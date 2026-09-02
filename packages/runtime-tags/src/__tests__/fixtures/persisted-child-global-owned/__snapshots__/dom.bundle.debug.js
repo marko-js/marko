@@ -1,10 +1,13 @@
 // tags/g-badge/index.marko
 const $template$1 = "<p><!> <!></p>";
 const $walks$1 = "D%c%l";
-const $setup$1 = () => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
+const $global_flag = /*@__PURE__*/ _global_join("flag", "__tests__/tags/g-badge/index.marko_0_$global_flag#5/global", ($scope, $global_flag) => _text($scope["#text/1"], $scope.$global.flag));
 const $input = ($scope, input) => $input_value($scope, input.value);
-var g_badge_default = /*@__PURE__*/ _template("__tests__/tags/g-badge/index.marko", $template$1, $walks$1, 0, $input);
+function $setup$1($scope) {
+	$global_flag($scope, $scope.$global.flag);
+}
+var g_badge_default = /*@__PURE__*/ _template("__tests__/tags/g-badge/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -14,6 +17,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
+	$setup$1($scope["#childScope/0"]);
 	$count($scope, 0);
 	$setup__script($scope);
 }

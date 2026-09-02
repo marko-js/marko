@@ -34,7 +34,7 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0], $scope0_owned, 1);
 	_html(`<button id=c>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_reason && _scope($scope0_id, {

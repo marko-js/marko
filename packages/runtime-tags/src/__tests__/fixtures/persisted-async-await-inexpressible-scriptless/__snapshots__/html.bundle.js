@@ -21,9 +21,7 @@ var template_default = _template_persisted("a", (input) => {
 				_set_serialize_reason({ 0: _mask_group($scope0_owned, 2) });
 				const $childScope = _peek_scope_id();
 				_patch_child($scope2_id, "a", $childScope);
-				let w = widget_default({ label: input.value });
-				_var($scope2_id, "b", $childScope, "a1");
-				_html(`<em>${_patch_text($scope2_id, "c", w, void 0, $scope0_owned, 2)}</em>`);
+				_html(`<em>${_patch_text($scope2_id, "c", widget_default({ label: input.value }), void 0, $scope0_owned, 2)}</em>`);
 				_subscribe(_source_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
@@ -33,7 +31,7 @@ var template_default = _template_persisted("a", (input) => {
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0], $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, {
 		e: input.value,

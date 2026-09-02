@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-handler-const/template.marko:5:13
-      3 |   <if=(count > 1)>
-      4 |     <const/title=input.title/>
-    > 5 |     <button onClick() {
-        |             ^ Persisted templates currently support only escaped dynamic text and dynamic attributes in native HTML.
-      6 |       document.querySelector("main")!.dataset.title = title;
-      7 |     }>read</button>
-      8 |   </if>

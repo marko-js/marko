@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-global-state-intersection/template.marko:3:7
-      1 | <let/count=0/>
-      2 | <div>
-    > 3 |   <h1>${$global.brand + " #" + count}</h1>
-        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates do not yet support `$global` contributions to stateful expressions.
-      4 |   <button onClick() { count++ }>+</button>
-      5 | </div>
-      6 |

@@ -4,8 +4,9 @@ var grand_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<div>");
-	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);

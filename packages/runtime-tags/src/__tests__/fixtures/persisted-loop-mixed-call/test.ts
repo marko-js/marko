@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A call in a mixed loop input re-runs on every fill write with no
-// stable client value: fail closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A call over client state and a server fill re-evaluates client-side; the
+// fill keeps the server operand current.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ extra: ["x"] }, { extra: ["y"] }, click, { extra: ["z"] }],
 };

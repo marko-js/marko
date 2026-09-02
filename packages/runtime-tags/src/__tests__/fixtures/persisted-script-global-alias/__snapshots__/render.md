@@ -1,4 +1,4 @@
-# Render `{"$global":{"brand":"acme"}}`
+# Render `{"$global":{"brand":"acme","serializedGlobals":["brand"]}}`
 ```html
 <main
   data-brand="acme"
@@ -9,7 +9,7 @@
 </main>
 ```
 
-# Update `{"$global":{"brand":"bmce"}}`
+# Update `{"$global":{"brand":"bmce","serializedGlobals":["brand"]}}`
 ```html
 <main
   data-brand="bmce"

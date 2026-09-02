@@ -20,7 +20,7 @@ var template_default = _template_persisted("a", (input) => {
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 					return 0;
 				}
-			}, $scope1_id, "b", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["a1"]);
+			}, $scope1_id, "b", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["a1"], $scope0_owned, 3);
 			_script($scope1_id, "a2");
 			_patch_value($scope1_id, "a0", count, 1);
 			_scope($scope1_id, {
@@ -29,7 +29,7 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["a0"]);
+	}, $scope0_id, "b", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["a0"], $scope0_owned, 2);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, { g: input.inner });
 }, 1, 0);

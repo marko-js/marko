@@ -12,7 +12,7 @@ var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D%l");
 const $frame_content__input_label__OR__count = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko0", "input_label", /*@__PURE__*/ _or(1, ($scope) => _attr($scope["#p/0"], "title", $scope._.input_label + ":" + $scope._.count)), () => $frame_content__input_label, 0);
-const $frame_content__input_label = /*@__PURE__*/ _closure_get("input_label", $frame_content__input_label__OR__count);
+const $frame_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_label", /*@__PURE__*/ _closure_get("input_label", $frame_content__input_label__OR__count), 0);
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_label($scope);
 	$frame_content__count($scope);

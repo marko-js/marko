@@ -1,6 +1,8 @@
 // PATCH
 [`a !a0; D%c%;<button><!> <!></button>`, {
-  fa: ["a"],
+  fa: ["a", {
+    label: "b"
+  }],
   cAa: {
     tb: "b",
     s: {

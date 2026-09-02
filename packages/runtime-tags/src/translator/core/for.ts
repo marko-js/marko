@@ -25,9 +25,9 @@ import { isPersisted } from "../util/marko-config";
 import { some } from "../util/optional";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
-  isStatefulBranch,
   isBranchPathSection,
-  recordStructuralOrGlobalParams,
+  isStatefulBranch,
+  recordStructuralParams,
 } from "../util/persisted/structure";
 import {
   type Binding,
@@ -60,6 +60,7 @@ import {
   startSection,
 } from "../util/sections";
 import {
+  getExprWriteOwnership,
   getSerializeGuard,
   scopeReasonIdentifier,
 } from "../util/serialize-guard";
@@ -221,9 +222,7 @@ export default {
         // Patches select a loop that is not stateful.
         if (!isStatefulBranch(bodySection) && isBranchPathSection(tagSection)) {
           addRuntimeFeatureAsset("patch-loop");
-          // The loop's inputs drive structure: the params recorded here
-          // gate call-site feeds at translate.
-          recordStructuralOrGlobalParams(getSerializeSourcesForExpr(tagExtra));
+          recordStructuralParams(getSerializeSourcesForExpr(tagExtra));
         }
       });
       onFinalizeReferences(() => {
@@ -385,6 +384,9 @@ export default {
               id && getShellRecords()?.[id]
                 ? t.stringLiteral(id)
                 : t.numericLiteral(0),
+              // A param-selected loop yields to the client when the call
+              // site feeds its inputs from state.
+              ...getExprWriteOwnership(node.extra!),
             );
           }
         }

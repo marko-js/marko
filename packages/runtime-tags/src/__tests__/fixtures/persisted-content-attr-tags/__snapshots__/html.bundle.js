@@ -6,11 +6,13 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<section><header>");
-	_patch_dynamic_tag($scope0_id, "a", input.header, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "a", input.header, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	const $tag = input.header;
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
 	_html("</header><footer>");
-	_patch_dynamic_tag($scope0_id, "b", input.footer, $scope0_owned, 2);
-	_dynamic_tag($scope0_id, "b", input.footer, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
+	const $tag2 = input.footer;
+	_patch_dynamic_tag($scope0_id, "b", $tag2, 0, 0, 0, 0, $scope0_owned, 2);
+	_dynamic_tag($scope0_id, "b", $tag2, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
 	_html("</footer></section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);

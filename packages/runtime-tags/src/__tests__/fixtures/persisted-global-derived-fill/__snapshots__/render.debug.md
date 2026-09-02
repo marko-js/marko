@@ -1,4 +1,4 @@
-# Render `{"name":"amy","$global":{"prefix":"hi"}}`
+# Render `{"name":"amy","$global":{"prefix":"hi","serializedGlobals":["prefix"]}}`
 ```html
 <button>
   inc
@@ -25,7 +25,7 @@ document.querySelector("button").click();
 UPDATE: span::text@7 "0" => "1"
 ```
 
-# Update `{"name":"amy","$global":{"prefix":"yo"}}`
+# Update `{"name":"amy","$global":{"prefix":"yo","serializedGlobals":["prefix"]}}`
 ```html
 <button>
   inc
@@ -53,4 +53,4 @@ document.querySelector("button").click();
 REMOVE: button + span
 ```
 
-# Update `{"name":"bob","$global":{"prefix":"yo"}}`
+# Update `{"name":"bob","$global":{"prefix":"yo","serializedGlobals":["prefix"]}}`

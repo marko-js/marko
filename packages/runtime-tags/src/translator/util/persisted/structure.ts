@@ -4,7 +4,7 @@ import type { types as t } from "@marko/compiler";
 
 import { kDirectContent } from "../binding-prop-tree";
 import { isPersisted } from "../marko-config";
-import { every, forEach, type Opt, some, toArray } from "../optional";
+import { every, forEach, some, toArray } from "../optional";
 import type { Binding, Sources } from "../references";
 import { ensureReasonGroups, type Section } from "../sections";
 import {
@@ -134,7 +134,6 @@ export function isStatefulBranch(section: Section): boolean {
     stateful =
       (!expr && bodyRendersStateful(section)) ||
       (!!expr &&
-        !sources?.global &&
         (!!sources?.state || inStatefulBranch(section.parent)) &&
         every(expr.referencedBindings, selectionFeedDelivers));
     computing.delete(section);
@@ -163,29 +162,48 @@ function selectionFeedDelivers(binding: Binding) {
   );
 }
 
+// Selected by params alone: a call site feeding them from state hands the
+// branch to the client at run time. Call at finalize or later.
+export function getParamSelectorSources(section: Section) {
+  if (
+    !isPersisted() ||
+    !section.isBranch ||
+    !isBranchPathSection(section) ||
+    isStatefulBranch(section)
+  ) {
+    return;
+  }
+  const sources =
+    section.upstreamExpression &&
+    getSerializeSourcesForExpr(section.upstreamExpression);
+  return sources?.param && !sources.state ? sources : undefined;
+}
+
+// The selector sources of every param-selected branch around the section
+// (inclusive), or undefined when none.
+export function getParamSelectorChain(section: Section | undefined) {
+  let chain: Sources[] | undefined;
+  for (; section; section = section.parent) {
+    const sources = getParamSelectorSources(section);
+    if (sources) (chain ??= []).push(sources);
+  }
+  return chain;
+}
+
 // Structure selection and `$global` mixing both record here: neither
 // read lets the value leave through an expression channel.
-export function recordStructuralOrGlobalParams(sources: Sources | undefined) {
+// A branch/loop selector's root params select structure.
+export function recordStructuralParams(sources: Sources | undefined) {
   forEach(sources?.param, (binding) => {
-    if (!binding.section.parent) binding.structuralOrGlobalParam = true;
+    if (!binding.section.parent) binding.selectsStructure = true;
   });
 }
 
-export function hasStructuralOrGlobalParam(params: Opt<Binding>) {
-  return some(params, (binding) => binding.structuralOrGlobalParam);
-}
-
 // Shared per-patch-write analyze hook: freezes the value's reason groups
-// translate-time ownership gates and records `$global`-mixed params.
+// for translate-time ownership gates.
 export function ensurePersistedWriteGroups(getExtra: () => t.NodeExtra) {
   onFinalizePersisted(() => {
-    const sources = getSerializeSourcesForExpr(getExtra());
-    ensureReasonGroups(sources);
-    // A `$global` mixed into a param-fed value cannot survive a withheld
-    // patch write: call sites derive ownership requirements from the fact.
-    if (sources?.param && sources.global) {
-      recordStructuralOrGlobalParams(sources);
-    }
+    ensureReasonGroups(getSerializeSourcesForExpr(getExtra()));
   });
 }
 

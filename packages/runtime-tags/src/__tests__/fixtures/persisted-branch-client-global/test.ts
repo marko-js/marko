@@ -10,9 +10,9 @@ const inc = (document: Document) => {
 export const config: TestConfig = {
   persisted: true,
   steps: [
-    { $global: { brand: "acme" } },
+    { $global: { brand: "acme", serializedGlobals: ["brand"] } },
     inc,
-    { $global: { brand: "bmce" } },
+    { $global: { brand: "bmce", serializedGlobals: ["brand"] } },
     inc,
   ],
 };

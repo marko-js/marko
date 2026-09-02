@@ -14,7 +14,7 @@ var template_default = _template_persisted("a", (input) => {
 		_script($scope1_id, "a1");
 		_patch_value($scope1_id, "a0", picks, 1);
 		_scope($scope1_id, { f: picks });
-	}, 0, $scope0_id, "a", 1, $sg__input_labels, $sg__input_labels, void 0, void 0, "a0");
+	}, 0, $scope0_id, "a", 1, $sg__input_labels, $sg__input_labels, void 0, void 0, "a0", $scope0_owned, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_labels)}`);
 	$scope0_reason && _scope($scope0_id, {});
 }, 1, 0);

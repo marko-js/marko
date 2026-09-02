@@ -4,8 +4,8 @@ const $walks$1 = "D lD l";
 const $setup$1 = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$1 = ($scope, input) => {
-	_text($scope["#text/1"], JSON.stringify(input));
 	$input_label($scope, input.label);
+	_text($scope["#text/1"], JSON.stringify(input));
 };
 var duo_default = /*@__PURE__*/ _template("__tests__/tags/duo/index.marko", $template$1, $walks$1, 0, $input$1);
 
@@ -24,6 +24,6 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $input_title__OR__count);
+const $input_title = _fill_const("__tests__/template.marko0", "input_title", $input_title__OR__count);
 const $input = ($scope, input) => $input_title($scope, input.title);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

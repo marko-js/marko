@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-loop-whole-body/template.marko:4:9
-      2 | <main>
-      3 |   <for|i| of=l>
-    > 4 |     <li>${input.format(i)}</li>
-        |         ^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value read inside client-owned structure must deliver as a fill.
-      5 |   </for>
-      6 |   <button onClick() { l = [...l, "b"] }>+</button>
-      7 | </main>

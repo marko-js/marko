@@ -72,6 +72,7 @@ export {
 } from "./dom/dom";
 export { _on } from "./dom/event";
 export { applyPatch } from "./dom/patch";
+export { _global_join, _global_script } from "./dom/patch-global";
 export {
   _load_event_trigger,
   _load_idle_trigger,
@@ -102,14 +103,14 @@ export {
   _const,
   _el_read,
   _fill_const,
+  _fill_let,
+  _fill_let_change,
   _fill_join,
   _fill_join_for,
   _fill_join_if,
   _fill_join_closure,
   _fill_join_subscribers,
-  _fill_let,
   _global_read,
-  _fill_let_change,
   _for_closure,
   _for_selector,
   _hoist,

@@ -1,8 +1,14 @@
 import type { TestConfig } from "../../main.test";
 
-// `<lifecycle>` compiles through the dynamic-tag rules and stays closed in
-// any persisted compile, so an instance using it rejects at the child.
+const toggle = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button.outer")!.click();
+};
+
+// A child with `<lifecycle>` inside client-owned structure is a plain
+// client instance: it mounts when revealed and its server param fills.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  // Mount counts leave state a fresh render lacks.
+  skip_fresh_render: true,
+  steps: [{ label: "a" }, toggle, { label: "b" }, toggle, toggle],
 };

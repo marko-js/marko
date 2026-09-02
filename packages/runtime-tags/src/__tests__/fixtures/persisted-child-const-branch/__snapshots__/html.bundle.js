@@ -1,7 +1,7 @@
 // tags/badge/index.marko
 const $template = "<div></div>";
 _shells({
-	b: "b; ;<div></div>",
+	b: "b !; ;<div></div>",
 	b0: "b0;D ;<i> </i>"
 });
 var badge_default = _template_persisted("b", (input) => {
@@ -15,9 +15,9 @@ var badge_default = _template_persisted("b", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["b0"]);
+	}, $scope0_id, "a", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["b0"], $scope0_owned, 1);
 	_html(`</div>${_el_resume($scope0_id, "a", $sg__input_label)}`);
-	$scope0_reason && _scope($scope0_id, { e: input.note });
+	$scope0_reason ? _scope($scope0_id, { e: input.note }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.note);
 }, 0, 0);
 
 // template.marko

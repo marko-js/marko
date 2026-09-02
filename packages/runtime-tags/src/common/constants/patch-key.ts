@@ -12,7 +12,8 @@ export const Catch = "k";
 export const Child = "c";
 export const Control = "n";
 export const Effect = "e";
-export const GlobalEffect = "g";
+// An unescaped hole: the client re-parses the markup into its range.
+export const Html = "q";
 // A dynamic tag whose renderer arrives as input: the entry re-renders it.
 export const DynamicTag = "f";
 // Mirrors `AccessorProp.Global` on live scopes.
@@ -24,6 +25,8 @@ export const Loop = "l";
 export const Pending = "p";
 export const Setup = "s";
 export const Text = "t";
+// A text-only element (or comment) body: the client rewrites its content.
+export const TextContent = "m";
 export const Value = "v";
 // A fill whose value is a rebound registration: the entry carries the
 // bind-table index its `BindSource` stored.

@@ -66,6 +66,8 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "f", $childScope3);
 	site_footer_default({ year: input.year });
 	_html("</main>");
+	_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a1", $scope0_id);
 	$scope0_reason && _scope($scope0_id, {
 		d: _existing_scope($childScope),
 		e: _existing_scope($childScope2),

@@ -1,8 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-// A spread on an attr tag may carry any property of its group: a
-// provenance-free spread value gates the structural group it feeds.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A spread on an attr tag carrying an imported value selects client-side.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, {}, click, click],
 };

@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// An ASSIGNED tag variable needs the change-binding chain serialized
-// under persisted; until that lands, the call site fails closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// Assigning a child's tag variable writes back through its change handler,
+// which a patch keeps installed.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ start: 1 }, click, { start: 1 }, click],
 };

@@ -3,8 +3,8 @@ const $template = "<input><em> </em>";
 const $walks = " bD l";
 const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(6, ($scope) => _attr_input_value($scope, "a", $scope.e, $scope.f));
 const $input_value = /*@__PURE__*/ _const(4, ($scope) => {
-	_text($scope.b, $scope.e);
 	$input_value__OR__input_valueChange($scope);
+	_text($scope.b, $scope.e);
 });
 const $input_valueChange = /*@__PURE__*/ _const(5, $input_value__OR__input_valueChange);
 const $setup__script$1 = _script("b0", ($scope) => _attr_input_value_script($scope, "a"));

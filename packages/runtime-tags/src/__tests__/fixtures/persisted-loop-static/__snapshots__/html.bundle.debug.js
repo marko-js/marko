@@ -13,7 +13,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_id = _scope_id();
 		_html(`<p>${_patch_text($scope1_id, "#text/0", name)} ${_patch_text($scope1_id, "#text/1", input.note, 2, $scope0_owned, 1)}</p>`);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
-	}, 0, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "__tests__/template.marko_1*shell");
+	}, 0, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "__tests__/template.marko_1*shell", 0, 0);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

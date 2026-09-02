@@ -33,5 +33,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_suffix($scope, input.suffix);
-const $input_suffix = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_suffix", $if_content__input_suffix);
+const $input_suffix = _fill_const("__tests__/template.marko0", "input_suffix", $if_content__input_suffix);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

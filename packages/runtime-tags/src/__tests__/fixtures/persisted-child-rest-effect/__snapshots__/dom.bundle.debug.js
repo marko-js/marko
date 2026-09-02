@@ -3,8 +3,8 @@ const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input$1 = ($scope, input) => {
-	_text($scope["#text/0"], JSON.stringify(input));
 	$input_label($scope, input.label);
+	_text($scope["#text/0"], JSON.stringify(input));
 };
 const $input_label__script = _script("__tests__/tags/dump/index.marko_0_input_label#3", ($scope) => {
 	{
@@ -30,6 +30,6 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $input_title__OR__count);
+const $input_title = _fill_const("__tests__/template.marko0", "input_title", $input_title__OR__count);
 const $input = ($scope, input) => $input_title($scope, input.title);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

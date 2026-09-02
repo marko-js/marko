@@ -4,8 +4,7 @@
     brand: "Marko"
   },
   "PatchText:#text/0": "Marko",
-  "PatchBranch:#text/1": 0,
-  "PatchWrite:$global_brand": "Marko"
+  "PatchBranch:#text/1": 0
 }
 
 // PATCH
@@ -14,10 +13,7 @@
     brand: "Fresh"
   },
   "PatchText:#text/0": "Fresh",
-  "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1_$global_brand#5": "$global_brand 1"
-  }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1*shell"],
-  "PatchWrite:$global_brand": "Fresh"
+  "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1*shell"
 }]
 
 // PATCH
@@ -26,8 +22,5 @@
     brand: "Patch"
   },
   "PatchText:#text/0": "Patch",
-  "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1_$global_brand#5": "$global_brand 1"
-  }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1*shell"],
-  "PatchWrite:$global_brand": "Patch"
+  "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-global/template.marko_1*shell"
 }]

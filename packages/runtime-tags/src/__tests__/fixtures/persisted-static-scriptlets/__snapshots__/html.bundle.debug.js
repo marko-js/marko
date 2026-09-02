@@ -20,7 +20,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/2", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {

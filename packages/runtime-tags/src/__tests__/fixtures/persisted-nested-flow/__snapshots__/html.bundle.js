@@ -36,10 +36,10 @@ var template_default = _template_persisted("a", (input) => {
 				$scope0_reason && _scope($scope4_id, {});
 				return 0;
 			}
-		}, $scope3_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a3"]);
+		}, $scope3_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a3"], $scope0_owned, 1);
 		_html("</li>");
 		_scope($scope3_id, {});
-	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a2");
+	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a2", $scope0_owned, 1);
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	_if(() => {
 		if (input.summary) {
@@ -52,12 +52,12 @@ var template_default = _template_persisted("a", (input) => {
 					_subscribe(_source_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
-			}, $scope1_id, "b", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["a1"]);
+			}, $scope1_id, "b", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["a1"], $scope0_owned, 3);
 			_html("</section>");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_summary, $sg__input_summary, void 0, void 0, ["a0"]);
+	}, $scope0_id, "b", 1, $sg__input_summary, $sg__input_summary, void 0, void 0, ["a0"], $scope0_owned, 2);
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 4) });
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "c", $childScope);

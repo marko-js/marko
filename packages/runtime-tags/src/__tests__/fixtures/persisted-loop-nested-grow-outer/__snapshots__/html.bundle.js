@@ -16,12 +16,12 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", row.id + "@0")}</p>`);
 			_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
-		}, (cell) => cell, $scope1_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a1");
+		}, (cell) => cell, $scope1_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a1", $scope0_owned, 0);
 		_scope($scope1_id, {
 			e: row?.id,
 			_: _scope_with_id($scope0_id)
 		});
-	}, (row) => row.id, $scope0_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a0");
+	}, (row) => row.id, $scope0_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a0", $scope0_owned, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
 	$scope0_reason && _scope($scope0_id, {

@@ -1,4 +1,4 @@
-# Render `{"name":"first","$global":{"brand":"Marko","locale":"en"}}`
+# Render `{"name":"first","$global":{"brand":"Marko","locale":"en","serializedGlobals":["brand","locale"]}}`
 ```html
 <div>
   <h1
@@ -12,7 +12,7 @@
 </div>
 ```
 
-# Update `{"name":"second","$global":{"brand":"Runtime","locale":"fr"}}`
+# Update `{"name":"second","$global":{"brand":"Runtime","locale":"fr","serializedGlobals":["brand","locale"]}}`
 ```html
 <div>
   <h1

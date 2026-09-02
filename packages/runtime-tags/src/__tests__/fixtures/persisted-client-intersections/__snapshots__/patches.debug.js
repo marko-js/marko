@@ -1,5 +1,9 @@
 // PATCH
 {
+  "$global:": {
+    brand: "Acme Co",
+    locale: "fr"
+  },
   "PatchText:#text/0": "Store!",
   "PatchAttr:#p/1 title": "fr",
   "PatchText:#text/2": "Acme Co",

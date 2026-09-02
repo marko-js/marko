@@ -16,14 +16,14 @@ const $await_content__$params = ($scope, $params2) => $await_content__value($sco
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $frame_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $frame_content__input_second__OR__input_first__OR__showSecond = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko1", "input_first", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko0", "input_second", /*@__PURE__*/ _or(1, ($scope) => $frame_content__await_promise($scope, $scope._.showSecond ? $scope._.input_second : $scope._.input_first), 2), () => $frame_content__input_second, 0), () => $frame_content__input_first, 0);
-const $frame_content__input_second = /*@__PURE__*/ _closure_get("input_second", $frame_content__input_second__OR__input_first__OR__showSecond);
+const $frame_content__input_second = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_second", /*@__PURE__*/ _closure_get("input_second", $frame_content__input_second__OR__input_first__OR__showSecond), 0);
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_second($scope);
 	$frame_content__input_first($scope);
 	$frame_content__showSecond($scope);
 	$await_content($scope);
 };
-const $frame_content__input_first = /*@__PURE__*/ _closure_get("input_first", $frame_content__input_second__OR__input_first__OR__showSecond);
+const $frame_content__input_first = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko1", "input_first", /*@__PURE__*/ _closure_get("input_first", $frame_content__input_second__OR__input_first__OR__showSecond), 0);
 const $frame_content__showSecond = /*@__PURE__*/ _closure_get("showSecond", $frame_content__input_second__OR__input_first__OR__showSecond);
 const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $frame_content__setup);
 const $showSecond__closure = /*@__PURE__*/ _closure($frame_content__showSecond);

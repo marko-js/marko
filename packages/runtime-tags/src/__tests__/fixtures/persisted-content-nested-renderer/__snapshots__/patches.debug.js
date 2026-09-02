@@ -5,7 +5,7 @@
       "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_2*content"],
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "x",
-        "PatchDynamicTag:#text/1": "div"
+        "PatchDynamicTag:#text/1": ["div", 0, 0, 0, 1]
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_1*shell"]
@@ -18,7 +18,7 @@
       "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_2*content"],
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "y",
-        "PatchDynamicTag:#text/1": "div"
+        "PatchDynamicTag:#text/1": ["div", 0, 0, 0, 1]
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_1*shell"]
@@ -31,7 +31,7 @@
       "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_2*content"],
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "y",
-        "PatchDynamicTag:#text/1": "span"
+        "PatchDynamicTag:#text/1": ["span", 0, 0, 0, 1]
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_1*shell"]
@@ -44,7 +44,7 @@
       "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_2*content"],
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "z",
-        "PatchDynamicTag:#text/1": "em"
+        "PatchDynamicTag:#text/1": ["em", 0, 0, 0, 1]
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_1*shell"]
@@ -57,7 +57,7 @@
       "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_2*content"],
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "z",
-        "PatchDynamicTag:#text/1": 0
+        "PatchDynamicTag:#text/1": [0]
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-content-nested-renderer/template.marko_1*shell"]

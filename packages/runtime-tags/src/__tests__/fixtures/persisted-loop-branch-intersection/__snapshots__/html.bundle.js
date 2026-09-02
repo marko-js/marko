@@ -21,12 +21,12 @@ var template_default = _template_persisted("a", (input) => {
 				_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 3) && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $sg__input_flag, $sg__input_flag, void 0, void 0, ["a1"]);
+		}, $scope1_id, "a", 1, $sg__input_flag, $sg__input_flag, void 0, void 0, ["a1"], $scope0_owned, 2);
 		_scope($scope1_id, {
 			c: item,
 			_: _scope_with_id($scope0_id)
 		});
-	}, (item) => item, $scope0_id, "a", 1, _source_guard($scope0_reason, 0), _source_guard($scope0_reason, 1), void 0, void 0, "a0");
+	}, (item) => item, $scope0_id, "a", 1, _source_guard($scope0_reason, 0), _source_guard($scope0_reason, 1), void 0, void 0, "a0", $scope0_owned, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_reason ? _scope($scope0_id, {

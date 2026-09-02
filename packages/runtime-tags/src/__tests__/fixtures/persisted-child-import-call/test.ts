@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// Imported code can hide `$global` (or any server knowledge) no signal
-// tracks: calling it inside a skipped region fails closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// Imported code called by a child inside client-owned structure is client
+// code like anywhere else in Marko: the instance re-renders it client-side.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, {}, click, click],
 };

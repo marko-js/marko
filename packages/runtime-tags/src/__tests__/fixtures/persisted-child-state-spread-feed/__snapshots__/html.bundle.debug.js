@@ -21,7 +21,7 @@ var tabs_default = _template_persisted("__tests__/tags/tabs/index.marko", (input
 			$scope0_reason && _scope($scope2_id, {}, "__tests__/tags/tabs/index.marko", "4:2");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_tab, $sg__input_tab, void 0, void 0, ["__tests__/tags/tabs/index.marko_1*shell", "__tests__/tags/tabs/index.marko_2*shell"]);
+	}, $scope0_id, "#text/0", 1, $sg__input_tab, $sg__input_tab, void 0, void 0, ["__tests__/tags/tabs/index.marko_1*shell", "__tests__/tags/tabs/index.marko_2*shell"], $scope0_owned, 0);
 	$scope0_reason && _scope($scope0_id, { input_tab_on: input.tab?.on }, "__tests__/tags/tabs/index.marko", 0, { input_tab_on: ["input.tab.on"] });
 }, 0, 0);
 

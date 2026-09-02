@@ -20,6 +20,6 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $input_title__OR__count);
+const $input_title = _fill_const("__tests__/template.marko0", "input_title", $input_title__OR__count);
 const $input = ($scope, input) => $input_title($scope, input.title);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

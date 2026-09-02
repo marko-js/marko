@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A `by` keyer derived from server input would read stale inside a
-// client-owned loop: fail closed.
+// A function from the request keying a client-owned loop cannot serialize,
+// exactly as without persisted pages.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  error_html: true,
+  // Only the debug serializer reports the function; optimize emits a bind
+  // the frame commit rejects.
+  skip_optimize: true,
+  steps: [{ key: (item: string) => item }],
 };

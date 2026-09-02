@@ -7,5 +7,8 @@ export const config: TestConfig = {
   persisted: true,
   // The script leaves state on the page a fresh render lacks.
   skip_fresh_render: true,
-  steps: [{ $global: { brand: "acme" } }, { $global: { brand: "bmce" } }],
+  steps: [
+    { $global: { brand: "acme", serializedGlobals: ["brand"] } },
+    { $global: { brand: "bmce", serializedGlobals: ["brand"] } },
+  ],
 };

@@ -2,7 +2,7 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 _shells({
-	"__tests__/tags/badge/index.marko": "__tests__/tags/badge/index.marko; ;<div></div>",
+	"__tests__/tags/badge/index.marko": "__tests__/tags/badge/index.marko !; ;<div></div>",
 	"__tests__/tags/badge/index.marko_1*shell": "__tests__/tags/badge/index.marko_1*shell;D ;<i> </i>"
 });
 var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (input) => {
@@ -16,9 +16,9 @@ var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (inp
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/badge/index.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"]);
+	}, $scope0_id, "#div/0", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"], $scope0_owned, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $sg__input_label)}`);
-	$scope0_reason && _scope($scope0_id, { input_note: input.note }, "__tests__/tags/badge/index.marko", 0, { input_note: ["input.note"] });
+	$scope0_reason ? _scope($scope0_id, { input_note: input.note }, "__tests__/tags/badge/index.marko", 0, { input_note: ["input.note"] }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/badge/index.marko0", input.note);
 }, 0, 0);
 
 // template.marko

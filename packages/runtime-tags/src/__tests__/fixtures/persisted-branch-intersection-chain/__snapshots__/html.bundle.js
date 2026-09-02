@@ -31,7 +31,7 @@ var template_default = _template_persisted("a", (input) => {
 		"a0",
 		"a1",
 		"a2"
-	]);
+	], $scope0_owned, 0);
 	_html(`</div>${_el_resume($scope0_id, "a", $sg__input_kind)}<span>${_text_resume($scope0_id, "b", input.title + " root #0")}</span><button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_reason ? _scope($scope0_id, {

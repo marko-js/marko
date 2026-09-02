@@ -21,3 +21,4 @@ const $setup__script = _script("a0", ($scope) => {
 		$show($scope, !$scope.h);
 	});
 });
+const $input_suffix = _fill_const("a0", 5, $if_content__input_suffix);

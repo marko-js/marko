@@ -1,2 +1,2 @@
 // template.marko
-_script("a0", ($scope) => document.querySelector("main").dataset.brand = $scope.b);
+const $brand__script = _script("a1", ($scope) => document.querySelector("main").dataset.brand = $scope.b);

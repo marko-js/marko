@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-whole-attr/template.marko:4:8
-      2 | <main>
-      3 |   <if=show>
-    > 4 |     <p data-all=input>x</p>
-        |        ^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value read inside client-owned structure must deliver as a fill.
-      5 |   </if>
-      6 |   <button onClick() { show = !show }>+</button>
-      7 | </main>

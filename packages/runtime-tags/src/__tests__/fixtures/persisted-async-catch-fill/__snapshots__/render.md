@@ -25,6 +25,5 @@
 ```
 INSERT: main > p
 REMOVE: main > p + em
-UPDATE: main > p::text@7 "" => "boom"
 UPDATE: main > p::text@0 "" => "second"
 ```

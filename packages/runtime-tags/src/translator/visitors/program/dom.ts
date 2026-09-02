@@ -6,7 +6,9 @@ import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { find, forEach } from "../../util/optional";
 import {
+  getFillConditions,
   getPatchFillBindings,
+  getRootGlobalReads,
   hasPatchEffectReads,
   isPatchWriteBinding,
   isPatchFillBinding,
@@ -33,9 +35,9 @@ import {
   getSetup,
   getSignal,
   getSignalFn,
+  initGlobalRead,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
-  sectionHasGlobalEffect,
   signalHasStatements,
   writeRegisteredFns,
   writeSignals,
@@ -180,7 +182,14 @@ export default {
       // a template with fills in any section ships the patcher.
       let boundFills = false;
       forEachSection((fillSection) => {
-        if (getPatchFillBindings(fillSection)) {
+        // A fill that only client-selected structure needs ships its
+        // patcher from the call site that hands over the selection.
+        if (
+          find(
+            getPatchFillBindings(fillSection),
+            (binding) => !getFillConditions(binding)?.selectors,
+          )
+        ) {
           importRuntimeFeature("patch-value");
           boundFills ||= !!find(
             fillSection.bindings,
@@ -188,10 +197,7 @@ export default {
               isPatchFillBinding(binding) && upstreamFunctionValued(binding),
           );
         }
-        if (
-          find(fillSection.bindings, needsPatchEffectRuntime) ||
-          sectionHasGlobalEffect(fillSection)
-        ) {
+        if (find(fillSection.bindings, needsPatchEffectRuntime)) {
           importRuntimeFeature("patch-effect");
         }
       });
@@ -203,6 +209,7 @@ export default {
         importRuntimeFeature("patch-value-bind");
       }
 
+      forEach(getRootGlobalReads(section), initGlobalRead);
       const written = writeSignals(section);
       writeRegisteredFns();
 

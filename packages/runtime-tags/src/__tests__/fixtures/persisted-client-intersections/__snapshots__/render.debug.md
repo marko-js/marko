@@ -1,4 +1,4 @@
-# Render `{"title":"Store","label":"Widget","year":2026,"$global":{"brand":"Acme","locale":"en"}}`
+# Render `{"title":"Store","label":"Widget","year":2026,"$global":{"brand":"Acme","locale":"en","serializedGlobals":["brand","locale"]}}`
 ```html
 <main>
   <h1>
@@ -71,7 +71,7 @@ document.querySelector("button").click();
 UPDATE: main > section > h2::text "Widget x1" => "Widget x2"
 ```
 
-# Update `{"title":"Store!","label":"Gadget","year":2027,"$global":{"brand":"Acme Co","locale":"fr"}}`
+# Update `{"title":"Store!","label":"Gadget","year":2027,"$global":{"brand":"Acme Co","locale":"fr","serializedGlobals":["brand","locale"]}}`
 ```html
 <main>
   <h1>

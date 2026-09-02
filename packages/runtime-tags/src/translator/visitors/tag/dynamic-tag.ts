@@ -49,6 +49,7 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
   trackParamsReferences,
+  setBindingValueExprs,
   trackVarReferences,
 } from "../../util/references";
 import {
@@ -72,13 +73,12 @@ import {
   StructureKind,
 } from "../../util/sections";
 import {
-  getPatchWriteOwnership,
+  getExprWriteOwnership,
   getSerializeGuard,
 } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
-  getSerializeSourcesForExpr,
 } from "../../util/serialize-reasons";
 import { addSetupStatement } from "../../util/setup-statements";
 import {
@@ -208,7 +208,10 @@ export default {
       }
 
       if (hasVar) {
-        trackVarReferences(tag, BindingType.derived);
+        const varBinding = trackVarReferences(tag, BindingType.derived)!;
+        // A frame writes the variable from what the tag renders: its inputs
+        // are its provenance (a client render drives it through `_var`).
+        if (isPersisted()) setBindingValueExprs(varBinding, tagExtra);
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
         ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
@@ -489,6 +492,39 @@ export default {
         // marks its branch for it whatever the site's own reason.
         const patches = writesPatchDynamicTag(tag, tagSection);
         if (patches) {
+          // The site's renderer and input evaluate once: hoisted, they feed
+          // the render and the entry alike.
+          if (!t.isIdentifier(tagExpression)) {
+            const tagId = generateUidIdentifier("tag");
+            statements.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(tagId, tagExpression),
+              ]),
+            );
+            tagExpression = tagId;
+          }
+          // A statically empty input is no input.
+          let input: t.Expression | undefined = hasTagArgs
+            ? t.arrayExpression([...args])
+            : (args[0] as t.Expression | undefined);
+          if (t.isObjectExpression(input) && !input.properties.length) {
+            input = undefined;
+          }
+          if (input && !t.isIdentifier(input)) {
+            const inputId = generateUidIdentifier("input");
+            statements.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(inputId, input),
+              ]),
+            );
+            if (hasTagArgs) {
+              args.length = 0;
+              args.push(t.spreadElement(inputId));
+            } else {
+              args[0] = inputId;
+            }
+            input = inputId;
+          }
           statements.push(
             t.expressionStatement(
               callRuntime(
@@ -496,7 +532,26 @@ export default {
                 getScopeIdIdentifier(tagSection),
                 getScopeAccessorLiteral(nodeBinding),
                 t.cloneNode(tagExpression),
-                ...getPatchWriteOwnership(getSerializeSourcesForExpr(tagExtra)),
+                input ? t.cloneNode(input) : t.numericLiteral(0),
+                t.numericLiteral(hasTagArgs ? 1 : 0),
+                node.var
+                  ? t.stringLiteral(
+                      getResumeRegisterId(
+                        tagSection,
+                        node.var.extra?.binding,
+                        "var",
+                      ),
+                    )
+                  : t.numericLiteral(0),
+                contentProp
+                  ? t.stringLiteral(
+                      getResumeRegisterId(
+                        getSectionForBody(tag.get("body"))!,
+                        "content",
+                      ),
+                    )
+                  : t.numericLiteral(0),
+                ...getExprWriteOwnership(tagExtra),
               ),
             ),
           );

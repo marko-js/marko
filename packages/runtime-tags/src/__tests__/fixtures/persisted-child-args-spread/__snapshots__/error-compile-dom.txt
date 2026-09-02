@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-args-spread/template.marko:4:12
-      2 | <main>
-      3 |   <if=show>
-    > 4 |     <badge(...input.parts)/>
-        |            ^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a spread argument for a child inside client-owned structure is not supported yet.
-      5 |   </if>
-      6 |   <button onClick() { show = !show }>t</button>
-      7 | </main>

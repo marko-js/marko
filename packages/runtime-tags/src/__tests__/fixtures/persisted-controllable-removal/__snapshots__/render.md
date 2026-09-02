@@ -17,15 +17,14 @@
     Store!
   </h1>
   <input
-    default-value="second"
-    value="first"
+    default-value="first"
+    value="second"
   />
 </main>
 ```
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
-UPDATE: main > input[value] "first" => "second"
 ```
 
 # Update
@@ -33,6 +32,23 @@ UPDATE: main > input[value] "first" => "second"
 const el = document.querySelector("input");
 el.value = "loose";
 el.dispatchEvent(new document.defaultView.Event("input", { bubbles: true }));
+```
+```html
+<main
+  data-got="loose"
+>
+  <h1>
+    Store!
+  </h1>
+  <input
+    default-value="first"
+    value="second"
+  />
+</main>
+```
+## Change
+```
+UPDATE: main[data-got] null => "loose"
 ```
 
 # Update
@@ -43,18 +59,19 @@ document.querySelector("main").dataset.final =
 ```
 ```html
 <main
-  data-final="loose"
+  data-final="second"
+  data-got="loose"
 >
   <h1>
     Store!
   </h1>
   <input
-    default-value="second"
-    value="loose"
+    default-value="first"
+    value="second"
   />
 </main>
 ```
 ## Change
 ```
-UPDATE: main[data-final] null => "loose"
+UPDATE: main[data-final] null => "second"
 ```

@@ -33,7 +33,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		"__tests__/template.marko_1*shell",
 		"__tests__/template.marko_2*shell",
 		"__tests__/template.marko_3*shell"
-	]);
+	], $scope0_owned, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $sg__input_kind)}<span>${_text_resume($scope0_id, "#text/1", input.title + " root #" + count)}</span><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {

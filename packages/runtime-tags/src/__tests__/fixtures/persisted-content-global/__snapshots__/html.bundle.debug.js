@@ -6,8 +6,9 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html(`<section><span>${_patch_text($scope0_id, "#text/0", input.value, void 0, $scope0_owned, 0)}</span>`);
-	_patch_dynamic_tag($scope0_id, "#text/1", input.content, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, 0, $scope0_owned, 1);
+	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
 }, 0, 0);
@@ -35,7 +36,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_reason = _persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<div>${_patch_text($scope1_id, "#text/0", $global$1.brand)}</div>`);
-			_subscribe($scope0_reason && $global_brand__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+			_global_subscribe("__tests__/template.marko_1_$global_brand#3/global", $scope1_id);
+			_subscribe($global_brand__closures, _scope($scope1_id, {}, "__tests__/template.marko", "3:4"));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
@@ -43,7 +45,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {
 		count,
-		"ClosureScopes:$global_brand": $global_brand__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);

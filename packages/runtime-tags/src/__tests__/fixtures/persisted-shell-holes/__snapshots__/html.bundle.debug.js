@@ -16,7 +16,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 3);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
 		input_href: input.href,

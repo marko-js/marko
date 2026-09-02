@@ -22,19 +22,19 @@ var template_default = _template_persisted("a", (input) => {
 		}, 1, "a1", 1);
 		$scope0_reason && _subscribe($input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { catch: attrTag({ content: _content_resume("a3", () => {
+	}, $scope0_id), { catch: attrTag({ content: _content_resume("a4", () => {
 		_persisted_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_text_resume($scope2_id, "a", tag)}</p>`);
-		_subscribe($scope0_reason && $tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope2_id);
 	}, $scope0_id) }) }, 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a4");
+	_global_subscribe("a3", $scope0_id);
+	_script($scope0_id, "a5");
 	$scope0_reason ? _scope($scope0_id, {
 		g: tag,
 		i: n,
-		k: $tag__closures,
 		j: $input_promise__closures
 	}) : _patch_value($scope0_id, "a0", tag);
 	_resume_branch($scope0_id);

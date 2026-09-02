@@ -29,15 +29,15 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope2_reason = _persisted_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_text_resume($scope2_id, "#text/0", tag)}</p>`);
-		_subscribe($scope0_reason && $tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:6"));
+		_subscribe($tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:6"));
 		_resume_branch($scope2_id);
 	}, $scope0_id) }) }, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_global_subscribe("__tests__/template.marko_0_$global_brand#7/global", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {
 		tag,
 		n,
-		"ClosureScopes:tag": $tag__closures,
 		"ClosureScopes:input_promise": $input_promise__closures
 	}, "__tests__/template.marko", 0, {
 		tag: "1:8",

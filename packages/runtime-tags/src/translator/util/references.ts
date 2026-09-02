@@ -30,9 +30,13 @@ import {
   push,
   Sorted,
 } from "./optional";
-import { isPatchWriteBinding, isPatchFillBinding } from "./persisted/delivery";
+import {
+  getRootGlobalReads,
+  isPatchFillBinding,
+  isPatchWriteBinding,
+} from "./persisted/delivery";
 import { finalizePersisted } from "./persisted/lifecycle";
-import { callRuntime } from "./runtime";
+import { addRuntimeFeatureAsset, callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   ensureReasonGroups,
@@ -114,6 +118,9 @@ export interface Binding {
   assignmentSections: Opt<Section>;
   sources: undefined | Sources;
   reads: Set<ReferencedExtra>;
+  /** Fixed for the scope's lifetime (an `<id>`, a `<define>` renderer):
+   * never derived from inputs, so never rewritten. */
+  stable?: true;
   aliases: Set<Binding>;
   hoists: Opt<Section>;
   getters: Map<Getter["hoisted"], boolean>;
@@ -133,12 +140,15 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
-  /** A root param whose reads select structure or mix with `$global`,
-   * recorded where the reading context proves it. */
-  structuralOrGlobalParam: boolean;
+  /** A root param whose reads select a branch or loop (here, or in a
+   * child it feeds). */
+  selectsStructure: boolean;
   /** Captured inside a registered function: live-scope reads reach it at
    * any later invocation. */
   registeredFnCapture: boolean;
+  /** Feeds a child input group that client state also feeds (the child
+   * re-derives that group from both). */
+  feedsStateMixedGroup: boolean;
   /** Can hold a function a fill must deliver bind-aware: a literal fn,
    * an invoked or handler-attr read, or a derivation over one. */
   functionValued: boolean;
@@ -289,8 +299,9 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
-    structuralOrGlobalParam: false,
+    selectsStructure: false,
     registeredFnCapture: false,
+    feedsStateMixedGroup: false,
     functionValued: false,
     serializePropKeys: undefined,
     reserveSize: 0,
@@ -704,7 +715,8 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
-// One signal-inert root binding per template, minted on first access.
+// One root binding per template, minted on first access; persisted keys
+// its property aliases as client-reactive reads of the globals object.
 const [getGlobalBinding] = createProgramState(() =>
   createBinding(
     "$global",
@@ -720,20 +732,13 @@ export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
   trackReference(path, getGlobalBinding());
 }
 
-// The persisted guard key set for an expression's global reads: first-hop
-// property keys, or `true` when the bag itself was read (opaque).
-export function getGlobalReadKeys(globalBindings: ReferencedBindings) {
-  let keys: true | Set<string> | undefined;
-  forEach(globalBindings, (binding) => {
-    if (keys === true) return;
-    let hop: Binding | undefined;
-    for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
-      if (cur.upstreamAlias) hop = cur;
-    }
-    const key = hop?.property;
-    keys = key === undefined ? true : (keys ?? new Set()).add(key);
-  });
-  return keys;
+// The first-hop `$global` key a keyed alias reads through.
+export function getGlobalKey(binding: Binding) {
+  let hop: Binding | undefined;
+  for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
+    if (cur.upstreamAlias) hop = cur;
+  }
+  return hop?.property;
 }
 
 function createBindingsAndTrackReferences(
@@ -929,17 +934,6 @@ function trackReference(
   }
 
   addReadToExpression(root, reference, undefined);
-}
-
-// Unions two global-read records; an opaque read poisons the pair. Reuse of
-// a side's set only ever ADDS keys, which over-guards — never under-guards.
-export function mergeGlobalReads(
-  a: true | Set<string> | undefined,
-  b: true | Set<string> | undefined,
-) {
-  if (a === true || b === true) return true;
-  if (a && b) for (const key of b) a.add(key);
-  return a || b;
 }
 
 export function mergeReferences<T extends t.Node>(
@@ -1452,6 +1446,9 @@ export function finalizeReferences() {
   // freezes during analyze, so ensure them alongside the resume groups.
   if (isPersisted()) {
     finalizePersisted();
+    // Setup renders a root's keyed `$global` reads (see `initGlobalRead`).
+    const rootSection = getProgram().node.extra.section!;
+    if (getRootGlobalReads(rootSection)) addSetupStatement(rootSection);
     forEachSection((section) => {
       forEach(section.bindings, (binding) => {
         if (isPatchFillBinding(binding) || isPatchWriteBinding(binding)) {
@@ -1477,6 +1474,18 @@ export function finalizeReferences() {
   forEachSection(finalizeParamSerializeReasonGroups);
   forEachSectionReverse((section) => {
     finalizeKnownTags(section);
+    // Call-site provenance (above) can make more root params fills.
+    if (isPersisted()) {
+      forEach(section.bindings, (binding) => {
+        const fills = isPatchFillBinding(binding);
+        // A fill entry needs its patcher on every page this template
+        // renders into, interactive or not.
+        if (fills) addRuntimeFeatureAsset("patch-value");
+        if (fills || isPatchWriteBinding(binding)) {
+          ensureReasonGroups(getSerializeSourcesForRef(binding));
+        }
+      });
+    }
     finalizeSerializeReason(section);
     // TODO: this duplication is needed when a known tag is circular. We should find a better way.
     finalizeParamSerializeReasonGroups(section);
@@ -1765,9 +1774,6 @@ function resolveDerivedSources(binding: Binding) {
   } else if (exprs) {
     const seen = new Set<Binding>();
     forEach(exprs, (expr) => {
-      if (isPersisted() && expr.globalBindings) {
-        binding.sources = mergeSources(binding.sources, globalSources);
-      }
       if (isReferencedExtra(expr)) {
         forEach(expr.referencedBindings, (ref) => {
           if (!seen.has(ref)) {
@@ -2288,7 +2294,9 @@ export function getReadReplacement(
           replacement = t.cloneNode(inlined, true);
         } else if (
           signal?.referencedBindings === readBinding &&
-          !signal.hasSideEffect
+          !signal.hasSideEffect &&
+          // A keyed `$global` read always reads the globals object.
+          readBinding.type !== BindingType.global
         ) {
           replacement = getSignalValueIdentifier(signal);
         } else if (read.getter?.hoisted) {

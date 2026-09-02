@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A provenance-free ARGUMENT gating a child's structural param has no
-// delivery channel, exactly like the named-attribute form.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// An imported ARGUMENT gating a child's structure selects client-side, like
+// the named-attribute form.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, {}, click, click],
 };

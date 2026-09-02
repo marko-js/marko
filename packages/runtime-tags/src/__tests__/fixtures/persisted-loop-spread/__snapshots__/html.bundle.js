@@ -13,7 +13,7 @@ var template_default = _template_persisted("a", (input) => {
 		_html(`<li${_patch_attrs(item.attrs, "a", $scope1_id, "li", void 0, $scope0_owned, 0)}>${_patch_text($scope1_id, "b", item.id, void 0, $scope0_owned, 0)}</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, {});
-	}, (item) => item.id, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0");
+	}, (item) => item.id, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0", $scope0_owned, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, { g: count });

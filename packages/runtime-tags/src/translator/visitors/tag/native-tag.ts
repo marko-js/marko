@@ -20,7 +20,6 @@ import {
   toDelimitedString,
 } from "../../../common/helpers";
 import { ControlledType, WalkCode } from "../../../common/types";
-import { addAssetImport } from "../../util/asset-imports";
 import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
@@ -64,7 +63,6 @@ import {
   callRuntime,
   type DOMRuntimeFeature,
   getHTMLRuntime,
-  getRuntimePath,
   importRuntime,
   addRuntimeFeatureAsset,
   importRuntimeFeature,
@@ -78,6 +76,7 @@ import {
   type Section,
 } from "../../util/sections";
 import {
+  getExprWriteOwnership,
   getPatchWriteOwnership,
   getSerializeGuard,
 } from "../../util/serialize-guard";
@@ -106,6 +105,7 @@ import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
 export const kNativeTagBinding = Symbol("native tag binding");
+const kTextContentExtra = Symbol("text content extra");
 export const kSkipEndTag = Symbol("skip native tag mark");
 const kTagContentAttr = Symbol("tag could have dynamic content attribute");
 const kVisitOp = Symbol("native tag structure visit");
@@ -124,6 +124,8 @@ const htmlSelectArgs = new WeakMap<
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNativeTagBinding]?: Binding;
+    /** A text-only body's merged placeholder extra (its patch write). */
+    [kTextContentExtra]?: NodeExtra;
     [kSkipEndTag]?: true;
     [kTagContentAttr]?: true;
     [kVisitOp]?: StructureVisit;
@@ -358,17 +360,25 @@ export default {
           isBranchPathSection(tagSection)
         ) {
           addSerializeReason(tagSection, true, nodeBinding);
-          addAssetImport(`${getRuntimePath("dom")}/patch-attr.feat`);
+          addRuntimeFeatureAsset("patch-attr");
           for (const attr of node.attributes) {
             if (t.isMarkoAttribute(attr) && !isEventHandler(attr.name)) {
               const { value } = attr;
               ensurePersistedWriteGroups(() => value.extra || {});
             }
           }
-          if (spreadReferenceNodes && isAttrSetSpread(tag, tagName)) {
+          if (spreadReferenceNodes && isAttrSetSpread(tagName)) {
             addRuntimeFeatureAsset("patch-attrs");
             if (controllableClaimFor(tagName)) {
               addRuntimeFeatureAsset("controllable");
+            }
+            if (
+              !node.body.body.length &&
+              !isTextOnlyNativeTag(tag) &&
+              !getTagDef(tag)?.parseOptions?.openTagOnly &&
+              !seen.content
+            ) {
+              addRuntimeFeatureAsset("patch-dynamic-tag");
             }
             ensurePersistedWriteGroups(() => node.extra || {});
             (node.extra ??= {}).attrSetSpread = true;
@@ -444,17 +454,22 @@ export default {
         }
 
         if (textPlaceholders) {
-          exprExtras = push(
-            exprExtras,
+          const textExtra =
             textPlaceholders.length === 1
               ? (textPlaceholders[0].extra ??= {})
               : mergeReferences(
                   tagSection,
                   textPlaceholders[0],
                   textPlaceholders.slice(1),
-                ),
-          );
+                );
+          exprExtras = push(exprExtras, textExtra);
           addSetupExpr(tagSection, textPlaceholders[0]);
+          tagExtra[kTextContentExtra] = textExtra;
+          if (isPersisted() && isBranchPathSection(tagSection)) {
+            addSerializeReason(tagSection, true, nodeBinding);
+            addRuntimeFeatureAsset("patch-text-content");
+            ensurePersistedWriteGroups(() => textExtra);
+          }
         }
 
         if (injectNonce) {
@@ -657,9 +672,12 @@ export default {
           if (isPersisted() && isBranchPathSection(tagSection)) {
             const [valueAttr, changeAttr, groupValueAttr] =
               staticControllable.attrs;
-            if (changeAttr) {
-              // A param-fed handler binds only under server ownership, so
-              // a client-owned control never rebinds a stale handler.
+            // A state-fed control (value or handler) is the client's: no
+            // entry re-binds or re-writes it.
+            if (
+              changeAttr &&
+              writesPatchAttr(tagSection, changeAttr.value.extra)
+            ) {
               write`${callRuntime(
                 "_patch_bind",
                 getScopeIdIdentifier(tagSection),
@@ -670,9 +688,7 @@ export default {
                   ),
                 ),
                 t.cloneNode(changeAttr.value, true),
-                ...getPatchWriteOwnership(
-                  getSerializeSourcesForExpr(changeAttr.value.extra || {}),
-                ),
+                ...getExprWriteOwnership(changeAttr.value.extra),
               )}`;
             }
             // A param-fed control value writes only under server ownership.
@@ -680,35 +696,46 @@ export default {
             // `value`: each node applies its own comparison client-side.
             const groupEntry =
               staticControllable.helper === "_attr_input_checkedValue";
-            write`${callRuntime(
-              "_patch_control",
-              getScopeIdIdentifier(tagSection),
-              t.cloneNode(visitAccessor!, true),
-              t.numericLiteral(getControlledType(staticControllable)),
-              groupEntry
-                ? t.arrayExpression([
-                    valueAttr
-                      ? t.cloneNode(valueAttr.value, true)
-                      : buildUndefined(),
-                    groupValueAttr
-                      ? t.cloneNode(groupValueAttr.value, true)
-                      : buildUndefined(),
-                  ])
-                : valueAttr && t.cloneNode(valueAttr.value, true),
-              ...getPatchWriteOwnership(
+            const controlExtras = groupEntry
+              ? [valueAttr?.value.extra, groupValueAttr?.value.extra]
+              : [valueAttr?.value.extra];
+            let clientControl = false;
+            for (const extra of controlExtras) {
+              clientControl ||= !!getSerializeSourcesForExpr(extra || {})
+                ?.state;
+            }
+            if (!clientControl)
+              write`${callRuntime(
+                "_patch_control",
+                getScopeIdIdentifier(tagSection),
+                t.cloneNode(visitAccessor!, true),
+                t.numericLiteral(getControlledType(staticControllable)),
                 groupEntry
-                  ? mergeSources(
-                      valueAttr &&
+                  ? t.arrayExpression([
+                      valueAttr
+                        ? t.cloneNode(valueAttr.value, true)
+                        : buildUndefined(),
+                      groupValueAttr
+                        ? t.cloneNode(groupValueAttr.value, true)
+                        : buildUndefined(),
+                    ])
+                  : valueAttr && t.cloneNode(valueAttr.value, true),
+                ...getPatchWriteOwnership(
+                  groupEntry
+                    ? mergeSources(
+                        valueAttr &&
+                          getSerializeSourcesForExpr(
+                            valueAttr.value.extra || {},
+                          ),
+                        groupValueAttr &&
+                          getSerializeSourcesForExpr(
+                            groupValueAttr.value.extra || {},
+                          ),
+                      )
+                    : valueAttr &&
                         getSerializeSourcesForExpr(valueAttr.value.extra || {}),
-                      groupValueAttr &&
-                        getSerializeSourcesForExpr(
-                          groupValueAttr.value.extra || {},
-                        ),
-                    )
-                  : valueAttr &&
-                      getSerializeSourcesForExpr(valueAttr.value.extra || {}),
-              ),
-            )}`;
+                ),
+              )}`;
           }
         }
 
@@ -800,15 +827,13 @@ export default {
 
           if (tagName === "option" && name === "value") {
             write`${
-              !confident && writesPatchAttr(tag, tagSection, name, value.extra)
+              !confident && writesPatchAttr(tagSection, value.extra)
                 ? callRuntime(
                     "_patch_attr_option_value",
                     getScopeIdIdentifier(tagSection),
                     getScopeAccessorLiteral(nodeBinding!),
                     value,
-                    ...getPatchWriteOwnership(
-                      getSerializeSourcesForExpr(value.extra || {}),
-                    ),
+                    ...getExprWriteOwnership(value.extra),
                   )
                 : callRuntime("_attr_option_value", value)
             }`;
@@ -824,15 +849,13 @@ export default {
               } else {
                 // The patch write renders the attribute itself (expression
                 // appears once); ownership rides as trailing args.
-                if (writesPatchAttr(tag, tagSection, name, value.extra)) {
+                if (writesPatchAttr(tagSection, value.extra)) {
                   write`${callRuntime(
                     `_patch_attr_${name as "class" | "style"}`,
                     getScopeIdIdentifier(tagSection),
                     getScopeAccessorLiteral(nodeBinding!),
                     value,
-                    ...getPatchWriteOwnership(
-                      getSerializeSourcesForExpr(value.extra || {}),
-                    ),
+                    ...getExprWriteOwnership(value.extra),
                   )}`;
                   break;
                 }
@@ -862,16 +885,14 @@ export default {
               } else {
                 // The patch write renders the attribute itself (expression
                 // appears once); ownership rides as trailing args.
-                if (writesPatchAttr(tag, tagSection, name, value.extra)) {
+                if (writesPatchAttr(tagSection, value.extra)) {
                   write`${callRuntime(
                     "_patch_attr",
                     getScopeIdIdentifier(tagSection),
                     getScopeAccessorLiteral(nodeBinding!),
                     t.stringLiteral(name),
                     value,
-                    ...getPatchWriteOwnership(
-                      getSerializeSourcesForExpr(value.extra || {}),
-                    ),
+                    ...getExprWriteOwnership(value.extra),
                   )}`;
                   break;
                 }
@@ -904,8 +925,8 @@ export default {
 
           if (isTextOnly || isOpenOnly || hasChildren || staticContentAttr) {
             const patches =
-              isAttrSetSpread(tag, tagName) &&
-              writesPatchAttr(tag, tagSection, "spread", tag.node.extra);
+              isAttrSetSpread(tagName) &&
+              writesPatchAttr(tagSection, tag.node.extra);
             if (skipExpression) {
               write`${callRuntime(
                 patches ? "_patch_attrs_partial" : "_attrs_partial",
@@ -919,9 +940,7 @@ export default {
                       !staticControllable &&
                         controllableClaimFor(tagName) &&
                         t.numericLiteral(1),
-                      ...getPatchWriteOwnership(
-                        getSerializeSourcesForExpr(tag.node.extra || {}),
-                      ),
+                      ...getExprWriteOwnership(tag.node.extra),
                     ]
                   : []),
               )}`;
@@ -937,9 +956,7 @@ export default {
                 !staticControllable &&
                   controllableClaimFor(tagName) &&
                   t.numericLiteral(1),
-                ...getPatchWriteOwnership(
-                  getSerializeSourcesForExpr(tag.node.extra || {}),
-                ),
+                ...getExprWriteOwnership(tag.node.extra),
               )}`;
             } else {
               write`${callRuntime(
@@ -961,24 +978,34 @@ export default {
           const contentStatements: t.Statement[] = [];
           // A server-owned `content=` re-renders from a dynamic tag entry,
           // like a dynamic tag site (the client signal shape is the same).
-          if (
+          const patched =
             isPersisted() &&
             isBranchPathSection(tagSection) &&
             !inStatefulBranch(tagSection) &&
-            !hasStateFeed(staticContentAttr.value.extra)
-          ) {
+            !hasStateFeed(staticContentAttr.value.extra);
+          let content: t.Expression = staticContentAttr.value;
+          if (patched) {
+            if (!t.isIdentifier(content)) {
+              const contentId = generateUidIdentifier("content");
+              contentStatements.push(
+                t.variableDeclaration("const", [
+                  t.variableDeclarator(contentId, content),
+                ]),
+              );
+              content = contentId;
+            }
             contentStatements.push(
               t.expressionStatement(
                 callRuntime(
                   "_patch_dynamic_tag",
                   getScopeIdIdentifier(tagSection),
                   visitAccessor,
-                  t.cloneNode(staticContentAttr.value),
-                  ...getPatchWriteOwnership(
-                    getSerializeSourcesForExpr(
-                      staticContentAttr.value.extra || {},
-                    ),
-                  ),
+                  t.cloneNode(content),
+                  t.numericLiteral(0),
+                  t.numericLiteral(0),
+                  t.numericLiteral(0),
+                  t.numericLiteral(0),
+                  ...getExprWriteOwnership(staticContentAttr.value.extra || {}),
                 ),
               ),
             );
@@ -989,12 +1016,13 @@ export default {
                 "_attr_content",
                 visitAccessor,
                 getScopeIdIdentifier(tagSection),
-                staticContentAttr.value,
+                content,
                 getSerializeGuard(
                   tagSection,
                   nodeBinding && getSerializeReason(tagSection, nodeBinding),
                   true,
                 ),
+                patched && t.numericLiteral(1),
               ),
             ),
           );
@@ -1006,27 +1034,41 @@ export default {
             true,
           );
           tagExtra[kTagContentAttr] = true;
+          const patches =
+            isAttrSetSpread(tagName) &&
+            writesPatchAttr(tagSection, tag.node.extra);
+          const patchArgs = patches
+            ? [
+                serializeReason,
+                !staticControllable &&
+                  controllableClaimFor(tagName) &&
+                  t.numericLiteral(1),
+                ...getExprWriteOwnership(tag.node.extra),
+              ]
+            : [serializeReason];
           (tag.node.body.body as t.Statement[]) = [
             skipExpression
               ? t.expressionStatement(
                   callRuntime(
-                    "_attrs_partial_content",
+                    patches
+                      ? "_patch_attrs_partial_content"
+                      : "_attrs_partial_content",
                     spreadExpression,
                     skipExpression,
                     visitAccessor,
                     getScopeIdIdentifier(tagSection),
                     t.stringLiteral(tagName),
-                    serializeReason,
+                    ...patchArgs,
                   ),
                 )
               : t.expressionStatement(
                   callRuntime(
-                    "_attrs_content",
+                    patches ? "_patch_attrs_content" : "_attrs_content",
                     spreadExpression,
                     visitAccessor,
                     getScopeIdIdentifier(tagSection),
                     t.stringLiteral(tagName),
-                    serializeReason,
+                    ...patchArgs,
                   ),
                 ),
           ];
@@ -1085,7 +1127,19 @@ export default {
           );
         } else if (isTextOnly) {
           const rawTextHelper = getRawTextEscapeHelper(tagName);
-          if (rawTextHelper) {
+          const textExtra = tagExtra[kTextContentExtra];
+          if (textExtra && writesPatchAttr(tagSection, textExtra)) {
+            // The patch write renders the body itself (expression appears
+            // once), escaped for the element's namespace on the way out.
+            write`${callRuntime(
+              "_patch_text_content",
+              getScopeIdIdentifier(tagSection),
+              getScopeAccessorLiteral(nodeBinding!),
+              bodyToTextLiteral(tag.node.body),
+              importRuntime(rawTextHelper || "_escape"),
+              ...getExprWriteOwnership(textExtra),
+            )}`;
+          } else if (rawTextHelper) {
             // Raw text escapers neutralize multi-character tokens, so the whole
             // body escapes as one string: a `</script` split across adjacent
             // interpolations slips past per-placeholder calls.
@@ -1233,9 +1287,8 @@ export default {
               if (!confident) {
                 // The dom compile shares the capture gating (errors must
                 // match html) and imports the feature the patch write applies.
-                if (writesPatchAttr(tag, tagSection, name, value.extra)) {
-                  importRuntimeFeature("patch-attr");
-                }
+                const patched = writesPatchAttr(tagSection, value.extra);
+                if (patched) importRuntimeFeature("patch-attr");
                 const nodeExpr = createScopeReadExpression(nodeBinding!);
                 const meta: DelimitedAttrMeta = {
                   staticItems: undefined,
@@ -1286,7 +1339,7 @@ export default {
 
                 if (stmt) {
                   addStatement(
-                    "render",
+                    patched ? "patched" : "render",
                     tagSection,
                     valueReferences,
                     stmt,
@@ -1315,11 +1368,10 @@ export default {
                   ),
                 );
               } else {
-                if (writesPatchAttr(tag, tagSection, name, value.extra)) {
-                  importRuntimeFeature("patch-attr");
-                }
+                const patched = writesPatchAttr(tagSection, value.extra);
+                if (patched) importRuntimeFeature("patch-attr");
                 addStatement(
-                  "render",
+                  patched ? "patched" : "render",
                   tagSection,
                   valueReferences,
                   t.expressionStatement(
@@ -1354,9 +1406,10 @@ export default {
           if (
             isPersisted() &&
             isBranchPathSection(tagSection) &&
-            isAttrSetSpread(tag, staticName)
+            isAttrSetSpread(staticName)
           ) {
             importRuntimeFeature("patch-attrs");
+            if (canHaveAttrContent) importRuntimeFeature("patch-dynamic-tag");
             // A spread that owns the element's controllable (no static attr
             // does) re-claims it through the run-time claim table.
             if (!staticControllable && controllableClaimFor(staticName)) {
@@ -1435,9 +1488,13 @@ export default {
         if (!openTagOnly) {
           if (tagName !== "textarea" && isTextOnlyNativeTag(tag)) {
             const textLiteral = bodyToTextLiteral(tag.node.body);
+            const textExtra = tagExtra[kTextContentExtra];
+            const patched =
+              !!textExtra && writesPatchAttr(getSection(tag), textExtra);
+            if (patched) importRuntimeFeature("patch-text-content");
             if (!t.isStringLiteral(textLiteral)) {
               addStatement(
-                "render",
+                patched ? "patched" : "render",
                 getSection(tag),
                 textLiteral.extra?.referencedBindings,
                 t.expressionStatement(
@@ -1479,10 +1536,8 @@ function getSpreadControllableValueProps(tagName: string) {
 type RelatedControllable = ReturnType<typeof getRelatedControllable>;
 // A state-fed attribute recomputes client-side, and inside client-owned
 // structure delivery is owner fills: neither patch-writes.
-function writesPatchAttr(
-  tag: t.NodePath<t.MarkoTag>,
+export function writesPatchAttr(
   tagSection: Section,
-  name: string,
   extra: t.NodeExtra | undefined,
 ) {
   if (
@@ -1491,32 +1546,13 @@ function writesPatchAttr(
   ) {
     return false;
   }
-  const attrSources = getSerializeSourcesForExpr(extra || {});
-  if (!attrSources?.state) return true;
-  if (attrSources.global) {
-    throw tag.buildCodeFrameError(
-      `Persisted templates do not yet support \`$global\` contributions to stateful expressions (\`${name}\` attribute).`,
-    );
-  }
-  return false;
+  return !getSerializeSourcesForExpr(extra || {})?.state;
 }
 
-// A spread that is the element's whole attribute set: no `content` renderer
-// can ride it (the tag has its own body or admits none). Patches re-apply
-// such a set as-is, controllable claims included.
-export function isAttrSetSpread(
-  tag: t.NodePath<t.MarkoTag>,
-  tagName: string | undefined,
-) {
-  return (
-    !!tagName &&
-    tagName !== "option" &&
-    !!(
-      isTextOnlyNativeTag(tag) ||
-      getTagDef(tag)?.parseOptions?.openTagOnly ||
-      tag.node.body.body.length
-    )
-  );
+// A spread patches as the attribute set (content rides a dynamic tag
+// entry); an `<option>` spread renders through its select's value.
+export function isAttrSetSpread(tagName: string | undefined) {
+  return !!tagName && tagName !== "option";
 }
 
 export function getRelatedControllable(

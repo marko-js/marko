@@ -24,11 +24,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					item,
 					_: _scope_with_id($scope1_id)
 				}, "__tests__/template.marko", "4:6", { item: "4:10" })));
-			}, (item) => item, $scope1_id, "#text/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_2*shell");
+			}, (item) => item, $scope1_id, "#text/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_owned, 2);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {

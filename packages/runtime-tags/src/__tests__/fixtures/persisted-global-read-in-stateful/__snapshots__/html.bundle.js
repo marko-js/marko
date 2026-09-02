@@ -1,5 +1,5 @@
 // template.marko
-_shells({ a: "a !a0; b%;<button>t</button><!><!>" });
+_shells({ a: "a !a1; b%;<button>t</button><!><!>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -14,10 +14,8 @@ var template_default = _template_persisted("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 1, 0, 1);
-	_script($scope0_id, "a0");
-	$scope0_reason ? _scope($scope0_id, {
-		c: on,
-		d: $global$1?.brand
-	}) : _patch_value($scope0_id, "a0", $global$1?.brand);
+	_global_subscribe("a0", $scope0_id);
+	_script($scope0_id, "a1");
+	$scope0_reason && _scope($scope0_id, { c: on });
 	_resume_branch($scope0_id);
 }, 1, 1);

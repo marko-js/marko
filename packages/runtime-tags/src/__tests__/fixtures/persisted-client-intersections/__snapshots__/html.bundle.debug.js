@@ -75,6 +75,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/5", $childScope3);
 	site_footer_default({ year: input.year });
 	_html("</main>");
+	_global_subscribe("__tests__/template.marko_0_$global_locale#11/global", $scope0_id);
+	_global_subscribe("__tests__/template.marko_0_$global_brand#12/global", $scope0_id);
 	$scope0_reason && _scope($scope0_id, {
 		"#childScope/3": _existing_scope($childScope),
 		"#childScope/4": _existing_scope($childScope2),

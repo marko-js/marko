@@ -16,7 +16,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_value($scope1_id, "__tests__/template.marko0", picks, 1);
 		_scope($scope1_id, { picks }, "__tests__/template.marko", "2:4", { picks: "5:12" });
-	}, 0, $scope0_id, "#ul/0", 1, $sg__input_labels, $sg__input_labels, void 0, void 0, "__tests__/template.marko_1*shell");
+	}, 0, $scope0_id, "#ul/0", 1, $sg__input_labels, $sg__input_labels, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_owned, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_labels)}`);
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

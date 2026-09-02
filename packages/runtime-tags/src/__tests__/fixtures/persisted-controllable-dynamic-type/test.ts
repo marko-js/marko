@@ -1,7 +1,13 @@
 import type { TestConfig } from "../../main.test";
 
-// Stays fail-closed: the wire cannot yet express this control faithfully.
+// A dynamic `type=` on a controllable input: the type attribute and the
+// control value patch together.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { kind: "text", value: "a" },
+    { kind: "text", value: "b" },
+    { kind: "number", value: "3" },
+    { kind: "text", value: "c" },
+  ],
 };

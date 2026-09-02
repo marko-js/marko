@@ -6,8 +6,9 @@ var panel_default = _template_persisted("__tests__/tags/panel/index.marko", (inp
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<div class=panel>");
-	_patch_dynamic_tag($scope0_id, "#text/0", input.header, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", input.header, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.header;
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/panel/index.marko", 0);
 }, 0, 0);

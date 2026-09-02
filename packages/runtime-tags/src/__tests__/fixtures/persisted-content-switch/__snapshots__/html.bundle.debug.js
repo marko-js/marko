@@ -6,8 +6,9 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<section>");
-	_patch_dynamic_tag($scope0_id, "#text/0", input.content, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
 }, 0, 0);
@@ -50,7 +51,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				}, "__tests__/template.marko", "5:6"));
 				return 1;
 			}
-		}, $scope1_id, "#text/0", 1, $sg__input_kind, $sg__input_kind, void 0, void 0, ["__tests__/template.marko_6*shell", "__tests__/template.marko_2*shell"]);
+		}, $scope1_id, "#text/0", 1, $sg__input_kind, $sg__input_kind, void 0, void 0, ["__tests__/template.marko_6*shell", "__tests__/template.marko_2*shell"], $scope0_owned, 0);
 		$scope0_reason && _subscribe($input_kind__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });

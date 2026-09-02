@@ -13,7 +13,7 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_patch_text($scope2_id, "a", item.label, void 0, $scope0_owned, 0)}</li>`);
 		_scope($scope2_id, {});
-	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1");
+	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_owned, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	_if(() => {
 		if (input.promo) {
@@ -22,7 +22,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_promo, $sg__input_promo, void 0, void 0, ["a0"]);
+	}, $scope0_id, "b", 1, $sg__input_promo, $sg__input_promo, void 0, void 0, ["a0"], $scope0_owned, 1);
 	_html(`<p>${_patch_text($scope0_id, "c", input.note, void 0, $scope0_owned, 2)}</p><button>Count ${_text_resume($scope0_id, "e", count, 2)}</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, {

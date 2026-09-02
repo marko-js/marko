@@ -1,6 +1,9 @@
 // PATCH
 {
+  $: {
+    brand: "bmce"
+  },
   ta: "bmce",
-  ea0: "b",
+  ea1: "b",
   wb: "bmce"
 }

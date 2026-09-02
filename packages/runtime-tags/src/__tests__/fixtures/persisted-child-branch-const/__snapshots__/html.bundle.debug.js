@@ -2,7 +2,7 @@
 const $template$1 = "<section></section>";
 const $walks$1 = " b";
 _shells({
-	"__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko; ;<section></section>",
+	"__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko !; ;<section></section>",
 	"__tests__/tags/card/index.marko_1*shell": "__tests__/tags/card/index.marko_1*shell; D lD ;<h2> </h2><p> </p>"
 });
 var card_default = _template_persisted("__tests__/tags/card/index.marko", (input) => {
@@ -16,15 +16,15 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#section/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/card/index.marko_1*shell"]);
+	}, $scope0_id, "#section/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/card/index.marko_1*shell"], $scope0_owned, 2);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $sg__input_show)}`);
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		input_title: input.title,
 		input_note: input.note
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_title: ["input.title"],
 		input_note: ["input.note"]
-	});
+	}) : (_owned_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.title), _owned_guard($scope0_owned, 4) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/tags/card/index.marko1", input.note));
 }, 0, 0);
 
 // template.marko

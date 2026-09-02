@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// An inert call can change server-side, but a withheld capture has no
-// delivery path, so it cannot mix into a client-fed input group.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A source-free call beside client state in one input group: the client
+// tag-args signal owns the group, so it evaluates the call client-side.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, click, {}, click],
 };

@@ -1,4 +1,4 @@
-# Render `{"promise":{},"$global":{"brand":"acme"}}`
+# Render `{"promise":{},"$global":{"brand":"acme","serializedGlobals":["brand"]}}`
 ```html
 <main>
   <em>
@@ -10,7 +10,7 @@
 </main>
 ```
 
-# Update `{"promise":{},"$global":{"brand":"bmce"}}`
+# Update `{"promise":{},"$global":{"brand":"bmce","serializedGlobals":["brand"]}}`
 ```html
 <main>
   <p>

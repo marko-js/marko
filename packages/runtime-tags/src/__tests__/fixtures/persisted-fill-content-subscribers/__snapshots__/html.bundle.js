@@ -1,12 +1,12 @@
 // tags/frame.marko
-const $template = "<section><!></section>";
 _shells({ b: "b;D%;<section><!></section>" });
 var frame_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<section>");
-	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -14,8 +14,7 @@ var frame_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0;D ;<p class=b> </p>",
-	a1: "a1;D ;<p class=a> </p>",
-	a: /*@__PURE__*/ ((_w0, _w1) => `a !a2;${_w0};${_w1}`)(((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l"), ((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template, $template))
+	a1: "a1;D ;<p class=a> </p>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_label = _source_if($scope0_reason, 0);
