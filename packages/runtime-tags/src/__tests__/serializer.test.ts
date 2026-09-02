@@ -78,6 +78,8 @@ describe("serializer", () => {
         ));
       it("surrogate pairs stay raw", () =>
         assertStringify("a\u{1F600}b", `"a\u{1F600}b"`));
+      it("surrogate pairs stay raw alongside an escaped character", () =>
+        assertStringify("<a\u{1F600}b", `"\\x3Ca\u{1F600}b"`));
       it("lone surrogates escaped", () => {
         assertStringify("bad\uD800end", `"bad\\ud800end"`);
         assertStringify("bad\uDC00end", `"bad\\udc00end"`);
@@ -251,6 +253,18 @@ describe("serializer", () => {
       );
     });
 
+    it("gives an id to a map holding a symbol key", () =>
+      assertStringify(
+        new Map([[Symbol.for("s"), 1]]),
+        `new Map(_.a=[[Symbol.for("s"),1]])`,
+      ));
+
+    it("gives an id to a map holding a registered function", () => {
+      const mapFn = register("mapFn", function mapFn() {});
+      const map = new Map<unknown, unknown>([[1, mapFn]]);
+      assertStringify(map, `new Map(_.a=[[1,_._.mapFn]])`, { _: { mapFn } });
+    });
+
     it("dedupe value and keys across flushes", () => {
       const serializer = assertSerializer();
       const objA = { a: 1 };
@@ -377,6 +391,58 @@ describe("serializer", () => {
       assert.deepEqual(
         [...rt.map.keys()].map((k) => (k === rt ? "root" : k)),
         ["a", "root", "b"],
+      );
+    });
+
+    it("large Map value is an ancestor", () => {
+      const parent: any = { name: "p" };
+      parent.map = createPaddedMap();
+      parent.map.set("self", parent);
+      const rt = deserialize(parent);
+      assert.equal(rt.map.size, 26);
+      assert.equal(rt.map.get("self"), rt);
+    });
+
+    it("large Map key is an ancestor", () => {
+      const parent: any = { name: "p" };
+      parent.map = createPaddedMap();
+      parent.map.set(parent, "self");
+      const rt = deserialize(parent);
+      assert.equal(rt.map.size, 26);
+      assert.equal(rt.map.get(rt), "self");
+    });
+
+    it("preserves large Map key order around a deferred entry", () => {
+      const parent: any = { name: "p" };
+      parent.map = createPaddedMap();
+      parent.map.set(parent, "self");
+      parent.map.set("after", 1);
+      const rt = deserialize(parent);
+      const keys = [...rt.map.keys()];
+      assert.deepEqual(
+        keys.slice(-2).map((k: unknown) => (k === rt ? "parent" : k)),
+        ["parent", "after"],
+      );
+    });
+
+    it("defers a Map entry whose value is undefined", () => {
+      const parent: any = {};
+      parent.map = new Map([[parent, undefined]]);
+      const rt = deserialize(parent);
+      assert.equal(rt.map.size, 1);
+      assert.equal(rt.map.has(rt), true);
+      assert.equal(rt.map.get(rt), undefined);
+    });
+
+    it("aborts on an unserializable member that follows a deferred one", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const parent: any = {};
+      parent.set = new Set([parent, function unserializable() {}]);
+      new Serializer().stringifyScopes([[1, {}, parent]], boundary);
+      assert.equal(aborted.length, 1);
+      assert.match(
+        String(aborted[0]),
+        /Unable to serialize \(reading set\[1\]\)/,
       );
     });
 
@@ -1217,6 +1283,17 @@ describe("serializer", () => {
       assert.equal(rt.getFloat64(0), 1.5);
     });
 
+    it("view reaching the end of the buffer omits the length", () => {
+      const buf = new ArrayBuffer(8);
+      assert.equal(
+        serialize(new DataView(buf, 4)),
+        `new DataView(new ArrayBuffer(8),4)`,
+      );
+      const rt = deserialize(new DataView(buf, 4));
+      assert.equal(rt.byteOffset, 4);
+      assert.equal(rt.byteLength, 4);
+    });
+
     it("is unserializable over a SharedArrayBuffer rather than emitting a hole", () => {
       if (typeof SharedArrayBuffer === "undefined") return;
       const dv = new DataView(new SharedArrayBuffer(8), 0, 2);
@@ -1614,6 +1691,18 @@ describe("serializer", () => {
       assertStringify(new RegExp("a\ud800b"), `/a\\ud800b/`));
     it("leaves a paired surrogate intact", () =>
       assertStringify(new RegExp("a\u{1f600}b", "u"), `/a\u{1f600}b/u`));
+    it("keeps the flags on the constructor form", () =>
+      assertStringify(new RegExp("a<b", "gi"), `RegExp("a\\x3Cb","gi")`));
+    it("leaves an unrelated escape alone while escaping a raw NUL", () =>
+      assertStringify(
+        new RegExp("\\d" + String.fromCharCode(0)),
+        `/\\d\\x00/`,
+      ));
+    it("leaves an escaped paired surrogate intact", () =>
+      assertStringify(
+        new RegExp("\\\u{1f600}" + String.fromCharCode(0)),
+        `/\\\u{1f600}\\x00/`,
+      ));
   });
 
   describe("function", () => {
@@ -1753,6 +1842,89 @@ describe("serializer", () => {
       serializer.assertStringify(obj, `{a:{b:1}}`);
       serializer.assertStringify({ c: nested }, `{c:_.a=_(1).value.a}`);
       serializer.assertStringify({ d: nested }, `{d:_.a}`);
+    });
+  });
+
+  describe("channel mutations", () => {
+    it("holds back a mutation queued for another ready channel", () => {
+      const { boundary } = abortingBoundary();
+      const serializer = new Serializer();
+      const a = new Set();
+      const b = new Set();
+      serializer.writeCall(1, a, "add", { readyId: "a" });
+      serializer.writeCall(2, b, "add", { readyId: "b" });
+
+      assert.equal(serializer.pending({ readyId: "a" }), true);
+      assert.deepEqual(serializer.pendingReadyChannel(), { readyId: "a" });
+      assert.equal(
+        serializer.stringifyScopes([[1, {}, { a, b }]], boundary, {
+          readyId: "a",
+        }),
+        `_=>(_([1,{a:_.a=new Set,b:new Set}]),(_.a).add(1),0)`,
+      );
+
+      assert.equal(serializer.pending({ readyId: "b" }), true);
+    });
+
+    it("assigns a binding to a mutated object seen for the first time", () => {
+      const { boundary } = abortingBoundary();
+      const serializer = new Serializer();
+      const set = new Set();
+      serializer.writeCall(1, set, "add", undefined);
+      assert.equal(
+        serializer.stringifyScopes([[1, {}, {}]], boundary),
+        `_=>((_.a=new Set).add(1),0)`,
+      );
+    });
+
+    it("aborts when a mutated object or value cannot be serialized", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      serializer.writeCall(
+        function value() {},
+        function object() {},
+        "add",
+        undefined,
+      );
+      serializer.stringifyScopes([[1, {}, {}]], boundary);
+      assert.equal(aborted.length, 2);
+      for (const err of aborted) {
+        assert.match(String(err), /Unable to serialize\./);
+      }
+    });
+
+    it("aborts when a value is shared between independent ready channels", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      const shared = { x: 1 };
+      serializer.stringifyScopes([[1, {}, { shared }]], boundary, {
+        readyId: "a",
+      });
+      serializer.stringifyScopes([[2, {}, { shared }]], boundary, {
+        readyId: "b",
+      });
+      assert.equal(aborted.length, 1);
+      assert.match(
+        String(aborted[0]),
+        /shared between independently lazy loaded content/,
+      );
+    });
+
+    it("reaches a value serialized by an ancestor ready channel", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      const parent = { readyId: "a" };
+      const shared = { x: 1 };
+      serializer.stringifyScopes([[1, {}, { shared }]], boundary, parent);
+      assert.equal(
+        serializer.stringifyScopes([[2, {}, { shared }]], boundary, {
+          readyId: "b",
+          parent,
+        }),
+        `_=>[2,{shared:_.a=_(1).shared}]`,
+      );
+      assert.deepEqual([...serializer.takeChannelDeps()!], ["a"]);
+      assert.deepEqual(aborted, []);
     });
   });
 
@@ -1908,6 +2080,44 @@ describe("serializer", () => {
         returned: undefined,
       });
     });
+    it("stops following the iterator once the boundary aborts", async () => {
+      const { boundary, signal } = abortingBoundary();
+      const serializer = new Serializer();
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      const iter = (async function* () {
+        yield 1;
+        await gate;
+        yield 2;
+      })();
+
+      serializer.stringifyScopes([[1, {}, { iter }]], boundary);
+      await tick();
+      assert.equal(serializer.stringifyScopes([], boundary), `_=>(_.a.f(1),0)`);
+
+      signal.aborted = true;
+      release();
+      await tick();
+      assert.equal(serializer.stringifyScopes([], boundary), "");
+    });
+
+    it("partially consumed resumes as an exhausted async generator", async () => {
+      const iter = (async function* () {
+        yield 1;
+        yield 2;
+      })();
+      await iter.next();
+      const [result] = assertSerializer().assertStringify(
+        iter,
+        `(async function*(){}())`,
+      ) as [AsyncGenerator];
+      assert.equal(typeof result[Symbol.asyncIterator], "function");
+      assert.deepEqual(await consumeIterator(result), {
+        yielded: [],
+        returned: undefined,
+        errored: undefined,
+      });
+    });
   });
 
   describe("readable stream", () => {
@@ -2013,6 +2223,30 @@ describe("serializer", () => {
         returned: undefined,
         errored,
       });
+    });
+  });
+
+  describe("aborted boundary", () => {
+    it("stops reading a ReadableStream", async () => {
+      const { boundary, signal } = abortingBoundary();
+      const serializer = new Serializer();
+      let ctrl!: ReadableStreamDefaultController<Uint8Array>;
+      const stream = new ReadableStream<Uint8Array>({
+        start: (c) => (ctrl = c),
+      });
+
+      serializer.stringifyScopes([[1, {}, { stream }]], boundary);
+      ctrl.enqueue(new Uint8Array([1]));
+      await tick();
+      assert.equal(
+        serializer.stringifyScopes([], boundary),
+        `_=>(_.a.f(_.b=new Uint8Array([1])),0)`,
+      );
+
+      signal.aborted = true;
+      ctrl.enqueue(new Uint8Array([2]));
+      await tick();
+      assert.equal(serializer.stringifyScopes([], boundary), "");
     });
   });
 
@@ -2163,6 +2397,14 @@ describe("serializer", () => {
       assertStringify(
         { res: res, headers: res.headers },
         `{res:_.b=new Response(null,{headers:{a:"1",b:"2"}}),headers:_.a=_.b.headers}`,
+      );
+    });
+
+    it("headers serialized before their response", () => {
+      const res = new Response(null, { headers: { a: "1", b: "2" } });
+      assertStringify(
+        { headers: res.headers, res },
+        `{headers:_.a=new Headers({a:"1",b:"2"}),res:new Response(null,{headers:_.a})}`,
       );
     });
 
@@ -2706,6 +2948,27 @@ function hasSymbolIterator(
   value: unknown,
 ): value is { [Symbol.iterator](): IterableIterator<unknown> } {
   return Symbol.iterator in (value as any);
+}
+
+function tick() {
+  return new Promise((resolve) => setTimeout(resolve, 0));
+}
+
+function abortingBoundary() {
+  const aborted: unknown[] = [];
+  const signal = { aborted: false };
+  return {
+    aborted,
+    signal,
+    boundary: {
+      signal,
+      abort(err: unknown) {
+        aborted.push(err);
+      },
+      startAsync() {},
+      endAsync() {},
+    } as any as Boundary,
+  };
 }
 
 function abortedStringifying(scopes: ScopeFlush[]) {
