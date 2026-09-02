@@ -1,0 +1,6 @@
+CompileError: 
+    at __tests__/template.marko:1:1
+    > 1 | import "./tag.marko" with { load: "visible.x" }
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid load import, a default specifier is required.
+      2 | <div/>
+      3 |

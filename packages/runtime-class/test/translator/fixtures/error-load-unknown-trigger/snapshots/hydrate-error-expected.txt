@@ -1,0 +1,6 @@
+CompileError: 
+    at __tests__/template.marko:1:44
+    > 1 | import Tag from "./tag.marko" with { load: "bogus.foo" }
+        |                                            ^^^^^^^^^^^ Unknown trigger type "bogus". Supported triggers are "visible", "idle", "media", and "on*".
+      2 | <Tag/>
+      3 |
