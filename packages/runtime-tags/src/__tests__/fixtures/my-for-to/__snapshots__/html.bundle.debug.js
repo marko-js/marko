@@ -6,9 +6,9 @@ var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.content, [...args], 0, 1, $sg__input_to__OR__input_content);
 		_serialize_if($scope0_reason, 0) && _scope($scope1_id, {
-			$params2: _serialize_if($scope0_reason, 2) && $params2,
+			args: _serialize_if($scope0_reason, 2) && args,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/tags/my-for.marko", "1:2", { $params2: "1:6" });
+		}, "__tests__/tags/my-for.marko", "1:2", { args: "1:6" });
 	}, 0, $scope0_id, "#text/0", $sg__input_to__OR__input_content, $sg__input_to, $sg__input_to);
 	_serialize_if($scope0_reason, 1) && _scope($scope0_id, { input_content: input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] });
 });

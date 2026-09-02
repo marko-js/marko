@@ -426,7 +426,21 @@ export function trackParamsReferences(
 
     for (let i = 0; i < params.length; i++) {
       const param = params[i];
-      if (param.type === "RestElement") {
+      if (
+        i === 0 &&
+        param.type === "RestElement" &&
+        param.argument.type === "Identifier"
+      ) {
+        // `|...args|` names the whole params array, so `args` is that binding.
+        const { argument } = param;
+        paramsBinding.name = argument.name;
+        paramsBinding.declared = true;
+        (argument.extra ??= {}).binding = paramsBinding;
+        trackReferencesForBinding(
+          body.scope.getBinding(argument.name)!,
+          paramsBinding,
+        );
+      } else if (param.type === "RestElement") {
         createBindingsAndTrackReferences(
           param.argument,
           type,

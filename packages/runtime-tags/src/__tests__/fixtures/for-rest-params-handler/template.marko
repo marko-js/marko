@@ -1,0 +1,5 @@
+<let/clicked=""/>
+<for|...args| of=["a", "b"]>
+  <button onClick() { clicked = args.join(",") }>${args[0]}</button>
+</for>
+<span>${clicked}</span>
