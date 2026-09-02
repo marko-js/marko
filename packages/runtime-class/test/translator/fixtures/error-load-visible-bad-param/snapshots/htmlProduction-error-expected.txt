@@ -1,0 +1,6 @@
+CompileError: 
+    at __tests__/template.marko:1:44
+    > 1 | import Tag from "./tag.marko" with { load: "visible.x?bogus=1" }
+        |                                            ^^^^^^^^^^^^^^^^^^^ Unknown param "bogus" for the "visible" trigger. Supported params: "rootMargin".
+      2 | <Tag/>
+      3 |
