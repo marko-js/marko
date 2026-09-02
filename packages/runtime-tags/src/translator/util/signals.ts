@@ -959,17 +959,14 @@ export function getSignalFn(signal: Signal): t.Expression {
     signal.hasSideEffect = true;
   }
 
-  const params = isValue
-    ? [scopeIdentifier, getSignalValueIdentifier(signal)]
-    : [scopeIdentifier];
   let render = signal.prepare.length
     ? signal.prepare.concat(signal.render)
     : signal.render;
+  // A fill's run is the render without the frame's own writes.
   if (signal.patched.length) {
-    signal.fillFn = t.arrowFunctionExpression(
-      params,
-      t.blockStatement(render.map((statement) => t.cloneNode(statement, true))),
-    );
+    if (isValue && isPatchFillBinding(binding)) {
+      signal.fillFn = t.cloneNode(toScopeFn(render), true);
+    }
     render = render.concat(signal.patched);
   }
 
@@ -1000,6 +997,11 @@ export function getSignalFn(signal: Signal): t.Expression {
     );
   }
 
+  return toScopeFn(render);
+}
+
+// `(scope) => fn(scope)` is `fn`.
+function toScopeFn(render: t.Statement[]): t.Expression {
   if (render.length === 1) {
     const first = render[0];
     if (first.type === "ExpressionStatement") {

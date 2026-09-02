@@ -23,7 +23,7 @@ function $setup$1($scope) {
 const $input_title$1 = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko0", "input_title", ($scope) => {
 	$if_content__input_title$1($scope);
 	_text($scope["#text/0"], $scope.input_title);
-}, ($scope, input_title) => $if_content__input_title$1($scope));
+}, $if_content__input_title$1);
 const $input$1 = ($scope, input) => $input_title$1($scope, input.title);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, $setup$1, $input$1);
 

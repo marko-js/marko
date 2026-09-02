@@ -662,6 +662,16 @@ function testFixtures(interop?: true) {
                       );
                       if (persisted) {
                         stats.patch = await getSizes(patches.join(""));
+                        // A frame must cost less on the wire than the page
+                        // it patches; a larger one means a mechanism ships
+                        // what the client already has.
+                        for (const frame of patches) {
+                          const bytes = Buffer.byteLength(frame);
+                          assert.ok(
+                            bytes < stats.html.min,
+                            `persisted frame (${bytes}b) is not smaller than the page (${stats.html.min}b) for "${entry}"`,
+                          );
+                        }
                       }
                     }
 

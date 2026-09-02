@@ -16,7 +16,7 @@ const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "inp
 	$input_title__OR__x($scope);
 	_text_content($scope["#title/2"], `${_to_text($scope.input_title)} | site`);
 	_text($scope["#comment/3"], $scope.input_title);
-}, ($scope, input_title) => $input_title__OR__x($scope));
+}, $input_title__OR__x);
 const $input_color = ($scope, input_color) => _text_content($scope["#style/1"], `.a { color: ${_to_text(input_color)} }`);
 const $input = ($scope, input) => {
 	$input_title($scope, input.title);
