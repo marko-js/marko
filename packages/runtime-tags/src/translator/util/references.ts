@@ -189,6 +189,8 @@ declare module "@marko/compiler/dist/types" {
     read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
+    /** The expression is a dynamic tag's input (attrs, args, attr tags). */
+    dynamicTagInput?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
     /** `$global` bindings this expression reads: the root means an opaque
@@ -883,7 +885,7 @@ export function mergeReferences<T extends t.Node>(
   const fnReadsByExpression = getFunctionReadsByExpression();
   let reads = readsByExpression.get(targetExtra);
   let exprFnReads = fnReadsByExpression.get(targetExtra);
-  let { isEffect } = targetExtra;
+  let { isEffect, dynamicTagInput } = targetExtra;
 
   for (const node of nodes) {
     if (!node) continue;
@@ -896,6 +898,7 @@ export function mergeReferences<T extends t.Node>(
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
+      dynamicTagInput ||= extra.dynamicTagInput;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           read.binding.reads.delete(extra);
@@ -926,6 +929,7 @@ export function mergeReferences<T extends t.Node>(
 
   readsByExpression.set(targetExtra, reads);
   targetExtra.isEffect = isEffect;
+  targetExtra.dynamicTagInput = dynamicTagInput;
   targetExtra.section = section;
 
   return targetExtra as NonNullable<T["extra"]> & ReferencedExtra;
@@ -2736,23 +2740,27 @@ export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
   return extra;
 }
 
-const serializeReasonCache = new WeakMap<
-  t.NodeExtra | Binding,
-  boolean | SerializeReason
->();
+type ReasonCache = WeakMap<t.NodeExtra | Binding, boolean | SerializeReason>;
+const serializeReasonCache: ReasonCache = new WeakMap();
+// A native dynamic tag serializes its event attributes unguarded, so function
+// registration treats a dynamic tag's input as an unconditional reason. That
+// stays out of the serialize walk: unlike an effect it reads nothing itself.
+const registerReasonCache: ReasonCache = new WeakMap();
 export function getAllSerializeReasonsForExtra(
   extra: t.NodeExtra,
+  register?: boolean,
 ): undefined | SerializeReason {
-  if (extra.isEffect) return true;
-  let reason = serializeReasonCache.get(extra);
+  if (extra.isEffect || (register && extra.dynamicTagInput)) return true;
+  const cache = register ? registerReasonCache : serializeReasonCache;
+  let reason = cache.get(extra);
   if (reason === false) return;
   if (reason === undefined) {
     if (extra === getProgram().node.extra?.section!.returnValueExpr) {
       reason = true;
     } else {
-      serializeReasonCache.set(extra, false);
+      cache.set(extra, false);
       forEach(extra.downstream, (binding) => {
-        let linked = getAllSerializeReasonsForBinding(binding, true);
+        let linked = getAllSerializeReasonsForBinding(binding, true, register);
         if (linked && linked !== true) {
           const exprs = extra.downstreamExprs;
           if (exprs) {
@@ -2768,7 +2776,7 @@ export function getAllSerializeReasonsForExtra(
     }
 
     if (reason) {
-      serializeReasonCache.set(extra, reason);
+      cache.set(extra, reason);
     }
   }
 
@@ -2778,18 +2786,20 @@ export function getAllSerializeReasonsForExtra(
 export function getAllSerializeReasonsForBinding(
   binding: Binding,
   properties?: Opt<string> | true,
+  register?: boolean,
 ): undefined | SerializeReason {
   // The upstream-alias term is merged only for `properties !== true`, but it can
   // only promote a binding that has no other reason — i.e. one never read in an
   // expression, so never queried with `true`. A binding seen in both flavors
   // therefore can't differ by flavor, so a single binding key is safe.
-  let reason = serializeReasonCache.get(binding);
+  const cache = register ? registerReasonCache : serializeReasonCache;
+  let reason = cache.get(binding);
 
   if (reason === undefined) {
     reason = getSerializeReason(binding.section, binding);
 
     if (reason !== true) {
-      serializeReasonCache.set(binding, reason || false);
+      cache.set(binding, reason || false);
 
       if (properties !== true && binding.upstreamAlias) {
         reason = mergeSerializeReasons(
@@ -2797,6 +2807,7 @@ export function getAllSerializeReasonsForBinding(
           getAllSerializeReasonsForBinding(
             binding.upstreamAlias,
             binding.property,
+            register,
           ),
         );
       }
@@ -2805,7 +2816,7 @@ export function getAllSerializeReasonsForBinding(
         for (const expr of binding.reads) {
           reason = mergeSerializeReasons(
             reason,
-            getAllSerializeReasonsForExtra(expr),
+            getAllSerializeReasonsForExtra(expr, register),
           );
           if (reason === true) break;
         }
@@ -2814,7 +2825,7 @@ export function getAllSerializeReasonsForBinding(
           for (const alias of binding.aliases) {
             reason = mergeSerializeReasons(
               reason,
-              getAllSerializeReasonsForBinding(alias, properties),
+              getAllSerializeReasonsForBinding(alias, properties, register),
             );
             if (reason === true) break;
           }
@@ -2823,7 +2834,7 @@ export function getAllSerializeReasonsForBinding(
     }
 
     if (reason) {
-      serializeReasonCache.set(binding, reason);
+      cache.set(binding, reason);
     }
   }
 
@@ -2837,7 +2848,7 @@ export function getAllSerializeReasonsForBinding(
         for (const propBinding of binding.propertyAliases.values()) {
           reason = mergeSerializeReasons(
             reason,
-            getAllSerializeReasonsForBinding(propBinding, true),
+            getAllSerializeReasonsForBinding(propBinding, true, register),
           );
           if (reason === true) break;
         }
@@ -2863,7 +2874,7 @@ export function getAllSerializeReasonsForBinding(
         if (propBinding) {
           reason = mergeSerializeReasons(
             reason,
-            getAllSerializeReasonsForBinding(propBinding, rest),
+            getAllSerializeReasonsForBinding(propBinding, rest, register),
           );
         }
 
@@ -2873,7 +2884,7 @@ export function getAllSerializeReasonsForBinding(
             if (propBinding) {
               reason = mergeSerializeReasons(
                 reason,
-                getAllSerializeReasonsForBinding(propBinding, rest),
+                getAllSerializeReasonsForBinding(propBinding, rest, register),
               );
               if (reason === true) break;
             }

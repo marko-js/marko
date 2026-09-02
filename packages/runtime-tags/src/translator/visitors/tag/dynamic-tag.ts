@@ -154,10 +154,14 @@ export default {
       analyzeAttributeTags(tag);
 
       const tagSection = getOrCreateSection(tag);
+      const inputNodes = getAllTagReferenceNodes(node);
       const tagExtra = mergeReferences(tagSection, node, [
         node.name,
-        ...getAllTagReferenceNodes(node),
+        ...inputNodes,
       ]);
+      // Name-only tags are left out: flagging them registers sibling attr-tag
+      // props through `for` items, so a bare function as the name stays unregistered.
+      if (inputNodes.length) tagExtra.dynamicTagInput = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const nodeBinding = (tagExtra[kDOMBinding] = createBinding(

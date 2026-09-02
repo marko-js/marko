@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let onClickOnce = Once.content({ value: _resume(function() {
 		clickOnceCount++;
-	}, "a1", $scope0_id) });
+	}, "a2", $scope0_id) });
 	_var($scope0_id, "b", $childScope, "a5");
 	_html(`<button class=once>${_text_resume($scope0_id, "d", clickOnceCount)}</button>${_el_resume($scope0_id, "c")}`);
 	const Twice = { content: _content("a6", ({ value }) => {
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 				call--;
 				value();
 			}
-		}, "a2", $scope2_id);
+		}, "a1", $scope2_id);
 		_scope($scope2_id, {
 			c: value,
 			d: call
