@@ -33,7 +33,7 @@ const $onClickOnce = ($scope) => function() {
 const $onClickTwice = ($scope) => function() {
 	$clickTwiceCount($scope, +$scope.k + 1);
 };
-_resume("a2", $_return2);
+_resume("a1", $_return2);
 _resume("a0", $_return);
-_resume("a1", $onClickOnce);
+_resume("a2", $onClickOnce);
 _resume("a3", $onClickTwice);

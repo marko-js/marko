@@ -8,7 +8,6 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { generateUid } from "../util/generate-uid";
-import { getAttributeTagParent } from "../util/get-parent-tag";
 import {
   getDeclarationRoot,
   getExprRoot,
@@ -264,7 +263,7 @@ function resolveSerializeReason(exprExtras: Set<t.NodeExtra>) {
   for (const exprExtra of exprExtras) {
     reason = mergeSerializeReasons(
       reason,
-      getAllSerializeReasonsForExtra(getCanonicalExtra(exprExtra)),
+      getAllSerializeReasonsForExtra(getCanonicalExtra(exprExtra), true),
     );
   }
 
@@ -452,23 +451,10 @@ function shouldAlwaysRegister(markoRoot: MarkoExprRootPath) {
   if (isCoreTagName(tag, "let")) return true;
   if (isCoreTagName(tag, "return")) return true;
 
-  switch (analyzeTagNameType(tag)) {
-    case TagNameType.DynamicTag:
-    case TagNameType.NativeTag:
-      // A function passed to a dynamic tag may always be serialized; native-tag event
-      // handlers are already skipped in `canIgnoreRegister`, so anything else must serialize.
-      return true;
-    case TagNameType.AttributeTag:
-      if (
-        analyzeTagNameType(getAttributeTagParent(tag)) ===
-        TagNameType.DynamicTag
-      ) {
-        return true;
-      }
-      break;
-  }
-
-  return false;
+  // Native-tag event handlers are already skipped in `canIgnoreRegister`, so
+  // anything else must serialize. A dynamic tag's input resolves through its
+  // expression's `dynamicTagInput` in `finalizeFunctionRegistry`.
+  return analyzeTagNameType(tag) === TagNameType.NativeTag;
 }
 
 function hasSpreadAttributeAfter(attr: t.NodePath<t.MarkoAttribute>) {
