@@ -1,0 +1,6 @@
+CompileError: 
+    at __tests__/template.marko:1:44
+    > 1 | import Tag from "./tag.marko" with { load: "visible" }
+        |                                            ^^^^^^^^^ A selector is required for the "visible" trigger. (e.g. "visible.my-element")
+      2 | <Tag/>
+      3 |
