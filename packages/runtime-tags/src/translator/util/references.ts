@@ -919,6 +919,7 @@ export function mergeReferences<T extends t.Node>(
         }
       }
     } else if (extra?.pruned) {
+      /* v8 ignore next -- a dropped reference is never merged into another */
       throw new Error("Cannot merged a dropped reference.");
     }
   }
@@ -1669,6 +1670,7 @@ export function createSources(
   param: Sources["param"],
   global?: Sources["global"],
 ): Sources {
+  /* v8 ignore next 6 -- every caller passes at least one source */
   if (!(state || param || global)) {
     throw new Error(
       "Cannot create a serialize reason that does not reference state, a param, or $global.",
@@ -1807,6 +1809,7 @@ export function dropNodes(node: t.Node | t.Node[]) {
 }
 
 function dropExtra(exprExtra: ReferencedExtra) {
+  /* v8 ignore next 3 -- a merged reference is never dropped */
   if (exprExtra.merged) {
     throw new Error("Cannot drop a merged reference");
   }
@@ -2023,6 +2026,7 @@ export function getPrefixedScopeAccessor(
 
 export function getClosureAccessorId(binding: Binding) {
   const id = closureAccessorIds.get(getCanonicalBinding(binding)!);
+  /* v8 ignore next 5 -- analyze reserves an id for every closure binding */
   if (id === undefined) {
     throw new Error(
       `No closure accessor id was reserved for "${binding.name}".`,
