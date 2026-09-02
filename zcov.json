@@ -3,7 +3,6 @@
   "include": ["packages/*/src/**"],
   "exclude": [
     "**/*.d.marko",
-    "**/html/reorder-runtime.ts",
     "packages/runtime-class/src/runtime/components/legacy/**",
     "**/core/await/client-reorder-runtime.js"
   ]
