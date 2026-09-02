@@ -1,29 +1,19 @@
 import type { TestConfig } from "../../main.test";
 
 const type = (document: Document) => {
-  const el = document.querySelector("input")!;
+  const el = document.querySelector<HTMLInputElement>("input")!;
   el.value = "typed";
-  el.dispatchEvent(new document.defaultView!.Event("input", { bubbles: true }));
+  el.dispatchEvent(new (el.ownerDocument.defaultView as any).Event("input"));
 };
 
-const probe = (document: Document) => {
-  document.querySelector("p")!.textContent =
-    `live:${document.querySelector("input")!.value}`;
-};
-
-// A spread carrying a controllable: the patched set re-claims the control
-// through the run-time claim table, so the change handler stays live, an
-// unchanged frame preserves the controlled value, and a changed server
-// value wins the input.
+// A spread beside a controllable value: the spread patches as an attribute
+// set while the client keeps its controlled value.
 export const config: TestConfig = {
   persisted: true,
   steps: [
-    { field: { value: "a", placeholder: "p1" } },
+    { attrs: { placeholder: "p1" } },
+    { attrs: { placeholder: "p2" } },
     type,
-    probe,
-    { field: { value: "a", placeholder: "p2" } },
-    probe,
-    { field: { value: "b", placeholder: "p2" } },
-    probe,
+    { attrs: { placeholder: "p3", "data-x": 1 } },
   ],
 };

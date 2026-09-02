@@ -17,12 +17,12 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			$scope0_reason && _scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_patch_text($scope2_id, "#text/0", item, void 0, $scope0_owned, 2)}</li>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "6:4");
-	}, 0, $scope0_id, "#text/2", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_2*shell");
+	}, 0, $scope0_id, "#text/2", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_owned, 2);
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

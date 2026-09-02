@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 
 import { WalkCode } from "../../common/types";
-import { addAssetImport } from "../util/asset-imports";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
@@ -22,7 +21,7 @@ import {
 import {
   callRuntime,
   getHTMLRuntime,
-  getRuntimePath,
+  addRuntimeFeatureAsset,
   importRuntimeFeature,
 } from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -34,6 +33,7 @@ import {
   getSection,
 } from "../util/sections";
 import {
+  isStableExpr,
   getPatchWriteOwnership,
   getSerializeGuard,
 } from "../util/serialize-guard";
@@ -67,14 +67,7 @@ type HTMLMethod = "_escape" | "_unescaped";
 export default {
   analyze: {
     enter(placeholder) {
-      if (isNonHTMLText(placeholder)) {
-        if (isPersisted() && !evaluate(placeholder.node.value).confident) {
-          throw placeholder.buildCodeFrameError(
-            "Persisted templates currently support only escaped dynamic text and plain dynamic attributes in native HTML.",
-          );
-        }
-        return;
-      }
+      if (isNonHTMLText(placeholder)) return;
 
       const { node } = placeholder;
       const valueExtra = evaluate(node.value);
@@ -96,9 +89,9 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
-        if (isPersisted() && node.escape && isBranchPathSection(section)) {
+        if (isPersisted() && isBranchPathSection(section)) {
           addSerializeReason(section, true, nodeBinding);
-          addAssetImport(`${getRuntimePath("dom")}/patch-text.feat`);
+          addRuntimeFeatureAsset(node.escape ? "patch-text" : "patch-html");
           ensurePersistedWriteGroups(() => valueExtra);
         }
       }
@@ -189,19 +182,13 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
     const holeSources =
-      isPersisted() && node.escape && isBranchPathSection(section)
+      isPersisted() && isBranchPathSection(section)
         ? getSerializeSourcesForExpr(valueExtra)
         : undefined;
-    if (holeSources?.state && holeSources.global) {
-      throw placeholder.buildCodeFrameError(
-        "Persisted templates do not yet support `$global` contributions to stateful expressions.",
-      );
-    }
     // A state-fed hole recomputes through the signal graph, and inside
     // client-owned structure delivery is owner fills: neither patch-writes.
     const isPatch =
       isPersisted() &&
-      node.escape &&
       isBranchPathSection(section) &&
       !inStatefulBranch(section) &&
       !!nodeBinding &&
@@ -209,7 +196,9 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const isPatchText = isHTML && isPatch;
     // An interactive page receives assets transitively through its dom
     // program, so the feature import rides both outputs.
-    if (isPatch && !isHTML) importRuntimeFeature("patch-text");
+    if (isPatch && !isHTML) {
+      importRuntimeFeature(node.escape ? "patch-text" : "patch-html");
+    }
 
     if (isHTML) {
       // `2` (or a guard scaled to 0/2) also asks the runtime to write a
@@ -231,12 +220,12 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
             // the expression appears (and evaluates) once; a param-fed
             // write's ownership bit rides as trailing args.
             callRuntime(
-              "_patch_text",
+              node.escape ? "_patch_text" : "_patch_html",
               getScopeIdIdentifier(section),
               getScopeAccessorLiteral(nodeBinding),
               value,
               shouldResume,
-              ...getPatchWriteOwnership(holeSources),
+              ...getPatchWriteOwnership(holeSources, isStableExpr(valueExtra)),
             )
           : markerSerializeReason
             ? callRuntime(
@@ -252,7 +241,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       }`;
     } else {
       addStatement(
-        "render",
+        isPatch ? "patched" : "render",
         section,
         valueExtra.referencedBindings,
         t.expressionStatement(

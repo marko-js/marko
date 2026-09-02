@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_patch_text($scope1_id, "a", item.label, void 0, $scope0_owned, 1)}</li>`);
 		_scope($scope1_id, {});
-	}, "id", $scope0_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0");
+	}, "id", $scope0_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0", $scope0_owned, 1);
 	_html(`</ul>${_el_resume($scope0_id, "b", $sg__input_items)}<button>Count ${_text_resume($scope0_id, "d", count, 2)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, { i: count });

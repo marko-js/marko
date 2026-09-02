@@ -6,7 +6,13 @@ import type { TestConfig } from "../../main.test";
 export const config: TestConfig = {
   persisted: true,
   steps: () => [
-    { promise: Promise.resolve("ok"), $global: { brand: "acme" } },
-    { promise: Promise.reject(new Error("boom")), $global: { brand: "bmce" } },
+    {
+      promise: Promise.resolve("ok"),
+      $global: { brand: "acme", serializedGlobals: ["brand"] },
+    },
+    {
+      promise: Promise.reject(new Error("boom")),
+      $global: { brand: "bmce", serializedGlobals: ["brand"] },
+    },
   ],
 };

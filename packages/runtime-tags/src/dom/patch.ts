@@ -1,7 +1,11 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import { PatchKey } from "../common/types";
-import { patchGlobalsEntry } from "./patch-changed";
-import { abortRun, run, runEffects } from "./queue";
+import {
+  type Accessor,
+  AccessorProp,
+  PatchKey,
+  type Scope,
+} from "../common/types";
+import { abortRun, run, runEffects, runId } from "./queue";
 import { abortPatch, beginPatch, init, patchers } from "./resume";
 import type { RenderData } from "./resume";
 
@@ -28,8 +32,9 @@ export function applyPatch(
   runtimeId = DEFAULT_RUNTIME_ID,
 ): boolean | Promise<boolean> {
   init(runtimeId);
-  // Registered here so this module stays tree-shakable.
-  patchers[PatchKey.Globals] = patchGlobalsEntry;
+  // Registered here so this module stays tree-shakable; a page with
+  // `$global` joins installed its own (`patch-global.feat`).
+  patchers[PatchKey.Globals] ||= applyGlobals;
   const render = beginPatch(renderId);
   try {
     // A frame is trusted executable resume data (an envelope holding the
@@ -56,6 +61,27 @@ export function applyPatch(
     return false;
   } finally {
     abortPatch();
+  }
+}
+
+// A plain patched write; a changed value is marked with the frame's epoch
+// (`patch-effect`, `patch-global`).
+export function patchWrite(scope: Scope, accessor: Accessor, value: unknown) {
+  if (scope[accessor] !== value || !(accessor in scope)) {
+    scope[accessor] = value;
+    (scope[AccessorProp.PatchChanged] ??= {})[accessor] = runId;
+  }
+}
+
+// Re-shipped globals land as plain writes on the globals object (scope 0),
+// so `$global` reads never go stale.
+export function applyGlobals(live: Scope, _key: string, value: unknown) {
+  for (const key in value as Record<string, unknown>) {
+    patchWrite(
+      live[AccessorProp.Global] as unknown as Scope,
+      key as Accessor,
+      (value as Record<string, unknown>)[key],
+    );
   }
 }
 

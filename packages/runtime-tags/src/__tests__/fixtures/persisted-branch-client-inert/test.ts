@@ -1,8 +1,13 @@
 import type { TestConfig } from "../../main.test";
 
-// A source-free inert call inside client-owned structure: nothing
-// recomputes it client-side and nothing ships it, so it fails closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A source-free call inside client-owned structure renders with ordinary
+// client semantics: the client evaluates it when it renders the branch and
+// patches never touch it.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, {}, click, {}],
 };

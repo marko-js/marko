@@ -16,13 +16,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
+	_global_subscribe("__tests__/template.marko_1_$global_brand#3/global", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? _scope($scope0_id, {
-		on,
-		$global_brand: $global$1?.brand
-	}, "__tests__/template.marko", 0, {
-		on: "1:6",
-		$global_brand: ["$global.brand"]
-	}) : _patch_value($scope0_id, "__tests__/template.marko0", $global$1?.brand);
+	$scope0_reason && _scope($scope0_id, { on }, "__tests__/template.marko", 0, { on: "1:6" });
 	_resume_branch($scope0_id);
 }, 1, 1);

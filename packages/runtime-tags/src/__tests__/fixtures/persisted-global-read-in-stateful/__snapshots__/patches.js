@@ -1,4 +1,6 @@
 // PATCH
 {
-  va0: "bmce"
+  $: {
+    brand: "bmce"
+  }
 }

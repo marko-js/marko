@@ -22,6 +22,6 @@ function $setup($scope) {
 	$other($scope, 0);
 	$setup__script($scope);
 }
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_label", $input_label__OR__other);
+const $input_label = _fill_const("__tests__/template.marko0", "input_label", $input_label__OR__other);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -1,2 +1,0 @@
-Persisted templates cannot patch this faithfully yet: a script reading server values inside client-owned structure is not supported yet.
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-script/template.marko

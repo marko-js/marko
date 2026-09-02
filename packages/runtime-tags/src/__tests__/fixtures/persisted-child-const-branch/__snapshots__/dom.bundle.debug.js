@@ -2,7 +2,7 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
-const $if_content__input_note = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_note));
+const $if_content__input_note = /*@__PURE__*/ _fill_join("__tests__/tags/badge/index.marko0", "input_note", /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_note)));
 const $if_content__setup = $if_content__input_note;
 const $if = /*@__PURE__*/ _if("#div/0", "<i> </i>", "D ", $if_content__setup);
 const $input_label = ($scope, input_label) => $if($scope, input_label ? 0 : 1);
@@ -10,7 +10,7 @@ const $input$1 = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_note($scope, input.note);
 };
-const $input_note = /*@__PURE__*/ _const("input_note", $if_content__input_note);
+const $input_note = /*@__PURE__*/ _fill_const("__tests__/tags/badge/index.marko0", "input_note", $if_content__input_note);
 var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$1, " b", 0, $input$1);
 
 // template.marko

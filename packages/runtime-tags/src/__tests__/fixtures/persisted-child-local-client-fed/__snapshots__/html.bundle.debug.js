@@ -14,7 +14,7 @@ var child_default = _template_persisted("__tests__/tags/child.marko", (input) =>
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const l = input.label + "!";
-			_owned_guard($scope0_owned, 1) ? _patch_value($scope1_id, "__tests__/tags/child.marko1", l) : _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_label#5/init");
+			_owned_guard($scope0_owned, 1) ? _patch_value($scope1_id, "__tests__/tags/child.marko2", l) : _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_label#5/init");
 			_html(`<p>${_text_resume($scope1_id, "#text/0", l + "#" + c)}</p>`);
 			_scope($scope1_id, {
 				l,
@@ -22,17 +22,17 @@ var child_default = _template_persisted("__tests__/tags/child.marko", (input) =>
 			}, "__tests__/tags/child.marko", "3:4", { l: "4:12" });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/child.marko_1*shell"]);
+	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_owned, 0);
 	_html(`<button id=c>c</button>${_el_resume($scope0_id, "#button/1")}</div>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/child.marko0", c, 1);
-	$scope0_reason && _scope($scope0_id, {
+	_patch_value($scope0_id, "__tests__/tags/child.marko1", c, 1);
+	$scope0_reason ? _scope($scope0_id, {
 		input_label: input.label,
 		c
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],
 		c: "1:6"
-	});
+	}) : _owned_guard($scope0_owned, 1) && _client_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/child.marko0", input.label);
 	_resume_branch($scope0_id);
 }, 0, 0);
 

@@ -1,8 +1,18 @@
 import type { TestConfig } from "../../main.test";
 
-// Assigning a grandchild's tag variable needs the `_var_change` chain the
-// instance memo cannot vouch for: the call site fails closed.
+const bump = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button.bump")!.click();
+};
+const reset = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button.reset")!.click();
+};
+const toggle = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button.toggle")!.click();
+};
+
+// A nested child's assigned tag variable inside client-owned structure is
+// plain client behavior.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, bump, reset, toggle, toggle, bump, {}],
 };

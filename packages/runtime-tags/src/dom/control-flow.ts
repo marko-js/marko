@@ -306,7 +306,7 @@ export function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   return awaitCounter;
 }
 
-function runPendingEffects(scope: BranchScope) {
+export function runPendingEffects(scope: BranchScope) {
   const effects = scope[AccessorProp.PendingEffects];
   if (effects) {
     scope[AccessorProp.PendingEffects] = [];

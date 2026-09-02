@@ -10,10 +10,10 @@ const click = (document: Document) => {
 export const config: TestConfig = {
   persisted: true,
   steps: [
-    { name: "amy", $global: { prefix: "hi" } },
+    { name: "amy", $global: { prefix: "hi", serializedGlobals: ["prefix"] } },
     click,
-    { name: "amy", $global: { prefix: "yo" } },
+    { name: "amy", $global: { prefix: "yo", serializedGlobals: ["prefix"] } },
     click,
-    { name: "bob", $global: { prefix: "yo" } },
+    { name: "bob", $global: { prefix: "yo", serializedGlobals: ["prefix"] } },
   ],
 };

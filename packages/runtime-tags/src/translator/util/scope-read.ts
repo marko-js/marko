@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { scopeIdentifier } from "../visitors/program";
 import { getAccessorProp } from "./get-accessor-enums";
+import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import {
   type Binding,
   BindingType,
@@ -28,6 +29,18 @@ export function createScopeReadExpression(
   reference: Binding,
   section = reference.section,
 ) {
+  // A keyed `$global` read: the globals object every scope shares.
+  if (reference.type === BindingType.global) {
+    return getDeclaredBindingExpression(
+      reference,
+      () =>
+        t.memberExpression(
+          scopeIdentifier,
+          t.identifier(getAccessorProp().Global),
+        ),
+      false,
+    ) as t.MemberExpression;
+  }
   const propName = toPropertyName(getScopeAccessor(reference));
   const expr = t.memberExpression(
     reference.type === BindingType.local

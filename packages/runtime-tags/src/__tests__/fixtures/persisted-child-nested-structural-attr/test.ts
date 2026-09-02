@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A plain attribute feeding a NESTED structural param matches through the
-// input root property, so a provenance-free feed still fails closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A plain attribute feeding a nested structural param from an import
+// selects client-side.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, {}, click, click],
 };

@@ -14,12 +14,12 @@ var template_default = _template_persisted("a", (input) => {
 				document.querySelector("main").dataset.got = next;
 			}, "a0"))}${_patch_bind($scope1_id, "Ea", _resume(function(next) {
 				document.querySelector("main").dataset.got = next;
-			}, "a0"))}${_patch_control($scope1_id, "a", 2, input.value, $scope0_owned, 3)}>${_el_resume($scope1_id, "a")}`);
+			}, "a0"), 0, 0)}${_patch_control($scope1_id, "a", 2, input.value, $scope0_owned, 3)}>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a2");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"]);
+	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 2);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, { g: input.value });
 }, 1, 0);

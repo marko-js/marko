@@ -11,17 +11,12 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
-import { isOutputDOM, isPersisted } from "../util/marko-config";
-import {
-  dropNodes,
-  getAllTagReferenceNodes,
-  getGlobalReadKeys,
-  mergeGlobalReads,
-} from "../util/references";
+import { isOutputDOM } from "../util/marko-config";
+import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-statements";
-import { addHTMLEffectCall, addStatement, getSignal } from "../util/signals";
+import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains, traverseFindAwait } from "../util/traverse";
 
 const htmlScriptTagAlternateMsg =
@@ -126,11 +121,6 @@ export default {
             "The value returned from a [`<script>`](https://markojs.com/docs/reference/core-tag#script) body is discarded, so this cleanup function will never run. Register it with [`$signal.onabort`](https://markojs.com/docs/reference/language#signal) or use [`<lifecycle onDestroy>`](https://markojs.com/docs/reference/core-tag#lifecycle) instead.",
         });
       }
-      // A persisted script's DIRECT `$global` reads re-queue when a frame's
-      // globals change; global-derived binding reads reject instead.
-      const globalReads = isPersisted()
-        ? getGlobalReadKeys(value.extra?.globalBindings)
-        : undefined;
       if (isOutputDOM()) {
         const isFunction =
           t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
@@ -163,15 +153,8 @@ export default {
           referencedBindings,
           inlineBody || t.expressionStatement(t.callExpression(value, [])),
         );
-        if (globalReads) {
-          const signal = getSignal(section, referencedBindings);
-          signal.globalEffectReads = mergeGlobalReads(
-            signal.globalEffectReads,
-            globalReads,
-          );
-        }
       } else {
-        addHTMLEffectCall(section, referencedBindings, globalReads);
+        addHTMLEffectCall(section, referencedBindings);
       }
 
       tag.remove();

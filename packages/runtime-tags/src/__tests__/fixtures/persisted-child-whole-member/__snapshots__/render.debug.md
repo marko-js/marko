@@ -51,8 +51,8 @@ UPDATE: main > p::text "{\"label\":\"a\",\"value\":0}" => "{\"label\":\"a\",\"va
 ```
 ## Change
 ```
-UPDATE: main > p::text "{\"label\":\"a\",\"value\":1}" => "{\"label\":\"b\",\"value\":1}"
 UPDATE: main > h2::text "a" => "b"
+UPDATE: main > p::text "{\"label\":\"a\",\"value\":1}" => "{\"label\":\"b\",\"value\":1}"
 ```
 
 # Update

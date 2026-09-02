@@ -1,8 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-// Aliasing an import cannot smuggle it past the scan: any referenced
-// module binding in the child fails closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// An aliased import inside a client instance is client code too.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, {}, click, click],
 };

@@ -9,6 +9,7 @@ var greet_default = _template_persisted("__tests__/tags/greet/index.marko", (inp
 	const double = input.n * 2;
 	_html(`<span>${_patch_text($scope0_id, "#text/0", $global$1.locale)}</span>`);
 	const $return = double;
+	_global_subscribe("__tests__/tags/greet/index.marko_0_$global_locale#4/global", $scope0_id);
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/greet/index.marko", 0);
 	return $return;
 }, 0, 1);

@@ -10,3 +10,4 @@ const $count = /*@__PURE__*/ _let(5, $input_title__OR__count);
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.f + 1);
 }));
+const $input_title = _fill_const("a0", 4, $input_title__OR__count);

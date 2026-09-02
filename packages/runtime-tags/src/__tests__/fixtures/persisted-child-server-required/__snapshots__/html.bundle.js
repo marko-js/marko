@@ -4,7 +4,7 @@ _shells({
 	b0: "b0,<em>open</em>"
 });
 var widget_default = _template_persisted("b", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_open = _source_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_open = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
@@ -13,7 +13,7 @@ var widget_default = _template_persisted("b", (input) => {
 			$scope0_reason && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["b0"]);
+	}, $scope0_id, "a", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["b0"], $scope0_owned, 0);
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 

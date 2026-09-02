@@ -1,11 +1,14 @@
 // tags/greet/index.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $global_locale = /*@__PURE__*/ _global_join("locale", "__tests__/tags/greet/index.marko_0_$global_locale#4/global", ($scope, $global_locale) => _text($scope["#text/0"], $scope.$global.locale));
 const $double = /*@__PURE__*/ _const("double", ($scope) => _return($scope, $scope.double));
 const $input_n = ($scope, input_n) => $double($scope, input_n * 2);
 const $input = ($scope, input) => $input_n($scope, input.n);
-var greet_default = /*@__PURE__*/ _template("__tests__/tags/greet/index.marko", $template$1, "D l", 0, $input);
+function $setup$1($scope) {
+	$global_locale($scope, $scope.$global.locale);
+}
+var greet_default = /*@__PURE__*/ _template("__tests__/tags/greet/index.marko", $template$1, "D l", $setup$1, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p> </p><button>+</button></main>`)($template$1);
@@ -16,6 +19,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	_var($scope, "#childScope/0", $d);
+	$setup$1($scope["#childScope/0"]);
 	$count($scope, 1);
 	$setup__script($scope);
 }

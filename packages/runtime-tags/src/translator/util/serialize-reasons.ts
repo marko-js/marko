@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
-import { isPersisted } from "./marko-config";
 import { concat, forEach, type Opt } from "./optional";
 import {
   type Binding,
@@ -13,7 +12,6 @@ import {
   isReferencedExtra,
   type KnownExprs,
   mapParamBindingToExpr,
-  globalSources,
   mergeSources,
   type ReferencedBindings,
   type Sources,
@@ -56,6 +54,9 @@ export function addSerializeReason(
   if (reason) {
     if (reason !== true) {
       addProvenance(section, reason, prop && getPropKey(section, prop, prefix));
+      // A `$global` read alone never serializes (the client reads the
+      // globals object, as without persisted pages); it stays provenance.
+      if (!reason.state && !reason.param) return;
     }
     if (prop) {
       const key = getPropKey(section, prop, prefix);
@@ -166,13 +167,9 @@ export function getSerializeReason(
 }
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
-  const sources = isReferencedExtra(expr)
+  return isReferencedExtra(expr)
     ? getSerializeSourcesForRef(expr.referencedBindings)
     : undefined;
-  // Gated: the global dimension only exists for persisted classification.
-  return isPersisted() && expr.globalBindings
-    ? mergeSources(sources, globalSources)
-    : sources;
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

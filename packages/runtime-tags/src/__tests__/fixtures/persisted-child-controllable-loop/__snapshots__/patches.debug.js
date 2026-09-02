@@ -29,7 +29,7 @@
     "PatchChild:#childScope/2": {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko1": 0
         }
       }, _.e = "packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko_1*shell"]
     },
@@ -42,7 +42,7 @@
     "PatchChild:#childScope/2": {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-child-controllable-loop/tags/counter/index.marko1": 0
         }
       }, _.e]
     },

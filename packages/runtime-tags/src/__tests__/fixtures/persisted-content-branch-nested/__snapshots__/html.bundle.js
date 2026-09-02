@@ -6,8 +6,9 @@ var widget_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_owned, 0)}</p>`);
-	_patch_dynamic_tag($scope0_id, "b", input.content, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, 0, $scope0_owned, 1);
+	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
@@ -50,12 +51,12 @@ var template_default = _template_persisted("a", (input) => {
 					}));
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $sg__input_b, $sg__input_b, void 0, void 0, ["a2"]);
+			}, $scope1_id, "a", 1, $sg__input_b, $sg__input_b, void 0, void 0, ["a2"], $scope0_owned, 4);
 			_html(`</div>${_el_resume($scope1_id, "a", $sg__input_b)}`);
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_a, $sg__input_a, void 0, void 0, ["a1"]);
+	}, $scope0_id, "a", 1, $sg__input_a, $sg__input_a, void 0, void 0, ["a1"], $scope0_owned, 3);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_a)}`);
 	$scope0_reason && _scope($scope0_id, {
 		e: input.b,

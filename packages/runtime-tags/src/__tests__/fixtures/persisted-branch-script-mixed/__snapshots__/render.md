@@ -67,3 +67,22 @@ UPDATE: main > h1::text "Store" => "Store!"
 UPDATE: main > h1::text "Store!" => "Store"
 UPDATE: main[data-log] "[a:Marko][b:Marko]" => "[a:Marko][b:Marko][b:Fresh]"
 ```
+
+# Update `{"show":true,"title":"Store","value":"c","$global":{"brand":"Patch","serializedGlobals":["brand"]}}`
+```html
+<main
+  data-log="[a:Marko][b:Marko][b:Fresh][c:Patch]"
+>
+  <h1>
+    Store
+  </h1>
+  <p>
+    promo
+  </p>
+</main>
+```
+## Change
+```
+UPDATE: main > h1::text "Store" => "Store"
+UPDATE: main[data-log] "[a:Marko][b:Marko][b:Fresh]" => "[a:Marko][b:Marko][b:Fresh][c:Patch]"
+```

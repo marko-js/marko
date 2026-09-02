@@ -14,18 +14,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
+			_global_subscribe("__tests__/template.marko_1_input_value#6_$global_brand#7/global", $scope1_id);
 			_script($scope1_id, "__tests__/template.marko_1_input_value#6_$global_brand#7");
-			_patch_effect($scope1_id, "__tests__/template.marko_1_input_value#6_$global_brand#7", "input_value $global_brand 1");
+			_patch_effect($scope1_id, "__tests__/template.marko_1_input_value#6_$global_brand#7", "input_value 1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 2);
 	_html("</main>");
-	$scope0_reason ? _scope($scope0_id, {
-		input_value: input.value,
-		$global_brand: $global$1?.brand
-	}, "__tests__/template.marko", 0, {
-		input_value: ["input.value"],
-		$global_brand: ["$global.brand"]
-	}) : (_owned_guard($scope0_owned, 3) && _patch_write($scope0_id, "input_value", input.value), _patch_write($scope0_id, "$global_brand", $global$1?.brand));
+	$scope0_reason ? _scope($scope0_id, { input_value: input.value }, "__tests__/template.marko", 0, { input_value: ["input.value"] }) : _owned_guard($scope0_owned, 3) && _patch_write($scope0_id, "input_value", input.value);
 }, 1, 1);

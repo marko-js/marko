@@ -31,6 +31,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		}
 	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_global_subscribe("__tests__/template.marko_0_$global_brand#3/global", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {
 		brand,

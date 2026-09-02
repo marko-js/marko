@@ -6,7 +6,7 @@ _shells({
 	"__tests__/tags/outer/tags/inner/index.marko_1*shell": "__tests__/tags/outer/tags/inner/index.marko_1*shell,<em>o</em>"
 });
 var inner_default = _template_persisted("__tests__/tags/outer/tags/inner/index.marko", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_open = _source_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_open = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
@@ -15,7 +15,7 @@ var inner_default = _template_persisted("__tests__/tags/outer/tags/inner/index.m
 			$scope0_reason && _scope($scope1_id, {}, "__tests__/tags/outer/tags/inner/index.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["__tests__/tags/outer/tags/inner/index.marko_1*shell"]);
+	}, $scope0_id, "#text/0", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["__tests__/tags/outer/tags/inner/index.marko_1*shell"], $scope0_owned, 0);
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/outer/tags/inner/index.marko", 0);
 }, 0, 0);
 

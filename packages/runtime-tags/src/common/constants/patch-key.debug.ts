@@ -7,7 +7,7 @@ export const Catch = "PatchCatch:";
 export const Child = "PatchChild:";
 export const Control = "PatchControl:";
 export const Effect = "PatchEffect:";
-export const GlobalEffect = "PatchGlobalEffect:";
+export const Html = "PatchHtml:";
 export const DynamicTag = "PatchDynamicTag:";
 export const Globals = "$global:";
 export const Init = "PatchInit:";
@@ -15,6 +15,7 @@ export const Loop = "PatchLoop:";
 export const Pending = "PatchPending:";
 export const Setup = "PatchSetup:";
 export const Text = "PatchText:";
+export const TextContent = "PatchTextContent:";
 export const Value = "PatchValue:";
 export const Write = "PatchWrite:";
 

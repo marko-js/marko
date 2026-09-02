@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// An alias of a root-declared derived arrow: only canonical grains
-// refresh as fills, so the alias read fails closed (call `mk` directly).
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A function alias invoked inside client-owned structure reads its
+// captures from the live scope, which the patch keeps current.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ title: "a" }, click, { title: "b" }, click, click],
 };

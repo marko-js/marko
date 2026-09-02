@@ -14,7 +14,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<option${_patch_attr_option_value($scope1_id, "a", o.value, $scope0_owned, 1)}>${_patch_text($scope1_id, "b", o.label, void 0, $scope0_owned, 1)}</option>${_el_resume($scope1_id, "a")}`);
 			_scope($scope1_id, {});
-		}, (o) => o.id, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "a0");
+		}, (o) => o.id, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "a0", $scope0_owned, 1);
 		_html("</select>");
 	});
 	_html(`${_el_resume($scope0_id, "a")}<select id=plain><option${_attr_option_value("a")}${_patch_attr($scope0_id, "b", "selected", input.pick === "a", $scope0_owned, 2)}>A</option>${_el_resume($scope0_id, "b")}<option${_attr_option_value("b")}${_patch_attr($scope0_id, "c", "selected", input.pick === "b", $scope0_owned, 2)}>B</option>${_el_resume($scope0_id, "c")}</select><em>${_text_resume($scope0_id, "d", count)}</em><button>+</button>${_el_resume($scope0_id, "e")}</main>`);

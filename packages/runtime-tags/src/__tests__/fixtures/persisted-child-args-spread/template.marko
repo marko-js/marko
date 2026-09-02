@@ -1,7 +1,10 @@
 <let/show=true/>
+<define/badge|a, b|>
+  <em>${a}${b}</em>
+</define>
 <main>
   <if=show>
-    <badge(...input.parts)/>
+    <${badge}(...input.parts)/>
   </if>
   <button onClick() { show = !show }>t</button>
 </main>

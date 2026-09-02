@@ -12,13 +12,15 @@ import {
 import {
   createAwaitCounter,
   dismissPlaceholder,
-  renderCatch,
+  runPendingEffects,
 } from "./control-flow";
 import { getShellContent, shells } from "./patch-shells";
 import "./patch-child.feat";
 import {
+  caughtError,
   pendingEffects,
   placeholderShown,
+  queueEffect,
   queueRender,
   rendering,
 } from "./queue";
@@ -39,6 +41,7 @@ import {
   collectScopes,
   findBranchWithKey,
   insertBranchBefore,
+  removeAndDestroyBranch,
   syncGen,
   tempDetachBranch,
 } from "./scope";
@@ -68,7 +71,8 @@ function beginAwaitPending(scope: Scope, nodeAccessor: string) {
         : restoreDetached(scope, nodeAccessor),
     );
   }
-  awaitCounter.i++;
+  // A later pending await under the same boundary keeps the first's UI.
+  if (awaitCounter.i++) return;
 
   if (tryPlaceholder) {
     insertBranchBefore(
@@ -216,6 +220,16 @@ const applyChild = patchers[PatchKey.Child];
 patchers[PatchKey.Child] = (scope, key, value) => {
   const link = key.slice(PatchKey.Child.length) as Accessor;
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
+  // A try showing its catch render (shown like a placeholder, with no await
+  // pending) takes its body back first: the frame's partial addresses the body.
+  if (
+    (scope[link] as BranchScope | undefined)?.[
+      AccessorProp.PlaceholderBranch
+    ] &&
+    !(scope[link] as BranchScope)[AccessorProp.AwaitCounter]?.i
+  ) {
+    dismissPlaceholder(scope[link] as BranchScope);
+  }
   // A boundary entry `[partial, contentId, catchId?, placeholderId?]`
   // rebuilds a missing branch from its content id, then applies the partial.
   if (Array.isArray(value)) {
@@ -241,6 +255,8 @@ patchers[PatchKey.Child] = (scope, key, value) => {
         scope,
         parentNode,
       );
+      insertBranchBefore(branch, parentNode, inside ? null : marker);
+      scope[link] = branch as never;
       branch[AccessorProp.BranchAccessor] = accessor as Accessor;
       if (catchId !== undefined) {
         branch[AccessorProp.CatchContent] = resolveBoundaryContent(
@@ -254,8 +270,6 @@ patchers[PatchKey.Child] = (scope, key, value) => {
           scope,
         ) as never;
       }
-      insertBranchBefore(branch, parentNode, inside ? null : marker);
-      scope[link] = branch as never;
       if (shell) {
         withConstructing(() => patchScope(value as Scope, branch));
       } else {
@@ -293,6 +307,47 @@ patchers[PatchKey.Catch] = (scope, key, error) => {
     error = err;
   }
   markSettled(scope, accessor);
-  endAwaitPending(scope, accessor);
-  renderCatch(scope, error);
+  // The catch render replaces this try's own placeholder in place; the
+  // parked body stays parked.
+  if (!tryBranch?.[AccessorProp.PlaceholderBranch]) {
+    endAwaitPending(scope, accessor);
+  }
+  if (!tryBranch) throw error;
+  showCatch(tryBranch, error);
 };
+
+// The catch render shows like a placeholder: the parked try body comes
+// back when the next frame patches the try.
+function showCatch(tryBranch: BranchScope, error: unknown) {
+  const shown = tryBranch[AccessorProp.PlaceholderBranch] as
+    | BranchScope
+    | 0
+    | undefined;
+  const anchor = (shown || tryBranch)[AccessorProp.StartNode];
+  const parentNode = anchor.parentNode!;
+  const catchBranch = createAndSetupBranch(
+    tryBranch[AccessorProp.Global],
+    tryBranch[AccessorProp.CatchContent] as Renderer,
+    tryBranch[AccessorProp.Owner]!,
+    parentNode,
+  );
+  (tryBranch[AccessorProp.CatchContent] as Renderer)[RendererProp.Params]?.(
+    catchBranch,
+    [error],
+  );
+  caughtError.add(pendingEffects);
+  insertBranchBefore(catchBranch, parentNode, anchor);
+  if (shown) {
+    const awaitCounter = tryBranch[AccessorProp.AwaitCounter] as
+      | AwaitCounter
+      | undefined;
+    if (awaitCounter) {
+      awaitCounter.i = 0;
+      queueEffect(tryBranch, runPendingEffects);
+    }
+    removeAndDestroyBranch(shown);
+  } else {
+    tempDetachBranch(tryBranch);
+  }
+  tryBranch[AccessorProp.PlaceholderBranch] = catchBranch;
+}

@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A global-derived return never re-ships for the client recompute: the
-// call site fails closed.
+// A tag variable derived from `$global` in the child recomputes from the
+// re-shipped bag; the parent hole follows.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { $global: { locale: "en", serializedGlobals: ["locale"] } },
+    { $global: { locale: "fr", serializedGlobals: ["locale"] } },
+    { $global: { locale: "de", serializedGlobals: ["locale"] } },
+  ],
 };

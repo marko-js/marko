@@ -22,7 +22,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6");
 					return 0;
 				}
-			}, $scope1_id, "#text/1", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2*shell"]);
+			}, $scope1_id, "#text/1", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 3);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_value($scope1_id, "__tests__/template.marko0", count, 1);
 			_scope($scope1_id, {
@@ -31,7 +31,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			}, "__tests__/template.marko", "3:4", { count: "4:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/1", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 2);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, { input_inner: input.inner }, "__tests__/template.marko", 0, { input_inner: ["input.inner"] });
 }, 1, 0);

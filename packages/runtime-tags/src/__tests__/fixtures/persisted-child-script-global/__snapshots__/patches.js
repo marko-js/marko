@@ -4,9 +4,7 @@
     brand: "Marko"
   },
   ca: {
-    ta: "Marko",
-    eb0: "b",
-    wb: "Marko"
+    ta: "Marko"
   }
 }
 
@@ -16,8 +14,6 @@
     brand: "Runtime"
   },
   ca: {
-    ta: "Runtime",
-    eb0: "b",
-    wb: "Runtime"
+    ta: "Runtime"
   }
 }

@@ -18,7 +18,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { c: x });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["a0"]);
+	}, $scope0_id, "b", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["a0"], $scope0_owned, 2);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
@@ -29,7 +29,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope2_id, { c: y });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["a1"]);
+	}, $scope0_id, "c", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["a1"], $scope0_owned, 3);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 1, 0);

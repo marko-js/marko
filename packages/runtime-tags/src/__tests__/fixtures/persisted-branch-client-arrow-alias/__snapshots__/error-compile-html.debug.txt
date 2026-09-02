@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-branch-client-arrow-alias/template.marko:6:8
-      4 |   <if=open>
-      5 |     <const/fn=mk/>
-    > 6 |     <p>${fn()}</p>
-        |        ^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value read inside client-owned structure must deliver as a fill.
-      7 |   </if>
-      8 |   <button onClick() { open = !open }>+</button>
-      9 | </main>

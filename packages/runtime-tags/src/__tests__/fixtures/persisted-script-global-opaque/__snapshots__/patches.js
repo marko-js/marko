@@ -4,8 +4,7 @@
     brand: "Marko",
     other: "y"
   },
-  ta: "y",
-  ga0: "!"
+  ta: "y"
 }
 
 // PATCH
@@ -14,6 +13,5 @@
     brand: "Marko",
     other: "y"
   },
-  ta: "y",
-  ga0: "!"
+  ta: "y"
 }

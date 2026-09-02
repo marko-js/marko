@@ -8,7 +8,7 @@ var widget_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_shells({ a: "a !a0;D%b ;<main><!><button>t</button></main>" });
+_shells({ a: "a !a1;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -26,7 +26,8 @@ var template_default = _template_persisted("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a0");
+	_global_subscribe("a0", $scope0_id);
+	_script($scope0_id, "a1");
 	$scope0_reason ? _scope($scope0_id, {
 		c: brand,
 		e: show

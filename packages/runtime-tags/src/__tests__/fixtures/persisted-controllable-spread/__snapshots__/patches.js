@@ -1,21 +1,20 @@
 // PATCH
 {
-  h1: "a0",
   ja: [{
-    type: "text",
-    value: "a",
-    placeholder: "p2",
-    valueChange: b(1)
-  }, 0, 1]
+    placeholder: "p2"
+  }, {
+    value: 1,
+    valueChange: 1
+  }]
 }
 
 // PATCH
 {
-  h1: "a0",
   ja: [{
-    type: "text",
-    value: "b",
-    placeholder: "p2",
-    valueChange: b(1)
-  }, 0, 1]
+    placeholder: "p3",
+    "data-x": 1
+  }, {
+    value: 1,
+    valueChange: 1
+  }]
 }

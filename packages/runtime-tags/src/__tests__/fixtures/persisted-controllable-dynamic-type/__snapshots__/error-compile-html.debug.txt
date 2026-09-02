@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-controllable-dynamic-type/template.marko:1:1
-    > 1 | <input type=input.kind value=input.value valueChange(next: string) {}>
-        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a dynamic `type=` can change the control kind.
-      2 |

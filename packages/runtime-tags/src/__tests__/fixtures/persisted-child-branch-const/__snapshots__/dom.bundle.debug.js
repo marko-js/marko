@@ -2,15 +2,15 @@
 const $template$1 = "<section></section>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
-const $if_content__input_title = /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => {
+const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/tags/card/index.marko0", "input_title", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => {
 	_attr_class($scope["#h2/0"], $scope._.input_title);
 	_text($scope["#text/1"], $scope._.input_title);
-});
+}));
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$if_content__input_note._($scope);
 };
-const $if_content__input_note = /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => _text($scope["#text/2"], $scope._.input_note));
+const $if_content__input_note = /*@__PURE__*/ _fill_join("__tests__/tags/card/index.marko1", "input_note", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => _text($scope["#text/2"], $scope._.input_note)));
 const $if = /*@__PURE__*/ _if("#section/0", "<h2> </h2><p> </p>", " D lD ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
@@ -18,8 +18,8 @@ const $input$1 = ($scope, input) => {
 	$input_title($scope, input.title);
 	$input_note$1($scope, input.note);
 };
-const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);
-const $input_note$1 = /*@__PURE__*/ _const("input_note", $if_content__input_note);
+const $input_title = /*@__PURE__*/ _fill_const("__tests__/tags/card/index.marko0", "input_title", $if_content__input_title);
+const $input_note$1 = /*@__PURE__*/ _fill_const("__tests__/tags/card/index.marko1", "input_note", $if_content__input_note);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, " b", 0, $input$1);
 
 // template.marko

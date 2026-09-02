@@ -1,8 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-// A rest grain in a selector has the whole-input problem: unrelated (or
-// unserializable) members change it after the wire write. Fail closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A rest of the input mixed into a state test fills as its own value.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ known: "k", x: 1 }, click, click, { known: "k2", x: 0 }],
 };

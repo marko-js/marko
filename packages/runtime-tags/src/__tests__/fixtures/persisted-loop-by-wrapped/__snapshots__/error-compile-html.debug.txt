@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-loop-by-wrapped/template.marko:3:23
-      1 | <let/items=[{ id: 1 }]/>
-      2 | <main>
-    > 3 |   <for|item| of=items by=input.key.bind(null)>
-        |                       ^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server-derived `by` key inside a client-owned loop would read stale.
-      4 |     <li>${item.id}</li>
-      5 |   </for>
-      6 |   <button onClick() { items = [...items, { id: 2 }] }>+</button>

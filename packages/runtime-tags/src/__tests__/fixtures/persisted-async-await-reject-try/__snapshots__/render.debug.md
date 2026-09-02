@@ -20,7 +20,5 @@
 INSERT: main::text("loading")
 REMOVE:  + em
 INSERT: main > em
-REMOVE: main::text("loading")
-INSERT: main > em
-REMOVE: main > em + em
+REMOVE: main > em + ::text("loading")
 ```

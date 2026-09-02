@@ -1,9 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-// An alias of a server value is not a canonical binding, so it cannot fill
-// (no ordinal, no server write); an effect reading it is rejected rather
-// than going silently stale.
+// A script reading an alias chain of a server value re-runs when the
+// chain's root refreshes.
 export const config: TestConfig = {
   persisted: true,
-  error_compiler: true,
+  steps: [
+    { value: "v1", title: "t1" },
+    { value: "v2", title: "t2" },
+  ],
 };

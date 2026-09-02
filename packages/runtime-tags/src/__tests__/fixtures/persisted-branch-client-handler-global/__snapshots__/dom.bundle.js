@@ -1,9 +1,9 @@
 // template.marko
-const $if_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $if_content__setup = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	document.querySelector("main").dataset.title = $scope._.c;
 }));
 const $if = /*@__PURE__*/ _if(0, "<button class=read>read</button>", " ", $if_content__setup);
 const $show = /*@__PURE__*/ _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
-const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, true);
 }));

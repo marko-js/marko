@@ -13,7 +13,11 @@ const [getTagDownstreams] = createSectionState(
   () =>
     new Map<
       t.NodePath<t.MarkoTag>,
-      { binding: Binding; exprs: KnownExprs | undefined }
+      {
+        binding: Binding;
+        exprs: KnownExprs | undefined;
+        consumer: t.MarkoTagExtra | undefined;
+      }
     >(),
 );
 
@@ -21,20 +25,24 @@ export function setTagDownstream(
   tag: t.NodePath<t.MarkoTag>,
   binding: undefined | Binding,
   exprs?: KnownExprs,
+  consumer?: t.MarkoTagExtra,
 ) {
   if (binding) {
-    getTagDownstreams(getSection(tag)).set(tag, { binding, exprs });
+    getTagDownstreams(getSection(tag)).set(tag, { binding, exprs, consumer });
   }
 }
 
 export function finalizeTagDownstreams(section: Section) {
-  for (const [tag, { binding, exprs }] of getTagDownstreams(section)) {
-    crawlSectionsAndSetBinding(tag, binding, exprs);
+  for (const [tag, { binding, exprs, consumer }] of getTagDownstreams(
+    section,
+  )) {
+    crawlSectionsAndSetBinding(tag, consumer, binding, exprs);
   }
 }
 
 function crawlSectionsAndSetBinding(
   tag: t.NodePath<t.MarkoTag>,
+  consumer: t.MarkoTagExtra | undefined,
   binding: Binding,
   exprs: KnownExprs | undefined,
   properties?: Opt<string>,
@@ -43,6 +51,7 @@ function crawlSectionsAndSetBinding(
   if (!skip) {
     const contentSection = getSectionForBody(tag.get("body"));
     if (contentSection) {
+      contentSection.consumer = consumer;
       let target: Binding | undefined = binding;
       forEach(properties, (property) => {
         target = target?.propertyAliases.get(property);
@@ -68,12 +77,20 @@ function crawlSectionsAndSetBinding(
         const attrTagMeta = attrTagLookup[getTagName(child)];
         crawlSectionsAndSetBinding(
           child,
+          consumer,
           binding,
           exprs,
           concat(properties, attrTagMeta.name),
         );
       } else {
-        crawlSectionsAndSetBinding(child, binding, exprs, properties, true);
+        crawlSectionsAndSetBinding(
+          child,
+          consumer,
+          binding,
+          exprs,
+          properties,
+          true,
+        );
       }
     }
   }

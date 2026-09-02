@@ -1,8 +1,11 @@
 import type { TestConfig } from "../../main.test";
 
-// Client state feeding `content=` on a native tag stays closed: the entry
-// would clobber the client's selection.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A native `content=` selected by client state renders client-side.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, click, {}, click],
 };

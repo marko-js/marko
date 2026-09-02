@@ -248,31 +248,52 @@ export function _fill_join_subscribers<T extends SignalFn>(
   });
 }
 
-// A binding's declaration signal already writes + queues its downstream
-// (closures included), so it registers as the fill directly, fused so
-// compiled templates spend one call, not two.
-function fill<T>(key: string, signal: Signal<unknown>) {
-  patchFills[key] = signal;
-  return signal as Signal<T>;
+// A declaration doubles as its fill; `fillFn` (its renders with the frame
+// writes left out) is the fill-driven run when it has any. A let id carries
+// its signal index after the value accessor in debug.
+function fill<T extends Signal<any>>(
+  key: string,
+  signal: T,
+  id: EncodedAccessor,
+  fillFn: SignalFn | undefined,
+) {
+  patchFills[key] = fillFn ? _const(id, fillFn) : signal;
+  return signal;
 }
-export function _fill_let<T>(key: string, id: EncodedAccessor, fn?: SignalFn) {
-  return fill<T>(key, _let<T>(id, fn) as Signal<unknown>);
+export function _fill_let<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+  fillFn?: SignalFn,
+) {
+  return fill(
+    key,
+    _let<T>(id, fn),
+    MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
+    fillFn,
+  );
 }
 export function _fill_let_change<T>(
   key: string,
   id: EncodedAccessor,
   fn?: SignalFn,
+  fillFn?: SignalFn,
 ) {
-  return fill<T>(key, _let_change<T>(id, fn) as Signal<unknown>);
+  return fill(
+    key,
+    _let_change<T>(id, fn),
+    MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
+    fillFn,
+  );
 }
 export function _fill_const<T>(
   key: string,
   id: EncodedAccessor,
   fn?: SignalFn,
+  fillFn?: SignalFn,
 ) {
-  return fill<T>(key, _const<T>(id, fn) as Signal<unknown>);
+  return fill(key, _const<T>(id, fn), id, fillFn);
 }
-
 export function _or(
   id: number,
   fn: SignalFn,

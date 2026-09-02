@@ -1,5 +1,9 @@
 import { types as t } from "@marko/compiler";
-import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
+import {
+  getProgram,
+  isAttributeTag,
+  loadFileForTag,
+} from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from "../visitors/program";
 import {
@@ -10,6 +14,7 @@ import {
 } from "./binding-prop-tree";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
+import isStatic from "./is-static";
 import { isOptimize, isPersisted } from "./marko-config";
 import {
   analyzeAttributeTags,
@@ -30,9 +35,8 @@ import { getChildPatchPlan } from "./persisted/decisions";
 import { addPersistedChildRenderer } from "./persisted/intrinsics";
 import { onFinalizePersisted } from "./persisted/lifecycle";
 import {
-  hasStructuralOrGlobalParam,
   inStatefulBranch,
-  recordStructuralOrGlobalParams,
+  recordStructuralParams,
 } from "./persisted/structure";
 import {
   addRead,
@@ -123,6 +127,8 @@ const kProvenanceRecordedGroups = Symbol(
   "known tag provenance recorded groups",
 );
 const kChildScopeBinding = Symbol("known tag scope binding");
+export const kStaticBody = Symbol("known tag static body");
+export const kTagVar = Symbol("known tag var");
 const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
 const kKnownExprs = Symbol("known tag exprs");
 
@@ -131,6 +137,8 @@ declare module "@marko/compiler/dist/types" {
     [kContentSection]?: Section;
     [kProvenanceRecordedGroups]?: number;
     [kChildScopeBinding]?: Binding;
+    [kStaticBody]?: boolean;
+    [kTagVar]?: true;
     [kChildOffsetScopeBinding]?: Binding;
     [kKnownExprs]?: KnownExprs;
   }
@@ -151,6 +159,10 @@ export function knownTagAnalyze(
     BindingType.dom,
     section,
   ));
+  let staticBody = true;
+  for (const child of tagBody.get("body")) staticBody &&= isStatic(child);
+  tagExtra[kStaticBody] = staticBody;
+  if (tag.node.var) tagExtra[kTagVar] = true;
   const attrExprs = new Set([tagExtra]);
   if (isPersisted()) {
     // Frame ids are local labels: a patch pairs the child scope through a
@@ -178,7 +190,7 @@ export function knownTagAnalyze(
     propTree,
     attrExprs,
   ));
-  setTagDownstream(tag, propTree?.props?.[0]?.binding, exprs);
+  setTagDownstream(tag, propTree?.props?.[0]?.binding, exprs, tagExtra);
 
   if (varBinding) {
     // Tag variables emit a `_var` statement in the parent's setup.
@@ -247,7 +259,7 @@ export function knownTagTranslateHTML(
   // A client-owned instance renders nothing into a patch: the link and the
   // child render skip together, and the absent entry keeps the live child.
   const skipsPatchRender =
-    isPersisted() && getChildPatchPlan(tag).skipsPatchRender;
+    isPersisted() && getChildPatchPlan(tag.node.extra!).skipsPatchRender;
   let clientOwnedStatements: t.Statement[] | undefined = skipsPatchRender
     ? []
     : undefined;
@@ -285,7 +297,14 @@ export function knownTagTranslateHTML(
       }
     }
 
-    if (tagVar) {
+    // A persisted page serializes the child scope for pairing even with no
+    // client code, where nothing could resolve the var's registration.
+    if (
+      tagVar &&
+      (!isPersisted() ||
+        getProgram().node.extra.isInteractive ||
+        loadFileForTag(tag)?.ast.program.extra?.isInteractive)
+    ) {
       // Deferred below the render call: `_var` mints the post-render scope id
       // for the scope offset.
       varStatement = t.expressionStatement(
@@ -457,6 +476,14 @@ export function knownTagTranslateDOM(
   // program, so the feature import rides both outputs.
   if (isPersisted() && !inStatefulBranch(getSection(tag))) {
     importRuntimeFeature("patch-child");
+    for (const group of getParamGroupFeeds(extra) || []) {
+      if (
+        group.sources?.state &&
+        some(group.params, (binding) => binding.selectsStructure)
+      ) {
+        importRuntimeFeature("patch-value");
+      }
+    }
   }
 
   if (node.var) {
@@ -542,19 +569,28 @@ export function finalizeKnownTags(section: Section) {
             );
           });
           addSerializeProvenance(section, fnSources, scopeBinding, group.id);
+          const provenance = getSerializeProvenance(
+            section,
+            scopeBinding,
+            group.id,
+          );
           // The ownership mask composes over these groups at translate
           // time; group order freezes here.
-          ensureReasonGroups(
-            getSerializeProvenance(section, scopeBinding, group.id),
-          );
-          // The fact rolls up: a param feeding a child's structural or
-          // `$global`-mixed param makes this template's params so too.
-          if (
-            some(group.reason, (binding) => binding.structuralOrGlobalParam)
-          ) {
-            recordStructuralOrGlobalParams(
-              getSerializeProvenance(section, scopeBinding, group.id),
-            );
+          ensureReasonGroups(provenance);
+          // Under client state the child re-derives the group, so its
+          // server feeds must keep reaching it.
+          if (provenance?.state) {
+            forEach(provenance.param, (binding) => {
+              binding.feedsStateMixedGroup = true;
+            });
+          }
+          // The fact rolls up: a param feeding a child's structural param
+          // makes this template's params so too.
+          if (some(group.reason, (binding) => binding.selectsStructure)) {
+            recordStructuralParams(provenance);
+            // Client state selecting the child's structure hands it the
+            // structure at run time: its fills need the value patcher.
+            if (provenance?.state) addRuntimeFeatureAsset("patch-value");
           }
         }
       }
@@ -568,12 +604,10 @@ export interface ParamGroupFeeds {
   /** The call site's provenance feeding this group (fn-body reads
    * included; survives any force on the key). */
   sources: Sources | undefined;
-  /** The group covers a structural or `$global`-mixed child param. */
-  structuralOrGlobal: boolean;
 }
 
-// Whether a group has a feed that can change server-side (params or
-// globals) — client state is the only feed this excludes.
+// Whether a group has a feed only the server can supply (params); state
+// and `$global` both recompute client-side.
 export function hasServerFeed(sources: Sources | undefined) {
   return !!(sources?.param || sources?.global);
 }
@@ -597,7 +631,6 @@ export function getParamGroupFeeds(
       scopeBinding,
       group.id,
     ),
-    structuralOrGlobal: hasStructuralOrGlobalParam(group.reason),
   }));
 }
 
@@ -1725,4 +1758,9 @@ function isSimpleReference(expr: t.Expression): boolean {
 function getRootSection(section: Section) {
   while (section.parent) section = section.parent;
   return section;
+}
+
+// The section a known tag renders in (its child scope binding's).
+export function getKnownTagSection(tagExtra: t.MarkoTagExtra) {
+  return tagExtra[kChildScopeBinding]!.section;
 }

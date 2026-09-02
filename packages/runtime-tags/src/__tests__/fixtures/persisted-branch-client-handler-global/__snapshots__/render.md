@@ -1,4 +1,4 @@
-# Render `{"$global":{"title":"first"}}`
+# Render `{"$global":{"title":"first","serializedGlobals":["title"]}}`
 ```html
 <main>
   <button
@@ -57,7 +57,7 @@ document.querySelector(".read").click();
 UPDATE: main[data-title] null => "first!"
 ```
 
-# Update `{"$global":{"title":"second"}}`
+# Update `{"$global":{"title":"second","serializedGlobals":["title"]}}`
 
 # Update
 ```js

@@ -1,7 +1,7 @@
 <let/show=false/>
 <main>
   <if=show>
-    <p data-all=input>x</p>
+    <p data-all=JSON.stringify(input)>x</p>
   </if>
   <button onClick() { show = !show }>+</button>
 </main>

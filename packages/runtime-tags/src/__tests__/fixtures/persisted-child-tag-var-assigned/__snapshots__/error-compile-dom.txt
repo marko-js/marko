@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-tag-var-assigned/template.marko:4:5
-      2 | <main>
-      3 |   <if=show>
-    > 4 |     <counter-box/count start=1/>
-        |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: assigning a child's tag variable inside client-owned structure is not supported yet.
-      5 |     <p>${count}</p>
-      6 |     <button.reset onClick() { count = 0 }>r</button>
-      7 |   </if>
