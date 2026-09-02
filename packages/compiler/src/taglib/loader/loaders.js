@@ -1,6 +1,5 @@
 import loadAttributeFromProps from "./loadAttributeFromProps";
 import loadAttributes from "./loadAttributes";
-import loadTagFromFile from "./loadTagFromFile";
 import loadTagFromProps from "./loadTagFromProps";
 import loadTaglibFromDir from "./loadTaglibFromDir";
 import loadTaglibFromFile from "./loadTaglibFromFile";
@@ -25,7 +24,6 @@ export {
   isSupportedTagProperty,
   loadAttributeFromProps,
   loadAttributes,
-  loadTagFromFile,
   loadTagFromProps,
   loadTaglibFromDir,
   loadTaglibFromFile,
