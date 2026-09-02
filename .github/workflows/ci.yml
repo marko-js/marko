@@ -65,6 +65,11 @@ jobs:
         uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          # zcov merges every worker's `coverage-v8` dump into this one lcov; a
+          # search also ships those dumps, which codecov cannot parse.
+          files: ./coverage/lcov.info
+          disable_search: true
+          fail_ci_if_error: true
   release:
     runs-on: ubuntu-latest
     needs: [build, test]
