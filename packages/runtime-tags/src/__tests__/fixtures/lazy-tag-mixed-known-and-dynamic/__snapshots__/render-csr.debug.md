@@ -81,8 +81,8 @@ document.querySelector(".inc").click();
 ```
 ## Change
 ```
-UPDATE: span:nth-of-type(2)::text "0" => "1"
 UPDATE: span:nth-of-type(1)::text "0" => "1"
+UPDATE: span:nth-of-type(2)::text "0" => "1"
 ```
 
 # Update

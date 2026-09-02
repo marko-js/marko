@@ -60,7 +60,6 @@ document.querySelector(".parent").click();
 ## Change
 ```
 INSERT: .parent + .child
-UPDATE: .child::text@0 "" => "child"
 ```
 
 # Update
