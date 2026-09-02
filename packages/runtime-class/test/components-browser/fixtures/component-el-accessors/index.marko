@@ -1,0 +1,16 @@
+class {
+    onCreate() {
+        this.state = { clicks: 0 };
+    }
+
+    onMount() {
+        this.subscribeTo(this.getEl("first")).on("click", () => {
+            this.state.clicks++;
+        });
+    }
+}
+
+<div key="root">
+    <span key="first">a</span>
+    <span key="second">b</span>
+</div>
