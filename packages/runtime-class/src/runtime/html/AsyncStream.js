@@ -2,7 +2,6 @@
 var EventEmitter = require("events-light");
 var selfClosingTags = require("self-closing-tags");
 var RenderResult = require("../RenderResult");
-var parseHTML = require("../vdom/parse-html");
 var BufferedWriter = require("./BufferedWriter");
 var attrsHelper = require("./helpers/attrs");
 var markoAttr = require("./helpers/data-marko");
@@ -96,8 +95,6 @@ function AsyncStream(global, writer, parentOut) {
   this.name = undefined;
   this._timeoutId = undefined;
 
-  this._node = undefined;
-
   this._elStack = undefined; // Array
 
   this.___components = null; // ComponentsContext
@@ -125,7 +122,6 @@ AsyncStream.enableAsyncStackTrace = function () {
 
 var proto = (AsyncStream.prototype = {
   constructor: AsyncStream,
-  ___host: typeof document === "object" && document,
   ___isOut: true,
 
   [Symbol.asyncIterator]() {
@@ -777,38 +773,6 @@ var proto = (AsyncStream.prototype = {
     if (preserve) {
       this.write("<!--F/-->");
     }
-  },
-
-  ___getNode: function (host) {
-    var node = this._node;
-
-    if (!node) {
-      var nextEl;
-      var fragment;
-      var html = this.___getOutput();
-      if (!host) host = this.___host;
-      var doc = host.ownerDocument || host;
-
-      if (html) {
-        node = parseHTML(html);
-
-        if (node && node.nextSibling) {
-          // If there are multiple nodes, turn it into a document fragment.
-          fragment = doc.createDocumentFragment();
-
-          do {
-            nextEl = node.nextSibling;
-            fragment.appendChild(node);
-          } while ((node = nextEl));
-
-          node = fragment;
-        }
-      }
-
-      // if HTML is empty use empty document fragment (so that we're returning a valid DOM node)
-      this._node = node || doc.createDocumentFragment();
-    }
-    return node;
   },
 
   then: function (fn, fnErr) {
