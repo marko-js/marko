@@ -1,4 +1,4 @@
-// size: 26586 (min) 9948 (brotli)
+// size: 26634 (min) 9945 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2109,10 +2109,12 @@ let empty = [],
   _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
     ((nodeAccessor = decodeAccessor(nodeAccessor)),
       (childScopeAccessor = decodeAccessor(childScopeAccessor)));
-    let pending, renderer;
+    let pending,
+      renderer,
+      insertCached = (child, marker) => insertLoaded(renderer, child, marker);
     return (owner) => {
       let child = owner[childScopeAccessor];
-      if (renderer) insertLoaded(renderer, child, owner[nodeAccessor]);
+      if (renderer) queueRender(child, insertCached, -1, owner[nodeAccessor]);
       else {
         let awaitCounter = addAwaitCounter(owner);
         ((child.X ||= /* @__PURE__ */ new Map()),
@@ -2129,18 +2131,19 @@ let empty = [],
     };
   }),
   _load_signal = /*@__PURE__*/ withLazy((load) => {
-    let pending, signal;
-    return (scope, value) => {
-      ((pending ||= load()),
-        scope.X || (!("X" in scope) && scope.H === runId)
-          ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value })
-          : signal
-            ? signal(scope, value)
-            : pending.then(
-                (mod) => queueAsyncRender(scope, (signal = mod._), value),
-                () => 0,
-              ));
-    };
+    let pending,
+      apply = (scope, value) => {
+        ((pending ||= load()),
+          scope.X || (!("X" in scope) && scope.H === runId)
+            ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, [value, apply])
+            : apply._
+              ? apply._(scope, value)
+              : pending.then(
+                  (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
+                  () => 0,
+                ));
+      };
+    return apply;
   });
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
@@ -2220,32 +2223,30 @@ function mount(input = {}, reference, position) {
 function insertLoaded(renderer, branch, marker, awaitCounter) {
   let parent = marker.parentNode,
     values = branch.X,
+    clone = () => {
+      (syncGen(branch), renderer.b(branch, parent.namespaceURI), (branch.X = 0));
+    },
     insert = () => {
       (insertBranchBefore(branch, parent, marker), marker.remove(), awaitCounter?.c());
     },
     remaining;
-  if (
-    (syncGen(branch),
-    renderer.b(branch, parent.namespaceURI),
-    (branch.X = 0),
-    (remaining = values?.size))
-  ) {
+  if ((remaining = values?.size)) {
     let fail = loadFailed(branch, awaitCounter);
-    for (let [promise, entry] of values)
+    values.forEach(([, apply], promise) =>
       promise.then(
-        (signal) => {
-          ((entry.b = signal),
-            --remaining ||
-              queueAsyncRender(branch, (branch) => {
-                (syncGen(branch),
-                  renderer.c?.(branch),
-                  values.forEach((e) => e.b._(branch, e.a)),
-                  insert());
-              }));
-        },
+        (mod) =>
+          (apply._ = mod._) &&
+          !--remaining &&
+          queueAsyncRender(branch, (branch) => {
+            (clone(),
+              renderer.c?.(branch),
+              values.forEach(([value, apply]) => apply(branch, value)),
+              insert());
+          }),
         (error) => remaining > 0 && ((remaining = 0), fail(error)),
-      );
-  } else (setupBranch(renderer, branch), insert());
+      ),
+    );
+  } else (clone(), setupBranch(renderer, branch), insert());
 }
 function loadFailed(scope, awaitCounter) {
   return (error) => {

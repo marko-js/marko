@@ -1,4 +1,3 @@
-import { LoadSignalValue } from "../common/accessor.debug";
 import { decodeAccessor } from "../common/helpers";
 import {
   AccessorProp,
@@ -9,23 +8,27 @@ import {
   type Template,
 } from "../common/types";
 import { addAwaitCounter, renderCatch } from "./control-flow";
-import { queueAsyncRender, runId } from "./queue";
+import { queueAsyncRender, queueRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
 import { withLazy } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
 
-type LoadValues = Map<Promise<LoadSignal>, LoadValue>;
+/** Input chunks buffered until the tag's module lands, keyed by the chunk's
+ * load so a re-set attribute replaces its own entry: the value, and the
+ * `_load_signal` that applies it once its module is cached. */
+type LoadValues = Map<Promise<LoadSignal>, [value: unknown, apply: LoadApply]>;
+/** A `_load_signal`: applies a chunk's value, and caches the chunk's
+ * signal on itself once loaded. */
+interface LoadApply extends Signal {
+  _?: Signal;
+}
 interface LoadModule {
   _: [template: string, walks: string, setup: SetupFn];
 }
 interface LoadSignal {
   _: Signal;
-}
-interface LoadValue {
-  [LoadSignalValue.Value]: unknown;
-  [LoadSignalValue.Signal]?: LoadSignal;
 }
 export interface LoadTrigger {
   <T>(load: () => Promise<T>): () => Promise<T>;
@@ -77,11 +80,15 @@ export const _load_setup = /*@__PURE__*/ withLazy(
 
     let pending: ReturnType<typeof load> | undefined;
     let renderer: Renderer | undefined;
+    const insertCached = (child: BranchScope, marker: ChildNode) =>
+      insertLoaded(renderer!, child, marker);
 
     return (owner: Scope) => {
       const child = owner[childScopeAccessor] as BranchScope;
       if (renderer) {
-        insertLoaded(renderer, child, owner[nodeAccessor] as ChildNode);
+        // Later in this run, once the rest of the owner's setup has
+        // buffered every input chunk for the batch below.
+        queueRender(child, insertCached, -1, owner[nodeAccessor] as ChildNode);
       } else {
         const awaitCounter = addAwaitCounter(owner);
         child[AccessorProp.Load] ||= new Map() as LoadValues;
@@ -112,38 +119,42 @@ function insertLoaded(
 ) {
   const parent = marker.parentNode as Element,
     values = branch[AccessorProp.Load] as LoadValues,
+    // Clone in the run that sets up: nested scopes take the generation of
+    // the run that creates them, and a `<let>` seeded by setup in a later
+    // run is dropped as stale, taking the nested tag's `<return>` with it.
+    clone = () => {
+      syncGen(branch);
+      renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
+      branch[AccessorProp.Load] = 0;
+    },
     insert = () => {
       insertBranchBefore(branch, parent, marker);
       marker.remove();
       awaitCounter?.c();
     };
   let remaining: number;
-  syncGen(branch);
-  renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
-  branch[AccessorProp.Load] = 0;
   if ((remaining = values?.size as number)) {
     const fail = loadFailed(branch, awaitCounter);
-    for (const [promise, entry] of values!) {
+    // Each entry's signal is cached as its chunk lands, so the replay
+    // applies every entry synchronously.
+    values!.forEach(([, apply], promise) =>
       promise.then(
-        (signal) => {
-          entry[LoadSignalValue.Signal] = signal;
-          if (!--remaining) {
-            queueAsyncRender(branch, (branch) => {
-              syncGen(branch);
-              renderer[RendererProp.Setup]?.(branch);
-              values.forEach((e) =>
-                e[LoadSignalValue.Signal]!._(branch, e[LoadSignalValue.Value]),
-              );
-              insert();
-            });
-          }
-        },
+        (mod) =>
+          (apply._ = mod._) &&
+          !--remaining &&
+          queueAsyncRender(branch, (branch) => {
+            clone();
+            renderer[RendererProp.Setup]?.(branch);
+            values.forEach(([value, apply]) => apply(branch, value));
+            insert();
+          }),
         // A rejected input chunk drives the same `@catch` boundary as a setup
         // failure; `remaining = 0` stops later chunks re-firing either arm.
         (error) => remaining > 0 && ((remaining = 0), fail(error)),
-      );
-    }
+      ),
+    );
   } else {
+    clone();
     setupBranch(renderer, branch);
     insert();
   }
@@ -166,26 +177,27 @@ function loadFailed(
 
 export const _load_signal = /*@__PURE__*/ withLazy(
   (load: () => Promise<LoadSignal>): Signal => {
-    let pending: ReturnType<typeof load> | undefined;
-    let signal: Signal | undefined;
-    return (scope: Scope, value: unknown) => {
+    let pending: Promise<LoadSignal> | undefined;
+    const apply: LoadApply = (scope: Scope, value: unknown) => {
       pending ||= load();
       if (
         scope[AccessorProp.Load] ||
         (!(AccessorProp.Load in scope) && scope[AccessorProp.Gen] === runId)
       ) {
-        (scope[AccessorProp.Load] ||= new Map() as LoadValues).set(pending, {
-          [LoadSignalValue.Value]: value,
-        });
-      } else if (signal) {
-        signal(scope, value);
+        (scope[AccessorProp.Load] ||= new Map() as LoadValues).set(pending, [
+          value,
+          apply,
+        ]);
+      } else if (apply._) {
+        apply._(scope, value);
       } else {
         pending.then(
-          (mod) => queueAsyncRender(scope, (signal = mod._), value),
+          (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
           () => 0,
         );
       }
     };
+    return apply;
   },
 );
 

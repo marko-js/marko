@@ -1,0 +1,10 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/mounted=false>
+<let/n=0>
+<button class="mount" onClick() { mounted = true }>mount</button>
+<button class="inc" onClick() { n++ }>inc</button>
+<if=mounted>
+  <Child/focusChild label=`x${n}`/>
+  <button class="focus" onClick() { focusChild() }>focus</button>
+</if>

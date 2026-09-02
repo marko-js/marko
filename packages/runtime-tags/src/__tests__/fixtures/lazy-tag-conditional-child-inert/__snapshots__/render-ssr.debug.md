@@ -70,5 +70,4 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + div
-UPDATE: div::text@0 "" => "x"
 ```

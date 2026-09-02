@@ -1,0 +1,8 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/mounted=false>
+<button class="mount" onClick() { mounted = true }>mount</button>
+<if=mounted>
+  <${Child}/focusChild label="x"/>
+  <button class="focus" onClick() { focusChild() }>focus</button>
+</if>
