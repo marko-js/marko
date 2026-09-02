@@ -35,7 +35,7 @@ el.dispatchEvent(new document.defaultView.Event("input", { bubbles: true }));
 ```
 ```html
 <main
-  data-got="HI"
+  data-got="hi"
 >
   <h1>
     Store!
@@ -48,5 +48,5 @@ el.dispatchEvent(new document.defaultView.Event("input", { bubbles: true }));
 ```
 ## Change
 ```
-UPDATE: main[data-got] null => "HI"
+UPDATE: main[data-got] null => "hi"
 ```

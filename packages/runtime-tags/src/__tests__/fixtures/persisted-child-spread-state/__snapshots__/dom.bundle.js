@@ -29,3 +29,4 @@ const $on = /*@__PURE__*/ _let(7, ($scope) => {
 const $setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
 	$on($scope, !$scope.h);
 }));
+const $input_props = _fill_const("a0", 6, $input_props__OR__on);

@@ -23,9 +23,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				cell,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "5:6", { cell: "5:10" })));
-		}, (cell) => cell, $scope1_id, "#text/0", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "__tests__/template.marko_2*shell");
+		}, (cell) => cell, $scope1_id, "#text/0", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_owned, 1);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
-	}, (row) => row.id, $scope0_id, "#text/1", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "__tests__/template.marko_1*shell");
+	}, (row) => row.id, $scope0_id, "#text/1", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_owned, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {

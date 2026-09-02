@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// Group params carry LEAF property names: matching walks up to the input
-// ROOT property, so a nested structural feed still gates its group.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A nested structural param fed from an attribute tag reading an import
+// selects client-side.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{}, {}, click, click],
 };

@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
 // A branch script mixing an effect-read input value with a `$global` key:
-// one entry carries local accessors, the owner-hop depth, AND the global
-// segment — either side changing re-runs it, neither means no run.
+// one entry carries local accessors and the owner-hop depth, the key joins
+// the host signal: either side changing re-runs it once, both at once too.
 const step = (value: string, brand: string, title = "Store") => ({
   show: true,
   title,
@@ -19,5 +19,6 @@ export const config: TestConfig = {
     step("b", "Marko"),
     step("b", "Marko", "Store!"),
     step("b", "Fresh"),
+    step("c", "Patch"),
   ],
 };

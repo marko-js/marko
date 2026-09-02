@@ -10,7 +10,7 @@ var field_default = _template_persisted("__tests__/tags/field/index.marko", (inp
 		v = _new_v;
 	}, "__tests__/tags/field/index.marko_0/valueChange", $scope0_id))}${_patch_bind($scope0_id, "ControlledHandler:#input/0", _resume((_new_v) => {
 		v = _new_v;
-	}, "__tests__/tags/field/index.marko_0/valueChange", $scope0_id))}${_patch_control($scope0_id, "#input/0", 2, v)}>${_el_resume($scope0_id, "#input/0")}<em>${_text_resume($scope0_id, "#text/1", v)}</em>`);
+	}, "__tests__/tags/field/index.marko_0/valueChange", $scope0_id), 0, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_text_resume($scope0_id, "#text/1", v)}</em>`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/field/index.marko0", v, 1);
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/field/index.marko", 0, { "ControlledHandler:#input/0": ["valueChange"] });

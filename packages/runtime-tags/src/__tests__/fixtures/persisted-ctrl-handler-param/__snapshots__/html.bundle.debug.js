@@ -10,7 +10,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	if ($scope0_reason) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_html(`<input${_attr_input_value($scope1_id, "#input/0", "x", input.onChange)}${_patch_bind($scope1_id, "ControlledHandler:#input/0", input.onChange)}${_patch_control($scope1_id, "#input/0", 2, "x", $scope0_owned, 0)}>${_el_resume($scope1_id, "#input/0")}`);
+			_html(`<input${_attr_input_value($scope1_id, "#input/0", "x", input.onChange)}${_patch_control($scope1_id, "#input/0", 2, "x", $scope0_owned, 0)}>${_el_resume($scope1_id, "#input/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4", { "ControlledHandler:#input/0": ["valueChange", "4:22"] });
 			return 0;

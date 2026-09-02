@@ -1,64 +1,22 @@
-# Render `{"field":{"value":"a","placeholder":"p1"}}`
+# Render `{"attrs":{"placeholder":"p1"}}`
 ```html
 <input
   placeholder="p1"
-  type="text"
-  value="a"
-/>
-<p />
-```
-
-# Update
-```js
-const el = document.querySelector("input");
-el.value = "typed";
-el.dispatchEvent(new document.defaultView.Event("input", { bubbles: true }));
-```
-```html
-<input
-  placeholder="p1"
-  type="text"
   value="a"
 />
 <p>
-  typed
+  a
 </p>
 ```
-## Change
-```
-UPDATE: p::text "" => "typed"
-```
 
-# Update
-```js
-document.querySelector("p").textContent =
-`live:${document.querySelector("input") .value}`;
-```
-```html
-<input
-  placeholder="p1"
-  type="text"
-  value="a"
-/>
-<p>
-  live:a
-</p>
-```
-## Change
-```
-REMOVE: p::text("typed")
-INSERT: p::text("live:a")
-```
-
-# Update `{"field":{"value":"a","placeholder":"p2"}}`
+# Update `{"attrs":{"placeholder":"p2"}}`
 ```html
 <input
   placeholder="p2"
-  type="text"
   value="a"
 />
 <p>
-  live:a
+  a
 </p>
 ```
 ## Change
@@ -68,45 +26,39 @@ UPDATE: input[placeholder] "p1" => "p2"
 
 # Update
 ```js
-document.querySelector("p").textContent =
-`live:${document.querySelector("input") .value}`;
-```
-```html
-<input
-  placeholder="p2"
-  type="text"
-  value="a"
-/>
-<p>
-  live:a
-</p>
-```
-## Change
-```
-REMOVE: p::text("live:a")
-INSERT: p::text("live:a")
-```
-
-# Update `{"field":{"value":"b","placeholder":"p2"}}`
-
-# Update
-```js
-document.querySelector("p").textContent =
-`live:${document.querySelector("input") .value}`;
+const el = document.querySelector("input");
+el.value = "typed";
+el.dispatchEvent(new (el.ownerDocument.defaultView).Event("input"));
 ```
 ```html
 <input
   default-value="a"
   placeholder="p2"
-  type="text"
-  value="b"
+  value="typed"
 />
 <p>
-  live:b
+  typed
 </p>
 ```
 ## Change
 ```
-REMOVE: p::text("live:a")
-INSERT: p::text("live:b")
+UPDATE: p::text "a" => "typed"
+```
+
+# Update `{"attrs":{"placeholder":"p3","data-x":1}}`
+```html
+<input
+  data-x="1"
+  default-value="a"
+  placeholder="p3"
+  value="typed"
+/>
+<p>
+  typed
+</p>
+```
+## Change
+```
+UPDATE: input[placeholder] "p2" => "p3"
+UPDATE: input[data-x] null => "1"
 ```

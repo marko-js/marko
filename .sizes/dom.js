@@ -1,4 +1,4 @@
-// size: 28323 (min) 10466 (brotli)
+// size: 28568 (min) 10592 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -749,17 +749,17 @@ function _fill_join_subscribers(key, valueAccessor, value, getJoin, index) {
     }
   });
 }
-function fill(key, signal) {
-  return ((patchFills[key] = signal), signal);
+function fill(key, signal, id, fillFn) {
+  return ((patchFills[key] = fillFn ? _const(id, fillFn) : signal), signal);
 }
-function _fill_let(key, id, fn) {
-  return fill(key, _let(id, fn));
+function _fill_let(key, id, fn, fillFn) {
+  return fill(key, _let(id, fn), id, fillFn);
 }
-function _fill_let_change(key, id, fn) {
-  return fill(key, _let_change(id, fn));
+function _fill_let_change(key, id, fn, fillFn) {
+  return fill(key, _let_change(id, fn), id, fillFn);
 }
-function _fill_const(key, id, fn) {
-  return fill(key, _const(id, fn));
+function _fill_const(key, id, fn, fillFn) {
+  return fill(key, _const(id, fn), id, fillFn);
 }
 function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
   return (
@@ -2110,16 +2110,10 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let globalsChanged = {},
-  patchGlobalsEntry = (live, _key, value) => {
-    let globals = live.$;
-    for (let key in value)
-      globals[key] !== value[key] && ((globals[key] = value[key]), (globalsChanged[key] = runId));
-  },
-  frameChecks = [],
+let frameChecks = [],
   frameVars = {};
 function applyPatch(frame, renderId = "_", runtimeId = "M") {
-  (init(runtimeId), (patchers.$ = patchGlobalsEntry));
+  (init(runtimeId), (patchers.$ ||= applyGlobals));
   let render = beginPatch(renderId);
   try {
     let names = Object.keys(frameVars),
@@ -2135,9 +2129,31 @@ function applyPatch(frame, renderId = "_", runtimeId = "M") {
     abortPatch();
   }
 }
+function patchWrite(scope, accessor, value) {
+  (scope[accessor] !== value || !(accessor in scope)) &&
+    ((scope[accessor] = value), ((scope.AA ??= {})[accessor] = runId));
+}
+function applyGlobals(live, _key, value) {
+  for (let key in value) patchWrite(live.$, key, value[key]);
+}
 function commitFrame(render) {
   (runEffects(render.m([]), 1), run());
   for (let check of frameChecks) check();
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let globalJoins = {};
+function _global_join(key, id, join) {
+  return ((globalJoins[key] ??= {})[id] = (scope, value) => {
+    (join(scope, value), subscribeToScopeSet(scope.$, "B" + id, scope));
+  });
+}
+function _global_script(id, fn) {
+  let effect = _resume(id, (scope) => {
+    let ran = (scope.AA ??= {});
+    ran[id] !== runId && ((ran[id] = runId), fn(scope));
+  });
+  return (scope) => queueEffect(scope, effect);
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs

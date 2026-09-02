@@ -1,25 +1,26 @@
 // template.marko
 const $template = "<input><p> </p>";
 const $walks = " bD l";
-const $text = /*@__PURE__*/ _let("text/5", ($scope) => _text($scope["#text/1"], $scope.text));
+const $value = /*@__PURE__*/ _let("value/5", ($scope) => {
+	_attr_input_value($scope, "#input/0", $scope.value, $valueChange($scope));
+	_text($scope["#text/1"], $scope.value);
+});
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#input/0"));
 function $setup($scope) {
-	$text($scope, "");
+	$value($scope, "a");
+	$setup__script($scope);
 }
-const $field2__script = _script("__tests__/template.marko_0_field#6", ($scope) => _attrs_script($scope, "#input/0"));
-const $field2 = /*@__PURE__*/ _const("field", ($scope) => {
-	_attrs($scope, "#input/0", {
-		type: "text",
-		...$scope.field
-	}, _controllable_input);
-	$field2__script($scope);
+const $input_attrs__script = _script("__tests__/template.marko_0_input_attrs#4", ($scope) => _attrs_script($scope, "#input/0"));
+const $input_attrs = /*@__PURE__*/ _const("input_attrs", ($scope) => {
+	_attrs_partial($scope, "#input/0", $scope.input_attrs, {
+		value: 1,
+		valueChange: 1
+	});
+	$input_attrs__script($scope);
 });
-const $input_field = ($scope, input_field) => $field2($scope, {
-	...input_field,
-	valueChange: $field($scope)
-});
-const $input = ($scope, input) => $input_field($scope, input.field);
-const $field = ($scope) => (next) => {
-	$text($scope, next);
+const $input = ($scope, input) => $input_attrs($scope, input.attrs);
+const $valueChange = ($scope) => function(v) {
+	$value($scope, v);
 };
-_resume("__tests__/template.marko_0/field", $field);
+_resume("__tests__/template.marko_0/valueChange", $valueChange);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

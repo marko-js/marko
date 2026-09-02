@@ -13,10 +13,10 @@ const read = (document: Document) => {
 export const config: TestConfig = {
   persisted: true,
   steps: [
-    { $global: { title: "first" } },
+    { $global: { title: "first", serializedGlobals: ["title"] } },
     show,
     read,
-    { $global: { title: "second" } },
+    { $global: { title: "second", serializedGlobals: ["title"] } },
     read,
   ],
 };

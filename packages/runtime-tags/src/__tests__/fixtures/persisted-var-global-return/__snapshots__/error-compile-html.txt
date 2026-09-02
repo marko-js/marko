@@ -1,8 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-var-global-return/template.marko:2:3
-      1 | <main>
-    > 2 |   <tagger/tag/>
-        |   ^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a return derived from $global is not supported yet.
-      3 |   <p>${tag}</p>
-      4 | </main>
-      5 |

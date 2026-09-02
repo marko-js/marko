@@ -17,7 +17,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope2_id, {});
 		}, 1, "a2");
 		$scope0_reason && _scope($scope1_id, {});
-	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1");
+	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_owned, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_reason && _scope($scope0_id, {});

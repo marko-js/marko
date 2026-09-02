@@ -143,6 +143,11 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
+  /** For content a known tag consumes: that tag's extra (its input feeds
+   * decide whether the consumer may hand the site to the client). */
+  consumer: t.MarkoTagExtra | undefined;
+  /** For a `<define>` body: the sections of its direct `<${var}>` sites. */
+  defineSites: Section[] | undefined;
   downstreamBinding:
     | {
         binding: Binding;
@@ -255,6 +260,8 @@ export function startSection(
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
+      consumer: undefined,
+      defineSites: undefined,
       downstreamBinding: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,

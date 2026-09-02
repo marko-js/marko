@@ -5,10 +5,7 @@
     locale: "en",
     other: "y"
   },
-  ta: "y",
-  ea0: "c d",
-  wc: "Marko",
-  wd: "en"
+  ta: "y"
 }
 
 // PATCH
@@ -18,10 +15,7 @@
     locale: "fr",
     other: "y"
   },
-  ta: "y",
-  ea0: "c d",
-  wc: "Marko",
-  wd: "fr"
+  ta: "y"
 }
 
 // PATCH
@@ -31,8 +25,5 @@
     locale: "fr",
     other: "y"
   },
-  ta: "y",
-  ea0: "c d",
-  wc: "Fresh",
-  wd: "fr"
+  ta: "y"
 }

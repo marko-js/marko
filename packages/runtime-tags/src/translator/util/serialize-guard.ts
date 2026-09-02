@@ -2,13 +2,14 @@ import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
 import { isPersisted } from "./marko-config";
-import { type Opt, some, Sorted } from "./optional";
+import { forEach, type Opt, some, Sorted } from "./optional";
 import { scopeReasonRuntime } from "./persisted/intrinsics";
 import { isBranchPathSection } from "./persisted/structure";
 import {
   compareSources,
   getDebugNames,
   getDebugNamesAsIdentifier,
+  isReferencedExtra,
   type Sources,
 } from "./references";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
@@ -19,6 +20,7 @@ import {
   type Section,
 } from "./sections";
 import {
+  getSerializeSourcesForExpr,
   isReasonDynamic,
   type SerializeReason,
   type SerializeReasons,
@@ -191,9 +193,31 @@ function ensureScopeOwned(section: Section) {
 // The per-group ownership bit as `[mask, groupIdx]` trailing args for a
 // patch writer, or `[]` when statically server-owned; only root params
 // gate (locals ride structure whose ownership the call site required).
+// The ownership args for an expression's write: a value fixed for the
+// scope's lifetime (a constant, an `<id>`, a `<define>`) only seeds a construct.
+export function getExprWriteOwnership(extra: t.NodeExtra | undefined) {
+  return getPatchWriteOwnership(
+    getSerializeSourcesForExpr(extra || {}),
+    isStableExpr(extra),
+  );
+}
+
+export function isStableExpr(extra: t.NodeExtra | undefined) {
+  if (!extra || !isReferencedExtra(extra)) return false;
+  let stable = true;
+  forEach(extra.referencedBindings, (binding) => {
+    stable &&= !!binding.stable;
+  });
+  return stable;
+}
+
 export function getPatchWriteOwnership(
   sources: Sources | undefined,
+  stable?: boolean,
 ): [t.Expression, t.Expression] | [] {
+  // Never changes: the write only seeds a construct, like a client-owned
+  // group's (mask `0`).
+  if (stable) return [t.numericLiteral(0), t.numericLiteral(0)];
   for (const [paramsSection, params] of groupParamsBySection(sources?.param)) {
     if (!paramsSection.parent) {
       ensureScopeOwned(paramsSection);

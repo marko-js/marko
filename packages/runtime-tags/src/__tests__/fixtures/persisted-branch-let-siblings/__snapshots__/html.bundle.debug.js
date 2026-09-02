@@ -20,7 +20,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_scope($scope1_id, { x }, "__tests__/template.marko", "3:4", { x: "4:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 2);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
@@ -31,7 +31,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_scope($scope2_id, { y }, "__tests__/template.marko", "8:4", { y: "9:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_2*shell"]);
+	}, $scope0_id, "#text/2", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 3);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

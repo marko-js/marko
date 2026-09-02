@@ -51,7 +51,7 @@ function $setup($scope) {
 	$on($scope, false);
 	$setup__script($scope);
 }
-const $input_props = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_props", $input_props__OR__on);
+const $input_props = _fill_const("__tests__/template.marko0", "input_props", $input_props__OR__on);
 const $input = ($scope, input) => {
 	$input_badge($scope, input.badge);
 	$input_props($scope, input.props);

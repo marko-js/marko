@@ -20,6 +20,6 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_suffix = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_suffix", $input_suffix__OR__count);
+const $input_suffix = _fill_const("__tests__/template.marko0", "input_suffix", $input_suffix__OR__count);
 const $input = ($scope, input) => $input_suffix($scope, input.suffix);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

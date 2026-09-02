@@ -1,8 +1,14 @@
 import type { TestConfig } from "../../main.test";
 
-// A `<script>` reading a server value inside client-owned structure: its
-// re-run entry would ride the branch partial the frame no longer carries.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A script inside client-owned structure reading a server value: the value
+// fills through the closure that queues the script, which re-runs.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  // The script leaves state on the page a fresh render lacks.
+  skip_fresh_render: true,
+  steps: [{ title: "a" }, click, click, { title: "b" }],
 };

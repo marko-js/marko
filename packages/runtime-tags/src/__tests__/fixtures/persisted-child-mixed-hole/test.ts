@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// One hole reading both params fuses them into one group: the server-fed
-// label has no fill to deliver through, so the state mix rejects.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// One hole reading a server param and a client-fed param: the server value
+// fills at the parent and the tag-args signal re-feeds the child.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ title: "a" }, click, { title: "b" }, click, { title: "c" }],
 };

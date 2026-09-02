@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><button>+</button><span>parity</span><!></main>";
 const $walks = "D b b%l";
-const $if_content__input_tone = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _attr_class($scope["#em/0"], $scope._.input_tone));
+const $if_content__input_tone = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_tone", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _attr_class($scope["#em/0"], $scope._.input_tone)));
 const $if_content__setup = $if_content__input_tone;
 const $input_tone__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_tone", /*@__PURE__*/ _or(8, ($scope) => _attr_class($scope["#button/0"], [
 	"btn",

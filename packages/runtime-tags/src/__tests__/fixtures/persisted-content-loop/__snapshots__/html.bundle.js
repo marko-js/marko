@@ -4,8 +4,9 @@ _shells({ b: "b;b%;<!><!><!>" });
 var widget_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
@@ -38,7 +39,7 @@ var template_default = _template_persisted("a", (input) => {
 			e: $for_content__item_text__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1");
+	}, 0, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_owned, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	$scope0_reason && _scope($scope0_id, {});
 }, 1, () => [widget_default]);

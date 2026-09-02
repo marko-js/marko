@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-mixed-hole/template.marko:3:3
-      1 | <let/count=0/>
-      2 | <main>
-    > 3 |   <combo label=input.title qty=count/>
-        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a server value mixed into a client-fed input group must be patchable through a fill.
-      4 |   <button onClick() { count++ }>+</button>
-      5 | </main>
-      6 |

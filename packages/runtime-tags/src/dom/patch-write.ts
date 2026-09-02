@@ -1,18 +1,11 @@
 import type { Accessor } from "../common/types";
-import { AccessorProp, PatchKey } from "../common/types";
-import { runId } from "./queue";
+import { PatchKey } from "../common/types";
+import { patchWrite } from "./patch";
 import { constructPatchers, patchers } from "./resume";
 
-// Plain patched writes, shared by every feat whose entries carry them; a
-// changed value is marked with the frame's epoch for `patch-effect`.
+// Plain patched writes, shared by every feat whose entries carry them.
 constructPatchers[PatchKey.Write] = patchers[PatchKey.Write] = (
   scope,
   key,
   value,
-) => {
-  const accessor = key.slice(PatchKey.Write.length) as Accessor;
-  if (scope[accessor] !== value || !(accessor in scope)) {
-    scope[accessor] = value;
-    (scope[AccessorProp.PatchChanged] ??= {})[accessor] = runId;
-  }
-};
+) => patchWrite(scope, key.slice(PatchKey.Write.length) as Accessor, value);

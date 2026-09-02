@@ -15,7 +15,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		_html(`<li${_patch_attrs(item.attrs, "#li/0", $scope1_id, "li", void 0, $scope0_owned, 0)}>${_patch_text($scope1_id, "#text/1", item.id, void 0, $scope0_owned, 0)}</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1_item_attrs#4");
 		_scope($scope1_id, {}, "__tests__/template.marko", "3:4", { "EventAttributes:#li/0": ["...item.attrs", "4:12"] });
-	}, (item) => item.id, $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell");
+	}, (item) => item.id, $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_owned, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });

@@ -9,7 +9,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, "a0"), () => {
 		_html(`<select${_patch_bind($scope0_id, "Eb", _resume(function(next) {
 			document.querySelector("main").dataset.choice = next;
-		}, "a0"))}${_patch_control($scope0_id, "b", 3, input.choice, $scope0_owned, 1)}><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
+		}, "a0"), 0, 0)}${_patch_control($scope0_id, "b", 3, input.choice, $scope0_owned, 1)}><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
 	});
 	_html(`${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");

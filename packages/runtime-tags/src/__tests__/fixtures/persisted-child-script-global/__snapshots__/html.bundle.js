@@ -1,14 +1,13 @@
 // tags/badge/index.marko
 const $template = "<span> </span>";
-_shells({ b: "b !b0;D ;<span> </span>" });
+_shells({ b: "b !b1;D ;<span> </span>" });
 var badge_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
-	const $global$1 = $global();
-	_html(`<span>${_patch_text($scope0_id, "a", $global$1.brand)}</span>`);
-	_script($scope0_id, "b0");
-	_patch_effect($scope0_id, "b0", "b");
-	$scope0_reason ? _scope($scope0_id, { b: $global$1?.brand }) : _patch_write($scope0_id, "b", $global$1?.brand);
+	_html(`<span>${_patch_text($scope0_id, "a", $global().brand)}</span>`);
+	_global_subscribe("b0", $scope0_id);
+	_script($scope0_id, "b1");
+	$scope0_reason && _scope($scope0_id, {});
 }, 0, 1);
 
 // template.marko

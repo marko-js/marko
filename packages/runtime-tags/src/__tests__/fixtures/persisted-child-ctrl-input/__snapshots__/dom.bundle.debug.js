@@ -3,8 +3,8 @@ const $template$1 = "<input><em> </em>";
 const $walks$1 = " bD l";
 const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(6, ($scope) => _attr_input_value($scope, "#input/0", $scope.input_value, $scope.input_valueChange));
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
-	_text($scope["#text/1"], $scope.input_value);
 	$input_value__OR__input_valueChange($scope);
+	_text($scope["#text/1"], $scope.input_value);
 });
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_value__OR__input_valueChange);
 const $setup__script$1 = _script("__tests__/tags/field/index.marko_0", ($scope) => _attr_input_value_script($scope, "#input/0"));

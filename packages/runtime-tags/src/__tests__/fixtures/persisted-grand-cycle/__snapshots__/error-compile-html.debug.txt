@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-grand-cycle/template.marko:3:3
-      1 | <let/show=true/>
-      2 | <main>
-    > 3 |   <if=show>
-        |   ^ Cannot read properties of undefined (reading 'paramReasonGroups')
-      4 |     <cyc-a/>
-      5 |   </if>
-      6 |   <button onClick() { show = !show }>t</button>

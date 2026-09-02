@@ -5,8 +5,9 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<section>");
-	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -33,8 +34,9 @@ var template_default = _template_persisted("a", (input) => {
 				_persisted_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_patch_text($scope2_id, "a", input.note, void 0, $scope0_owned, 2)}</p>`);
-				_patch_dynamic_tag($scope2_id, "b", input.inner, $scope0_owned, 3);
-				_dynamic_tag($scope2_id, "b", input.inner, {}, 0, 0, _source_guard($scope0_reason, 3), 1);
+				const $tag = input.inner;
+				_patch_dynamic_tag($scope2_id, "b", $tag, 0, 0, 0, 0, $scope0_owned, 3);
+				_dynamic_tag($scope2_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 3), 1);
 				_subscribe(_source_if($scope0_reason, 3) && $input_inner__closures, _subscribe(_source_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
 				_resume_branch($scope2_id);
 			}, $scope1_id) });
@@ -44,7 +46,7 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, {
 		e: input.note,

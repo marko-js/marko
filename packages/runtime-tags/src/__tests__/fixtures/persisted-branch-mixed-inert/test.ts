@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// An inert call re-rolls on every fill write of a mixed selector, so
-// the selection flips without any input or state change: fail closed.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A call mixed into a client-owned selector re-evaluates client-side on
+// every fill or state change, like any client-rendered expression.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ min: 0 }, click, { min: 2 }, click, click],
 };

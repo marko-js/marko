@@ -25,16 +25,16 @@ export function addPersistedChildRenderer(expr: t.Node) {
   }
 }
 
-export function getPersistedIntrinsics() {
-  return getPersistedChildRenderers();
-}
-
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     /** This template ITSELF reads `$global` (local, no roll-up): exported
      * as the html template's intrinsics for render-time composition. */
     readsGlobals?: true;
   }
+}
+
+export function getPersistedIntrinsics() {
+  return getPersistedChildRenderers();
 }
 
 export function scopeReasonRuntime() {

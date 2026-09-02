@@ -1,9 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-child-nested-structural-attr/template.marko:5:5
-      3 | <main>
-      4 |   <if=show>
-    > 5 |     <tabs2 tab=thing/>
-        |     ^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: an input the child needs server-owned cannot feed from client-owned structure.
-      6 |   </if>
-      7 |   <button onClick() { show = !show }>t</button>
-      8 | </main>

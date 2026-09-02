@@ -5,8 +5,9 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<section>");
-	_patch_dynamic_tag($scope0_id, "a", input.content, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -34,7 +35,8 @@ var template_default = _template_persisted("a", (input) => {
 			_persisted_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_patch_text($scope2_id, "a", $global$1.brand)}:${_patch_text($scope2_id, "b", input.prefix, 2, $scope0_owned, 2)}:${_patch_text($scope2_id, "c", item, 2, $scope0_owned, 1)}</i>`);
-			_subscribe($scope0_reason && $for_content__item__closures, _subscribe($scope0_reason && $global_brand__closures, _subscribe(_source_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }))));
+			_global_subscribe("a2", $scope2_id);
+			_subscribe($scope0_reason && $for_content__item__closures, _subscribe($global_brand__closures, _subscribe(_source_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }))));
 			_resume_branch($scope2_id);
 		}, $scope1_id) });
 		_scope($scope1_id, {
@@ -42,12 +44,10 @@ var template_default = _template_persisted("a", (input) => {
 			d: $for_content__item__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1");
+	}, 0, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	$scope0_reason && _scope($scope0_id, {
 		e: input.prefix,
-		f: $global$1?.brand,
-		g: $input_prefix__closures,
-		h: $global_brand__closures
+		g: $input_prefix__closures
 	});
 }, 1, 1);

@@ -19,7 +19,7 @@ var tabs_default = _template_persisted("b", (input) => {
 			$scope0_reason && _scope($scope2_id, {});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $sg__input_tab, $sg__input_tab, void 0, void 0, ["b0", "b1"]);
+	}, $scope0_id, "a", 1, $sg__input_tab, $sg__input_tab, void 0, void 0, ["b0", "b1"], $scope0_owned, 0);
 	$scope0_reason && _scope($scope0_id, { e: input.tab?.on });
 }, 0, 0);
 

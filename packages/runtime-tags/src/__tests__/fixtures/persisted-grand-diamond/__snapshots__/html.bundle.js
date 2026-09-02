@@ -1,5 +1,5 @@
 // tags/dia-d/index.marko
-const $template$2 = "<em> </em>";
+const $template = "<em> </em>";
 _shells({ e: "e;D ;<em> </em>" });
 var dia_d_default = _template_persisted("e", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
@@ -9,9 +9,7 @@ var dia_d_default = _template_persisted("e", (input) => {
 }, 0, 0);
 
 // tags/dia-b/index.marko
-const $template$1 = $template$2;
-const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
-_shells({ c: /*@__PURE__*/ ((_w0, _w1) => `c;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)("D l"), $template$2) });
+_shells({ c: /*@__PURE__*/ ((_w0, _w1) => `c;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)("D l"), $template) });
 var dia_b_default = _template_persisted("c", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -23,9 +21,7 @@ var dia_b_default = _template_persisted("c", (input) => {
 }, 0, () => [dia_d_default]);
 
 // tags/dia-c/index.marko
-const $template = $template$2;
-const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
-_shells({ d: /*@__PURE__*/ ((_w0, _w1) => `d;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)("D l"), $template$2) });
+_shells({ d: /*@__PURE__*/ ((_w0, _w1) => `d;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)("D l"), $template) });
 var dia_c_default = _template_persisted("d", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -37,7 +33,6 @@ var dia_c_default = _template_persisted("d", (input) => {
 }, 0, () => [dia_d_default]);
 
 // tags/dia-a/index.marko
-_shells({ b: /*@__PURE__*/ ((_w0, _w1) => `b;${_w0};${_w1}`)(((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks), ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template)) });
 var dia_a_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

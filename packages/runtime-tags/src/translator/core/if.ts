@@ -25,9 +25,9 @@ import { isPersisted } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
-  isStatefulBranch,
   isBranchPathSection,
-  recordStructuralOrGlobalParams,
+  isStatefulBranch,
+  recordStructuralParams,
 } from "../util/persisted/structure";
 import {
   compareSources,
@@ -53,6 +53,7 @@ import {
   startSection,
 } from "../util/sections";
 import {
+  getExprWriteOwnership,
   getSerializeGuard,
   getSerializeGuardForAny,
   scopeReasonIdentifier,
@@ -131,11 +132,7 @@ export const IfTag = {
             isBranchPathSection(ifTagSection)
           ) {
             addRuntimeFeatureAsset("patch-branch");
-            // Branch tests drive structure: the params recorded here gate
-            // call-site feeds at translate.
-            recordStructuralOrGlobalParams(
-              getSerializeSourcesForExpr(ifTagExtra),
-            );
+            recordStructuralParams(getSerializeSourcesForExpr(ifTagExtra));
           }
         });
       }
@@ -183,6 +180,8 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
+          // Read before the branch tags are removed below.
+          const ifTagExtra = ifTag.node.extra!;
           const nodeBinding = getOptimizedOnlyChildNodeBinding(
             ifTag,
             ifTagSection,
@@ -337,6 +336,9 @@ export const IfTag = {
                       }),
                     )
                   : undefined,
+                // A param-selected chain yields to the client when the
+                // call site feeds the selector from state.
+                ...(persistedPatch ? getExprWriteOwnership(ifTagExtra) : []),
               ),
             );
           }

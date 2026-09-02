@@ -428,10 +428,18 @@ export function _attr_content(
   scopeId: number,
   content: unknown,
   serializeReason?: number,
+  patches?: 1,
 ) {
   const shouldResume = serializeReason !== 0;
   const render = normalizeServerRender(content);
   const branchId = _peek_scope_id();
+  const { state } = $chunk.boundary;
+  if (patches && state.writesPatches) {
+    if (render) state.pairBranch?.(scopeId, nodeAccessor, branchId);
+    const renderer = normalizeDynamicRenderer<ServerRenderer>(content);
+    const id = typeof renderer === "function" && renderer[RendererProp.Id];
+    if (id) (state.renderedContents ??= new Set()).add(id);
+  }
   if (render) {
     if (shouldResume) {
       withBranchId(branchId, render);
@@ -694,6 +702,8 @@ function forBranches(
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
   shellId?: string | 0,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
   if (
     $chunk.boundary.state.writeLoop?.(
@@ -701,6 +711,8 @@ function forBranches(
       scopeId,
       accessor,
       shellId,
+      owned,
+      group,
     )
   )
     return;
@@ -794,8 +806,19 @@ export function _if(
   parentEndTag?: string | 0,
   singleNode?: 1,
   shellIds?: string[],
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
-  if ($chunk.boundary.state.writeBranch?.(scopeId, accessor, cb, shellIds))
+  if (
+    $chunk.boundary.state.writeBranch?.(
+      scopeId,
+      accessor,
+      cb,
+      shellIds,
+      owned,
+      group,
+    )
+  )
     return;
   // A patchable conditional's markers must resume even on a page with no
   // other client code: a patch pairs and constructs through them.
@@ -960,6 +983,22 @@ function scopeWithId(state: State, scopeId: number) {
   return scope;
 }
 
+// Joins the key's subscriber set on scope 0; a set minted after the
+// globals flushed rides its own scope 0 partial.
+export function _global_subscribe(id: string, scopeId: number) {
+  const { state } = $chunk.boundary;
+  // A frame's scopes are live already (paired) or subscribe as they render
+  // (constructed).
+  if (state.writesPatches) return;
+  const key = AccessorPrefix.ClosureScopes + id;
+  let subscribers = (state.globalSubscribers ??= {})[key];
+  if (!subscribers) {
+    subscribers = state.globalSubscribers[key] = new Set();
+    if (state.hasGlobals) writeScope(0, { [key]: subscribers });
+  }
+  _subscribe(subscribers, scopeWithId(state, scopeId));
+}
+
 export function _subscribe(
   subscribers: Set<ScopeInternals> | undefined,
   scope: ScopeInternals,
@@ -1027,8 +1066,15 @@ export function maskGroup(mask: SerializeReasonValue, group: number) {
       : ((mask as Partial<Record<number, number>>)[group] ?? 0);
 }
 
+// Mirrors `ownedWrite`: an unfed group (`0`) still seeds a construct.
 export function _owned_guard(mask: SerializeReasonValue, group: number) {
-  return maskGroup(mask, group) === 2 ? 1 : 0;
+  const owned = maskGroup(mask, group);
+  return owned === 2 || (owned === 0 && isInResumedBranch()) ? 1 : 0;
+}
+// Whether the client contributes to the group (the low mask bit): the
+// instance then owns whatever the group selects.
+export function _client_guard(mask: SerializeReasonValue, group: number) {
+  return maskGroup(mask, group) & 1 ? 1 : 0;
 }
 
 // Page-side group guards (patch renders have no reason): any contribution,
@@ -1452,6 +1498,8 @@ export class State implements SerializeState {
     accessor: Accessor,
     cb: () => number | undefined | void,
     shellIds?: string[],
+    owned?: SerializeReasonValue,
+    group?: number,
   ): 1 | void;
   writeLoop?(
     iterate: (
@@ -1464,6 +1512,8 @@ export class State implements SerializeState {
     scopeId: number,
     accessor: Accessor,
     shellId?: string | 0,
+    owned?: SerializeReasonValue,
+    group?: number,
   ): 1 | void;
   shipShell?(shellId: string | 0 | undefined): string | undefined;
   // A boundary body or dynamic tag branch pairs with the live page's branch
@@ -1499,6 +1549,11 @@ export class State implements SerializeState {
   declare patchDeferred?: 1;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
+  public globalSubscribers?: Record<string, Set<ScopeInternals>>;
+  // Content renderers a frame created and invoked (by id): one created but
+  // never invoked was withheld by its consumer, so its fills deliver.
+  public createdContents?: Set<string>;
+  public renderedContents?: Set<string>;
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
@@ -2130,7 +2185,7 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
     // values assigned mid-render are dropped — mutation is unsupported by design.
     if (!isBlockingState && !state.hasGlobals) {
       state.hasGlobals = true;
-      const globals = getFilteredGlobals(state.$global);
+      const globals = withGlobalSubscribers(state);
       // Globals become scope 0 so we can reference them as `_(0)`.
       if (globals) flushes.push([0, globals, globals]);
     }
@@ -2163,9 +2218,16 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
   }
 }
 
+// The scope 0 record: the serialized globals plus the subscriber sets.
+function withGlobalSubscribers(state: State) {
+  const globals = getFilteredGlobals(state.$global);
+  const subscribers = state.globalSubscribers;
+  return subscribers ? { ...(globals || undefined), ...subscribers } : globals;
+}
+
 function flushSerializerGlobals(boundary: Boundary) {
   const { state } = boundary;
-  const globals = getFilteredGlobals(state.$global);
+  const globals = withGlobalSubscribers(state);
   if (globals) {
     state.hasGlobals = true;
     state.needsMainRuntime = true;

@@ -1,6 +1,8 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/persisted-dynamic-renderer-swap/card-a.marko;D ;<section class=a> </section>`, {
-  "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-dynamic-renderer-swap/card-a.marko"],
+  "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-dynamic-renderer-swap/card-a.marko", {
+    label: "two"
+  }],
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "two"
   }
@@ -8,7 +10,9 @@
 
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/persisted-dynamic-renderer-swap/card-b.marko;D%;<article class=b><!>!</article>`, {
-  "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-dynamic-renderer-swap/card-b.marko"],
+  "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/persisted-dynamic-renderer-swap/card-b.marko", {
+    label: "three"
+  }],
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "three"
   }

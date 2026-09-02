@@ -11,7 +11,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko_0/valueChange"), () => {
 		_html(`<select${_patch_bind($scope0_id, "ControlledHandler:#select/1", _resume(function(next) {
 			document.querySelector("main").dataset.choice = next;
-		}, "__tests__/template.marko_0/valueChange"))}${_patch_control($scope0_id, "#select/1", 3, input.choice, $scope0_owned, 1)}><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
+		}, "__tests__/template.marko_0/valueChange"), 0, 0)}${_patch_control($scope0_id, "#select/1", 3, input.choice, $scope0_owned, 1)}><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
 	});
 	_html(`${_el_resume($scope0_id, "#select/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");

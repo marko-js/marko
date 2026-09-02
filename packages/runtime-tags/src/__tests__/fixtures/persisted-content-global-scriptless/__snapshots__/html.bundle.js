@@ -6,8 +6,9 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h2>`);
-	_patch_dynamic_tag($scope0_id, "b", input.content, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, 0, $scope0_owned, 1);
+	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -34,7 +35,8 @@ var template_default = _template_persisted("a", (input) => {
 			_persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", $global$1.brand)}</em>`);
-			_subscribe($scope0_reason && $global_brand__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_global_subscribe("a3", $scope1_id);
+			_subscribe($global_brand__closures, _scope($scope1_id, {}));
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
@@ -50,10 +52,8 @@ var template_default = _template_persisted("a", (input) => {
 					_persisted_reason();
 					const $scope3_id = _scope_id();
 					_html(`<i>${_patch_text($scope3_id, "a", $global$1.brand)}</i>`);
-					_subscribe($scope0_reason && $global_brand__closures, _scope($scope3_id, {
-						_: _scope_with_id($scope2_id),
-						Ch: 1
-					}));
+					_global_subscribe("a4", $scope3_id);
+					_subscribe($global_brand__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 					_resume_branch($scope3_id);
 				}, $scope2_id)
 			});
@@ -63,11 +63,7 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2"]);
+	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2"], $scope0_owned, 1);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {
-		g: $global$1?.brand,
-		h: $global_brand__closures,
-		a: _existing_scope($childScope)
-	});
+	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1, 1);

@@ -60,7 +60,10 @@ export let _dynamic_tag = (
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
-  if (patches && renderer) state.pairBranch?.(scopeId, accessor, branchId);
+  // A null renderer still renders the body: its writes pair too.
+  if (patches && (renderer || content)) {
+    state.pairBranch?.(scopeId, accessor, branchId);
+  }
   let rendered: boolean;
   let result: unknown;
 
@@ -191,6 +194,15 @@ export let _dynamic_tag = (
     const beforeBranch = marks ? deferBranchStart(chunk) : undefined;
 
     const render = () => {
+      const { state } = chunk.boundary;
+      if (state.writesPatches) {
+        const rendered = (renderer || content) as
+          | { [RendererProp.Id]?: string }
+          | 0
+          | undefined;
+        const id = rendered ? rendered[RendererProp.Id] : undefined;
+        if (id) (state.renderedContents ??= new Set()).add(id);
+      }
       if (renderer) {
         try {
           _set_serialize_reason(
@@ -244,6 +256,13 @@ export let _dynamic_tag = (
 };
 
 export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
+  // Also called at module load (template definitions), outside any render.
+  const state = getChunk()?.boundary.state;
+  if (state?.writesPatches) (state.createdContents ??= new Set()).add(id);
+  return content(id, fn, scopeId);
+}
+
+function content(id: string, fn: ServerRenderer, scopeId?: number) {
   fn[RendererProp.Id] = id;
   // The owner id the client derives from `RendererProp.Owner`; both sides key a
   // content instance by it, so they must be written from the same scope.
@@ -269,10 +288,8 @@ export function _content_elide(
   placeholder?: 1,
 ) {
   elidedContents.add(fn);
-  return registerAccess(
-    _content(id, fn, scopeId),
-    placeholder ? "void 0" : "0",
-  );
+  // No client renderer registers for it, so no fill could reach it.
+  return registerAccess(content(id, fn, scopeId), placeholder ? "void 0" : "0");
 }
 
 // A static shell record renders server-side from its own template and rides

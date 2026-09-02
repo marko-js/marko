@@ -7,6 +7,7 @@ var g_badge_default = _template_persisted("__tests__/tags/g-badge/index.marko", 
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.value, void 0, $scope0_owned, 0)} ${_patch_text($scope0_id, "#text/1", $global$1.flag, 2)}</p>`);
+	_global_subscribe("__tests__/tags/g-badge/index.marko_0_$global_flag#5/global", $scope0_id);
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/g-badge/index.marko", 0);
 }, 0, 1);
 

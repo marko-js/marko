@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A spread argument hides which child params it feeds, so per-group
-// channel analysis cannot run: fail closed at the call site.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A spread argument for a child inside client-owned structure fills at the
+// parent and re-applies through the tag-args signal.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [{ parts: ["a"] }, { parts: ["b"] }, click, click, { parts: ["c"] }],
 };

@@ -1,8 +1,0 @@
-
-    at packages/runtime-tags/src/__tests__/fixtures/persisted-var-mixed/template.marko:2:3
-      1 | <main>
-    > 2 |   <mixer/v value=input.n/>
-        |   ^^^^^^^^^^^^^^^^^^^^^^^^ Persisted templates cannot patch this faithfully yet: a return mixing client state with server params is not supported yet.
-      3 |   <p>${v}</p>
-      4 | </main>
-      5 |

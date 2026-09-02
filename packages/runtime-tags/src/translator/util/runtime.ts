@@ -30,6 +30,7 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_fill_join",
+  "_global_join",
   "_fill_join_closure",
   "_fill_join_for",
   "_fill_join_if",
@@ -136,9 +137,12 @@ export type DOMRuntimeFeature =
   | "patch-control-select"
   | "patch-dynamic-tag"
   | "patch-effect"
+  | "patch-global"
+  | "patch-html"
   | "patch-loop"
   | "patch-ready"
   | "patch-text"
+  | "patch-text-content"
   | "patch-value"
   | "patch-value-bind"
   | "placeholder";

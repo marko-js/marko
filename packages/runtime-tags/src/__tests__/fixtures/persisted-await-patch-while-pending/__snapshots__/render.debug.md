@@ -9,19 +9,6 @@
 ```
 
 # Update `{"msg":"b","promise":{"value":2}}`
-```html
-<button>
-  0
-</button>
-<em>
-  loading
-</em>
-```
-## Change
-```
-INSERT: button + em
-REMOVE: em + em
-```
 
 ## Patch rejected (navigate)
 

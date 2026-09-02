@@ -18,7 +18,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { c: n });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"]);
+	}, $scope0_id, "c", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 1);
 	_html("</div>");
 	_script($scope0_id, "a2");
 	$scope0_reason ? _scope($scope0_id, {

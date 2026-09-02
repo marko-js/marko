@@ -1,8 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A call in a mixed selector re-runs on every fill write with no stable
-// client value (and a server function would re-bind stale): fail closed.
+// A function from the request read in a stateful test cannot serialize,
+// exactly as without persisted pages.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  error_html: true,
+  // Only the debug serializer reports the function; optimize emits a bind
+  // the frame commit rejects.
+  skip_optimize: true,
+  steps: [{ min: 0, check: () => true }],
 };

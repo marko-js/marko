@@ -7,8 +7,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_patch_dynamic_tag($scope0_id, "#text/0", input.content, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/1", input.content + ":" + count)}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {

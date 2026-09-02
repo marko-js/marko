@@ -1,4 +1,4 @@
-# Render `{"$global":{"brand":"acme"}}`
+# Render `{"$global":{"brand":"acme","serializedGlobals":["brand"]}}`
 ```html
 <button>
   t
@@ -8,7 +8,7 @@
 </em>
 ```
 
-# Update `{"$global":{"brand":"bmce"}}`
+# Update `{"$global":{"brand":"bmce","serializedGlobals":["brand"]}}`
 ```html
 <button>
   t
@@ -45,11 +45,10 @@ document.querySelector("button").click();
   t
 </button>
 <em>
-  bmce
+   
 </em>
 ```
 ## Change
 ```
 INSERT: button + em
-UPDATE: em::text " " => "bmce"
 ```

@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getFile } from "@marko/compiler/babel-utils";
+import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import {
   generateUidIdentifier,
@@ -30,6 +30,7 @@ import {
 import { callRuntime, importRuntime } from "../../util/runtime";
 import {
   forEachSection,
+  forEachSectionReverse,
   getScopeIdIdentifier,
   getSection,
   type Section,
@@ -284,6 +285,20 @@ export default {
         }
       }
 
+      if (persisted) {
+        // Hoisted content declarations go ahead of every use, deepest first (a
+        // section's parts may reference its children's).
+        let decls: t.VariableDeclarator[] | undefined;
+        forEachSectionReverse((childSection) => {
+          const meta = getSectionMeta(childSection);
+          if (meta.decls)
+            decls = decls ? [...meta.decls, ...decls] : meta.decls;
+        });
+        if (decls) {
+          program.node.body.unshift(t.variableDeclaration("const", decls));
+        }
+      }
+
       const contentId = usedSharedUid("content") && getTemplateContentName();
       const contentFn = t.arrowFunctionExpression(
         [t.identifier("input")],
@@ -304,7 +319,7 @@ export default {
           // FOREIGN renderer, which parents must render through): the local
           // globals/opaque bit plus lazily-referenced child renderers.
           ...(persisted
-            ? buildIntrinsicsArgs(program, pageArg ?? t.numericLiteral(0))
+            ? buildIntrinsicsArgs(pageArg ?? t.numericLiteral(0))
             : [pageArg]),
         ),
       );
@@ -327,14 +342,11 @@ export default {
 // globals or opaque (children irrelevant once true), a lazy child list
 // (an arrow: module cycles must not evaluate eagerly) = locally clean
 // but transitively unresolved, `0` = proven clean.
-function buildIntrinsicsArgs(
-  program: t.NodePath<t.Program>,
-  pageArg: t.Expression,
-) {
+function buildIntrinsicsArgs(pageArg: t.Expression) {
   const { names, opaque } = getPersistedIntrinsics();
   return [
     pageArg,
-    opaque || program.node.extra!.readsGlobals
+    opaque || getProgram().node.extra!.readsGlobals
       ? t.numericLiteral(1)
       : names.size
         ? t.arrowFunctionExpression(

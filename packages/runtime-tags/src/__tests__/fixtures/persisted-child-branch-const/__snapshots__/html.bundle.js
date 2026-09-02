@@ -1,7 +1,7 @@
 // tags/card/index.marko
 const $template = "<section></section>";
 _shells({
-	b: "b; ;<section></section>",
+	b: "b !; ;<section></section>",
 	b0: "b0; D lD ;<h2> </h2><p> </p>"
 });
 var card_default = _template_persisted("b", (input) => {
@@ -15,12 +15,12 @@ var card_default = _template_persisted("b", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"]);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_owned, 2);
 	_html(`</section>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_reason ? _scope($scope0_id, {
 		e: input.title,
 		f: input.note
-	});
+	}) : (_owned_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b0", input.title), _owned_guard($scope0_owned, 4) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b1", input.note));
 }, 0, 0);
 
 // template.marko

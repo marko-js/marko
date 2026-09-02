@@ -7,6 +7,7 @@ var g_badge_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<p>${_patch_text($scope0_id, "a", input.value, void 0, $scope0_owned, 0)} ${_patch_text($scope0_id, "b", $global$1.flag, 2)}</p>`);
+	_global_subscribe("b0", $scope0_id);
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 1);
 

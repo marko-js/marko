@@ -162,8 +162,10 @@ export function getShellId(section: Section) {
 
 // A branch's shell is its resolved structure (known child templates
 // included); anything else leaves it shell-less, so divergence fails closed.
-function isShellExpressible(section: Section) {
-  if (!section.structure) return false;
+function isShellExpressible(section: Section, visiting = new Set<Section>()) {
+  // A template cycle never resolves to a finite shell.
+  if (!section.structure || visiting.has(section)) return false;
+  visiting.add(section);
   for (const op of section.structure) {
     if (
       typeof op === "object" &&
@@ -179,7 +181,7 @@ function isShellExpressible(section: Section) {
         !op.hasVar &&
         (!op.renderer ||
           (op.renderer.kind === StructureKind.ExportRef &&
-            isShellExpressible(op.renderer.program.section!)))
+            isShellExpressible(op.renderer.program.section!, visiting)))
       )
     ) {
       return false;

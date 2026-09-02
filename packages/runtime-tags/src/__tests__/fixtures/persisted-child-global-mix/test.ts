@@ -1,8 +1,17 @@
 import type { TestConfig } from "../../main.test";
 
-// A hole mixing a param with `$global` cannot survive a withheld capture,
-// so that param must stay server-owned: feeding it client state rejects.
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A child hole mixing a client-fed param with `$global` recomputes
+// client-side from the live bag.
 export const config: TestConfig = {
-  error_compiler: true,
   persisted: true,
+  steps: [
+    { $global: { flag: "!", serializedGlobals: ["flag"] } },
+    click,
+    { $global: { flag: "?", serializedGlobals: ["flag"] } },
+    click,
+  ],
 };

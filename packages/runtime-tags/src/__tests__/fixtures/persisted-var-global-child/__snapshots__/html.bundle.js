@@ -7,6 +7,7 @@ var greet_default = _template_persisted("b", (input) => {
 	const double = input.n * 2;
 	_html(`<span>${_patch_text($scope0_id, "a", $global$1.locale)}</span>`);
 	const $return = double;
+	_global_subscribe("b0", $scope0_id);
 	$scope0_reason && _scope($scope0_id, {});
 	return $return;
 }, 0, 1);

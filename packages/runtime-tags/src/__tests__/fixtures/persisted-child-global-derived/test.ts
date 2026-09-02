@@ -10,8 +10,8 @@ const toggle = (document: Document) => {
 export const config: TestConfig = {
   persisted: true,
   steps: [
-    { $global: { brand: "acme" } },
-    { $global: { brand: "bmce" } },
+    { $global: { brand: "acme", serializedGlobals: ["brand"] } },
+    { $global: { brand: "bmce", serializedGlobals: ["brand"] } },
     toggle,
     toggle,
   ],

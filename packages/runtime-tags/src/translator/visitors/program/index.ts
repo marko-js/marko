@@ -22,7 +22,6 @@ import {
   isOutputHTML,
   isPersisted,
 } from "../../util/marko-config";
-import { assertSupportedPatch } from "../../util/persisted/admission";
 import {
   BindingType,
   finalizeReferences,
@@ -276,7 +275,6 @@ export default {
       }
 
       if (isPersisted()) {
-        assertSupportedPatch(program);
         // A static record slot rebuilds client-side; the import rides both
         // outputs (an interactive page gets assets through its dom program).
         forEachSection((section) => {

@@ -32,8 +32,10 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	_patch_dynamic_tag($scope0_id, "#text/0", input.mode === "plain" ? card_plain_default : card_live_default, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", input.mode === "plain" ? card_plain_default : card_live_default, { label: input.label }, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.mode === "plain" ? card_plain_default : card_live_default;
+	const $input2 = { label: input.label };
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
 		input_mode: input.mode,

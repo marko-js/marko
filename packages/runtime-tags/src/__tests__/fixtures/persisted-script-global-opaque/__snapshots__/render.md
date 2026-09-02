@@ -12,7 +12,7 @@
 # Update `{"$global":{"brand":"Marko","other":"y","serializedGlobals":["brand","other"]}}`
 ```html
 <main
-  data-log="[Marko][Marko]"
+  data-log="[Marko]"
 >
   <h1>
     y
@@ -22,13 +22,12 @@
 ## Change
 ```
 UPDATE: main > h1::text "x" => "y"
-UPDATE: main[data-log] "[Marko]" => "[Marko][Marko]"
 ```
 
 # Update `{"$global":{"brand":"Marko","other":"y","serializedGlobals":["brand","other"]}}`
 ```html
 <main
-  data-log="[Marko][Marko]"
+  data-log="[Marko]"
 >
   <h1>
     y

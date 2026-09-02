@@ -6,8 +6,9 @@ var frame_default = _template_persisted("__tests__/tags/frame.marko", (input) =>
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html("<section>");
-	_patch_dynamic_tag($scope0_id, "#text/0", input.content, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	const $tag = input.content;
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
 }, 0, 0);
@@ -17,8 +18,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<button class=
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l");
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<p class=b> </p>",
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<p class=a> </p>",
-	"__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !__tests__/template.marko_0;${_w0};${_w1}`)(((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l"), ((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template$1, $template$1))
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<p class=a> </p>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_label = _source_if($scope0_reason, 0);

@@ -20,7 +20,7 @@ import {
   _attrs_partial,
   stringAttr,
 } from "./attrs";
-import { _to_text } from "./content";
+import { _to_text, _unescaped } from "./content";
 import {
   getRegistered,
   K_SCOPE_ID,
@@ -31,6 +31,7 @@ import { shells } from "./shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
   _peek_scope_id,
+  _html_resume,
   _text_resume,
   addSetupId,
   getChunk,
@@ -44,6 +45,8 @@ import {
   State,
   withBranchId,
   writePatch,
+  _attr_content,
+  _html,
 } from "./writer";
 
 // Intrinsic render summary: what a template's render could depend on
@@ -217,9 +220,13 @@ class PatchState extends State {
     accessor: string,
     cb: () => number | undefined | void,
     shellIds?: string[],
+    owned?: SerializeReasonValue,
+    group?: number,
   ) {
     // Inert captures render plain html: no entries, no interception.
     if (this.patchInert) return;
+    // A client-fed selector re-selects on the live page: the frame says nothing.
+    if (clientSelected(owned, group)) return 1;
     const branchId = _peek_scope_id();
     (this.patchParents ??= {})[branchId] = [
       scopeId,
@@ -273,8 +280,11 @@ class PatchState extends State {
     scopeId: number,
     accessor: string,
     shellId?: string | 0,
+    owned?: SerializeReasonValue,
+    group?: number,
   ) {
     if (this.patchInert) return;
+    if (clientSelected(owned, group)) return 1;
     const partials: object[] = [];
     const keys: unknown[] = [];
     const seen = new Set<unknown>();
@@ -618,12 +628,10 @@ export function _patch_effect(
   scopeId: number,
   registerId: string,
   accessors: string,
-  globals?: 1,
 ) {
   if (getState().writesPatches) {
     writePatch(scopeId, {
-      [(globals ? PatchKey.GlobalEffect : PatchKey.Effect) + registerId]:
-        accessors,
+      [PatchKey.Effect + registerId]: accessors,
     });
   }
   return "";
@@ -635,6 +643,10 @@ export function _patch_dynamic_tag(
   scopeId: number,
   accessor: Accessor,
   tag: unknown,
+  args: unknown,
+  isArgs: 0 | 1,
+  varId: string | 0,
+  contentId: string | 0,
   owned?: SerializeReasonValue,
   group?: number,
 ) {
@@ -647,13 +659,71 @@ export function _patch_dynamic_tag(
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
       // An identified renderer ships its comparable id (record in-band or
-      // dom registration); anything else rides the serializer.
+      // dom registration); `[renderer, input, isArgs, varId, isTagName]`.
       if (id) shipShell(state as PatchState, id);
+      if (contentId) shipShell(state as PatchState, contentId);
+      writeEmbeddedBinds(state as PatchState, args);
+      const entry: unknown[] = [
+        id || renderer || 0,
+        args || 0,
+        isArgs,
+        varId,
+        typeof renderer === "string" ? 1 : 0,
+        contentId,
+      ];
+      while (entry.length > 1 && !entry[entry.length - 1]) entry.pop();
       writePatch(scopeId, {
-        [PatchKey.DynamicTag + accessor]: id ? [id] : (renderer ?? 0),
+        [PatchKey.DynamicTag + accessor]: entry,
       });
     }
   }
+}
+
+// A spread that may carry `content`: the set patches as attributes and
+// the content as a dynamic tag entry, the way a static `content=` does.
+export function _patch_attrs_content(
+  data: Record<string, unknown>,
+  accessor: Accessor,
+  scopeId: number,
+  tagName: string,
+  serializeReason?: 1 | 0,
+  controllable?: 1,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const content = data?.content;
+  _patch_dynamic_tag(scopeId, accessor, content, 0, 0, 0, 0, owned, group);
+  _html(
+    `${_patch_attrs(withoutContent(data), accessor, scopeId, tagName, controllable, owned, group)}>`,
+  );
+  _attr_content(accessor, scopeId, content, serializeReason, 1);
+}
+
+export function _patch_attrs_partial_content(
+  data: Record<string, unknown>,
+  skip: Record<string, 1>,
+  accessor: Accessor,
+  scopeId: number,
+  tagName: string,
+  serializeReason?: 1 | 0,
+  controllable?: 1,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const content = data?.content;
+  _patch_dynamic_tag(scopeId, accessor, content, 0, 0, 0, 0, owned, group);
+  _html(
+    `${_patch_attrs_partial(withoutContent(data), skip, accessor, scopeId, tagName, controllable, owned, group)}>`,
+  );
+  _attr_content(accessor, scopeId, content, serializeReason, 1);
+}
+
+// The content renderer never rides the set: its entry delivers it.
+function withoutContent(data: Record<string, unknown>) {
+  if (data?.content === undefined) return data;
+  const set = { ...data };
+  delete set.content;
+  return set;
 }
 
 export function _patch_text(
@@ -680,6 +750,50 @@ export function _patch_text(
   // The patch write doubles as the output writer, so the text rides the
   // same resume marking a plain placeholder gets.
   return _text_resume(scopeId, accessor, value, shouldResume);
+}
+
+// An unescaped hole: the entry carries the markup string the client parses
+// into the hole's range; the output writer marks that range for resume.
+export function _patch_html(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+  shouldResume?: number,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const state = getState();
+  if (state.writesPatches) {
+    writeOwned(
+      scopeId,
+      PatchKey.Html + accessor,
+      _unescaped(value),
+      owned,
+      group,
+    );
+  } else {
+    getChunk()!.needsWalk = true;
+  }
+  return _html_resume(scopeId, accessor, value, shouldResume);
+}
+
+// A text-only body (`<title>`, `<style>`, a comment): the entry carries
+// the plain text; the html output escapes it for its own namespace.
+export function _patch_text_content(
+  scopeId: number,
+  accessor: Accessor,
+  value: string,
+  escape: (value: unknown) => string,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const state = getState();
+  if (state.writesPatches) {
+    writeOwned(scopeId, PatchKey.TextContent + accessor, value, owned, group);
+  } else {
+    getChunk()!.needsWalk = true;
+  }
+  return escape(value);
 }
 
 // A spread's attribute set: the entry carries the merged object and the
@@ -790,6 +904,19 @@ function patchStringAttr(
   }
 
   return stringAttr(name, value);
+}
+
+// Structure whose selector group the client contributes to (the low mask
+// bit): the instance selects it client-side.
+function clientSelected(owned?: SerializeReasonValue, group?: number) {
+  return owned !== undefined && !!(maskGroup(owned, group!) & 1);
+}
+
+// Whether a consumer withheld a content renderer the frame handed it
+// (created, never invoked): server values inside deliver as fills then.
+export function _content_withheld(id: string) {
+  const state = getState() as PatchState;
+  return !!state.createdContents?.has(id) && !state.renderedContents?.has(id);
 }
 
 // A patch write needs exclusive server ownership; a contribution-less group
