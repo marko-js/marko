@@ -59,6 +59,37 @@ describe("runtime-tags/html render result", () => {
 
   after(() => disposeServer?.());
 
+  describe("render options", () => {
+    it("refuses to mount an html-compiled template", () => {
+      assert.throws(
+        () => (sync as any).mount(),
+        /mount\(\) is not implemented for the HTML compilation/,
+      );
+    });
+
+    it("rejects a runtimeId that is not an identifier", () => {
+      assert.throws(
+        () => sync.render({ $global: { runtimeId: "1bad" } }),
+        /Invalid runtimeId: "1bad"/,
+      );
+    });
+
+    it("rejects a renderId that is not an identifier", () => {
+      assert.throws(
+        () => sync.render({ $global: { renderId: "bad-id" } }),
+        /Invalid renderId: "bad-id"/,
+      );
+    });
+
+    it("takes an identifier-shaped runtimeId and renderId", () => {
+      const result = sync.render({
+        name: "world",
+        $global: { runtimeId: "_R", renderId: "r0" },
+      }) as ServerResult;
+      assertBody(result.toString());
+    });
+  });
+
   describe("toString", () => {
     it("returns the html of a synchronous render", () => {
       assertBody(renderSync().toString());
