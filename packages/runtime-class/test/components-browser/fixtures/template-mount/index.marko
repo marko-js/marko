@@ -1,0 +1,11 @@
+class {
+    onCreate() {
+        this.state = { label: "" };
+    }
+
+    onInput(input) {
+        this.state.label = input.label || "none";
+    }
+}
+
+<div key="root">${state.label}</div>
