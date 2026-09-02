@@ -15,6 +15,81 @@ function getChildNodes(parentNode) {
   return childNodes;
 }
 describe("AsyncVDOMBuilder", function () {
+  it("emits an error and ends", function (done) {
+    var out = new AsyncVDOMBuilder();
+    var seen;
+    out.on("error", function (err) {
+      seen = err;
+    });
+    out.on("finish", function () {
+      expect(seen).to.be.an("error");
+      expect(seen.message).to.equal("boom");
+      done();
+    });
+    expect(out.error(new Error("boom"))).to.equal(out);
+  });
+
+  it("refuses to go async once in sync mode", function () {
+    var out = new AsyncVDOMBuilder();
+    out.sync();
+    expect(function () {
+      out.beginAsync();
+    }).to.throw(/sync mode/);
+  });
+
+  it("creates a sibling out sharing the same global", function () {
+    var global = { a: 1 };
+    var out = new AsyncVDOMBuilder(global);
+    var next = out.createOut();
+    expect(next).to.not.equal(out);
+    expect(next.global).to.equal(out.global);
+  });
+
+  it("routes on/once for last through onLast", function (done) {
+    var out = new AsyncVDOMBuilder();
+    var calls = 0;
+    out.on("last", function () {
+      calls++;
+    });
+    out.once("last", function () {
+      calls++;
+    });
+
+    var lastOut = out.beginAsync({ last: true });
+    out.on("finish", function () {
+      expect(calls).to.equal(2);
+      done();
+    });
+    out.end();
+    lastOut.end();
+  });
+
+  it("removes a listener it added", function (done) {
+    var out = new AsyncVDOMBuilder();
+    var calls = 0;
+    var onFinish = function () {
+      calls++;
+    };
+    out.on("finish", onFinish);
+    expect(out.removeListener("finish", onFinish)).to.equal(out);
+    out.on("finish", function () {
+      expect(calls).to.equal(0);
+      done();
+    });
+    out.end();
+  });
+
+  it("catches a rejected render", function () {
+    var out = new AsyncVDOMBuilder();
+    var caught = out.catch(function (err) {
+      return err.message;
+    });
+    out.error(new Error("nope"));
+    return caught.then(function (message) {
+      expect(message).to.equal("nope");
+    });
+  });
+
   it("sync", function () {
     var out = new AsyncVDOMBuilder();
     out.element("div", {}, 0);
