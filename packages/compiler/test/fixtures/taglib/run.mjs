@@ -57,6 +57,46 @@ const cases = {
     write({ resolved, errors });
   },
 
+  lookup: () => {
+    taglib.register("probe-lookup", {
+      "taglib-id": "probe-lookup",
+      "attribute-groups": { aria: { "aria-label": "string" } },
+      "<probe-tag>": {
+        "@a": "string",
+        // The second group is undeclared, so the lookup has to skip it.
+        "attribute-groups": ["aria", "missing-group"],
+      },
+      "<probe-pattern>": { "@data-*": { pattern: true, type: "string" } },
+      "<probe-bare>": {},
+    });
+    const lookup = taglib.buildLookup(process.cwd(), emptyTranslator);
+    const names = (tagName) => {
+      const found = [];
+      lookup.forEachAttribute(tagName, (attr) => found.push(attr.name));
+      return found;
+    };
+    write({
+      attrs: names("probe-tag"),
+      patternAttrs: names("probe-pattern"),
+      bareAttrs: names("probe-bare"),
+      missingTagAttrs: names("does-not-exist"),
+      tagByName: !!lookup.getTag("probe-tag"),
+      tagByElement: !!lookup.getTag({ tagName: "probe-tag" }),
+      missingTag: lookup.getTag("does-not-exist") ?? null,
+      attrByObjects:
+        lookup.getAttribute({ tagName: "probe-tag" }, { name: "a" })?.name ??
+          null,
+      groupAttr: lookup.getAttribute("probe-tag", "aria-label")?.name ?? null,
+      patternAttr: lookup.getAttribute("probe-pattern", "data-x")?.name ?? null,
+      missingAttr: lookup.getAttribute("probe-tag", "nope") ?? null,
+      sortedIsCached: lookup.getTagsSorted() === lookup.getTagsSorted(),
+      sortedNames: lookup
+        .getTagsSorted()
+        .map((tag) => tag.name)
+        .filter((name) => name.startsWith("probe-")),
+    });
+  },
+
   "reload-after-parse-error": () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-taglib-"));
     const file = path.join(dir, "marko-tag.json");

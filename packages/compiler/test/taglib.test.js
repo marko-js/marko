@@ -43,6 +43,28 @@ describe("compiler/taglib", () => {
     assert.deepEqual(tags, ["legacy-panel"]);
   });
 
+  describe("lookup", () => {
+    it("resolves tags and attributes across a merged taglib", () => {
+      const result = run({ CASE: "lookup" });
+      assert.deepEqual(result.attrs, ["a", "aria-label"]);
+      assert.deepEqual(result.patternAttrs, ["data-*"]);
+      assert.deepEqual(result.missingTagAttrs, []);
+      assert.equal(result.tagByName, true);
+      assert.equal(result.tagByElement, true);
+      assert.equal(result.missingTag, null);
+      assert.equal(result.attrByObjects, "a");
+      assert.equal(result.groupAttr, "aria-label");
+      assert.equal(result.patternAttr, "data-*");
+      assert.equal(result.missingAttr, null);
+      assert.equal(result.sortedIsCached, true);
+      assert.deepEqual(result.sortedNames, [
+        "probe-bare",
+        "probe-pattern",
+        "probe-tag",
+      ]);
+    });
+  });
+
   describe("optional taglibs", () => {
     it("skips one the root package does not depend on", () =>
       assert.deepEqual(run({ CASE: "optional-undeclared" }), []));
