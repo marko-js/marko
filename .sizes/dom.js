@@ -1,4 +1,4 @@
-// size: 26634 (min) 9945 (brotli)
+// size: 26744 (min) 9997 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -140,8 +140,8 @@ let unsafeStyleAttrReg = /[\\;]/g,
     let rangeAccessor = "A" + nodeAccessor;
     return (scope, display) => {
       let referenceNode = scope[nodeAccessor],
-        onlyChild = referenceNode.nodeType === 1,
-        parentNode = onlyChild ? referenceNode : referenceNode.parentNode,
+        parentNode = parentOf(referenceNode),
+        onlyChild = referenceNode === parentNode,
         range = scope[rangeAccessor];
       range ||
         ((range = scope[rangeAccessor] = {}),
@@ -266,26 +266,30 @@ let unsafeStyleAttrReg = /[\\;]/g,
         newScopes = (scope[scopesAccessor] = []);
       scope[keyedScopesAccessor] = null;
       let oldLen = oldScopes.length,
-        parentNode =
-          referenceNode.nodeType > 1
-            ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
-            : referenceNode,
+        parentNode = parentOf(referenceNode, oldScopes[0]?.S),
         oldScopesByKey,
         hasPotentialMoves,
-        start = 0;
+        start = 0,
+        mapStart = 0,
+        matched = 0;
       forEach(value, (key, args) => {
         let i = newScopes.length,
           oldScope = oldScopes[i],
-          branch =
-            oldLen &&
-            (oldScopesByKey || key !== (oldScope?.M ?? i)
-              ? (oldScopesByKey ||= oldScopes.reduce(
-                  (map, scope, j) => (j < i ? map : ((scope.I = j), map.set(scope.M ?? j, scope))),
-                  /* @__PURE__ */ new Map(),
-                )).get(key)
-              : oldScope && (start++, oldScope));
+          branch;
+        if (oldLen)
+          if (oldScopesByKey || key !== (oldScope?.M ?? i)) {
+            if (!oldScopesByKey) {
+              oldScopesByKey = /* @__PURE__ */ new Map();
+              for (let j = (mapStart = i); j < oldLen; j++) {
+                let scope = oldScopes[j];
+                ((scope.I = j), oldScopesByKey.set(scope.M ?? j, scope));
+              }
+            }
+            ((branch = oldScopesByKey.get(key)),
+              branch && (branch.I < 0 ? (branch = void 0) : ((branch.I = ~branch.I), matched++)));
+          } else oldScope && (start++, (branch = oldScope));
         (branch
-          ? ((hasPotentialMoves = !0), oldScopesByKey?.delete(key))
+          ? (hasPotentialMoves = !0)
           : (branch = createAndSetupBranch(scope.$, renderer, scope, parentNode)),
           (branch.M = key),
           newScopes.push(branch),
@@ -299,19 +303,24 @@ let unsafeStyleAttrReg = /[\\;]/g,
       if (
         (hasSiblings &&
           (oldLen
-            ? ((afterReference = oldScopes[oldEnd].K.nextSibling),
-              newLen || parentNode.insertBefore(referenceNode, afterReference))
-            : newLen && ((afterReference = referenceNode.nextSibling), referenceNode.remove())),
+            ? ((afterReference = nextSiblingOf(oldScopes[oldEnd].K)),
+              newLen || insertChildNodes(parentNode, afterReference, referenceNode, referenceNode))
+            : newLen &&
+              ((afterReference = nextSiblingOf(referenceNode)),
+              removeChildNodes(referenceNode, referenceNode))),
         !hasPotentialMoves)
       ) {
         oldLen &&
           (oldScopes.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch),
-          hasSiblings || (parentNode.textContent = ""));
+          hasSiblings || clearChildren(parentNode));
         for (let newScope of newScopes) insertBranchBefore(newScope, parentNode, afterReference);
         return;
       }
-      if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
-      else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
+      if (oldScopesByKey) {
+        if (matched < oldLen - mapStart)
+          for (let i = mapStart; i < oldLen; i++)
+            oldScopes[i].I >= 0 && removeAndDestroyBranch(oldScopes[i]);
+      } else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
       for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
         (oldEnd--, newEnd--);
       if (
@@ -330,7 +339,10 @@ let unsafeStyleAttrReg = /[\\;]/g,
         lo,
         hi,
         mid;
-      for (let i = diffLen; i--;) sources[i] = newScopes[start + i].I ?? -1;
+      for (let i = diffLen; i--;) {
+        let oldIndex = newScopes[start + i].I;
+        sources[i] = oldIndex < 0 ? ~oldIndex : -1;
+      }
       for (let i = 0; i < diffLen; i++)
         if (~sources[i])
           if (tail < 0 || sources[tails[tail]] < sources[i])
@@ -1933,8 +1945,7 @@ function dynamicTagScript(branch) {
 function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) {
   let referenceNode = scope[nodeAccessor],
     prevBranch = scope["A" + nodeAccessor],
-    parentNode =
-      referenceNode.nodeType > 1 ? (prevBranch?.S || referenceNode).parentNode : referenceNode,
+    parentNode = parentOf(referenceNode, prevBranch?.S),
     newBranch = (scope["A" + nodeAccessor] =
       newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
   referenceNode === parentNode
@@ -1947,6 +1958,15 @@ function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) 
         removeAndDestroyBranch(prevBranch))
       : newBranch &&
         (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
+}
+function parentOf(referenceNode, branchStart) {
+  return referenceNode.nodeType > 1 ? (branchStart || referenceNode).parentNode : referenceNode;
+}
+function nextSiblingOf(node) {
+  return node.nextSibling;
+}
+function clearChildren(parent) {
+  parent.textContent = "";
 }
 function createBranchWithTagNameOrRenderer($global, tagNameOrRenderer, parentScope, parentNode) {
   let branch = createBranch($global, tagNameOrRenderer, parentScope, parentNode);

@@ -20,7 +20,13 @@ import {
   type Scope,
 } from "../common/types";
 import { controllableRenders } from "./controllable";
-import { _attrs, _attrs_content, _attrs_script } from "./dom";
+import {
+  _attrs,
+  _attrs_content,
+  _attrs_script,
+  insertChildNodes,
+  removeChildNodes,
+} from "./dom";
 import {
   caughtError,
   runEffects,
@@ -453,10 +459,8 @@ export const _show = /*@__PURE__*/ withBranches(
       // The reference node is the parent element when the `<show>` is its only
       // child, otherwise a marker node just after the body.
       const referenceNode = scope[nodeAccessor] as ChildNode;
-      const onlyChild = referenceNode.nodeType === NodeType.Element;
-      const parentNode = onlyChild
-        ? (referenceNode as unknown as ParentNode & Element)
-        : referenceNode.parentNode!;
+      const parentNode = parentOf(referenceNode);
+      const onlyChild = (referenceNode as Node) === parentNode;
       let range = scope[rangeAccessor] as BranchScope | undefined;
 
       if (!range) {
@@ -736,10 +740,10 @@ export function setConditionalRenderer<T>(
   const prevBranch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
     | BranchScope
     | undefined;
-  const parentNode =
-    referenceNode.nodeType > NodeType.Element
-      ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
-      : (referenceNode as ParentNode);
+  const parentNode = parentOf(
+    referenceNode,
+    prevBranch?.[AccessorProp.StartNode],
+  );
   const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
     newRenderer &&
     createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
@@ -794,15 +798,15 @@ const loop = /*@__PURE__*/ withBranches(
         const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
         scope[keyedScopesAccessor] = null;
         const oldLen = oldScopes.length;
-        const parentNode = (
-          referenceNode.nodeType > NodeType.Element
-            ? referenceNode.parentNode ||
-              oldScopes[0]?.[AccessorProp.StartNode].parentNode
-            : referenceNode
-        ) as Element;
+        const parentNode = parentOf(
+          referenceNode,
+          oldScopes[0]?.[AccessorProp.StartNode],
+        );
         let oldScopesByKey: Map<unknown, BranchScope> | undefined;
         let hasPotentialMoves: boolean | undefined;
         let start = 0;
+        let mapStart = 0;
+        let matched = 0;
 
         if (MARKO_DEBUG) {
           // eslint-disable-next-line no-var
@@ -816,21 +820,39 @@ const loop = /*@__PURE__*/ withBranches(
 
           const i = newScopes.length;
           const oldScope = oldScopes[i];
-          let branch =
-            oldLen &&
-            (oldScopesByKey || key !== (oldScope?.[AccessorProp.LoopKey] ?? i)
-              ? (oldScopesByKey ||= oldScopes.reduce(
-                  (map, scope, j) =>
-                    j < i
-                      ? map
-                      : ((scope[AccessorProp.LoopIndex] = j),
-                        map.set(scope[AccessorProp.LoopKey] ?? j, scope)),
-                  new Map<unknown, BranchScope>(),
-                )).get(key)
-              : oldScope && (start++, oldScope));
+          let branch: BranchScope | undefined;
+          if (oldLen) {
+            if (
+              oldScopesByKey ||
+              key !== (oldScope?.[AccessorProp.LoopKey] ?? i)
+            ) {
+              if (!oldScopesByKey) {
+                oldScopesByKey = new Map();
+                for (let j = (mapStart = i); j < oldLen; j++) {
+                  const scope = oldScopes[j];
+                  scope[AccessorProp.LoopIndex] = j;
+                  oldScopesByKey.set(scope[AccessorProp.LoopKey] ?? j, scope);
+                }
+              }
+              branch = oldScopesByKey.get(key);
+              // A reused scope flips its index negative, so a duplicate key
+              // sees it as taken instead of paying a Map delete per match.
+              if (branch) {
+                if (branch[AccessorProp.LoopIndex]! < 0) {
+                  branch = undefined;
+                } else {
+                  branch[AccessorProp.LoopIndex] =
+                    ~branch[AccessorProp.LoopIndex]!;
+                  matched++;
+                }
+              }
+            } else if (oldScope) {
+              start++;
+              branch = oldScope;
+            }
+          }
           if (branch) {
             hasPotentialMoves = true;
-            oldScopesByKey?.delete(key);
           } else {
             branch = createAndSetupBranch(
               scope[AccessorProp.Global],
@@ -852,14 +874,20 @@ const loop = /*@__PURE__*/ withBranches(
 
         if (hasSiblings) {
           if (oldLen) {
-            afterReference =
-              oldScopes[oldEnd][AccessorProp.EndNode].nextSibling;
+            afterReference = nextSiblingOf(
+              oldScopes[oldEnd][AccessorProp.EndNode],
+            );
             if (!newLen) {
-              parentNode.insertBefore(referenceNode, afterReference);
+              insertChildNodes(
+                parentNode,
+                afterReference,
+                referenceNode,
+                referenceNode,
+              );
             }
           } else if (newLen) {
-            afterReference = referenceNode.nextSibling;
-            referenceNode.remove();
+            afterReference = nextSiblingOf(referenceNode);
+            removeChildNodes(referenceNode, referenceNode);
           }
         }
 
@@ -870,7 +898,7 @@ const loop = /*@__PURE__*/ withBranches(
               hasSiblings ? removeAndDestroyBranch : destroyBranch,
             );
             if (!hasSiblings) {
-              parentNode.textContent = "";
+              clearChildren(parentNode);
             }
           }
 
@@ -882,7 +910,13 @@ const loop = /*@__PURE__*/ withBranches(
         }
 
         if (oldScopesByKey) {
-          oldScopesByKey.forEach(removeAndDestroyBranch);
+          if (matched < oldLen - mapStart) {
+            for (let i = mapStart; i < oldLen; i++) {
+              if (oldScopes[i][AccessorProp.LoopIndex]! >= 0) {
+                removeAndDestroyBranch(oldScopes[i]);
+              }
+            }
+          }
         } else {
           for (let i = newLen; i < oldLen; i++) {
             removeAndDestroyBranch(oldScopes[i]);
@@ -922,7 +956,8 @@ const loop = /*@__PURE__*/ withBranches(
         let mid: number;
 
         for (let i = diffLen; i--;) {
-          sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
+          const oldIndex = newScopes[start + i][AccessorProp.LoopIndex];
+          sources[i] = oldIndex! < 0 ? ~oldIndex! : -1;
         }
 
         for (let i = 0; i < diffLen; i++) {
@@ -970,6 +1005,24 @@ const loop = /*@__PURE__*/ withBranches(
       };
     },
 );
+
+// An element reference is the parent itself; a marker's parent comes from the
+// branch when the marker has left the DOM. Optimized code that calls the DOM
+// directly is discarded whenever a CPU profiler starts, so the loop keeps
+// every DOM call behind a helper.
+function parentOf(referenceNode: Node, branchStart?: Node) {
+  return (
+    referenceNode.nodeType > NodeType.Element
+      ? (branchStart || referenceNode).parentNode
+      : referenceNode
+  ) as Element;
+}
+function nextSiblingOf(node: ChildNode) {
+  return node.nextSibling;
+}
+function clearChildren(parent: Element) {
+  parent.textContent = "";
+}
 
 export const _for_of = /*@__PURE__*/ loop<
   [all: unknown[], by?: (item: unknown, index: number) => unknown]
