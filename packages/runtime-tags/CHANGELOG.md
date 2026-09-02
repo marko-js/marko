@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.48
+
+### Patch Changes
+
+- [#4074](https://github.com/marko-js/marko/pull/4074) [`1526955`](https://github.com/marko-js/marko/commit/152695589df85ca41ca546330b96fae4dc0659ba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a lazily loaded tag's nested tags losing their setup when the tag also receives attributes: the DOM is now cloned in the same run as setup, so a nested `<let>` seeds and a nested `<return>` reaches the tag variable. Input chunks buffered while the module lands render with that batch instead of a frame behind it.
+
 ## 6.3.47
 
 ### Patch Changes
