@@ -24,7 +24,7 @@ function $setup($scope) {
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", ($scope) => {
 	$if_content__input_title($scope);
 	_text($scope["#text/0"], shout($scope.input_title));
-}, ($scope, input_title) => $if_content__input_title($scope));
+}, $if_content__input_title);
 const $if = /*@__PURE__*/ _if("#text/2", "<span> </span>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {

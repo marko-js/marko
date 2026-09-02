@@ -19,7 +19,7 @@ const $input_no = ($scope, input_no) => $label($scope, input_no + "!");
 const $input_yes = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_yes", ($scope) => {
 	$if_content__input_yes($scope);
 	_text($scope["#text/0"], $scope.input_yes);
-}, ($scope, input_yes) => $if_content__input_yes($scope));
+}, $if_content__input_yes);
 const $input = ($scope, input) => {
 	$input_no($scope, input.no);
 	$input_yes($scope, input.yes);

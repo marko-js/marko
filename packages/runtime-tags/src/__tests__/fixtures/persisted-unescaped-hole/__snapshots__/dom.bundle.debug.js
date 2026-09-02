@@ -15,6 +15,6 @@ function $setup($scope) {
 const $input_html = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_html", ($scope) => {
 	$if_content__input_html($scope);
 	_html($scope, $scope.input_html, "#text/0");
-}, ($scope, input_html) => $if_content__input_html($scope));
+}, $if_content__input_html);
 const $input = ($scope, input) => $input_html($scope, input.html);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
