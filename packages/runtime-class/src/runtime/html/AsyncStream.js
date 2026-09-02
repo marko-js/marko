@@ -136,6 +136,7 @@ var proto = (AsyncStream.prototype = {
     const originalWriter = this._state.writer;
     let buffer = "";
     let iteratorNextFn;
+    let iteratorReturnFn = defaultIteratorReturn;
 
     if (!originalWriter.stream) {
       // Writing has finished completely so we can use a simple iterator
@@ -151,7 +152,7 @@ var proto = (AsyncStream.prototype = {
       let pending;
       const stream = {
         write(data) {
-          buffer += data;
+          if (!done) buffer += data;
         },
         end() {
           done = true;
@@ -220,6 +221,20 @@ var proto = (AsyncStream.prototype = {
 
         return pending.promise;
       };
+
+      // The last consumer to leave is still waiting on `pending`, which only a
+      // later write would settle; end the iteration instead of hanging on it.
+      iteratorReturnFn = (value) => {
+        done = true;
+        buffer = "";
+
+        if (pending) {
+          pending.resolve({ value: undefined, done: true });
+          pending = undefined;
+        }
+
+        return defaultIteratorReturn(value);
+      };
     }
 
     return (this.___iterator = {
@@ -234,15 +249,23 @@ var proto = (AsyncStream.prototype = {
 
   toReadable() {
     let cancelled = false;
+    this.___readers = (this.___readers || 0) + 1;
     return new ReadableStream({
       start: async (ctrl) => {
         const encoder = new TextEncoder();
+        const iterator = this[Symbol.asyncIterator]();
         try {
-          for await (const chunk of this) {
+          for (;;) {
+            // Read by hand: `for await` would close the shared iterator on the
+            // way out, ending the consumers still reading it.
+            const result = await iterator.next();
             if (cancelled) {
               return;
             }
-            ctrl.enqueue(encoder.encode(chunk));
+            if (result.done) {
+              break;
+            }
+            ctrl.enqueue(encoder.encode(result.value));
           }
           ctrl.close();
         } catch (err) {
@@ -251,8 +274,14 @@ var proto = (AsyncStream.prototype = {
           }
         }
       },
-      cancel() {
+      cancel: () => {
         cancelled = true;
+
+        // Every consumer shares one iterator, so only the last one out may end
+        // it; the others are still reading.
+        if (!--this.___readers) {
+          this[Symbol.asyncIterator]().return();
+        }
       },
     });
   },
@@ -823,7 +852,7 @@ function getNonMarkoStack(error) {
     .join("\n");
 }
 
-function iteratorReturnFn(value) {
+function defaultIteratorReturn(value) {
   return Promise.resolve({
     value,
     done: true,

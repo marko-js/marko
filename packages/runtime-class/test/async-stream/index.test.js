@@ -869,10 +869,9 @@ describe("AsyncStream", function () {
     it("rejects the iteration when the stream errors", async function () {
       var out = new AsyncStream();
       out.on("error", function () {});
+      var chunks = [];
       var iterated = (async function () {
-        // eslint-disable-next-line no-unused-vars, no-empty
-        for await (var _chunk of out) {
-        }
+        for await (var chunk of out) chunks.push(chunk);
       })();
 
       var asyncOut = out.beginAsync();
@@ -889,6 +888,7 @@ describe("AsyncStream", function () {
       }
       expect(caught).to.be.an("error");
       expect(caught.message).to.contain("boom");
+      expect(chunks).to.deep.equal([]);
     });
 
     it("reports an error raised before the first read", async function () {
@@ -951,6 +951,100 @@ describe("AsyncStream", function () {
         "first",
       );
       await reader.cancel();
+    });
+
+    it("ends the iteration when the reader cancels with nothing left to emit", async function () {
+      var out = new AsyncStream();
+      var iterator = out[Symbol.asyncIterator]();
+      var reader = out.toReadable().getReader();
+
+      out.write("first");
+      var asyncOut = out.beginAsync();
+      expect(new TextDecoder().decode((await reader.read()).value)).to.equal(
+        "first",
+      );
+      await reader.cancel();
+
+      expect(await iterator.next()).to.deep.equal({
+        value: undefined,
+        done: true,
+      });
+
+      asyncOut.end();
+      out.end();
+    });
+
+    it("keeps the other consumers running when one cancels", async function () {
+      var out = new AsyncStream();
+      var cancelling = out.toReadable().getReader();
+      var reader = out.toReadable().getReader();
+      var decoder = new TextDecoder();
+
+      out.write("a");
+      var first = out.beginAsync();
+      var second = out.beginAsync();
+      await cancelling.cancel();
+      // Several chunks after the cancel: the cancelled consumer must not close
+      // the iterator when it stops on the first of them.
+      setTimeout(function () {
+        first.write("one");
+        first.end();
+      }, 5);
+      setTimeout(function () {
+        second.write("two");
+        second.end();
+        out.end();
+      }, 20);
+
+      var chunks = [];
+      for (;;) {
+        var read = await reader.read();
+        if (read.done) break;
+        chunks.push(decoder.decode(read.value));
+      }
+      expect(chunks).to.deep.equal(["a", "onetwo"]);
+    });
+
+    it("ends the iteration once the last consumer cancels", async function () {
+      var out = new AsyncStream();
+      var iterator = out[Symbol.asyncIterator]();
+      var first = out.toReadable().getReader();
+      var second = out.toReadable().getReader();
+
+      out.write("a");
+      var asyncOut = out.beginAsync();
+      await first.read();
+      await first.cancel();
+      await second.cancel();
+
+      expect(await iterator.next()).to.deep.equal({
+        value: undefined,
+        done: true,
+      });
+
+      asyncOut.end();
+      out.end();
+    });
+
+    it("discards output produced after the last consumer cancels", async function () {
+      var out = new AsyncStream();
+      var iterator = out[Symbol.asyncIterator]();
+      var reader = out.toReadable().getReader();
+
+      out.write("first");
+      var asyncOut = out.beginAsync();
+      await reader.read();
+      await reader.cancel();
+
+      asyncOut.write("dropped");
+      asyncOut.flush();
+      expect(await iterator.next()).to.deep.equal({
+        value: undefined,
+        done: true,
+      });
+
+      asyncOut.end();
+      out.end();
     });
 
     it("errors the stream when the output errors", async function () {
