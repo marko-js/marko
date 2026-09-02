@@ -10,7 +10,7 @@ import {
   parseVar,
 } from "@marko/compiler/babel-utils";
 import { types as t } from "@marko/compiler/internal/babel";
-import { getLines, getPosition, NodeType, parse, TagType } from "@marko/parse";
+import { NodeType, parse, TagType } from "@marko/parse";
 
 import { buildCodeFrameError } from "../util/build-code-frame";
 import throwAggregateError from "../util/merge-errors";
@@ -50,6 +50,8 @@ export function parseMarko(file) {
   const { htmlParseOptions = {} } = file.markoOpts;
   const { watchFiles } = file.metadata.marko;
   const parseVisits = [];
+  // Tag definitions looked up by the parse hook, keyed by tag name start.
+  const tagDefs = new Map();
   let currentTag = file.path;
   let currentBody = currentTag;
   let preservingWhitespaceUntil = htmlParseOptions.preserveWhitespace;
@@ -58,36 +60,20 @@ export function parseMarko(file) {
   let resolveText = noop;
 
   const parsed = parse(code, file.opts.filename, {
+    // The taglib decides how every tag body parses, so the parser's own
+    // default for the name is ignored.
     getTagType(name, range) {
-      const parseOptions = getTagDefForTagName(file, name)?.parseOptions;
-      let type = TagType.html;
+      const tagDef = getTagDefForTagName(file, name);
+      const parseOptions = tagDef?.parseOptions;
+      tagDefs.set(range.start, tagDef);
 
       if (parseOptions) {
-        if (parseOptions.statement) {
-          type = TagType.statement;
-        } else if (parseOptions.openTagOnly) {
-          type = TagType.void;
-        } else if (parseOptions.text) {
-          type = TagType.text;
-        }
+        if (parseOptions.statement) return TagType.statement;
+        if (parseOptions.openTagOnly) return TagType.void;
+        if (parseOptions.text) return TagType.text;
       }
 
-      // Otherwise this reaches htmljs-parser's "reserved and cannot be used
-      // as an HTML tag", which names neither the concise form nor the tag.
-      if (type === TagType.statement && code[range.start - 1] === "<") {
-        const lines = getLines(code);
-        throw buildCodeFrameError(
-          file.opts.filename,
-          code,
-          {
-            start: toBabelPosition(getPosition(lines, range.start)),
-            end: toBabelPosition(getPosition(lines, range.end)),
-          },
-          statementTagInHTMLModeError(name, code, range.end),
-        );
-      }
-
-      return type;
+      return TagType.html;
     },
   });
 
@@ -254,17 +240,19 @@ export function parseMarko(file) {
       case NodeType.Comment:
         pushContent(withLoc(t.markoComment(read(node.value)), node));
         break;
+      case NodeType.Import:
+      case NodeType.Export:
+      case NodeType.Class:
       case NodeType.Static:
         visitStatic(node);
+        break;
+      case NodeType.Style:
+        visitStyle(node);
         break;
       case NodeType.Tag:
       case NodeType.AttrTag:
         visitTag(node);
         break;
-      default:
-        // The getTagType hook always returns a type, so the built in
-        // Import/Export/Class/Style statement nodes cannot occur.
-        throw new Error(`Unexpected Marko syntax tree node "${node.type}".`);
     }
   };
 
@@ -371,10 +359,9 @@ export function parseMarko(file) {
         );
       }
 
-      const parseOptions = (node.tagDef = getTagDefForTagName(
-        file,
-        literalTagName,
-      ))?.parseOptions;
+      const parseOptions = (node.tagDef = tagDefs.has(part.start)
+        ? tagDefs.get(part.start)
+        : getTagDefForTagName(file, literalTagName))?.parseOptions;
 
       if (parseOptions?.preserveWhitespace) {
         // Keep the outermost owner so a nested preserving tag (eg a
@@ -388,10 +375,19 @@ export function parseMarko(file) {
   };
 
   const visitStatic = (cst) => {
+    // Built in statements carry no `name`; their keyword is `target` or the
+    // lowercased node type.
+    const name = cst.name || {
+      start: cst.start,
+      end: cst.start + (cst.target || cst.type).length,
+    };
+
+    assertConciseStatement(name);
+
     const node = enterTagNode({
-      start: cst.name.start,
-      end: cst.name.end,
-      quasis: [cst.name],
+      start: name.start,
+      end: name.end,
+      quasis: [name],
       expressions: [],
     });
 
@@ -400,6 +396,71 @@ export function parseMarko(file) {
     }
 
     closeTag(cst.end);
+  };
+
+  // A `style {}` block is a text tag to the taglib: its `.ext` are shorthand
+  // class names and the braces are a single valueless attribute.
+  const visitStyle = (cst) => {
+    const name = { start: cst.start, end: cst.start + "style".length };
+    assertConciseStatement(name);
+
+    const node = enterTagNode({
+      start: name.start,
+      end: name.end,
+      quasis: [name],
+      expressions: [],
+    });
+    let shorthandClassNames;
+
+    if (cst.ext) {
+      shorthandClassNames = [];
+      let start = name.end;
+      for (const ext of cst.ext.slice(1).split(".")) {
+        const end = start + 1 + ext.length;
+        shorthandClassNames.push(
+          parseTemplateString({
+            quasis: [{ start: start + 1, end }],
+            expressions: [],
+          }),
+        );
+        start = end;
+      }
+    }
+
+    visitAttr(node, {
+      type: NodeType.AttrNamed,
+      name: { start: cst.value.start - 1, end: cst.value.end + 1 },
+      args: undefined,
+      value: undefined,
+    });
+    finishOpenTag(node, cst.end, undefined, shorthandClassNames);
+    closeTag(conciseTextTagEnd(cst.end));
+  };
+
+  // Otherwise this reaches htmljs-parser's "reserved and cannot be used as
+  // an HTML tag", which names neither the concise form nor the tag.
+  const assertConciseStatement = (name) => {
+    if (code[name.start - 1] === "<") {
+      throw buildCodeFrameError(
+        file.opts.filename,
+        code,
+        locationAt(name),
+        statementTagInHTMLModeError(read(name), code, name.end),
+      );
+    }
+  };
+
+  // A concise text tag closes just before the indentation of the next non
+  // blank line, or at the end of the file.
+  const conciseTextTagEnd = (start) => {
+    let lineStart = start;
+    let pos = start;
+
+    while (pos < code.length && code.charCodeAt(pos) <= 32) {
+      if (code[pos++] === "\n") lineStart = pos;
+    }
+
+    return pos === code.length ? pos : lineStart - 1;
   };
 
   const visitTag = (cst) => {
@@ -797,6 +858,7 @@ const statementTagExample = {
   import: 'import Tag from "<tag>"',
   server: 'server console.log("…")',
   static: "static const value = …",
+  style: "style { … }",
 };
 function statementTagInHTMLModeError(tagName, code, nameEnd) {
   // `<export/value>` is what an author reaches for to publish a value to the
