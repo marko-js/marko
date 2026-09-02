@@ -375,11 +375,9 @@ export function parseMarko(file) {
   };
 
   const visitStatic = (cst) => {
-    // Built in statements carry no `name`; their keyword is `target` or the
-    // lowercased node type.
     const name = cst.name || {
       start: cst.start,
-      end: cst.start + (cst.target || cst.type).length,
+      end: cst.start + cst.type.length,
     };
 
     assertConciseStatement(name);
