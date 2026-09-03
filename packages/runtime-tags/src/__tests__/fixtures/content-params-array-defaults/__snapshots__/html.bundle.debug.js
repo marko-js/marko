@@ -4,9 +4,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Wrap = { content: _content("__tests__/template.marko_1*content", ([$a, b]) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__$a = _serialize_guard($scope1_reason, 1), $sg__b = _serialize_guard($scope1_reason, 2);
 		const a = void 0 !== $a ? $a : 1;
-		_html(`<div>${_text_resume($scope1_id, "#text/0", a, _serialize_guard($scope1_reason, 1))}|${_text_resume($scope1_id, "#text/1", b, _serialize_guard($scope1_reason, 2) * 2)}</div>`);
+		_html(`<div>${_text_resume($scope1_id, "#text/0", a, $sg__$a)}|${_text_resume($scope1_id, "#text/1", b, $sg__b * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	let n = 2;
@@ -23,5 +23,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"#childScope/1": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, { n: "4:6" });
-	_resume_branch($scope0_id);
 }, 1);

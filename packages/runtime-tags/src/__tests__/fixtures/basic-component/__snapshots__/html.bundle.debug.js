@@ -6,7 +6,6 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "#text/1", clickCount)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_scope($scope0_id, { clickCount }, "__tests__/tags/counter.marko", 0, { clickCount: "1:6" });
-	_resume_branch($scope0_id);
 });
 
 // template.marko

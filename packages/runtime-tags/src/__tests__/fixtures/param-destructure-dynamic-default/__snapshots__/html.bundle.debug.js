@@ -6,15 +6,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	const ChildA = { content: _content("__tests__/template.marko_1*content", ({ id, foo, foo: $foo }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__id = _serialize_guard($scope1_reason, 0), $sg__foo = _serialize_guard($scope1_reason, 1);
 		const { bar: $bar } = void 0 !== $foo ? $foo : { bar: count + 2 };
 		const bar = void 0 !== $bar ? $bar : count + 1;
-		_html(`<div${_attr("id", id)} class=a>${_text_resume($scope1_id, "#text/1", bar)} ${_text_resume($scope1_id, "#text/2", typeof foo, _serialize_guard($scope1_reason, 1) * 2)}</div>${_el_resume($scope1_id, "#div/0", _serialize_guard($scope1_reason, 0))}`);
+		_html(`<div${_attr("id", id)} class=a>${_text_resume($scope1_id, "#text/1", bar)} ${_text_resume($scope1_id, "#text/2", typeof foo, $sg__foo * 2)}</div>${_el_resume($scope1_id, "#div/0", $sg__id)}`);
 		_subscribe($count__closures, _scope($scope1_id, {
 			foo,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:1", { foo: "2:21" }));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	ChildA.content({
 		foo: { bar: 0 },
@@ -27,17 +26,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	ChildA.content({ id: "c" });
 	const ChildB = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason();
+		const $scope2_reason = _scope_reason(), $sg__input_id = _serialize_guard($scope2_reason, 0), $sg__foo2 = _serialize_guard($scope2_reason, 1);
 		const { foo, foo: $foo2 } = input;
 		const { bar: $bar2 } = void 0 !== $foo2 ? $foo2 : { bar: count + 2 };
 		const bar = void 0 !== $bar2 ? $bar2 : count + 1;
-		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "#text/1", bar)} ${_text_resume($scope2_id, "#text/2", typeof foo, _serialize_guard($scope2_reason, 1) * 2)}</div>${_el_resume($scope2_id, "#div/0", _serialize_guard($scope2_reason, 0))}`);
+		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "#text/1", bar)} ${_text_resume($scope2_id, "#text/2", typeof foo, $sg__foo2 * 2)}</div>${_el_resume($scope2_id, "#div/0", $sg__input_id)}`);
 		_subscribe($count__closures, _scope($scope2_id, {
 			foo,
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:count": 1
 		}, "__tests__/template.marko", "9:1", { foo: "10:11" }));
-		_resume_branch($scope2_id);
 	}, $scope0_id) };
 	ChildB.content({
 		foo: { bar: 0 },
@@ -54,5 +52,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count,
 		"ClosureScopes:count": $count__closures
 	}, "__tests__/template.marko", 0, { count: "1:5" });
-	_resume_branch($scope0_id);
 }, 1);

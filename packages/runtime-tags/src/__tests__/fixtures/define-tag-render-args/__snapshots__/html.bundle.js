@@ -5,8 +5,8 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	const MyTag = { content: _content("a0", (a, b, c) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
-		_html(`<div>${_text_resume($scope1_id, "a", a, _serialize_guard($scope1_reason, 1))}|${_text_resume($scope1_id, "b", b, _serialize_guard($scope1_reason, 2) * 2)}|${_text_resume($scope1_id, "c", c, _serialize_guard($scope1_reason, 3) * 2)}</div>`);
+		const $scope1_reason = _scope_reason(), $sg__a = _serialize_guard($scope1_reason, 1), $sg__b = _serialize_guard($scope1_reason, 2), $sg__c = _serialize_guard($scope1_reason, 3);
+		_html(`<div>${_text_resume($scope1_id, "a", a, $sg__a)}|${_text_resume($scope1_id, "b", b, $sg__b * 2)}|${_text_resume($scope1_id, "c", c, $sg__c * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason(18);
@@ -18,5 +18,4 @@ var template_default = _template("a", (input) => {
 		d: x,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -17,5 +17,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
 	_html(`</svg><div>${_text_resume($scope0_id, "#text/1", n)}</div>`);
 	_scope($scope0_id, { attrs: _serialize_if($scope0_reason, 0) && attrs }, "__tests__/template.marko", 0, { attrs: "2:8" });
-	_resume_branch($scope0_id);
 }, 1);

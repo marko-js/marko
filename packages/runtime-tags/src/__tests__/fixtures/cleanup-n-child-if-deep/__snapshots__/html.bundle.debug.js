@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { name, write } = input;
 	_html(`<div>${_text_resume($scope0_id, "#text/0", name, $sg__input_name)} a</div><span>${_text_resume($scope0_id, "#text/1", name, $sg__input_name)} a</span><p>${_text_resume($scope0_id, "#text/2", name, $sg__input_name)} a</p>`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_name#5_write#6");
+	_script($scope0_id, "__tests__/tags/child.marko_0_name#5_write#6", $sg__input_name);
 	_scope($scope0_id, {
 		name,
 		write
@@ -12,7 +12,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		name: "1:9",
 		write: "1:15"
 	});
-	_resume_branch($scope0_id);
+	$sg__input_name || _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -77,5 +77,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		showInner: "3:6",
 		write: "9:8"
 	});
-	_resume_branch($scope0_id);
 }, 1);

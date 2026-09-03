@@ -6,8 +6,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const a = "abc";
 	const Foo = { content: _content("__tests__/template.marko_3*content", (input) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason();
-		_dynamic_tag($scope3_id, "#text/0", input.content, [input.value], 0, 1, _serialize_guard($scope3_reason, 0));
+		const $scope3_reason = _scope_reason(), $sg__input_content__OR__input_value = _serialize_guard($scope3_reason, 0);
+		_dynamic_tag($scope3_id, "#text/0", input.content, [input.value], 0, 1, $sg__input_content__OR__input_value);
 		_serialize_if($scope3_reason, 0) && _scope($scope3_id, {
 			input_content: _serialize_if($scope3_reason, 2) && input.content,
 			input_value: _serialize_if($scope3_reason, 1) && input.value
@@ -44,5 +44,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count: "1:6",
 		a: "2:8"
 	});
-	_resume_branch($scope0_id);
 }, 1);

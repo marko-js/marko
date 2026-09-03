@@ -8,5 +8,4 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, { e: _resume(function(v) {
 		liveCount = v;
 	}, "a0", $scope0_id) || void 0 });
-	_resume_branch($scope0_id);
 }, 1);

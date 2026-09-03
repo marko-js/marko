@@ -24,5 +24,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		options: "1:6",
 		"ControlledHandler:#select/0": ["valueChange", "3:33"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

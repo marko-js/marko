@@ -5,23 +5,21 @@
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [];
-  M._.j[3] = _ => {
-    _.push("_f 3")
-  };
-  M._.r.push(_ => [1, {
+  M._.r = [_ => [1, {
     d: 0,
     e: new Set
   }, 1, {
     _: _(1),
-    C: "c",
     Q: _(1, "a4")
   }], "b0 5 a6 1", _ => [3, {
     P: _(2)
   }, 1, {
     d: "outer placeholder",
     G: 2
-  }]);
+  }]];
+  M._.j[3] = _ => {
+    _.push("_f 3")
+  };
   M._.w()
 </script>
 
@@ -33,17 +31,10 @@
 </t>
 <t hidden M_=8><!--M_#c--></t>
 <script>
-  M._.j.b = _ => {
-    _.push("a3 6 b0 10")
-  };
-  M._.j[8] = _ => {
-    _.push("_f 8")
-  };
   M._.r.push(_ => [6, {
     _: _(3)
   }, 1, {
     _: _(6),
-    C: "c",
     Q: _(6, "a1")
   }], _ => [8, {
     P: _(7)
@@ -51,6 +42,12 @@
     d: "inner placeholder",
     G: 7
   }]);
+  M._.j.b = _ => {
+    _.push("a3 6 b0 10")
+  };
+  M._.j[8] = _ => {
+    _.push("_f 8")
+  };
   M._.w()
 </script>
 
@@ -58,9 +55,6 @@
 
 <t hidden M_=c><!--M_[--><span>inner 0<!--M_$12 a--></span><!--M_]8 a 11--></t>
 <script>
-  M._.j.c = _ => {
-    _.push("a0 11 b0 12")
-  };
   M._.r.push(_ => [11, {
     c: "inner",
     _: _(8),
@@ -69,5 +63,8 @@
   }, {
     d: "inner 0"
   }]);
+  M._.j.c = _ => {
+    _.push("a0 11 b0 12")
+  };
   M._.w()
 </script>

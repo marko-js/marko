@@ -1,4 +1,4 @@
-// size: 26634 (min) 9945 (brotli)
+// size: 26796 (min) 10023 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -893,6 +893,7 @@ function init(runtimeId = "M") {
           let render = (curRenders[renderId] = renders[renderId] || renders(renderId)),
             walk = render.w,
             scopeLookup = {},
+            pending = [],
             getScope = (id) =>
               scopeLookup[id] || (+id ? initScope((scopeLookup[id] = { L: +id })) : initGlobal()),
             initGlobal = () =>
@@ -901,7 +902,7 @@ function init(runtimeId = "M") {
                 renderId,
               }),
             initScope = (scope) => (
-              (scope.H = 1),
+              (scope.H ??= 1),
               (scope.$ = initGlobal()),
               branchesEnabled && scope.G && (scope.F = getScope(scope.G)),
               scope
@@ -933,26 +934,36 @@ function init(runtimeId = "M") {
               (
                 branchScopesStack = [],
                 branchStarts = [],
-                orphanBranches = [],
-                deferredOwners = [],
                 curBranchScopes,
+                reorderBranch,
+                reorderDepth = 0,
+                adopt = (scope, branch) =>
+                  scope.F === scope
+                    ? scope !== branch && setParentBranch(scope, branch)
+                    : (scope.F = branch),
               ) =>
               (
                 branchId,
                 branch,
                 endedBranches,
                 accessor,
+                nodeAccessor,
                 singleNode,
                 parent = visit.parentNode,
                 startVisit = visit,
-                i = orphanBranches.length,
-                j = deferredOwners.length,
               ) => {
+                if (visitType === "*") {
+                  for (; reorderBranch && pending.length >= reorderDepth;)
+                    adopt(pending.pop(), reorderBranch);
+                  (reorderBranch = +lastToken && visitScope) &&
+                    (reorderDepth = pending.push(reorderBranch));
+                  return;
+                }
                 for (
                   visitType !== "[" &&
                   ((visitScope[nextToken()] =
                     visitType === ")" || visitType === "}" ? parent : visit),
-                  (accessor = "A" + lastToken),
+                  (accessor = "A" + (nodeAccessor = lastToken)),
                   (singleNode = visitType !== "]" && visitType !== ")"),
                   nextToken());
                   (branchId = +lastToken);
@@ -972,7 +983,8 @@ function init(runtimeId = "M") {
                       (branch.K = branch.S = startVisit),
                       visitType === "(" && (branch.a = startVisit));
                   } else
-                    ((curBranchScopes = push(curBranchScopes, branch)),
+                    ((branch.C = nodeAccessor),
+                      (curBranchScopes = push(curBranchScopes, branch)),
                       accessor &&
                         ((visitScope[accessor] = curBranchScopes),
                         forEach(curBranchScopes, (scope) => (scope._ ??= visitScope)),
@@ -984,17 +996,11 @@ function init(runtimeId = "M") {
                         visit.previousSibling === startVisit
                           ? startVisit
                           : parent.insertBefore(new Text(), visit)));
-                  for (; i && orphanBranches[i - 1].L > branchId;)
-                    (i--, setParentBranch(orphanBranches.pop(), branch));
-                  for (; j && deferredOwners[j - 1].L > branchId;) {
-                    j--;
-                    let owner = deferredOwners.pop();
-                    owner.F !== owner && (owner.F = branch);
-                  }
+                  for (; pending.at(-1)?.L >= branchId;) adopt(pending.pop(), branch);
                   nextToken();
                 }
                 if (endedBranches) {
-                  for (let ended of endedBranches) orphanBranches.push(ended);
+                  for (let ended of endedBranches) pending.push(ended);
                   singleNode &&
                     (visitScope[accessor] =
                       endedBranches.length > 1 ? endedBranches.reverse() : endedBranches[0]);
@@ -1003,7 +1009,7 @@ function init(runtimeId = "M") {
                   ? (endedBranches ||
                       (branchScopesStack.push(curBranchScopes), (curBranchScopes = void 0)),
                     branchStarts.push(visit))
-                  : deferredOwners.push(visitScope);
+                  : pending.push(visitScope);
               },
             nextToken = () =>
               (lastToken = visitText.slice(
@@ -1068,19 +1074,28 @@ function init(runtimeId = "M") {
                     ? visitType === "&"
                       ? (htmlStart = visit)
                       : ((visitScope[nextToken()] = htmlStart),
-                        (visitScope["H" + lastToken] = visit))
+                        (visitScope["H" + lastToken] = visit),
+                        (branchesEnabled || lazyEnabled) &&
+                          pending[pending.length - 1] !== visitScope &&
+                          pending.push(visitScope))
                     : branchesEnabled && visitType > "'"
                       ? (visitBranches ||= createVisitBranches())()
                       : lazyEnabled && render.b && visitType > "%"
                         ? (visits[retained++] = visit)
-                        : (visitScope[nextToken()] =
-                            visitType === "$"
-                              ? visit.previousSibling
-                              : visit.parentNode.insertBefore(new Text(), visit)));
+                        : ((visitScope[nextToken()] =
+                            visitType === "%"
+                              ? visit.parentNode.insertBefore(new Text(), visit)
+                              : visit.previousSibling),
+                          (branchesEnabled || lazyEnabled) &&
+                            pending[pending.length - 1] !== visitScope &&
+                            pending.push(visitScope)));
               return (
+                branchesEnabled &&
+                  visitBranches &&
+                  ((visitType = "*"), (lastToken = ""), visitBranches()),
                 embedRenders &&
                   !embedAnchor &&
-                  visit &&
+                  visit?.parentNode &&
                   embedRenders.set(
                     (embedAnchor = visit.parentNode.insertBefore(new Text(), visit.nextSibling)),
                     [renderId, scopeLookup],

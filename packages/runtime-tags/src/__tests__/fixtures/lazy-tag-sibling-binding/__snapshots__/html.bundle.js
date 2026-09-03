@@ -10,7 +10,6 @@ var child_s_default = _template("b", (input) => {
 		g: isShared,
 		h: holder
 	});
-	_resume_branch($scope0_id);
 });
 
 // child-b.marko
@@ -25,7 +24,6 @@ var child_b_default = _template("a", (input) => {
 		g: isInner,
 		h: inner
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -54,5 +52,4 @@ var template_default = _template("c", (input) => {
 		g: shared,
 		i: count
 	});
-	_resume_branch($scope0_id);
 }, 1);

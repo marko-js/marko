@@ -50,7 +50,10 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { getExprIfSerialized } from "./serialize-guard";
+import {
+  getExprIfSerialized,
+  getSerializeGuardForAny,
+} from "./serialize-guard";
 import {
   getSerializeReason,
   isReasonDynamic,
@@ -1237,6 +1240,13 @@ export function writeHTMLResumeStatements(
   const body = path.node.body as t.Statement[];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
+  // Whether any node of the section writes a marker, as the same argument
+  // shape `_if` and `_await` take: absent when always, `0` when never.
+  const markerSerializeArg = getSerializeGuardForAny(
+    section,
+    section.domSerializeReasons,
+    true,
+  );
   const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
     ? true
     : section.serializeReason;
@@ -1294,6 +1304,7 @@ export function writeHTMLResumeStatements(
                     t.stringLiteral(
                       getResumeRegisterId(section, closure, "pending"),
                     ),
+                    markerSerializeArg,
                   ),
                 ),
               ),
@@ -1333,6 +1344,7 @@ export function writeHTMLResumeStatements(
             "_script",
             scopeIdIdentifier,
             t.stringLiteral(getResumeRegisterId(section, signalRefs)),
+            markerSerializeArg,
           ),
         ),
       );
@@ -1489,10 +1501,24 @@ export function writeHTMLResumeStatements(
           (binding) => binding.type === BindingType.let,
         )));
 
-  if (resumeClosestBranch) {
-    body.push(
-      t.expressionStatement(callRuntime("_resume_branch", scopeIdIdentifier)),
-    );
+  // The walker places a scope whose marker it visits, so a section that always
+  // writes one needs no link; a dynamic marker guards it, none writes it plain.
+  if (resumeClosestBranch && markerSerializeArg) {
+    // An abort signal's effect always ships; a closure subscription only with
+    // the scope write, so the link borrows that guard.
+    const call = callRuntime("_resume_branch", scopeIdIdentifier);
+    const link = section.hasAbortSignal
+      ? call
+      : getExprIfSerialized(section, sectionSerializeReason, call);
+    if (link) {
+      body.push(
+        t.expressionStatement(
+          markerSerializeArg.type === "NumericLiteral"
+            ? link
+            : t.logicalExpression("||", markerSerializeArg, link),
+        ),
+      );
+    }
   }
 
   const additionalStatements = getHTMLSectionStatements(section);

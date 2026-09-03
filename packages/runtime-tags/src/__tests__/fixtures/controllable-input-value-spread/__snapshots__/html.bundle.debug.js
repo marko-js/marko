@@ -25,5 +25,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_html(`<span>${_text_resume($scope0_id, "#text/1", value)}</span>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

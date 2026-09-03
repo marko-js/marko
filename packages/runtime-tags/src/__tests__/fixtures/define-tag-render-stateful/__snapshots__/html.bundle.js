@@ -6,8 +6,8 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	const MyTag = { content: _content("a0", ({ name, count }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
-		_html(`<div>Hello ${_text_resume($scope1_id, "a", name, _serialize_guard($scope1_reason, 1) * 2)} ${_text_resume($scope1_id, "b", count, _serialize_guard($scope1_reason, 2) * 2)}</div>`);
+		const $scope1_reason = _scope_reason(), $sg__name = _serialize_guard($scope1_reason, 1), $sg__count = _serialize_guard($scope1_reason, 2);
+		_html(`<div>Hello ${_text_resume($scope1_id, "a", name, $sg__name * 2)} ${_text_resume($scope1_id, "b", count, $sg__count * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason(10);
@@ -21,5 +21,4 @@ var template_default = _template("a", (input) => {
 		d: count,
 		c: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1);

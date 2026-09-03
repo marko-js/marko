@@ -27,5 +27,5 @@ var template_default = _template("a", (input) => {
 		_html("</ul>");
 		_scope($scope3_id, {});
 	}, 0, $scope0_id, "c", 1, 0, 0, 0, 1);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a1", 0);
 }, 1);

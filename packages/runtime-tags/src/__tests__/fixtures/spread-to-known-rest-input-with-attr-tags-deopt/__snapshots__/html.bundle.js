@@ -16,7 +16,7 @@ var child_default = _template("b", (input) => {
 
 // tags/wrap.marko
 var wrap_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_foo = _serialize_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_foo = _serialize_guard($scope0_reason, 1), $si__input_foo = _serialize_if($scope0_reason, 1), $sg__input_class__OR__rest = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_foo__closures = /* @__PURE__ */ new Set();
 	const { class: _class, foo, ...rest } = input;
@@ -27,15 +27,15 @@ var wrap_default = _template("c", (input) => {
 	}, _content_resume("c0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_set_serialize_reason(_serialize_guard($scope0_reason, 1));
+		_set_serialize_reason($sg__input_foo);
 		const $childScope = _peek_scope_id();
 		child_default({ foo: input.foo });
 		_subscribe($si__input_foo && $input_foo__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: $si__input_foo && _existing_scope($childScope)
 		}));
-		_resume_branch($scope1_id);
-	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
+		$sg__input_foo || _resume_branch($scope1_id);
+	}, $scope0_id), 0, $sg__input_class__OR__rest);
 	_scope($scope0_id, {
 		d: input.foo,
 		e: _serialize_if($scope0_reason, 3) && _class,

@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	_scope_reason();
+	_serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	let x = 0;
 	const getMessage = _resume(() => input.message, "a0", $scope0_id);
@@ -13,5 +13,4 @@ var template_default = _template("a", (input) => {
 		g: x,
 		h: getMessage
 	});
-	_resume_branch($scope0_id);
 }, 1);

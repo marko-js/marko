@@ -551,16 +551,13 @@ function runtimeSourceKey() {
   if (!sourceKey) {
     const hash = createHash("sha1").update(rolldownVersion);
     const srcDir = path.join(import.meta.dirname, "../..");
-    for (const file of fs.readdirSync(srcDir, {
-      recursive: true,
-    }) as string[]) {
-      if (
-        file.endsWith(".ts") &&
-        !file.startsWith("__tests__") &&
-        !file.startsWith("translator")
-      ) {
-        hash.update(file).update(fs.readFileSync(path.join(srcDir, file)));
-      }
+    // Pruned rather than filtered: workers sweep and rename under
+    // `__tests__/dist` concurrently, and a walk into it can hit ENOENT.
+    for (const file of fs.globSync("**/*.ts", {
+      cwd: srcDir,
+      exclude: (name) => name === "__tests__" || name === "translator",
+    })) {
+      hash.update(file).update(fs.readFileSync(path.join(srcDir, file)));
     }
     sourceKey = hash.digest("hex").slice(0, 12);
   }

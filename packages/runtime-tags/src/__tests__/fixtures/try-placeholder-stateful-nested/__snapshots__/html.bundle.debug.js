@@ -1,11 +1,11 @@
 // tags/note.marko
 var note_default = _template("__tests__/tags/note.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.label, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "__tests__/tags/note.marko_0_input_label#3");
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.label, $sg__input_label)}</span>`);
+	_script($scope0_id, "__tests__/tags/note.marko_0_input_label#3", $sg__input_label);
 	_scope($scope0_id, { input_label: input.label }, "__tests__/tags/note.marko", 0, { input_label: ["input.label"] });
-	_resume_branch($scope0_id);
+	$sg__input_label || _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -37,7 +37,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						"#childScope/0": _existing_scope($childScope),
 						"ClosureSignalIndex:clicks": 1
 					}, "__tests__/template.marko", "11:8", { inner: "11:14" });
-					_resume_branch($scope4_id);
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:6");
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_6*content", () => {
@@ -46,7 +45,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				note_default({ label: "inner placeholder" });
 			}, $scope2_id) }) });
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
-			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
@@ -59,5 +57,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		clicks,
 		"ClosureScopes:clicks": $clicks__closures
 	}, "__tests__/template.marko", 0, { clicks: "3:6" });
-	_resume_branch($scope0_id);
 }, 1);

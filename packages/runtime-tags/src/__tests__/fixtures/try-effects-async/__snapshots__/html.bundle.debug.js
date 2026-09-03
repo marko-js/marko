@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			})() : value, 2)}`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "11:4");
 		});
-		_script($scope1_id, "__tests__/template.marko_1_clickCount#3");
+		_script($scope1_id, "__tests__/template.marko_1_clickCount#3", 0);
 		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
@@ -25,9 +25,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html("LOADING...");
 		}, $scope0_id) }),
 		catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", (err) => {
-			const $scope3_reason = _scope_reason();
+			const $scope3_reason = _scope_reason(), $sg__err = _serialize_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(_text_resume($scope3_id, "#text/0", err, _serialize_guard($scope3_reason, 0)));
+			_html(_text_resume($scope3_id, "#text/0", err, $sg__err));
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "17:4");
 		}, $scope0_id) })
 	});
@@ -36,5 +36,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		clickCount,
 		"ClosureScopes:clickCount": $clickCount__closures
 	}, "__tests__/template.marko", 0, { clickCount: "2:6" });
-	_resume_branch($scope0_id);
 }, 1);

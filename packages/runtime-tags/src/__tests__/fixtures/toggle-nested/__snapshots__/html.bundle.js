@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 5), $sg__input_value1__OR__input_value = _serialize_guard($scope0_reason, 2), $sg__input_value2 = _serialize_guard($scope0_reason, 6), $sg__input_show = _serialize_guard($scope0_reason, 4), $si__input_show__OR__input_value = _serialize_if($scope0_reason, 0), $si__input_show__OR__input_value2 = _serialize_if($scope0_reason, 1), $si__input_value = _serialize_if($scope0_reason, 5), $si__input_value2 = _serialize_if($scope0_reason, 6), $si__input_show__OR__input_value1__OR__input_value = _serialize_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 5), $sg__input_value2 = _serialize_guard($scope0_reason, 6), $sg__input_value1__OR__input_value = _serialize_guard($scope0_reason, 2), $sg__input_show = _serialize_guard($scope0_reason, 4), $si__input_show__OR__input_value = _serialize_if($scope0_reason, 0), $si__input_show__OR__input_value2 = _serialize_if($scope0_reason, 1), $si__input_value = _serialize_if($scope0_reason, 5), $si__input_value2 = _serialize_if($scope0_reason, 6), $si__input_show__OR__input_value1__OR__input_value = _serialize_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $value__closures = /* @__PURE__ */ new Set();
 	const $value2__closures = /* @__PURE__ */ new Set();

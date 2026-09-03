@@ -10,16 +10,15 @@ var custom_tag_default = _template("b", (input) => {
 		f: input.content,
 		g: x
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	custom_tag_default({ content: _content_resume("a0", (count) => {
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__count = _serialize_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
-		_html(`<div>Count: ${_text_resume($scope1_id, "a", count, _serialize_guard($scope1_reason, 0) * 2)}</div>`);
+		_html(`<div>Count: ${_text_resume($scope1_id, "a", count, $sg__count * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, _scope_id()) });
 }, 1);

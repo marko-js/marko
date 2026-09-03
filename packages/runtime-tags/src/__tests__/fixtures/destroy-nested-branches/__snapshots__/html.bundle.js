@@ -1,12 +1,12 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $sg__input_name = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	const { name } = input;
-	_html(`<p>${_text_resume($scope0_id, "a", name, _serialize_guard($scope0_reason, 0))}</p>`);
-	_script($scope0_id, "b0");
+	_html(`<p>${_text_resume($scope0_id, "a", name, $sg__input_name)}</p>`);
+	_script($scope0_id, "b0", $sg__input_name);
 	_scope($scope0_id, { d: name });
-	_resume_branch($scope0_id);
+	$sg__input_name || _resume_branch($scope0_id);
 });
 
 // template.marko

@@ -23,5 +23,4 @@ var template_default = _template("a", (input) => {
 	}, 0, 0, 0);
 	_html(`<div id=tags-api>${_text_resume($scope0_id, "b", received)}</div>`);
 	_scope($scope0_id, {});
-	_resume_branch($scope0_id);
 }, 1);

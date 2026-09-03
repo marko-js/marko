@@ -38,6 +38,7 @@ import {
   isReasonDynamic,
   mapCrossProgramReason,
   type SerializeReason,
+  type SerializeReasons,
 } from "./serialize-reasons";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -125,6 +126,9 @@ export interface Section {
   hoistedTo: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
+  /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
+   * (not merged) so each one's guard stays buildable. */
+  domSerializeReasons: undefined | SerializeReasons;
   paramReasonGroups: ParamSerializeReasonGroups | undefined;
   returnValueExpr: t.NodeExtra | undefined;
   returnSerializeReason: SerializeReason | undefined;
@@ -213,6 +217,7 @@ export function startSection(
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
+      domSerializeReasons: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
       returnSerializeReason: undefined,

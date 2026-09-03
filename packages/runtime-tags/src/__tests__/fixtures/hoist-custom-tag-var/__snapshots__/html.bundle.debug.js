@@ -12,7 +12,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var thing_default = _template("__tests__/tags/thing.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/thing.marko_0_input_value#2");
+	_script($scope0_id, "__tests__/tags/thing.marko_0_input_value#2", 0);
 	_scope($scope0_id, { input_value: input.value }, "__tests__/tags/thing.marko", 0, { input_value: ["input.value"] });
 });
 
@@ -58,9 +58,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/3", 1, 0, $sg__input_show, 0, 1);
 	if (true) {
 		const $scope5_id = _scope_id();
-		_script($scope5_id, "__tests__/template.marko_5");
+		_script($scope5_id, "__tests__/template.marko_5", 0);
 		_scope($scope5_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "26:2");
 	}
-	_script($scope0_id, "__tests__/template.marko_0");
+	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
 	$si__input_show && _scope($scope0_id, { input_show: input.show }, "__tests__/template.marko", 0, { input_show: ["input.show"] });
 }, 1);

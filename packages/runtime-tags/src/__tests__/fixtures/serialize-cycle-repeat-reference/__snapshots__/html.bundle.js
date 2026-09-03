@@ -21,5 +21,4 @@ var template_default = _template("a", (input) => {
 		e: graph?.current,
 		f: graph?.all
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -9,7 +9,6 @@ var tags_pinger_default = _template("b", (input) => {
 		e: input.onPing,
 		f: count
 	});
-	_resume_branch($scope0_id);
 });
 
 // components/class-host/index.marko

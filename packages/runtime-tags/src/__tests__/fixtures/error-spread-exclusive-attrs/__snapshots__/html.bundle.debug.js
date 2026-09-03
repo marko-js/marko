@@ -15,5 +15,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_attrs: ["input.attrs"],
 		"ControlledHandler:#input/0": ["checkedChange", "2:39"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

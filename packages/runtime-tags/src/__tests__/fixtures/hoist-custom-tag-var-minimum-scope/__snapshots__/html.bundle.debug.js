@@ -20,14 +20,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			const $for_content2__ref_getter = _hoist($scope2_id, "__tests__/template.marko_2_ref#3/hoist");
 			let ref = child_default({ value: `${i},${j}` });
-			_script($scope2_id, "__tests__/template.marko_2");
+			_script($scope2_id, "__tests__/template.marko_2", 0);
 			_scope($scope2_id, {
 				ref,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "7:4", { ref: "9:12" });
 			_assert_hoist(ref);
 		}, 0, $scope1_id, "#text/0", 1, 0, 0);
-		_script($scope1_id, "__tests__/template.marko_1");
+		_script($scope1_id, "__tests__/template.marko_1", 0);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, 0, $scope0_id, "#text/3", 1, 0, 0);
 	_script($scope0_id, "__tests__/template.marko_0");

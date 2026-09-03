@@ -37,5 +37,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		selected: "1:6",
 		enabled: "2:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

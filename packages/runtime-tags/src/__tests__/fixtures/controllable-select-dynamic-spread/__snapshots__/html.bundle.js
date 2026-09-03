@@ -18,5 +18,4 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id));
 	_html(`<span>${_text_resume($scope0_id, "b", value)}</span>`);
 	_scope($scope0_id, { d: tag });
-	_resume_branch($scope0_id);
 }, 1);

@@ -26,7 +26,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		text_length: ["text.length", "2:6"],
 		id: "3:5"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

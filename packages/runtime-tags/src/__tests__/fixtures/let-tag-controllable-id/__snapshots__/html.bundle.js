@@ -14,5 +14,4 @@ var template_default = _template("a", (input) => {
 		g: y,
 		h: handler || void 0
 	});
-	_resume_branch($scope0_id);
 }, 1);

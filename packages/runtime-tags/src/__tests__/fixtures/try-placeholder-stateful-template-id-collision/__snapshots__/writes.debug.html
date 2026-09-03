@@ -7,11 +7,7 @@
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [];
-  M._.j[3] = _ => {
-    _.push("_placeholderDismiss 3")
-  };
-  M._.r.push(_ => [1, {
+  M._.r = [_ => [1, {
       clicks: 0,
       tag: _._[
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/tags/n5.marko"
@@ -20,7 +16,6 @@
       "ClosureScopes:tag": new Set
     }, 1, {
       _: _(1),
-      "#BranchAccessor": "#text/3",
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_1*content"
         )
@@ -30,12 +25,14 @@
       "#PlaceholderBranch": _(2)
     }, {
       _: _(1),
-      "#childScope/0": _(5),
-      "#ClosestBranchId": 2
+      "#childScope/0": _(5)
     }, {
-      n: 0,
-      "#ClosestBranchId": 2
-    }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(4)), 0));
+      n: 0
+    }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(4)), 0)
+  ];
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
+  };
   M._.w()
 </script>
 
@@ -45,11 +42,6 @@
     <!>0<!--M_$7 #text/2-->
   </button><!--M_$7 #button/0--><!--M_]6 #text/0 7--><!--M_]3 #text/0 6--></t>
 <script>
-  M._.j.b = _ => {
-    _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_3_clicks#4/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_3_tag#5/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/tags/n5.marko_0 7"
-      )
-  };
   M._.r.push(_ => [6, {
     "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/tags/n5.marko",
     body: "body",
@@ -58,5 +50,10 @@
   }, {
     n: 0
   }]);
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_3_clicks#4/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/template.marko_3_tag#5/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-template-id-collision/tags/n5.marko_0 7"
+      )
+  };
   M._.w()
 </script>

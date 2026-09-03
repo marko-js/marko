@@ -16,5 +16,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"ControlledHandler:#select/0": ["valueChange", "3:21"],
 		"EventAttributes:#option/1": ["...placeholder", "4:14"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

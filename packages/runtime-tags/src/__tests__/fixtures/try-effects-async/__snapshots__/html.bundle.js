@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 			})() : value, 2)}`);
 			_scope($scope4_id, {});
 		});
-		_script($scope1_id, "a3");
+		_script($scope1_id, "a3", 0);
 		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
@@ -25,9 +25,9 @@ var template_default = _template("a", (input) => {
 			_html("LOADING...");
 		}, $scope0_id) }),
 		catch: attrTag({ content: _content_resume("a1", (err) => {
-			const $scope3_reason = _scope_reason();
+			const $scope3_reason = _scope_reason(), $sg__err = _serialize_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(_text_resume($scope3_id, "a", err, _serialize_guard($scope3_reason, 0)));
+			_html(_text_resume($scope3_id, "a", err, $sg__err));
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
 		}, $scope0_id) })
 	});
@@ -36,5 +36,4 @@ var template_default = _template("a", (input) => {
 		d: clickCount,
 		e: $clickCount__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

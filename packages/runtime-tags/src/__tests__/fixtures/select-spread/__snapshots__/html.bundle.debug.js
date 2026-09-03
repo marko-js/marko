@@ -15,5 +15,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"ControlledHandler:#select/1": ["...input.rest", "3:12"],
 		"EventAttributes:#select/1": ["...input.rest", "3:12"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

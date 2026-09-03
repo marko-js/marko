@@ -1,8 +1,8 @@
 // tags/tags-label.marko
 var tags_label_default = _template("__tests__/tags/tags-label.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_text = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.text, _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.text, $sg__input_text)}</span>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/tags-label.marko", 0);
 });
 
@@ -15,7 +15,6 @@ var tags_counter_default = _template("__tests__/tags/tags-counter.marko", (input
 	_html(`<button id=counter>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/tags-counter.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/tags-counter.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 });
 
 // components/class-section.marko

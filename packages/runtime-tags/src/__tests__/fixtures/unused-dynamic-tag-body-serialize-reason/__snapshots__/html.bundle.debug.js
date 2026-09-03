@@ -4,11 +4,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Wrap = { content: _content("__tests__/template.marko_1*content", ({ as, onClick, content }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__as__OR__onClick__OR__content = _serialize_guard($scope1_reason, 3);
 		_dynamic_tag($scope1_id, "#text/0", as, {
 			onClick,
 			content
-		}, 0, 0, _serialize_guard($scope1_reason, 3));
+		}, 0, 0, $sg__as__OR__onClick__OR__content);
 		_serialize_if($scope1_reason, 3) && _scope($scope1_id, {
 			as: _serialize_if($scope1_reason, 2) && as,
 			onClick: _serialize_if($scope1_reason, 1) && onClick,
@@ -21,8 +21,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const Message = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason();
-		_html(_text_resume($scope2_id, "#text/0", input.before + input.after, _serialize_guard($scope2_reason, 0)));
+		const $scope2_reason = _scope_reason(), $sg__input_before__OR__input_after = _serialize_guard($scope2_reason, 0);
+		_html(_text_resume($scope2_id, "#text/0", input.before + input.after, $sg__input_before__OR__input_after));
 		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {
 			input_before: _serialize_if($scope2_reason, 2) && input.before,
 			input_after: _serialize_if($scope2_reason, 1) && input.after
@@ -52,5 +52,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { x: "7:5" });
-	_resume_branch($scope0_id);
 }, 1);

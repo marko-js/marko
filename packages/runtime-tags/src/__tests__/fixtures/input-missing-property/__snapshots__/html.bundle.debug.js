@@ -7,13 +7,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Child = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		const $Child_content__input_name__closures = new Set();
-		const $scope1_reason = _scope_reason(), $si__input_count__OR__input_name = _serialize_if($scope1_reason, 0), $sg__input_count = _serialize_guard($scope1_reason, 1), $si__input_name = _serialize_if($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope1_reason, 2), $si__input_count__OR__input_name = _serialize_if($scope1_reason, 0), $sg__input_count = _serialize_guard($scope1_reason, 1), $si__input_name = _serialize_if($scope1_reason, 2);
 		_if(() => {
 			if (input.count) {
 				const $scope2_id = _scope_id();
 				if (true) {
 					const $scope3_id = _scope_id();
-					_html(`<div>${_text_resume($scope3_id, "#text/0", input.name || "Fallback", _serialize_guard($scope1_reason, 2))}</div>`);
+					_html(`<div>${_text_resume($scope3_id, "#text/0", input.name || "Fallback", $sg__input_name)}</div>`);
 					$si__input_count__OR__input_name && _subscribe($si__input_name && $Child_content__input_name__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "8:6"));
 				}
 				$si__input_count__OR__input_name && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
@@ -33,5 +33,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

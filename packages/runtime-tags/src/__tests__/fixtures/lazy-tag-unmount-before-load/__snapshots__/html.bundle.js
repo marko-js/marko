@@ -1,9 +1,9 @@
 // child.marko
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "a0");
+	_html(`<span>${_text_resume($scope0_id, "a", input.value, $sg__input_value)}</span>`);
+	_script($scope0_id, "a0", $sg__input_value);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -35,5 +35,4 @@ var template_default = _template("b", (input) => {
 	}, $scope0_id, "b");
 	_script($scope0_id, "b2");
 	_scope($scope0_id, { c: show });
-	_resume_branch($scope0_id);
 }, 1);

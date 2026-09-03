@@ -1,14 +1,14 @@
 // tags/custom-tag.marko
 var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_test = _serialize_guard($scope0_reason, 3), $si__input_test = _serialize_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $sg__input_test_style = _serialize_guard($scope0_reason, 4), $sg__input_test_content = _serialize_guard($scope0_reason, 5), $sg__input_test = _serialize_guard($scope0_reason, 3), $sg__input_style = _serialize_guard($scope0_reason, 2), $si__input_test = _serialize_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_style(input.style)}></div>${_el_resume($scope0_id, "#div/0", _serialize_guard($scope0_reason, 2))}`);
+	_html(`<div${_attr_style(input.style)}></div>${_el_resume($scope0_id, "#div/0", $sg__input_style)}`);
 	_if(() => {
 		if (input.test) {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attr_style(input.test.style)} id=test>`);
-			_dynamic_tag($scope1_id, "#text/1", input.test.content, {}, 0, 0, _serialize_guard($scope0_reason, 5));
-			_html(`</div>${_el_resume($scope1_id, "#div/0", _serialize_guard($scope0_reason, 4))}`);
+			_dynamic_tag($scope1_id, "#text/1", input.test.content, {}, 0, 0, $sg__input_test_content);
+			_html(`</div>${_el_resume($scope1_id, "#div/0", $sg__input_test_style)}`);
 			$si__input_test && _scope($scope1_id, { _: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/custom-tag.marko", "3:2");
 			return 0;
 		}

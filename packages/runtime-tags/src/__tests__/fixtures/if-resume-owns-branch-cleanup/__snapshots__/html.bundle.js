@@ -7,7 +7,7 @@ var child_default = _template("b", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_html("<p>inner</p>");
-			_script($scope1_id, "b0");
+			_script($scope1_id, "b0", 0);
 			$si__input_show && _scope($scope1_id, {});
 			return 0;
 		}
@@ -37,5 +37,4 @@ var template_default = _template("a", (input) => {
 		d: outer,
 		e: show
 	});
-	_resume_branch($scope0_id);
 }, 1);

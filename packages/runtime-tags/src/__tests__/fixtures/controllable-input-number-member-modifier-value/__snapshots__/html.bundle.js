@@ -26,5 +26,4 @@ var template_default = _template("a", (input) => {
 	});
 	_html(`<span>${_text_resume($scope0_id, "b", value)} ${_text_resume($scope0_id, "c", typeof value, 2)}</span>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
-	_resume_branch($scope0_id);
 }, 1);

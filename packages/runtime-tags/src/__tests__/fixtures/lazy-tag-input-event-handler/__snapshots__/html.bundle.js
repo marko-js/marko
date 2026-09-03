@@ -9,7 +9,6 @@ var child_default = _template("a", (input) => {
 		d: input,
 		f: data
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -31,5 +30,4 @@ var template_default = _template("b", (input) => {
 		e: shared,
 		f: count
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 var thing_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "c0");
+	_script($scope0_id, "c0", 0);
 	_scope($scope0_id, { c: input.value });
 });
 
@@ -61,9 +61,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "d", 1, 0, $sg__input_show);
 	{
 		const $scope5_id = _scope_id();
-		_script($scope5_id, "a4");
+		_script($scope5_id, "a4", 0);
 		_scope($scope5_id, { _: _scope_with_id($scope0_id) });
 	}
-	_script($scope0_id, "a5");
+	_script($scope0_id, "a5", $sg__input_show);
 	$si__input_show && _scope($scope0_id, { h: input.show });
 }, 1);

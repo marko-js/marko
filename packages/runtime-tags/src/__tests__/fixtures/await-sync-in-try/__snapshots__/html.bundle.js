@@ -12,12 +12,12 @@ var template_default = _template("a", (input) => {
 			$si__input_value && _scope($scope4_id, {});
 		}, $sg__input_value);
 		$si__input_value && _subscribe($input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
+		$si__input_value && _resume_branch($scope1_id);
 	}, $scope0_id), {
 		catch: attrTag({ content: _content_resume("a0", (err) => {
-			const $scope2_reason = _scope_reason();
+			const $scope2_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope2_reason, 0);
 			const $scope2_id = _scope_id();
-			_html(`Error: ${_text_resume($scope2_id, "a", err.message, _serialize_guard($scope2_reason, 0) * 2)}`);
+			_html(`Error: ${_text_resume($scope2_id, "a", err.message, $sg__err_message * 2)}`);
 			_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
 		}, $scope0_id) }),
 		placeholder: attrTag({ content: _content_resume("a1", () => {

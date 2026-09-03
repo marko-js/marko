@@ -1,10 +1,10 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_thing_selected = _serialize_guard($scope0_reason, 1), $sg__input_thing_content = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class({ "selected": input.thing.selected })}>`);
-	_dynamic_tag($scope0_id, "#text/1", input.thing.content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
-	_html(`</div>${_el_resume($scope0_id, "#div/0", _serialize_guard($scope0_reason, 1))}`);
+	_dynamic_tag($scope0_id, "#text/1", input.thing.content, {}, 0, 0, $sg__input_thing_content);
+	_html(`</div>${_el_resume($scope0_id, "#div/0", $sg__input_thing_selected)}`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
@@ -30,5 +30,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		selected,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { selected: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

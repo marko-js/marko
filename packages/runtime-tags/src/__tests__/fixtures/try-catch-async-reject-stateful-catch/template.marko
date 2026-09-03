@@ -1,0 +1,11 @@
+import { rejectAfter } from "../../utils/resolve";
+
+<try>
+  <await|value|=rejectAfter(new Error("nope"), 1)>
+    ${value}
+  </await>
+  <@catch|err|>
+    <let/n=0/>
+    <button onClick() { n++ }>${err.message} ${n}</button>
+  </@catch>
+</try>

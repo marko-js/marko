@@ -12,7 +12,6 @@ var counter_default = _template("b", (input) => {
 			x = _new_x;
 		}, "b0", $scope0_id) || void 0
 	});
-	_resume_branch($scope0_id);
 	return $return;
 });
 

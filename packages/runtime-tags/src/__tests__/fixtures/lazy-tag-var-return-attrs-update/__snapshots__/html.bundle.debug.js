@@ -9,7 +9,6 @@ var inner_default = _template("__tests__/tags/inner.marko", (input) => {
 	_html(`<p>focused ${_text_resume($scope0_id, "#text/0", focused, 2)}</p>`);
 	const $return = focus;
 	_scope($scope0_id, { focused }, "__tests__/tags/inner.marko", 0, { focused: "1:6" });
-	_resume_branch($scope0_id);
 	return $return;
 });
 
@@ -52,5 +51,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "4:6" });
-	_resume_branch($scope0_id);
 }, 1);

@@ -12,7 +12,6 @@ var my_box_default = _template("b", (input) => {
 		e: input,
 		f: input.content
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

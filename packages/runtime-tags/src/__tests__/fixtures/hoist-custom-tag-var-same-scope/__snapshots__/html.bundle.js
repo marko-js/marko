@@ -2,7 +2,7 @@
 var thing_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "c0");
+	_script($scope0_id, "c0", 0);
 	_scope($scope0_id, { c: input.value });
 });
 

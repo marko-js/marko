@@ -37,5 +37,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		state_bChange: ["state.bChange", "3:8"],
 		tag: "9:8"
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -1,14 +1,14 @@
 // tags/hello/index.marko
 var hello_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_header_class = _serialize_guard($scope0_reason, 1), $sg__input_header_content = _serialize_guard($scope0_reason, 2), $sg__input_content = _serialize_guard($scope0_reason, 3), $sg__input_footer_class = _serialize_guard($scope0_reason, 4), $sg__input_footer_content = _serialize_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	_html(`<header${_attr_class(input.header.class)}>`);
-	_dynamic_tag($scope0_id, "b", input.header.content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
-	_html(`</header>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 1))}<main>`);
-	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 3));
+	_dynamic_tag($scope0_id, "b", input.header.content, {}, 0, 0, $sg__input_header_content);
+	_html(`</header>${_el_resume($scope0_id, "a", $sg__input_header_class)}<main>`);
+	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, $sg__input_content);
 	_html(`</main><footer${_attr_class(input.footer.class)}>`);
-	_dynamic_tag($scope0_id, "e", input.footer.content, {}, 0, 0, _serialize_guard($scope0_reason, 5));
-	_html(`</footer>${_el_resume($scope0_id, "d", _serialize_guard($scope0_reason, 4))}`);
+	_dynamic_tag($scope0_id, "e", input.footer.content, {}, 0, 0, $sg__input_footer_content);
+	_html(`</footer>${_el_resume($scope0_id, "d", $sg__input_footer_class)}`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

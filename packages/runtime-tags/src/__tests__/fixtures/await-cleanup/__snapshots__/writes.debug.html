@@ -11,7 +11,6 @@
       "ClosureScopes:show": new Set
     }, 2, {
       _: _(2),
-      "#BranchAccessor": "#text/0",
       "#PlaceholderContent": _(2,
         "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_4*content"
         )
@@ -26,6 +25,11 @@
 <t hidden M_=b><!--M_[-->1<!--M_$6 #text/0--><!--M_]4 #text/0 6--></t>
 <t hidden M_=c></t>
 <script>
+  M._.r.push(_ => [6, {
+    _: _(4)
+  }], _ => [7, {
+    "#ClosestBranchId": 4
+  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_3_show#2/pending 6 packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_3 6"
@@ -36,11 +40,5 @@
       "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_5 7"
       )
   };
-  M._.r.push(_ => [6, {
-    "#ClosestBranchId": 2,
-    _: _(4)
-  }], _ => [7, {
-    "#ClosestBranchId": 2
-  }]);
   M._.w()
 </script>

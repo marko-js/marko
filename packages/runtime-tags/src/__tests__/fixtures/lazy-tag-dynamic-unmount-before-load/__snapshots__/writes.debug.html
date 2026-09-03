@@ -8,7 +8,6 @@
       "ClosureScopes:show": new Set
     }, 1, {
       _: _(1),
-      "#BranchAccessor": "#text/1",
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/template.marko_3*content"
         )
@@ -25,6 +24,10 @@
   <span>1<!--M_$6 #text/0--></span><!--M_]5 #text/0 6--><!--M_]3 #text/0 5-->
 </t>
 <script>
+  M._.r.push(_ => [5, {
+    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko",
+    _: _(3)
+  }]);
   M._.b = {
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko": [
       1
@@ -40,9 +43,5 @@
       "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/template.marko_2_show#2/pending 5"
       )
   };
-  M._.r.push(_ => [5, {
-    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko",
-    _: _(3)
-  }]);
   M._.w()
 </script>

@@ -8,7 +8,6 @@ var tags_counter_default = _template("__tests__/components/tags-counter.marko", 
 	_html(`<button id=tags${_attr("data-parent", input.count)}>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/components/tags-counter.marko_0");
 	_scope($scope0_id, { count }, "__tests__/components/tags-counter.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 });
 
 // template.marko

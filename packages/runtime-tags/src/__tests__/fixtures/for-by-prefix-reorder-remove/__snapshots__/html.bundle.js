@@ -26,5 +26,4 @@ var template_default = _template("a", (input) => {
 		h: rows?.[3],
 		i: rows?.[2]
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -14,7 +14,6 @@ var child_default = _template("b", (input) => {
 	};
 	_html(`<span>child:${_text_resume($scope0_id, "a", count, 2)}</span>`);
 	_scope($scope0_id, { b: count });
-	_resume_branch($scope0_id);
 	return $return;
 });
 

@@ -1,6 +1,6 @@
 // tags/recurse.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_level = _serialize_if($scope0_reason, 0), $sg__input_level = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_level = _serialize_guard($scope0_reason, 0), $si__input_level = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_level__closures = new Set();
 	_if(() => {
@@ -12,7 +12,7 @@ const $content = (input) => {
 				const $scope2_reason = _scope_reason();
 				_await($scope2_id, "#text/0", resolveAfter(0), () => {
 					const $scope3_id = _scope_id();
-					$si__input_level && _script($scope3_id, "__tests__/tags/recurse.marko_3_input_level#3/pending");
+					$si__input_level && _script($scope3_id, "__tests__/tags/recurse.marko_3_input_level#3/pending", $sg__input_level);
 					_set_serialize_reason($sg__input_level);
 					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
@@ -20,7 +20,7 @@ const $content = (input) => {
 						_: _scope_with_id($scope2_id),
 						"#childScope/0": _existing_scope($childScope)
 					}, "__tests__/tags/recurse.marko", "7:7");
-					_resume_branch($scope3_id);
+					$sg__input_level || $si__input_level && _resume_branch($scope3_id);
 				}, $sg__input_level);
 				$si__input_level && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/recurse.marko", "5:5");
 			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/tags/recurse.marko_4*content", () => {

@@ -21,9 +21,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
-import { addSorted } from "../util/optional";
 import {
-  compareSources,
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
@@ -48,6 +46,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
   type SerializeReasons,
+  sourcesUtil,
 } from "../util/serialize-reasons";
 import {
   addValue,
@@ -190,20 +189,14 @@ export const IfTag = {
               );
               if (branchSerializeReason) {
                 if (branchSerializeReasons !== true) {
-                  if (
+                  branchSerializeReasons =
                     branchSerializeReason === true ||
                     branchSerializeReason.state
-                  ) {
-                    branchSerializeReasons = true;
-                  } else if (branchSerializeReasons) {
-                    branchSerializeReasons = addSorted(
-                      compareSources,
-                      branchSerializeReasons,
-                      branchSerializeReason,
-                    );
-                  } else {
-                    branchSerializeReasons = [branchSerializeReason];
-                  }
+                      ? true
+                      : sourcesUtil.add(
+                          branchSerializeReasons,
+                          branchSerializeReason,
+                        );
                 }
                 bodyStatements.push(
                   t.returnStatement(t.numericLiteral(i)) as any,

@@ -17,7 +17,6 @@ var child_default = _template("b", (input) => {
 		r: input["valueChange"] || void 0,
 		t: input.valueChange || void 0
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -35,5 +34,4 @@ var template_default = _template("a", (input) => {
 	});
 	_html(`source=${_text_resume($scope0_id, "b", source, 2)}`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
-	_resume_branch($scope0_id);
 }, 1);

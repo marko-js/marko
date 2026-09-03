@@ -1,8 +1,8 @@
 // tags/n2.marko
 var n2_default = _template("__tests__/tags/n2.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div class=n2>${_text_resume($scope0_id, "#text/0", input.label, _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div class=n2>${_text_resume($scope0_id, "#text/0", input.label, $sg__input_label)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/n2.marko", 0);
 });
 
@@ -14,7 +14,6 @@ var n5_default = _template("__tests__/tags/n5.marko", (input) => {
 	_html(`<button class=n5>${_text_resume($scope0_id, "#text/1", input.label, _serialize_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/n5.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/n5.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 });
 
 // tags/n1.marko
@@ -25,7 +24,6 @@ var n1_default = _template("__tests__/tags/n1.marko", (input) => {
 	_html(`<button class=n1>${_text_resume($scope0_id, "#text/1", input.label, _serialize_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/n1.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/n1.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -50,7 +48,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope2_id),
 				"ClosureSignalIndex:clicks": 1
 			}, "__tests__/template.marko", "11:4", { body: "11:10" });
-			_resume_branch($scope3_id);
 		});
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -63,7 +60,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "10:4"));
-		_resume_branch($scope1_id);
 	}, $scope0_id) }) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
@@ -75,5 +71,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		clicks: "5:6",
 		tag: "6:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

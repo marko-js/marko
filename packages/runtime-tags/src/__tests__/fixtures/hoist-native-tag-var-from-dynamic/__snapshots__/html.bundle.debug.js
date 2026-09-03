@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<div></div>${_el_resume($scope3_id, "#div/0")}`);
 			_subscribe($child_content2__subscribers, _scope($scope3_id, {}, "__tests__/template.marko", "16:4"));
 		}, $scope2_id) });
-		_script($scope2_id, "__tests__/template.marko_2");
+		_script($scope2_id, "__tests__/template.marko_2", 0);
 		_subscribe($inputshowChildnull_content__subscribers, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:3": $child_content2__subscribers
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p></p>${_el_resume($scope4_id, "#p/0")}`);
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, {}, "__tests__/template.marko", "34:4"));
 	}, $scope0_id), 0, $sg__input_show);
-	_script($scope0_id, "__tests__/template.marko_0");
+	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
 	_scope($scope0_id, {
 		"ClosureScopes:1": $child_content__subscribers,
 		"ClosureScopes:2": $inputshowChildnull_content__subscribers,

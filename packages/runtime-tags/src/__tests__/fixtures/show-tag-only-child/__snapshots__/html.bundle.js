@@ -14,5 +14,4 @@ var template_default = _template("a", (input) => {
 	_show_end($scope0_id, "c", $show, 1, 1, "</div>");
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { d: open });
-	_resume_branch($scope0_id);
 }, 1);

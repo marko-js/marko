@@ -29,7 +29,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 									const $scope12_id = _scope_id();
 									_html(`<div${_attr_class(value)} level=4></div>`);
 								}, 0);
-								_resume_branch($scope9_id);
 							}, $scope8_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_11*content", () => {
 								_scope_reason();
 								const $scope11_id = _scope_id();
@@ -37,7 +36,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							}, $scope8_id) }) });
 							_html("</div>");
 						}, 0);
-						_resume_branch($scope7_id);
 					}, $scope6_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_10*content", () => {
 						_scope_reason();
 						const $scope10_id = _scope_id();
@@ -45,7 +43,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					}, $scope6_id) }) });
 					_html("</div>");
 				}, 0);
-				_resume_branch($scope3_id);
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
 				_scope_reason();
 				const $scope5_id = _scope_id();
@@ -53,7 +50,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope2_id) }) });
 			_html("</div>");
 		}, 0);
-		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_4*content", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();

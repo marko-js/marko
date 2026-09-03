@@ -20,13 +20,13 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_hoist($scope2_id, "a2");
 			let ref = child_default({ value: `${i},${j}` });
-			_script($scope2_id, "a3");
+			_script($scope2_id, "a3", 0);
 			_scope($scope2_id, {
 				d: ref,
 				_: _scope_with_id($scope1_id)
 			});
 		}, 0, $scope1_id, "a", 1, 0, 0);
-		_script($scope1_id, "a4");
+		_script($scope1_id, "a4", 0);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "d", 1, 0, 0);
 	_script($scope0_id, "a5");

@@ -14,7 +14,6 @@ var child_s_default = _template("__tests__/child-s.marko", (input) => {
 		isShared: "6:8",
 		holder: "7:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // child-b.marko
@@ -33,7 +32,6 @@ var child_b_default = _template("__tests__/child-b.marko", (input) => {
 		isInner: "6:8",
 		inner: "7:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -65,5 +63,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		shared: "4:6",
 		count: "5:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

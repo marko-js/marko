@@ -6,7 +6,6 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_html(`<button class=child>${_text_resume($scope0_id, "#text/1", input.label, _serialize_guard($scope0_reason, 0))}: ${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -31,5 +30,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { value }, "__tests__/template.marko", 0, { value: "4:6" });
-	_resume_branch($scope0_id);
 }, 1);

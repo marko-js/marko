@@ -5,11 +5,6 @@
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
       show: !0
-    }, 2, {
-      "#BranchAccessor": "#text/0",
-      "#PlaceholderContent": _(2,
-        "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-unmount-before-load/template.marko_3*content"
-        )
     }],
     "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-unmount-before-load/template.marko_0 1"
   ];
@@ -22,6 +17,11 @@
   <script async type=module src="child.marko.load.mjs"></script><span>1</span>
 </t>
 <script>
+  M._.r.push(_ => [4, {
+    "#PlaceholderContent": _(2,
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-unmount-before-load/template.marko_3*content"
+      )
+  }]);
   M._.b = {
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-unmount-before-load/child.marko": [
       1
@@ -29,7 +29,7 @@
   };
   M._.j.b = _ => {
     (b => b.splice(b.indexOf(1), 1, _ => [7, {
-        "#ClosestBranchId": 2
+        "#ClosestBranchId": 4
       }],
       "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-unmount-before-load/child.marko_0 7"
       ))(M._.b[

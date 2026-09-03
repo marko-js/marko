@@ -28,7 +28,6 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 		htmlInput: "1:67",
 		content: "6:5"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

@@ -10,7 +10,6 @@ var grand_child_default = _template("__tests__/grand-child.marko", (input) => {
 	}, 0);
 	_script($scope0_id, "__tests__/grand-child.marko_0");
 	_scope($scope0_id, { n }, "__tests__/grand-child.marko", 0, { n: "3:6" });
-	_resume_branch($scope0_id);
 });
 
 // child.marko
@@ -31,14 +30,12 @@ var child_default = _template("__tests__/child.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/2": _existing_scope($childScope)
 		}, "__tests__/child.marko", "6:2"));
-		_resume_branch($scope1_id);
 	});
 	_script($scope0_id, "__tests__/child.marko_0");
 	_scope($scope0_id, {
 		count,
 		"ClosureScopes:count": $count__closures
 	}, "__tests__/child.marko", 0, { count: "4:6" });
-	_resume_branch($scope0_id);
 });
 
 // template.marko

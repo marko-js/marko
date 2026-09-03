@@ -45,5 +45,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		list_0: ["list[0]", "3:6"],
 		list_1: ["list[1]", "3:6"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

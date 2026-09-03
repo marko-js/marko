@@ -22,5 +22,4 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id))}>${_el_resume($scope0_id, "d")}${_text_resume($scope0_id, "e", a)}<button>set</button>${_el_resume($scope0_id, "f")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});
-	_resume_branch($scope0_id);
 }, 1);

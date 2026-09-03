@@ -13,7 +13,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope2_id, "__tests__/template.marko_2_value#3/pending");
 			_html(`<span>${_text_resume($scope2_id, "#text/0", value)}</span>`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3");
-			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:1");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
@@ -26,5 +25,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		value,
 		"ClosureScopes:value": $value__closures
 	}, "__tests__/template.marko", 0, { value: "2:5" });
-	_resume_branch($scope0_id);
 }, 1);

@@ -36,5 +36,4 @@ var template_default = _template("a", (input) => {
 		d: outer,
 		e: n
 	});
-	_resume_branch($scope0_id);
 }, 1);

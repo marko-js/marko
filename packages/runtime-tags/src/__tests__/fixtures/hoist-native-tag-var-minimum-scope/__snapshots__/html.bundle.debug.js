@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope2_id, "__tests__/template.marko_2");
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
 		}, 0, $scope1_id, "#text/0", 1, 0, 0, 0, 1);
-		_script($scope1_id, "__tests__/template.marko_1");
+		_script($scope1_id, "__tests__/template.marko_1", 0);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, 0, $scope0_id, "#text/3", 1, 0, 0);
 	_script($scope0_id, "__tests__/template.marko_0");

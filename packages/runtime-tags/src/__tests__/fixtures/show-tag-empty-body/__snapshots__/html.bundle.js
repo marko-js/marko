@@ -9,5 +9,4 @@ var template_default = _template("a", (input) => {
 	_show_end($scope0_id, "e", reveal);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { i: reveal });
-	_resume_branch($scope0_id);
 }, 1);

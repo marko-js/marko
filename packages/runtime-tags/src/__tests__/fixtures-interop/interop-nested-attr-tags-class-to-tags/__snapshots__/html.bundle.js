@@ -11,7 +11,6 @@ var tags_layout_default = _template("b", (input) => {
 	_html("</div>");
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { h: count });
-	_resume_branch($scope0_id);
 });
 
 // template.marko

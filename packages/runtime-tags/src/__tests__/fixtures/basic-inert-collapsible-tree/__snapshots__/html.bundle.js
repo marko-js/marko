@@ -44,10 +44,10 @@ var comments_default = _template("b", $content);
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_comments__OR__input_path = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_set_serialize_reason({
-		0: _serialize_guard($scope0_reason, 0),
+		0: $sg__input_comments__OR__input_path,
 		1: _serialize_guard($scope0_reason, 1),
 		2: _serialize_guard($scope0_reason, 2)
 	});

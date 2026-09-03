@@ -1,10 +1,10 @@
 // tags/echo/index.marko
 var echo_default = _template("__tests__/tags/echo/index.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_skip = _serialize_guard($scope0_reason, 1), $sg__input_label = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { skip, ...r } = input;
 	const { ...s } = r;
-	_html(`<em>${_text_resume($scope0_id, "#text/0", skip, _serialize_guard($scope0_reason, 1))}${_text_resume($scope0_id, "#text/1", s.label, _serialize_guard($scope0_reason, 2) * 2)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", skip, $sg__input_skip)}${_text_resume($scope0_id, "#text/1", s.label, $sg__input_label * 2)}</em>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/echo/index.marko", 0);
 });
 
@@ -26,5 +26,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { label: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

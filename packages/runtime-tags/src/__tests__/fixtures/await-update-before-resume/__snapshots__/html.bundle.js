@@ -24,5 +24,4 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) }) });
 	_script($scope0_id, "a4");
 	_scope($scope0_id, { d: $value__closures });
-	_resume_branch($scope0_id);
 }, 1);

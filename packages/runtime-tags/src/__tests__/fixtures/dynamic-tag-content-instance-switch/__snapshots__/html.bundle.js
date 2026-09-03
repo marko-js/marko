@@ -10,14 +10,12 @@ var provider_default = _template("b", (input) => {
 		_scope_reason();
 		_html(`<div>value ${_text_resume($scope1_id, "a", count, 2)}</div>`);
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {
 		e: count,
 		g: $count__closures
 	});
-	_resume_branch($scope0_id);
 	return $return;
 });
 
@@ -36,5 +34,4 @@ var template_default = _template("a", (input) => {
 		h: b,
 		i: sel
 	});
-	_resume_branch($scope0_id);
 }, 1);

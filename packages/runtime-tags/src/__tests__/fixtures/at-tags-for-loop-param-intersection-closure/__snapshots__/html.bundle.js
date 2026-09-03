@@ -30,7 +30,6 @@ var template_default = _template("a", (input) => {
 				f: item,
 				_: _scope_with_id($scope0_id)
 			}));
-			_resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });
@@ -40,5 +39,4 @@ var template_default = _template("a", (input) => {
 		d: mult,
 		g: $mult__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

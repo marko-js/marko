@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_html("<p>inner</p>");
-			_script($scope1_id, "__tests__/tags/child.marko_1");
+			_script($scope1_id, "__tests__/tags/child.marko_1", 0);
 			$si__input_show && _scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
 			return 0;
 		}
@@ -40,5 +40,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		outer: "1:6",
 		show: "2:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

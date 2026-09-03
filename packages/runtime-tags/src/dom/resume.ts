@@ -138,6 +138,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           renders[renderId] || renders(renderId));
         const walk = render.w;
         const scopeLookup: Record<string | number, Scope> = {};
+        // Ended branches and visit owners awaiting the branch enclosing them.
+        const pending: Scope[] = [];
         // Lazily creates scopes on first access so one that serialized no
         // props is indistinguishable from empty; scope 0 is the global.
         const getScope = (id: string | number) =>
@@ -151,7 +153,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             renderId,
           } as unknown as Scope) as unknown as Scope[typeof AccessorProp.Global];
         const initScope = (scope: Scope) => {
-          scope[AccessorProp.Gen] = 1;
+          // Merging late data re-inits; a scope destroyed since its first
+          // walk (0) must stay destroyed.
+          scope[AccessorProp.Gen] ??= 1;
           scope[AccessorProp.Global] = initGlobal();
           if (branchesEnabled && scope[AccessorProp.ClosestBranchId]) {
             scope[AccessorProp.ClosestBranch] = getScope(
@@ -196,28 +200,47 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         const createVisitBranches = (
           branchScopesStack: Opt<BranchScope>[] = [],
           branchStarts: Comment[] = [],
-          orphanBranches: BranchScope[] = [],
-          deferredOwners: Scope[] = [],
           curBranchScopes?: Opt<BranchScope>,
+          reorderBranch?: BranchScope | 0,
+          reorderDepth = 0,
+          // An ended branch is its own closest branch; anything else is an owner.
+          adopt = (scope: Scope, branch: BranchScope) =>
+            scope[AccessorProp.ClosestBranch] === scope
+              ? scope !== branch &&
+                setParentBranch(scope as BranchScope, branch)
+              : (scope[AccessorProp.ClosestBranch] = branch),
         ) => {
           return (
             branchId?: number,
             branch?: BranchScope,
             endedBranches?: BranchScope[],
             accessor?: string,
+            nodeAccessor?: string,
             singleNode?: boolean,
             parent = visit.parentNode!,
             startVisit: ChildNode = visit,
-            i = orphanBranches.length,
-            j = deferredOwners.length,
           ) => {
+            // Reordered content walks after its enclosing branch ended, so the
+            // branch it reorders into adopts what the span leaves unparented.
+            if (visitType === ResumeSymbol.ReorderStart) {
+              while (reorderBranch && pending.length >= reorderDepth) {
+                adopt(pending.pop()!, reorderBranch);
+              }
+              // Generated reorder ids are not numeric and resolve to the global.
+              if ((reorderBranch = (+lastToken && visitScope) as BranchScope)) {
+                reorderDepth = pending.push(reorderBranch);
+              }
+              return;
+            }
+
             if (visitType !== ResumeSymbol.BranchStart) {
               visitScope[nextToken(/* read accessor */)] =
                 visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
                 visitType === ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
                   ? parent
                   : visit;
-              accessor = AccessorPrefix.BranchScopes + lastToken;
+              accessor =
+                AccessorPrefix.BranchScopes + (nodeAccessor = lastToken);
               singleNode =
                 visitType !== ResumeSymbol.BranchEnd &&
                 visitType !== ResumeSymbol.BranchEndOnlyChildInParent;
@@ -250,6 +273,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     startVisit;
                 }
               } else {
+                // Lets a resumed `<try>` find its branch in the owner without
+                // serializing the accessor.
+                branch[AccessorProp.BranchAccessor] = nodeAccessor;
                 curBranchScopes = push(curBranchScopes, branch);
                 if (accessor) {
                   visitScope[accessor] = curBranchScopes;
@@ -272,19 +298,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     : parent.insertBefore(new Text(), visit);
               }
 
-              while (i && orphanBranches[i - 1][AccessorProp.Id] > branchId) {
-                i--;
-                setParentBranch(orphanBranches.pop()!, branch);
-              }
-
-              // Link deferred owners nested in this branch (see push below) so
-              // their client-created branches join the tree; skips own branches.
-              while (j && deferredOwners[j - 1][AccessorProp.Id] > branchId) {
-                j--;
-                const owner = deferredOwners.pop()!;
-                if (owner[AccessorProp.ClosestBranch] !== owner) {
-                  owner[AccessorProp.ClosestBranch] = branch;
-                }
+              // Everything inside this branch has a larger id and its own scope
+              // may sit on top as an owner, so `>=`; an empty stack compares false.
+              while (
+                (pending.at(-1)?.[AccessorProp.Id] as number) >= branchId
+              ) {
+                adopt(pending.pop()!, branch);
               }
 
               nextToken(/* read optional next branchId */);
@@ -293,7 +312,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             if (endedBranches) {
               // Avoids spreading into push, which is capped by engine
               // argument limits for very large branch lists.
-              for (const ended of endedBranches) orphanBranches.push(ended);
+              for (const ended of endedBranches) pending.push(ended);
               if (singleNode) {
                 visitScope[accessor!] =
                   endedBranches.length > 1
@@ -309,9 +328,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               }
               branchStarts.push(visit);
             } else {
-              // Defer this owner so its enclosing branch links it above,
-              // avoiding a serialized closest-branch id.
-              deferredOwners.push(visitScope);
+              pending.push(visitScope);
             }
           };
         };
@@ -408,7 +425,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           let retained = 0;
           for (visit of (visits = render.v)) {
             lastTokenIndex = render.i.length;
-            visitText = visit.data!;
+            visitText = visit.data;
             visitType = visitText[lastTokenIndex++] as ResumeSymbol;
             visitScope = getScope(nextToken(/* read scope id */));
 
@@ -427,6 +444,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 visitScope[nextToken(/* read accessor */)] = htmlStart!;
                 visitScope[AccessorPrefix.DynamicHTMLLastChild + lastToken] =
                   visit;
+                if (
+                  (branchesEnabled || lazyEnabled) &&
+                  pending[pending.length - 1] !== visitScope
+                ) {
+                  pending.push(visitScope);
+                }
               }
             } else if (branchesEnabled && visitType > ResumeSymbol.HtmlEnd) {
               (visitBranches ||= createVisitBranches())();
@@ -439,14 +462,32 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             ) {
               visits[retained++] = visit;
             } else {
+              // A reorder bound (a bare `{ data }`, see REORDER_RUNTIME_CODE)
+              // lands here only without branches; it reads as an undefined node.
               visitScope[nextToken(/* read accessor */)] =
-                visitType === ResumeSymbol.Node
-                  ? visit.previousSibling!
-                  : visit.parentNode!.insertBefore(new Text(), visit);
+                visitType === ResumeSymbol.EmptyText
+                  ? visit.parentNode!.insertBefore(new Text(), visit)
+                  : visit.previousSibling!;
+              // Lazy content may enable branches later; consecutive visits
+              // usually share an owner, so one entry suffices.
+              if (
+                (branchesEnabled || lazyEnabled) &&
+                pending[pending.length - 1] !== visitScope
+              ) {
+                pending.push(visitScope);
+              }
             }
           }
 
-          if (embedRenders && !embedAnchor && visit) {
+          // A chunk's own script ends the walk, so its span closes here.
+          if (branchesEnabled && visitBranches) {
+            visitType = ResumeSymbol.ReorderStart;
+            lastToken = "";
+            visitBranches();
+          }
+
+          // No visits, or a reorder bound last, leaves nothing to anchor after.
+          if (embedRenders && !embedAnchor && visit?.parentNode) {
             // The anchor's disconnection marks the embedded render as
             // removed; the observer destroys its scopes.
             embedRenders.set(

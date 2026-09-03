@@ -42,7 +42,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		callDefaulted: "8:8",
 		defaulted: "9:8"
 	});
-	_resume_branch($scope0_id);
 	_assert_hoist(second);
 	_assert_hoist(third);
 	_assert_hoist(nullary);

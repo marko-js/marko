@@ -17,11 +17,10 @@ var template_default = _template("a", (input) => {
 					_html(_text_resume($scope3_id, "a", show));
 					_script($scope3_id, "a1");
 					_scope($scope3_id, { _: _scope_with_id($scope2_id) });
-					_resume_branch($scope3_id);
 				});
 				_await($scope2_id, "b", resolveAfter(0, 1), () => {
 					const $scope5_id = _scope_id();
-					_script($scope5_id, "a2");
+					_script($scope5_id, "a2", 0);
 					_resume_branch($scope5_id);
 				}, 0);
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
@@ -39,5 +38,4 @@ var template_default = _template("a", (input) => {
 		c: show,
 		d: $show__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

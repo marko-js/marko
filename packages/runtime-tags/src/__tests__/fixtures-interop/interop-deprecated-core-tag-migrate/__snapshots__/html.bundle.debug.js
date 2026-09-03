@@ -14,5 +14,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		greeting: "1:10",
 		count: "2:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

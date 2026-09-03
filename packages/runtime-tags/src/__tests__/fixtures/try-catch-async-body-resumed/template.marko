@@ -1,0 +1,15 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <await|value|=resolveAfter("ready", 1)>
+    <let/n=0/>
+    <if=n>
+      <const/x=(() => { throw new Error("bang") })()/>
+      ${x}
+    </if>
+    <button onClick() { n++ }>${value} ${n}</button>
+  </await>
+  <@catch|err|>
+    caught ${err.message}
+  </@catch>
+</try>

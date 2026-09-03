@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const { value } = input;
-	_script($scope0_id, "__tests__/tags/child.marko_0_input#1");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input#1", 0);
 	_scope($scope0_id, { input }, "__tests__/tags/child.marko", 0, { input: 0 });
 });
 
@@ -20,5 +20,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

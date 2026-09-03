@@ -15,5 +15,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		clickCount: "1:6",
 		increment: "2:8"
 	});
-	_resume_branch($scope0_id);
 }, 1);

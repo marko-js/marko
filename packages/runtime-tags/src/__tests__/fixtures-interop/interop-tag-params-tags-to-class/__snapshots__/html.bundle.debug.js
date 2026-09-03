@@ -40,7 +40,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			baseCount,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { baseCount: "2:15" }));
-		_resume_branch($scope1_id);
 	}, $scope0_id), 0, 0);
 	_scope($scope0_id, {
 		multiplier,

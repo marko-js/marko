@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <await=resolveAfter("outer", 1)>
+    <try>
+      <@placeholder>loading</@placeholder>
+      <await|value|=resolveAfter("inner", 2)>
+        <let/n=0/>
+        <button onClick() { n++ }>${value} ${n}</button>
+      </await>
+    </try>
+  </await>
+  <@catch|err|>
+    caught ${err.message}
+  </@catch>
+</try>

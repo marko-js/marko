@@ -6,5 +6,4 @@ var template_default = _template("a", (input) => {
 	_html(`<div>${_text_resume($scope0_id, "a", "Hello!")}<button>Toggle</button>${_el_resume($scope0_id, "b")}</div>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: show });
-	_resume_branch($scope0_id);
 }, 1);

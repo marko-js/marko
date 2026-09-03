@@ -14,5 +14,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>Update</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { value: _serialize_if($scope0_reason, 0) && value }, "__tests__/template.marko", 0, { value: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

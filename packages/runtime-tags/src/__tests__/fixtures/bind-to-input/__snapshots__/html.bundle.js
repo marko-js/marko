@@ -14,7 +14,6 @@ var counter_default = _template("b", (input) => {
 		j: x,
 		k: $countChange || void 0
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -36,7 +35,6 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", x));
 			_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_set_serialize_reason(8);
@@ -52,7 +50,6 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope0_id),
 				Cd: 1
 			}));
-			_resume_branch($scope2_id);
 		}, $scope0_id)
 	});
 	_scope($scope0_id, {
@@ -60,5 +57,4 @@ var template_default = _template("a", (input) => {
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
 	});
-	_resume_branch($scope0_id);
 }, 1);

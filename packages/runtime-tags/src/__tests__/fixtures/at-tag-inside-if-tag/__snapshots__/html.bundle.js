@@ -1,10 +1,10 @@
 // tags/custom-tag/index.marko
 var custom_tag_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_thing_x = _serialize_guard($scope0_reason, 1), $sg__input_thing_content = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { thing: { x, content } } = input;
-	_dynamic_tag($scope0_id, "a", content, {}, 0, 0, _serialize_guard($scope0_reason, 2));
-	_html(`<div>${_text_resume($scope0_id, "b", x, _serialize_guard($scope0_reason, 1))}</div>`);
+	_dynamic_tag($scope0_id, "a", content, {}, 0, 0, $sg__input_thing_content);
+	_html(`<div>${_text_resume($scope0_id, "b", x, $sg__input_thing_x)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

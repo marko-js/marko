@@ -18,5 +18,4 @@ var template_default = _template("a", (input) => {
 		e: money,
 		g: day
 	});
-	_resume_branch($scope0_id);
 }, 1);

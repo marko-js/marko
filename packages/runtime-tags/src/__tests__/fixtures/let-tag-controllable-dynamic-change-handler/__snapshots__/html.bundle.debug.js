@@ -20,5 +20,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		y: "3:6",
 		"TagVariableChange:y": ["yChange", "3:6"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

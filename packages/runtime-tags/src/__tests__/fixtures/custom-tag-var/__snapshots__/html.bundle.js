@@ -7,7 +7,6 @@ var child_default = _template("b", (input) => {
 	const $return = x;
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { c: x });
-	_resume_branch($scope0_id);
 	return $return;
 });
 

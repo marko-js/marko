@@ -12,5 +12,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_show_end($scope0_id, "#div/1", visible, 1, 1, "</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { visible }, "__tests__/template.marko", 0, { visible: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

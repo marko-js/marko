@@ -9,7 +9,6 @@ var counter_default = _template("b", (input) => {
 		d: input,
 		e: count
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

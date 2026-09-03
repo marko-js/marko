@@ -21,7 +21,6 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a");
 		_html("<div>settled</div>");
 		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_scope_id();
@@ -32,5 +31,4 @@ var template_default = _template("a", (input) => {
 		c: show,
 		d: $show__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

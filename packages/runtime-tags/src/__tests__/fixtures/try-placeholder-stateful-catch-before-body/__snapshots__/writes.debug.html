@@ -4,17 +4,12 @@
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [];
-  M._.j[3] = _ => {
-    _.push("_placeholderDismiss 3")
-  };
-  M._.r.push(_ => [1, {
+  M._.r = [_ => [1, {
       attempt: 1,
       "ClosureScopes:attempt": new Set([_(3)])
     }, 1, {
       _: _(1),
       "ClosureSignalIndex:attempt": 1,
-      "#BranchAccessor": "#text/0",
       "#CatchContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_3*content"
         ),
@@ -26,9 +21,12 @@
     _ => (_([3, {
       "#PlaceholderBranch": _(2)
     }, {
-      _: _(1),
-      "#ClosestBranchId": 2
-    }]), (_.a = _(1)["ClosureScopes:attempt"]).add(_(4)), 0));
+      _: _(1)
+    }]), (_.a = _(1)["ClosureScopes:attempt"]).add(_(4)), 0)
+  ];
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
+  };
   M._.w()
 </script>
 

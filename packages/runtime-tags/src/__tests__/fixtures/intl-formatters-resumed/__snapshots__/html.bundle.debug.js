@@ -22,5 +22,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		money: "2:8",
 		day: "3:8"
 	});
-	_resume_branch($scope0_id);
 }, 1);

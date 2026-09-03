@@ -24,5 +24,4 @@ var template_default = _template("a", (input) => {
 		});
 	}, 0, $scope0_id, "a");
 	_scope($scope0_id, { b: counts });
-	_resume_branch($scope0_id);
 }, 1);

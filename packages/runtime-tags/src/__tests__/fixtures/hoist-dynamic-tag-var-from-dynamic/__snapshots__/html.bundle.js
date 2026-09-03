@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 		_var($scope4_id, "b", $Child_scope3, "a6");
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, { c: setHtml3 }));
 	}, $scope0_id), 0, $sg__input_show);
-	_script($scope0_id, "a8");
+	_script($scope0_id, "a8", $sg__input_show);
 	_scope($scope0_id, {
 		B1: $thing_content__subscribers,
 		B2: $inputshowThingnull_content__subscribers,

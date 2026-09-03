@@ -24,5 +24,4 @@ var template_default = _template("a", (input) => {
 		g: checkedValue,
 		h: $checkedValueChange
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -9,5 +9,4 @@ var template_default = _template("a", (input) => {
 	_html(`<form><input${_attr_input_checkedValue($scope0_id, "a", checkedValue, $checkedValueChange, "a")} type=radio name=p>${_el_resume($scope0_id, "a")}<input${_attr_input_checkedValue($scope0_id, "b", checkedValue, $checkedValueChange, "b")} type=radio name=p>${_el_resume($scope0_id, "b")}<input${_attr_input_checkedValue($scope0_id, "c", checkedValue, $checkedValueChange, "c")} type=radio name=p>${_el_resume($scope0_id, "c")}<button type=reset>reset</button></form><span>v=${_text_resume($scope0_id, "d", checkedValue, 2)}</span>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { f: $checkedValueChange });
-	_resume_branch($scope0_id);
 }, 1);

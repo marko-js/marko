@@ -20,11 +20,16 @@ export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||
     x() {},
     w(node, op, id) {
       while ((node = walker.nextNode())) {
+        // Only reorder markers ("#", "!") are ever looked up, so only they are
+        // kept: the lookup lives as long as the page, and every node marker
+        // would otherwise stay referenced in it after resume consumed it.
         doc.x(
           (op =
             (op = node.data) &&
             !op.indexOf(prefix) &&
-            ((lookup[(id = op.slice(prefixLen + 1))] = node), op[prefixLen])),
+            ((id = op.slice(prefixLen + 1)),
+            (op = op[prefixLen]) > "#" || (lookup[id] = node),
+            op)),
           id,
           node,
         );
@@ -68,6 +73,7 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
         (placeholderRoot = placeholders[id] =
           {
             i: runtime.l[id] ? 1 : 2,
+            r: id,
             // Resume may still walk markers inside the dropped placeholder, so
             // park it in any detached parent (a bare <t> clone is the cheapest).
             c(start = runtime.l["^" + id], removed = node.cloneNode()) {
@@ -83,6 +89,9 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
               replace(id, node);
             },
           });
+      // Opens the chunk's visits for resume to parent to the root's branch; the
+      // walk that this chunk's own script triggers closes it.
+      runtime.v.push({ data: runtime.i + "*" + placeholder.r });
       // repurpose "op" for callbacks ...carefully
       if ((op = runtime.j[id])) {
         placeholderCb = placeholder.c;

@@ -34,5 +34,5 @@ var template_default = _template("a", (input) => {
 		f: $si__input_show && rows,
 		g: $selected__closures
 	});
-	_resume_branch($scope0_id);
+	$sg__input_show || _resume_branch($scope0_id);
 }, 1);

@@ -26,5 +26,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		graph_current: ["graph.current", "9:6"],
 		graph_all: ["graph.all", "9:6"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

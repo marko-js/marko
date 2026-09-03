@@ -20,5 +20,4 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "b", _marko_template, { value: msg });
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: msg });
-	_resume_branch($scope0_id);
 }, 1);

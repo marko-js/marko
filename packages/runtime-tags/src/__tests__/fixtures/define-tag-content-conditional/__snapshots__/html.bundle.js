@@ -5,9 +5,9 @@ var template_default = _template("a", (input) => {
 	let show = false;
 	_content("a0", ({ content }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__content = _serialize_guard($scope1_reason, 0);
 		_html("<section>");
-		_dynamic_tag($scope1_id, "a", content, {}, 0, 0, _serialize_guard($scope1_reason, 0));
+		_dynamic_tag($scope1_id, "a", content, {}, 0, 0, $sg__content);
 		_html("</section>");
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id);
@@ -15,5 +15,4 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "a2");
 	_scope($scope0_id, { c: show });
-	_resume_branch($scope0_id);
 }, 1);

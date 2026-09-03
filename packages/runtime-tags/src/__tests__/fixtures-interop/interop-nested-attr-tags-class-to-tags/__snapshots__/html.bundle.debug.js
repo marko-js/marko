@@ -11,7 +11,6 @@ var tags_layout_default = _template("__tests__/components/tags-layout.marko", (i
 	_html("</div>");
 	_script($scope0_id, "__tests__/components/tags-layout.marko_0");
 	_scope($scope0_id, { count }, "__tests__/components/tags-layout.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 });
 
 // template.marko

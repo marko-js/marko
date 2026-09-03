@@ -1,20 +1,20 @@
 // tags/cell/index.marko
 var cell_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span class=cell>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span class=cell>${_text_resume($scope0_id, "a", input.value, $sg__input_value)}</span>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/row/index.marko
 var row_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 1), $sg__input_quantity = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<div class=row>");
-	_set_serialize_reason(_serialize_guard($scope0_reason, 1));
+	_set_serialize_reason($sg__input_name);
 	const $childScope = _peek_scope_id();
 	cell_default({ value: input.name });
-	_set_serialize_reason(_serialize_guard($scope0_reason, 2));
+	_set_serialize_reason($sg__input_quantity);
 	const $childScope2 = _peek_scope_id();
 	cell_default({ value: input.quantity });
 	_html("</div>");
@@ -41,5 +41,4 @@ var template_default = _template("a", (input) => {
 		c: quantity,
 		b: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1);

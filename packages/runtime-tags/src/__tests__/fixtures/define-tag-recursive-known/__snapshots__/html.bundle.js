@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const Foo = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__input_bar = _serialize_guard($scope1_reason, 1), $si__input_bar = _serialize_if($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $sg__input_bar = _serialize_guard($scope1_reason, 1), $sg__input_message = _serialize_guard($scope1_reason, 2), $si__input_bar = _serialize_if($scope1_reason, 1);
 		_if(() => {
 			if (input.bar) {
 				const $scope2_id = _scope_id();
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(_text_resume($scope3_id, "a", JSON.stringify(input.message), _serialize_guard($scope1_reason, 2)));
+				_html(_text_resume($scope3_id, "a", JSON.stringify(input.message), $sg__input_message));
 				_serialize_if($scope1_reason, 0) && _scope($scope3_id, { _: _serialize_if($scope1_reason, 2) && _scope_with_id($scope1_id) });
 				return 1;
 			}

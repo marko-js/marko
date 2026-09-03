@@ -14,7 +14,6 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 		input_data: ["input.data"],
 		count: "2:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

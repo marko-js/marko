@@ -22,5 +22,4 @@ var template_default = _template("a", (input) => {
 		i: index,
 		j: filtered
 	});
-	_resume_branch($scope0_id);
 }, 1);

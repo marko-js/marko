@@ -1,8 +1,8 @@
 // tags/show-result/index.marko
 var show_result_default = _template("__tests__/tags/show-result/index.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div class=result>${_text_resume($scope0_id, "#text/0", input.get(), _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div class=result>${_text_resume($scope0_id, "#text/0", input.get(), $sg__input)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/show-result/index.marko", 0);
 });
 
@@ -22,5 +22,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "3:6" });
-	_resume_branch($scope0_id);
 }, 1);

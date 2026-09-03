@@ -34,5 +34,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		store_clear: store?.clear,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { store_clear: ["store.clear", "1:8"] });
-	_resume_branch($scope0_id);
 }, 1);

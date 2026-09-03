@@ -9,7 +9,6 @@ var inner_default = _template("c", (input) => {
 	_html(`<p>focused ${_text_resume($scope0_id, "a", focused, 2)}</p>`);
 	const $return = focus;
 	_scope($scope0_id, { b: focused });
-	_resume_branch($scope0_id);
 	return $return;
 });
 
@@ -35,5 +34,4 @@ var template_default = _template("b", (input) => {
 	_if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "b2");
 	_scope($scope0_id, {});
-	_resume_branch($scope0_id);
 }, 1);

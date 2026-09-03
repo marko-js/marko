@@ -14,5 +14,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("body content");
 	}, $scope0_id));
 	_scope($scope0_id, { tagName }, "__tests__/template.marko", 0, { tagName: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

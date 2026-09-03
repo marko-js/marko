@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const test = _resume(function() {
 			return unserializable;
 		}, "__tests__/template.marko_1/test", $scope1_id);
-		_script($scope1_id, "__tests__/template.marko_1_test#1");
+		_script($scope1_id, "__tests__/template.marko_1_test#1", 0);
 		_scope($scope1_id, {
 			unserializable,
 			test

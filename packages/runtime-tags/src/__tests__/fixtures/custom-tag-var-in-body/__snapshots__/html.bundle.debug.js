@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let setHtml = child_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_script($scope1_id, "__tests__/template.marko_1_setHtml#2");
+		_script($scope1_id, "__tests__/template.marko_1_setHtml#2", 0);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 		_resume_branch($scope1_id);
 	}, $scope0_id) });

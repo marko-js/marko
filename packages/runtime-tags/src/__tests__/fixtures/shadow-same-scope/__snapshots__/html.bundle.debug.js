@@ -19,5 +19,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$count2: "8:12",
 		$count3: "14:8"
 	});
-	_resume_branch($scope0_id);
 }, 1);

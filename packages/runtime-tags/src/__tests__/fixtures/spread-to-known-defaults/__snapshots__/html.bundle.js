@@ -1,22 +1,22 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_class__OR__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "a", input.value)}${_attr_class(input.class)}>${_el_resume($scope0_id, "a", _serialize_guard($scope0_reason, 0))}`);
+	_html(`<input${_attr_input_value($scope0_id, "a", input.value)}${_attr_class(input.class)}>${_el_resume($scope0_id, "a", $sg__input_class__OR__input_value)}`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/wrap.marko
 var wrap_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0), $sg__input_class = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason(_serialize_guard($scope0_reason, 1));
+	_set_serialize_reason($sg__input_class);
 	const $childScope = _peek_scope_id();
 	child_default({
 		...input,
 		value: "override"
 	});
-	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	_set_serialize_reason($sg__input);
 	const $childScope2 = _peek_scope_id();
 	child_default({
 		value: "default",

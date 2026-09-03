@@ -34,5 +34,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	}, 0, $scope0_id, "#text/0");
 	_scope($scope0_id, { counts }, "__tests__/template.marko", 0, { counts: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

@@ -19,7 +19,6 @@ var template_default = _template("a", (input) => {
 			}, $scope3_id, "c", 1, 1, 1, 0, 1);
 			_script($scope3_id, "a0");
 			_scope($scope3_id, { d: value });
-			_resume_branch($scope3_id);
 		});
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a1", () => {
 		_scope_reason();

@@ -1,9 +1,9 @@
 // tags/echo/index.marko
 var echo_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { ...rest } = input;
-	_html(`<em>${_text_resume($scope0_id, "a", rest.label, _serialize_guard($scope0_reason, 0))}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", rest.label, $sg__input_label)}</em>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -22,5 +22,4 @@ var template_default = _template("a", (input) => {
 		c: label,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1);

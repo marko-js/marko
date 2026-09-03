@@ -5,7 +5,6 @@ var parent_el_default = _template("b", (input) => {
 	_html(`<!--Body Text-->${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

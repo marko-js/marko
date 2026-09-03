@@ -1,18 +1,18 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "b0");
+	_html(`<span>${_text_resume($scope0_id, "a", input.value, $sg__input_value)}</span>`);
+	_script($scope0_id, "b0", $sg__input_value);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/parent-a.marko
 const $Child_withLoadAssets$1 = withLoadAssets(child_default, "_b");
 var parent_a_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	_set_serialize_reason($sg__input_value);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets$1({ value: input.value });
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
@@ -21,9 +21,9 @@ var parent_a_default = _template("c", (input) => {
 // tags/parent-b.marko
 const $Child_withLoadAssets = withLoadAssets(child_default, "_b");
 var parent_b_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	_set_serialize_reason($sg__input_value);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value * 2 });
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
@@ -47,5 +47,4 @@ var template_default = _template("a", (input) => {
 		b: _existing_scope($childScope),
 		c: _existing_scope($childScope2)
 	});
-	_resume_branch($scope0_id);
 }, 1);

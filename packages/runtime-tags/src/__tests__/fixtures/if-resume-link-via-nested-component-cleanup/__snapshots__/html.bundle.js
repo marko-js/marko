@@ -3,7 +3,7 @@ var leaf_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<p>leaf</p>");
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b0", 0);
 	_resume_branch($scope0_id);
 });
 
@@ -45,5 +45,4 @@ var template_default = _template("a", (input) => {
 		d: outer,
 		e: show
 	});
-	_resume_branch($scope0_id);
 }, 1);

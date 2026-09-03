@@ -37,5 +37,4 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=rotate>Rotate</button>${_el_resume($scope0_id, "b")}<button class=toggle>Toggle</button>${_el_resume($scope0_id, "c")}<button class=drop>Drop</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { e: items });
-	_resume_branch($scope0_id);
 }, 1);

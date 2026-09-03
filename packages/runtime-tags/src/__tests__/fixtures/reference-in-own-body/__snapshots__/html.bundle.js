@@ -4,15 +4,15 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_scope($scope0_id, { c: { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
-		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, _serialize_guard($scope1_reason, 0));
+		const $scope1_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope1_reason, 0);
+		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $sg__input_content);
 		const $return = "A";
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 		return $return;
 	}, $scope0_id) }.content({ content: _content("a2", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_script($scope2_id, "a1");
+		_script($scope2_id, "a1", 0);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 		_resume_branch($scope2_id);
 	}, $scope0_id) }) });

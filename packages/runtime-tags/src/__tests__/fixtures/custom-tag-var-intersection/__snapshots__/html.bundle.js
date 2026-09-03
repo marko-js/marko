@@ -10,7 +10,6 @@ var child_default = _template("b", (input) => {
 		e: input.extra,
 		f: x
 	});
-	_resume_branch($scope0_id);
 	return $return;
 });
 
@@ -27,5 +26,4 @@ var template_default = _template("a", (input) => {
 		d: name,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1);

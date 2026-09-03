@@ -14,5 +14,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"ControlledHandler:#input/0": ["...{ checkedValue: sel, value: \"a\" }", "2:11"],
 		"EventAttributes:#input/0": ["...{ checkedValue: sel, value: \"a\" }", "2:11"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

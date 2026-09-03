@@ -3,7 +3,7 @@ let id = 0;
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/child.marko_0_input#1");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input#1", 0);
 	_scope($scope0_id, { input }, "__tests__/tags/child.marko", 0, { input: 0 });
 });
 
@@ -39,6 +39,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, 0, $sg__input_show, 0, 1);
-	_script($scope0_id, "__tests__/template.marko_0");
+	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
 	$si__input_show && _scope($scope0_id, { input_show: input.show }, "__tests__/template.marko", 0, { input_show: ["input.show"] });
 }, 1);

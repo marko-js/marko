@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b0", 0);
 	_scope($scope0_id, { b: input });
 });
 
@@ -31,6 +31,6 @@ var template_default = _template("a", (input) => {
 		((api) => api())(_hoist_read_error).addClass("child");
 	}, "a0", $scope0_id) });
 	let api = source_default({});
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a1", 0);
 	_scope($scope0_id, { d: api });
 }, 1);

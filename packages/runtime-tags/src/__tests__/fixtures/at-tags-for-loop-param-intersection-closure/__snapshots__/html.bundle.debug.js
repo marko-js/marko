@@ -30,7 +30,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				item,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:5", { item: "3:7" }));
-			_resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });
@@ -40,5 +39,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		mult,
 		"ClosureScopes:mult": $mult__closures
 	}, "__tests__/template.marko", 0, { mult: "1:5" });
-	_resume_branch($scope0_id);
 }, 1);

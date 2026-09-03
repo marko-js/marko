@@ -15,5 +15,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		clicks: "1:6",
 		el: "2:15"
 	});
-	_resume_branch($scope0_id);
 }, 1);

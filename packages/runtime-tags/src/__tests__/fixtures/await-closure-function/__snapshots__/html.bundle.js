@@ -13,7 +13,6 @@ var template_default = _template("a", (input) => {
 			_html(_text_resume($scope2_id, "a", value));
 			_script($scope2_id, "a1");
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
-			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a2", () => {

@@ -1,28 +1,24 @@
 <!--M_[--><!--M_!^b-->
-<script>
-  WALKER_RUNTIME("M")("_");
-  M._.r = [_ => [0, {
-    settings: {
-      message: "a globals message long enough to dedup"
-    }
-  }, 1, {
-    C: "a",
-    E: _(1, "a1")
-  }]]
-</script>
 
 <!-- FLUSH -->
 
 <!--M_!b--><!--M_]1 a 2-->
 <t hidden M_=b><button>ERROR!<!--M_$3 b--></button><!--M_$3 a--></t>
 <script>
+  WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
+  M._.r = [_ => [0, {
+    settings: {
+      message: _.a = "a globals message long enough to dedup"
+    }
+  }, 1, {
+    E: _(1, "a1")
+  }, {
+    e: "ERROR!",
+    f: _.a
+  }]];
   M._.j.b = _ => {
     _.push("a0 3")
   };
-  M._.r.push(_ => [3, {
-    e: "ERROR!",
-    f: _.a = _(0).settings.message
-  }]);
   M._.w()
 </script>

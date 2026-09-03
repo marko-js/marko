@@ -21,7 +21,6 @@ var press_default = _template("__tests__/tags/press.marko", (input) => {
 		input: 0,
 		label: "1:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

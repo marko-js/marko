@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			$si__input_a && _scope($scope4_id, {});
 		}, $sg__input_a);
 		$si__input_a && _subscribe($input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
+		$si__input_a && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_scope_id();
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 			$si__input_b && _scope($scope6_id, {});
 		}, $sg__input_b);
 		$si__input_b && _subscribe($input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope2_id);
+		$si__input_b && _resume_branch($scope2_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a2", () => {
 		_scope_reason();
 		_scope_id();

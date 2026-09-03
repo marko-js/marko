@@ -17,11 +17,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(_text_resume($scope3_id, "#text/0", show));
 					_script($scope3_id, "__tests__/template.marko_3");
 					_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:5");
-					_resume_branch($scope3_id);
 				});
 				_await($scope2_id, "#text/1", resolveAfter(0, 1), () => {
 					const $scope5_id = _scope_id();
-					_script($scope5_id, "__tests__/template.marko_5");
+					_script($scope5_id, "__tests__/template.marko_5", 0);
 					_resume_branch($scope5_id);
 				}, 0);
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:3");
@@ -39,5 +38,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show,
 		"ClosureScopes:show": $show__closures
 	}, "__tests__/template.marko", 0, { show: "2:5" });
-	_resume_branch($scope0_id);
 }, 1);

@@ -26,5 +26,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count: "3:6",
 		log: "4:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

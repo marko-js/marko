@@ -12,5 +12,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_html(`<output>${_text_resume($scope0_id, "#text/1", v)}</output>`);
 	_scope($scope0_id, { tag }, "__tests__/template.marko", 0, { tag: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

@@ -20,5 +20,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_selected: ["input.selected"],
 		enabled: "1:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

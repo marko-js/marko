@@ -16,5 +16,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button id=add>Add</button>${_el_resume($scope0_id, "#button/1")}<button id=remove>Remove</button>${_el_resume($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { items }, "__tests__/template.marko", 0, { items: "3:8" });
-	_resume_branch($scope0_id);
 }, 1);

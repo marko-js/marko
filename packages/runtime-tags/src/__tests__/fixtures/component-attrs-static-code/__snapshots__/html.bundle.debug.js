@@ -12,7 +12,6 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 		input: 0,
 		count: "1:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

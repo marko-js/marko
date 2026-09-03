@@ -16,7 +16,6 @@ var tags_layout_default = _template("__tests__/components/tags-layout.marko", (i
 		input_content: ["input.content"],
 		count: "1:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

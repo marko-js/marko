@@ -6,5 +6,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><span>${_text_resume($scope0_id, "#text/0", n)}</span></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div><button>bump</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

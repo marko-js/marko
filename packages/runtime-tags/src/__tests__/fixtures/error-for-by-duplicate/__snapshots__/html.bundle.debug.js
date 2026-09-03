@@ -10,5 +10,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, () => "dup", $scope0_id, "#text/0", 1, 1, 1, 0, 1);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

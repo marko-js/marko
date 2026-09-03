@@ -4,9 +4,9 @@ function shout(message) {
 	return message.toUpperCase() + "!";
 }
 var greeting_default = _template("__tests__/tags/greeting.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_message = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.message, _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.message, $sg__input_message)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/greeting.marko", 0);
 });
 
@@ -34,5 +34,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		quiet: "4:6",
 		message: "5:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -5,9 +5,6 @@
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
     c: !0
-  }, 2, {
-    C: "a",
-    Q: _(2, "b0")
   }], "b2 1"];
   M._.w()
 </script>
@@ -18,12 +15,15 @@
   <script async type=module src="child.marko.load.mjs"></script><span>1</span>
 </t>
 <script>
+  M._.r.push(_ => [4, {
+    Q: _(2, "b0")
+  }]);
   M._.b = {
     _a: [1]
   };
   M._.j.b = _ => {
     (b => b.splice(b.indexOf(1), 1, _ => [7, {
-      G: 2
+      G: 4
     }], "a0 7"))(M._.b._a)
   };
   M._.w()

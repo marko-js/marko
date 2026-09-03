@@ -38,5 +38,4 @@ var template_default = _template("a", (input) => {
 		d: second,
 		e: message
 	});
-	_resume_branch($scope0_id);
 }, 1);

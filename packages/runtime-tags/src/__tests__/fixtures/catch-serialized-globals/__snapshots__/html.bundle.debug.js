@@ -26,6 +26,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			message: "8:12",
 			clicked: "9:10"
 		});
-		_resume_branch($scope2_id);
 	}, $scope0_id) }) });
 }, 1);

@@ -14,5 +14,4 @@ var template_default = _template("a", (input) => {
 	});
 	_html(`<span>${_text_resume($scope0_id, "b", clicked)}</span>`);
 	_scope($scope0_id, {});
-	_resume_branch($scope0_id);
 }, 1);

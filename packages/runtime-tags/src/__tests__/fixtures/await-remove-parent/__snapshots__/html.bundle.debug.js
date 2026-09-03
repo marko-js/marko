@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				_await($scope2_id, "#text/0", resolveAfter(0, 1), () => {
 					const $scope4_id = _scope_id();
-					_script($scope4_id, "__tests__/template.marko_4");
+					_script($scope4_id, "__tests__/template.marko_4", 0);
 				}, 0);
 			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
 				_scope_reason();
@@ -25,5 +25,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

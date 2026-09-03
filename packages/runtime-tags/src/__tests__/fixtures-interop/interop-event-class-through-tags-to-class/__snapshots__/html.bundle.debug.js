@@ -18,11 +18,11 @@ _marko_template$1._ = (0, import_renderer.default)(function(input, out, _compone
 // components/tags-child.marko
 s("__tests__/components/class-child.marko", _marko_template$1);
 var tags_child_default = _template("__tests__/components/tags-child.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_onChange = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", _marko_template$1, { "on-change": _resume(function() {
 		input.onChange?.();
-	}, "__tests__/components/tags-child.marko_0/onchange", $scope0_id) }, 0, 0, _serialize_guard($scope0_reason, 0));
+	}, "__tests__/components/tags-child.marko_0/onchange", $scope0_id) }, 0, 0, $sg__input_onChange);
 	_scope($scope0_id, { input_onChange: input.onChange }, "__tests__/components/tags-child.marko", 0, { input_onChange: ["input.onChange"] });
 });
 
