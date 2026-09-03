@@ -1,4 +1,4 @@
-// size: 6470 (min) 2868 (brotli)
+// size: 6735 (min) 2988 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -87,7 +87,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
     };
   }),
   _for_of = /*@__PURE__*/ /* @__PURE__ */ withBranches(
-    (forEach) => (nodeAccessor, template, walks, setup, params) => {
+    (forEach, tailOf) => (nodeAccessor, template, walks, setup, params) => {
       nodeAccessor = decodeAccessor(nodeAccessor);
       let scopesAccessor = "A" + nodeAccessor,
         keyedScopesAccessor = "O" + nodeAccessor,
@@ -103,22 +103,47 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
           hasPotentialMoves,
           start = 0,
           mapStart = 0,
+          mapEnd = oldLen,
+          suffixStart = Infinity,
           matched = 0;
         forEach(value, (key, args) => {
           let i = newScopes.length,
             oldScope = oldScopes[i],
             branch;
           if (oldLen)
-            if (oldScopesByKey || key !== (oldScope?.M ?? i)) {
+            if (i >= suffixStart) {
+              let j = i - suffixStart + mapEnd;
+              ((branch = oldScopes[j]), (branch.I = ~j));
+            } else if (oldScopesByKey || key !== (oldScope?.M ?? i)) {
               if (!oldScopesByKey) {
+                let tail = tailOf?.(value);
+                if (tail) {
+                  let [items, by] = tail,
+                    newEnd = items.length - 1;
+                  for (
+                    ;
+                    mapEnd > i &&
+                    newEnd >= i &&
+                    (typeof by == "string" ? items[newEnd][by] : by(items[newEnd], newEnd)) ===
+                      (oldScopes[mapEnd - 1].M ?? mapEnd - 1);
+                  )
+                    (mapEnd--, newEnd--);
+                  suffixStart = newEnd + 1;
+                }
                 oldScopesByKey = /* @__PURE__ */ new Map();
-                for (let j = (mapStart = i); j < oldLen; j++) {
+                for (let j = (mapStart = i); j < mapEnd; j++) {
                   let scope = oldScopes[j];
                   ((scope.I = j), oldScopesByKey.set(scope.M ?? j, scope));
                 }
+                if (i >= suffixStart) {
+                  let j = i - suffixStart + mapEnd;
+                  ((branch = oldScopes[j]), (branch.I = ~j));
+                }
               }
-              ((branch = oldScopesByKey.get(key)),
-                branch && (branch.I < 0 ? (branch = void 0) : ((branch.I = ~branch.I), matched++)));
+              ((branch ||= oldScopesByKey.get(key)),
+                branch &&
+                  (i >= suffixStart ||
+                    (branch.I < 0 ? (branch = void 0) : ((branch.I = ~branch.I), matched++))));
             } else oldScope && (start++, (branch = oldScope));
           (branch
             ? (hasPotentialMoves = !0)
@@ -150,8 +175,8 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
           return;
         }
         if (oldScopesByKey) {
-          if (matched < oldLen - mapStart)
-            for (let i = mapStart; i < oldLen; i++)
+          if (matched < mapEnd - mapStart)
+            for (let i = mapStart; i < mapEnd; i++)
               oldScopes[i].I >= 0 && removeAndDestroyBranch(oldScopes[i]);
         } else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
         for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
@@ -195,12 +220,15 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
             (afterReference = newScopes[start + i].S));
       };
     },
-  )(([all, by], cb) => {
-    ((by ||= bySecondArg),
-      typeof by == "string"
-        ? forOf(all, (item, i) => cb(item[by], [item, i]))
-        : forOf(all, (item, i) => cb(by(item, i), [item, i])));
-  });
+  )(
+    ([all, by], cb) => {
+      ((by ||= bySecondArg),
+        typeof by == "string"
+          ? forOf(all, (item, i) => cb(item[by], [item, i]))
+          : forOf(all, (item, i) => cb(by(item, i), [item, i])));
+    },
+    ([all, by]) => Array.isArray(all) && [all, by || bySecondArg],
+  );
 function isNotVoid(value) {
   return value != null && value !== !1;
 }

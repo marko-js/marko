@@ -780,6 +780,13 @@ export function setConditionalRenderer<T>(
 const loop = /*@__PURE__*/ withBranches(
   <T extends unknown[] = unknown[]>(
     forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
+    // Indexable inputs expose their length and keys so a mismatch can first
+    // claim the unchanged tail, leaving only the gap to the key map.
+    tailOf?: (
+      value: T,
+    ) =>
+      | [items: unknown[], by: string | ((item: any, i: number) => unknown)]
+      | false,
   ) =>
     (
       nodeAccessor: EncodedAccessor,
@@ -806,6 +813,8 @@ const loop = /*@__PURE__*/ withBranches(
         let hasPotentialMoves: boolean | undefined;
         let start = 0;
         let mapStart = 0;
+        let mapEnd = oldLen;
+        let suffixStart = Infinity;
         let matched = 0;
 
         if (MARKO_DEBUG) {
@@ -822,23 +831,52 @@ const loop = /*@__PURE__*/ withBranches(
           const oldScope = oldScopes[i];
           let branch: BranchScope | undefined;
           if (oldLen) {
-            if (
+            if (i >= suffixStart) {
+              const j = i - suffixStart + mapEnd;
+              branch = oldScopes[j];
+              branch[AccessorProp.LoopIndex] = ~j;
+            } else if (
               oldScopesByKey ||
               key !== (oldScope?.[AccessorProp.LoopKey] ?? i)
             ) {
               if (!oldScopesByKey) {
+                const tail = tailOf?.(value);
+                if (tail) {
+                  const [items, by] = tail;
+                  let newEnd = items.length - 1;
+                  while (
+                    mapEnd > i &&
+                    newEnd >= i &&
+                    (typeof by === "string"
+                      ? (items[newEnd] as Record<string, unknown>)[by]
+                      : by(items[newEnd], newEnd)) ===
+                      (oldScopes[mapEnd - 1][AccessorProp.LoopKey] ??
+                        mapEnd - 1)
+                  ) {
+                    mapEnd--;
+                    newEnd--;
+                  }
+                  suffixStart = newEnd + 1;
+                }
                 oldScopesByKey = new Map();
-                for (let j = (mapStart = i); j < oldLen; j++) {
+                for (let j = (mapStart = i); j < mapEnd; j++) {
                   const scope = oldScopes[j];
                   scope[AccessorProp.LoopIndex] = j;
                   oldScopesByKey.set(scope[AccessorProp.LoopKey] ?? j, scope);
                 }
+                if (i >= suffixStart) {
+                  const j = i - suffixStart + mapEnd;
+                  branch = oldScopes[j];
+                  branch[AccessorProp.LoopIndex] = ~j;
+                }
               }
-              branch = oldScopesByKey.get(key);
+              if (!branch) branch = oldScopesByKey.get(key);
               // A reused scope flips its index negative, so a duplicate key
               // sees it as taken instead of paying a Map delete per match.
               if (branch) {
-                if (branch[AccessorProp.LoopIndex]! < 0) {
+                if (i >= suffixStart) {
+                  // claimed from the tail above
+                } else if (branch[AccessorProp.LoopIndex]! < 0) {
                   branch = undefined;
                 } else {
                   branch[AccessorProp.LoopIndex] =
@@ -910,8 +948,8 @@ const loop = /*@__PURE__*/ withBranches(
         }
 
         if (oldScopesByKey) {
-          if (matched < oldLen - mapStart) {
-            for (let i = mapStart; i < oldLen; i++) {
+          if (matched < mapEnd - mapStart) {
+            for (let i = mapStart; i < mapEnd; i++) {
               if (oldScopes[i][AccessorProp.LoopIndex]! >= 0) {
                 removeAndDestroyBranch(oldScopes[i]);
               }
@@ -1026,16 +1064,19 @@ function clearChildren(parent: Element) {
 
 export const _for_of = /*@__PURE__*/ loop<
   [all: unknown[], by?: (item: unknown, index: number) => unknown]
->(([all, by], cb) => {
-  by ||= bySecondArg;
-  if (typeof by === "string") {
-    forOf(all, (item, i) =>
-      cb((item as Record<string, unknown>)[by], [item, i]),
-    );
-  } else {
-    forOf(all, (item, i) => cb(by(item, i), [item, i]));
-  }
-});
+>(
+  ([all, by], cb) => {
+    by ||= bySecondArg;
+    if (typeof by === "string") {
+      forOf(all, (item, i) =>
+        cb((item as Record<string, unknown>)[by], [item, i]),
+      );
+    } else {
+      forOf(all, (item, i) => cb(by(item, i), [item, i]));
+    }
+  },
+  ([all, by]) => Array.isArray(all) && [all, by || bySecondArg],
+);
 
 export const _for_in = /*@__PURE__*/ loop<
   [obj: {}, by?: (key: string, v: unknown) => unknown]
