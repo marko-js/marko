@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/custom-tag-args-spread-error/template.marko:1:8
+    > 1 | <badge(...input.parts)/>
+        |        ^^^^^^^^^^^^^^ Tag does not support spread arguments.
+      2 |
