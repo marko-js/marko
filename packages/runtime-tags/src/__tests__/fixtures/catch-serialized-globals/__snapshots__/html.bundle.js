@@ -22,6 +22,5 @@ var template_default = _template("a", (input) => {
 			f: message,
 			g: _serialize_if($scope2_reason, 0) && clicked
 		});
-		_resume_branch($scope2_id);
 	}, $scope0_id) }) });
 }, 1);

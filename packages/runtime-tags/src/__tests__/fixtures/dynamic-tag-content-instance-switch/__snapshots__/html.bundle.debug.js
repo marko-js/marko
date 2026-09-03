@@ -10,7 +10,6 @@ var provider_default = _template("__tests__/tags/provider.marko", (input) => {
 		_scope_reason();
 		_html(`<div>value ${_text_resume($scope1_id, "#text/0", count, 2)}</div>`);
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/provider.marko", "3:2"));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	const $return = body;
 	_script($scope0_id, "__tests__/tags/provider.marko_0");
@@ -18,7 +17,6 @@ var provider_default = _template("__tests__/tags/provider.marko", (input) => {
 		count,
 		"ClosureScopes:count": $count__closures
 	}, "__tests__/tags/provider.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 	return $return;
 });
 
@@ -41,5 +39,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		b: "2:11",
 		sel: "3:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

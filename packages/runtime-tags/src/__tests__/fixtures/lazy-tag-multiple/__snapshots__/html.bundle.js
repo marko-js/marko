@@ -1,18 +1,18 @@
 // child-a.marko
 var child_a_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span class=a>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "a0");
+	_html(`<span class=a>${_text_resume($scope0_id, "a", input.value, $sg__input_value)}</span>`);
+	_script($scope0_id, "a0", $sg__input_value);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // child-b.marko
 var child_b_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span class=b>${_text_resume($scope0_id, "a", input.value * 2, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "b0");
+	_html(`<span class=b>${_text_resume($scope0_id, "a", input.value * 2, $sg__input_value)}</span>`);
+	_script($scope0_id, "b0", $sg__input_value);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -36,5 +36,4 @@ var template_default = _template("c", (input) => {
 		c: _existing_scope($childScope),
 		e: _existing_scope($childScope2)
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -30,7 +30,6 @@ var template_default = _template("a", (input) => {
 		_html(`<button id=tags>${_text_resume($scope1_id, "b", count)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id), 0, 0);
 	_scope($scope0_id, {
 		b: count,

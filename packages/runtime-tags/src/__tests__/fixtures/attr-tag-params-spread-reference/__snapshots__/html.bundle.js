@@ -1,16 +1,16 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(_text_resume($scope0_id, "a", JSON.stringify(input), _serialize_guard($scope0_reason, 0) * 2));
+	_html(_text_resume($scope0_id, "a", JSON.stringify(input), $sg__input * 2));
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	_set_serialize_reason($sg__input);
 	let $item;
 	forUntil(1, 0, 1, (i) => {
 		$item = attrTags($item, { value: i });

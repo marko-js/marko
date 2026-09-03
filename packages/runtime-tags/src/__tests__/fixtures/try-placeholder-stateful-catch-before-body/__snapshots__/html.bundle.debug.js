@@ -24,12 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<button>retry ${_text_resume($scope1_id, "#text/1", attempt, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_subscribe($attempt__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
-			_resume_branch($scope1_id);
 		}, $scope0_id) }),
 		catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", (err) => {
-			const $scope3_reason = _scope_reason();
+			const $scope3_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(`<b>${_text_resume($scope3_id, "#text/0", err.message, _serialize_guard($scope3_reason, 0))}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "#text/0", err.message, $sg__err_message)}</b>`);
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "15:4");
 		}, $scope0_id) })
 	});

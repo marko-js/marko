@@ -12,7 +12,6 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 			x = _new_x;
 		}, "__tests__/tags/counter.marko_0/valueChange", $scope0_id) || void 0
 	}, "__tests__/tags/counter.marko", 0, { x: "1:6" });
-	_resume_branch($scope0_id);
 	return $return;
 });
 

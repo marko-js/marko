@@ -17,5 +17,4 @@ var template_default = _template("a", (input) => {
 		f: input.selected,
 		g: enabled
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -9,5 +9,5 @@ abcde
 ```
 ## Change
 ```
-INSERT: ::text@2 + ::text("de")
+INSERT: ::text@0 + ::text("de")
 ```

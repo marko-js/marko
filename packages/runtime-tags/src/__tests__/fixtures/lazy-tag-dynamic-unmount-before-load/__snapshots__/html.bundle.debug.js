@@ -1,9 +1,9 @@
 // child.marko
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "__tests__/child.marko_0");
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.value, $sg__input_value)}</span>`);
+	_script($scope0_id, "__tests__/child.marko_0", $sg__input_value);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
@@ -23,7 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope2_id, "__tests__/template.marko_2_show#2/pending");
 			_dynamic_tag($scope2_id, "#text/0", show ? $Child_withLoadAssets : null, { value: 1 });
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
-			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
@@ -36,5 +35,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show,
 		"ClosureScopes:show": $show__closures
 	}, "__tests__/template.marko", 0, { show: "4:6" });
-	_resume_branch($scope0_id);
 }, 1);

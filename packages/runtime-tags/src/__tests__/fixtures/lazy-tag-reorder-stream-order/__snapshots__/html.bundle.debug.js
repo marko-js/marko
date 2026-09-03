@@ -15,7 +15,6 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		shared: "6:6",
 		count: "7:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -36,7 +35,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				label,
 				shared
 			});
-			_resume_branch($scope2_id);
 		}, 0);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_4*content", () => {
 		_scope_reason();
@@ -49,6 +47,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label,
 			shared
 		});
-		_resume_branch($scope3_id);
 	}, 0);
 }, 1);

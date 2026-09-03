@@ -6,7 +6,6 @@ var grand_child_default = _template("b", (input) => {
 	_html(`<button class=grand>grand:${_text_resume($scope0_id, "b", copy.name, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { f: copy });
-	_resume_branch($scope0_id);
 });
 
 // child.marko
@@ -23,7 +22,6 @@ var child_default = _template("a", (input) => {
 		e: obj,
 		d: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

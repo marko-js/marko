@@ -1,0 +1,3 @@
+<let/n=0/>
+<if=n><const/x=(() => { throw new Error("bang") })()/>${x}</if>
+<button onClick() { n++ }>${n}</button>

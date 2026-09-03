@@ -14,7 +14,6 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 		input_onCount: ["input.onCount"],
 		clickCount: "1:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -37,5 +36,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
 	_scope($scope0_id, { onCount }, "__tests__/template.marko", 0, { onCount: "2:8" });
-	_resume_branch($scope0_id);
 }, 1);

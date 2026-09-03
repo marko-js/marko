@@ -29,7 +29,6 @@ var template_default = _template("a", (input) => {
 									_scope_id();
 									_html(`<div${_attr_class(value)} level=4></div>`);
 								}, 0);
-								_resume_branch($scope9_id);
 							}, $scope8_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 								_scope_reason();
 								_scope_id();
@@ -37,7 +36,6 @@ var template_default = _template("a", (input) => {
 							}, $scope8_id) }) });
 							_html("</div>");
 						}, 0);
-						_resume_branch($scope7_id);
 					}, $scope6_id), { placeholder: attrTag({ content: _content_resume("a2", () => {
 						_scope_reason();
 						_scope_id();
@@ -45,7 +43,6 @@ var template_default = _template("a", (input) => {
 					}, $scope6_id) }) });
 					_html("</div>");
 				}, 0);
-				_resume_branch($scope3_id);
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 				_scope_reason();
 				_scope_id();
@@ -53,7 +50,6 @@ var template_default = _template("a", (input) => {
 			}, $scope2_id) }) });
 			_html("</div>");
 		}, 0);
-		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a6", () => {
 		_scope_reason();
 		_scope_id();

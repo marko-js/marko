@@ -21,7 +21,6 @@ var template_default = _template("a", (input) => {
 			_html(`<button type=button class=inc>increment</button>${_el_resume($scope1_id, "a")}<span class=count>${_text_resume($scope1_id, "b", count)}</span>`);
 			_script($scope1_id, "a0");
 			_scope($scope1_id, { c: count });
-			_resume_branch($scope1_id);
 		}, _scope_id())
 	});
 }, 1);

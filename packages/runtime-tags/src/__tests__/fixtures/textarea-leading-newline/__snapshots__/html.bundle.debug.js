@@ -8,5 +8,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/valueChange", $scope0_id))}</textarea>${_el_resume($scope0_id, "#textarea/1")}<textarea id=body>${_textarea_value(input.v)}</textarea>${_el_resume($scope0_id, "#textarea/2", $sg__input_v)}<p id=text>${_text_resume($scope0_id, "#text/3", input.v, $sg__input_v)}</p>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#textarea/1": ["valueChange"] });
-	_resume_branch($scope0_id);
 }, 1);

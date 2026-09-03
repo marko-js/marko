@@ -1,8 +1,8 @@
 // tags/child/index.marko
 var child_default = _template("__tests__/tags/child/index.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_a = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, $sg__input_a)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child/index.marko", 0);
 });
 
@@ -25,5 +25,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		n,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

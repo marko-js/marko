@@ -21,5 +21,4 @@ var template_default = _template("a", (input) => {
 		g: visible,
 		h: inner
 	});
-	_resume_branch($scope0_id);
 }, 1);

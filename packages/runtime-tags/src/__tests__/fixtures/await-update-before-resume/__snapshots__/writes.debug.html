@@ -8,7 +8,6 @@
       "ClosureScopes:value": new Set([_(3)])
     }, 1, {
       _: _(1),
-      "#BranchAccessor": "#text/1",
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/await-update-before-resume/template.marko_2*content"
         )
@@ -24,13 +23,13 @@
   <div id=inside>0<!--M_$5 #text/0--></div><!--M_]3 #text/0 5-->
 </t>
 <script>
+  M._.r.push(_ => [5, {
+    value: 0
+  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/await-update-before-resume/template.marko_3_value#2 5 packages/runtime-tags/src/__tests__/fixtures/await-update-before-resume/template.marko_3 5"
       )
   };
-  M._.r.push(_ => [5, {
-    value: 0
-  }]);
   M._.w()
 </script>

@@ -1,11 +1,11 @@
 // tags/note.marko
 var note_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $sg__input_label = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.label, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "b0");
+	_html(`<span>${_text_resume($scope0_id, "a", input.label, $sg__input_label)}</span>`);
+	_script($scope0_id, "b0", $sg__input_label);
 	_scope($scope0_id, { d: input.label });
-	_resume_branch($scope0_id);
+	$sg__input_label || _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -37,7 +37,6 @@ var template_default = _template("a", (input) => {
 						a: _existing_scope($childScope),
 						Ce: 1
 					});
-					_resume_branch($scope4_id);
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a1", () => {
@@ -46,7 +45,6 @@ var template_default = _template("a", (input) => {
 				note_default({ label: "inner placeholder" });
 			}, $scope2_id) }) });
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
-			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
@@ -59,5 +57,4 @@ var template_default = _template("a", (input) => {
 		d: clicks,
 		e: $clicks__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

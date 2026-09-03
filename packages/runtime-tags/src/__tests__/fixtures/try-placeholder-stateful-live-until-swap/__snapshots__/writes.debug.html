@@ -4,16 +4,11 @@
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [];
-  M._.j[3] = _ => {
-    _.push("_placeholderDismiss 3")
-  };
-  M._.r.push(_ => [1, {
+  M._.r = [_ => [1, {
       clicks: 0,
       "ClosureScopes:clicks": new Set
     }, 1, {
       _: _(1),
-      "#BranchAccessor": "#text/0",
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-live-until-swap/template.marko_1*content"
         )
@@ -22,9 +17,12 @@
     _ => (_([3, {
       "#PlaceholderBranch": _(2)
     }, {
-      _: _(1),
-      "#ClosestBranchId": 2
-    }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(4)), 0));
+      _: _(1)
+    }]), (_.a = _(1)["ClosureScopes:clicks"]).add(_(4)), 0)
+  ];
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
+  };
   M._.w()
 </script>
 
@@ -34,14 +32,14 @@
       0<!--M_$5 #text/1--></button><!--M_$5 #button/0--><!--M_]3 #text/0 5-->
 </t>
 <script>
+  M._.r.push(_ => [5, {
+    _: _(3),
+    "ClosureSignalIndex:clicks": 1
+  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-live-until-swap/template.marko_3_clicks#1/pending 5 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-live-until-swap/template.marko_3 5"
       )
   };
-  M._.r.push(_ => [5, {
-    _: _(3),
-    "ClosureSignalIndex:clicks": 1
-  }]);
   M._.w()
 </script>

@@ -26,7 +26,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		"TagVariableChange:otherState": ["otherStateChange", "6:6"],
 		"TagVariableChange:thirdState": ["thirdStateChange", "11:6"]
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -44,5 +43,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_html(`source=${_text_resume($scope0_id, "#text/1", source, 2)}`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

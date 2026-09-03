@@ -4,11 +4,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Child = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__input_a = _serialize_guard($scope1_reason, 0), $sg__b = _serialize_guard($scope1_reason, 1);
 		const { a, b } = input;
-		_html(`<div>${_text_resume($scope1_id, "a", a, _serialize_guard($scope1_reason, 0))}</div><div>${_text_resume($scope1_id, "b", b, _serialize_guard($scope1_reason, 1))}</div>`);
-		_script($scope1_id, "a1");
-		_script($scope1_id, "a2");
+		_html(`<div>${_text_resume($scope1_id, "a", a, $sg__input_a)}</div><div>${_text_resume($scope1_id, "b", b, $sg__b)}</div>`);
+		_script($scope1_id, "a1", $sg__input_a || $sg__b);
+		_script($scope1_id, "a2", $sg__input_a || $sg__b);
 		_scope($scope1_id, { e: input.a });
 	}, $scope0_id) };
 	_set_serialize_reason({

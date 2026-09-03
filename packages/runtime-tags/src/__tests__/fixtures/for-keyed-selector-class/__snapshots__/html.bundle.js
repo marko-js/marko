@@ -30,5 +30,4 @@ var template_default = _template("a", (input) => {
 		e: selected,
 		f: rows
 	});
-	_resume_branch($scope0_id);
 }, 1);

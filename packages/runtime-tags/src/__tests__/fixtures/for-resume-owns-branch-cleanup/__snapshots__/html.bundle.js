@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 	_for_to(count, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>item ${_escape(i)}</p>`);
-		_script($scope1_id, "b0");
+		_script($scope1_id, "b0", 0);
 		$si__input_count && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_count, $sg__input_count, $sg__input_count, 0, 1);
 	$si__input_count && _scope($scope0_id, {});
@@ -34,5 +34,4 @@ var template_default = _template("a", (input) => {
 		d: outer,
 		e: count
 	});
-	_resume_branch($scope0_id);
 }, 1);

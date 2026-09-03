@@ -13,5 +13,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		n: "1:6",
 		m: "4:10"
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -33,5 +33,4 @@ var template_default = _template("a", (input) => {
 		d: selected,
 		e: hovered
 	});
-	_resume_branch($scope0_id);
 }, 1);

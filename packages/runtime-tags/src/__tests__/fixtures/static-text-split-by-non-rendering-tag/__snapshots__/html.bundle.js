@@ -10,5 +10,4 @@ var template_default = _template("a", (input) => {
 		c: n,
 		d: m
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -23,5 +23,4 @@ var template_default = _template("a", (input) => {
 		e: total,
 		f: seen
 	});
-	_resume_branch($scope0_id);
 }, 1);

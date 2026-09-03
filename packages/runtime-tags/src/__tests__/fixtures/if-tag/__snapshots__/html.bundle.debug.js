@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $si__input_a__OR__input_b = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $si__input_a__OR__input_b = _serialize_if($scope0_reason, 0), $sg__input_x__OR__input_y = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.a + input.b) {
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b);
-	_html(`<div>${_text_resume($scope0_id, "#text/2", input.x ? "A" : input.y ? "B" : "C", _serialize_guard($scope0_reason, 1))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/2", input.x ? "A" : input.y ? "B" : "C", $sg__input_x__OR__input_y)}</div>`);
 	_serialize_if($scope0_reason, 2) && _scope($scope0_id, {
 		input_a: _serialize_if($scope0_reason, 4) && input.a,
 		input_b: _serialize_if($scope0_reason, 3) && input.b,

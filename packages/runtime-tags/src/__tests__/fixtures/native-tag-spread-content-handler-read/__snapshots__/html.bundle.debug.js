@@ -16,7 +16,6 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 		input_content: ["input.content"],
 		"EventAttributes:#div/0": ["...input", "3:9"]
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

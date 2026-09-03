@@ -22,5 +22,4 @@ var template_default = _template("a", (input) => {
 	B.content({ value });
 	_script($scope0_id, "a2");
 	_scope($scope0_id, { a: _existing_scope($childScope2) });
-	_resume_branch($scope0_id);
 }, 1);

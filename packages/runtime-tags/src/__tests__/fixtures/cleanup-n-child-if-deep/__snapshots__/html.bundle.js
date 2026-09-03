@@ -4,12 +4,12 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { name, write } = input;
 	_html(`<div>${_text_resume($scope0_id, "a", name, $sg__input_name)} a</div><span>${_text_resume($scope0_id, "b", name, $sg__input_name)} a</span><p>${_text_resume($scope0_id, "c", name, $sg__input_name)} a</p>`);
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b0", $sg__input_name);
 	_scope($scope0_id, {
 		f: name,
 		g: write
 	});
-	_resume_branch($scope0_id);
+	$sg__input_name || _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -69,5 +69,4 @@ var template_default = _template("a", (input) => {
 		i: write,
 		k: $showInner__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

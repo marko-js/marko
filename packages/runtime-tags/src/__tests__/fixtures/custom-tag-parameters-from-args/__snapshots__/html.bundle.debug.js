@@ -16,7 +16,6 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 		x: "1:6",
 		y: "2:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -24,9 +23,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	custom_tag_default({ content: _content_resume("__tests__/template.marko_1*content", (count, count2) => {
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__count = _serialize_guard($scope1_reason, 1), $sg__count2 = _serialize_guard($scope1_reason, 2);
 		const $scope1_id = _scope_id();
-		_html(`<div>Counts: ${_text_resume($scope1_id, "#text/0", count, _serialize_guard($scope1_reason, 1) * 2)},${_text_resume($scope1_id, "#text/1", count2, _serialize_guard($scope1_reason, 2) * 2)}</div>`);
+		_html(`<div>Counts: ${_text_resume($scope1_id, "#text/0", count, $sg__count * 2)},${_text_resume($scope1_id, "#text/1", count2, $sg__count2 * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) });
 }, 1);

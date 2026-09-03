@@ -24,12 +24,11 @@ var template_default = _template("a", (input) => {
 			_html(`<button>retry ${_text_resume($scope1_id, "b", attempt, 2)}</button>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a0");
 			_subscribe($attempt__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-			_resume_branch($scope1_id);
 		}, $scope0_id) }),
 		catch: attrTag({ content: _content_resume("a2", (err) => {
-			const $scope3_reason = _scope_reason();
+			const $scope3_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(`<b>${_text_resume($scope3_id, "a", err.message, _serialize_guard($scope3_reason, 0))}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "a", err.message, $sg__err_message)}</b>`);
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
 		}, $scope0_id) })
 	});

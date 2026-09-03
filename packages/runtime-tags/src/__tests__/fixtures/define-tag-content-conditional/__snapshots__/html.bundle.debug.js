@@ -5,9 +5,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let show = false;
 	const Layout = { content: _content("__tests__/template.marko_1*content", ({ content }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__content = _serialize_guard($scope1_reason, 0);
 		_html("<section>");
-		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, _serialize_guard($scope1_reason, 0));
+		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, $sg__content);
 		_html("</section>");
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
@@ -26,5 +26,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

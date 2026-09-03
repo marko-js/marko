@@ -6,8 +6,8 @@ var template_default = _template("a", (input) => {
 	const a = "abc";
 	const Foo = { content: _content("a0", (input) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason();
-		_dynamic_tag($scope3_id, "a", input.content, [input.value], 0, 1, _serialize_guard($scope3_reason, 0));
+		const $scope3_reason = _scope_reason(), $sg__input_content__OR__input_value = _serialize_guard($scope3_reason, 0);
+		_dynamic_tag($scope3_id, "a", input.content, [input.value], 0, 1, $sg__input_content__OR__input_value);
 		_serialize_if($scope3_reason, 0) && _scope($scope3_id, {
 			d: _serialize_if($scope3_reason, 2) && input.content,
 			e: _serialize_if($scope3_reason, 1) && input.value
@@ -38,5 +38,4 @@ var template_default = _template("a", (input) => {
 		d: a,
 		b: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1);

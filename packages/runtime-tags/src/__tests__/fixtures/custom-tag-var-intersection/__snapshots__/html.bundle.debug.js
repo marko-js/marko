@@ -13,7 +13,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		input_extra: ["input.extra"],
 		x: "1:6"
 	});
-	_resume_branch($scope0_id);
 	return $return;
 });
 
@@ -31,5 +30,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		name,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { name: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

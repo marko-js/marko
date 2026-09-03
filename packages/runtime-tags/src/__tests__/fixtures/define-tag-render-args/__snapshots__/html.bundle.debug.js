@@ -5,8 +5,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = 1;
 	const MyTag = { content: _content("__tests__/template.marko_1*content", (a, b, c) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
-		_html(`<div>${_text_resume($scope1_id, "#text/0", a, _serialize_guard($scope1_reason, 1))}|${_text_resume($scope1_id, "#text/1", b, _serialize_guard($scope1_reason, 2) * 2)}|${_text_resume($scope1_id, "#text/2", c, _serialize_guard($scope1_reason, 3) * 2)}</div>`);
+		const $scope1_reason = _scope_reason(), $sg__a = _serialize_guard($scope1_reason, 1), $sg__b = _serialize_guard($scope1_reason, 2), $sg__c = _serialize_guard($scope1_reason, 3);
+		_html(`<div>${_text_resume($scope1_id, "#text/0", a, $sg__a)}|${_text_resume($scope1_id, "#text/1", b, $sg__b * 2)}|${_text_resume($scope1_id, "#text/2", c, $sg__c * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_set_serialize_reason(18);
@@ -18,5 +18,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { x: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

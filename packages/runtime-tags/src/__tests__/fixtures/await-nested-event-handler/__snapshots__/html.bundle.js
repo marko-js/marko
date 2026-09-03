@@ -18,7 +18,6 @@ var template_default = _template("a", (input) => {
 					_html(`<div>changes: ${_text_resume($scope4_id, "b", changes, 2)}</div>${_el_resume($scope4_id, "a")}`);
 					_script($scope4_id, "a1");
 					_scope($scope4_id, { _: _scope_with_id($scope3_id) });
-					_resume_branch($scope4_id);
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a2", () => {

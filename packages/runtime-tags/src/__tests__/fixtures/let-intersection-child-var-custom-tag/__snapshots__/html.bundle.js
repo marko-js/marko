@@ -5,7 +5,7 @@ var let_global_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const $return = $global$1[input.value];
-	_script($scope0_id, "c1");
+	_script($scope0_id, "c1", 0);
 	_scope($scope0_id, {
 		c: input.value,
 		U: _resume(function(next) {
@@ -32,5 +32,4 @@ var template_default = _template("a", (input) => {
 		h: b,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1);

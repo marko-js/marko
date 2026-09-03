@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_for_to(count, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>item ${_escape(i)}</p>`);
-		_script($scope1_id, "__tests__/tags/child.marko_1");
+		_script($scope1_id, "__tests__/tags/child.marko_1", 0);
 		$si__input_count && _scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_count, $sg__input_count, $sg__input_count, 0, 1);
 	$si__input_count && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
@@ -37,5 +37,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		outer: "1:6",
 		count: "2:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -5,16 +5,11 @@
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [];
-  M._.j[3] = _ => {
-    _.push("_placeholderDismiss 3")
-  };
-  M._.r.push(_ => [1, {
+  M._.r = [_ => [1, {
       clicks: 0,
       "ClosureScopes:clicks": new Set
     }, 1, {
       _: _(1),
-      "#BranchAccessor": "#text/2",
       "#PlaceholderContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_5*content"
         )
@@ -25,7 +20,11 @@
     }, 1, {
       input_label: "outer placeholder",
       "#ClosestBranchId": 2
-    }]);
+    }]
+  ];
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
+  };
   M._.w()
 </script>
 
@@ -38,19 +37,10 @@
 </t>
 <t hidden M_=8><!--M_#c--></t>
 <script>
-  M._.j.b = _ => {
-    _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_2_clicks#3/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 10"
-      )
-  };
-  M._.j[8] = _ => {
-    _.push("_placeholderDismiss 8")
-  };
   M._.r.push(_ => [6, {
     _: _(3)
   }, 1, {
     _: _(6),
-    "#BranchAccessor": "#text/2",
     "#PlaceholderContent": _(6,
       "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_6*content"
       )
@@ -60,6 +50,14 @@
     input_label: "inner placeholder",
     "#ClosestBranchId": 7
   }]);
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_2_clicks#3/pending 6 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 10"
+      )
+  };
+  M._.j[8] = _ => {
+    _.push("_placeholderDismiss 8")
+  };
   M._.w()
 </script>
 
@@ -68,11 +66,6 @@
 <t hidden M_=c><!--M_[--><span>inner
     0<!--M_$12 #text/0--></span><!--M_]8 #text/0 11--></t>
 <script>
-  M._.j.c = _ => {
-    _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_4_clicks#3/pending 11 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 12"
-      )
-  };
   M._.r.push(_ => [11, {
     inner: "inner",
     _: _(8),
@@ -81,5 +74,10 @@
   }, {
     input_label: "inner 0"
   }]);
+  M._.j.c = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/template.marko_4_clicks#3/pending 11 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested/tags/note.marko_0_input_label#3 12"
+      )
+  };
   M._.w()
 </script>

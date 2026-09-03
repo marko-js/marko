@@ -43,5 +43,4 @@ var template_default = _template("a", (input) => {
 		b: _existing_scope($childScope2),
 		c: _existing_scope($childScope3)
 	});
-	_resume_branch($scope0_id);
 }, 1);

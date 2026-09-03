@@ -6,7 +6,6 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_html(`<button>count: ${_text_resume($scope0_id, "#text/1", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 });
 
 // template.marko

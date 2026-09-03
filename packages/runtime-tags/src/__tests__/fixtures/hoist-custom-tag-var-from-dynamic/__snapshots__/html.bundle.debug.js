@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, { setHtml3 }, "__tests__/template.marko", "26:4", { setHtml3: "27:10" }));
 		_assert_hoist(setHtml3);
 	}, $scope0_id), 0, $sg__input_show);
-	_script($scope0_id, "__tests__/template.marko_0");
+	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
 	_scope($scope0_id, {
 		"ClosureScopes:1": $thing_content__subscribers,
 		"ClosureScopes:2": $inputshowThingnull_content__subscribers,

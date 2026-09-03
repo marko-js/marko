@@ -13,7 +13,6 @@ var tags_layout_default = _template("b", (input) => {
 		f: input.content,
 		g: count
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

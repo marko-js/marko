@@ -16,5 +16,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		tag: "1:6",
 		el: "3:9"
 	});
-	_resume_branch($scope0_id);
 }, 1);

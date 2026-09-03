@@ -1,9 +1,8 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
-import { type Opt, some, Sorted } from "./optional";
+import { type Opt, some } from "./optional";
 import {
-  compareSources,
   getDebugNames,
   getDebugNamesAsIdentifier,
   type Sources,
@@ -19,11 +18,10 @@ import {
   isReasonDynamic,
   type SerializeReason,
   type SerializeReasons,
+  sourcesUtil,
 } from "./serialize-reasons";
 import { createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
-
-const sourcesUtil = new Sorted(compareSources);
 
 type DynamicSerializeReason = Sources & { state: undefined };
 
@@ -87,12 +85,8 @@ export function getSerializeGuardForAny(
   reasons: undefined | SerializeReasons,
   optional: boolean,
 ) {
-  if (!reasons || reasons === true) {
+  if (!Array.isArray(reasons)) {
     return getSerializeGuard(section, reasons, optional);
-  }
-
-  if (reasons.length === 1) {
-    return getSerializeGuard(section, reasons[0], optional);
   }
 
   let expr!: t.Expression;

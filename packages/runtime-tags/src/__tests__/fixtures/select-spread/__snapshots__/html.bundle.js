@@ -12,5 +12,4 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});
-	_resume_branch($scope0_id);
 }, 1);

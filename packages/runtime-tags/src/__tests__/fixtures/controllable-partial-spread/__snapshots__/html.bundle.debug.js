@@ -31,5 +31,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"EventAttributes:#input/2": ["...rest", "5:11"],
 		"ControlledHandler:#input/3": ["valueChange"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

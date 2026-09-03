@@ -22,5 +22,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_resume($scope0_id, "#input/3")}${_text_resume($scope0_id, "#text/4", a)}<button>set</button>${_el_resume($scope0_id, "#button/5")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/3": ["valueChange"] });
-	_resume_branch($scope0_id);
 }, 1);

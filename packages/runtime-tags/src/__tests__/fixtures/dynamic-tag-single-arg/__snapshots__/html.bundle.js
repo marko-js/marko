@@ -1,8 +1,8 @@
 // tags/custom-tag.marko
 var custom_tag_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input, _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input, $sg__input)}</div>`);
 	const $return = "hello from other";
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 	return $return;
@@ -18,5 +18,4 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "c", tags[0], [x], 0, 1);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { d: x });
-	_resume_branch($scope0_id);
 }, 1);

@@ -14,7 +14,6 @@ var child_default = _template("b", (input) => {
 		d: 0,
 		f: id
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

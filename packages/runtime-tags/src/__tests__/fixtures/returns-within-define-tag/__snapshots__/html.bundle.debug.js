@@ -71,5 +71,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		clickTwiceCount: "23:5",
 		onClickTwice: "24:7"
 	});
-	_resume_branch($scope0_id);
 }, 1);

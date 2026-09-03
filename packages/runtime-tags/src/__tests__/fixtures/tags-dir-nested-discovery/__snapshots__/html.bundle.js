@@ -7,9 +7,9 @@ var icon_star_default = _template("b", (input) => {
 
 // tags/util/greeting.marko
 var greeting_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<p>Hello, ${_text_resume($scope0_id, "a", input.name, _serialize_guard($scope0_reason, 0) * 2)}!</p>`);
+	_html(`<p>Hello, ${_text_resume($scope0_id, "a", input.name, $sg__input_name * 2)}!</p>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

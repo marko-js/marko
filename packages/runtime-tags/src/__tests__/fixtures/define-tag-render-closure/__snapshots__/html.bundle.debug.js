@@ -9,7 +9,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html(`<div>${_text_resume($scope1_id, "#text/0", x)}</div>`);
 		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	MyTag.content({});
 	_if(() => {
@@ -26,5 +25,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x,
 		"ClosureScopes:x": $x__closures
 	}, "__tests__/template.marko", 0, { x: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

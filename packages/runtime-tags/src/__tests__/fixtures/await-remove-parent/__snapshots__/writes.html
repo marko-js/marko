@@ -4,10 +4,7 @@
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [_ => [4, {
-    C: "a",
-    Q: _(2, "a1")
-  }], "a3 1"];
+  M._.r = ["a3 1"];
   M._.w()
 </script>
 
@@ -15,11 +12,13 @@
 
 <t hidden M_=b></t>
 <script>
+  M._.r.push(_ => [4, {
+    Q: _(2, "a1")
+  }, 1, {
+    G: 4
+  }]);
   M._.j.b = _ => {
     _.push("a0 6")
   };
-  M._.r.push(_ => [6, {
-    G: 2
-  }]);
   M._.w()
 </script>

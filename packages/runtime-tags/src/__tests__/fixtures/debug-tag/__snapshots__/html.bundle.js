@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	debugger;
 	let y = 0;
 	debugger;
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a0", 0);
 	_scope($scope0_id, {
 		a: x,
 		b: y

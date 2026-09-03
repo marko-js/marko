@@ -18,9 +18,9 @@ var template_default = _template("b", (input) => {
 			_scope_reason();
 			$Child_withLoadAssets({});
 		}, $scope1_id), { catch: attrTag({ content: _content_resume("b0", (err) => {
-			const $scope4_reason = _scope_reason();
+			const $scope4_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope4_reason, 0);
 			const $scope4_id = _scope_id();
-			_html(`caught: ${_text_resume($scope4_id, "a", err.message, _serialize_guard($scope4_reason, 0) * 2)}`);
+			_html(`caught: ${_text_resume($scope4_id, "a", err.message, $sg__err_message * 2)}`);
 			_serialize_if($scope4_reason, 0) && _scope($scope4_id, {});
 		}, $scope1_id) }) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b2", () => {

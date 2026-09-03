@@ -11,7 +11,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html(`<option${_attr_option_value("a")}>A${_text_resume($scope1_id, "#text/0", n, 2)}</option>`);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
-		_resume_branch($scope1_id);
 	}, $scope0_id));
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
@@ -22,5 +21,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		tag: "1:6",
 		n: "2:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

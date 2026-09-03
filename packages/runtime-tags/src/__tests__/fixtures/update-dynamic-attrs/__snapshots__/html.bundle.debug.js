@@ -21,5 +21,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"EventAttributes:#div/1": ["...input.value", "3:13"],
 		"EventAttributes:#div/2": ["...input.value", "4:9"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

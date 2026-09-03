@@ -6,15 +6,14 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	const ChildA = { content: _content("a0", ({ id, foo, foo: $foo }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__id = _serialize_guard($scope1_reason, 0), $sg__foo = _serialize_guard($scope1_reason, 1);
 		const { bar: $bar } = void 0 !== $foo ? $foo : { bar: 2 };
 		const bar = void 0 !== $bar ? $bar : 1;
-		_html(`<div${_attr("id", id)} class=a>${_text_resume($scope1_id, "b", bar)} ${_text_resume($scope1_id, "c", typeof foo, _serialize_guard($scope1_reason, 1) * 2)}</div>${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 0))}`);
+		_html(`<div${_attr("id", id)} class=a>${_text_resume($scope1_id, "b", bar)} ${_text_resume($scope1_id, "c", typeof foo, $sg__foo * 2)}</div>${_el_resume($scope1_id, "a", $sg__id)}`);
 		_subscribe($count__closures, _scope($scope1_id, {
 			g: foo,
 			_: _scope_with_id($scope0_id)
 		}));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	ChildA.content({
 		foo: { bar: 0 },
@@ -27,17 +26,16 @@ var template_default = _template("a", (input) => {
 	ChildA.content({ id: "c" });
 	const ChildB = { content: _content("a1", (input) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason();
+		const $scope2_reason = _scope_reason(), $sg__input_id = _serialize_guard($scope2_reason, 0), $sg__foo2 = _serialize_guard($scope2_reason, 1);
 		const { foo, foo: $foo2 } = input;
 		const { bar: $bar2 } = void 0 !== $foo2 ? $foo2 : { bar: 2 };
 		const bar = void 0 !== $bar2 ? $bar2 : 1;
-		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "b", bar)} ${_text_resume($scope2_id, "c", typeof foo, _serialize_guard($scope2_reason, 1) * 2)}</div>${_el_resume($scope2_id, "a", _serialize_guard($scope2_reason, 0))}`);
+		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "b", bar)} ${_text_resume($scope2_id, "c", typeof foo, $sg__foo2 * 2)}</div>${_el_resume($scope2_id, "a", $sg__input_id)}`);
 		_subscribe($count__closures, _scope($scope2_id, {
 			g: foo,
 			_: _scope_with_id($scope0_id),
 			Ci: 1
 		}));
-		_resume_branch($scope2_id);
 	}, $scope0_id) };
 	ChildB.content({
 		foo: { bar: 0 },
@@ -54,5 +52,4 @@ var template_default = _template("a", (input) => {
 		h: count,
 		i: $count__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

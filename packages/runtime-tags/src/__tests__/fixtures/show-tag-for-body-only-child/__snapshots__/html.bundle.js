@@ -12,5 +12,4 @@ var template_default = _template("a", (input) => {
 	_show_end($scope0_id, "b", visible, 1, 1, "</div>");
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { d: visible });
-	_resume_branch($scope0_id);
 }, 1);

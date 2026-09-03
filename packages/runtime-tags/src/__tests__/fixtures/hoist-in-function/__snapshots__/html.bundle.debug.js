@@ -1,8 +1,8 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_fn = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", typeof input.fn, _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", typeof input.fn, $sg__input_fn)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	child_default({ fn: () => ((x) => x())(_hoist_read_error) });
 	const x = 1;
-	_script($scope0_id, "__tests__/template.marko_0");
+	_script($scope0_id, "__tests__/template.marko_0", 0);
 	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "5:8" });
 	_assert_hoist(x);
 }, 1);

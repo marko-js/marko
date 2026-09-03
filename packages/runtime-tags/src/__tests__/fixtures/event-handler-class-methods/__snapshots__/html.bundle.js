@@ -11,5 +11,4 @@ var template_default = _template("a", (input) => {
 		f: obj.go,
 		g: n
 	});
-	_resume_branch($scope0_id);
 }, 1);

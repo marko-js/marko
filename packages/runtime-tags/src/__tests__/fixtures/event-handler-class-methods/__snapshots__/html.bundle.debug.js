@@ -19,5 +19,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		obj_go: ["obj.go", "6:8"],
 		n: "7:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

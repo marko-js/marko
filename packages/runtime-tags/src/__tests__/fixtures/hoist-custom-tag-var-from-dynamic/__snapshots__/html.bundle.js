@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 		let setHtml3 = child_default({});
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, { c: setHtml3 }));
 	}, $scope0_id), 0, $sg__input_show);
-	_script($scope0_id, "a5");
+	_script($scope0_id, "a5", $sg__input_show);
 	_scope($scope0_id, {
 		B1: $thing_content__subscribers,
 		B2: $inputshowThingnull_content__subscribers,

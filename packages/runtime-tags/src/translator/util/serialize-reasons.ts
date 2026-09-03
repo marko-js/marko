@@ -6,9 +6,17 @@ import {
   AccessorProp,
 } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
-import { concat, forEach, type OneMany, type Opt } from "./optional";
+import {
+  concat,
+  forEach,
+  type OneMany,
+  type Opt,
+  some,
+  Sorted,
+} from "./optional";
 import {
   type Binding,
+  BindingType,
   bindingUtil,
   compareSources,
   createSources,
@@ -22,7 +30,9 @@ import {
 } from "./references";
 import type { Section } from "./sections";
 
-export type SerializeReasons = true | [Sources, ...Sources[]];
+export type SerializeReasons = true | OneMany<Sources>;
+
+export const sourcesUtil = new Sorted(compareSources);
 export type SerializeReason = true | Sources;
 type SerializeKey = symbol & { __serialize_key__: 1 };
 
@@ -355,6 +365,22 @@ export function applySerializeExprs(section: Section) {
 }
 
 export function finalizeSerializeReason(section: Section) {
+  // A static reason ends the scan: any dom node then always resumes.
+  some(section.bindings, (binding) => {
+    const reason =
+      binding.type === BindingType.dom && getSerializeReason(section, binding);
+    if (reason) {
+      section.domSerializeReasons =
+        reason === true
+          ? true
+          : sourcesUtil.add(
+              section.domSerializeReasons as Opt<Sources>,
+              reason,
+            );
+    }
+    return reason === true;
+  });
+
   const curReason = section.serializeReason;
   let newReason: undefined | SerializeReason = curReason;
   if (newReason !== true) {

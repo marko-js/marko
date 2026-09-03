@@ -1,28 +1,10 @@
 <!--M_[--><!--M_!^b-->
-<script>
-  WALKER_RUNTIME("M")("_");
-  M._.r = [_ => [2, {
-    "#BranchAccessor": "#text/0",
-    "#CatchContent": _(1,
-      "packages/runtime-tags/src/__tests__/fixtures/async-reject-then-resolve-before-and-after-isolated-boundaries/template.marko_2*content"
-      )
-  }, {
-    "#BranchAccessor": "#text/1",
-    "#CatchContent": _(1,
-      "packages/runtime-tags/src/__tests__/fixtures/async-reject-then-resolve-before-and-after-isolated-boundaries/template.marko_5*content"
-      )
-  }, {
-    "#BranchAccessor": "#text/2",
-    "#CatchContent": _(1,
-      "packages/runtime-tags/src/__tests__/fixtures/async-reject-then-resolve-before-and-after-isolated-boundaries/template.marko_8*content"
-      )
-  }]]
-</script>
 
 <!-- FLUSH -->
 
 <t hidden M_=c>Rejected B</t>
 <script>
+  WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.w()
 </script>
@@ -34,8 +16,12 @@
 <div>Resolved C: C Value</div>
 <button>Before</button><!--M_$7 #button/1--><!--M_]4 #text/0 7--><!--M_!d--><!--M_]1 #text/2 4-->
 <script>
-  M._.r.push(
+  M._.r = [_ => [4, {
+      "#CatchContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/async-reject-then-resolve-before-and-after-isolated-boundaries/template.marko_8*content"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/async-reject-then-resolve-before-and-after-isolated-boundaries/template.marko_9 7"
-    );
+  ];
   M._.w()
 </script>

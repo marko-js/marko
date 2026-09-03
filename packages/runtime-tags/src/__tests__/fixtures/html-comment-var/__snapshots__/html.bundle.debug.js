@@ -7,7 +7,6 @@ var parent_el_default = _template("__tests__/tags/parent-el.marko", (input) => {
 	const $return = tagName;
 	_script($scope0_id, "__tests__/tags/parent-el.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/parent-el.marko", 0);
-	_resume_branch($scope0_id);
 	return $return;
 });
 

@@ -30,11 +30,9 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(_text_resume($scope1_id, "a", count));
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id));
 	_scope($scope0_id, {
 		b: count,
 		c: $count__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

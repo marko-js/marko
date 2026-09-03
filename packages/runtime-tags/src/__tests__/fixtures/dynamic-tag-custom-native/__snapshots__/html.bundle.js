@@ -1,9 +1,9 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_id = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { id } = input;
-	_html(`<div>Id is ${_text_resume($scope0_id, "a", id, _serialize_guard($scope0_reason, 0) * 2)}</div>`);
+	_html(`<div>Id is ${_text_resume($scope0_id, "a", id, $sg__input_id * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -16,5 +16,4 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "b", tagName, { id: "dynamic" });
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: tagName });
-	_resume_branch($scope0_id);
 }, 1);

@@ -33,7 +33,6 @@ var template_default = _template("a", (input) => {
 			g: baseCount,
 			_: _scope_with_id($scope0_id)
 		}));
-		_resume_branch($scope1_id);
 	}, $scope0_id), 0, 0);
 	_scope($scope0_id, {
 		b: multiplier,

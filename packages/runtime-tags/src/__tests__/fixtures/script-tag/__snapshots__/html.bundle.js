@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let x = 1;
 	_html("<div id=ref>0</div>");
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a0", 0);
 	_scope($scope0_id, { a: x });
 	_resume_branch($scope0_id);
 }, 1);

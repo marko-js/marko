@@ -16,13 +16,13 @@ var child_default = _template("b", (input) => {
 // template.marko
 const Child = child_default;
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div id=known>");
 	const $childScope = _peek_scope_id();
 	child_default(input);
 	_html("</div><div id=dynamic>");
-	_dynamic_tag($scope0_id, "b", Child, input, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "b", Child, input, 0, 0, $sg__input);
 	_html("</div>");
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

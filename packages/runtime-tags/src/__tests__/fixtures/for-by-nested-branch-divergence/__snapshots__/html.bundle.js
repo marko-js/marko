@@ -41,5 +41,4 @@ var template_default = _template("a", (input) => {
 		e: list?.[0],
 		f: list?.[1]
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -10,7 +10,6 @@ var grand_child_default = _template("b", (input) => {
 	}, 0);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { h: n });
-	_resume_branch($scope0_id);
 });
 
 // child.marko
@@ -31,14 +30,12 @@ var child_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			c: _existing_scope($childScope)
 		}));
-		_resume_branch($scope1_id);
 	});
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		g: count,
 		h: $count__closures
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

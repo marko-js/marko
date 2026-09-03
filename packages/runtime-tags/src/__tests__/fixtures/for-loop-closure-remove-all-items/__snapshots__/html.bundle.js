@@ -12,5 +12,4 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<div></div>${_el_resume($scope0_id, "b")}</div>`);
 	_scope($scope0_id, { c: items });
-	_resume_branch($scope0_id);
 }, 1);

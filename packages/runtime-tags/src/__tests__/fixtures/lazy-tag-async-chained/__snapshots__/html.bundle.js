@@ -6,13 +6,12 @@ var child_default = _template("a", (input) => {
 	_html(`<button${_attr("id", input.id)}>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { g: count });
-	_resume_branch($scope0_id);
 });
 
 // template.marko
 const $Child_withLoadAssets = withLoadAssets(child_default, "_a");
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_value = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0), $si__input_value = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({
@@ -27,6 +26,6 @@ var template_default = _template("b", (input) => {
 			value
 		});
 		$si__input_value && _scope($scope1_id, { b: _existing_scope($childScope2) });
-	}, _serialize_guard($scope0_reason, 0));
+	}, $sg__input_value);
 	$si__input_value && _scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

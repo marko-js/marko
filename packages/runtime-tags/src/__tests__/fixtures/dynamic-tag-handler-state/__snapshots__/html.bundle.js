@@ -39,5 +39,4 @@ var template_default = _template("a", (input) => {
 		h: n,
 		j: _serialize_if($scope0_reason, 0) && attrs
 	});
-	_resume_branch($scope0_id);
 }, 1);

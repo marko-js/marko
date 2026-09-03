@@ -22,5 +22,4 @@ var template_default = _template("a", (input) => {
 	_html(`<button type=reset>reset</button></form><div>${_text_resume($scope0_id, "b", value)}</div><button class=remove>Remove option</button>${_el_resume($scope0_id, "c")}<button class=add>Add option</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { e: options });
-	_resume_branch($scope0_id);
 }, 1);

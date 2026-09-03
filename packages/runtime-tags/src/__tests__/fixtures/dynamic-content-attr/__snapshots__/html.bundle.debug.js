@@ -10,7 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html(`${_text_resume($scope1_id, "#text/0", count)} ${_escape(sideEffect++)}`);
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:1"));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html("<button>");
 	_attr_content("#button/0", $scope0_id, (count, MyThing));
@@ -24,5 +23,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count: "3:5",
 		MyThing: "5:8"
 	});
-	_resume_branch($scope0_id);
 }, 1);

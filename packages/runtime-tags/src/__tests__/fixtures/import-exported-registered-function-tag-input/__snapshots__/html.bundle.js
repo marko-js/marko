@@ -18,7 +18,6 @@ var press_default = _template("c", (input) => {
 		d: input,
 		e: label
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

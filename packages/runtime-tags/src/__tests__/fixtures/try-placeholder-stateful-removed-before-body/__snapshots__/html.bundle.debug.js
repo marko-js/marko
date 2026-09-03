@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html(" loading");
-				_script($scope3_id, "__tests__/template.marko_3");
+				_script($scope3_id, "__tests__/template.marko_3", 0);
 				_resume_branch($scope3_id);
 			}, $scope1_id) }) });
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
@@ -27,5 +27,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

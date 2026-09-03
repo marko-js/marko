@@ -28,5 +28,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		items: "2:6",
 		items_length: ["items.length", "2:6"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

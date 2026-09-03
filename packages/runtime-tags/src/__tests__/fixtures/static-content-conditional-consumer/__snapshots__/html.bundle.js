@@ -1,6 +1,6 @@
 // tags/consumer.marko
 var consumer_default = _template("b", (input) => {
-	_scope_reason();
+	_serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	let show = false;
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
@@ -10,7 +10,6 @@ var consumer_default = _template("b", (input) => {
 		e: input.content,
 		f: show
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

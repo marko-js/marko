@@ -1,18 +1,18 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_initial__OR__input_onValue = _serialize_guard($scope0_reason, 0), $si__input_initial__OR__input_onValue = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { initial, onValue } = input;
 	let value = initial;
-	_html(`<span>${_text_resume($scope0_id, "#text/0", value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
+	_html(`<span>${_text_resume($scope0_id, "#text/0", value, $sg__input_initial__OR__input_onValue)}</span>`);
+	$si__input_initial__OR__input_onValue && _scope($scope0_id, {
 		initial: _serialize_if($scope0_reason, 2) && initial,
 		onValue: _serialize_if($scope0_reason, 1) && onValue
 	}, "__tests__/tags/child.marko", 0, {
 		initial: "1:10",
 		onValue: "1:19"
 	});
-	_resume_branch($scope0_id);
+	$sg__input_initial__OR__input_onValue || $si__input_initial__OR__input_onValue && _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -32,5 +32,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		initial,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { initial: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

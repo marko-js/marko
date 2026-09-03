@@ -11,7 +11,6 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	};
 	_html(`<span>child:${_text_resume($scope0_id, "#text/0", count, 2)}</span>`);
 	_scope($scope0_id, { count }, "__tests__/tags/child/index.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 	return $return;
 });
 

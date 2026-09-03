@@ -21,5 +21,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		quiet: "5:6",
 		message: "6:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

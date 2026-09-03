@@ -32,5 +32,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		rows_3: ["rows[3]", "1:6"],
 		rows_2: ["rows[2]", "1:6"]
 	});
-	_resume_branch($scope0_id);
 }, 1);

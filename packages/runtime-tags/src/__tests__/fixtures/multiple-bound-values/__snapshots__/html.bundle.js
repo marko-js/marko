@@ -16,7 +16,6 @@ var _2counters_default = _template("b", (input) => {
 		n: input.count1Change || void 0,
 		p: input.count2Change || void 0
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -39,5 +38,4 @@ var template_default = _template("a", (input) => {
 	});
 	_html(`<div>${_text_resume($scope0_id, "b", count1)} ${_text_resume($scope0_id, "c", count2, 2)}</div>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
-	_resume_branch($scope0_id);
 }, 1);

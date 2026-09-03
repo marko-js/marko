@@ -21,7 +21,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0");
 		_html("<div>settled</div>");
 		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
-		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
@@ -32,5 +31,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show,
 		"ClosureScopes:show": $show__closures
 	}, "__tests__/template.marko", 0, { show: "2:6" });
-	_resume_branch($scope0_id);
 }, 1);

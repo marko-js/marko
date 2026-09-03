@@ -8,7 +8,6 @@
     "ClosureScopes:changes": new Set
   }, 1, {
     _: _(1),
-    "#BranchAccessor": "#text/0",
     "#PlaceholderContent": _(1,
       "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_3*content"
       )
@@ -24,18 +23,13 @@
 </t>
 <t hidden M_=c>caught: ERROR!</t>
 <script>
+  M._.r.push(_ => [5, {
+    _: _(3)
+  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_2_changes#1/pending 5 packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_2 5"
       )
   };
-  M._.r.push(_ => [5, {
-    _: _(3)
-  }, {
-    "#BranchAccessor": "#text/0",
-    "#CatchContent": _(5,
-      "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await-same-tick/template.marko_5*content"
-      )
-  }]);
   M._.w()
 </script>

@@ -3,7 +3,7 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<p>leaf</p>");
-	_script($scope0_id, "__tests__/tags/leaf.marko_0");
+	_script($scope0_id, "__tests__/tags/leaf.marko_0", 0);
 	_resume_branch($scope0_id);
 });
 
@@ -48,5 +48,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		outer: "1:6",
 		show: "2:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

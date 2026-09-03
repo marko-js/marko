@@ -158,8 +158,18 @@ export function isInResumedBranch() {
   return $chunk?.context?.[kBranchId] !== undefined;
 }
 
-export function withBranchId<T>(branchId: number, cb: () => T): T {
-  return withContext(kBranchId, branchId, cb);
+export function withBranchId<T>(branchId: number, cb: () => T): T;
+export function withBranchId<T, U>(
+  branchId: number,
+  cb: (value: U) => T,
+  cbValue: U,
+): T;
+export function withBranchId<T, U>(
+  branchId: number,
+  cb: (value?: U) => T,
+  cbValue?: U,
+): T {
+  return withContext(kBranchId, branchId, cb, cbValue);
 }
 
 function withIsAsync<T, U>(cb: (value: U) => T, value: U): T {
@@ -174,8 +184,17 @@ export function writeScript(script: string) {
   $chunk.writeScript(script);
 }
 
-export function _script(scopeId: number, registryId: string) {
-  if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
+// Content that resumes apart from its enclosing branch's walk (lazy, async)
+// links the scope, unless the section writes a marker the walker places it by.
+export function _script(
+  scopeId: number,
+  registryId: string,
+  serializeMarker?: number,
+) {
+  if (
+    serializeMarker === 0 &&
+    ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync])
+  ) {
     _resume_branch(scopeId);
   }
   $chunk.boundary.state.needsMainRuntime = true;
@@ -740,6 +759,7 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const scope = scopeWithId(state, scopeId);
   const pending = target.writeScopes[scopeId];
   state.needsMainRuntime = true;
+  countResumeWrite($chunk.boundary);
   Object.assign(scope, partialScope);
 
   // Each serialize state only flushes the props it wrote itself; the
@@ -885,7 +905,7 @@ export function _await<T>(
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
       );
-      content(promise);
+      withBranchId(branchId, content, promise);
       $chunk.writeHTML(
         $chunk.boundary.state.mark(
           ResumeSymbol.BranchEnd,
@@ -918,7 +938,7 @@ export function _await<T>(
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
-              withIsAsync(content, value);
+              withBranchId(branchId, () => withIsAsync(content, value));
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(
                   ResumeSymbol.BranchEnd,
@@ -959,10 +979,17 @@ export function _try(
   // to the try's enclosing branch (a sibling of the try), as CSR does.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
-  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
+  const chunk = $chunk;
+  const { boundary } = chunk;
+  const { state } = boundary;
+  const { resumeWrites } = boundary;
+  const beforeBranch = deferBranchStart(chunk);
+  // Whether `tryBoundary` writes the catch and placeholder renderers itself
+  // once the body settles.
+  let renderersAtSettle = false;
 
-  if (catchContent !== undefined) {
-    tryCatch(
+  if (catchContent !== undefined || placeholderContent) {
+    renderersAtSettle = tryBoundary(
       placeholderContent
         ? () =>
             tryPlaceholder(
@@ -973,28 +1000,25 @@ export function _try(
               placeholderBranchId,
             )
         : content,
-      catchContent || (() => {}),
-    );
-  } else if (placeholderContent) {
-    tryPlaceholder(
-      content,
+      catchContent,
       placeholderContent,
       branchId,
-      scopeId,
-      placeholderBranchId,
     );
   } else {
-    content();
+    withBranchId(branchId, content);
   }
 
-  writeScope(branchId, {
-    [AccessorProp.BranchAccessor]: accessor,
-    [AccessorProp.CatchContent]: catchContent,
-    [AccessorProp.PlaceholderContent]: placeholderContent,
-  });
+  // An async body's start mark has already streamed and must pair with an end;
+  // a sync body that wrote nothing resumable keeps the boundary off the wire.
+  const rendered = chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
+  applyBranchStart(chunk, beforeBranch, rendered);
+  if (!rendered) return;
 
+  if (!renderersAtSettle) {
+    writeTryRenderers(branchId, catchContent, placeholderContent);
+  }
   $chunk.writeHTML(
-    $chunk.boundary.state.mark(
+    state.mark(
       ResumeSymbol.BranchEnd,
       scopeId + " " + accessor + " " + branchId,
     ),
@@ -1027,7 +1051,15 @@ function tryPlaceholder(
   };
 }
 
-function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
+// Returns whether it writes the renderers itself: a body whose sync part wrote
+// nothing resumable cannot re-run client side while streaming, so they follow
+// at settle, and only if the settled body (or a fired catch) resumes at all.
+function tryBoundary(
+  content: () => void,
+  catchContent: ServerRenderer | 0 | undefined,
+  placeholderContent: ServerRenderer | undefined,
+  branchId: number,
+) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const { state } = boundary;
@@ -1035,31 +1067,48 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   // work; the outer-aborted check in onNext keeps that from firing the catch.
   const catchBoundary = new Boundary(state, boundary.signal, boundary);
   const body = chunk.fork(catchBoundary, null);
-  const bodyEnd = body.render(content);
+  const bodyEnd = withBranchId(branchId, () => body.render(content));
 
   if (catchBoundary.signal.aborted) {
     // Sync error. The body's already-written scopes stay in the resume payload
     // as dead fills; a `@catch` firing is rare enough not to warrant dropping them.
-    catchContent(catchBoundary.signal.reason);
-    return;
+    if (catchContent === undefined) {
+      boundary.abort(catchBoundary.signal.reason);
+    } else if (catchContent) {
+      catchContent(catchBoundary.signal.reason);
+    }
+    return false;
   }
 
   if (body === bodyEnd) {
     // Sync success
     chunk.append(body);
-    return;
+    return false;
   }
 
-  const reorderId = state.nextReorderId();
-  const endMarker = state.mark(Mark.PlaceholderEnd, reorderId);
-  const bodyNext = (bodyEnd.next = $chunk = body.fork(boundary, chunk.next));
+  const renderersAtSettle = !catchBoundary.resumeWrites;
+  // Forked from the try's chunk: an `_await` in the body replaces the body's
+  // context with a copy, on which the branch id would never restore.
+  const bodyNext = (bodyEnd.next = $chunk = chunk.fork(boundary, chunk.next));
   chunk.next = body;
-  chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
-  bodyEnd.writeHTML(endMarker);
   boundary.startAsync();
+
+  // With a catch, markers let it take the body's place in the stream.
+  const reorderId = catchContent === undefined ? "" : state.nextReorderId();
+  const endMarker = reorderId && state.mark(Mark.PlaceholderEnd, reorderId);
+  if (reorderId) {
+    chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
+    bodyEnd.writeHTML(endMarker);
+  }
+
   catchBoundary.onNext = () => {
     if (boundary.signal.aborted) return;
     if (catchBoundary.signal.aborted) {
+      if (!reorderId) {
+        boundary.abort(catchBoundary.signal.reason);
+        return;
+      }
+
       if (!bodyEnd.consumed) {
         let cur: Chunk = body;
         let writeMarker = true;
@@ -1086,19 +1135,55 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
       }
 
       const catchChunk = chunk.fork(boundary, null);
+      const { resumeWrites } = boundary;
       catchChunk.reorderId = reorderId;
-      catchChunk.render(catchContent, catchBoundary.signal.reason);
+      // The body is discarded, so only a catch that itself resumes needs them.
+      if (
+        (catchChunk.render(
+          catchContent || NOOP,
+          catchBoundary.signal.reason,
+        ) !== catchChunk ||
+          boundary.resumeWrites !== resumeWrites) &&
+        renderersAtSettle
+      ) {
+        catchChunk.render(() =>
+          writeTryRenderers(branchId, catchContent, placeholderContent),
+        );
+      }
       state.reorder(catchChunk);
       boundary.endAsync();
     } else if (!catchBoundary.count) {
+      if (renderersAtSettle && catchBoundary.resumeWrites) {
+        bodyEnd.render(() =>
+          writeTryRenderers(branchId, catchContent, placeholderContent),
+        );
+      }
       boundary.endAsync();
     } else {
       boundary.onNext();
     }
   };
+  return renderersAtSettle;
+}
+
+function writeTryRenderers(
+  branchId: number,
+  catchContent: ServerRenderer | 0 | undefined,
+  placeholderContent: ServerRenderer | undefined,
+) {
+  writeScope(branchId, {
+    [AccessorProp.CatchContent]: catchContent,
+    [AccessorProp.PlaceholderContent]: placeholderContent,
+  });
 }
 
 const NOOP = () => {};
+
+// Counted up the parent chain so an enclosing `<try>` sees writes from nested
+// bodies, including ones reordered out of its own chunk chain.
+function countResumeWrite(boundary: Boundary | undefined) {
+  for (; boundary; boundary = boundary.parent) boundary.resumeWrites++;
+}
 
 type Mark = Mark.Value;
 
@@ -1203,6 +1288,9 @@ export { FlushStatus };
 export class Boundary extends AbortController {
   public onNext = NOOP;
   public count = 0;
+  // Scope and effect writes under it, so a `<try>` can tell whether anything
+  // inside reaches the client.
+  public resumeWrites = 0;
   public state: State;
   public parent?: Boundary;
   constructor(state: State, signal?: AbortSignal, parent?: Boundary) {
@@ -1295,6 +1383,7 @@ export class Chunk {
   }
 
   writeEffect(scopeId: number, registryId: string) {
+    countResumeWrite(this.boundary);
     if (this.lastEffect === registryId) {
       this.effects += " " + scopeId;
     } else {
@@ -1545,6 +1634,10 @@ export class Chunk {
         : '"' + effects + '"';
     }
 
+    let reordered = "";
+
+    let needsResumeArray = false;
+
     if (state.writeReorders) {
       let carried: Chunk[] | null = null;
 
@@ -1615,14 +1708,7 @@ export class Chunk {
         }
 
         if (reorderEffects) {
-          if (!state.hasWrittenResume) {
-            state.hasWrittenResume = true;
-            scripts = concatScripts(
-              scripts,
-              runtimePrefix + RuntimeKey.Resume + "=[]",
-            );
-          }
-
+          needsResumeArray = true;
           reorderScripts = concatScripts(
             reorderScripts,
             '_.push("' + reorderEffects + '")',
@@ -1630,11 +1716,11 @@ export class Chunk {
         }
 
         for (const reservation of readyReservations) {
-          scripts = concatScripts(scripts, reservation);
+          reordered = concatScripts(reordered, reservation);
         }
 
-        scripts = concatScripts(
-          scripts,
+        reordered = concatScripts(
+          reordered,
           reorderScripts &&
             runtimePrefix +
               RuntimeKey.Scripts +
@@ -1672,7 +1758,17 @@ export class Chunk {
           runtimePrefix + RuntimeKey.Resume + "=[" + state.resumes + "]",
         );
       }
+    } else if (needsResumeArray && !state.hasWrittenResume) {
+      // A reordered chunk's script pushes its effects into the resume array.
+      state.hasWrittenResume = true;
+      scripts = concatScripts(
+        scripts,
+        runtimePrefix + RuntimeKey.Resume + "=[]",
+      );
     }
+
+    // Reordered scripts follow the resume data they push after.
+    scripts = concatScripts(scripts, reordered);
 
     if (needsWalk) {
       scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");

@@ -26,7 +26,6 @@ var menu_default = _template("b", (input) => {
 		g: open,
 		h: $si__input_content && $input_content__closures
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

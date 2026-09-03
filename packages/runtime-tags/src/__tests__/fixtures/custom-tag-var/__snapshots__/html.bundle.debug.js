@@ -7,7 +7,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $return = x;
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_scope($scope0_id, { x }, "__tests__/tags/child.marko", 0, { x: "1:6" });
-	_resume_branch($scope0_id);
 	return $return;
 });
 

@@ -17,5 +17,4 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
 	_html(`</svg><div>${_text_resume($scope0_id, "b", n)}</div>`);
 	_scope($scope0_id, { g: _serialize_if($scope0_reason, 0) && attrs });
-	_resume_branch($scope0_id);
 }, 1);

@@ -25,7 +25,6 @@ var _2counters_default = _template("__tests__/tags/2counters.marko", (input) => 
 		"TagVariableChange:count1": ["count1Change", "1:6"],
 		"TagVariableChange:count2": ["count2Change", "2:6"]
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -48,5 +47,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_html(`<div>${_text_resume($scope0_id, "#text/1", count1)} ${_text_resume($scope0_id, "#text/2", count2, 2)}</div>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

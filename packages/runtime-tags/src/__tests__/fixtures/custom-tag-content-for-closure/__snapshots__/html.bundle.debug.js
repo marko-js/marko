@@ -29,7 +29,6 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 		input_content: ["input.content"],
 		open: "1:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

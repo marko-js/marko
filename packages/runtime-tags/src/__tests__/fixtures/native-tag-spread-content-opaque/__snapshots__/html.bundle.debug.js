@@ -1,14 +1,14 @@
 // tags/render-input.marko
 var render_input_default = _template("__tests__/tags/render-input.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_data_content = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.data.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "#text/0", input.data.content, {}, 0, 0, $sg__input_data_content);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/render-input.marko", 0);
 });
 
 // tags/my-box.marko
 var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let show = false;
 	_html("<div");
@@ -17,7 +17,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+			_set_serialize_reason($sg__input);
 			const $childScope = _peek_scope_id();
 			render_input_default({ data: input });
 			_scope($scope1_id, { "#childScope/0": _serialize_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/tags/my-box.marko", "8:4");
@@ -34,7 +34,6 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 		show: "1:6",
 		"EventAttributes:#div/0": ["...input", "3:9"]
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

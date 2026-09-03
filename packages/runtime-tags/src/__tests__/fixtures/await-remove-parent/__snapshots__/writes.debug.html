@@ -4,12 +4,7 @@
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [_ => [4, {
-      "#BranchAccessor": "#text/0",
-      "#PlaceholderContent": _(2,
-        "packages/runtime-tags/src/__tests__/fixtures/await-remove-parent/template.marko_3*content"
-        )
-    }],
+  M._.r = [
     "packages/runtime-tags/src/__tests__/fixtures/await-remove-parent/template.marko_0 1"
   ];
   M._.w()
@@ -19,13 +14,17 @@
 
 <t hidden M_=b></t>
 <script>
+  M._.r.push(_ => [4, {
+    "#PlaceholderContent": _(2,
+      "packages/runtime-tags/src/__tests__/fixtures/await-remove-parent/template.marko_3*content"
+      )
+  }, 1, {
+    "#ClosestBranchId": 4
+  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/await-remove-parent/template.marko_4 6"
       )
   };
-  M._.r.push(_ => [6, {
-    "#ClosestBranchId": 2
-  }]);
   M._.w()
 </script>

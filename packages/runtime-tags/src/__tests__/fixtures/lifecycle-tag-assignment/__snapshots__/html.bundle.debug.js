@@ -8,5 +8,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_x#3");
 	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

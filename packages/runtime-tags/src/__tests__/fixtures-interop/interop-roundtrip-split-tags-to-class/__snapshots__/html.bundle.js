@@ -25,5 +25,4 @@ var template_default = _template("a", (input) => {
 	});
 	_html(`<div id=tags-api>${_text_resume($scope0_id, "b", count)}</div>`);
 	_scope($scope0_id, { c: count });
-	_resume_branch($scope0_id);
 }, 1);

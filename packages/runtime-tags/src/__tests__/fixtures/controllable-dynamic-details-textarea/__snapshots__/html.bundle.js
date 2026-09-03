@@ -23,7 +23,6 @@ var template_default = _template("a", (input) => {
 			}, "a1", $scope1_id)
 		});
 		_subscribe($text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id));
 	_html(`<output>${_text_resume($scope0_id, "b", open ? "open" : "closed")}/${_text_resume($scope0_id, "c", text, 2)}</output>`);
 	_scope($scope0_id, {
@@ -32,5 +31,4 @@ var template_default = _template("a", (input) => {
 		h: textareaTag,
 		i: $text__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

@@ -37,5 +37,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		selected: "1:6",
 		rows: "2:6"
 	});
-	_resume_branch($scope0_id);
+	$sg__input_show || _resume_branch($scope0_id);
 }, 1);

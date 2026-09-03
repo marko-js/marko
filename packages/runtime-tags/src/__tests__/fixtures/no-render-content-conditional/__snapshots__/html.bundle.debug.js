@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	let x = my_const_default({ value: input.foo });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/child.marko_0_x#5/var");
-	_script($scope0_id, "__tests__/tags/child.marko_0_input#3_x#5");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input#3_x#5", _serialize_guard($scope0_reason, 0));
 	_scope($scope0_id, {
 		input,
 		x,

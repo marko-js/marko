@@ -9,7 +9,6 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		_html(`<button>${_text_resume($scope1_id, "#text/1", count)}:${_escape(value)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/child.marko_1");
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/child.marko", "4:2"));
-		_resume_branch($scope1_id);
 	});
 	_scope($scope0_id, {
 		count,

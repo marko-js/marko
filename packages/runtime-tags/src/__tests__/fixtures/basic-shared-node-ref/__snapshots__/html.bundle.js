@@ -22,5 +22,4 @@ var template_default = _template("a", (input) => {
 		d: open,
 		e: list
 	});
-	_resume_branch($scope0_id);
 }, 1);

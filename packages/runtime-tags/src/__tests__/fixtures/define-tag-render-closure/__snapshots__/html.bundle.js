@@ -9,7 +9,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<div>${_text_resume($scope1_id, "a", x)}</div>`);
 		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	MyTag.content({});
 	_if(() => {
@@ -26,5 +25,4 @@ var template_default = _template("a", (input) => {
 		e: x,
 		f: $x__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

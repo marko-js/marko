@@ -30,5 +30,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		cond,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { cond: "1:6" });
-	_resume_branch($scope0_id);
 }, 1);

@@ -5,18 +5,11 @@
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
-  M._.r = [];
-  M._.j[3] = _ => {
-    _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_1_clickCount#3 3"
-      )
-  };
-  M._.r.push(_ => [1, {
+  M._.r = [_ => [1, {
       clickCount: 0,
       "ClosureScopes:clickCount": new Set([_(3)])
     }, 1, {
       _: _(1),
-      "#BranchAccessor": "#text/2",
       "#CatchContent": _(1,
         "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_3*content"
         ),
@@ -25,7 +18,12 @@
         )
     }],
     "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_0 1"
-    );
+  ];
+  M._.j[3] = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-effects-async/template.marko_1_clickCount#3 3"
+      )
+  };
   M._.w()
 </script>
 

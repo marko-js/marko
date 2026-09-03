@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			_html(`<div></div>${_el_resume($scope3_id, "a")}`);
 			_subscribe($child_content2__subscribers, _scope($scope3_id, {}));
 		}, $scope2_id) });
-		_script($scope2_id, "a6");
+		_script($scope2_id, "a6", 0);
 		_subscribe($inputshowChildnull_content__subscribers, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			B3: $child_content2__subscribers
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p></p>${_el_resume($scope4_id, "a")}`);
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, {}));
 	}, $scope0_id), 0, $sg__input_show);
-	_script($scope0_id, "a8");
+	_script($scope0_id, "a8", $sg__input_show);
 	_scope($scope0_id, {
 		B1: $child_content__subscribers,
 		B2: $inputshowChildnull_content__subscribers,

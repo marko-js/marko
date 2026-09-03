@@ -10,7 +10,7 @@ var cart_state_default = _template("__tests__/tags/cart-state.marko", (input) =>
 	const $scope0_id = _scope_id();
 	let cart = null;
 	const $return = { cart };
-	_script($scope0_id, "__tests__/tags/cart-state.marko_0");
+	_script($scope0_id, "__tests__/tags/cart-state.marko_0", 0);
 	_resume_branch($scope0_id);
 	return $return;
 });

@@ -1,19 +1,19 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_a = _serialize_guard($scope0_reason, 1), $sg__input_b = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.a, _serialize_guard($scope0_reason, 1))}</div><div>${_text_resume($scope0_id, "b", input.b, _serialize_guard($scope0_reason, 2))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.a, $sg__input_a)}</div><div>${_text_resume($scope0_id, "b", input.b, $sg__input_b)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $sg__input_a = _serialize_guard($scope0_reason, 1), $sg__input_b = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0), $sg__input_a2 = _serialize_guard($scope0_reason, 1), $sg__input_b2 = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_set_serialize_reason({
 		0: $sg__input_a__OR__input_b,
-		1: $sg__input_a,
-		2: $sg__input_b
+		1: $sg__input_a2,
+		2: $sg__input_b2
 	});
 	const $childScope = _peek_scope_id();
 	child_default({
@@ -22,14 +22,14 @@ var template_default = _template("a", (input) => {
 	});
 	const Child = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
-		_html(`<div>${_text_resume($scope1_id, "a", input.a, _serialize_guard($scope1_reason, 1))}</div><div>${_text_resume($scope1_id, "b", input.b, _serialize_guard($scope1_reason, 2))}</div>`);
+		const $scope1_reason = _scope_reason(), $sg__input_a = _serialize_guard($scope1_reason, 1), $sg__input_b = _serialize_guard($scope1_reason, 2);
+		_html(`<div>${_text_resume($scope1_id, "a", input.a, $sg__input_a)}</div><div>${_text_resume($scope1_id, "b", input.b, $sg__input_b)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason({
 		0: $sg__input_a__OR__input_b,
-		1: $sg__input_a,
-		2: $sg__input_b
+		1: $sg__input_a2,
+		2: $sg__input_b2
 	});
 	const $childScope2 = _peek_scope_id();
 	Child.content({

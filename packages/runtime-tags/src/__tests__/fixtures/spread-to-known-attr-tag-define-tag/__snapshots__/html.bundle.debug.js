@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Child = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__input_option = _serialize_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $sg__input_option = _serialize_guard($scope1_reason, 1), $sg__input_class__OR__input_option = _serialize_guard($scope1_reason, 0);
 		_html(`<select${_attr_class(input.class)}>`);
 		_for_of(input.option, (option) => {
 			const $scope3_id = _scope_id();
@@ -13,14 +13,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`</option>${_el_resume($scope3_id, "#option/0")}`);
 			_script($scope3_id, "__tests__/template.marko_3_option#2");
 			_scope($scope3_id, {}, "__tests__/template.marko", "3:6", { "EventAttributes:#option/0": ["...option", "4:18"] });
-		}, 0, $scope1_id, "#select/0", $sg__input_option, _serialize_guard($scope1_reason, 0), $sg__input_option, "</select>", 1);
+		}, 0, $scope1_id, "#select/0", $sg__input_option, $sg__input_class__OR__input_option, $sg__input_option, "</select>", 1);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	const Wrap = { content: _content("__tests__/template.marko_2*content", ({ class: _class, ...rest }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason();
+		const $scope2_reason = _scope_reason(), $sg___class__OR__rest_option = _serialize_guard($scope2_reason, 0);
 		_set_serialize_reason({
-			0: _serialize_guard($scope2_reason, 0),
+			0: $sg___class__OR__rest_option,
 			1: _serialize_guard($scope2_reason, 1)
 		});
 		const $childScope = _peek_scope_id();

@@ -10,9 +10,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 
 // tags/thing.marko
 var thing_default = _template("__tests__/tags/thing.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_what = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.what, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "#text/0", input.what, {}, 0, 0, $sg__input_what);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/thing.marko", 0);
 });
 
@@ -29,6 +29,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($what_content__subscribers, _scope($scope1_id, { setHtml }, "__tests__/template.marko", "3:4", { setHtml: "4:12" }));
 		_assert_hoist(setHtml);
 	}, $scope0_id) }) });
-	_script($scope0_id, "__tests__/template.marko_0");
+	_script($scope0_id, "__tests__/template.marko_0", 0);
 	_scope($scope0_id, { "ClosureScopes:1": $what_content__subscribers }, "__tests__/template.marko", 0);
 }, 1);

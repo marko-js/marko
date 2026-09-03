@@ -9,7 +9,6 @@ var inner_default = _template("__tests__/tags/inner.marko", (input) => {
 	_html(`<p>focused ${_text_resume($scope0_id, "#text/0", focused, 2)}</p>`);
 	const $return = focus;
 	_scope($scope0_id, { focused }, "__tests__/tags/inner.marko", 0, { focused: "1:6" });
-	_resume_branch($scope0_id);
 	return $return;
 });
 
@@ -55,9 +54,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html("loading");
 				}, $scope1_id) }),
 				catch: attrTag({ content: _content_resume("__tests__/template.marko_4*content", (err) => {
-					const $scope4_reason = _scope_reason();
+					const $scope4_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope4_reason, 0);
 					const $scope4_id = _scope_id();
-					_html(`<span class=err>${_text_resume($scope4_id, "#text/0", err.message, _serialize_guard($scope4_reason, 0))}</span>`);
+					_html(`<span class=err>${_text_resume($scope4_id, "#text/0", err.message, $sg__err_message)}</span>`);
 					_serialize_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "10:6");
 				}, $scope1_id) })
 			});
@@ -67,5 +66,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

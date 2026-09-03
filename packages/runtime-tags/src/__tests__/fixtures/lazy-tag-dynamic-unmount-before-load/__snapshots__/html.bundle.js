@@ -1,9 +1,9 @@
 // child.marko
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "a0");
+	_html(`<span>${_text_resume($scope0_id, "a", input.value, $sg__input_value)}</span>`);
+	_script($scope0_id, "a0", $sg__input_value);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -23,7 +23,6 @@ var template_default = _template("b", (input) => {
 			_script($scope2_id, "b0");
 			_dynamic_tag($scope2_id, "a", $Child_withLoadAssets, { value: 1 });
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
-			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b1", () => {
@@ -36,5 +35,4 @@ var template_default = _template("b", (input) => {
 		c: show,
 		d: $show__closures
 	});
-	_resume_branch($scope0_id);
 }, 1);

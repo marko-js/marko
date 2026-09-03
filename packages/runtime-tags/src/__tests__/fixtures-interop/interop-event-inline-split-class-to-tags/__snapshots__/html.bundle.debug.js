@@ -12,7 +12,6 @@ var tags_pinger_default = _template("__tests__/components/tags-pinger.marko", (i
 		input_onPing: ["input.onPing"],
 		count: "1:6"
 	});
-	_resume_branch($scope0_id);
 });
 
 // components/class-host/index.marko

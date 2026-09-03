@@ -21,7 +21,6 @@ var my_tag_default = _template("b", (input) => {
 		g: htmlInput,
 		i: _serialize_if($scope0_reason, 0) && content
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko

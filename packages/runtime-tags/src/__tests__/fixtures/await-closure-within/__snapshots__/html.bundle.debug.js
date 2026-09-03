@@ -19,7 +19,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope3_id, "#text/2", 1, 1, 1, 0, 1);
 			_script($scope3_id, "__tests__/template.marko_3");
 			_scope($scope3_id, { value }, "__tests__/template.marko", "4:3", { value: "5:9" });
-			_resume_branch($scope3_id);
 		});
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();

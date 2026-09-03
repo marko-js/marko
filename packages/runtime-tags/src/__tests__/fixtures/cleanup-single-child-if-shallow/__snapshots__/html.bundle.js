@@ -3,7 +3,7 @@ var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div>child</div>");
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b0", 0);
 	_scope($scope0_id, { b: input });
 	_resume_branch($scope0_id);
 });
@@ -26,5 +26,4 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { d: show });
-	_resume_branch($scope0_id);
 }, 1);

@@ -2,7 +2,7 @@
 var thing_default = _template("__tests__/tags/thing.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/thing.marko_0_input_value#2");
+	_script($scope0_id, "__tests__/tags/thing.marko_0_input_value#2", 0);
 	_scope($scope0_id, { input_value: input.value }, "__tests__/tags/thing.marko", 0, { input_value: ["input.value"] });
 });
 

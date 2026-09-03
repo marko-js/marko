@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_message = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let x = 0;
 	const getMessage = _resume(() => input.message, "__tests__/template.marko_0/getMessage", $scope0_id);
@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (x) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "#text/0", getMessage(), _serialize_guard($scope0_reason, 0))}</span>`);
+			_html(`<span>${_text_resume($scope1_id, "#text/0", getMessage(), $sg__input_message)}</span>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
@@ -24,5 +24,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x: "1:6",
 		getMessage: "2:8"
 	});
-	_resume_branch($scope0_id);
 }, 1);

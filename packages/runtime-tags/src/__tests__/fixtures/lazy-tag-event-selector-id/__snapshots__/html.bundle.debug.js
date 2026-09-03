@@ -1,9 +1,9 @@
 // child.marko
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
-	_script($scope0_id, "__tests__/child.marko_0");
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.value, $sg__input_value)}</span>`);
+	_script($scope0_id, "__tests__/child.marko_0", $sg__input_value);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
@@ -13,9 +13,9 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/chi
 	selector: "#load"
 }]);
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason(_serialize_guard($scope0_reason, 0));
+	_set_serialize_reason($sg__input_value);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_html("<button id=load>load</button>");

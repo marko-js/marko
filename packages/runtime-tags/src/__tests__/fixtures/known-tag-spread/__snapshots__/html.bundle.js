@@ -1,16 +1,16 @@
 // tags/child-a/index.marko
 var child_a_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_a = _serialize_guard($scope0_reason, 1), $sg__input_b = _serialize_guard($scope0_reason, 2), $sg__input_c = _serialize_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.a, _serialize_guard($scope0_reason, 1))} ${_text_resume($scope0_id, "b", input.b, _serialize_guard($scope0_reason, 2) * 2)} ${_text_resume($scope0_id, "c", input.c, _serialize_guard($scope0_reason, 3) * 2)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.a, $sg__input_a)} ${_text_resume($scope0_id, "b", input.b, $sg__input_b * 2)} ${_text_resume($scope0_id, "c", input.c, $sg__input_c * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/child-c/index.marko
 var child_c_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_a = _serialize_guard($scope0_reason, 1), $sg__input_b = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.a, _serialize_guard($scope0_reason, 1))} ${_text_resume($scope0_id, "b", input.b, _serialize_guard($scope0_reason, 2) * 2)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.a, $sg__input_a)} ${_text_resume($scope0_id, "b", input.b, $sg__input_b * 2)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -51,5 +51,4 @@ var template_default = _template("a", (input) => {
 		d: _existing_scope($childScope2),
 		e: _serialize_if($scope0_reason, 0) && _existing_scope($childScope3)
 	});
-	_resume_branch($scope0_id);
 }, 1);

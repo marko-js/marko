@@ -25,7 +25,6 @@ var template_default = _template("a", (input) => {
 				_html(`<button>${_text_resume($scope1_id, "b", n)}</button>${_el_resume($scope1_id, "a")}`);
 				_script($scope1_id, "a0");
 				_scope($scope1_id, { c: n });
-				_resume_branch($scope1_id);
 			}, _scope_id())
 		}),
 		foot: attrTag({ class: "f" })

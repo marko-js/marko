@@ -10,9 +10,9 @@ var child_default = _template("b", (input) => {
 
 // tags/thing.marko
 var thing_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_what = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.what, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "a", input.what, {}, 0, 0, $sg__input_what);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -28,6 +28,6 @@ var template_default = _template("a", (input) => {
 		let setHtml = child_default({});
 		_subscribe($what_content__subscribers, _scope($scope1_id, { c: setHtml }));
 	}, $scope0_id) }) });
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a2", 0);
 	_scope($scope0_id, { B1: $what_content__subscribers });
 }, 1);

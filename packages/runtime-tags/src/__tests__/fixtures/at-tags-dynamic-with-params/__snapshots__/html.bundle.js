@@ -1,8 +1,8 @@
 // tags/hello/index.marko
 var hello_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.item, [1], 0, 1, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "a", input.item, [1], 0, 1, $sg__input_item);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -14,9 +14,9 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(1);
 	let $item;
 	$item = attrTag({ content: _content("a0", (y) => {
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $sg__y = _serialize_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
-		_html(`y: ${_text_resume($scope1_id, "a", y, _serialize_guard($scope1_reason, 0) * 2)}`);
+		_html(`y: ${_text_resume($scope1_id, "a", y, $sg__y * 2)}`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) });
 	const $childScope = _peek_scope_id();
@@ -28,5 +28,4 @@ var template_default = _template("a", (input) => {
 		d: x,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1);

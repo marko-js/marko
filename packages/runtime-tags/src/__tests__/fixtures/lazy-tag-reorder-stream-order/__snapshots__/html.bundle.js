@@ -11,7 +11,6 @@ var child_default = _template("a", (input) => {
 		h: shared,
 		i: count
 	});
-	_resume_branch($scope0_id);
 });
 
 // template.marko
@@ -27,12 +26,11 @@ var template_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter("reordered", 1), (label) => {
-			const $scope2_id = _scope_id();
+			_scope_id();
 			$Child_withLoadAssets({
 				label,
 				shared
 			});
-			_resume_branch($scope2_id);
 		}, 0);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
 		_scope_reason();
@@ -40,11 +38,10 @@ var template_default = _template("b", (input) => {
 		_html("loading");
 	}, $scope0_id) }) });
 	_await($scope0_id, "b", resolveAfter("streamed", 2), (label) => {
-		const $scope3_id = _scope_id();
+		_scope_id();
 		$Child_withLoadAssets({
 			label,
 			shared
 		});
-		_resume_branch($scope3_id);
 	}, 0);
 }, 1);

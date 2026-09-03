@@ -1,8 +1,8 @@
 // tags/custom-tag.marko
 var custom_tag_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", JSON.stringify(input), _serialize_guard($scope0_reason, 0))}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", JSON.stringify(input), $sg__input)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -19,5 +19,4 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "f", tags[0], [...["spread1", "spread2"]], 0, 1, 0);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { g: x });
-	_resume_branch($scope0_id);
 }, 1);

@@ -16,7 +16,6 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope2_id),
 				Cc: 1
 			});
-			_resume_branch($scope3_id);
 		});
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
@@ -25,7 +24,6 @@ var template_default = _template("a", (input) => {
 		_html(`<button>loading ${_text_resume($scope1_id, "b", clicks, 2)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id) }) });
 	_scope($scope0_id, {
 		b: clicks,
