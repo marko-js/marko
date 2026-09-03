@@ -109,4 +109,10 @@ export function assertAttributesOrSingleArg(path) {
       "Tag does not support multiple arguments.",
     );
   }
+  if (args && args[0]?.type === "SpreadElement") {
+    throw path.hub.buildError(
+      args[0],
+      "Tag does not support spread arguments.",
+    );
+  }
 }
