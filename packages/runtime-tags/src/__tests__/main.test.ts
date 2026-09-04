@@ -210,7 +210,11 @@ function testFixtures(interop?: true) {
           const browsers: ReturnType<typeof createBrowser>[] = [];
           const rejectLoad =
             config.reject_load &&
-            ((id: string) => config.reject_load!.some((s) => id.includes(s)));
+            // Only a fixture asset can fail to load, never a runtime module
+            // (the prebuilt runtime splits `dom/load.ts` into a chunk).
+            ((id: string) =>
+              !id.includes("/dist/dom-") &&
+              config.reject_load!.some((s) => id.includes(s)));
 
           // Mocha retains suite closures for the entire run, so the cached
           // browsers/bundles are released once the fixture finishes to keep
@@ -368,6 +372,8 @@ function testFixtures(interop?: true) {
             );
             const chunks: string[] = [];
             const patches: string[] = [];
+            // The document each patch is measured against (same input).
+            const freshDocs: string[] = [];
             const logs: ConsoleRecord[][] = [];
             let template!: Awaited<
               ReturnType<typeof runner.runServer>
@@ -474,6 +480,9 @@ function testFixtures(interop?: true) {
                 rejectLoad || undefined,
               );
               browsers.push(fresh);
+              freshDocs[patches.length - 1] = stripDefaultScript(
+                freshChunks.join(""),
+              );
               const freshFlush = fresh.stream(freshChunks);
               while (freshFlush());
               await fresh.runAsyncScripts();
@@ -552,7 +561,7 @@ function testFixtures(interop?: true) {
 
             tracker.cleanup();
 
-            return { browser, tracker, chunks, patches };
+            return { browser, tracker, chunks, patches, freshDocs };
           });
 
           skipHTML || it("html", () => snapCompile("html"));
@@ -617,7 +626,7 @@ function testFixtures(interop?: true) {
             it("ssr", async () => {
               await snapMode(
                 async () => {
-                  const { tracker, chunks, patches } = await ssr();
+                  const { tracker, chunks, patches, freshDocs } = await ssr();
                   if (persisted) {
                     // Each wire frame is one expression; format them
                     // independently so beautify cannot glue `}{`.
@@ -662,14 +671,17 @@ function testFixtures(interop?: true) {
                       );
                       if (persisted) {
                         stats.patch = await getSizes(patches.join(""));
-                        // A frame must cost less on the wire than the page
-                        // it patches; a larger one means a mechanism ships
-                        // what the client already has.
-                        for (const frame of patches) {
-                          const bytes = Buffer.byteLength(frame);
+                        // A response must cost less on the wire, raw and
+                        // compressed, than the document for the same input;
+                        // a larger one ships what the client already has.
+                        for (let i = 0; i < patches.length; i++) {
+                          const doc: Sizes = freshDocs[i]
+                            ? await getSizes(freshDocs[i])
+                            : stats.html;
+                          const frame = await getSizes(patches[i]);
                           assert.ok(
-                            bytes < stats.html.min,
-                            `persisted frame (${bytes}b) is not smaller than the page (${stats.html.min}b) for "${entry}"`,
+                            frame.min < doc.min && frame.brotli < doc.brotli,
+                            `persisted response ${i} (${frame.min}b/${frame.brotli}b brotli) is not smaller than its document (${doc.min}b/${doc.brotli}b) for "${entry}"`,
                           );
                         }
                       }

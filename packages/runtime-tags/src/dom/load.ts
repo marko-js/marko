@@ -8,9 +8,9 @@ import {
   type Template,
 } from "../common/types";
 import { addAwaitCounter, renderCatch } from "./control-flow";
-import { queueAsyncRender, queueEffect, queueRender, runId } from "./queue";
+import { queueAsyncRender, queueRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
-import { ready, readyFailed, withLazy } from "./resume";
+import { withLazy } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
@@ -72,6 +72,18 @@ export const _load_template = /*@__PURE__*/ withLazy(
     return lazyTemplate;
   },
 );
+
+// A persisted page's ready feature drives a site's channel once its loaded
+// content is live (or fails), so deferred frame data drains after.
+let loadReady: ((branch: BranchScope, readyId?: string) => void) | undefined;
+let loadReadyFailed: ((readyId?: string) => void) | undefined;
+export function installLoadReady(
+  onReady: typeof loadReady,
+  onFailed: typeof loadReadyFailed,
+) {
+  loadReady = onReady;
+  loadReadyFailed = onFailed;
+}
 
 export const _load_setup = /*@__PURE__*/ withLazy(
   (
@@ -142,9 +154,7 @@ function insertLoaded(
       insertBranchBefore(branch, parent, marker);
       marker.remove();
       awaitCounter?.c();
-      // A constructed site drives its channel once the content is live, so
-      // deferred frame data (re-shipping this render's state) drains after.
-      if (readyId) queueEffect(branch, () => ready(readyId));
+      loadReady?.(branch, readyId);
     };
   let remaining: number;
   if ((remaining = values?.size as number)) {
@@ -186,7 +196,7 @@ function loadFailed(
       if (awaitCounter.m) awaitCounter.i = 0;
       else awaitCounter.c();
     }
-    readyFailed(readyId);
+    loadReadyFailed?.(readyId);
     queueAsyncRender(scope, renderCatch, error);
   };
 }

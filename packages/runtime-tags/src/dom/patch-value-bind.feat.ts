@@ -2,19 +2,19 @@ import "./patch-value.feat";
 import { BIND_FRAME_VAR } from "../common/meta";
 import type { Scope } from "../common/types";
 import { PatchKey } from "../common/types";
-import { frameChecks, frameVars } from "./patch";
-import { failPatch, getRegisteredWithScope, patchers, patchId } from "./resume";
+import { frameChecks, frameEpoch, frameVars } from "./patch";
+import { failPatch, getRegisteredWithScope, patchers } from "./resume";
 
 // The frame's bind table: a source entry re-binds its registration
 // against the paired live scope it anchors at, and bound fills reference
-// the bind by index. Epoch-keyed so a lost source entry in a later
-// frame can never read an earlier frame's handler.
+// the bind by index. Keyed by frame epoch (a frame and its deferred drains)
+// so a lost source entry in a later frame never reads an earlier handler.
 let frameBinds: Record<string, unknown> = {};
-let frameBindsPatch = 0;
+let frameBindsEpoch = 0;
 const binds = () => {
-  if (frameBindsPatch !== patchId) {
+  if (frameBindsEpoch !== frameEpoch) {
     frameBinds = {};
-    frameBindsPatch = patchId;
+    frameBindsEpoch = frameEpoch;
   }
   return frameBinds;
 };
@@ -30,7 +30,7 @@ let expectedEmbeddedPatch = 0;
 frameChecks.push(() => {
   const expected = expectedEmbedded;
   expectedEmbedded = [];
-  if (expectedEmbeddedPatch === patchId) {
+  if (expectedEmbeddedPatch === frameEpoch) {
     for (const [frameBinds, n] of expected) {
       if (!(n in frameBinds)) failPatch();
     }
@@ -38,8 +38,8 @@ frameChecks.push(() => {
 });
 frameVars[BIND_FRAME_VAR] = (n: number) => {
   const frameBinds = binds();
-  if (expectedEmbeddedPatch !== patchId) {
-    expectedEmbeddedPatch = patchId;
+  if (expectedEmbeddedPatch !== frameEpoch) {
+    expectedEmbeddedPatch = frameEpoch;
     expectedEmbedded = [];
   }
   expectedEmbedded.push([frameBinds, n]);

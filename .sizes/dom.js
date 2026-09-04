@@ -1,4 +1,4 @@
-// size: 28779 (min) 10667 (brotli)
+// size: 28775 (min) 10667 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -420,9 +420,6 @@ function normalizeDynamicRenderer(value) {
     let normalized = value.content || value.default || value;
     if ("a" in normalized) return normalized;
   }
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function withBranches(runtime) {
   return ((branchesEnabled = 1), runtime);
@@ -1492,6 +1489,9 @@ function normalizeClientRender(value) {
   let renderer = normalizeDynamicRenderer(value);
   if (renderer && renderer.a) return renderer;
 }
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
 function _lifecycle(scope, thisObj, index = 0) {
   let accessor = "K" + index,
     instance = scope[accessor];
@@ -2126,9 +2126,10 @@ function byFirstArg(name) {
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
 let frameChecks = [],
-  frameVars = {};
+  frameVars = {},
+  epochs = 0;
 function applyPatch(frame, renderId = "_", runtimeId = "M") {
-  (init(runtimeId), (patchers.$ ||= applyGlobals));
+  (init(runtimeId), (patchers.$ ||= applyGlobals), ++epochs);
   let render = beginPatch(renderId);
   try {
     let names = Object.keys(frameVars),
@@ -2169,6 +2170,216 @@ function _global_script(id, fn) {
     ran[id] !== runId && ((ran[id] = runId), fn(scope));
   });
   return (scope) => queueEffect(scope, effect);
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let _template = (id, template, walks, setup, inputSignal) => {
+    let renderer = _content(id, template, walks, setup, inputSignal)();
+    return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
+  },
+  _load_template = /*@__PURE__*/ withLazy((id, load) => {
+    let pending,
+      lazyTemplate = _template(
+        id,
+        0,
+        0,
+        (branch) => {
+          let awaitCounter = addAwaitCounter(branch);
+          ((branch.X ||= /* @__PURE__ */ new Map()),
+            (pending ||= load()).then(
+              (renderer) => {
+                (Object.assign(lazyTemplate, renderer),
+                  queueAsyncRender(branch, (branch) =>
+                    insertLoaded(renderer, branch, branch.S, awaitCounter),
+                  ));
+              },
+              loadFailed(branch, awaitCounter, "_" + id),
+            ));
+        },
+        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
+      );
+    return lazyTemplate;
+  }),
+  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load, readyId) => {
+    ((nodeAccessor = decodeAccessor(nodeAccessor)),
+      (childScopeAccessor = decodeAccessor(childScopeAccessor)));
+    let pending,
+      renderer,
+      insertCached = (child, marker) => insertLoaded(renderer, child, marker);
+    return (owner) => {
+      let child = owner[childScopeAccessor];
+      if (renderer) queueRender(child, insertCached, -1, owner[nodeAccessor]);
+      else {
+        let awaitCounter = addAwaitCounter(owner);
+        ((child.X ||= /* @__PURE__ */ new Map()),
+          (pending ||= load()).then(
+            (mod) => {
+              ((renderer = _content("", ...mod._)()),
+                queueAsyncRender(child, (child) =>
+                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter, readyId),
+                ));
+            },
+            loadFailed(child, awaitCounter, readyId),
+          ));
+      }
+    };
+  }),
+  _load_signal = /*@__PURE__*/ withLazy((load) => {
+    let pending,
+      apply = (scope, value) => {
+        ((pending ||= load()),
+          scope.X || (!("X" in scope) && scope.H === runId)
+            ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, [value, apply])
+            : apply._
+              ? apply._(scope, value)
+              : pending.then(
+                  (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
+                  () => 0,
+                ));
+      };
+    return apply;
+  });
+function mount(input = {}, reference, position) {
+  let branch,
+    parentNode = reference,
+    nextSibling = null,
+    { $global } = input;
+  switch (
+    ($global
+      ? (({ $global, ...input } = input),
+        ($global = {
+          runtimeId: "M",
+          renderId: "_",
+          ...$global,
+        }))
+      : ($global = {
+          runtimeId: "M",
+          renderId: "_",
+        }),
+    position)
+  ) {
+    case "beforebegin":
+      ((parentNode = reference.parentNode), (nextSibling = reference));
+      break;
+    case "afterbegin":
+      nextSibling = reference.firstChild;
+      break;
+    case "afterend":
+      ((parentNode = reference.parentNode), (nextSibling = reference.nextSibling));
+      break;
+  }
+  let curValue,
+    args = this.d,
+    effects = prepareEffects(() => {
+      ((branch = createBranch($global, this, void 0, parentNode)),
+        (branch.T = (newValue) => {
+          curValue = newValue;
+        }),
+        this.c?.(branch),
+        args?.(branch, input));
+    });
+  return (
+    insertChildNodes(parentNode, nextSibling, branch.S, branch.K),
+    runEffects(effects),
+    {
+      get value() {
+        return curValue;
+      },
+      set value(newValue) {
+        _var_change(branch, newValue);
+      },
+      update(newInput = {}) {
+        args &&
+          (newInput.$global && ({ $global, ...newInput } = newInput),
+          runEffects(
+            prepareEffects(() => {
+              args(branch, newInput);
+            }),
+          ));
+      },
+      destroy() {
+        removeAndDestroyBranch(branch);
+      },
+    }
+  );
+}
+function insertLoaded(renderer, branch, marker, awaitCounter, readyId) {
+  let parent = marker.parentNode,
+    values = branch.X,
+    clone = () => {
+      (syncGen(branch), renderer.b(branch, parent.namespaceURI), (branch.X = 0));
+    },
+    insert = () => {
+      (insertBranchBefore(branch, parent, marker), marker.remove(), awaitCounter?.c());
+    },
+    remaining;
+  if ((remaining = values?.size)) {
+    let fail = loadFailed(branch, awaitCounter, readyId);
+    values.forEach(([, apply], promise) =>
+      promise.then(
+        (mod) =>
+          (apply._ = mod._) &&
+          !--remaining &&
+          queueAsyncRender(branch, (branch) => {
+            (clone(),
+              renderer.c?.(branch),
+              values.forEach(([value, apply]) => apply(branch, value)),
+              insert());
+          }),
+        (error) => remaining > 0 && ((remaining = 0), fail(error)),
+      ),
+    );
+  } else (clone(), setupBranch(renderer, branch), insert());
+}
+function loadFailed(scope, awaitCounter, readyId) {
+  return (error) => {
+    (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
+      queueAsyncRender(scope, renderCatch, error));
+  };
+}
+function _load_visible_trigger(selector, options) {
+  let pending, el;
+  return (load) => () =>
+    (pending ||= new Promise(
+      (resolve) =>
+        (el = getSelectorOrResolve(selector, resolve)) &&
+        new IntersectionObserver(
+          (entries, io) =>
+            entries.some((entry) => entry.isIntersecting) && resolve(io.disconnect()),
+          options,
+        ).observe(el),
+    )).then(load);
+}
+function _load_idle_trigger(options) {
+  let pending;
+  return (load) => () =>
+    (pending ||= new Promise((resolve) =>
+      (self.requestIdleCallback || resolve)(resolve, options),
+    )).then(load);
+}
+function _load_event_trigger(event, selector) {
+  let pending;
+  return (load) => () =>
+    (pending ||= new Promise((resolve) =>
+      getSelectorOrResolve(selector, resolve)?.addEventListener(event, resolve, { once: !0 }),
+    )).then(load);
+}
+function _load_media_trigger(query) {
+  let pending, mql;
+  return (load) => () =>
+    (pending ||= new Promise((resolve) =>
+      (mql = matchMedia(query)).matches
+        ? resolve()
+        : mql.addEventListener("change", resolve, { once: !0 }),
+    )).then(load);
+}
+function _load_race_trigger(...triggers) {
+  let noop = () => Promise.resolve(),
+    pending;
+  return (load) => () => (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
+}
+function getSelectorOrResolve(selector, resolve) {
+  return document.querySelector(selector) || resolve();
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
@@ -2275,73 +2486,7 @@ let empty = [],
       )
         return toInsertNode(branch.S, branch.K);
     },
-  },
-  _template = (id, template, walks, setup, inputSignal) => {
-    let renderer = _content(id, template, walks, setup, inputSignal)();
-    return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
-  },
-  _load_template = /*@__PURE__*/ withLazy((id, load) => {
-    let pending,
-      lazyTemplate = _template(
-        id,
-        0,
-        0,
-        (branch) => {
-          let awaitCounter = addAwaitCounter(branch);
-          ((branch.X ||= /* @__PURE__ */ new Map()),
-            (pending ||= load()).then(
-              (renderer) => {
-                (Object.assign(lazyTemplate, renderer),
-                  queueAsyncRender(branch, (branch) =>
-                    insertLoaded(renderer, branch, branch.S, awaitCounter),
-                  ));
-              },
-              loadFailed(branch, awaitCounter, "_" + id),
-            ));
-        },
-        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
-      );
-    return lazyTemplate;
-  }),
-  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load, readyId) => {
-    ((nodeAccessor = decodeAccessor(nodeAccessor)),
-      (childScopeAccessor = decodeAccessor(childScopeAccessor)));
-    let pending,
-      renderer,
-      insertCached = (child, marker) => insertLoaded(renderer, child, marker);
-    return (owner) => {
-      let child = owner[childScopeAccessor];
-      if (renderer) queueRender(child, insertCached, -1, owner[nodeAccessor]);
-      else {
-        let awaitCounter = addAwaitCounter(owner);
-        ((child.X ||= /* @__PURE__ */ new Map()),
-          (pending ||= load()).then(
-            (mod) => {
-              ((renderer = _content("", ...mod._)()),
-                queueAsyncRender(child, (child) =>
-                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter, readyId),
-                ));
-            },
-            loadFailed(child, awaitCounter, readyId),
-          ));
-      }
-    };
-  }),
-  _load_signal = /*@__PURE__*/ withLazy((load) => {
-    let pending,
-      apply = (scope, value) => {
-        ((pending ||= load()),
-          scope.X || (!("X" in scope) && scope.H === runId)
-            ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, [value, apply])
-            : apply._
-              ? apply._(scope, value)
-              : pending.then(
-                  (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
-                  () => 0,
-                ));
-      };
-    return apply;
-  });
+  };
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
 }
@@ -2352,150 +2497,5 @@ function attrTags(first, attrs) {
 }
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
-}
-function mount(input = {}, reference, position) {
-  let branch,
-    parentNode = reference,
-    nextSibling = null,
-    { $global } = input;
-  switch (
-    ($global
-      ? (({ $global, ...input } = input),
-        ($global = {
-          runtimeId: "M",
-          renderId: "_",
-          ...$global,
-        }))
-      : ($global = {
-          runtimeId: "M",
-          renderId: "_",
-        }),
-    position)
-  ) {
-    case "beforebegin":
-      ((parentNode = reference.parentNode), (nextSibling = reference));
-      break;
-    case "afterbegin":
-      nextSibling = reference.firstChild;
-      break;
-    case "afterend":
-      ((parentNode = reference.parentNode), (nextSibling = reference.nextSibling));
-      break;
-  }
-  let curValue,
-    args = this.d,
-    effects = prepareEffects(() => {
-      ((branch = createBranch($global, this, void 0, parentNode)),
-        (branch.T = (newValue) => {
-          curValue = newValue;
-        }),
-        this.c?.(branch),
-        args?.(branch, input));
-    });
-  return (
-    insertChildNodes(parentNode, nextSibling, branch.S, branch.K),
-    runEffects(effects),
-    {
-      get value() {
-        return curValue;
-      },
-      set value(newValue) {
-        _var_change(branch, newValue);
-      },
-      update(newInput = {}) {
-        args &&
-          (newInput.$global && ({ $global, ...newInput } = newInput),
-          runEffects(
-            prepareEffects(() => {
-              args(branch, newInput);
-            }),
-          ));
-      },
-      destroy() {
-        removeAndDestroyBranch(branch);
-      },
-    }
-  );
-}
-function insertLoaded(renderer, branch, marker, awaitCounter, readyId) {
-  let parent = marker.parentNode,
-    values = branch.X,
-    clone = () => {
-      (syncGen(branch), renderer.b(branch, parent.namespaceURI), (branch.X = 0));
-    },
-    insert = () => {
-      (insertBranchBefore(branch, parent, marker),
-        marker.remove(),
-        awaitCounter?.c(),
-        readyId && queueEffect(branch, () => ready(readyId)));
-    },
-    remaining;
-  if ((remaining = values?.size)) {
-    let fail = loadFailed(branch, awaitCounter, readyId);
-    values.forEach(([, apply], promise) =>
-      promise.then(
-        (mod) =>
-          (apply._ = mod._) &&
-          !--remaining &&
-          queueAsyncRender(branch, (branch) => {
-            (clone(),
-              renderer.c?.(branch),
-              values.forEach(([value, apply]) => apply(branch, value)),
-              insert());
-          }),
-        (error) => remaining > 0 && ((remaining = 0), fail(error)),
-      ),
-    );
-  } else (clone(), setupBranch(renderer, branch), insert());
-}
-function loadFailed(scope, awaitCounter, readyId) {
-  return (error) => {
-    (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
-      queueAsyncRender(scope, renderCatch, error));
-  };
-}
-function _load_visible_trigger(selector, options) {
-  let pending, el;
-  return (load) => () =>
-    (pending ||= new Promise(
-      (resolve) =>
-        (el = getSelectorOrResolve(selector, resolve)) &&
-        new IntersectionObserver(
-          (entries, io) =>
-            entries.some((entry) => entry.isIntersecting) && resolve(io.disconnect()),
-          options,
-        ).observe(el),
-    )).then(load);
-}
-function _load_idle_trigger(options) {
-  let pending;
-  return (load) => () =>
-    (pending ||= new Promise((resolve) =>
-      (self.requestIdleCallback || resolve)(resolve, options),
-    )).then(load);
-}
-function _load_event_trigger(event, selector) {
-  let pending;
-  return (load) => () =>
-    (pending ||= new Promise((resolve) =>
-      getSelectorOrResolve(selector, resolve)?.addEventListener(event, resolve, { once: !0 }),
-    )).then(load);
-}
-function _load_media_trigger(query) {
-  let pending, mql;
-  return (load) => () =>
-    (pending ||= new Promise((resolve) =>
-      (mql = matchMedia(query)).matches
-        ? resolve()
-        : mql.addEventListener("change", resolve, { once: !0 }),
-    )).then(load);
-}
-function _load_race_trigger(...triggers) {
-  let noop = () => Promise.resolve(),
-    pending;
-  return (load) => () => (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
-}
-function getSelectorOrResolve(selector, resolve) {
-  return document.querySelector(selector) || resolve();
 }
 //#endregion

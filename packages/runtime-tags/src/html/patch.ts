@@ -1,9 +1,9 @@
 import {
-  normalizeAttrValue,
   normalizeDynamicRenderer,
   stringifyClassObject,
   stringifyStyleObject,
   toDelimitedString,
+  isNotVoid,
 } from "../common/helpers";
 import { READY_FRAME_VAR } from "../common/meta";
 import type {
@@ -135,9 +135,12 @@ class PatchState extends State {
   // `flushChunk`): a frame must merge into the live page's ready record —
   // never replace it, the page still holds unresumed data for modules that
   // have not loaded — and only the client patch-ready feature knows how.
+  // Each batch is a thunk: its binds materialize and validate when the
+  // channel's module drains it, not when the frame text evaluates.
   override writeReady(id: string, resumes: string) {
     const frames = (this.readyFrames ??= {});
-    frames[id] = frames[id] ? frames[id] + "," + resumes : resumes;
+    const batch = "_=>(" + resumes + ")";
+    frames[id] = frames[id] ? frames[id] + "," + batch : batch;
     return "";
   }
   override shipShell(shellId: string | 0 | undefined) {
@@ -185,6 +188,10 @@ class PatchState extends State {
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
     this.patchTrees = undefined;
+    // The client's bind table lives one frame: a later frame re-ships the
+    // sources it references.
+    this.binds = undefined;
+    this.patchBinds = 0;
     this.serializer = new Serializer();
     return out;
   }
@@ -344,7 +351,7 @@ export function _patch_attr(
     writeOwned(
       scopeId,
       PatchKey.Attr + accessor + " " + name,
-      normalizeAttrValue(value) ?? 0,
+      attrValue(value) ?? 0,
       owned,
       group,
     );
@@ -852,7 +859,7 @@ export function _patch_attr_option_value(
     writeOwned(
       scopeId,
       PatchKey.Attr + accessor + " value",
-      normalizeAttrValue(value) ?? 0,
+      attrValue(value) ?? 0,
       owned,
       group,
     );
@@ -924,4 +931,8 @@ function shipShell(state: PatchState, shellId: string | 0 | undefined) {
     state.shellFrames += shells[shellId];
   }
   return shellId;
+}
+
+function attrValue(value: unknown) {
+  if (isNotVoid(value)) return value === true ? "" : value + "";
 }

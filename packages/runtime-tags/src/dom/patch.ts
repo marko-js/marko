@@ -26,6 +26,11 @@ export const frameChecks: (() => void)[] = [];
 // each name as a free variable (`b(1)`), skipping registry indirection.
 export const frameVars: Record<string, unknown> = {};
 
+// A frame and the deferred batches it drains later share one epoch, so a
+// bind source applied with the frame still serves a batch's reference.
+export let frameEpoch = 0;
+let epochs = 0;
+
 export function applyPatch(
   frame: string,
   renderId = DEFAULT_RENDER_ID,
@@ -35,6 +40,7 @@ export function applyPatch(
   // Registered here so this module stays tree-shakable; a page with
   // `$global` joins installed its own (`patch-global.feat`).
   patchers[PatchKey.Globals] ||= applyGlobals;
+  frameEpoch = ++epochs;
   const render = beginPatch(renderId);
   try {
     // A frame is trusted executable resume data (an envelope holding the
@@ -101,9 +107,11 @@ export function installPatchReady(
 export function applyReadyPatch(
   renderId: string,
   runtimeId: string,
+  epoch: number,
   push: (render: RenderData) => void,
 ) {
   init(runtimeId);
+  frameEpoch = epoch;
   const render = beginPatch(renderId);
   try {
     push(render);

@@ -116,14 +116,14 @@ export async function importWithContext<T>(
   function importModuleDynamically(id: string, parent: vm.Module) {
     // Simulate a network-level chunk load failure (e.g. deploy skew) for the
     // matched dynamic import while its siblings resolve normally.
-    if (rejectLoad?.(id)) {
-      return Promise.reject(new Error(`simulated chunk load failure: ${id}`));
-    }
     const from = parent.identifier;
     // The shared debug runtime bundle is linked by absolute path.
     const resolved = path.isAbsolute(id)
       ? id
       : resolveSync(id, { ...resolveOpts, from });
+    if (rejectLoad?.(resolved || id)) {
+      return Promise.reject(new Error(`simulated chunk load failure: ${id}`));
+    }
 
     if (!resolved) {
       throw new Error(

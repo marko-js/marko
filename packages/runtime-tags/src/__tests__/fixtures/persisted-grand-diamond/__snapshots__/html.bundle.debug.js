@@ -40,6 +40,7 @@ var dia_c_default = _template_persisted("__tests__/tags/dia-c/index.marko", (inp
 // tags/dia-a/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$3, $template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$3, $walks$2);
+_shells({ "__tests__/tags/dia-a/index.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/dia-a/index.marko;${_w0};${_w1}`)(((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$3, $walks$2), ((_w0, _w1) => `${_w0}${_w1}`)($template$3, $template$2)) });
 var dia_a_default = _template_persisted("__tests__/tags/dia-a/index.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

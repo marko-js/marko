@@ -170,11 +170,12 @@ export function knownTagAnalyze(
     // otherwise skip it, leaving its fills and effects unreachable).
     addSerializeReason(section, true, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
+    const hasVar = !!tag.node.var;
     onFinalizePersisted(() => {
       if (!inStatefulBranch(section)) {
         addRuntimeFeatureAsset("patch-child");
         // A construct seeds the tag var through the bind channel.
-        if (tag.node.var) addRuntimeFeatureAsset("patch-value-bind");
+        if (hasVar) addRuntimeFeatureAsset("patch-value-bind");
       }
     });
   }

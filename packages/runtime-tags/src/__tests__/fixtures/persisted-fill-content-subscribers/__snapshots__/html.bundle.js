@@ -1,4 +1,5 @@
 // tags/frame.marko
+const $template = "<section><!></section>";
 _shells({ b: "b;D%;<section><!></section>" });
 var frame_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
@@ -14,7 +15,8 @@ var frame_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0;D ;<p class=b> </p>",
-	a1: "a1;D ;<p class=a> </p>"
+	a1: "a1;D ;<p class=a> </p>",
+	a: /*@__PURE__*/ ((_w0, _w1) => `a !a2;${_w0};${_w1}`)(((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l"), ((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template, $template))
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_label = _source_if($scope0_reason, 0);
