@@ -1,4 +1,4 @@
-// size: 26796 (min) 10023 (brotli)
+// size: 27032 (min) 10128 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -96,7 +96,11 @@ let unsafeStyleAttrReg = /[\\;]/g,
   curRenders,
   embedRenders,
   readyIds,
+  readyFailedSink,
+  failedReady,
+  readyFailedHandler,
   lazyEnabled,
+  ready = /*@__PURE__*/ withReadyFailed(settleReady),
   isResuming,
   cloneCache = {},
   _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
@@ -859,11 +863,17 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
-function ready(readyId) {
+function readyFailed(readyId, error) {
+  ((failedReady ||= /* @__PURE__ */ new Map()).set(readyId, error || Error(readyId)),
+    settleReady(readyId));
+}
+function withReadyFailed(fn) {
+  return ((readyFailedSink = readyFailed), fn);
+}
+function settleReady(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
-function readyFailed(readyId) {}
 function withLazy(runtime) {
   return ((lazyEnabled = 1), runtime);
 }
@@ -1056,14 +1066,22 @@ function init(runtimeId = "M") {
           return (
             (serializeContext._ = registeredValues),
             (render.m = (effects) => {
-              if ((processResumes(render.r, effects), readyIds && render.b))
+              if ((processResumes(render.r, effects), readyIds && render.b)) {
+                let error;
                 for (let progress = 1; progress;) {
                   progress = 0;
                   for (let readyId of readyIds) {
                     let resumes = render.b[readyId];
-                    resumes && processResumes(resumes, effects) && (progress = 1);
+                    if (resumes?.length && (error = failedReady?.get(readyId))) {
+                      let failed = [];
+                      (processResumes(resumes, failed), (resumes.length = 0));
+                      for (let i = 1; i < failed.length; i += 2)
+                        readyFailedHandler(failed[i], error);
+                      progress = 1;
+                    } else resumes && processResumes(resumes, effects) && (progress = 1);
                   }
                 }
+              }
               let retained = 0;
               for (visit of (visits = render.v))
                 ((lastTokenIndex = render.i.length),
@@ -1107,6 +1125,7 @@ function init(runtimeId = "M") {
             (render.w = () => {
               (walk(), runResumeEffects(render));
             }),
+            readyFailedSink && ((render.e = readyFailedSink), render.f?.forEach(readyFailedSink)),
             render
           );
         }),

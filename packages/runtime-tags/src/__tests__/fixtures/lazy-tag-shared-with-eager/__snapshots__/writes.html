@@ -4,7 +4,9 @@
 </section>
 <script>
   ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => ((r, f) => r && (r.e ? r
+      .e(f) : (r.f ||= []).push(f)))(self.M?._, "_c")), p.after(d))
   }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
     .isIntersecting) && i.disconnect() + l()).observe(e))(document
     .querySelector("body") || l()))(document.currentScript,

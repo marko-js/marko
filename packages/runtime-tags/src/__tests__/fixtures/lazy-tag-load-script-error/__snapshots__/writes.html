@@ -2,7 +2,9 @@
 </main>
 <script>
   ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => ((r, f) => r && (r.e ? r
+      .e(f) : (r.f ||= []).push(f)))(self.M?._, "_a")), p.after(d))
   }) => (e => e?.addEventListener("click", l, {
     once: 1
   }))(document.querySelector("body") || l()))(document.currentScript,

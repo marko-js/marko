@@ -157,17 +157,22 @@ function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
 }
 
 function writeTriggerScript(id: string, html: string, triggers: Trigger[]) {
+  const { runtimeId, renderId } = $global();
   const htmlStr = _escape_script(JSON.stringify(html));
-  // A loader script that fails at the network level never evaluates, so the
-  // debug build reports from the script's own error event; matches the
-  // load-entry rejection arm's diagnostic.
-  const insert = MARKO_DEBUG
-    ? `(d=new Range().createContextualFragment(h),d.querySelectorAll("script").forEach(s=>s.onerror=()=>console.error(${_escape_script(
-        JSON.stringify(
-          `The lazy module for "${id}" failed to load; its server-rendered content cannot become interactive.`,
-        ),
-      )})),p.after(d))`
-    : `p.after(new Range().createContextualFragment(d=h))`;
+  const idStr = _escape_script(JSON.stringify(id));
+  // A loader script that fails at the network level never evaluates, so its
+  // own error event fails the id through the render (dom/resume.ts), parking
+  // it when the runtime has not evaluated yet.
+  const onError = `((r,f)=>r&&(r.e?r.e(f):(r.f||=[]).push(f)))(self.${runtimeId}?.${renderId},${idStr})`;
+  const insert = `(d=new Range().createContextualFragment(h),d.querySelectorAll("script").forEach(s=>s.onerror=()=>${
+    MARKO_DEBUG
+      ? `(console.error(${_escape_script(
+          JSON.stringify(
+            `The lazy module for "${id}" failed to load; its server-rendered content cannot become interactive.`,
+          ),
+        )}),${onError})`
+      : onError
+  }),p.after(d))`;
   const exprs = triggers.map((trigger) => {
     const options = trigger.options && toObjectExpression(trigger.options);
     switch (trigger.type) {

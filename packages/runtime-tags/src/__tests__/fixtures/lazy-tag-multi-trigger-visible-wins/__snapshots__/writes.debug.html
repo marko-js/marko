@@ -3,9 +3,12 @@
 <script>
   ((p, h, d, l = $ => {
     d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
-      "script").forEach(s => s.onerror = () => console.error(
+      "script").forEach(s => s.onerror = () => (console.error(
       "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger-visible-wins/child.marko\" failed to load; its server-rendered content cannot become interactive."
-      )), p.after(d))
+      ), ((r, f) => r && (r.e ? r.e(f) : (r.f ||= []).push(f)))(self
+      .M?._,
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger-visible-wins/child.marko"
+      ))), p.after(d))
   }) => {
     (e => e && new IntersectionObserver((e, i) => e.some(e => e
       .isIntersecting) && i.disconnect() + l()).observe(e))(document

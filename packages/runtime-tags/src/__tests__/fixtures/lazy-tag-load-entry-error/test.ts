@@ -6,9 +6,8 @@ const load = (document: Document) => {
 };
 
 // The loader script evaluates but its template chunk import rejects
-// (deploy skew): the load entry reports through `readyFailed` and the
-// server-rendered content stays visible but inert. (CSR rejects through
-// the runtime-managed path instead, which drives `@catch`.)
+// (deploy skew): the load entry's rejection arm fails the server-rendered
+// site into its `@catch`, as a CSR load rejecting through the runtime does.
 export const config: TestConfig = {
   equivalent: false,
   reject_load: ["child.mjs"],

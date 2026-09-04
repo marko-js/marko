@@ -162,23 +162,16 @@ export default {
           const entryFile = getFile();
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
-          // A rejected chunk blocks this ready id forever: the debug build
-          // reports it instead of leaving the content silently inert, while
-          // production keeps the arm's bytes out (the failure still surfaces
-          // as a network error in devtools).
-          const report = !markoOpts.optimize;
+          // A rejected chunk blocks this ready id forever, so the arm fails
+          // the sites waiting on it into their `@catch`.
           program.node.body = [
             t.importDeclaration(
               [
                 t.importSpecifier(t.identifier("ready"), t.identifier("ready")),
-                ...(report
-                  ? [
-                      t.importSpecifier(
-                        t.identifier("readyFailed"),
-                        t.identifier("readyFailed"),
-                      ),
-                    ]
-                  : []),
+                t.importSpecifier(
+                  t.identifier("readyFailed"),
+                  t.identifier("readyFailed"),
+                ),
               ],
               t.stringLiteral(getRuntimePath("dom")),
             ),
@@ -199,16 +192,13 @@ export default {
                       t.stringLiteral(readyId),
                     ]),
                   ),
-                  ...(report
-                    ? [
-                        t.arrowFunctionExpression(
-                          [],
-                          t.callExpression(t.identifier("readyFailed"), [
-                            t.stringLiteral(readyId),
-                          ]),
-                        ),
-                      ]
-                    : []),
+                  t.arrowFunctionExpression(
+                    [t.identifier("error")],
+                    t.callExpression(t.identifier("readyFailed"), [
+                      t.stringLiteral(readyId),
+                      t.identifier("error"),
+                    ]),
+                  ),
                 ],
               ),
             ),

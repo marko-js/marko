@@ -43,6 +43,10 @@ export interface RenderData {
   m?(effects: unknown[]): unknown[];
   // Blocking resumes keyed by ready id.
   b?: Record<string, ResumeData>;
+  // Fails a ready id ("e" for error) and, before this runtime evaluated,
+  // the ids its loader scripts' error events parked, see html/assets.ts.
+  e?(readyId: string, error?: unknown): void;
+  f?: string[];
   /* --- Used by inline runtime --- */
 
   // Document
@@ -66,30 +70,46 @@ let embedRenders:
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
-let failedIds: undefined | Set<string>;
+// Installed on renders as `e` once `ready` is bundled (a load entry exists);
+// nothing else names `readyFailed`, so other bundles fold the sink away.
+let readyFailedSink: undefined | typeof readyFailed;
+// Ready ids whose module never arrives, keyed to the failure's error.
+let failedReady: undefined | Map<string, unknown>;
+// Installed by `dom/catch.feat.ts`: fails a site's `<try>` into its `@catch`.
+let readyFailedHandler: undefined | ((scope: Scope, error: unknown) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
 
-export function ready(readyId: string) {
+export const ready = /*@__PURE__*/ withReadyFailed(settleReady);
+
+// A lazy module that will never arrive can never deliver its channel's
+// pending resume data, so the channel settles with each of its sites failing
+// into its `@catch` instead of staying inert.
+export function readyFailed(readyId: string, error?: unknown) {
+  if (MARKO_DEBUG && !readyIds?.has(readyId)) {
+    console.error(
+      `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
+    );
+  }
+  (failedReady ||= new Map()).set(readyId, error || new Error(readyId));
+  settleReady(readyId);
+}
+
+function withReadyFailed<T>(fn: T) {
+  readyFailedSink = readyFailed;
+  return fn;
+}
+
+function settleReady(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
 }
 
-// A lazy module that will never arrive can never deliver its channel's
-// pending resume data: the debug build records the failure per channel
-// (repeat reports fold) and says so instead of staying silent. Production
-// builds compile no reporting call sites, so this strips away entirely.
-export function readyFailed(readyId: string) {
-  if (MARKO_DEBUG) {
-    if (failedIds?.has(readyId) || readyIds?.has(readyId)) return;
-    (failedIds ||= new Set()).add(readyId);
-    console.error(
-      `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
-    );
-  }
+export function installReadyFailed(handler: typeof readyFailedHandler) {
+  readyFailedHandler = handler;
 }
 
 export function withLazy<T>(runtime: T) {
@@ -411,11 +431,22 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           if (readyIds && render.b) {
             // Process ready channels to a fixed point — draining one may
             // unblock another's deps marker.
+            let error: unknown;
             for (let progress: unknown = 1; progress;) {
               progress = 0;
               for (const readyId of readyIds) {
                 const resumes = render.b[readyId];
-                if (resumes && processResumes(resumes, effects)) {
+                if (resumes?.length && (error = failedReady?.get(readyId))) {
+                  // Its effects name the sites; the first failure destroys a
+                  // shared `<try>`, which skips the rest. Emptied, it satisfies deps.
+                  const failed: unknown[] = [];
+                  processResumes(resumes, failed);
+                  resumes.length = 0;
+                  for (let i = 1; i < failed.length; i += 2) {
+                    readyFailedHandler!(failed[i] as Scope, error);
+                  }
+                  progress = 1;
+                } else if (resumes && processResumes(resumes, effects)) {
                   progress = 1;
                 }
               }
@@ -507,6 +538,13 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           walk();
           runResumeEffects(render);
         };
+
+        if (readyFailedSink) {
+          // Loader scripts that errored before this runtime evaluated parked
+          // their ids; the walk they belong to has already run.
+          render.e = readyFailedSink;
+          render.f?.forEach(readyFailedSink);
+        }
 
         return render;
       }) as Renders),

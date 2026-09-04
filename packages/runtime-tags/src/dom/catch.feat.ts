@@ -10,7 +10,9 @@ import {
   installCatch,
   type PendingRender,
   placeholderShown,
+  queueAsyncRender,
 } from "./queue";
+import { installReadyFailed } from "./resume";
 import type { SignalFn } from "./signals";
 
 const handlePendingTry = (
@@ -30,6 +32,9 @@ const handlePendingTry = (
 
 // Module evaluation is the enablement: the compiler injects this side-effect
 // import once per program containing `<try>`, `<await>`, or lazy loading.
+installReadyFailed((scope, error) =>
+  queueAsyncRender(scope, renderCatch, error),
+);
 installCatch(
   // Deliberately no per-effect try/catch: an error thrown from a `<script>` or
   // `<lifecycle>` body escapes the flush instead of reaching `@catch`.
