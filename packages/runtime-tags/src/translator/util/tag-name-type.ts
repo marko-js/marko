@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
 import {
+  getFile,
   getProgram,
   getTagDef,
   isNativeTag,
@@ -9,6 +10,7 @@ import {
 
 import type { LoadImportConfig } from "../visitors/import-declaration";
 import * as TagNameType from "./constants/tag-name-type";
+import { isAnalyzing } from "./get-compile-stage";
 import { isCoreTag } from "./is-core-tag";
 
 declare module "@marko/compiler/dist/types" {
@@ -93,6 +95,11 @@ export default function analyzeTagNameType(
         extra.tagNameUnresolved = !(
           TAG_NAME_IDENTIFIER_REG.test(tagName) && tag.scope.hasBinding(tagName)
         );
+      } else if (childFile !== getFile() && isAnalyzing(childFile)) {
+        // Closing a cross-file cycle: the child's analysis is incomplete, so
+        // the runtime path renders it rather than composing its template.
+        extra.tagNameType = TagNameType.DynamicTag;
+        extra.tagNameDynamic = true;
       }
     }
   }
