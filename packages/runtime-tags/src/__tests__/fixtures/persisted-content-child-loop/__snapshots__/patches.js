@@ -3,13 +3,13 @@
   ca: {
     la: [{
       ta: "1",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "y"
       }
     }, {
       ta: "2",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "y"
       }
@@ -22,7 +22,7 @@
   ca: {
     la: [{
       ta: "1",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "z"
       }
@@ -35,19 +35,19 @@
   ca: {
     la: [{
       ta: "1",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "w"
       }
     }, {
       ta: "2",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "w"
       }
     }, {
       ta: "3",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "w"
       }

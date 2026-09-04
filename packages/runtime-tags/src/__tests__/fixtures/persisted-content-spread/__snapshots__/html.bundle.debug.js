@@ -13,8 +13,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 	}, $scope0_id) };
 	_html(`<main><div${_patch_attrs(input.attrs, "#div/0", $scope0_id, "div", void 0, $scope0_owned, 1)}>`);
-	_patch_dynamic_tag($scope0_id, "#div/0", extra, 0, 0, 0, 0, 0, 0);
-	_attr_content("#div/0", $scope0_id, extra, void 0, 1);
+	_patch_dynamic_tag($scope0_id, "#div/0", extra, 0, 0, 0, 0, 0);
+	_attr_content("#div/0", $scope0_id, extra);
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}<section`);
 	_patch_attrs_content({
 		...input.attrs,

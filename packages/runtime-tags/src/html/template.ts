@@ -41,9 +41,9 @@ export const _template = (
         `mount() is not implemented for the HTML compilation of a Marko template`,
       );
     };
-    (renderer as unknown as Template).renderPatch = () => {
+    (renderer as unknown as Template).patch = () => {
       throw new Error(
-        `renderPatch() is only implemented for templates compiled with the \`persisted\` option`,
+        `patch() is only implemented for templates compiled with the \`persisted\` option`,
       );
     };
   }

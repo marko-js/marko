@@ -426,9 +426,9 @@ export function patchPartial(
   if (!partials) trees.set(serializeState, (partials = {}));
   let partial = partials[scopeId];
   if (!partial) {
-    const pending = state.patchPending?.[scopeId];
+    const link = state.patchLinks?.[scopeId];
+    const pending = link?.[2];
     if (serializeState.readyId && !pending && scopeId !== state.rootScopeId) {
-      const link = state.patchParents?.[scopeId];
       if (link && typeof link[1] === "string") {
         // Hang this scope's partial off its parent's boundary child entry
         // (parent scope `link[0]`, slot `link[1]`): the live page reaches
@@ -450,7 +450,8 @@ export function patchPartial(
     if (pending) {
       // A child links into its parent's entry on its first write; boundary
       // construct ids ride it and a paired branch ignores them.
-      const [parentScopeId, key, contentId, slotIds] = pending;
+      const [parentScopeId, , key, contentId, slotIds] =
+        link as Required<PatchLink>;
       if (contentId) {
         state.shipShell?.(contentId);
         for (const id of slotIds || []) {
@@ -492,13 +493,12 @@ export function _attr_content(
   scopeId: number,
   content: unknown,
   serializeReason?: number,
-  patches?: 1,
 ) {
   const shouldResume = serializeReason !== 0;
   const render = normalizeServerRender(content);
   const branchId = _peek_scope_id();
   const { state } = $chunk.boundary;
-  if (patches && state.writesPatches) {
+  if (state.writesPatches) {
     if (render) state.pairBranch?.(scopeId, nodeAccessor, branchId);
     const renderer = normalizeDynamicRenderer<ServerRenderer>(content);
     const id = typeof renderer === "function" && renderer[RendererProp.Id];
@@ -1616,6 +1616,14 @@ type Mark = Mark.Value;
 
 type RuntimeKey = RuntimeKey.Value;
 
+export type PatchLink = [
+  parentScopeId: number,
+  link: string | [accessor: string, key: unknown],
+  pendingKey?: string,
+  contentId?: string,
+  slotIds?: (string | 0 | undefined)[],
+];
+
 export class State implements SerializeState {
   public tagId = 1;
   public scopeId = 1;
@@ -1675,19 +1683,10 @@ export class State implements SerializeState {
   >;
   declare patchBinds?: number;
   declare binds?: Map<WeakKey, number>;
-  declare patchParents?: Record<
-    number,
-    [parentScopeId: number, link: string | [accessor: string, key: unknown]]
-  >;
-  declare patchPending?: Record<
-    number,
-    [
-      parentScopeId: number,
-      key: string,
-      contentId?: string,
-      slotIds?: (string | 0 | undefined)[],
-    ]
-  >;
+  // How a scope hangs off its parent: the link a bind walk follows (a slot,
+  // or a keyed loop hop) and, until its first write, the entry key its
+  // partial nests under with any boundary construct ids.
+  declare patchLinks?: Record<number, PatchLink>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;
   declare patchDeferred?: 1;

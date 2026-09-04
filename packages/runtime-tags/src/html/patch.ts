@@ -49,6 +49,7 @@ import {
   writePatch,
   _attr_content,
   _html,
+  type PatchLink,
 } from "./writer";
 
 // Intrinsic render summary: what a template's render could depend on
@@ -70,7 +71,7 @@ export function _template_persisted(
   const template = _template(templateId, renderer, page as 1) as Template &
     ServerRenderer &
     WithIntrinsics;
-  template.renderPatch = renderPatch;
+  template.patch = renderPatch;
   if (intrinsics !== undefined) template[kIntrinsics] = intrinsics;
   return template;
 }
@@ -127,7 +128,7 @@ export function renderPatch(
 class PatchState extends State {
   public sentShells?: Set<string>;
   public shellFrames = "";
-  public readyFrames?: Map<string, string>;
+  public readyFrames?: Record<string, string>;
   override writesPatches = true;
 
   // Ready data rides the frame as an explicit record call (see
@@ -135,11 +136,8 @@ class PatchState extends State {
   // never replace it, the page still holds unresumed data for modules that
   // have not loaded — and only the client patch-ready feature knows how.
   override writeReady(id: string, resumes: string) {
-    const existing = this.readyFrames?.get(id);
-    (this.readyFrames ??= new Map()).set(
-      id,
-      existing ? existing + "," + resumes : resumes,
-    );
+    const frames = (this.readyFrames ??= {});
+    frames[id] = frames[id] ? frames[id] + "," + resumes : resumes;
     return "";
   }
   override shipShell(shellId: string | 0 | undefined) {
@@ -154,9 +152,9 @@ class PatchState extends State {
   ) {
     if (!this.patchInert && !peekPatchPartial(this, branchId)) {
       const link = AccessorPrefix.BranchScopes + accessor;
-      (this.patchParents ??= {})[branchId] = [scopeId, link];
-      (this.patchPending ??= {})[branchId] = [
+      (this.patchLinks ??= {})[branchId] = [
         scopeId,
+        link,
         PatchKey.Child + link,
         contentId,
         slotIds,
@@ -173,9 +171,11 @@ class PatchState extends State {
 
   override flushChunk(_html: string, scripts: string) {
     if (this.readyFrames) {
-      const record = [...this.readyFrames]
-        .map(([id, resumes]) => toObjectKey(id) + ":[" + resumes + "]")
-        .join(",");
+      let record = "";
+      for (const id in this.readyFrames) {
+        record +=
+          (record && ",") + toObjectKey(id) + ":[" + this.readyFrames[id] + "]";
+      }
       this.readyFrames = undefined;
       const readyCall = READY_FRAME_VAR + "({" + record + "})";
       // One frame stays one expression: the record call sequences ahead of
@@ -229,10 +229,10 @@ class PatchState extends State {
     // A client-fed selector re-selects on the live page: the frame says nothing.
     if (clientSelected(owned, group)) return 1;
     const branchId = _peek_scope_id();
-    (this.patchParents ??= {})[branchId] = [
+    const link: PatchLink = ((this.patchLinks ??= {})[branchId] = [
       scopeId,
       AccessorPrefix.BranchScopes + accessor,
-    ];
+    ]);
     const branchIndex = withBranchId(branchId, cb);
     const shellId =
       branchIndex === undefined
@@ -260,10 +260,7 @@ class PatchState extends State {
     });
     // Later settle frames nest under the live branch as a Child apply.
     if (branchIndex !== undefined) {
-      (this.patchPending ??= {})[branchId] = [
-        scopeId,
-        PatchKey.Child + AccessorPrefix.BranchScopes + accessor,
-      ];
+      link[2] = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
     return 1 as const;
   }
@@ -306,7 +303,7 @@ class PatchState extends State {
       // Loop items pair by key: the link is a keyed hop the bind walk
       // resolves against the live scopes' loop keys.
       const branchId = _peek_scope_id();
-      (this.patchParents ??= {})[branchId] = [
+      (this.patchLinks ??= {})[branchId] = [
         scopeId,
         [AccessorPrefix.BranchScopes + accessor, itemKey],
       ];
@@ -403,17 +400,17 @@ export function _patch_child(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    (state.patchParents ??= {})[childScopeId] = [scopeId, accessor];
+    const link: PatchLink = ((state.patchLinks ??= {})[childScopeId] = [
+      scopeId,
+      accessor,
+    ]);
     const partial = peekPatchPartial(state, childScopeId);
     if (partial) {
       writePatch(scopeId, {
         [PatchKey.Child + accessor]: partial,
       });
     } else {
-      (state.patchPending ??= {})[childScopeId] = [
-        scopeId,
-        PatchKey.Child + accessor,
-      ];
+      link[2] = PatchKey.Child + accessor;
     }
   }
 }
@@ -514,7 +511,7 @@ export function _patch_bind(
       let cur: number | undefined = scopeId;
       let link;
       while (cur !== undefined && cur !== boundId) {
-        link = state.patchParents?.[cur];
+        link = state.patchLinks?.[cur];
         if (!link?.[1]) {
           cur = undefined;
         } else {
@@ -528,7 +525,7 @@ export function _patch_bind(
         entry[0] = registered.id;
         entry[depth + 1] = accessor;
         for (let i = depth, scope = scopeId; i; i--) {
-          link = state.patchParents![scope]!;
+          link = state.patchLinks![scope]!;
           entry[i] = link[1];
           scope = link[0];
         }
@@ -602,9 +599,8 @@ export function _patch_dynamic_tag(
   accessor: Accessor,
   tag: unknown,
   args: unknown,
-  isArgs: 0 | 1,
-  varId: string | 0,
   contentId: string | 0,
+  varId: string | 0,
   owned?: SerializeReasonValue,
   group?: number,
 ) {
@@ -617,21 +613,24 @@ export function _patch_dynamic_tag(
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
       // An identified renderer ships its comparable id (record in-band or
-      // dom registration); `[renderer, input, isArgs, varId, isTagName]`.
+      // dom registration); a lone one is the entry itself. A native tag name
+      // is `["div"]` alone, `>div` inside a longer entry. Arguments are the
+      // array input.
       if (id) shipShell(state as PatchState, id);
       if (contentId) shipShell(state as PatchState, contentId);
       writeEmbeddedBinds(state as PatchState, args);
+      const native = typeof renderer === "string";
       const entry: unknown[] = [
         id || renderer || 0,
         args || 0,
-        isArgs,
-        varId,
-        typeof renderer === "string" ? 1 : 0,
         contentId,
+        varId,
       ];
       while (entry.length > 1 && !entry[entry.length - 1]) entry.pop();
+      if (native && entry.length > 1) entry[0] = ">" + renderer;
       writePatch(scopeId, {
-        [PatchKey.DynamicTag + accessor]: entry,
+        [PatchKey.DynamicTag + accessor]:
+          entry.length > 1 || native ? entry : entry[0],
       });
     }
   }
@@ -650,11 +649,11 @@ export function _patch_attrs_content(
   group?: number,
 ) {
   const content = data?.content;
-  _patch_dynamic_tag(scopeId, accessor, content, 0, 0, 0, 0, owned, group);
+  _patch_dynamic_tag(scopeId, accessor, content, 0, 0, 0, owned, group);
   _html(
     `${_patch_attrs(withoutContent(data), accessor, scopeId, tagName, controllable, owned, group)}>`,
   );
-  _attr_content(accessor, scopeId, content, serializeReason, 1);
+  _attr_content(accessor, scopeId, content, serializeReason);
 }
 
 export function _patch_attrs_partial_content(
@@ -669,18 +668,17 @@ export function _patch_attrs_partial_content(
   group?: number,
 ) {
   const content = data?.content;
-  _patch_dynamic_tag(scopeId, accessor, content, 0, 0, 0, 0, owned, group);
+  _patch_dynamic_tag(scopeId, accessor, content, 0, 0, 0, owned, group);
   _html(
     `${_patch_attrs_partial(withoutContent(data), skip, accessor, scopeId, tagName, controllable, owned, group)}>`,
   );
-  _attr_content(accessor, scopeId, content, serializeReason, 1);
+  _attr_content(accessor, scopeId, content, serializeReason);
 }
 
 // The content renderer never rides the set: its entry delivers it.
 function withoutContent(data: Record<string, unknown>) {
   if (data?.content === undefined) return data;
-  const set = { ...data };
-  delete set.content;
+  const { content: _, ...set } = data;
   return set;
 }
 

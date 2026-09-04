@@ -12,7 +12,7 @@ var card_default = _template_persisted("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_patch_text($scope1_id, "a", i, void 0, $scope0_owned, 1)}`);
 		const $tag = input.content;
-		_patch_dynamic_tag($scope1_id, "b", $tag, 0, 0, 0, 0, $scope0_owned, 2);
+		_patch_dynamic_tag($scope1_id, "b", $tag, 0, 0, 0, $scope0_owned, 2);
 		_dynamic_tag($scope1_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
 		_html("</li>");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });

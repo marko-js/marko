@@ -5,7 +5,7 @@ var wrap_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
@@ -23,10 +23,10 @@ var template_default = _template_persisted("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $tag = input.tag;
 	const $input2 = { class: input.cls };
-	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, "a0", $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, "a0", 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "a", $tag, $input2, _content_record("a0", $scope0_id), 0, $sg__input_tag__OR__input_cls, 1);
 	const $tag2 = input.wrap ? wrap_default : null;
-	_patch_dynamic_tag($scope0_id, "b", $tag2, 0, 0, 0, "a1", $scope0_owned, 3);
+	_patch_dynamic_tag($scope0_id, "b", $tag2, 0, "a1", 0, $scope0_owned, 3);
 	_dynamic_tag($scope0_id, "b", $tag2, {}, _content_elide("a1", () => {
 		const $scope1_id = _scope_id();
 		_persisted_reason();

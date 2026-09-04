@@ -11,6 +11,6 @@
       }
     }
   }]
-}), [`packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-construct/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-construct/template.marko_1_input_label#4/init packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-construct/template.marko_1_#text#0/init;b%/&;<!><!><!>`, {
+}), [`packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-construct/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-construct/template.marko_1_#text#0/init;b%/&;<!><!><!>`, {
   "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-construct/template.marko_1*shell"
 }])

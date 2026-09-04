@@ -214,10 +214,10 @@ Per reason group at a templated call site: the feeding provenance
 Translate composes ownership masks and admission from it.
 _Avoid_: group ownership
 
-**Poison**:
-A runtime patch entry marking a region unanalyzable, forcing navigation.
-Translate/runtime only; analyze records why faithful patching is
-impossible, not the mechanism.
+**Bind `0`**:
+The serializer's last resort for a handler no recorded link reaches: the
+frame commit check rejects it and the client navigates. Analyze records why
+a faithful patch is impossible, never the mechanism.
 
 ## Compilation modes
 

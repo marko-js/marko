@@ -1,11 +1,11 @@
 // PATCH
 [`a,<em>alpha</em>`, {
-  fa: ["a"],
+  fa: "a",
   tb: "two"
 }]
 
 // PATCH
 [`b,<strong>beta</strong>`, {
-  fa: ["b"],
+  fa: "b",
   tb: "three"
 }]

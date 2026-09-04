@@ -82,12 +82,6 @@ export default {
     if (binding) {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
-      // A composite (ternary, object) delivers a bound function whenever
-      // it contains one; selection among function-valued bindings
-      // propagates during source resolution.
-      t.traverseFast(valueAttr.value, (n) => {
-        if (t.isFunction(n)) binding.functionValued = true;
-      });
       if (!upstreamAlias) {
         // Keep unread initializers because their expressions may have side effects;
         // downstream minification can discard proven-pure values.

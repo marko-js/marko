@@ -15,8 +15,8 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id) };
 	_html("<main><section>");
 	const $content = input.mode ? frag.content : null;
-	_patch_dynamic_tag($scope0_id, "a", $content, 0, 0, 0, 0, $scope0_owned, 2);
-	_attr_content("a", $scope0_id, $content, void 0, 1);
+	_patch_dynamic_tag($scope0_id, "a", $content, 0, 0, 0, $scope0_owned, 2);
+	_attr_content("a", $scope0_id, $content);
 	_html(`</section>${_el_resume($scope0_id, "a")}<p>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_owned, 1)}</p></main>`);
 	$scope0_reason && _scope($scope0_id, {
 		e: input.note,

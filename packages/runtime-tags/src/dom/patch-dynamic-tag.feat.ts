@@ -13,28 +13,32 @@ import { getShellContent, shells } from "./patch-shells";
 import type { Renderer } from "./renderer";
 import { constructPatchers, getRegisteredWithScope, patchers } from "./resume";
 
-// `[renderer, input, isArgs, varId, isTagName, contentId]`: ids resolve to
-// a shipped record or dom registration; the var id to the tag variable.
+// `[renderer, input, contentId, varId]`, a lone renderer bare: ids resolve
+// to a shipped record or dom registration; a native tag name is `["div"]`
+// alone, `>div` in a longer entry; array input is arguments.
 patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
   scope,
   key,
   entry,
 ) => {
   const accessor = key.slice(PatchKey.DynamicTag.length) as Accessor;
-  let [renderer, input, isArgs, varId, isTagName, contentId] = entry as [
+  const bare = !Array.isArray(entry);
+  let [renderer, input, contentId, varId] = (bare ? [entry] : entry) as [
     unknown,
     unknown,
-    0 | 1 | undefined,
     string | 0 | undefined,
-    0 | 1 | undefined,
     string | 0 | undefined,
   ];
-  if (typeof renderer === "string" && !isTagName) {
-    const current = scope[
-      (AccessorPrefix.ConditionalRenderer + accessor) as Accessor
-    ] as string | undefined;
-    if (!input && current?.split(" ")[0] === renderer) return;
-    renderer = resolveContent(renderer);
+  if (typeof renderer === "string" && (bare || input !== undefined)) {
+    if (renderer[0] === ">") {
+      renderer = renderer.slice(1);
+    } else {
+      const current = scope[
+        (AccessorPrefix.ConditionalRenderer + accessor) as Accessor
+      ] as string | undefined;
+      if (!input && current?.split(" ")[0] === renderer) return;
+      renderer = resolveContent(renderer);
+    }
   }
   (
     _dynamic_tag(
@@ -48,7 +52,7 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
               ) => void
             )(value)
         : 0,
-      isArgs || undefined,
+      Array.isArray(input) as unknown as 1,
     ) as (scope: Scope, renderer: unknown, getInput?: () => unknown) => void
   )(scope, renderer || undefined, input ? () => input : undefined);
 };

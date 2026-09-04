@@ -17,7 +17,7 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "_a", [{
 }], 1);
 _shells({
 	b: "b; ;<main></main>",
-	b0: "b0 b2 b3;b%/&;<!><!><!>"
+	b0: "b0 b2;b%/&;<!><!><!>"
 });
 var template_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);

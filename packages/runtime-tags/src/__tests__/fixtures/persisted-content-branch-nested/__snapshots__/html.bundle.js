@@ -7,7 +7,7 @@ var widget_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_owned, 0)}</p>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, 0, $scope0_owned, 1);
+	_patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1);
 	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);

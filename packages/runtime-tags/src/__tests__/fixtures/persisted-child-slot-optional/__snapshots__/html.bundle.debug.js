@@ -7,7 +7,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	const $scope0_id = _scope_id();
 	_html(`<div class=card><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h1>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, 0, $scope0_owned, 1);
+	_patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1);
 	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);

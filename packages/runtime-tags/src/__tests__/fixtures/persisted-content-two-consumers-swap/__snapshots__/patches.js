@@ -9,7 +9,7 @@
   bb: [{
     ca: {
       ta: "b",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "x"
       }
@@ -28,7 +28,7 @@
   bb: [{
     ca: {
       ta: "d",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "y"
       }
@@ -58,7 +58,7 @@
   bb: [{
     ca: {
       ta: "f",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "w"
       }

@@ -12,7 +12,7 @@ var panel_default = _template_persisted("__tests__/tags/panel/index.marko", (inp
 		if (input.open) {
 			const $scope1_id = _scope_id();
 			const $tag = input.body;
-			_patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 2);
+			_patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 2);
 			_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, $sg__input_body, 1);
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel/index.marko", "1:2");
 			return 0;
