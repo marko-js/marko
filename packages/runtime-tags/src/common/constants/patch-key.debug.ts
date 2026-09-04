@@ -14,6 +14,7 @@ export const Init = "PatchInit:";
 export const Loop = "PatchLoop:";
 export const Pending = "PatchPending:";
 export const Setup = "PatchSetup:";
+export const Style = "PatchStyle:";
 export const Text = "PatchText:";
 export const TextContent = "PatchTextContent:";
 export const Value = "PatchValue:";

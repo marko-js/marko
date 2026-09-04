@@ -12,7 +12,12 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 // template.marko
 const $template = "<main></main>";
 const $walks = " b";
-_shells({ "__tests__/template.marko": "__tests__/template.marko; ;<main></main>" });
+_shells({
+	"__tests__/template.marko_2*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*content;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), /*@__PURE__*/ ((_w0) => `${_w0}<em> </em>`)("")),
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
+	"__tests__/template.marko_1_#text#0/await": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1_#text#0/await;${_w0};${_w1}`)(((_w0) => `0${_w0}&D l`)(""), ((_w0) => `${_w0}<em> </em>`)("")),
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
+});
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -32,11 +37,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/template.marko", "3:6"));
-			}, 1);
+			}, 1, "__tests__/template.marko_1_#text#0/await");
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, [0], $scope0_owned, 1);
+	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, {
 		input_value: input.value,

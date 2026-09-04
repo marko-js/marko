@@ -29,6 +29,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $childScope = _peek_scope_id();
 			let { valueChange: $valueChange, value } = counter_default({});
 			_var($scope1_id, "b", $childScope, "a0");
+			_owned_guard(0, 0) && _patch_write($scope1_id, "f", value, 1);
 			_html(`<p>${_text_resume($scope1_id, "c", value)}</p><button class=reset>r</button>${_el_resume($scope1_id, "d")}`);
 			_script($scope1_id, "a1");
 			_scope($scope1_id, {

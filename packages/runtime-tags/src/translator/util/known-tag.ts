@@ -173,6 +173,8 @@ export function knownTagAnalyze(
     onFinalizePersisted(() => {
       if (!inStatefulBranch(section)) {
         addRuntimeFeatureAsset("patch-child");
+        // A construct seeds the tag var through the bind channel.
+        if (tag.node.var) addRuntimeFeatureAsset("patch-value-bind");
       }
     });
   }
@@ -429,7 +431,37 @@ export function knownTagTranslateHTML(
       "let",
       statements,
     );
-    if (varStatement) statements.push(varStatement);
+    if (varStatement) {
+      statements.push(varStatement);
+      // A construct has no wired child return: the var seeds (only there),
+      // a registered return riding the frame's bind table.
+      if (isPersisted()) {
+        for (const name in t.getBindingIdentifiers(tag.node.var!)) {
+          const varBinding = tag.scope.getBinding(name)?.identifier.extra
+            ?.binding as Binding | undefined;
+          if (!varBinding) continue;
+          statements.push(
+            t.expressionStatement(
+              t.logicalExpression(
+                "&&",
+                callRuntime(
+                  "_owned_guard",
+                  t.numericLiteral(0),
+                  t.numericLiteral(0),
+                ),
+                callRuntime(
+                  "_patch_write",
+                  getScopeIdIdentifier(section),
+                  getScopeAccessorLiteral(varBinding),
+                  t.identifier(name),
+                  t.numericLiteral(1),
+                ),
+              ),
+            ),
+          );
+        }
+      }
+    }
   } else if (clientOwnedStatements) {
     // The render-wide persisted reason is the page-vs-patch bit: truthy on
     // a page render (serialize + render the child), falsy on a patch. A
@@ -476,6 +508,7 @@ export function knownTagTranslateDOM(
   // program, so the feature import rides both outputs.
   if (isPersisted() && !inStatefulBranch(getSection(tag))) {
     importRuntimeFeature("patch-child");
+    if (tag.node.var) importRuntimeFeature("patch-value-bind");
     for (const group of getParamGroupFeeds(extra) || []) {
       if (
         group.sources?.state &&
@@ -503,18 +536,17 @@ export function knownTagTranslateDOM(
       }
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
+    const wireVar = callRuntime(
+      "_var",
+      scopeIdentifier,
+      getScopeAccessorLiteral(childScopeBinding, true),
+      source.identifier,
+    );
     addStatement(
       "prepare",
       tagSection,
       undefined,
-      t.expressionStatement(
-        callRuntime(
-          "_var",
-          scopeIdentifier,
-          getScopeAccessorLiteral(childScopeBinding, true),
-          source.identifier,
-        ),
-      ),
+      t.expressionStatement(wireVar),
     );
   }
   callSetup?.(tagSection, childScopeBinding);

@@ -20,6 +20,7 @@ import {
   _attrs_partial,
   stringAttr,
 } from "./attrs";
+import { _escape_style_value } from "./content";
 import { _to_text, _unescaped } from "./content";
 import {
   getRegistered,
@@ -39,6 +40,7 @@ import {
   isInResumedBranch,
   maskGroup,
   patchPartial,
+  writeEmbeddedBinds,
   peekPatchPartial,
   type ScopeInternals,
   type SerializeReasonValue,
@@ -124,7 +126,6 @@ export function renderPatch(
 // source: a frame carries only patch fills.
 class PatchState extends State {
   public sentShells?: Set<string>;
-  public binds?: Map<WeakKey, number>;
   public shellFrames = "";
   public readyFrames?: Map<string, string>;
   override writesPatches = true;
@@ -565,6 +566,7 @@ export function _patch_write(
 ) {
   const state = getState();
   if (state.writesPatches) {
+    if (setup && !isInResumedBranch()) return "";
     writeEmbeddedBinds(state as PatchState, value);
     if (setup) {
       const partial = patchPartial(state, scopeId);
@@ -578,50 +580,6 @@ export function _patch_write(
     }
   }
   return "";
-}
-
-// Binds each scope-bound registration in a patch value while the
-// partial tree still accepts writes; the serialized slot references it.
-function writeEmbeddedBinds(
-  state: PatchState,
-  value: unknown,
-  seen?: Set<unknown>,
-) {
-  if (
-    !value ||
-    (typeof value !== "object" && typeof value !== "function") ||
-    seen?.has(value)
-  ) {
-    return;
-  }
-  const registered = getRegistered(value as WeakKey);
-  const bound = registered && (registered.scope as ScopeInternals | undefined);
-  if (bound) {
-    const binds = (state.binds ??= new Map());
-    if (!binds.has(value as WeakKey)) {
-      const n = (state.patchBinds = (state.patchBinds || 0) + 1);
-      writePatch(bound[K_SCOPE_ID]!, {
-        [PatchKey.BindSource + n]: registered.id,
-      });
-      binds.set(value as WeakKey, n);
-    }
-    return;
-  }
-  (seen ??= new Set()).add(value);
-  if (Array.isArray(value)) {
-    for (const item of value) writeEmbeddedBinds(state, item, seen);
-  } else if (value instanceof Map) {
-    for (const [key, item] of value) {
-      writeEmbeddedBinds(state, key, seen);
-      writeEmbeddedBinds(state, item, seen);
-    }
-  } else if (value instanceof Set) {
-    for (const item of value) writeEmbeddedBinds(state, item, seen);
-  } else if (typeof value === "object") {
-    for (const key in value) {
-      writeEmbeddedBinds(state, (value as Record<string, unknown>)[key], seen);
-    }
-  }
 }
 
 export function _patch_effect(
@@ -779,6 +737,30 @@ export function _patch_html(
 
 // A text-only body (`<title>`, `<style>`, a comment): the entry carries
 // the plain text; the html output escapes it for its own namespace.
+// A `<style>` interpolation: the write doubles as the escaped output.
+export function _patch_style(
+  scopeId: number,
+  accessor: Accessor,
+  name: string,
+  value: unknown,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const state = getState();
+  if (state.writesPatches) {
+    writeOwned(
+      scopeId,
+      PatchKey.Style + accessor + " " + name,
+      value,
+      owned,
+      group,
+    );
+  } else {
+    getChunk()!.needsWalk = true;
+  }
+  return _escape_style_value(value);
+}
+
 export function _patch_text_content(
   scopeId: number,
   accessor: Accessor,

@@ -17,6 +17,7 @@ var kid_default = _template_persisted("__tests__/tags/kid.marko", (input) => {
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)($walks$1);
+_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko;${_w0};${_w1}`)(((_w0) => `0${_w0}&D l`)($walks$1), ((_w0) => `${_w0}<p> </p>`)($template$1)) });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -24,6 +25,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let x = kid_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_x#3/var");
+	_owned_guard(0, 0) && _patch_write($scope0_id, "x", x, 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/2", x)}</p>`);
 	$scope0_reason && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1, () => [kid_default]);

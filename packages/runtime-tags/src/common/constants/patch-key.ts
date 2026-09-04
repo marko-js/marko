@@ -24,6 +24,8 @@ export const Init = "i";
 export const Loop = "l";
 export const Pending = "p";
 export const Setup = "s";
+// A `<style>` interpolation: `accessor name`, the client rewrites the rule.
+export const Style = "y";
 export const Text = "t";
 // A text-only element (or comment) body: the client rewrites its content.
 export const TextContent = "m";

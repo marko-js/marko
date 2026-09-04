@@ -173,12 +173,12 @@ function isShellExpressible(section: Section, visiting = new Set<Section>()) {
       // Static text is plain markup, expressible like a markup string.
       op.kind !== StructureKind.Text &&
       // A known child composes when its root is expressible (nested
-      // branches/boundaries pair via their own entries) and has no tag var.
+      // branches/boundaries pair via their own entries); a tag var wires
+      // as a construct init.
       // A renderer-less child is a lazy site: only its marker expresses
       // (the loaded module renders the markup client-side).
       !(
         op.kind === StructureKind.Child &&
-        !op.hasVar &&
         (!op.renderer ||
           (op.renderer.kind === StructureKind.ExportRef &&
             isShellExpressible(op.renderer.program.section!, visiting)))

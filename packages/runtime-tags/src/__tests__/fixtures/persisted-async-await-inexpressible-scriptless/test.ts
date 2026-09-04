@@ -1,11 +1,9 @@
 import type { TestConfig } from "../../main.test";
 
-// A scriptless await body only a dom registration could render (a child tag
-// variable) blocks its branch's shell (`inexpressibleAwaitBody`), so
-// revealing the branch rejects to navigation.
+// A scriptless await body holding a child tag variable constructs from its
+// shipped record; the variable's write-back wires the child.
 export const config: TestConfig = {
   persisted: true,
-  expect_rejection: true,
   steps: [
     { show: false, value: "x" },
     { show: true, value: "x" },

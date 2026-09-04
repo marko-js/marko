@@ -30,6 +30,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $childScope = _peek_scope_id();
 			let w = widget_default({ label: input.label });
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_w#3/var");
+			_owned_guard(0, 0) && _patch_write($scope1_id, "w", w, 1);
 			_html(`<p class=echo>${_text_resume($scope1_id, "#text/2", w)}</p>`);
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 			return 0;

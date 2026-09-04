@@ -16,6 +16,7 @@ var tagger_default = _template_persisted("__tests__/tags/tagger/index.marko", (i
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p> </p></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D0${_w0}&D m`)("b");
+_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko;${_w0};${_w1}`)(((_w0) => `D0${_w0}&D m`)("b"), ((_w0) => `<main>${_w0}<p> </p></main>`)($template$1)) });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
