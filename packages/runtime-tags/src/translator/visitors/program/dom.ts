@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { importDefault } from "@marko/compiler/babel-utils";
+import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
@@ -80,7 +80,7 @@ export default {
       let extraDecls = decls;
       const styleFile = program.node.extra.styleFile;
       if (styleFile) {
-        importDefault(program.hub.file, styleFile);
+        importDefault(getFile(), styleFile);
       }
 
       forEachSectionReverse((childSection) => {
@@ -218,7 +218,7 @@ export default {
         t.exportDefaultDeclaration(
           callRuntime(
             "_template",
-            t.stringLiteral(program.hub.file.metadata.marko.id),
+            t.stringLiteral(getFile().metadata.marko.id),
             ...replaceNullishAndEmptyFunctionsWith0([
               templateIdentifier,
               walksIdentifier,

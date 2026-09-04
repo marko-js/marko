@@ -4,6 +4,7 @@ import {
   assertNoAttributeTags,
   assertNoParams,
   diagnosticWarn,
+  getFile,
   getProgram,
   parseStatements,
   type Tag,
@@ -29,7 +30,7 @@ export default {
       let code = "";
       for (const child of body) {
         if (child.type !== "MarkoText") {
-          throw tag.hub.file.hub.buildError(
+          throw getFile().hub.buildError(
             child,
             "Unexpected content in [`<script>` tag](https://markojs.com/docs/reference/core-tag#script). Only javascript and typescript is supported." +
               htmlScriptTagAlternateMsg,
@@ -42,7 +43,7 @@ export default {
 
       const start = body[0]?.start;
       const end = body[body.length - 1]?.end;
-      const bodyStatements = parseStatements(tag.hub.file, code, start, end);
+      const bodyStatements = parseStatements(getFile(), code, start, end);
       if (bodyStatements.length) {
         const valueFn = t.arrowFunctionExpression(
           [],
