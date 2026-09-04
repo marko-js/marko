@@ -1,0 +1,5 @@
+import CycB from "./cyc-b.marko";
+<div>a ${input.depth}</div>
+<if=input.depth < 2>
+  <CycB depth=input.depth + 1/>
+</if>

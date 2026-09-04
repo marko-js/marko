@@ -338,6 +338,10 @@ function getMarkoFile(code, fileOpts, markoOpts) {
 
           throwAggregateError(errors);
         }
+
+        // Ready to translate; a file still at "analyze" is mid-analysis (an
+        // import cycle loaded it from inside its own analysis).
+        file.___compileStage = "translate";
       } catch (e) {
         compileCache.delete(id);
         throw e;
