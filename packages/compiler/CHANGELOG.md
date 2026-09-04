@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.42.4
+
+### Patch Changes
+
+- [#4097](https://github.com/marko-js/marko/pull/4097) [`29d1db2`](https://github.com/marko-js/marko/commit/29d1db2bd86ef49bbeaf00c2d14af73e1b9b53d6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Advance a file's compile stage to `translate` as soon as its analysis completes, so a translator can tell a template loaded mid-analysis (an import cycle) from one that finished.
+
+- [#4092](https://github.com/marko-js/marko/pull/4092) [`26e88cd`](https://github.com/marko-js/marko/commit/26e88cd71a42c75f01d760ae874f866462ad9f9e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a compile error for a spread argument on a custom tag (`<child(...args)/>`). A template cannot reference its arguments, and the client output previously imported a signal the child never exported.
+
 ## 5.42.3
 
 ### Patch Changes

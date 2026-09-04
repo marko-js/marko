@@ -1,5 +1,26 @@
 # @marko/runtime-tags
 
+## 6.3.49
+
+### Patch Changes
+
+- [#4097](https://github.com/marko-js/marko/pull/4097) [`29d1db2`](https://github.com/marko-js/marko/commit/29d1db2bd86ef49bbeaf00c2d14af73e1b9b53d6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix custom tags that form a cycle across files (`<cyc-a>` renders `<cyc-b>`, which renders `<cyc-a>`). The site that closes the cycle now renders through the dynamic tag runtime instead of composing the not-yet-analyzed child's template, which produced a `Cannot access '$template' before initialization` error in the client bundle.
+
+- [#4090](https://github.com/marko-js/marko/pull/4090) [`cae3409`](https://github.com/marko-js/marko/commit/cae3409998f555789ab09f48541fb330ea26efc0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Register functions passed to a child template that spreads them onto a dynamic tag. A native dynamic tag serializes its event handlers regardless of the parent's serialize guards, so the parent left them unregistered and SSR threw `Unable to serialize (reading ["EventAttributes:..."])`.
+
+- [#4091](https://github.com/marko-js/marko/pull/4091) [`7a669e3`](https://github.com/marko-js/marko/commit/7a669e3f15ca1da93b80cc38adf3779daa055727) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `<for|...args|>` serializing its params under a generated name nothing declared, which threw a `ReferenceError` at render once a handler read `args`.
+
+- [#4093](https://github.com/marko-js/marko/pull/4093) [`51afc53`](https://github.com/marko-js/marko/commit/51afc53377275935e4ca26e3dab6d2f1124d01e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize less resume data by letting the client walker infer what the markers already imply:
+
+  - A `<try>` no longer serializes its `BranchAccessor`; the walker reads it off the branch end mark. Its `@catch` and `@placeholder` renderers ship only when something inside the boundary resumes: a body that finished synchronously without a resume write drops the boundary entirely, and a body that went async before writing anything sends the renderers once it settles with resumable content (or once its catch fires with resumable content). This covers placeholder-only boundaries too.
+  - A scope that writes a node or branch end marker no longer serializes `ClosestBranchId`; the walker parents every marker's owner when the enclosing branch ends. The translator knows which markers a section writes and under which guard, so `_resume_branch` (and the link an effect in async or lazy content writes) is dropped or guarded at compile time.
+  - Reordered content (a placeholder body, an async catch) is bracketed by the reorder runtime so the walker parents its branches and owners to the branch that encloses it. This also fixes a throw from a nested placeholder-only `<try>` escaping the enclosing `@catch`, because such branches previously never got a parent.
+
+  Scope data that lands after a branch was destroyed no longer revives that scope.
+
+- Updated dependencies [[`29d1db2`](https://github.com/marko-js/marko/commit/29d1db2bd86ef49bbeaf00c2d14af73e1b9b53d6), [`26e88cd`](https://github.com/marko-js/marko/commit/26e88cd71a42c75f01d760ae874f866462ad9f9e)]:
+  - @marko/compiler@5.42.4
+
 ## 6.3.48
 
 ### Patch Changes
