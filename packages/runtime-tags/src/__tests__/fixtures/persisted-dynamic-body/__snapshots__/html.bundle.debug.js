@@ -7,7 +7,7 @@ var box_a_default = _template_persisted("__tests__/box-a.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div class=a>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/box-a.marko", 0);
@@ -22,7 +22,7 @@ var box_b_default = _template_persisted("__tests__/box-b.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<p class=b>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
 	_html("</p>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/box-b.marko", 0);
@@ -41,7 +41,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $input_text__closures = new Set();
 	_html("<main>");
 	const $tag = input.mode === "a" ? box_a_default : box_b_default;
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, "__tests__/template.marko_1*content", $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, "__tests__/template.marko_1*content", 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "#text/0", $tag, {}, _content_elide("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _persisted_reason();

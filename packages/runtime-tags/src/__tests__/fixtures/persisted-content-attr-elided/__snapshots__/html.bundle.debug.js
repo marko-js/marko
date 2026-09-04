@@ -17,8 +17,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id) };
 	_html("<main><section>");
 	const $content = input.mode ? frag.content : null;
-	_patch_dynamic_tag($scope0_id, "#section/0", $content, 0, 0, 0, 0, $scope0_owned, 2);
-	_attr_content("#section/0", $scope0_id, $content, void 0, 1);
+	_patch_dynamic_tag($scope0_id, "#section/0", $content, 0, 0, 0, $scope0_owned, 2);
+	_attr_content("#section/0", $scope0_id, $content);
 	_html(`</section>${_el_resume($scope0_id, "#section/0")}<p>${_patch_text($scope0_id, "#text/1", input.note, void 0, $scope0_owned, 1)}</p></main>`);
 	$scope0_reason && _scope($scope0_id, {
 		input_note: input.note,

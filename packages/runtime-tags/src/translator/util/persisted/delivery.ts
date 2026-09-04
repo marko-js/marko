@@ -308,15 +308,12 @@ function hasRegisteredFnCapture(binding: Binding): boolean {
 }
 
 // Closures whose construct INITs render a fresh scope: state closures
-// through their own signal, fill closures as arrivals at the joins they feed,
-// and lazy-child input feeds (the stash must exist before the module loads).
+// through their own signal, fill closures as arrivals at the joins they feed.
+// A lazy child's server-owned input reaches it through its ready channel.
 export function getConstructInitClosures(section: Section) {
   return filter(
     section.referencedClosures as Opt<Binding>,
-    (closure) =>
-      !!closure.sources?.state ||
-      fillJoinsIn(closure, section) ||
-      feedsTagNameLoadIn(closure, section),
+    (closure) => !!closure.sources?.state || fillJoinsIn(closure, section),
   );
 }
 

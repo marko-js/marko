@@ -5,7 +5,7 @@ var panel_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div class=panel>");
 	const $tag = input.header;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_header, 1);
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {});

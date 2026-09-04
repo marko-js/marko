@@ -1003,7 +1003,6 @@ export default {
                   t.numericLiteral(0),
                   t.numericLiteral(0),
                   t.numericLiteral(0),
-                  t.numericLiteral(0),
                   ...getExprWriteOwnership(staticContentAttr.value.extra || {}),
                 ),
               ),
@@ -1021,7 +1020,6 @@ export default {
                   nodeBinding && getSerializeReason(tagSection, nodeBinding),
                   true,
                 ),
-                patched && t.numericLiteral(1),
               ),
             ),
           );

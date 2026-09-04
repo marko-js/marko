@@ -537,21 +537,20 @@ export default {
                 getScopeAccessorLiteral(nodeBinding),
                 t.cloneNode(tagExpression),
                 input ? t.cloneNode(input) : t.numericLiteral(0),
-                t.numericLiteral(hasTagArgs ? 1 : 0),
+                contentProp
+                  ? t.stringLiteral(
+                      getResumeRegisterId(
+                        getSectionForBody(tag.get("body"))!,
+                        "content",
+                      ),
+                    )
+                  : t.numericLiteral(0),
                 node.var
                   ? t.stringLiteral(
                       getResumeRegisterId(
                         tagSection,
                         node.var.extra?.binding,
                         "var",
-                      ),
-                    )
-                  : t.numericLiteral(0),
-                contentProp
-                  ? t.stringLiteral(
-                      getResumeRegisterId(
-                        getSectionForBody(tag.get("body"))!,
-                        "content",
                       ),
                     )
                   : t.numericLiteral(0),

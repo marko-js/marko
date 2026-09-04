@@ -3,7 +3,7 @@
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "b",
-      "PatchDynamicTag:#text/1": ["packages/runtime-tags/src/__tests__/fixtures/persisted-content-dynamic-body/template.marko_2*content"],
+      "PatchDynamicTag:#text/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-dynamic-body/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchText:#text/0": "y"
       }

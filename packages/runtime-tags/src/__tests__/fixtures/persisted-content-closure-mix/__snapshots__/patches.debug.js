@@ -5,7 +5,7 @@
   },
   "PatchLoop:#main/0": [{
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": [_.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-content-closure-mix/template.marko_2*content"],
+      "PatchDynamicTag:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-content-closure-mix/template.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Acme",
         "PatchText:#text/1": "q",
@@ -14,7 +14,7 @@
     }
   }, {
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": [_.a],
+      "PatchDynamicTag:#text/0": _.a,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Acme",
         "PatchText:#text/1": "q",
@@ -31,7 +31,7 @@
   },
   "PatchLoop:#main/0": [{
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": [_.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-content-closure-mix/template.marko_2*content"],
+      "PatchDynamicTag:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-content-closure-mix/template.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Zed",
         "PatchText:#text/1": "q",
@@ -40,7 +40,7 @@
     }
   }, {
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": [_.a],
+      "PatchDynamicTag:#text/0": _.a,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Zed",
         "PatchText:#text/1": "q",
@@ -49,7 +49,7 @@
     }
   }, {
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": [_.a],
+      "PatchDynamicTag:#text/0": _.a,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Zed",
         "PatchText:#text/1": "q",

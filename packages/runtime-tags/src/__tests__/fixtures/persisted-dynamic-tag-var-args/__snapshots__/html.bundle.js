@@ -28,7 +28,7 @@ var template_default = _template_persisted("b", (input) => {
 	_html("<main>");
 	const $tag = input.on ? counter_default : null;
 	const $input2 = [input.start];
-	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, 1, "b0", 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, "b0", $scope0_owned, 0);
 	const $inputoncounternull_scope = _peek_scope_id();
 	let n = _dynamic_tag($scope0_id, "a", $tag, [...$input2], 0, 1, void 0, 1);
 	_var($scope0_id, "b", $inputoncounternull_scope, "b0");

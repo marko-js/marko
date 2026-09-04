@@ -7,7 +7,7 @@ var wrap_default = _template_persisted("__tests__/tags/wrap.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/wrap.marko", 0);
@@ -27,10 +27,10 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $input_note__closures = new Set();
 	const $tag = input.tag;
 	const $input2 = { class: input.cls };
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, "__tests__/template.marko_2*content", $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, "__tests__/template.marko_2*content", 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "#text/0", $tag, $input2, _content_record("__tests__/template.marko_2*content", $scope0_id), 0, $sg__input_tag__OR__input_cls, 1);
 	const $tag2 = input.wrap ? wrap_default : null;
-	_patch_dynamic_tag($scope0_id, "#text/1", $tag2, 0, 0, 0, "__tests__/template.marko_1*content", $scope0_owned, 3);
+	_patch_dynamic_tag($scope0_id, "#text/1", $tag2, 0, "__tests__/template.marko_1*content", 0, $scope0_owned, 3);
 	_dynamic_tag($scope0_id, "#text/1", $tag2, {}, _content_elide("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _persisted_reason();

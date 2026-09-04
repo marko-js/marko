@@ -96,10 +96,17 @@ export function installPatchReady(
 // Commits deferred ready-channel data after its module loads: the wrapped
 // partials already sit in the render's ready record, so an empty frame run
 // applies them under the same commit sequence as `applyPatch`.
-export function applyReadyPatch(renderId: string, runtimeId: string) {
+// Deferred batches join the ready record only inside the patch context:
+// the walk `beginPatch` finishes would otherwise read them as page data.
+export function applyReadyPatch(
+  renderId: string,
+  runtimeId: string,
+  push: (render: RenderData) => void,
+) {
   init(runtimeId);
   const render = beginPatch(renderId);
   try {
+    push(render);
     commitFrame(render);
     return true;
   } catch (error) {

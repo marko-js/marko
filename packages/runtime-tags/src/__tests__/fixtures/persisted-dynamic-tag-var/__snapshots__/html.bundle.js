@@ -23,7 +23,7 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $tag = input.which ? one_default : two_default;
 	const $input2 = { a: input.a };
-	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, "a0", 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, "a0", $scope0_owned, 0);
 	const $inputwhichonetwo_scope = _peek_scope_id();
 	let x = _dynamic_tag($scope0_id, "a", $tag, $input2, void 0, void 0, void 0, 1);
 	_var($scope0_id, "b", $inputwhichonetwo_scope, "a0");

@@ -25,7 +25,7 @@ var template_default = _template_persisted("c", (input) => {
 	_html("<main>");
 	const $tag = input.mode === "a" ? card_a_default : card_b_default;
 	const $input2 = { label: input.label };
-	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, $scope0_owned, 0);
 	_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, _source_guard($scope0_reason, 0), 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "c0");

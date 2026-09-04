@@ -14,7 +14,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const $tag = input.content;
-			_patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 2);
+			_patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 2);
 			_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;

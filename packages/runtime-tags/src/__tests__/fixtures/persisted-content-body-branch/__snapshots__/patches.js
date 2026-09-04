@@ -3,7 +3,7 @@
   ba: [{
     ca: {
       ta: "t",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ba: [1, {
           ta: "x"
@@ -18,7 +18,7 @@
   ba: [{
     ca: {
       ta: "u",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ba: [1, {
           ta: "y"
@@ -33,7 +33,7 @@
   ba: [{
     ca: {
       ta: "u",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ba: [{
           ta: "y"
@@ -48,7 +48,7 @@
   ba: [{
     ca: {
       ta: "v",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ba: [{
           ta: "z"
@@ -68,7 +68,7 @@
   ba: [{
     ca: {
       ta: "w",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ba: [1, {
           ta: "w"

@@ -495,7 +495,7 @@ function testFixtures(interop?: true) {
                     tracker.beginUpdate();
                     let applied = true;
                     const frames: string[] = [];
-                    for await (const frame of template.renderPatch(input)) {
+                    for await (const frame of template.patch(input)) {
                       if (frames.length && betweenFrames) {
                         tracker.logUpdate(input);
                         tracker.beginUpdate();

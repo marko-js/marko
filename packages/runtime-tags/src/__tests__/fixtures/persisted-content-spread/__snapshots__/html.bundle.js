@@ -11,8 +11,8 @@ var template_default = _template_persisted("a", (input) => {
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html(`<main><div${_patch_attrs(input.attrs, "a", $scope0_id, "div", void 0, $scope0_owned, 1)}>`);
-	_patch_dynamic_tag($scope0_id, "a", extra, 0, 0, 0, 0, 0, 0);
-	_attr_content("a", $scope0_id, extra, void 0, 1);
+	_patch_dynamic_tag($scope0_id, "a", extra, 0, 0, 0, 0, 0);
+	_attr_content("a", $scope0_id, extra);
 	_html(`</div>${_el_resume($scope0_id, "a")}<section`);
 	_patch_attrs_content({
 		...input.attrs,

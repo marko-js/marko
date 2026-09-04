@@ -32,7 +32,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main>");
 	const $tag = input.on ? counter_default : null;
 	const $input2 = [input.start];
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 1, "__tests__/template.marko_0_n#8/var", 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, "__tests__/template.marko_0_n#8/var", $scope0_owned, 0);
 	const $inputoncounternull_scope = _peek_scope_id();
 	let n = _dynamic_tag($scope0_id, "#text/0", $tag, [...$input2], 0, 1, void 0, 1);
 	_var($scope0_id, "#scopeOffset/1", $inputoncounternull_scope, "__tests__/template.marko_0_n#8/var");

@@ -2,10 +2,10 @@
 [`a0;D l%;<p> </p><!><!>`, `a1;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: ["a0"],
+      fa: "a0",
       cAa: {
         ta: "x",
-        fb: ["div", 0, 0, 0, 1]
+        fb: ["div"]
       }
     }
   }, "a1"]
@@ -15,10 +15,10 @@
 [`a0;D l%;<p> </p><!><!>`, `a1;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: ["a0"],
+      fa: "a0",
       cAa: {
         ta: "y",
-        fb: ["div", 0, 0, 0, 1]
+        fb: ["div"]
       }
     }
   }, "a1"]
@@ -28,10 +28,10 @@
 [`a0;D l%;<p> </p><!><!>`, `a1;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: ["a0"],
+      fa: "a0",
       cAa: {
         ta: "y",
-        fb: ["span", 0, 0, 0, 1]
+        fb: ["span"]
       }
     }
   }, "a1"]
@@ -41,10 +41,10 @@
 [`a0;D l%;<p> </p><!><!>`, `a1;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: ["a0"],
+      fa: "a0",
       cAa: {
         ta: "z",
-        fb: ["em", 0, 0, 0, 1]
+        fb: ["em"]
       }
     }
   }, "a1"]
@@ -54,10 +54,10 @@
 [`a0;D l%;<p> </p><!><!>`, `a1;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: ["a0"],
+      fa: "a0",
       cAa: {
         ta: "z",
-        fb: [0]
+        fb: 0
       }
     }
   }, "a1"]

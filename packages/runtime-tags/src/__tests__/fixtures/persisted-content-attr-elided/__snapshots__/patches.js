@@ -1,6 +1,6 @@
 // PATCH
 [`a0;D ;<em> </em>`, {
-  fa: ["a0"],
+  fa: "a0",
   cAa: {
     ta: "two"
   },
@@ -9,13 +9,13 @@
 
 // PATCH
 {
-  fa: [0],
+  fa: 0,
   tb: "three"
 }
 
 // PATCH
 [`a0;D ;<em> </em>`, {
-  fa: ["a0"],
+  fa: "a0",
   cAa: {
     ta: "four"
   },

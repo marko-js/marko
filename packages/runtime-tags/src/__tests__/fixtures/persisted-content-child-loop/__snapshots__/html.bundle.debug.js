@@ -13,7 +13,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 		const $scope1_id = _scope_id();
 		_html(`<li>${_patch_text($scope1_id, "#text/0", i, void 0, $scope0_owned, 1)}`);
 		const $tag = input.content;
-		_patch_dynamic_tag($scope1_id, "#text/1", $tag, 0, 0, 0, 0, $scope0_owned, 2);
+		_patch_dynamic_tag($scope1_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 2);
 		_dynamic_tag($scope1_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
 		_html("</li>");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");

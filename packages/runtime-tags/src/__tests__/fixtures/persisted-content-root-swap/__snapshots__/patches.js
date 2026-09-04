@@ -1,9 +1,9 @@
 // PATCH
 {
-  fa: ["div", 0, 0, 0, 1]
+  fa: ["div"]
 }
 
 // PATCH
 {
-  fa: ["span", 0, 0, 0, 1]
+  fa: ["span"]
 }

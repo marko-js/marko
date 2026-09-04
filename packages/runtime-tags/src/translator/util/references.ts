@@ -207,6 +207,8 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     section?: Section;
     referencedBindings?: ReferencedBindings;
+    /** The expression contains a function (recorded by the function visitor). */
+    functionValued?: true;
     downstream?: Opt<Binding>;
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a downstream template's binding, for dereferencing its reasons. */
@@ -1776,14 +1778,15 @@ function resolveDerivedSources(binding: Binding) {
   } else if (exprs) {
     const seen = new Set<Binding>();
     forEach(exprs, (expr) => {
+      // A value holding a function literal (or one selected among
+      // function-valued bindings) can deliver one.
+      if (expr.functionValued) binding.functionValued = true;
       if (isReferencedExtra(expr)) {
         forEach(expr.referencedBindings, (ref) => {
           if (!seen.has(ref)) {
             seen.add(ref);
             resolveBindingSources(ref);
             binding.sources = mergeSources(binding.sources, ref.sources);
-            // A derived selecting among function-valued bindings can
-            // deliver one of them.
             if (ref.functionValued) binding.functionValued = true;
           }
         });

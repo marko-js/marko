@@ -11,7 +11,7 @@
     ba: [{
       ca: {
         ta: "l",
-        fb: ["a0"],
+        fb: "a0",
         cAb: {
           ta: "x"
         }
@@ -26,7 +26,7 @@
     ba: [{
       ca: {
         ta: "m",
-        fb: ["a0"],
+        fb: "a0",
         cAb: {
           ta: "y"
         }
@@ -46,7 +46,7 @@
     ba: [{
       ca: {
         ta: "n",
-        fb: ["a0"],
+        fb: "a0",
         cAb: {
           ta: "z"
         }

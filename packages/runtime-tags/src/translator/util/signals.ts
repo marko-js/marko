@@ -25,7 +25,6 @@ import {
   toArray,
 } from "./optional";
 import {
-  feedsTagNameLoadIn,
   getDeliveryRoot,
   getFillConditions,
   getLocalFillFeeds,
@@ -146,7 +145,6 @@ type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
   initId?: string,
-  retain?: boolean,
 ) => t.Expression;
 // Structured facts about a branch section's closure hop: what kind of
 // branch it is and which accessor (plus branch index) addresses it.
@@ -163,8 +161,8 @@ const [getClosureSignal, _setClosureSignal] = createSectionState<
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
   hop: ClosureHop,
-  build: closureSignalBuilder = (_closure, render, initId, retain) =>
-    buildClosureHop(hop, render, initId, retain),
+  build: closureSignalBuilder = (_closure, render, initId) =>
+    buildClosureHop(hop, render, initId),
 ) {
   _setClosureSignal(getSectionForBody(tag.get("body"))!, { hop, build });
 }
@@ -173,16 +171,13 @@ function buildClosureHop(
   hop: ClosureHop,
   render: t.Expression,
   initId?: string,
-  retain?: boolean,
 ) {
   const accessor = getScopeAccessorLiteral(hop.ref, true);
   const init = initId && t.stringLiteral(initId);
   return hop.kind === "if"
     ? init
       ? callRuntime(
-          // The `_resume` alias keeps a `tagNameLoad` input's registration
-          // out of the pure-call list (nothing else references it).
-          retain ? "_resume_init_if_closure" : "_init_if_closure",
+          "_init_if_closure",
           init,
           accessor,
           t.numericLiteral(hop.index),
@@ -195,12 +190,7 @@ function buildClosureHop(
           render,
         )
     : init
-      ? callRuntime(
-          retain ? "_resume_init_for_closure" : "_init_for_closure",
-          init,
-          accessor,
-          render,
-        )
+      ? callRuntime("_init_for_closure", init, accessor, render)
       : callRuntime("_for_closure", accessor, render);
 }
 
@@ -461,20 +451,13 @@ export function getSignal(
         const initId = constructsWithInit(section, closure)
           ? getResumeRegisterId(section, closure, "init")
           : undefined;
-        const retain = !!initId && feedsTagNameLoadIn(closure, section);
 
         if (closureSignal && !isDynamicClosure(section, closure)) {
-          return closureSignal.build(closure, render, initId, retain);
+          return closureSignal.build(closure, render, initId);
         }
 
         return callRuntime(
-          initId
-            ? // The `_resume` alias keeps a `tagNameLoad` input's registration
-              // out of the pure-call list (nothing else references it).
-              retain
-              ? "_resume_init_closure_get"
-              : "_init_closure_get"
-            : "_closure_get",
+          initId ? "_init_closure_get" : "_closure_get",
           ...(initId ? [t.stringLiteral(initId)] : []),
           // Optimized builds pass the reserved closure accessor id.
           isOptimize()
@@ -1704,9 +1687,7 @@ function toSequenceExpression(exprs: t.Expression[]) {
 function constructsWithInit(section: Section, closure: Binding) {
   return (
     sectionConstructs(section) &&
-    (!!closure.sources?.state ||
-      includes(getLocalFillFeeds(section), closure) ||
-      feedsTagNameLoadIn(closure, section))
+    (!!closure.sources?.state || includes(getLocalFillFeeds(section), closure))
   );
 }
 

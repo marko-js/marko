@@ -3,7 +3,7 @@
   ba: [{
     ca: {
       ta: "b",
-      fb: ["a0"],
+      fb: "a0",
       cAb: {
         ta: "y"
       }

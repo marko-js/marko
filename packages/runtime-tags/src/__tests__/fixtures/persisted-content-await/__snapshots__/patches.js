@@ -2,7 +2,7 @@
 [`a2;b%;<!><!><!>`, `a1;D ;<em> </em>`, `a3;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: ["a2"],
+      fa: "a2",
       cAa: {
         pa: "a1",
         cAa: {
@@ -17,7 +17,7 @@
 [`a2;b%;<!><!><!>`, `a1;D ;<em> </em>`, `a3;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: ["a2"],
+      fa: "a2",
       cAa: {
         pa: "a1",
         cAa: {
@@ -37,7 +37,7 @@
 [`a2;b%;<!><!><!>`, `a1;D ;<em> </em>`, `a3;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: ["a2"],
+      fa: "a2",
       cAa: {
         pa: "a1",
         cAa: {

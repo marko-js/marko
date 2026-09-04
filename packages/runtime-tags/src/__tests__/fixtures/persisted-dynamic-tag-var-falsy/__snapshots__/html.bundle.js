@@ -5,7 +5,7 @@ var template_default = _template_persisted("a", (input) => {
 	const $scope0_id = _scope_id();
 	let clicks = 0;
 	const $tag = input.tag;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, "a0", 0, $scope0_owned, 0);
+	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, "a0", $scope0_owned, 0);
 	const $inputtag_scope = _peek_scope_id();
 	let el = _dynamic_tag($scope0_id, "a", $tag, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "b", $inputtag_scope, "a0");

@@ -85,14 +85,14 @@ function pendingReady(render: RenderData, renderId: string, runtimeId: string) {
 
 function markReady(readyId: string) {
   for (const [render, entry] of pending) {
-    const deferred = entry.c.get(readyId);
-    if (deferred) {
-      entry.c.delete(readyId);
-      pushBatch(render, readyId, deferred);
-      if (!entry.c.size) {
-        pending.delete(render);
-        settle(entry, applyReadyPatch(entry.renderId, entry.runtimeId));
-      }
+    if (entry.c.has(readyId) && [...entry.c.keys()].every(isReady)) {
+      pending.delete(render);
+      settle(
+        entry,
+        applyReadyPatch(entry.renderId, entry.runtimeId, (render) => {
+          for (const [id, batch] of entry.c) pushBatch(render, id, batch);
+        }),
+      );
     }
   }
 }

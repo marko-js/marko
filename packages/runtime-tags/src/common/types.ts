@@ -95,7 +95,7 @@ export interface Template {
     position?: InsertPosition,
   ): MountedTemplate;
   render(input?: Input): RenderedTemplate;
-  renderPatch(input?: Input): RenderedTemplate;
+  patch(input?: Input): RenderedTemplate;
 }
 
 export interface MountedTemplate {
