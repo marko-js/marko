@@ -115,7 +115,6 @@ export const entryBuilder = {
 
     if (fileMeta.implicitSplitComponent) {
       state.hasComponents = true;
-      return;
     }
 
     if (fileMeta.component) {
