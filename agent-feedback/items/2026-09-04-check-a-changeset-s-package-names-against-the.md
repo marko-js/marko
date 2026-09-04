@@ -1,0 +1,12 @@
+---
+type: dx
+impact: high
+effort: med
+site: AGENTS.md › ## Commands
+---
+
+# Check a changeset's package names against the packages the diff touched; `changeset status` cannot
+
+The `pnpm run change` paragraph names the three valid workspace packages and then says to "check it with `pnpm exec changeset status`; a wrong name passes review and breaks the release on `main`" — but that command cannot catch the failure the same sentence warns about, so its first clause makes its second vacuous. Its own code provides only two non-zero exits: `@changesets/assemble-release-plan` throws `Found changeset <id> for package <name> which is not in the workspace` for a name that is no workspace package at all, and `@changesets/cli`'s `status` has a single `process.exit(1)`, guarded by "packages changed and no changesets found". A changeset naming a real-but-wrong workspace package — `marko` for a fix confined to `packages/runtime-tags` — exits 0 and prints `Packages to be bumped at patch: - marko`, which reads as confirmation, while on `main` `changeset version` bumps `packages/runtime-class` and the runtime-tags fix never publishes. Nothing else guards it: no job in `.github/workflows/ci.yml`, no `.husky` hook, and no `package.json` script runs any changeset check at all. Add a `scripts/check-changesets.mts` wired into the CI `build` job (which needs `fetch-depth: 0` for the merge base) that fails when a changeset names a versionable package with no changed files under its directory, with a documented opt-out for a deliberate cross-package bump, and reword this paragraph and the matching line in `agent-feedback/README.md § Pre-ship` so neither implies `changeset status` validates the choice.
+
+Check: In a throwaway pnpm workspace holding `packages/compiler`, `packages/runtime-tags` and `packages/runtime-class` under the real package names `@marko/compiler`, `@marko/runtime-tags` and `marko`, commit a change touching only `packages/runtime-tags` together with a changeset whose front matter is `"marko": patch`; `changeset status` exits 0, plain and with `--since=main`, printing only `- marko`. The same fixture with a nonexistent package name exits 1, and with the changeset deleted exits 1 — the two cases the paragraph does not warn about. An in-repo run proves nothing on its own, because `.changeset/` currently carries changesets for all three packages, so it exits 0 whatever a new changeset names.
