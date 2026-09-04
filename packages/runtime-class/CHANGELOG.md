@@ -1,5 +1,23 @@
 # Change Log
 
+## 5.39.39
+
+### Patch Changes
+
+- [#4080](https://github.com/marko-js/marko/pull/4080) [`1babc82`](https://github.com/marko-js/marko/commit/1babc82a3442ae9f2069c9a28e6e51e802d17aea) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop the `runtime/events` singleton, unreferenced since it stopped being re-exported in 2017
+
+- [#4080](https://github.com/marko-js/marko/pull/4080) [`bee7d69`](https://github.com/marko-js/marko/commit/bee7d69a648ede49b2a08d2044868c49a553ad71) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop the `assign`, `merge` and `props-script` runtime helpers, unreferenced since the Marko 4 compiler was removed
+
+- [#4099](https://github.com/marko-js/marko/pull/4099) [`7277898`](https://github.com/marko-js/marko/commit/7277898ac409ae0877f3786819c409cbacce84c9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix hydration dependencies for components nested under an implicit split component.
+
+- [#4089](https://github.com/marko-js/marko/pull/4089) [`059a5da`](https://github.com/marko-js/marko/commit/059a5da2931594e41718a331d737f82000c2e1be) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop `AsyncStream`'s DOM node parsing, which only ran in an unsupported html-mode-in-the-browser render
+
+- [#4077](https://github.com/marko-js/marko/pull/4077) [`a93fa8b`](https://github.com/marko-js/marko/commit/a93fa8b6a2e37b01b3b769ff0ea03cac3e414cfd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop a `toReadable` consumer's read when it cancels, instead of leaving it waiting on a write that never comes
+
+- Updated dependencies [[`29d1db2`](https://github.com/marko-js/marko/commit/29d1db2bd86ef49bbeaf00c2d14af73e1b9b53d6), [`29d1db2`](https://github.com/marko-js/marko/commit/29d1db2bd86ef49bbeaf00c2d14af73e1b9b53d6), [`cae3409`](https://github.com/marko-js/marko/commit/cae3409998f555789ab09f48541fb330ea26efc0), [`7a669e3`](https://github.com/marko-js/marko/commit/7a669e3f15ca1da93b80cc38adf3779daa055727), [`26e88cd`](https://github.com/marko-js/marko/commit/26e88cd71a42c75f01d760ae874f866462ad9f9e), [`51afc53`](https://github.com/marko-js/marko/commit/51afc53377275935e4ca26e3dab6d2f1124d01e6)]:
+  - @marko/compiler@5.42.4
+  - @marko/runtime-tags@6.3.49
+
 ## 5.39.38
 
 ### Patch Changes
