@@ -3,12 +3,12 @@ const $template$1 = "<section><!></section>";
 const $walks$1 = "D%l";
 _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D%;<section><!></section>" });
 var card_default = _template_persisted("__tests__/tags/card/index.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
 	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 }, 0, 0);
@@ -49,10 +49,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 							_: _scope_with_id($scope3_id),
 							"ClosureSignalIndex:input_value": 1
 						}, "__tests__/template.marko", "5:10");
-						_resume_branch($scope4_id);
 					}, 1, "__tests__/template.marko_3_#text#0/await");
 					$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
-					_resume_branch($scope3_id);
+					$scope0_reason && _resume_branch($scope3_id);
 				}, $scope2_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_5*content", $scope2_id) }) });
 				$scope0_reason && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6");
 			}, $scope1_id) });

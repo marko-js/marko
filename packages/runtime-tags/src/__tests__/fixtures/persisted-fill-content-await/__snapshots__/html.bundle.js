@@ -2,12 +2,12 @@
 const $template = "<section><!></section>";
 _shells({ b: "b;D%;<section><!></section>" });
 var frame_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
 	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -52,5 +52,4 @@ var template_default = _template_persisted("a", (input) => {
 		j: $showSecond__closures,
 		a: _existing_scope($childScope)
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.second), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a1", input.first));
-	_resume_branch($scope0_id);
 }, 1, () => [frame_default]);

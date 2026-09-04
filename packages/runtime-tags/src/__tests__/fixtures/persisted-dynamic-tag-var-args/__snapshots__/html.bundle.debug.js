@@ -19,7 +19,6 @@ var counter_default = _template_persisted("__tests__/counter.marko", (input) => 
 			n = v;
 		}, "__tests__/counter.marko_0/valueChange", $scope0_id) || void 0
 	}, "__tests__/counter.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 	return $return;
 }, 0, 0);
 

@@ -23,5 +23,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		"ControlledHandler:#input/0": ["...input.rest", "2:23"],
 		"EventAttributes:#input/0": ["...input.rest", "2:23"]
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.rest);
-	_resume_branch($scope0_id);
 }, 1, 0);

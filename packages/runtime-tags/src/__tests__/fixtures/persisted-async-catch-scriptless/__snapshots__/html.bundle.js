@@ -18,7 +18,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope3_id, {});
 		}, 1, "a1", 1);
 		$scope0_reason && _subscribe($input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
+		$scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_elide("a3", (err) => {
 		_persisted_reason();
 		const $scope2_id = _scope_id();

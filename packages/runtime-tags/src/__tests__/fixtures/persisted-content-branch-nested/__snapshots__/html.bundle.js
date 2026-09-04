@@ -42,7 +42,6 @@ var template_default = _template_persisted("a", (input) => {
 							const $scope3_id = _scope_id();
 							_html(`<em>${_patch_text($scope3_id, "a", input.text, void 0, $scope0_owned, 6)}</em>`);
 							_subscribe(_source_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
-							_resume_branch($scope3_id);
 						}, $scope2_id)
 					});
 					_subscribe(_source_if($scope0_reason, 5) && $input_label__closures, _scope($scope2_id, {

@@ -6,7 +6,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -15,7 +15,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_id = _scope_id();
 			const $tag = input.content;
 			_patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 2);
-			_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
+			_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
@@ -29,5 +29,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_content: ["input.content"],
 		count: "1:6"
 	});
-	_resume_branch($scope0_id);
 }, 1, 0);

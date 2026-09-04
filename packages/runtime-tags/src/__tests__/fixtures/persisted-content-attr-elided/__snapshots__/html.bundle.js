@@ -12,7 +12,6 @@ var template_default = _template_persisted("a", (input) => {
 		_persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_owned, 1)}</em>`);
 		_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html("<main><section>");
 	const $content = input.mode ? frag.content : null;

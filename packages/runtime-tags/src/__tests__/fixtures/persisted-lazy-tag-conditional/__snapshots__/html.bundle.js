@@ -8,7 +8,6 @@ var child_default = _template_persisted("a", (input) => {
 	_script($scope0_id, "a0");
 	_patch_value($scope0_id, "a0", count, 1);
 	$scope0_reason && _scope($scope0_id, { g: count });
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko

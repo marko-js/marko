@@ -6,14 +6,14 @@ _shells({
 	"__tests__/tags/panel/index.marko_1*shell": "__tests__/tags/panel/index.marko_1*shell;b%;<!><!><!>"
 });
 var panel_default = _template_persisted("__tests__/tags/panel/index.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_open = _source_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_body = _source_guard($scope0_reason, 2), $sg__input_open = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
 			const $scope1_id = _scope_id();
 			const $tag = input.body;
 			_patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, 0, $scope0_owned, 2);
-			_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
+			_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, $sg__input_body, 1);
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel/index.marko", "1:2");
 			return 0;
 		}
@@ -34,7 +34,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_reason = _persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</em>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html("<main>");
 	const $childScope = _peek_scope_id();
@@ -57,5 +56,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_title: ["input.title"],
 		count: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _content_withheld("__tests__/template.marko_1*content") && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
-	_resume_branch($scope0_id);
 }, 1, () => [panel_default]);

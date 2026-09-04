@@ -54,7 +54,7 @@ var template_default = _template_persisted("a", (input) => {
 					}
 				}, $scope2_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a2", "a3"], $scope0_owned, 0);
 				$scope0_reason && _subscribe($for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
-				_resume_branch($scope2_id);
+				$sg__input_items || $scope0_reason && _resume_branch($scope2_id);
 			}, $scope1_id)
 		});
 		_scope($scope1_id, {

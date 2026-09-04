@@ -25,5 +25,4 @@ var template_default = _template_persisted("a", (input) => {
 		e: count,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [doubler_default]);

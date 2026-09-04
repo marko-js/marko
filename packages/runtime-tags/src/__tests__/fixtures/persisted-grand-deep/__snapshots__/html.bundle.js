@@ -27,7 +27,6 @@ var l2_default = _template_persisted("c", (input) => {
 		g: n,
 		c: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 0, () => [l3_default]);
 
 // tags/l1/index.marko
@@ -65,5 +64,4 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.note,
 		f: show
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.note);
-	_resume_branch($scope0_id);
 }, 1, () => [l1_default]);

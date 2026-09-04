@@ -13,7 +13,6 @@ var price_card_default = _template_persisted("b", (input) => {
 		e: input.label,
 		f: qty
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "b0", input.label);
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // tags/promo-tag.marko
@@ -31,7 +30,6 @@ var promo_tag_default = _template_persisted("c", (input) => {
 		e: input.text,
 		f: seen
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "c0", input.text);
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // tags/site-footer.marko
@@ -43,7 +41,6 @@ var site_footer_default = _template_persisted("d", (input) => {
 	let frozen = 0;
 	_html(`<footer>${_patch_text($scope0_id, "a", input.year + frozen, void 0, $scope0_owned, 0)}</footer>`);
 	$scope0_reason && _scope($scope0_id, { e: frozen });
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko

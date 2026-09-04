@@ -40,5 +40,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		brand: "1:8",
 		show: "2:6"
 	}) : _patch_value($scope0_id, "__tests__/template.marko0", brand);
-	_resume_branch($scope0_id);
 }, 1, 1);

@@ -1,4 +1,4 @@
-// size: 28568 (min) 10592 (brotli)
+// size: 28779 (min) 10667 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1204,15 +1204,21 @@ function init(runtimeId = "M") {
                     ? visitType === "&"
                       ? (htmlStart = visit)
                       : ((visitScope[nextToken()] = htmlStart),
-                        (visitScope["H" + lastToken] = visit))
+                        (visitScope["H" + lastToken] = visit),
+                        (branchesEnabled || lazyEnabled) &&
+                          pending[pending.length - 1] !== visitScope &&
+                          pending.push(visitScope))
                     : branchesEnabled && visitType > "'"
                       ? (visitBranches ||= createVisitBranches())()
                       : lazyEnabled && render.b && visitType > "%"
                         ? (visits[retained++] = visit)
-                        : (visitScope[nextToken()] =
-                            visitType === "$"
-                              ? visit.previousSibling
-                              : visit.parentNode.insertBefore(new Text(), visit)));
+                        : ((visitScope[nextToken()] =
+                            visitType === "%"
+                              ? visit.parentNode.insertBefore(new Text(), visit)
+                              : visit.previousSibling),
+                          (branchesEnabled || lazyEnabled) &&
+                            pending[pending.length - 1] !== visitScope &&
+                            pending.push(visitScope)));
               return (
                 branchesEnabled &&
                   visitBranches &&
@@ -2424,14 +2430,9 @@ function insertLoaded(renderer, branch, marker, awaitCounter, readyId) {
         readyId && queueEffect(branch, () => ready(readyId)));
     },
     remaining;
-  if (
-    (syncGen(branch),
-    renderer.b(branch, parent.namespaceURI),
-    (branch.X = 0),
-    (remaining = values?.size))
-  ) {
+  if ((remaining = values?.size)) {
     let fail = loadFailed(branch, awaitCounter, readyId);
-    for (let [promise, entry] of values)
+    values.forEach(([, apply], promise) =>
       promise.then(
         (mod) =>
           (apply._ = mod._) &&

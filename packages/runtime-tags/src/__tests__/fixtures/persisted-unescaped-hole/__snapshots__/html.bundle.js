@@ -12,5 +12,4 @@ var template_default = _template_persisted("a", (input) => {
 		f: input.html,
 		g: count
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.html);
-	_resume_branch($scope0_id);
 }, 1, 0);

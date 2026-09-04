@@ -19,5 +19,4 @@ var template_default = _template_persisted("a", (input) => {
 		j: pick,
 		k: open
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", pick), _owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "e", input.title));
-	_resume_branch($scope0_id);
 }, 1, 0);

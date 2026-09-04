@@ -197,8 +197,17 @@ export function requireMainRuntime() {
   $chunk.boundary.state.needsMainRuntime = true;
 }
 
-export function _script(scopeId: number, registryId: string) {
-  if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
+// Content that resumes apart from its enclosing branch's walk (lazy, async)
+// links the scope, unless the section writes a marker the walker places it by.
+export function _script(
+  scopeId: number,
+  registryId: string,
+  serializeMarker?: number,
+) {
+  if (
+    serializeMarker === 0 &&
+    ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync])
+  ) {
     _resume_branch(scopeId);
   }
   $chunk.boundary.state.needsMainRuntime = true;
@@ -1300,9 +1309,13 @@ export function _try(
   // to the try's enclosing branch (a sibling of the try), as CSR does.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
+  const chunk = $chunk;
+  const { boundary } = chunk;
+  const { state } = boundary;
+  const { resumeWrites } = boundary;
   // A patch shows `@placeholder`/`@catch` from received client state;
   // the document reorder/`<t hidden>` path must not ride the frame stream.
-  const writesPatches = $chunk.boundary.state.writesPatches;
+  const { writesPatches } = state;
   // Construct payload (content id + slot ids, `0` = elided catch) rides the
   // pairing entry, except for always-pairing branches outside divergence.
   const elide = alwaysPairs && !isInResumedBranch();
@@ -1323,7 +1336,7 @@ export function _try(
         : ((placeholderContent[RendererProp.Id] as string | undefined) ?? ""),
     ];
   }
-  $chunk.boundary.state.pairBranch?.(
+  state.pairBranch?.(
     scopeId,
     accessor,
     branchId,
@@ -1332,12 +1345,14 @@ export function _try(
       : undefined,
     trySlotIds,
   );
-  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
-  const usePlaceholder = placeholderContent && !writesPatches;
+  const beforeBranch = deferBranchStart(chunk);
+  // Whether `tryBoundary` writes the catch and placeholder renderers itself
+  // once the body settles.
+  let renderersAtSettle = false;
 
-  if (catchContent !== undefined && !writesPatches) {
-    tryCatch(
-      usePlaceholder
+  if (!writesPatches && (catchContent !== undefined || placeholderContent)) {
+    renderersAtSettle = tryBoundary(
+      placeholderContent
         ? () =>
             tryPlaceholder(
               content,
@@ -1347,27 +1362,24 @@ export function _try(
               placeholderBranchId,
             )
         : content,
-      catchContent || (() => {}),
-    );
-  } else if (usePlaceholder) {
-    tryPlaceholder(
-      content,
-      placeholderContent!,
+      catchContent,
+      placeholderContent,
       branchId,
     );
-  } else if (
-    writesPatches &&
-    catchContent &&
-    elidedContents.has(catchContent as WeakKey)
-  ) {
+  } else if (!writesPatches) {
+    withBranchId(branchId, content);
+  } else if (catchContent && elidedContents.has(catchContent as WeakKey)) {
+    // A patch body stays outside the branch id context: the persisted writers
+    // read it as "inside a divergent branch" (see isInResumedBranch).
     withContext(kElidedCatch, catchContent, content);
   } else {
-    withBranchId(branchId, content);
+    content();
   }
 
   // An async body's start mark has already streamed and must pair with an end;
   // a sync body that wrote nothing resumable keeps the boundary off the wire.
-  const rendered = chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
+  const rendered =
+    writesPatches || chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
   applyBranchStart(chunk, beforeBranch, rendered);
   if (!rendered) return;
 
@@ -1836,6 +1848,7 @@ export class Chunk {
     // A patch never ships effects: paired scopes attached theirs when the
     // page resumed, and a fresh construct attaches its shell's.
     if (this.boundary.state.writesPatches) return;
+    countResumeWrite(this.boundary);
     if (this.lastEffect === registryId) {
       this.effects += " " + scopeId;
     } else {
@@ -2087,6 +2100,10 @@ export class Chunk {
         : '"' + effects + '"';
     }
 
+    let reordered = "";
+
+    let needsResumeArray = false;
+
     if (state.writeReorders && !state.writesPatches) {
       let carried: Chunk[] | null = null;
 
@@ -2196,6 +2213,9 @@ export class Chunk {
     flushSerializer(boundary, state);
     if (state.resumes) {
       scripts = concatScripts(scripts, state.resumeScript(state.resumes));
+    } else if (needsResumeArray && !state.hasWrittenResume) {
+      // A reordered chunk's script pushes its effects into the resume array.
+      scripts = concatScripts(scripts, state.resumeScript(""));
     }
 
     // Reordered scripts follow the resume data they push after.

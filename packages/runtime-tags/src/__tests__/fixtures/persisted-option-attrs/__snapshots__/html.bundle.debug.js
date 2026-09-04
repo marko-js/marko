@@ -22,5 +22,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`${_el_resume($scope0_id, "#select/0")}<select id=plain><option${_attr_option_value("a")}${_patch_attr($scope0_id, "#option/1", "selected", input.pick === "a", $scope0_owned, 2)}>A</option>${_el_resume($scope0_id, "#option/1")}<option${_attr_option_value("b")}${_patch_attr($scope0_id, "#option/2", "selected", input.pick === "b", $scope0_owned, 2)}>B</option>${_el_resume($scope0_id, "#option/2")}</select><em>${_text_resume($scope0_id, "#text/3", count)}</em><button>+</button>${_el_resume($scope0_id, "#button/4")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 }, 1, 0);

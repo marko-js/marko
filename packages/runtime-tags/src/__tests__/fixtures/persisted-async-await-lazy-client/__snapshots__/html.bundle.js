@@ -29,5 +29,4 @@ var template_default = _template_persisted("a", (input) => {
 		g: n,
 		h: $n__closures
 	});
-	_resume_branch($scope0_id);
 }, 1, 0);

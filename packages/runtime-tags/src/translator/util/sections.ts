@@ -129,6 +129,9 @@ export interface Section {
   hoistedTo: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
+  /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
+   * (not merged) so each one's guard stays buildable. */
+  domSerializeReasons: undefined | SerializeReasons;
   /** Pending serialize exprs, resolved into the reasons (and provenance)
    * once references finalize. */
   serializeExprs: Opt<t.NodeExtra>;
@@ -251,6 +254,7 @@ export function startSection(
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
+      domSerializeReasons: undefined,
       serializeExprs: undefined,
       propSerializeExprs: undefined,
       serializeProvenance: undefined,

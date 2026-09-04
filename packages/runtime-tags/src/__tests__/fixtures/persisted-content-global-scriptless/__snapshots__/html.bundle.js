@@ -37,7 +37,6 @@ var template_default = _template_persisted("a", (input) => {
 			_html(`<em>${_patch_text($scope1_id, "a", $global$1.brand)}</em>`);
 			_global_subscribe("a3", $scope1_id);
 			_subscribe($global_brand__closures, _scope($scope1_id, {}));
-			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_if(() => {
@@ -54,7 +53,6 @@ var template_default = _template_persisted("a", (input) => {
 					_html(`<i>${_patch_text($scope3_id, "a", $global$1.brand)}</i>`);
 					_global_subscribe("a4", $scope3_id);
 					_subscribe($global_brand__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
-					_resume_branch($scope3_id);
 				}, $scope2_id)
 			});
 			_scope($scope2_id, {

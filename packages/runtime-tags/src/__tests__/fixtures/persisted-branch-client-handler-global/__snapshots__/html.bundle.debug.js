@@ -22,5 +22,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_global_subscribe("__tests__/template.marko_0_$global_title#3/global", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, { title }, "__tests__/template.marko", 0, { title: "1:8" }) : _patch_write($scope0_id, "title", title);
-	_resume_branch($scope0_id);
 }, 1, 1);

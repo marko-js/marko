@@ -40,5 +40,4 @@ var template_default = _template_persisted("a", (input) => {
 		d: text,
 		e: open
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [field_default]);

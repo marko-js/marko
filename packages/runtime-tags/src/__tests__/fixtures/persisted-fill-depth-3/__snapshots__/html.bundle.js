@@ -47,5 +47,4 @@ var template_default = _template_persisted("a", (input) => {
 		m: $count__closures,
 		k: $input_items__closures
 	}) : _owned_guard($scope0_owned, 4) && _patch_value($scope0_id, "a0", input.suffix);
-	_resume_branch($scope0_id);
 }, 1, 0);

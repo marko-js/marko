@@ -47,5 +47,4 @@ var template_default = _template_persisted("a", (input) => {
 		d: show,
 		e: on
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [tabs_default]);

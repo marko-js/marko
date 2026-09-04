@@ -27,5 +27,4 @@ var template_default = _template_persisted("a", (input) => {
 		i: label,
 		a: _existing_scope($childScope)
 	}) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "i", label);
-	_resume_branch($scope0_id);
 }, 1, () => [labeler_default]);

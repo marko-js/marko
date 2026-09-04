@@ -16,5 +16,4 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`</ul>${_el_resume($scope0_id, "a")}<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, { f: boost });
-	_resume_branch($scope0_id);
 }, 1, 0);

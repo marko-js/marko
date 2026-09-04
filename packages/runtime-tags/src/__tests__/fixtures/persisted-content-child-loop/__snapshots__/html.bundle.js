@@ -5,7 +5,7 @@ _shells({
 	b0: "b0;D%b%;<li><!><!></li>"
 });
 var card_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_count__OR__input_content = _source_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_count__OR__input_content = _source_guard($scope0_reason, 0), $sg__input_count = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.count, (i) => {
@@ -16,7 +16,7 @@ var card_default = _template_persisted("b", (input) => {
 		_dynamic_tag($scope1_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 2), 1);
 		_html("</li>");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "a", 1, $sg__input_count__OR__input_content, _source_guard($scope0_reason, 1), void 0, void 0, "b0", $scope0_owned, 1);
+	}, 0, $scope0_id, "a", 1, $sg__input_count__OR__input_content, $sg__input_count, void 0, void 0, "b0", $scope0_owned, 1);
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_count__OR__input_content)}`);
 	$scope0_reason ? _scope($scope0_id, { e: input.content }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.content);
 }, 0, 0);
@@ -44,7 +44,6 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_owned, 2)}</em>`);
 			_subscribe(_source_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html("</main>");

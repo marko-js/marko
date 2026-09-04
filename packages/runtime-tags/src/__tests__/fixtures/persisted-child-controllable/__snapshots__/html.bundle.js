@@ -47,5 +47,4 @@ var template_default = _template_persisted("a", (input) => {
 	});
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, { c: _existing_scope($childScope) });
-	_resume_branch($scope0_id);
 }, 1, () => [counter_default]);

@@ -62,5 +62,4 @@ var template_default = _template_persisted("a", (input) => {
 	}, 0, $scope0_id, "c", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "a1", 0, 0);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {});
-	_resume_branch($scope0_id);
 }, 1, () => [counter_default]);

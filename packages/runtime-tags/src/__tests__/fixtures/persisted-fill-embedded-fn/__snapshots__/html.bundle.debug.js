@@ -28,5 +28,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		bag: "2:8",
 		open: "3:6"
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", bag), _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_title", input.title));
-	_resume_branch($scope0_id);
 }, 1, 0);

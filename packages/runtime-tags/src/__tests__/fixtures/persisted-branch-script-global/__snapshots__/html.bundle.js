@@ -11,7 +11,7 @@ var template_default = _template_persisted("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
-			_script($scope1_id, "a3");
+			_script($scope1_id, "a3", 0);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

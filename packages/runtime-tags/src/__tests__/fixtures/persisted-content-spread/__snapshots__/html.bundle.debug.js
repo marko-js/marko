@@ -11,7 +11,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_reason = _persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</em>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html(`<main><div${_patch_attrs(input.attrs, "#div/0", $scope0_id, "div", void 0, $scope0_owned, 1)}>`);
 	_patch_dynamic_tag($scope0_id, "#div/0", extra, 0, 0, 0, 0, 0, 0);
@@ -37,5 +36,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		"EventAttributes:#div/0": ["...input.attrs", "6:11"],
 		"EventAttributes:#section/1": ["...{ ...input.attrs, content: extra }", "7:15"]
 	}) : _owned_guard($scope0_owned, 0) && _content_withheld("__tests__/template.marko_1*content") && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
-	_resume_branch($scope0_id);
 }, 1, 0);

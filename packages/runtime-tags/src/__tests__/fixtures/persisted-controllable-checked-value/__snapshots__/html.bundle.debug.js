@@ -20,5 +20,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		"ControlledHandler:#input/0": ["checkedValueChange", "3:51"],
 		"ControlledHandler:#input/1": ["checkedValueChange", "4:51"]
 	});
-	_resume_branch($scope0_id);
 }, 1, 0);

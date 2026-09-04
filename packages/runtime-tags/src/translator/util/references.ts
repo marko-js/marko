@@ -217,6 +217,8 @@ declare module "@marko/compiler/dist/types" {
     read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
+    /** The expression is a dynamic tag's input (attrs, args, attr tags). */
+    dynamicTagInput?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
     /** `$global` bindings this expression reads: the root means an opaque

@@ -6,7 +6,6 @@ import {
   assertNoParams,
   computeNode,
   diagnosticWarn,
-  getFile,
   getProgram,
   getTagDef,
 } from "@marko/compiler/babel-utils";

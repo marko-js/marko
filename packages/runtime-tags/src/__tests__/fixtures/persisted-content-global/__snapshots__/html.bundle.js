@@ -36,7 +36,6 @@ var template_default = _template_persisted("a", (input) => {
 			_html(`<div>${_patch_text($scope1_id, "a", $global$1.brand)}</div>`);
 			_global_subscribe("a1", $scope1_id);
 			_subscribe($global_brand__closures, _scope($scope1_id, {}));
-			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
@@ -45,5 +44,4 @@ var template_default = _template_persisted("a", (input) => {
 		c: count,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1, 1);

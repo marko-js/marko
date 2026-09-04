@@ -15,7 +15,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
 			_global_subscribe("__tests__/template.marko_1_input_value#6_$global_brand#7/global", $scope1_id);
-			_script($scope1_id, "__tests__/template.marko_1_input_value#6_$global_brand#7");
+			_script($scope1_id, "__tests__/template.marko_1_input_value#6_$global_brand#7", 0);
 			_patch_effect($scope1_id, "__tests__/template.marko_1_input_value#6_$global_brand#7", "input_value 1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;

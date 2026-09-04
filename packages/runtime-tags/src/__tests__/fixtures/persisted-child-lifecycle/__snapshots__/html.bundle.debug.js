@@ -10,7 +10,6 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0_mounted#5");
 	_patch_value($scope0_id, "__tests__/tags/widget/index.marko0", mounted, 1);
 	$scope0_reason && _scope($scope0_id, { mounted }, "__tests__/tags/widget/index.marko", 0, { mounted: "1:6" });
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
@@ -41,5 +40,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_label: ["input.label"],
 		show: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
-	_resume_branch($scope0_id);
 }, 1, () => [widget_default]);

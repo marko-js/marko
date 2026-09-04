@@ -4,7 +4,6 @@ import { types as t } from "@marko/compiler";
 import {
   getFile,
   assertAttributesOrSingleArg,
-  getFile,
   getProgram,
   getTagDef,
   getTaglibLookup,

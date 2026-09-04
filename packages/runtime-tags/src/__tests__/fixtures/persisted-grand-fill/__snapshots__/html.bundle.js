@@ -36,5 +36,4 @@ var template_default = _template_persisted("a", (input) => {
 		f: input.subtitle,
 		g: show
 	}) : (_owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title), _owned_guard($scope0_owned, 2) && _patch_value($scope0_id, "a1", input.subtitle));
-	_resume_branch($scope0_id);
 }, 1, () => [card_default]);

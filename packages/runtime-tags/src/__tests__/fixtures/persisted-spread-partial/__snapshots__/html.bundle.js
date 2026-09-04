@@ -9,5 +9,4 @@ var template_default = _template_persisted("a", (input) => {
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, { j: count });
-	_resume_branch($scope0_id);
 }, 1, 0);

@@ -35,5 +35,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_parts: ["input.parts"],
 		show: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.parts);
-	_resume_branch($scope0_id);
 }, 1, 1);

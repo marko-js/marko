@@ -13,7 +13,6 @@ var template_default = _template_persisted("a", (input) => {
 		_persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "a", input.x, void 0, $scope0_owned, 0)}</em>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	if ($scope0_reason) _if(() => {
 		{
@@ -30,5 +29,4 @@ var template_default = _template_persisted("a", (input) => {
 		f: s,
 		g: $input_x__closures
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.x);
-	_resume_branch($scope0_id);
 }, 1, 1);

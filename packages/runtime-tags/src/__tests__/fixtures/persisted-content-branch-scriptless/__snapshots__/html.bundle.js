@@ -2,12 +2,12 @@
 const $template = "<section><!></section>";
 _shells({ b: "b;D%;<section><!></section>" });
 var widget_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
 	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -34,7 +34,6 @@ var template_default = _template_persisted("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "a", input.text, void 0, $scope0_owned, 2)}</em>`);
 				_subscribe(_source_if($scope0_reason, 2) && $input_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
-				_resume_branch($scope2_id);
 			}, $scope1_id) });
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),

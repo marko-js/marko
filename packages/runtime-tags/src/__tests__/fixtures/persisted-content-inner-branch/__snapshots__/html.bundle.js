@@ -42,7 +42,7 @@ var template_default = _template_persisted("a", (input) => {
 				}
 			}, $scope1_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 2);
 			$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-			_resume_branch($scope1_id);
+			$sg__input_show || $scope0_reason && _resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html("</main>");

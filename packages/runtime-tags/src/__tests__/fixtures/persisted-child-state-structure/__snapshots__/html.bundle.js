@@ -39,5 +39,4 @@ var template_default = _template_persisted("a", (input) => {
 		c: count,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [toggle_panel_default]);

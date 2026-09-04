@@ -38,7 +38,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_html(`<div>${_patch_text($scope1_id, "#text/0", $global$1.brand)}</div>`);
 			_global_subscribe("__tests__/template.marko_1_$global_brand#3/global", $scope1_id);
 			_subscribe($global_brand__closures, _scope($scope1_id, {}, "__tests__/template.marko", "3:4"));
-			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
@@ -47,5 +46,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		count,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 }, 1, 1);

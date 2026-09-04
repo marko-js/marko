@@ -80,6 +80,7 @@ import {
 } from "./sections";
 import {
   getExprIfSerialized,
+  getSerializeGuardForAny,
   getOwnershipGuard,
   getPatchWriteOwnership,
   scopeReasonIdentifier,

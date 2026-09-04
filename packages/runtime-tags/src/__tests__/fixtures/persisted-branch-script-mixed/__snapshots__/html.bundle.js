@@ -13,7 +13,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
 			_global_subscribe("a1", $scope1_id);
-			_script($scope1_id, "a2");
+			_script($scope1_id, "a2", 0);
 			_patch_effect($scope1_id, "a2", "g 1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

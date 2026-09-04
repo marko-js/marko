@@ -10,7 +10,6 @@ var counter_default = _template_persisted("__tests__/tags/counter/index.marko", 
 	_script($scope0_id, "__tests__/tags/counter/index.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/counter/index.marko0", n, 1);
 	$scope0_reason && _scope($scope0_id, { n }, "__tests__/tags/counter/index.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
@@ -34,5 +33,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
-	_resume_branch($scope0_id);
 }, 1, () => [counter_default]);

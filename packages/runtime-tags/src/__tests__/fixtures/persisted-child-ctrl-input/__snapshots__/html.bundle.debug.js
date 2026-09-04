@@ -51,5 +51,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		text: "1:6",
 		open: "2:6"
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [field_default]);

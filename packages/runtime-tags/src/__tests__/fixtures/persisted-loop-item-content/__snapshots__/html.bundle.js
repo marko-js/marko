@@ -36,7 +36,6 @@ var template_default = _template_persisted("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "a", item.n, void 0, $scope0_owned, 0)}</em>`);
 				_subscribe($scope0_reason && $for_content__item_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
-				_resume_branch($scope2_id);
 			}, $scope1_id)
 		});
 		_html("</li>");

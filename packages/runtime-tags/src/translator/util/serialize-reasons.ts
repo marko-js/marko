@@ -2,7 +2,14 @@ import { types as t } from "@marko/compiler";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
-import { concat, forEach, type Opt } from "./optional";
+import {
+  concat,
+  forEach,
+  type OneMany,
+  type Opt,
+  some,
+  Sorted,
+} from "./optional";
 import {
   type Binding,
   BindingType,

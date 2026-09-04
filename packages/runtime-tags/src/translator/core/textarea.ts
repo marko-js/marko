@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { decodeHTML } from "@marko/compiler/babel-utils";
-import { getFile } from "@marko/compiler/babel-utils";
+import { decodeHTML, getFile } from "@marko/compiler/babel-utils";
 
 import normalizeStringExpression from "../util/normalize-string-expression";
 

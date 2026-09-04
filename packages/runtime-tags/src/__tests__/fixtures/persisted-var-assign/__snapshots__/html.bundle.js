@@ -13,7 +13,6 @@ var counter_box_default = _template_persisted("b", (input) => {
 	$scope0_reason && _scope($scope0_id, { U: _resume(function(v) {
 		count = v;
 	}, "b0", $scope0_id) || void 0 });
-	_resume_branch($scope0_id);
 	return $return;
 }, 0, 0);
 

@@ -33,7 +33,6 @@ var child_default = _template_persisted("__tests__/tags/child.marko", (input) =>
 		input_label: ["input.label"],
 		c: "1:6"
 	}) : _owned_guard($scope0_owned, 1) && _client_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/child.marko0", input.label);
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
@@ -61,5 +60,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		n,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 }, 1, () => [child_default]);

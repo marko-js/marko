@@ -33,5 +33,4 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, { g: count });
-	_resume_branch($scope0_id);
 }, 1, () => [row_default]);

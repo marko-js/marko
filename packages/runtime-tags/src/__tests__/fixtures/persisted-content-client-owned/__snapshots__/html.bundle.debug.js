@@ -38,7 +38,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					const $scope2_id = _scope_id();
 					_html(`<em>${_text_resume($scope2_id, "#text/0", input.note)}</em>`);
 					_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
-					_resume_branch($scope2_id);
 				}, $scope1_id)
 			});
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
@@ -57,5 +56,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_note: ["input.note"],
 		open: "1:6"
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.note));
-	_resume_branch($scope0_id);
 }, 1, () => [card_default]);

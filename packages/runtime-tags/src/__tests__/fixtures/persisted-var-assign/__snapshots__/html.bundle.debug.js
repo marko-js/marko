@@ -15,7 +15,6 @@ var counter_box_default = _template_persisted("__tests__/tags/counter-box/index.
 	$scope0_reason && _scope($scope0_id, { "#TagVariableChange": _resume(function(v) {
 		count = v;
 	}, "__tests__/tags/counter-box/index.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/tags/counter-box/index.marko", 0);
-	_resume_branch($scope0_id);
 	return $return;
 }, 0, 0);
 

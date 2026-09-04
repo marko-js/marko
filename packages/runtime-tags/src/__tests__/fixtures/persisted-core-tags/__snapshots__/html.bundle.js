@@ -14,5 +14,4 @@ var template_default = _template_persisted("a", (input) => {
 		f: input.value,
 		h: count
 	}) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "f", input.value);
-	_resume_branch($scope0_id);
 }, 1, 0);

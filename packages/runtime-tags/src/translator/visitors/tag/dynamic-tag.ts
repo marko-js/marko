@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 import {
   getFile,
   assertAttributesOrArgs,
-  getFile,
   getProgram,
   getTagTemplate,
   importDefault,
@@ -177,6 +176,9 @@ export default {
         node.name,
         ...inputNodes,
       ]);
+      // Name-only tags are left out: flagging them registers sibling attr-tag
+      // props through `for` items, so a bare function as the name stays unregistered.
+      if (inputNodes.length) tagExtra.dynamicTagInput = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const nodeBinding = (tagExtra[kDOMBinding] = createBinding(

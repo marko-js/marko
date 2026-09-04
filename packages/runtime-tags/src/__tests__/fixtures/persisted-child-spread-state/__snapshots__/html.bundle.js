@@ -19,7 +19,6 @@ var card_default = _template_persisted("c", (input) => {
 	_script($scope0_id, "c0");
 	_patch_value($scope0_id, "c0", open, 1);
 	$scope0_reason && _scope($scope0_id, { i: open });
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
@@ -45,5 +44,4 @@ var template_default = _template_persisted("a", (input) => {
 		j: input.badge?.label,
 		b: _existing_scope($childScope2)
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.props), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a1", input.badge?.label));
-	_resume_branch($scope0_id);
 }, 1, () => [badge_default, card_default]);

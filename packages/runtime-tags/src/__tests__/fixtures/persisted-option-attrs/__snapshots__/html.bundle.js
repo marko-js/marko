@@ -20,5 +20,4 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`${_el_resume($scope0_id, "a")}<select id=plain><option${_attr_option_value("a")}${_patch_attr($scope0_id, "b", "selected", input.pick === "a", $scope0_owned, 2)}>A</option>${_el_resume($scope0_id, "b")}<option${_attr_option_value("b")}${_patch_attr($scope0_id, "c", "selected", input.pick === "b", $scope0_owned, 2)}>B</option>${_el_resume($scope0_id, "c")}</select><em>${_text_resume($scope0_id, "d", count)}</em><button>+</button>${_el_resume($scope0_id, "e")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, { k: count });
-	_resume_branch($scope0_id);
 }, 1, 0);

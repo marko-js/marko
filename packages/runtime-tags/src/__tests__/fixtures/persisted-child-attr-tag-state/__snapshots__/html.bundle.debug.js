@@ -54,5 +54,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		show: "1:6",
 		on: "2:6"
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [tabs_default]);

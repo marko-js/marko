@@ -16,5 +16,4 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`</ul>${_el_resume($scope0_id, "b", $sg__input_items)}<button>Count ${_text_resume($scope0_id, "d", count, 2)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, { i: count });
-	_resume_branch($scope0_id);
 }, 1, 0);

@@ -42,5 +42,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		count,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 }, 1, () => [toggle_panel_default]);

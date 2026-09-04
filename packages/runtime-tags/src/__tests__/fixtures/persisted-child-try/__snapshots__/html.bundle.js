@@ -33,5 +33,4 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
 	$scope0_reason && _scope($scope0_id, { c: show });
-	_resume_branch($scope0_id);
 }, 1, () => [widget_default]);

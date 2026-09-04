@@ -11,7 +11,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		if (count > 1) {
 			const $scope1_id = _scope_id();
 			_html("<p>big</p>");
-			_script($scope1_id, "__tests__/template.marko_1_input_title#4");
+			_script($scope1_id, "__tests__/template.marko_1_input_title#4", 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
@@ -25,5 +25,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_title: ["input.title"],
 		count: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
-	_resume_branch($scope0_id);
 }, 1, 0);

@@ -9,7 +9,6 @@ var template_default = _template_persisted("a", (input) => {
 		_persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "a", input.title, void 0, $scope0_owned, 0)}</em>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html(`<main><div${_patch_attrs(input.attrs, "a", $scope0_id, "div", void 0, $scope0_owned, 1)}>`);
 	_patch_dynamic_tag($scope0_id, "a", extra, 0, 0, 0, 0, 0, 0);
@@ -29,5 +28,4 @@ var template_default = _template_persisted("a", (input) => {
 		j: extra,
 		l: $input_title__closures
 	}) : _owned_guard($scope0_owned, 0) && _content_withheld("a0") && _patch_value($scope0_id, "a0", input.title);
-	_resume_branch($scope0_id);
 }, 1, 0);

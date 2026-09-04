@@ -40,5 +40,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		s,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { s: "1:6" }) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.x);
-	_resume_branch($scope0_id);
 }, 1, () => [kid_default]);

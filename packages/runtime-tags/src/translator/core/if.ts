@@ -22,7 +22,6 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPersisted } from "../util/marko-config";
-import { addSorted } from "../util/optional";
 import { onClassifyStructure } from "../util/persisted/lifecycle";
 import {
   isBranchPathSection,

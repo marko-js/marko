@@ -12,7 +12,6 @@ var mixer_default = _template_persisted("b", (input) => {
 		d: input.value,
 		e: local
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "b0", input.value);
-	_resume_branch($scope0_id);
 	return $return;
 }, 0, 0);
 

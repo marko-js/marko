@@ -17,7 +17,6 @@ var counter_default = _template_persisted("a", (input) => {
 			n = v;
 		}, "a0", $scope0_id) || void 0
 	});
-	_resume_branch($scope0_id);
 	return $return;
 }, 0, 0);
 

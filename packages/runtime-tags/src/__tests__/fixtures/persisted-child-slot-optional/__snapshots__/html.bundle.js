@@ -30,5 +30,4 @@ var template_default = _template_persisted("a", (input) => {
 		g: count,
 		a: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [card_default]);

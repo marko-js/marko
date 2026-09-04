@@ -9,7 +9,6 @@ var kid_default = _template_persisted("b", (input) => {
 	_script($scope0_id, "b0");
 	_patch_value($scope0_id, "b0", c, 1);
 	$scope0_reason && _scope($scope0_id, { c });
-	_resume_branch($scope0_id);
 	return $return;
 }, 0, 0);
 

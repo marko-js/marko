@@ -5,7 +5,6 @@ import {
   assertNoAttributeTags,
   assertNoParams,
   diagnosticWarn,
-  getFile,
   getProgram,
   parseStatements,
   type Tag,

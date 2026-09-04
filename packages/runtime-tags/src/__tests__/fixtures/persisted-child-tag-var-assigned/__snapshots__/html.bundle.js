@@ -13,7 +13,6 @@ var counter_box_default = _template_persisted("b", (input) => {
 	$scope0_reason && _scope($scope0_id, { U: _resume(function(v) {
 		count = v;
 	}, "b0", $scope0_id) || void 0 });
-	_resume_branch($scope0_id);
 	return $return;
 }, 0, 0);
 
@@ -39,5 +38,4 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, { c: show });
-	_resume_branch($scope0_id);
 }, 1, () => [counter_box_default]);

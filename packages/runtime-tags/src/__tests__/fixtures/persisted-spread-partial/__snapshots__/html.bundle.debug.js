@@ -15,5 +15,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		"EventAttributes:#button/0": ["...input.attrs", "3:14"],
 		"EventAttributes:#div/2": ["...input.box", "4:11"]
 	});
-	_resume_branch($scope0_id);
 }, 1, 0);

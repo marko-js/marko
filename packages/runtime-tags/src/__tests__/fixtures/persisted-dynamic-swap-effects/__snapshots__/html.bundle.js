@@ -17,19 +17,18 @@ var card_live_default = _template_persisted("a", (input) => {
 	_script($scope0_id, "a0");
 	_patch_value($scope0_id, "a0", n, 1);
 	$scope0_reason && _scope($scope0_id, { g: n });
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
 _shells({ c: "c;D%;<main><!></main>" });
 var template_default = _template_persisted("c", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_mode__OR__input_label = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	const $tag = input.mode === "plain" ? card_plain_default : card_live_default;
 	const $input2 = { label: input.label };
 	_patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, $sg__input_mode__OR__input_label, 1);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
 		d: input.mode,

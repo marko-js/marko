@@ -15,5 +15,4 @@ var template_default = _template_persisted("a", (input) => {
 	}, "a1", $scope0_id), 0, 0)}${_patch_control($scope0_id, "b", 1, [input.picked, "b"], $scope0_owned, 0)} type=checkbox class=b>${_el_resume($scope0_id, "b")}</fieldset><p>${_text_resume($scope0_id, "c", last)}</p>`);
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, {});
-	_resume_branch($scope0_id);
 }, 1, 0);

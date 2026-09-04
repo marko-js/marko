@@ -48,5 +48,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_label: ["input.label"],
 		count: "1:6"
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [box_default]);

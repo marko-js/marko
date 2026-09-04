@@ -22,5 +22,4 @@ var template_default = _template_persisted("a", (input) => {
 		g: input.msg,
 		h: count
 	});
-	_resume_branch($scope0_id);
 }, 1, 0);

@@ -20,5 +20,4 @@ var template_default = _template_persisted("a", (input) => {
 		g: api,
 		h: api.label
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", api), _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a1", api.label), _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "e", input.title), _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "f", getTitle));
-	_resume_branch($scope0_id);
 }, 1, 0);

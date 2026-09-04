@@ -29,7 +29,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_scope($scope4_id, {}, "__tests__/template.marko", "4:4");
 		}, 1, "__tests__/template.marko_1_#text#1/await", 1);
 		$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_b__closures, _subscribe(_source_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2")));
-		_resume_branch($scope1_id);
+		$scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }) }, 1);
 	$scope0_reason && _scope($scope0_id, {
 		"ClosureScopes:input_a": $input_a__closures,

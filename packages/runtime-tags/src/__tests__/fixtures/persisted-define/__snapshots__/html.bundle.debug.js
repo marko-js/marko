@@ -12,7 +12,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_reason = _persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", attrs.x)} ${_patch_text($scope1_id, "#text/1", input.title, 2, $scope0_owned, 1)}</em>`);
 		_subscribe(_source_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_set_serialize_reason({ 0: _mask_group($scope0_owned, 2) });
 	const $childScope = _peek_scope_id();

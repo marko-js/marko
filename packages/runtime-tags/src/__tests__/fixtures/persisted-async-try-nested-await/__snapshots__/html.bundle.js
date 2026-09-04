@@ -25,7 +25,7 @@ var template_default = _template_persisted("a", (input) => {
 				_scope($scope5_id, {});
 			}, 1, "a3", 1);
 			$scope0_reason && _subscribe($input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
-			_resume_branch($scope2_id);
+			$scope0_reason && _resume_branch($scope2_id);
 		}, $scope1_id), { catch: attrTag({ content: _content_record("a1", $scope1_id) }) }, 1);
 		$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { catch: attrTag({ content: _content_record("a2", $scope0_id) }) }, 1);

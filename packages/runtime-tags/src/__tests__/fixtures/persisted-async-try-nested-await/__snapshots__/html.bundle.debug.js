@@ -27,7 +27,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				_scope($scope5_id, {}, "__tests__/template.marko", "4:8");
 			}, 1, "__tests__/template.marko_2_#text#0/await", 1);
 			$scope0_reason && _subscribe($input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
-			_resume_branch($scope2_id);
+			$scope0_reason && _resume_branch($scope2_id);
 		}, $scope1_id), { catch: attrTag({ content: _content_record("__tests__/template.marko_4*content", $scope1_id) }) }, 1);
 		$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 	}, $scope0_id), { catch: attrTag({ content: _content_record("__tests__/template.marko_3*content", $scope0_id) }) }, 1);

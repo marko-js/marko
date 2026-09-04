@@ -19,7 +19,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope4_id, {});
 		}, 1, "a2", 1);
 		$scope0_reason && _subscribe($input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
+		$scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_record("a1", $scope0_id) }),
 		catch: attrTag({ content: _content_elide("a4", (err) => {

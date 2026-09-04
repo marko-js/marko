@@ -8,7 +8,7 @@ import {
   type Template,
 } from "../common/types";
 import { addAwaitCounter, renderCatch } from "./control-flow";
-import { queueAsyncRender, queueEffect, runId } from "./queue";
+import { queueAsyncRender, queueEffect, queueRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
 import { ready, readyFailed, withLazy } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
@@ -95,9 +95,9 @@ export const _load_setup = /*@__PURE__*/ withLazy(
     return (owner: Scope) => {
       const child = owner[childScopeAccessor] as BranchScope;
       if (renderer) {
-        // A later instance of an already-loaded module: the first load
-        // already counted down and drove the channel.
-        insertLoaded(renderer, child, owner[nodeAccessor] as ChildNode);
+        // Later in this run, once the rest of the owner's setup has
+        // buffered every input chunk for the batch below.
+        queueRender(child, insertCached, -1, owner[nodeAccessor] as ChildNode);
       } else {
         const awaitCounter = addAwaitCounter(owner);
         child[AccessorProp.Load] ||= new Map() as LoadValues;
@@ -149,7 +149,9 @@ function insertLoaded(
   let remaining: number;
   if ((remaining = values?.size as number)) {
     const fail = loadFailed(branch, awaitCounter, readyId);
-    for (const [promise, entry] of values!) {
+    // Each entry's signal is cached as its chunk lands, so the replay
+    // applies every entry synchronously.
+    values!.forEach(([, apply], promise) =>
       promise.then(
         (mod) =>
           (apply._ = mod._) &&

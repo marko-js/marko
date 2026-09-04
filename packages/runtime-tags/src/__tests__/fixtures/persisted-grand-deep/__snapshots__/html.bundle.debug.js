@@ -28,7 +28,6 @@ var l2_default = _template_persisted("__tests__/tags/l1/tags/l2/index.marko", (i
 		n,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/tags/l1/tags/l2/index.marko", 0, { n: "1:6" });
-	_resume_branch($scope0_id);
 }, 0, () => [l3_default]);
 
 // tags/l1/index.marko
@@ -73,5 +72,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_note: ["input.note"],
 		show: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
-	_resume_branch($scope0_id);
 }, 1, () => [l1_default]);

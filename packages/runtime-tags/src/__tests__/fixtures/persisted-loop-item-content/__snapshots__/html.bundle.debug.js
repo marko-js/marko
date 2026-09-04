@@ -38,7 +38,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "#text/0", item.n, void 0, $scope0_owned, 0)}</em>`);
 				_subscribe($scope0_reason && $for_content__item_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:10"));
-				_resume_branch($scope2_id);
 			}, $scope1_id)
 		});
 		_html("</li>");

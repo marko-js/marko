@@ -40,5 +40,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		fmt: "1:9",
 		show: "2:6"
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", fmt), _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_title", input.title));
-	_resume_branch($scope0_id);
 }, 1, () => [card_default]);

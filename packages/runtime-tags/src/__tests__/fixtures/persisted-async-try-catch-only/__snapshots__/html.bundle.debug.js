@@ -16,7 +16,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_reason = _persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.message, void 0, $scope0_owned, 0)}</em>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
-		_resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, { "ClosureScopes:input_message": $input_message__closures }, "__tests__/template.marko", 0);

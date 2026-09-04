@@ -2,6 +2,7 @@
 _shells({ a: "a !a0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	_source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html("<main>");
@@ -12,5 +13,4 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.content,
 		f: open
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.content);
-	_resume_branch($scope0_id);
 }, 1, 0);

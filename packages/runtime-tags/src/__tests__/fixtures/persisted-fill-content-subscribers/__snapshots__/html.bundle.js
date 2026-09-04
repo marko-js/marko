@@ -1,12 +1,12 @@
 // tags/frame.marko
 _shells({ b: "b;D%;<section><!></section>" });
 var frame_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
 	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -33,7 +33,6 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<p class=a>${_text_resume($scope1_id, "a", input.label + ":0")}</p>`);
 		_subscribe($a__closures, _subscribe($si__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
-		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_set_serialize_reason(0);
 	const $childScope2 = _peek_scope_id();
@@ -46,7 +45,6 @@ var template_default = _template_persisted("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			Cj: 1
 		})));
-		_resume_branch($scope2_id);
 	}, $scope0_id) });
 	_html(`<button class=a>a</button>${_el_resume($scope0_id, "c")}<button class=b>b</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a2");
@@ -60,5 +58,4 @@ var template_default = _template_persisted("a", (input) => {
 		l: $b__closures,
 		b: _existing_scope($childScope2)
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.label);
-	_resume_branch($scope0_id);
 }, 1, () => [frame_default]);

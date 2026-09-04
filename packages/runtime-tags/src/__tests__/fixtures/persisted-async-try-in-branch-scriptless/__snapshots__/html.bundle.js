@@ -25,10 +25,9 @@ var template_default = _template_persisted("a", (input) => {
 						_: _scope_with_id($scope2_id),
 						Cf: 1
 					});
-					_resume_branch($scope3_id);
 				}, 1, "a2");
 				$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
-				_resume_branch($scope2_id);
+				$scope0_reason && _resume_branch($scope2_id);
 			}, $scope1_id), { placeholder: attrTag({ content: _content_record("a0", $scope1_id) }) });
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

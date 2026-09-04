@@ -25,7 +25,6 @@ var kid_default = _template_persisted("__tests__/tags/kid.marko", (input) => {
 		input_b: ["input.b"],
 		on: "1:6"
 	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/kid.marko0", input.b);
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko

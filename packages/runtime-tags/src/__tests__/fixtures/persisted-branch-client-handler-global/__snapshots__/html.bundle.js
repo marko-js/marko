@@ -10,5 +10,4 @@ var template_default = _template_persisted("a", (input) => {
 	_global_subscribe("a0", $scope0_id);
 	_script($scope0_id, "a2");
 	$scope0_reason ? _scope($scope0_id, { c: title }) : _patch_write($scope0_id, "c", title);
-	_resume_branch($scope0_id);
 }, 1, 1);

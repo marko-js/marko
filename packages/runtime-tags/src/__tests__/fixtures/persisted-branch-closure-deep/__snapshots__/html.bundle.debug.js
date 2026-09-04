@@ -38,5 +38,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_inner: ["input.inner"],
 		count: "1:6"
 	});
-	_resume_branch($scope0_id);
 }, 1, 0);

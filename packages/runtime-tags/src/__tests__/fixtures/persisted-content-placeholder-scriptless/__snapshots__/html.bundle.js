@@ -6,7 +6,7 @@ _shells({
 	b2: "b2;b%;<!><!><!>"
 });
 var card_default = _template_persisted("b", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -19,13 +19,13 @@ var card_default = _template_persisted("b", (input) => {
 			_html("<span>done</span>");
 		}, 1, "b1");
 		$scope0_reason && _subscribe($input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope2_id);
+		$scope0_reason && _resume_branch($scope2_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_elide("b3", () => {
 		_persisted_reason();
 		const $scope1_id = _scope_id();
-		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0));
+		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $sg__input_content);
 		_subscribe(_source_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		_resume_branch($scope1_id);
+		$sg__input_content || _resume_branch($scope1_id);
 	}, $scope0_id, 1) }) }, 1);
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {
@@ -55,7 +55,6 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_owned, 1)}</em>`);
 			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html("</main>");

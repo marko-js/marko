@@ -16,7 +16,6 @@ var price_card_default = _template_persisted("__tests__/tags/price-card.marko", 
 		input_label: ["input.label"],
 		qty: "1:6"
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/price-card.marko0", input.label);
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko

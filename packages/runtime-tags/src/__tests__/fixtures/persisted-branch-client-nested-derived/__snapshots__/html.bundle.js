@@ -18,5 +18,4 @@ var template_default = _template_persisted("a", (input) => {
 		h: show,
 		i: $label__closures
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", label), _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a1", show));
-	_resume_branch($scope0_id);
 }, 1, 0);

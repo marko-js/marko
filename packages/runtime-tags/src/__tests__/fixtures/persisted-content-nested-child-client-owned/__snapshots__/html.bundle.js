@@ -3,14 +3,14 @@ const $template = "<div><!><button>+</button></div>";
 const $walks = "D%b l";
 _shells({ c: "c !c0;D%b ;<div><!><button>+</button></div>" });
 var grand_default = _template_persisted("c", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html("<div>");
 	if ($scope0_reason) _if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, _source_guard($scope0_reason, 0));
+			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $sg__input_content);
 			_scope($scope1_id, {});
 			return 0;
 		}
@@ -22,7 +22,6 @@ var grand_default = _template_persisted("c", (input) => {
 		e: input.content,
 		f: open
 	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "c0", input.content);
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // tags/child/index.marko
@@ -55,7 +54,6 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "a", input.note)}</em>`);
 			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html("</main>");

@@ -19,5 +19,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_global_subscribe("__tests__/template.marko_1_$global_brand#3/global", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, { on }, "__tests__/template.marko", 0, { on: "1:6" });
-	_resume_branch($scope0_id);
 }, 1, 1);

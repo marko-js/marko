@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
 import { isPersisted } from "./marko-config";
-import { forEach, type Opt, some, Sorted } from "./optional";
+import { forEach, type Opt, some } from "./optional";
 import { scopeReasonRuntime } from "./persisted/intrinsics";
 import { isBranchPathSection } from "./persisted/structure";
 import {

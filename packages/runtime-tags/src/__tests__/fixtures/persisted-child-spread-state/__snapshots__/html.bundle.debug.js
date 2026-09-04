@@ -21,7 +21,6 @@ var card_default = _template_persisted("__tests__/tags/card.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/card.marko0", open, 1);
 	$scope0_reason && _scope($scope0_id, { open }, "__tests__/tags/card.marko", 0, { open: "1:6" });
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
@@ -62,5 +61,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		on: "1:6",
 		input_badge_label: ["input.badge.label"]
 	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.props), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.badge?.label));
-	_resume_branch($scope0_id);
 }, 1, () => [badge_default, card_default]);

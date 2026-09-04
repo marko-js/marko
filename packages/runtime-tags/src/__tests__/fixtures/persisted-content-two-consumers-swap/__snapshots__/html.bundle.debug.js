@@ -37,7 +37,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_owned, 4)}</em>`);
 			_subscribe($si__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
-			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_if(() => {
@@ -56,7 +55,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 						_: _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_note": 1
 					}, "__tests__/template.marko", "6:6"));
-					_resume_branch($scope3_id);
 				}, $scope2_id)
 			});
 			_scope($scope2_id, {

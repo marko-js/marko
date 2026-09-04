@@ -56,5 +56,4 @@ var template_default = _template_persisted("a", (input) => {
 		k: tenfold,
 		c: _existing_scope($childScope)
 	});
-	_resume_branch($scope0_id);
 }, 1, () => [counter_default]);

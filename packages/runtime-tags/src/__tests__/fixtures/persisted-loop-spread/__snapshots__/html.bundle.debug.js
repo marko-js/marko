@@ -19,5 +19,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 }, 1, 0);

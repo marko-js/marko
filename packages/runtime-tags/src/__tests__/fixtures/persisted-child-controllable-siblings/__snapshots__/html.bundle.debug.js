@@ -68,5 +68,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		"#childScope/3": _existing_scope($childScope),
 		"#childScope/4": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1, () => [counter_default]);

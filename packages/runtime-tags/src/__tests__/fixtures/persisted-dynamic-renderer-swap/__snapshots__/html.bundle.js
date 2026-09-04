@@ -34,5 +34,4 @@ var template_default = _template_persisted("c", (input) => {
 		g: input.label,
 		i: n
 	});
-	_resume_branch($scope0_id);
 }, 1, 1);

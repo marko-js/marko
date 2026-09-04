@@ -44,5 +44,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_label: ["input.label"],
 		n: "3:6"
 	});
-	_resume_branch($scope0_id);
 }, 1, 1);

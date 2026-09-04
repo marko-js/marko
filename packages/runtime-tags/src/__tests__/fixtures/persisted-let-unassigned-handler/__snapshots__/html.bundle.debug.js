@@ -11,5 +11,4 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_script($scope0_id, "__tests__/template.marko_0_x_length#6");
 	_patch_effect($scope0_id, "__tests__/template.marko_0_x_length#6", "x_length");
 	$scope0_reason ? _scope($scope0_id, { x_length: x?.length }, "__tests__/template.marko", 0, { x_length: ["x.length", "1:6"] }) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "x_length", x?.length);
-	_resume_branch($scope0_id);
 }, 1, 0);

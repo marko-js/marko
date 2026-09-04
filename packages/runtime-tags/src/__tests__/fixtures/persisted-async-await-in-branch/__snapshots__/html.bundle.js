@@ -34,5 +34,4 @@ var template_default = _template_persisted("a", (input) => {
 		i: input.promise,
 		j: count
 	});
-	_resume_branch($scope0_id);
 }, 1, 0);

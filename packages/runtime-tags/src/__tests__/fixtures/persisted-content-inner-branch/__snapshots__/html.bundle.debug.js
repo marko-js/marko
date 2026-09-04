@@ -44,7 +44,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				}
 			}, $scope1_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 2);
 			$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
-			_resume_branch($scope1_id);
+			$sg__input_show || $scope0_reason && _resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html("</main>");

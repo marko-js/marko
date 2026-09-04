@@ -28,5 +28,4 @@ var template_default = _template_persisted("a", (input) => {
 		f: count,
 		g: $count__closures
 	});
-	_resume_branch($scope0_id);
 }, 1, 0);

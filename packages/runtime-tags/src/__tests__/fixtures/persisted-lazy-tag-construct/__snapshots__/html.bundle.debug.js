@@ -10,7 +10,6 @@ var child_default = _template_persisted("__tests__/child.marko", (input) => {
 	_script($scope0_id, "__tests__/child.marko_0");
 	_patch_value($scope0_id, "__tests__/child.marko0", count, 1);
 	$scope0_reason && _scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
-	_resume_branch($scope0_id);
 }, 0, 0);
 
 // template.marko
