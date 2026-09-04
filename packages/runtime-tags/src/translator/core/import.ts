@@ -1,10 +1,14 @@
-import { parseStatements, type Tag } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  parseStatements,
+  type Tag,
+} from "@marko/compiler/babel-utils";
 
 export default {
   parse(tag) {
     const { node } = tag;
     const statements = parseStatements(
-      tag.hub.file,
+      getFile(),
       node.rawValue!,
       node.start!,
       node.end!,

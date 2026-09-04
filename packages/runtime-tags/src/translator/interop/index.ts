@@ -2,6 +2,7 @@ import path from "path";
 
 import { type Config, taglib, types as t } from "@marko/compiler";
 import {
+  getFile,
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
@@ -172,7 +173,7 @@ export function createInteropTranslator(translate5: any) {
       ...visitor,
       Program: {
         enter(program, state) {
-          const entryFile = program.hub.file;
+          const entryFile = getFile();
           const { output, entry } = entryFile.markoOpts;
           const isDOMPageEntry =
             (output === "dom" && entry === "page") || output === "hydrate";

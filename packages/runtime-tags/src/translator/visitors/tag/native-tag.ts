@@ -5,6 +5,7 @@ import {
   assertNoParams,
   computeNode,
   diagnosticWarn,
+  getFile,
   getProgram,
   getTagDef,
 } from "@marko/compiler/babel-utils";
@@ -528,7 +529,7 @@ export default {
             if (spreadLoc && spreadLoc.start.index != null) {
               const name =
                 "..." +
-                tag.hub.file.code.slice(
+                getFile().code.slice(
                   spreadLoc.start.index,
                   spreadLoc.end.index,
                 );

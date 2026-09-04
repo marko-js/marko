@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrArgs,
+  getFile,
   getProgram,
   getTagTemplate,
   importDefault,
@@ -327,7 +328,7 @@ export default {
 
         if (t.isStringLiteral(tagExpression)) {
           tagExpression = importDefault(
-            tag.hub.file,
+            getFile(),
             getTagRelativePath(tag),
             tagExpression.value,
           );
@@ -347,7 +348,7 @@ export default {
           const classId = classFile!.metadata.marko.id;
           const registration = isOutputHTML()
             ? t.callExpression(
-                importNamed(tag.hub.file, getCompatRuntimeFile(), "s"),
+                importNamed(getFile(), getCompatRuntimeFile(), "s"),
                 [
                   t.stringLiteral(classId),
                   t.identifier((tagExpression as t.Identifier).name),
@@ -404,7 +405,7 @@ export default {
         }
       } else if (t.isStringLiteral(tagExpression)) {
         tagExpression = importDefault(
-          tag.hub.file,
+          getFile(),
           getTagRelativePath(tag),
           tagExpression.value,
         );

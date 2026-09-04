@@ -3,6 +3,7 @@ import path from "path";
 import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrSingleArg,
+  getFile,
   getProgram,
   getTagDef,
   getTaglibLookup,
@@ -151,9 +152,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   let tagIdentifier: t.Expression;
   if (t.isStringLiteral(node.name)) {
     const relativePath = getTagRelativePath(tag);
-    tagIdentifier = isCircularRequest(tag.hub.file, relativePath)
+    tagIdentifier = isCircularRequest(getFile(), relativePath)
       ? t.identifier(getTemplateContentName())
-      : importDefault(tag.hub.file, relativePath, getTagName(tag));
+      : importDefault(getFile(), relativePath, getTagName(tag));
   } else {
     tagIdentifier = node.name;
   }
@@ -307,7 +308,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       childExports.params,
       (binding, preferredName, directContent) =>
         importOrSelfReferenceName(
-          tag.hub.file,
+          getFile(),
           relativePath,
           (directContent && binding.directContentExport) || binding.export!,
           preferredName,
@@ -416,7 +417,7 @@ export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   } else if (tagName) {
     const closestTag = closest(
       tagName,
-      Object.keys((getTaglibLookup(tag.hub.file) as any).merged.tags),
+      Object.keys((getTaglibLookup(getFile()) as any).merged.tags),
     );
     if (distance(tagName, closestTag) < 4) {
       didYouMean = ` Did you mean \`<${closestTag}>\`?`;

@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   getProgram,
   loadFileForImport,
   resolveRelativePath,
@@ -51,15 +52,15 @@ export default {
     // templates still ship them. Only top-level imports need linking.
     if (
       t.isProgram(importDecl.parent) &&
-      isClientAssetImport(importDecl.hub.file, value)
+      isClientAssetImport(getFile(), value)
     ) {
-      addAssetImport(importDecl.hub.file, value);
+      addAssetImport(getFile(), value);
     }
 
     const tagImport = resolveTagImport(importDecl, value);
     if (tagImport) {
       (node.extra ??= {}).tagImport = tagImport;
-      const tags = importDecl.hub.file.metadata.marko.tags!;
+      const tags = getFile().metadata.marko.tags!;
       if (!tags.includes(tagImport)) {
         tags.push(tagImport);
       }
@@ -262,7 +263,7 @@ function trackImportedRegisteredFns(
   const { node } = importDecl;
   // Type imports are already stripped: the compiler turns `stripTypes` on for
   // every output this translator runs for.
-  const childFile = loadFileForImport(importDecl.hub.file, node.source.value);
+  const childFile = loadFileForImport(getFile(), node.source.value);
   if (!childFile) return;
 
   for (const specifier of importDecl.get("specifiers")) {
