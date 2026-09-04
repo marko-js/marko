@@ -71,6 +71,8 @@ export {
   _to_text,
 } from "./dom/dom";
 export { _on } from "./dom/event";
+export { applyPatch } from "./dom/patch";
+export { _global_join, _global_script } from "./dom/patch-global";
 export {
   _load_event_trigger,
   _load_idle_trigger,
@@ -85,6 +87,7 @@ export { run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
+  _init_join,
   _resume,
   _var_resume,
   init,
@@ -99,6 +102,14 @@ export {
   _closure_get,
   _const,
   _el_read,
+  _fill_const,
+  _fill_let,
+  _fill_let_change,
+  _fill_join,
+  _fill_join_for,
+  _fill_join_if,
+  _fill_join_closure,
+  _fill_join_subscribers,
   _global_read,
   _for_closure,
   _for_selector,
@@ -106,6 +117,17 @@ export {
   _hoist_resume,
   _id,
   _if_closure,
+  _init_closure_get,
+  _init_for_closure,
+  _init_for_selector,
+  _init_if_closure,
+  // A `tagNameLoad` input init has no module-graph reference (a construct
+  // resolves it by serialized id), so the translator emits these `_resume`
+  // aliases — which the pure-call list excludes — to keep the registration.
+  _init_closure_get as _resume_init_closure_get,
+  _init_for_closure as _resume_init_for_closure,
+  _init_for_selector as _resume_init_for_selector,
+  _init_if_closure as _resume_init_if_closure,
   _let,
   _let_change,
   _or,

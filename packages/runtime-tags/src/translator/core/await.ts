@@ -9,6 +9,11 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
+import { isPersisted } from "../util/marko-config";
+import {
+  boundaryAlwaysPairs,
+  inStatefulBranch,
+} from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -17,7 +22,11 @@ import {
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -29,10 +38,12 @@ import {
   startSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
+import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
 import {
   addStatement,
   addValue,
+  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
@@ -110,6 +121,20 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
+    bodySection.isBoundary = true;
+    // Page entry must ship the child patcher and branch-resume latch even
+    // when this template module does not load (a scriptless persisted await).
+    if (isPersisted()) {
+      addRuntimeFeatureAsset("patch-boundary");
+      // A scriptless construct paints the settled body via text fills.
+      addRuntimeFeatureAsset("patch-text");
+      // Recorded on every section; `buildShells` keeps only those whose
+      // shipped body records a construct can resolve.
+      (section.constructSetups ??= []).push({
+        binding: tagExtra[kDOMBinding]!,
+        body: bodySection,
+      });
+    }
     const valueExtra = evaluate(valueAttr.value);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -138,6 +163,11 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        // A patch pairs the body scope through a `PatchChild` entry, so the
+        // page must ship its patcher (the import rides both outputs).
+        if (isPersisted()) {
+          importRuntimeFeature("patch-boundary");
+        }
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -151,6 +181,19 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
+        const valueSources = getSerializeSourcesForExpr(
+          valueAttr.value.extra || {},
+        );
+        // Client-owned thenables resolve via `_await_promise`; a patch
+        // must not Pending them (the body has no fills to Child). Otherwise
+        // a constructible await's Pending carries its body content id.
+        const patchContent =
+          isPersisted() && !valueSources?.param && !valueSources?.global
+            ? t.numericLiteral(0)
+            : section.constructSetups?.some((s) => s.binding === nodeRef)
+              ? t.stringLiteral(getResumeRegisterId(section, nodeRef, "await"))
+              : undefined;
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -163,7 +206,23 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(section, bodySection?.serializeReason, true),
+                // A persisted page always marks a patchable boundary: the
+                // frame pairs its body through the resumed branch link.
+                isPersisted() && !inStatefulBranch(section)
+                  ? t.numericLiteral(1)
+                  : getSerializeGuard(
+                      section,
+                      bodySection?.serializeReason,
+                      true,
+                    ),
+                patchContent,
+                // An always-pairing body's Pending entry drops its
+                // construct id outside divergent contexts.
+                ...(isPersisted() &&
+                bodySection &&
+                boundaryAlwaysPairs(bodySection)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]
@@ -181,6 +240,9 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        if (isPersisted()) {
+          importRuntimeFeature("patch-boundary");
+        }
       },
       exit(tag) {
         const { node } = tag;
@@ -194,15 +256,18 @@ export default {
         signal.build = () => {
           const branchRenderArgs = getBranchRendererArgs(bodySection);
           const branchParams = branchRenderArgs.pop();
+          const awaitContent = callRuntime(
+            "_await_content",
+            getScopeAccessorLiteral(nodeRef, true),
+            ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
+          );
           (signal.prependStatements ||= []).push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 t.identifier(bodySection.name),
-                callRuntime(
-                  "_await_content",
-                  getScopeAccessorLiteral(nodeRef, true),
-                  ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
-                ),
+                // Constructs resolve body content from the frame's shipped
+                // record; registering here would bundle html resume elides.
+                awaitContent,
               ),
             ]),
           );

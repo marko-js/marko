@@ -1,0 +1,42 @@
+// tags/counter-box/index.marko
+_shells({ b: "b !;Db%;<span>box <!></span>" });
+var counter_box_default = _template_persisted("b", (input) => {
+	const $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let count = input.start;
+	_html(`<span>box ${_text_resume($scope0_id, "a", count, 2)}</span>`);
+	const $return = count;
+	_patch_bind($scope0_id, "U", _resume(function(v) {
+		count = v;
+	}, "b0", $scope0_id) || void 0);
+	_patch_value($scope0_id, "b0", count, 1);
+	$scope0_reason && _scope($scope0_id, { U: _resume(function(v) {
+		count = v;
+	}, "b0", $scope0_id) || void 0 });
+	return $return;
+}, 0, 0);
+
+// template.marko
+_shells({ a: "a !a2;D%b ;<main><!><button class=toggle>t</button></main>" });
+var template_default = _template_persisted("a", (input) => {
+	const $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let show = true;
+	_html("<main>");
+	if ($scope0_reason) _if(() => {
+		{
+			const $scope1_id = _scope_id();
+			const $childScope = _peek_scope_id();
+			let count = counter_box_default({ start: 1 });
+			_var($scope1_id, "b", $childScope, "a0");
+			_owned_guard(0, 0) && _patch_write($scope1_id, "e", count, 1);
+			_html(`<p>${_text_resume($scope1_id, "c", count)}</p><button class=reset>r</button>${_el_resume($scope1_id, "d")}`);
+			_script($scope1_id, "a1");
+			_scope($scope1_id, { a: _existing_scope($childScope) });
+			return 0;
+		}
+	}, $scope0_id, "a");
+	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "b")}</main>`);
+	_script($scope0_id, "a2");
+	$scope0_reason && _scope($scope0_id, { c: show });
+}, 1, () => [counter_box_default]);

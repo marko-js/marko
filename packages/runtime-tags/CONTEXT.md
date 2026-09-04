@@ -167,6 +167,58 @@ A `readyId`-keyed serialization channel that withholds lazy resume data until
 its module registers and earlier data drains.
 _Avoid_: async HTML stream
 
+## Persisted pages
+
+Analyze names observations in template terms; translate names conclusions
+(ownership, wire channels, masks) and keeps them out of shared metadata.
+
+**Patch**:
+A server rerender of a persisted page applied to the live client DOM by
+refreshing values and navigating structure, without a full page render.
+_Avoid_: rerender, hydration update
+
+**Stateful structure**:
+A branch body whose selection has a state reason (main's `kStatefulReason`
+vocabulary) — state sources, no `$global`, fill-deliverable param feeds —
+derived from its upstream expression (`isStatefulBranch`), never stored.
+Resumed code re-selects it, so patch renders skip it and frames omit its
+entry. Translate code may call the derived policy _client-owned_.
+_Avoid_: state-selected, client-reselectable, client-owned as a shared field name
+
+**Structural-or-global param**:
+A root param whose reads select structure or mix with `$global` — the value
+never leaves through an expression channel, so whoever renders must supply
+it. Translate derives server-ownership requirements from this fact.
+_Avoid_: server-required param
+
+**Branch path**:
+The root section and every section below it not crossing boundary content
+or a content body its consumer renders stateful; their text and attr
+holes emit direct patch writes.
+_Avoid_: capture path, patch section
+
+**Patch fill**:
+A server-sourced binding whose reads intersect client state, refreshed by
+patches through a registered fill signal. Distinct from a resume-payload
+_fill_ batch.
+_Avoid_: fill outside a patch-delivery discussion
+
+**Effect write / capture write**:
+Wire channels for refreshable values no fill consumes: an accessor write
+plus effect re-run, or a bare accessor write for registered-function
+captures.
+
+**Group feeds**:
+Per reason group at a templated call site: the feeding provenance
+(`sources`) and whether the group covers a structural-or-global param.
+Translate composes ownership masks and admission from it.
+_Avoid_: group ownership
+
+**Poison**:
+A runtime patch entry marking a region unanalyzable, forcing navigation.
+Translate/runtime only; analyze records why faithful patching is
+impossible, not the mechanism.
+
 ## Compilation modes
 
 **Output mode**:

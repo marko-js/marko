@@ -1,14 +1,21 @@
 import { types as t } from "@marko/compiler";
 import {
+  isAttributeTag,
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
   assertNoVar,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
-import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { isPersisted } from "../util/marko-config";
+import {
+  analyzeAttributeTags,
+  getAttrTagPaths,
+} from "../util/nested-attribute-tags";
+import { boundaryAlwaysPairs } from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -17,7 +24,11 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -54,48 +65,71 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze(tag) {
-    assertNoVar(tag);
-    assertNoArgs(tag);
-    assertNoParams(tag);
-    assertNoAttributes(tag);
-    const attrTags = analyzeAttributeTags(tag);
-    // The runtime reads only `placeholder` and `catch`, so any other attribute
-    // tag (usually a typo) would silently drop its pending/error UI.
-    if (attrTags) {
-      for (const name in attrTags) {
-        if (name !== "@placeholder" && name !== "@catch") {
-          const suggestion =
-            name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
-          throw tag.buildCodeFrameError(
-            `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
-          );
+  analyze: {
+    enter(tag) {
+      assertNoVar(tag);
+      assertNoArgs(tag);
+      assertNoParams(tag);
+      assertNoAttributes(tag);
+      const attrTags = analyzeAttributeTags(tag);
+      // The runtime reads only `placeholder` and `catch`, so any other attribute
+      // tag (usually a typo) would silently drop its pending/error UI.
+      if (attrTags) {
+        for (const name in attrTags) {
+          if (name !== "@placeholder" && name !== "@catch") {
+            const suggestion =
+              name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
+            throw tag.buildCodeFrameError(
+              `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
+            );
+          }
         }
       }
-    }
-    const section = getOrCreateSection(tag);
-    const tagExtra = mergeReferences(
-      section,
-      tag.node,
-      getAllTagReferenceNodes(tag.node),
-    );
-    tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);
+      const section = getOrCreateSection(tag);
+      const tagExtra = mergeReferences(
+        section,
+        tag.node,
+        getAllTagReferenceNodes(tag.node),
+      );
+      tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);
 
-    if (!tag.node.body.body.length) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
-        );
-    }
+      if (!tag.node.body.body.length) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
+          );
+      }
 
-    const bodySection = startSection(tag.get("body"));
+      const bodySection = startSection(tag.get("body"));
 
-    if (bodySection) {
-      bodySection.upstreamExpression = tagExtra;
-      structure.visit(tag, WalkCode.Replace);
-      structure.enterShallow(tag);
-    }
+      if (bodySection) {
+        bodySection.isBoundary = true;
+        bodySection.upstreamExpression = tagExtra;
+        if (isPersisted()) {
+          // Page entry must ship the boundary patchers even when this
+          // template's dom module does not load (a scriptless `<try>`):
+          // the try's pairing entry carries its content id and slot writes.
+          addRuntimeFeatureAsset("patch-boundary");
+          addRuntimeFeatureAsset("catch");
+        }
+        structure.visit(tag, WalkCode.Replace);
+        structure.enterShallow(tag);
+      }
+    },
+    exit(tag) {
+      // The attr tag bodies' sections exist once their own analyze ran; a
+      // shape this cannot flag falls back to loading the dom module.
+      if (!isPersisted()) return;
+      for (const attrTag of getAttrTagPaths(tag)) {
+        const section =
+          attrTag.isMarkoTag() && isAttributeTag(attrTag)
+            ? attrTag.node.body.extra?.section
+            : undefined;
+        if (section) section.boundaryContent = true;
+        else getProgram().node.extra.isInteractive = true;
+      }
+    },
   },
   translate: translateByTarget({
     html: {
@@ -112,6 +146,9 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        // A patch pairs the body scope through a `PatchChild` entry, so the
+        // page must ship its patcher (the import rides both outputs).
+        if (isPersisted()) importRuntimeFeature("patch-child");
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -145,6 +182,12 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                // An always-pairing branch drops its pairing entry's
+                // construct payload outside divergent contexts.
+                ...(isPersisted() &&
+                boundaryAlwaysPairs(getSectionForBody(tagBody)!)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]
@@ -161,6 +204,7 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        if (isPersisted()) importRuntimeFeature("patch-child");
       },
       exit(tag) {
         const { node } = tag;

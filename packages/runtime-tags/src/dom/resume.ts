@@ -20,8 +20,8 @@ import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
-type ResumeFn = (ctx: SerializeContext) => unknown;
-type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
+export type ResumeFn = (ctx: SerializeContext) => unknown;
+export type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
 interface SerializeContext {
   (data: number | (Scope | number)[], registryId?: string): unknown;
   _: Record<string, unknown>;
@@ -43,6 +43,11 @@ export interface RenderData {
   m?(effects: unknown[]): unknown[];
   // Blocking resumes keyed by ready id.
   b?: Record<string, ResumeData>;
+  // Load-error sink: a lazy loader script's `onerror` reports its channel
+  // id here once the runtime has installed it (`init`)...
+  e?(readyId?: string): void;
+  // ...and parks it here before then (`init` drains this queue).
+  f?: string[] | void;
   /* --- Used by inline runtime --- */
 
   // Document
@@ -57,8 +62,44 @@ export interface RenderData {
   p?: Record<string | number, AwaitCounter>;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
+type Patcher = (scope: Scope, key: string, value: unknown) => void;
 
 export const registeredValues: Record<string, unknown> = {};
+export const patchers: Record<string, Patcher> = {};
+// Frame records ahead of the scope tree (`id;walks;template` shell
+// strings), registered by the patch feature that understands them.
+export let onPatchRecord: ((entry: string) => void) | undefined;
+export const _patch_records = (handler: NonNullable<typeof onPatchRecord>) =>
+  (onPatchRecord = handler);
+// Rejects the applying patch: unwinds to `applyPatch`'s catch, and the
+// caller falls back to a full document navigation. Only conditions
+// reachable in a matched build guard explicitly (lazy load failures,
+// withheld handlers, server-decided sentinels); skew rejects upstream via
+// the build id, so anything else crashes naturally into the same catch.
+export const failPatch = () => {
+  throw 0;
+};
+// Construct application dispatch: everything in a setup envelope is
+// REQUIRED (paired refresh via `patchers` stays soft — a shaken fill is
+// a correct no-op).
+export const constructPatchers: typeof patchers = {};
+export const patchConstruct = (setup: Scope, live: Scope) => {
+  for (const key in setup) {
+    constructPatchers[
+      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+    ](live, key, setup[key as keyof Scope]);
+  }
+};
+// Applies a patch partial to its live counterpart; structural patchers
+// recurse back through here, so no scope is ever addressed by id.
+export const patchScope = (partial: Scope, live: Scope) => {
+  for (const key in partial) {
+    patchers[
+      // Debug accessor prefixes are multi-character, ending ":".
+      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+    ](live, key, partial[key as keyof Scope]);
+  }
+};
 let curRenders: Renders;
 let embedRenders:
   | undefined
@@ -66,30 +107,76 @@ let embedRenders:
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
-let failedIds: undefined | Set<string>;
+let patchReady: undefined | ((readyId: string) => void);
+let patchReadyFailed: undefined | ((readyId: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
+// The render a frame is applying against (set by `beginPatch`).
+export let patchRender: RenderData | 0 = 0;
+let patching: 0 | 1 = 0;
+// Frame epoch: per-frame tables (the bind table) key off it so entries
+// from one frame can never satisfy a later frame's references.
+export let patchId = 0;
+
+export function beginPatch(renderId: string) {
+  const render = (patchRender = curRenders[renderId]);
+  // A page with no effects never wrote a walk call; pairing into resumed
+  // branches needs the walked links, so finish the resume before patching.
+  render.w();
+  patching = 1;
+  patchId++;
+  return render;
+}
+
+export function abortPatch() {
+  patchRender = patching = 0;
+}
+// Set while a partial applies to a tree a shell's walk just created: fresh
+// scopes met then have no renderer to set them up (see `PatchKey.Setup`).
+export let constructing = 0;
+export function withConstructing<T>(fn: () => T) {
+  constructing++;
+  try {
+    return fn();
+  } finally {
+    constructing--;
+  }
+}
 
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
+  patchReady?.(readyId);
 }
 
-// A lazy module that will never arrive can never deliver its channel's
-// pending resume data: the debug build records the failure per channel
-// (repeat reports fold) and says so instead of staying silent. Production
-// builds compile no reporting call sites, so this strips away entirely.
-export function readyFailed(readyId: string) {
+export function installReady(
+  onReady: (readyId: string) => void,
+  onFail: (readyId: string) => void,
+) {
+  patchReady = onReady;
+  patchReadyFailed = onFail;
+}
+
+// A channel module that will never arrive can never drain the data waiting
+// on it: the persisted feature (when installed) settles pending patches and
+// rejects later frames naming the channel. Id-less runtime-managed load
+// failures never gate a channel (each channel's entry reports itself).
+export function readyFailed(readyId?: string) {
   if (MARKO_DEBUG) {
-    if (failedIds?.has(readyId) || readyIds?.has(readyId)) return;
-    (failedIds ||= new Set()).add(readyId);
-    console.error(
-      `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
-    );
+    if (readyId && !readyIds?.has(readyId)) {
+      console.error(
+        `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
+      );
+    }
   }
+  if (readyId) patchReadyFailed?.(readyId);
+}
+
+export function isReady(readyId: string) {
+  return !!readyIds?.has(readyId);
 }
 
 export function withLazy<T>(runtime: T) {
@@ -165,6 +252,19 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           return scope;
         };
         const applyScopes = (partials: (Scope | number)[]) => {
+          if (patching && patchRender === render) {
+            // `[...shells, tree]`, anchored at the page root (scope 1); a
+            // deferred run applies via `_()`, leaving only a trailing 0.
+            let i = 0;
+            while (typeof partials[i] === "string") {
+              onPatchRecord!(partials[i++] as unknown as string);
+            }
+            if (partials[i]) {
+              patchScope(partials[i] as Scope, getScope(1));
+            }
+            return;
+          }
+
           let scopeId = partials[0] as number;
           for (let i = 1; i < partials.length; i++) {
             const partial = partials[i];
@@ -378,7 +478,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               // Gates can't reach here (only in ready streams, readyIds set);
               // a payload returns its fill or applies it and ends in `,0`.
               const scopes = (serialized as ResumeFn)(serializeContext);
-              if (Array.isArray(scopes)) applyScopes(scopes);
+              if (Array.isArray(scopes)) {
+                applyScopes(scopes);
+              } else if (patching && patchRender === render && scopes) {
+                // A shell-less frame is its bare tree object.
+                applyScopes([scopes as Scope]);
+              }
             }
           }
           resumes.splice(0, i);
@@ -405,6 +510,14 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           }
         }
 
+        // Loader `onerror` sink (`html/assets.ts`); installed only when the
+        // patch-ready feature latches, which shakes it from other bundles.
+        // A loader that failed before this module evaluated parked its id
+        // on the queue; from here on failures report directly.
+        if (patchReadyFailed) {
+          render.e = readyFailed;
+          render.f = render.f?.forEach(readyFailed);
+        }
         render.m = (effects: unknown[]) => {
           processResumes(render.r, effects);
 
@@ -543,6 +656,22 @@ export function getRegisteredWithScope(id: string, scope?: Scope) {
 
 export function _resume<T>(id: string, obj: T): T {
   return (registeredValues[id] = obj);
+}
+
+// A fill closure's construct init is the arrival at each join it feeds:
+// registered from the join's own fill wrapper, so it lives exactly as long.
+export function _init_join<T extends (scope: Scope) => void>(
+  id: string,
+  join: T,
+): T {
+  const prev = registeredValues[id] as T | undefined;
+  registeredValues[id] = prev
+    ? (scope: Scope) => {
+        prev(scope);
+        join(scope);
+      }
+    : join;
+  return join;
 }
 
 export function _var_resume<T extends Signal<unknown>>(

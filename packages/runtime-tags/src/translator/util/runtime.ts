@@ -12,6 +12,7 @@ import {
   _escape_style,
   _unescaped,
 } from "../../html";
+import { addAssetImport } from "./asset-imports";
 import { isTranslate } from "./get-compile-stage";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
@@ -28,6 +29,20 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 //
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
+  "_fill_join",
+  "_global_join",
+  "_fill_join_closure",
+  "_fill_join_for",
+  "_fill_join_if",
+  "_fill_join_subscribers",
+  "_init_closure_get",
+  "_init_for_closure",
+  "_init_for_selector",
+  "_init_if_closure",
+  "_init_join",
+  "_fill_const",
+  "_fill_let",
+  "_fill_let_change",
   "_await_content",
   "_child_setup",
   "_if",
@@ -109,7 +124,35 @@ export type DOMRuntimeFeature =
   | "controllable-select"
   | "controllable-textarea"
   | "dynamic-tag-var"
+  | "patch-attr"
+  | "patch-attrs"
+  | "patch-boundary"
+  | "patch-branch"
+  | "patch-child"
+  | "patch-content"
+  | "patch-control"
+  | "patch-control-checked-value"
+  | "patch-control-input"
+  | "patch-control-open"
+  | "patch-control-select"
+  | "patch-dynamic-tag"
+  | "patch-effect"
+  | "patch-global"
+  | "patch-html"
+  | "patch-loop"
+  | "patch-ready"
+  | "patch-style"
+  | "patch-text"
+  | "patch-text-content"
+  | "patch-value"
+  | "patch-value-bind"
   | "placeholder";
+// The analyze-phase half of `importRuntimeFeature`: the page entry links
+// client assets from analyze metadata.
+export function addRuntimeFeatureAsset(feature: DOMRuntimeFeature) {
+  addAssetImport(`${getRuntimePath("dom")}/${feature}.feat`);
+}
+
 const importedFeatures = new WeakMap<t.Program, Set<string>>();
 export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!isTranslate()) {

@@ -1,0 +1,7 @@
+import cardA from "./card-a.marko";
+import cardB from "./card-b.marko";
+<let/n=0/>
+<main>
+  <${input.mode === "a" ? cardA : cardB} label=input.label/>
+  <button onClick() { n++ }>${n}</button>
+</main>

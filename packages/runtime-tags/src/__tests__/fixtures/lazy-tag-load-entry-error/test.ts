@@ -10,6 +10,8 @@ const load = (document: Document) => {
 // server-rendered content stays visible but inert. (CSR rejects through
 // the runtime-managed path instead, which drives `@catch`.)
 export const config: TestConfig = {
+  // Debug intentionally logs the load-failure diagnostic optimize cannot.
+  skip_parity: true,
   equivalent: false,
   reject_load: ["child.mjs"],
   steps: [{ label: "a" }, load, wait],

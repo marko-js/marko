@@ -1,4 +1,5 @@
 import { RendererProp } from "./accessor.debug";
+import { AccessorProp, type Scope } from "./types";
 
 export const htmlAttrNameReg = /^[^a-z_]|[^a-z0-9._:-]/i;
 export const userAttrNameReg = /^[^a-z_$]|[^a-z0-9._:-]/i;
@@ -218,6 +219,17 @@ export function normalizeDynamicRenderer<Renderer>(
 export const decodeAccessor = (num: number): string =>
   (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 
+export const encodeAccessor = (accessor: string) => {
+  const encoded = parseInt(accessor, 36);
+  return encoded - (encoded < 36 ? 10 : encoded < 1296 ? 334 : 11998);
+};
+
+export function normalizeAttrValue(value: unknown) {
+  if (isNotVoid(value)) {
+    return value === true ? "" : value + "";
+  }
+}
+
 // Branch (control flow) support latch. A `let` written only by
 // `withBranches` folds away with it, dropping guarded branch handling from
 // bundles without branches; an object property would defeat that analysis.
@@ -235,4 +247,21 @@ export let dynamicHtmlEnabled: undefined | 1;
 export function withDynamicHtml<T>(runtime: T) {
   dynamicHtmlEnabled = 1;
   return runtime;
+}
+
+// `_content` bakes one id per section, so two instances of it share that id and
+// only their owner tells them apart. Ownerless renderers and string tags keep
+// the bare id, so nothing but owner-bound content pays the suffix.
+type RendererLike = {
+  [RendererProp.Id]?: string;
+  [RendererProp.Owner]?: Scope;
+};
+export function rendererKey(renderer: RendererLike | string | undefined) {
+  // Only owner-bound content is qualified; a Class-API interop renderer has no
+  // owner, so its non-string id keeps comparing as it always has.
+  return (renderer as RendererLike | undefined)?.[RendererProp.Owner]
+    ? (renderer as RendererLike)[RendererProp.Id] +
+        " " +
+        (renderer as RendererLike)[RendererProp.Owner]![AccessorProp.Id]
+    : (renderer as RendererLike | undefined)?.[RendererProp.Id] || renderer;
 }

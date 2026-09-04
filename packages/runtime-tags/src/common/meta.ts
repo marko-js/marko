@@ -14,3 +14,13 @@ export const DYNAMIC_TAG_VAR_REGISTER_ID = MARKO_DEBUG
 export const PLACEHOLDER_DISMISS_REGISTER_ID = MARKO_DEBUG
   ? "_placeholderDismiss"
   : "_f";
+// Rebuilds a registered content value from an in-band template.
+export const CONTENT_REGISTER_ID = MARKO_DEBUG ? "_content" : "_c";
+
+// Frame-scoped var resolving an index in the frame's bind table.
+export const BIND_FRAME_VAR = MARKO_DEBUG ? "bind" : "b";
+
+// Frame-scoped var delivering ready-channel patch data: an explicit call the
+// patch-ready feature installs, so a frame never touches the live page's
+// ready record directly (and a runtime without the feature rejects the frame).
+export const READY_FRAME_VAR = MARKO_DEBUG ? "ready" : "y";

@@ -1,3 +1,4 @@
+import { BIND_FRAME_VAR } from "../common/meta";
 import * as Char from "./constants/char";
 import type { Boundary } from "./writer";
 
@@ -439,6 +440,13 @@ export function register<T extends WeakKey>(
   return val;
 }
 
+// A value whose serialized form is a fixed expression (an in-band
+// record): unbound, so every occurrence emits the access text itself.
+export function registerAccess<T extends WeakKey>(val: T, access: string) {
+  REGISTRY.set(val, { id: "", scope: undefined, access });
+  return val;
+}
+
 export function getRegistered(val: WeakKey) {
   const registered = REGISTRY.get(val);
   if (registered) {
@@ -455,6 +463,10 @@ export function getRegistered(val: WeakKey) {
 // applies a payload's return value when it is an array.
 function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
+  // A patch frame is one flat entry array (the line owns its brackets), so
+  // the scope run serializes with no fn wrapper or list brackets; an
+  // assigned-reference flush wraps itself as a `(_([...]),...,0)` entry.
+  const bare = state.boundary?.state?.writesPatches;
   let nextSlotId = -1;
   let fillIndex = -1;
 
@@ -468,10 +480,13 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
       // The skip is a SIGNED delta, so a flush that revisits a lower slot
-      // steps the cursor back rather than landing in the wrong one.
+      // steps the cursor back rather than landing in the wrong one. A bare
+      // patch run has no cursor at all: its single flush is the page root.
       buf[openIndex] =
         nextSlotId === -1
-          ? "[" + scopeId + ",{"
+          ? bare
+            ? "{"
+            : scopeId + ",{"
           : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
@@ -481,16 +496,15 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     }
   }
 
-  if (nextSlotId !== -1) {
-    buf.push("]");
-  }
-
   let extras = "";
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
     extras = ",0)";
+    // A deferred bare run applies through `_()` mid-expression, so a patch
+    // frame must evaluate its shell records first (see `resumeScript`).
+    if (bare) state.boundary!.state.patchDeferred = 1;
     if (fillIndex !== -1) {
-      buf[fillIndex] = "_(" + buf[fillIndex];
-      buf.push(")");
+      buf[fillIndex] = "_([" + buf[fillIndex];
+      buf.push("])");
     }
     writeAssigned(state);
   }
@@ -504,12 +518,9 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   // Everything elided and nothing else to flush.
   if (!result) return "";
 
-  if (state.wroteUndefined) {
-    state.wroteUndefined = false;
-    return "(_,$)=>" + result;
-  } else {
-    return "_=>" + result;
-  }
+  const arrow = state.wroteUndefined ? "(_,$)=>" : "_=>";
+  state.wroteUndefined = false;
+  return bare ? result : extras ? arrow + result : arrow + "[" + result + "]";
 }
 
 function writeAssigned(state: State) {
@@ -761,7 +772,16 @@ function writeRegistered(
   registered: Registered,
 ) {
   const { scope } = registered;
-  if (scope) {
+  // Patch-render scope ids have no client-side map, so a bound
+  // registration references the bind recorded at render time instead.
+  if (scope && state.boundary?.state?.writesPatches) {
+    const n = (
+      state.boundary.state as { binds?: Map<WeakKey, number> }
+    ).binds?.get(val);
+    // Bind `0` is never written, so a registration the render-time scan
+    // could not reach rejects at the frame's commit check (navigation).
+    state.buf.push(BIND_FRAME_VAR + "(" + (n || 0) + ")");
+  } else if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(
       parent,
@@ -1901,20 +1921,22 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
   for (const key in val) {
     if (hasOwnProperty.call(val, key)) {
       const escapedKey = toObjectKey(key);
-      state.buf.push(sep + escapedKey + ":");
-      if (
-        writeProp(
-          state,
-          (val as Record<PropertyKey, unknown>)[key],
-          ref,
-          escapedKey,
-        )
-      ) {
+      const member = (val as Record<PropertyKey, unknown>)[key];
+      if (member === undefined && state.boundary?.state?.writesPatches) {
+        // A patch member set to undefined must overwrite the live value, so
+        // it survives as `$` where a resume would elide it.
+        state.wroteUndefined = true;
+        state.buf.push(sep + escapedKey + ":$");
         sep = ",";
       } else {
-        // A deferred circular value is reassigned last, so it also moves last in
-        // key order; holding its slot with `$` costs bytes on every such graph.
-        state.buf.pop();
+        state.buf.push(sep + escapedKey + ":");
+        if (writeProp(state, member, ref, escapedKey)) {
+          sep = ",";
+        } else {
+          // A deferred circular value is reassigned last, so it also moves last in
+          // key order; holding its slot with `$` costs bytes on every such graph.
+          state.buf.pop();
+        }
       }
     }
   }

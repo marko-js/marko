@@ -37,8 +37,11 @@ The compiler phase contract is strict:
 Everything through `analyze` is cached and reused across outputs. Therefore:
 
 - Mutating AST structure during `analyze` is an anti-pattern; perform reshaping in pre-analyze.
-- Never retain an AST node or `NodePath` across phases, including inside `node.extra`: nodes are cloned between phases. Store durable metadata/ids and resolve current nodes within the current phase.
+- Never retain an AST node or `NodePath` across phases, including inside `node.extra` (or program extra/`Section`/`Binding` fields): the analyzed AST is cached and `t.cloneNode`d for each output, so a stored node points at the cache while translate walks a clone — reads go stale and identity checks fail silently. The metadata shell itself (`node.extra` objects, `Section`s, `Binding`s) is shared by reference across clones, so record facts there — flags, ids, `Section`/`Binding` references — and resolve current nodes within the current phase. If the fact concerns a child whose metadata does not exist yet at your visitor, flag it from an analyze `exit` hook (children are analyzed by then) rather than storing the child node for later.
 - Never make output-specific decisions before `translate`. Branch on `dom`/`html` only while translating.
+- Reach the current compilation through `getFile()`/`getProgram()` (from `@marko/compiler/babel-utils`), never `path.hub.file`: the hub chain re-derives what the compile state already tracks and reads inconsistently across contexts. There are currently zero `hub.file` uses in the translator; keep it that way.
+- `file.metadata.marko` is public compiler output (returned from the top-level compile APIs): never route internal channels through it. Internal analyze products belong on the extras shell (program extra, `Section`, `Binding`); metadata carries only deliberately public facts.
+- Naming follows the same contract: analyze metadata (Binding/Section/`node.extra` fields) records **what the template does** — observed facts, in template terms (sources, reads, uses, shapes). Translate names its **conclusions** — decisions, policies, and output mechanisms (ownership, wire channels, masks). A shared field named after a decision (e.g. server/client "owned", "required") is a smell: name the observation and derive the decision where it is made.
 
 Node visitors live in `visitors/` and are split per phase by `extractVisitors` (`util/visitors.ts`); `visitors/tag/index.ts` dispatches to `native-tag.ts` / `custom-tag.ts` / `dynamic-tag.ts` / `attribute-tag.ts` or a tag definition's own hooks.
 

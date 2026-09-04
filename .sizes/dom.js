@@ -1,4 +1,4 @@
-// size: 26796 (min) 10023 (brotli)
+// size: 28779 (min) 10667 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -45,6 +45,8 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   isScheduled,
   channel,
+  patchFills = {},
+  closureFillJoins = {},
   _return = (scope, value) => scope.T?.(value),
   _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = /* @__PURE__ */ new WeakMap(),
@@ -93,10 +95,18 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
+  patchers = {},
+  onPatchRecord,
+  patchScope = (partial, live) => {
+    for (let key in partial) patchers[key[0]](live, key, partial[key]);
+  },
   curRenders,
   embedRenders,
   readyIds,
   lazyEnabled,
+  patchRender = 0,
+  patching = 0,
+  patchId = 0,
   isResuming,
   cloneCache = {},
   _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
@@ -411,11 +421,17 @@ function normalizeDynamicRenderer(value) {
     if ("a" in normalized) return normalized;
   }
 }
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
 function withBranches(runtime) {
   return ((branchesEnabled = 1), runtime);
 }
 function withDynamicHtml(runtime) {
   return ((dynamicHtmlEnabled = 1), runtime);
+}
+function rendererKey(renderer) {
+  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
 }
 function _hoist_read_error() {}
 function _assert_hoist(value) {}
@@ -475,6 +491,9 @@ function run() {
     (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
   }
   runEffects(effects);
+}
+function abortRun() {
+  (runId++, (pendingRenders = []), (pendingEffects = []));
 }
 function queueAsyncRender(scope, signal, value) {
   (pendingRenders.length || queueMicrotask(run), queueRender(scope, signal, -1, value));
@@ -667,6 +686,81 @@ function _const(valueAccessor, fn) {
     }
   );
 }
+function fillJoin(key, valueAccessor, join, dispatch) {
+  let prev = patchFills[key],
+    prevFn = prev?._;
+  if (!prev || prevFn) {
+    let fn = prevFn
+      ? (scope) => {
+          (prevFn(scope), dispatch(scope));
+        }
+      : dispatch;
+    (patchFills[key] = _const(valueAccessor, fn))._ = fn;
+  }
+  return join;
+}
+function _fill_join(key, valueAccessor, join, buildDispatch) {
+  return fillJoin(key, valueAccessor, join, buildDispatch ? buildDispatch(join) : join);
+}
+function _fill_join_if(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i > 0; i -= 2)
+    dispatch = _if_closure(hops[i - 2], hops[i - 1], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_for(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_closure(key, valueAccessor, join, index) {
+  let signals = (closureFillJoins[key] ??= []),
+    closureJoin = join;
+  return (
+    (signals[index] = join),
+    (closureJoin.c = index),
+    signals.d ||
+      ((signals.d = 1),
+      fillJoin(key, valueAccessor, join, (scope) => {
+        let instances = scope[closureJoin.a];
+        if (instances) {
+          let signalIndex = closureJoin.b;
+          for (let childScope of instances)
+            if (childScope.H > 0 && childScope.H < runId) {
+              let sig = signals[childScope[signalIndex] || 0];
+              sig && queueRender(childScope, sig, -1);
+            }
+        }
+      })),
+    join
+  );
+}
+function _fill_join_subscribers(key, valueAccessor, value, getJoin, index) {
+  return fillJoin(key, valueAccessor, value, (scope) => {
+    let join = getJoin(),
+      instances = scope[join.a];
+    if (instances) {
+      let signalIndex = join.b;
+      for (let childScope of instances)
+        childScope.H > 0 &&
+          childScope.H < runId &&
+          (childScope[signalIndex] || 0) === index &&
+          queueRender(childScope, join, -1);
+    }
+  });
+}
+function fill(key, signal, id, fillFn) {
+  return ((patchFills[key] = fillFn ? _const(id, fillFn) : signal), signal);
+}
+function _fill_let(key, id, fn, fillFn) {
+  return fill(key, _let(id, fn), id, fillFn);
+}
+function _fill_let_change(key, id, fn, fillFn) {
+  return fill(key, _let_change(id, fn), id, fillFn);
+}
+function _fill_const(key, id, fn, fillFn) {
+  return fill(key, _const(id, fn), id, fillFn);
+}
 function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
   return (
     scopeIdAccessor !== "L" && (scopeIdAccessor = decodeAccessor(scopeIdAccessor)),
@@ -787,6 +881,27 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
     closureSignal
   );
 }
+function _init_closure_get(initId, valueAccessor, fn, getOwnerScope, resumeId) {
+  return _resume(initId, _closure_get(valueAccessor, fn, getOwnerScope, resumeId));
+}
+function _init_if_closure(initId, ownerConditionalNodeAccessor, branch, fn) {
+  return _resume(initId, _if_closure(ownerConditionalNodeAccessor, branch, fn));
+}
+function _init_for_closure(initId, ownerLoopNodeAccessor, fn) {
+  return _resume(initId, _for_closure(ownerLoopNodeAccessor, fn));
+}
+function _init_for_selector(
+  initId,
+  ownerLoopNodeAccessor,
+  ownerValueAccessor,
+  keyValueAccessor,
+  fn,
+) {
+  return _resume(
+    initId,
+    _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, fn),
+  );
+}
 function _child_setup(setup) {
   return (
     (setup._ = (scope, owner) => {
@@ -859,6 +974,13 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
+function beginPatch(renderId) {
+  let render = (patchRender = curRenders[renderId]);
+  return (render.w(), (patching = 1), patchId++, render);
+}
+function abortPatch() {
+  patchRender = patching = 0;
+}
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
@@ -908,6 +1030,12 @@ function init(runtimeId = "M") {
               scope
             ),
             applyScopes = (partials) => {
+              if (patching && patchRender === render) {
+                let i = 0;
+                for (; typeof partials[i] == "string";) onPatchRecord(partials[i++]);
+                partials[i] && patchScope(partials[i], getScope(1));
+                return;
+              }
               let scopeId = partials[0];
               for (let i = 1; i < partials.length; i++) {
                 let partial = partials[i];
@@ -1037,7 +1165,9 @@ function init(runtimeId = "M") {
                 } else if (readyIds && typeof serialized == "number") break;
                 else {
                   let scopes = serialized(serializeContext);
-                  Array.isArray(scopes) && applyScopes(scopes);
+                  Array.isArray(scopes)
+                    ? applyScopes(scopes)
+                    : patching && patchRender === render && scopes && applyScopes([scopes]);
                 }
               }
               return (resumes.splice(0, i), i);
@@ -1134,6 +1264,17 @@ function getRegisteredWithScope(id, scope) {
 }
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
+}
+function _init_join(id, join) {
+  let prev = registeredValues[id];
+  return (
+    (registeredValues[id] = prev
+      ? (scope) => {
+          (prev(scope), join(scope));
+        }
+      : join),
+    join
+  );
 }
 function _var_resume(id, signal) {
   return (_resume(id, (scope) => (value) => signal(scope, value)), signal);
@@ -1350,9 +1491,6 @@ function _attrs_script(scope, nodeAccessor) {
 function normalizeClientRender(value) {
   let renderer = normalizeDynamicRenderer(value);
   if (renderer && renderer.a) return renderer;
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function _lifecycle(scope, thisObj, index = 0) {
   let accessor = "K" + index,
@@ -1936,9 +2074,6 @@ function renderCatch(scope, error) {
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
 }
-function rendererKey(renderer) {
-  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
-}
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
 }
@@ -1987,6 +2122,53 @@ function bySecondArg(_item, index) {
 }
 function byFirstArg(name) {
   return name;
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let frameChecks = [],
+  frameVars = {};
+function applyPatch(frame, renderId = "_", runtimeId = "M") {
+  (init(runtimeId), (patchers.$ ||= applyGlobals));
+  let render = beginPatch(renderId);
+  try {
+    let names = Object.keys(frameVars),
+      fn = Function("_", "$", ...names, "return " + frame);
+    return (
+      (render.r = [(ctx) => fn(ctx, void 0, ...names.map((name) => frameVars[name]))]),
+      commitFrame(render),
+      !0
+    );
+  } catch {
+    return (abortRun(), !1);
+  } finally {
+    abortPatch();
+  }
+}
+function patchWrite(scope, accessor, value) {
+  (scope[accessor] !== value || !(accessor in scope)) &&
+    ((scope[accessor] = value), ((scope.AA ??= {})[accessor] = runId));
+}
+function applyGlobals(live, _key, value) {
+  for (let key in value) patchWrite(live.$, key, value[key]);
+}
+function commitFrame(render) {
+  (runEffects(render.m([]), 1), run());
+  for (let check of frameChecks) check();
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let globalJoins = {};
+function _global_join(key, id, join) {
+  return ((globalJoins[key] ??= {})[id] = (scope, value) => {
+    (join(scope, value), subscribeToScopeSet(scope.$, "B" + id, scope));
+  });
+}
+function _global_script(id, fn) {
+  let effect = _resume(id, (scope) => {
+    let ran = (scope.AA ??= {});
+    ran[id] !== runId && ((ran[id] = runId), fn(scope));
+  });
+  return (scope) => queueEffect(scope, effect);
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
@@ -2114,14 +2296,14 @@ let empty = [],
                     insertLoaded(renderer, branch, branch.S, awaitCounter),
                   ));
               },
-              loadFailed(branch, awaitCounter),
+              loadFailed(branch, awaitCounter, "_" + id),
             ));
         },
         _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
       );
     return lazyTemplate;
   }),
-  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
+  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load, readyId) => {
     ((nodeAccessor = decodeAccessor(nodeAccessor)),
       (childScopeAccessor = decodeAccessor(childScopeAccessor)));
     let pending,
@@ -2137,10 +2319,10 @@ let empty = [],
             (mod) => {
               ((renderer = _content("", ...mod._)()),
                 queueAsyncRender(child, (child) =>
-                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter),
+                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter, readyId),
                 ));
             },
-            loadFailed(child, awaitCounter),
+            loadFailed(child, awaitCounter, readyId),
           ));
       }
     };
@@ -2235,18 +2417,21 @@ function mount(input = {}, reference, position) {
     }
   );
 }
-function insertLoaded(renderer, branch, marker, awaitCounter) {
+function insertLoaded(renderer, branch, marker, awaitCounter, readyId) {
   let parent = marker.parentNode,
     values = branch.X,
     clone = () => {
       (syncGen(branch), renderer.b(branch, parent.namespaceURI), (branch.X = 0));
     },
     insert = () => {
-      (insertBranchBefore(branch, parent, marker), marker.remove(), awaitCounter?.c());
+      (insertBranchBefore(branch, parent, marker),
+        marker.remove(),
+        awaitCounter?.c(),
+        readyId && queueEffect(branch, () => ready(readyId)));
     },
     remaining;
   if ((remaining = values?.size)) {
-    let fail = loadFailed(branch, awaitCounter);
+    let fail = loadFailed(branch, awaitCounter, readyId);
     values.forEach(([, apply], promise) =>
       promise.then(
         (mod) =>
@@ -2263,7 +2448,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
     );
   } else (clone(), setupBranch(renderer, branch), insert());
 }
-function loadFailed(scope, awaitCounter) {
+function loadFailed(scope, awaitCounter, readyId) {
   return (error) => {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
       queueAsyncRender(scope, renderCatch, error));

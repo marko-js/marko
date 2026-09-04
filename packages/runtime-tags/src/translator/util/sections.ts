@@ -9,6 +9,7 @@ import {
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import type { WalkCode } from "../../common/types";
 import * as ContentType from "./constants/content-type";
+import type * as ShellBlocker from "./constants/shell-blocker";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -19,6 +20,7 @@ import {
   find,
   findIndexSorted,
   findSorted,
+  type OneMany,
   type Opt,
   Sorted,
 } from "./optional";
@@ -37,6 +39,7 @@ import {
 import {
   isReasonDynamic,
   mapCrossProgramReason,
+  type SerializeKey,
   type SerializeReason,
   type SerializeReasons,
 } from "./serialize-reasons";
@@ -129,11 +132,26 @@ export interface Section {
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
    * (not merged) so each one's guard stays buildable. */
   domSerializeReasons: undefined | SerializeReasons;
+  /** Pending serialize exprs, resolved into the reasons (and provenance)
+   * once references finalize. */
+  serializeExprs: Opt<t.NodeExtra>;
+  propSerializeExprs: Map<SerializeKey, OneMany<t.NodeExtra>> | undefined;
+  /** Whose values feed each serialization decision — survives force-`true`
+   * and counts function-body reads; complete after reference finalize. */
+  serializeProvenance: Sources | undefined;
+  propSerializeProvenance: Map<SerializeKey, Sources> | undefined;
+  /** Interned per-prop reason keys for string/symbol props. */
+  serializePropKeys: Map<string | symbol, SerializeKey> | undefined;
   paramReasonGroups: ParamSerializeReasonGroups | undefined;
   returnValueExpr: t.NodeExtra | undefined;
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
+  /** For content a known tag consumes: that tag's extra (its input feeds
+   * decide whether the consumer may hand the site to the client). */
+  consumer: t.MarkoTagExtra | undefined;
+  /** For a `<define>` body: the sections of its direct `<${var}>` sites. */
+  defineSites: Section[] | undefined;
   downstreamBinding:
     | {
         binding: Binding;
@@ -148,6 +166,25 @@ export interface Section {
   abortSignalExprs: number;
   readsOwner: boolean;
   isBranch: boolean;
+  /** An `<await>`/`<try>` body: always-rendered like the branch path, but
+   * paired (never constructed) by patches. */
+  isBoundary: boolean;
+  /** A content renderer slot-serialized by register id (today only
+   * `<try>` `@placeholder`/`@catch` bodies): `buildShells` re-registers
+   * static ones from entry data; others load the dom module. */
+  boundaryContent: boolean;
+  /** A content body shipped as a shell record (set by `buildShells`): a
+   * `"static"` one (template only) rides its slot in-band, a dynamic one
+   * elides its slot and a dynamic tag entry constructs it by id. */
+  contentRecord: false | true | "static";
+  /** Awaits a construct must deliver body content for (marker binding +
+   * body section); `buildShells` prunes those no shipped shell reaches. */
+  constructSetups: { binding: Binding; body: Section }[] | undefined;
+  /** Lazily loaded child sites in this section, by their marker binding. */
+  loadSites: Binding[] | undefined;
+  /** Branch whose shell would construct unfaithfully: the first blocker's
+   * reason code sticks, no shell ships, patches fail closed. */
+  shellBlocked: ShellBlocker.Value | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -218,16 +255,29 @@ export function startSection(
       serializeReason: undefined,
       serializeReasons: new Map(),
       domSerializeReasons: undefined,
+      serializeExprs: undefined,
+      propSerializeExprs: undefined,
+      serializeProvenance: undefined,
+      propSerializeProvenance: undefined,
+      serializePropKeys: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
+      consumer: undefined,
+      defineSites: undefined,
       downstreamBinding: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
       readsOwner: false,
       isBranch: false,
+      isBoundary: false,
+      boundaryContent: false,
+      contentRecord: false,
+      constructSetups: undefined,
+      loadSites: undefined,
+      shellBlocked: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     section.program = parentSection ? parentSection.program : section;
@@ -508,7 +558,7 @@ export function finalizeParamSerializeReasonGroups(section: Section) {
   }
 }
 
-function ensureReasonGroups(reason: Section["serializeReason"]) {
+export function ensureReasonGroups(reason: Section["serializeReason"]) {
   if (isReasonDynamic(reason)) {
     for (const [paramSection, params] of groupParamsBySection(reason.param)) {
       ensureParamReasonGroup(paramSection, params);

@@ -1,10 +1,14 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
-import { type Opt, some } from "./optional";
+import { isPersisted } from "./marko-config";
+import { forEach, type Opt, some } from "./optional";
+import { scopeReasonRuntime } from "./persisted/intrinsics";
+import { isBranchPathSection } from "./persisted/structure";
 import {
   getDebugNames,
   getDebugNamesAsIdentifier,
+  isReferencedExtra,
   type Sources,
 } from "./references";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
@@ -15,6 +19,7 @@ import {
   type Section,
 } from "./sections";
 import {
+  getSerializeSourcesForExpr,
   isReasonDynamic,
   type SerializeReason,
   type SerializeReasons,
@@ -29,6 +34,7 @@ interface SectionReasonState {
   if: TypeState;
   guard: TypeState;
   declarators: t.VariableDeclarator[];
+  owned?: true;
 }
 
 interface TypeState {
@@ -46,7 +52,7 @@ const [getSectionReasonState] = createSectionState<SectionReasonState>(
     declarators: [
       t.variableDeclarator(
         t.identifier(getSharedUid(`scope${section.id}_reason`, section)),
-        callRuntime("_scope_reason"),
+        callRuntime(scopeReasonRuntime()),
       ),
     ],
   }),
@@ -77,7 +83,7 @@ export function getSerializeGuard(
         );
   }
 
-  return getOrHoist(reason, true);
+  return getDynamicGuard(section, reason, true);
 }
 
 export function getSerializeGuardForAny(
@@ -109,18 +115,146 @@ export function getExprIfSerialized<
   R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
-    return (reason && expr) as R;
+    if (!reason) return undefined as R;
+    // A patch serializes no ordinary resume payload, so a statically
+    // serialized value rides the scope reason (`1` page, `undefined` patch).
+    // Child sections gate through their cross-section guards; only the
+    // root declares the reason identifier.
+    if (isPersisted() && !section.parent) {
+      return t.logicalExpression(
+        "&&",
+        scopeReasonIdentifier(section),
+        expr,
+      ) as R;
+    }
+    return expr as R;
   }
 
-  const guard = getOrHoist(reason, false);
+  // Branch-path pairing never prunes with a value group: interior patch
+  // writes anchor through it, so it rides the root page/patch reason.
+  if (isPersisted() && isBranchPathSection(section) && section.parent) {
+    let rootSection = section;
+    while (rootSection.parent) rootSection = rootSection.parent;
+    return t.logicalExpression(
+      "&&",
+      scopeReasonIdentifier(rootSection),
+      expr,
+    ) as R;
+  }
+
+  const guard = getDynamicGuard(section, reason, false);
   return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
+}
+
+// The global dimension has no param slots: it is persisted-only, where the
+// scope reason itself is `1` for a page render and `undefined` for a patch.
+function getDynamicGuard(
+  section: Section,
+  reason: DynamicSerializeReason,
+  isGuard: boolean,
+) {
+  const paramGuard = reason.param ? getOrHoist(reason, isGuard) : undefined;
+  if (!reason.global) return paramGuard;
+  const globalGuard = scopeReasonIdentifier(section);
+  return paramGuard
+    ? t.logicalExpression("||", globalGuard, paramGuard)
+    : globalGuard;
+}
+
+export function scopeReasonIdentifier(section: Section) {
+  return t.identifier(getSharedUid(`scope${section.id}_reason`, section));
+}
+
+export function scopeOwnedIdentifier(section: Section) {
+  return t.identifier(getSharedUid(`scope${section.id}_owned`, section));
+}
+
+// The ownership mask local reads the ambient slot the parent set, so its
+// declarator leads the reason's (which clears that slot).
+function ensureScopeOwned(section: Section) {
+  const state = getSectionReasonState(section);
+  if (!state.owned) {
+    state.owned = true;
+    state.declarators.unshift(
+      t.variableDeclarator(
+        scopeOwnedIdentifier(section),
+        callRuntime("_persisted_ownership"),
+      ),
+    );
+  }
+}
+
+// The per-group ownership bit as `[mask, groupIdx]` trailing args for a
+// patch writer, or `[]` when statically server-owned; only root params
+// gate (locals ride structure whose ownership the call site required).
+// The ownership args for an expression's write: a value fixed for the
+// scope's lifetime (a constant, an `<id>`, a `<define>`) only seeds a construct.
+export function getExprWriteOwnership(extra: t.NodeExtra | undefined) {
+  return getPatchWriteOwnership(
+    getSerializeSourcesForExpr(extra || {}),
+    isStableExpr(extra),
+  );
+}
+
+export function isStableExpr(extra: t.NodeExtra | undefined) {
+  if (!extra || !isReferencedExtra(extra)) return false;
+  let stable = true;
+  forEach(extra.referencedBindings, (binding) => {
+    stable &&= !!binding.stable;
+  });
+  return stable;
+}
+
+export function getPatchWriteOwnership(
+  sources: Sources | undefined,
+  stable?: boolean,
+): [t.Expression, t.Expression] | [] {
+  // Never changes: the write only seeds a construct, like a client-owned
+  // group's (mask `0`).
+  if (stable) return [t.numericLiteral(0), t.numericLiteral(0)];
+  for (const [paramsSection, params] of groupParamsBySection(sources?.param)) {
+    if (!paramsSection.parent) {
+      ensureScopeOwned(paramsSection);
+      return [
+        scopeOwnedIdentifier(paramsSection),
+        withLeadingComment(
+          t.numericLiteral(getParamReasonGroupIndex(paramsSection, params)),
+          getDebugNames(params),
+        ),
+      ];
+    }
+  }
+  return [];
+}
+
+// The same test as a statement-position guard expression (fills and
+// effect writes), or undefined when statically server-owned.
+export function getOwnershipGuard(sources: Sources | undefined) {
+  const args = getPatchWriteOwnership(sources);
+  return args.length ? callRuntime("_owned_guard", ...args) : undefined;
+}
+
+// A root group's 2-bit sources value, composed into child masks.
+export function getOwnershipGroupValue(
+  section: Section,
+  params: NonNullable<Sources["param"]>,
+) {
+  ensureScopeOwned(section);
+  return callRuntime(
+    "_mask_group",
+    scopeOwnedIdentifier(section),
+    withLeadingComment(
+      t.numericLiteral(getParamReasonGroupIndex(section, params)),
+      getDebugNames(params),
+    ),
+  );
 }
 
 function getOrHoist(
   reason: DynamicSerializeReason,
   isGuard: boolean,
 ): t.Expression | undefined {
-  const onlySection = getOnlySection(reason.param);
+  const onlySection = getOnlySection(reason.param!);
 
   if (onlySection) {
     const state = getSectionReasonState(onlySection);
@@ -175,9 +309,13 @@ function buildGuardExpr(
   );
   return paramsSection.paramReasonGroups
     ? callRuntime(
-        (isGuard
-          ? "_serialize_guard"
-          : "_serialize_if") satisfies HTMLRuntimeHelpers,
+        (isPersisted()
+          ? isGuard
+            ? "_source_guard"
+            : "_source_if"
+          : isGuard
+            ? "_serialize_guard"
+            : "_serialize_if") satisfies HTMLRuntimeHelpers,
         serializeIdentifier,
         withLeadingComment(
           t.numericLiteral(getParamReasonGroupIndex(paramsSection, params)),

@@ -20,19 +20,25 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isPersisted,
 } from "../../util/marko-config";
 import {
   BindingType,
   finalizeReferences,
   trackParamsReferences,
 } from "../../util/references";
-import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
+import {
+  getCompatRuntimeFile,
+  getRuntimePath,
+  importRuntimeFeature,
+} from "../../util/runtime";
 import {
   forEachSection,
   getSectionRegisterReasons,
   startSection,
 } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
+import { buildShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -91,7 +97,7 @@ export default {
       const styleFile = getStyleFile(getFile());
       if (styleFile) {
         programExtra.styleFile = styleFile;
-        addAssetImport(getFile(), styleFile);
+        addAssetImport(styleFile);
       }
     },
 
@@ -121,6 +127,9 @@ export default {
         );
       });
 
+      if (isPersisted()) {
+        buildShells();
+      }
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip
         // importing and calling it (checked when this template translates).
@@ -162,11 +171,9 @@ export default {
           const entryFile = getFile();
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
-          // A rejected chunk blocks this ready id forever: the debug build
-          // reports it instead of leaving the content silently inert, while
-          // production keeps the arm's bytes out (the failure still surfaces
-          // as a network error in devtools).
-          const report = !markoOpts.optimize;
+          // A rejected chunk blocks this ready id forever: debug reports it;
+          // persisted also reports in production so deferred patches settle.
+          const report = !markoOpts.optimize || isPersisted();
           program.node.body = [
             t.importDeclaration(
               [
@@ -265,6 +272,16 @@ export default {
           program.skip();
           return;
         }
+      }
+
+      if (isPersisted()) {
+        // A static record slot rebuilds client-side; the import rides both
+        // outputs (an interactive page gets assets through its dom program).
+        forEachSection((section) => {
+          if (section.contentRecord === "static") {
+            importRuntimeFeature("patch-content");
+          }
+        });
       }
 
       if (isOutputHTML()) {

@@ -21,6 +21,14 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted } from "../util/marko-config";
+import { some } from "../util/optional";
+import { onClassifyStructure } from "../util/persisted/lifecycle";
+import {
+  isBranchPathSection,
+  isStatefulBranch,
+  recordStructuralParams,
+} from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -33,22 +41,37 @@ import {
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import {
   ContentType,
+  forEachSection,
   getBranchRendererArgs,
+  getDirectClosures,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
+import {
+  getExprWriteOwnership,
+  getSerializeGuard,
+  scopeReasonIdentifier,
+} from "../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
+  getSerializeSourcesForExpr,
+  getSerializeSourcesForRef,
 } from "../util/serialize-reasons";
+import { getShellId, getShellRecords } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -194,6 +217,39 @@ export default {
       getBranchSectionAccessor(nodeBinding),
     );
 
+    if (isPersisted()) {
+      onClassifyStructure(tagSection, () => {
+        // Patches select a loop that is not stateful.
+        if (!isStatefulBranch(bodySection) && isBranchPathSection(tagSection)) {
+          addRuntimeFeatureAsset("patch-loop");
+          recordStructuralParams(getSerializeSourcesForExpr(tagExtra));
+        }
+      });
+      onFinalizeReferences(() => {
+        addSerializeReason(
+          tagSection,
+          !isStatefulBranch(bodySection) &&
+            (!!(bodySection.isHoistThrough || bodySection.hoisted) ||
+              getSerializeSourcesForRef(getDirectClosures(bodySection))),
+          nodeBinding,
+        );
+        // Items with dom bindings or nested sections link: a source-less list
+        // (a literal) still resumes its marker.
+        if (
+          !isStatefulBranch(bodySection) &&
+          isBranchPathSection(tagSection) &&
+          hasDomBindingsOrNestedSections(bodySection)
+        ) {
+          if (!getSerializeReason(tagSection, nodeBinding)) {
+            addSerializeReason(tagSection, true, nodeBinding);
+          }
+          if (!getSerializeReason(bodySection, kBranchSerializeReason)) {
+            addSerializeReason(bodySection, true, kBranchSerializeReason);
+          }
+        }
+      });
+    }
+
     if (!isAttrTag && !getOnlyChildParentTagName(tag)) {
       structure.visit(tag, WalkCode.Replace);
       structure.enterShallow(tag);
@@ -230,7 +286,15 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
+        // A client-owned loop compiles like a stateful loop on a plain
+        // page: no marker retention, shells, or loop entry.
+        const stateful = isStatefulBranch(bodySection);
+        // A patchable loop keeps its markers: item pairing and insertion
+        // anchor at branch marks, which elision would remove.
+        const persistedPatch =
+          isPersisted() && !stateful && isBranchPathSection(tagSection);
         const singleChild =
+          !persistedPatch &&
           bodySection.content?.singleChild &&
           bodySection.content.startType !== ContentType.Text;
 
@@ -265,7 +329,8 @@ export default {
         );
 
         if (branchSerializeReason) {
-          const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
+          const skipParentEnd =
+            !persistedPatch && onlyChildParentTagName && markerSerializeReason;
           const statefulSerializeArg = getSerializeGuard(
             tagSection,
             getSerializeReason(tagSection, kStatefulReason),
@@ -281,11 +346,15 @@ export default {
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
-            getSerializeGuard(
-              tagSection,
-              branchSerializeReason,
-              !markerSerializeArg,
-            ),
+            // Pairing stays statically on under persisted: the patch
+            // intercept preempts, and interior writes anchor through it.
+            persistedPatch
+              ? t.numericLiteral(1)
+              : getSerializeGuard(
+                  tagSection,
+                  branchSerializeReason,
+                  !markerSerializeArg,
+                ),
             markerSerializeArg,
             statefulSerializeArg,
           );
@@ -302,11 +371,40 @@ export default {
 
             forTagArgs.push(t.numericLiteral(1));
           }
+
+          if (persistedPatch) {
+            // The item body's shell id, so patches can construct additions;
+            // a bare `0` makes any addition reject the patch. (`singleChild`
+            // and `skipParentEnd` are forced off above, so the two optional
+            // marker args are always the unset placeholders here.)
+            const id = !bodySection.shellBlocked && getShellId(bodySection);
+            forTagArgs.push(
+              undefined,
+              undefined,
+              id && getShellRecords()?.[id]
+                ? t.stringLiteral(id)
+                : t.numericLiteral(0),
+              // A param-selected loop yields to the client when the call
+              // site feeds its inputs from state.
+              ...getExprWriteOwnership(node.extra!),
+            );
+          }
         }
 
-        statements.push(
-          t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
+        let statement: t.Statement = t.expressionStatement(
+          callRuntime(forTagHTMLRuntime, ...forTagArgs),
         );
+        if (stateful) {
+          // Patch renders skip the loop: its state reads are server-stale
+          // and the frame never speaks the listing.
+          let rootSection = tagSection;
+          while (rootSection.parent) rootSection = rootSection.parent;
+          statement = t.ifStatement(
+            scopeReasonIdentifier(rootSection),
+            statement,
+          );
+        }
+        statements.push(statement);
 
         for (const replacement of tag.replaceWithMultiple(statements)) {
           replacement.skip();
@@ -325,6 +423,16 @@ export default {
           return;
         }
 
+        if (
+          isPersisted() &&
+          isBranchPathSection(getSection(tag)) &&
+          !isStatefulBranch(bodySection)
+        ) {
+          // An interactive page receives assets transitively through its
+          // dom program, so the feature import rides both outputs.
+          importRuntimeFeature("patch-loop");
+        }
+
         setSectionParentIsOwner(bodySection, true);
       },
       exit(tag) {
@@ -337,23 +445,43 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
-        setClosureSignalBuilder(tag, (closure, render) => {
-          const selectorKeyBinding = getForSelectorKey(bodySection, closure);
-          if (selectorKeyBinding) {
-            return callRuntime(
-              "_for_selector",
-              getScopeAccessorLiteral(nodeRef, true),
-              getScopeAccessorLiteral(closure, true),
-              getScopeAccessorLiteral(selectorKeyBinding, true),
-              render,
-            );
-          }
-          return callRuntime(
-            "_for_closure",
-            getScopeAccessorLiteral(nodeRef, true),
-            render,
-          );
-        });
+        setClosureSignalBuilder(
+          tag,
+          { kind: "for", ref: nodeRef },
+          (closure, render, initId, retain) => {
+            const selectorKeyBinding = getForSelectorKey(bodySection, closure);
+            const init = initId && t.stringLiteral(initId);
+            // The `_resume` aliases keep a `tagNameLoad` input's registration
+            // out of the pure-call list (nothing else references it).
+            if (selectorKeyBinding) {
+              const args = [
+                getScopeAccessorLiteral(nodeRef, true),
+                getScopeAccessorLiteral(closure, true),
+                getScopeAccessorLiteral(selectorKeyBinding, true),
+                render,
+              ];
+              return init
+                ? callRuntime(
+                    retain ? "_resume_init_for_selector" : "_init_for_selector",
+                    init,
+                    ...args,
+                  )
+                : callRuntime("_for_selector", ...args);
+            }
+            return init
+              ? callRuntime(
+                  retain ? "_resume_init_for_closure" : "_init_for_closure",
+                  init,
+                  getScopeAccessorLiteral(nodeRef, true),
+                  render,
+                )
+              : callRuntime(
+                  "_for_closure",
+                  getScopeAccessorLiteral(nodeRef, true),
+                  render,
+                );
+          },
+        );
 
         const forType = getForType(node)!;
         const signal = getSignal(tagSection, nodeRef, "for");
@@ -583,6 +711,17 @@ function getStaticMemberChain(
   if (cur.type === "Identifier" && cur.name === rootName) {
     return chain.reverse();
   }
+}
+
+function hasDomBindingsOrNestedSections(section: Section) {
+  let has = some(
+    section.bindings,
+    (binding) => binding.type === BindingType.dom,
+  );
+  forEachSection((child) => {
+    has ||= child.parent === section;
+  });
+  return has;
 }
 
 function forTypeToRuntime(type: ForType) {

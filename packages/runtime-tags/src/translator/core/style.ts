@@ -18,9 +18,14 @@ import MagicString, { type SourceMap } from "magic-string";
 import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";
 import { isCoreTagName } from "../util/is-core-tag";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
+import {
+  ensurePersistedWriteGroups,
+  inStatefulBranch,
+  isBranchPathSection,
+} from "../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -28,16 +33,25 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
+  type Section,
 } from "../util/sections";
+import { getPatchWriteOwnership, isStableExpr } from "../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
+  getSerializeSourcesForExpr,
 } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
@@ -95,7 +109,7 @@ export default {
     const importPath = getStyleImportPath(file, node, names);
     (node.extra ??= {}).styleImportPath = importPath;
     if (importPath) {
-      addAssetImport(file, importPath);
+      addAssetImport(importPath);
     }
 
     if (names) {
@@ -132,6 +146,26 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   }
 
   addSerializeExpr(section, exprExtras, binding);
+  if (patchesStyle(section)) {
+    addSerializeReason(section, true, binding);
+    addRuntimeFeatureAsset("patch-style");
+    for (const value of dynamicStyleValues(node)) {
+      ensurePersistedWriteGroups(() => value.extra!);
+    }
+  }
+}
+
+// A dynamic style in server-owned structure writes its rule from the frame
+// (a state-fed interpolation recomputes through the signal graph).
+function patchesStyle(section: Section) {
+  return (
+    isPersisted() && isBranchPathSection(section) && !inStatefulBranch(section)
+  );
+}
+function patchesStyleValue(section: Section, value: t.Expression) {
+  return (
+    patchesStyle(section) && !getSerializeSourcesForExpr(value.extra!)?.state
+  );
 }
 
 function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
@@ -221,9 +255,26 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const dynamic = node.extra?.dynamicStyle;
 
   if (dynamic) {
-    const { binding } = dynamic;
+    const { binding, names } = dynamic;
     const section = getSection(tag);
-    writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
+    writer.writeTo(tag)`${callRuntime(
+      "_style_html",
+      buildStyleDecls(node, (value, i) =>
+        patchesStyleValue(section, value)
+          ? callRuntime(
+              "_patch_style",
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(binding),
+              t.stringLiteral(names[i]),
+              value,
+              ...getPatchWriteOwnership(
+                getSerializeSourcesForExpr(value.extra!),
+                isStableExpr(value.extra),
+              ),
+            )
+          : callRuntime("_escape_style_value", value),
+      ),
+    )}`;
     writer.markNode(tag, binding, getSerializeReason(section, binding));
   }
 
@@ -256,8 +307,10 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
     dynamicStyleValues(node).forEach((value, i) => {
       const valueRef = value.extra?.referencedBindings;
+      const patched = patchesStyleValue(section, value);
+      if (patched) importRuntimeFeature("patch-style");
       addStatement(
-        "render",
+        patched ? "patched" : "render",
         section,
         valueRef,
         t.expressionStatement(
@@ -316,13 +369,16 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function buildStyleDecls(node: t.MarkoTag) {
+function buildStyleDecls(
+  node: t.MarkoTag,
+  toDecl: (value: t.Expression, i: number) => t.Expression,
+) {
   const { names } = node.extra!.dynamicStyle!;
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {
     parts.push(`${names[i]}:`);
-    parts.push(callRuntime("_escape_style_value", value));
+    parts.push(toDecl(value, i));
     parts.push(";");
   });
 

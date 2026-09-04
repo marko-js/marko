@@ -1,0 +1,21 @@
+// template.marko
+const $template = "<main><ul></ul><button>Count <!></button></main>";
+const $walks = "D b Db%m";
+_shells({
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D b Db%;<main><ul></ul><button>Count <!></button></main>",
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#6/init;D%c%;<li><!> (<!>)</li>"
+});
+var template_default = _template_persisted("__tests__/template.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html("<main><ul>");
+	_for_of(input.items, (item) => {
+		const $scope1_id = _scope_id();
+		_html(`<li>${_patch_text($scope1_id, "#text/0", item.label, void 0, $scope0_owned, 0)} (${_text_resume($scope1_id, "#text/1", count, 2)})</li>`);
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6");
+	}, "id", $scope0_id, "#ul/0", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "__tests__/template.marko_1*shell", $scope0_owned, 0);
+	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}<button>Count ${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+}, 1, 0);

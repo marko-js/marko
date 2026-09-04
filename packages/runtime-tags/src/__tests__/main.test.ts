@@ -6,7 +6,7 @@ import path from "path";
 import * as compiler from "@marko/compiler";
 import jsBeautify from "js-beautify";
 
-const { html_beautify } = jsBeautify;
+const { html_beautify, js_beautify } = jsBeautify;
 
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
@@ -24,8 +24,10 @@ import {
   type FlushType,
   isDestroy,
   isFlush,
+  isNavigate,
   isThrows,
   isWait,
+  type Navigate,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -36,7 +38,7 @@ import {
   stripDebugRuntime,
   stripOptimizeRuntime,
 } from "./utils/strip-inline-runtime";
-import createMutationTracker from "./utils/track-mutations";
+import createMutationTracker, { formatBody } from "./utils/track-mutations";
 
 const require = createRequire(import.meta.url);
 
@@ -46,6 +48,7 @@ type Step =
   | Flush
   | Destroy
   | Throws
+  | Navigate
   | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
@@ -73,6 +76,11 @@ export type TestConfig = {
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
+  /** Debug intentionally logs a dev-only diagnostic the optimized build cannot. */
+  skip_parity?: boolean;
+  // A fixture whose patches are MEANT to reject declares it; anything else
+  // rejecting fails the test rather than snapshotting the navigation.
+  expect_rejection?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -85,6 +93,11 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** Compiles the fixture with the `persisted` compiler option. */
+  persisted?: boolean;
+  /** Persisted: skip checking each patched page against a fresh render of
+   * the same input (client effects leave state a fresh render lacks). */
+  skip_fresh_render?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -144,6 +157,7 @@ function testFixtures(interop?: true) {
         ? (require(testFile).config ?? {})
         : {};
       const hasCompilerError = !!config.error_compiler;
+      const persisted = !!config.persisted;
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
       const stripFixtureDir = async (str: string | Promise<string>) =>
@@ -180,11 +194,18 @@ function testFixtures(interop?: true) {
           const equivalent = config.equivalent !== false;
           const skipSSR =
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
+          // Persisted mode is inherently SSR: the client only resumes and
+          // applies patches, so there is no meaningful CSR mount.
           const skipCSR =
-            optimize || hasCompilerError || skipDOM || config.skip_csr;
+            optimize ||
+            persisted ||
+            hasCompilerError ||
+            skipDOM ||
+            config.skip_csr;
           const stats: {
             dom?: Record<string, ChunkSizes | Sizes>;
             html?: Sizes;
+            patch?: Sizes;
           } = {};
           const browsers: ReturnType<typeof createBrowser>[] = [];
           const rejectLoad =
@@ -213,6 +234,9 @@ function testFixtures(interop?: true) {
           const getModeOpts = once(
             (): compiler.Config => ({
               translator,
+              // A compile cache is scoped to one configuration, and the
+              // per-fixture `optimizeKnownTemplates` are part of it.
+              cache: new Map(),
               runtimeId: config.runtime_id,
               writeVersionComment: false,
               babelConfig: {
@@ -221,6 +245,7 @@ function testFixtures(interop?: true) {
                 browserslistConfigFile: false,
               },
               optimize,
+              persisted,
               optimizeKnownTemplates: optimize
                 ? (
                     fs.readdirSync(fixtureDir, {
@@ -265,16 +290,16 @@ function testFixtures(interop?: true) {
           };
 
           const snapCompile = async (output: "html" | "dom") => {
-            if (config.error_compiler) {
+            if (hasCompilerError) {
               await snapMode(
                 () => {
                   // The fix-guide only fires for an agent-driven terminal and a
                   // translator resolved from a specifier, so force both here.
                   const restore = config.fix_guide ? forceCodingAgent() : noop;
                   try {
-                    for (const f of config.error_compiler === true
-                      ? [templateFile]
-                      : (config.error_compiler as string[]).map(resolve)) {
+                    for (const f of Array.isArray(config.error_compiler)
+                      ? config.error_compiler.map(resolve)
+                      : [templateFile]) {
                       compiler.compileFileSync(f, {
                         ...getModeOpts(),
                         ...(config.fix_guide && {
@@ -342,11 +367,15 @@ function testFixtures(interop?: true) {
               abortController?.signal,
             );
             const chunks: string[] = [];
+            const patches: string[] = [];
             const logs: ConsoleRecord[][] = [];
+            let template!: Awaited<
+              ReturnType<typeof runner.runServer>
+            >["template"];
             const capture = captureConsole();
 
             try {
-              const { template } = await runner.runServer();
+              ({ template } = await runner.runServer());
               if (abortController) {
                 input.$global = {
                   ...(input.$global as any),
@@ -417,12 +446,102 @@ function testFixtures(interop?: true) {
             }
 
             await browser.runAsyncScripts(() => tracker.logRender(input));
-            const { run } =
+            const { applyPatch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
+            let rejected = false;
 
+            // Until a client-side step diverges the page from what the
+            // server would render for the same input, every applied patch
+            // must leave the DOM as a fresh render of that input would.
+            let diverged = hasFlush || !!config.skip_fresh_render;
+            const assertPatchedLikeFresh = async (input: Input) => {
+              const capture = captureConsole();
+              const freshChunks: string[] = [];
+              try {
+                resetResolveState();
+                for await (const data of template.render(input)) {
+                  freshChunks.push(data);
+                }
+              } finally {
+                resetResolveState();
+                capture.cleanup();
+              }
+              // The fresh page resumes like the live one did, so client
+              // effects and reorders land on both sides.
+              const fresh = createBrowser(
+                runner.assets,
+                config.load_order,
+                rejectLoad || undefined,
+              );
+              browsers.push(fresh);
+              const freshFlush = fresh.stream(freshChunks);
+              while (freshFlush());
+              await fresh.runAsyncScripts();
+              const expected = formatBody(fresh.window.document.body, false);
+              const actual = formatBody(browser.window.document.body, false);
+              if (expected !== actual) {
+                throw new Error(
+                  `A persisted patch left the page unlike a fresh render of ${JSON.stringify(input)}.\n--- fresh render\n${expected}\n--- patched page\n${actual}\n`,
+                );
+              }
+            };
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
+              onStep: () => {
+                diverged = true;
+              },
+              onInput: persisted
+                ? async (input, betweenFrames) => {
+                    tracker.beginUpdate();
+                    let applied = true;
+                    const frames: string[] = [];
+                    for await (const frame of template.renderPatch(input)) {
+                      if (frames.length && betweenFrames) {
+                        tracker.logUpdate(input);
+                        tracker.beginUpdate();
+                        await betweenFrames(browser.window.document);
+                        run();
+                        await browser.runAsyncScripts();
+                        run();
+                        tracker.logUpdate(betweenFrames);
+                        tracker.beginUpdate();
+                      }
+                      frames.push(frame);
+                      // A production caller navigates on the first failed
+                      // frame; later frames must not mutate further.
+                      const result = applyPatch(frame);
+                      if (typeof result !== "boolean") {
+                        // A deferred patch is waiting on a lazy module; load
+                        // triggers schedule via setTimeout, so a macrotask
+                        // tick must pass before the chunk can be imported.
+                        await resolveAfter(0, 1);
+                        await browser.runAsyncScripts();
+                      }
+                      if (!(applied = await result)) break;
+                    }
+                    patches.push(frames.join(""));
+                    tracker.logUpdate(input);
+                    if (applied && !diverged && !betweenFrames) {
+                      await assertPatchedLikeFresh(input);
+                    }
+                    if (!applied) {
+                      if (!config.expect_rejection) {
+                        throw new Error(
+                          "A persisted patch unexpectedly rejected (set `expect_rejection` if intended).",
+                        );
+                      }
+                      rejected = true;
+                      tracker.logStatus("## Patch rejected (navigate)");
+                    }
+                    return applied;
+                  }
+                : undefined,
             });
+            if (config.expect_rejection && !rejected) {
+              throw new Error(
+                "No persisted patch rejected (drop `expect_rejection` if the case now applies).",
+              );
+            }
 
             while (hasFlush) {
               await resolveAfter(0, 1);
@@ -433,7 +552,7 @@ function testFixtures(interop?: true) {
 
             tracker.cleanup();
 
-            return { browser, tracker, chunks };
+            return { browser, tracker, chunks, patches };
           });
 
           skipHTML || it("html", () => snapCompile("html"));
@@ -473,6 +592,9 @@ function testFixtures(interop?: true) {
               // scoped or failed run both the assert and the rewrite would use
               // partial numbers.
               if (!allTestsPassed(this.test!.parent!)) return;
+              // A grep that skips the dom/html tests collects no stats;
+              // nothing ran, so there is nothing to compare.
+              if (!Object.keys(stats).length) return;
               const sizesFile = path.join(fixtureDir, "sizes.json");
               const actual = JSON.stringify(stats, null, 2) + "\n";
               // Assert instead of rewriting: a --grep test:update refreshes only
@@ -495,7 +617,31 @@ function testFixtures(interop?: true) {
             it("ssr", async () => {
               await snapMode(
                 async () => {
-                  const { tracker, chunks } = await ssr();
+                  const { tracker, chunks, patches } = await ssr();
+                  if (persisted) {
+                    // Each wire frame is one expression; format them
+                    // independently so beautify cannot glue `}{`.
+                    await snapMode(
+                      () =>
+                        patches
+                          .map((joined) => {
+                            const frames = joined
+                              .split("\n")
+                              .map((frame) => frame.trimEnd())
+                              .filter(Boolean)
+                              .map((frame) =>
+                                js_beautify(frame, {
+                                  indent_size: 2,
+                                }).trimEnd(),
+                              )
+                              .join("\n");
+                            return "// PATCH\n" + frames;
+                          })
+                          .join("\n\n")
+                          .trimEnd() + "\n",
+                      "patches.js",
+                    );
+                  }
                   await snapMode(async () => {
                     const pretty = html_beautify(
                       (optimize ? stripOptimizeRuntime : stripDebugRuntime)(
@@ -514,6 +660,19 @@ function testFixtures(interop?: true) {
                       stats.html = await getSizes(
                         stripDefaultScript(chunks.join("")),
                       );
+                      if (persisted) {
+                        stats.patch = await getSizes(patches.join(""));
+                        // A frame must cost less on the wire than the page
+                        // it patches; a larger one means a mechanism ships
+                        // what the client already has.
+                        for (const frame of patches) {
+                          const bytes = Buffer.byteLength(frame);
+                          assert.ok(
+                            bytes < stats.html.min,
+                            `persisted frame (${bytes}b) is not smaller than the page (${stats.html.min}b) for "${entry}"`,
+                          );
+                        }
+                      }
                     }
 
                     return `${pretty}\n`;
@@ -536,6 +695,30 @@ function testFixtures(interop?: true) {
               ));
         });
       }
+
+      // A diverging render log means tree shaking or debug-only assertions
+      // changed behavior (silently, since each mode snapshots separately).
+      // An `after` hook: it must observe the snapshots THIS run wrote.
+      if (!config.skip_optimize && !config.skip_parity) {
+        after(function parity() {
+          const snapshotsDir = resolve("__snapshots__");
+          for (const name of fs.existsSync(snapshotsDir)
+            ? fs.readdirSync(snapshotsDir)
+            : []) {
+            if (name.startsWith("render") && !name.includes(".debug.")) {
+              const debugName = name.replace(/\.md$/, ".debug.md");
+              const debugFile = path.join(snapshotsDir, debugName);
+              if (fs.existsSync(debugFile)) {
+                assert.strictEqual(
+                  fs.readFileSync(path.join(snapshotsDir, name), "utf8"),
+                  fs.readFileSync(debugFile, "utf8"),
+                  `${name} diverges from ${debugName}`,
+                );
+              }
+            }
+          }
+        });
+      }
     });
   }
 }
@@ -546,7 +729,11 @@ async function runSteps(
   browser: ReturnType<typeof createBrowser>,
   run: () => void,
   opts: {
-    onInput?: (input: Input) => void;
+    onStep?: () => void;
+    onInput?: (
+      input: Input,
+      betweenFrames?: (document: Document) => unknown,
+    ) => void | boolean | Promise<void | boolean>;
     onFlush?: () => Promise<void>;
     onDestroy?: () => void;
   },
@@ -565,6 +752,7 @@ async function runSteps(
       run();
       tracker.logUpdate();
     } else if (isFlush(update)) {
+      opts.onStep?.();
       if (update.flushType === "stream") {
         if (opts.onFlush) {
           tracker.beginUpdate();
@@ -578,6 +766,7 @@ async function runSteps(
         tracker.logUpdate();
       }
     } else if (typeof update === "function") {
+      opts.onStep?.();
       tracker.beginUpdate();
       await update(browser.window.document);
       run();
@@ -589,7 +778,9 @@ async function runSteps(
         tracker.logUpdate(update);
       }
     } else if (opts.onInput) {
-      opts.onInput(update);
+      const input = isNavigate(update) ? update.navigateInput : update;
+      const between = isNavigate(update) ? update.betweenFrames : undefined;
+      if ((await opts.onInput(input, between)) === false) break;
     } else {
       // if new input is detected, stop testing
       // this will be covered by the client tests

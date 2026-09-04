@@ -5,6 +5,7 @@ import {
   withBranches,
   isPromise,
   normalizeDynamicRenderer,
+  rendererKey,
 } from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import { toArray } from "../common/opt";
@@ -43,6 +44,7 @@ import {
   type SetupFn,
 } from "./renderer";
 import { _resume } from "./resume";
+export { rendererKey };
 import {
   collectScopes,
   destroyBranch,
@@ -292,7 +294,7 @@ function scheduleAwaitFrame(
   }
 }
 
-function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
+export function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   const awaitCounter: AwaitCounter = (tryBranch[AccessorProp.AwaitCounter] = {
     i: 0,
     c() {
@@ -304,7 +306,7 @@ function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   return awaitCounter;
 }
 
-function runPendingEffects(scope: BranchScope) {
+export function runPendingEffects(scope: BranchScope) {
   const effects = scope[AccessorProp.PendingEffects];
   if (effects) {
     scope[AccessorProp.PendingEffects] = [];
@@ -312,7 +314,7 @@ function runPendingEffects(scope: BranchScope) {
   }
 }
 
-function dismissPlaceholder(tryBranch: BranchScope) {
+export function dismissPlaceholder(tryBranch: BranchScope) {
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
@@ -514,19 +516,6 @@ export const _show = /*@__PURE__*/ withBranches(
     };
   },
 );
-
-// `_content` bakes one id per section, so two instances of it share that id and
-// only their owner tells them apart. Ownerless renderers and string tags keep
-// the bare id, so nothing but owner-bound content pays the suffix.
-export function rendererKey(renderer: Renderer | string | undefined) {
-  // Only owner-bound content is qualified; a Class-API interop renderer has no
-  // owner, so its non-string id keeps comparing as it always has.
-  return (renderer as Renderer | undefined)?.[RendererProp.Owner]
-    ? (renderer as Renderer)[RendererProp.Id] +
-        " " +
-        (renderer as Renderer)[RendererProp.Owner]![AccessorProp.Id]
-    : (renderer as Renderer | undefined)?.[RendererProp.Id] || renderer;
-}
 
 export function patchDynamicTag(
   fn: <T extends typeof _dynamic_tag>(cond: T) => T,

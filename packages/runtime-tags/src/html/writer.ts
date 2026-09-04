@@ -14,6 +14,7 @@ import {
   AccessorPrefix,
   AccessorProp,
   type Falsy,
+  PatchKey,
   ResumeSymbol,
 } from "../common/types";
 import { RendererProp } from "../common/types";
@@ -28,6 +29,7 @@ import {
   WALKER_RUNTIME_CODE,
 } from "./inlined-runtimes.debug";
 import {
+  getRegistered,
   K_SCOPE_ID,
   quote,
   register as serializerRegister,
@@ -50,7 +52,7 @@ interface SerializeState {
   flushScopes: boolean;
 }
 
-type ScopeInternals = PartialScope & {
+export type ScopeInternals = PartialScope & {
   [K_SCOPE_ID]?: number;
 };
 
@@ -120,6 +122,12 @@ export function _peek_scope_id() {
 }
 
 const kPendingContexts = Symbol("Pending Contexts");
+// The nearest elided `@catch` renderer: a rejection under it captures the
+// server-rendered catch html into its frame.
+const kElidedCatch = Symbol("Elided Catch");
+// Boundary content elided from a scriptless page's slots (no client
+// renderer): marked so `_try` routes rejections through inert captures.
+export const elidedContents = new WeakSet<WeakKey>();
 
 export function withContext<T>(
   key: PropertyKey,
@@ -184,6 +192,12 @@ export function writeScript(script: string) {
   $chunk.writeScript(script);
 }
 
+// Guarantees the walker bootstrap (which creates `self[runtimeId][renderId]`)
+// flushes with or before this chunk's scripts.
+export function requireMainRuntime() {
+  $chunk.boundary.state.needsMainRuntime = true;
+}
+
 // Content that resumes apart from its enclosing branch's walk (lazy, async)
 // links the scope, unless the section writes a marker the walker places it by.
 export function _script(
@@ -199,6 +213,33 @@ export function _script(
   }
   $chunk.boundary.state.needsMainRuntime = true;
   $chunk.writeEffect(scopeId, registryId);
+  // Paired scopes keep their effects and a branch's ride its shell; a scope
+  // a construct creates below a branch (a child instance) mounts from setup.
+  const { state } = $chunk.boundary;
+  if (
+    state.writesPatches &&
+    !state.patchInert &&
+    isInResumedBranch() &&
+    $chunk.context![kBranchId] !== scopeId
+  ) {
+    addSetupId(scopeId, registryId, 1);
+  }
+}
+
+// Setup ids share the shell record grammar (`inits…!effects…`); each side
+// dedupes so a feed shared by several locals arrives once.
+export function addSetupId(scopeId: number, id: string, effect?: 1) {
+  const { state } = $chunk.boundary;
+  const setup = (patchPartial(state, scopeId)[PatchKey.Setup] ??= {}) as Record<
+    string,
+    string
+  >;
+  const [inits = "", effects = ""] = (setup[PatchKey.Init] || "").split("!");
+  const side = effect ? effects : inits;
+  if ((" " + side + " ").includes(" " + id + " ")) return;
+  const added = side ? side + " " + id : id;
+  const next = effect ? [inits, added] : [added, effects];
+  setup[PatchKey.Init] = next[1] ? next[0] + "!" + next[1] : next[0];
 }
 
 export function _trailers(html: string) {
@@ -303,6 +344,142 @@ function markText(
     : state.mark(ResumeSymbol.EmptyText, scopeId + " " + accessor);
 }
 
+// Structural patch entries hold their child partial objects, so the root
+// partial IS the frame tree and one ordinary serializer flush emits it.
+export function writePatch(
+  scopeId: number,
+  entries: Record<string, unknown>,
+  serializeState = $chunk.serializeState,
+) {
+  const { state } = $chunk.boundary;
+  if (state.patchInert) return;
+  if (state.patchFlushed) {
+    throw new Error(
+      "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
+    );
+  }
+  const partial = patchPartial($chunk.boundary.state, scopeId, serializeState);
+  for (const key in entries) {
+    // `undefined` survives to the wire (`$`): it overwrites, never elides.
+    partial[key] = entries[key];
+  }
+}
+
+export function peekPatchPartial(state: State, scopeId: number) {
+  return state.patchTrees?.get($chunk.serializeState)?.[scopeId];
+}
+
+// Binds each scope-bound registration in a patch value while the
+// partial tree still accepts writes; the serialized slot references it.
+export function writeEmbeddedBinds(
+  state: State,
+  value: unknown,
+  seen?: Set<unknown>,
+) {
+  if (
+    !value ||
+    (typeof value !== "object" && typeof value !== "function") ||
+    seen?.has(value)
+  ) {
+    return;
+  }
+  const registered = getRegistered(value as WeakKey);
+  const bound = registered && (registered.scope as ScopeInternals | undefined);
+  if (bound) {
+    const binds = (state.binds ??= new Map());
+    if (!binds.has(value as WeakKey)) {
+      const n = (state.patchBinds = (state.patchBinds || 0) + 1);
+      writePatch(bound[K_SCOPE_ID]!, {
+        [PatchKey.BindSource + n]: registered.id,
+      });
+      binds.set(value as WeakKey, n);
+    }
+    return;
+  }
+  (seen ??= new Set()).add(value);
+  if (Array.isArray(value)) {
+    for (const item of value) writeEmbeddedBinds(state, item, seen);
+  } else if (value instanceof Map) {
+    for (const [key, item] of value) {
+      writeEmbeddedBinds(state, key, seen);
+      writeEmbeddedBinds(state, item, seen);
+    }
+  } else if (value instanceof Set) {
+    for (const item of value) writeEmbeddedBinds(state, item, seen);
+  } else if (typeof value === "object") {
+    for (const key in value) {
+      writeEmbeddedBinds(state, (value as Record<string, unknown>)[key], seen);
+    }
+  }
+}
+
+export function patchPartial(
+  state: State,
+  scopeId: number,
+  serializeState: SerializeState = $chunk.serializeState,
+): Record<string, unknown> {
+  if (state.patchInert) return {};
+  // One flush-lived merge tree per serialize state (a ready channel's
+  // content must not apply before its module); `flushChunk` drops the map.
+  const trees = (state.patchTrees ??= new Map());
+  let partials = trees.get(serializeState);
+  if (!partials) trees.set(serializeState, (partials = {}));
+  let partial = partials[scopeId];
+  if (!partial) {
+    const pending = state.patchPending?.[scopeId];
+    if (serializeState.readyId && !pending && scopeId !== state.rootScopeId) {
+      const link = state.patchParents?.[scopeId];
+      if (link && typeof link[1] === "string") {
+        // Hang this scope's partial off its parent's boundary child entry
+        // (parent scope `link[0]`, slot `link[1]`): the live page reaches
+        // it by following that slot when the channel's module applies.
+        partial = partials[scopeId] = {};
+        writePatch(
+          link[0],
+          { [PatchKey.Child + link[1]]: partial },
+          serializeState,
+        );
+        return partial;
+      }
+      // No linkable hop (keyed loop items): the write rides the main tree
+      // embedded in its structural entry, so it cannot defer — construct
+      // data naming a not-yet-registered id then rejects at apply.
+      return patchPartial(state, scopeId, state);
+    }
+    partial = partials[scopeId] = {};
+    if (pending) {
+      // A child links into its parent's entry on its first write; boundary
+      // construct ids ride it and a paired branch ignores them.
+      const [parentScopeId, key, contentId, slotIds] = pending;
+      if (contentId) {
+        state.shipShell?.(contentId);
+        for (const id of slotIds || []) {
+          if (typeof id === "string") state.shipShell?.(id);
+        }
+        writePatch(
+          parentScopeId,
+          {
+            [key]: slotIds
+              ? [partial, contentId, ...slotIds]
+              : [partial, contentId],
+          },
+          serializeState,
+        );
+      } else {
+        writePatch(parentScopeId, { [key]: partial }, serializeState);
+      }
+    } else if (scopeId === state.rootScopeId) {
+      // Every other partial reaches the wire nested inside a structural
+      // entry of an ancestor, rooted here (`writeScope` is patch-inert, so
+      // the root also registers with the serialize state directly).
+      writeScope(scopeId, partial);
+      serializeState.writeScopes[scopeId] = partial;
+      serializeState.flushScopes = true;
+    }
+  }
+  return partial;
+}
+
 export function _resume_branch(scopeId: number) {
   const branchId = $chunk.context?.[kBranchId];
   if (branchId !== undefined && branchId !== scopeId) {
@@ -315,10 +492,18 @@ export function _attr_content(
   scopeId: number,
   content: unknown,
   serializeReason?: number,
+  patches?: 1,
 ) {
   const shouldResume = serializeReason !== 0;
   const render = normalizeServerRender(content);
   const branchId = _peek_scope_id();
+  const { state } = $chunk.boundary;
+  if (patches && state.writesPatches) {
+    if (render) state.pairBranch?.(scopeId, nodeAccessor, branchId);
+    const renderer = normalizeDynamicRenderer<ServerRenderer>(content);
+    const id = typeof renderer === "function" && renderer[RendererProp.Id];
+    if (id) (state.renderedContents ??= new Set()).add(id);
+  }
   if (render) {
     if (shouldResume) {
       withBranchId(branchId, render);
@@ -363,8 +548,21 @@ export function _var(
 ) {
   writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
   // TODO: if the return value is already registered, use that.
+  const wiring = _resume({}, registryId, parentScopeId);
+  // A constructed child gets the same wiring as a resumed one: a seed bound
+  // to the parent's registration, so no separate init registers for it.
+  const state = getState();
+  if (state.writesPatches && isInResumedBranch()) {
+    writeEmbeddedBinds(state, wiring);
+    (
+      (patchPartial(state, childScopeId)[PatchKey.Setup] ??= {}) as Record<
+        string,
+        unknown
+      >
+    )[PatchKey.Write + AccessorProp.TagVariable] = wiring;
+  }
   const childScope = writeScopePassive(childScopeId, {
-    [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId),
+    [AccessorProp.TagVariable]: wiring,
   });
   if (nodeAccessor !== undefined) {
     writeScope(parentScopeId, {
@@ -375,9 +573,11 @@ export function _var(
 
 function writeScopePassive(scopeId: number, partialScope: PartialScope) {
   const target = $chunk.serializeState;
-  const scope = _scope_with_id(scopeId);
-  const passive = (target.passiveScopes ||= {});
+  const scope = scopeWithId($chunk.boundary.state, scopeId);
   Object.assign(scope, partialScope);
+  // Passive resume props never ride a patch (see `writeScope`).
+  if ($chunk.boundary.state.writesPatches) return scope;
+  const passive = (target.passiveScopes ||= {});
   passive[scopeId] = Object.assign(passive[scopeId] || {}, partialScope);
   return scope;
 }
@@ -433,6 +633,7 @@ export function _for_of(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -450,6 +651,7 @@ export function _for_of(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -464,6 +666,7 @@ export function _for_in(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -482,6 +685,7 @@ export function _for_in(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -498,6 +702,7 @@ export function _for_to(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -517,6 +722,7 @@ export function _for_to(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -533,6 +739,7 @@ export function _for_until(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellId?: string | 0,
 ): void {
   forBranches(
     by,
@@ -552,6 +759,7 @@ export function _for_until(
     serializeStateful,
     parentEndTag,
     singleNode,
+    shellId,
   );
 }
 
@@ -570,7 +778,24 @@ function forBranches(
   serializeStateful: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
+  shellId?: string | 0,
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
+  if (
+    $chunk.boundary.state.writeLoop?.(
+      iterate as Parameters<NonNullable<State["writeLoop"]>>[0],
+      scopeId,
+      accessor,
+      shellId,
+      owned,
+      group,
+    )
+  )
+    return;
+  // A patchable loop's markers must resume even on a page with no other
+  // client code: a patch pairs and constructs through them.
+  if (shellId !== undefined) $chunk.needsWalk = true;
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
     var seenKeys = new Set<unknown>();
@@ -657,7 +882,24 @@ export function _if(
   serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  shellIds?: string[],
+  owned?: SerializeReasonValue,
+  group?: number,
 ) {
+  if (
+    $chunk.boundary.state.writeBranch?.(
+      scopeId,
+      accessor,
+      cb,
+      shellIds,
+      owned,
+      group,
+    )
+  )
+    return;
+  // A patchable conditional's markers must resume even on a page with no
+  // other client code: a patch pairs and constructs through them.
+  if (shellIds) $chunk.needsWalk = true;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
@@ -762,6 +1004,10 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   countResumeWrite($chunk.boundary);
   Object.assign(scope, partialScope);
 
+  // Nothing ever resumes a patch's output, so resume writes stop at the
+  // canonical scope (server reads); patch data flows through `writePatch`.
+  if (state.writesPatches) return scope;
+
   // Each serialize state only flushes the props it wrote itself; the
   // canonical scope (above) accumulates everything for server side reads.
   if (pending && pending !== partialScope) {
@@ -815,6 +1061,22 @@ function scopeWithId(state: State, scopeId: number) {
   return scope;
 }
 
+// Joins the key's subscriber set on scope 0; a set minted after the
+// globals flushed rides its own scope 0 partial.
+export function _global_subscribe(id: string, scopeId: number) {
+  const { state } = $chunk.boundary;
+  // A frame's scopes are live already (paired) or subscribe as they render
+  // (constructed).
+  if (state.writesPatches) return;
+  const key = AccessorPrefix.ClosureScopes + id;
+  let subscribers = (state.globalSubscribers ??= {})[key];
+  if (!subscribers) {
+    subscribers = state.globalSubscribers[key] = new Set();
+    if (state.hasGlobals) writeScope(0, { [key]: subscribers });
+  }
+  _subscribe(subscribers, scopeWithId(state, scopeId));
+}
+
 export function _subscribe(
   subscribers: Set<ScopeInternals> | undefined,
   scope: ScopeInternals,
@@ -832,14 +1094,80 @@ export function _subscribe(
   return scope;
 }
 
-// A reason is 1, empty, an offset group bitmask, or a keyed dynamic guard.
+// A reason is 1, empty, an offset group bitmask, or keyed group values.
 export type SerializeReasonValue =
   | undefined
   | number
-  | Partial<Record<string, 0 | 1>>;
+  | Partial<Record<string, number>>;
 
 export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
+}
+
+// Compiled into persisted templates in place of `_scope_reason`: a page
+// render serializes by the instance's sources mask (any contribution can
+// change; no contribution at all serializes fully, as an unset reason does)
+// while a patch serializes nothing beyond its own fills.
+export function _persisted_reason() {
+  const { state } = $chunk.boundary;
+  const reason = state.serializeReason;
+  state.serializeReason = undefined;
+  if (state.writesPatches) {
+    // The first persisted template of the render is the page root, about to
+    // allocate the next id — the frame names it as the walk's entry pair.
+    if (!state.rootScopeId) {
+      state.rootScopeId = _peek_scope_id();
+      // Globals re-ship with every frame (undefined included) so the live
+      // page's global object never reads stale.
+      const globals = getFilteredGlobals(state.$global, 1);
+      if (globals) {
+        patchPartial(state, state.rootScopeId)[PatchKey.Globals] = globals;
+      }
+    }
+    return undefined;
+  }
+  return reason || 1;
+}
+
+// The instance's sources mask (2 bits per group: client/server contribute;
+// `1` = all-server root default), read before `_persisted_reason` clears it.
+export function _persisted_ownership() {
+  const { state } = $chunk.boundary;
+  return state.writesPatches ? (state.serializeReason ?? 1) : 1;
+}
+
+export function maskGroup(mask: SerializeReasonValue, group: number) {
+  return mask === 1
+    ? 2
+    : typeof mask === "number"
+      ? (mask >>> (1 + 2 * group)) & 3
+      : ((mask as Partial<Record<number, number>>)[group] ?? 0);
+}
+
+// Mirrors `ownedWrite`: an unfed group (`0`) still seeds a construct.
+export function _owned_guard(mask: SerializeReasonValue, group: number) {
+  const owned = maskGroup(mask, group);
+  return owned === 2 || (owned === 0 && isInResumedBranch()) ? 1 : 0;
+}
+// Whether the client contributes to the group (the low mask bit): the
+// instance then owns whatever the group selects.
+export function _client_guard(mask: SerializeReasonValue, group: number) {
+  return maskGroup(mask, group) & 1 ? 1 : 0;
+}
+
+// Page-side group guards (patch renders have no reason): any contribution,
+// client or server, can change — the group's resume data serializes.
+export function _source_if(mask: SerializeReasonValue, group: number) {
+  return mask && maskGroup(mask, group) ? 1 : undefined;
+}
+
+export function _source_guard(mask: SerializeReasonValue, group: number) {
+  return mask && maskGroup(mask, group) ? 1 : 0;
+}
+
+// A group's 2-bit value, composed into a child mask by pass-through.
+export function _mask_group(mask: SerializeReasonValue, group: number) {
+  return maskGroup(mask, group);
 }
 
 export function _scope_reason() {
@@ -890,18 +1218,46 @@ export function writeWaitReady(
   }
 }
 
+// Renders content into a detached chunk with patch writes suppressed:
+// the html ships as frame data (a rejection's catch UI), never entries.
+// Async content cannot ride one frame, so it yields `0` (reject).
+function renderInert(renderer: (arg: unknown) => void, arg: unknown) {
+  const chunk = $chunk;
+  const { state } = chunk.boundary;
+  const body = new Chunk(chunk.boundary, null, chunk.context, {
+    parent: chunk.serializeState,
+    resumes: "",
+    writeScopes: {},
+    flushScopes: false,
+  } as Chunk["serializeState"]);
+  state.patchInert = 1;
+  try {
+    return body.render(renderer, arg) === body ? body.html : 0;
+  } finally {
+    state.patchInert = undefined;
+    $chunk = chunk;
+  }
+}
+
 export function _await<T>(
   scopeId: number,
   accessor: Accessor,
   promise: Promise<T> | T,
   content: (value: T) => void,
   serializeMarker?: number,
+  patchContent?: 0 | string,
+  alwaysPairs?: 1,
 ) {
-  const resumeMarker = serializeMarker !== 0;
+  const writesPatches = $chunk.boundary.state.writesPatches;
+  // `0`: a client-owned thenable, resolved by `_await_promise`. A string is
+  // the body's content id, letting a construct build the await branch.
+  if (writesPatches && patchContent === 0) return;
+  const resumeMarker = serializeMarker !== 0 || writesPatches;
 
   if (!isPromise(promise)) {
     if (resumeMarker) {
       const branchId = _peek_scope_id();
+      $chunk.boundary.state.pairBranch?.(scopeId, accessor, branchId);
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
       );
@@ -920,6 +1276,15 @@ export function _await<T>(
 
   const chunk = $chunk;
   const { boundary } = chunk;
+  if (writesPatches) {
+    // A construct resolves the pending body from this shipped record; an
+    // always-pairing body outside divergent contexts never constructs.
+    const elide = alwaysPairs && !isInResumedBranch();
+    if (!elide) $chunk.boundary.state.shipShell!(patchContent);
+    writePatch(scopeId, {
+      [PatchKey.Pending + accessor]: (!elide && patchContent) || 1,
+    });
+  }
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
   if (chunk.context?.[kPendingContexts]) {
@@ -935,6 +1300,10 @@ export function _await<T>(
           chunk.render(() => {
             if (resumeMarker) {
               const branchId = _peek_scope_id();
+              $chunk.boundary.state.pairBranch?.(scopeId, accessor, branchId);
+              // The Child entry is the settle signal: force it so a body
+              // with no writes of its own still attaches the pending UI.
+              if (writesPatches) patchPartial(boundary.state, branchId);
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
@@ -955,6 +1324,24 @@ export function _await<T>(
     },
     (err) => {
       chunk.async = false;
+      if (boundary.state.writesPatches) {
+        if (!boundary.signal.aborted) {
+          chunk.render(() => {
+            // An elided catch has no client renderer: its frame carries
+            // the server-rendered catch html alongside the error.
+            const elidedCatch = $chunk.context?.[kElidedCatch] as
+              | ((err: unknown) => void)
+              | undefined;
+            writePatch(scopeId, {
+              [PatchKey.Catch + accessor]: elidedCatch
+                ? [err, renderInert(elidedCatch, err)]
+                : err,
+            });
+          });
+          boundary.endAsync();
+        }
+        return;
+      }
       boundary.abort(err);
     },
   );
@@ -968,6 +1355,7 @@ export function _try(
     placeholder?: { content?(): void };
     catch?: { content?(err: unknown): void };
   },
+  alwaysPairs?: 1,
 ) {
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
@@ -983,18 +1371,50 @@ export function _try(
   const { boundary } = chunk;
   const { state } = boundary;
   const { resumeWrites } = boundary;
+  // A patch shows `@placeholder`/`@catch` from received client state;
+  // the document reorder/`<t hidden>` path must not ride the frame stream.
+  const { writesPatches } = state;
+  // Construct payload (content id + slot ids, `0` = elided catch) rides the
+  // pairing entry, except for always-pairing branches outside divergence.
+  const elide = alwaysPairs && !isInResumedBranch();
+  let trySlotIds: (string | 0 | undefined)[] | undefined;
+  if (
+    writesPatches &&
+    !elide &&
+    (catchContent !== undefined || placeholderContent)
+  ) {
+    trySlotIds = [
+      catchContent === undefined
+        ? undefined
+        : catchContent === 0 || elidedContents.has(catchContent)
+          ? 0
+          : ((catchContent[RendererProp.Id] as string | undefined) ?? ""),
+      placeholderContent === undefined || elidedContents.has(placeholderContent)
+        ? undefined
+        : ((placeholderContent[RendererProp.Id] as string | undefined) ?? ""),
+    ];
+  }
+  state.pairBranch?.(
+    scopeId,
+    accessor,
+    branchId,
+    writesPatches && !elide
+      ? ((content as ServerRenderer)[RendererProp.Id] as string | undefined)
+      : undefined,
+    trySlotIds,
+  );
   const beforeBranch = deferBranchStart(chunk);
   // Whether `tryBoundary` writes the catch and placeholder renderers itself
   // once the body settles.
   let renderersAtSettle = false;
 
-  if (catchContent !== undefined || placeholderContent) {
+  if (!writesPatches && (catchContent !== undefined || placeholderContent)) {
     renderersAtSettle = tryBoundary(
       placeholderContent
         ? () =>
             tryPlaceholder(
               content,
-              placeholderContent,
+              placeholderContent!,
               branchId,
               scopeId,
               placeholderBranchId,
@@ -1004,13 +1424,20 @@ export function _try(
       placeholderContent,
       branchId,
     );
-  } else {
+  } else if (!writesPatches) {
     withBranchId(branchId, content);
+  } else if (catchContent && elidedContents.has(catchContent as WeakKey)) {
+    // A patch body stays outside the branch id context: the persisted writers
+    // read it as "inside a divergent branch" (see isInResumedBranch).
+    withContext(kElidedCatch, catchContent, content);
+  } else {
+    content();
   }
 
   // An async body's start mark has already streamed and must pair with an end;
   // a sync body that wrote nothing resumable keeps the boundary off the wire.
-  const rendered = chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
+  const rendered =
+    writesPatches || chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
   applyBranchStart(chunk, beforeBranch, rendered);
   if (!rendered) return;
 
@@ -1205,8 +1632,72 @@ export class State implements SerializeState {
   public resumes = "";
   public nonceAttr = "";
   public serializer = new Serializer();
+  declare writesPatches?: boolean;
+  // Patch rendering (persisted pages) intercepts branch/loop writes;
+  // defined only by the patch entry's State subclass, so normal SSR
+  // bundles carry none of it.
+  writeBranch?(
+    scopeId: number,
+    accessor: Accessor,
+    cb: () => number | undefined | void,
+    shellIds?: string[],
+    owned?: SerializeReasonValue,
+    group?: number,
+  ): 1 | void;
+  writeLoop?(
+    iterate: (
+      each: (
+        itemKey: unknown,
+        sameAsIndex: boolean,
+        render: () => void,
+      ) => void,
+    ) => void,
+    scopeId: number,
+    accessor: Accessor,
+    shellId?: string | 0,
+    owned?: SerializeReasonValue,
+    group?: number,
+  ): 1 | void;
+  shipShell?(shellId: string | 0 | undefined): string | undefined;
+  // A boundary body or dynamic tag branch pairs with the live page's branch
+  // scope: its partial nests under the owner, bind paths resolve through it.
+  pairBranch?(
+    scopeId: number,
+    accessor: Accessor,
+    branchId: number,
+    contentId?: string,
+    slotIds?: (string | 0 | undefined)[],
+  ): void;
+  declare rootScopeId?: number;
+  declare patchTrees?: Map<
+    SerializeState,
+    Record<number, Record<string, unknown>>
+  >;
+  declare patchBinds?: number;
+  declare binds?: Map<WeakKey, number>;
+  declare patchParents?: Record<
+    number,
+    [parentScopeId: number, link: string | [accessor: string, key: unknown]]
+  >;
+  declare patchPending?: Record<
+    number,
+    [
+      parentScopeId: number,
+      key: string,
+      contentId?: string,
+      slotIds?: (string | 0 | undefined)[],
+    ]
+  >;
+  declare patchFlushed?: 1;
+  declare patchInert?: 1;
+  declare patchDeferred?: 1;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
+  public globalSubscribers?: Record<string, Set<ScopeInternals>>;
+  // Content renderers a frame created and invoked (by id): one created but
+  // never invoked was withheld by its consumer, so its fills deliver.
+  public createdContents?: Set<string>;
+  public renderedContents?: Set<string>;
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
@@ -1217,6 +1708,34 @@ export class State implements SerializeState {
     if ($global.cspNonce) {
       this.nonceAttr = " nonce" + attrAssignment($global.cspNonce);
     }
+  }
+
+  flushChunk(html: string, scripts: string, pending: number) {
+    const { $global, nonceAttr } = this;
+    const { __flush__ } = $global;
+
+    if (scripts) {
+      html += "<script" + nonceAttr + ">" + scripts + "</script>";
+    }
+
+    if (__flush__) {
+      $global.__flush__ = undefined;
+      html = __flush__($global, html);
+    }
+
+    return pending ? html : html + this.trailerHTML;
+  }
+
+  walkScript() {
+    return this.runtimePrefix + RuntimeKey.Walk + "()";
+  }
+
+  resumeScript(resumes: string) {
+    if (this.hasWrittenResume) {
+      return this.runtimePrefix + RuntimeKey.Resume + ".push(" + resumes + ")";
+    }
+    this.hasWrittenResume = true;
+    return this.runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]";
   }
 
   get runtimePrefix() {
@@ -1315,7 +1834,9 @@ export class Boundary extends AbortController {
   }
 
   flush() {
-    if (!this.signal.aborted) {
+    // A pending patch must not stringify until its frame is actually
+    // emitted: the same partial objects keep receiving later writes.
+    if (!this.signal.aborted && !(this.count && this.state.writesPatches)) {
       flushSerializer(this, this.state);
     }
 
@@ -1383,6 +1904,9 @@ export class Chunk {
   }
 
   writeEffect(scopeId: number, registryId: string) {
+    // A patch never ships effects: paired scopes attached theirs when the
+    // page resumed, and a fresh construct attaches its shell's.
+    if (this.boundary.state.writesPatches) return;
     countResumeWrite(this.boundary);
     if (this.lastEffect === registryId) {
       this.effects += " " + scopeId;
@@ -1398,6 +1922,7 @@ export class Chunk {
 
   append(chunk: Chunk) {
     this.html += chunk.html;
+    this.needsWalk ||= chunk.needsWalk;
     this.effects = concatEffects(this.effects, chunk.effects);
     this.scripts = concatScripts(this.scripts, chunk.scripts);
     this.lastEffect = chunk.lastEffect || this.lastEffect;
@@ -1587,7 +2112,12 @@ export class Chunk {
     const { state } = boundary;
     const { $global, runtimePrefix } = state;
     let needsWalk = state.walkOnNextFlush;
-    if (needsWalk) state.walkOnNextFlush = false;
+    if (needsWalk) {
+      state.walkOnNextFlush = false;
+      // A walk with nothing else to resume (a persisted site that only
+      // records its node) still runs on the runtime.
+      state.needsMainRuntime = true;
+    }
 
     let readyResumeScripts = this.flushReadyScripts();
     for (let channel; (channel = state.serializer.pendingReadyChannel());) {
@@ -1638,7 +2168,7 @@ export class Chunk {
 
     let needsResumeArray = false;
 
-    if (state.writeReorders) {
+    if (state.writeReorders && !state.writesPatches) {
       let carried: Chunk[] | null = null;
 
       for (const reorderedChunk of state.writeReorders) {
@@ -1746,32 +2276,17 @@ export class Chunk {
     // Placeholders render during this pass; their scopes go out with it.
     flushSerializer(boundary, state);
     if (state.resumes) {
-      if (state.hasWrittenResume) {
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
-        );
-      } else {
-        state.hasWrittenResume = true;
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + "=[" + state.resumes + "]",
-        );
-      }
+      scripts = concatScripts(scripts, state.resumeScript(state.resumes));
     } else if (needsResumeArray && !state.hasWrittenResume) {
       // A reordered chunk's script pushes its effects into the resume array.
-      state.hasWrittenResume = true;
-      scripts = concatScripts(
-        scripts,
-        runtimePrefix + RuntimeKey.Resume + "=[]",
-      );
+      scripts = concatScripts(scripts, state.resumeScript(""));
     }
 
     // Reordered scripts follow the resume data they push after.
     scripts = concatScripts(scripts, reordered);
 
     if (needsWalk) {
-      scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
+      scripts = concatScripts(scripts, state.walkScript());
     }
 
     this.html = html;
@@ -1784,32 +2299,18 @@ export class Chunk {
   flushHTML() {
     const { boundary } = this;
     const { state } = boundary;
+    if (state.writesPatches && boundary.count) {
+      flushSerializer(boundary, state);
+    }
     if (this.needsWalk) {
       this.needsWalk = false;
       state.walkOnNextFlush = true;
     }
 
     this.flushScript();
-    const { scripts } = this;
-    const { $global, nonceAttr } = state;
-    const { __flush__ } = $global;
-    let { html } = this;
+    const { html, scripts } = this;
     this.html = this.scripts = "";
-
-    if (scripts) {
-      html += "<script" + nonceAttr + ">" + scripts + "</script>";
-    }
-
-    if (__flush__) {
-      $global.__flush__ = undefined;
-      html = __flush__($global, html);
-    }
-
-    if (!boundary.count) {
-      html += state.trailerHTML;
-    }
-
-    return html;
+    return state.flushChunk(html, scripts, boundary.count);
   }
 }
 
@@ -1840,7 +2341,7 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
     // values assigned mid-render are dropped — mutation is unsupported by design.
     if (!isBlockingState && !state.hasGlobals) {
       state.hasGlobals = true;
-      const globals = getFilteredGlobals(state.$global);
+      const globals = withGlobalSubscribers(state);
       // Globals become scope 0 so we can reference them as `_(0)`.
       if (globals) flushes.push([0, globals, globals]);
     }
@@ -1873,9 +2374,16 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
   }
 }
 
+// The scope 0 record: the serialized globals plus the subscriber sets.
+function withGlobalSubscribers(state: State) {
+  const globals = getFilteredGlobals(state.$global);
+  const subscribers = state.globalSubscribers;
+  return subscribers ? { ...(globals || undefined), ...subscribers } : globals;
+}
+
 function flushSerializerGlobals(boundary: Boundary) {
   const { state } = boundary;
-  const globals = getFilteredGlobals(state.$global);
+  const globals = withGlobalSubscribers(state);
   if (globals) {
     state.hasGlobals = true;
     state.needsMainRuntime = true;
@@ -1897,7 +2405,9 @@ function depsMarker(deps: Set<string> | null) {
   return marker;
 }
 
-function getFilteredGlobals($global: Record<string, unknown>) {
+// `all` keeps undefined-valued keys: a patch must overwrite them, where a
+// resume elides.
+function getFilteredGlobals($global: Record<string, unknown>, all?: 1) {
   if (!$global) return 0;
 
   const serializedGlobals = $global.serializedGlobals as
@@ -1912,7 +2422,7 @@ function getFilteredGlobals($global: Record<string, unknown>) {
   if (Array.isArray(serializedGlobals)) {
     for (const key of serializedGlobals) {
       const value = $global[key];
-      if (value !== undefined) {
+      if (all || value !== undefined) {
         if (filtered) {
           filtered[key] = value;
         } else {
@@ -1924,7 +2434,7 @@ function getFilteredGlobals($global: Record<string, unknown>) {
     for (const key in serializedGlobals) {
       if (serializedGlobals[key]) {
         const value = $global[key];
-        if (value !== undefined) {
+        if (all || value !== undefined) {
           if (filtered) {
             filtered[key] = value;
           } else {

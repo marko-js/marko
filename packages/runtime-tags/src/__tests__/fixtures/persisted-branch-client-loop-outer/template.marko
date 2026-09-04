@@ -1,0 +1,12 @@
+<let/expand=false/>
+<main>
+  <for|item| of=input.items>
+    <li>
+      ${item}
+      <if=expand>
+        <p>${input.note}</p>
+      </if>
+    </li>
+  </for>
+  <button onClick() { expand = !expand }>+</button>
+</main>
