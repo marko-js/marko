@@ -29,6 +29,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $childScope = _peek_scope_id();
 			let count = counter_box_default({ start: 1 });
 			_var($scope1_id, "b", $childScope, "a0");
+			_owned_guard(0, 0) && _patch_write($scope1_id, "e", count, 1);
 			_html(`<p>${_text_resume($scope1_id, "c", count)}</p><button class=reset>r</button>${_el_resume($scope1_id, "d")}`);
 			_script($scope1_id, "a1");
 			_scope($scope1_id, { a: _existing_scope($childScope) });

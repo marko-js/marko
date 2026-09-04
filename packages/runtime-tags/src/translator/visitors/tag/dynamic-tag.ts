@@ -194,6 +194,7 @@ export default {
             ensurePersistedWriteGroups(() => tagExtra);
             if (writesPatchDynamicTag(tag, tagSection)) {
               addRuntimeFeatureAsset("patch-dynamic-tag");
+              if (hasVar) addRuntimeFeatureAsset("patch-value-bind");
             }
           }
         });
@@ -265,6 +266,7 @@ export default {
       // The import rides both outputs (interactive pages load it transitively).
       if (writesPatchDynamicTag(tag, getSection(tag))) {
         importRuntimeFeature("patch-dynamic-tag");
+        if (tag.node.var) importRuntimeFeature("patch-value-bind");
       }
       // An unknown renderer defeats transitive `$global` knowledge; `input`
       // content is the parent's own, already counted where it was compiled.

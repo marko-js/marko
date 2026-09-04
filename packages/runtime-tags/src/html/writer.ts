@@ -29,6 +29,7 @@ import {
   WALKER_RUNTIME_CODE,
 } from "./inlined-runtimes.debug";
 import {
+  getRegistered,
   K_SCOPE_ID,
   quote,
   register as serializerRegister,
@@ -368,6 +369,50 @@ export function peekPatchPartial(state: State, scopeId: number) {
   return state.patchTrees?.get($chunk.serializeState)?.[scopeId];
 }
 
+// Binds each scope-bound registration in a patch value while the
+// partial tree still accepts writes; the serialized slot references it.
+export function writeEmbeddedBinds(
+  state: State,
+  value: unknown,
+  seen?: Set<unknown>,
+) {
+  if (
+    !value ||
+    (typeof value !== "object" && typeof value !== "function") ||
+    seen?.has(value)
+  ) {
+    return;
+  }
+  const registered = getRegistered(value as WeakKey);
+  const bound = registered && (registered.scope as ScopeInternals | undefined);
+  if (bound) {
+    const binds = (state.binds ??= new Map());
+    if (!binds.has(value as WeakKey)) {
+      const n = (state.patchBinds = (state.patchBinds || 0) + 1);
+      writePatch(bound[K_SCOPE_ID]!, {
+        [PatchKey.BindSource + n]: registered.id,
+      });
+      binds.set(value as WeakKey, n);
+    }
+    return;
+  }
+  (seen ??= new Set()).add(value);
+  if (Array.isArray(value)) {
+    for (const item of value) writeEmbeddedBinds(state, item, seen);
+  } else if (value instanceof Map) {
+    for (const [key, item] of value) {
+      writeEmbeddedBinds(state, key, seen);
+      writeEmbeddedBinds(state, item, seen);
+    }
+  } else if (value instanceof Set) {
+    for (const item of value) writeEmbeddedBinds(state, item, seen);
+  } else if (typeof value === "object") {
+    for (const key in value) {
+      writeEmbeddedBinds(state, (value as Record<string, unknown>)[key], seen);
+    }
+  }
+}
+
 export function patchPartial(
   state: State,
   scopeId: number,
@@ -503,8 +548,21 @@ export function _var(
 ) {
   writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
   // TODO: if the return value is already registered, use that.
+  const wiring = _resume({}, registryId, parentScopeId);
+  // A constructed child gets the same wiring as a resumed one: a seed bound
+  // to the parent's registration, so no separate init registers for it.
+  const state = getState();
+  if (state.writesPatches && isInResumedBranch()) {
+    writeEmbeddedBinds(state, wiring);
+    (
+      (patchPartial(state, childScopeId)[PatchKey.Setup] ??= {}) as Record<
+        string,
+        unknown
+      >
+    )[PatchKey.Write + AccessorProp.TagVariable] = wiring;
+  }
   const childScope = writeScopePassive(childScopeId, {
-    [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId),
+    [AccessorProp.TagVariable]: wiring,
   });
   if (nodeAccessor !== undefined) {
     writeScope(parentScopeId, {
@@ -1616,6 +1674,7 @@ export class State implements SerializeState {
     Record<number, Record<string, unknown>>
   >;
   declare patchBinds?: number;
+  declare binds?: Map<WeakKey, number>;
   declare patchParents?: Record<
     number,
     [parentScopeId: number, link: string | [accessor: string, key: unknown]]
@@ -2053,7 +2112,12 @@ export class Chunk {
     const { state } = boundary;
     const { $global, runtimePrefix } = state;
     let needsWalk = state.walkOnNextFlush;
-    if (needsWalk) state.walkOnNextFlush = false;
+    if (needsWalk) {
+      state.walkOnNextFlush = false;
+      // A walk with nothing else to resume (a persisted site that only
+      // records its node) still runs on the runtime.
+      state.needsMainRuntime = true;
+    }
 
     let readyResumeScripts = this.flushReadyScripts();
     for (let channel; (channel = state.serializer.pendingReadyChannel());) {

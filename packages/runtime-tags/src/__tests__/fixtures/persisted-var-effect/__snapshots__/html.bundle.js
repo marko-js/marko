@@ -1,4 +1,5 @@
 // tags/labeler/index.marko
+const $template = "<span>fmt</span>";
 _shells({ b: "b,<span>fmt</span>" });
 var labeler_default = _template_persisted("b", (input) => {
 	_persisted_reason();
@@ -8,6 +9,7 @@ var labeler_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
+_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !a1 a2;${_w0};${_w1}`)(((_w0) => `D0${_w0}& D m`)("b"), ((_w0) => `<main>${_w0}<button> </button></main>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -18,6 +20,7 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let label = labeler_default({ title: input.title });
 	_var($scope0_id, "b", $childScope, "a0");
+	_owned_guard(0, 0) && _patch_write($scope0_id, "i", label, 1);
 	_html(`<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");

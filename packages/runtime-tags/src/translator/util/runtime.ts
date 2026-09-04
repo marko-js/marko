@@ -141,6 +141,7 @@ export type DOMRuntimeFeature =
   | "patch-html"
   | "patch-loop"
   | "patch-ready"
+  | "patch-style"
   | "patch-text"
   | "patch-text-content"
   | "patch-value"

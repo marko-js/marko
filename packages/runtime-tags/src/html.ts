@@ -65,6 +65,7 @@ export {
   _patch_dynamic_tag,
   _content_withheld,
   _patch_html,
+  _patch_style,
   _patch_text,
   _patch_text_content,
   _patch_init,

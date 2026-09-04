@@ -26,6 +26,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $childScope = _peek_scope_id();
 			let w = widget_default({ label: input.label });
 			_var($scope1_id, "b", $childScope, "a0");
+			_owned_guard(0, 0) && _patch_write($scope1_id, "d", w, 1);
 			_html(`<p class=echo>${_text_resume($scope1_id, "c", w)}</p>`);
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;

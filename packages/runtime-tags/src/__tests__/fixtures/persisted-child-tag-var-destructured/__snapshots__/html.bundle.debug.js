@@ -33,6 +33,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $childScope = _peek_scope_id();
 			let { valueChange: $valueChange, value } = counter_default({});
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_$pattern#4/var");
+			_owned_guard(0, 0) && _patch_write($scope1_id, "value", value, 1);
 			_html(`<p>${_text_resume($scope1_id, "#text/2", value)}</p><button class=reset>r</button>${_el_resume($scope1_id, "#button/3")}`);
 			_script($scope1_id, "__tests__/template.marko_1_$valueChange#6");
 			_scope($scope1_id, {

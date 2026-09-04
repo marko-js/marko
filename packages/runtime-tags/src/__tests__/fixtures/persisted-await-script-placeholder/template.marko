@@ -1,0 +1,11 @@
+<main>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <await|value|=input.promise>
+      <span id="v">${value}</span>
+      <script>
+        document.querySelector("main")!.dataset.seen = value;
+      </script>
+    </await>
+  </try>
+</main>
