@@ -156,7 +156,8 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
     if (!effect && getSerializeSourcesForRef(read.referencedBindings)?.state) {
       return true;
     }
-    // A `<define>` body reads as if at each direct site of its var.
+    // A `<define>` body reads as if at each direct site of its var; a
+    // recursive define reaches its own sites once.
     const sites = [read.section];
     for (const site of sites) {
       // No patch write reaches a skipped region: reads inside stateful
@@ -181,7 +182,9 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
           content = readSection;
         }
         if (readSection.defineSites) {
-          sites.push(...readSection.defineSites);
+          for (const defineSite of readSection.defineSites) {
+            if (!sites.includes(defineSite)) sites.push(defineSite);
+          }
           break;
         }
         readSection = readSection.parent;

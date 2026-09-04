@@ -297,13 +297,12 @@ patchers[PatchKey.Catch] = (scope, key, error) => {
   // html before the normal catch machinery runs; a frame without it (an
   // async catch body) rejects.
   const tryBranch = findBranchWithKey(scope, AccessorProp.CatchContent);
-  if (tryBranch && (tryBranch[AccessorProp.CatchContent] as unknown) === 0) {
+  let content = tryBranch?.[AccessorProp.CatchContent] as Renderer | 0;
+  // The slot stays `0`: every rejection frame renders its own catch html.
+  if (content === 0) {
     const [err, html] = error as [unknown, string | 0];
     if (typeof html !== "string") failPatch();
-    tryBranch[AccessorProp.CatchContent] = _content(
-      "",
-      html as string,
-    )(tryBranch[AccessorProp.Owner]) as never;
+    content = _content("", html as string)(tryBranch![AccessorProp.Owner]);
     error = err;
   }
   markSettled(scope, accessor);
@@ -313,12 +312,12 @@ patchers[PatchKey.Catch] = (scope, key, error) => {
     endAwaitPending(scope, accessor);
   }
   if (!tryBranch) throw error;
-  showCatch(tryBranch, error);
+  showCatch(tryBranch, error, content as Renderer);
 };
 
 // The catch render shows like a placeholder: the parked try body comes
 // back when the next frame patches the try.
-function showCatch(tryBranch: BranchScope, error: unknown) {
+function showCatch(tryBranch: BranchScope, error: unknown, content: Renderer) {
   const shown = tryBranch[AccessorProp.PlaceholderBranch] as
     | BranchScope
     | 0
@@ -327,14 +326,11 @@ function showCatch(tryBranch: BranchScope, error: unknown) {
   const parentNode = anchor.parentNode!;
   const catchBranch = createAndSetupBranch(
     tryBranch[AccessorProp.Global],
-    tryBranch[AccessorProp.CatchContent] as Renderer,
+    content,
     tryBranch[AccessorProp.Owner]!,
     parentNode,
   );
-  (tryBranch[AccessorProp.CatchContent] as Renderer)[RendererProp.Params]?.(
-    catchBranch,
-    [error],
-  );
+  content[RendererProp.Params]?.(catchBranch, [error]);
   caughtError.add(pendingEffects);
   insertBranchBefore(catchBranch, parentNode, anchor);
   if (shown) {

@@ -224,12 +224,6 @@ export const encodeAccessor = (accessor: string) => {
   return encoded - (encoded < 36 ? 10 : encoded < 1296 ? 334 : 11998);
 };
 
-export function normalizeAttrValue(value: unknown) {
-  if (isNotVoid(value)) {
-    return value === true ? "" : value + "";
-  }
-}
-
 // Branch (control flow) support latch. A `let` written only by
 // `withBranches` folds away with it, dropping guarded branch handling from
 // bundles without branches; an object property would defeat that analysis.

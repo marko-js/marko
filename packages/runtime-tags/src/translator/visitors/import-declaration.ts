@@ -167,7 +167,12 @@ export default {
           } else {
             // A persisted page's frames may carry data for this module before
             // it loads; the feature defers them until its `ready()` call.
-            if (isPersisted()) importRuntimeFeature("patch-ready");
+            if (isPersisted()) {
+              // A frame's ready batch may bind handlers before the child's
+              // own feature loads, so the page carries the bind feature.
+              importRuntimeFeature("patch-ready");
+              importRuntimeFeature("patch-value-bind");
+            }
             const allKnownTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,

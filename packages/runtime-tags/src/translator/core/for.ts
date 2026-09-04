@@ -48,7 +48,7 @@ import {
 } from "../util/runtime";
 import {
   ContentType,
-  forEachSection,
+  getChildSections,
   getBranchRendererArgs,
   getDirectClosures,
   getOrCreateSection,
@@ -708,14 +708,10 @@ function getStaticMemberChain(
 }
 
 function hasDomBindingsOrNestedSections(section: Section) {
-  let has = some(
-    section.bindings,
-    (binding) => binding.type === BindingType.dom,
+  return (
+    some(section.bindings, (binding) => binding.type === BindingType.dom) ||
+    getChildSections(section).length > 0
   );
-  forEachSection((child) => {
-    has ||= child.parent === section;
-  });
-  return has;
 }
 
 function forTypeToRuntime(type: ForType) {

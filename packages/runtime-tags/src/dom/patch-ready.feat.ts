@@ -1,11 +1,19 @@
 import { READY_FRAME_VAR } from "../common/meta";
-import { applyReadyPatch, frameVars, installPatchReady } from "./patch";
+import { installLoadReady } from "./load";
+import {
+  applyReadyPatch,
+  frameEpoch,
+  frameVars,
+  installPatchReady,
+} from "./patch";
+import { queueEffect } from "./queue";
 import {
   installReady,
   isReady,
   patchRender,
+  ready,
+  readyFailed,
   type RenderData,
-  type ResumeFn,
 } from "./resume";
 
 interface Pending {
@@ -15,6 +23,7 @@ interface Pending {
   r: ((applied: boolean) => void)[];
   renderId: string;
   runtimeId: string;
+  epoch: number;
 }
 const pending = new Map<RenderData, Pending>();
 
@@ -23,6 +32,10 @@ const pending = new Map<RenderData, Pending>();
 frameVars[READY_FRAME_VAR] = acceptReady;
 installPatchReady(pendingReady, discardReady);
 installReady(markReady, failReady);
+installLoadReady(
+  (branch, readyId) => readyId && queueEffect(branch, () => ready(readyId)),
+  readyFailed,
+);
 
 // Receives a frame's ready-channel record (an explicit call in the frame
 // text): data for a loaded channel merges into the live render's ready
@@ -43,7 +56,13 @@ function acceptReady(record: Record<string, unknown[]>) {
       if (!entry) {
         pending.set(
           render,
-          (entry = { c: new Map(), r: [], renderId: "", runtimeId: "" }),
+          (entry = {
+            c: new Map(),
+            r: [],
+            renderId: "",
+            runtimeId: "",
+            epoch: frameEpoch,
+          }),
         );
       }
       const deferred = entry.c.get(readyId);
@@ -59,19 +78,12 @@ function acceptReady(record: Record<string, unknown[]>) {
 }
 
 // Appends a frame batch to the live ready record without disturbing the
-// initial page's still-pending resume data for that channel. Scope
-// partials get the patch-apply wrapper; gates (arrays/numbers) and effect
-// strings keep their native resume handling.
+// initial page's still-pending resume data for that channel. A batch is a
+// thunk the drain evaluates (its partial applies as a shell-less frame).
 function pushBatch(render: RenderData, readyId: string, batch: unknown[]) {
   const target = ((render.b ??= {})[readyId] ??= []);
   framePushes.push(target, target.length);
-  for (const partial of batch) {
-    target.push(
-      typeof partial === "object" && partial && !Array.isArray(partial)
-        ? wrapPartial(partial)
-        : (partial as (typeof target)[number]),
-    );
-  }
+  for (const partial of batch) target.push(partial as (typeof target)[number]);
 }
 
 function pendingReady(render: RenderData, renderId: string, runtimeId: string) {
@@ -89,9 +101,14 @@ function markReady(readyId: string) {
       pending.delete(render);
       settle(
         entry,
-        applyReadyPatch(entry.renderId, entry.runtimeId, (render) => {
-          for (const [id, batch] of entry.c) pushBatch(render, id, batch);
-        }),
+        applyReadyPatch(
+          entry.renderId,
+          entry.runtimeId,
+          entry.epoch,
+          (render) => {
+            for (const [id, batch] of entry.c) pushBatch(render, id, batch);
+          },
+        ),
       );
     }
   }
@@ -128,8 +145,4 @@ function discardReady(render: RenderData) {
 
 function settle(entry: Pending, applied: boolean) {
   for (const resolve of entry.r) resolve(applied);
-}
-
-function wrapPartial(partial: unknown): ResumeFn {
-  return (ctx) => ctx([partial as never]);
 }

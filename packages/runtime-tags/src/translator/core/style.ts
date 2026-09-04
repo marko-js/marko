@@ -21,6 +21,7 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
+import { onFinalizePersisted } from "../util/persisted/lifecycle";
 import {
   ensurePersistedWriteGroups,
   inStatefulBranch,
@@ -146,13 +147,15 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   }
 
   addSerializeExpr(section, exprExtras, binding);
-  if (patchesStyle(section)) {
-    addSerializeReason(section, true, binding);
-    addRuntimeFeatureAsset("patch-style");
-    for (const value of dynamicStyleValues(node)) {
-      ensurePersistedWriteGroups(() => value.extra!);
+  // Stateful structure is known only once sources resolve.
+  const valueExtras = dynamicStyleValues(node).map((value) => value.extra!);
+  onFinalizePersisted(() => {
+    if (patchesStyle(section)) {
+      addSerializeReason(section, true, binding);
+      addRuntimeFeatureAsset("patch-style");
+      for (const extra of valueExtras) ensurePersistedWriteGroups(() => extra);
     }
-  }
+  });
 }
 
 // A dynamic style in server-owned structure writes its rule from the frame

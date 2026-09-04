@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 10034,
-        "brotli": 4321
+        "brotli": 4326
       },
       "files": {
         "tags/cyc-b/index.marko": 329,

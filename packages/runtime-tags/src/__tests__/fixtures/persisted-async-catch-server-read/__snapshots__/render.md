@@ -20,3 +20,19 @@
 INSERT: main > em
 REMOVE: main > em + em
 ```
+
+# Update `{"promise":{},"title":"third"}`
+```html
+<main>
+  <em>
+    third
+  </em>
+</main>
+```
+## Change
+```
+INSERT: main > em
+REMOVE: #document-fragment > em + em
+INSERT: main > em
+REMOVE: main > em + em
+```

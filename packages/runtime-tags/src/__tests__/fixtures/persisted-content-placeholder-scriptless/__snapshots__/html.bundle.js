@@ -1,5 +1,4 @@
 // tags/card/index.marko
-const $template = "<section><!></section>";
 _shells({
 	b0: "b0,<span>done</span>",
 	b1: "b1,<span>done</span>",
@@ -36,10 +35,7 @@ var card_default = _template_persisted("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_shells({
-	a0: "a0;D ;<em> </em>",
-	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)("D%l"), ((_w0) => `<main>${_w0}</main>`)($template))
-});
+_shells({ a0: "a0;D ;<em> </em>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

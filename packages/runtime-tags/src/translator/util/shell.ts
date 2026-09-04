@@ -7,6 +7,7 @@ import { isBranchPathSection, isStatefulBranch } from "./persisted/structure";
 import { addRuntimeFeatureAsset } from "./runtime";
 import {
   forEachSection,
+  getChildSections,
   forEachSectionReverse,
   getSectionRegisterReasons,
   type Section,
@@ -166,7 +167,13 @@ function isShellExpressible(section: Section, visiting = new Set<Section>()) {
   // A template cycle never resolves to a finite shell.
   if (!section.structure || visiting.has(section)) return false;
   visiting.add(section);
-  for (const op of section.structure) {
+  const expressible = isStructureExpressible(section, visiting);
+  visiting.delete(section);
+  return expressible;
+}
+
+function isStructureExpressible(section: Section, visiting: Set<Section>) {
+  for (const op of section.structure!) {
     if (
       typeof op === "object" &&
       op.kind !== StructureKind.Visit &&
@@ -189,15 +196,9 @@ function isShellExpressible(section: Section, visiting = new Set<Section>()) {
   }
   // Nested branches, boundaries and recorded content bodies arrive through
   // the walk or entry data; any other child section the shell cannot express.
-  let contentChild = false;
-  forEachSection((child) => {
-    contentChild ||=
-      child.parent === section &&
-      !child.isBranch &&
-      !child.isBoundary &&
-      !child.contentRecord;
-  });
-  return !contentChild;
+  return !getChildSections(section).some(
+    (child) => !child.isBranch && !child.isBoundary && !child.contentRecord,
+  );
 }
 
 // Await bodies ship as their construct's `await` records, never as

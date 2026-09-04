@@ -15,11 +15,15 @@ const [getStructureClassifiers] = createProgramState<
 export function onClassifyStructure(section: Section, classify: () => void) {
   getStructureClassifiers().push([section.depth, classify]);
 }
+// Both queues drain: a callback closes over analyzed nodes, and the
+// program state outlives this pass.
 export function finalizePersisted() {
-  for (const [, classify] of getStructureClassifiers().sort(
-    ([a], [b]) => a - b,
-  )) {
+  const classifiers = getStructureClassifiers();
+  for (const [, classify] of classifiers.sort(([a], [b]) => a - b)) {
     classify();
   }
-  for (const finalize of getPersistedFinalizers()) finalize();
+  classifiers.length = 0;
+  const finalizers = getPersistedFinalizers();
+  for (const finalize of finalizers) finalize();
+  finalizers.length = 0;
 }
