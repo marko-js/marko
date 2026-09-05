@@ -36,6 +36,7 @@ import { addPersistedChildRenderer } from "./persisted/intrinsics";
 import { onFinalizePersisted } from "./persisted/lifecycle";
 import {
   inStatefulBranch,
+  readsOnlySelect,
   recordStructuralParams,
 } from "./persisted/structure";
 import {
@@ -52,6 +53,7 @@ import {
   type InputBinding,
   isInvokeOnlyBinding,
   type KnownExprs,
+  mapParamBindingToExpr,
   mapParamReasonToExpr,
   mergeReferences,
   mergeSources,
@@ -88,6 +90,7 @@ import {
   addSerializeReason,
   getSerializeProvenance,
   getSerializeReason,
+  getSerializeSourcesForExpr,
   getSerializeSourcesForExprs,
   getSerializeSourcesForRef,
 } from "./serialize-reasons";
@@ -608,10 +611,33 @@ export function finalizeKnownTags(section: Section) {
           // time; group order freezes here.
           ensureReasonGroups(provenance);
           // Under client state the child re-derives the group, so its
-          // server feeds must keep reaching it.
+          // server feeds must keep reaching it. A member that only selects
+          // (a selector's params nest into the group) is served by pairing
+          // when its own feed has no state.
           if (provenance?.state) {
-            forEach(provenance.param, (binding) => {
-              binding.feedsStateMixedGroup = true;
+            forEach(group.reason, (param) => {
+              const feeder = mapParamBindingToExpr(knownExprs, param);
+              let sources: Sources | undefined;
+              forEach(feeder, (extra) => {
+                sources = mergeSources(
+                  sources,
+                  getSerializeSourcesForExpr(extra),
+                );
+                forEach(
+                  (extra as t.FunctionExtra).referencedBindingsInFunction,
+                  (binding) => {
+                    sources = mergeSources(
+                      sources,
+                      getSerializeSourcesForRef(binding),
+                    );
+                  },
+                );
+              });
+              if (sources?.state || !readsOnlySelect(param)) {
+                forEach(sources?.param, (binding) => {
+                  binding.feedsStateMixedGroup = true;
+                });
+              }
             });
           }
           // The fact rolls up: a param feeding a child's structural param

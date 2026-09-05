@@ -3,6 +3,7 @@
 import type { types as t } from "@marko/compiler";
 
 import { kDirectContent } from "../binding-prop-tree";
+import { isBranchSelector } from "../branch-tag";
 import { isPersisted } from "../marko-config";
 import { every, forEach, some, toArray } from "../optional";
 import type { Binding, Sources } from "../references";
@@ -159,6 +160,15 @@ function selectionFeedDelivers(binding: Binding) {
       : isPatchFillBinding(binding)) ||
     inStatefulBranch(binding.section)
   );
+}
+
+// A param read only as branch selectors: its value never joins a client
+// derivation, so pairing delivers it and no fill is needed.
+export function readsOnlySelect(binding: Binding) {
+  for (const read of binding.reads) {
+    if (!isBranchSelector(read)) return false;
+  }
+  return true;
 }
 
 // Selected by params alone: a call site feeding them from state hands the

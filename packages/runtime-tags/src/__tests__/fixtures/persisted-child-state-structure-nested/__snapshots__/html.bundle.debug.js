@@ -65,5 +65,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	$scope0_reason ? _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "1:6" }) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.inner), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.title));
+	}, "__tests__/template.marko", 0, { count: "1:6" }) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
 }, 1, () => [panel_default]);

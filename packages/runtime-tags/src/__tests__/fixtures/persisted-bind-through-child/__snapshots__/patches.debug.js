@@ -7,6 +7,5 @@
       },
       "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/persisted-bind-through-child/tags/store.marko_0/_return", 2, "#childScope/0", "TagVariableChange:count"]
     }, "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-through-child/tags/child.marko_1*shell"]
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-bind-through-child/template.marko0": !0
+  }
 }]

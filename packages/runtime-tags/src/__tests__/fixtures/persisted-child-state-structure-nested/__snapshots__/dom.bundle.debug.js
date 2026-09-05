@@ -30,8 +30,8 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_inner = _fill_const("__tests__/template.marko0", "input_inner", ($scope) => $input_inner$1($scope["#childScope/0"], $scope.input_inner));
-const $input_title = _fill_const("__tests__/template.marko1", "input_title", ($scope) => $input_title$1($scope["#childScope/0"], $scope.input_title));
+const $input_inner = ($scope, input_inner) => $input_inner$1($scope["#childScope/0"], input_inner);
+const $input_title = _fill_const("__tests__/template.marko0", "input_title", ($scope) => $input_title$1($scope["#childScope/0"], $scope.input_title));
 const $input = ($scope, input) => {
 	$input_inner($scope, input.inner);
 	$input_title($scope, input.title);

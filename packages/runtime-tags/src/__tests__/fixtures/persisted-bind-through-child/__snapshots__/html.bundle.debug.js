@@ -51,7 +51,7 @@ var child_default = _template_persisted("__tests__/tags/child.marko", (input) =>
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}<p> </p>${_w1}<!>`)("", $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&D l/${_w1}&b`)("", "b%c");
-_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !;${_w0};${_w1}`)(((_w0, _w1) => `0${_w0}&D l/${_w1}&b`)("", "b%c"), ((_w0, _w1) => `${_w0}<p> </p>${_w1}<!>`)("", $template$1)) });
+_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko;${_w0};${_w1}`)(((_w0, _w1) => `0${_w0}&D l/${_w1}&b`)("", "b%c"), ((_w0, _w1) => `${_w0}<p> </p>${_w1}<!>`)("", $template$1)) });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -72,8 +72,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		show: input.show,
 		on: store.set
 	});
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/3": _existing_scope($childScope2)
-	}, "__tests__/template.marko", 0) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.show);
+	}, "__tests__/template.marko", 0);
 }, 1, () => [store_default, child_default]);

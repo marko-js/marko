@@ -43,7 +43,7 @@ var store_default = _template_persisted("c", (input) => {
 }, 0, 0);
 
 // template.marko
-_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !;${_w0};${_w1}`)(((_w0, _w1) => `0${_w0}&D l/${_w1}&b`)("", "b%c"), ((_w0, _w1) => `${_w0}<p> </p>${_w1}<!>`)("", $template)) });
+_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0, _w1) => `0${_w0}&D l/${_w1}&b`)("", "b%c"), ((_w0, _w1) => `${_w0}<p> </p>${_w1}<!>`)("", $template)) });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
@@ -64,8 +64,8 @@ var template_default = _template_persisted("a", (input) => {
 		show: input.show,
 		on: store.set
 	});
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_reason && _scope($scope0_id, {
 		a: _existing_scope($childScope),
 		d: _existing_scope($childScope2)
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.show);
+	});
 }, 1, () => [store_default, child_default]);

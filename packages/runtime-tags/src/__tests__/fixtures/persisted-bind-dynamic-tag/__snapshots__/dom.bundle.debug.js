@@ -49,6 +49,6 @@ function $setup($scope) {
 	_var($scope, "#childScope/0", $store);
 	$setup$1($scope["#childScope/0"]);
 }
-const $input_show = _fill_const("__tests__/template.marko0", "input_show", ($scope) => $input_show$1($scope["#childScope/3"], $scope.input_show));
+const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/3"], input_show);
 const $input = ($scope, input) => $input_show($scope, input.show);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
