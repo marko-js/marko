@@ -1,7 +1,7 @@
 CompileError: 
-    at __tests__/template.marko:1:7
+    at __tests__/template.marko:1:6
     > 1 | style {
-        |       ^ EOF reached while parsing attribute name for the "style" tag
+        |      ^ EOF reached while parsing expression
       2 |   div {
       3 |     color: green;
       4 | }

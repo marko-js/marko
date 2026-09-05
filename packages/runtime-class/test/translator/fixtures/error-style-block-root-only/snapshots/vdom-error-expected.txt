@@ -2,5 +2,5 @@ CompileError:
     at __tests__/template.marko:2:4
       1 | <div>
     > 2 |   <style { div { color: green; } }/>
-        |    ^^^^^ Style blocks must be at the root of your Marko template.
+        |    ^^^^^ `style` is a statement, not an html tag: write it at the root of the template without angle brackets, eg `style { … }`.
       3 | </div>
