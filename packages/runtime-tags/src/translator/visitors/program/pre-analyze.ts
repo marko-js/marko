@@ -1,5 +1,11 @@
 import { types as t } from "@marko/compiler";
-import { isNativeTag } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  getTagDef,
+  getTagDefForTagName,
+  isNativeTag,
+  type TagDefinition,
+} from "@marko/compiler/babel-utils";
 
 import { htmlAttrNameReg, userAttrNameReg } from "../../../common/helpers";
 import { flattenTextOnlyConditional } from "../../core/if";
@@ -9,6 +15,12 @@ import { getMarkoRoot, isMarko } from "../../util/get-root";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { getHTMLRuntime } from "../../util/runtime";
 import withPreviousLocation from "../../util/with-previous-location";
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTag {
+    tagDef?: TagDefinition | null;
+  }
+}
 
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 // Keyed per refining modifier (`value:parseInt:=x` vs `value:=x`), since the
@@ -126,13 +138,27 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
       // Convert tags which have an associated binding to an identifier.
       // <MyTag> --> <${MyTag}>
       node.name = withPreviousLocation(t.identifier(tagName), name);
-    } else if (isNativeTag(tag)) {
-      attrNameReg = htmlAttrNameReg;
-      switch (tagName) {
-        case "textarea":
-          preAnalyzeTextarea(tag);
-          break;
-      }
+    }
+  }
+
+  const nativeTagDef = getStaticNativeTagDef(tag);
+  if (nativeTagDef) {
+    if (!t.isStringLiteral(node.name)) {
+      node.name = withPreviousLocation(
+        t.stringLiteral(nativeTagDef.name),
+        node.name,
+      );
+      node.tagDef = nativeTagDef;
+    }
+    attrNameReg = htmlAttrNameReg;
+    if (nativeTagDef.parseOptions?.openTagOnly && node.body.body.length) {
+      throw tag.hub.buildError(
+        node.body.body[0],
+        `The \`<${nativeTagDef.name}>\` tag cannot have content, so it does not support a body.`,
+      );
+    }
+    if (nativeTagDef.name === "textarea") {
+      preAnalyzeTextarea(tag);
     }
   }
 
@@ -164,6 +190,26 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
       }
 
       attr.modifier = null;
+    }
+  }
+}
+
+function getStaticNativeTagDef(tag: t.NodePath<t.MarkoTag>) {
+  const { name } = tag.node;
+  if (t.isStringLiteral(name)) {
+    return isNativeTag(tag) ? getTagDef(tag) : undefined;
+  }
+
+  if (t.isTemplateLiteral(name) && name.quasis.length === 1) {
+    const tagDef = getTagDefForTagName(getFile(), name.quasis[0].value.cooked!);
+    if (
+      // A string names an element, never a core tag or a discovered template.
+      tagDef?.taglibId === "marko-html" &&
+      tagDef.html &&
+      !tagDef.template &&
+      !tagDef.renderer
+    ) {
+      return tagDef;
     }
   }
 }
