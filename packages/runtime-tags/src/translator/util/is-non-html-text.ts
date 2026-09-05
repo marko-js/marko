@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/compiler/babel-utils";
 
 import { isCoreTag } from "./is-core-tag";
+import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export function isNonHTMLText(
   placeholder: t.NodePath<t.MarkoPlaceholder | t.MarkoText>,
@@ -27,6 +28,8 @@ export function isNonHTMLText(
 }
 
 export function isTextOnlyNativeTag(tag: t.NodePath<t.MarkoTag>) {
+  if (analyzeTagNameType(tag) !== TagNameType.NativeTag) return false;
+
   const def = getTagDef(tag);
   // Have to special case `title` here for the compat with v5 which does not treat title as a text only tag.
   return !!(
