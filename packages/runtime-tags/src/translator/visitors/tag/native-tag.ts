@@ -1179,7 +1179,10 @@ export default {
 
         if (!openTagOnly) {
           if (tagName !== "textarea" && isTextOnlyNativeTag(tag)) {
-            const textLiteral = bodyToTextLiteral(tag.node.body);
+            const textLiteral = bodyToTextLiteral(
+              tag.node.body,
+              tagName === "title",
+            );
             if (!t.isStringLiteral(textLiteral)) {
               addStatement(
                 "render",

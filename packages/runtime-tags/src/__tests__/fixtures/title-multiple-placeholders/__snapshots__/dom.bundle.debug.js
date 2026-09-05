@@ -1,8 +1,11 @@
 // template.marko
-const $template = "<button>inc <!></button><title></title>";
-const $walks = " Db%l b";
-const $input_a__OR__n = /*@__PURE__*/ _or(7, ($scope) => _text_content($scope["#title/2"], `${_to_text($scope.input_a)} - ${_to_text($scope.n)}`));
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => {
+const $template = "<button>inc <!></button><title></title><title></title><title>&amp; &#38; &#x26; &lt;</title>";
+const $walks = " Db%l b c";
+const $input_a__OR__n = /*@__PURE__*/ _or(8, ($scope) => {
+	_text_content($scope["#title/2"], `& & & < ${_to_text($scope.input_a)} - ${_to_text($scope.n)}`);
+	_text_content($scope["#title/3"], `& & & < ${_to_text($scope.input_a)} - ${_to_text($scope.n)}`);
+});
+const $n = /*@__PURE__*/ _let("n/7", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$input_a__OR__n($scope);
 });
