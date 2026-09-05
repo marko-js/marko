@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-dynamic-tag-void-body/template.marko:1:10
+    > 1 | <${"br"}>text</>
+        |          ^^^^ The `<br>` tag cannot have content, so it does not support a body.
+      2 |

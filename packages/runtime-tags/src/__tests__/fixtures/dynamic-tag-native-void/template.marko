@@ -1,0 +1,13 @@
+<let/count=0/>
+
+<${"br"}/>
+<p>${count}</p>
+<${"img"} src="x.png"/>
+<${"input"} name="a"/>
+<${"meta"} content="description"/>
+<${"textarea"}>count &amp; ${count}</>
+<${"title"}>count ${count}</>
+<${"if"}>core tag name</>
+<${"custom"}>custom tag name</>
+
+<div>before<${input.show && "span"}/>${count}<button onClick() { count++ }>inc</button></div>
