@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.3.50
+
+### Patch Changes
+
+- [#4095](https://github.com/marko-js/marko/pull/4095) [`f95cd6a`](https://github.com/marko-js/marko/commit/f95cd6a4cdfad4a8c1cc6cfb66b7060180e767df) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize static native dynamic tag names (`<${"br"}/>`) before analysis so they use the same void-element, textarea, and text-only handling as direct native tags. Genuinely dynamic tag names and custom/core tag collisions retain their existing dynamic behavior.
+
+- [#4095](https://github.com/marko-js/marko/pull/4095) [`2e052fc`](https://github.com/marko-js/marko/commit/2e052fc955c67d91083146b738624db156e0d9db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Decode HTML character references in literal `<title>` text before client updates, matching the server render without decoding interpolated values.
+
 ## 6.3.49
 
 ### Patch Changes
