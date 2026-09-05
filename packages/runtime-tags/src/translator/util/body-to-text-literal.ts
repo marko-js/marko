@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { decodeHTML } from "@marko/compiler/babel-utils";
 
 import { escapeTemplateRaw } from "./normalize-string-expression";
 import { callRuntime } from "./runtime";
@@ -15,8 +16,11 @@ declare module "@marko/compiler/dist/types" {
 // Translate: a text-only body as a JS string, each interpolation coerced with
 // `_to_text`. Used by text-only native tags and html comments. A lone
 // interpolation stays bare — its `_text`/`_text_content` sink coerces it.
-export function bodyToTextLiteral(body: t.MarkoTagBody) {
-  return buildTextLiteral(body, toText, true);
+export function bodyToTextLiteral(
+  body: t.MarkoTagBody,
+  decodeEntities = false,
+) {
+  return buildTextLiteral(body, toText, true, decodeEntities);
 }
 
 // Pre-analyze variant: interpolations stay raw (the output-specific `_to_text` import
@@ -49,6 +53,7 @@ function buildTextLiteral(
   body: t.MarkoTagBody,
   coerce: (value: t.Expression) => t.Expression,
   bareSingle: boolean,
+  decodeEntities = false,
 ) {
   const templateQuasis: t.TemplateElement[] = [];
   const templateExpressions: t.Expression[] = [];
@@ -57,7 +62,7 @@ function buildTextLiteral(
   let singleValue: t.Expression | undefined;
   for (const child of body.body) {
     if (t.isMarkoText(child)) {
-      currentQuasi += child.value;
+      currentQuasi += decodeEntities ? decodeHTML(child.value) : child.value;
     } else if (t.isMarkoPlaceholder(child)) {
       placeholderExtra ||= child.value.extra;
       templateQuasis.push(templateElement(currentQuasi, false));
