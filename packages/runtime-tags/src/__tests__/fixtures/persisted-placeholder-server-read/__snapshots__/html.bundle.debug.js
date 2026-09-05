@@ -4,7 +4,8 @@ const $walks = " D l%c";
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<div id=done>done</div>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await,<div id=done>done</div>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>"
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();

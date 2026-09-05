@@ -3,6 +3,7 @@
 import type { types as t } from "@marko/compiler";
 
 import { kDirectContent } from "../binding-prop-tree";
+import { isBranchSelector } from "../branch-tag";
 import { isPersisted } from "../marko-config";
 import { every, forEach, some, toArray } from "../optional";
 import type { Binding, Sources } from "../references";
@@ -27,9 +28,8 @@ export function boundaryAlwaysPairs(bodySection: Section) {
   return true;
 }
 
-// Whether the section renders inside stateful structure
-// (inclusive): patch renders skip those bodies, so nothing inside may
-// rely on a patch write.
+// Whether the section renders inside stateful structure (inclusive), whose
+// bodies patch renders skip.
 export function inStatefulBranch(section: Section | undefined) {
   while (section) {
     if (isStatefulBranch(section)) return true;
@@ -162,6 +162,15 @@ function selectionFeedDelivers(binding: Binding) {
   );
 }
 
+// A param read only as branch selectors: its value never joins a client
+// derivation, so pairing delivers it and no fill is needed.
+export function readsOnlySelect(binding: Binding) {
+  for (const read of binding.reads) {
+    if (!isBranchSelector(read)) return false;
+  }
+  return true;
+}
+
 // Selected by params alone: a call site feeding them from state hands the
 // branch to the client at run time. Call at finalize or later.
 export function getParamSelectorSources(section: Section) {
@@ -190,9 +199,8 @@ export function getParamSelectorChain(section: Section | undefined) {
   return chain;
 }
 
-// Structure selection and `$global` mixing both record here: neither
-// read lets the value leave through an expression channel.
-// A branch/loop selector's root params select structure.
+// Structure selection and `$global` mixing record here; a branch/loop
+// selector's root params select structure.
 export function recordStructuralParams(sources: Sources | undefined) {
   forEach(sources?.param, (binding) => {
     if (!binding.section.parent) binding.selectsStructure = true;

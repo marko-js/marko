@@ -2,7 +2,8 @@
 _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
-	a2: "a2;b%;<!><!><!>"
+	a2: "a2;b%;<!><!><!>",
+	a: "a !a5;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();

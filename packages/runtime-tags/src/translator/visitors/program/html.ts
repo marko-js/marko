@@ -230,9 +230,8 @@ export default {
 
       const shells = getShellRecords();
       if (persisted && shells) {
-        // Branch shells, decided during analyze, register at server module
-        // load so patches can ship constructible shells without the client
-        // bundling conditional content.
+        // Branch shells register at server module load so patches can construct
+        // them without the client bundling conditional content.
         const active = { ...shells };
         // The one translate-side blocker: `hasHTMLEffect` only exists once
         // translate registers effects, so this drop cannot move to analyze.
@@ -243,10 +242,8 @@ export default {
         const records: t.ObjectProperty[] = [];
         for (const id in active) {
           const section = active[id];
-          // The id token carries `inits…!effects…` (entries reference the
-          // bare id); a lone `!` marks a shell needing setup for seeds alone.
-          // Roots (template records a dynamic tag entry constructs) carry
-          // their own inits/effects like a branch shell.
+          // The id token carries `inits…!effects…`; a lone `!` marks a shell needing
+          // setup for seeds alone. Roots carry their own like a branch shell.
           let marker = "";
           if (id === getShellId(section) || !section.parent) {
             forEach(getConstructInitClosures(section), (closure) => {
@@ -315,9 +312,8 @@ export default {
           persisted ? "_template_persisted" : "_template",
           t.stringLiteral(getFile().metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
-          // Persisted templates always carry their intrinsics (absent =
-          // FOREIGN renderer, which parents must render through): the local
-          // globals/opaque bit plus lazily-referenced child renderers.
+          // Persisted templates always carry intrinsics (absent = FOREIGN renderer,
+          // which parents must render through).
           ...(persisted
             ? buildIntrinsicsArgs(pageArg ?? t.numericLiteral(0))
             : [pageArg]),
@@ -338,10 +334,8 @@ export default {
   },
 } satisfies TemplateVisitor<t.Program>;
 
-// The intrinsics trailing arg, one self-resolving value: `1` = reads
-// globals or opaque (children irrelevant once true), a lazy child list
-// (an arrow: module cycles must not evaluate eagerly) = locally clean
-// but transitively unresolved, `0` = proven clean.
+// Intrinsics arg: `1` reads globals/opaque, a lazy child list (an arrow, so
+// module cycles stay lazy) is locally clean, `0` proven clean.
 function buildIntrinsicsArgs(pageArg: t.Expression) {
   const { names, opaque } = getPersistedIntrinsics();
   return [

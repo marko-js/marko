@@ -184,9 +184,8 @@ export default {
         const valueSources = getSerializeSourcesForExpr(
           valueAttr.value.extra || {},
         );
-        // Client-owned thenables resolve via `_await_promise`; a patch
-        // must not Pending them (the body has no fills to Child). Otherwise
-        // a constructible await's Pending carries its body content id.
+        // Client-owned thenables resolve via `_await_promise`, so a patch must not
+        // Pending them; otherwise Pending carries the body content id.
         const patchContent =
           isPersisted() && !valueSources?.param && !valueSources?.global
             ? t.numericLiteral(0)

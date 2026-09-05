@@ -19,7 +19,9 @@ const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D%l");
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content,<div id=done>done</div>",
 	"__tests__/template.marko_3_#text#0/await": "__tests__/template.marko_3_#text#0/await,<div id=done>done</div>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>"
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
+	"__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !__tests__/template.marko_0;${_w0};${_w1}`)(((_w0) => ` D l/${_w0}&`)("D%l"), ((_w0) => `<button> </button>${_w0}`)($template$1))
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
@@ -31,7 +33,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_set_serialize_reason(0);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/2", $childScope);
-	wrap_default({ content: _content("__tests__/template.marko_1*content", () => {
+	wrap_default({ content: _content_elide("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _persisted_reason();
 		const $scope1_id = _scope_id();
 		_try($scope1_id, "#text/0", _content_resume("__tests__/template.marko_3*content", () => {

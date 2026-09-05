@@ -36,6 +36,7 @@ import { addPersistedChildRenderer } from "./persisted/intrinsics";
 import { onFinalizePersisted } from "./persisted/lifecycle";
 import {
   inStatefulBranch,
+  readsOnlySelect,
   recordStructuralParams,
 } from "./persisted/structure";
 import {
@@ -52,6 +53,7 @@ import {
   type InputBinding,
   isInvokeOnlyBinding,
   type KnownExprs,
+  mapParamBindingToExpr,
   mapParamReasonToExpr,
   mergeReferences,
   mergeSources,
@@ -88,6 +90,7 @@ import {
   addSerializeReason,
   getSerializeProvenance,
   getSerializeReason,
+  getSerializeSourcesForExpr,
   getSerializeSourcesForExprs,
   getSerializeSourcesForRef,
 } from "./serialize-reasons";
@@ -165,9 +168,8 @@ export function knownTagAnalyze(
   if (tag.node.var) tagExtra[kTagVar] = true;
   const attrExprs = new Set([tagExtra]);
   if (isPersisted()) {
-    // Frame ids are local labels: a patch pairs the child scope through a
-    // parent entry, so the ref must serialize (a scriptless child could
-    // otherwise skip it, leaving its fills and effects unreachable).
+    // The ref must serialize so a patch can pair the child scope through a
+    // parent entry, even for a scriptless child.
     addSerializeReason(section, true, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
     const hasVar = !!tag.node.var;
@@ -464,10 +466,8 @@ export function knownTagTranslateHTML(
       }
     }
   } else if (clientOwnedStatements) {
-    // The render-wide persisted reason is the page-vs-patch bit: truthy on
-    // a page render (serialize + render the child), falsy on a patch. A
-    // patch still renders when the child's intrinsics demand it (global
-    // reads anywhere in its subtree, or an unknown renderer).
+    // The persisted reason is the page-vs-patch bit; a patch still renders
+    // when the child's intrinsics demand it.
     let rootSection = section;
     while (rootSection.parent) rootSection = rootSection.parent;
     clientOwnedStatements.push(callStatement(tagIdentifier, ...getArgs()));
@@ -611,10 +611,33 @@ export function finalizeKnownTags(section: Section) {
           // time; group order freezes here.
           ensureReasonGroups(provenance);
           // Under client state the child re-derives the group, so its
-          // server feeds must keep reaching it.
+          // server feeds must keep reaching it. A member that only selects
+          // (a selector's params nest into the group) is served by pairing
+          // when its own feed has no state.
           if (provenance?.state) {
-            forEach(provenance.param, (binding) => {
-              binding.feedsStateMixedGroup = true;
+            forEach(group.reason, (param) => {
+              const feeder = mapParamBindingToExpr(knownExprs, param);
+              let sources: Sources | undefined;
+              forEach(feeder, (extra) => {
+                sources = mergeSources(
+                  sources,
+                  getSerializeSourcesForExpr(extra),
+                );
+                forEach(
+                  (extra as t.FunctionExtra).referencedBindingsInFunction,
+                  (binding) => {
+                    sources = mergeSources(
+                      sources,
+                      getSerializeSourcesForRef(binding),
+                    );
+                  },
+                );
+              });
+              if (sources?.state || !readsOnlySelect(param)) {
+                forEach(sources?.param, (binding) => {
+                  binding.feedsStateMixedGroup = true;
+                });
+              }
             });
           }
           // The fact rolls up: a param feeding a child's structural param

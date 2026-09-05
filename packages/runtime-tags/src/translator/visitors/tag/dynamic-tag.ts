@@ -152,6 +152,8 @@ export default {
       const { node } = tag;
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
+        // The body reads as if at each site; the site's section exists here.
+        (definedBodySection.defineSites ??= []).push(getOrCreateSection(tag));
         addSetupStatement(getOrCreateSection(tag));
         knownTagAnalyze(
           tag,

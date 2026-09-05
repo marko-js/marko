@@ -13,9 +13,8 @@ import { getShellContent, shells } from "./patch-shells";
 import type { Renderer } from "./renderer";
 import { constructPatchers, getRegisteredWithScope, patchers } from "./resume";
 
-// `[renderer, input, contentId, varId]`, a lone renderer bare: ids resolve
-// to a shipped record or dom registration; a native tag name is `["div"]`
-// alone, `>div` in a longer entry; array input is arguments.
+// `[renderer, input, contentId, varId]`, a lone renderer bare; a native tag
+// name is `["div"]` alone or `>div` in a longer entry, array input is args.
 patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
   scope,
   key,
@@ -29,6 +28,8 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
     string | 0 | undefined,
     string | 0 | undefined,
   ];
+  // A bind reference delivers owner-bound content.
+  if (typeof renderer === "function") renderer = renderer();
   if (typeof renderer === "string" && (bare || input !== undefined)) {
     if (renderer[0] === ">") {
       renderer = renderer.slice(1);

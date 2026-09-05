@@ -28,8 +28,7 @@ export const frameVars: Record<string, unknown> = {};
 
 // A frame and the deferred batches it drains later share one epoch, so a
 // bind source applied with the frame still serves a batch's reference.
-export let frameEpoch = 0;
-let epochs = 0;
+export let frameEpoch: object = {};
 
 export function applyPatch(
   frame: string,
@@ -40,12 +39,11 @@ export function applyPatch(
   // Registered here so this module stays tree-shakable; a page with
   // `$global` joins installed its own (`patch-global.feat`).
   patchers[PatchKey.Globals] ||= applyGlobals;
-  frameEpoch = ++epochs;
+  frameEpoch = {};
   const render = beginPatch(renderId);
   try {
-    // A frame is trusted executable resume data (an envelope holding the
-    // partial tree) from the same server that produced the document.
-    // `$` stays the serializer's `undefined` sentinel (never passed).
+    // A frame is trusted executable resume data from the same server that
+    // produced the document; `$` stays the serializer's `undefined` sentinel.
     const names = Object.keys(frameVars);
     // eslint-disable-next-line no-new-func
     const fn = new Function("_", "$", ...names, "return " + frame);
@@ -59,13 +57,15 @@ export function applyPatch(
     return pendingReady?.(render, renderId, runtimeId) || true;
   } catch (error) {
     // The frame did not apply faithfully, so the caller navigates; only an
-    // intentional rejection (`failPatch`) throws 0. Deferred data from this
-    // (or any earlier pending) frame is meaningless after the navigation.
+    // intentional rejection (`failPatch`) throws 0.
     if (MARKO_DEBUG && error) console.error(error);
     discardReady?.(render);
     abortRun();
     return false;
   } finally {
+    // A rejected frame must not read as page data on a later walk; the
+    // array stays, a still-streaming page pushes into it.
+    render.r!.length = 0;
     abortPatch();
   }
 }
@@ -99,15 +99,12 @@ export function installPatchReady(
   discardReady = discard;
 }
 
-// Commits deferred ready-channel data after its module loads: the wrapped
-// partials already sit in the render's ready record, so an empty frame run
-// applies them under the same commit sequence as `applyPatch`.
-// Deferred batches join the ready record only inside the patch context:
-// the walk `beginPatch` finishes would otherwise read them as page data.
+// Commits deferred ready-channel data after its module loads, as an empty
+// frame run so it shares `applyPatch`'s commit sequence and patch context.
 export function applyReadyPatch(
   renderId: string,
   runtimeId: string,
-  epoch: number,
+  epoch: object,
   push: (render: RenderData) => void,
 ) {
   init(runtimeId);

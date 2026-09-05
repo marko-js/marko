@@ -78,11 +78,8 @@ export default {
       case "$global": {
         // An HTML read resolves to the `$global` const the program declares.
         if (isOutputHTML()) break;
-        // Only a persisted keyed read (`$global.key`) becomes a tracked
-        // binding — it needs an identity a fill can deliver through — so the
-        // standard read replacement rewrites the whole member expression.
-        // Every other shape (dynamic/aliased reads, whole-bag reads, and all
-        // non-persisted builds) has no binding and stays a bag access here.
+        // Only a persisted keyed `$global.key` read becomes a tracked binding (a
+        // fill needs an identity); every other shape stays a bag access.
         if (
           (t.isMemberExpression(identifier.parent) ||
             t.isOptionalMemberExpression(identifier.parent)) &&

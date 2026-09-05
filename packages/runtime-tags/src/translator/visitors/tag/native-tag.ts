@@ -296,9 +296,8 @@ export default {
       if (relatedControllable && relatedControllable.attrs[1]) {
         hasEventHandlers = true;
       }
-      // A patched control's entry needs the control patcher plus its
-      // kind's helper table on the page — linked as assets, so the
-      // template module itself stays unloaded when nothing else needs it.
+      // A patched control links the control patcher and its kind's helper as
+      // assets, so the template module stays unloaded when nothing needs it.
       if (
         relatedControllable &&
         isPersisted() &&
@@ -690,9 +689,8 @@ export default {
                 ...getExprWriteOwnership(changeAttr.value.extra),
               )}`;
             }
-            // A param-fed control value writes only under server ownership.
-            // A group entry (`checkedValue`) also carries the input's own
-            // `value`: each node applies its own comparison client-side.
+            // A param-fed control value writes only under server ownership; a group
+            // entry also carries `value` so each node compares client-side.
             const groupEntry =
               staticControllable.helper === "_attr_input_checkedValue";
             const controlExtras = groupEntry

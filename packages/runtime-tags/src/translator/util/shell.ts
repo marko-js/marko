@@ -34,9 +34,8 @@ export function buildShells() {
   const interactive = getProgram().node.extra.isInteractive;
   const keep = new Set<Section>();
   const records = (getProgram().node.extra.shellRecords ??= {});
-  // A content body nothing registers ships as a shell record (a dynamic tag
-  // entry constructs by id, a static one rides its slot); static boundary
-  // content is a record too.
+  // A content body nothing registers ships as a shell record; static
+  // boundary content is a record too.
   forEachSectionReverse((section) => {
     // Kept root awaits let `Pending` carry a body record id; the root
     // records under the template id so a dynamic tag entry can construct it.
@@ -179,11 +178,8 @@ function isStructureExpressible(section: Section, visiting: Set<Section>) {
       op.kind !== StructureKind.Visit &&
       // Static text is plain markup, expressible like a markup string.
       op.kind !== StructureKind.Text &&
-      // A known child composes when its root is expressible (nested
-      // branches/boundaries pair via their own entries); a tag var wires
-      // as a construct init.
-      // A renderer-less child is a lazy site: only its marker expresses
-      // (the loaded module renders the markup client-side).
+      // A known child composes when its root is expressible; a renderer-less
+      // child is a lazy site where only its marker expresses.
       !(
         op.kind === StructureKind.Child &&
         (!op.renderer ||
@@ -194,10 +190,15 @@ function isStructureExpressible(section: Section, visiting: Set<Section>) {
       return false;
     }
   }
-  // Nested branches, boundaries and recorded content bodies arrive through
-  // the walk or entry data; any other child section the shell cannot express.
+  // Nested branches, boundaries, content records, and (interactive) boundary
+  // content arrive through the walk or entries; nothing else is expressible.
+  const interactive = getProgram().node.extra.isInteractive;
   return !getChildSections(section).some(
-    (child) => !child.isBranch && !child.isBoundary && !child.contentRecord,
+    (child) =>
+      !child.isBranch &&
+      !child.isBoundary &&
+      !child.contentRecord &&
+      !(child.boundaryContent && interactive),
   );
 }
 

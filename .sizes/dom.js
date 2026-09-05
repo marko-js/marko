@@ -1,4 +1,4 @@
-// size: 28775 (min) 10667 (brotli)
+// size: 28806 (min) 10671 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -426,9 +426,6 @@ function withBranches(runtime) {
 }
 function withDynamicHtml(runtime) {
   return ((dynamicHtmlEnabled = 1), runtime);
-}
-function rendererKey(renderer) {
-  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
 }
 function _hoist_read_error() {}
 function _assert_hoist(value) {}
@@ -2074,6 +2071,9 @@ function renderCatch(scope, error) {
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
 }
+function rendererKey(renderer) {
+  return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
+}
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
 }
@@ -2126,10 +2126,9 @@ function byFirstArg(name) {
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
 let frameChecks = [],
-  frameVars = {},
-  epochs = 0;
+  frameVars = {};
 function applyPatch(frame, renderId = "_", runtimeId = "M") {
-  (init(runtimeId), (patchers.$ ||= applyGlobals), ++epochs);
+  (init(runtimeId), (patchers.$ ||= applyGlobals));
   let render = beginPatch(renderId);
   try {
     let names = Object.keys(frameVars),
@@ -2142,7 +2141,7 @@ function applyPatch(frame, renderId = "_", runtimeId = "M") {
   } catch {
     return (abortRun(), !1);
   } finally {
-    abortPatch();
+    ((render.r.length = 0), abortPatch());
   }
 }
 function patchWrite(scope, accessor, value) {
@@ -2186,6 +2185,7 @@ let _template = (id, template, walks, setup, inputSignal) => {
         (branch) => {
           let awaitCounter = addAwaitCounter(branch);
           ((branch.X ||= /* @__PURE__ */ new Map()),
+            (branch.AC = "_" + id),
             (pending ||= load()).then(
               (renderer) => {
                 (Object.assign(lazyTemplate, renderer),
@@ -2193,14 +2193,17 @@ let _template = (id, template, walks, setup, inputSignal) => {
                     insertLoaded(renderer, branch, branch.S, awaitCounter),
                   ));
               },
-              loadFailed(branch, awaitCounter, "_" + id),
+              loadFailed(branch, awaitCounter),
             ));
         },
         _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
       );
     return lazyTemplate;
   }),
-  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load, readyId) => {
+  _load_ready = (readyId, childScopeAccessor, setup) => (owner) => {
+    ((owner[decodeAccessor(childScopeAccessor)].AC = readyId), setup(owner));
+  },
+  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
     ((nodeAccessor = decodeAccessor(nodeAccessor)),
       (childScopeAccessor = decodeAccessor(childScopeAccessor)));
     let pending,
@@ -2216,10 +2219,10 @@ let _template = (id, template, walks, setup, inputSignal) => {
             (mod) => {
               ((renderer = _content("", ...mod._)()),
                 queueAsyncRender(child, (child) =>
-                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter, readyId),
+                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter),
                 ));
             },
-            loadFailed(child, awaitCounter, readyId),
+            loadFailed(child, awaitCounter),
           ));
       }
     };
@@ -2303,7 +2306,7 @@ function mount(input = {}, reference, position) {
     }
   );
 }
-function insertLoaded(renderer, branch, marker, awaitCounter, readyId) {
+function insertLoaded(renderer, branch, marker, awaitCounter) {
   let parent = marker.parentNode,
     values = branch.X,
     clone = () => {
@@ -2314,7 +2317,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter, readyId) {
     },
     remaining;
   if ((remaining = values?.size)) {
-    let fail = loadFailed(branch, awaitCounter, readyId);
+    let fail = loadFailed(branch, awaitCounter);
     values.forEach(([, apply], promise) =>
       promise.then(
         (mod) =>
@@ -2331,7 +2334,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter, readyId) {
     );
   } else (clone(), setupBranch(renderer, branch), insert());
 }
-function loadFailed(scope, awaitCounter, readyId) {
+function loadFailed(scope, awaitCounter) {
   return (error) => {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
       queueAsyncRender(scope, renderCatch, error));

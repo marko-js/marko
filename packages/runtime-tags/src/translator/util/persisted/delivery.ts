@@ -1,7 +1,6 @@
 import type { types as t } from "@marko/compiler";
-// Translate-side patch delivery: which bindings refresh over the wire
-// (fills and wire writes), fill identity, and what a freshly constructed
-// scope can render. Analyze facts these derive from live in ./structure.
+// Translate-side patch delivery: which bindings refresh over the wire, fill
+// identity, and what a fresh scope can render. Analyze facts: ./structure.
 import { getProgram, getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
@@ -27,9 +26,8 @@ import {
   isStatefulBranch,
 } from "./structure";
 
-// The stable wire/registry key for a fill: template id plus a program-wide
-// fill ordinal (built in section order, so every compile output agrees and
-// fills in different sections can never collide).
+// Stable wire/registry key for a fill: template id plus a program-wide fill
+// ordinal built in section order so every output agrees.
 const [getFillOrdinals] = createProgramState<{ m?: Map<Binding, number> }>(
   () => ({}),
 );
@@ -68,7 +66,7 @@ function isPatchRefreshableBinding(binding: Binding) {
   return (
     isPersisted() &&
     getCanonicalBinding(binding) === binding &&
-    !binding.section.parent &&
+    isPatchWrittenSection(binding.section) &&
     !!binding.sources &&
     !!(binding.sources.param || binding.sources.global) &&
     !binding.sources.state &&
@@ -79,9 +77,19 @@ function isPatchRefreshableBinding(binding: Binding) {
   );
 }
 
+// A scope a frame writes into: the root, or a paired/constructed branch
+// on the branch path (a stateful branch is the client's alone).
+function isPatchWrittenSection(section: Section) {
+  return (
+    !section.parent ||
+    (section.isBranch &&
+      isBranchPathSection(section) &&
+      !isStatefulBranch(section))
+  );
+}
+
 // A potential fill: a server-sourced value whose reads intersect client
-// state. The server writes every potential fill; the client registration
-// rides the intersection itself, so tree-shaking decides which apply.
+// state; the server writes all, tree-shaking decides which apply.
 export function isPatchFillBinding(binding: Binding) {
   // State of a scope a construct may create (a branch body, a non-page
   // root) seeds through its fill signal — assigned state only (retention).
@@ -310,9 +318,8 @@ function hasRegisteredFnCapture(binding: Binding): boolean {
   return false;
 }
 
-// Closures whose construct INITs render a fresh scope: state closures
-// through their own signal, fill closures as arrivals at the joins they feed.
-// A lazy child's server-owned input reaches it through its ready channel.
+// Closures whose construct INITs render a fresh scope; a lazy child's
+// server-owned input arrives through its ready channel.
 export function getConstructInitClosures(section: Section) {
   return filter(
     section.referencedClosures as Opt<Binding>,
@@ -360,9 +367,8 @@ export function getLocalFillFeeds(section: Section) {
   return feeds;
 }
 
-// A local the server computes without client state: a param property
-// (or rest, a declared object), or a derivation/never-assigned let. A
-// `$global` contribution is fine — the shipped value is per-frame current.
+// A local the server computes without client state; a `$global`
+// contribution is fine since the shipped value is per-frame current.
 function isSeedableLocal(binding: Binding) {
   return (
     !binding.sources?.state &&

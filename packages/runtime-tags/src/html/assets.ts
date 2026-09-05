@@ -198,10 +198,8 @@ function writeTriggerScript(
         ),
       )})`,
     reportErrors &&
-      // The runtime installs the sink (`render.e`) only once its module
-      // evaluates; a failure before then parks its id on `render.f`, which
-      // `init` (dom/resume.ts) drains. Both ids are identifier-safe
-      // (`runtimePrefix` dot-joins them).
+      // The runtime installs the sink (`render.e`) only once it evaluates; an
+      // earlier failure parks its id on `render.f` for `init` to drain.
       `((r,f)=>r.e?r.e(f):(r.f||=[]).push(f))(self.${g.runtimeId}.${
         g.renderId
       },${_escape_script(JSON.stringify(id))})`,

@@ -201,10 +201,8 @@ export default {
           importRuntimeFeature("patch-effect");
         }
       });
-      // Function-carrying fills (`functionValued`: literal functions,
-      // invoked or handler-attr reads, derivations over them) need the
-      // bind patchers; other templates skip them (an unshipped patcher
-      // rejects the frame into navigation, never a broken bind).
+      // Only function-carrying fills need the bind patchers; an unshipped patcher
+      // rejects the frame into navigation, never a broken bind.
       if (boundFills) {
         importRuntimeFeature("patch-value-bind");
       }

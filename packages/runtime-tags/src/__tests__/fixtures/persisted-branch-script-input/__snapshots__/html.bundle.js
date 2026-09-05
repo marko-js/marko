@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
 			_script($scope1_id, "a1", 0);
-			_patch_effect($scope1_id, "a1", "g 1");
+			_patch_effect($scope1_id, "a1", "1 g");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

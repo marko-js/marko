@@ -430,9 +430,8 @@ export function patchPartial(
     const pending = link?.[2];
     if (serializeState.readyId && !pending && scopeId !== state.rootScopeId) {
       if (link && typeof link[1] === "string") {
-        // Hang this scope's partial off its parent's boundary child entry
-        // (parent scope `link[0]`, slot `link[1]`): the live page reaches
-        // it by following that slot when the channel's module applies.
+        // Hang this partial off its parent's boundary child entry (scope `link[0]`,
+        // slot `link[1]`) for the live page to reach when the channel applies.
         partial = partials[scopeId] = {};
         writePatch(
           link[0],
@@ -441,9 +440,8 @@ export function patchPartial(
         );
         return partial;
       }
-      // No linkable hop (keyed loop items): the write rides the main tree
-      // embedded in its structural entry, so it cannot defer — construct
-      // data naming a not-yet-registered id then rejects at apply.
+      // No linkable hop (keyed loop items): the write rides the main tree, so
+      // construct data naming an unregistered id rejects at apply.
       return patchPartial(state, scopeId, state);
     }
     partial = partials[scopeId] = {};
@@ -470,9 +468,8 @@ export function patchPartial(
         writePatch(parentScopeId, { [key]: partial }, serializeState);
       }
     } else if (scopeId === state.rootScopeId) {
-      // Every other partial reaches the wire nested inside a structural
-      // entry of an ancestor, rooted here (`writeScope` is patch-inert, so
-      // the root also registers with the serialize state directly).
+      // Every other partial nests inside an ancestor's structural entry rooted
+      // here (`writeScope` is patch-inert, so the root registers directly).
       writeScope(scopeId, partial);
       serializeState.writeScopes[scopeId] = partial;
       serializeState.flushScopes = true;
@@ -499,8 +496,19 @@ export function _attr_content(
   const branchId = _peek_scope_id();
   const { state } = $chunk.boundary;
   if (state.writesPatches) {
-    if (render) state.pairBranch?.(scopeId, nodeAccessor, branchId);
     const renderer = normalizeDynamicRenderer<ServerRenderer>(content);
+    if (render) {
+      state.pairBranch?.(
+        scopeId,
+        nodeAccessor,
+        branchId,
+        undefined,
+        undefined,
+        typeof renderer === "function"
+          ? renderer[RendererProp.Owner]
+          : undefined,
+      );
+    }
     const id = typeof renderer === "function" && renderer[RendererProp.Id];
     if (id) (state.renderedContents ??= new Set()).add(id);
   }
@@ -1104,10 +1112,8 @@ export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
 }
 
-// Compiled into persisted templates in place of `_scope_reason`: a page
-// render serializes by the instance's sources mask (any contribution can
-// change; no contribution at all serializes fully, as an unset reason does)
-// while a patch serializes nothing beyond its own fills.
+// Replaces `_scope_reason` in persisted templates: a page render serializes
+// by the sources mask (none = fully), a patch only its own fills.
 export function _persisted_reason() {
   const { state } = $chunk.boundary;
   const reason = state.serializeReason;
@@ -1218,9 +1224,8 @@ export function writeWaitReady(
   }
 }
 
-// Renders content into a detached chunk with patch writes suppressed:
-// the html ships as frame data (a rejection's catch UI), never entries.
-// Async content cannot ride one frame, so it yields `0` (reject).
+// Renders content into a detached chunk with patch writes suppressed so the
+// html ships as frame data; async content yields `0` (reject).
 function renderInert(renderer: (arg: unknown) => void, arg: unknown) {
   const chunk = $chunk;
   const { state } = chunk.boundary;
@@ -1402,6 +1407,7 @@ export function _try(
       ? ((content as ServerRenderer)[RendererProp.Id] as string | undefined)
       : undefined,
     trySlotIds,
+    (content as ServerRenderer)[RendererProp.Owner],
   );
   const beforeBranch = deferBranchStart(chunk);
   // Whether `tryBoundary` writes the catch and placeholder renderers itself
@@ -1622,6 +1628,8 @@ export type PatchLink = [
   pendingKey?: string,
   contentId?: string,
   slotIds?: (string | 0 | undefined)[],
+  // A content body's owner (its client `_`) when not the rendering scope.
+  ownerScopeId?: number,
 ];
 
 export class State implements SerializeState {
@@ -1641,9 +1649,8 @@ export class State implements SerializeState {
   public nonceAttr = "";
   public serializer = new Serializer();
   declare writesPatches?: boolean;
-  // Patch rendering (persisted pages) intercepts branch/loop writes;
-  // defined only by the patch entry's State subclass, so normal SSR
-  // bundles carry none of it.
+  // Patch rendering intercepts branch/loop writes; defined only by the patch
+  // entry's State subclass so normal SSR bundles carry none of it.
   writeBranch?(
     scopeId: number,
     accessor: Accessor,
@@ -1675,6 +1682,7 @@ export class State implements SerializeState {
     branchId: number,
     contentId?: string,
     slotIds?: (string | 0 | undefined)[],
+    ownerScopeId?: number,
   ): void;
   declare rootScopeId?: number;
   declare patchTrees?: Map<
@@ -1683,9 +1691,8 @@ export class State implements SerializeState {
   >;
   declare patchBinds?: number;
   declare binds?: Map<WeakKey, number>;
-  // How a scope hangs off its parent: the link a bind walk follows (a slot,
-  // or a keyed loop hop) and, until its first write, the entry key its
-  // partial nests under with any boundary construct ids.
+  // How a scope hangs off its parent: the link a bind walk follows and, until
+  // its first write, the entry key its partial nests under.
   declare patchLinks?: Record<number, PatchLink>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;

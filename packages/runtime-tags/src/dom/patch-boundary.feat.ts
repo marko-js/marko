@@ -293,9 +293,8 @@ patchers[PatchKey.Child] = (scope, key, value) => {
 
 patchers[PatchKey.Catch] = (scope, key, error) => {
   const accessor = key.slice(PatchKey.Catch.length);
-  // An elided catch slot (`0`) fills from the frame's server-rendered
-  // html before the normal catch machinery runs; a frame without it (an
-  // async catch body) rejects.
+  // An elided catch slot (`0`) fills from the frame's server-rendered html;
+  // a frame without it (an async catch body) rejects.
   const tryBranch = findBranchWithKey(scope, AccessorProp.CatchContent);
   let content = tryBranch?.[AccessorProp.CatchContent] as Renderer | 0;
   // The slot stays `0`: every rejection frame renders its own catch html.

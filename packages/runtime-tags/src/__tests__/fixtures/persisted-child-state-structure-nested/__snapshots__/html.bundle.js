@@ -59,5 +59,5 @@ var template_default = _template_persisted("a", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		g: count,
 		a: _existing_scope($childScope)
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.inner), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a1", input.title));
+	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title);
 }, 1, () => [panel_default]);

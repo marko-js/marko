@@ -1,4 +1,5 @@
 import { READY_FRAME_VAR } from "../common/meta";
+import { AccessorProp, type Scope } from "../common/types";
 import { installLoadReady } from "./load";
 import {
   applyReadyPatch,
@@ -23,7 +24,7 @@ interface Pending {
   r: ((applied: boolean) => void)[];
   renderId: string;
   runtimeId: string;
-  epoch: number;
+  epoch: object;
 }
 const pending = new Map<RenderData, Pending>();
 
@@ -32,16 +33,20 @@ const pending = new Map<RenderData, Pending>();
 frameVars[READY_FRAME_VAR] = acceptReady;
 installPatchReady(pendingReady, discardReady);
 installReady(markReady, failReady);
+// A loaded branch carries its channel stamp (`_load_template` names its
+// template's; `_load_ready` stamps a lazy child's site).
+const channelOf = (branch: Scope) =>
+  branch[AccessorProp.ReadyId] as string | undefined;
 installLoadReady(
-  (branch, readyId) => readyId && queueEffect(branch, () => ready(readyId)),
-  readyFailed,
+  (branch) => {
+    const readyId = channelOf(branch);
+    if (readyId) queueEffect(branch, () => ready(readyId));
+  },
+  (branch) => readyFailed(channelOf(branch)),
 );
 
-// Receives a frame's ready-channel record (an explicit call in the frame
-// text): data for a loaded channel merges into the live render's ready
-// record for this frame's run; the rest waits for its module.
-// Live-record pushes of the frame being applied (alternating batch,
-// prior length), undone if it rejects.
+// Live-record pushes of the frame being applied (alternating batch, prior
+// length), undone if it rejects.
 const framePushes: (unknown[] | number)[] = [];
 
 function acceptReady(record: Record<string, unknown[]>) {
@@ -77,9 +82,8 @@ function acceptReady(record: Record<string, unknown[]>) {
   }
 }
 
-// Appends a frame batch to the live ready record without disturbing the
-// initial page's still-pending resume data for that channel. A batch is a
-// thunk the drain evaluates (its partial applies as a shell-less frame).
+// Appends a frame batch (a thunk the drain evaluates) to the live ready
+// record without disturbing the page's still-pending resume data.
 function pushBatch(render: RenderData, readyId: string, batch: unknown[]) {
   const target = ((render.b ??= {})[readyId] ??= []);
   framePushes.push(target, target.length);
@@ -128,9 +132,8 @@ function failReady(readyId: string) {
 }
 
 function discardReady(render: RenderData) {
-  // A rejected frame's channel pushes must not survive to a later run;
-  // truncating is exact unless the batch was partially consumed mid-run —
-  // then the caller is navigating anyway and dropping the rest is safe.
+  // A rejected frame's pushes must not survive to a later run; a partially
+  // consumed batch is safe to drop since the caller is navigating anyway.
   while (framePushes.length) {
     const length = framePushes.pop() as number;
     const batch = framePushes.pop() as unknown[];

@@ -3,9 +3,8 @@ import { queueEffect, runId } from "./queue";
 import { _resume } from "./resume";
 import { type Signal, type SignalFn, subscribeToScopeSet } from "./signals";
 
-// Joins reading a `$global` key, by key then join id (like `closureFillJoins`);
-// their scopes subscribe on the globals object (scope 0), and
-// `patch-global.feat` queues them when a frame changes the key.
+// Joins reading a `$global` key, by key then join id; their scopes
+// subscribe on the globals object (scope 0).
 export const globalJoins: Record<string, Record<string, SignalFn>> = {};
 
 export function _global_join<T extends Signal<any>>(
@@ -23,9 +22,7 @@ export function _global_join<T extends Signal<any>>(
   }) as unknown as T;
 }
 
-// Like `_script`, but runs once per run however many triggers (renders,
-// key joins, a frame's effect entry) reach it. Its scope subscribes to the
-// keys through the join of the signal it hangs off, like any reader.
+// Like `_script`, but runs once per run however many triggers reach it.
 export function _global_script(id: string, fn: (scope: Scope) => void) {
   const effect = _resume(id, (scope: Scope) => {
     const ran = (scope[AccessorProp.PatchChanged] ??= {});

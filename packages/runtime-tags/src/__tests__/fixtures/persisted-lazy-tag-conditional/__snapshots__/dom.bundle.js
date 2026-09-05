@@ -1,6 +1,6 @@
 // template.marko
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
-let $load_Child_setup = _resume("b2", /*@__PURE__*/ _load_setup(0, 1, /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")), "_a"));
+let $load_Child_setup = _resume("b2", /*@__PURE__*/ _load_ready("_a", 1, /*@__PURE__*/ _load_setup(0, 1, /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")))));
 
 // child.marko
 const $template = "<button><!>:<!></button>";

@@ -98,10 +98,8 @@ export function _const<T>(
   }) as Signal<T>;
 }
 
-// Value signals for the page's live server/client intersections, keyed by
-// `templateId:ordinal`. `_fill_join` rides each intersection, so tree-shaking
-// keeps a registration exactly when a consuming join is retained; joins
-// compose behind one guard and never displace a declaration-owned key.
+// Value signals for live server/client intersections keyed by
+// `templateId:ordinal`, retained exactly when a consuming join is.
 export const patchFills: Record<string, Signal<unknown> & { _?: SignalFn }> =
   {};
 function fillJoin<T extends SignalFn>(
@@ -140,10 +138,8 @@ export function _fill_join<T extends SignalFn>(
     buildDispatch ? buildDispatch(join) : join,
   );
 }
-// Cross-section joins run against branch scopes: these register the
-// owner-side dispatch, composed inward over trailing hop args (owner
-// first); per-kind helpers keep branch-free bundles free of the other
-// kind, and mixed chains ride `_fill_join`'s dispatch builder instead.
+// Owner-side dispatch for cross-section joins over branch scopes; per-kind
+// helpers keep branch-free bundles free of the other kind.
 export function _fill_join_if<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
@@ -173,9 +169,8 @@ export function _fill_join_for<T extends SignalFn>(
   return fillJoin(key, valueAccessor, join, dispatch);
 }
 
-// Deep closure positions of one key reassemble the indexed composite:
-// each registers at its compile-time index; one dispatcher selects per
-// subscriber, and a shaken position is simply absent (nothing to update).
+// Deep closure positions of one key reassemble the indexed composite; a
+// shaken position is simply absent.
 const closureFillJoins: Record<string, SignalFn[] & { d?: 1 }> = {};
 export function _fill_join_closure<T extends SignalFn>(
   key: string,
@@ -248,9 +243,8 @@ export function _fill_join_subscribers<T extends SignalFn>(
   });
 }
 
-// A declaration doubles as its fill; `fillFn` (its renders with the frame
-// writes left out) is the fill-driven run when it has any. A let id carries
-// its signal index after the value accessor in debug.
+// A declaration doubles as its fill; `fillFn` (renders minus frame writes)
+// is the fill-driven run when it has any.
 function fill<T extends Signal<any>>(
   key: string,
   signal: T,

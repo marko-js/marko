@@ -7,7 +7,8 @@
   "PatchChild:BranchScopes:#div/0": {
     "PatchText:#text/0": "b"
   },
-  "PatchDynamicTag:#section/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-spread/template.marko_1*content",
+  "PatchBindSource:1": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-spread/template.marko_1*content",
+  "PatchDynamicTag:#section/1": bind(1),
   "PatchAttrs:#section/1": {
     class: "c2",
     "data-x": 1
@@ -25,7 +26,8 @@
   "PatchChild:BranchScopes:#div/0": {
     "PatchText:#text/0": "c"
   },
-  "PatchDynamicTag:#section/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-spread/template.marko_1*content",
+  "PatchBindSource:1": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-spread/template.marko_1*content",
+  "PatchDynamicTag:#section/1": bind(1),
   "PatchAttrs:#section/1": {
     class: "c3"
   },

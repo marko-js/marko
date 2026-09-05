@@ -77,7 +77,6 @@ export default {
 
           if (ref.parent.type === "MarkoTag" && ref.parent.name === ref.node) {
             (ref.parent.extra ??= {}).defineBodySection = bodySection;
-            (bodySection.defineSites ??= []).push(getSection(ref));
             allHaveInput &&= !ref.parent.arguments?.length;
             dropNodes(ref.parent.name);
           } else {

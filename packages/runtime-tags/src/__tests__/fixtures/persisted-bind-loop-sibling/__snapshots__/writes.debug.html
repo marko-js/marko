@@ -1,0 +1,56 @@
+<!--M_[-->
+<p>x<!--M_$2 #text/2-->:<!>0<!--M_$2 #text/3--></p>
+<!--M_[--><!--M_]5 #text/0--><!--M_[5--><!--M_]6 #text/0--><!--M_]2 #text/4 6--><!--M_[2-->
+<p>y<!--M_$7 #text/2-->:<!>0<!--M_$7 #text/3--></p>
+<!--M_[--><!--M_]10 #text/0--><!--M_[10--><!--M_]11 #text/0--><!--M_]7 #text/4 11--><!--M_]1 #text/0 7-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    "ClosureScopes:input_show": new Set([_(5), _(6), _(10), _(11)])
+  }, {
+    "#scopeOffset/1": 4,
+    name: "x",
+    store_set: _(3,
+      "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-loop-sibling/tags/store.marko_0/_return"
+      ),
+    _: _(1),
+    "#childScope/0": _(3),
+    "ClosureScopes:store_set": new Set,
+    "#LoopKey": "x"
+  }, {
+    "#TagVariable": _(2,
+      "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-loop-sibling/template.marko_1_store#7/var"
+      )
+  }, 1, {
+    other: "y",
+    _: _(2),
+    "#LoopKey": "y"
+  }, {
+    other: "x",
+    _: _(2),
+    "#LoopKey": "x"
+  }, {
+    "#scopeOffset/1": 9,
+    name: "y",
+    store_set: _(8,
+      "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-loop-sibling/tags/store.marko_0/_return"
+      ),
+    _: _(1),
+    "#childScope/0": _(8),
+    "ClosureScopes:store_set": new Set,
+    "#LoopKey": "y"
+  }, {
+    "#TagVariable": _(7,
+      "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-loop-sibling/template.marko_1_store#7/var"
+      )
+  }, 1, {
+    other: "y",
+    _: _(7),
+    "#LoopKey": "y"
+  }, {
+    other: "x",
+    _: _(7),
+    "#LoopKey": "x"
+  }]];
+  M._.w()
+</script>

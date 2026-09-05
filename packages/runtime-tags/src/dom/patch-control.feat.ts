@@ -9,12 +9,8 @@ import {
 import { queueRender } from "./queue";
 import { patchers } from "./resume";
 
-// Kind-keyed control applies, filled by the per-kind patch feats a page's
-// controls link: the wire keys `kind + accessor` (kind is a
-// `ControlledType` digit), and the SAME controlled helpers CSR uses
-// arbitrate live interaction.
-// Queued as a RENDER so fresh constructs take the first-render path and a
-// select's deferred option sync drains in the same frame.
+// Kind-keyed control applies (wire key `kind + accessor`), filled by the
+// per-kind feats; queued as a RENDER so fresh constructs take first-render.
 export const patchControls: {
   [T in ControlledType]?: (
     scope: Scope,

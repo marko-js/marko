@@ -5,11 +5,11 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isPersisted } from "./marko-config";
 import { toArray } from "./optional";
-import { isPatchFillBinding } from "./persisted/delivery";
+import { isPatchFillBinding, isPatchWriteBinding } from "./persisted/delivery";
 import { getCanonicalBinding } from "./references";
 import { getOrCreateSection } from "./sections";
 import { getSerializeReason } from "./serialize-reasons";
-import { writeLocalFill } from "./signals";
+import { writeLocalFill, writeLocalWrite } from "./signals";
 import { toPropertyName } from "./to-property-name";
 
 export default function translateVar(
@@ -122,12 +122,17 @@ export default function translateVar(
         binding &&
         binding.section === tagSection &&
         tagSection.parent &&
-        !binding.sources?.state &&
-        isPatchFillBinding(binding)
+        !binding.sources?.state
       ) {
-        inserted.push(
-          t.expressionStatement(writeLocalFill(tagSection, binding)),
-        );
+        if (isPatchFillBinding(binding)) {
+          inserted.push(
+            t.expressionStatement(writeLocalFill(tagSection, binding)),
+          );
+        } else if (isPatchWriteBinding(binding)) {
+          inserted.push(
+            t.expressionStatement(writeLocalWrite(tagSection, binding)),
+          );
+        }
       }
     });
   }
