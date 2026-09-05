@@ -296,11 +296,9 @@ function resolveMarkoFile(file, filename) {
 
 const idCache = new WeakMap();
 const templateIdHashOpts = { outputLength: 5 };
-// Only what is unsafe in a string, URL or filesystem context is percent
-// encoded (`%` always is, keeping the encoding reversible). Template ids
-// ride wire formats too, so a custom `getTemplateId` result encodes the
-// same way.
-const unsafeTemplateIdCharReg = /[\u0000-\u0020\u007f-\uffff"%\\`<>]/g;
+// Percent-encode only what is unsafe in string, URL or filesystem contexts;
+// `%` always encodes so the encoding stays reversible (custom ids too).
+const unsafeTemplateIdCharReg = /[\u0000-\u0020\u007f-\uffff"%\\`<>;,]/g;
 const normalizeTemplateId = (id) =>
   id.replace(
     unsafeTemplateIdCharReg,

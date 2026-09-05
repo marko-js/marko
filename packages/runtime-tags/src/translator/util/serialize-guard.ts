@@ -116,10 +116,8 @@ export function getExprIfSerialized<
 >(section: Section, reason: T, expr: t.Expression): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
     if (!reason) return undefined as R;
-    // A patch serializes no ordinary resume payload, so a statically
-    // serialized value rides the scope reason (`1` page, `undefined` patch).
-    // Child sections gate through their cross-section guards; only the
-    // root declares the reason identifier.
+    // A patch has no ordinary resume payload, so a statically serialized value
+    // rides the scope reason (`1` page / `undefined` patch); the root declares it.
     if (isPersisted() && !section.parent) {
       return t.logicalExpression(
         "&&",
@@ -184,11 +182,8 @@ function ensureScopeOwned(section: Section) {
   }
 }
 
-// The per-group ownership bit as `[mask, groupIdx]` trailing args for a
-// patch writer, or `[]` when statically server-owned; only root params
-// gate (locals ride structure whose ownership the call site required).
-// The ownership args for an expression's write: a value fixed for the
-// scope's lifetime (a constant, an `<id>`, a `<define>`) only seeds a construct.
+// Ownership args for an expression's write; a value fixed for the scope's
+// lifetime (constant, `<id>`, `<define>`) only seeds a construct.
 export function getExprWriteOwnership(extra: t.NodeExtra | undefined) {
   return getPatchWriteOwnership(
     getSerializeSourcesForExpr(extra || {}),
@@ -205,6 +200,8 @@ export function isStableExpr(extra: t.NodeExtra | undefined) {
   return stable;
 }
 
+// A patch writer's trailing `[mask, groupIdx]` ownership args, or `[]` when
+// statically server-owned; only root params gate.
 export function getPatchWriteOwnership(
   sources: Sources | undefined,
   stable?: boolean,

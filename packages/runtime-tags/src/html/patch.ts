@@ -1,3 +1,4 @@
+import { assertValidLoopKey } from "../common/errors";
 import {
   normalizeDynamicRenderer,
   stringifyClassObject,
@@ -52,12 +53,8 @@ import {
   type PatchLink,
 } from "./writer";
 
-// Intrinsic render summary: what a template's render could depend on
-// beyond its inputs, as ONE self-resolving value. `1` = must render
-// (reads globals / opaque); `0` = whole subtree proven clean; a lazy
-// child-renderer thunk = locally clean, resolved to 0/1 on first query
-// (lazy: module cycles must not evaluate eagerly). An ABSENT summary
-// means unknown (foreign renderer) — never clean.
+// Intrinsic render summary as ONE self-resolving value: `1` must render,
+// `0` proven clean, a lazy thunk resolves on first query; absent = unknown.
 type Intrinsics = 0 | 1 | (() => unknown[]);
 const kIntrinsics = Symbol();
 type WithIntrinsics = { [kIntrinsics]?: Intrinsics };
@@ -76,11 +73,8 @@ export function _template_persisted(
   return template;
 }
 
-// A patch must render a child unless its summary proves the whole subtree
-// clean; steady state is one property read (the walk overwrites the thunk
-// with its answer). `1` resolves always; `0` only when the walk closed
-// without an unresolved cycle back-edge (a tainted answer may depend on
-// an in-progress ancestor).
+// A child renders unless its summary proves the subtree clean; `0` only
+// holds when the walk closed without an unresolved cycle back-edge.
 export function _must_render(child: unknown) {
   const intrinsics = (child as WithIntrinsics | undefined)?.[kIntrinsics];
   if (intrinsics === undefined) return true;
@@ -131,12 +125,8 @@ class PatchState extends State {
   public readyFrames?: Record<string, string>;
   override writesPatches = true;
 
-  // Ready data rides the frame as an explicit record call (see
-  // `flushChunk`): a frame must merge into the live page's ready record —
-  // never replace it, the page still holds unresumed data for modules that
-  // have not loaded — and only the client patch-ready feature knows how.
-  // Each batch is a thunk: its binds materialize and validate when the
-  // channel's module drains it, not when the frame text evaluates.
+  // Ready data rides the frame as an explicit record call so it merges into
+  // (never replaces) the live ready record; each batch is a lazy thunk.
   override writeReady(id: string, resumes: string) {
     const frames = (this.readyFrames ??= {});
     const batch = "_=>(" + resumes + ")";
@@ -152,6 +142,7 @@ class PatchState extends State {
     branchId: number,
     contentId?: string,
     slotIds?: (string | 0 | undefined)[],
+    ownerScopeId?: number,
   ) {
     if (!this.patchInert && !peekPatchPartial(this, branchId)) {
       const link = AccessorPrefix.BranchScopes + accessor;
@@ -161,6 +152,7 @@ class PatchState extends State {
         PatchKey.Child + link,
         contentId,
         slotIds,
+        ownerScopeId,
       ];
     }
   }
@@ -292,20 +284,15 @@ class PatchState extends State {
     if (clientSelected(owned, group)) return 1;
     const partials: object[] = [];
     const keys: unknown[] = [];
-    const seen = new Set<unknown>();
     let indexKeys = true;
+    if (MARKO_DEBUG) {
+      // eslint-disable-next-line no-var
+      var seenKeys = new Set<unknown>();
+    }
     iterate((itemKey, sameAsIndex, render) => {
-      // Client pairing needs serializable, unique keys; failing the render
-      // here (falling back to a navigation) beats corrupting the pairing.
-      if (
-        (typeof itemKey !== "string" && typeof itemKey !== "number") ||
-        seen.has(itemKey)
-      ) {
-        throw new Error(
-          `Persisted loop patches require unique string or number keys (got ${String(itemKey)}).`,
-        );
+      if (MARKO_DEBUG) {
+        assertValidLoopKey(itemKey, seenKeys);
       }
-      seen.add(itemKey);
       indexKeys &&= sameAsIndex;
       // Loop items pair by key: the link is a keyed hop the bind walk
       // resolves against the live scopes' loop keys.
@@ -431,9 +418,8 @@ export function _patch_init(scopeId: number, initIds: string) {
   return "";
 }
 
-// Emitted as the scope reason's complement (`$reason || _patch_value(...)`):
-// a page render serializes the value through the reason-gated scope write,
-// so only a patch (the falsy persisted reason) ever reaches here.
+// Emitted as the scope reason's complement, so only a patch (the falsy
+// persisted reason) ever reaches here.
 export function _patch_value(
   scopeId: number,
   key: string,
@@ -467,9 +453,8 @@ export function _patch_value(
   return "";
 }
 
-// A control entry: the kind (a `ControlledType` digit) rides the key
-// ahead of the node accessor, and the kind's registered helper applies
-// the value against the frame's final handler slot.
+// A control entry: the kind digit rides the key ahead of the accessor, and
+// the kind's helper applies the value against the final handler slot.
 export function _patch_control(
   scopeId: number,
   accessor: Accessor,
@@ -507,46 +492,41 @@ export function _patch_bind(
     const bound =
       registered && (registered.scope as ScopeInternals | undefined);
     if (bound) {
-      // A scope-bound registration installs the way CSR setup does: the
-      // entry anchors at the scope this instance was registered against
-      // and names the child-link path down to the slot, so the factory
-      // receives its own live scope. A target the bound scope cannot
-      // reach through recorded links poisons (`0`): reject, never
-      // install a silently broken handler.
-      const boundId = bound[K_SCOPE_ID]!;
-      let depth = 0;
-      let cur: number | undefined = scopeId;
-      let link;
-      while (cur !== undefined && cur !== boundId) {
-        link = state.patchLinks?.[cur];
-        if (!link?.[1]) {
-          cur = undefined;
-        } else {
-          depth++;
-          cur = link[0];
-        }
+      // A scope-bound registration is reached from the site: owner hops up
+      // (a content body's owner is where it was defined) to the nearest
+      // shared scope, then render links down to the bound scope.
+      const links = state.patchLinks;
+      const siteChain: number[] = [];
+      for (let cur: number | undefined = scopeId; cur !== undefined;) {
+        siteChain.push(cur);
+        const link: PatchLink | undefined = links?.[cur];
+        cur = link && (link[5] ?? link[0]);
       }
-      let entry: 0 | unknown[] = 0;
-      if (cur !== undefined) {
-        entry = new Array(depth + 2);
-        entry[0] = registered.id;
-        entry[depth + 1] = accessor;
-        for (let i = depth, scope = scopeId; i; i--) {
-          link = state.patchLinks![scope]!;
-          entry[i] = link[1];
-          scope = link[0];
+      const down: PatchLink[1][] = [];
+      let cur = bound[K_SCOPE_ID]!;
+      let up = siteChain.indexOf(cur);
+      while (up < 0) {
+        const link = links?.[cur];
+        if (MARKO_DEBUG && !link) {
+          throw new Error(
+            "A persisted patch could not link a handler to its scope.",
+          );
         }
+        down.push(link![1]);
+        cur = link![0];
+        up = siteChain.indexOf(cur);
       }
-      writePatch(cur ?? scopeId, {
-        [PatchKey.Bind + (state.patchBinds = (state.patchBinds || 0) + 1)]:
-          entry,
+      writePatch(scopeId, {
+        [PatchKey.Bind + (state.patchBinds = (state.patchBinds || 0) + 1)]: [
+          registered.id,
+          up,
+          ...down.reverse(),
+          accessor,
+        ],
       });
     } else {
-      // Both forms where a construct is possible: the plain write reaches
-      // PAIRED scopes (a handler removed between frames clears its live
-      // slot), while the setup entry lands after a construct's seeds — a
-      // seed's first-render write resets the change slot, so apply-time
-      // installs cannot last.
+      // Both forms: the plain write clears paired scopes' slots, while the setup
+      // entry lands after a construct's seeds (which reset the change slot).
       writeEmbeddedBinds(state as PatchState, value);
       const partial = patchPartial(state, scopeId);
       partial[PatchKey.Write + accessor] = value;
@@ -619,16 +599,16 @@ export function _patch_dynamic_tag(
     if (ownedWrite(owned, group)) {
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
-      // An identified renderer ships its comparable id (record in-band or
-      // dom registration); a lone one is the entry itself. A native tag name
-      // is `["div"]` alone, `>div` inside a longer entry. Arguments are the
-      // array input.
-      if (id) shipShell(state as PatchState, id);
+      // A renderer ships its comparable id (or itself bare); native names are
+      // `["div"]`/`>div`, args ride as array input, owner-bound content binds.
+      const bound = !!id && !!getRegistered(renderer as WeakKey)?.scope;
+      if (id && !bound) shipShell(state as PatchState, id);
       if (contentId) shipShell(state as PatchState, contentId);
       writeEmbeddedBinds(state as PatchState, args);
+      if (bound) writeEmbeddedBinds(state as PatchState, renderer);
       const native = typeof renderer === "string";
       const entry: unknown[] = [
-        id || renderer || 0,
+        bound ? renderer : id || renderer || 0,
         args || 0,
         contentId,
         varId,
@@ -740,9 +720,8 @@ export function _patch_html(
   return _html_resume(scopeId, accessor, value, shouldResume);
 }
 
-// A text-only body (`<title>`, `<style>`, a comment): the entry carries
-// the plain text; the html output escapes it for its own namespace.
-// A `<style>` interpolation: the write doubles as the escaped output.
+// A text-only body carries plain text (html output escapes per namespace);
+// a `<style>` interpolation's write doubles as the escaped output.
 export function _patch_style(
   scopeId: number,
   accessor: Accessor,
@@ -798,10 +777,8 @@ export function _patch_attrs(
   if (state.writesPatches) {
     if (ownedWrite(owned, group)) {
       writeEmbeddedBinds(state as PatchState, data);
-      // `controllable` marks a spread that owns the element's controllable
-      // (no static attr does), so only then does the client re-claim it.
-      // A bare set is the common entry; the array form (`Array.isArray`
-      // discriminates) carries `skip`/`controllable` without key bytes.
+      // `controllable` marks a spread owning the element's controllable; the
+      // array form carries `skip`/`controllable` without key bytes.
       writeOwned(
         scopeId,
         PatchKey.Attrs + accessor,

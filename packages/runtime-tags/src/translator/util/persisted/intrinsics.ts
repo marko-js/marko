@@ -1,14 +1,12 @@
-// Program-level runtime knowledge for persisted pages: the child-renderer
-// union exported as html intrinsics, whether this template reads
-// `$global`, and the scope-reason runtime name.
+// Program-level runtime knowledge for persisted pages: child renderers,
+// `$global` reads, and the scope-reason runtime name.
 import type { types as t } from "@marko/compiler";
 
 import { isPersisted } from "../marko-config";
 import { createProgramState } from "../state";
 
-// The template's child renderers, collected at translate for the runtime
-// intrinsics export: transitive global knowledge composes at RENDER time
-// (exact under module cycles and dynamic dispatch), never at compile.
+// Child renderers for the html intrinsics export; transitive global
+// knowledge composes at RENDER time, never at compile.
 const [getPersistedChildRenderers] = createProgramState(() => ({
   names: new Set<string>(),
   opaque: false,

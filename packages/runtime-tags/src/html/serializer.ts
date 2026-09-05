@@ -463,9 +463,8 @@ export function getRegistered(val: WeakKey) {
 // applies a payload's return value when it is an array.
 function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
-  // A patch frame is one flat entry array (the line owns its brackets), so
-  // the scope run serializes with no fn wrapper or list brackets; an
-  // assigned-reference flush wraps itself as a `(_([...]),...,0)` entry.
+  // A patch frame is one flat entry array, so the scope run serializes with
+  // no fn wrapper or list brackets.
   const bare = state.boundary?.state?.writesPatches;
   let nextSlotId = -1;
   let fillIndex = -1;
@@ -479,9 +478,8 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     // Empty scopes fold into the next emitted slot's skip count.
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
-      // The skip is a SIGNED delta, so a flush that revisits a lower slot
-      // steps the cursor back rather than landing in the wrong one. A bare
-      // patch run has no cursor at all: its single flush is the page root.
+      // The skip is a SIGNED delta so a flush revisiting a lower slot steps back;
+      // a bare patch run has no cursor (its single flush is the page root).
       buf[openIndex] =
         nextSlotId === -1
           ? bare

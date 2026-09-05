@@ -27,9 +27,8 @@ export function boundaryAlwaysPairs(bodySection: Section) {
   return true;
 }
 
-// Whether the section renders inside stateful structure
-// (inclusive): patch renders skip those bodies, so nothing inside may
-// rely on a patch write.
+// Whether the section renders inside stateful structure (inclusive), whose
+// bodies patch renders skip.
 export function inStatefulBranch(section: Section | undefined) {
   while (section) {
     if (isStatefulBranch(section)) return true;
@@ -190,9 +189,8 @@ export function getParamSelectorChain(section: Section | undefined) {
   return chain;
 }
 
-// Structure selection and `$global` mixing both record here: neither
-// read lets the value leave through an expression channel.
-// A branch/loop selector's root params select structure.
+// Structure selection and `$global` mixing record here; a branch/loop
+// selector's root params select structure.
 export function recordStructuralParams(sources: Sources | undefined) {
   forEach(sources?.param, (binding) => {
     if (!binding.section.parent) binding.selectsStructure = true;

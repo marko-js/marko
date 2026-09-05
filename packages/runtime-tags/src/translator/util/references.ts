@@ -1462,9 +1462,8 @@ export function finalizeReferences() {
     });
   }
 
-  // The RETURN classifies like a patch write: its reason (and, persisted, its
-  // param groups) must exist BEFORE group finalize and known-tag stamping,
-  // or same-file call sites fail closed on a group-count mismatch.
+  // The RETURN classifies like a patch write, BEFORE group finalize and
+  // known-tag stamping, or same-file call sites fail on a group-count mismatch.
   const programSection = getProgram().node.extra.section!;
   if (programSection.returnValueExpr) {
     programSection.returnSerializeReason = getSerializeSourcesForExpr(

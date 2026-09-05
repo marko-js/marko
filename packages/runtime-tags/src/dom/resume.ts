@@ -71,17 +71,13 @@ export const patchers: Record<string, Patcher> = {};
 export let onPatchRecord: ((entry: string) => void) | undefined;
 export const _patch_records = (handler: NonNullable<typeof onPatchRecord>) =>
   (onPatchRecord = handler);
-// Rejects the applying patch: unwinds to `applyPatch`'s catch, and the
-// caller falls back to a full document navigation. Only conditions
-// reachable in a matched build guard explicitly (lazy load failures,
-// withheld handlers, server-decided sentinels); skew rejects upstream via
-// the build id, so anything else crashes naturally into the same catch.
+// Rejects the applying patch so the caller falls back to a full navigation;
+// only conditions reachable in a matched build guard explicitly.
 export const failPatch = () => {
   throw 0;
 };
 // Construct application dispatch: everything in a setup envelope is
-// REQUIRED (paired refresh via `patchers` stays soft — a shaken fill is
-// a correct no-op).
+// REQUIRED (a shaken fill via `patchers` is a correct no-op).
 export const constructPatchers: typeof patchers = {};
 export const patchConstruct = (setup: Scope, live: Scope) => {
   for (const key in setup) {
@@ -160,10 +156,8 @@ export function installReady(
   patchReadyFailed = onFail;
 }
 
-// A channel module that will never arrive can never drain the data waiting
-// on it: the persisted feature (when installed) settles pending patches and
-// rejects later frames naming the channel. Id-less runtime-managed load
-// failures never gate a channel (each channel's entry reports itself).
+// A channel module that never arrives can never drain its data: the
+// persisted feature settles pending patches and rejects later frames.
 export function readyFailed(readyId?: string) {
   if (MARKO_DEBUG) {
     if (readyId && !readyIds?.has(readyId)) {
@@ -510,10 +504,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           }
         }
 
-        // Loader `onerror` sink (`html/assets.ts`); installed only when the
-        // patch-ready feature latches, which shakes it from other bundles.
-        // A loader that failed before this module evaluated parked its id
-        // on the queue; from here on failures report directly.
+        // Loader `onerror` sink, installed only when patch-ready latches; a loader
+        // that failed before this evaluated parked its id on the queue.
         if (patchReadyFailed) {
           render.e = readyFailed;
           render.f = render.f?.forEach(readyFailed);

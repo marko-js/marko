@@ -30,6 +30,7 @@ export const TagVariableChange = "U";
 // key matches, accessors being lowercase).
 export const PatchChanged = "AA";
 export const PatchSetup = "AB";
+export const ReadyId = "AC";
 
 type Self = typeof import("./accessor-prop");
 export type Value = Self[keyof Self];

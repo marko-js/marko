@@ -29,15 +29,11 @@ setTimeout(() => document.body.click());
 UPDATE: main > button[title] "first" => "second"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `{"title":"third"}`
 ```html
 <main>
   <button
-    data-seen="second"
-    title="second"
+    title="third"
   >
     go
   </button>
@@ -45,5 +41,24 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: main > button[data-seen] null => "second"
+UPDATE: main > button[title] "second" => "third"
+```
+
+# Update
+```js
+document.querySelector("button").click();
+```
+```html
+<main>
+  <button
+    data-seen="third"
+    title="third"
+  >
+    go
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > button[data-seen] null => "third"
 ```

@@ -18,9 +18,8 @@ import {
 } from "../serialize-reasons";
 import { inStatefulBranch } from "./structure";
 
-// A dynamic tag rendering `input` content (a body or attribute tag) and
-// nothing else: its name reads one property of the template's input, through
-// any alias; resolved references are required, so call at finalize or later.
+// A dynamic tag rendering only `input` content, named by one input property
+// through any alias; needs resolved references (finalize or later).
 export function isContentRenderTag(tag: t.NodePath<t.MarkoTag>) {
   const program = getProgram();
   const { node } = tag;

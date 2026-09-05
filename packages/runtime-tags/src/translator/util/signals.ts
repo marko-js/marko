@@ -1316,9 +1316,8 @@ export function writeSignals(section: Section) {
                   hopExprs = [t.arrowFunctionExpression([joinId], dispatch)];
                 }
               }
-              // A constructible body's fill closure inits as the arrival at
-              // this join, registered under the closure's init id (a state
-              // closure's own signal is its init).
+              // A constructible body's fill closure inits as the arrival at this
+              // join, registered under the closure's init id.
               if (
                 member.section !== signal.section &&
                 !member.sources?.state &&
@@ -1482,10 +1481,8 @@ function inBoundaryContent(section: Section | undefined) {
   return false;
 }
 
-// A lone read renders through the closure itself, as does an intersection
-// member whose chain leaves the branch ladder (the intersection's own
-// registration composes branch hops only); branch-chain intersections
-// register themselves (over-counting is safe).
+// A lone read, or an intersection member whose chain leaves the branch
+// ladder, renders through the closure itself (over-counting is safe).
 function hasFillDeliveredRead(binding: Binding, section: Section): boolean {
   for (const read of binding.reads) {
     // A script (not a handler) inside the section re-runs from the closure.
@@ -1703,9 +1700,8 @@ export function sectionConstructs(section: Section) {
   );
 }
 
-// The plain fill write of a server-owned branch local, gated like a root
-// fill by its param group's ownership; a client-fed instance instead asks
-// a fresh scope to re-derive it through its feeds' closure inits.
+// Plain fill write of a server-owned branch local, gated by its param
+// group's ownership; a client-fed instance re-derives via closure inits.
 export function writeLocalFill(section: Section, binding: Binding) {
   writtenLocalFills.add(binding);
   const write = callRuntime(
@@ -1733,8 +1729,22 @@ export function writeLocalFill(section: Section, binding: Binding) {
   );
 }
 
-// Locals whose declaration already wrote their fill (`translateVar`), so
-// the section's leading writes cover only the param properties.
+// Plain write of a server-owned branch local that effects or handlers read,
+// gated by its ownership like the root's writes.
+export function writeLocalWrite(section: Section, binding: Binding) {
+  writtenLocalFills.add(binding);
+  const write = callRuntime(
+    "_patch_write",
+    getScopeIdIdentifier(section),
+    t.stringLiteral(getScopeAccessor(binding)),
+    getDeclaredBindingExpression(binding),
+  );
+  const owned = getOwnershipGuard(getSerializeSourcesForRef(binding));
+  return owned ? t.logicalExpression("&&", owned, write) : write;
+}
+
+// Locals whose declaration already wrote their fill or write
+// (`translateVar`), so the section's leading writes cover only the rest.
 const writtenLocalFills = new WeakSet<Binding>();
 
 // A spread's effect re-attaches what its serialized set carried: the frame's
@@ -1752,9 +1762,8 @@ function isSerializedSpreadEffect(signal: Signal) {
   );
 }
 
-// An effect read the wire cannot keep current blocks constructs; fill and
-// wire-write deliveries (param- and `$global`-derived alike) stay current,
-// and direct `$global` reads re-queue against the live bag.
+// An effect read the wire cannot keep current blocks constructs; fills,
+// wire writes and direct `$global` reads stay current.
 export function sectionHasServerEffect(section: Section) {
   for (const signal of getSignals(section).values()) {
     if (signal.hasHTMLEffect && !isSerializedSpreadEffect(signal)) {
@@ -1927,9 +1936,8 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
-  // Under persisted the reason is binary (`1` page render, `undefined`
-  // patch) and the whole scope write rides it below, so per-property guards
-  // are redundant inside it.
+  // Under persisted the reason is binary and the whole scope write rides it,
+  // so per-property guards are redundant inside it.
   const persisted = isPersisted();
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (persisted || isSameReason(sectionSerializeReason, reason)) return expr;
@@ -2036,41 +2044,46 @@ export function writeHTMLResumeStatements(
   );
 
   // Effect-read values need no client registration: the wire writes the
-  // accessor here, and each reading effect's section re-runs it by register
-  // id when the value it saw changed.
+  // accessor and each reading effect re-runs by register id on change.
   if (isPersisted()) {
     forEach(section.bindings, (binding) => {
       if (isPatchWriteBinding(binding)) {
-        fillCalls.push(
-          gatePatchWrite(
-            binding,
-            callRuntime(
-              "_patch_write",
-              scopeIdIdentifier,
-              t.stringLiteral(getScopeAccessor(binding)),
-              getDeclaredBindingExpression(binding),
-            ),
+        const write = gatePatchWrite(
+          binding,
+          callRuntime(
+            "_patch_write",
+            scopeIdIdentifier,
+            t.stringLiteral(getScopeAccessor(binding)),
+            getDeclaredBindingExpression(binding),
           ),
         );
+        // A branch local writes at its declaration (`translateVar`), other
+        // branch bindings up front; root writes ride the reason's complement.
+        if (!section.parent) {
+          fillCalls.push(write);
+        } else if (!writtenLocalFills.has(binding)) {
+          getHTMLSectionStatements(section).push(t.expressionStatement(write));
+        }
       }
     });
-    // One entry per effect (keyed by its register id), listing every
-    // effect-read accessor it observes: a patch changing several of them
-    // re-runs the effect ONCE, matching the client `_or` coalescing.
-    // Entries self-gate on patch renders (and the check defers to the
-    // effect queue), so they emit plainly in any section's body. Effect
-    // bindings are root values, so one owner-hop count suffixes the
-    // accessors (accessors never parse as pure numbers).
+    // One entry per effect listing its effect-read accessors, grouped under
+    // a numeric owner-hop token, so a patch changing several re-runs it ONCE.
     for (const signal of allSignals) {
       if (signal.hasHTMLEffect) {
-        let accessors = "";
+        const byHops: string[][] = [];
         forEach(signal.referencedBindings, (binding) => {
           const root = getDeliveryRoot(binding);
           if (isPatchWriteBinding(root) && hasPatchEffectReads(root)) {
-            accessors += (accessors && " ") + getScopeAccessor(root);
+            (byHops[section.depth - root.section.depth] ??= []).push(
+              getScopeAccessor(root),
+            );
           }
         });
-        if (accessors && section.depth) accessors += " " + section.depth;
+        let accessors = "";
+        byHops.forEach((group, hops) => {
+          accessors +=
+            (accessors && " ") + (hops ? hops + " " : "") + group.join(" ");
+        });
         if (accessors) {
           body.push(
             t.expressionStatement(
@@ -2117,9 +2130,8 @@ export function writeHTMLResumeStatements(
   ) {
     forEach(getPatchFillBindings(section), (binding) => {
       if (!binding.sources?.state) {
-        // A server-owned local writes plainly as soon as it exists: a param
-        // property leads the body, a declared var follows its declaration
-        // (root fills already write as the scope reason's complement).
+        // A server-owned local writes plainly as soon as it exists (root fills
+        // already write as the scope reason's complement).
         if (section.parent && !writtenLocalFills.has(binding)) {
           getHTMLSectionStatements(section).push(
             t.expressionStatement(writeLocalFill(section, binding)),
@@ -2138,9 +2150,8 @@ export function writeHTMLResumeStatements(
           ),
         ),
       );
-      // A controllable let's change handler wires through `_patch_bind`,
-      // emitted after the value so a seed cannot clobber an installed
-      // handler (only a let reserving the change slot has one).
+      // A controllable let's change handler wires through `_patch_bind` after the
+      // value so a seed cannot clobber an installed handler.
       const changeAccessor = getPrefixedScopeAccessor(
         binding,
         getAccessorPrefix().TagVariableChange,
@@ -2149,9 +2160,7 @@ export function writeHTMLResumeStatements(
         binding.reserveSize &&
         getSerializedAccessors(section).get(changeAccessor);
       if (change) {
-        // The runtime decides how the handler wires from the rendered
-        // value alone (bind by owner-hop distance, or plain write), so any
-        // handler expression shape compiles the same way. A param-fed
+        // The runtime decides the wiring from the rendered value alone; a param-fed
         // handler binds only under server ownership.
         const bindOwned =
           change.reason !== true ? getOwnershipGuard(change.reason) : undefined;

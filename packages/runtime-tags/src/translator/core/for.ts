@@ -373,10 +373,8 @@ export default {
           }
 
           if (persistedPatch) {
-            // The item body's shell id, so patches can construct additions;
-            // a bare `0` makes any addition reject the patch. (`singleChild`
-            // and `skipParentEnd` are forced off above, so the two optional
-            // marker args are always the unset placeholders here.)
+            // Item body shell id so patches can construct additions (a bare `0`
+            // rejects); the two optional marker args are always unset here.
             const id = !bodySection.shellBlocked && getShellId(bodySection);
             forTagArgs.push(
               undefined,

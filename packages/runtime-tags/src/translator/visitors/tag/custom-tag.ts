@@ -270,7 +270,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           ]),
         );
         importRuntimeFeature("catch");
-        const loadSetupCall = callRuntime(
+        let loadSetupCall = callRuntime(
           "_load_setup",
           getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
           getScopeAccessorLiteral(childBinding, true),
@@ -281,12 +281,17 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 "@__PURE__",
               )
             : setupLoadExpr,
-          // A construct's client-side load drives the child's ready
-          // channel, so its deferred frame data drains after insert.
-          isPersisted() &&
-            getReadyId(childFile) !== undefined &&
-            t.stringLiteral(getReadyId(childFile)!),
         );
+        // A construct's client-side load drives the child's ready channel
+        // (stamped on its branch), so deferred frame data drains after insert.
+        if (isPersisted() && getReadyId(childFile) !== undefined) {
+          loadSetupCall = callRuntime(
+            "_load_ready",
+            t.stringLiteral(getReadyId(childFile)!),
+            getScopeAccessorLiteral(childBinding, true),
+            loadSetupCall,
+          );
+        }
         getProgram().node.body.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(

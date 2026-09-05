@@ -201,8 +201,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     }
 
     if (isHTML) {
-      // `2` (or a guard scaled to 0/2) also asks the runtime to write a
-      // `<!>` between non-empty text and the mergeable text before it; `0`
+      // `2` also asks the runtime to write a `<!>` before mergeable text; `0`
       // skips the resume marker entirely (a patched but unresumed node).
       const guard =
         markerSerializeReason &&

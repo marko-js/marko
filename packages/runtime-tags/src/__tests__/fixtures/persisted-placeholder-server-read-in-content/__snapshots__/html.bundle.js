@@ -1,4 +1,5 @@
 // tags/wrap/index.marko
+const $template = "<section><!></section>";
 _shells({ b: "b;D%;<section><!></section>" });
 var wrap_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
@@ -15,7 +16,9 @@ var wrap_default = _template_persisted("b", (input) => {
 _shells({
 	a0: "a0,<div id=done>done</div>",
 	a1: "a1,<div id=done>done</div>",
-	a2: "a2;b%;<!><!><!>"
+	a2: "a2;b%;<!><!><!>",
+	a3: "a3;b%;<!><!><!>",
+	a: /*@__PURE__*/ ((_w0, _w1) => `a !a5;${_w0};${_w1}`)(((_w0) => ` D l/${_w0}&`)("D%l"), ((_w0) => `<button> </button>${_w0}`)($template))
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
@@ -27,7 +30,7 @@ var template_default = _template_persisted("a", (input) => {
 	_set_serialize_reason(0);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "c", $childScope);
-	wrap_default({ content: _content("a4", () => {
+	wrap_default({ content: _content_elide("a3", () => {
 		_persisted_reason();
 		const $scope1_id = _scope_id();
 		_try($scope1_id, "a", _content_resume("a2", () => {
@@ -39,7 +42,7 @@ var template_default = _template_persisted("a", (input) => {
 			}, 1, "a1");
 			$scope0_reason && _subscribe($input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }));
 			$scope0_reason && _resume_branch($scope3_id);
-		}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
+		}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 			_persisted_reason();
 			const $scope2_id = _scope_id();
 			_html(`<em>loading ${_text_resume($scope2_id, "a", input.msg, 2)}</em>`);

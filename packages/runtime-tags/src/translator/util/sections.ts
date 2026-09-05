@@ -169,13 +169,11 @@ export interface Section {
   /** An `<await>`/`<try>` body: always-rendered like the branch path, but
    * paired (never constructed) by patches. */
   isBoundary: boolean;
-  /** A content renderer slot-serialized by register id (today only
-   * `<try>` `@placeholder`/`@catch` bodies): `buildShells` re-registers
-   * static ones from entry data; others load the dom module. */
+  /** A content renderer slot-serialized by register id (`<try>` bodies):
+   * static ones re-register from entry data, others load the dom module. */
   boundaryContent: boolean;
-  /** A content body shipped as a shell record (set by `buildShells`): a
-   * `"static"` one (template only) rides its slot in-band, a dynamic one
-   * elides its slot and a dynamic tag entry constructs it by id. */
+  /** A content body shipped as a shell record: `"static"` rides its slot
+   * in-band, a dynamic one is constructed by id from a dynamic tag entry. */
   contentRecord: false | true | "static";
   /** Awaits a construct must deliver body content for (marker binding +
    * body section); `buildShells` prunes those no shipped shell reaches. */

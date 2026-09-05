@@ -165,9 +165,8 @@ export function knownTagAnalyze(
   if (tag.node.var) tagExtra[kTagVar] = true;
   const attrExprs = new Set([tagExtra]);
   if (isPersisted()) {
-    // Frame ids are local labels: a patch pairs the child scope through a
-    // parent entry, so the ref must serialize (a scriptless child could
-    // otherwise skip it, leaving its fills and effects unreachable).
+    // The ref must serialize so a patch can pair the child scope through a
+    // parent entry, even for a scriptless child.
     addSerializeReason(section, true, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
     const hasVar = !!tag.node.var;
@@ -464,10 +463,8 @@ export function knownTagTranslateHTML(
       }
     }
   } else if (clientOwnedStatements) {
-    // The render-wide persisted reason is the page-vs-patch bit: truthy on
-    // a page render (serialize + render the child), falsy on a patch. A
-    // patch still renders when the child's intrinsics demand it (global
-    // reads anywhere in its subtree, or an unknown renderer).
+    // The persisted reason is the page-vs-patch bit; a patch still renders
+    // when the child's intrinsics demand it.
     let rootSection = section;
     while (rootSection.parent) rootSection = rootSection.parent;
     clientOwnedStatements.push(callStatement(tagIdentifier, ...getArgs()));

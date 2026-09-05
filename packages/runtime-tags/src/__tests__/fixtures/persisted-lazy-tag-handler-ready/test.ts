@@ -1,8 +1,9 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-// A frame for a not-yet-loaded lazy child carries a handler bind on its
-// ready channel: the bind materializes and validates when the batch drains.
+// Frames for a not-yet-loaded lazy child carry handler binds on its ready
+// channel: each frame's binds materialize and validate when the batch
+// drains, two frames pending on the channel included.
 const load = (document: Document) => {
   setTimeout(() => document.body.click());
 };
@@ -12,5 +13,12 @@ const click = (document: Document) => {
 export const config: TestConfig = {
   persisted: true,
   equivalent: false,
-  steps: [{ title: "first" }, load, { title: "second" }, wait, click],
+  steps: [
+    { title: "first" },
+    load,
+    { title: "second" },
+    { title: "third" },
+    wait,
+    click,
+  ],
 };

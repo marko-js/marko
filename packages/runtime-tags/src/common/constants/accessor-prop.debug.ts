@@ -28,6 +28,7 @@ export const TagVariable = "#TagVariable";
 export const TagVariableChange = "#TagVariableChange";
 export const PatchChanged = "#PatchChanged";
 export const PatchSetup = "#PatchSetup";
+export const ReadyId = "#ReadyId";
 
 type Self = typeof import("./accessor-prop.debug");
 export type Value = Self[keyof Self];

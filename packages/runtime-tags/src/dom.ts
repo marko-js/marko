@@ -78,6 +78,7 @@ export {
   _load_idle_trigger,
   _load_media_trigger,
   _load_race_trigger,
+  _load_ready,
   _load_setup,
   _load_signal,
   _load_template,

@@ -1,5 +1,6 @@
 import { decodeAccessor } from "../common/helpers";
 import {
+  type Accessor,
   AccessorProp,
   type BranchScope,
   type EncodedAccessor,
@@ -44,6 +45,10 @@ export const _load_template = /*@__PURE__*/ withLazy(
       (branch) => {
         const awaitCounter = addAwaitCounter(branch);
         branch[AccessorProp.Load] ||= new Map() as LoadValues;
+        // The template's ready channel (the client half of the translator's
+        // `getReadyId`; the prefix pairs with its optimize flag).
+        branch[AccessorProp.ReadyId] = ((MARKO_DEBUG ? "ready:" : "_") +
+          id) as never;
         (pending ||= load()).then(
           (renderer) => {
             Object.assign(lazyTemplate, renderer);
@@ -56,13 +61,7 @@ export const _load_template = /*@__PURE__*/ withLazy(
               ),
             );
           },
-          // The template's ready-channel id (the client half of the
-          // translator's `getReadyId`; the prefix pairs with its optimize flag).
-          loadFailed(
-            branch as BranchScope,
-            awaitCounter,
-            (MARKO_DEBUG ? "ready:" : "_") + id,
-          ),
+          loadFailed(branch as BranchScope, awaitCounter),
         );
       },
       _load_signal(() =>
@@ -73,10 +72,10 @@ export const _load_template = /*@__PURE__*/ withLazy(
   },
 );
 
-// A persisted page's ready feature drives a site's channel once its loaded
-// content is live (or fails), so deferred frame data drains after.
-let loadReady: ((branch: BranchScope, readyId?: string) => void) | undefined;
-let loadReadyFailed: ((readyId?: string) => void) | undefined;
+// A persisted page's ready feature drives a branch's stamped channel once
+// loaded content is live (or fails), so deferred frame data drains after.
+let loadReady: ((branch: BranchScope) => void) | undefined;
+let loadReadyFailed: typeof loadReady;
 export function installLoadReady(
   onReady: typeof loadReady,
   onFailed: typeof loadReadyFailed,
@@ -84,15 +83,28 @@ export function installLoadReady(
   loadReady = onReady;
   loadReadyFailed = onFailed;
 }
+export const _load_ready =
+  (
+    readyId: string,
+    childScopeAccessor: EncodedAccessor,
+    setup: (owner: Scope) => void,
+  ) =>
+  (owner: Scope) => {
+    (
+      owner[
+        (MARKO_DEBUG
+          ? childScopeAccessor
+          : decodeAccessor(childScopeAccessor as number)) as Accessor
+      ] as Scope
+    )[AccessorProp.ReadyId] = readyId as never;
+    setup(owner);
+  };
 
 export const _load_setup = /*@__PURE__*/ withLazy(
   (
     nodeAccessor: EncodedAccessor,
     childScopeAccessor: EncodedAccessor,
     load: () => Promise<LoadModule>,
-    // Only a persisted `linkAssets` build has a channel (and deferred frame
-    // data) for the load to drive; other builds omit it.
-    readyId?: string,
   ) => {
     if (!MARKO_DEBUG) {
       nodeAccessor = decodeAccessor(nodeAccessor as number);
@@ -122,11 +134,10 @@ export const _load_setup = /*@__PURE__*/ withLazy(
                 child,
                 owner[nodeAccessor] as ChildNode,
                 awaitCounter,
-                readyId,
               ),
             );
           },
-          loadFailed(child, awaitCounter, readyId),
+          loadFailed(child, awaitCounter),
         );
       }
     };
@@ -138,7 +149,6 @@ function insertLoaded(
   branch: BranchScope,
   marker: ChildNode,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
-  readyId?: string,
 ) {
   const parent = marker.parentNode as Element,
     values = branch[AccessorProp.Load] as LoadValues,
@@ -154,11 +164,11 @@ function insertLoaded(
       insertBranchBefore(branch, parent, marker);
       marker.remove();
       awaitCounter?.c();
-      loadReady?.(branch, readyId);
+      loadReady?.(branch);
     };
   let remaining: number;
   if ((remaining = values?.size as number)) {
-    const fail = loadFailed(branch, awaitCounter, readyId);
+    const fail = loadFailed(branch, awaitCounter);
     // Each entry's signal is cached as its chunk lands, so the replay
     // applies every entry synchronously.
     values!.forEach(([, apply], promise) =>
@@ -187,7 +197,6 @@ function insertLoaded(
 function loadFailed(
   scope: BranchScope,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
-  readyId?: string,
 ) {
   return (error: unknown) => {
     if (awaitCounter) {
@@ -196,7 +205,7 @@ function loadFailed(
       if (awaitCounter.m) awaitCounter.i = 0;
       else awaitCounter.c();
     }
-    loadReadyFailed?.(readyId);
+    loadReadyFailed?.(scope);
     queueAsyncRender(scope, renderCatch, error);
   };
 }

@@ -62,7 +62,14 @@ export let _dynamic_tag = (
   const branchId = _peek_scope_id();
   // A null renderer still renders the body: its writes pair too.
   if (patches && (renderer || content)) {
-    state.pairBranch?.(scopeId, accessor, branchId);
+    state.pairBranch?.(
+      scopeId,
+      accessor,
+      branchId,
+      undefined,
+      undefined,
+      typeof renderer === "function" ? renderer[RendererProp.Owner] : undefined,
+    );
   }
   let rendered: boolean;
   let result: unknown;
@@ -130,11 +137,13 @@ export let _dynamic_tag = (
                       0,
                       undefined,
                       serializeReason,
+                      patches,
                     )
                 : undefined,
               1,
             );
           } else if (renderContent) {
+            // The body is a branch of the native tag's scope: it pairs too.
             _dynamic_tag(
               branchId,
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
@@ -143,6 +152,7 @@ export let _dynamic_tag = (
               0,
               undefined,
               serializeReason,
+              patches,
             );
           }
         }
@@ -278,9 +288,8 @@ export function _content_resume(
   return _resume(_content(id, fn, scopeId), id, scopeId);
 }
 
-// Dynamic content with no client renderer elides its slot: a catch slot
-// serializes `0` (its rejection frame carries server-rendered html), a
-// placeholder slot `undefined` (pending shows the live content).
+// Content with no client renderer elides its slot: a catch slot serializes
+// `0` (its frame carries html), a placeholder slot `undefined`.
 export function _content_elide(
   id: string,
   fn: ServerRenderer,
@@ -292,9 +301,8 @@ export function _content_elide(
   return registerAccess(content(id, fn, scopeId), placeholder ? "void 0" : "0");
 }
 
-// A static shell record renders server-side from its own template and rides
-// its slot in-band for the client to rebuild: gated markup only reaches
-// responses the server rendered for this user, and nothing bundles.
+// A static shell record renders server-side and rides its slot in-band, so
+// gated markup only reaches responses rendered for this user.
 const contentAccessPrefix =
   "_._" +
   /*@__PURE__*/ toAccess(/*@__PURE__*/ toObjectKey(CONTENT_REGISTER_ID)) +

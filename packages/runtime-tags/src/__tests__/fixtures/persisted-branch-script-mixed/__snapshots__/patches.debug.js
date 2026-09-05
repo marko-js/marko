@@ -5,7 +5,7 @@
   },
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "input_value 1"
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "1 input_value"
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
 }]
@@ -17,7 +17,7 @@
   },
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "input_value 1"
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "1 input_value"
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
 }]
@@ -29,7 +29,7 @@
   },
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "input_value 1"
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "1 input_value"
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
 }]
@@ -41,7 +41,7 @@
   },
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "input_value 1"
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "1 input_value"
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "c"
 }]

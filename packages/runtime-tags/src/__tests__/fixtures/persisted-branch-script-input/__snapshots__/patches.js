@@ -2,7 +2,7 @@
 [`a0 !a1,<p>promo</p>`, {
   ta: "Store",
   bb: [{
-    ea1: "g 1"
+    ea1: "1 g"
   }, "a0"],
   wg: "b"
 }]
@@ -18,7 +18,7 @@
 [`a0 !a1,<p>promo</p>`, {
   ta: "Store",
   bb: [{
-    ea1: "g 1"
+    ea1: "1 g"
   }, "a0"],
   wg: "d"
 }]

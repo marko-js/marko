@@ -1,6 +1,5 @@
-// Shell records (`id marker;walks;template`): raw for the server's own
-// static renders, quoted once as frame chunks shipped at most once per
-// response for constructs.
+// Shell records (`id marker;walks;template`): raw for the server's static
+// renders, quoted once per response as frame chunks for constructs.
 export const shellRecords: Record<string, string> = {};
 export const shells: Record<string, string> = {};
 

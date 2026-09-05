@@ -107,9 +107,8 @@ export default {
         bodySection.isBoundary = true;
         bodySection.upstreamExpression = tagExtra;
         if (isPersisted()) {
-          // Page entry must ship the boundary patchers even when this
-          // template's dom module does not load (a scriptless `<try>`):
-          // the try's pairing entry carries its content id and slot writes.
+          // Page entry must ship the boundary patchers even when this template's
+          // dom module never loads (a scriptless `<try>`).
           addRuntimeFeatureAsset("patch-boundary");
           addRuntimeFeatureAsset("catch");
         }
