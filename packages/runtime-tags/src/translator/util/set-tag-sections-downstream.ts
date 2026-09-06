@@ -29,12 +29,13 @@ export function setTagDownstream(
 
 export function finalizeTagDownstreams(section: Section) {
   for (const [tag, { binding, exprs }] of getTagDownstreams(section)) {
-    crawlSectionsAndSetBinding(tag, binding, exprs);
+    crawlSectionsAndSetBinding(tag, tag.node.extra!, binding, exprs);
   }
 }
 
 function crawlSectionsAndSetBinding(
   tag: t.NodePath<t.MarkoTag>,
+  downstreamTag: t.MarkoTagExtra,
   binding: Binding,
   exprs: KnownExprs | undefined,
   properties?: Opt<string>,
@@ -47,12 +48,17 @@ function crawlSectionsAndSetBinding(
       forEach(properties, (property) => {
         target = target?.propertyAliases.get(property);
       });
-      contentSection.downstreamBinding =
+      const serialized = !(
         target &&
         (target.noSerialize ||
           includes(target.noSerializeProperties, "content"))
-          ? false
-          : { binding, properties: concat(properties, "content"), exprs };
+      );
+      contentSection.downstream = {
+        tag: downstreamTag,
+        binding: serialized ? binding : undefined,
+        properties: serialized ? concat(properties, "content") : undefined,
+        exprs: serialized ? exprs : undefined,
+      };
     }
   }
 
@@ -68,12 +74,20 @@ function crawlSectionsAndSetBinding(
         const attrTagMeta = attrTagLookup[getTagName(child)];
         crawlSectionsAndSetBinding(
           child,
+          downstreamTag,
           binding,
           exprs,
           concat(properties, attrTagMeta.name),
         );
       } else {
-        crawlSectionsAndSetBinding(child, binding, exprs, properties, true);
+        crawlSectionsAndSetBinding(
+          child,
+          downstreamTag,
+          binding,
+          exprs,
+          properties,
+          true,
+        );
       }
     }
   }

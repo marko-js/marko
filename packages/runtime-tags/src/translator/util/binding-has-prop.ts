@@ -6,10 +6,10 @@ import type { Section } from "./sections";
 // its renderer elided; references to the renderer must be elided in sync.
 export function isSectionRendererElided(section: Section) {
   return (
-    !!section.downstreamBinding &&
+    !!section.downstream?.binding &&
     !bindingHasProperty(
-      section.downstreamBinding.binding,
-      section.downstreamBinding.properties,
+      section.downstream.binding,
+      section.downstream.properties,
     )
   );
 }
