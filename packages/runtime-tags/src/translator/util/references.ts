@@ -1313,7 +1313,7 @@ export function finalizeReferences() {
       // The walk keeps merging through a forced hop: the force decides the
       // reason, but later hops' sources still feed provenance.
       while (currentSection !== sourceSection) {
-        const upstreamReason = currentSection.downstreamBinding
+        const upstreamReason = currentSection.downstream?.binding
           ? getSectionRegisterReasons(currentSection) || undefined
           : !currentSection.upstreamExpression ||
             getSerializeSourcesForExpr(currentSection.upstreamExpression);

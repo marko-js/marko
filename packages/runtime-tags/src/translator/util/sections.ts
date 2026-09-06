@@ -146,13 +146,15 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  downstreamBinding:
+  /** The content's rendering tag (its extra), and the child binding the
+   * content feeds when the child can serialize it. */
+  downstream:
     | {
-        binding: Binding;
+        tag: t.MarkoTagExtra;
+        binding: Binding | undefined;
         properties: Opt<string>;
         exprs: KnownExprs | undefined;
       }
-    | false
     | undefined;
   hasAbortSignal: boolean;
   /** Count of distinct `$signal` expression roots; analyze allocates each
@@ -240,7 +242,7 @@ export function startSection(
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
-      downstreamBinding: undefined,
+      downstream: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
       readsOwner: false,
@@ -308,6 +310,23 @@ export const [getBranchRendererArgs, setBranchRendererArgs] =
 export function forEachSection(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;
   sections?.forEach(fn);
+}
+
+// Direct child sections by parent, grouped once per program after analyze
+// (call at finalize or later).
+const childSections = new WeakMap<Section, Section[]>();
+export function getChildSections(section: Section) {
+  let children = childSections.get(section);
+  if (!children) {
+    for (const child of getProgram().node.extra.sections || []) {
+      childSections.set(child, []);
+    }
+    forEachSection((child) => {
+      if (child.parent) childSections.get(child.parent)!.push(child);
+    });
+    children = childSections.get(section) || [];
+  }
+  return children;
 }
 
 export function forEachSectionReverse(fn: (section: Section) => void) {
@@ -423,17 +442,17 @@ export function getNodeContentType(
 export function getSectionRegisterReasons(section: Section) {
   if (section.isBranch) return false; // Branches handle whether to register their section/renderer.
 
-  const { downstreamBinding } = section;
-  if (downstreamBinding) {
+  const { downstream } = section;
+  if (downstream?.binding) {
     let downstreamReasons = getAllSerializeReasonsForBinding(
-      downstreamBinding.binding,
-      downstreamBinding.properties,
+      downstream.binding,
+      downstream.properties,
     );
     if (downstreamReasons && downstreamReasons !== true) {
       downstreamReasons = mapCrossProgramReason(
         section.program,
         downstreamReasons,
-        downstreamBinding.exprs,
+        downstream.exprs,
       );
     }
     if (!downstreamReasons) return false;
@@ -447,7 +466,7 @@ export function getSectionRegisterReasons(section: Section) {
       return false;
     }
     return downstreamReasons;
-  } else if (downstreamBinding === false) {
+  } else if (downstream) {
     return false;
   }
 
@@ -525,7 +544,7 @@ export function finalizeParamSerializeReasonGroups(section: Section) {
   }
 }
 
-function ensureReasonGroups(reason: Section["serializeReason"]) {
+export function ensureReasonGroups(reason: Section["serializeReason"]) {
   if (isReasonDynamic(reason)) {
     for (const [paramSection, params] of groupParamsBySection(reason.param)) {
       ensureParamReasonGroup(paramSection, params);
