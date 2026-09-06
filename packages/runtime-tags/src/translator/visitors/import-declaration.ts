@@ -105,7 +105,7 @@ export default {
       }
 
       (node.extra ??= {}).loadImport = loadImport;
-      const { file } = importDecl.hub;
+      const file = getFile();
 
       const loadFile = tagImport && loadFileForImport(file, value);
       if (!loadFile) {
@@ -141,7 +141,7 @@ export default {
           const binding = importDecl.scope.getBinding(local.name)!;
 
           if (isOutputHTML()) {
-            const { file } = importDecl.hub;
+            const file = getFile();
             const loadFile = loadFileForImport(file, node.source.value)!;
             const wrappedName = getOrCreateHtmlLoadWrapped(
               getReadyId(loadFile)!,
@@ -167,7 +167,7 @@ export default {
             if (allKnownTagReferences) {
               importDecl.remove();
             } else {
-              const { file } = importDecl.hub;
+              const file = getFile();
               const loadFile = loadFileForImport(file, node.source.value)!;
               const resolvedPath = resolveRelativePath(
                 file,

@@ -1,7 +1,7 @@
 import path from "path";
 
 import { types as t } from "@marko/compiler";
-import { importDefault } from "@marko/compiler/babel-utils";
+import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import type { ResolvedExport } from "../visitors/function";
 import { getMarkoOpts, isOutputHTML } from "./marko-config";
@@ -14,7 +14,7 @@ import { callRuntime, getRuntimePath } from "./runtime";
  * reserved a register id without registering it.
  */
 export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
-  const { file } = program.hub;
+  const file = getFile();
   const statements: t.Statement[] = [];
   const seen = new Set<string>();
 
