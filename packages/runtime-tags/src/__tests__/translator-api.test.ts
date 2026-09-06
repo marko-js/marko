@@ -52,6 +52,21 @@ describe("runtime-tags/translator-api", () => {
     });
   });
 
+  it("normalizes a custom getTemplateId like a built-in id", () => {
+    const { code } = compiler.compileSync(
+      "<div/>",
+      path.join(import.meta.dirname, "tmp.marko"),
+      {
+        ...baseConfig,
+        cache: new Map(),
+        output: "html",
+        optimize: true,
+        getTemplateId: () => 'my template;"id"',
+      },
+    );
+    assert.ok(code.includes('"my%20template%3b%22id%22"'), code);
+  });
+
   describe("style blocks with sourceMaps", () => {
     const styleSrc = `<style>\n  .foo { color: red }\n</style>\n<div class="foo"/>\n`;
     const compileWithSourceMaps = (sourceMaps: "both" | "inline" | true) => {
