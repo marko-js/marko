@@ -7,6 +7,7 @@ import {
   assertNoParams,
   diagnosticWarn,
   getEnd,
+  getFile,
   getProgram,
   getStart,
   getTemplateId,
@@ -77,10 +78,7 @@ export default {
     assertNoParams(tag);
     assertNoAttributeTags(tag);
 
-    const {
-      node,
-      hub: { file },
-    } = tag;
+    const { node } = tag;
     assertNoStyleAttributes(tag);
 
     const names = collectDynamicStyleNames(tag);
@@ -92,7 +90,7 @@ export default {
 
     // Resolve up front so the page entry builder can link it for server-only
     // templates (which never reach translate); cached on the node for reuse.
-    const importPath = getStyleImportPath(file, node, names);
+    const importPath = getStyleImportPath(getFile(), node, names);
     (node.extra ??= {}).styleImportPath = importPath;
     if (importPath) {
       addAssetImport(importPath);
@@ -141,7 +139,7 @@ function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
       const program = getProgram().node;
       const index = programDynamicStyleNameCounts.get(program) ?? 0;
       programDynamicStyleNameCounts.set(program, index + 1);
-      (names ??= []).push(dynamicStyleName(tag, index));
+      (names ??= []).push(dynamicStyleName(index));
     } else if (!t.isMarkoText(child)) {
       throw tag.hub.buildError(
         child,
@@ -156,8 +154,8 @@ function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
 const styleNameUnsafeReg = /[^a-zA-Z0-9_]/g;
 const encodeStyleNameChar = (c: string) => "-" + c.charCodeAt(0).toString(36);
 
-function dynamicStyleName(tag: t.NodePath<t.MarkoTag>, index: number) {
-  const { file } = tag.hub;
+function dynamicStyleName(index: number) {
+  const file = getFile();
   const id = getTemplateId(
     file.markoOpts,
     file.opts.filename as string,
@@ -288,10 +286,7 @@ function dynamicStyleValues(node: t.MarkoTag) {
 }
 
 function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
-  const {
-    node,
-    hub: { file },
-  } = tag;
+  const { node } = tag;
   const importPath = node.extra?.styleImportPath;
   if (!importPath) return;
 
@@ -308,7 +303,10 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
     );
   } else {
     const varDecl = t.variableDeclaration("const", [
-      t.variableDeclarator(node.var, importStar(file, importPath, "style")),
+      t.variableDeclarator(
+        node.var,
+        importStar(getFile(), importPath, "style"),
+      ),
     ]);
     getProgram().node.body.push(
       isOutputDOM() ? varDecl : t.markoScriptlet([varDecl], true),
