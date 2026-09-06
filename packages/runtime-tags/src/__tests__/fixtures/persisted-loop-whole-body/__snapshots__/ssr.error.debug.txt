@@ -1,0 +1,1 @@
+Unable to serialize "input" in packages/runtime-tags/src/__tests__/fixtures/persisted-loop-whole-body/template.marko (reading format). Values referenced in the browser must be serializable.

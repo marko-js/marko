@@ -1,0 +1,6 @@
+import boxA from "../persisted-dynamic-body/box-a.marko";
+<let/open=false/>
+<main>
+  <section content=(open ? boxA : null)/>
+  <button onClick() { open = !open }>+</button>
+</main>

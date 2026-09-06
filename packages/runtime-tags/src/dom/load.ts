@@ -1,5 +1,6 @@
 import { decodeAccessor } from "../common/helpers";
 import {
+  type Accessor,
   AccessorProp,
   type BranchScope,
   type EncodedAccessor,
@@ -44,6 +45,10 @@ export const _load_template = /*@__PURE__*/ withLazy(
       (branch) => {
         const awaitCounter = addAwaitCounter(branch);
         branch[AccessorProp.Load] ||= new Map() as LoadValues;
+        // The template's ready channel (the client half of the translator's
+        // `getReadyId`; the prefix pairs with its optimize flag).
+        branch[AccessorProp.ReadyId] = ((MARKO_DEBUG ? "ready:" : "_") +
+          id) as never;
         (pending ||= load()).then(
           (renderer) => {
             Object.assign(lazyTemplate, renderer);
@@ -66,6 +71,34 @@ export const _load_template = /*@__PURE__*/ withLazy(
     return lazyTemplate;
   },
 );
+
+// A persisted page's ready feature drives a branch's stamped channel once
+// loaded content is live (or fails), so deferred frame data drains after.
+let loadReady: ((branch: BranchScope) => void) | undefined;
+let loadReadyFailed: typeof loadReady;
+export function installLoadReady(
+  onReady: typeof loadReady,
+  onFailed: typeof loadReadyFailed,
+) {
+  loadReady = onReady;
+  loadReadyFailed = onFailed;
+}
+export const _load_ready =
+  (
+    readyId: string,
+    childScopeAccessor: EncodedAccessor,
+    setup: (owner: Scope) => void,
+  ) =>
+  (owner: Scope) => {
+    (
+      owner[
+        (MARKO_DEBUG
+          ? childScopeAccessor
+          : decodeAccessor(childScopeAccessor as number)) as Accessor
+      ] as Scope
+    )[AccessorProp.ReadyId] = readyId as never;
+    setup(owner);
+  };
 
 export const _load_setup = /*@__PURE__*/ withLazy(
   (
@@ -131,6 +164,7 @@ function insertLoaded(
       insertBranchBefore(branch, parent, marker);
       marker.remove();
       awaitCounter?.c();
+      loadReady?.(branch);
     };
   let remaining: number;
   if ((remaining = values?.size as number)) {
@@ -171,6 +205,7 @@ function loadFailed(
       if (awaitCounter.m) awaitCounter.i = 0;
       else awaitCounter.c();
     }
+    loadReadyFailed?.(scope);
     queueAsyncRender(scope, renderCatch, error);
   };
 }

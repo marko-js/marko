@@ -64,6 +64,8 @@ export default {
 
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
+      // A generated id never changes; a given value follows its sources.
+      if (!valueAttr) binding.stable = true;
       assertNoTagVarMutation(tag);
       setBindingDownstream(binding, !!valueAttr && evaluate(valueAttr.value));
     }

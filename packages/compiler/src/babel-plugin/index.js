@@ -167,6 +167,8 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   // `stripTypes` is left out of the key on purpose: it is for cli flows, which
   // compile once per process, so no cache is shared across its settings.
   const contentHash = canCache && new Hash().update(code).digest();
+  // A cache is scoped to ONE compilation config: template-id derivation
+  // (including `optimizeKnownTemplates`) is part of that contract.
   let cached = canCache && compileCache.get(id);
 
   if (cached) {

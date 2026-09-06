@@ -96,6 +96,22 @@ export function isThrows(value: any): value is Throws {
   return typeof value === "function" && value.throws;
 }
 
+export type Navigate = {
+  navigateInput: Record<string, unknown>;
+  betweenFrames?: (document: Document) => unknown;
+};
+export function navigate(
+  input: Record<string, unknown>,
+  betweenFrames?: (document: Document) => unknown,
+): Navigate {
+  return { navigateInput: input, betweenFrames };
+}
+export function isNavigate(value: any): value is Navigate {
+  return (
+    typeof value === "object" && value !== null && "navigateInput" in value
+  );
+}
+
 export function resolveAfter<T>(value: T, id?: number) {
   const promise = getSharedPromise(id);
   return Object.assign(

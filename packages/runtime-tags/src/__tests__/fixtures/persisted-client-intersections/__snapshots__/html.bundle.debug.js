@@ -1,0 +1,82 @@
+// tags/price-card.marko
+const $template$3 = "<section><h2> </h2><button>+</button></section>";
+const $walks$3 = "E l l";
+_shells({ "__tests__/tags/price-card.marko": "__tests__/tags/price-card.marko !__tests__/tags/price-card.marko_0;E l ;<section><h2> </h2><button>+</button></section>" });
+var price_card_default = _template_persisted("__tests__/tags/price-card.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let qty = 1;
+	_html(`<section><h2>${_text_resume($scope0_id, "#text/0", input.label + " x" + qty)}</h2><button>+</button>${_el_resume($scope0_id, "#button/1")}</section>`);
+	_script($scope0_id, "__tests__/tags/price-card.marko_0");
+	_patch_value($scope0_id, "__tests__/tags/price-card.marko1", qty, 1);
+	$scope0_reason ? _scope($scope0_id, {
+		input_label: input.label,
+		qty
+	}, "__tests__/tags/price-card.marko", 0, {
+		input_label: ["input.label"],
+		qty: "1:6"
+	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/price-card.marko0", input.label);
+}, 0, 0);
+
+// tags/promo-tag.marko
+const $template$2 = "<aside> </aside><button class=promo>seen</button>";
+const $walks$2 = "D l b";
+_shells({ "__tests__/tags/promo-tag.marko": "__tests__/tags/promo-tag.marko !__tests__/tags/promo-tag.marko_0;D l ;<aside> </aside><button class=promo>seen</button>" });
+var promo_tag_default = _template_persisted("__tests__/tags/promo-tag.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let seen = 0;
+	_html(`<aside>${_text_resume($scope0_id, "#text/0", input.text + " (" + seen + ")")}</aside><button class=promo>seen</button>${_el_resume($scope0_id, "#button/1")}`);
+	_script($scope0_id, "__tests__/tags/promo-tag.marko_0");
+	_patch_value($scope0_id, "__tests__/tags/promo-tag.marko1", seen, 1);
+	$scope0_reason ? _scope($scope0_id, {
+		input_text: input.text,
+		seen
+	}, "__tests__/tags/promo-tag.marko", 0, {
+		input_text: ["input.text"],
+		seen: "1:6"
+	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/promo-tag.marko0", input.text);
+}, 0, 0);
+
+// tags/site-footer.marko
+const $template$1 = "<footer> </footer>";
+const $walks$1 = "D l";
+_shells({ "__tests__/tags/site-footer.marko": "__tests__/tags/site-footer.marko;D ;<footer> </footer>" });
+var site_footer_default = _template_persisted("__tests__/tags/site-footer.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let frozen = 0;
+	_html(`<footer>${_patch_text($scope0_id, "#text/0", input.year + frozen, void 0, $scope0_owned, 0)}</footer>`);
+	$scope0_reason && _scope($scope0_id, { frozen }, "__tests__/tags/site-footer.marko", 0, { frozen: "1:6" });
+}, 0, 0);
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<main><h1> </h1><p> </p>${_w0}${_w1}${_w2}</main>`)($template$3, $template$2, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `E l D l/${_w0}&/${_w1}&/${_w2}&l`)($walks$3, $walks$2, "D l");
+_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko;${_w0};${_w1}`)(((_w0, _w1, _w2) => `E l D l/${_w0}&/${_w1}&/${_w2}&l`)($walks$3, $walks$2, "D l"), ((_w0, _w1, _w2) => `<main><h1> </h1><p> </p>${_w0}${_w1}${_w2}</main>`)($template$3, $template$2, $template$1)) });
+var template_default = _template_persisted("__tests__/template.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	const $global$1 = $global();
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h1><p${_patch_attr($scope0_id, "#p/1", "title", $global$1.locale)}>${_patch_text($scope0_id, "#text/2", $global$1.brand)}</p>${_el_resume($scope0_id, "#p/1")}`);
+	_set_serialize_reason({ 0: _mask_group($scope0_owned, 1) });
+	const $childScope = _peek_scope_id();
+	_patch_child($scope0_id, "#childScope/3", $childScope);
+	price_card_default({ label: input.label });
+	_set_serialize_reason(0);
+	const $childScope2 = _peek_scope_id();
+	_patch_child($scope0_id, "#childScope/4", $childScope2);
+	promo_tag_default({ text: "Sale" });
+	_set_serialize_reason({ 0: _mask_group($scope0_owned, 2) });
+	const $childScope3 = _peek_scope_id();
+	_patch_child($scope0_id, "#childScope/5", $childScope3);
+	site_footer_default({ year: input.year });
+	_html("</main>");
+	_global_subscribe("__tests__/template.marko_0_$global_locale#11/global", $scope0_id);
+	_global_subscribe("__tests__/template.marko_0_$global_brand#12/global", $scope0_id);
+	$scope0_reason && _scope($scope0_id, {
+		"#childScope/3": _existing_scope($childScope),
+		"#childScope/4": _existing_scope($childScope2),
+		"#childScope/5": _existing_scope($childScope3)
+	}, "__tests__/template.marko", 0);
+}, 1, 1);

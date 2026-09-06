@@ -64,6 +64,9 @@ export function addSerializeReason(
   if (reason) {
     if (reason !== true) {
       addProvenance(section, reason, prop && getPropKey(section, prop, prefix));
+      // A `$global` read alone never serializes (the client reads the
+      // globals object, as without persisted pages); it stays provenance.
+      if (!reason.state && !reason.param) return;
     }
     if (prop) {
       const key = getPropKey(section, prop, prefix);
@@ -375,6 +378,17 @@ export function finalizeSerializeReason(section: Section) {
       addProvenance(section, provenance);
     }
   }
+}
+
+// Records provenance without touching the reason: for feeds that inform
+// ownership but must never cause serialization (function-body reads).
+export function addSerializeProvenance(
+  section: Section,
+  sources: Sources | undefined,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
+) {
+  addProvenance(section, sources, prop && getPropKey(section, prop, prefix));
 }
 
 // What feeds a serialization decision, complete after reference finalize;
