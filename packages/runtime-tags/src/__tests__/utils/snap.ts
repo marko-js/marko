@@ -13,7 +13,7 @@ export async function snap(
   file: string,
   expectErr?: boolean,
   uniqueName?: string,
-): Promise<void> {
+): Promise<string> {
   const snapdir = dir + path.sep + "__snapshots__";
   const expectedFile = snapdir + path.sep + file;
   let actual: string;
@@ -98,6 +98,7 @@ export async function snap(
     }
     assert.strictEqual(actual, expected);
   }
+  return actual;
 }
 
 if (UPDATE) {
