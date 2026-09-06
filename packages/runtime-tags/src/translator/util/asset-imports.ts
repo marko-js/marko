@@ -1,4 +1,5 @@
 import type { types as t } from "@marko/compiler";
+import { getFile } from "@marko/compiler/babel-utils";
 
 declare module "@marko/compiler" {
   export interface MarkoMeta {
@@ -11,8 +12,8 @@ declare module "@marko/compiler" {
   }
 }
 
-export function addAssetImport(file: t.BabelFile, request: string) {
-  (file.metadata.marko.assetImports ??= new Set()).add(request);
+export function addAssetImport(request: string) {
+  (getFile().metadata.marko.assetImports ??= new Set()).add(request);
 }
 
 export function isClientAssetImport(file: t.BabelFile, request: string) {

@@ -54,7 +54,7 @@ export default {
       t.isProgram(importDecl.parent) &&
       isClientAssetImport(getFile(), value)
     ) {
-      addAssetImport(getFile(), value);
+      addAssetImport(value);
     }
 
     const tagImport = resolveTagImport(importDecl, value);
