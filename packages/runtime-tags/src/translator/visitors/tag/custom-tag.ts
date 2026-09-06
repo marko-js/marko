@@ -169,7 +169,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
 function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const { file } = tag.hub;
+  const file = getFile();
   const relativePath = getTagRelativePath(tag);
   const programSection = getProgram().node.extra.section!;
   const childFile = loadFileForTag(tag)!;
@@ -350,10 +350,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 }
 
 export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
-  const {
-    node,
-    hub: { file },
-  } = tag;
+  const { node } = tag;
+  const file = getFile();
   let relativePath: string | undefined;
 
   if (t.isStringLiteral(node.name)) {

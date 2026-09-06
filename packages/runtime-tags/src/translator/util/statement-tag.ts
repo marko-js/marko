@@ -1,5 +1,9 @@
 import { types as t } from "@marko/compiler";
-import { parseStatements, type Tag } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  parseStatements,
+  type Tag,
+} from "@marko/compiler/babel-utils";
 
 // `<static>` runs everywhere, so it gets no target and no "on the ..." suffix.
 export function createStatementTag(keyword: "client" | "server" | "static") {
@@ -8,10 +12,8 @@ export function createStatementTag(keyword: "client" | "server" | "static") {
 
   return {
     parse(tag) {
-      const {
-        node,
-        hub: { file },
-      } = tag;
+      const { node } = tag;
+      const file = getFile();
       const rawValue = node.rawValue!;
       const code = rawValue.replace(keywordReg, "");
       const start = node.start! + (rawValue.length - code.length);
