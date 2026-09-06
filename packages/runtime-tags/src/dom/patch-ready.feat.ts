@@ -1,5 +1,5 @@
 import { READY_FRAME_VAR } from "../common/meta";
-import { AccessorProp, type Scope } from "../common/types";
+import { AccessorProp } from "../common/types";
 import { installLoadReady } from "./load";
 import {
   applyReadyPatch,
@@ -35,14 +35,12 @@ installPatchReady(pendingReady, discardReady);
 installReady(markReady, failReady);
 // A loaded branch carries its channel stamp (`_load_template` names its
 // template's; `_load_ready` stamps a lazy child's site).
-const channelOf = (branch: Scope) =>
-  branch[AccessorProp.ReadyId] as string | undefined;
 installLoadReady(
   (branch) => {
-    const readyId = channelOf(branch);
+    const readyId = branch[AccessorProp.ReadyId] as string | undefined;
     if (readyId) queueEffect(branch, () => ready(readyId));
   },
-  (branch) => readyFailed(channelOf(branch)),
+  (branch) => readyFailed(branch[AccessorProp.ReadyId] as string | undefined),
 );
 
 // Live-record pushes of the frame being applied (alternating batch, prior
