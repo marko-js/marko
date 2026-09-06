@@ -73,6 +73,8 @@ export type TestConfig = {
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
+  /** Debug intentionally logs a dev-only diagnostic the optimized build cannot. */
+  skip_parity?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -144,6 +146,8 @@ function testFixtures(interop?: true) {
         ? (require(testFile).config ?? {})
         : {};
       const hasCompilerError = !!config.error_compiler;
+      // Render logs by file, then mode, for the parity check below.
+      const renderLogs = new Map<string, Map<string, string>>();
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
       const stripFixtureDir = async (str: string | Promise<string>) =>
@@ -242,7 +246,7 @@ function testFixtures(interop?: true) {
             ),
           );
 
-          const snapMode = (
+          const snapMode = async (
             fn: () => unknown,
             file: string,
             expectErr?: boolean,
@@ -250,7 +254,7 @@ function testFixtures(interop?: true) {
           ) => {
             const resolvedFile =
               expectErr && actualFile ? `${actualFile}.error.txt` : file;
-            return snap(
+            const actual = await snap(
               fn,
               fixtureDir,
               optimize
@@ -262,19 +266,24 @@ function testFixtures(interop?: true) {
                   ? actualFile
                   : actualFile.replace(/(\.[^.]+)$/, ".debug$1")),
             );
+            if (resolvedFile.startsWith("render")) {
+              let logs = renderLogs.get(resolvedFile);
+              if (!logs) renderLogs.set(resolvedFile, (logs = new Map()));
+              logs.set(mode, actual);
+            }
           };
 
           const snapCompile = async (output: "html" | "dom") => {
-            if (config.error_compiler) {
+            if (hasCompilerError) {
               await snapMode(
                 () => {
                   // The fix-guide only fires for an agent-driven terminal and a
                   // translator resolved from a specifier, so force both here.
                   const restore = config.fix_guide ? forceCodingAgent() : noop;
                   try {
-                    for (const f of config.error_compiler === true
-                      ? [templateFile]
-                      : (config.error_compiler as string[]).map(resolve)) {
+                    for (const f of Array.isArray(config.error_compiler)
+                      ? config.error_compiler.map(resolve)
+                      : [templateFile]) {
                       compiler.compileFileSync(f, {
                         ...getModeOpts(),
                         ...(config.fix_guide && {
@@ -534,6 +543,24 @@ function testFixtures(interop?: true) {
                 config.error_dom,
                 "csr",
               ));
+        });
+      }
+
+      // A diverging render log means tree shaking or debug-only assertions
+      // changed behavior (silently, since each mode snapshots separately).
+      if (!config.skip_optimize && !config.skip_parity) {
+        after(function parity() {
+          for (const [file, logs] of renderLogs) {
+            const debug = logs.get("debug");
+            const optimize = logs.get("optimize");
+            if (debug !== undefined && optimize !== undefined) {
+              assert.strictEqual(
+                optimize,
+                debug,
+                `${file} diverges between optimize and debug`,
+              );
+            }
+          }
         });
       }
     });

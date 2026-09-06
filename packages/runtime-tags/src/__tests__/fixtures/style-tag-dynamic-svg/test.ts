@@ -7,4 +7,6 @@ function click(document: Document) {
 export const config: TestConfig = {
   equivalent: false,
   steps: [{ color: "red" }, click],
+  // The css var name embeds the template id, which differs by mode.
+  skip_parity: true,
 };

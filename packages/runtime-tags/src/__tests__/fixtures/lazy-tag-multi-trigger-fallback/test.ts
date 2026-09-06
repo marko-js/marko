@@ -6,4 +6,6 @@ import { wait } from "../../utils/resolve";
 export const config: TestConfig = {
   steps: [{ value: 1 }, wait],
   equivalent: false,
+  // Debug logs the missed lazy-trigger selector diagnostic.
+  skip_parity: true,
 };
