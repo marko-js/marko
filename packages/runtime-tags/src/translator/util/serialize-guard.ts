@@ -153,10 +153,19 @@ function getDynamicGuard(
 ) {
   const paramGuard = reason.param ? getOrHoist(reason, isGuard) : undefined;
   if (!reason.global) return paramGuard;
-  const globalGuard = scopeReasonIdentifier(section);
+  const globalGuard = scopeReasonIdentifier(getReasonSection(section));
   return paramGuard
     ? t.logicalExpression("||", globalGuard, paramGuard)
     : globalGuard;
+}
+
+// Branch and boundary bodies declare no reason of their own; the nearest
+// enclosing content body or the root does.
+function getReasonSection(section: Section) {
+  while (section.parent && (section.isBranch || section.isBoundary)) {
+    section = section.parent;
+  }
+  return section;
 }
 
 export function scopeReasonIdentifier(section: Section) {
