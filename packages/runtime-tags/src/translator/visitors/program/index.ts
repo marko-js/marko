@@ -91,7 +91,7 @@ export default {
       const styleFile = getStyleFile(getFile());
       if (styleFile) {
         programExtra.styleFile = styleFile;
-        addAssetImport(getFile(), styleFile);
+        addAssetImport(styleFile);
       }
     },
 

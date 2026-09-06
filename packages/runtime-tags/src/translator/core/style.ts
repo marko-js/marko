@@ -95,7 +95,7 @@ export default {
     const importPath = getStyleImportPath(file, node, names);
     (node.extra ??= {}).styleImportPath = importPath;
     if (importPath) {
-      addAssetImport(file, importPath);
+      addAssetImport(importPath);
     }
 
     if (names) {
