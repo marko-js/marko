@@ -19,6 +19,7 @@ import {
   find,
   findIndexSorted,
   findSorted,
+  type OneMany,
   type Opt,
   Sorted,
 } from "./optional";
@@ -37,6 +38,7 @@ import {
 import {
   isReasonDynamic,
   mapCrossProgramReason,
+  type SerializeKey,
   type SerializeReason,
   type SerializeReasons,
 } from "./serialize-reasons";
@@ -129,6 +131,16 @@ export interface Section {
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
    * (not merged) so each one's guard stays buildable. */
   domSerializeReasons: undefined | SerializeReasons;
+  /** Pending serialize exprs, resolved into the reasons (and provenance)
+   * once references finalize. */
+  serializeExprs: Opt<t.NodeExtra>;
+  propSerializeExprs: Map<SerializeKey, OneMany<t.NodeExtra>> | undefined;
+  /** Whose values feed each serialization decision — survives force-`true`
+   * and counts function-body reads; complete after reference finalize. */
+  serializeProvenance: Sources | undefined;
+  propSerializeProvenance: Map<SerializeKey, Sources> | undefined;
+  /** Interned per-prop reason keys for string/symbol props. */
+  serializePropKeys: Map<string | symbol, SerializeKey> | undefined;
   paramReasonGroups: ParamSerializeReasonGroups | undefined;
   returnValueExpr: t.NodeExtra | undefined;
   returnSerializeReason: SerializeReason | undefined;
@@ -218,6 +230,11 @@ export function startSection(
       serializeReason: undefined,
       serializeReasons: new Map(),
       domSerializeReasons: undefined,
+      serializeExprs: undefined,
+      propSerializeExprs: undefined,
+      serializeProvenance: undefined,
+      propSerializeProvenance: undefined,
+      serializePropKeys: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
       returnSerializeReason: undefined,
