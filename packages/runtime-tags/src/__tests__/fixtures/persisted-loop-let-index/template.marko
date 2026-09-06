@@ -1,0 +1,10 @@
+<ul>
+  <for|label| of=input.labels>
+    <li>
+      ${label}
+      <let/picks=0/>
+      <span>${picks}</span>
+      <button onClick() { picks++ }>+</button>
+    </li>
+  </for>
+</ul>

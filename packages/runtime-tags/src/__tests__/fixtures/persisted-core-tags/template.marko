@@ -1,0 +1,12 @@
+<let/count=0/>
+<id/uid/>
+<main data-id=uid>
+  <lifecycle
+    onMount() { count++ }
+    onUpdate() { count += 10 }
+    value=input.value
+  />
+  <log=input.title/>
+  <p>${count}</p>
+  <button onClick() { count++ }>+</button>
+</main>

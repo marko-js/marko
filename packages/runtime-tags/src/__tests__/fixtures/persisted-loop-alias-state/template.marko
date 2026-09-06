@@ -1,0 +1,9 @@
+<let/count=0/>
+<main>
+  <for|item| of=input.items by=(item) => item.id>
+    <const/{ name } = item/>
+    <const/same = item/>
+    <p>${name + "/" + same.id + "#" + count}</p>
+  </for>
+  <button onClick() { count++ }>+</button>
+</main>

@@ -1,0 +1,32 @@
+<main><!--M_[--><button id=one
+    title=a>one</button><!--M_$2 #button/0--><!--M_]1 #text/0 2--><!--M_[--><button
+    id=two
+    title=a>two</button><!--M_$3 #button/0--><!--M_]1 #text/1 3--><em>0<!--M_$1 #text/2--></em>
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      input_title: "a",
+      handler: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-source-per-frame/template.marko_0/handler"
+        ),
+      "ClosureScopes:input_title": new Set,
+      "ClosureScopes:handler": new Set
+    }], _ => (_([2, {
+      "EventAttributes:#button/0": {
+        click: _.a = _(1).handler
+      },
+      _: _(1)
+    }]), (_.b = _(1)["ClosureScopes:input_title"]).add(_(2)), (_.c = _(1)[
+      "ClosureScopes:handler"]).add(_(2)), 0), _ => (_([3, {
+      "EventAttributes:#button/0": {
+        click: _.a
+      },
+      _: _(1),
+      "ClosureSignalIndex:input_title": 1,
+      "ClosureSignalIndex:handler": 1
+    }]), _.b.add(_(3)), _.c.add(_(3)), 0),
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-source-per-frame/template.marko_1_input_title#5_handler#9 2 packages/runtime-tags/src/__tests__/fixtures/persisted-bind-source-per-frame/template.marko_2_input_title#5_handler#9 3"
+  ];
+  M._.w()
+</script>

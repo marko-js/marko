@@ -1,0 +1,34 @@
+// tags/card/index.marko
+const $template$1 = "<section><!></section>";
+const $walks$1 = "D%l";
+const $setup$1 = () => {};
+const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
+const $input_content = $dynamicTag;
+const $input$1 = ($scope, input) => $input_content($scope, input.content);
+var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, "D%l", 0, $input$1);
+
+// template.marko
+const $template = "<main></main>";
+const $walks = " b";
+const $setup = () => {};
+const $await_content__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => _text($scope["#text/0"], $scope._._._.input_value), ($scope) => $scope._._._);
+const $await_content__setup = $await_content__input_value;
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ", $await_content__setup);
+const $card_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
+const $card_content__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => $card_content__await_promise($scope, Promise.resolve($scope._._.input_value)), ($scope) => $scope._._);
+const $card_content__setup = ($scope) => {
+	$card_content__input_value($scope);
+	$await_content($scope);
+};
+const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $card_content__setup);
+const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $card_content($scope));
+const $if = /*@__PURE__*/ _if("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
+const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
+const $input = ($scope, input) => {
+	$input_show($scope, input.show);
+	$input_value($scope, input.value);
+};
+const $input_value__closure = /*@__PURE__*/ _closure($card_content__input_value, $await_content__input_value);
+const $input_value = /*@__PURE__*/ _const("input_value", $input_value__closure);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

@@ -1,0 +1,5 @@
+import plain from "./card-plain.marko";
+import live from "./card-live.marko";
+<main>
+  <${input.mode === "plain" ? plain : live} label=input.label/>
+</main>

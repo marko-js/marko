@@ -1,0 +1,10 @@
+<let/count=0/>
+<div>
+  <h1>${input.title + " #" + count}</h1>
+  <button.root onClick() { count++ }>+</button>
+  <if=input.show>
+    <let/n=0/>
+    <p>Seen ${n}</p>
+    <button.inner onClick() { n++ }>+</button>
+  </if>
+</div>

@@ -1,0 +1,7 @@
+<let/count=0/>
+<ul>
+  <for|item| of=input.items by=(item) => item.id>
+    <row item=item/>
+  </for>
+</ul>
+<button onClick() { count++ }>${count}</button>

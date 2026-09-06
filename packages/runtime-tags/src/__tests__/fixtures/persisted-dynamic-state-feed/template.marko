@@ -1,0 +1,6 @@
+import cardA from "../persisted-dynamic-renderer-swap/card-a.marko";
+<let/active=false/>
+<main>
+  <${input.on ? cardA : null} label=active/>
+  <button onClick() { active = !active }>+</button>
+</main>

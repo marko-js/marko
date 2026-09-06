@@ -1,3 +1,5 @@
+import type { types as t } from "@marko/compiler";
+
 import { getAccessorPrefix } from "./get-accessor-enums";
 import { type Binding, kBranchSerializeReason } from "./references";
 import type { Section } from "./sections";
@@ -20,6 +22,12 @@ export function getBranchSectionAccessor(
   };
 }
 
+// Expressions that select a branch, across every program in the compile.
+const branchSelectors = new WeakSet<t.NodeExtra>();
+export function isBranchSelector(extra: t.NodeExtra) {
+  return branchSelectors.has(extra);
+}
+
 export function initBranchSection(
   bodySection: Section,
   upstreamExpression: Section["upstreamExpression"],
@@ -28,6 +36,7 @@ export function initBranchSection(
   bodySection.isBranch = true;
   bodySection.upstreamExpression = upstreamExpression;
   bodySection.sectionAccessor = sectionAccessor;
+  if (upstreamExpression) branchSelectors.add(upstreamExpression);
 }
 
 // The branch id rides the always-rendered resume marker and the state

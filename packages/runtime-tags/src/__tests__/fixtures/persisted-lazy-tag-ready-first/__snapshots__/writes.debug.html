@@ -1,0 +1,20 @@
+<main>
+  <script async type=module src="child.marko.load.mjs"></script>
+  <button>a<!--M_$2 #text/1-->:<!>
+      0<!--M_$2 #text/2--></button><!--M_$2 #button/0-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-ready-first/child.marko": [
+      _ => [2, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-ready-first/child.marko_0 2"
+    ]
+  };
+  M._.r = [_ => [1, {
+    "#childScope/1": _(2)
+  }]];
+  M._.w()
+</script>

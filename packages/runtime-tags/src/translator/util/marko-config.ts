@@ -5,6 +5,10 @@ export function isOutputHTML() {
   return getMarkoOpts().output === "html";
 }
 
+export function isPersisted() {
+  return !!getMarkoOpts().persisted;
+}
+
 export function isOutputDOM() {
   return getMarkoOpts().output === "dom";
 }

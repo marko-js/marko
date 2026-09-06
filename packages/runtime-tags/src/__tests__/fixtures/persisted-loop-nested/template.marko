@@ -1,0 +1,11 @@
+<let/outer=["a"]/>
+<let/inner=["x"]/>
+<main>
+  <for|o| of=outer>
+    <for|i| of=inner>
+      <div>${o}${i}: ${input.note}</div>
+    </for>
+  </for>
+  <button.o onClick() { outer = [...outer, "b"] }>o</button>
+  <button.i onClick() { inner = [...inner, "y"] }>i</button>
+</main>

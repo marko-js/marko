@@ -11,7 +11,12 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
-import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPersisted,
+} from "../util/marko-config";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
@@ -160,6 +165,14 @@ export default {
             node.attributes = undefined;
             return;
           } else {
+            // A persisted page's frames may carry data for this module before
+            // it loads; the feature defers them until its `ready()` call.
+            if (isPersisted()) {
+              // A frame's ready batch may bind handlers before the child's
+              // own feature loads, so the page carries the bind feature.
+              importRuntimeFeature("patch-ready");
+              importRuntimeFeature("patch-value-bind");
+            }
             const allKnownTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,
@@ -246,7 +259,10 @@ function getOrCreateHtmlLoadWrapped(
               "withLoadAssets",
               originalIdentifier,
               t.stringLiteral(readyId),
-              triggers ? t.valueToNode(triggers) : undefined,
+              triggers && t.valueToNode(triggers),
+              // A persisted page may hold a deferred patch on this channel,
+              // so its loader scripts report load errors.
+              isPersisted() && t.numericLiteral(1),
             ),
           ),
         ]),

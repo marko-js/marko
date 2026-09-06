@@ -21,12 +21,24 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted } from "../util/marko-config";
+import { onClassifyStructure } from "../util/persisted/lifecycle";
+import {
+  isBranchPathSection,
+  isStatefulBranch,
+  recordStructuralParams,
+} from "../util/persisted/structure";
 import {
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
 } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  getHTMLRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import {
   ContentType,
   getBranchRendererArgs,
@@ -39,15 +51,19 @@ import {
   startSection,
 } from "../util/sections";
 import {
+  getExprWriteOwnership,
   getSerializeGuard,
   getSerializeGuardForAny,
+  scopeReasonIdentifier,
 } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
   type SerializeReasons,
   sourcesUtil,
 } from "../util/serialize-reasons";
+import { getShellId, getShellRecords } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -105,6 +121,20 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
+      if (isPersisted()) {
+        onClassifyStructure(ifTagSection, () => {
+          // Patches select a chain that is not stateful.
+          if (
+            !branches.some(
+              ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
+            ) &&
+            isBranchPathSection(ifTagSection)
+          ) {
+            addRuntimeFeatureAsset("patch-branch");
+            recordStructuralParams(getSerializeSourcesForExpr(ifTagExtra));
+          }
+        });
+      }
     }
   },
   translate: translateByTarget({
@@ -149,6 +179,8 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
+          // Read before the branch tags are removed below.
+          const ifTagExtra = ifTag.node.extra!;
           const nodeBinding = getOptimizedOnlyChildNodeBinding(
             ifTag,
             ifTagSection,
@@ -167,15 +199,28 @@ export const IfTag = {
           let statement: t.Statement | undefined;
           let singleChild = true;
 
-          for (const [, branchBodySection] of branches) {
-            if (
-              !(
-                branchBodySection?.content?.singleChild &&
-                branchBodySection.content.startType !== ContentType.Text
-              )
-            ) {
-              singleChild = false;
-              break;
+          // A client-owned chain compiles like a stateful conditional on a
+          // plain page: no marker retention, shells, or branch entry.
+          const stateful = branches.some(
+            ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
+          );
+          // A patchable conditional keeps its markers: the shipped-branch
+          // swap anchors at the marker node, which elision would remove.
+          const persistedPatch =
+            isPersisted() && !stateful && isBranchPathSection(ifTagSection);
+          if (persistedPatch) {
+            singleChild = false;
+          } else {
+            for (const [, branchBodySection] of branches) {
+              if (
+                !(
+                  branchBodySection?.content?.singleChild &&
+                  branchBodySection.content.startType !== ContentType.Text
+                )
+              ) {
+                singleChild = false;
+                break;
+              }
             }
           }
 
@@ -222,7 +267,9 @@ export const IfTag = {
 
           if (branchSerializeReasons) {
             const skipParentEnd =
-              onlyChildParentTagName && markerSerializeReason;
+              !persistedPatch &&
+              onlyChildParentTagName &&
+              markerSerializeReason;
             if (skipParentEnd) {
               getParentTag(ifTag)!.node.extra![kSkipEndTag] = true;
             }
@@ -248,11 +295,15 @@ export const IfTag = {
                 cbNode,
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
-                getSerializeGuardForAny(
-                  ifTagSection,
-                  branchSerializeReasons,
-                  !markerSerializeArg,
-                ),
+                // Pairing stays statically on under persisted: the patch
+                // intercept preempts, and interior writes anchor through it.
+                persistedPatch
+                  ? t.numericLiteral(1)
+                  : getSerializeGuardForAny(
+                      ifTagSection,
+                      branchSerializeReasons,
+                      !markerSerializeArg,
+                    ),
                 markerSerializeArg,
                 statefulSerializeArg,
                 skipParentEnd
@@ -261,7 +312,38 @@ export const IfTag = {
                     ? t.numericLiteral(0)
                     : undefined,
                 singleChild ? t.numericLiteral(1) : undefined,
+                // Shell ids per branch index: a patch ships the shell so the
+                // client constructs diverged branches without bundling them.
+                persistedPatch
+                  ? t.arrayExpression(
+                      branches.map(([, branchBody]) => {
+                        // Only ids with a built shell ship; a bare `0` makes
+                        // divergence to the branch reject the patch.
+                        const id =
+                          branchBody &&
+                          !branchBody.shellBlocked &&
+                          getShellId(branchBody);
+                        return id && getShellRecords()?.[id]
+                          ? t.stringLiteral(id)
+                          : t.numericLiteral(0);
+                      }),
+                    )
+                  : undefined,
+                // A param-selected chain yields to the client when the
+                // call site feeds the selector from state.
+                ...(persistedPatch ? getExprWriteOwnership(ifTagExtra) : []),
               ),
+            );
+          }
+
+          if (stateful) {
+            // Patch renders skip the chain: the tests' state reads are
+            // server-stale and the frame never speaks the selection.
+            let rootSection = ifTagSection;
+            while (rootSection.parent) rootSection = rootSection.parent;
+            statement = t.ifStatement(
+              scopeReasonIdentifier(rootSection),
+              statement!,
             );
           }
 
@@ -287,6 +369,17 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
+          if (
+            isPersisted() &&
+            isBranchPathSection(ifTagSection) &&
+            !branches.some(
+              ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
+            )
+          ) {
+            // An interactive page receives assets transitively through its
+            // dom program, so the feature import rides both outputs.
+            importRuntimeFeature("patch-branch");
+          }
           const ifTagExtra = branches[0][0].node.extra!;
           const nodeRef = getOptimizedOnlyChildNodeBinding(
             ifTag,
@@ -301,13 +394,10 @@ export const IfTag = {
             const [testAttr] = branchTag.node.attributes;
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
             if (branchBodySection) {
-              setClosureSignalBuilder(branchTag, (_closure, render) => {
-                return callRuntime(
-                  "_if_closure",
-                  getScopeAccessorLiteral(nodeRef, true),
-                  t.numericLiteral(i),
-                  render,
-                );
+              setClosureSignalBuilder(branchTag, {
+                kind: "if",
+                ref: nodeRef,
+                index: i,
               });
             }
 

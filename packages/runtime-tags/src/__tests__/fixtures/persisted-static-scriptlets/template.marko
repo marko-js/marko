@@ -1,0 +1,11 @@
+static const shout = (s: string) => s.toUpperCase() + "!";
+server const stamp = "srv";
+client const flag = "cli";
+<let/count=0/>
+<main>
+  <p>${shout(input.title)} ${stamp}</p>
+  <if=input.show>
+    <span>${shout(input.title) + " #" + count}</span>
+  </if>
+  <button onClick() { count++; document.querySelector("main")!.dataset.flag = flag }>+</button>
+</main>
