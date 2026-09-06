@@ -1,0 +1,27 @@
+// template.marko
+const $template = "<main><div></div><span> </span><button>+</button></main>";
+const $walks = "D bD l l";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D bD l ;<main><div></div><span> </span><button>+</button></main>" });
+var template_default = _template_persisted("__tests__/template.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let show = false;
+	_html("<main><div>");
+	if ($scope0_reason) _if(() => {
+		if (show) {
+			const $scope1_id = _scope_id();
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.title)}</p>`);
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
+			return 0;
+		}
+	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
+	_html(`<span>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_owned, 1)}</span><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_reason ? _scope($scope0_id, {
+		input_title: input.title,
+		show
+	}, "__tests__/template.marko", 0, {
+		input_title: ["input.title"],
+		show: "1:6"
+	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+}, 1, 0);

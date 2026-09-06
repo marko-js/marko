@@ -1,0 +1,33 @@
+// template.marko
+const $template = "<main><!><button>+</button><output></output></main>";
+const $walks = "D%b l";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button><output></output></main>" });
+var template_default = _template_persisted("__tests__/template.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	const onChange = _resume((next) => {
+		document.querySelector("output").textContent = input.prefix + next;
+	}, "__tests__/template.marko_0/onChange", $scope0_id);
+	let open = false;
+	_html("<main>");
+	if ($scope0_reason) _if(() => {
+		if (open) {
+			const $scope1_id = _scope_id();
+			_html(`<input${_attr_input_value($scope1_id, "#input/0", "x", onChange)}${_patch_control($scope1_id, "#input/0", 2, "x", $scope0_owned, 0)}>${_el_resume($scope1_id, "#input/0")}`);
+			_script($scope1_id, "__tests__/template.marko_1");
+			_scope($scope1_id, {}, "__tests__/template.marko", "6:4", { "ControlledHandler:#input/0": ["valueChange", "7:22"] });
+			return 0;
+		}
+	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
+	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}<output></output></main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_reason ? _scope($scope0_id, {
+		input_prefix: input.prefix,
+		onChange,
+		open
+	}, "__tests__/template.marko", 0, {
+		input_prefix: ["input.prefix"],
+		onChange: "1:8",
+		open: "4:6"
+	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", onChange), _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_prefix", input.prefix));
+}, 1, 0);

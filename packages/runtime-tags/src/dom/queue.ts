@@ -88,6 +88,14 @@ export function run() {
   runEffects(effects);
 }
 
+// Discards a rejected frame's queued work and retires its epoch, so
+// residue (marks, fresh `Gen`s, queued checks) can never match later.
+export function abortRun() {
+  runId++;
+  pendingRenders = [];
+  pendingEffects = [];
+}
+
 export function queueAsyncRender<T, U extends Scope = Scope>(
   scope: U,
   signal: Signal<T, U>,

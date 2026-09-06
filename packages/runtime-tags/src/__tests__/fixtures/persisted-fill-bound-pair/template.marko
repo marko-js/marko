@@ -1,0 +1,9 @@
+<const/fa=() => input.a/>
+<const/fb=() => input.b/>
+<let/open=false/>
+<main>
+  <if=open>
+    <p>${fa() + ":" + fb()}</p>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

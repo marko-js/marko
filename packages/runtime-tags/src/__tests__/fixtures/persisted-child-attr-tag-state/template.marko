@@ -1,0 +1,11 @@
+<let/show=true/>
+<let/on=false/>
+<main>
+  <if=show>
+    <tabs>
+      <@tab on=on/>
+    </tabs>
+  </if>
+  <button.flip onClick() { on = !on }>f</button>
+  <button.toggle onClick() { show = !show }>t</button>
+</main>

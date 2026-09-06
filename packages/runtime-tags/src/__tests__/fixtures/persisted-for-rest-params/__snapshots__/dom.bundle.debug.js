@@ -1,0 +1,33 @@
+// tags/my-for.marko
+const $template$1 = "<!><!><!>";
+const $walks$1 = "b%c";
+const $setup$1 = () => {};
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
+const $for_content__input_content__OR__args = /*@__PURE__*/ _fill_join_for("__tests__/tags/my-for.marko0", "input_content", /*@__PURE__*/ _init_join("__tests__/tags/my-for.marko_1_input_content#4/init", /*@__PURE__*/ _or(2, ($scope) => $for_content__dynamicTag($scope, $scope._.input_content, () => [...$scope.args]))), "#text/0");
+const $for_content__input_content = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_content__OR__args);
+const $for_content__setup = $for_content__input_content;
+const $for_content__args = /*@__PURE__*/ _const("args", $for_content__input_content__OR__args);
+const $for = /*@__PURE__*/ _for_to("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__args);
+const $input_to = ($scope, input_to) => $for($scope, [
+	input_to,
+	0,
+	1
+]);
+const $input = ($scope, input) => {
+	$input_to($scope, input.to);
+	$input_content($scope, input.content);
+};
+const $input_content = /*@__PURE__*/ _fill_const("__tests__/tags/my-for.marko0", "input_content", $for_content__input_content);
+var my_for_default = /*@__PURE__*/ _template("__tests__/tags/my-for.marko", $template$1, "b%c", 0, $input);
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
+const $myfor_content__i = ($scope, i) => _text($scope["#text/0"], i);
+const $myfor_content__$params = ($scope, $params2) => $myfor_content__i($scope, $params2[0]);
+const $myfor_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", 0, $myfor_content__$params);
+function $setup($scope) {
+	$input_content($scope["#childScope/0"], $myfor_content($scope));
+	$input_to($scope["#childScope/0"], 5);
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

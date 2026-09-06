@@ -1,0 +1,9 @@
+<store/store/>
+<p>${store.last}</p>
+<frame>
+  <if=input.show>
+    <let/count=0 valueChange=store.set/>
+    <span>Seen ${count}</span>
+    <button onClick() { count++ }>+</button>
+  </if>
+</frame>

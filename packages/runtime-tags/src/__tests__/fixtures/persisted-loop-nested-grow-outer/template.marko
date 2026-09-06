@@ -1,0 +1,7 @@
+<let/count=0/>
+<for|row| of=input.rows by=(row) => row.id>
+  <for|cell| of=row.cells by=(cell) => cell>
+    <p>${row.id + "@" + count}</p>
+  </for>
+</for>
+<button onClick() { count++ }>+</button>

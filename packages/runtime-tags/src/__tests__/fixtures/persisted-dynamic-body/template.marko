@@ -1,0 +1,5 @@
+import boxA from "./box-a.marko";
+import boxB from "./box-b.marko";
+<main>
+  <${input.mode === "a" ? boxA : boxB}>${input.text}</>
+</main>

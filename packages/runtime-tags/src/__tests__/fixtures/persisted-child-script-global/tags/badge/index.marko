@@ -1,0 +1,5 @@
+<span>${$global.brand}</span>
+<script>
+  const el = document.querySelector("main")!;
+  el.dataset.log = (el.dataset.log || "") + "[" + $global.brand + "]";
+</script>

@@ -9,6 +9,7 @@ import {
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import type { WalkCode } from "../../common/types";
 import * as ContentType from "./constants/content-type";
+import type * as ShellBlocker from "./constants/shell-blocker";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -146,6 +147,8 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
+  /** For a `<define>` body: the sections of its direct `<${var}>` sites. */
+  defineSites: Section[] | undefined;
   /** The content's rendering tag (its extra), and the child binding the
    * content feeds when the child can serialize it. */
   downstream:
@@ -162,6 +165,23 @@ export interface Section {
   abortSignalExprs: number;
   readsOwner: boolean;
   isBranch: boolean;
+  /** An `<await>`/`<try>` body: always-rendered like the branch path, but
+   * paired (never constructed) by patches. */
+  isBoundary: boolean;
+  /** A content renderer slot-serialized by register id (`<try>` bodies):
+   * static ones re-register from entry data, others load the dom module. */
+  boundaryContent: boolean;
+  /** A content body shipped as a shell record: `"static"` rides its slot
+   * in-band, a dynamic one is constructed by id from a dynamic tag entry. */
+  contentRecord: false | true | "static";
+  /** Awaits a construct must deliver body content for (marker binding +
+   * body section); `buildShells` prunes those no shipped shell reaches. */
+  constructSetups: { binding: Binding; body: Section }[] | undefined;
+  /** Lazily loaded child sites in this section, by their marker binding. */
+  loadSites: Binding[] | undefined;
+  /** Branch whose shell would construct unfaithfully: the first blocker's
+   * reason code sticks, no shell ships, patches fail closed. */
+  shellBlocked: ShellBlocker.Value | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -242,11 +262,18 @@ export function startSection(
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
+      defineSites: undefined,
       downstream: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
       readsOwner: false,
       isBranch: false,
+      isBoundary: false,
+      boundaryContent: false,
+      contentRecord: false,
+      constructSetups: undefined,
+      loadSites: undefined,
+      shellBlocked: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     section.program = parentSection ? parentSection.program : section;
