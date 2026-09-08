@@ -1,0 +1,7 @@
+CompileError: 
+    at __tests__/template.marko:1:30
+    > 1 | <await(Promise.resolve("x"))|v|>
+        |                              ^ The "<await>" tag does not support body content or tag parameters. Use "<@then|result|>" instead.
+      2 |   <span>${v}</span>
+      3 | </await>
+      4 |

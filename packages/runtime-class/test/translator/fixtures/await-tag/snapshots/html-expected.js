@@ -19,6 +19,38 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "_provider": promise,
     "_name": "promise"
   }), out, _componentDef, "0");
+  _marko_tag(_await, _marko_render_input(() => {
+    const prefix = "Result: ";
+    if (input.show) {
+      _marko_repeatable_attr_tag("then", {
+        "renderBody": (out, result) => {
+          out.w(_marko_escapeXml(prefix));
+          out.w(_marko_escapeXml(result));
+        }
+      });
+    } else {
+      _marko_repeatable_attr_tag("then", {
+        "renderBody": (out, result) => {
+          out.w("<span>");
+          out.w(_marko_escapeXml(result));
+          out.w("</span>");
+        }
+      });
+    }
+    _marko_repeatable_attr_tag("catch", {
+      "renderBody": (out, error) => {
+        out.w(_marko_escapeXml(error.message));
+      }
+    });
+    _marko_repeatable_attr_tag("placeholder", {
+      "renderBody": out => {
+        out.w("Loading");
+      }
+    });
+  }, {
+    "_provider": promise,
+    "_name": "promise"
+  }), out, _componentDef, "1");
 }, {
   t: _marko_componentType,
   i: true,

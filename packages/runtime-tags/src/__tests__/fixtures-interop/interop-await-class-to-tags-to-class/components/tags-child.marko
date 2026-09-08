@@ -1,0 +1,7 @@
+// use tags
+import { resolveAfter } from "../../../utils/resolve";
+
+<await|value|=resolveAfter("hi", 1)>
+  <div id="tags">${value}</div>
+  <class-child value=value/>
+</await>

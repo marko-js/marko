@@ -22,6 +22,23 @@ export function enter(path) {
     );
   }
 
+  const body = path.get("body");
+  const unsupported =
+    body.get("params")[0] ||
+    body
+      .get("body")
+      .find(
+        (child) =>
+          !child.isMarkoComment() &&
+          !(child.isMarkoText() && !child.node.value.trim()),
+      );
+
+  if (unsupported) {
+    throw unsupported.buildCodeFrameError(
+      'The "<await>" tag does not support body content or tag parameters. Use "<@then|result|>" instead.',
+    );
+  }
+
   const [provider] = args;
   path.pushContainer(
     "attributes",
