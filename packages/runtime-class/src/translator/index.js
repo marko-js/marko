@@ -130,7 +130,11 @@ export const analyze = {
       const tagName = tag.node.name.value;
       const binding =
         /^[A-Z][a-zA-Z0-9_$]*$/.test(tagName) && tag.scope.getBinding(tagName);
-      if (binding && binding.kind === "module" && binding.identifier.loc) {
+      if (
+        binding &&
+        binding.path.isImportDefaultSpecifier() &&
+        binding.identifier.loc
+      ) {
         const importSource = binding.path.parent.source.value;
         relativePath = resolveTagImport(tag, importSource) || importSource;
         tag.node.extra = tag.node.extra || {};
