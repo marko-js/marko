@@ -71,8 +71,8 @@
   },
   "dependencies": {
     "@luxass/strip-json-comments": "^2.0.1",
+    "@marko/parse": "link:../../../language-server/packages/parse",
     "complain": "^1.6.1",
-    "htmljs-parser": "^5.14.0",
     "jsesc": "^3.1.0",
     "kleur": "^4.1.5",
     "lasso-package-root": "^1.0.1",

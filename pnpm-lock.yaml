@@ -166,12 +166,12 @@ importers:
       '@luxass/strip-json-comments':
         specifier: ^2.0.1
         version: 2.0.1
+      '@marko/parse':
+        specifier: link:../../../language-server/packages/parse
+        version: link:../../../language-server/packages/parse
       complain:
         specifier: ^1.6.1
         version: 1.6.1
-      htmljs-parser:
-        specifier: ^5.14.0
-        version: 5.14.0
       jsesc:
         specifier: ^3.1.0
         version: 3.1.0
@@ -2167,9 +2167,6 @@ packages:
   html-encoding-sniffer@6.0.0:
     resolution: {integrity: sha512-CV9TW3Y3f8/wT0BRFc1/KAVQ3TUHiXmaAb6VW9vtiMFf7SLoMd1PdAc4W3KFOFETBJUb90KatHqlsZMWV+R9Gg==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
-
-  htmljs-parser@5.14.0:
-    resolution: {integrity: sha512-cGHMvzufiWAcQl11UM8HwxxpFkVicgtJ5RniyFHTClT0WfwMWSxAc7QMAlqpKet+xTsrr7QOOeShOENBMvCPVg==}
 
   htmlparser2@5.0.1:
     resolution: {integrity: sha512-vKZZra6CSe9qsJzh0BjBGXo8dvzNsq/oGvsjfRdOrrryfeD9UOBEEQdeoqCRmKZchF5h2zOBMQ6YuQ0uRUmdbQ==}
@@ -5047,8 +5044,6 @@ snapshots:
       '@exodus/bytes': 1.15.1
     transitivePeerDependencies:
       - '@noble/hashes'
-
-  htmljs-parser@5.14.0: {}
 
   htmlparser2@5.0.1:
     dependencies:
