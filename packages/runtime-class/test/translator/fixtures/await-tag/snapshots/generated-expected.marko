@@ -3,3 +3,26 @@
     ${result}
   </@then>
 </await>
+<await(promise)>
+  <!-- before attribute tags -->
+  $ const prefix = "Result: ";
+  <if(input.show)>
+    <@then|result|>
+      ${prefix}${result}
+    </@then>
+  </if>
+  <else>
+    <@then|result|>
+      <span>
+        ${result}
+      </span>
+    </@then>
+  </else>
+  <@catch|error|>
+    ${error.message}
+  </@catch>
+  <@placeholder>
+    Loading
+  </@placeholder>
+  <!-- after attribute tags -->
+</await>

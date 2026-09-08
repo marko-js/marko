@@ -24,6 +24,38 @@ _marko_template._ = (0, _renderer2.default)(function (input, out, _componentDef,
     "_provider": promise,
     "_name": "promise"
   }), out, _componentDef, "0");
+  (0, _renderTag.default)(_renderer.default, (0, _attrTag.i)(() => {
+    const prefix = "Result: ";
+    if (input.show) {
+      (0, _attrTag.a)("then", {
+        "renderBody": (out, result) => {
+          out.w((0, _escapeXml.x)(prefix));
+          out.w((0, _escapeXml.x)(result));
+        }
+      });
+    } else {
+      (0, _attrTag.a)("then", {
+        "renderBody": (out, result) => {
+          out.w("<span>");
+          out.w((0, _escapeXml.x)(result));
+          out.w("</span>");
+        }
+      });
+    }
+    (0, _attrTag.a)("catch", {
+      "renderBody": (out, error) => {
+        out.w((0, _escapeXml.x)(error.message));
+      }
+    });
+    (0, _attrTag.a)("placeholder", {
+      "renderBody": out => {
+        out.w("Loading");
+      }
+    });
+  }, {
+    "_provider": promise,
+    "_name": "promise"
+  }), out, _componentDef, "1");
 }, {
   t: _marko_componentType,
   i: true,
