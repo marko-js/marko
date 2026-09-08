@@ -1,6 +1,8 @@
 "use strict";
 // eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
+// eslint-disable-next-line no-constant-binary-expression
+var invokeLifecycle = "MARKO_DEBUG" && require("./invoke-lifecycle");
 
 class ServerComponent {
   constructor(id, input, out, typeName, customEvents, scope) {
@@ -11,12 +13,22 @@ class ServerComponent {
     this.___bubblingDomEvents = undefined; // Used to keep track of bubbling DOM events for components rendered on the server
     this.___bubblingDomEventsExtraArgsCount = 0;
 
-    this.onCreate(input, out);
-    this.___updatedInput = this.onInput(input, out) || input;
+    // eslint-disable-next-line no-constant-condition
+    "MARKO_DEBUG"
+      ? invokeLifecycle(this, "onCreate", [input, out])
+      : this.onCreate(input, out);
+    this.___updatedInput =
+      // eslint-disable-next-line no-constant-condition
+      ("MARKO_DEBUG"
+        ? invokeLifecycle(this, "onInput", [input, out])
+        : this.onInput(input, out)) || input;
     if (this.___input === undefined) {
       this.___input = this.___updatedInput;
     }
-    this.onRender(out);
+    // eslint-disable-next-line no-constant-condition
+    "MARKO_DEBUG"
+      ? invokeLifecycle(this, "onRender", [out])
+      : this.onRender(out);
   }
 
   set input(newInput) {

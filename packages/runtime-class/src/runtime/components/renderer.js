@@ -1,4 +1,6 @@
 var copyProps = require("raptor-util/copyProps");
+// eslint-disable-next-line no-constant-binary-expression
+var invokeLifecycle = "MARKO_DEBUG" && require("./invoke-lifecycle");
 var beginComponent = require("@internal/components-beginComponent");
 var endComponent = require("@internal/components-endComponent");
 var registry = require("@internal/components-registry");
@@ -185,7 +187,13 @@ function createRendererFunc(
         if (isExisting === true) {
           if (
             component.___isDirty === false ||
-            component.shouldUpdate(input, component.___state) === false
+            // eslint-disable-next-line no-constant-condition
+            ("MARKO_DEBUG"
+              ? invokeLifecycle(component, "shouldUpdate", [
+                  input,
+                  component.___state,
+                ])
+              : component.shouldUpdate(input, component.___state)) === false
           ) {
             // We put a placeholder element in the output stream to ensure that the existing
             // DOM node is matched up correctly when using morphdom. We flag the VElement
