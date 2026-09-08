@@ -1,0 +1,19 @@
+class {
+  onCreate(input) {
+    this.fail = input.fail;
+    this.check("onCreate");
+  }
+  onInput(input) { this.check("onInput"); return input; }
+  onRender() { this.check("onRender"); }
+  onMount() { this.check("onMount"); }
+  shouldUpdate() { this.check("shouldUpdate"); return true; }
+  onUpdate() { this.check("onUpdate"); }
+  onDestroy() { this.check("onDestroy"); }
+  check(hook) {
+    if (this.fail && this.fail.hook === hook) {
+      throw this.fail.error;
+    }
+  }
+}
+
+<div>${input.name}</div>

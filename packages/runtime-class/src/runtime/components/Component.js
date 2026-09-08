@@ -2,6 +2,8 @@
 
 // eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
+// eslint-disable-next-line no-constant-binary-expression
+var invokeLifecycle = "MARKO_DEBUG" && require("./invoke-lifecycle");
 var EventEmitter = require("events-light");
 var SubscriptionTracker = require("listener-tracker");
 var inherit = require("raptor-util/inherit");
@@ -432,7 +434,10 @@ Component.prototype = componentProto = {
       // We need to set a flag to preview `this.input = foo` inside
       // onInput causing infinite recursion
       this.___settingInput = true;
-      updatedInput = onInput.call(this, newInput || {}, out);
+      // eslint-disable-next-line no-constant-condition
+      updatedInput = "MARKO_DEBUG"
+        ? invokeLifecycle(this, "onInput", [newInput || {}, out], onInput)
+        : onInput.call(this, newInput || {}, out);
       this.___settingInput = false;
     }
 
@@ -482,7 +487,12 @@ Component.prototype = componentProto = {
       // The UI component is still dirty after process state handlers
       // then we should rerender
 
-      if (this.shouldUpdate(input, state) !== false) {
+      if (
+        // eslint-disable-next-line no-constant-condition
+        ("MARKO_DEBUG"
+          ? invokeLifecycle(this, "shouldUpdate", [input, state])
+          : this.shouldUpdate(input, state)) !== false
+      ) {
         this.___scheduleRerender();
       }
     }
@@ -611,27 +621,41 @@ Component.prototype = componentProto = {
 
   ___emit: emit,
   ___emitCreate(input, out) {
-    this.onCreate && this.onCreate(input, out);
+    this.onCreate &&
+      // eslint-disable-next-line no-constant-condition
+      ("MARKO_DEBUG"
+        ? invokeLifecycle(this, "onCreate", [input, out])
+        : this.onCreate(input, out));
     this.___emit("create", input, out);
   },
 
   ___emitRender(out) {
-    this.onRender && this.onRender(out);
+    this.onRender &&
+      // eslint-disable-next-line no-constant-condition
+      ("MARKO_DEBUG"
+        ? invokeLifecycle(this, "onRender", [out])
+        : this.onRender(out));
     this.___emit("render", out);
   },
 
   ___emitUpdate() {
-    this.onUpdate && this.onUpdate();
+    this.onUpdate &&
+      // eslint-disable-next-line no-constant-condition
+      ("MARKO_DEBUG" ? invokeLifecycle(this, "onUpdate") : this.onUpdate());
     this.___emit("update");
   },
 
   ___emitMount() {
-    this.onMount && this.onMount();
+    this.onMount &&
+      // eslint-disable-next-line no-constant-condition
+      ("MARKO_DEBUG" ? invokeLifecycle(this, "onMount") : this.onMount());
     this.___emit("mount");
   },
 
   ___emitDestroy() {
-    this.onDestroy && this.onDestroy();
+    this.onDestroy &&
+      // eslint-disable-next-line no-constant-condition
+      ("MARKO_DEBUG" ? invokeLifecycle(this, "onDestroy") : this.onDestroy());
     this.___emit("destroy");
   },
 };

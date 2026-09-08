@@ -2,6 +2,9 @@ var registry = require("@internal/components-registry");
 var setImmediate = require("@internal/set-immediate").___setImmediate;
 var updateManager = require("../components/update-manager");
 var runtime = require(".");
+var invokeLifecycle =
+  // eslint-disable-next-line no-constant-binary-expression
+  "MARKO_DEBUG" && require("../components/invoke-lifecycle");
 
 var createTemplate = runtime.t;
 var createComponent = registry.___createComponent;
@@ -38,7 +41,11 @@ exports.t = runtime.t = function (typeName) {
               instance.___renderer = (input, out) => {
                 instance.___emitCreate(input, out);
                 if (instance.onInput) {
-                  input = instance.onInput(input, out) || input;
+                  input =
+                    // eslint-disable-next-line no-constant-condition
+                    ("MARKO_DEBUG"
+                      ? invokeLifecycle(instance, "onInput", [input, out])
+                      : instance.onInput(input, out)) || input;
                 }
                 instance.___renderer = renderer;
                 instance.___renderer(input, out);

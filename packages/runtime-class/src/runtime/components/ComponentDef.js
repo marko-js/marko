@@ -1,6 +1,8 @@
 "use strict";
 // eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
+// eslint-disable-next-line no-constant-binary-expression
+var invokeLifecycle = "MARKO_DEBUG" && require("./invoke-lifecycle");
 var extend = require("raptor-util/extend");
 var componentUtil = require("@internal/components-util");
 var w10NOOP = require("../helpers/serialize-noop").___noop;
@@ -123,10 +125,17 @@ ComponentDef.___deserialize = function (o, types, global, registry) {
     !(flags & FLAG_OLD_HYDRATE_NO_CREATE)
   ) {
     if (component.onCreate) {
-      component.onCreate(input, { global: global });
+      // eslint-disable-next-line no-constant-condition
+      "MARKO_DEBUG"
+        ? invokeLifecycle(component, "onCreate", [input, { global: global }])
+        : component.onCreate(input, { global: global });
     }
     if (component.onInput) {
-      input = component.onInput(input, { global: global }) || input;
+      input =
+        // eslint-disable-next-line no-constant-condition
+        ("MARKO_DEBUG"
+          ? invokeLifecycle(component, "onInput", [input, { global: global }])
+          : component.onInput(input, { global: global })) || input;
     }
   } else {
     if (state) {
