@@ -22,6 +22,8 @@ interface VirtualDep {
 }
 
 export interface MarkoMeta {
+  /** Browser-only custom element registration modules. */
+  browserImports?: Set<string>;
   id: string;
   component?: string;
   watchFiles: string[];
@@ -40,6 +42,15 @@ export interface CompileResult {
 }
 
 export const version: string;
+
+/** Reads a generated declaration-only .d.marko file. Cleared by taglib.clearCaches(). */
+export function getVirtualFile(filename: string): string | undefined;
+export function getVirtualFileOrigin(filename: string): string | undefined;
+export function registerVirtualFile(
+  filename: string,
+  source: string,
+  origin?: string,
+): void;
 
 export const globalConfig: Config;
 

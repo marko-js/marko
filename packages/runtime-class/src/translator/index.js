@@ -90,7 +90,7 @@ export const analyze = {
       meta.component =
         meta.component && resolveRelativePath(file, meta.component);
       meta.deps = meta.deps.map((filename) =>
-        typeof filename === "string"
+        typeof filename === "string" && !meta.browserImports?.has(filename)
           ? resolveRelativePath(file, filename)
           : filename,
       );

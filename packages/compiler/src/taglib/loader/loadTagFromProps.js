@@ -323,6 +323,10 @@ class TagLoader {
       value[0] === "." ? nodePath.resolve(this.dirname, value) : value;
   }
 
+  browserImport(value) {
+    this.tag.browserImport = resolveRelative(this.dirname, value);
+  }
+
   /**
    * An Object where each property maps to an attribute definition.
    * The property key will be the attribute name and the property value

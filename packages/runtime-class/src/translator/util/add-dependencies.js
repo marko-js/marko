@@ -252,7 +252,13 @@ function addBrowserImports(seenImports, lassoDeps, body, file, entryFile) {
       continue;
     }
 
-    addImport(seenImports, body, resolveRelativeToEntry(entryFile, file, dep));
+    addImport(
+      seenImports,
+      body,
+      file.metadata.marko.browserImports?.has(dep)
+        ? dep
+        : resolveRelativeToEntry(entryFile, file, dep),
+    );
   }
 }
 

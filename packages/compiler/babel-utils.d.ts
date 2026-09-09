@@ -47,7 +47,8 @@ export interface TagDefinition {
     description: string;
     descriptionMoreURL?: string;
   }>;
-  htmlType?: "html" | "svg" | "math";
+  htmlType?: "html" | "svg" | "math" | "custom-element";
+  browserImport?: string;
   html: boolean;
   name: string;
   isNestedTag?: boolean;
@@ -129,7 +130,8 @@ export interface Tag {
     description?: string;
     descriptionMoreURL?: string;
   }>;
-  htmlType?: "html" | "svg" | "math";
+  htmlType?: "html" | "svg" | "math" | "custom-element";
+  browserImport?: string;
   html?: boolean;
   types?: string;
   template?: string;

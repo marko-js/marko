@@ -9,6 +9,14 @@ import { enter, exit } from "../util/plugin-hooks";
 export const visitor = {
   MarkoTag: {
     enter(path) {
+      const tagDef = getTagDef(path);
+      const browserImport = tagDef?.browserImport;
+      if (browserImport) {
+        const meta = path.hub.file.metadata.marko;
+        meta.watchFiles.push(tagDef.filePath);
+        (meta.browserImports ||= new Set()).add(browserImport);
+        if (!meta.deps.includes(browserImport)) meta.deps.push(browserImport);
+      }
       const transformers = getTransformersForTag(path);
       const { node } = path;
 

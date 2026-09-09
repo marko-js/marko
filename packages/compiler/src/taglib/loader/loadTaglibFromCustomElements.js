@@ -6,144 +6,126 @@ import * as jsonFileReader from "./json-file-reader";
 import * as loaders from "./loaders";
 import * as types from "./types";
 
-/**
- * Synthesizes a taglib for an installed package that ships no `marko.json`
- * but declares a custom elements manifest via the `customElements` field in
- * its `package.json` (https://github.com/webcomponents/custom-elements-manifest).
- *
- * Each custom element registration becomes a virtual shadow template (a path
- * under `node_modules/.marko-custom-elements/` that exists only in the
- * compiler's virtual file registry) that types its attributes as `Input`,
- * imports the module registering the element, and renders it as a native tag:
- *
- *     export interface Input { label?: string }
- *     import "some-package/some-element.js";
- *     <${"some-element"} ...input/>
- *
- * so the element flows through the regular custom tag pipeline: the import
- * reaches the client bundle, and editors/TS pick up `Input` like any tag.
- */
-function loadFromCustomElements(packageJsonPath, packageName, rootDir) {
-  var pkg;
-  try {
-    pkg = jsonFileReader.readFileSync(packageJsonPath);
-  } catch (_) {
-    return undefined;
+export default function loadFromCustomElements(packageJsonPath, packageName) {
+  const pkg = jsonFileReader.readFileSync(packageJsonPath);
+  if (typeof pkg.customElements !== "string") return;
+
+  const packageRoot = nodePath.dirname(packageJsonPath);
+  const manifestPath = nodePath.resolve(packageRoot, pkg.customElements);
+  const cacheKey = `${packageJsonPath}\0${manifestPath}\0${packageName}`;
+  let taglib = cache.get(cacheKey);
+  if (taglib) return taglib;
+
+  const manifestKey = `${manifestPath}\0manifest`;
+  let manifest = cache.get(manifestKey);
+  if (!manifest) {
+    manifest = normalizeManifest(jsonFileReader.readFileSync(manifestPath));
+    cache.put(manifestKey, manifest);
   }
-
-  if (typeof pkg.customElements !== "string") {
-    return undefined;
-  }
-
-  var manifestPath = nodePath.join(
-    nodePath.dirname(packageJsonPath),
-    pkg.customElements,
-  );
-  var taglib = cache.get(manifestPath);
-
-  if (!taglib) {
-    taglib = new types.Taglib(manifestPath, true, packageName);
-    cache.put(manifestPath, taglib);
-
-    try {
-      var manifest = jsonFileReader.readFileSync(manifestPath);
-      loaders.loadTaglibFromProps(
-        taglib,
-        manifestToTaglibProps(manifest, packageName, rootDir),
-      );
-    } catch (err) {
-      cache.remove(manifestPath);
-      throw err;
+  const props = {};
+  for (const { name, module, declaration: decl } of manifest) {
+    const browserImport = nodePath.resolve(packageRoot, module);
+    const relativeModule = nodePath.relative(packageRoot, browserImport);
+    if (
+      relativeModule === ".." ||
+      relativeModule.startsWith(`..${nodePath.sep}`) ||
+      nodePath.isAbsolute(relativeModule)
+    )
+      continue;
+    const declaration = `${manifestPath}.${name}.d.marko`;
+    registerVirtualFile(declaration, declarationSource(decl), manifestPath);
+    const attributes = Object.create(null);
+    attributes["*"] = {
+      type: "expression",
+      preserveName: true,
+      targetProperty: null,
+    };
+    for (const attr of decl?.attributes || []) {
+      if (typeof attr.name !== "string") continue;
+      attributes[attr.name] = {
+        type: "expression",
+        preserveName: true,
+        targetProperty: null,
+        ...(attr.description || attr.summary
+          ? { description: attr.description || attr.summary }
+          : {}),
+      };
     }
+    props[`<${name}>`] = {
+      html: true,
+      htmlType: "custom-element",
+      types: declaration,
+      browserImport,
+      attributes,
+      ...(decl?.description || decl?.summary
+        ? { description: decl.description || decl.summary }
+        : {}),
+    };
   }
-
+  taglib = new types.Taglib(manifestPath, true, packageName);
+  taglib.setPackageName(packageName, packageRoot);
+  loaders.loadTaglibFromProps(taglib, props);
+  cache.put(cacheKey, taglib);
   return taglib;
 }
 
-function manifestToTaglibProps(manifest, packageName, rootDir) {
-  var props = {};
-  var generatedDir = nodePath.join(
-    rootDir,
-    "node_modules",
-    ".marko-custom-elements",
-    packageName,
-  );
-
-  for (var mod of manifest.modules || []) {
-    if (mod.kind !== "javascript-module") continue;
-
-    for (var exp of mod.exports || []) {
-      if (exp.kind !== "custom-element-definition") continue;
-
-      var decl = resolveDeclaration(manifest, mod, exp.declaration);
-      var template = nodePath.join(generatedDir, exp.name + ".marko");
-      registerVirtualFile(
-        template,
-        shadowTemplate(exp.name, decl, packageName + "/" + mod.path),
-      );
-
-      var tagProps = (props["<" + exp.name + ">"] = { template });
-      if (decl && (decl.description || decl.summary)) {
-        tagProps.description = decl.description || decl.summary;
+function normalizeManifest(manifest) {
+  const elements = [];
+  for (const mod of manifest.modules || []) {
+    if (mod.kind !== "javascript-module" || typeof mod.path !== "string")
+      continue;
+    for (const exp of mod.exports || []) {
+      if (
+        exp.kind === "custom-element-definition" &&
+        /^[a-z][a-z0-9._-]*-[a-z0-9._-]*$/.test(exp.name)
+      ) {
+        elements.push({
+          name: exp.name,
+          module: mod.path,
+          declaration: resolveDeclaration(manifest, mod, exp.declaration),
+        });
       }
     }
   }
-
-  return props;
+  return elements;
 }
 
-function shadowTemplate(tagName, decl, importPath) {
-  var fields = [];
-
-  for (var attr of (decl && decl.attributes) || []) {
-    var doc = attr.description || attr.summary;
-    if (doc) fields.push("  /** " + doc.replace(/\*\//g, "*\\/") + " */");
+function declarationSource(decl) {
+  const fields = [];
+  const keys = new Set(["content"]);
+  for (const attr of decl?.attributes || []) {
+    if (typeof attr.name !== "string" || keys.has(attr.name)) continue;
+    keys.add(attr.name);
+    const doc = attr.description || attr.summary;
+    if (doc) fields.push(`  /** ${doc.replace(/\*\//g, "*\\/")} */`);
     fields.push(
-      "  " + propertyKey(attr.name) + "?: " + attributeType(attr.type) + ";",
+      `  ${JSON.stringify(attr.name)}?: ${attributeType(attr.type)};`,
     );
   }
-
   fields.push("  content?: Marko.Body;");
-
-  return (
-    "// Generated from the custom elements manifest of " +
-    importPath.split("/")[0] +
-    " — do not edit.\n" +
-    "export interface Input {\n" +
-    fields.join("\n") +
-    "\n}\n\n" +
-    "import " +
-    JSON.stringify(importPath) +
-    ";\n\n" +
-    "<${" +
-    JSON.stringify(tagName) +
-    "} ...input/>\n"
-  );
+  return `export interface Input extends Omit<Marko.HTMLAttributes<HTMLElement>, ${[...keys].map((key) => JSON.stringify(key)).join(" | ")}> {\n${fields.join("\n")}\n}\n`;
 }
 
 function resolveDeclaration(manifest, mod, ref) {
-  if (!ref || ref.package) return undefined;
-
-  var target = mod;
-  if (ref.module) {
-    target = (manifest.modules || []).find((m) => m.path === ref.module);
-    if (!target) return undefined;
-  }
-
-  return (target.declarations || []).find(
-    (d) => d.name === ref.name && d.customElement,
-  );
+  if (!ref || ref.package) return;
+  const target = ref.module
+    ? manifest.modules.find(
+        (m) =>
+          nodePath.posix.normalize(m.path) ===
+          nodePath.posix.normalize(ref.module),
+      )
+    : mod;
+  return target?.declarations?.find((d) => d.name === ref.name);
 }
 
-function propertyKey(name) {
-  return /^[A-Za-z_$][\w$]*$/.test(name) ? name : JSON.stringify(name);
-}
-
-// Manifest attribute types are free-form (TS, JSDoc or Closure); anything
-// that does not scan as a plain TS type expression falls back to `string`.
+// CEM types may contain JSDoc syntax or references with no TypeScript exports.
+// Preserve only self-contained primitive/literal unions; never emit broken types.
 function attributeType(type) {
-  var text = type && type.text;
-  return text && /^[\w\s|&'"`,.<>[\]()-]+$/.test(text) ? text : "string";
+  const text = type?.text?.trim();
+  return text &&
+    /^(?:string|number|boolean|unknown|any|never|null|undefined|true|false|-?\d+(?:\.\d+)?|"(?:[^"\\\r\n]|\\.)*"|'(?:[^'\\\r\n]|\\.)*')(?:\s*\|\s*(?:string|number|boolean|unknown|any|never|null|undefined|true|false|-?\d+(?:\.\d+)?|"(?:[^"\\\r\n]|\\.)*"|'(?:[^'\\\r\n]|\\.)*'))*$/.test(
+      text,
+    )
+    ? text
+    : "unknown";
 }
-
-export default loadFromCustomElements;

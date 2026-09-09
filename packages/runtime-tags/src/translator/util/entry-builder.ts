@@ -190,7 +190,11 @@ const builder = {
       const assets =
         isRoot || state.bundled ? state.bundledAssets : state.assets;
       for (const request of assetImports) {
-        assets.add(resolveRelativeToEntry(entryFile, file, request));
+        assets.add(
+          file.metadata.marko.browserImports?.has(request)
+            ? request
+            : resolveRelativeToEntry(entryFile, file, request),
+        );
       }
     }
 

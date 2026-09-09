@@ -73,6 +73,9 @@ export default {
       trackParamsReferences(program, BindingType.input);
 
       const programExtra = (program.node.extra ??= {});
+      for (const request of getFile().metadata.marko.browserImports || []) {
+        addAssetImport(request);
+      }
       const inputBinding = program.node.params![0].extra?.binding;
       if (inputBinding) {
         inputBinding.nullable = false;
@@ -130,6 +133,13 @@ export default {
   },
   translate: {
     enter(program) {
+      if (isOutputDOM()) {
+        for (const request of getFile().metadata.marko.browserImports || []) {
+          program.node.body.unshift(
+            t.importDeclaration([], t.stringLiteral(request)),
+          );
+        }
+      }
       scopeIdentifier = isOutputDOM()
         ? generateUidIdentifier("scope")
         : (null as any as t.Identifier);

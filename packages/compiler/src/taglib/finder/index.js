@@ -149,15 +149,15 @@ function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
         } else {
           // No taglib, but the package may declare a custom elements manifest
           // (`customElements` in its package.json) we can expose as native tags.
-          let packageJsonPath = markoModules.tryResolve(
-            name + "/package.json",
-            rootPkg.__dirname,
-          );
+          let packageJsonPath =
+            markoModules.tryResolve(
+              name + "/package.json",
+              rootPkg.__dirname,
+            ) || findPackageJson(name, rootPkg.__dirname);
           if (packageJsonPath) {
             let ceTaglib = taglibLoader.loadTaglibFromCustomElements(
               packageJsonPath,
               name,
-              rootPkg.__dirname,
             );
             if (ceTaglib) {
               addTaglib(ceTaglib);
@@ -185,6 +185,18 @@ function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
 }
 
 find._withMeta = findWithMeta;
+
+function findPackageJson(name, dir) {
+  for (;;) {
+    const filename = nodePath.join(dir, "node_modules", name, "package.json");
+    try {
+      if (taglibConfig.fs.statSync(filename).isFile()) return filename;
+    } catch {}
+    const parent = nodePath.dirname(dir);
+    if (parent === dir) return;
+    dir = parent;
+  }
+}
 
 function clearCache() {
   findCache = new Map();

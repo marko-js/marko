@@ -68,28 +68,80 @@ describe("compiler/taglib", () => {
 
   it("exposes a dependency's custom elements manifest as generated tags", () =>
     assert.deepEqual(run({ CASE: "custom-elements-manifest" }), {
-      template: path.join(
+      types: path.join(
         "node_modules",
-        ".marko-custom-elements",
         "probe-elements",
-        "probe-badge.marko",
+        "custom-elements.json.probe-badge.d.marko",
       ),
+      native: true,
+      template: null,
       description: "A badge.",
       onDisk: false,
-      source: `// Generated from the custom elements manifest of probe-elements — do not edit.
-export interface Input {
+      source: `export interface Input extends Omit<Marko.HTMLAttributes<HTMLElement>, "content" | "label" | "pinned" | "count" | "items" | "model" | "size"> {
   /** Badge label. */
-  label?: string;
-  pinned?: boolean;
-  count?: number;
+  "label"?: string;
+  "pinned"?: boolean;
+  "count"?: number;
+  "items"?: unknown;
+  "model"?: unknown;
+  "size"?: 'small' | 'large';
   content?: Marko.Body;
 }
-
-import "probe-elements/define/probe-badge.js";
-
-<\${"probe-badge"} ...input/>
 `,
     }));
+
+  it("keeps custom elements native and registration browser-only", () => {
+    const results = run({ CASE: "custom-elements-compile" });
+    for (const [mode, code] of Object.entries(results)) {
+      if (mode.endsWith(":html")) {
+        assert.doesNotMatch(
+          code,
+          /import .*define\/probe-badge|require\(.*define\/probe-badge/,
+        );
+        if (!mode.includes("-page:")) assert.match(code, /probe-badge/);
+      } else {
+        assert.match(code, /define\/probe-badge\.js/);
+        assert.ok(
+          code.includes(
+            path.join(
+              fixture,
+              "node_modules/probe-elements/define/probe-badge.js",
+            ),
+          ),
+        );
+      }
+      assert.doesNotMatch(code, /\.d\.marko|\.marko-custom-elements/);
+    }
+  });
+
+  it("renders custom elements on the server without DOM globals", () => {
+    const results = run({ CASE: "custom-elements-render" });
+    for (const html of results) {
+      assert.match(
+        html,
+        /<probe-badge data-label="?hello"?><span>child<\/span><\/probe-badge>/,
+      );
+    }
+  });
+
+  it("upgrades static custom elements from the page browser graph", () => {
+    assert.deepEqual(run({ CASE: "custom-elements-browser" }), {
+      upgraded: true,
+      content: "child",
+    });
+  });
+
+  it("scopes custom elements aliases and clears generated declarations", () => {
+    assert.deepEqual(run({ CASE: "custom-elements-cache" }), {
+      aliases: ["alias-a", "alias-b"],
+      sameDeclaration: true,
+      sameRegistration: true,
+      cleared: true,
+      rebuilt: true,
+      origin: true,
+      rejectsRuntimeFiles: true,
+    });
+  });
 
   describe("optional taglibs", () => {
     it("skips one the root package does not depend on", () =>

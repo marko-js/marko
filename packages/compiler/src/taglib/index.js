@@ -3,6 +3,7 @@ import path from "path";
 import markoModules from "@marko/compiler/modules";
 
 import tryLoadTranslator from "../util/try-load-translator";
+import { clearVirtualFiles } from "../virtual-files";
 import taglibConfig from "./config";
 import * as finder from "./finder";
 import * as loader from "./loader";
@@ -96,6 +97,7 @@ export function register(id, props) {
 }
 
 export function clearCaches() {
+  clearVirtualFiles();
   loader.clearCache();
   finder.clearCache();
   loadedTranslatorsTaglibs.clear();

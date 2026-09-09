@@ -1,8 +1,10 @@
 import fs from "node:fs";
+import Module from "node:module";
 import os from "node:os";
 import path from "node:path";
 
-import { getVirtualFile, taglib } from "@marko/compiler";
+import { compileSync, getVirtualFile, getVirtualFileOrigin, registerVirtualFile, taglib } from "@marko/compiler";
+import { JSDOM } from "jsdom";
 
 // Empty on both halves of what a translator owes the lookup, so what comes
 // back is only what `register` put there.
@@ -50,12 +52,100 @@ const cases = {
       .getTag("probe-badge");
     write(
       tag && {
-        template: path.relative(process.cwd(), tag.template),
+        types: path.relative(process.cwd(), tag.types),
+        native: tag.html && tag.htmlType === "custom-element",
+        template: tag.template ?? null,
         description: tag.description,
-        onDisk: fs.existsSync(tag.template),
-        source: getVirtualFile(tag.template),
+        onDisk: fs.existsSync(tag.types),
+        source: getVirtualFile(tag.types),
       },
     );
+  },
+
+  "custom-elements-compile": () => {
+    const results = {};
+    for (const translator of ["@marko/runtime-tags/translator", "marko/translator"]) {
+      for (const output of ["html", "dom", "hydrate"]) {
+        const result = compileSync('<probe-badge label="hello"><span>child</span></probe-badge>', path.join(process.cwd(), "template.marko"), {
+          translator,
+          output,
+          resolveVirtualDependency: (_from, dep) => dep.virtualPath,
+        });
+        results[`${translator}:${output}`] = result.code;
+      }
+    }
+    for (const output of ["html", "dom"]) {
+      const result = compileSync("<probe-badge/>", path.join(process.cwd(), "template.marko"), {
+        translator: "@marko/runtime-tags/translator",
+        output,
+        entry: "page",
+        linkAssets: { runtime: "./assets.js", onAsset() {} },
+      });
+      results[`@marko/runtime-tags/translator-page:${output}`] = result.code;
+    }
+    write(results);
+  },
+
+  "custom-elements-render": async () => {
+    const results = [];
+    for (const translator of ["@marko/runtime-tags/translator", "marko/translator"]) {
+      const filename = path.join(process.cwd(), "template.marko");
+      const { code } = compileSync('<probe-badge data-label="hello"><span>child</span></probe-badge>', filename, {
+        translator, modules: "cjs", output: "html",
+      });
+      const mod = new Module(filename);
+      mod.filename = filename;
+      mod.paths = Module._nodeModulePaths(process.cwd());
+      mod._compile(code, filename);
+      const template = mod.exports.default || mod.exports;
+      results.push(await (template.renderToString ? template.renderToString({}) : template.render({})));
+    }
+    write(results);
+  },
+
+  "custom-elements-browser": () => {
+    const { window } = new JSDOM("<probe-badge><span>child</span></probe-badge>");
+    globalThis.HTMLElement = window.HTMLElement;
+    globalThis.customElements = window.customElements;
+    const filename = path.join(process.cwd(), "template.marko");
+    const { code } = compileSync("<probe-badge><span>child</span></probe-badge>", filename, {
+      translator: "@marko/runtime-tags/translator",
+      output: "hydrate",
+      modules: "cjs",
+      resolveVirtualDependency: (_from, dep) => dep.virtualPath,
+    });
+    const mod = new Module(filename);
+    mod.filename = filename;
+    mod.paths = Module._nodeModulePaths(process.cwd());
+    mod._compile(code, filename);
+    write({
+      upgraded: window.document.querySelector("probe-badge") instanceof window.customElements.get("probe-badge"),
+      content: window.document.querySelector("probe-badge").textContent,
+    });
+    window.close();
+    delete globalThis.HTMLElement;
+    delete globalThis.customElements;
+  },
+
+  "custom-elements-cache": () => {
+    const pkg = path.join(process.cwd(), "node_modules/probe-elements/package.json");
+    const a = taglib._loader.loadTaglibFromCustomElements(pkg, "alias-a", "/project-a");
+    const b = taglib._loader.loadTaglibFromCustomElements(pkg, "alias-b", "/project-b");
+    const first = a.tags["probe-badge"];
+    const second = b.tags["probe-badge"];
+    const before = getVirtualFile(first.types);
+    taglib.clearCaches();
+    const cleared = getVirtualFile(first.types) === undefined;
+    const rebuilt = taglib._loader.loadTaglibFromCustomElements(pkg, "alias-a", "/project-c");
+    write({
+      aliases: [first.packageName, second.packageName],
+      sameDeclaration: first.types === second.types,
+      sameRegistration: first.browserImport === second.browserImport,
+      cleared,
+      rebuilt: getVirtualFile(rebuilt.tags["probe-badge"].types) === before,
+      origin: getVirtualFileOrigin(first.types) === path.join(process.cwd(), "node_modules/probe-elements/custom-elements.json"),
+      rejectsRuntimeFiles: !!message(() => registerVirtualFile("runtime.marko", "<div/>")),
+    });
   },
 
   "optional-undeclared": () => write(taglib.resolveOptionalTaglibs(["marko-undeclared-taglib"])),
@@ -124,4 +214,4 @@ const cases = {
   },
 };
 
-cases[process.env.CASE]();
+await cases[process.env.CASE]();
