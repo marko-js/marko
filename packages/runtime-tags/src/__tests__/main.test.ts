@@ -92,8 +92,9 @@ export type TestConfig = {
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
 // worker a subset of round-robin "slots" via the env below: a fixture runs here
 // when `index % slotTotal` is one of this worker's slots. Round-robin keeps the
-// expensive fixtures spread evenly across workers. With no env set (a plain
-// `pnpm test`, or a scoped `--grep`) `slots` is null and every fixture runs.
+// expensive fixtures spread evenly across workers. With no env set (any run
+// outside that script, such as `pnpm run test:serial`) `slots` is null and
+// every fixture runs.
 const slotTotal = Number(process.env.MARKO_TEST_SLOT_TOTAL) || 1;
 const slots = process.env.MARKO_TEST_SLOTS
   ? new Set(process.env.MARKO_TEST_SLOTS.split(",").map(Number))

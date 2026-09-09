@@ -7,7 +7,7 @@
     "@ci:release": "pnpm run build && node scripts/pkg-override && changeset publish && pnpm run @ci:release-alias && node scripts/pkg-override && pnpm install --frozen-lockfile",
     "@ci:release-alias": "node -r ~ts scripts/publish-alias.mts",
     "@ci:test": "zcov -- pnpm run @ci:test:fast",
-    "@ci:test:fast": "pnpm run test:parallel",
+    "@ci:test:fast": "pnpm run test",
     "@ci:version": "changeset version && oxfmt \"**/package.json\" && pnpm install --lockfile-only",
     "audit": "pnpm audit --prod",
     "build": "pnpm -r --if-present run build && pnpm run build:types",
@@ -19,10 +19,10 @@
     "lint": "oxlint && oxfmt --check --with-node-modules .",
     "prepare": "husky && pnpm --filter @marko/compiler run build-babel-types",
     "report": "zcov report -r html && open ./coverage/index.html",
-    "test": "mocha --config .mocharc.all.cjs",
-    "test:parallel": "node scripts/test-parallel.js",
-    "test:update": "UPDATE_EXPECTATIONS=1 mocha --config .mocharc.all.cjs",
-    "test:update:parallel": "cross-env UPDATE_EXPECTATIONS=1 node scripts/test-parallel.js"
+    "test": "node scripts/test-parallel.js",
+    "test:serial": "mocha --config .mocharc.all.cjs",
+    "test:update": "cross-env UPDATE_EXPECTATIONS=1 node scripts/test-parallel.js",
+    "test:update:serial": "cross-env UPDATE_EXPECTATIONS=1 mocha --config .mocharc.all.cjs"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",
