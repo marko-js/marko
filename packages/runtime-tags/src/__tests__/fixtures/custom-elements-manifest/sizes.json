@@ -1,12 +1,18 @@
 {
   "dom": {
     "template.marko.page.mjs": {
-      "min": 438,
-      "brotli": 263
+      "total": {
+        "min": 4317,
+        "brotli": 1975
+      },
+      "files": {
+        "node_modules/probe-elements/define/probe-badge.js": 990,
+        "template.marko": 675
+      }
     }
   },
   "html": {
-    "min": 57,
-    "brotli": 51
+    "min": 618,
+    "brotli": 343
   }
 }

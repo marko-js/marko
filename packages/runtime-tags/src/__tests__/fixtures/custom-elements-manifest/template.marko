@@ -1,1 +1,15 @@
-<probe-badge label="hello"><span>child</span></probe-badge>
+<let/count=0/>
+<let/label="Likes"/>
+<let/disabled=false/>
+
+<probe-badge
+  label=label
+  count=count
+  disabled=disabled
+  onCount-change(event) { count = event.detail; }
+>
+  <span>${label} on this post</span>
+</probe-badge>
+<output>${count}</output>
+<button id="reset" onClick() { count = 5; label = "Votes"; }>Reset</button>
+<button id="toggle" onClick() { disabled = !disabled; }>Toggle disabled</button>
