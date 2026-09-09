@@ -6,13 +6,14 @@
 // one mocha worker per core: every slotted worker loads all sliced files but
 // only runs its own slice of their fixtures.
 //
-// A plain `pnpm test` is untouched — it stays serial, which is what a scoped
-// `--grep` dev run wants. This is the "run everything, fast" path used by CI.
+// This is what `pnpm test` runs, and what CI runs; a scoped `--grep` works here
+// too. `pnpm run test:serial` keeps the single-process mocha run for when bail,
+// live output or a debugger matters more than throughput.
 //
 // Plain CommonJS because it needs no types and is spawned directly by `node`;
 // the mocha workers it spawns get `~ts` via `.mocharc.parallel.cjs`.
 //
-// Usage: node scripts/test-parallel.js [extra mocha args...]
+// Usage: pnpm test [-- extra mocha args...]
 //        MARKO_TEST_WORKERS=8 node scripts/test-parallel.js
 const { spawn } = require("node:child_process");
 const fs = require("node:fs");

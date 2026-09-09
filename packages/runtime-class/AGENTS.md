@@ -88,8 +88,10 @@ fixtures/<name>/
 
 ### Running tests
 
+From the repo root:
+
 ```sh
-npm test # all tests
-npm test -- --grep "<fixture> " # specific fixture
-npm run test:update # update snapshots
+pnpm test # all tests
+pnpm test -- --grep "<fixture> " # specific fixture
+pnpm run test:update # update snapshots
 ```

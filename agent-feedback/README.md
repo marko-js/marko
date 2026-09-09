@@ -58,13 +58,13 @@ Repro:
 Guard tests:
 
 - Fold into existing fixture families under `packages/*/src/__tests__/fixtures*`; no one-off test files.
-- Snapshots: `pnpm run test:update -- --grep "..."` per fixture; `pnpm run test:update:parallel` repo-wide (plain `test:update` bails at the first failure and skips the rest).
+- Snapshots: `pnpm run test:update -- --grep "..."` per fixture; `pnpm run test:update` repo-wide.
 - Compile errors: `error_compiler: true` + snapshot. Runtime dev errors: snapshot under `## Console` with `skip_optimize: true`. SSR-only errors: `error_html: true, skip_csr: true`.
 - Debug-only diagnostics (`MARKO_DEBUG` `console.error`) must not change optimized output; match the controllable-select diagnostic pattern.
 
 Pre-ship:
 
-- `pnpm run test:parallel`.
+- `pnpm test`.
 - Runtime changes: `pnpm run build && pnpm run build:sizes`. Bundle size is a feature; report any non-zero delta before committing. Then `git checkout -- .sizes*`; the pre-commit hook regenerates them.
 - Pre-commit is slow by design (lint-staged, full build, tsc, sizes). On hook failure grep its output for `error TS`.
 - Changeset only for user-facing changes: write `.changeset/<name>.md` directly, verify with `pnpm exec changeset status`.

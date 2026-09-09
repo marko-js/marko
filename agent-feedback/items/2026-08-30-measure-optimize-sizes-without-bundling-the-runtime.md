@@ -17,5 +17,5 @@ Measuring a chunk's shared-runtime share once per process and adding it to the
 fixture's own tree-shaken bytes would let that build take the external too.
 
 Check: in `createBuilds`, extend `externalRuntimePlugin` to the optimize dom
-build and time `pnpm run test:parallel`; the fixture `sizes.json` assertions are
+build and time `pnpm test`; the fixture `sizes.json` assertions are
 what fail.

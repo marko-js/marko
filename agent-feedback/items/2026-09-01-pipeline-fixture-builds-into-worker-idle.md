@@ -7,7 +7,7 @@ site: packages/runtime-tags/src/__tests__/main.test.ts › ssrRunner
 
 # Pipeline the next fixture build into the worker's idle time
 
-A `--cpu-prof` of one `test:parallel` worker running `main.test.ts` alone
+A `--cpu-prof` of one `pnpm test` worker running `main.test.ts` alone
 spends 32% of its wall time in `(idle)`: `createServerRunner` awaits rolldown,
 whose work runs on native threads while the JS thread has nothing to do. With
 one worker per core the other workers absorb some of that, but the run still

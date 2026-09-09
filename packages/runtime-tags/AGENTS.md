@@ -78,13 +78,16 @@ export default {
 
 Fixture-based snapshot tests driven by `src/__tests__/main.test.ts`. Fixtures live in `src/__tests__/fixtures/`, plus `fixtures-interop/` (Marko 5 ↔ 6 mixing, suite name `translator-interop`). A dir suffixed `.skip` is ignored.
 
+From the repo root:
+
 ```sh
-npm test -- --grep "runtime-tags/translator <fixture> "  # one fixture (note trailing space)
-npm run test:update -- --grep "runtime-tags/translator <fixture> "  # regenerate its snapshots
-npm test -- --grep "translator-interop"                  # interop suite (run after base suite passes)
+pnpm test                                                            # whole suite, fanned across CPU cores
+pnpm test -- --grep "runtime-tags/translator <fixture> "             # one fixture (note trailing space)
+pnpm run test:update -- --grep "runtime-tags/translator <fixture> "  # regenerate its snapshots
+pnpm test -- --grep "translator-interop"                             # interop suite (run after base suite passes)
 ```
 
-Run scoped; the full suite is slow and `bail: true` stops everything at the first failure anyway.
+Iterate scoped, then run `pnpm test` for everything; it fans across cores and reports every failure. Repeating a grep as `pnpm run test:serial -- --grep "..."` runs it in one process, with `bail: true` and live output, for a debugger or a clean stack trace.
 
 ### Fixture anatomy
 
@@ -116,11 +119,11 @@ To add a fixture: create the dir + `template.marko` (+ `test.ts` with steps exer
 1. `translator/core/<tag>.ts` + register in `core/index.ts` (and `util/is-core-tag.ts`).
 2. Runtime helpers in `src/dom/` / `src/html/`, exported from `src/dom.ts` / `src/html.ts`; add to `util/runtime.ts` lists as needed.
 3. Several small fixtures covering static values, dynamic updates, nesting, and interaction with `<for>`/`<if>`.
-4. `npm run change` — user-facing changes need a changeset.
+4. `pnpm run change` — user-facing changes need a changeset.
 5. Update `cheatsheet.md` (the LLM syntax reference shipped in the published package) when the change affects user-facing syntax, idioms, or guidance.
 6. Expect broad snapshot/`sizes.json` churn and an update to `packages/runtime-class/test/taglib-lookup/fixtures/getTagsSorted/expected.json` (interop taglib lookup).
 
-**Changing generated output**: iterate with `npm run compile -- -o dom -d file.marko` (and `-o html`), then `test:update` and audit snapshot diffs — output shape changes ripple through hundreds of fixtures; verify a sample by hand, don't rubber-stamp.
+**Changing generated output**: iterate with `pnpm run compile -- -o dom -d file.marko` (and `-o html`), then `test:update` and audit snapshot diffs — output shape changes ripple through hundreds of fixtures; verify a sample by hand, don't rubber-stamp.
 
 **Changing runtime behavior**: find the covering fixtures by grepping `__tests__/fixtures` for the runtime helper or syntax; extend `steps` before touching the runtime so the mutation log captures the before/after.
 
