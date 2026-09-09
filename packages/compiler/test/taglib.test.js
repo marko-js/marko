@@ -66,39 +66,34 @@ describe("compiler/taglib", () => {
     });
   });
 
-  it("exposes a dependency's custom elements manifest as generated tags", () =>
+  it("exposes a dependency's custom elements manifest as native metadata", () =>
     assert.deepEqual(run({ CASE: "custom-elements-manifest" }), {
-      types: path.join(
-        "node_modules",
-        "probe-elements",
-        "custom-elements.json.probe-badge.d.marko",
-      ),
+      types: null,
       native: true,
       template: null,
       description: "A badge.",
-      onDisk: false,
-      source: `export interface Input extends Omit<Marko.HTMLAttributes<HTMLElement>, "content" | "label" | "pinned" | "count" | "items" | "model" | "size"> {
-  /** Badge label. */
-  "label"?: string;
-  "pinned"?: boolean;
-  "count"?: number;
-  "items"?: unknown;
-  "model"?: unknown;
-  "size"?: 'small' | 'large';
-  content?: Marko.Body;
-}
-`,
+      attributes: {
+        label: "string",
+        pinned: "boolean",
+        count: "number",
+        items: "Array.<string>",
+        model: "BadgeModel",
+        size: "'small' | 'large'",
+      },
+      origin: path.join(
+        "node_modules",
+        "probe-elements",
+        "custom-elements.json",
+      ),
     }));
 
-  it("scopes custom elements aliases and clears generated declarations", () => {
+  it("scopes custom elements aliases and clears manifest metadata", () => {
     assert.deepEqual(run({ CASE: "custom-elements-cache" }), {
       aliases: ["alias-a", "alias-b"],
-      sameDeclaration: true,
+      distinctTags: true,
       sameRegistration: true,
-      cleared: true,
       rebuilt: true,
       origin: true,
-      rejectsRuntimeFiles: true,
     });
   });
 

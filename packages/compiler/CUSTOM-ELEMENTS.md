@@ -14,13 +14,15 @@ Manifest module paths are physical paths relative to the package directory.
 Marko imports those resolved files directly; neither `package.json` nor the
 registration subpath needs to be publicly exported.
 
-Attribute types are exposed as in-memory, declaration-only `.d.marko` files.
-Primitive types, literals and their unions are preserved. Unsupported types,
+Attribute type text and documentation are exposed directly on taglib attribute
+definitions (`nativeType` and `description`). Language tooling validates these
+types and incorporates them into native-element checking in the consumer's
+existing extracted script, retaining global HTML and event attributes.
+Primitive types, literals and their unions are preserved; unsupported types,
 including unresolved named references and JSDoc expressions, become `unknown`.
-No runtime wrapper is generated or written into `node_modules`.
+No handwritten or generated `.d.marko` files or runtime wrappers are needed.
 
-Language tooling can read these files with `getVirtualFile(filename)` and obtain
-their real manifest location with `getVirtualFileOrigin(filename)`. They are
-referenced by `TagDefinition.types`; `TagDefinition.browserImport` records the
-browser-only registration module. `taglib.clearCaches()` clears both discovery
-and generated declarations so edited manifests can be rediscovered.
+`TagDefinition.filePath` points to the real manifest for navigation.
+`TagDefinition.browserImport` records the browser-only registration module.
+`taglib.clearCaches()` clears discovery and manifest metadata so edited manifests
+can be rediscovered.

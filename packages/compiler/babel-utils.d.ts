@@ -1,6 +1,8 @@
 import type { Config, types as t } from "@marko/compiler";
 
 export interface AttributeDefinition {
+  /** Manifest type text for native attributes; tooling validates before use. */
+  nativeType?: string;
   allowExpressions: boolean;
   filePath: string;
   name: string;
@@ -96,6 +98,7 @@ export interface TaglibLookup {
 }
 
 export interface Attribute {
+  nativeType?: string;
   allowExpressions?: boolean;
   type?: string;
   html?: boolean;

@@ -55,6 +55,10 @@ class AttrLoader {
     }
   }
 
+  nativeType(value) {
+    this.attr.nativeType = value;
+  }
+
   /**
    * The name of the target property to use when mapping
    * the attribute to a property on the target object.

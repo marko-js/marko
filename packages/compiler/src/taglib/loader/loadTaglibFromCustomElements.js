@@ -1,6 +1,5 @@
 import nodePath from "path";
 
-import { registerVirtualFile } from "../../virtual-files";
 import * as cache from "./cache";
 import * as jsonFileReader from "./json-file-reader";
 import * as loaders from "./loaders";
@@ -32,8 +31,6 @@ export default function loadFromCustomElements(packageJsonPath, packageName) {
       nodePath.isAbsolute(relativeModule)
     )
       continue;
-    const declaration = `${manifestPath}.${name}.d.marko`;
-    registerVirtualFile(declaration, declarationSource(decl), manifestPath);
     const attributes = Object.create(null);
     attributes["*"] = {
       type: "expression",
@@ -44,6 +41,9 @@ export default function loadFromCustomElements(packageJsonPath, packageName) {
       if (typeof attr.name !== "string") continue;
       attributes[attr.name] = {
         type: "expression",
+        ...(typeof attr.type?.text === "string"
+          ? { nativeType: attr.type.text }
+          : {}),
         preserveName: true,
         targetProperty: null,
         ...(attr.description || attr.summary
@@ -54,7 +54,6 @@ export default function loadFromCustomElements(packageJsonPath, packageName) {
     props[`<${name}>`] = {
       html: true,
       htmlType: "custom-element",
-      types: declaration,
       browserImport,
       attributes,
       ...(decl?.description || decl?.summary
@@ -90,22 +89,6 @@ function normalizeManifest(manifest) {
   return elements;
 }
 
-function declarationSource(decl) {
-  const fields = [];
-  const keys = new Set(["content"]);
-  for (const attr of decl?.attributes || []) {
-    if (typeof attr.name !== "string" || keys.has(attr.name)) continue;
-    keys.add(attr.name);
-    const doc = attr.description || attr.summary;
-    if (doc) fields.push(`  /** ${doc.replace(/\*\//g, "*\\/")} */`);
-    fields.push(
-      `  ${JSON.stringify(attr.name)}?: ${attributeType(attr.type)};`,
-    );
-  }
-  fields.push("  content?: Marko.Body;");
-  return `export interface Input extends Omit<Marko.HTMLAttributes<HTMLElement>, ${[...keys].map((key) => JSON.stringify(key)).join(" | ")}> {\n${fields.join("\n")}\n}\n`;
-}
-
 function resolveDeclaration(manifest, mod, ref) {
   if (!ref || ref.package) return;
   const target = ref.module
@@ -116,16 +99,4 @@ function resolveDeclaration(manifest, mod, ref) {
       )
     : mod;
   return target?.declarations?.find((d) => d.name === ref.name);
-}
-
-// CEM types may contain JSDoc syntax or references with no TypeScript exports.
-// Preserve only self-contained primitive/literal unions; never emit broken types.
-function attributeType(type) {
-  const text = type?.text?.trim();
-  return text &&
-    /^(?:string|number|boolean|unknown|any|never|null|undefined|true|false|-?\d+(?:\.\d+)?|"(?:[^"\\\r\n]|\\.)*"|'(?:[^'\\\r\n]|\\.)*')(?:\s*\|\s*(?:string|number|boolean|unknown|any|never|null|undefined|true|false|-?\d+(?:\.\d+)?|"(?:[^"\\\r\n]|\\.)*"|'(?:[^'\\\r\n]|\\.)*'))*$/.test(
-      text,
-    )
-    ? text
-    : "unknown";
 }

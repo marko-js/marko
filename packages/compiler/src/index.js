@@ -21,11 +21,6 @@ import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
 export const version = pkg.version;
-export {
-  getVirtualFile,
-  getVirtualFileOrigin,
-  registerVirtualFile,
-} from "./virtual-files";
 export { taglib, types };
 
 const hasBabel = !!(

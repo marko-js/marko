@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-import { getVirtualFile, getVirtualFileOrigin, registerVirtualFile, taglib } from "@marko/compiler";
+import { taglib } from "@marko/compiler";
 
 // Empty on both halves of what a translator owes the lookup, so what comes
 // back is only what `register` put there.
@@ -50,12 +50,12 @@ const cases = {
       .getTag("probe-badge");
     write(
       tag && {
-        types: path.relative(process.cwd(), tag.types),
+        types: tag.types ?? null,
         native: tag.html && tag.htmlType === "custom-element",
         template: tag.template ?? null,
         description: tag.description,
-        onDisk: fs.existsSync(tag.types),
-        source: getVirtualFile(tag.types),
+        attributes: Object.fromEntries(Object.values(tag.attributes).filter(attr => attr.name !== "*").map(attr => [attr.name, attr.nativeType])),
+        origin: path.relative(process.cwd(), tag.filePath),
       },
     );
   },
@@ -66,18 +66,14 @@ const cases = {
     const b = taglib._loader.loadTaglibFromCustomElements(pkg, "alias-b", "/project-b");
     const first = a.tags["probe-badge"];
     const second = b.tags["probe-badge"];
-    const before = getVirtualFile(first.types);
     taglib.clearCaches();
-    const cleared = getVirtualFile(first.types) === undefined;
     const rebuilt = taglib._loader.loadTaglibFromCustomElements(pkg, "alias-a", "/project-c");
     write({
       aliases: [first.packageName, second.packageName],
-      sameDeclaration: first.types === second.types,
+      distinctTags: first !== second,
       sameRegistration: first.browserImport === second.browserImport,
-      cleared,
-      rebuilt: getVirtualFile(rebuilt.tags["probe-badge"].types) === before,
-      origin: getVirtualFileOrigin(first.types) === path.join(process.cwd(), "node_modules/probe-elements/custom-elements.json"),
-      rejectsRuntimeFiles: !!message(() => registerVirtualFile("runtime.marko", "<div/>")),
+      rebuilt: rebuilt !== a && rebuilt.tags["probe-badge"].attributes.label.nativeType === first.attributes.label.nativeType,
+      origin: first.filePath === path.join(process.cwd(), "node_modules/probe-elements/custom-elements.json"),
     });
   },
 
