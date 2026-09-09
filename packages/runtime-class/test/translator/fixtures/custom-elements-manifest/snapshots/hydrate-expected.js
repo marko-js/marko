@@ -1,0 +1,1 @@
+import "__tests__/node_modules/probe-elements/define/probe-badge.js";

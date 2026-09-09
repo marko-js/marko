@@ -60,7 +60,7 @@ function runTest(config) {
     const snapshotsDir = resolve("snapshots");
     const name = `snapshots${path.sep + mode}`;
     const stripFixtureDir = (str) =>
-      str.replaceAll(relativeFixtureDir, "__tests__");
+      stripCwd(str).replaceAll(relativeFixtureDir, "__tests__");
 
     if (!fs.existsSync(snapshotsDir)) {
       fs.mkdirSync(snapshotsDir);

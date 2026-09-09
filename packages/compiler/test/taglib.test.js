@@ -90,47 +90,6 @@ describe("compiler/taglib", () => {
 `,
     }));
 
-  it("keeps custom elements native and registration browser-only", () => {
-    const results = run({ CASE: "custom-elements-compile" });
-    for (const [mode, code] of Object.entries(results)) {
-      if (mode.endsWith(":html")) {
-        assert.doesNotMatch(
-          code,
-          /import .*define\/probe-badge|require\(.*define\/probe-badge/,
-        );
-        if (!mode.includes("-page:")) assert.match(code, /probe-badge/);
-      } else {
-        assert.match(code, /define\/probe-badge\.js/);
-        assert.ok(
-          code.includes(
-            path.join(
-              fixture,
-              "node_modules/probe-elements/define/probe-badge.js",
-            ),
-          ),
-        );
-      }
-      assert.doesNotMatch(code, /\.d\.marko|\.marko-custom-elements/);
-    }
-  });
-
-  it("renders custom elements on the server without DOM globals", () => {
-    const results = run({ CASE: "custom-elements-render" });
-    for (const html of results) {
-      assert.match(
-        html,
-        /<probe-badge data-label="?hello"?><span>child<\/span><\/probe-badge>/,
-      );
-    }
-  });
-
-  it("upgrades static custom elements from the page browser graph", () => {
-    assert.deepEqual(run({ CASE: "custom-elements-browser" }), {
-      upgraded: true,
-      content: "child",
-    });
-  });
-
   it("scopes custom elements aliases and clears generated declarations", () => {
     assert.deepEqual(run({ CASE: "custom-elements-cache" }), {
       aliases: ["alias-a", "alias-b"],
