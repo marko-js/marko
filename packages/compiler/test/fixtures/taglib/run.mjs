@@ -50,16 +50,9 @@ const cases = {
       .getTag("probe-badge");
     write(
       tag && {
-        html: tag.html,
-        htmlType: tag.htmlType,
-        import: tag.parseOptions.import,
+        template: path.relative(process.cwd(), tag.template),
         description: tag.description,
-        attrs: Object.fromEntries(
-          Object.entries(tag.attributes).map(([name, attr]) => [
-            name,
-            attr.type,
-          ]),
-        ),
+        source: fs.readFileSync(tag.template, "utf8"),
       },
     );
   },

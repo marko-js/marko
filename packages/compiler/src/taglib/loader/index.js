@@ -15,8 +15,12 @@ function loadTaglibFromDir(filePath, tagDiscoveryDir) {
   return loaders.loadTaglibFromDir(filePath, tagDiscoveryDir);
 }
 
-function loadTaglibFromCustomElements(packageJsonPath, packageName) {
-  return loaders.loadTaglibFromCustomElements(packageJsonPath, packageName);
+function loadTaglibFromCustomElements(packageJsonPath, packageName, rootDir) {
+  return loaders.loadTaglibFromCustomElements(
+    packageJsonPath,
+    packageName,
+    rootDir,
+  );
 }
 
 function clearCache() {

@@ -157,6 +157,7 @@ function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
             let ceTaglib = taglibLoader.loadTaglibFromCustomElements(
               packageJsonPath,
               name,
+              rootPkg.__dirname,
             );
             if (ceTaglib) {
               addTaglib(ceTaglib);

@@ -1,5 +1,6 @@
 import nodePath from "path";
 
+import taglibConfig from "../config";
 import * as cache from "./cache";
 import * as jsonFileReader from "./json-file-reader";
 import * as loaders from "./loaders";
@@ -9,11 +10,19 @@ import * as types from "./types";
  * Synthesizes a taglib for an installed package that ships no `marko.json`
  * but declares a custom elements manifest via the `customElements` field in
  * its `package.json` (https://github.com/webcomponents/custom-elements-manifest).
- * Every custom element registration in the manifest becomes a native tag
- * (`html: true`, `htmlType: "custom-element"`) with attribute metadata, and
- * the module that registers it is recorded so translators can load it client side.
+ *
+ * Each custom element registration becomes a generated shadow template under
+ * `node_modules/.marko-custom-elements/` that types its attributes as `Input`,
+ * imports the module registering the element, and renders it as a native tag:
+ *
+ *     export interface Input { label?: string }
+ *     import "some-package/some-element.js";
+ *     <${"some-element"} ...input/>
+ *
+ * so the element flows through the regular custom tag pipeline: the import
+ * reaches the client bundle, and editors/TS pick up `Input` like any tag.
  */
-function loadFromCustomElements(packageJsonPath, packageName) {
+function loadFromCustomElements(packageJsonPath, packageName, rootDir) {
   var pkg;
   try {
     pkg = jsonFileReader.readFileSync(packageJsonPath);
@@ -39,7 +48,7 @@ function loadFromCustomElements(packageJsonPath, packageName) {
       var manifest = jsonFileReader.readFileSync(manifestPath);
       loaders.loadTaglibFromProps(
         taglib,
-        manifestToTaglibProps(manifest, packageName),
+        manifestToTaglibProps(manifest, packageName, rootDir),
       );
     } catch (err) {
       cache.remove(manifestPath);
@@ -50,8 +59,14 @@ function loadFromCustomElements(packageJsonPath, packageName) {
   return taglib;
 }
 
-function manifestToTaglibProps(manifest, packageName) {
+function manifestToTaglibProps(manifest, packageName, rootDir) {
   var props = {};
+  var generatedDir = nodePath.join(
+    rootDir,
+    "node_modules",
+    ".marko-custom-elements",
+    packageName,
+  );
 
   for (var mod of manifest.modules || []) {
     if (mod.kind !== "javascript-module") continue;
@@ -60,34 +75,49 @@ function manifestToTaglibProps(manifest, packageName) {
       if (exp.kind !== "custom-element-definition") continue;
 
       var decl = resolveDeclaration(manifest, mod, exp.declaration);
-      var tagProps = (props["<" + exp.name + ">"] = {
-        html: true,
-        htmlType: "custom-element",
-        // The module holding the `customElements.define` call; importing it
-        // in the browser is what upgrades the rendered element.
-        parseOptions: { import: packageName + "/" + mod.path },
-      });
+      var template = nodePath.join(generatedDir, exp.name + ".marko");
+      writeIfChanged(
+        template,
+        shadowTemplate(exp.name, decl, packageName + "/" + mod.path),
+      );
 
-      if (decl) {
-        if (decl.description || decl.summary) {
-          tagProps.description = decl.description || decl.summary;
-        }
-
-        for (var attr of decl.attributes || []) {
-          var attrProps = { type: attributeType(attr.type) };
-          if (attr.description || attr.summary) {
-            attrProps.description = attr.description || attr.summary;
-          }
-          if (attr.default !== undefined) {
-            attrProps.defaultValue = attr.default;
-          }
-          tagProps["@" + attr.name] = attrProps;
-        }
+      var tagProps = (props["<" + exp.name + ">"] = { template });
+      if (decl && (decl.description || decl.summary)) {
+        tagProps.description = decl.description || decl.summary;
       }
     }
   }
 
   return props;
+}
+
+function shadowTemplate(tagName, decl, importPath) {
+  var fields = [];
+
+  for (var attr of (decl && decl.attributes) || []) {
+    var doc = attr.description || attr.summary;
+    if (doc) fields.push("  /** " + doc.replace(/\*\//g, "*\\/") + " */");
+    fields.push(
+      "  " + propertyKey(attr.name) + "?: " + attributeType(attr.type) + ";",
+    );
+  }
+
+  fields.push("  content?: Marko.Body;");
+
+  return (
+    "// Generated from the custom elements manifest of " +
+    importPath.split("/")[0] +
+    " — do not edit.\n" +
+    "export interface Input {\n" +
+    fields.join("\n") +
+    "\n}\n\n" +
+    "import " +
+    JSON.stringify(importPath) +
+    ";\n\n" +
+    "<${" +
+    JSON.stringify(tagName) +
+    "} ...input/>\n"
+  );
 }
 
 function resolveDeclaration(manifest, mod, ref) {
@@ -104,12 +134,32 @@ function resolveDeclaration(manifest, mod, ref) {
   );
 }
 
+function propertyKey(name) {
+  return /^[A-Za-z_$][\w$]*$/.test(name) ? name : JSON.stringify(name);
+}
+
+// Manifest attribute types are free-form (TS, JSDoc or Closure); anything
+// that does not scan as a plain TS type expression falls back to `string`.
 function attributeType(type) {
   var text = type && type.text;
-  if (!text) return "string";
-  if (/\bboolean\b/.test(text)) return "boolean";
-  if (/\bnumber\b/.test(text)) return "number";
-  return "string";
+  return text && /^[\w\s|&'"`,.<>[\]()-]+$/.test(text) ? text : "string";
+}
+
+function writeIfChanged(file, content) {
+  var fs = taglibConfig.fs;
+  try {
+    if (fs.readFileSync(file, "utf8") === content) return;
+  } catch (_) {
+    // Missing or unreadable: fall through to the write.
+  }
+
+  try {
+    fs.mkdirSync(nodePath.dirname(file), { recursive: true });
+    fs.writeFileSync(file, content);
+  } catch (_) {
+    // A read-only fs (eg a browser shim) keeps the tag; resolving its
+    // template will surface a clearer error than throwing here.
+  }
 }
 
 export default loadFromCustomElements;

@@ -66,13 +66,28 @@ describe("compiler/taglib", () => {
     });
   });
 
-  it("exposes a dependency's custom elements manifest as native tags", () =>
+  it("exposes a dependency's custom elements manifest as generated tags", () =>
     assert.deepEqual(run({ CASE: "custom-elements-manifest" }), {
-      html: true,
-      htmlType: "custom-element",
-      import: "probe-elements/define/probe-badge.js",
+      template: path.join(
+        "node_modules",
+        ".marko-custom-elements",
+        "probe-elements",
+        "probe-badge.marko",
+      ),
       description: "A badge.",
-      attrs: { label: "string", pinned: "boolean", count: "number" },
+      source: `// Generated from the custom elements manifest of probe-elements — do not edit.
+export interface Input {
+  /** Badge label. */
+  label?: string;
+  pinned?: boolean;
+  count?: number;
+  content?: Marko.Body;
+}
+
+import "probe-elements/define/probe-badge.js";
+
+<\${"probe-badge"} ...input/>
+`,
     }));
 
   describe("optional taglibs", () => {
