@@ -20,7 +20,9 @@ import { buildCodeFrameError } from "./util/build-code-frame";
 import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
+import { withVirtualFiles } from "./virtual-files";
 export const version = pkg.version;
+export { getVirtualFile, registerVirtualFile } from "./virtual-files";
 export { taglib, types };
 
 const hasBabel = !!(
@@ -100,6 +102,7 @@ function loadMarkoConfig(config) {
     markoConfig.stripTypes = isTranslatedOutput(markoConfig.output);
   }
 
+  markoConfig.fileSystem = withVirtualFiles(markoConfig.fileSystem);
   return markoConfig;
 }
 
@@ -208,7 +211,7 @@ export function _clearDefaults() {
 }
 
 function getFs(config) {
-  return config?.fileSystem || globalConfig.fileSystem;
+  return withVirtualFiles(config?.fileSystem || globalConfig.fileSystem);
 }
 
 function isTranslatedOutput(output) {

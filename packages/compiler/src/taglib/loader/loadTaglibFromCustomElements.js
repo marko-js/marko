@@ -1,6 +1,6 @@
 import nodePath from "path";
 
-import taglibConfig from "../config";
+import { registerVirtualFile } from "../../virtual-files";
 import * as cache from "./cache";
 import * as jsonFileReader from "./json-file-reader";
 import * as loaders from "./loaders";
@@ -11,8 +11,9 @@ import * as types from "./types";
  * but declares a custom elements manifest via the `customElements` field in
  * its `package.json` (https://github.com/webcomponents/custom-elements-manifest).
  *
- * Each custom element registration becomes a generated shadow template under
- * `node_modules/.marko-custom-elements/` that types its attributes as `Input`,
+ * Each custom element registration becomes a virtual shadow template (a path
+ * under `node_modules/.marko-custom-elements/` that exists only in the
+ * compiler's virtual file registry) that types its attributes as `Input`,
  * imports the module registering the element, and renders it as a native tag:
  *
  *     export interface Input { label?: string }
@@ -76,7 +77,7 @@ function manifestToTaglibProps(manifest, packageName, rootDir) {
 
       var decl = resolveDeclaration(manifest, mod, exp.declaration);
       var template = nodePath.join(generatedDir, exp.name + ".marko");
-      writeIfChanged(
+      registerVirtualFile(
         template,
         shadowTemplate(exp.name, decl, packageName + "/" + mod.path),
       );
@@ -143,23 +144,6 @@ function propertyKey(name) {
 function attributeType(type) {
   var text = type && type.text;
   return text && /^[\w\s|&'"`,.<>[\]()-]+$/.test(text) ? text : "string";
-}
-
-function writeIfChanged(file, content) {
-  var fs = taglibConfig.fs;
-  try {
-    if (fs.readFileSync(file, "utf8") === content) return;
-  } catch (_) {
-    // Missing or unreadable: fall through to the write.
-  }
-
-  try {
-    fs.mkdirSync(nodePath.dirname(file), { recursive: true });
-    fs.writeFileSync(file, content);
-  } catch (_) {
-    // A read-only fs (eg a browser shim) keeps the tag; resolving its
-    // template will surface a clearer error than throwing here.
-  }
 }
 
 export default loadFromCustomElements;

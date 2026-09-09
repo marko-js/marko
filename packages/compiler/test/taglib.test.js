@@ -75,6 +75,7 @@ describe("compiler/taglib", () => {
         "probe-badge.marko",
       ),
       description: "A badge.",
+      onDisk: false,
       source: `// Generated from the custom elements manifest of probe-elements — do not edit.
 export interface Input {
   /** Badge label. */

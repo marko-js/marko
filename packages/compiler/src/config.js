@@ -202,4 +202,5 @@ if (
 export default config;
 
 import taglibConfig from "./taglib/config";
-taglibConfig.fs = config.fileSystem;
+import { withVirtualFiles } from "./virtual-files";
+taglibConfig.fs = withVirtualFiles(config.fileSystem);

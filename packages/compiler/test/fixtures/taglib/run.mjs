@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-import { taglib } from "@marko/compiler";
+import { getVirtualFile, taglib } from "@marko/compiler";
 
 // Empty on both halves of what a translator owes the lookup, so what comes
 // back is only what `register` put there.
@@ -52,7 +52,8 @@ const cases = {
       tag && {
         template: path.relative(process.cwd(), tag.template),
         description: tag.description,
-        source: fs.readFileSync(tag.template, "utf8"),
+        onDisk: fs.existsSync(tag.template),
+        source: getVirtualFile(tag.template),
       },
     );
   },
