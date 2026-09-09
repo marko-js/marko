@@ -19,6 +19,7 @@ import {
   toDelimitedString,
 } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
+import { addAssetImport } from "../../util/asset-imports";
 import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
@@ -127,6 +128,16 @@ export default {
       }
 
       const tagName = getCanonicalTagName(tag);
+      const tagDef = getTagDef(tag);
+      if (
+        tagDef?.htmlType === "custom-element" &&
+        tagDef.parseOptions?.import
+      ) {
+        // A custom element (eg discovered from a custom elements manifest)
+        // upgrades in the browser by loading the module that registers it.
+        addAssetImport(tagDef.parseOptions.import);
+      }
+
       switch (tagName) {
         case "html":
         case "body":

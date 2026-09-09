@@ -15,6 +15,10 @@ function loadTaglibFromDir(filePath, tagDiscoveryDir) {
   return loaders.loadTaglibFromDir(filePath, tagDiscoveryDir);
 }
 
+function loadTaglibFromCustomElements(packageJsonPath, packageName) {
+  return loaders.loadTaglibFromCustomElements(packageJsonPath, packageName);
+}
+
 function clearCache() {
   cache.clear();
 }
@@ -37,6 +41,7 @@ export {
   clearCache,
   createTaglib,
   loadTag,
+  loadTaglibFromCustomElements,
   loadTaglibFromDir,
   loadTaglibFromFile,
   loadTaglibFromProps,

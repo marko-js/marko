@@ -58,12 +58,22 @@ describe("compiler/taglib", () => {
       assert.equal(result.missingAttr, null);
       assert.equal(result.sortedIsCached, true);
       assert.deepEqual(result.sortedNames, [
+        "probe-badge",
         "probe-bare",
         "probe-pattern",
         "probe-tag",
       ]);
     });
   });
+
+  it("exposes a dependency's custom elements manifest as native tags", () =>
+    assert.deepEqual(run({ CASE: "custom-elements-manifest" }), {
+      html: true,
+      htmlType: "custom-element",
+      import: "probe-elements/define/probe-badge.js",
+      description: "A badge.",
+      attrs: { label: "string", pinned: "boolean", count: "number" },
+    }));
 
   describe("optional taglibs", () => {
     it("skips one the root package does not depend on", () =>

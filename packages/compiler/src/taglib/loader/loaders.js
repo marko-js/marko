@@ -1,6 +1,7 @@
 import loadAttributeFromProps from "./loadAttributeFromProps";
 import loadAttributes from "./loadAttributes";
 import loadTagFromProps from "./loadTagFromProps";
+import loadTaglibFromCustomElements from "./loadTaglibFromCustomElements";
 import loadTaglibFromDir from "./loadTaglibFromDir";
 import loadTaglibFromFile from "./loadTaglibFromFile";
 import loadTaglibFromProps from "./loadTaglibFromProps";
@@ -25,6 +26,7 @@ export {
   loadAttributeFromProps,
   loadAttributes,
   loadTagFromProps,
+  loadTaglibFromCustomElements,
   loadTaglibFromDir,
   loadTaglibFromFile,
   loadTaglibFromProps,

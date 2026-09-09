@@ -47,7 +47,7 @@ export interface TagDefinition {
     description: string;
     descriptionMoreURL?: string;
   }>;
-  htmlType?: "html" | "svg" | "math";
+  htmlType?: "html" | "svg" | "math" | "custom-element";
   html: boolean;
   name: string;
   isNestedTag?: boolean;
@@ -75,6 +75,8 @@ export interface TagDefinition {
     openTagOnly?: boolean;
     rawOpenTag?: boolean;
     preserveWhitespace?: boolean;
+    /** Client module to load for this tag (eg a custom element definition). */
+    import?: string;
   };
 }
 
@@ -129,7 +131,7 @@ export interface Tag {
     description?: string;
     descriptionMoreURL?: string;
   }>;
-  htmlType?: "html" | "svg" | "math";
+  htmlType?: "html" | "svg" | "math" | "custom-element";
   html?: boolean;
   types?: string;
   template?: string;

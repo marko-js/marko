@@ -44,6 +44,26 @@ const cases = {
     });
   },
 
+  "custom-elements-manifest": () => {
+    const tag = taglib
+      .buildLookup(process.cwd(), emptyTranslator)
+      .getTag("probe-badge");
+    write(
+      tag && {
+        html: tag.html,
+        htmlType: tag.htmlType,
+        import: tag.parseOptions.import,
+        description: tag.description,
+        attrs: Object.fromEntries(
+          Object.entries(tag.attributes).map(([name, attr]) => [
+            name,
+            attr.type,
+          ]),
+        ),
+      },
+    );
+  },
+
   "optional-undeclared": () => write(taglib.resolveOptionalTaglibs(["marko-undeclared-taglib"])),
 
   "optional-throws": () =>

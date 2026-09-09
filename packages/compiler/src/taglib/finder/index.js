@@ -146,6 +146,22 @@ function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
           // no relation to how it is imported, so hold onto the name it resolved by.
           var taglib = taglibLoader.loadTaglibFromFile(taglibPath, true, name);
           addTaglib(taglib);
+        } else {
+          // No taglib, but the package may declare a custom elements manifest
+          // (`customElements` in its package.json) we can expose as native tags.
+          let packageJsonPath = markoModules.tryResolve(
+            name + "/package.json",
+            rootPkg.__dirname,
+          );
+          if (packageJsonPath) {
+            let ceTaglib = taglibLoader.loadTaglibFromCustomElements(
+              packageJsonPath,
+              name,
+            );
+            if (ceTaglib) {
+              addTaglib(ceTaglib);
+            }
+          }
         }
       }
     });
