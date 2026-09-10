@@ -1,0 +1,12 @@
+import Wrapper from "./components/wrapper.marko";
+
+<let/on=false>
+<button onClick() { on = !on }>toggle</button>
+<Wrapper>
+  <if=on>
+    <b>on</b>
+  </if>
+  <else>
+    <i>off</i>
+  </else>
+</Wrapper>
