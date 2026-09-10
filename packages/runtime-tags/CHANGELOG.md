@@ -1,5 +1,20 @@
 # @marko/runtime-tags
 
+## 6.3.50
+
+### Patch Changes
+
+- [#4095](https://github.com/marko-js/marko/pull/4095) [`f95cd6a`](https://github.com/marko-js/marko/commit/f95cd6a4cdfad4a8c1cc6cfb66b7060180e767df) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize static native dynamic tag names (`<${"br"}/>`) before analysis so they use the same void-element, textarea, and text-only handling as direct native tags. Genuinely dynamic tag names and custom/core tag collisions retain their existing dynamic behavior.
+
+- [#4116](https://github.com/marko-js/marko/pull/4116) [`17ea1d0`](https://github.com/marko-js/marko/commit/17ea1d0c08d701a572fabe054488862712cd9b06) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix custom tags that shadow a text-only native tag (`title`, `textarea`) dropping their body content
+
+- [#4121](https://github.com/marko-js/marko/pull/4121) [`07b202d`](https://github.com/marko-js/marko/commit/07b202d0819e3be20f32d5685c1c74f5d97b35ea) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a bound PascalCase tag (eg `<Layout>`) compiling as a dynamic tag when its direct child is a control flow tag such as `<if>`.
+
+- [#4095](https://github.com/marko-js/marko/pull/4095) [`2e052fc`](https://github.com/marko-js/marko/commit/2e052fc955c67d91083146b738624db156e0d9db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Decode HTML character references in literal `<title>` text before client updates, matching the server render without decoding interpolated values.
+
+- Updated dependencies [[`f5df06a`](https://github.com/marko-js/marko/commit/f5df06a275483a5fb5469f61759224e5defc91bc)]:
+  - @marko/compiler@5.42.5
+
 ## 6.3.49
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.42.5
+
+### Patch Changes
+
+- [#4107](https://github.com/marko-js/marko/pull/4107) [`f5df06a`](https://github.com/marko-js/marko/commit/f5df06a275483a5fb5469f61759224e5defc91bc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize custom `getTemplateId` results to the same character set as built-in template ids.
+
 ## 5.42.4
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # Change Log
 
+## 5.39.40
+
+### Patch Changes
+
+- [#4118](https://github.com/marko-js/marko/pull/4118) [`b5c6235`](https://github.com/marko-js/marko/commit/b5c62350f2c26ffd2054dc27825ff26ddc851f78) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reject unsupported body content and tag parameters on Class API `<await>` tags with a compile-time error directing callers to `<@then|result|>`.
+
+- [#4119](https://github.com/marko-js/marko/pull/4119) [`7f41e12`](https://github.com/marko-js/marko/commit/7f41e12792af5e00de3c9260301442c2e46b52bd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Preserve named and namespace import bindings when rendering Class API custom tags instead of resolving them to the module's default export.
+
+- [#4117](https://github.com/marko-js/marko/pull/4117) [`dbca13f`](https://github.com/marko-js/marko/commit/dbca13f8dd7d20cb22e417bf402a1d3acc6b1573) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Include the lifecycle method, component type and instance ID in an error when a class component lifecycle hook (including `onInput` and `shouldUpdate`) throws in development, on the server or in the browser. Preserve the original thrown value as the error's cause without separately logging it; production behavior is unchanged.
+
+- Updated dependencies [[`f95cd6a`](https://github.com/marko-js/marko/commit/f95cd6a4cdfad4a8c1cc6cfb66b7060180e767df), [`17ea1d0`](https://github.com/marko-js/marko/commit/17ea1d0c08d701a572fabe054488862712cd9b06), [`07b202d`](https://github.com/marko-js/marko/commit/07b202d0819e3be20f32d5685c1c74f5d97b35ea), [`f5df06a`](https://github.com/marko-js/marko/commit/f5df06a275483a5fb5469f61759224e5defc91bc), [`2e052fc`](https://github.com/marko-js/marko/commit/2e052fc955c67d91083146b738624db156e0d9db)]:
+  - @marko/runtime-tags@6.3.50
+  - @marko/compiler@5.42.5
+
 ## 5.39.39
 
 ### Patch Changes
