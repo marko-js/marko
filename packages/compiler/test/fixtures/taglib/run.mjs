@@ -49,8 +49,13 @@ const cases = {
     const tag = lookup.getTag("probe-badge");
     const chip = lookup.getTag("probe-chip");
     const icon = lookup.getTag("kit-icon");
+    const ghost = lookup.getTag("probe-ghost");
     write(
       tag && {
+        unshippedModuleTag: ghost && {
+          typed: ghost.attributes.opacity?.nativeType ?? null,
+          browserImport: ghost.browserImport ?? null,
+        },
         manifestDirRelativeImport:
           icon && path.relative(process.cwd(), icon.browserImport),
         declarationOnlyTag: chip && {

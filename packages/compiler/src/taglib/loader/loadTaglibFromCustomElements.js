@@ -26,19 +26,26 @@ export default function loadFromCustomElements(packageJsonPath, packageName) {
   // (eg Shoelace's) write them relative to the manifest's own directory.
   const manifestRoot = nodePath.dirname(manifestPath);
   const props = {};
-  for (const { name, module, declaration: decl } of manifest) {
+  for (const { name, module: rawModule, declaration: decl } of manifest) {
+    const module = normalizeModulePath(rawModule);
     let browserImport = nodePath.resolve(packageRoot, module);
-    if (manifestRoot !== packageRoot && !fileExists(browserImport)) {
-      const fromManifest = nodePath.resolve(manifestRoot, module);
-      if (fileExists(fromManifest)) browserImport = fromManifest;
+    if (!fileExists(browserImport)) {
+      const fromManifest =
+        manifestRoot !== packageRoot && nodePath.resolve(manifestRoot, module);
+      // A module the package does not actually ship (eg a manifest pointing at
+      // source files) still types the tag, but cannot be auto-registered.
+      browserImport =
+        fromManifest && fileExists(fromManifest) ? fromManifest : undefined;
     }
-    const relativeModule = nodePath.relative(packageRoot, browserImport);
-    if (
-      relativeModule === ".." ||
-      relativeModule.startsWith(`..${nodePath.sep}`) ||
-      nodePath.isAbsolute(relativeModule)
-    )
-      continue;
+    if (browserImport) {
+      const relativeModule = nodePath.relative(packageRoot, browserImport);
+      if (
+        relativeModule === ".." ||
+        relativeModule.startsWith(`..${nodePath.sep}`) ||
+        nodePath.isAbsolute(relativeModule)
+      )
+        continue;
+    }
     const attributes = Object.create(null);
     attributes["*"] = {
       type: "expression",
@@ -62,7 +69,7 @@ export default function loadFromCustomElements(packageJsonPath, packageName) {
     props[`<${name}>`] = {
       html: true,
       htmlType: "custom-element",
-      browserImport,
+      ...(browserImport ? { browserImport } : {}),
       attributes,
       ...(decl?.description || decl?.summary
         ? { description: decl.description || decl.summary }
@@ -135,10 +142,13 @@ function resolveDeclaration(manifest, mod, ref) {
   if (!ref || ref.package) return;
   const target = ref.module
     ? manifest.modules.find(
-        (m) =>
-          nodePath.posix.normalize(m.path) ===
-          nodePath.posix.normalize(ref.module),
+        (m) => normalizeModulePath(m.path) === normalizeModulePath(ref.module),
       )
     : mod;
   return target?.declarations?.find((d) => d.name === ref.name);
+}
+
+// Some manifests (eg Spectrum's) write module refs with a leading slash.
+function normalizeModulePath(modulePath) {
+  return nodePath.posix.normalize(modulePath).replace(/^\/+/, "");
 }

@@ -61,6 +61,7 @@ describe("compiler/taglib", () => {
         "probe-badge",
         "probe-bare",
         "probe-chip",
+        "probe-ghost",
         "probe-pattern",
         "probe-tag",
       ]);
@@ -69,6 +70,10 @@ describe("compiler/taglib", () => {
 
   it("exposes a dependency's custom elements manifest as native metadata", () =>
     assert.deepEqual(run({ CASE: "custom-elements-manifest" }), {
+      unshippedModuleTag: {
+        typed: "number",
+        browserImport: null,
+      },
       manifestDirRelativeImport: path.join(
         "node_modules",
         "probe-kit",
