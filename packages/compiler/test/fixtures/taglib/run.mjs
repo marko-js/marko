@@ -65,6 +65,7 @@ const cases = {
           attributes: Object.fromEntries(Object.values(chip.attributes).filter(attr => attr.name !== "*").map(attr => [attr.name, attr.nativeType])),
         },
         types: tag.types ?? null,
+        labelFieldName: tag.attributes.label.fieldName,
         native: tag.html && tag.htmlType === "custom-element",
         template: tag.template ?? null,
         description: tag.description,

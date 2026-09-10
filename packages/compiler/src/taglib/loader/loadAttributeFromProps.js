@@ -59,6 +59,11 @@ class AttrLoader {
     this.attr.nativeType = value;
   }
 
+  /** The custom element class field a manifest attribute reflects. */
+  fieldName(value) {
+    this.attr.fieldName = value;
+  }
+
   /**
    * The name of the target property to use when mapping
    * the attribute to a property on the target object.

@@ -59,6 +59,9 @@ export default function loadFromCustomElements(packageJsonPath, packageName) {
         ...(typeof attr.type?.text === "string"
           ? { nativeType: attr.type.text }
           : {}),
+        ...(typeof attr.fieldName === "string"
+          ? { fieldName: attr.fieldName }
+          : {}),
         preserveName: true,
         targetProperty: null,
         ...(attr.description || attr.summary

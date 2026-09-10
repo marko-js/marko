@@ -96,6 +96,7 @@ describe("compiler/taglib", () => {
         },
       },
       types: null,
+      labelFieldName: "label",
       native: true,
       template: null,
       description: "A badge.",
