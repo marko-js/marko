@@ -1,0 +1,11 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0>
+<const/view=() => count>
+<try>
+  <await=resolveAfter(0, 1)>
+    <p>${view()}</p>
+    <button onClick() { count++ }>${count}</button>
+  </await>
+  <@placeholder>loading</@placeholder>
+</try>

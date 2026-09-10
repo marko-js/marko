@@ -24,9 +24,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("Loading");
 	}, $scope0_id) }) });
 	_scope($scope0_id, {
+		input_foo: $si__input_foo && input.foo,
 		count,
 		"ClosureScopes:input_foo": $si__input_foo && $input_foo__closures,
 		"ClosureScopes:count": $count__closures
-	}, "__tests__/template.marko", 0, { count: "3:6" });
+	}, "__tests__/template.marko", 0, {
+		input_foo: ["input.foo"],
+		count: "3:6"
+	});
 	_resume_branch($scope0_id);
 }, 1);

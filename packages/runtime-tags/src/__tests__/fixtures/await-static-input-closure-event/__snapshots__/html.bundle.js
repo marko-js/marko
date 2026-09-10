@@ -24,6 +24,7 @@ var template_default = _template("a", (input) => {
 		_html("Loading");
 	}, $scope0_id) }) });
 	_scope($scope0_id, {
+		d: $si__input_foo && input.foo,
 		e: count,
 		f: $si__input_foo && $input_foo__closures,
 		g: $count__closures
