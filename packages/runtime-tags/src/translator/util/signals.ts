@@ -1290,32 +1290,42 @@ export function writeHTMLResumeStatements(
           );
         }
 
+        const closureScopesReason = getSerializeReason(
+          closure.section,
+          closure,
+          getAccessorPrefix().ClosureScopes,
+        );
         if (underTryPlaceholder(section)) {
           const reason = getSerializeReason(section);
           if (reason) {
+            // The pending effect replays the closure on resume, so it must be
+            // gated the same way the closure's value is serialized.
+            const script = getExprIfSerialized(
+              section,
+              reason,
+              callRuntime(
+                "_script",
+                getScopeIdIdentifier(section),
+                t.stringLiteral(
+                  getResumeRegisterId(section, closure, "pending"),
+                ),
+                markerSerializeArg,
+              ),
+            );
             getHTMLSectionStatements(section).push(
               t.expressionStatement(
-                getExprIfSerialized(
-                  section,
-                  reason,
-                  callRuntime(
-                    "_script",
-                    getScopeIdIdentifier(section),
-                    t.stringLiteral(
-                      getResumeRegisterId(section, closure, "pending"),
-                    ),
-                    markerSerializeArg,
-                  ),
-                ),
+                isReasonDynamic(closureScopesReason) &&
+                  !isSameReason(closureScopesReason, reason)
+                  ? getExprIfSerialized(
+                      closure.section,
+                      closureScopesReason,
+                      script,
+                    )
+                  : script,
               ),
             );
           }
         } else {
-          const closureScopesReason = getSerializeReason(
-            closure.section,
-            closure,
-            getAccessorPrefix().ClosureScopes,
-          );
           const subscribeArg =
             isReasonDynamic(closureScopesReason) &&
             !isSameReason(closureScopesReason, sectionSerializeReason)
