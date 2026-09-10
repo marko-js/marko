@@ -146,6 +146,7 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
+  hasPlaceholder: boolean;
   /** The content's rendering tag (its extra), and the child binding the
    * content feeds when the child can serialize it. */
   downstream:
@@ -242,6 +243,7 @@ export function startSection(
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
+      hasPlaceholder: false,
       downstream: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
@@ -287,6 +289,19 @@ export function getSection(path: t.NodePath) {
   }
 
   return section;
+}
+
+// Content that streams in behind a `<@placeholder>` always resumes, so its
+// closures are replayed on the client rather than subscribed lazily.
+export function underTryPlaceholder(section: Section) {
+  let curSection = section.parent;
+  while (curSection) {
+    if (curSection.hasPlaceholder) {
+      return true;
+    }
+    curSection = curSection.parent;
+  }
+  return false;
 }
 
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(

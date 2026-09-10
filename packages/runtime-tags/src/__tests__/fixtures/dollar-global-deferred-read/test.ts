@@ -1,11 +1,14 @@
 import type { TestConfig } from "../../main.test";
+import { resolveAfter } from "../../utils/resolve";
 
 export const config: TestConfig = {
   skip_csr: true,
   steps: [
     {
       $global: {
-        slow: new Promise((resolve) => setTimeout(resolve, 10)),
+        get slow() {
+          return resolveAfter(undefined, 1);
+        },
         fast: "ok",
       },
     },

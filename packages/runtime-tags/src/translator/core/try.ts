@@ -33,7 +33,6 @@ import {
   addValue,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
-  setTryHasPlaceholder,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
@@ -93,6 +92,7 @@ export default {
 
     if (bodySection) {
       bodySection.upstreamExpression = tagExtra;
+      bodySection.hasPlaceholder = !!attrTags?.["@placeholder"];
       structure.visit(tag, WalkCode.Replace);
       structure.enterShallow(tag);
     }
@@ -105,10 +105,6 @@ export default {
         if (!bodySection) {
           tag.remove();
           return;
-        }
-
-        if (tag.node.extra?.attributeTags?.["@placeholder"]) {
-          setTryHasPlaceholder(bodySection, true);
         }
 
         setSectionParentIsOwner(bodySection, true);
@@ -156,10 +152,6 @@ export default {
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody)!;
 
-        if (tag.node.extra?.attributeTags?.["@placeholder"]) {
-          setTryHasPlaceholder(bodySection, true);
-        }
-
         setSectionParentIsOwner(bodySection, true);
       },
       exit(tag) {
@@ -183,11 +175,9 @@ export default {
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "try");
 
-        const hasPlaceholder =
-          !!tag.node.extra?.attributeTags?.["@placeholder"];
         signal.build = () => {
           importRuntimeFeature("catch");
-          if (hasPlaceholder) importRuntimeFeature("placeholder");
+          if (bodySection.hasPlaceholder) importRuntimeFeature("placeholder");
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeRef, true),

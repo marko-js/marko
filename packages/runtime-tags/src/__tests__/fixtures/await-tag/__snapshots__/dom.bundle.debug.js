@@ -29,7 +29,7 @@ function $setup($scope) {
 	$await_content2($scope);
 	$await_content3($scope);
 	$count($scope, 0);
-	$await_promise($scope, Promise.resolve("a"));
+	$await_promise($scope, resolveAfter("a", 0));
 	$await_promise2($scope, resolveAfter("b", 2));
 	$await_promise3($scope, resolveAfter("c", 1));
 	$setup__script($scope);

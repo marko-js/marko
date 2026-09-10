@@ -8,7 +8,7 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content_resume("__tests__/template.marko_3*content", "<b> </b>", "D ", 0, $catch_content__$params);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__attempt = /*@__PURE__*/ _closure_get("attempt", ($scope) => $try_content__await_promise($scope, $scope._.attempt === 1 ? resolveAfter("body", 3) : Promise.reject(new Error("nope"))));
+const $try_content__attempt = /*@__PURE__*/ _closure_get("attempt", ($scope) => $try_content__await_promise($scope, $scope._.attempt === 1 ? resolveAfter("body", 3) : rejectAfter(new Error("nope"), 0)));
 const $try_content__setup = ($scope) => {
 	$try_content__attempt($scope);
 	$await_content($scope);

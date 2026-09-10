@@ -46,6 +46,7 @@ import {
   isSameOrChildSection,
   type Section,
   sectionUtil,
+  underTryPlaceholder,
 } from "./sections";
 import {
   addOwnerSerializeReason,
@@ -1345,6 +1346,10 @@ export function finalizeReferences() {
             closure,
             getAccessorPrefix().ClosureScopes,
           );
+          // The pending replay reads the value on resume, not only on change.
+          if (underTryPlaceholder(section)) {
+            addSerializeReason(sourceSection, closure.sources, closure);
+          }
           if (getDynamicClosureIndex(closure, section)) {
             addSerializeReason(
               section,
