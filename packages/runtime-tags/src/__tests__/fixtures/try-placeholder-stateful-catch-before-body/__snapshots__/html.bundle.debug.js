@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_await($scope2_id, "#text/0", attempt === 1 ? resolveAfter("body", 3) : Promise.reject(new Error("nope")), (value) => {
+		_await($scope2_id, "#text/0", attempt === 1 ? resolveAfter("body", 3) : rejectAfter(new Error("nope"), 0), (value) => {
 			const $scope4_id = _scope_id();
 			_html(`<p>${_text_resume($scope4_id, "#text/0", value)}</p>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "12:4");

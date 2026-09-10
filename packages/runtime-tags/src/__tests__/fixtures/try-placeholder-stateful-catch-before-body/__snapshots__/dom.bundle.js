@@ -5,7 +5,7 @@ const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content_resume("a2", "<b> </b>", "D ", 0, $catch_content__$params);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
-const $try_content__attempt = /*@__PURE__*/ _closure_get(2, ($scope) => $try_content__await_promise($scope, $scope._.b === 1 ? resolveAfter("body", 3) : Promise.reject(/* @__PURE__ */ new Error("nope"))));
+const $try_content__attempt = /*@__PURE__*/ _closure_get(2, ($scope) => $try_content__await_promise($scope, $scope._.b === 1 ? resolveAfter("body", 3) : rejectAfter(/* @__PURE__ */ new Error("nope"), 0)));
 const $placeholder_content__attempt = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.b, $scope._.b));
 const $placeholder_content__setup__script = _script("a0", ($scope) => {
 	_lifecycle($scope, {
