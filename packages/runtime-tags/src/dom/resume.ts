@@ -96,37 +96,37 @@ export const patchScope = (partial: Scope, live: Scope) => {
     ](live, key, partial[key as keyof Scope]);
   }
 };
-let curRenders: Renders;
+export let curRenders: Renders;
 let embedRenders:
   | undefined
   | Map<Text, [renderId: string, scopes: Record<string | number, Scope>]>;
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
-let readyIds: undefined | Set<string>;
+export let readyIds: undefined | Set<string>;
 let patchReady: undefined | ((readyId: string) => void);
 let patchReadyFailed: undefined | ((readyId: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
-// The render a frame is applying against (set by `beginPatch`).
-export let patchRender: RenderData | 0 = 0;
+// The render a frame is applying against (set by `beginPatch`); read only
+// while `patching`.
+export let patchRender!: RenderData;
 let patching: 0 | 1 = 0;
 // Frame epoch: per-frame tables (the bind table) key off it so entries
 // from one frame can never satisfy a later frame's references.
 export let patchId = 0;
 
-export function beginPatch(renderId: string) {
-  const render = (patchRender = curRenders[renderId]);
+export function beginPatch(render: RenderData) {
+  patchRender = render;
   // A page with no effects never wrote a walk call; pairing into resumed
   // branches needs the walked links, so finish the resume before patching.
   render.w();
   patching = 1;
   patchId++;
-  return render;
 }
 
 export function abortPatch() {
-  patchRender = patching = 0;
+  patching = 0;
 }
 // Set while a partial applies to a tree a shell's walk just created: fresh
 // scopes met then have no renderer to set them up (see `PatchKey.Setup`).
@@ -158,15 +158,15 @@ export function installReady(
 
 // A channel module that never arrives can never drain its data: the
 // persisted feature settles pending patches and rejects later frames.
-export function readyFailed(readyId?: string) {
+export function readyFailed(readyId: string) {
   if (MARKO_DEBUG) {
-    if (readyId && !readyIds?.has(readyId)) {
+    if (!readyIds?.has(readyId)) {
       console.error(
         `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
       );
     }
   }
-  if (readyId) patchReadyFailed?.(readyId);
+  patchReadyFailed?.(readyId);
 }
 
 export function isReady(readyId: string) {

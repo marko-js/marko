@@ -45,10 +45,6 @@ export const _load_template = /*@__PURE__*/ withLazy(
       (branch) => {
         const awaitCounter = addAwaitCounter(branch);
         branch[AccessorProp.Load] ||= new Map() as LoadValues;
-        // The template's ready channel (the client half of the translator's
-        // `getReadyId`; the prefix pairs with its optimize flag).
-        branch[AccessorProp.ReadyId] = ((MARKO_DEBUG ? "ready:" : "_") +
-          id) as never;
         (pending ||= load()).then(
           (renderer) => {
             Object.assign(lazyTemplate, renderer);
@@ -76,13 +72,30 @@ export const _load_template = /*@__PURE__*/ withLazy(
 // loaded content is live (or fails), so deferred frame data drains after.
 let loadReady: ((branch: BranchScope) => void) | undefined;
 let loadReadyFailed: typeof loadReady;
+// Installed by the persisted ready feature, whose wrappers below are the
+// only callers: a plain page carries no site start.
+let loadStart: ((branch: BranchScope, readyId: string) => void) | undefined;
 export function installLoadReady(
   onReady: typeof loadReady,
   onFailed: typeof loadReadyFailed,
+  onStart: typeof loadStart,
 ) {
   loadReady = onReady;
   loadReadyFailed = onFailed;
+  loadStart = onStart;
 }
+// A persisted page's `<${Lazy}>` site: frame data for a child this template
+// constructs waits for its clone, so its setup reports the start.
+export const _load_ready_template = (
+  readyId: string,
+  template: Template & Renderer,
+) => {
+  template[RendererProp.Setup] = ((setup) => (branch) => {
+    loadStart!(branch as BranchScope, readyId);
+    setup(branch);
+  })(template[RendererProp.Setup]!);
+  return template;
+};
 export const _load_ready =
   (
     readyId: string,
@@ -90,13 +103,14 @@ export const _load_ready =
     setup: (owner: Scope) => void,
   ) =>
   (owner: Scope) => {
-    (
+    loadStart!(
       owner[
         (MARKO_DEBUG
           ? childScopeAccessor
           : decodeAccessor(childScopeAccessor as number)) as Accessor
-      ] as Scope
-    )[AccessorProp.ReadyId] = readyId as never;
+      ] as BranchScope,
+      readyId,
+    );
     setup(owner);
   };
 

@@ -187,34 +187,40 @@ export default {
                 loadFile.opts.filename,
               );
               importRuntimeFeature("catch");
+              const loadTemplate = callRuntime(
+                "_load_template",
+                t.stringLiteral(loadFile.metadata.marko.id),
+                t.arrowFunctionExpression(
+                  [],
+                  t.callExpression(
+                    t.memberExpression(
+                      t.callExpression(t.import(), [
+                        t.stringLiteral(resolvedPath),
+                      ]),
+                      t.identifier("then"),
+                    ),
+                    [
+                      t.arrowFunctionExpression(
+                        [t.identifier("mod")],
+                        toMemberExpression(t.identifier("mod"), "default"),
+                      ),
+                    ],
+                  ),
+                ),
+              );
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(
                     local,
-                    callRuntime(
-                      "_load_template",
-                      t.stringLiteral(loadFile.metadata.marko.id),
-                      t.arrowFunctionExpression(
-                        [],
-                        t.callExpression(
-                          t.memberExpression(
-                            t.callExpression(t.import(), [
-                              t.stringLiteral(resolvedPath),
-                            ]),
-                            t.identifier("then"),
-                          ),
-                          [
-                            t.arrowFunctionExpression(
-                              [t.identifier("mod")],
-                              toMemberExpression(
-                                t.identifier("mod"),
-                                "default",
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // A frame's data for a site this template constructs
+                    // waits for its clone; the wrapper reports the start.
+                    isPersisted()
+                      ? callRuntime(
+                          "_load_ready_template",
+                          t.stringLiteral(getReadyId(loadFile)!),
+                          loadTemplate,
+                        )
+                      : loadTemplate,
                   ),
                 ]),
               );

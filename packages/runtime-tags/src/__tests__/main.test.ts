@@ -8,6 +8,7 @@ import jsBeautify from "js-beautify";
 
 const { html_beautify, js_beautify } = jsBeautify;
 
+import { DEFAULT_RENDER_ID } from "../common/meta";
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
@@ -460,8 +461,11 @@ function testFixtures(interop?: true) {
             }
 
             await browser.runAsyncScripts(() => tracker.logRender(input));
-            const { applyPatch, run } =
+            const { patch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
+            const [, applyPatch] = persisted
+              ? patch({ renderId: DEFAULT_RENDER_ID })
+              : [];
             let rejected = false;
 
             // Until a client-side step diverges the page from what the
@@ -526,7 +530,7 @@ function testFixtures(interop?: true) {
                       frames.push(frame);
                       // A production caller navigates on the first failed
                       // frame; later frames must not mutate further.
-                      const result = applyPatch(frame);
+                      const result = applyPatch!(frame);
                       if (typeof result !== "boolean") {
                         // A deferred patch is waiting on a lazy module; load
                         // triggers schedule via setTimeout, so a macrotask

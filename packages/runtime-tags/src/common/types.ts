@@ -8,6 +8,8 @@ import * as WalkCode from "./constants/walk-code";
 import * as WalkRangeSize from "./constants/walk-range-size";
 export type Falsy = undefined | null | false | 0 | "";
 export interface BranchScope extends Scope {
+  // A persisted page's lazy site names its channel (`_load_ready`).
+  [AccessorProp.ReadyId]: string | undefined;
   [AccessorProp.StartNode]: ChildNode;
   [AccessorProp.EndNode]: ChildNode;
   [AccessorProp.ParentBranch]: BranchScope | undefined;
