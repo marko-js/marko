@@ -1,0 +1,7 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/n=0/>
+<button class="n" onClick() { n++ }>${n}</button>
+<main>
+  <${input.show ? Child : null} label=input.label/>
+</main>

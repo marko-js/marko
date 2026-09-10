@@ -1,4 +1,3 @@
-import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import {
   type Accessor,
   AccessorProp,
@@ -6,17 +5,20 @@ import {
   type Scope,
 } from "../common/types";
 import { abortRun, run, runEffects, runId } from "./queue";
-import { abortPatch, beginPatch, init, patchers } from "./resume";
+import {
+  abortPatch,
+  beginPatch,
+  curRenders,
+  patchers,
+  patchRender,
+} from "./resume";
 import type { RenderData } from "./resume";
 
-type PendingReady = (
-  render: RenderData,
-  renderId: string,
-  runtimeId: string,
-) => Promise<boolean> | undefined;
-type DiscardReady = (render: RenderData) => void;
-let pendingReady: PendingReady | undefined;
-let discardReady: DiscardReady | undefined;
+// Installed by `patch-ready`: commits a frame's ready record, settles a
+// frame holding data for a not-yet-loaded module, discards a rejected one.
+let commitReady: (() => void) | undefined;
+let pendingReady: (() => Promise<boolean> | undefined) | undefined;
+let discardReady: (() => void) | undefined;
 
 // Frame-commit checks registered by patch features: one that throws
 // (`failPatch`) rejects the frame like any patcher.
@@ -30,44 +32,49 @@ export const frameVars: Record<string, unknown> = {};
 // bind source applied with the frame still serves a batch's reference.
 export let frameEpoch: object = {};
 
-export function applyPatch(
-  frame: string,
-  renderId = DEFAULT_RENDER_ID,
-  runtimeId = DEFAULT_RUNTIME_ID,
-): boolean | Promise<boolean> {
-  init(runtimeId);
-  // Registered here so this module stays tree-shakable; a page with
-  // `$global` joins installed its own (`patch-global.feat`).
-  patchers[PatchKey.Globals] ||= applyGlobals;
-  frameEpoch = {};
-  const render = beginPatch(renderId);
-  try {
-    // A frame is trusted executable resume data from the same server that
-    // produced the document; `$` stays the serializer's `undefined` sentinel.
-    const names = Object.keys(frameVars);
-    // eslint-disable-next-line no-new-func
-    const fn = new Function("_", "$", ...names, "return " + frame);
-    render.r = [
-      (ctx: unknown) =>
-        fn(ctx, undefined, ...names.map((name) => frameVars[name])),
-    ] as typeof render.r;
-    commitFrame(render);
-    // A frame holding data for a not-yet-loaded lazy module settles once
-    // every deferred channel drains (or a load fails).
-    return pendingReady?.(render, renderId, runtimeId) || true;
-  } catch (error) {
-    // The frame did not apply faithfully, so the caller navigates; only an
-    // intentional rejection (`failPatch`) throws 0.
-    if (MARKO_DEBUG && error) console.error(error);
-    discardReady?.(render);
-    abortRun();
-    return false;
-  } finally {
-    // A rejected frame must not read as page data on a later walk; the
-    // array stays, a still-streaming page pushes into it.
-    render.r!.length = 0;
-    abortPatch();
-  }
+/** The live page's `$global`: names its render. */
+export type PatchGlobal = { renderId: string };
+
+/**
+ * The live page's side of `template.patch`: `[headers, apply]`, the headers
+ * a patch request sends (none yet) and the apply for each frame.
+ */
+export function patch($global: PatchGlobal) {
+  return [
+    {},
+    (frame: string): boolean | Promise<boolean> => {
+      // Registered here so this module stays tree-shakable; a page with
+      // `$global` joins installed its own (`patch-global.feat`).
+      patchers[PatchKey.Globals] ||= applyGlobals;
+      frameEpoch = {};
+      beginPatch(curRenders[$global.renderId]);
+      try {
+        // A frame is trusted executable resume data from the same server
+        // that produced the document; `$` stays the serializer's `undefined`.
+        const names = Object.keys(frameVars);
+        // eslint-disable-next-line no-new-func
+        const fn = new Function("_", "$", ...names, "return " + frame);
+        patchRender.r = [
+          (ctx: unknown) =>
+            fn(ctx, undefined, ...names.map((name) => frameVars[name])),
+        ] as typeof patchRender.r;
+        commitFrame();
+        return pendingReady?.() || true;
+      } catch (error) {
+        // The frame did not apply faithfully, so the caller navigates; only
+        // an intentional rejection (`failPatch`) throws 0.
+        if (MARKO_DEBUG && error) console.error(error);
+        discardReady?.();
+        abortRun();
+        return false;
+      } finally {
+        // A rejected frame must not read as page data on a later walk; the
+        // array stays, a still-streaming page pushes into it.
+        patchRender.r!.length = 0;
+        abortPatch();
+      }
+    },
+  ] as const;
 }
 
 // A plain patched write; a changed value is marked with the frame's epoch
@@ -92,27 +99,27 @@ export function applyGlobals(live: Scope, _key: string, value: unknown) {
 }
 
 export function installPatchReady(
-  pending: PendingReady,
-  discard: DiscardReady,
+  commit: typeof commitReady,
+  pending: typeof pendingReady,
+  discard: typeof discardReady,
 ) {
+  commitReady = commit;
   pendingReady = pending;
   discardReady = discard;
 }
 
 // Commits deferred ready-channel data after its module loads, as an empty
-// frame run so it shares `applyPatch`'s commit sequence and patch context.
+// frame run so it shares a frame's commit sequence and patch context.
 export function applyReadyPatch(
-  renderId: string,
-  runtimeId: string,
+  render: RenderData,
   epoch: object,
-  push: (render: RenderData) => void,
+  push: () => void,
 ) {
-  init(runtimeId);
   frameEpoch = epoch;
-  const render = beginPatch(renderId);
+  beginPatch(render);
   try {
-    push(render);
-    commitFrame(render);
+    push();
+    commitFrame();
     return true;
   } catch (error) {
     if (MARKO_DEBUG && error) console.error(error);
@@ -123,8 +130,9 @@ export function applyReadyPatch(
   }
 }
 
-function commitFrame(render: RenderData) {
-  runEffects(render.m!([]), 1);
+function commitFrame() {
+  runEffects(patchRender.m!([]), 1);
   run();
+  commitReady?.();
   for (const check of frameChecks) check();
 }
