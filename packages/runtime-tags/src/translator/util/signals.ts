@@ -1290,14 +1290,14 @@ export function writeHTMLResumeStatements(
           );
         }
 
-        const closureScopesReason = getSerializeReason(
-          closure.section,
-          closure,
-          getAccessorPrefix().ClosureScopes,
-        );
         if (underTryPlaceholder(section)) {
           const reason = getSerializeReason(section);
           if (reason) {
+            const closureScopesReason = getSerializeReason(
+              closure.section,
+              closure,
+              getAccessorPrefix().ClosureScopes,
+            );
             // The pending effect replays the closure on resume, so it must be
             // gated the same way the closure's value is serialized.
             const script = getExprIfSerialized(
@@ -1326,6 +1326,11 @@ export function writeHTMLResumeStatements(
             );
           }
         } else {
+          const closureScopesReason = getSerializeReason(
+            closure.section,
+            closure,
+            getAccessorPrefix().ClosureScopes,
+          );
           const subscribeArg =
             isReasonDynamic(closureScopesReason) &&
             !isSameReason(closureScopesReason, sectionSerializeReason)
