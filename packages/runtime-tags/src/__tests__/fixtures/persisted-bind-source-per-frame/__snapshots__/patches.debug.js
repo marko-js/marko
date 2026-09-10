@@ -1,5 +1,6 @@
 // PATCH
 {
+  1: "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-source-per-frame/template.marko_0/handler",
   "PatchPending:#text/0": 1,
   "PatchPending:#text/1": 1,
   "PatchText:#text/2": "0",
@@ -10,16 +11,15 @@
       title: "b",
       onClick: bind(1)
     }
-  },
-  "PatchBindSource:1": "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-source-per-frame/template.marko_0/handler"
+  }
 }
 {
+  1: "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-source-per-frame/template.marko_0/handler",
   "PatchChild:BranchScopes:#text/1": {
     "PatchAttrs:#button/0": {
       id: "two",
       title: "b",
       onClick: bind(1)
     }
-  },
-  "PatchBindSource:1": "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-source-per-frame/template.marko_0/handler"
+  }
 }

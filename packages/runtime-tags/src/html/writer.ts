@@ -389,9 +389,8 @@ export function writeEmbeddedBinds(
     const binds = (state.binds ??= new Map());
     if (!binds.has(value as WeakKey)) {
       const n = (state.patchBinds = (state.patchBinds || 0) + 1);
-      writePatch(bound[K_SCOPE_ID]!, {
-        [PatchKey.BindSource + n]: registered.id,
-      });
+      // The bind index is the entry's key (`patch-value-bind.feat`).
+      writePatch(bound[K_SCOPE_ID]!, { [n]: registered.id });
       binds.set(value as WeakKey, n);
     }
     return;
@@ -561,13 +560,12 @@ export function _var(
   // to the parent's registration, so no separate init registers for it.
   const state = getState();
   if (state.writesPatches && isInResumedBranch()) {
-    writeEmbeddedBinds(state, wiring);
     (
       (patchPartial(state, childScopeId)[PatchKey.Setup] ??= {}) as Record<
         string,
         unknown
       >
-    )[PatchKey.Write + AccessorProp.TagVariable] = wiring;
+    )[PatchKey.Var] = registryId;
   }
   const childScope = writeScopePassive(childScopeId, {
     [AccessorProp.TagVariable]: wiring,

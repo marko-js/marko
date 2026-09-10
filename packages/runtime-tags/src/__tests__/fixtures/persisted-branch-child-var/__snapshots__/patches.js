@@ -2,15 +2,14 @@
 [`a0 !a2;0 D l& b;<div class=box> </div><button id=read>read</button>`, {
   ba: [{
     ca: {
+      1: "b0",
       tb: "b",
       s: {
-        wT: b(1)
-      },
-      h2: "b0"
+        0: "a1"
+      }
     },
-    h1: "a1",
     s: {
-      wd: b(2)
+      wd: b(1)
     }
   }, "a0"]
 }]

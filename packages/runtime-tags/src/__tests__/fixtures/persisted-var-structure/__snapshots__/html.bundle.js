@@ -21,7 +21,6 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let double = doubler_default({ value: count });
 	_var($scope0_id, "b", $childScope, "a0");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "f", double, 1);
 	if ($scope0_reason) _if(() => {
 		if (double > 2) {
 			const $scope1_id = _scope_id();

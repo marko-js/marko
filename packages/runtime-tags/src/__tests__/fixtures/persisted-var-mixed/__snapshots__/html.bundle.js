@@ -27,7 +27,6 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let v = mixer_default({ value: input.n });
 	_var($scope0_id, "b", $childScope, "a0");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "g", v, 1);
 	_html(`<p>${_text_resume($scope0_id, "c", v)}</p></main>`);
 	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1, () => [mixer_default]);

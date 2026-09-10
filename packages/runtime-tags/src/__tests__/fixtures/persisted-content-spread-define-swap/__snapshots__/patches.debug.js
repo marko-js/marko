@@ -1,6 +1,6 @@
 // PATCH
 {
-  "PatchBindSource:1": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-spread-define-swap/template.marko_2*content",
+  1: "packages/runtime-tags/src/__tests__/fixtures/persisted-content-spread-define-swap/template.marko_2*content",
   "PatchDynamicTag:#div/0": bind(1),
   "PatchAttrs:#div/0": {},
   "PatchChild:BranchScopes:#div/0": {
@@ -11,7 +11,7 @@
 
 // PATCH
 {
-  "PatchBindSource:1": "packages/runtime-tags/src/__tests__/fixtures/persisted-content-spread-define-swap/template.marko_1*content",
+  1: "packages/runtime-tags/src/__tests__/fixtures/persisted-content-spread-define-swap/template.marko_1*content",
   "PatchDynamicTag:#div/0": bind(1),
   "PatchAttrs:#div/0": {},
   "PatchChild:BranchScopes:#div/0": {

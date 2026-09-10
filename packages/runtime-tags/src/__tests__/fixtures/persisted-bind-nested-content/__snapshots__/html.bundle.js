@@ -44,7 +44,6 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let store = store_default({});
 	_var($scope0_id, "b", $childScope, "a3");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "h", store, 1);
 	_html(`<p>${_text_resume($scope0_id, "c", store.last)}</p>`);
 	_set_serialize_reason(0);
 	const $childScope3 = _peek_scope_id();
