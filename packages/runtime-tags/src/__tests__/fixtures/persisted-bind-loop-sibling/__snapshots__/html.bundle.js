@@ -32,7 +32,6 @@ var template_default = _template_persisted("a", (input) => {
 		_patch_child($scope1_id, "a", $childScope);
 		let store = store_default({});
 		_var($scope1_id, "b", $childScope, "a3");
-		_owned_guard(0, 0) && _patch_write($scope1_id, "h", store, 1);
 		_html(`<p>${_patch_text($scope1_id, "c", name)}:${_text_resume($scope1_id, "d", store.last, 2)}</p>`);
 		_for_of(["y", "x"], (other) => {
 			const $scope2_id = _scope_id();

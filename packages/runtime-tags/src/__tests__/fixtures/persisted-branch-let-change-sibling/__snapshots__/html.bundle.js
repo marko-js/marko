@@ -26,7 +26,6 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let store = store_default({});
 	_var($scope0_id, "b", $childScope, "a1");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "j", store, 1);
 	_html(`<main><h1>${_patch_text($scope0_id, "c", input.title, void 0, $scope0_owned, 0)}</h1><p>Last ${_text_resume($scope0_id, "d", store.last, 2)}</p>`);
 	_if(() => {
 		if (input.show) {

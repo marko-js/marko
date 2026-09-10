@@ -49,7 +49,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let store = store_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store#7/var");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "store", store, 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/2", store.last)}</p>`);
 	_set_serialize_reason(0);
 	const $childScope3 = _peek_scope_id();

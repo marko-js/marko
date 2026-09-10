@@ -436,13 +436,13 @@ export function knownTagTranslateHTML(
     );
     if (varStatement) {
       statements.push(varStatement);
-      // A construct has no wired child return: the var seeds (only there),
-      // a registered return riding the frame's bind table.
+      // A construct seeds the var (only there) unless the child's return is
+      // state-fed: its own fill then returns through the wired registration.
       if (isPersisted()) {
         for (const name in t.getBindingIdentifiers(tag.node.var!)) {
           const varBinding = tag.scope.getBinding(name)?.identifier.extra
             ?.binding as Binding | undefined;
-          if (!varBinding) continue;
+          if (!varBinding || varBinding.sources?.state) continue;
           statements.push(
             t.expressionStatement(
               t.logicalExpression(
@@ -537,6 +537,8 @@ export function knownTagTranslateDOM(
       }
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
+    // A frame constructing the child seeds the wiring through its setup.
+    if (isPersisted()) importRuntimeFeature("patch-var");
     const wireVar = callRuntime(
       "_var",
       scopeIdentifier,

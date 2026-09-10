@@ -25,7 +25,6 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let v = inner_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/widget/index.marko_0_v#3/var");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "v", v, 1);
 	_html(`<em>${_text_resume($scope0_id, "#text/2", v)}</em>`);
 	$scope0_reason && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/widget/index.marko", 0);
 }, 0, () => [inner_default]);

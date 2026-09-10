@@ -30,7 +30,6 @@ var widget_default = _template_persisted("b", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let v = inner_default({});
 	_var($scope0_id, "b", $childScope, "b0");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "e", v, 1);
 	_html(`<em>${_text_resume($scope0_id, "c", v)}</em><button class=reset>r</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "b1");
 	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
