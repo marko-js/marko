@@ -108,6 +108,19 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const { name, attributes } = node;
   let attrNameReg = userAttrNameReg;
+  if (name.type === "StringLiteral") {
+    const tagName = name.value;
+    if (
+      tag.scope.getBinding(tagName) &&
+      TAG_NAME_IDENTIFIER_REG.test(tagName)
+    ) {
+      // Convert tags which have an associated binding to an identifier.
+      // <MyTag> --> <${MyTag}>
+      node.name = withPreviousLocation(t.identifier(tagName), name);
+    }
+  }
+  // Before the body: a child asking for this tag's type would cache the
+  // unrewritten name as an unresolved dynamic tag.
   normalizeBody(tag.get("body").get("body"));
   normalizeBody(tag.get("attributeTags"));
 
@@ -126,18 +139,6 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
 
     if (insertions) {
       node.body.body = [...insertions, ...node.body.body];
-    }
-  }
-
-  if (name.type === "StringLiteral") {
-    const tagName = name.value;
-    if (
-      tag.scope.getBinding(tagName) &&
-      TAG_NAME_IDENTIFIER_REG.test(tagName)
-    ) {
-      // Convert tags which have an associated binding to an identifier.
-      // <MyTag> --> <${MyTag}>
-      node.name = withPreviousLocation(t.identifier(tagName), name);
     }
   }
 
