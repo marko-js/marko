@@ -1,0 +1,11 @@
+static const data = Promise.resolve({ items: ["a", "b"] });
+
+<let/count=0>
+
+<try>
+  <@placeholder>Loading</>
+  <await|d|=data>
+    <p>${input.foo}</p>
+    <button onClick() { count++; }>${count}</button>
+  </await>
+</try>
