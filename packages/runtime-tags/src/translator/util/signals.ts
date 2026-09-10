@@ -1297,7 +1297,7 @@ export function writeHTMLResumeStatements(
         );
         if (underTryPlaceholder(section)) {
           const reason = getSerializeReason(section);
-          if (reason && closureScopesReason) {
+          if (reason) {
             // The pending effect replays the closure on resume, so it must be
             // gated the same way the closure's value is serialized.
             const script = getExprIfSerialized(
