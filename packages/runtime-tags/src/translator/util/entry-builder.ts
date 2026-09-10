@@ -56,10 +56,14 @@ const builder = {
       body.push(t.importDeclaration([], t.stringLiteral(asset)));
     }
 
-    if (state.init || state.load) {
-      const isPage = entryFile.path.node.extra.page;
+    // A persisted page's patches apply against the runtime, so its entry
+    // initializes it (as the document's render) even with no client code.
+    const persisted = !!entryFile.markoOpts.persisted;
+    const init = state.init || persisted;
+    if (init || state.load) {
+      const isPage = entryFile.path.node.extra.page || persisted;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
-      if (state.init) {
+      if (init) {
         body.push(
           t.importDeclaration(
             [
@@ -77,13 +81,21 @@ const builder = {
         );
       }
 
-      // The topmost templates with client side work; everything below one of
-      // them (and its client assets) arrives through its imports.
-      for (const root of state.roots) {
-        body.push(t.importDeclaration([], t.stringLiteral(root)));
+      if (state.init || state.load) {
+        // The topmost templates with client side work; everything below one
+        // of them (and its client assets) arrives through its imports.
+        for (const root of state.roots) {
+          body.push(t.importDeclaration([], t.stringLiteral(root)));
+        }
+      } else {
+        // No client work: the page needs its patch features, not its
+        // templates' modules.
+        for (const asset of state.bundledAssets) {
+          body.push(t.importDeclaration([], t.stringLiteral(asset)));
+        }
       }
 
-      if (!state.init) {
+      if (!init) {
         // Client statements ran when the modules above loaded; with nothing
         // to resume there is no runtime to initialize.
         if (exportInit) {

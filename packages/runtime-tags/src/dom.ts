@@ -71,7 +71,7 @@ export {
   _to_text,
 } from "./dom/dom";
 export { _on } from "./dom/event";
-export { applyPatch } from "./dom/patch";
+export { patch } from "./dom/patch";
 export { _global_join, _global_script } from "./dom/patch-global";
 export {
   _load_event_trigger,
@@ -79,6 +79,7 @@ export {
   _load_media_trigger,
   _load_race_trigger,
   _load_ready,
+  _load_ready_template,
   _load_setup,
   _load_signal,
   _load_template,

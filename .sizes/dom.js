@@ -1,4 +1,4 @@
-// size: 28806 (min) 10671 (brotli)
+// size: 28834 (min) 10651 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -104,7 +104,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   embedRenders,
   readyIds,
   lazyEnabled,
-  patchRender = 0,
+  patchRender,
   patching = 0,
   patchId = 0,
   isResuming,
@@ -968,12 +968,11 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
-function beginPatch(renderId) {
-  let render = (patchRender = curRenders[renderId]);
-  return (render.w(), (patching = 1), patchId++, render);
+function beginPatch(render) {
+  ((patchRender = render), render.w(), (patching = 1), patchId++);
 }
 function abortPatch() {
-  patchRender = patching = 0;
+  patching = 0;
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
@@ -2127,22 +2126,30 @@ function byFirstArg(name) {
 //#region packages/runtime-tags/dist/dom.mjs
 let frameChecks = [],
   frameVars = {};
-function applyPatch(frame, renderId = "_", runtimeId = "M") {
-  (init(runtimeId), (patchers.$ ||= applyGlobals));
-  let render = beginPatch(renderId);
-  try {
-    let names = Object.keys(frameVars),
-      fn = Function("_", "$", ...names, "return " + frame);
-    return (
-      (render.r = [(ctx) => fn(ctx, void 0, ...names.map((name) => frameVars[name]))]),
-      commitFrame(render),
-      !0
-    );
-  } catch {
-    return (abortRun(), !1);
-  } finally {
-    ((render.r.length = 0), abortPatch());
-  }
+/**
+ * The live page's side of `template.patch`: `[headers, apply]`, the headers
+ * a patch request sends (none yet) and the apply for each frame.
+ */
+function patch($global) {
+  return [
+    {},
+    (frame) => {
+      ((patchers.$ ||= applyGlobals), beginPatch(curRenders[$global.renderId]));
+      try {
+        let names = Object.keys(frameVars),
+          fn = Function("_", "$", ...names, "return " + frame);
+        return (
+          (patchRender.r = [(ctx) => fn(ctx, void 0, ...names.map((name) => frameVars[name]))]),
+          commitFrame(),
+          !0
+        );
+      } catch {
+        return (abortRun(), !1);
+      } finally {
+        ((patchRender.r.length = 0), abortPatch());
+      }
+    },
+  ];
 }
 function patchWrite(scope, accessor, value) {
   (scope[accessor] !== value || !(accessor in scope)) &&
@@ -2151,8 +2158,8 @@ function patchWrite(scope, accessor, value) {
 function applyGlobals(live, _key, value) {
   for (let key in value) patchWrite(live.$, key, value[key]);
 }
-function commitFrame(render) {
-  (runEffects(render.m([]), 1), run());
+function commitFrame() {
+  (runEffects(patchRender.m([]), 1), run());
   for (let check of frameChecks) check();
 }
 //#endregion
@@ -2185,7 +2192,6 @@ let _template = (id, template, walks, setup, inputSignal) => {
         (branch) => {
           let awaitCounter = addAwaitCounter(branch);
           ((branch.X ||= /* @__PURE__ */ new Map()),
-            (branch.AC = "_" + id),
             (pending ||= load()).then(
               (renderer) => {
                 (Object.assign(lazyTemplate, renderer),
@@ -2200,8 +2206,15 @@ let _template = (id, template, walks, setup, inputSignal) => {
       );
     return lazyTemplate;
   }),
+  loadStart,
+  _load_ready_template = (readyId, template) => (
+    (template.c = ((setup) => (branch) => {
+      (loadStart(branch, readyId), setup(branch));
+    })(template.c)),
+    template
+  ),
   _load_ready = (readyId, childScopeAccessor, setup) => (owner) => {
-    ((owner[decodeAccessor(childScopeAccessor)].AC = readyId), setup(owner));
+    (loadStart(owner[decodeAccessor(childScopeAccessor)], readyId), setup(owner));
   },
   _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
     ((nodeAccessor = decodeAccessor(nodeAccessor)),

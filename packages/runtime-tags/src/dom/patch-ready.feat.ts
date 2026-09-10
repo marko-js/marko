@@ -7,13 +7,14 @@ import {
   frameVars,
   installPatchReady,
 } from "./patch";
-import { queueEffect } from "./queue";
+import { queueEffect, run, runEffects } from "./queue";
 import {
   installReady,
   isReady,
   patchRender,
   ready,
   readyFailed,
+  readyIds,
   type RenderData,
 } from "./resume";
 
@@ -22,77 +23,88 @@ interface Pending {
   c: Map<string, unknown[]>;
   // Every `applyPatch` promise awaiting this render's channels.
   r: ((applied: boolean) => void)[];
-  renderId: string;
-  runtimeId: string;
   epoch: object;
 }
 const pending = new Map<RenderData, Pending>();
+// Sites still cloning their child, by channel: the channel is unready
+// (its data blocks like a still-loading module's) until the last lands.
+const loading: Record<string, number> = {};
 
 // Module evaluation is the enablement: the compiler injects this side-effect
 // import once per program with a lazy load import in a persisted build.
 frameVars[READY_FRAME_VAR] = acceptReady;
-installPatchReady(pendingReady, discardReady);
+installPatchReady(commitReady, pendingReady, discardReady);
 installReady(markReady, failReady);
-// A loaded branch carries its channel stamp (`_load_template` names its
-// template's; `_load_ready` stamps a lazy child's site).
+// Every lazy site of a persisted page stamps its channel as it starts cloning
+// (`_load_ready`, `_load_ready_template`) and reports its insert or failure.
 installLoadReady(
   (branch) => {
-    const readyId = branch[AccessorProp.ReadyId] as string | undefined;
-    if (readyId) queueEffect(branch, () => ready(readyId));
+    if (!--loading[branch[AccessorProp.ReadyId]!]) {
+      queueEffect(branch, () => ready(branch[AccessorProp.ReadyId]!));
+    }
   },
-  (branch) => readyFailed(branch[AccessorProp.ReadyId] as string | undefined),
+  (branch) => {
+    loading[branch[AccessorProp.ReadyId]!]--;
+    readyFailed(branch[AccessorProp.ReadyId]!);
+  },
+  (branch, readyId) => {
+    branch[AccessorProp.ReadyId] = readyId;
+    loading[readyId] = (loading[readyId] || 0) + 1;
+    // Absent until a first `ready`, when there is nothing to hold.
+    readyIds?.delete(readyId);
+  },
 );
 
 // Live-record pushes of the frame being applied (alternating batch, prior
 // length), undone if it rejects.
 const framePushes: (unknown[] | number)[] = [];
 
-function acceptReady(record: Record<string, unknown[]>) {
-  const render = patchRender as RenderData;
+// The frame's run may construct a site of a channel (a returning lazy
+// tag), so its record commits after the run, channels settled.
+let record: Record<string, unknown[]> = {};
+function acceptReady(frameRecord: Record<string, unknown[]>) {
   framePushes.length = 0;
+  record = frameRecord;
+}
+
+function commitReady() {
+  let pushed = false;
   for (const readyId in record) {
+    const batch = record[readyId];
+    // A dead channel can never make its data whole: the frame rejects.
     if (failed.has(readyId)) throw 0;
     if (isReady(readyId)) {
-      pushBatch(render, readyId, record[readyId]);
+      pushBatch(batch, readyId);
+      pushed = true;
     } else {
-      let entry = pending.get(render);
-      if (!entry) {
-        pending.set(
-          render,
-          (entry = {
-            c: new Map(),
-            r: [],
-            renderId: "",
-            runtimeId: "",
-            epoch: frameEpoch,
-          }),
-        );
-      }
-      const deferred = entry.c.get(readyId);
-      if (deferred) {
-        // A later frame's entries append: they re-ship full state, so
-        // in-order application leaves the newest frame's values live.
-        deferred.push(...record[readyId]);
-      } else {
-        entry.c.set(readyId, record[readyId]);
-      }
+      const entry =
+        pending.get(patchRender) ||
+        pending
+          .set(patchRender, { c: new Map(), r: [], epoch: frameEpoch })
+          .get(patchRender)!;
+      // A later frame's entries append: they re-ship full state, so
+      // in-order application leaves the newest frame's values live.
+      entry.c.get(readyId)?.push(...batch) || entry.c.set(readyId, batch);
     }
+  }
+  record = {};
+  if (pushed) {
+    runEffects(patchRender.m!([]), 1);
+    run();
   }
 }
 
 // Appends a frame batch (a thunk the drain evaluates) to the live ready
 // record without disturbing the page's still-pending resume data.
-function pushBatch(render: RenderData, readyId: string, batch: unknown[]) {
-  const target = ((render.b ??= {})[readyId] ??= []);
+function pushBatch(batch: unknown[], readyId: string) {
+  const target = ((patchRender.b ??= {})[readyId] ??= []);
   framePushes.push(target, target.length);
   for (const partial of batch) target.push(partial as (typeof target)[number]);
 }
 
-function pendingReady(render: RenderData, renderId: string, runtimeId: string) {
-  const entry = pending.get(render);
+function pendingReady() {
+  const entry = pending.get(patchRender);
   if (entry) {
-    entry.renderId = renderId;
-    entry.runtimeId = runtimeId;
     return new Promise<boolean>((resolve) => entry.r.push(resolve));
   }
 }
@@ -103,14 +115,7 @@ function markReady(readyId: string) {
       pending.delete(render);
       settle(
         entry,
-        applyReadyPatch(
-          entry.renderId,
-          entry.runtimeId,
-          entry.epoch,
-          (render) => {
-            for (const [id, batch] of entry.c) pushBatch(render, id, batch);
-          },
-        ),
+        applyReadyPatch(render, entry.epoch, () => entry.c.forEach(pushBatch)),
       );
     }
   }
@@ -129,7 +134,7 @@ function failReady(readyId: string) {
   }
 }
 
-function discardReady(render: RenderData) {
+function discardReady() {
   // A rejected frame's pushes must not survive to a later run; a partially
   // consumed batch is safe to drop since the caller is navigating anyway.
   while (framePushes.length) {
@@ -137,9 +142,9 @@ function discardReady(render: RenderData) {
     const batch = framePushes.pop() as unknown[];
     if (batch.length > length) batch.length = length;
   }
-  const entry = pending.get(render);
+  const entry = pending.get(patchRender);
   if (entry) {
-    pending.delete(render);
+    pending.delete(patchRender);
     settle(entry, false);
   }
 }
