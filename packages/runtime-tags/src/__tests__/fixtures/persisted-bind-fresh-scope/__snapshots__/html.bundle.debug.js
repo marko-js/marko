@@ -33,7 +33,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_patch_child($scope1_id, "#childScope/0", $childScope);
 			let store = store_default({});
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_store#5/var");
-			_owned_guard(0, 0) && _patch_write($scope1_id, "store", store, 1);
 			let count = 0;
 			_html(`<p>${_text_resume($scope1_id, "#text/2", store.last)}</p><span>Seen ${_text_resume($scope1_id, "#text/3", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "#button/4")}`);
 			_script($scope1_id, "__tests__/template.marko_1");

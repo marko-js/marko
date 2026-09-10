@@ -21,7 +21,6 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let double = doubler_default({ value: count });
 	_var($scope0_id, "b", $childScope, "a0");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "f", double, 1);
 	_html(`<p>${_text_resume($scope0_id, "c", double)}</p><button>+</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, {

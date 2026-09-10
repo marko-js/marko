@@ -30,7 +30,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let store = store_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store#9/var");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "store", store, 1);
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/2", input.title, void 0, $scope0_owned, 0)}</h1><p>Last ${_text_resume($scope0_id, "#text/3", store.last, 2)}</p>`);
 	_if(() => {
 		if (input.show) {

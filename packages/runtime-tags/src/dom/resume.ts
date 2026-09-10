@@ -82,17 +82,21 @@ export const constructPatchers: typeof patchers = {};
 export const patchConstruct = (setup: Scope, live: Scope) => {
   for (const key in setup) {
     constructPatchers[
-      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+      MARKO_DEBUG && key.indexOf(":") > 0
+        ? key.slice(0, key.indexOf(":") + 1)
+        : key[0]
     ](live, key, setup[key as keyof Scope]);
   }
 };
 // Applies a patch partial to its live counterpart; structural patchers
-// recurse back through here, so no scope is ever addressed by id.
+// recurse back through here, so no scope is ever addressed by id. Debug
+// entry keys are `PatchKind:…`; a bind source's index key is its own kind.
 export const patchScope = (partial: Scope, live: Scope) => {
   for (const key in partial) {
     patchers[
-      // Debug accessor prefixes are multi-character, ending ":".
-      MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+      MARKO_DEBUG && key.indexOf(":") > 0
+        ? key.slice(0, key.indexOf(":") + 1)
+        : key[0]
     ](live, key, partial[key as keyof Scope]);
   }
 };

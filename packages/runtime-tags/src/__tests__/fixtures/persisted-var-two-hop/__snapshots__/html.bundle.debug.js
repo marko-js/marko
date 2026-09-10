@@ -36,7 +36,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let double = doubler_default({ value: count });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_double#5/var");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "double", double, 1);
 	const $childScope2 = _peek_scope_id();
 	if ($scope0_reason || _must_render(shower_default)) {
 		_set_serialize_reason(2);

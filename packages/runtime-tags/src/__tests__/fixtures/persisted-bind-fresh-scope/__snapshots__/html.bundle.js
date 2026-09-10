@@ -29,7 +29,6 @@ var template_default = _template_persisted("a", (input) => {
 			_patch_child($scope1_id, "a", $childScope);
 			let store = store_default({});
 			_var($scope1_id, "b", $childScope, "a1");
-			_owned_guard(0, 0) && _patch_write($scope1_id, "f", store, 1);
 			let count = 0;
 			_html(`<p>${_text_resume($scope1_id, "c", store.last)}</p><span>Seen ${_text_resume($scope1_id, "d", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "e")}`);
 			_script($scope1_id, "a2");

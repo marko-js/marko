@@ -1,7 +1,6 @@
 import "./patch-value.feat";
 import { BIND_FRAME_VAR } from "../common/meta";
 import type { Scope } from "../common/types";
-import { PatchKey } from "../common/types";
 import { frameChecks, frameEpoch, frameVars } from "./patch";
 import { failPatch, getRegisteredWithScope, patchers } from "./resume";
 
@@ -13,11 +12,15 @@ const binds = () => {
   if (!table) tables.set(frameEpoch, (table = {}));
   return table;
 };
-patchers[PatchKey.BindSource] = (scope, key, id) => {
-  binds()[key.slice(PatchKey.BindSource.length)] = (
-    getRegisteredWithScope(id as string) as (scope: Scope) => unknown
-  )(scope);
-};
+// A source entry's key is its bind index (from 1), dispatched on its first
+// digit like any kind; the index is the datum, so no prefix.
+for (let digit = 10; --digit;) {
+  patchers[digit] = (scope, key, id) => {
+    binds()[key] = (
+      getRegisteredWithScope(id as string) as (scope: Scope) => unknown
+    )(scope);
+  };
+}
 // The frame's bind references: each wrapper resolves lazily (its bind
 // walks in after the frame text evaluates), validated at commit.
 let expectedEmbedded: [binds: Record<string, unknown>, n: number][] = [];

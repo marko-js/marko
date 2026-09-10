@@ -4,9 +4,6 @@ export const Attr = "a";
 // A spread's whole attribute set: the client re-applies it as a render.
 export const Attrs = "j";
 export const Bind = "d";
-// A bound registration resolved against its paired live scope, stored
-// in the frame's bind table for `_._.b(n)` references to resolve.
-export const BindSource = "h";
 export const Branch = "b";
 export const Catch = "k";
 export const Child = "c";
@@ -30,8 +27,11 @@ export const Text = "t";
 // A text-only element (or comment) body: the client rewrites its content.
 export const TextContent = "m";
 export const Value = "v";
+// Setup-only: a child's tag-variable wiring, registered at its owner. An
+// integer key enumerates ahead of the fills that return through it.
+export const Var = "0";
 // A fill whose value is a rebound registration: the entry carries the
-// bind-table index its `BindSource` stored.
+// bind-table index a source entry (keyed by that index) stored.
 export const Write = "w";
 
 type Self = typeof import("./patch-key");

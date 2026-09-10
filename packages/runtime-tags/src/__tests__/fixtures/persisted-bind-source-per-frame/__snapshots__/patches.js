@@ -1,5 +1,6 @@
 // PATCH
 {
+  1: "a0",
   pa: 1,
   pb: 1,
   tc: "0",
@@ -10,16 +11,15 @@
       title: "b",
       onClick: b(1)
     }
-  },
-  h1: "a0"
+  }
 }
 {
+  1: "a0",
   cAb: {
     ja: {
       id: "two",
       title: "b",
       onClick: b(1)
     }
-  },
-  h1: "a0"
+  }
 }
