@@ -1,5 +1,6 @@
 import nodePath from "path";
 
+import taglibConfig from "../config";
 import * as cache from "./cache";
 import * as jsonFileReader from "./json-file-reader";
 import * as loaders from "./loaders";
@@ -21,9 +22,16 @@ export default function loadFromCustomElements(packageJsonPath, packageName) {
     manifest = normalizeManifest(jsonFileReader.readFileSync(manifestPath));
     cache.put(manifestKey, manifest);
   }
+  // CEM module paths should be package-root relative, but some manifests
+  // (eg Shoelace's) write them relative to the manifest's own directory.
+  const manifestRoot = nodePath.dirname(manifestPath);
   const props = {};
   for (const { name, module, declaration: decl } of manifest) {
-    const browserImport = nodePath.resolve(packageRoot, module);
+    let browserImport = nodePath.resolve(packageRoot, module);
+    if (manifestRoot !== packageRoot && !fileExists(browserImport)) {
+      const fromManifest = nodePath.resolve(manifestRoot, module);
+      if (fileExists(fromManifest)) browserImport = fromManifest;
+    }
     const relativeModule = nodePath.relative(packageRoot, browserImport);
     if (
       relativeModule === ".." ||
@@ -68,16 +76,21 @@ export default function loadFromCustomElements(packageJsonPath, packageName) {
   return taglib;
 }
 
+const tagNameReg = /^[a-z][a-z0-9._-]*-[a-z0-9._-]*$/;
+
 function normalizeManifest(manifest) {
   const elements = [];
+  const seen = new Set();
   for (const mod of manifest.modules || []) {
     if (mod.kind !== "javascript-module" || typeof mod.path !== "string")
       continue;
     for (const exp of mod.exports || []) {
       if (
         exp.kind === "custom-element-definition" &&
-        /^[a-z][a-z0-9._-]*-[a-z0-9._-]*$/.test(exp.name)
+        tagNameReg.test(exp.name) &&
+        !seen.has(exp.name)
       ) {
+        seen.add(exp.name);
         elements.push({
           name: exp.name,
           module: mod.path,
@@ -86,7 +99,36 @@ function normalizeManifest(manifest) {
       }
     }
   }
+  // Manifests without `custom-element-definition` exports (eg Shoelace's)
+  // still mark elements via `customElement: true` declarations with a `tagName`.
+  for (const mod of manifest.modules || []) {
+    if (mod.kind !== "javascript-module" || typeof mod.path !== "string")
+      continue;
+    for (const decl of mod.declarations || []) {
+      if (
+        decl.customElement &&
+        typeof decl.tagName === "string" &&
+        tagNameReg.test(decl.tagName) &&
+        !seen.has(decl.tagName)
+      ) {
+        seen.add(decl.tagName);
+        elements.push({
+          name: decl.tagName,
+          module: mod.path,
+          declaration: decl,
+        });
+      }
+    }
+  }
   return elements;
+}
+
+function fileExists(filename) {
+  try {
+    return taglibConfig.fs.statSync(filename).isFile();
+  } catch {
+    return false;
+  }
 }
 
 function resolveDeclaration(manifest, mod, ref) {

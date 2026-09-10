@@ -2,6 +2,7 @@
   "name": "taglib-fixture",
   "dependencies": {
     "marko-missing-taglib": "*",
-    "probe-elements": "*"
+    "probe-elements": "*",
+    "probe-kit": "*"
   }
 }

@@ -60,6 +60,7 @@ describe("compiler/taglib", () => {
       assert.deepEqual(result.sortedNames, [
         "probe-badge",
         "probe-bare",
+        "probe-chip",
         "probe-pattern",
         "probe-tag",
       ]);
@@ -68,6 +69,27 @@ describe("compiler/taglib", () => {
 
   it("exposes a dependency's custom elements manifest as native metadata", () =>
     assert.deepEqual(run({ CASE: "custom-elements-manifest" }), {
+      manifestDirRelativeImport: path.join(
+        "node_modules",
+        "probe-kit",
+        "dist",
+        "components",
+        "kit-icon.js",
+      ),
+      declarationOnlyTag: {
+        native: true,
+        description: "A chip.",
+        browserImport: path.join(
+          "node_modules",
+          "probe-elements",
+          "define",
+          "probe-chip.js",
+        ),
+        attributes: {
+          variant: "string",
+          removable: "boolean",
+        },
+      },
       types: null,
       native: true,
       template: null,

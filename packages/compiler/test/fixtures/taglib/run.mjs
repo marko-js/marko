@@ -45,11 +45,20 @@ const cases = {
   },
 
   "custom-elements-manifest": () => {
-    const tag = taglib
-      .buildLookup(process.cwd(), emptyTranslator)
-      .getTag("probe-badge");
+    const lookup = taglib.buildLookup(process.cwd(), emptyTranslator);
+    const tag = lookup.getTag("probe-badge");
+    const chip = lookup.getTag("probe-chip");
+    const icon = lookup.getTag("kit-icon");
     write(
       tag && {
+        manifestDirRelativeImport:
+          icon && path.relative(process.cwd(), icon.browserImport),
+        declarationOnlyTag: chip && {
+          native: chip.html && chip.htmlType === "custom-element",
+          description: chip.description,
+          browserImport: path.relative(process.cwd(), chip.browserImport),
+          attributes: Object.fromEntries(Object.values(chip.attributes).filter(attr => attr.name !== "*").map(attr => [attr.name, attr.nativeType])),
+        },
         types: tag.types ?? null,
         native: tag.html && tag.htmlType === "custom-element",
         template: tag.template ?? null,
