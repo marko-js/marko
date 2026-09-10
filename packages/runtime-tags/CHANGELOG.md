@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.3.51
+
+### Patch Changes
+
+- [#4122](https://github.com/marko-js/marko/pull/4122) [`d55e660`](https://github.com/marko-js/marko/commit/d55e660683c85259f19cf4ff6d548b191f44aecf) Thanks [@rturnq](https://github.com/rturnq)! - Fix resume error ("Cannot read properties of undefined (reading 'data')") when a non-serialized value such as `input` is read inside an `<await>` body under a `<try>` with `<@placeholder>`: the pending closure effect is now gated on the same serialize reason as the value it reads.
+
 ## 6.3.50
 
 ### Patch Changes
