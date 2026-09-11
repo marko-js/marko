@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // Option `value`/`selected` patch like any attribute; a select's controlled
-// value re-syncs its options after the frame's writes land, as a render does.
+// value re-syncs its options after the flush's writes land, as a render does.
 export const config: TestConfig = {
   persisted: true,
   steps: [

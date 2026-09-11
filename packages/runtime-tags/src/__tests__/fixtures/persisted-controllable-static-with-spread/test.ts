@@ -12,7 +12,7 @@ const probe = (document: Document) => {
 };
 
 // A control owned by a static (client-state) attr with a server spread: a
-// frame carrying only the spread must leave the live control alone — the
+// flush carrying only the spread must leave the live control alone — the
 // binding, handler, and typed value all survive the patch.
 export const config: TestConfig = {
   persisted: true,

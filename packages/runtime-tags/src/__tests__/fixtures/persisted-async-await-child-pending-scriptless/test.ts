@@ -7,7 +7,7 @@ const inc = (document: Document) => {
 
 // A pending await constructed from its record on a scriptless page settles
 // into a stateful child: the body record's walk created it, so its setup
-// (seed, mount) applies when the settle frame lands.
+// (seed, mount) applies when the settle flush lands.
 export const config: TestConfig = {
   persisted: true,
   steps: () => [

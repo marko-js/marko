@@ -1,4 +1,4 @@
-import { BIND_FRAME_VAR } from "../common/meta";
+import { BIND_FLUSH_VAR } from "../common/meta";
 import * as Char from "./constants/char";
 import type { Boundary } from "./writer";
 
@@ -301,9 +301,9 @@ const KNOWN_OBJECTS = /* @__PURE__ */ (() =>
 class State {
   ids = 0;
   flushId = 0;
-  // A frame's tree is no live scope: the response's context keeps every
+  // A flush's tree is no live scope: the response's context keeps every
   // tree it applied, keyed as the client keys them (the k-th tree), and a
-  // later frame paths from that key.
+  // later flush paths from that key.
   trees = 0;
   wroteUndefined = false;
   buf = [] as string[];
@@ -467,7 +467,7 @@ export function getRegistered(val: WeakKey) {
 // applies a payload's return value when it is an array.
 function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
-  // A patch frame is one flat entry array, so the scope run serializes with
+  // A patch flush is one flat entry array, so the scope run serializes with
   // no fn wrapper or list brackets.
   const patch = state.boundary?.state?.writesPatches;
   let nextSlotId = -1;
@@ -476,9 +476,9 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   for (const flush of flushes) {
     const scopeId = flush[0];
     const scope = flush[1];
-    // A frame's flush is its own tree (the scope object is shared).
+    // Each flush is its own tree (the scope object is shared).
     const ref = patch
-      ? newFrameReference(state)
+      ? newFlushReference(state)
       : state.refs.get(scope) || newScopeReference(state, scope, scopeId);
 
     // Empty scopes fold into the next emitted slot's skip count.
@@ -506,7 +506,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
     extras = ",0)";
     // A deferred patch run applies through `_()` mid-expression, so a patch
-    // frame must evaluate its shell records first (see `resumeScript`).
+    // flush must evaluate its shell records first (see `resumeScript`).
     if (patch) state.boundary!.state.patchDeferred = 1;
     if (fillIndex !== -1) {
       buf[fillIndex] = "_([" + buf[fillIndex];
@@ -759,7 +759,7 @@ function trackScope(state: State, val: WeakKey, scopeId: number) {
   }
 }
 
-function newFrameReference(state: State) {
+function newFlushReference(state: State) {
   const ref = new Reference(null, null, state.flushId, null);
   ref.id = "_(" + state.trees++ + ")";
   return ref;
@@ -796,8 +796,8 @@ function writeRegistered(
       state.boundary.state as { binds?: Map<WeakKey, number> }
     ).binds?.get(val);
     // Bind `0` is never written, so a registration the render-time scan
-    // could not reach rejects at the frame's commit check (navigation).
-    state.buf.push(BIND_FRAME_VAR + "(" + (n || 0) + ")");
+    // could not reach rejects at the flush's commit check (navigation).
+    state.buf.push(BIND_FLUSH_VAR + "(" + (n || 0) + ")");
   } else if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(

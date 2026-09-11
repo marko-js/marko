@@ -160,7 +160,7 @@ export function resolveStructure(section: Section) {
           }
           break;
         case StructureKind.Child: {
-          // A lazy site composes its child only when a frame constructs it.
+          // A lazy site composes its child only when a flush constructs it.
           const composed = html && op.load?.serverOnly;
           const renderer = op.load && !composed ? undefined : op.renderer;
           if (composed) {

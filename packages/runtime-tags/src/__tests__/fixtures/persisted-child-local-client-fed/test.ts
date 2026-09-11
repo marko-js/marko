@@ -9,7 +9,7 @@ const clickP = (document: Document) => {
 };
 
 // A child's server-owned local derives from a param the CLIENT feeds: the
-// frame withholds the write and names the feed's init instead, so a fresh
+// flush withholds the write and names the feed's init instead, so a fresh
 // scope re-derives it from the live input and later feeds keep it current.
 export const config: TestConfig = {
   persisted: true,

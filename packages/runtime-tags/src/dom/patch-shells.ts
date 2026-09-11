@@ -22,7 +22,7 @@ import {
 const _content = /*@__PURE__*/ withBranches(content);
 
 // A branch stashes its setup for the shell's first render; a scope this
-// frame created (`Gen` since the frame's run, met while constructing) has
+// flush created (`Gen` since the flush's run, met while constructing) has
 // no render coming, so its setup applies now.
 patchers[PatchKey.Setup] = (scope, _key, value) => {
   if (
@@ -35,8 +35,8 @@ patchers[PatchKey.Setup] = (scope, _key, value) => {
     scope[AccessorProp.PatchSetup] = value as Scope;
   }
 };
-// Ids the frame asks a fresh scope to run, in the shell record's grammar
-// (`inits…!effects…`): a child's mounts, a client-fed local's feed inits.
+// Ids the flush asks a fresh scope to run, in the shell record's grammar
+// (`inits…!effects…`): a child's mounts, a client-upstream local's inits.
 constructPatchers[PatchKey.Init] = (scope, _key, ids) =>
   runSetupIds(resolveSetupIds(ids as string), scope);
 

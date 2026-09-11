@@ -2549,7 +2549,7 @@ describe("serializer", () => {
     assert.equal(partials.length, 25001);
   });
 
-  describe("patch frames", () => {
+  describe("patch flushes", () => {
     const patchBoundary = () =>
       ({
         signal: { aborted: false },

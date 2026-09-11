@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
-// Pending `<await>` inside `<try>` + `@placeholder`: the first frame
+// Pending `<await>` inside `<try>` + `@placeholder`: the first flush
 // applies ready fills and re-enters received placeholder state; the
-// settle frame replaces it with the resolved body.
+// settle flush replaces it with the resolved body.
 export const config: TestConfig = {
   persisted: true,
   steps: () => [

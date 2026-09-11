@@ -4,7 +4,7 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// An unescaped hole patches as html: a server-owned one from the frame, a
+// An unescaped hole patches as html: a server-owned one from the flush, a
 // client-owned one through its fill; the fill never re-renders the former.
 export const config: TestConfig = {
   persisted: true,

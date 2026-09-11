@@ -123,7 +123,7 @@ export function _peek_scope_id() {
 
 const kPendingContexts = Symbol("Pending Contexts");
 // The nearest elided `@catch` renderer: a rejection under it captures the
-// server-rendered catch html into its frame.
+// server-rendered catch html into its flush.
 const kElidedCatch = Symbol("Elided Catch");
 // Boundary content elided from a scriptless page's slots (no client
 // renderer): marked so `_try` routes rejections through inert captures.
@@ -236,7 +236,7 @@ export function _script(
 }
 
 // Setup ids share the shell record grammar (`inits…!effects…`); each side
-// dedupes so a feed shared by several locals arrives once.
+// dedupes so an upstream shared by several locals arrives once.
 export function addSetupId(scopeId: number, id: string, effect?: 1) {
   const { state } = $chunk.boundary;
   const setup = (patchPartial(state, scopeId)[PatchKey.Setup] ??= {}) as Record<
@@ -354,7 +354,7 @@ function markText(
 }
 
 // Structural patch entries hold their child partial objects, so the root
-// partial IS the frame tree and one ordinary serializer flush emits it.
+// partial IS the flush tree and one ordinary serializer flush emits it.
 export function writePatch(
   scopeId: number,
   entries: Record<string, unknown>,
@@ -364,7 +364,7 @@ export function writePatch(
   if (state.patchInert) return;
   if (state.patchFlushed) {
     throw new Error(
-      "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
+      "A persisted patch cannot write after its flush was written (async patch content is not supported).",
     );
   }
   const partial = patchPartial($chunk.boundary.state, scopeId, serializeState);
@@ -439,7 +439,7 @@ export function patchPartial(
     if (serializeState.readyId && !pending) {
       // A channel's entries sit in the enclosing tree under the channel's
       // key, at the parent's child entry (scope `link[0]`, slot `link[1]`)
-      // or the root: one flat frame, applied once the channel is ready.
+      // or the root: one flat flush, applied once the channel is ready.
       const guard = (patchPartial(
         state,
         link ? link[0] : scopeId,
@@ -1106,8 +1106,8 @@ function scopeWithId(state: State, scopeId: number) {
 export function _global_subscribe(id: string, scopeId: number, unfilled?: 1) {
   const { state } = $chunk.boundary;
   if (!unfilled && !inUnpatched()) return;
-  // A frame's scopes are live already (paired) or subscribe as they render
-  // (constructed); the frame re-ships every global they could read.
+  // A flush's scopes are live already (paired) or subscribe as they render
+  // (constructed); the flush re-ships every global they could read.
   if (state.writesPatches) return;
   const key = AccessorPrefix.ClosureScopes + id;
   let subscribers = (state.globalSubscribers ??= {})[key];
@@ -1136,7 +1136,7 @@ export function _subscribe(
 }
 
 // On when no patch fills the group's value here (`_source_if` folded in: on
-// a page the reason is the mask): the client feeds it, or the read sits in
+// a page the reason is the mask): the client is upstream, or the read sits in
 // unpatched structure.
 export function _unfilled_if(owned?: SerializeReasonValue, group?: number) {
   const fed = maskGroup(owned, group!);
@@ -1161,10 +1161,10 @@ export function _persisted_reason() {
   state.serializeReason = undefined;
   if (state.writesPatches) {
     // The first persisted template of the render is the page root, about to
-    // allocate the next id — the frame names it as the walk's entry pair.
+    // allocate the next id — the flush names it as the walk's entry pair.
     if (!state.rootScopeId) {
       state.rootScopeId = _peek_scope_id();
-      // Globals re-ship with every frame (undefined included) so the live
+      // Globals re-ship with every flush (undefined included) so the live
       // page's global object never reads stale.
       const globals = getFilteredGlobals(state.$global, 1);
       if (globals) {
@@ -1198,7 +1198,7 @@ export function _filled_guard(mask: SerializeReasonValue, group: number) {
   const owned = maskGroup(mask, group);
   return owned === 2 || (owned === 0 && isInResumedBranch()) ? 1 : 0;
 }
-// Whether the client feeds the group (the low mask bit): the resumed page
+// Whether the client is upstream of the group (the low mask bit): the resumed page
 // then owns whatever sits downstream of the group.
 export function _client_guard(mask: SerializeReasonValue, group: number) {
   return maskGroup(mask, group) & 1 ? 1 : 0;
@@ -1268,7 +1268,7 @@ export function writeWaitReady(
 }
 
 // Renders content into a detached chunk with patch writes suppressed so the
-// html ships as frame data; async content yields `0` (reject).
+// html ships as flush data; async content yields `0` (reject).
 function renderInert(renderer: (arg: unknown) => void, arg: unknown) {
   const chunk = $chunk;
   const { state } = chunk.boundary;
@@ -1375,7 +1375,7 @@ export function _await<T>(
       if (boundary.state.writesPatches) {
         if (!boundary.signal.aborted) {
           chunk.render(() => {
-            // An elided catch has no client renderer: its frame carries
+            // An elided catch has no client renderer: its flush carries
             // the server-rendered catch html alongside the error.
             const elidedCatch = $chunk.context?.[kElidedCatch] as
               | ((err: unknown) => void)
@@ -1420,7 +1420,7 @@ export function _try(
   const { state } = boundary;
   const { resumeWrites } = boundary;
   // A patch shows `@placeholder`/`@catch` from received client state;
-  // the document reorder/`<t hidden>` path must not ride the frame stream.
+  // the document reorder/`<t hidden>` path must not ride the flush stream.
   const { writesPatches } = state;
   // Construct payload (content id + slot ids, `0` = elided catch) rides the
   // pairing entry, except for always-pairing branches outside divergence.
@@ -1745,8 +1745,8 @@ export class State implements SerializeState {
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   public globalSubscribers?: Record<string, Set<ScopeInternals>>;
-  // Content renderers a frame created and invoked (by id): one created but
-  // never invoked was withheld by its consumer, so its fills deliver.
+  // Content renderers a flush created and invoked (by id): one created but
+  // never invoked was withheld by its consumer, so its values fill.
   public createdContents?: Set<string>;
   public renderedContents?: Set<string>;
   public flushScopes = false;
@@ -1885,7 +1885,7 @@ export class Boundary extends AbortController {
   }
 
   flush() {
-    // A pending patch must not stringify until its frame is actually
+    // A pending patch must not stringify until its flush is actually
     // emitted: the same partial objects keep receiving later writes.
     if (!this.signal.aborted && !(this.count && this.state.writesPatches)) {
       flushSerializer(this, this.state);
@@ -2223,7 +2223,7 @@ export class Chunk {
       let carried: Chunk[] | null = null;
 
       for (const reorderedChunk of state.writeReorders) {
-        // A chunk requeued when its reorder marker streamed delivers once
+        // A chunk requeued when its reorder marker streamed emits once
         // settled, or as an empty reorder once an aborted boundary strands it.
         if (reorderedChunk.async && reorderedChunk.consumed) {
           let aborted: Boundary | undefined = reorderedChunk.boundary;

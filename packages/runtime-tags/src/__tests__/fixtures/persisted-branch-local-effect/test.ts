@@ -1,5 +1,5 @@
 import type { TestConfig } from "../../main.test";
-// An effect in a nested branch reads a server-owned local declared in the enclosing branch: the frame writes the local and the effect's hop count targets that scope.
+// An effect in a nested branch reads a server-owned local declared in the enclosing branch: the flush writes the local and the effect's hop count targets that scope.
 export const config: TestConfig = {
   persisted: true,
   steps: [

@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // The loop-then-conditional chain dispatches per item and per selection,
-// including a same-frame destroy + fill change.
+// including a same-flush destroy + fill change.
 export const config: TestConfig = {
   persisted: true,
   steps: [
@@ -13,7 +13,7 @@ export const config: TestConfig = {
     click,
     { items: ["a", "b"], flag: true, suffix: "y" },
     click,
-    // The branches are destroyed in the same frame the fill changes.
+    // The branches are destroyed in the same flush the fill changes.
     { items: ["a", "b"], flag: false, suffix: "z" },
   ],
 };

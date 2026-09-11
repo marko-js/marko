@@ -2,7 +2,7 @@ import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
 // A branch holding a load-on-render child beside a server-owned spread:
-// the spread delivers as the element's attrs, so the frame still
+// the spread delivers as the element's attrs, so the flush still
 // constructs the branch and the child with it.
 export const config: TestConfig = {
   persisted: true,

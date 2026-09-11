@@ -88,7 +88,7 @@ export function run() {
   runEffects(effects);
 }
 
-// Discards a rejected frame's queued work and retires its epoch, so
+// Discards a rejected flush's queued work and retires its epoch, so
 // residue (marks, fresh `Gen`s, queued checks) can never match later.
 export function abortRun() {
   runId++;

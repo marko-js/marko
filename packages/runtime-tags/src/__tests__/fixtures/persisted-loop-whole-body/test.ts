@@ -6,7 +6,7 @@ export const config: TestConfig = {
   persisted: true,
   error_html: true,
   // Only the debug serializer reports the function; optimize emits a bind
-  // the frame commit rejects.
+  // the flush commit rejects.
   skip_optimize: true,
   steps: [{ format: (item: string) => item + "!" }],
 };

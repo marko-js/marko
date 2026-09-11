@@ -512,25 +512,25 @@ function testFixtures(interop?: true) {
                 diverged = true;
               },
               onInput: persisted
-                ? async (input, betweenFrames) => {
+                ? async (input, betweenFlushes) => {
                     tracker.beginUpdate();
                     let applied = true;
-                    const frames: string[] = [];
-                    for await (const frame of template.patch(input)) {
-                      if (frames.length && betweenFrames) {
+                    const flushes: string[] = [];
+                    for await (const flush of template.patch(input)) {
+                      if (flushes.length && betweenFlushes) {
                         tracker.logUpdate(input);
                         tracker.beginUpdate();
-                        await betweenFrames(browser.window.document);
+                        await betweenFlushes(browser.window.document);
                         run();
                         await browser.runAsyncScripts();
                         run();
-                        tracker.logUpdate(betweenFrames);
+                        tracker.logUpdate(betweenFlushes);
                         tracker.beginUpdate();
                       }
-                      frames.push(frame);
+                      flushes.push(flush);
                       // A production caller navigates on the first failed
-                      // frame; later frames must not mutate further.
-                      const result = applyPatch!(frame);
+                      // flush; later flushes must not mutate further.
+                      const result = applyPatch!(flush);
                       if (typeof result !== "boolean") {
                         // A deferred patch is waiting on a lazy module; load
                         // triggers schedule via setTimeout, so a macrotask
@@ -540,9 +540,9 @@ function testFixtures(interop?: true) {
                       }
                       if (!(applied = await result)) break;
                     }
-                    patches.push(frames.join(""));
+                    patches.push(flushes.join(""));
                     tracker.logUpdate(input);
-                    if (applied && !diverged && !betweenFrames) {
+                    if (applied && !diverged && !betweenFlushes) {
                       await assertPatchedLikeFresh(input);
                     }
                     if (!applied) {
@@ -640,23 +640,23 @@ function testFixtures(interop?: true) {
                 async () => {
                   const { tracker, chunks, patches, freshDocs } = await ssr();
                   if (persisted) {
-                    // Each wire frame is one expression; format them
+                    // Each wire flush is one expression; format them
                     // independently so beautify cannot glue `}{`.
                     await snapMode(
                       () =>
                         patches
                           .map((joined) => {
-                            const frames = joined
+                            const flushes = joined
                               .split("\n")
-                              .map((frame) => frame.trimEnd())
+                              .map((flush) => flush.trimEnd())
                               .filter(Boolean)
-                              .map((frame) =>
-                                js_beautify(frame, {
+                              .map((flush) =>
+                                js_beautify(flush, {
                                   indent_size: 2,
                                 }).trimEnd(),
                               )
                               .join("\n");
-                            return "// PATCH\n" + frames;
+                            return "// PATCH\n" + flushes;
                           })
                           .join("\n\n")
                           .trimEnd() + "\n",
@@ -690,10 +690,10 @@ function testFixtures(interop?: true) {
                           const doc: Sizes = freshDocs[i]
                             ? await getSizes(freshDocs[i])
                             : stats.html;
-                          const frame = await getSizes(patches[i]);
+                          const flush = await getSizes(patches[i]);
                           assert.ok(
-                            frame.min < doc.min && frame.brotli < doc.brotli,
-                            `persisted response ${i} (${frame.min}b/${frame.brotli}b brotli) is not smaller than its document (${doc.min}b/${doc.brotli}b) for "${entry}"`,
+                            flush.min < doc.min && flush.brotli < doc.brotli,
+                            `persisted response ${i} (${flush.min}b/${flush.brotli}b brotli) is not smaller than its document (${doc.min}b/${doc.brotli}b) for "${entry}"`,
                           );
                         }
                       }
@@ -750,7 +750,7 @@ async function runSteps(
     onStep?: () => void;
     onInput?: (
       input: Input,
-      betweenFrames?: (document: Document) => unknown,
+      betweenFlushes?: (document: Document) => unknown,
     ) => void | boolean | Promise<void | boolean>;
     onFlush?: () => Promise<void>;
     onDestroy?: () => void;
@@ -797,7 +797,7 @@ async function runSteps(
       }
     } else if (opts.onInput) {
       const input = isNavigate(update) ? update.navigateInput : update;
-      const between = isNavigate(update) ? update.betweenFrames : undefined;
+      const between = isNavigate(update) ? update.betweenFlushes : undefined;
       if ((await opts.onInput(input, between)) === false) break;
     } else {
       // if new input is detected, stop testing

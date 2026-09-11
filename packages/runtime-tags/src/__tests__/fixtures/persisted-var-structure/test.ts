@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A client-fed return driving a test is client-owned structure: the
-// selection recomputes client-side and frames never speak it.
+// selection recomputes client-side and flushes never speak it.
 export const config: TestConfig = {
   persisted: true,
   steps: [{}, click, {}, click],

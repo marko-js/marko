@@ -213,8 +213,8 @@ export default {
 
       if (hasVar) {
         const varBinding = trackVarReferences(tag, BindingType.derived)!;
-        // A frame writes the variable from what the tag renders: its inputs
-        // are its provenance (a client render drives it through `_var`).
+        // A flush writes the variable from what the tag renders: its inputs
+        // are its sources (a client render drives it through `_var`).
         if (isPersisted()) setBindingValueExprs(varBinding, tagExtra);
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
@@ -223,7 +223,7 @@ export default {
 
       const bodySection = startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
-      // Split so the force cannot swallow the exprs' provenance.
+      // Split so the force cannot swallow the exprs' sources.
       if (hasVar) addSerializeExpr(tagSection, true, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
 
@@ -499,8 +499,8 @@ export default {
         // `2` skips: a client-owned group upstream); the render takes it.
         let patchPairingArg: t.Expression | undefined;
         if (writesPatchDynamicTag(tag, tagSection)) {
-          // The site's renderer and input evaluate once: hoisted, they feed
-          // the render and the entry alike.
+          // The site's renderer and input evaluate once: hoisted, both the
+          // render and the entry read them.
           if (!t.isIdentifier(tagExpression)) {
             const tagId = generateUidIdentifier("tag");
             statements.push(

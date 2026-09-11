@@ -10,7 +10,7 @@ const probe = (document: Document) => {
 };
 
 // An array `checkedValue` (checkbox group): the entry re-ships the array by
-// value each frame and each box compares its own `value` against it.
+// value each flush and each box compares its own `value` against it.
 export const config: TestConfig = {
   persisted: true,
   steps: [

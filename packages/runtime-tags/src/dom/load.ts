@@ -69,7 +69,7 @@ export const _load_template = /*@__PURE__*/ withLazy(
 );
 
 // A persisted page's ready feature drives a branch's stamped channel once
-// loaded content is live (or fails), so deferred frame data drains after.
+// loaded content is live (or fails), so deferred flush data drains after.
 let loadReady: ((branch: BranchScope) => void) | undefined;
 let loadReadyFailed: typeof loadReady;
 // Installed by the persisted ready feature, whose wrappers below are the
@@ -84,7 +84,7 @@ export function installLoadReady(
   loadReadyFailed = onFailed;
   loadStart = onStart;
 }
-// A persisted page's `<${Lazy}>` site: frame data for a child this template
+// A persisted page's `<${Lazy}>` site: flush data for a child this template
 // constructs waits for its clone, so its setup reports the start.
 export const _load_ready_template = (
   readyId: string,

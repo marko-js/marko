@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // Body content a child renders inside a branch the call site feeds from
-// state: the frame patches the content when the child renders it and
+// state: the flush patches the content when the child renders it and
 // fills its server values when the child withholds it.
 export const config: TestConfig = {
   persisted: true,

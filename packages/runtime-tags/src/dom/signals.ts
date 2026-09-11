@@ -212,7 +212,7 @@ export function _fill_join_closure<T extends SignalFn>(
 }
 
 // Keeps a fill-joined value and its closure signal together so optimized
-// pages retain the only delivery path to subscribed content scopes.
+// pages retain the only refresh path to subscribed content scopes.
 export function _fill_join_subscribers<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
@@ -243,7 +243,7 @@ export function _fill_join_subscribers<T extends SignalFn>(
   });
 }
 
-// A declaration doubles as its fill; `fillFn` (renders minus frame writes)
+// A declaration doubles as its fill; `fillFn` (renders minus flush writes)
 // is the fill-driven run when it has any.
 function fill<T extends Signal<any>>(
   key: string,

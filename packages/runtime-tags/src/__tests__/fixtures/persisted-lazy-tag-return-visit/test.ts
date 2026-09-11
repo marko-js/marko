@@ -6,7 +6,7 @@ const click = (document: Document) => {
 };
 
 // The site leaves and returns with its module resident: the returning
-// frame's ready batch must wait for the child to clone back in.
+// flush's ready batch must wait for the child to clone back in.
 export const config: TestConfig = {
   persisted: true,
   equivalent: false,

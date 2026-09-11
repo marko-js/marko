@@ -1,6 +1,6 @@
 import type { TestConfig } from "../../main.test";
 
-// Head content is document content: a frame patches a title's text and a
+// Head content is document content: a flush patches a title's text and a
 // meta's attribute like any element's.
 export const config: TestConfig = {
   persisted: true,

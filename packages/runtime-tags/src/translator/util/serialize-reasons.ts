@@ -63,9 +63,9 @@ export function addSerializeReason(
 ) {
   if (reason) {
     if (reason !== true) {
-      addProvenance(section, reason, prop && getPropKey(section, prop, prefix));
+      addSources(section, reason, prop && getPropKey(section, prop, prefix));
       // A `$global` read alone never serializes (the client reads the
-      // globals object, as without persisted pages); it stays provenance.
+      // globals object, as without persisted pages); it stays a source.
       if (!reason.state && !reason.param) return;
     }
     if (prop) {
@@ -105,7 +105,7 @@ export function addSerializeExpr(
 ) {
   if (expr) {
     // Exprs accumulate even once forced: resolving into a `true` reason is
-    // a no-op, and provenance still needs them.
+    // a no-op, and the sources still need them.
     if (prop) {
       const key = getPropKey(section, prop, prefix);
       if (expr === true) {
@@ -309,7 +309,7 @@ export function applySerializeExprs(section: Section) {
   if (propExprs) {
     section.propSerializeExprs = undefined;
     for (const [key, exprs] of propExprs) {
-      addProvenance(section, getProvenanceForExprs(exprs), key);
+      addSources(section, getAllSourcesForExprs(exprs), key);
       const exprReason = getSerializeSourcesForExprs(exprs);
       if (exprReason) {
         const curReason = section.serializeReasons.get(key);
@@ -324,7 +324,7 @@ export function applySerializeExprs(section: Section) {
   const scopeExprs = section.serializeExprs;
   if (scopeExprs) {
     section.serializeExprs = undefined;
-    addProvenance(section, getProvenanceForExprs(scopeExprs));
+    addSources(section, getAllSourcesForExprs(scopeExprs));
     const exprReason = getSerializeSourcesForExprs(scopeExprs);
     if (exprReason) {
       const curReason = section.serializeReason;
@@ -371,58 +371,55 @@ export function finalizeSerializeReason(section: Section) {
     }
   }
 
-  // Prop provenance folds into the scope's, mirroring the reason merge.
-  const propProvenance = section.propSerializeProvenance;
-  if (propProvenance) {
-    for (const provenance of propProvenance.values()) {
-      addProvenance(section, provenance);
+  // Prop sources fold into the scope's, mirroring the reason merge.
+  const propSources = section.propSerializeSources;
+  if (propSources) {
+    for (const sources of propSources.values()) {
+      addSources(section, sources);
     }
   }
 }
 
-// Records provenance without touching the reason: for feeds that inform
+// Records sources without touching the reason: for upstreams that inform
 // ownership but must never cause serialization (function-body reads).
-export function addSerializeProvenance(
+export function addSerializeSources(
   section: Section,
   sources: Sources | undefined,
   prop?: Binding | AccessorProp | symbol,
   prefix?: AccessorPrefix | symbol,
 ) {
-  addProvenance(section, sources, prop && getPropKey(section, prop, prefix));
+  addSources(section, sources, prop && getPropKey(section, prop, prefix));
 }
 
-// What feeds a serialization decision, complete after reference finalize;
+// The sources of a serialization decision, complete after reference finalize;
 // EMPTY under a forced reason means unrecorded, never "sourceless".
-export function getSerializeProvenance(
+export function getSerializeSources(
   section: Section,
   prop?: Binding | AccessorProp | symbol,
   prefix?: AccessorPrefix | symbol,
 ): Sources | undefined {
   return prop
-    ? section.propSerializeProvenance?.get(getPropKey(section, prop, prefix))
-    : section.serializeProvenance;
+    ? section.propSerializeSources?.get(getPropKey(section, prop, prefix))
+    : section.serializeSources;
 }
 
-function addProvenance(
+function addSources(
   section: Section,
   sources: Sources | undefined,
   key?: SerializeKey,
 ) {
   if (!sources) return;
   if (key) {
-    const provenance = (section.propSerializeProvenance ??= new Map());
-    provenance.set(key, mergeSources(provenance.get(key), sources)!);
+    const propSources = (section.propSerializeSources ??= new Map());
+    propSources.set(key, mergeSources(propSources.get(key), sources)!);
   } else {
-    section.serializeProvenance = mergeSources(
-      section.serializeProvenance,
-      sources,
-    )!;
+    section.serializeSources = mergeSources(section.serializeSources, sources)!;
   }
 }
 
-// Unlike the reason resolution, provenance counts reads inside function
+// Unlike the reason resolution, these sources count reads inside function
 // values: a consumer may invoke them at render time.
-function getProvenanceForExprs(exprs: Opt<t.NodeExtra>) {
+export function getAllSourcesForExprs(exprs: Opt<t.NodeExtra>) {
   let sources: Sources | undefined;
   forEach(exprs, (expr) => {
     sources = mergeSources(sources, getSerializeSourcesForExpr(expr));

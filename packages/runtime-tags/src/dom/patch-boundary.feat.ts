@@ -142,13 +142,13 @@ const settled = new WeakMap<Scope, Set<string>>();
 patchers[PatchKey.Pending] = (scope, key, value) => {
   const accessor = key.slice(PatchKey.Pending.length);
   const link = (AccessorPrefix.BranchScopes + accessor) as Accessor;
-  // The server now owns this await frame. Invalidate a promise started while
+  // The server now owns this await flush. Invalidate a promise started while
   // setting up a newly constructed parent body so its stale resolution drops.
   scope[(AccessorPrefix.Promise + accessor) as Accessor] = 0 as never;
-  // A settle from an earlier response must not hide this frame's pending UI.
+  // A settle from an earlier response must not hide this flush's pending UI.
   settled.get(scope)?.delete(accessor);
-  // A construct has no live await branch: the entry's id delivers the body
-  // content record its frame shipped. Mirrors `_await_content`.
+  // A construct has no live await branch: the entry's id names the body
+  // content record its flush shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
     const renderer = getShellContent(shells[value]);
     const pendingScopes = collectScopes(
@@ -164,7 +164,7 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
     );
     (scope[link] as BranchScope)[AccessorProp.PendingScopes] = pendingScopes;
   }
-  // Same-frame settle (Promise.resolve) also writes Child; skip pending UI.
+  // Same-flush settle (Promise.resolve) also writes Child; skip pending UI.
   queueMicrotask(() => {
     if (!settled.get(scope)?.has(accessor)) beginAwaitPending(scope, accessor);
   });
@@ -221,7 +221,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   const link = key.slice(PatchKey.Child.length) as Accessor;
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
   // A try showing its catch render (shown like a placeholder, with no await
-  // pending) takes its body back first: the frame's partial addresses the body.
+  // pending) takes its body back first: the flush's partial addresses the body.
   if (
     (scope[link] as BranchScope | undefined)?.[
       AccessorProp.PlaceholderBranch
@@ -293,11 +293,11 @@ patchers[PatchKey.Child] = (scope, key, value) => {
 
 patchers[PatchKey.Catch] = (scope, key, error) => {
   const accessor = key.slice(PatchKey.Catch.length);
-  // An elided catch slot (`0`) fills from the frame's server-rendered html;
-  // a frame without it (an async catch body) rejects.
+  // An elided catch slot (`0`) fills from the flush's server-rendered html;
+  // a flush without it (an async catch body) rejects.
   const tryBranch = findBranchWithKey(scope, AccessorProp.CatchContent);
   let content = tryBranch?.[AccessorProp.CatchContent] as Renderer | 0;
-  // The slot stays `0`: every rejection frame renders its own catch html.
+  // The slot stays `0`: every rejection flush renders its own catch html.
   if (content === 0) {
     const [err, html] = error as [unknown, string | 0];
     if (typeof html !== "string") failPatch();
@@ -315,7 +315,7 @@ patchers[PatchKey.Catch] = (scope, key, error) => {
 };
 
 // The catch render shows like a placeholder: the parked try body comes
-// back when the next frame patches the try.
+// back when the next flush patches the try.
 function showCatch(tryBranch: BranchScope, error: unknown, content: Renderer) {
   const shown = tryBranch[AccessorProp.PlaceholderBranch] as
     | BranchScope

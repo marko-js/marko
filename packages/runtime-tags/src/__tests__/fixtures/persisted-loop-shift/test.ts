@@ -8,7 +8,7 @@ const items = (...pairs: [number, string][]) =>
   pairs.map(([id, label]) => ({ id, label }));
 
 // The first patch of the session PREPENDS an item (its shell arrives at the
-// end of the frame, so the additions defer) while a conditional and captures
+// end of the flush, so the additions defer) while a conditional and captures
 // trail the loop: growth must not shift any pairing.
 export const config: TestConfig = {
   persisted: true,

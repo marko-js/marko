@@ -6,7 +6,7 @@ import { getRegisteredWithScope, patchers } from "./resume";
 
 // Key: effect register id. Entry: space-joined read accessors, a numeric
 // token switching the owner hops for those after it. A read stamped with
-// this frame's epoch re-runs the effect ONCE.
+// this flush's epoch re-runs the effect ONCE.
 patchers[PatchKey.Effect] = (scope, key, entry) => {
   if (scope[AccessorProp.Gen] === runId) return;
   const epoch = runId;
