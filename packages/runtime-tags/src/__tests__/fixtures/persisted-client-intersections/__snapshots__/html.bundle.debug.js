@@ -15,7 +15,7 @@ var price_card_default = _template_persisted("__tests__/tags/price-card.marko", 
 	}, "__tests__/tags/price-card.marko", 0, {
 		input_label: ["input.label"],
 		qty: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/price-card.marko0", input.label);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/price-card.marko0", input.label);
 }, 0, 0);
 
 // tags/promo-tag.marko
@@ -35,7 +35,7 @@ var promo_tag_default = _template_persisted("__tests__/tags/promo-tag.marko", (i
 	}, "__tests__/tags/promo-tag.marko", 0, {
 		input_text: ["input.text"],
 		seen: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/promo-tag.marko0", input.text);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/promo-tag.marko0", input.text);
 }, 0, 0);
 
 // tags/site-footer.marko

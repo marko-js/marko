@@ -13,7 +13,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	let count = 0;
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
-		_owned_guard($scope0_owned, 0) ? _patch_value($scope1_id, "__tests__/template.marko0", row?.id) : _patch_init($scope1_id, "__tests__/template.marko_1_input_rows#4/init");
+		_filled_guard($scope0_owned, 0) ? _patch_value($scope1_id, "__tests__/template.marko0", row?.id) : _patch_init($scope1_id, "__tests__/template.marko_1_input_rows#4/init");
 		_for_of(row.cells, (cell) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "#text/0", row.id + "@" + count)}</p>`);

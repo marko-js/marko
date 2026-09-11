@@ -39,7 +39,7 @@ var child_default = _template_persisted("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_owned, 1);
-	$scope0_reason ? _scope($scope0_id, { e: input.on }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.on);
+	$scope0_reason ? _scope($scope0_id, { e: input.on }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.on);
 }, 0, 0);
 
 // template.marko

@@ -51,7 +51,7 @@ var template_default = _template_persisted("a", (input) => {
 					return 0;
 				}
 			}, $scope2_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2"], $scope0_owned, 0);
-			_subscribe(_source_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_owned, 0) && $input_show__closures, _scope($scope2_id, {
 				c: other,
 				_: _scope_with_id($scope1_id)
 			}));

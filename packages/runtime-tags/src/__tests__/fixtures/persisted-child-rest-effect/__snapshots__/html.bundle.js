@@ -7,7 +7,7 @@ var dump_default = _template_persisted("b", (input) => {
 	_html(`<p>${_patch_text($scope0_id, "a", JSON.stringify(input), void 0, $scope0_owned, 0)}</p>`);
 	_script($scope0_id, "b0");
 	_patch_effect($scope0_id, "b0", "d");
-	$scope0_reason ? _scope($scope0_id, { d: input.label }) : _owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "d", input.label);
+	$scope0_reason ? _scope($scope0_id, { d: input.label }) : _filled_guard($scope0_owned, 1) && _patch_write($scope0_id, "d", input.label);
 }, 0, 0);
 
 // template.marko
@@ -30,5 +30,5 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.title,
 		f: count,
 		a: _existing_scope($childScope)
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.title);
 }, 1, () => [dump_default]);

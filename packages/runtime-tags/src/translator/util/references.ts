@@ -140,9 +140,9 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
-  /** A root param whose reads select a branch or loop (here, or in a
+  /** A root param whose reads sit upstream of a branch or loop (here, or in a
    * child it feeds). */
-  selectsStructure: boolean;
+  upstreamOfStructure: boolean;
   /** Captured inside a registered function: live-scope reads reach it at
    * any later invocation. */
   registeredFnCapture: boolean;
@@ -303,7 +303,7 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
-    selectsStructure: false,
+    upstreamOfStructure: false,
     registeredFnCapture: false,
     feedsStateMixedGroup: false,
     functionValued: false,

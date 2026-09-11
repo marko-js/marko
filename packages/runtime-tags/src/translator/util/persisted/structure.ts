@@ -3,7 +3,7 @@
 import type { types as t } from "@marko/compiler";
 
 import { kDirectContent } from "../binding-prop-tree";
-import { isBranchSelector } from "../branch-tag";
+import { isBranchUpstream } from "../branch-tag";
 import { isPersisted } from "../marko-config";
 import { every, forEach, some, toArray } from "../optional";
 import type { Binding, Sources } from "../references";
@@ -107,7 +107,7 @@ function bodyRendersStateful(section: Section) {
   return !!target && rendersStatefulProp(target, props[props.length - 1]);
 }
 
-// A branch body selected by a state reason (or nested in one) whose param
+// A branch body whose upstream has a state reason (or nested in one) whose param
 // feeds all deliver; resolved sources are required, so call at finalize or later.
 const statefulBySection = new WeakMap<Section, boolean>();
 const computing = new Map<Section, number>();
@@ -115,7 +115,7 @@ let provisionalAt = Infinity;
 export function isStatefulBranch(section: Section): boolean {
   let stateful = statefulBySection.get(section);
   if (stateful === undefined) {
-    // An in-flight re-ask (a read inside the branch its own selection walks)
+    // An in-flight re-ask (a read inside the branch its own upstream walk hits)
     // answers false: statefulness needs a grounded source, never itself.
     const at = computing.get(section);
     if (at !== undefined) {
@@ -135,7 +135,7 @@ export function isStatefulBranch(section: Section): boolean {
       (!expr && bodyRendersStateful(section)) ||
       (!!expr &&
         (!!sources?.state || inStatefulBranch(section.parent)) &&
-        every(expr.referencedBindings, selectionFeedDelivers));
+        every(expr.referencedBindings, upstreamFeedDelivers));
     computing.delete(section);
     // A frame that consumed an OUTER frame's provisional answer must not
     // cache: that outer result may still land stateful.
@@ -151,7 +151,7 @@ export function isStatefulBranch(section: Section): boolean {
 
 // A state-mixed ref recomputes client-side, so its param ORIGINS must fill;
 // a pure-param ref ships its own computed value.
-function selectionFeedDelivers(binding: Binding) {
+function upstreamFeedDelivers(binding: Binding) {
   const sources = getSerializeSourcesForRef(binding);
   return (
     !sources?.param ||
@@ -162,18 +162,18 @@ function selectionFeedDelivers(binding: Binding) {
   );
 }
 
-// A param read only as branch selectors: its value never joins a client
+// A param read only upstream of branches: its value never joins a client
 // derivation, so pairing delivers it and no fill is needed.
-export function readsOnlySelect(binding: Binding) {
+export function readsOnlyUpstream(binding: Binding) {
   for (const read of binding.reads) {
-    if (!isBranchSelector(read)) return false;
+    if (!isBranchUpstream(read)) return false;
   }
   return true;
 }
 
-// Selected by params alone: a call site feeding them from state hands the
+// Params alone upstream: a call site feeding them from state hands the
 // branch to the client at run time. Call at finalize or later.
-export function getParamSelectorSources(section: Section) {
+export function getParamUpstreamSources(section: Section) {
   if (
     !isPersisted() ||
     !section.isBranch ||
@@ -190,20 +190,20 @@ export function getParamSelectorSources(section: Section) {
 
 // The selector sources of every param-selected branch around the section
 // (inclusive), or undefined when none.
-export function getParamSelectorChain(section: Section | undefined) {
+export function getParamUpstreamChain(section: Section | undefined) {
   let chain: Sources[] | undefined;
   for (; section; section = section.parent) {
-    const sources = getParamSelectorSources(section);
+    const sources = getParamUpstreamSources(section);
     if (sources) (chain ??= []).push(sources);
   }
   return chain;
 }
 
-// Structure selection and `$global` mixing record here; a branch/loop
-// selector's root params select structure.
+// Structure upstream and `$global` mixing record here: a branch/loop
+// upstream's root params sit upstream of structure.
 export function recordStructuralParams(sources: Sources | undefined) {
   forEach(sources?.param, (binding) => {
-    if (!binding.section.parent) binding.selectsStructure = true;
+    if (!binding.section.parent) binding.upstreamOfStructure = true;
   });
 }
 
@@ -213,6 +213,12 @@ export function ensurePersistedWriteGroups(getExtra: () => t.NodeExtra) {
   onFinalizePersisted(() => {
     ensureReasonGroups(getSerializeSourcesForExpr(getExtra()));
   });
+}
+
+// Structure resumed code renders on its own: boundary content, or a
+// stateful branch's body (patch renders skip both).
+export function inResumedStructure(section: Section) {
+  return !isBranchPathSection(section) || inStatefulBranch(section);
 }
 
 // Sections whose holes patch-write directly: every level down to them links

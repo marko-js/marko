@@ -15,7 +15,7 @@ var price_card_default = _template_persisted("__tests__/tags/price-card.marko", 
 	}, "__tests__/tags/price-card.marko", 0, {
 		input_label: ["input.label"],
 		qty: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/price-card.marko0", input.label);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/price-card.marko0", input.label);
 }, 0, 0);
 
 // template.marko
@@ -30,7 +30,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let card = price_card_default({ label: input.label });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_card#8/var");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "card", card, 1);
+	_filled_guard(0, 0) && _patch_write($scope0_id, "card", card, 1);
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/2", input.title, void 0, $scope0_owned, 1)}</h1><button class=read>read</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {

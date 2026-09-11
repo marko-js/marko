@@ -18,7 +18,7 @@ var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (inp
 		}
 	}, $scope0_id, "#div/0", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"], $scope0_owned, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $sg__input_label)}`);
-	$scope0_reason ? _scope($scope0_id, { input_note: input.note }, "__tests__/tags/badge/index.marko", 0, { input_note: ["input.note"] }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/badge/index.marko0", input.note);
+	$scope0_reason ? _scope($scope0_id, { input_note: input.note }, "__tests__/tags/badge/index.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/badge/index.marko0", input.note);
 }, 0, 0);
 
 // template.marko

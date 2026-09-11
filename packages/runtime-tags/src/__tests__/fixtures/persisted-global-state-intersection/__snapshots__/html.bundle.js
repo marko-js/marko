@@ -6,7 +6,7 @@ var template_default = _template_persisted("a", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_html(`<div><h1>${_text_resume($scope0_id, "a", $global$1.brand + " #0")}</h1><button>+</button>${_el_resume($scope0_id, "b")}</div>`);
-	_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, { c: count });
 }, 1, 1);

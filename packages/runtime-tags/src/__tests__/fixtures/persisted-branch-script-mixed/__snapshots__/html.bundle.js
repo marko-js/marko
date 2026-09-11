@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
-			_global_subscribe("a1", $scope1_id);
+			_global_subscribe("a1", $scope1_id, 1);
 			_script($scope1_id, "a2", 0);
 			_patch_effect($scope1_id, "a2", "1 g");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
@@ -20,5 +20,5 @@ var template_default = _template_persisted("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 2);
 	_html("</main>");
-	$scope0_reason ? _scope($scope0_id, { g: input.value }) : _owned_guard($scope0_owned, 3) && _patch_write($scope0_id, "g", input.value);
+	$scope0_reason ? _scope($scope0_id, { g: input.value }) : _filled_guard($scope0_owned, 3) && _patch_write($scope0_id, "g", input.value);
 }, 1, 1);

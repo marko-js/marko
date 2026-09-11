@@ -7,7 +7,7 @@ const [getPersistedFinalizers] = createProgramState<(() => void)[]>(() => []);
 export function onFinalizePersisted(finalize: () => void) {
   getPersistedFinalizers().push(finalize);
 }
-// Structure classification runs first (state-selection itself derives on
+// Structure classification runs first (statefulness itself derives on
 // demand from resolved sources; these callbacks record its consequences).
 const [getStructureClassifiers] = createProgramState<
   [depth: number, classify: () => void][]

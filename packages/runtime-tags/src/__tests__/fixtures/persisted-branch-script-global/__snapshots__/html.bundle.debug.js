@@ -21,6 +21,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 0);
 	_html("</main>");
 	_global_subscribe("__tests__/template.marko_0_$global_brand#5/global", $scope0_id);
-	_global_subscribe("__tests__/template.marko_1_$global_brand#5/global", $scope0_id);
+	_global_subscribe("__tests__/template.marko_1_$global_brand#5/global", $scope0_id, 1);
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 1);

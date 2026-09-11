@@ -29,5 +29,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_title: ["input.title"],
 		api: "1:8",
 		api_label: ["api.label", "1:8"]
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", api), _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko1", api.label), _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_title", input.title));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", api), _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko1", api.label), _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_title", input.title));
 }, 1, 0);

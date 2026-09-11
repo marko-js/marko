@@ -13,7 +13,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<main>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_owned_guard($scope0_owned, 1) ? _patch_value($scope1_id, "a1", item) : _patch_init($scope1_id, "a2");
+		_filled_guard($scope0_owned, 1) ? _patch_value($scope1_id, "a1", item) : _patch_init($scope1_id, "a2");
 		_if(() => {
 			if (input.flag) {
 				const $scope2_id = _scope_id();
@@ -35,5 +35,5 @@ var template_default = _template_persisted("a", (input) => {
 		h: count,
 		j: $input_suffix__closures,
 		k: $count__closures
-	}) : _owned_guard($scope0_owned, 3) && _patch_value($scope0_id, "a0", input.suffix);
+	}) : _filled_guard($scope0_owned, 3) && _patch_value($scope0_id, "a0", input.suffix);
 }, 1, 0);

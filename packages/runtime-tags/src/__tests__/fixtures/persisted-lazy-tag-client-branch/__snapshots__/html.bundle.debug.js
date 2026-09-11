@@ -53,5 +53,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_show: ["input.show"],
 		input_label: ["input.label"],
 		open: "3:6"
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.show), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.label));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.show), _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.label));
 }, 1, () => [$Child_withLoadAssets]);

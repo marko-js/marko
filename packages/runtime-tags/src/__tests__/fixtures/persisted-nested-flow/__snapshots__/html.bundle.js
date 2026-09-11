@@ -48,7 +48,7 @@ var template_default = _template_persisted("a", (input) => {
 				if (input.detail) {
 					const $scope2_id = _scope_id();
 					_html(`<small>${_patch_text($scope2_id, "a", input.detail, void 0, $scope0_owned, 3)}</small>`);
-					_subscribe(_source_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					_subscribe(_unfilled_if($scope0_owned, 3) && $input_detail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "b", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["a1"], $scope0_owned, 3);

@@ -30,7 +30,7 @@ var template_default = _template_persisted("a", (input) => {
 			_patch_child($scope1_id, "a", $childScope);
 			let el = box_default({ label: input.label });
 			_var($scope1_id, "b", $childScope, "a1");
-			_owned_guard(0, 0) && _patch_write($scope1_id, "d", el, 1);
+			_filled_guard(0, 0) && _patch_write($scope1_id, "d", el, 1);
 			_html(`<button id=read>read</button>${_el_resume($scope1_id, "c")}`);
 			_script($scope1_id, "a2");
 			_scope($scope1_id, {

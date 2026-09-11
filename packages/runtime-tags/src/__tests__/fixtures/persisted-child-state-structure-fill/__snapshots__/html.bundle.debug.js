@@ -18,7 +18,7 @@ var toggle_panel_default = _template_persisted("__tests__/tags/toggle-panel/inde
 		}
 	}, $scope0_id, "#div/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/toggle-panel/index.marko_1*shell"], $scope0_owned, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $sg__input_show)}`);
-	$scope0_reason ? _scope($scope0_id, { input_title: input.title }, "__tests__/tags/toggle-panel/index.marko", 0, { input_title: ["input.title"] }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/toggle-panel/index.marko0", input.title);
+	$scope0_reason ? _scope($scope0_id, { input_title: input.title }, "__tests__/tags/toggle-panel/index.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/toggle-panel/index.marko0", input.title);
 }, 0, 0);
 
 // template.marko
@@ -46,5 +46,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	$scope0_reason ? _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "1:6" }) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}, "__tests__/template.marko", 0, { count: "1:6" }) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
 }, 1, () => [toggle_panel_default]);

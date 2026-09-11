@@ -14,7 +14,7 @@ var kid_default = _template_persisted("b", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		g: input.b,
 		h: on
-	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.b);
+	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.b);
 }, 0, 0);
 
 // template.marko

@@ -123,7 +123,7 @@ export const IfTag = {
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPersisted()) {
         onClassifyStructure(ifTagSection, () => {
-          // Patches select a chain that is not stateful.
+          // Patches render a chain that is not stateful.
           if (
             !branches.some(
               ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
@@ -329,8 +329,8 @@ export const IfTag = {
                       }),
                     )
                   : undefined,
-                // A param-selected chain yields to the client when the
-                // call site feeds the selector from state.
+                // A chain with params upstream yields to the client when
+                // the call site feeds them from state.
                 ...(persistedPatch ? getExprWriteOwnership(ifTagExtra) : []),
               ),
             );
@@ -338,7 +338,7 @@ export const IfTag = {
 
           if (stateful) {
             // Patch renders skip the chain: the tests' state reads are
-            // server-stale and the frame never speaks the selection.
+            // server-stale and the patch never names the branch.
             let rootSection = ifTagSection;
             while (rootSection.parent) rootSection = rootSection.parent;
             statement = t.ifStatement(

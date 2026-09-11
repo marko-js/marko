@@ -34,6 +34,7 @@ import {
   getState,
   rendererKey,
   withBranchId,
+  withUnpatched,
 } from "./writer";
 
 const voidElementsReg =
@@ -51,17 +52,22 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
-  patches?: 1,
+  // How a patch treats the site: `1` pairs and re-renders it, `2` skips
+  // it (a client-owned group is upstream of the renderer), absent never patches.
+  patchPairing?: 1 | 2,
 ) => {
   const shouldResume = serializeReason !== 0;
   // A patch entry may target this site: its branch marks and pairs, while
   // the child's data still serializes on the site's own reason.
-  const marks = shouldResume || patches;
+  const marks = shouldResume || patchPairing;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
+  // A patch render skips a site it never pairs (state or a client-owned
+  // group upstream): the resumed page renders it, as with `writeBranch`.
+  if (patchPairing !== 1 && state.writesPatches) return;
   const branchId = _peek_scope_id();
   // A null renderer still renders the body: its writes pair too.
-  if (patches && (renderer || content)) {
+  if (patchPairing && (renderer || content)) {
     state.pairBranch?.(
       scopeId,
       accessor,
@@ -137,7 +143,7 @@ export let _dynamic_tag = (
                       0,
                       undefined,
                       serializeReason,
-                      patches,
+                      patchPairing,
                     )
                 : undefined,
               1,
@@ -152,7 +158,7 @@ export let _dynamic_tag = (
               0,
               undefined,
               serializeReason,
-              patches,
+              patchPairing,
             );
           }
         }
@@ -194,7 +200,10 @@ export let _dynamic_tag = (
         );
       }
     };
-    renderNative();
+    // A site no patch pairs renders unpatched: the resumed page
+    // re-renders it, so no patch fills its reads.
+    if (patchPairing !== 1 && state.persisted) withUnpatched(renderNative);
+    else renderNative();
 
     // Registered, not written: the getter only reaches the wire when a tag
     // variable holds it, so a native dynamic tag without one pays nothing.
@@ -232,7 +241,11 @@ export let _dynamic_tag = (
         return content();
       }
     };
-    result = marks ? withBranchId(branchId, render) : render();
+    const run =
+      patchPairing !== 1 && state.persisted
+        ? () => withUnpatched(render)
+        : render;
+    result = marks ? withBranchId(branchId, run) : run();
     rendered = _peek_scope_id() !== branchId;
 
     if (beforeBranch !== undefined) {
@@ -250,7 +263,7 @@ export let _dynamic_tag = (
     // A patched site keeps its key so a shell record pairs by id alone.
     if (
       shouldResume ||
-      (patches &&
+      (patchPairing &&
         typeof renderer === "function" &&
         shells[renderer[RendererProp.Id]!])
     ) {
@@ -337,7 +350,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
       content,
       inputIsArgs,
       resume,
-      patches,
+      patchPairing,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -350,7 +363,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
         content,
         inputIsArgs,
         resume,
-        patches,
+        patchPairing,
       );
     };
   }

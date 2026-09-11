@@ -5,8 +5,7 @@ var box_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div class=box>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -33,5 +32,5 @@ var template_default = _template_persisted("a", (input) => {
 		g: open,
 		i: $input_title__closures,
 		h: $input_show__closures
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.show), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a1", input.title));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.show), _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a1", input.title));
 }, 1, () => [box_default]);

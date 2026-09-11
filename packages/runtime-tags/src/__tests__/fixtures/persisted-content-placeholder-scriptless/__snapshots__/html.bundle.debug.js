@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/card/index.marko_2*content": "__tests__/tags/card/index.marko_2*content;b%;<!><!><!>"
 });
 var card_default = _template_persisted("__tests__/tags/card/index.marko", (input) => {
-	const $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -19,7 +19,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 			const $scope3_id = _scope_id();
 			_html("<span>done</span>");
 		}, 1, "__tests__/tags/card/index.marko_2_#text#0/await");
-		$scope0_reason && _subscribe($input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4"));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4"));
 		$scope0_reason && _resume_branch($scope2_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_elide("__tests__/tags/card/index.marko_1*content", () => {
 		const $scope1_reason = _persisted_reason();
@@ -54,7 +54,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_reason = _persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_owned, 1)}</em>`);
-			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+			_subscribe(_unfilled_if($scope0_owned, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		}, $scope0_id)
 	});
 	_html("</main>");

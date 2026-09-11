@@ -21,7 +21,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope4_id = _scope_id();
 			_html("<span>ok</span>");
 		}, 1, "__tests__/template.marko_3_#text#0/await");
-		$scope0_reason && _subscribe($input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 		$scope0_reason && _resume_branch($scope3_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _persisted_reason();
@@ -50,5 +50,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_detail: ["input.detail"],
 		count: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.detail);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.detail);
 }, 1, 0);

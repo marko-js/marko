@@ -15,7 +15,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.x, void 0, $scope0_owned, 0)}</em>`);
-		_subscribe(_source_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
+		_subscribe(_unfilled_if($scope0_owned, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 	}, $scope0_id) };
 	if ($scope0_reason) _if(() => {
 		if (s) {
@@ -31,5 +31,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	$scope0_reason ? _scope($scope0_id, {
 		s,
 		"ClosureScopes:input_x": $input_x__closures
-	}, "__tests__/template.marko", 0, { s: "1:6" }) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.x);
+	}, "__tests__/template.marko", 0, { s: "1:6" }) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.x);
 }, 1, 1);

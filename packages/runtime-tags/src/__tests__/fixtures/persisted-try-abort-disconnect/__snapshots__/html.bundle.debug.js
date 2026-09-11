@@ -23,7 +23,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_html(`<p>A:${_patch_text($scope4_id, "#text/0", v, 2, $scope0_owned, 0)}</p>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "4:4");
 		}, 1, "__tests__/template.marko_1_#text#0/await", 1);
-		$scope0_reason && _subscribe($input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 0) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
 		$scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }),

@@ -22,10 +22,11 @@ export function getBranchSectionAccessor(
   };
 }
 
-// Expressions that select a branch, across every program in the compile.
-const branchSelectors = new WeakSet<t.NodeExtra>();
-export function isBranchSelector(extra: t.NodeExtra) {
-  return branchSelectors.has(extra);
+// Expressions upstream of a branch (a condition, collection, renderer),
+// across every program in the compile.
+const branchUpstreams = new WeakSet<t.NodeExtra>();
+export function isBranchUpstream(extra: t.NodeExtra) {
+  return branchUpstreams.has(extra);
 }
 
 export function initBranchSection(
@@ -36,11 +37,11 @@ export function initBranchSection(
   bodySection.isBranch = true;
   bodySection.upstreamExpression = upstreamExpression;
   bodySection.sectionAccessor = sectionAccessor;
-  if (upstreamExpression) branchSelectors.add(upstreamExpression);
+  if (upstreamExpression) branchUpstreams.add(upstreamExpression);
 }
 
-// The branch id rides the always-rendered resume marker and the state
-// driven selection keeps the branch-visiting signal, so the owner links at
+// The branch id rides the always-rendered resume marker and a state-fed
+// upstream keeps the branch-visiting signal, so the owner links at
 // resume instead of serializing.
 export function resumeOwnerByMarkerWhenStatic(
   tagSection: Section,

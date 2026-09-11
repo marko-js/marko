@@ -52,5 +52,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_prefix: ["input.prefix"],
 		handle: "1:8",
 		open: "4:6"
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", handle), _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_prefix", input.prefix));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", handle), _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_prefix", input.prefix));
 }, 1, () => [field_default]);

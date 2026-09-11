@@ -37,7 +37,7 @@ var card_default = _template_persisted("__tests__/tags/card.marko", (input) => {
 	}, "__tests__/tags/card.marko", 0, {
 		input_title: ["input.title"],
 		open: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/card.marko0", input.title);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/card.marko0", input.title);
 }, 0, () => [badge_default]);
 
 // template.marko

@@ -22,8 +22,7 @@ var frame_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -66,7 +65,7 @@ var template_default = _template_persisted("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 0);
-		_subscribe(_source_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe(_unfilled_if($scope0_owned, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$sg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_reason && _scope($scope0_id, {

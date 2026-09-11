@@ -11,7 +11,7 @@ var template_default = _template_persisted("a", (input) => {
 	let count = 0;
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
-		_owned_guard($scope0_owned, 0) ? _patch_value($scope1_id, "a0", row?.id) : _patch_init($scope1_id, "a2");
+		_filled_guard($scope0_owned, 0) ? _patch_value($scope1_id, "a0", row?.id) : _patch_init($scope1_id, "a2");
 		_for_of(row.cells, (cell) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", row.id + "@0")}</p>`);

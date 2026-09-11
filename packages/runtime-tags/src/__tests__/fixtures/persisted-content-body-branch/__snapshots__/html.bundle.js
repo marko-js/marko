@@ -7,8 +7,7 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h2>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -22,7 +21,7 @@ _shells({
 	a3: "a3;Db%;<strong>B:<!></strong>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_note = _source_if($scope0_reason, 7), $sg__input_alt = _source_guard($scope0_reason, 6), $sg__input_show = _source_guard($scope0_reason, 4);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_alt = _source_guard($scope0_reason, 6), $sg__input_show = _source_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_alt__closures = /* @__PURE__ */ new Set();
@@ -42,19 +41,19 @@ var template_default = _template_persisted("a", (input) => {
 						if (input.alt) {
 							const $scope3_id = _scope_id();
 							_html(`<em>A:${_patch_text($scope3_id, "a", input.note, 2, $scope0_owned, 7)}</em>`);
-							_subscribe($si__input_note && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
+							_subscribe(_unfilled_if($scope0_owned, 7) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 							return 0;
 						} else {
 							const $scope4_id = _scope_id();
 							_html(`<strong>B:${_patch_text($scope4_id, "a", input.note, 2, $scope0_owned, 7)}</strong>`);
-							_subscribe($si__input_note && $input_note__closures, _scope($scope4_id, {
+							_subscribe(_unfilled_if($scope0_owned, 7) && $input_note__closures, _scope($scope4_id, {
 								_: _scope_with_id($scope2_id),
 								Cj: 1
 							}));
 							return 1;
 						}
 					}, $scope2_id, "a", 1, $sg__input_alt, $sg__input_alt, void 0, void 0, ["a2", "a3"], $scope0_owned, 6);
-					$scope0_reason && _subscribe(_source_if($scope0_reason, 6) && $input_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 6) && $input_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$sg__input_alt || $scope0_reason && _resume_branch($scope2_id);
 				}, $scope1_id)
 			});

@@ -10,8 +10,8 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<main>");
 	_for_of(input.items, ({ id, ...rest }) => {
 		const $scope1_id = _scope_id();
-		_owned_guard($scope0_owned, 0) ? _patch_value($scope1_id, "a0", id) : _patch_init($scope1_id, "a1");
-		_owned_guard($scope0_owned, 0) ? _patch_value($scope1_id, "a1", rest) : _patch_init($scope1_id, "a1");
+		_filled_guard($scope0_owned, 0) ? _patch_value($scope1_id, "a0", id) : _patch_init($scope1_id, "a1");
+		_filled_guard($scope0_owned, 0) ? _patch_value($scope1_id, "a1", rest) : _patch_init($scope1_id, "a1");
 		_html(`<p>${_text_resume($scope1_id, "a", id + ":" + Object.keys(rest).join("+") + "#0")}</p>`);
 		_scope($scope1_id, {
 			d: id,

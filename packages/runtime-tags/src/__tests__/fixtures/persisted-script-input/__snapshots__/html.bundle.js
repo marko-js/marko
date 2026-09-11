@@ -6,5 +6,5 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h1></main>`);
 	_script($scope0_id, "a0");
 	_patch_effect($scope0_id, "a0", "e");
-	$scope0_reason ? _scope($scope0_id, { e: input.announce }) : _owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "e", input.announce);
+	$scope0_reason ? _scope($scope0_id, { e: input.announce }) : _filled_guard($scope0_owned, 1) && _patch_write($scope0_id, "e", input.announce);
 }, 1, 0);

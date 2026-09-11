@@ -5,7 +5,7 @@ var badge_default = _template_persisted("b", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "a", $global().brand)}</span>`);
-	_global_subscribe("b0", $scope0_id);
+	_global_subscribe("b0", $scope0_id, 1);
 	_script($scope0_id, "b1");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 1);

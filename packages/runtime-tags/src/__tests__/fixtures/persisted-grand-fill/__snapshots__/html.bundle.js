@@ -35,5 +35,5 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.title,
 		f: input.subtitle,
 		g: show
-	}) : (_owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title), _owned_guard($scope0_owned, 2) && _patch_value($scope0_id, "a1", input.subtitle));
+	}) : (_filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title), _filled_guard($scope0_owned, 2) && _patch_value($scope0_id, "a1", input.subtitle));
 }, 1, () => [card_default]);

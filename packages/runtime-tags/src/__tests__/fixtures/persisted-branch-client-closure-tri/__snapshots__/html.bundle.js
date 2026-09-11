@@ -16,5 +16,5 @@ var template_default = _template_persisted("a", (input) => {
 		f: open,
 		g: $input_title__closures,
 		h: $open__closures
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.title);
 }, 1, 0);

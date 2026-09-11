@@ -26,7 +26,7 @@ var counter_default = _template_persisted("b", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		e: input.onCount,
 		f: input.step
-	}) : (_owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.onCount), _owned_guard($scope0_owned, 3) && _patch_write($scope0_id, "f", input.step));
+	}) : (_filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.onCount), _filled_guard($scope0_owned, 3) && _patch_write($scope0_id, "f", input.step));
 }, 0, 0);
 
 // template.marko

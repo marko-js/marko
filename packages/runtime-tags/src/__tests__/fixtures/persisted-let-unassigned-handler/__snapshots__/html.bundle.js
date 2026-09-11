@@ -7,5 +7,5 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<main><em>${_text_resume($scope0_id, "a", 0)}</em><button>set</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
 	_patch_effect($scope0_id, "a0", "g");
-	$scope0_reason ? _scope($scope0_id, { g: x?.length }) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "g", x?.length);
+	$scope0_reason ? _scope($scope0_id, { g: x?.length }) : _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "g", x?.length);
 }, 1, 0);

@@ -58,7 +58,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					return 0;
 				}
 			}, $scope2_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_owned, 0);
-			_subscribe(_source_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_owned, 0) && $input_show__closures, _scope($scope2_id, {
 				other,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "4:4", { other: "4:8" }));
