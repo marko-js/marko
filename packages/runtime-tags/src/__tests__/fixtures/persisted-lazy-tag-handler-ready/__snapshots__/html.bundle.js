@@ -12,7 +12,7 @@ var child_default = _template_persisted("a", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		d: input.title,
 		e: handler
-	}) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "d", input.title);
+	}) : _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "d", input.title);
 }, 0, 0);
 
 // template.marko

@@ -13,5 +13,5 @@ var template_default = _template_persisted("a", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		f: input.value,
 		h: count
-	}) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "f", input.value);
+	}) : _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "f", input.value);
 }, 1, 0);

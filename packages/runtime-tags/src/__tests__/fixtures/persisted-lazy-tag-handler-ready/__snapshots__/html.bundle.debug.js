@@ -18,7 +18,7 @@ var child_default = _template_persisted("__tests__/child.marko", (input) => {
 		input_title: ["input.title"],
 		handler: "1:8",
 		"EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "2:12"]
-	}) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_title", input.title);
+	}) : _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_title", input.title);
 }, 0, 0);
 
 // template.marko

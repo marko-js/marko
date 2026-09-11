@@ -30,7 +30,7 @@ var template_default = _template_persisted("a", (input) => {
 			_for_of([1, 2], (x) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_patch_text($scope3_id, "a", x)}:${_patch_text($scope3_id, "b", input.note, 2, $scope0_owned, 1)}</p>`);
-				_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
+				_subscribe(_unfilled_if($scope0_owned, 1) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 			}, 0, $scope2_id, "a", 1, 1, 0, void 0, void 0, "a2", 0, 0);
 			_html(`</div>${_el_resume($scope2_id, "a")}`);
 			$scope0_reason && _scope($scope2_id, { _: _scope_with_id($scope0_id) });

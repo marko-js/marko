@@ -60,5 +60,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_props: ["input.props"],
 		on: "1:6",
 		input_badge_label: ["input.badge.label"]
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.props), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.badge?.label));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.props), _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.badge?.label));
 }, 1, () => [badge_default, card_default]);

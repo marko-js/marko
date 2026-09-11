@@ -21,7 +21,7 @@ import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
 import { getChildPatchPlan } from "./decisions";
 import {
-  getParamSelectorChain,
+  getParamUpstreamChain,
   isBranchPathSection,
   isStatefulBranch,
 } from "./structure";
@@ -135,7 +135,7 @@ function hasStateJoinedRead(binding: Binding): boolean {
 // Why a binding fills: `true` unconditionally, or the run-time conditions
 // its reads sit under (param-selected structure, withholdable content).
 export interface FillConditions {
-  selectors?: Sources[];
+  upstreams?: Sources[];
   contents?: Section[];
 }
 export function getFillConditions(binding: Binding) {
@@ -207,12 +207,12 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
           conditions = mergeConditions(conditions, { contents: [content] });
         }
       }
-      // Only structure OTHER params select can leave this read client-owned;
+      // Only structure with OTHER params upstream can leave this read client-owned;
       // a page's root params always come from the request.
       if (!getProgram().node.extra.page) {
-        for (const sources of getParamSelectorChain(site) || []) {
-          if (!selectsThrough(sources, binding)) {
-            conditions = mergeConditions(conditions, { selectors: [sources] });
+        for (const sources of getParamUpstreamChain(site) || []) {
+          if (!upstreamThrough(sources, binding)) {
+            conditions = mergeConditions(conditions, { upstreams: [sources] });
           }
         }
       }
@@ -221,17 +221,17 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
   return conditions;
 }
 
-// Whether the selector's params include the binding or a value it is a
+// Whether the upstream's params include the binding or a value it is a
 // property of (both reach the client together).
-function selectsThrough(sources: Sources, binding: Binding) {
+function upstreamThrough(sources: Sources, binding: Binding) {
   for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
     if (includes(sources.param, cur)) return true;
   }
   return false;
 }
 
-// `true`: a pure client consumer frames never render; `"selects"`: a
-// client-fed selector, so the runtime decides; `false`: server-owned.
+// `true`: a pure client consumer patches never render; `"upstream"`: a
+// client-fed upstream, so the runtime decides; `false`: server-owned.
 function consumerMayWithhold(content: Section) {
   const consumer = content.downstream!.tag;
   // A `<define>` var passed on (its direct sites classify on their own)
@@ -239,7 +239,7 @@ function consumerMayWithhold(content: Section) {
   if (!isKnownTagExtra(consumer)) {
     for (const read of content.downstream!.binding?.reads || []) {
       if (!(read as { defineBodySection?: Section }).defineBodySection) {
-        return "selects";
+        return "upstream";
       }
     }
     return false;
@@ -248,9 +248,9 @@ function consumerMayWithhold(content: Section) {
   for (const group of getParamGroupFeeds(consumer) || []) {
     if (
       group.sources?.state &&
-      some(group.params, (param) => param.selectsStructure)
+      some(group.params, (param) => param.upstreamOfStructure)
     ) {
-      return "selects";
+      return "upstream";
     }
   }
   return false;
@@ -269,9 +269,9 @@ function mergeConditions(
   b: FillConditions,
 ): FillConditions {
   if (!a)
-    return { selectors: b.selectors?.slice(), contents: b.contents?.slice() };
-  for (const sources of b.selectors || []) {
-    if (!a.selectors?.includes(sources)) (a.selectors ??= []).push(sources);
+    return { upstreams: b.upstreams?.slice(), contents: b.contents?.slice() };
+  for (const sources of b.upstreams || []) {
+    if (!a.upstreams?.includes(sources)) (a.upstreams ??= []).push(sources);
   }
   for (const content of b.contents || []) {
     if (!a.contents?.includes(content)) (a.contents ??= []).push(content);

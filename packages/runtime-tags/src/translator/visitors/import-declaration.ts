@@ -46,7 +46,7 @@ export type LoadImportConfig = (
   | { render: false; triggers: LoadTrigger[] }
 ) & {
   // Under persisted: a page's import whose every site sits in structure only
-  // the server selects (the client never instantiates a page or that
+  // the server renders (the client never instantiates a page or that
   // structure), so the server alone renders it and no client render ships.
   serverOnly?: true;
 };

@@ -43,5 +43,5 @@ var template_default = _template_persisted("a", (input) => {
 		h: on,
 		j: input.badge?.label,
 		b: _existing_scope($childScope2)
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.props), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a1", input.badge?.label));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.props), _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a1", input.badge?.label));
 }, 1, () => [badge_default, card_default]);

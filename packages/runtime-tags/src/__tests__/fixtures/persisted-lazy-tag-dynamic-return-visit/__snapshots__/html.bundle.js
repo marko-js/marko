@@ -17,8 +17,7 @@ var template_default = _template_persisted("b", (input) => {
 	_html(`<button class=n>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}<main>`);
 	const $tag = input.show ? $Child_withLoadAssets : null;
 	const $input2 = { label: input.label };
-	_patch_dynamic_tag($scope0_id, "c", $tag, $input2, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "c", $tag, $input2, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "c", $tag, $input2, 0, 0, _source_guard($scope0_reason, 0), _patch_dynamic_tag($scope0_id, "c", $tag, $input2, 0, 0, $scope0_owned, 0));
 	_html("</main>");
 	_script($scope0_id, "b0");
 	$scope0_reason && _scope($scope0_id, {

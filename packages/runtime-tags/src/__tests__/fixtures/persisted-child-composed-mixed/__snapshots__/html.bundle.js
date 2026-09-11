@@ -41,5 +41,5 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.base,
 		f: count,
 		a: _existing_scope($childScope)
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.base);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.base);
 }, 1, () => [relay_default]);

@@ -7,8 +7,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h2>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 }, 0, 0);
@@ -23,7 +22,7 @@ _shells({
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_note = _source_if($scope0_reason, 4), $sg__input_show = _source_guard($scope0_reason, 5);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_html("<main>");
@@ -36,7 +35,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_reason = _persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_owned, 4)}</em>`);
-			_subscribe($si__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+			_subscribe(_unfilled_if($scope0_owned, 4) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		}, $scope0_id)
 	});
 	_if(() => {
@@ -51,7 +50,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					const $scope3_reason = _persisted_reason();
 					const $scope3_id = _scope_id();
 					_html(`<em>${_patch_text($scope3_id, "#text/0", input.note, void 0, $scope0_owned, 4)}</em>`);
-					_subscribe($si__input_note && $input_note__closures, _scope($scope3_id, {
+					_subscribe(_unfilled_if($scope0_owned, 4) && $input_note__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_note": 1
 					}, "__tests__/template.marko", "6:6"));

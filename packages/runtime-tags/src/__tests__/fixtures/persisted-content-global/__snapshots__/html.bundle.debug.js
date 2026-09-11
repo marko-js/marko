@@ -7,8 +7,7 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 	const $scope0_id = _scope_id();
 	_html(`<section><span>${_patch_text($scope0_id, "#text/0", input.value, void 0, $scope0_owned, 0)}</span>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
 }, 0, 0);
@@ -37,7 +36,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $scope1_id = _scope_id();
 			_html(`<div>${_patch_text($scope1_id, "#text/0", $global$1.brand)}</div>`);
 			_global_subscribe("__tests__/template.marko_1_$global_brand#3/global", $scope1_id);
-			_subscribe($global_brand__closures, _scope($scope1_id, {}, "__tests__/template.marko", "3:4"));
+			_subscribe(_unfilled_if() && $global_brand__closures, _scope($scope1_id, {}, "__tests__/template.marko", "3:4"));
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);

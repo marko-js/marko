@@ -36,10 +36,10 @@ import {
   isPatchFillBinding,
 } from "./persisted/delivery";
 import {
-  getParamSelectorChain,
+  inResumedStructure,
+  getParamUpstreamChain,
   inStatefulBranch,
   isBranchPathSection,
-  isStatefulBranch,
 } from "./persisted/structure";
 import {
   type AssignedBindingExtra,
@@ -65,6 +65,7 @@ import {
   isAssignedBindingExtra,
   isRegisteredFnExtra,
   type ReferencedBindings,
+  type ReferencedExtra,
 } from "./references";
 import { callRuntime, importRuntimeFeature } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
@@ -72,6 +73,7 @@ import {
   getDynamicClosureIndex,
   getScopeIdIdentifier,
   getSectionForBody,
+  groupParamsBySection,
   isDynamicClosure,
   isImmediateOwner,
   type Section,
@@ -80,7 +82,7 @@ import {
 import {
   getExprIfSerialized,
   getSerializeGuardForAny,
-  getOwnershipGuard,
+  getFilledGuard,
   getPatchWriteOwnership,
   scopeReasonIdentifier,
 } from "./serialize-guard";
@@ -520,11 +522,14 @@ export function initGlobalRead(binding: Binding) {
 }
 
 // Client work reading a `$global` key, keyed by the scope a changed key
-// queues it on (a closure: the owner its chain dispatches from).
+// queues it on (a closure: the owner its chain dispatches from). A join is
+// `unfilled` when resumed code renders the read wherever the scope sits (an
+// effect, a state-mixed read, resumed structure); otherwise the site decides
+// at render (a patch fills a hole under server-owned structure).
 export function getGlobalJoins(section: Section) {
   let root = section;
   while (root.parent) root = root.parent;
-  const ids = new Set<string>();
+  const joins = new Map<string, boolean>();
   if (isPersisted()) {
     forEach(root.bindings, (binding) => {
       if (binding.type !== BindingType.global || !binding.upstreamAlias) return;
@@ -535,6 +540,7 @@ export function getGlobalJoins(section: Section) {
         // A signal fed by a server value the client never receives is
         // server-computed.
         if (hasUnfillablePatchReads(refs)) continue;
+        const unfilled = isResumedRead(read);
         if (Array.isArray(refs)) {
           target = read.section;
           id = getResumeRegisterId(read.section, refs, "global");
@@ -548,11 +554,28 @@ export function getGlobalJoins(section: Section) {
           target = read.section.parent;
           id = getResumeRegisterId(read.section, binding, "global");
         }
-        if (target === section) ids.add(id);
+        if (target === section) joins.set(id, unfilled || !!joins.get(id));
       }
     });
   }
-  return ids;
+  return joins;
+}
+
+// A read resumed code renders wherever its scope sits (an effect, a
+// state-mixed expression, resumed structure): no patch fills it, so the
+// owner value's change must dispatch to it.
+function isResumedRead(read: ReferencedExtra) {
+  return (
+    !!read.isEffect ||
+    !!getSerializeSourcesForRef(read.referencedBindings)?.state ||
+    inResumedStructure(read.section)
+  );
+}
+function hasResumedRead(binding: Binding, section: Section) {
+  for (const read of binding.reads) {
+    if (read.section === section && isResumedRead(read)) return true;
+  }
+  return false;
 }
 
 // The `$global` keys a signal joins; none when a server value the client
@@ -1347,7 +1370,7 @@ export function writeSignals(section: Section) {
           (inStatefulBranch(signal.section) ||
             inBoundaryContent(signal.section) ||
             inContentSection(signal.section) ||
-            getParamSelectorChain(signal.section)) &&
+            getParamUpstreamChain(signal.section)) &&
           isPatchFillBinding(signal.referencedBindings) &&
           signal.section !== signal.referencedBindings.section &&
           // A dynamic closure dispatches through its owner-anchored
@@ -1356,13 +1379,13 @@ export function writeSignals(section: Section) {
             isDynamicClosure(signal.section, signal.referencedBindings)) &&
           hasFillDeliveredRead(signal.referencedBindings, signal.section)
         ) {
-          // Inside client-owned structure a lone closure over a server
+          // Inside unpatched structure a lone closure over a server
           // fill IS the delivery channel: it registers the join itself.
           value =
             !getClosureSignal(signal.section) ||
             isDynamicClosure(signal.section, signal.referencedBindings)
               ? // Deep closure positions reassemble the indexed composite via a
-                // shared per-key table, selected by the serialized index.
+                // shared per-key table, keyed by the serialized index.
                 callRuntime(
                   "_fill_join_closure",
                   t.stringLiteral(getPatchFillKey(signal.referencedBindings)),
@@ -1437,7 +1460,7 @@ export function writeSignals(section: Section) {
 }
 
 // Whether every hop to `owner` dispatches from the owner scope: branches
-// always; inside client-owned, content sections too (lexical owners).
+// always; inside unpatched structure, content sections too (lexical owners).
 function isBranchChainTo(section: Section, owner: Section) {
   const stateful = inStatefulBranch(section) || inContentSection(section);
   while (section !== owner) {
@@ -1689,8 +1712,7 @@ export function sectionConstructs(section: Section) {
   return (
     isPersisted() &&
     section.isBranch &&
-    isBranchPathSection(section) &&
-    !isStatefulBranch(section) &&
+    !inResumedStructure(section) &&
     !section.shellBlocked &&
     !sectionHasServerEffect(section)
   );
@@ -1706,7 +1728,7 @@ export function writeLocalFill(section: Section, binding: Binding) {
     t.stringLiteral(getPatchFillKey(binding)),
     getDeclaredBindingExpression(binding),
   );
-  const owned = getOwnershipGuard(getSerializeSourcesForRef(binding));
+  const owned = getFilledGuard(getSerializeSourcesForRef(binding));
   if (!owned) return write;
   let initIds = "";
   forEach(binding.sources?.param, (feed) => {
@@ -1735,7 +1757,7 @@ export function writeLocalWrite(section: Section, binding: Binding) {
     t.stringLiteral(getScopeAccessor(binding)),
     getDeclaredBindingExpression(binding),
   );
-  const owned = getOwnershipGuard(getSerializeSourcesForRef(binding));
+  const owned = getFilledGuard(getSerializeSourcesForRef(binding));
   return owned ? t.logicalExpression("&&", owned, write) : write;
 }
 
@@ -1890,15 +1912,39 @@ export function writeHTMLResumeStatements(
             );
           }
         } else {
-          const subscribeArg =
+          // A persisted reader a patch fills needs no dispatch unless the
+          // client can change the owner value (`_unfilled_if`).
+          const ownership =
+            isPersisted() &&
+            !closure.sources.state &&
+            !hasResumedRead(closure, section)
+              ? getPatchWriteOwnership(closure.sources)
+              : undefined;
+          let subscribeArg: t.Expression = identifier;
+          if (
             isReasonDynamic(closureScopesReason) &&
-            !isSameReason(closureScopesReason, sectionSerializeReason)
-              ? getExprIfSerialized(
-                  closure.section,
-                  closureScopesReason,
-                  identifier,
-                )
-              : identifier;
+            !isSameReason(closureScopesReason, sectionSerializeReason) &&
+            // `_unfilled_if` on the same root group already tests the mask.
+            !(
+              ownership?.length &&
+              !closureScopesReason.global &&
+              isSameReason(closureScopesReason, closure.sources) &&
+              groupParamsBySection(closureScopesReason.param).size === 1
+            )
+          ) {
+            subscribeArg = getExprIfSerialized(
+              closure.section,
+              closureScopesReason,
+              identifier,
+            );
+          }
+          if (ownership) {
+            subscribeArg = t.logicalExpression(
+              "&&",
+              callRuntime("_unfilled_if", ...ownership),
+              subscribeArg,
+            );
+          }
           addWriteScopeBuilder(section, (expr) =>
             callRuntime("_subscribe", subscribeArg, expr),
           );
@@ -1908,13 +1954,14 @@ export function writeHTMLResumeStatements(
   });
 
   // A scope with client work reading `$global` keys joins their readers.
-  for (const id of getGlobalJoins(section)) {
+  for (const [id, unfilled] of getGlobalJoins(section)) {
     body.push(
       t.expressionStatement(
         callRuntime(
           "_global_subscribe",
           t.stringLiteral(id),
           scopeIdIdentifier,
+          unfilled && t.numericLiteral(1),
         ),
       ),
     );
@@ -2005,9 +2052,9 @@ export function writeHTMLResumeStatements(
   });
 
   // A fill (the scope write's else branch) runs under its group's ownership
-  // and, when conditional, a client-fed selector or withheld content.
+  // and, when conditional, a client-owned upstream or withheld content.
   const gatePatchWrite = (binding: Binding, write: t.Expression) => {
-    let guard: t.Expression | undefined = getOwnershipGuard(
+    let guard: t.Expression | undefined = getFilledGuard(
       getSerializeSourcesForRef(binding),
     );
     const conditions = getFillConditions(binding);
@@ -2016,7 +2063,7 @@ export function writeHTMLResumeStatements(
       const add = (term: t.Expression) => {
         needed = needed ? t.logicalExpression("||", needed, term) : term;
       };
-      for (const sources of conditions.selectors || []) {
+      for (const sources of conditions.upstreams || []) {
         const args = getPatchWriteOwnership(sources);
         if (args.length) add(callRuntime("_client_guard", ...args));
       }
@@ -2169,7 +2216,7 @@ export function writeHTMLResumeStatements(
         // The runtime decides the wiring from the rendered value alone; a param-fed
         // handler binds only under server ownership.
         const bindOwned =
-          change.reason !== true ? getOwnershipGuard(change.reason) : undefined;
+          change.reason !== true ? getFilledGuard(change.reason) : undefined;
         const bindCall = callRuntime(
           "_patch_bind",
           scopeIdIdentifier,

@@ -11,7 +11,7 @@ var template_default = _template_persisted("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const label = input.title + "!";
-			_owned_guard($scope0_owned, 2) && _patch_write($scope1_id, "c", label);
+			_filled_guard($scope0_owned, 2) && _patch_write($scope1_id, "c", label);
 			_html(`<p>${_patch_text($scope1_id, "a", label, void 0, $scope0_owned, 2)}</p><button>c</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a1");
 			_scope($scope1_id, {

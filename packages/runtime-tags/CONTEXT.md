@@ -177,16 +177,47 @@ A server rerender of a persisted page applied to the live client DOM by
 refreshing values and navigating structure, without a full page render.
 _Avoid_: rerender, hydration update
 
+**Frame**:
+One flushed payload of a patch render (a sync flush, a settle, a lazy
+module's ready data), applied as a unit: the frame commit check accepts or
+rejects it whole. Not the rerender itself — that is the patch.
+_Avoid_: frame for the patch render
+
+**Upstream**:
+What an expression or binding derives from: the expressions feeding it and
+the bindings those read (`upstreamAlias`, `upstreamExpression`). Structure
+has an upstream too — an `<if>` condition, a `<for>` collection, a dynamic
+tag's renderer (`isBranchUpstream`) — and a root param read only there is
+_upstream of structure_.
+_Avoid_: selector, selection, selects (keyed `for` row select aside)
+
 **Stateful structure**:
-A branch body whose selection has a state reason (main's `kStatefulReason`
+A branch body whose upstream expression has a state reason (main's `kStatefulReason`
 vocabulary) — state sources, no `$global`, fill-deliverable param feeds —
 derived from its upstream expression (`isStatefulBranch`), never stored.
-Resumed code re-selects it, so patch renders skip it and frames omit its
+Resumed code re-renders it, so patch renders skip it and frames omit its
 entry. Translate code may call the derived policy _client-owned_.
-_Avoid_: state-selected, client-reselectable, client-owned as a shared field name
+_Avoid_: state-selected, client-owned as a shared field name
+
+**Hole / filled / unfilled**:
+A read a patch delivers by writing its value at the site is a _hole_ the
+patch _fills_; the html gates say which side acts on a param group:
+`_filled_guard` (a patch fills it: server-owned, or unfed where a construct
+needs the seed), `_unfilled_if` (no patch fills it: the client feeds it, or
+the read sits in unpatched structure). Analyze records reads no patch can
+fill (`hasUnfillablePatchReads`), never the gate.
+_Avoid_: server-side/client-side value, owned read
+
+**Unpatched structure**:
+Structure patch renders skip and so never fill: stateful structure, a
+branch or loop whose upstream a client-owned group feeds, a dynamic tag
+site a patch never pairs. The html writer tracks it at render as context
+(`withUnpatched`, `inUnpatched`) because a child template cannot see how
+its parent reached it; analyze names the static cases `inResumedStructure`.
+_Avoid_: client-owned structure, client-selected
 
 **Structural-or-global param**:
-A root param whose reads select structure or mix with `$global` — the value
+A root param whose reads sit upstream of structure or mix with `$global` — the value
 never leaves through an expression channel, so whoever renders must supply
 it. Translate derives server-ownership requirements from this fact.
 _Avoid_: server-required param

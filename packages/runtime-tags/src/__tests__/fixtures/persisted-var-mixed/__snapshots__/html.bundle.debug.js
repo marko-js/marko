@@ -16,7 +16,7 @@ var mixer_default = _template_persisted("__tests__/tags/mixer/index.marko", (inp
 	}, "__tests__/tags/mixer/index.marko", 0, {
 		input_value: ["input.value"],
 		local: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/mixer/index.marko0", input.value);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/mixer/index.marko0", input.value);
 	return $return;
 }, 0, 0);
 

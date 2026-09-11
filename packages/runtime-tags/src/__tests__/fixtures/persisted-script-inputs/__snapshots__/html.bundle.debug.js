@@ -14,5 +14,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]
-	}) : (_owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_a", input.a), _owned_guard($scope0_owned, 2) && _patch_write($scope0_id, "input_b", input.b));
+	}) : (_filled_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_a", input.a), _filled_guard($scope0_owned, 2) && _patch_write($scope0_id, "input_b", input.b));
 }, 1, 0);

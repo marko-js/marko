@@ -39,7 +39,7 @@ var wrapper_default = _template_persisted("__tests__/components/wrapper.marko", 
 		}
 	}, $scope0_id, "#section/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/components/wrapper.marko_1*shell"], $scope0_owned, 1);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $sg__input_show)}`);
-	$scope0_reason ? _scope($scope0_id, { input_label: input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/components/wrapper.marko0", input.label);
+	$scope0_reason ? _scope($scope0_id, { input_label: input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/components/wrapper.marko0", input.label);
 }, 0, () => [$Child_withLoadAssets]);
 
 // template.marko
@@ -71,5 +71,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		input_label: ["input.label"]
-	}) : (_owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.show), _owned_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.label));
+	}) : (_filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.show), _filled_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.label));
 }, 1, () => [wrapper_default]);

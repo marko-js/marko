@@ -26,7 +26,7 @@ var template_default = _template_persisted("a", (input) => {
 			_html(`<span>${_patch_text($scope4_id, "a", b, void 0, $scope0_owned, 2)}</span>`);
 			_scope($scope4_id, {});
 		}, 1, "a4", 1);
-		$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_b__closures, _subscribe(_source_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 2) && $input_b__closures, _subscribe(_unfilled_if($scope0_owned, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		$scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("a2", $scope0_id) }) }, 1);
 	$scope0_reason && _scope($scope0_id, {

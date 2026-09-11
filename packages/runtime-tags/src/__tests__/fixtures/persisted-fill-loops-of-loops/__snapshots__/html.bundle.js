@@ -15,7 +15,7 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(row.cells, (cell) => {
 			const $scope2_id = _scope_id();
-			_owned_guard($scope0_owned, 0) ? _patch_value($scope2_id, "a1", cell) : _patch_init($scope2_id, "a2");
+			_filled_guard($scope0_owned, 0) ? _patch_value($scope2_id, "a1", cell) : _patch_init($scope2_id, "a2");
 			_html(`<p>${_text_resume($scope2_id, "a", cell + ":" + input.suffix + "@0")}</p>`);
 			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 1) && $input_suffix__closures, _scope($scope2_id, {
 				c: cell,
@@ -31,5 +31,5 @@ var template_default = _template_persisted("a", (input) => {
 		g: count,
 		h: $input_suffix__closures,
 		i: $count__closures
-	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.suffix);
+	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.suffix);
 }, 1, 0);

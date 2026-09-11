@@ -11,7 +11,7 @@ var child_default = _template_persisted("a", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		e: input.item,
 		f: open
-	}) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "e", input.item);
+	}) : _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "e", input.item);
 }, 0, 0);
 
 // template.marko
@@ -35,5 +35,5 @@ var template_default = _template_persisted("b", (input) => {
 		h: item,
 		i: count,
 		d: _existing_scope($childScope)
-	}) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "h", item);
+	}) : _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "h", item);
 }, 1, () => [$Child_withLoadAssets]);

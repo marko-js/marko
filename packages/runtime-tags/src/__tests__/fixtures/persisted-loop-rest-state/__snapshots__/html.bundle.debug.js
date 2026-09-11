@@ -12,8 +12,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main>");
 	_for_of(input.items, ({ id, ...rest }) => {
 		const $scope1_id = _scope_id();
-		_owned_guard($scope0_owned, 0) ? _patch_value($scope1_id, "__tests__/template.marko0", id) : _patch_init($scope1_id, "__tests__/template.marko_1_input_items#4/init");
-		_owned_guard($scope0_owned, 0) ? _patch_value($scope1_id, "__tests__/template.marko1", rest) : _patch_init($scope1_id, "__tests__/template.marko_1_input_items#4/init");
+		_filled_guard($scope0_owned, 0) ? _patch_value($scope1_id, "__tests__/template.marko0", id) : _patch_init($scope1_id, "__tests__/template.marko_1_input_items#4/init");
+		_filled_guard($scope0_owned, 0) ? _patch_value($scope1_id, "__tests__/template.marko1", rest) : _patch_init($scope1_id, "__tests__/template.marko_1_input_items#4/init");
 		_html(`<p>${_text_resume($scope1_id, "#text/0", id + ":" + Object.keys(rest).join("+") + "#" + count)}</p>`);
 		_scope($scope1_id, {
 			id,

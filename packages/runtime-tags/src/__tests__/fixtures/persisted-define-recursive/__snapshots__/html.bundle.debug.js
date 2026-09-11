@@ -24,7 +24,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, $sg__n, $sg__n, void 0, void 0, [0]);
-		_subscribe(_source_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_owned, 0) && $input_x__closures, _scope($scope1_id, {
 			n,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "1:2", { n: "1:13" }));

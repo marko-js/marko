@@ -32,7 +32,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_patch_child($scope1_id, "#childScope/0", $childScope);
 			let el = box_default({ label: input.label });
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_el#3/var");
-			_owned_guard(0, 0) && _patch_write($scope1_id, "el", el, 1);
+			_filled_guard(0, 0) && _patch_write($scope1_id, "el", el, 1);
 			_html(`<button id=read>read</button>${_el_resume($scope1_id, "#button/2")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, {

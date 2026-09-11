@@ -24,8 +24,7 @@ var frame_default = _template_persisted("__tests__/tags/frame.marko", (input) =>
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
 }, 0, 0);
@@ -53,7 +52,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		_patch_child($scope1_id, "#childScope/0", $childScope);
 		let setLast = store_default({});
 		_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_setLast#2/var");
-		_owned_guard(0, 0) && _patch_write($scope1_id, "setLast", setLast, 1);
+		_filled_guard(0, 0) && _patch_write($scope1_id, "setLast", setLast, 1);
 		_subscribe($frame_content__subscribers, _scope($scope1_id, {
 			setLast,
 			"#childScope/0": _existing_scope($childScope)

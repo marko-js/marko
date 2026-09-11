@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 		const $scope1_id = _scope_id();
 		_persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "a", input.x, void 0, $scope0_owned, 0)}</em>`);
-		_subscribe(_source_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe(_unfilled_if($scope0_owned, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	if ($scope0_reason) _if(() => {
 		{
@@ -28,5 +28,5 @@ var template_default = _template_persisted("a", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		f: s,
 		g: $input_x__closures
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.x);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.x);
 }, 1, 1);

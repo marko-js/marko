@@ -8,8 +8,7 @@ var layout_default = _template_persisted("__tests__/layout.marko", (input) => {
 	let open = false;
 	_html(`<header><button>${_text_resume($scope0_id, "#text/1", open ? "close" : "open")}</button>${_el_resume($scope0_id, "#button/0")}</header><main>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/2", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/2", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "#text/2", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), _patch_dynamic_tag($scope0_id, "#text/2", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</main>");
 	_script($scope0_id, "__tests__/layout.marko_0");
 	_patch_value($scope0_id, "__tests__/layout.marko0", open, 1);
@@ -83,7 +82,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"], $scope0_owned, 0);
-		$scope0_reason && _subscribe($input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));
 		$sg__input_page || $scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_script($scope0_id, "__tests__/template.marko_0");

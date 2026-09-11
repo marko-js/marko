@@ -27,7 +27,7 @@ var template_default = _template_persisted("a", (input) => {
 				const $childScope = _peek_scope_id();
 				_patch_child($scope2_id, "a", $childScope);
 				_html(`<em>${_patch_text($scope2_id, "c", widget_default({ label: input.value }), void 0, $scope0_owned, 2)}</em>`);
-				_subscribe(_source_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_owned, 2) && $input_value__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
 				}));

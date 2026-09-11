@@ -22,8 +22,7 @@ var frame_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -49,7 +48,7 @@ var template_default = _template_persisted("a", (input) => {
 		_patch_child($scope1_id, "a", $childScope);
 		let setLast = store_default({});
 		_var($scope1_id, "b", $childScope, "a3");
-		_owned_guard(0, 0) && _patch_write($scope1_id, "c", setLast, 1);
+		_filled_guard(0, 0) && _patch_write($scope1_id, "c", setLast, 1);
 		_subscribe($frame_content__subscribers, _scope($scope1_id, {
 			c: setLast,
 			a: _existing_scope($childScope)

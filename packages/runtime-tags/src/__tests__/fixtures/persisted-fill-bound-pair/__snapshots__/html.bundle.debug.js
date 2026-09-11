@@ -31,5 +31,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		fa: "1:8",
 		fb: "2:8",
 		open: "3:6"
-	}) : (_owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", fa), _owned_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/template.marko1", fb), _owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_a", input.a), _owned_guard($scope0_owned, 2) && _patch_write($scope0_id, "input_b", input.b));
+	}) : (_filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", fa), _filled_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/template.marko1", fb), _filled_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_a", input.a), _filled_guard($scope0_owned, 2) && _patch_write($scope0_id, "input_b", input.b));
 }, 1, 0);

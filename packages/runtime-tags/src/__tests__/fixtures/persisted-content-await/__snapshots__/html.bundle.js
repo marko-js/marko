@@ -6,8 +6,7 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -21,7 +20,7 @@ _shells({
 	a3: /*@__PURE__*/ ((_w0, _w1) => `a3;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template)
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_value = _source_if($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_value__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -37,12 +36,12 @@ var template_default = _template_persisted("a", (input) => {
 				_await($scope2_id, "a", Promise.resolve(input.value), () => {
 					const $scope3_id = _scope_id();
 					_html(`<em>${_patch_text($scope3_id, "a", input.value, void 0, $scope0_owned, 2)}</em>`);
-					_subscribe($si__input_value && $input_value__closures, _scope($scope3_id, {
+					_subscribe(_unfilled_if($scope0_owned, 2) && $input_value__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						Cf: 1
 					}));
 				}, 1, "a1");
-				$scope0_reason && _subscribe($si__input_value && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+				$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 2) && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				$scope0_reason && _resume_branch($scope2_id);
 			}, $scope1_id) });
 			_scope($scope1_id, {

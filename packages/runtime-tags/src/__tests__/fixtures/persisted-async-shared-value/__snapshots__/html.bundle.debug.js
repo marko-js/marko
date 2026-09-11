@@ -14,7 +14,7 @@ var child_default = _template_persisted("__tests__/child.marko", (input) => {
 	}, "__tests__/child.marko", 0, {
 		input_name: ["input.name"],
 		input_item: ["input.item"]
-	}) : (_owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_name", input.name), _owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_item", input.item));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_name", input.name), _filled_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_item", input.item));
 }, 0, 0);
 
 // template.marko
@@ -66,7 +66,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				"#childScope/1": _existing_scope($childScope3)
 			}, "__tests__/template.marko", "9:6");
 		}, 1, "__tests__/template.marko_1_#text#0/await", 1);
-		$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4"));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4"));
 		$scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_3*content", $scope0_id) }) }, 1);
 	_html("</main>");

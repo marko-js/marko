@@ -18,5 +18,5 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.color,
 		f: input.x,
 		g: s
-	}) : (_owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.color), _owned_guard($scope0_owned, 2) && _patch_value($scope0_id, "a1", input.x));
+	}) : (_filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.color), _filled_guard($scope0_owned, 2) && _patch_value($scope0_id, "a1", input.x));
 }, 1, 0);

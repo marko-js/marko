@@ -14,7 +14,7 @@ var child_default = _template_persisted("__tests__/tags/child.marko", (input) =>
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const l = input.label + "!";
-			_owned_guard($scope0_owned, 1) ? _patch_value($scope1_id, "__tests__/tags/child.marko2", l) : _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_label#5/init");
+			_filled_guard($scope0_owned, 1) ? _patch_value($scope1_id, "__tests__/tags/child.marko2", l) : _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_label#5/init");
 			_html(`<p>${_text_resume($scope1_id, "#text/0", l + "#" + c)}</p>`);
 			_scope($scope1_id, {
 				l,
@@ -32,7 +32,7 @@ var child_default = _template_persisted("__tests__/tags/child.marko", (input) =>
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],
 		c: "1:6"
-	}) : _owned_guard($scope0_owned, 1) && _client_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/child.marko0", input.label);
+	}) : _filled_guard($scope0_owned, 1) && _client_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/child.marko0", input.label);
 }, 0, 0);
 
 // template.marko

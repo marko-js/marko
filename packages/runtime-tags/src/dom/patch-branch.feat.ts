@@ -13,7 +13,7 @@ import { createAndSetupBranch } from "./renderer";
 import { failPatch, withConstructing, patchers, patchScope } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 
-// Shape-typed conditional entry: bare number = selection + 1 (`0` hides),
+// Shape-typed conditional entry: bare number = index + 1 (`0` hides),
 // bare string = a static branch's shell id, else `[index?, partial, shellId?]`.
 patchers[PatchKey.Branch] = (scope, key, value) => {
   const entry = value as number | string | [number | Scope, ...unknown[]];
@@ -21,22 +21,22 @@ patchers[PatchKey.Branch] = (scope, key, value) => {
   const branchKey = (AccessorPrefix.BranchScopes + suffix) as Accessor;
   const liveBranch = scope[branchKey] as BranchScope | undefined;
   const rendererKey = (AccessorPrefix.ConditionalRenderer + suffix) as Accessor;
-  let selection = 0;
+  let index = 0;
   let branchPartial: Scope | number | undefined;
   let shellId: string | undefined;
   if (typeof entry === "object") {
     [branchPartial, shellId] = entry as [Scope, string?];
     if (typeof branchPartial === "number") {
-      selection = branchPartial;
+      index = branchPartial;
       branchPartial = (entry as unknown[])[1] as Scope;
       shellId = (entry as unknown[])[2] as string | undefined;
     }
   } else if (typeof entry === "number") {
-    selection = entry - 1;
+    index = entry - 1;
   } else {
     shellId = entry;
   }
-  if (selection === -1) {
+  if (index === -1) {
     if (liveBranch) {
       scope[branchKey] = undefined;
       removeAndDestroyBranch(liveBranch);
@@ -46,13 +46,13 @@ patchers[PatchKey.Branch] = (scope, key, value) => {
   }
   branchPartial ||= {} as Scope;
   const current = liveBranch ? ((scope[rendererKey] as number) ?? 0) : -1;
-  scope[rendererKey] = selection as never;
-  if (selection === current) {
+  scope[rendererKey] = index as never;
+  if (index === current) {
     patchScope(branchPartial as Scope, liveBranch as Scope);
   } else if (shellId) {
     construct(scope, branchKey, branchPartial as Scope, shells[shellId]);
   } else {
-    // The server could not ship a shell for the newly selected branch, so
+    // The server could not ship a shell for the new branch, so
     // this divergence cannot apply faithfully.
     failPatch();
   }

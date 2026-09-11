@@ -27,5 +27,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_color: ["input.color"],
 		input_x: ["input.x"],
 		s: "1:6"
-	}) : (_owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.color), _owned_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.x));
+	}) : (_filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.color), _filled_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.x));
 }, 1, 0);

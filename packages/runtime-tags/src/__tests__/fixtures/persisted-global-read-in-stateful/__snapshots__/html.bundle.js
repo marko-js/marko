@@ -14,7 +14,7 @@ var template_default = _template_persisted("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 1, 0, 1);
-	_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, { c: on });
 }, 1, 1);

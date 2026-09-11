@@ -19,7 +19,7 @@ var card_default = _template_persisted("b", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		g: input.content,
 		h: open
-	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.content);
+	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.content);
 }, 0, 0);
 
 // template.marko
@@ -45,5 +45,5 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.note,
 		f: $input_note__closures,
 		a: _existing_scope($childScope)
-	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.note);
+	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.note);
 }, 1, () => [card_default]);

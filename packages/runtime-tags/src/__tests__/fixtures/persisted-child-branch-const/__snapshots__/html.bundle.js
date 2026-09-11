@@ -20,7 +20,7 @@ var card_default = _template_persisted("b", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		e: input.title,
 		f: input.note
-	}) : (_owned_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b0", input.title), _owned_guard($scope0_owned, 4) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b1", input.note));
+	}) : (_filled_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b0", input.title), _filled_guard($scope0_owned, 4) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b1", input.note));
 }, 0, 0);
 
 // template.marko

@@ -11,14 +11,13 @@ var my_for_default = _template_persisted("b", (input) => {
 		const $scope1_id = _scope_id();
 		const $tag = input.content;
 		const $input2 = [...args];
-		_patch_dynamic_tag($scope1_id, "a", $tag, $input2, 0, 0, $scope0_owned, 0);
-		_dynamic_tag($scope1_id, "a", $tag, [...$input2], 0, 1, $sg__input_to__OR__input_content, 1);
+		_dynamic_tag($scope1_id, "a", $tag, [...$input2], 0, 1, $sg__input_to__OR__input_content, _patch_dynamic_tag($scope1_id, "a", $tag, $input2, 0, 0, $scope0_owned, 0));
 		$scope0_reason && _scope($scope1_id, {
 			b: args,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, $sg__input_to__OR__input_content, $sg__input_to, void 0, void 0, "b0", $scope0_owned, 1);
-	$scope0_reason ? _scope($scope0_id, { e: input.content }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.content);
+	$scope0_reason ? _scope($scope0_id, { e: input.content }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.content);
 }, 0, 1);
 
 // template.marko

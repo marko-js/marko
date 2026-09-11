@@ -27,7 +27,7 @@ var child_default = _template_persisted("__tests__/tags/child.marko", (input) =>
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_owned, 1);
-	$scope0_reason ? _scope($scope0_id, { input_on: input.on }, "__tests__/tags/child.marko", 0, { input_on: ["input.on"] }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/child.marko0", input.on);
+	$scope0_reason ? _scope($scope0_id, { input_on: input.on }, "__tests__/tags/child.marko", 0, { input_on: ["input.on"] }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/child.marko0", input.on);
 }, 0, 0);
 
 // tags/store.marko

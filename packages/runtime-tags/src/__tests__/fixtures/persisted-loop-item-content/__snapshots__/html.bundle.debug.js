@@ -7,8 +7,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	const $scope0_id = _scope_id();
 	_html(`<b>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</b>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1));
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 }, 0, 0);
 
@@ -37,7 +36,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				const $scope2_reason = _persisted_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "#text/0", item.n, void 0, $scope0_owned, 0)}</em>`);
-				_subscribe($scope0_reason && $for_content__item_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:10"));
+				_subscribe(_unfilled_if($scope0_owned, 0) && $for_content__item_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:10"));
 			}, $scope1_id)
 		});
 		_html("</li>");
