@@ -22,7 +22,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_html(`<em>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_owned, 1)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "4:6");
 		}, 1, "__tests__/template.marko_2_#text#0/await", 1);
-		$scope0_reason && _subscribe($input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 		$scope0_reason && _resume_branch($scope2_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_1*content", (err) => {
 		const $scope1_reason = _persisted_reason();
@@ -40,5 +40,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		n: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
 }, 1, 0);

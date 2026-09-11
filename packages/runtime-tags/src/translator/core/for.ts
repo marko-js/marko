@@ -219,7 +219,7 @@ export default {
 
     if (isPersisted()) {
       onClassifyStructure(tagSection, () => {
-        // Patches select a loop that is not stateful.
+        // Patches render a loop that is not stateful.
         if (!isStatefulBranch(bodySection) && isBranchPathSection(tagSection)) {
           addRuntimeFeatureAsset("patch-loop");
           recordStructuralParams(getSerializeSourcesForExpr(tagExtra));
@@ -382,7 +382,7 @@ export default {
               id && getShellRecords()?.[id]
                 ? t.stringLiteral(id)
                 : t.numericLiteral(0),
-              // A param-selected loop yields to the client when the call
+              // A loop with params upstream yields to the client when the call
               // site feeds its inputs from state.
               ...getExprWriteOwnership(node.extra!),
             );

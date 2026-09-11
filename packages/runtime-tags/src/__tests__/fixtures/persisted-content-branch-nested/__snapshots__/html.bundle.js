@@ -7,8 +7,7 @@ var widget_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_owned, 0)}</p>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1));
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
 
@@ -41,10 +40,10 @@ var template_default = _template_persisted("a", (input) => {
 							_persisted_reason();
 							const $scope3_id = _scope_id();
 							_html(`<em>${_patch_text($scope3_id, "a", input.text, void 0, $scope0_owned, 6)}</em>`);
-							_subscribe(_source_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
+							_subscribe(_unfilled_if($scope0_owned, 6) && $input_text__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 						}, $scope2_id)
 					});
-					_subscribe(_source_if($scope0_reason, 5) && $input_label__closures, _scope($scope2_id, {
+					_subscribe(_unfilled_if($scope0_owned, 5) && $input_label__closures, _scope($scope2_id, {
 						_: _scope_with_id($scope1_id),
 						a: _existing_scope($childScope)
 					}));

@@ -15,5 +15,5 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.prefix,
 		f: onChange,
 		g: open
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", onChange), _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "e", input.prefix));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", onChange), _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "e", input.prefix));
 }, 1, 0);

@@ -14,7 +14,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const label = "[" + input.title + "]";
-			_owned_guard($scope0_owned, 1) ? _patch_value($scope1_id, "__tests__/template.marko0", label) : _patch_init($scope1_id, "__tests__/template.marko_1_input_title#5/init");
+			_filled_guard($scope0_owned, 1) ? _patch_value($scope1_id, "__tests__/template.marko0", label) : _patch_init($scope1_id, "__tests__/template.marko_1_input_title#5/init");
 			_html(`<p>${_text_resume($scope1_id, "#text/0", label + " #" + count)}</p>`);
 			_scope($scope1_id, {
 				label,

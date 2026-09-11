@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const label = input.title + "!";
-			_owned_guard($scope0_owned, 3) && _patch_write($scope1_id, "c", label);
+			_filled_guard($scope0_owned, 3) && _patch_write($scope1_id, "c", label);
 			_html(`<p>${_patch_text($scope1_id, "a", label, void 0, $scope0_owned, 3)}</p>`);
 			_if(() => {
 				if (input.inner) {
@@ -37,5 +37,5 @@ var template_default = _template_persisted("a", (input) => {
 		f: input.inner,
 		g: input.suffix,
 		j: $input_suffix__closures
-	}) : _owned_guard($scope0_owned, 5) && _patch_write($scope0_id, "g", input.suffix);
+	}) : _filled_guard($scope0_owned, 5) && _patch_write($scope0_id, "g", input.suffix);
 }, 1, 0);

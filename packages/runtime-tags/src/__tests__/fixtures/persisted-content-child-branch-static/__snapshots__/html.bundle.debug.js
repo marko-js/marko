@@ -13,14 +13,13 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const $tag = input.content;
-			_patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 2);
-			_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
+			_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 2));
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#section/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/card/index.marko_1*shell"], $scope0_owned, 1);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $sg__input_show)}`);
-	$scope0_reason ? _scope($scope0_id, { input_content: input.content }, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
+	$scope0_reason ? _scope($scope0_id, { input_content: input.content }, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
 }, 0, 0);
 
 // template.marko

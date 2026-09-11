@@ -7,8 +7,7 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h2>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -34,7 +33,7 @@ var template_default = _template_persisted("a", (input) => {
 			_persisted_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "a", count)}:${_patch_text($scope1_id, "b", input.note, 2, $scope0_owned, 1)}</em>`);
-			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
+			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_owned, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);

@@ -235,9 +235,9 @@ export function getPatchWriteOwnership(
 
 // The same test as a statement-position guard expression (fills and
 // effect writes), or undefined when statically server-owned.
-export function getOwnershipGuard(sources: Sources | undefined) {
+export function getFilledGuard(sources: Sources | undefined) {
   const args = getPatchWriteOwnership(sources);
-  return args.length ? callRuntime("_owned_guard", ...args) : undefined;
+  return args.length ? callRuntime("_filled_guard", ...args) : undefined;
 }
 
 // A root group's 2-bit sources value, composed into child masks.

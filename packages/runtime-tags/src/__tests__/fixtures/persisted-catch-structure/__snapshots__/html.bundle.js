@@ -19,7 +19,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope_id();
 			_html("<span>ok</span>");
 		}, 1, "a1");
-		$scope0_reason && _subscribe($input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }));
 		$scope0_reason && _resume_branch($scope3_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a3", () => {
 		_persisted_reason();
@@ -45,5 +45,5 @@ var template_default = _template_persisted("a", (input) => {
 		h: count,
 		i: $input_detail__closures,
 		j: $input_promise__closures
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.detail);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.detail);
 }, 1, 0);

@@ -7,8 +7,7 @@ var grand_default = _template_persisted("__tests__/tags/grand/index.marko", (inp
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/grand/index.marko", 0);
 }, 0, 0);
@@ -71,5 +70,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_title: ["input.title"],
 		input_note: ["input.note"],
 		open: "1:6"
-	}) : (_owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title), _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.note));
+	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title), _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.note));
 }, 1, () => [child_default]);

@@ -33,7 +33,8 @@ import {
   getChunk,
   getState,
   isInResumedBranch,
-  maskGroup,
+  _client_guard,
+  _filled_guard,
   patchPartial,
   writeEmbeddedBinds,
   peekPatchPartial,
@@ -187,7 +188,7 @@ class PatchState extends State {
     return "";
   }
 
-  // Ships the selection, branch partial, and (once per response) the shell
+  // Ships the branch index, partial, and (once per response) the shell
   // so the client can construct on divergence without bundling content.
   override writeBranch(
     scopeId: number,
@@ -199,8 +200,9 @@ class PatchState extends State {
   ) {
     // Inert captures render plain html: no entries, no interception.
     if (this.patchInert) return;
-    // A client-fed selector re-selects on the live page: the frame says nothing.
-    if (clientSelected(owned, group)) return 1;
+    // A branch with a client-owned group upstream re-renders on the resumed
+    // page: the patch skips it.
+    if (_client_guard(owned, group!)) return 1;
     const branchId = _peek_scope_id();
     const link: PatchLink = ((this.patchLinks ??= {})[branchId] = [
       scopeId,
@@ -212,7 +214,7 @@ class PatchState extends State {
         ? undefined
         : shipShell(this, shellIds?.[branchIndex]);
     // Shape-typed entry, densest form first: a bare number is the
-    // selection + 1 (`0` hides), and empty/zero members drop.
+    // branch index + 1 (`0` hides), and empty/zero members drop.
     const branchPartial =
       branchIndex === undefined ? undefined : peekPatchPartial(this, branchId);
     writePatch(scopeId, {
@@ -255,7 +257,7 @@ class PatchState extends State {
     group?: number,
   ) {
     if (this.patchInert) return;
-    if (clientSelected(owned, group)) return 1;
+    if (_client_guard(owned, group!)) return 1;
     const partials: object[] = [];
     const keys: unknown[] = [];
     let indexKeys = true;
@@ -438,7 +440,7 @@ export function _patch_control(
   group?: number,
 ) {
   const state = getState();
-  if (state.writesPatches && ownedWrite(owned, group)) {
+  if (state.writesPatches && _filled_guard(owned, group!)) {
     writeEmbeddedBinds(state as PatchState, value);
     writeOwned(
       scopeId,
@@ -461,7 +463,7 @@ export function _patch_bind(
   group?: number,
 ) {
   const state = getState();
-  if (state.writesPatches && ownedWrite(owned, group)) {
+  if (state.writesPatches && _filled_guard(owned, group!)) {
     const registered = !!value && getRegistered(value as WeakKey);
     const bound =
       registered && (registered.scope as ScopeInternals | undefined);
@@ -570,7 +572,7 @@ export function _patch_dynamic_tag(
     getChunk()!.needsWalk = true;
   } else {
     const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
-    if (ownedWrite(owned, group)) {
+    if (_filled_guard(owned, group!)) {
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
       // A renderer ships its comparable id (or itself bare); native names are
@@ -595,6 +597,9 @@ export function _patch_dynamic_tag(
       });
     }
   }
+  // How a patch treats the site (`_dynamic_tag`'s `patchPairing`): `1` pairs it,
+  // `2` skips it (a client-owned group is upstream of the renderer).
+  return _client_guard(owned, group!) ? 2 : 1;
 }
 
 // A spread that may carry `content`: the set patches as attributes and
@@ -749,7 +754,7 @@ export function _patch_attrs(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    if (ownedWrite(owned, group)) {
+    if (_filled_guard(owned, group!)) {
       writeEmbeddedBinds(state as PatchState, data);
       // `controllable` marks a spread owning the element's controllable; the
       // array form carries `skip`/`controllable` without key bytes.
@@ -780,7 +785,7 @@ export function _patch_attrs_partial(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    if (ownedWrite(owned, group)) {
+    if (_filled_guard(owned, group!)) {
       writeEmbeddedBinds(state as PatchState, data);
       writeOwned(
         scopeId,
@@ -844,12 +849,6 @@ function patchStringAttr(
   return stringAttr(name, value);
 }
 
-// Structure whose selector group the client contributes to (the low mask
-// bit): the instance selects it client-side.
-function clientSelected(owned?: SerializeReasonValue, group?: number) {
-  return owned !== undefined && !!(maskGroup(owned, group!) & 1);
-}
-
 // Whether a consumer withheld a content renderer the frame handed it
 // (created, never invoked): server values inside deliver as fills then.
 export function _content_withheld(id: string) {
@@ -857,12 +856,6 @@ export function _content_withheld(id: string) {
   return !!state.createdContents?.has(id) && !state.renderedContents?.has(id);
 }
 
-// A patch write needs exclusive server ownership; a contribution-less group
-// (a call-site constant) writes only where a fresh scope may need it.
-function ownedWrite(owned?: SerializeReasonValue, group?: number) {
-  const mask = owned === undefined ? 2 : maskGroup(owned, group!);
-  return mask === 2 || (mask === 0 && isInResumedBranch());
-}
 function writeOwned(
   scopeId: number,
   key: string,
@@ -870,7 +863,7 @@ function writeOwned(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (ownedWrite(owned, group)) writePatch(scopeId, { [key]: value });
+  if (_filled_guard(owned, group!)) writePatch(scopeId, { [key]: value });
 }
 
 // Only a shell the server can ship rides an entry: a missing one makes a

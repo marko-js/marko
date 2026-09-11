@@ -50,7 +50,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				if (input.detail) {
 					const $scope2_id = _scope_id();
 					_html(`<small>${_patch_text($scope2_id, "#text/0", input.detail, void 0, $scope0_owned, 3)}</small>`);
-					_subscribe(_source_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"));
+					_subscribe(_unfilled_if($scope0_owned, 3) && $input_detail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"));
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, $sg__input_detail, $sg__input_detail, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 3);

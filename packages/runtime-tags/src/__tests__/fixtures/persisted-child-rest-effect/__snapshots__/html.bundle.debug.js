@@ -8,7 +8,7 @@ var dump_default = _template_persisted("__tests__/tags/dump/index.marko", (input
 	_html(`<p>${_patch_text($scope0_id, "#text/0", JSON.stringify(input), void 0, $scope0_owned, 0)}</p>`);
 	_script($scope0_id, "__tests__/tags/dump/index.marko_0_input_label#3");
 	_patch_effect($scope0_id, "__tests__/tags/dump/index.marko_0_input_label#3", "input_label");
-	$scope0_reason ? _scope($scope0_id, { input_label: input.label }, "__tests__/tags/dump/index.marko", 0, { input_label: ["input.label"] }) : _owned_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_label", input.label);
+	$scope0_reason ? _scope($scope0_id, { input_label: input.label }, "__tests__/tags/dump/index.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_owned, 1) && _patch_write($scope0_id, "input_label", input.label);
 }, 0, 0);
 
 // template.marko
@@ -36,5 +36,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		count: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
 }, 1, () => [dump_default]);

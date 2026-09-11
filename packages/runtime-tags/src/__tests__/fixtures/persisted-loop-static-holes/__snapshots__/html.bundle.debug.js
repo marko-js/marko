@@ -32,7 +32,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_for_of([1, 2], (x) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_patch_text($scope3_id, "#text/0", x)}:${_patch_text($scope3_id, "#text/1", input.note, 2, $scope0_owned, 1)}</p>`);
-				_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "13:6"));
+				_subscribe(_unfilled_if($scope0_owned, 1) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "13:6"));
 			}, 0, $scope2_id, "#div/0", 1, 1, 0, void 0, void 0, "__tests__/template.marko_3*shell", 0, 0);
 			_html(`</div>${_el_resume($scope2_id, "#div/0")}`);
 			$scope0_reason && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "11:2");

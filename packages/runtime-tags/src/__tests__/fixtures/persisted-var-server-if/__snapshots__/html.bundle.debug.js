@@ -28,7 +28,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let double = doubler_default({ value: input.n });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_double#8/var");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "double", double, 1);
+	_filled_guard(0, 0) && _patch_write($scope0_id, "double", double, 1);
 	_if(() => {
 		if (double > 4) {
 			const $scope1_id = _scope_id();

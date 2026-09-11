@@ -20,7 +20,7 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	let label = labeler_default({ title: input.title });
 	_var($scope0_id, "b", $childScope, "a0");
-	_owned_guard(0, 0) && _patch_write($scope0_id, "i", label, 1);
+	_filled_guard(0, 0) && _patch_write($scope0_id, "i", label, 1);
 	_html(`<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
@@ -29,5 +29,5 @@ var template_default = _template_persisted("a", (input) => {
 		h: count,
 		i: label,
 		a: _existing_scope($childScope)
-	}) : _owned_guard($scope0_owned, 0) && _patch_write($scope0_id, "i", label);
+	}) : _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "i", label);
 }, 1, () => [labeler_default]);

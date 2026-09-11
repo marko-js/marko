@@ -7,8 +7,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	const $scope0_id = _scope_id();
 	_html(`<li><b>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</b>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1));
 	_html("</li>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 }, 0, 0);
@@ -43,19 +42,19 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					if (item.alt) {
 						const $scope3_id = _scope_id();
 						_html(`<em>${_patch_text($scope3_id, "#text/0", item.n, void 0, $scope0_owned, 0)}</em>`);
-						_subscribe($scope0_reason && $for_content__item_n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
+						_subscribe(_unfilled_if($scope0_owned, 0) && $for_content__item_n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
 						return 0;
 					} else {
 						const $scope4_id = _scope_id();
 						_html(`<span>${_patch_text($scope4_id, "#text/0", item.n, void 0, $scope0_owned, 0)}</span>`);
-						_subscribe($scope0_reason && $for_content__item_n__closures, _scope($scope4_id, {
+						_subscribe(_unfilled_if($scope0_owned, 0) && $for_content__item_n__closures, _scope($scope4_id, {
 							_: _scope_with_id($scope2_id),
 							"ClosureSignalIndex:item_n": 1
 						}, "__tests__/template.marko", "7:8"));
 						return 1;
 					}
 				}, $scope2_id, "#text/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"], $scope0_owned, 0);
-				$scope0_reason && _subscribe($for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
+				$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 				$sg__input_items || $scope0_reason && _resume_branch($scope2_id);
 			}, $scope1_id)
 		});

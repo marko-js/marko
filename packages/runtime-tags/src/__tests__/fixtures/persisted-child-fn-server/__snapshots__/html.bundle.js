@@ -28,5 +28,5 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.suffix,
 		f: count,
 		a: _existing_scope($childScope)
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.suffix);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.suffix);
 }, 1, () => [dump_default]);

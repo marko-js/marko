@@ -7,7 +7,7 @@ var badge_default = _template_persisted("__tests__/tags/badge/index.marko", (inp
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<span>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</span>`);
-	_global_subscribe("__tests__/tags/badge/index.marko_0_$global_brand#1/global", $scope0_id);
+	_global_subscribe("__tests__/tags/badge/index.marko_0_$global_brand#1/global", $scope0_id, 1);
 	_script($scope0_id, "__tests__/tags/badge/index.marko_0_$global_brand#1");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 }, 0, 1);

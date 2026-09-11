@@ -42,5 +42,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_tag: ["input.tag"],
 		show: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.tag);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.tag);
 }, 1, () => [badge_default]);

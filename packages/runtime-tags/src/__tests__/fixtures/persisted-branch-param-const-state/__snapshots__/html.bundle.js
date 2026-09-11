@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const label = "[" + input.title + "]";
-			_owned_guard($scope0_owned, 1) ? _patch_value($scope1_id, "a0", label) : _patch_init($scope1_id, "a1");
+			_filled_guard($scope0_owned, 1) ? _patch_value($scope1_id, "a0", label) : _patch_init($scope1_id, "a1");
 			_html(`<p>${_text_resume($scope1_id, "a", label + " #0")}</p>`);
 			_scope($scope1_id, {
 				b: label,

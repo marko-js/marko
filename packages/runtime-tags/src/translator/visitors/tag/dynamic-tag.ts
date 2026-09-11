@@ -36,8 +36,7 @@ import { addPersistedChildRenderer } from "../../util/persisted/intrinsics";
 import { onFinalizePersisted } from "../../util/persisted/lifecycle";
 import {
   ensurePersistedWriteGroups,
-  inStatefulBranch,
-  isBranchPathSection,
+  inResumedStructure,
 } from "../../util/persisted/structure";
 import {
   type Binding,
@@ -496,8 +495,10 @@ export default {
         );
         // The dynamic tag entry rides the tag site, ownership gated; the tag
         // marks its branch for it whatever the site's own reason.
-        const patches = writesPatchDynamicTag(tag, tagSection);
-        if (patches) {
+        // The entry writer returns how a patch treats the site (`1` pairs,
+        // `2` skips: a client-owned group upstream); the render takes it.
+        let patchPairingArg: t.Expression | undefined;
+        if (writesPatchDynamicTag(tag, tagSection)) {
           // The site's renderer and input evaluate once: hoisted, they feed
           // the render and the entry alike.
           if (!t.isIdentifier(tagExpression)) {
@@ -531,34 +532,30 @@ export default {
             }
             input = inputId;
           }
-          statements.push(
-            t.expressionStatement(
-              callRuntime(
-                "_patch_dynamic_tag",
-                getScopeIdIdentifier(tagSection),
-                getScopeAccessorLiteral(nodeBinding),
-                t.cloneNode(tagExpression),
-                input ? t.cloneNode(input) : t.numericLiteral(0),
-                contentProp
-                  ? t.stringLiteral(
-                      getResumeRegisterId(
-                        getSectionForBody(tag.get("body"))!,
-                        "content",
-                      ),
-                    )
-                  : t.numericLiteral(0),
-                node.var
-                  ? t.stringLiteral(
-                      getResumeRegisterId(
-                        tagSection,
-                        node.var.extra?.binding,
-                        "var",
-                      ),
-                    )
-                  : t.numericLiteral(0),
-                ...getExprWriteOwnership(tagExtra),
-              ),
-            ),
+          patchPairingArg = callRuntime(
+            "_patch_dynamic_tag",
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeBinding),
+            t.cloneNode(tagExpression),
+            input ? t.cloneNode(input) : t.numericLiteral(0),
+            contentProp
+              ? t.stringLiteral(
+                  getResumeRegisterId(
+                    getSectionForBody(tag.get("body"))!,
+                    "content",
+                  ),
+                )
+              : t.numericLiteral(0),
+            node.var
+              ? t.stringLiteral(
+                  getResumeRegisterId(
+                    tagSection,
+                    node.var.extra?.binding,
+                    "var",
+                  ),
+                )
+              : t.numericLiteral(0),
+            ...getExprWriteOwnership(tagExtra),
           );
         }
         const dynamicTagExpr = hasTagArgs
@@ -573,7 +570,7 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
-              patches ? t.numericLiteral(1) : undefined,
+              patchPairingArg,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -584,7 +581,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
-              patches ? t.numericLiteral(1) : undefined,
+              patchPairingArg,
             );
 
         if (node.var) {
@@ -790,7 +787,6 @@ function writesPatchDynamicTag(tag: t.NodePath<t.MarkoTag>, section: Section) {
   return (
     isPersisted() &&
     (isContentRenderTag(tag) || isServerOwnedDynamicTag(tag)) &&
-    isBranchPathSection(section) &&
-    !inStatefulBranch(section)
+    !inResumedStructure(section)
   );
 }

@@ -34,5 +34,5 @@ var template_default = _template_persisted("a", (input) => {
 		j: count,
 		l: $input_title__closures,
 		m: $count__closures
-	}) : _owned_guard($scope0_owned, 4) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_owned, 4) && _patch_value($scope0_id, "a0", input.title);
 }, 1, 0);

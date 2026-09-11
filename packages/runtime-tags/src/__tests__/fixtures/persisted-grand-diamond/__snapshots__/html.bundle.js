@@ -77,5 +77,5 @@ var template_default = _template_persisted("a", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		e: input.note,
 		f: show
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.note);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.note);
 }, 1, () => [dia_a_default]);

@@ -182,12 +182,12 @@ export default {
       // a template with fills in any section ships the patcher.
       let boundFills = false;
       forEachSection((fillSection) => {
-        // A fill that only client-selected structure needs ships its
-        // patcher from the call site that hands over the selection.
+        // A fill only structure with a client upstream needs ships its
+        // patcher from the call site that hands over that structure.
         if (
           find(
             getPatchFillBindings(fillSection),
-            (binding) => !getFillConditions(binding)?.selectors,
+            (binding) => !getFillConditions(binding)?.upstreams,
           )
         ) {
           importRuntimeFeature("patch-value");

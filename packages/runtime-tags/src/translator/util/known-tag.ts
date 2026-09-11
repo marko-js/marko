@@ -36,7 +36,7 @@ import { addPersistedChildRenderer } from "./persisted/intrinsics";
 import { onFinalizePersisted } from "./persisted/lifecycle";
 import {
   inStatefulBranch,
-  readsOnlySelect,
+  readsOnlyUpstream,
   recordStructuralParams,
 } from "./persisted/structure";
 import {
@@ -448,7 +448,7 @@ export function knownTagTranslateHTML(
               t.logicalExpression(
                 "&&",
                 callRuntime(
-                  "_owned_guard",
+                  "_filled_guard",
                   t.numericLiteral(0),
                   t.numericLiteral(0),
                 ),
@@ -513,7 +513,7 @@ export function knownTagTranslateDOM(
     for (const group of getParamGroupFeeds(extra) || []) {
       if (
         group.sources?.state &&
-        some(group.params, (binding) => binding.selectsStructure)
+        some(group.params, (binding) => binding.upstreamOfStructure)
       ) {
         importRuntimeFeature("patch-value");
       }
@@ -613,8 +613,8 @@ export function finalizeKnownTags(section: Section) {
           // time; group order freezes here.
           ensureReasonGroups(provenance);
           // Under client state the child re-derives the group, so its
-          // server feeds must keep reaching it. A member that only selects
-          // (a selector's params nest into the group) is served by pairing
+          // server feeds must keep reaching it. A member only upstream of
+          // branches (its params nest into the group) is served by pairing
           // when its own feed has no state.
           if (provenance?.state) {
             forEach(group.reason, (param) => {
@@ -635,7 +635,7 @@ export function finalizeKnownTags(section: Section) {
                   },
                 );
               });
-              if (sources?.state || !readsOnlySelect(param)) {
+              if (sources?.state || !readsOnlyUpstream(param)) {
                 forEach(sources?.param, (binding) => {
                   binding.feedsStateMixedGroup = true;
                 });
@@ -644,9 +644,9 @@ export function finalizeKnownTags(section: Section) {
           }
           // The fact rolls up: a param feeding a child's structural param
           // makes this template's params so too.
-          if (some(group.reason, (binding) => binding.selectsStructure)) {
+          if (some(group.reason, (binding) => binding.upstreamOfStructure)) {
             recordStructuralParams(provenance);
-            // Client state selecting the child's structure hands it the
+            // Client state upstream of the child's structure hands it the
             // structure at run time: its fills need the value patcher.
             if (provenance?.state) addRuntimeFeatureAsset("patch-value");
           }

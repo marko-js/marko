@@ -18,7 +18,7 @@ var panel_default = _template_persisted("__tests__/tags/panel/index.marko", (inp
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "#text/0", input.title, void 0, $scope0_owned, 4)}</em>`);
-					_subscribe(_source_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel/index.marko", "3:6"));
+					_subscribe(_unfilled_if($scope0_owned, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel/index.marko", "3:6"));
 					return 0;
 				}
 			}, $scope1_id, "#section/0", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/tags/panel/index.marko_2*shell"], $scope0_owned, 3);
@@ -34,7 +34,7 @@ var panel_default = _template_persisted("__tests__/tags/panel/index.marko", (inp
 	}, "__tests__/tags/panel/index.marko", 0, {
 		input_inner: ["input.inner"],
 		input_title: ["input.title"]
-	}) : (_owned_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/tags/panel/index.marko0", input.inner), _owned_guard($scope0_owned, 4) && (_client_guard($scope0_owned, 3) || _client_guard($scope0_owned, 2)) && _patch_value($scope0_id, "__tests__/tags/panel/index.marko1", input.title));
+	}) : (_filled_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/tags/panel/index.marko0", input.inner), _filled_guard($scope0_owned, 4) && (_client_guard($scope0_owned, 3) || _client_guard($scope0_owned, 2)) && _patch_value($scope0_id, "__tests__/tags/panel/index.marko1", input.title));
 }, 0, 0);
 
 // template.marko
@@ -65,5 +65,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	$scope0_reason ? _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "1:6" }) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}, "__tests__/template.marko", 0, { count: "1:6" }) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
 }, 1, () => [panel_default]);

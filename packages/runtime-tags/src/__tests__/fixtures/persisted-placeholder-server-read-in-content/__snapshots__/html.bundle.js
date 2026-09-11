@@ -6,8 +6,7 @@ var wrap_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -40,7 +39,7 @@ var template_default = _template_persisted("a", (input) => {
 				_scope_id();
 				_html("<div id=done>done</div>");
 			}, 1, "a1");
-			$scope0_reason && _subscribe($input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }));
+			$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }));
 			$scope0_reason && _resume_branch($scope3_id);
 		}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 			_persisted_reason();
@@ -57,5 +56,5 @@ var template_default = _template_persisted("a", (input) => {
 		i: $input_msg__closures,
 		j: $input_promise__closures,
 		c: _existing_scope($childScope)
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.msg);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.msg);
 }, 1, () => [wrap_default]);

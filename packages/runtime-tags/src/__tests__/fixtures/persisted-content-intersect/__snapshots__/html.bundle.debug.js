@@ -7,8 +7,7 @@ var box_default = _template_persisted("__tests__/tags/box/index.marko", (input) 
 	const $scope0_id = _scope_id();
 	_html("<div class=box>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/box/index.marko", 0);
 }, 0, 0);
@@ -54,5 +53,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_a: ["input.a"],
 		input_b: ["input.b"],
 		open: "1:6"
-	}) : (_owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.a), _owned_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.b));
+	}) : (_filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.a), _filled_guard($scope0_owned, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.b));
 }, 1, () => [box_default]);

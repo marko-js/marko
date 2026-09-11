@@ -24,7 +24,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_header: ["input.header"],
 		open: "1:6"
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.header);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.header);
 }, 0, 0);
 
 // template.marko
@@ -49,5 +49,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_note: input.note,
 		"ClosureScopes:input_note": $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
 }, 1, () => [card_default]);

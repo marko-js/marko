@@ -7,8 +7,7 @@ var card_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h2>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1);
-	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), 1);
+	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_owned, 1));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -37,11 +36,11 @@ var template_default = _template_persisted("a", (input) => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "a", input.note, void 0, $scope0_owned, 3)}</em>`);
-					_subscribe(_source_if($scope0_reason, 3) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					_subscribe(_unfilled_if($scope0_owned, 3) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 2);
-			$scope0_reason && _subscribe(_source_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			$sg__input_show || $scope0_reason && _resume_branch($scope1_id);
 		}, $scope0_id)
 	});

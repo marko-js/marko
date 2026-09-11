@@ -8,8 +8,7 @@ var layout_default = _template_persisted("a", (input) => {
 	let open = false;
 	_html(`<header><button>${_text_resume($scope0_id, "b", "open")}</button>${_el_resume($scope0_id, "a")}</header><main>`);
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "c", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "c", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), 1);
+	_dynamic_tag($scope0_id, "c", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), _patch_dynamic_tag($scope0_id, "c", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</main>");
 	_script($scope0_id, "a0");
 	_patch_value($scope0_id, "a0", open, 1);
@@ -81,7 +80,7 @@ var template_default = _template_persisted("d", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "a", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["d1", "d2"], $scope0_owned, 0);
-		$scope0_reason && _subscribe($input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$sg__input_page || $scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_script($scope0_id, "d3");

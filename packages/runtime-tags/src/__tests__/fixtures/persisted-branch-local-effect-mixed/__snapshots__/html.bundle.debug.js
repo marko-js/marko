@@ -14,7 +14,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const label = input.title + "!";
-			_owned_guard($scope0_owned, 3) && _patch_write($scope1_id, "label", label);
+			_filled_guard($scope0_owned, 3) && _patch_write($scope1_id, "label", label);
 			_html(`<p>${_patch_text($scope1_id, "#text/0", label, void 0, $scope0_owned, 3)}</p>`);
 			_if(() => {
 				if (input.inner) {
@@ -43,5 +43,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_title: ["input.title"],
 		input_inner: ["input.inner"],
 		input_suffix: ["input.suffix"]
-	}) : _owned_guard($scope0_owned, 5) && _patch_write($scope0_id, "input_suffix", input.suffix);
+	}) : _filled_guard($scope0_owned, 5) && _patch_write($scope0_id, "input_suffix", input.suffix);
 }, 1, 0);

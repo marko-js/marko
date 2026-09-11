@@ -159,6 +159,15 @@ export function withContext<T, U>(
 }
 
 const kBranchId = Symbol("Branch Id");
+// Set while rendering structure patch renders skip (a client-owned group
+// upstream): the resumed page re-renders it, so no patch fills its reads.
+const kUnpatched = Symbol("Unpatched");
+export function inUnpatched() {
+  return !!$chunk?.context?.[kUnpatched];
+}
+export function withUnpatched<T>(cb: () => T): T {
+  return withContext(kUnpatched, 1, cb, undefined);
+}
 
 const kIsAsync = Symbol("Is Async");
 
@@ -806,6 +815,13 @@ function forBranches(
     )
   )
     return;
+  if (
+    $chunk.boundary.state.persisted &&
+    (!shellId || _client_guard(owned, group!))
+  ) {
+    const run = iterate;
+    iterate = (each) => withUnpatched(() => run(each));
+  }
   // A patchable loop's markers must resume even on a page with no other
   // client code: a patch pairs and constructs through them.
   if (shellId !== undefined) $chunk.needsWalk = true;
@@ -913,6 +929,15 @@ export function _if(
   // A patchable conditional's markers must resume even on a page with no
   // other client code: a patch pairs and constructs through them.
   if (shellIds) $chunk.needsWalk = true;
+  // A shell-less branch, or one with a client-owned group upstream, is the
+  // resumed page's to render: no patch fills its reads.
+  if (
+    $chunk.boundary.state.persisted &&
+    (!shellIds || _client_guard(owned, group!))
+  ) {
+    const render = cb;
+    cb = () => withUnpatched(render);
+  }
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
@@ -1075,11 +1100,14 @@ function scopeWithId(state: State, scopeId: number) {
 }
 
 // Joins the key's subscriber set on scope 0; a set minted after the
-// globals flushed rides its own scope 0 partial.
-export function _global_subscribe(id: string, scopeId: number) {
+// globals flushed rides its own scope 0 partial. A plain read a patch fills
+// is a hole, no join; it joins under unpatched structure or when the
+// resumed page renders it regardless (`unfilled`: effects, state-mixed reads).
+export function _global_subscribe(id: string, scopeId: number, unfilled?: 1) {
   const { state } = $chunk.boundary;
+  if (!unfilled && !inUnpatched()) return;
   // A frame's scopes are live already (paired) or subscribe as they render
-  // (constructed).
+  // (constructed); the frame re-ships every global they could read.
   if (state.writesPatches) return;
   const key = AccessorPrefix.ClosureScopes + id;
   let subscribers = (state.globalSubscribers ??= {})[key];
@@ -1105,6 +1133,14 @@ export function _subscribe(
     }
   }
   return scope;
+}
+
+// On when no patch fills the group's value here (`_source_if` folded in: on
+// a page the reason is the mask): the client feeds it, or the read sits in
+// unpatched structure.
+export function _unfilled_if(owned?: SerializeReasonValue, group?: number) {
+  const fed = maskGroup(owned, group!);
+  return fed & 1 || (fed && inUnpatched()) ? 1 : undefined;
 }
 
 // A reason is 1, empty, an offset group bitmask, or keyed group values.
@@ -1137,31 +1173,33 @@ export function _persisted_reason() {
     }
     return undefined;
   }
+  state.persisted = true;
   return reason || 1;
 }
 
 // The instance's sources mask (2 bits per group: client/server contribute;
 // `1` = all-server root default), read before `_persisted_reason` clears it.
 export function _persisted_ownership() {
-  const { state } = $chunk.boundary;
-  return state.writesPatches ? (state.serializeReason ?? 1) : 1;
+  return $chunk.boundary.state.serializeReason ?? 1;
 }
 
+// An absent mask is statically server-owned (the compiler emitted no args).
 export function maskGroup(mask: SerializeReasonValue, group: number) {
-  return mask === 1
+  return mask === undefined || mask === 1
     ? 2
     : typeof mask === "number"
       ? (mask >>> (1 + 2 * group)) & 3
       : ((mask as Partial<Record<number, number>>)[group] ?? 0);
 }
 
-// Mirrors `ownedWrite`: an unfed group (`0`) still seeds a construct.
-export function _owned_guard(mask: SerializeReasonValue, group: number) {
+// On when a patch fills the group here: server-owned, or unfed (`0`, a
+// call-site constant) where a fresh scope may need the seed.
+export function _filled_guard(mask: SerializeReasonValue, group: number) {
   const owned = maskGroup(mask, group);
   return owned === 2 || (owned === 0 && isInResumedBranch()) ? 1 : 0;
 }
-// Whether the client contributes to the group (the low mask bit): the
-// instance then owns whatever the group selects.
+// Whether the client feeds the group (the low mask bit): the resumed page
+// then owns whatever sits downstream of the group.
 export function _client_guard(mask: SerializeReasonValue, group: number) {
   return maskGroup(mask, group) & 1 ? 1 : 0;
 }
@@ -1654,6 +1692,8 @@ export class State implements SerializeState {
   public nonceAttr = "";
   public serializer = new Serializer();
   declare writesPatches?: boolean;
+  /** A page render of persisted templates: structure tracks unpatched context. */
+  public persisted?: true;
   // Patch rendering intercepts branch/loop writes; defined only by the patch
   // entry's State subclass so normal SSR bundles carry none of it.
   writeBranch?(

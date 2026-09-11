@@ -17,7 +17,7 @@ var panel_default = _template_persisted("b", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "a", input.title, void 0, $scope0_owned, 4)}</em>`);
-					_subscribe(_source_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					_subscribe(_unfilled_if($scope0_owned, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["b1"], $scope0_owned, 3);
@@ -30,7 +30,7 @@ var panel_default = _template_persisted("b", (input) => {
 		e: input.inner,
 		f: input.title,
 		h: $input_title__closures
-	}) : (_owned_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b0", input.inner), _owned_guard($scope0_owned, 4) && (_client_guard($scope0_owned, 3) || _client_guard($scope0_owned, 2)) && _patch_value($scope0_id, "b1", input.title));
+	}) : (_filled_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b0", input.inner), _filled_guard($scope0_owned, 4) && (_client_guard($scope0_owned, 3) || _client_guard($scope0_owned, 2)) && _patch_value($scope0_id, "b1", input.title));
 }, 0, 0);
 
 // template.marko
@@ -59,5 +59,5 @@ var template_default = _template_persisted("a", (input) => {
 	$scope0_reason ? _scope($scope0_id, {
 		g: count,
 		a: _existing_scope($childScope)
-	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title);
 }, 1, () => [panel_default]);

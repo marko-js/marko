@@ -15,7 +15,7 @@ var list_default = _template_persisted("__tests__/tags/list/index.marko", (input
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/list/index.marko", "2:4");
 	}, 0, $scope0_id, "#ul/0", 1, $sg__input_items__OR__input_suffix, $sg__input_items, void 0, void 0, "__tests__/tags/list/index.marko_1*shell", $scope0_owned, 1);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items__OR__input_suffix)}`);
-	$scope0_reason ? _scope($scope0_id, { input_suffix: input.suffix }, "__tests__/tags/list/index.marko", 0, { input_suffix: ["input.suffix"] }) : _owned_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/list/index.marko0", input.suffix);
+	$scope0_reason ? _scope($scope0_id, { input_suffix: input.suffix }, "__tests__/tags/list/index.marko", 0, { input_suffix: ["input.suffix"] }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/list/index.marko0", input.suffix);
 }, 0, 0);
 
 // template.marko
@@ -43,5 +43,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	$scope0_reason ? _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "1:6" }) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.s);
+	}, "__tests__/template.marko", 0, { count: "1:6" }) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.s);
 }, 1, () => [list_default]);

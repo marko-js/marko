@@ -33,7 +33,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				_patch_child($scope2_id, "#childScope/0", $childScope);
 				let w = widget_default({ label: input.value });
 				_html(`<em>${_patch_text($scope2_id, "#text/2", w, void 0, $scope0_owned, 2)}</em>`);
-				_subscribe(_source_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_owned, 2) && $input_value__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/template.marko", "3:6"));

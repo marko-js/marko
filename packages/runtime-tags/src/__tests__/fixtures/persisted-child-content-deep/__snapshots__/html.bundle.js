@@ -6,8 +6,7 @@ var card_default = _template_persisted("c", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section class=card>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -19,8 +18,7 @@ var box_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div class=box>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -44,5 +42,5 @@ var template_default = _template_persisted("a", (input) => {
 		e: input.title,
 		f: open,
 		g: $input_title__closures
-	}) : _owned_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.title);
 }, 1, () => [card_default, box_default]);

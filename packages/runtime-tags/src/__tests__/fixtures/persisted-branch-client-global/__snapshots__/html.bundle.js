@@ -8,7 +8,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<main>");
 	if ($scope0_reason) _if(() => {}, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
-	_global_subscribe("a0", $scope0_id);
+	_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, { c: count });
 }, 1, 1);

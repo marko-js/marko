@@ -6,8 +6,7 @@ var widget_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</section>");
 	$scope0_reason && _scope($scope0_id, {});
 }, 0, 0);
@@ -42,14 +41,14 @@ var template_default = _template_persisted("a", (input) => {
 			} else if (input.kind === "b") {
 				const $scope2_id = _scope_id();
 				_html(`<i>B:${_patch_text($scope2_id, "a", input.kind, 2, $scope0_owned, 0)}</i>`);
-				_subscribe(_source_if($scope0_reason, 0) && $input_kind__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_owned, 0) && $input_kind__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ci: 1
 				}));
 				return 1;
 			}
 		}, $scope1_id, "a", 1, $sg__input_kind, $sg__input_kind, void 0, void 0, ["a3", "a2"], $scope0_owned, 0);
-		$scope0_reason && _subscribe($input_kind__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 0) && $input_kind__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$sg__input_kind || $scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	if ($scope0_reason) _if(() => {
@@ -92,5 +91,5 @@ var template_default = _template_persisted("a", (input) => {
 		i: $input_kind__closures,
 		a: _existing_scope($childScope),
 		j: $input_inner__closures
-	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.inner);
+	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.inner);
 }, 1, () => [widget_default]);

@@ -24,5 +24,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		rest: "2:20"
-	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", rest);
+	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", rest);
 }, 1, 0);

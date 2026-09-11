@@ -7,8 +7,7 @@ var grand_default = _template_persisted("__tests__/tags/grand/index.marko", (inp
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	const $tag = input.content;
-	_patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0);
-	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, 1);
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0));
 	_html("</div>");
 	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/grand/index.marko", 0);
 }, 0, 0);
@@ -41,7 +40,7 @@ var card_default = _template_persisted("__tests__/tags/card/index.marko", (input
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
+	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
 }, 0, () => [grand_default]);
 
 // template.marko
@@ -69,5 +68,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_note: input.note,
 		"ClosureScopes:input_note": $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _owned_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
 }, 1, () => [card_default]);
