@@ -105,7 +105,6 @@ REMOVE: main > h1 + p
 ## Change
 ```
 UPDATE: main > h1::text "Store!" => "Store!"
-INSERT: main > h1 + button
-INSERT: main > button + p
+INSERT: main > h1 + :is(button, p)
 UPDATE: main > p::text@5 "" => "0"
 ```

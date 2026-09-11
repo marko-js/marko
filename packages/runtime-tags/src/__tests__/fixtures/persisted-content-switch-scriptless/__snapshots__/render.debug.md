@@ -23,7 +23,6 @@
 ```
 REMOVE: main > section > b
 INSERT: main > section > i
-UPDATE: main > section > i::text@2 "" => "b"
 ```
 
 # Update `{}`

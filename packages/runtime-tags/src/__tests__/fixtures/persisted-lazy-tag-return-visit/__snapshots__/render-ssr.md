@@ -27,8 +27,8 @@ REMOVE: main > button
 ## Change
 ```
 INSERT: main > button
-UPDATE: main > button::text@2 "" => "0"
 UPDATE: main > button::text@0 "" => "b"
+UPDATE: main > button::text@2 "" => "0"
 ```
 
 # Update

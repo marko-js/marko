@@ -101,7 +101,6 @@ REMOVE: main > a
 ## Change
 ```
 INSERT: main > a
-UPDATE: main > a[href] null => "/c"
 ```
 
 # Update

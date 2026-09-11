@@ -23,7 +23,6 @@
 ## Change
 ```
 INSERT: main > .card
-UPDATE: .card > h2::text " " => "A"
 ```
 
 # Update

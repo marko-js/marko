@@ -29,10 +29,7 @@ INSERT: main > div
 ```
 ## Change
 ```
-INSERT: main > div > p
-UPDATE: main > div > p::text " " => "l"
-INSERT: main > div > p + em
-UPDATE: main > div > em::text " " => "x"
+INSERT: main > div > :is(p, em)
 ```
 
 # Update `{"a":true,"b":true,"label":"m","text":"y"}`
@@ -79,8 +76,4 @@ REMOVE: main > div
 ## Change
 ```
 INSERT: main > div
-INSERT: main > div > p
-UPDATE: main > div > p::text " " => "n"
-INSERT: main > div > p + em
-UPDATE: main > div > em::text " " => "z"
 ```

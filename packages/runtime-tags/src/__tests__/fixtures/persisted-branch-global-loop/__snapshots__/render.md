@@ -122,9 +122,6 @@ INSERT: p
 ```
 REMOVE: p
 INSERT: div
-INSERT: div > p
-INSERT: div > p:nth-of-type(1) + p
-INSERT: div > p:nth-of-type(2) + p
 UPDATE: div > p:nth-of-type(1) > button::text " " => "0"
 UPDATE: div > p:nth-of-type(2) > button::text " " => "0"
 UPDATE: div > p:nth-of-type(3) > button::text " " => "0"

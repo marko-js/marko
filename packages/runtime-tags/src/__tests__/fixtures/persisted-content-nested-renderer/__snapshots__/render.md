@@ -17,9 +17,6 @@
 ## Change
 ```
 INSERT: main > section
-INSERT: main > section > p
-UPDATE: main > section > p::text " " => "x"
-INSERT: main > section > p + div
 ```
 
 # Update `{"show":true,"note":"y","inner":"div"}`

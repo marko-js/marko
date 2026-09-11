@@ -23,9 +23,6 @@
 ## Change
 ```
 INSERT: main > section > :is(.fixed, p)
-UPDATE: .fixed[class] null => "fixed"
-UPDATE: .fixed::text " " => "fixed"
-UPDATE: main > section > p::text " " => "b"
 ```
 
 # Update `{"show":true,"note":"c"}`

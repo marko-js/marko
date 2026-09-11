@@ -18,6 +18,8 @@ import {
   isPersisted,
 } from "../util/marko-config";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import { getSection } from "../util/sections";
+import { sectionConstructs } from "../util/signals";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
 import type { TemplateVisitor } from "../util/visitors";
@@ -39,9 +41,15 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export type LoadImportConfig =
+export type LoadImportConfig = (
   | { render: true; triggers?: never }
-  | { render: false; triggers: LoadTrigger[] };
+  | { render: false; triggers: LoadTrigger[] }
+) & {
+  // Under persisted: a page's import whose every site sits in structure only
+  // the server selects (the client never instantiates a page or that
+  // structure), so the server alone renders it and no client render ships.
+  serverOnly?: true;
+};
 const triggerRegExp = /\s*([\w-]+)\s*([^?|]+?)?\s*(?:\?([^|]*?))?\s*(?:\||$)/g;
 const [getHtmlLoadWrapped] = createProgramState(
   () => new Map<string, string>(),
@@ -144,6 +152,19 @@ export default {
         if (loadImport) {
           const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
           const binding = importDecl.scope.getBinding(local.name)!;
+          // A trigger keeps its channel, so a navigation never forces a load.
+          // An import is a module binding, so its uses (tag names, values
+          // passed along) are its babel references.
+          if (
+            isPersisted() &&
+            loadImport.render &&
+            getProgram().node.extra.page &&
+            binding.referencePaths.every((ref) =>
+              sectionConstructs(getSection(ref)),
+            )
+          ) {
+            loadImport.serverOnly = true;
+          }
 
           if (isOutputHTML()) {
             const file = getFile();
@@ -173,6 +194,39 @@ export default {
               importRuntimeFeature("patch-ready");
               importRuntimeFeature("patch-value-bind");
             }
+            const file = getFile();
+            const loadFile = loadFileForImport(file, node.source.value)!;
+            const resolvedPath = resolveRelativePath(
+              file,
+              loadFile.opts.filename,
+            );
+            // Frames name a server-only template; the page registers its
+            // loader only, for the registrations its frames need.
+            if (loadImport.serverOnly) {
+              importDecl.replaceWith(
+                t.expressionStatement(
+                  callRuntime(
+                    "_load_lazy",
+                    t.stringLiteral(getReadyId(loadFile)!),
+                    // `.then(() => {})` drops the namespace, so the bundler
+                    // keeps the registrations alone (no export, no render).
+                    t.arrowFunctionExpression(
+                      [],
+                      t.callExpression(
+                        t.memberExpression(
+                          t.callExpression(t.import(), [
+                            t.stringLiteral(resolvedPath),
+                          ]),
+                          t.identifier("then"),
+                        ),
+                        [t.arrowFunctionExpression([], t.blockStatement([]))],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+              return;
+            }
             const allKnownTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,
@@ -180,12 +234,6 @@ export default {
             if (allKnownTagReferences) {
               importDecl.remove();
             } else {
-              const file = getFile();
-              const loadFile = loadFileForImport(file, node.source.value)!;
-              const resolvedPath = resolveRelativePath(
-                file,
-                loadFile.opts.filename,
-              );
               importRuntimeFeature("catch");
               const loadTemplate = callRuntime(
                 "_load_template",

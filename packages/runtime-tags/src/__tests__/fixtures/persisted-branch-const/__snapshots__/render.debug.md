@@ -91,6 +91,5 @@ REMOVE: main > p
 ## Change
 ```
 INSERT: main > p
-UPDATE: main > p::text@0 "" => "Fresh!"
 UPDATE: main > p::text@7 "" => "4"
 ```

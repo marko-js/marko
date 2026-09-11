@@ -8,6 +8,7 @@ import {
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import type { WalkCode } from "../../common/types";
+import type { LoadImportConfig } from "../visitors/import-declaration";
 import * as ContentType from "./constants/content-type";
 import type * as ShellBlocker from "./constants/shell-blocker";
 import type * as Step from "./constants/step";
@@ -110,6 +111,8 @@ export interface StructureChild {
   name: string;
   hasVar: boolean;
   renderer?: StructureRef;
+  // A lazy site: its import's load config.
+  load?: LoadImportConfig;
 }
 
 export interface Section {
@@ -178,7 +181,7 @@ export interface Section {
    * body section); `buildShells` prunes those no shipped shell reaches. */
   constructSetups: { binding: Binding; body: Section }[] | undefined;
   /** Lazily loaded child sites in this section, by their marker binding. */
-  loadSites: Binding[] | undefined;
+  loadSites: { site: Binding; load: LoadImportConfig }[] | undefined;
   /** Branch whose shell would construct unfaithfully: the first blocker's
    * reason code sticks, no shell ships, patches fail closed. */
   shellBlocked: ShellBlocker.Value | undefined;

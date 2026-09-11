@@ -1,6 +1,6 @@
 // PATCH
-(ready({
-  "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko": [_ => ({
+[`packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/template.marko_1_#text#0/init;b%/&;<!><!><!>`, {
+  "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/child.marko": {
     "PatchChild:BranchScopes:#main/0": {
       "PatchChild:#childScope/1": {
         "PatchText:#text/1": "b",
@@ -10,10 +10,9 @@
         }
       }
     }
-  })]
-}), [`packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/template.marko_1_#text#0/init;b%/&;<!><!><!>`, {
+  },
   "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-conditional/template.marko_1*shell"
-}])
+}]
 
 // PATCH
 {

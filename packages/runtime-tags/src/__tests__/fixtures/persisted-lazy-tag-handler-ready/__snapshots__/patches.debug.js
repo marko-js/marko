@@ -1,6 +1,6 @@
 // PATCH
-ready({
-  "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-handler-ready/child.marko": [_ => ({
+{
+  "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-handler-ready/child.marko": {
     "PatchChild:#childScope/1": {
       1: "packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-handler-ready/child.marko_0/handler",
       "PatchAttrs:#button/0": {
@@ -9,12 +9,12 @@ ready({
       },
       "PatchWrite:input_title": "second"
     }
-  })]
-})
+  }
+}
 
 // PATCH
-ready({
-  "ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-handler-ready/child.marko": [_ => ({
+{
+  "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-handler-ready/child.marko": {
     "PatchChild:#childScope/1": {
       1: "packages/runtime-tags/src/__tests__/fixtures/persisted-lazy-tag-handler-ready/child.marko_0/handler",
       "PatchAttrs:#button/0": {
@@ -23,5 +23,5 @@ ready({
       },
       "PatchWrite:input_title": "third"
     }
-  })]
-})
+  }
+}

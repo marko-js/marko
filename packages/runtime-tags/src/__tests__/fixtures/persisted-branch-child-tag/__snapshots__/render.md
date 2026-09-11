@@ -46,8 +46,6 @@ UPDATE: main > button::text "0" => "1"
 ```
 REMOVE: main > em
 INSERT: main > .badge
-UPDATE: .badge::text "" => "b"
-UPDATE: .badge::text "" => ""
 ```
 
 # Update `{"show":true,"title":"c","note":"n"}`

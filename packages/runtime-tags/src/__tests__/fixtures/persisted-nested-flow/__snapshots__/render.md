@@ -92,7 +92,6 @@ UPDATE: main > ul > li:nth-of-type(3)::text "Bread" => "Bread"
 REMOVE: main > ul > li:nth-of-type(3)::text + em
 INSERT: main > ul > li
 INSERT: main > ul + section
-UPDATE: main > section::text "" => "2 deals"
 UPDATE: main > footer > span::text@0 "new" => "hot"
 ```
 
@@ -135,7 +134,6 @@ INSERT: main > ul > li:nth-of-type(2)::text + em
 REMOVE: main > ul > li:nth-of-type(1) + li
 UPDATE: main > section::text "2 deals" => "1 deal"
 INSERT: main > section::text + small
-UPDATE: main > section > small::text " " => "ends soon"
 UPDATE: main > footer > span::text@0 "hot" => "hot"
 ```
 

@@ -427,17 +427,24 @@ export function patchPartial(
   if (!partial) {
     const link = state.patchLinks?.[scopeId];
     const pending = link?.[2];
-    if (serializeState.readyId && !pending && scopeId !== state.rootScopeId) {
+    if (serializeState.readyId && !pending) {
+      // A channel's entries sit in the enclosing tree under the channel's
+      // key, at the parent's child entry (scope `link[0]`, slot `link[1]`)
+      // or the root: one flat frame, applied once the channel is ready.
+      const guard = (patchPartial(
+        state,
+        link ? link[0] : scopeId,
+        serializeState.parent || state,
+      )[PatchKey.Ready + serializeState.readyId] ??= {}) as Record<
+        string,
+        unknown
+      >;
+      if (scopeId === state.rootScopeId) {
+        return (partials[scopeId] = guard);
+      }
       if (link && typeof link[1] === "string") {
-        // Hang this partial off its parent's boundary child entry (scope `link[0]`,
-        // slot `link[1]`) for the live page to reach when the channel applies.
-        partial = partials[scopeId] = {};
-        writePatch(
-          link[0],
-          { [PatchKey.Child + link[1]]: partial },
-          serializeState,
-        );
-        return partial;
+        return (partials[scopeId] = guard[PatchKey.Child + link[1]] ??=
+          {}) as Record<string, unknown>;
       }
       // No linkable hop (keyed loop items): the write rides the main tree, so
       // construct data naming an unregistered id rejects at apply.

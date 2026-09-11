@@ -54,11 +54,9 @@
 UPDATE: ul > li:nth-of-type(1) > b::text "a" => "a"
 REMOVE: ul > li:nth-of-type(1) > b + span
 INSERT: ul > li:nth-of-type(1) > b + em
-UPDATE: ul > li:nth-of-type(1) > em::text " " => "11"
 UPDATE: ul > li:nth-of-type(2) > b::text "b" => "b"
 REMOVE: ul > li:nth-of-type(2) > b + em
 INSERT: ul > li:nth-of-type(2) > b + span
-UPDATE: ul > li:nth-of-type(2) > span::text " " => "22"
 INSERT: ul > li:nth-of-type(2) + li
 ```
 
@@ -109,6 +107,5 @@ REMOVE: ul > li + li
 UPDATE: ul > li:nth-of-type(1) > b::text "c" => "x"
 REMOVE: ul > li:nth-of-type(1) > b + em
 INSERT: ul > li:nth-of-type(1) > b + span
-UPDATE: ul > li:nth-of-type(1) > span::text " " => "9"
 INSERT: ul > li:nth-of-type(1) + li
 ```
