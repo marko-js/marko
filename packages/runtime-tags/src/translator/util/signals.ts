@@ -25,16 +25,16 @@ import {
   toArray,
 } from "./optional";
 import {
-  getDeliveryRoot,
+  getFillRoot,
   getFillConditions,
-  getLocalFillFeeds,
+  getLocalFillUpstreams,
   getPatchFillBindings,
   getPatchFillKey,
   hasUnfillablePatchReads,
   hasPatchEffectReads,
   isPatchWriteBinding,
   isPatchFillBinding,
-} from "./persisted/delivery";
+} from "./persisted/refresh";
 import {
   inResumedStructure,
   getParamUpstreamChain,
@@ -125,7 +125,7 @@ export interface Signal {
    * synchronous `_return` may reach before the registering tag's own setup. */
   prepare: t.Statement[];
   render: t.Statement[];
-  /** Renders of holes a persisted frame writes itself: a client render
+  /** Renders of holes a persisted flush writes itself: a client render
    * needs them, a fill (refreshing a paired scope) does not. */
   patched: t.Statement[];
   /** The fill-driven run of a declaration that has `patched` renders. */
@@ -487,7 +487,7 @@ export function getSignal(
 
 // A dynamic content record elides the chain's dom renderers, and with them
 // the `_closure_get` pending registration the replay script would look up.
-function inRecordDeliveredChain(section: Section) {
+function inShellRecordChain(section: Section) {
   for (let cur: Section | undefined = section; cur; cur = cur.parent) {
     if (cur.contentRecord === true) return true;
   }
@@ -579,7 +579,7 @@ function hasResumedRead(binding: Binding, section: Section) {
 }
 
 // The `$global` keys a signal joins; none when a server value the client
-// never receives also feeds it (server-computed: fills and writes deliver).
+// never receives is also upstream (server-computed: a patch fills it).
 function getGlobalJoinKeys(signal: Signal) {
   const keys: string[] = [];
   if (!hasUnfillablePatchReads(signal.referencedBindings)) {
@@ -641,7 +641,7 @@ export function initValue(binding: Binding, isLet = false) {
         : "_let"
       : "_const";
     // A fill binding's own declaration doubles as its fill registration
-    // (even a pure forwarder); renders the frame writes itself stay out.
+    // (even a pure forwarder); renders the flush writes itself stay out.
     if (fills) {
       const call = callRuntime(
         `_fill${helper}`,
@@ -652,7 +652,7 @@ export function initValue(binding: Binding, isLet = false) {
       );
       // Its consumer is a child's state join, retained without this
       // declaration: the registration must survive on its own.
-      if (binding.feedsStateMixedGroup) t.removeComments(call);
+      if (binding.upstreamOfStateMixedGroup) t.removeComments(call);
       return call;
     }
     if (
@@ -969,7 +969,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   let render = signal.prepare.length
     ? signal.prepare.concat(signal.render)
     : signal.render;
-  // A fill's run is the render without the frame's own writes.
+  // A fill's run is the render without the flush's own writes.
   if (signal.patched.length) {
     if (isValue && isPatchFillBinding(binding)) {
       signal.fillFn = t.cloneNode(toScopeFn(render), true);
@@ -1284,7 +1284,7 @@ export function writeSignals(section: Section) {
                 "_fill_join";
               let hopExprs: t.Expression[] = [];
               if (member.section !== signal.section) {
-                // A chain that leaves the branch ladder delivers through the
+                // A chain that leaves the branch ladder refreshes through the
                 // member's own closure signal (`_fill_join_closure`) instead.
                 if (!isBranchSectionChain(signal.section, member.section)) {
                   if (inStatefulBranch(signal.section)) {
@@ -1377,10 +1377,10 @@ export function writeSignals(section: Section) {
           // subscriber set, so its chain shape does not matter.
           (isBranchChainTo(signal.section, signal.referencedBindings.section) ||
             isDynamicClosure(signal.section, signal.referencedBindings)) &&
-          hasFillDeliveredRead(signal.referencedBindings, signal.section)
+          hasFilledRead(signal.referencedBindings, signal.section)
         ) {
           // Inside unpatched structure a lone closure over a server
-          // fill IS the delivery channel: it registers the join itself.
+          // fill IS the refresh channel: it registers the join itself.
           value =
             !getClosureSignal(signal.section) ||
             isDynamicClosure(signal.section, signal.referencedBindings)
@@ -1502,7 +1502,7 @@ function inBoundaryContent(section: Section | undefined) {
 
 // A lone read, or an intersection member whose chain leaves the branch
 // ladder, renders through the closure itself (over-counting is safe).
-function hasFillDeliveredRead(binding: Binding, section: Section): boolean {
+function hasFilledRead(binding: Binding, section: Section): boolean {
   for (const read of binding.reads) {
     // A script (not a handler) inside the section re-runs from the closure.
     if (
@@ -1521,7 +1521,7 @@ function hasFillDeliveredRead(binding: Binding, section: Section): boolean {
   for (const alias of binding.aliases) {
     if (
       getCanonicalBinding(alias) === binding &&
-      hasFillDeliveredRead(alias, section)
+      hasFilledRead(alias, section)
     ) {
       return true;
     }
@@ -1699,11 +1699,12 @@ function toSequenceExpression(exprs: t.Expression[]) {
 }
 
 // A closure into a body that ships a shell whose init a construct may run:
-// state (named by the shell record) or a local fill's feed (by the frame).
+// state (named by the shell record) or a local fill's upstream (by the flush).
 function constructsWithInit(section: Section, closure: Binding) {
   return (
     sectionConstructs(section) &&
-    (!!closure.sources?.state || includes(getLocalFillFeeds(section), closure))
+    (!!closure.sources?.state ||
+      includes(getLocalFillUpstreams(section), closure))
   );
 }
 
@@ -1731,9 +1732,10 @@ export function writeLocalFill(section: Section, binding: Binding) {
   const owned = getFilledGuard(getSerializeSourcesForRef(binding));
   if (!owned) return write;
   let initIds = "";
-  forEach(binding.sources?.param, (feed) => {
-    if (feed.section !== section) {
-      initIds += (initIds && " ") + getResumeRegisterId(section, feed, "init");
+  forEach(binding.sources?.param, (upstream) => {
+    if (upstream.section !== section) {
+      initIds +=
+        (initIds && " ") + getResumeRegisterId(section, upstream, "init");
     }
   });
   return t.conditionalExpression(
@@ -1765,8 +1767,8 @@ export function writeLocalWrite(section: Section, binding: Binding) {
 // (`translateVar`), so the section's leading writes cover only the rest.
 const writtenLocalFills = new WeakSet<Binding>();
 
-// A spread's effect re-attaches what its serialized set carried: the frame's
-// attribute set is the delivery, so its reads need no other channel.
+// A spread's effect re-attaches what its serialized set carried: the flush's
+// attribute set is the refresh, so its reads need no other channel.
 function isSerializedSpreadEffect(signal: Signal) {
   const refs = signal.referencedBindings;
   return (
@@ -1875,12 +1877,12 @@ export function writeHTMLResumeStatements(
           getAccessorPrefix().ClosureScopes,
         );
         if (underTryPlaceholder(section)) {
-          // A scriptless page or a record-delivered chain never registers
+          // A scriptless page or a shell-record chain never registers
           // the pending replay, so the envelope must not reference it.
           const reason =
             isPersisted() &&
             (!getProgram().node.extra.isInteractive ||
-              inRecordDeliveredChain(section))
+              inShellRecordChain(section))
               ? undefined
               : getSerializeReason(section);
           if (reason) {
@@ -2125,7 +2127,7 @@ export function writeHTMLResumeStatements(
       if (signal.hasHTMLEffect) {
         const byHops: string[][] = [];
         forEach(signal.referencedBindings, (binding) => {
-          const root = getDeliveryRoot(binding);
+          const root = getFillRoot(binding);
           if (isPatchWriteBinding(root) && hasPatchEffectReads(root)) {
             (byHops[section.depth - root.section.depth] ??= []).push(
               getScopeAccessor(root),

@@ -6,7 +6,7 @@ const click = (document: Document) => {
 
 // A registered function inside a custom iterator the bind scan cannot
 // traverse still serializes: its own write channel binds it first, and
-// binds share by value identity across the frame.
+// binds share by value identity across the flush.
 export const config: TestConfig = {
   persisted: true,
   steps: [{ title: "a" }, click, { title: "b" }],

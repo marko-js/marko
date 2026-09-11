@@ -12,14 +12,14 @@ import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach, some } from "../../util/optional";
 import {
-  getConstructInitClosures,
-  getPatchFillBindings,
-  isPatchFillBinding,
-} from "../../util/persisted/delivery";
-import {
   getPersistedIntrinsics,
   scopeReasonRuntime,
 } from "../../util/persisted/intrinsics";
+import {
+  getConstructInitClosures,
+  getPatchFillBindings,
+  isPatchFillBinding,
+} from "../../util/persisted/refresh";
 import {
   BindingType,
   getReadReplacement,

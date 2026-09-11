@@ -1,10 +1,10 @@
 import type { types as t } from "@marko/compiler";
-// Translate-side patch delivery: which bindings refresh over the wire, fill
+// Translate-side patch fills: which bindings a patch fills or writes, fill
 // identity, and what a fresh scope can render. Analyze facts: ./structure.
 import { getProgram, getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
-import { getParamGroupFeeds, isKnownTagExtra } from "../known-tag";
+import { getParamGroupSources, isKnownTagExtra } from "../known-tag";
 import { isPersisted } from "../marko-config";
 import {
   every,
@@ -56,8 +56,8 @@ export function getPatchFillBindings(section: { bindings: Opt<Binding> }) {
 
 // Whether every param source promotes to a fill: the client can then
 // re-evaluate an expression mixing them with state at any time.
-export function paramsDeliverAsFills(params: Sources["param"]) {
-  return every(params, (param) => isPatchFillBinding(getDeliveryRoot(param)));
+export function paramsFill(params: Sources["param"]) {
+  return every(params, (param) => isPatchFillBinding(getFillRoot(param)));
 }
 
 // A canonical root server value a patch can keep current (aliases never
@@ -77,7 +77,7 @@ function isPatchRefreshableBinding(binding: Binding) {
   );
 }
 
-// A scope a frame writes into: the root, or a paired/constructed branch
+// A scope a flush writes into: the root, or a paired/constructed branch
 // on the branch path (a stateful branch is the client's alone).
 function isPatchWrittenSection(section: Section) {
   return (
@@ -97,7 +97,7 @@ export function isPatchFillBinding(binding: Binding) {
     isPersisted() &&
     ((!binding.section.parent && !getProgram().node.extra.page) ||
       (binding.section.isBranch && isBranchPathSection(binding.section))) &&
-    // Stateful branches never construct from frames, so their
+    // Stateful branches never construct from flushes, so their
     // state needs no seed fill.
     !isStatefulBranch(binding.section) &&
     getCanonicalBinding(binding) === binding &&
@@ -117,7 +117,7 @@ export function isPatchFillBinding(binding: Binding) {
 
 // The root value an alias chain reads: aliases never fill or write on
 // their own, their root does.
-export function getDeliveryRoot(binding: Binding) {
+export function getFillRoot(binding: Binding) {
   let root = binding;
   for (let cur = getCanonicalBinding(root); cur !== root;) {
     root = cur;
@@ -144,7 +144,7 @@ export function getFillConditions(binding: Binding) {
 }
 
 function getFillReadKind(binding: Binding): true | FillConditions | undefined {
-  if (binding.feedsStateMixedGroup) return true;
+  if (binding.upstreamOfStateMixedGroup) return true;
   let conditions: FillConditions | undefined;
   for (const alias of binding.aliases) {
     // A property alias or rest fills on its own; a direct alias reads this.
@@ -199,7 +199,7 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
       }
       if (effect || binding.section.parent) continue;
       // An `<await>` value re-fires no promise client-side: the boundary's
-      // own frames deliver its settlement.
+      // own flushes carry its settlement.
       if (content && !isBoundaryValueRead(read)) {
         const withholds = consumerMayWithhold(content);
         if (withholds === true) return true;
@@ -245,7 +245,7 @@ function consumerMayWithhold(content: Section) {
     return false;
   }
   if (getChildPatchPlan(consumer).skipsPatchRender) return true;
-  for (const group of getParamGroupFeeds(consumer) || []) {
+  for (const group of getParamGroupSources(consumer) || []) {
     if (
       group.sources?.state &&
       some(group.params, (param) => param.upstreamOfStructure)
@@ -293,7 +293,7 @@ export function isPatchWriteBinding(binding: Binding) {
 // id when a patch changes what they saw.
 export function hasPatchEffectReads(binding: Binding): boolean {
   for (const read of binding.reads) {
-    // A serialized spread's set is its own delivery.
+    // A serialized spread's set is its own refresh.
     if (read.isEffect && !read.attrSetSpread) return true;
   }
   for (const alias of binding.aliases) {
@@ -327,14 +327,14 @@ export function getConstructInitClosures(section: Section) {
 }
 
 // A closure read in `section` that is a `tagNameLoad` tag's input.
-export function feedsTagNameLoadIn(closure: Binding, section: Section) {
+export function readAsTagNameLoadInput(closure: Binding, section: Section) {
   for (const read of closure.reads) {
     if (read.section === section && read.tagNameLoadInput) return true;
   }
   return false;
 }
 
-// A fill closure feeding a state intersection read in `section` (which
+// A fill closure upstream of a state intersection read in `section` (which
 // then rides a `_fill_join_*` wrapper registering the closure's init).
 function fillJoinsIn(closure: Binding, section: Section) {
   if (closure.sources?.state || !isPatchFillBinding(closure)) return false;
@@ -350,24 +350,24 @@ function fillJoinsIn(closure: Binding, section: Section) {
   return false;
 }
 
-// Closures a section's server-owned local fills derive from: when a frame
+// Closures a section's server-owned local fills derive from: when a flush
 // withholds such a write, the fresh scope re-derives through their inits.
-export function getLocalFillFeeds(section: Section) {
-  let feeds: Opt<Binding>;
+export function getLocalFillUpstreams(section: Section) {
+  let upstreams: Opt<Binding>;
   forEach(getPatchFillBindings(section), (fill) => {
     if (fill.section === section && !fill.sources?.state) {
-      forEach(fill.sources?.param, (feed) => {
-        if (feed.section !== section && !includes(feeds, feed)) {
-          feeds = push(feeds, feed);
+      forEach(fill.sources?.param, (upstream) => {
+        if (upstream.section !== section && !includes(upstreams, upstream)) {
+          upstreams = push(upstreams, upstream);
         }
       });
     }
   });
-  return feeds;
+  return upstreams;
 }
 
 // A local the server computes without client state; a `$global`
-// contribution is fine since the shipped value is per-frame current.
+// contribution is fine since the shipped value is per-flush current.
 function isSeedableLocal(binding: Binding) {
   return (
     !binding.sources?.state &&
@@ -408,18 +408,18 @@ export function getRootGlobalReads(section: Section) {
 }
 
 // Server-sourced reads a patch cannot keep current: param-sourced bindings
-// that neither fill nor refresh over the wire read stale after any patch.
+// a patch neither fills nor writes read stale after any patch.
 export function hasUnfillablePatchReads(refs: Opt<Binding>) {
   return some(refs, (binding) => {
     const sources = getSerializeSourcesForRef(binding);
-    return !!sources?.param && !sources.global && !delivers(binding);
+    return !!sources?.param && !sources.global && !patchFills(binding);
   });
 }
 
-// A root value delivers as a fill or write; a local derivation delivers
-// when every server feed it derives from does (it recomputes client-side).
-function delivers(binding: Binding, seen = new Set<Binding>()): boolean {
-  const root = getDeliveryRoot(binding);
+// A patch fills a root value (a fill or a write) and a local derivation
+// when every server source it derives from (it recomputes client-side).
+function patchFills(binding: Binding, seen = new Set<Binding>()): boolean {
+  const root = getFillRoot(binding);
   if (seen.has(root)) return true;
   seen.add(root);
   if (!root.section.parent) {
@@ -427,5 +427,5 @@ function delivers(binding: Binding, seen = new Set<Binding>()): boolean {
   }
   // A branch's own param (a loop item) arrives with the structure.
   if (isSectionParam(root)) return true;
-  return every(root.sources?.param, (param) => delivers(param, seen));
+  return every(root.sources?.param, (param) => patchFills(param, seen));
 }

@@ -1,5 +1,5 @@
 // Analyze-side structure facts for persisted pages, in template terms;
-// ownership conclusions and wire channels belong to translate (./delivery).
+// ownership conclusions and wire channels belong to translate (./refresh).
 import type { types as t } from "@marko/compiler";
 
 import { kDirectContent } from "../binding-prop-tree";
@@ -12,8 +12,8 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "../serialize-reasons";
-import { isPatchFillBinding, paramsDeliverAsFills } from "./delivery";
 import { onFinalizePersisted } from "./lifecycle";
+import { isPatchFillBinding, paramsFill } from "./refresh";
 
 // A boundary branch live on every persisted page (serialized on every page
 // render, nothing on the chain diverges), so it pairs without a construct.
@@ -56,7 +56,7 @@ export function childRendersStateful(
 }
 
 // A binding (or a property of it) rendered as a tag inside stateful
-// structure, here or by the child binding a read feeds.
+// structure, here or by the child binding a read is upstream of.
 const rendering = new Set<Binding>();
 function rendersStateful(binding: Binding): boolean {
   if (rendering.has(binding)) return false;
@@ -81,7 +81,7 @@ function rendersStatefulProp(binding: Binding, prop: string) {
   return !!alias && rendersStateful(alias);
 }
 // A read inside stateful structure renders there (directly, or by the
-// child it feeds); elsewhere only the child's own structure decides.
+// child it is upstream of); elsewhere only the child's own structure decides.
 function readsRenderStateful(binding: Binding) {
   for (const read of binding.reads) {
     if (
@@ -94,7 +94,7 @@ function readsRenderStateful(binding: Binding) {
   }
   return false;
 }
-// A tag body is stateful when the prop it feeds renders so in the child;
+// A tag body is stateful when the prop it is upstream of renders so in the child;
 // the last hop stays a prop query so whole reads of its owner count.
 function bodyRendersStateful(section: Section) {
   const downstream = section.downstream;
@@ -107,8 +107,8 @@ function bodyRendersStateful(section: Section) {
   return !!target && rendersStatefulProp(target, props[props.length - 1]);
 }
 
-// A branch body whose upstream has a state reason (or nested in one) whose param
-// feeds all deliver; resolved sources are required, so call at finalize or later.
+// A branch body whose upstream has a state reason (or nested in one) and
+// whose param sources a patch fills; needs resolved sources (finalize or later).
 const statefulBySection = new WeakMap<Section, boolean>();
 const computing = new Map<Section, number>();
 let provisionalAt = Infinity;
@@ -135,7 +135,7 @@ export function isStatefulBranch(section: Section): boolean {
       (!expr && bodyRendersStateful(section)) ||
       (!!expr &&
         (!!sources?.state || inStatefulBranch(section.parent)) &&
-        every(expr.referencedBindings, upstreamFeedDelivers));
+        every(expr.referencedBindings, upstreamSourcesFill));
     computing.delete(section);
     // A frame that consumed an OUTER frame's provisional answer must not
     // cache: that outer result may still land stateful.
@@ -151,19 +151,17 @@ export function isStatefulBranch(section: Section): boolean {
 
 // A state-mixed ref recomputes client-side, so its param ORIGINS must fill;
 // a pure-param ref ships its own computed value.
-function upstreamFeedDelivers(binding: Binding) {
+function upstreamSourcesFill(binding: Binding) {
   const sources = getSerializeSourcesForRef(binding);
   return (
     !sources?.param ||
-    (sources.state
-      ? paramsDeliverAsFills(sources.param)
-      : isPatchFillBinding(binding)) ||
+    (sources.state ? paramsFill(sources.param) : isPatchFillBinding(binding)) ||
     inStatefulBranch(binding.section)
   );
 }
 
 // A param read only upstream of branches: its value never joins a client
-// derivation, so pairing delivers it and no fill is needed.
+// derivation, so pairing carries it and no fill is needed.
 export function readsOnlyUpstream(binding: Binding) {
   for (const read of binding.reads) {
     if (!isBranchUpstream(read)) return false;
@@ -171,7 +169,7 @@ export function readsOnlyUpstream(binding: Binding) {
   return true;
 }
 
-// Params alone upstream: a call site feeding them from state hands the
+// Params alone upstream: a call site with state upstream of them hands the
 // branch to the client at run time. Call at finalize or later.
 export function getParamUpstreamSources(section: Section) {
   if (

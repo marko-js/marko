@@ -2123,24 +2123,24 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let frameVars = {};
+let flushVars = {};
 /**
  * The live page's side of `template.patch`: `[headers, apply]`, the headers
- * a patch request sends (none yet) and the apply for each frame.
+ * a patch request sends (none yet) and the apply for each flush.
  */
 function patch($global) {
   let pageCtx,
     trees = [],
     responseCtx = (data) => (typeof data == "number" ? trees[data] : pageCtx(data));
   responseCtx._ = registeredValues;
-  let names = Object.keys(frameVars),
-    vars = Object.values(frameVars);
+  let names = Object.keys(flushVars),
+    vars = Object.values(flushVars);
   return [
     {},
-    (frame) => {
+    (flush) => {
       ((patchers.$ ||= applyGlobals), beginPatch(curRenders[$global.renderId]));
       try {
-        let fn = Function("_", "$", ...names, "return " + frame);
+        let fn = Function("_", "$", ...names, "return " + flush);
         return (
           (patchRender.r = [
             (ctx) => {
@@ -2266,7 +2266,7 @@ let loads = {},
     return apply;
   });
 /**
- * The loader of a lazy template only frames construct. Never pure: it
+ * The loader of a lazy template only flushes construct. Never pure: it
  * registers where no client code renders the site.
  */
 function _load_lazy(id, load) {

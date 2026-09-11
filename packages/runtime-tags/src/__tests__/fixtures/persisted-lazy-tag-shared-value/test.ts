@@ -9,7 +9,7 @@ const click = (document: Document) => {
   document.querySelector<HTMLElement>("b")!.click();
 };
 
-// An object the frame's tree writes and a lazy child's channel batch reads:
+// An object the flush's tree writes and a lazy child's channel batch reads:
 // the batch must carry it itself, not a path into the tree the client
 // applies and drops.
 export const config: TestConfig = {

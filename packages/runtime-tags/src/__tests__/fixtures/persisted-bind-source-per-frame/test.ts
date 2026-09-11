@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { resolveAfter, wait } from "../../utils/resolve";
 
-// A handler bound in one frame is bound again in the next: each streamed
-// frame re-ships the sources its bind references.
+// A handler bound in one flush is bound again in the next: each streamed
+// flush re-ships the sources its bind references.
 export const config: TestConfig = {
   persisted: true,
   steps: () => [

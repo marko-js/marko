@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A ternary selecting between two server-bound arrows: the fill delivers
-// whichever the frame selected, re-bound, with fresh captures.
+// whichever the flush selected, re-bound, with fresh captures.
 export const config: TestConfig = {
   persisted: true,
   steps: [

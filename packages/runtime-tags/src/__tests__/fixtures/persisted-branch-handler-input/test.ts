@@ -6,7 +6,7 @@ const click = (document: Document) => {
 
 // A branch handler capturing server input: fills keep the capture current
 // on paired scopes, and a constructed branch's handler reads the value the
-// construct's frame shipped.
+// construct's flush shipped.
 export const config: TestConfig = {
   persisted: true,
   steps: [

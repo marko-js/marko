@@ -1,6 +1,6 @@
 import type { TestConfig } from "../../main.test";
 
-// A value the response's first frame bound (two reads) that a later frame
+// A value the response's first flush bound (two reads) that a later flush
 // (the settled await) writes again: it references the binding, not a copy.
 export const config: TestConfig = {
   persisted: true,

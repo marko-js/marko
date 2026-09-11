@@ -28,7 +28,7 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
     string | 0 | undefined,
     string | 0 | undefined,
   ];
-  // A bind reference delivers owner-bound content.
+  // A bind reference resolves owner-bound content.
   if (typeof renderer === "function") renderer = renderer();
   if (typeof renderer === "string" && (bare || input !== undefined)) {
     if (renderer[0] === ">") {

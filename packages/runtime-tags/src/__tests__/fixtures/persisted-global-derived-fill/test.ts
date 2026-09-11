@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A `$global`-derived value read inside client-owned structure delivers as
-// a fill: each frame re-ships it (globals can change per response), so the
+// a fill: each flush re-ships it (globals can change per response), so the
 // revealed branch re-renders with the current derivation.
 export const config: TestConfig = {
   persisted: true,

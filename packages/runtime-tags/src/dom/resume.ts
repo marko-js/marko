@@ -66,7 +66,7 @@ type Patcher = (scope: Scope, key: string, value: unknown) => void;
 
 export const registeredValues: Record<string, unknown> = {};
 export const patchers: Record<string, Patcher> = {};
-// Frame records ahead of the scope tree (`id;walks;template` shell
+// Flush records ahead of the scope tree (`id;walks;template` shell
 // strings), registered by the patch feature that understands them.
 export let onPatchRecord: ((entry: string) => void) | undefined;
 export const _patch_records = (handler: NonNullable<typeof onPatchRecord>) =>
@@ -112,12 +112,12 @@ let patchReadyFailed: undefined | ((readyId: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
-// The render a frame is applying against (set by `beginPatch`); read only
+// The render a flush is applying against (set by `beginPatch`); read only
 // while `patching`.
 export let patchRender!: RenderData;
 let patching: 0 | 1 = 0;
-// The run the frame began on: a scope created since is the frame's own
-// construct (its entries construct); a deferred apply restores its frame's.
+// The run the flush began on: a scope created since is the flush's own
+// construct (its entries construct); a deferred apply restores its flush's.
 export let patchRun = 0;
 
 export function beginPatch(render: RenderData, runAt = runId) {
@@ -161,7 +161,7 @@ export function installReady(
 }
 
 // A channel module that never arrives can never drain its data: the
-// persisted feature settles pending patches and rejects later frames.
+// persisted feature settles pending patches and rejects later flushes.
 export function readyFailed(readyId: string) {
   if (MARKO_DEBUG) {
     if (!readyIds?.has(readyId)) {
@@ -479,7 +479,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               if (Array.isArray(scopes)) {
                 applyScopes(scopes);
               } else if (patching && patchRender === render && scopes) {
-                // A shell-less frame is its bare tree object.
+                // A shell-less flush is its bare tree object.
                 applyScopes([scopes as Scope]);
               }
             }
@@ -654,7 +654,7 @@ export function _resume<T>(id: string, obj: T): T {
   return (registeredValues[id] = obj);
 }
 
-// A fill closure's construct init is the arrival at each join it feeds:
+// A fill closure's construct init is the arrival at each join downstream:
 // registered from the join's own fill wrapper, so it lives exactly as long.
 export function _init_join<T extends (scope: Scope) => void>(
   id: string,

@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// An inline script in server-selected structure: it runs when a frame
-// reveals the branch, not when a later frame leaves the branch as is, and
+// An inline script in server-selected structure: it runs when a flush
+// reveals the branch, not when a later flush leaves the branch as is, and
 // again on a re-reveal.
 export const config: TestConfig = {
   persisted: true,

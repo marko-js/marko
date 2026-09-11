@@ -2,7 +2,7 @@ import assert from "assert";
 
 import type { TestConfig } from "../../main.test";
 
-// A child with a tag var inside a branch constructs from the frame; the
+// A child with a tag var inside a branch constructs from the flush; the
 // var's write-back wires the constructed child, so a handler reads it.
 export const config: TestConfig = {
   persisted: true,

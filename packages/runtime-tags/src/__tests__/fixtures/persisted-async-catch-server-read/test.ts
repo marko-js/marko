@@ -1,6 +1,6 @@
 import type { TestConfig } from "../../main.test";
 
-// A scriptless `<@catch>` renders server-side per rejection frame, so its
+// A scriptless `<@catch>` renders server-side per rejection flush, so its
 // request reads are current at materialization, on every rejection.
 export const config: TestConfig = {
   persisted: true,

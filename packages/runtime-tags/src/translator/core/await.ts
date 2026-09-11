@@ -206,7 +206,7 @@ export default {
                   toFirstExpressionOrBlock(node.body.body),
                 ),
                 // A persisted page always marks a patchable boundary: the
-                // frame pairs its body through the resumed branch link.
+                // flush pairs its body through the resumed branch link.
                 isPersisted() && !inStatefulBranch(section)
                   ? t.numericLiteral(1)
                   : getSerializeGuard(
@@ -264,7 +264,7 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 t.identifier(bodySection.name),
-                // Constructs resolve body content from the frame's shipped
+                // Constructs resolve body content from the flush's shipped
                 // record; registering here would bundle html resume elides.
                 awaitContent,
               ),

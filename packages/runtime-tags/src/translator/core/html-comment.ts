@@ -107,7 +107,7 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      // Split so the force cannot swallow the exprs' provenance.
+      // Split so the force cannot swallow the exprs' sources.
       if (tagVar) addSerializeExpr(tagSection, true, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
       if (

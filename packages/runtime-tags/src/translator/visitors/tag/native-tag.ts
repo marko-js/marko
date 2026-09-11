@@ -41,7 +41,7 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
-import { hasStateFeed } from "../../util/persisted/decisions";
+import { hasStateSource } from "../../util/persisted/decisions";
 import {
   ensurePersistedWriteGroups,
   inStatefulBranch,
@@ -604,7 +604,7 @@ export default {
               );
             }
           } else if (spreadExpression) {
-            // A lone spread is unambiguous provenance; with several, a merged
+            // A lone spread is an unambiguous source; with several, a merged
             // property could come from any, so the serializer's generic
             // phrasing (plus the runtime-read property name) stays honest.
             const spreads = tag.node.attributes.filter((attr) =>
@@ -979,7 +979,7 @@ export default {
             isPersisted() &&
             isBranchPathSection(tagSection) &&
             !inStatefulBranch(tagSection) &&
-            !hasStateFeed(staticContentAttr.value.extra);
+            !hasStateSource(staticContentAttr.value.extra);
           let content: t.Expression = staticContentAttr.value;
           if (patched) {
             if (!t.isIdentifier(content)) {
@@ -1532,8 +1532,8 @@ function getSpreadControllableValueProps(tagName: string) {
 }
 
 type RelatedControllable = ReturnType<typeof getRelatedControllable>;
-// A state-fed attribute recomputes client-side, and inside client-owned
-// structure delivery is owner fills: neither patch-writes.
+// A state-sourced attribute recomputes client-side, and inside unpatched
+// structure owner fills refresh it: neither patch-writes.
 export function writesPatchAttr(
   tagSection: Section,
   extra: t.NodeExtra | undefined,

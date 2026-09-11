@@ -177,15 +177,17 @@ A server rerender of a persisted page applied to the live client DOM by
 refreshing values and navigating structure, without a full page render.
 _Avoid_: rerender, hydration update
 
-**Frame**:
-One flushed payload of a patch render (a sync flush, a settle, a lazy
-module's ready data), applied as a unit: the frame commit check accepts or
-rejects it whole. Not the rerender itself — that is the patch.
-_Avoid_: frame for the patch render
+**Flush**:
+One payload of a patch render (a sync flush, a settle, a lazy module's
+ready data), applied as a unit: the flush commit check accepts or rejects
+it whole. The same word as a normal render's flush; the rerender itself is
+the patch.
+_Avoid_: frame
 
 **Upstream**:
-What an expression or binding derives from: the expressions feeding it and
-the bindings those read (`upstreamAlias`, `upstreamExpression`). Structure
+What an expression or binding derives from: the expressions it reads and
+the bindings those read (`upstreamAlias`, `upstreamExpression`). Summarized
+by kind as its _sources_ (`Sources`: state, param, `$global`). Structure
 has an upstream too — an `<if>` condition, a `<for>` collection, a dynamic
 tag's renderer (`isBranchUpstream`) — and a root param read only there is
 _upstream of structure_.
@@ -193,24 +195,24 @@ _Avoid_: selector, selection, selects (keyed `for` row select aside)
 
 **Stateful structure**:
 A branch body whose upstream expression has a state reason (main's `kStatefulReason`
-vocabulary) — state sources, no `$global`, fill-deliverable param feeds —
+vocabulary) — state sources, no `$global`, param sources a patch fills —
 derived from its upstream expression (`isStatefulBranch`), never stored.
-Resumed code re-renders it, so patch renders skip it and frames omit its
+Resumed code re-renders it, so patch renders skip it and flushes omit its
 entry. Translate code may call the derived policy _client-owned_.
 _Avoid_: state-selected, client-owned as a shared field name
 
 **Hole / filled / unfilled**:
-A read a patch delivers by writing its value at the site is a _hole_ the
+A read a patch keeps current by writing its value at the site is a _hole_ the
 patch _fills_; the html gates say which side acts on a param group:
 `_filled_guard` (a patch fills it: server-owned, or unfed where a construct
-needs the seed), `_unfilled_if` (no patch fills it: the client feeds it, or
+needs the seed), `_unfilled_if` (no patch fills it: the client is upstream, or
 the read sits in unpatched structure). Analyze records reads no patch can
 fill (`hasUnfillablePatchReads`), never the gate.
 _Avoid_: server-side/client-side value, owned read
 
 **Unpatched structure**:
 Structure patch renders skip and so never fill: stateful structure, a
-branch or loop whose upstream a client-owned group feeds, a dynamic tag
+branch or loop with a client-owned group upstream, a dynamic tag
 site a patch never pairs. The html writer tracks it at render as context
 (`withUnpatched`, `inUnpatched`) because a child template cannot see how
 its parent reached it; analyze names the static cases `inResumedStructure`.
@@ -219,7 +221,7 @@ _Avoid_: client-owned structure, client-selected
 **Structural-or-global param**:
 A root param whose reads sit upstream of structure or mix with `$global` — the value
 never leaves through an expression channel, so whoever renders must supply
-it. Translate derives server-ownership requirements from this fact.
+it. Translate derives which groups a patch must fill from this fact.
 _Avoid_: server-required param
 
 **Branch path**:
@@ -232,22 +234,23 @@ _Avoid_: capture path, patch section
 A server-sourced binding whose reads intersect client state, refreshed by
 patches through a registered fill signal. Distinct from a resume-payload
 _fill_ batch.
-_Avoid_: fill outside a patch-delivery discussion
+_Avoid_: fill outside a patch-refresh discussion, deliver/delivery
 
 **Effect write / capture write**:
 Wire channels for refreshable values no fill consumes: an accessor write
 plus effect re-run, or a bare accessor write for registered-function
 captures.
 
-**Group feeds**:
-Per reason group at a templated call site: the feeding provenance
-(`sources`) and whether the group covers a structural-or-global param.
-Translate composes ownership masks and admission from it.
-_Avoid_: group ownership
+**Param group sources**:
+Per reason group at a templated call site (`getParamGroupSources`): the
+call site's sources for the group, function-body reads included, and
+whether it covers a structural-or-global param. Translate composes
+ownership masks and admission from it.
+_Avoid_: group feeds, group ownership, provenance, feed/feeder for a source
 
 **Bind `0`**:
 The serializer's last resort for a handler no recorded link reaches: the
-frame commit check rejects it and the client navigates. Analyze records why
+flush commit check rejects it and the client navigates. Analyze records why
 a faithful patch is impossible, never the mechanism.
 
 ## Compilation modes

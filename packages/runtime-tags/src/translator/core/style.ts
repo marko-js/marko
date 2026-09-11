@@ -157,7 +157,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   });
 }
 
-// A dynamic style in server-owned structure writes its rule from the frame
+// A dynamic style in server-owned structure writes its rule from the flush
 // (a state-fed interpolation recomputes through the signal graph).
 function patchesStyle(section: Section) {
   return (

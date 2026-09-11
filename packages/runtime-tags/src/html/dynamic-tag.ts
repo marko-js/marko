@@ -302,7 +302,7 @@ export function _content_resume(
 }
 
 // Content with no client renderer elides its slot: a catch slot serializes
-// `0` (its frame carries html), a placeholder slot `undefined`.
+// `0` (its flush carries html), a placeholder slot `undefined`.
 export function _content_elide(
   id: string,
   fn: ServerRenderer,
@@ -334,7 +334,7 @@ export function _content_record(id: string, scopeId: number | undefined) {
       scopeId,
     ),
     contentAccessPrefix +
-      shells[id].slice(1) +
+      shells[id] +
       (scopeId === undefined ? ")" : ",_(" + scopeId + "))"),
   );
 }

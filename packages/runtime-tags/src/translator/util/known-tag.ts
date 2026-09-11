@@ -86,11 +86,11 @@ import {
 } from "./serialize-guard";
 import {
   addSerializeExpr,
-  addSerializeProvenance,
+  addSerializeSources,
   addSerializeReason,
-  getSerializeProvenance,
+  getAllSourcesForExprs,
+  getSerializeSources,
   getSerializeReason,
-  getSerializeSourcesForExpr,
   getSerializeSourcesForExprs,
   getSerializeSourcesForRef,
 } from "./serialize-reasons";
@@ -126,9 +126,7 @@ const [getKnownTags] = createSectionState(
 );
 
 const kContentSection = Symbol("known tag content section");
-const kProvenanceRecordedGroups = Symbol(
-  "known tag provenance recorded groups",
-);
+const kSourcesRecordedGroups = Symbol("known tag sources recorded groups");
 const kChildScopeBinding = Symbol("known tag scope binding");
 export const kStaticBody = Symbol("known tag static body");
 export const kTagVar = Symbol("known tag var");
@@ -138,7 +136,7 @@ const kKnownExprs = Symbol("known tag exprs");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kContentSection]?: Section;
-    [kProvenanceRecordedGroups]?: number;
+    [kSourcesRecordedGroups]?: number;
     [kChildScopeBinding]?: Binding;
     [kStaticBody]?: boolean;
     [kTagVar]?: true;
@@ -220,7 +218,7 @@ export function knownTagAnalyze(
       section,
     );
     setBindingDownstream(varBinding, varExpr);
-    // Split so the force cannot swallow the exprs' provenance.
+    // Split so the force cannot swallow the exprs' sources.
     if (mutatesTagVar) addSerializeExpr(section, true, childScopeBinding);
     addSerializeExpr(section, varExpr, childScopeBinding);
   }
@@ -336,9 +334,9 @@ export function knownTagTranslateHTML(
       } else {
         // Pages serialize fully, so the ambient slot carries the ownership
         // mask (needed exactly when a `_must_render` patch renders it).
-        const feeds = getParamGroupFeeds(tagExtra);
-        if (feeds) {
-          childSerializeReasonExpr = buildOwnershipMaskExpr(section, feeds);
+        const groups = getParamGroupSources(tagExtra);
+        if (groups) {
+          childSerializeReasonExpr = buildOwnershipMaskExpr(section, groups);
         }
       }
     } else if (contentSection.paramReasonGroups.length === 1) {
@@ -510,7 +508,7 @@ export function knownTagTranslateDOM(
   if (isPersisted() && !inStatefulBranch(getSection(tag))) {
     importRuntimeFeature("patch-child");
     if (tag.node.var) importRuntimeFeature("patch-value-bind");
-    for (const group of getParamGroupFeeds(extra) || []) {
+    for (const group of getParamGroupSources(extra) || []) {
       if (
         group.sources?.state &&
         some(group.params, (binding) => binding.upstreamOfStructure)
@@ -537,7 +535,7 @@ export function knownTagTranslateDOM(
       }
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
-    // A frame constructing the child seeds the wiring through its setup.
+    // A flush constructing the child seeds the wiring through its setup.
     if (isPersisted()) importRuntimeFeature("patch-var");
     const wireVar = callRuntime(
       "_var",
@@ -565,7 +563,7 @@ export function knownTagTranslateDOM(
 }
 
 // The child's return reason for call-site classification (persisted
-// rejects returns whose provenance cannot map through ownership).
+// rejects returns whose sources cannot map through ownership).
 export function getKnownTagReturnReason(tagExtra: t.MarkoTagExtra) {
   return tagExtra[kContentSection]?.returnSerializeReason;
 }
@@ -577,22 +575,22 @@ export function finalizeKnownTags(section: Section) {
     const contentSection = tagExtra[kContentSection]!;
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
       if (isPersisted()) {
-        tagExtra[kProvenanceRecordedGroups] =
+        tagExtra[kSourcesRecordedGroups] =
           contentSection.paramReasonGroups.length;
       }
       for (const group of contentSection.paramReasonGroups) {
-        const feeders = mapParamReasonToExpr(knownExprs, group.reason);
+        const exprs = mapParamReasonToExpr(knownExprs, group.reason);
         addSerializeReason(
           section,
-          getSerializeSourcesForExprs(feeders),
+          getSerializeSourcesForExprs(exprs),
           scopeBinding,
           group.id,
         );
         if (isPersisted()) {
           // Fn-body reads inform ownership but never serialization, so
-          // they join the group's provenance only.
+          // they join the group's sources only.
           let fnSources: Sources | undefined;
-          forEach(feeders as Opt<t.NodeExtra>, (extra) => {
+          forEach(exprs as Opt<t.NodeExtra>, (extra) => {
             forEach(
               (extra as t.FunctionExtra).referencedBindingsInFunction,
               (binding) => {
@@ -603,52 +601,34 @@ export function finalizeKnownTags(section: Section) {
               },
             );
           });
-          addSerializeProvenance(section, fnSources, scopeBinding, group.id);
-          const provenance = getSerializeProvenance(
-            section,
-            scopeBinding,
-            group.id,
-          );
+          addSerializeSources(section, fnSources, scopeBinding, group.id);
+          const sources = getSerializeSources(section, scopeBinding, group.id);
           // The ownership mask composes over these groups at translate
           // time; group order freezes here.
-          ensureReasonGroups(provenance);
+          ensureReasonGroups(sources);
           // Under client state the child re-derives the group, so its
-          // server feeds must keep reaching it. A member only upstream of
+          // server sources must keep reaching it. A member only upstream of
           // branches (its params nest into the group) is served by pairing
-          // when its own feed has no state.
-          if (provenance?.state) {
+          // when its own sources have no state.
+          if (sources?.state) {
             forEach(group.reason, (param) => {
-              const feeder = mapParamBindingToExpr(knownExprs, param);
-              let sources: Sources | undefined;
-              forEach(feeder, (extra) => {
-                sources = mergeSources(
-                  sources,
-                  getSerializeSourcesForExpr(extra),
-                );
-                forEach(
-                  (extra as t.FunctionExtra).referencedBindingsInFunction,
-                  (binding) => {
-                    sources = mergeSources(
-                      sources,
-                      getSerializeSourcesForRef(binding),
-                    );
-                  },
-                );
-              });
-              if (sources?.state || !readsOnlyUpstream(param)) {
-                forEach(sources?.param, (binding) => {
-                  binding.feedsStateMixedGroup = true;
+              const paramSources = getAllSourcesForExprs(
+                mapParamBindingToExpr(knownExprs, param),
+              );
+              if (paramSources?.state || !readsOnlyUpstream(param)) {
+                forEach(paramSources?.param, (binding) => {
+                  binding.upstreamOfStateMixedGroup = true;
                 });
               }
             });
           }
-          // The fact rolls up: a param feeding a child's structural param
+          // The fact rolls up: a param upstream of a child's structural param
           // makes this template's params so too.
           if (some(group.reason, (binding) => binding.upstreamOfStructure)) {
-            recordStructuralParams(provenance);
+            recordStructuralParams(sources);
             // Client state upstream of the child's structure hands it the
             // structure at run time: its fills need the value patcher.
-            if (provenance?.state) addRuntimeFeatureAsset("patch-value");
+            if (sources?.state) addRuntimeFeatureAsset("patch-value");
           }
         }
       }
@@ -656,44 +636,40 @@ export function finalizeKnownTags(section: Section) {
   }
 }
 
-export interface ParamGroupFeeds {
+export interface ParamGroupSources {
   /** The child params this group covers. */
   params: NonNullable<Opt<Binding>>;
-  /** The call site's provenance feeding this group (fn-body reads
-   * included; survives any force on the key). */
+  /** The call site's sources for this group (fn-body reads included;
+   * survives any force on the key). */
   sources: Sources | undefined;
 }
 
-// Whether a group has a feed only the server can supply (params); state
+// Whether a group has a source only the server can supply (params); state
 // and `$global` both recompute client-side.
-export function hasServerFeed(sources: Sources | undefined) {
+export function hasParamSource(sources: Sources | undefined) {
   return !!(sources?.param || sources?.global);
 }
 
-// Per-group feed classification for a known templated call site, aligned
+// Per-group sources for a known templated call site, aligned
 // with the child's `paramReasonGroups` indices.
 // A tag analyzed as a known child template (vs a `<define>` site).
 export function isKnownTagExtra(tagExtra: t.MarkoTagExtra) {
   return !!tagExtra[kKnownExprs];
 }
 
-export function getParamGroupFeeds(
+export function getParamGroupSources(
   tagExtra: t.MarkoTagExtra,
-): ParamGroupFeeds[] | undefined {
+): ParamGroupSources[] | undefined {
   const scopeBinding = tagExtra[kChildScopeBinding];
   const contentSection = tagExtra[kContentSection];
   const groups = contentSection?.paramReasonGroups;
   if (!tagExtra[kKnownExprs] || !scopeBinding || !groups) return;
   // Groups born after the record (circular same-file tags) have no
-  // provenance: fail closed as unanalyzable input.
-  if (groups.length !== tagExtra[kProvenanceRecordedGroups]) return;
+  // sources: fail closed as unanalyzable input.
+  if (groups.length !== tagExtra[kSourcesRecordedGroups]) return;
   return groups.map((group) => ({
     params: group.reason,
-    sources: getSerializeProvenance(
-      scopeBinding.section,
-      scopeBinding,
-      group.id,
-    ),
+    sources: getSerializeSources(scopeBinding.section, scopeBinding, group.id),
   }));
 }
 
@@ -701,23 +677,23 @@ export function getParamGroupFeeds(
 // dynamic), or undefined when the all-server default is equivalent.
 function buildOwnershipMaskExpr(
   section: Section,
-  feeds: ParamGroupFeeds[],
+  groups: ParamGroupSources[],
 ): t.Expression | undefined {
   const rootSection = getRootSection(section);
-  const values = feeds.map(({ sources }) => {
-    if (sources?.state) return hasServerFeed(sources) ? 3 : 1;
+  const values = groups.map(({ sources }) => {
+    if (sources?.state) return hasParamSource(sources) ? 3 : 1;
     let subset: Opt<Binding>;
     forEach(sources?.param, (binding) => {
       if (binding.section === rootSection) {
         subset = bindingUtil.add(subset, binding);
       }
     });
-    if (!subset) return hasServerFeed(sources) ? 2 : 0;
+    if (!subset) return hasParamSource(sources) ? 2 : 0;
     const composed = getOwnershipGroupValue(
       rootSection,
       subset as NonNullable<Sources["param"]>,
     );
-    // A `$global` feed adds a static server bit beside the composition.
+    // A `$global` source adds a static server bit beside the composition.
     return sources!.global
       ? t.binaryExpression("|", t.numericLiteral(2), composed)
       : composed;
@@ -735,14 +711,17 @@ function buildOwnershipMaskExpr(
     if (value === 0) continue;
     if (typeof value === "number" && i < 15) {
       mask |= value << (1 + 2 * i);
-      const names = getDebugNames(feeds[i].params);
+      const names = getDebugNames(groups[i].params);
       if (names) maskNames += maskNames ? ` | ${names}` : names;
     } else {
       needsObject = true;
     }
     props.push(
       t.objectProperty(
-        withLeadingComment(t.numericLiteral(i), getDebugNames(feeds[i].params)),
+        withLeadingComment(
+          t.numericLiteral(i),
+          getDebugNames(groups[i].params),
+        ),
         typeof value === "number" ? t.numericLiteral(value) : value,
       ),
     );

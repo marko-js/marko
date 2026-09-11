@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A 3-deep mixed chain (if → if → for): the fill dispatches through two
-// conditional hops and a keyed loop hop, including same-frame destroy.
+// conditional hops and a keyed loop hop, including same-flush destroy.
 export const config: TestConfig = {
   persisted: true,
   steps: [
@@ -13,7 +13,7 @@ export const config: TestConfig = {
     click,
     { show: true, inner: true, items: ["b", "a"], suffix: "y" },
     click,
-    // The whole chain is destroyed in the frame the fill changes.
+    // The whole chain is destroyed in the flush the fill changes.
     { show: true, inner: false, items: ["b", "a"], suffix: "z" },
   ],
 };

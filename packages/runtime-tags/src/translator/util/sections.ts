@@ -135,14 +135,14 @@ export interface Section {
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
    * (not merged) so each one's guard stays buildable. */
   domSerializeReasons: undefined | SerializeReasons;
-  /** Pending serialize exprs, resolved into the reasons (and provenance)
+  /** Pending serialize exprs, resolved into the reasons (and sources)
    * once references finalize. */
   serializeExprs: Opt<t.NodeExtra>;
   propSerializeExprs: Map<SerializeKey, OneMany<t.NodeExtra>> | undefined;
-  /** Whose values feed each serialization decision — survives force-`true`
+  /** The sources of each serialization decision — survives force-`true`
    * and counts function-body reads; complete after reference finalize. */
-  serializeProvenance: Sources | undefined;
-  propSerializeProvenance: Map<SerializeKey, Sources> | undefined;
+  serializeSources: Sources | undefined;
+  propSerializeSources: Map<SerializeKey, Sources> | undefined;
   /** Interned per-prop reason keys for string/symbol props. */
   serializePropKeys: Map<string | symbol, SerializeKey> | undefined;
   paramReasonGroups: ParamSerializeReasonGroups | undefined;
@@ -153,7 +153,7 @@ export interface Section {
   /** For a `<define>` body: the sections of its direct `<${var}>` sites. */
   defineSites: Section[] | undefined;
   /** The content's rendering tag (its extra), and the child binding the
-   * content feeds when the child can serialize it. */
+   * content is upstream of when the child can serialize it. */
   downstream:
     | {
         tag: t.MarkoTagExtra;
@@ -177,7 +177,7 @@ export interface Section {
   /** A content body shipped as a shell record: `"static"` rides its slot
    * in-band, a dynamic one is constructed by id from a dynamic tag entry. */
   contentRecord: false | true | "static";
-  /** Awaits a construct must deliver body content for (marker binding +
+  /** Awaits a construct must supply body content for (marker binding +
    * body section); `buildShells` prunes those no shipped shell reaches. */
   constructSetups: { binding: Binding; body: Section }[] | undefined;
   /** Lazily loaded child sites in this section, by their marker binding. */
@@ -257,8 +257,8 @@ export function startSection(
       domSerializeReasons: undefined,
       serializeExprs: undefined,
       propSerializeExprs: undefined,
-      serializeProvenance: undefined,
-      propSerializeProvenance: undefined,
+      serializeSources: undefined,
+      propSerializeSources: undefined,
       serializePropKeys: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
