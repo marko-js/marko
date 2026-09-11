@@ -85,7 +85,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a4");
 	$scope0_reason ? _scope($scope0_id, {
-		f: input.kind,
+		f: _source_if($scope0_reason, 0) && input.kind,
 		g: input.inner,
 		h: open,
 		i: $input_kind__closures,

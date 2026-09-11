@@ -45,7 +45,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, 0, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	$scope0_reason && _scope($scope0_id, {
-		e: input.prefix,
+		e: _source_if($scope0_reason, 1) && input.prefix,
 		g: $input_prefix__closures
 	});
 }, 1, 1);

@@ -136,7 +136,14 @@ export default function createMutationTracker(browser: {
 // dropped): two documents that print alike render alike. `defaults` off
 // drops the `default-*` annotations (a patched control keeps the defaults
 // it loaded with; a fresh render's defaults are its current values).
-export function formatBody(body: Document["body"], defaults = true) {
+// `asDefaults` prints a control's default in place of its live value: a
+// patch refreshes defaults and leaves what the user may have typed.
+export function formatBody(
+  body: Document["body"],
+  defaults = true,
+  asDefaults = false,
+) {
+  printDefaults = asDefaults;
   const clone = cloneAndSanitize(body);
   if (!defaults) {
     for (const el of (clone as Element).querySelectorAll(
@@ -155,6 +162,7 @@ export function formatBody(body: Document["body"], defaults = true) {
     .trim();
 }
 
+let printDefaults = false;
 function cloneAndSanitize(body: Document["body"]) {
   const clone = body.cloneNode(true) as ParentNode;
   const ignoredNodes: ChildNode[] = [];
@@ -198,7 +206,7 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
         if (source.defaultChecked && !source.checked) {
           target.setAttribute("default-checked", "");
         }
-        if (source.checked) {
+        if (printDefaults ? source.defaultChecked : source.checked) {
           target.setAttribute("checked", "");
         } else {
           target.removeAttribute("checked");
@@ -207,8 +215,9 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
         if (source.defaultValue && source.defaultValue !== source.value) {
           target.setAttribute("default-value", source.defaultValue);
         }
-        if (source.value) {
-          target.setAttribute("value", source.value);
+        const value = printDefaults ? source.defaultValue : source.value;
+        if (value) {
+          target.setAttribute("value", value);
         } else {
           target.removeAttribute("value");
         }
@@ -220,7 +229,7 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
       if (source.defaultValue && source.defaultValue !== source.value) {
         target.setAttribute("default-value", source.defaultValue);
       }
-      target.textContent = source.value;
+      target.textContent = printDefaults ? source.defaultValue : source.value;
     } else if (
       nodeInfo.isOptionElement(target) &&
       nodeInfo.isOptionElement(source)

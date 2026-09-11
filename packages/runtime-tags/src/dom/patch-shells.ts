@@ -47,7 +47,7 @@ export const resolveSetupIds = (ids: string) =>
   ids.split("!").map((part) =>
     part
       ? part.split(" ").map((id) => {
-          const fn = getRegisteredWithScope(id) as { _?: unknown };
+          const fn = getRegisteredWithScope<{ _?: unknown }>(id);
           return (fn._ || fn) as SetupFn;
         })
       : [],

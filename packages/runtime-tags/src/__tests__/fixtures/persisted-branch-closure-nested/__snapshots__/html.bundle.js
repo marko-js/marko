@@ -31,5 +31,5 @@ var template_default = _template_persisted("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["a0"], $scope0_owned, 2);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, { g: input.inner });
+	$scope0_reason && _scope($scope0_id, { g: _source_if($scope0_reason, 2) && input.inner });
 }, 1, 0);

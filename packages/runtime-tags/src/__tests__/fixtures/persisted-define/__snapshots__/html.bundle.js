@@ -17,8 +17,8 @@ var template_default = _template_persisted("a", (input) => {
 	thing.content({ x: input.n });
 	_html(`<div${_patch_attr_class($scope0_id, "b", [input.cls, { on: input.on }], $scope0_owned, 0)}${_patch_attr_style($scope0_id, "b", { color: input.color }, $scope0_owned, 5)}>x</div>${_el_resume($scope0_id, "b")}`);
 	$scope0_reason && _scope($scope0_id, {
-		g: input.cls,
-		h: input.on,
+		g: _source_if($scope0_reason, 4) && input.cls,
+		h: _source_if($scope0_reason, 3) && input.on,
 		k: $input_title__closures,
 		a: _existing_scope($childScope)
 	});

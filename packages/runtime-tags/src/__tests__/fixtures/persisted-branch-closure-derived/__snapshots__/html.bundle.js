@@ -21,6 +21,6 @@ var template_default = _template_persisted("a", (input) => {
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, {
 		h: count,
-		i: double
+		i: _source_if($scope0_reason, 1) && double
 	});
 }, 1, 0);

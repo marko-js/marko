@@ -23,6 +23,7 @@ var panel_default = _template_persisted("__tests__/tags/panel/index.marko", (inp
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("b%c");
+_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !__tests__/template.marko_0;${_w0};${_w1}`)(((_w0) => `D/${_w0}& l`)("b%c"), ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1)) });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

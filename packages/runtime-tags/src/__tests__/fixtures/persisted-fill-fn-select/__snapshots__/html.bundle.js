@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a2;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_upper = _source_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const up = _resume(() => "U" + input.title, "a0", $scope0_id);
 	const low = _resume(() => "l" + input.title, "a1", $scope0_id);
@@ -13,9 +13,9 @@ var template_default = _template_persisted("a", (input) => {
 	_script($scope0_id, "a2");
 	$scope0_reason ? _scope($scope0_id, {
 		e: input.title,
-		f: input.upper,
-		g: up,
-		h: low,
+		f: _source_if($scope0_reason, 1) && input.upper,
+		g: $si__input_upper && up,
+		h: $si__input_upper && low,
 		j: pick,
 		k: open
 	}) : (_filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", pick), _filled_guard($scope0_owned, 1) && _patch_write($scope0_id, "e", input.title));

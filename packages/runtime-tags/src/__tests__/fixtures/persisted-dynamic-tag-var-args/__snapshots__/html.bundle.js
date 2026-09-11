@@ -33,7 +33,7 @@ var template_default = _template_persisted("b", (input) => {
 	_var($scope0_id, "b", $inputoncounternull_scope, "b0");
 	_html(`<p>${_patch_text($scope0_id, "c", n, void 0, $scope0_owned, 0)}</p></main>`);
 	$scope0_reason && _scope($scope0_id, {
-		f: input.on,
-		g: input.start
+		f: _source_if($scope0_reason, 2) && input.on,
+		g: _source_if($scope0_reason, 1) && input.start
 	});
 }, 1, 1);

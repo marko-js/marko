@@ -35,7 +35,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}
 const $walks = /*@__PURE__*/ ((_w0) => `E lDb%l/${_w0}&l`)("b%c");
 _shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko;${_w0};${_w1}`)(((_w0) => `E lDb%l/${_w0}&l`)("b%c"), ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template$1)) });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_big = _source_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let last = 0;
 	const plain = _resume((next) => {
@@ -58,8 +58,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	});
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		plain,
-		tenfold,
+		plain: $si__input_big && plain,
+		tenfold: $si__input_big && tenfold,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		plain: "2:8",

@@ -19,7 +19,7 @@ _shells({
 	a1: /*@__PURE__*/ ((_w0, _w1) => `a1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template)
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 3);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 3), $si__input_show = _source_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -47,8 +47,8 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 3);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, {
-		e: input.title,
-		f: input.note,
+		e: $si__input_show && input.title,
+		f: $si__input_show && input.note,
 		h: $input_note__closures
 	});
 }, 1, () => [card_default]);

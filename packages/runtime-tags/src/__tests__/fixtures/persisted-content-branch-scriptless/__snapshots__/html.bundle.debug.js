@@ -46,7 +46,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, {
-		input_text: input.text,
+		input_text: _source_if($scope0_reason, 1) && input.text,
 		"ClosureScopes:input_text": $input_text__closures
 	}, "__tests__/template.marko", 0, { input_text: ["input.text"] });
 }, 1, () => [widget_default]);

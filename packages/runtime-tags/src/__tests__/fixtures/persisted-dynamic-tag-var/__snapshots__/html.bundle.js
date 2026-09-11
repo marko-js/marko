@@ -28,7 +28,7 @@ var template_default = _template_persisted("a", (input) => {
 	_var($scope0_id, "b", $inputwhichonetwo_scope, "a0");
 	_html(`<p>${_patch_text($scope0_id, "c", x, void 0, $scope0_owned, 0)}</p>`);
 	$scope0_reason && _scope($scope0_id, {
-		f: input.which,
-		g: input.a
+		f: _source_if($scope0_reason, 2) && input.which,
+		g: _source_if($scope0_reason, 1) && input.a
 	});
 }, 1, 1);

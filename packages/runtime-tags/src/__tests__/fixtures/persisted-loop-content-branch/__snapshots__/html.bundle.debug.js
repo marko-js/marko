@@ -59,7 +59,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			}, $scope1_id)
 		});
 		_scope($scope1_id, {
-			item_n: item?.n,
+			item_n: _source_if($scope0_reason, 0) && item?.n,
 			"ClosureScopes:item_n": $for_content__item_n__closures,
 			"ClosureScopes:item_alt": $for_content__item_alt__closures,
 			"#childScope/0": _existing_scope($childScope)

@@ -1174,8 +1174,11 @@ export function _persisted_reason() {
     return undefined;
   }
   state.persisted = true;
-  return reason || 1;
+  // No mask is the all-server root default. A pass-through mask can compose
+  // to 0 at runtime: the scope and markers still pair, no group's values ship.
+  return reason === undefined ? 1 : reason || UNFED;
 }
+const UNFED: SerializeReasonValue = {};
 
 // The instance's sources mask (2 bits per group: client/server contribute;
 // `1` = all-server root default), read before `_persisted_reason` clears it.
@@ -1210,8 +1213,9 @@ export function _source_if(mask: SerializeReasonValue, group: number) {
   return mask && maskGroup(mask, group) ? 1 : undefined;
 }
 
+// An unfed instance still resumes its markers (patches pair on them).
 export function _source_guard(mask: SerializeReasonValue, group: number) {
-  return mask && maskGroup(mask, group) ? 1 : 0;
+  return mask && (mask === UNFED || maskGroup(mask, group)) ? 1 : 0;
 }
 
 // A group's 2-bit value, composed into a child mask by pass-through.

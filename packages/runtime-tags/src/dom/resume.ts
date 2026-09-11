@@ -645,9 +645,9 @@ function runResumeEffects(render: RenderData) {
   }
 }
 
-export function getRegisteredWithScope(id: string, scope?: Scope) {
+export function getRegisteredWithScope<T = unknown>(id: string, scope?: Scope) {
   const val = registeredValues[id];
-  return scope ? (val as RegisteredFn)(scope) : val;
+  return (scope ? (val as RegisteredFn)(scope) : val) as T;
 }
 
 export function _resume<T>(id: string, obj: T): T {

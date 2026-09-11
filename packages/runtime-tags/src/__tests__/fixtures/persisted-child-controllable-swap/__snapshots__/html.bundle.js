@@ -29,7 +29,7 @@ var counter_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `E lDb%l/${_w0}&l`)("b%c"), ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_big = _source_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let last = 0;
 	const plain = _resume((next) => {
@@ -52,8 +52,8 @@ var template_default = _template_persisted("a", (input) => {
 	});
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		j: plain,
-		k: tenfold,
+		j: $si__input_big && plain,
+		k: $si__input_big && tenfold,
 		c: _existing_scope($childScope)
 	});
 }, 1, () => [counter_default]);

@@ -47,7 +47,7 @@ var site_footer_default = _template_persisted("__tests__/tags/site-footer.marko"
 	const $scope0_id = _scope_id();
 	let frozen = 0;
 	_html(`<footer>${_patch_text($scope0_id, "#text/0", input.year + frozen, void 0, $scope0_owned, 0)}</footer>`);
-	$scope0_reason && _scope($scope0_id, { frozen }, "__tests__/tags/site-footer.marko", 0, { frozen: "1:6" });
+	$scope0_reason && _scope($scope0_id, { frozen: _source_if($scope0_reason, 0) && frozen }, "__tests__/tags/site-footer.marko", 0, { frozen: "1:6" });
 }, 0, 0);
 
 // template.marko

@@ -1,15 +1,12 @@
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-_shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D%b%;<em><!><!></em>",
-	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>t</button></main>"
-});
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	let show = true;
-	const badge = { content: _content_elide("__tests__/template.marko_2*content", (a, b) => {
+	const badge = { content: _content("__tests__/template.marko_2*content", (a, b) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _persisted_reason();
 		_html(`<em>${_patch_text($scope2_id, "#text/0", a)}${_patch_text($scope2_id, "#text/1", b, 2)}</em>`);

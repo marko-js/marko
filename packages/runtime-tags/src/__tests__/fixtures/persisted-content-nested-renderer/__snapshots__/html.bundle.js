@@ -18,7 +18,7 @@ _shells({
 	a1: /*@__PURE__*/ ((_w0, _w1) => `a1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template)
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $si__input_show = _source_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_inner__closures = /* @__PURE__ */ new Set();
@@ -46,8 +46,8 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, {
-		e: input.note,
-		f: input.inner,
+		e: $si__input_show && input.note,
+		f: $si__input_show && input.inner,
 		g: $input_note__closures,
 		h: $input_inner__closures
 	});

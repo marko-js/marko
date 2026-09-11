@@ -40,7 +40,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {
 		input_title: input.title,
-		input_promise: input.promise,
+		input_promise: _source_if($scope0_reason, 1) && input.promise,
 		count,
 		"ClosureScopes:input_title": $input_title__closures,
 		"ClosureScopes:input_promise": $input_promise__closures

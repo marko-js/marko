@@ -6,8 +6,8 @@ var kid_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "a", input.a + input.b, void 0, $scope0_owned, 0)}</span>`);
 	$scope0_reason && _scope($scope0_id, {
-		d: input.a,
-		e: input.b
+		d: _source_if($scope0_reason, 2) && input.a,
+		e: _source_if($scope0_reason, 1) && input.b
 	});
 }, 0, 0);
 

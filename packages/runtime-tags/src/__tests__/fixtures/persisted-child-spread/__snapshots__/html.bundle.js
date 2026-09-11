@@ -52,7 +52,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<button id=c>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_reason && _scope($scope0_id, {
-		i: input.more,
+		i: _source_if($scope0_reason, 1) && input.more,
 		j: count,
 		a: _existing_scope($childScope)
 	});

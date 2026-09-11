@@ -6,7 +6,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D l%;<p> </p><!><!>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 4), $sg__input_show = _source_guard($scope0_reason, 2);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 4), $sg__input_show = _source_guard($scope0_reason, 2), $si__input_show = _source_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	_html("<main>");
@@ -35,8 +35,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 2);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
 	$scope0_reason ? _scope($scope0_id, {
-		input_title: input.title,
-		input_inner: input.inner,
+		input_title: $si__input_show && input.title,
+		input_inner: $si__input_show && input.inner,
 		input_suffix: input.suffix,
 		"ClosureScopes:input_suffix": $input_suffix__closures
 	}, "__tests__/template.marko", 0, {

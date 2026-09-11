@@ -407,7 +407,7 @@ export function _patch_value(
   if (state.writesPatches) {
     // Bound registrations cannot ride the wire as data: each stores a
     // bind at its bound scope and the serialized value references it.
-    writeEmbeddedBinds(state as PatchState, value);
+    writeEmbeddedBinds(state, value);
     if (setup) {
       if (state.patchFlushed) {
         throw new Error(
@@ -441,15 +441,19 @@ export function _patch_control(
   group?: number,
 ) {
   const state = getState();
-  if (state.writesPatches && _filled_guard(owned, group!)) {
-    writeEmbeddedBinds(state as PatchState, value);
-    writeFilled(
-      scopeId,
-      PatchKey.Control + type + accessor,
-      value,
-      owned,
-      group,
-    );
+  if (state.writesPatches) {
+    if (_filled_guard(owned, group!)) {
+      writeEmbeddedBinds(state, value);
+      writeFilled(
+        scopeId,
+        PatchKey.Control + type + accessor,
+        value,
+        owned,
+        group,
+      );
+    }
+  } else {
+    getChunk()!.needsWalk = true;
   }
   return "";
 }
@@ -504,7 +508,7 @@ export function _patch_bind(
     } else {
       // Both forms: the plain write clears paired scopes' slots, while the setup
       // entry lands after a construct's seeds (which reset the change slot).
-      writeEmbeddedBinds(state as PatchState, value);
+      writeEmbeddedBinds(state, value);
       const partial = patchPartial(state, scopeId);
       partial[PatchKey.Write + accessor] = value;
       if (isInResumedBranch()) {
@@ -528,7 +532,7 @@ export function _patch_write(
   const state = getState();
   if (state.writesPatches) {
     if (setup && !isInResumedBranch()) return "";
-    writeEmbeddedBinds(state as PatchState, value);
+    writeEmbeddedBinds(state, value);
     if (setup) {
       const partial = patchPartial(state, scopeId);
       ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
@@ -581,8 +585,8 @@ export function _patch_dynamic_tag(
       const bound = !!id && !!getRegistered(renderer as WeakKey)?.scope;
       if (id && !bound) shipShell(state as PatchState, id);
       if (contentId) shipShell(state as PatchState, contentId);
-      writeEmbeddedBinds(state as PatchState, args);
-      if (bound) writeEmbeddedBinds(state as PatchState, renderer);
+      writeEmbeddedBinds(state, args);
+      if (bound) writeEmbeddedBinds(state, renderer);
       const native = typeof renderer === "string";
       const entry: unknown[] = [
         bound ? renderer : id || renderer || 0,
@@ -756,7 +760,7 @@ export function _patch_attrs(
   const state = getState();
   if (state.writesPatches) {
     if (_filled_guard(owned, group!)) {
-      writeEmbeddedBinds(state as PatchState, data);
+      writeEmbeddedBinds(state, data);
       // `controllable` marks a spread owning the element's controllable; the
       // array form carries `skip`/`controllable` without key bytes.
       writeFilled(
@@ -787,7 +791,7 @@ export function _patch_attrs_partial(
   const state = getState();
   if (state.writesPatches) {
     if (_filled_guard(owned, group!)) {
-      writeEmbeddedBinds(state as PatchState, data);
+      writeEmbeddedBinds(state, data);
       writeFilled(
         scopeId,
         PatchKey.Attrs + accessor,

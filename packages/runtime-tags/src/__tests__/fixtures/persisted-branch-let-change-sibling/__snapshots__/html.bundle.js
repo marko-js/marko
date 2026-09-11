@@ -45,7 +45,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "e", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 1);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		l: store?.set,
+		l: _source_if($scope0_reason, 1) && store?.set,
 		a: _existing_scope($childScope)
 	});
 }, 1, () => [store_default]);

@@ -27,7 +27,7 @@ var child_default = _template_persisted("__tests__/tags/child.marko", (input) =>
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/child.marko1", c, 1);
 	$scope0_reason ? _scope($scope0_id, {
-		input_label: input.label,
+		input_label: _source_if($scope0_reason, 0) && input.label,
 		c
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],

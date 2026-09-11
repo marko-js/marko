@@ -18,7 +18,7 @@ var badge_default = _template_persisted("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["b0"], $scope0_owned, 0);
 	_html(`<i>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_owned, 1)}</i></div>`);
-	$scope0_reason && _scope($scope0_id, { e: input.label });
+	$scope0_reason && _scope($scope0_id, { e: _source_if($scope0_reason, 0) && input.label });
 }, 0, 0);
 
 // template.marko

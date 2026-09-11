@@ -27,7 +27,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("a0", $scope0_id) }) }, 1);
 	_script($scope0_id, "a5");
 	$scope0_reason && _scope($scope0_id, {
-		g: input.msg,
+		g: _source_if($scope0_reason, 1) && input.msg,
 		h: count,
 		j: $input_msg__closures,
 		i: $input_promise__closures

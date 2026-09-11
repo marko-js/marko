@@ -21,8 +21,8 @@ var template_default = _template_persisted("b", (input) => {
 	_html("</main>");
 	_script($scope0_id, "b0");
 	$scope0_reason && _scope($scope0_id, {
-		f: input.show,
-		g: input.label,
+		f: _source_if($scope0_reason, 2) && input.show,
+		g: _source_if($scope0_reason, 1) && input.label,
 		i: n
 	});
 }, 1, 1);

@@ -38,19 +38,20 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
         (AccessorPrefix.ConditionalRenderer + accessor) as Accessor
       ] as string | undefined;
       if (!input && current?.split(" ")[0] === renderer) return;
-      renderer = resolveContent(renderer);
+      renderer = resolveContent(renderer, scope);
     }
   }
   (
     _dynamic_tag(
       (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
-      contentId ? () => resolveContent(contentId as string) : 0,
+      contentId
+        ? (owner: Scope) => resolveContent(contentId as string, owner)
+        : 0,
       varId
         ? () => (owner: Scope, value: unknown) =>
-            (
-              getRegisteredWithScope(varId as string, owner) as (
-                v: unknown,
-              ) => void
+            getRegisteredWithScope<(v: unknown) => void>(
+              varId as string,
+              owner,
             )(value)
         : 0,
       Array.isArray(input) as unknown as 1,
@@ -58,9 +59,11 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
   )(scope, renderer || undefined, input ? () => input : undefined);
 };
 
-function resolveContent(id: string) {
+// A shipped shell builds the content; a registered one (the page has its
+// renderer) binds to the site's scope, which owns body content.
+function resolveContent(id: string, owner: Scope) {
   const shell = shells[id];
   return shell
     ? getShellContent(shell, id)
-    : (getRegisteredWithScope(id) as Renderer);
+    : getRegisteredWithScope<Renderer>(id, owner);
 }

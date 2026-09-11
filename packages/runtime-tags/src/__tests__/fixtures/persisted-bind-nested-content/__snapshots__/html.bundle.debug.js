@@ -89,7 +89,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		}, "__tests__/template.marko", "3:2");
 	}, $scope0_id) });
 	$scope0_reason && _scope($scope0_id, {
-		store_set: store?.set,
+		store_set: _source_if($scope0_reason, 0) && store?.set,
 		"#childScope/0": _existing_scope($childScope),
 		"ClosureScopes:store_set": $store_set__closures,
 		"ClosureScopes:input_show": $input_show__closures,

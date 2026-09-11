@@ -63,8 +63,8 @@ var template_default = _template_persisted("a", (input) => {
 	badge_default({ label: input.badge });
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		g: input.summary,
-		h: input.detail,
+		g: _source_if($scope0_reason, 2) && input.summary,
+		h: _source_if($scope0_reason, 0) && input.detail,
 		k: $input_detail__closures,
 		c: _existing_scope($childScope)
 	});

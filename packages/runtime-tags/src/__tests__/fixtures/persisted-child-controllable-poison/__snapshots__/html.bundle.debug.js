@@ -28,7 +28,7 @@ var counter_default = _template_persisted("__tests__/tags/counter/index.marko", 
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/counter/index.marko_1*shell"], $scope0_owned, 1);
 	$scope0_reason ? _scope($scope0_id, {
-		input_onCount: input.onCount,
+		input_onCount: _source_if($scope0_reason, 1) && input.onCount,
 		input_step: input.step
 	}, "__tests__/tags/counter/index.marko", 0, {
 		input_onCount: ["input.onCount"],

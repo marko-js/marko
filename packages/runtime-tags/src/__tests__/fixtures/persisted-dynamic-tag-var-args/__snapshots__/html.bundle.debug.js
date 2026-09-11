@@ -37,8 +37,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_var($scope0_id, "#scopeOffset/1", $inputoncounternull_scope, "__tests__/template.marko_0_n#8/var");
 	_html(`<p>${_patch_text($scope0_id, "#text/2", n, void 0, $scope0_owned, 0)}</p></main>`);
 	$scope0_reason && _scope($scope0_id, {
-		input_on: input.on,
-		input_start: input.start
+		input_on: _source_if($scope0_reason, 2) && input.on,
+		input_start: _source_if($scope0_reason, 1) && input.start
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_start: ["input.start"]

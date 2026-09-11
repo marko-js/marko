@@ -65,7 +65,7 @@ var template_default = _template_persisted("b", (input) => {
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("b0", $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		h: item,
+		h: _source_if($scope0_reason, 2) && item,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2),
 		j: $item__closures,

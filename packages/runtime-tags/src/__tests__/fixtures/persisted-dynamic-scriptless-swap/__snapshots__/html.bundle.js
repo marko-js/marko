@@ -9,7 +9,7 @@ var template_default = _template_persisted("a", (input) => {
 	_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, $sg__input_mode__OR__input_label, _patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, $scope0_owned, 0));
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		d: input.mode,
-		e: input.label
+		d: _source_if($scope0_reason, 2) && input.mode,
+		e: _source_if($scope0_reason, 1) && input.label
 	});
 }, 1, 1);

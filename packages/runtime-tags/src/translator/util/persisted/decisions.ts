@@ -1,7 +1,7 @@
 // Per-tag patch decisions, all derived on demand from analyze facts
 // (nothing is stored on the AST).
 import { types as t } from "@marko/compiler";
-import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import {
   getKnownTagSection,
@@ -11,12 +11,32 @@ import {
   kTagVar,
 } from "../known-tag";
 import { some } from "../optional";
-import { getCanonicalBinding } from "../references";
+import { getCanonicalBinding, type ReferencedExtra } from "../references";
 import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "../serialize-reasons";
-import { inStatefulBranch } from "./structure";
+import { TagNameType } from "../tag-name-type";
+import { inResumedStructure, inStatefulBranch } from "./structure";
+
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    /** The value of a native tag's `content=` attribute. */
+    contentAttr?: true;
+  }
+}
+
+// Whether the read's tag writes patch entries naming what it renders: a
+// server-owned dynamic tag, `content=` or a content spread, unless resumed.
+export function isPatchedSite(read: ReferencedExtra) {
+  const tagExtra = read.merged || read;
+  if (inResumedStructure(read.section)) return false;
+  // A dynamic tag's extra merges its name, attrs, args and attr tags.
+  if (tagExtra.tagNameType === TagNameType.DynamicTag) {
+    return !hasStateSource(tagExtra);
+  }
+  return (!!read.contentAttr && !hasStateSource(read)) || !!read.attrSetSpread;
+}
 
 // A dynamic tag rendering only `input` content, named by one input property
 // through any alias; needs resolved references (finalize or later).
@@ -48,23 +68,7 @@ export function isServerOwnedDynamicTag(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   if (t.isStringLiteral(node.name)) return false;
   // Name, attribute, spread and argument reads all merge into the tag extra.
-  if (hasStateSource(node.extra)) return false;
-  let attrTagState = false;
-  const checkAttrTags = (body: t.NodePath<t.MarkoTagBody>) => {
-    for (const child of body.get("body")) {
-      if (child.isMarkoTag() && isAttributeTag(child)) {
-        for (const attr of child.node.attributes) {
-          if (attr.type === "MarkoAttribute") {
-            attrTagState ||= hasStateSource(attr.value.extra);
-          }
-        }
-        attrTagState ||= hasStateSource(child.node.extra);
-        checkAttrTags(child.get("body"));
-      }
-    }
-  };
-  checkAttrTags(tag.get("body"));
-  return !attrTagState;
+  return !hasStateSource(node.extra);
 }
 
 export function hasStateSource(extra: t.NodeExtra | undefined) {
