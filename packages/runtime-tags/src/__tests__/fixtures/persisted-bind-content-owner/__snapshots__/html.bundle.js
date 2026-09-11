@@ -69,7 +69,7 @@ var template_default = _template_persisted("a", (input) => {
 		$sg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_reason && _scope($scope0_id, {
-		j: store?.set,
+		j: _source_if($scope0_reason, 0) && store?.set,
 		a: _existing_scope($childScope),
 		l: $store_set__closures,
 		k: $input_show__closures,

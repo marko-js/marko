@@ -7,8 +7,8 @@ var combo_default = _template_persisted("__tests__/tags/combo/index.marko", (inp
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label + input.qty, void 0, $scope0_owned, 0)}</p>`);
 	$scope0_reason && _scope($scope0_id, {
-		input_label: input.label,
-		input_qty: input.qty
+		input_label: _source_if($scope0_reason, 2) && input.label,
+		input_qty: _source_if($scope0_reason, 1) && input.qty
 	}, "__tests__/tags/combo/index.marko", 0, {
 		input_label: ["input.label"],
 		input_qty: ["input.qty"]

@@ -3,6 +3,7 @@ import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import * as ShellBlocker from "./constants/shell-blocker";
 import normalizeStringExpression from "./normalize-string-expression";
+import { contentIsPatched, contentMayConstruct } from "./persisted/refresh";
 import { isBranchPathSection, isStatefulBranch } from "./persisted/structure";
 import { addRuntimeFeatureAsset } from "./runtime";
 import {
@@ -79,7 +80,7 @@ export function buildShells() {
       }
     } else if (
       !isAwaitBody(section) &&
-      (!interactive || !getSectionRegisterReasons(section)) &&
+      contentNeedsRecord(section, interactive) &&
       isShellExpressible(section)
     ) {
       const chain: Section[] = [];
@@ -199,7 +200,31 @@ function isStructureExpressible(section: Section, visiting: Set<Section>) {
       !child.isBranch &&
       !child.isBoundary &&
       !child.contentRecord &&
-      !(child.boundaryContent && interactive),
+      !(child.boundaryContent && interactive) &&
+      // Content nothing names or rebuilds leaves nothing for a shell to lack.
+      contentNeedsRecord(child, interactive),
+  );
+}
+
+// A scriptless page has only records; elsewhere a record serves content a
+// site names or a patch may rebuild, or a renderer that cannot mount a child.
+function contentNeedsRecord(
+  section: Section,
+  interactive: boolean | undefined,
+) {
+  return (
+    !interactive ||
+    (!getSectionRegisterReasons(section) &&
+      (contentIsPatched(section) || contentMayConstruct(section))) ||
+    (hasPatchedChild(section) && contentMayConstruct(section))
+  );
+}
+
+// A known child site in a non-stateful section pairs from patches; the
+// section's client renderer never mounts it, so a construct needs the record.
+function hasPatchedChild(section: Section) {
+  return !!section.structure?.some(
+    (op) => typeof op === "object" && op.kind === StructureKind.Child,
   );
 }
 

@@ -16,14 +16,21 @@ import {
   some,
 } from "../optional";
 import { type Binding, getCanonicalBinding, type Sources } from "../references";
-import { forEachSection, type Section } from "../sections";
+import {
+  forEachSection,
+  getSectionRegisterReasons,
+  type Section,
+} from "../sections";
+import { isStableExpr } from "../serialize-guard";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
-import { getChildPatchPlan } from "./decisions";
+import { getChildPatchPlan, isPatchedSite } from "./decisions";
 import {
   getParamUpstreamChain,
+  inResumedStructure,
   isBranchPathSection,
   isStatefulBranch,
+  someContentRead,
 } from "./structure";
 
 // Stable wire/registry key for a fill: template id plus a program-wide fill
@@ -428,4 +435,83 @@ function patchFills(binding: Binding, seen = new Set<Binding>()): boolean {
   // A branch's own param (a loop item) arrives with the structure.
   if (isSectionParam(root)) return true;
   return every(root.sources?.param, (param) => patchFills(param, seen));
+}
+
+// Whether a patch may rebuild this content: its site can diverge, a consumer
+// renders it in constructible structure, or an enclosing branch constructs.
+const mayConstruct = new WeakMap<Section, boolean>();
+export function contentMayConstruct(section: Section): boolean {
+  let result = mayConstruct.get(section);
+  if (result === undefined) {
+    mayConstruct.set(section, false);
+    result =
+      sectionMayConstruct(section) ||
+      (!!section.parent && enclosingMayConstruct(section.parent));
+    mayConstruct.set(section, result);
+  }
+  return result;
+}
+
+// Whether any consumer's site names this content in a patch entry (a
+// boundary's records name what they render); an unknown consumer may.
+const isPatched = new WeakMap<Section, boolean>();
+export function contentIsPatched(section: Section): boolean {
+  let result = isPatched.get(section);
+  if (result === undefined) {
+    isPatched.set(section, false);
+    const { downstream } = section;
+    result =
+      !downstream?.binding ||
+      someContentRead(
+        downstream.binding,
+        downstream.properties,
+        (read) =>
+          isPatchedSite(read) ||
+          !!read.section.boundaryContent ||
+          !!read.section.isBoundary,
+      );
+    isPatched.set(section, result);
+  }
+  return result;
+}
+
+function sectionMayConstruct(section: Section): boolean {
+  if (section.isBranch) return !inResumedStructure(section);
+  if (section.isBoundary) return enclosingMayConstruct(section);
+  if (section.upstreamExpression) {
+    // A dynamic tag body: the site re-renders it when its upstream changes.
+    return (
+      !isStableExpr(section.upstreamExpression) && !inResumedStructure(section)
+    );
+  }
+  const { downstream } = section;
+  // A known consumer decides by where it renders the content; an unknown
+  // one may do anything.
+  return (
+    !downstream?.binding ||
+    someContentRead(downstream.binding, downstream.properties, (read) =>
+      enclosingMayConstruct(read.section),
+    )
+  );
+}
+
+function enclosingMayConstruct(section: Section): boolean {
+  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+    if (cur.isBranch) return !inResumedStructure(cur);
+    if (cur.upstreamExpression || cur.downstream) {
+      return contentMayConstruct(cur);
+    }
+  }
+  return false;
+}
+
+// Resumed content (registered, no record stands in) that a patched site
+// names through its owner binding: the only case that writes a bind.
+export function contentIsOwnerBound(bodySection: Section | undefined) {
+  return (
+    !!bodySection &&
+    !bodySection.contentRecord &&
+    !!getSectionRegisterReasons(bodySection) &&
+    contentIsPatched(bodySection)
+  );
 }

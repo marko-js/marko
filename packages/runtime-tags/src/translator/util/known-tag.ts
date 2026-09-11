@@ -34,6 +34,7 @@ import {
 import { getChildPatchPlan } from "./persisted/decisions";
 import { addPersistedChildRenderer } from "./persisted/intrinsics";
 import { onFinalizePersisted } from "./persisted/lifecycle";
+import { contentIsOwnerBound } from "./persisted/refresh";
 import {
   inStatefulBranch,
   readsOnlyUpstream,
@@ -78,6 +79,7 @@ import {
   getSectionForBody,
   type Section,
   startSection,
+  type ParamSerializeReasonGroups,
 } from "./sections";
 import {
   getOwnershipGroupValue,
@@ -174,8 +176,11 @@ export function knownTagAnalyze(
     onFinalizePersisted(() => {
       if (!inStatefulBranch(section)) {
         addRuntimeFeatureAsset("patch-child");
-        // A construct seeds the tag var through the bind channel.
-        if (hasVar) addRuntimeFeatureAsset("patch-value-bind");
+        // A construct seeds the tag var through the bind channel; the
+        // child may hand resumed content to a patched site.
+        if (hasVar || contentIsOwnerBound(getSectionForBody(tagBody))) {
+          addRuntimeFeatureAsset("patch-value-bind");
+        }
       }
     });
   }
@@ -336,7 +341,12 @@ export function knownTagTranslateHTML(
         // mask (needed exactly when a `_must_render` patch renders it).
         const groups = getParamGroupSources(tagExtra);
         if (groups) {
-          childSerializeReasonExpr = buildOwnershipMaskExpr(section, groups);
+          childSerializeReasonExpr = buildOwnershipMaskExpr(
+            section,
+            childScopeBinding,
+            contentSection.paramReasonGroups,
+            groups,
+          );
         }
       }
     } else if (contentSection.paramReasonGroups.length === 1) {
@@ -507,7 +517,12 @@ export function knownTagTranslateDOM(
   // program, so the feature import rides both outputs.
   if (isPersisted() && !inStatefulBranch(getSection(tag))) {
     importRuntimeFeature("patch-child");
-    if (tag.node.var) importRuntimeFeature("patch-value-bind");
+    if (
+      tag.node.var ||
+      contentIsOwnerBound(getSectionForBody(tag.get("body")))
+    ) {
+      importRuntimeFeature("patch-value-bind");
+    }
     for (const group of getParamGroupSources(extra) || []) {
       if (
         group.sources?.state &&
@@ -677,10 +692,12 @@ export function getParamGroupSources(
 // dynamic), or undefined when the all-server default is equivalent.
 function buildOwnershipMaskExpr(
   section: Section,
+  childScopeBinding: Binding,
+  reasonGroups: ParamSerializeReasonGroups,
   groups: ParamGroupSources[],
 ): t.Expression | undefined {
   const rootSection = getRootSection(section);
-  const values = groups.map(({ sources }) => {
+  const values = groups.map(({ sources }, i) => {
     if (sources?.state) return hasParamSource(sources) ? 3 : 1;
     let subset: Opt<Binding>;
     forEach(sources?.param, (binding) => {
@@ -688,7 +705,14 @@ function buildOwnershipMaskExpr(
         subset = bindingUtil.add(subset, binding);
       }
     });
-    if (!subset) return hasParamSource(sources) ? 2 : 0;
+    if (!subset) {
+      if (hasParamSource(sources)) return 2;
+      // An unfed group (a call-site constant) the child still reads
+      // client-side is the server's to supply; one it never reads ships not.
+      return getSerializeReason(section, childScopeBinding, reasonGroups[i].id)
+        ? 2
+        : 0;
+    }
     const composed = getOwnershipGroupValue(
       rootSection,
       subset as NonNullable<Sources["param"]>,

@@ -14,7 +14,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_html(`<li>${_text_resume($scope2_id, "#text/0", item)}${_text_resume($scope2_id, "#text/1", s, 2)}</li>`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6");
 		}, 0, $scope1_id, "#text/0", 1, $sg__input_list, $sg__input_list, 0, 1);
-		_scope($scope1_id, { item }, "__tests__/template.marko", "3:4", { item: "3:8" });
+		_scope($scope1_id, { item: _source_if($scope0_reason, 0) && item }, "__tests__/template.marko", "3:4", { item: "3:8" });
 	}, 0, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");

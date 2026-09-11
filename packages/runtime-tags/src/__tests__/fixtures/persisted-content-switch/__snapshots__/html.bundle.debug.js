@@ -88,7 +88,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {
-		input_kind: input.kind,
+		input_kind: _source_if($scope0_reason, 0) && input.kind,
 		input_inner: input.inner,
 		open,
 		"ClosureScopes:input_kind": $input_kind__closures,

@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 			_html(`<li>${_text_resume($scope2_id, "a", item)}${_text_resume($scope2_id, "b", s, 2)}</li>`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 		}, 0, $scope1_id, "a", 1, $sg__input_list, $sg__input_list, 0, 1);
-		_scope($scope1_id, { c: item });
+		_scope($scope1_id, { c: _source_if($scope0_reason, 0) && item });
 	}, 0, $scope0_id, "a");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");

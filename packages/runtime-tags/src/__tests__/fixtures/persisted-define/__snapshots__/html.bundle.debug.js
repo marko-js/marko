@@ -19,8 +19,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	thing.content({ x: input.n });
 	_html(`<div${_patch_attr_class($scope0_id, "#div/1", [input.cls, { on: input.on }], $scope0_owned, 0)}${_patch_attr_style($scope0_id, "#div/1", { color: input.color }, $scope0_owned, 5)}>x</div>${_el_resume($scope0_id, "#div/1")}`);
 	$scope0_reason && _scope($scope0_id, {
-		input_cls: input.cls,
-		input_on: input.on,
+		input_cls: _source_if($scope0_reason, 4) && input.cls,
+		input_on: _source_if($scope0_reason, 3) && input.on,
 		"ClosureScopes:input_title": $input_title__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

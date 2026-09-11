@@ -26,7 +26,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_store_set#9/init!__tests__/template.marko_3;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $si__input_show = _source_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	_for_of(["x", "y"], (name) => {
@@ -59,13 +59,13 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				}
 			}, $scope2_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_owned, 0);
 			_subscribe(_unfilled_if($scope0_owned, 0) && $input_show__closures, _scope($scope2_id, {
-				other,
+				other: $si__input_show && other,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "4:4", { other: "4:8" }));
 		}, (n) => n, $scope1_id, "#text/4", 1, 1, 0, void 0, void 0, "__tests__/template.marko_2*shell", 0, 0);
 		_scope($scope1_id, {
-			name,
-			store_set: store?.set,
+			name: $si__input_show && name,
+			store_set: $si__input_show && store?.set,
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope),
 			"ClosureScopes:store_set": $for_content__store_set__closures

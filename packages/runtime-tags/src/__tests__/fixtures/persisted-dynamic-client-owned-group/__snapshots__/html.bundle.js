@@ -19,8 +19,8 @@ var picker_default = _template_persisted("c", (input) => {
 	const $input2 = { label: input.label };
 	_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, $sg__input_on__OR__input_label, _patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, $scope0_owned, 0));
 	$scope0_reason && _scope($scope0_id, {
-		d: input.on,
-		e: input.label
+		d: _source_if($scope0_reason, 2) && input.on,
+		e: _source_if($scope0_reason, 1) && input.label
 	});
 }, 0, 1);
 

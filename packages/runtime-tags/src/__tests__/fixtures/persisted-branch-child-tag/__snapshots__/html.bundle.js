@@ -16,7 +16,7 @@ _shells({
 	a1: "a1,<em>closed</em>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 2);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 2), $si__input_show = _source_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -48,8 +48,8 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, {
-		g: input.title,
-		h: input.note,
+		g: $si__input_show && input.title,
+		h: $si__input_show && input.note,
 		i: count
 	});
 }, 1, () => [badge_default]);

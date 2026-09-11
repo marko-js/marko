@@ -4,7 +4,7 @@ _shells({
 	a0: "a0;D l%;<p> </p><!><!>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 4), $sg__input_show = _source_guard($scope0_reason, 2);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_inner = _source_guard($scope0_reason, 4), $sg__input_show = _source_guard($scope0_reason, 2), $si__input_show = _source_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -33,8 +33,8 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 2);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason ? _scope($scope0_id, {
-		e: input.title,
-		f: input.inner,
+		e: $si__input_show && input.title,
+		f: $si__input_show && input.inner,
 		g: input.suffix,
 		j: $input_suffix__closures
 	}) : _filled_guard($scope0_owned, 5) && _patch_write($scope0_id, "g", input.suffix);

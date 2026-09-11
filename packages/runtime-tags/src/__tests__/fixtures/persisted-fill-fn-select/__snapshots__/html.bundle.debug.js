@@ -3,7 +3,7 @@ const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_upper = _source_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const up = _resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
 	const low = _resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
@@ -22,9 +22,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason ? _scope($scope0_id, {
 		input_title: input.title,
-		input_upper: input.upper,
-		up,
-		low,
+		input_upper: _source_if($scope0_reason, 1) && input.upper,
+		up: $si__input_upper && up,
+		low: $si__input_upper && low,
 		pick,
 		open
 	}, "__tests__/template.marko", 0, {

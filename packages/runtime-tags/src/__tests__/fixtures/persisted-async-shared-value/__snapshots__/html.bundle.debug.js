@@ -71,7 +71,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_3*content", $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		item,
+		item: _source_if($scope0_reason, 2) && item,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2),
 		"ClosureScopes:item": $item__closures,

@@ -10,8 +10,8 @@ import { getRegisteredWithScope, patchers } from "./resume";
 // any kind; the index is the datum, so no prefix.
 for (let digit = 10; --digit;) {
   patchers[digit] = (scope, key, id) => {
-    flushBinds[key] = (
-      getRegisteredWithScope(id as string) as (scope: Scope) => unknown
+    flushBinds[key] = getRegisteredWithScope<(scope: Scope) => unknown>(
+      id as string,
     )(scope);
   };
 }

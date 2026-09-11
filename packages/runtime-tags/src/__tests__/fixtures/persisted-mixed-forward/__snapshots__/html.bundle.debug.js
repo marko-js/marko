@@ -7,8 +7,8 @@ var kid_default = _template_persisted("__tests__/tags/kid.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "#text/0", input.a + input.b, void 0, $scope0_owned, 0)}</span>`);
 	$scope0_reason && _scope($scope0_id, {
-		input_a: input.a,
-		input_b: input.b
+		input_a: _source_if($scope0_reason, 2) && input.a,
+		input_b: _source_if($scope0_reason, 1) && input.b
 	}, "__tests__/tags/kid.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]

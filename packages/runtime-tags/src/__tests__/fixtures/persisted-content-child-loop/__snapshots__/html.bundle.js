@@ -47,7 +47,7 @@ var template_default = _template_persisted("a", (input) => {
 	});
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		e: input.note,
+		e: _source_if($scope0_reason, 1) && input.note,
 		f: $input_note__closures,
 		a: _existing_scope($childScope)
 	});

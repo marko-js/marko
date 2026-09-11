@@ -24,7 +24,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, {
-		f: input.title,
+		f: _source_if($scope0_reason, 0) && input.title,
 		g: count
 	});
 }, 1, 0);

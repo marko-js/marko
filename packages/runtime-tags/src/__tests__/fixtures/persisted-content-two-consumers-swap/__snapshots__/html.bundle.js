@@ -20,7 +20,7 @@ _shells({
 	a2: /*@__PURE__*/ ((_w0, _w1) => `a2;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template)
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 5);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 5), $si__input_show = _source_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -63,8 +63,8 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2"], $scope0_owned, 5);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		f: input.note,
-		h: input.t2,
+		f: $si__input_show && input.note,
+		h: $si__input_show && input.t2,
 		i: $input_note__closures,
 		a: _existing_scope($childScope)
 	});

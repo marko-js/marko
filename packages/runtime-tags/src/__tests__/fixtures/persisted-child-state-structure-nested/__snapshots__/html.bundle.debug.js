@@ -28,8 +28,8 @@ var panel_default = _template_persisted("__tests__/tags/panel/index.marko", (inp
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/panel/index.marko_1*shell"], $scope0_owned, 2);
 	$scope0_reason ? _scope($scope0_id, {
-		input_inner: input.inner,
-		input_title: input.title,
+		input_inner: _source_if($scope0_reason, 2) && input.inner,
+		input_title: _source_if($scope0_reason, 0) && input.title,
 		"ClosureScopes:input_title": $input_title__closures
 	}, "__tests__/tags/panel/index.marko", 0, {
 		input_inner: ["input.inner"],

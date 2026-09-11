@@ -48,7 +48,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, 0, $scope0_id, "#main/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_items)}`);
 	$scope0_reason && _scope($scope0_id, {
-		input_prefix: input.prefix,
+		input_prefix: _source_if($scope0_reason, 1) && input.prefix,
 		"ClosureScopes:input_prefix": $input_prefix__closures
 	}, "__tests__/template.marko", 0, { input_prefix: ["input.prefix"] });
 }, 1, 1);

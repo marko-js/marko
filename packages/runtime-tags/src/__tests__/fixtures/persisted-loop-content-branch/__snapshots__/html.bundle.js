@@ -57,7 +57,7 @@ var template_default = _template_persisted("a", (input) => {
 			}, $scope1_id)
 		});
 		_scope($scope1_id, {
-			f: item?.n,
+			f: _source_if($scope0_reason, 0) && item?.n,
 			h: $for_content__item_n__closures,
 			g: $for_content__item_alt__closures,
 			a: _existing_scope($childScope)

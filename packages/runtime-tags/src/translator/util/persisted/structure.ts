@@ -5,8 +5,8 @@ import type { types as t } from "@marko/compiler";
 import { kDirectContent } from "../binding-prop-tree";
 import { isBranchUpstream } from "../branch-tag";
 import { isPersisted } from "../marko-config";
-import { every, forEach, some, toArray } from "../optional";
-import type { Binding, Sources } from "../references";
+import { every, forEach, type Opt, some, toArray } from "../optional";
+import type { Binding, ReferencedExtra, Sources } from "../references";
 import { ensureReasonGroups, type Section } from "../sections";
 import {
   getSerializeSourcesForExpr,
@@ -55,56 +55,85 @@ export function childRendersStateful(
     : rendersStatefulProp(input, prop);
 }
 
-// A binding (or a property of it) rendered as a tag inside stateful
-// structure, here or by the child binding a read is upstream of.
-const rendering = new Set<Binding>();
-function rendersStateful(binding: Binding): boolean {
-  if (rendering.has(binding)) return false;
-  rendering.add(binding);
+// The one walk over a content body's consumers (the binding it feeds
+// through its property path, aliases, bindings its reads hand it to).
+export function someContentRead(
+  binding: Binding,
+  properties: Opt<string>,
+  leaf: (read: ReferencedExtra) => boolean,
+) {
+  const props = toArray(properties, (prop: string) => prop);
+  let target: Binding | undefined = binding;
+  for (let i = 0; target && i < props.length; i++) {
+    if (someRead(target, leaf, new Set())) return true;
+    target = target.propertyAliases.get(props[i]);
+  }
+  return !!target && someBindingRead(target, leaf);
+}
+export function someBindingRead(
+  binding: Binding,
+  leaf: (read: ReferencedExtra) => boolean,
+  visiting = new Set<Binding>(),
+): boolean {
+  if (visiting.has(binding)) return false;
+  visiting.add(binding);
   try {
-    if (readsRenderStateful(binding)) return true;
+    if (someRead(binding, leaf, visiting)) return true;
     for (const alias of binding.propertyAliases.values()) {
-      if (rendersStateful(alias)) return true;
+      if (someBindingRead(alias, leaf, visiting)) return true;
     }
     for (const alias of binding.aliases) {
-      if (rendersStateful(alias)) return true;
+      if (someBindingRead(alias, leaf, visiting)) return true;
     }
     return false;
   } finally {
-    rendering.delete(binding);
+    visiting.delete(binding);
   }
 }
-function rendersStatefulProp(binding: Binding, prop: string) {
-  // A whole read (`...input` onward) may hand any prop over.
-  if (readsRenderStateful(binding)) return true;
-  const alias = binding.propertyAliases.get(prop);
-  return !!alias && rendersStateful(alias);
-}
-// A read inside stateful structure renders there (directly, or by the
-// child it is upstream of); elsewhere only the child's own structure decides.
-function readsRenderStateful(binding: Binding) {
+function someRead(
+  binding: Binding,
+  leaf: (read: ReferencedExtra) => boolean,
+  visiting: Set<Binding>,
+) {
   for (const read of binding.reads) {
+    if (leaf(read)) return true;
     if (
-      (read[kDirectContent] || read.downstream) &&
-      inStatefulBranch(read.section)
+      some(read.downstream, (downstream) =>
+        someBindingRead(downstream, leaf, visiting),
+      )
     ) {
       return true;
     }
-    if (some(read.downstream, rendersStateful)) return true;
   }
   return false;
 }
-// A tag body is stateful when the prop it is upstream of renders so in the child;
-// the last hop stays a prop query so whole reads of its owner count.
+
+// A read inside stateful structure renders the content there (directly, or
+// by the child it is upstream of).
+function rendersStatefulLeaf(read: ReferencedExtra) {
+  return (
+    !!(read[kDirectContent] || read.downstream) &&
+    inStatefulBranch(read.section)
+  );
+}
+function rendersStateful(binding: Binding) {
+  return someBindingRead(binding, rendersStatefulLeaf);
+}
+function rendersStatefulProp(binding: Binding, prop: string) {
+  return someContentRead(binding, prop, rendersStatefulLeaf);
+}
+// A tag body is stateful when the prop it is upstream of renders so in the
+// child; the last hop stays a prop query so whole reads of its owner count.
 function bodyRendersStateful(section: Section) {
   const downstream = section.downstream;
-  if (!downstream?.binding) return false;
-  const props = toArray(downstream.properties, (prop) => prop);
-  let target: Binding | undefined = downstream.binding;
-  for (let i = 0; target && i < props.length - 1; i++) {
-    target = target.propertyAliases.get(props[i]);
-  }
-  return !!target && rendersStatefulProp(target, props[props.length - 1]);
+  return (
+    !!downstream?.binding &&
+    someContentRead(
+      downstream.binding,
+      downstream.properties,
+      rendersStatefulLeaf,
+    )
+  );
 }
 
 // A branch body whose upstream has a state reason (or nested in one) and
@@ -126,13 +155,17 @@ export function isStatefulBranch(section: Section): boolean {
     computing.set(section, frame);
     const outerProvisionalAt = provisionalAt;
     provisionalAt = Infinity;
+    // A branch body or a dynamic tag body; a boundary body has no upstream
+    // of its own (its value settles, it never re-selects).
     const expr =
-      isPersisted() && section.isBranch
+      isPersisted() && !section.isBoundary
         ? section.upstreamExpression
         : undefined;
     const sources = expr && getSerializeSourcesForExpr(expr);
+    // A body the child renders stateful (any consumer), or one whose own
+    // upstream selects it from state.
     stateful =
-      (!expr && bodyRendersStateful(section)) ||
+      bodyRendersStateful(section) ||
       (!!expr &&
         (!!sources?.state || inStatefulBranch(section.parent)) &&
         every(expr.referencedBindings, upstreamSourcesFill));

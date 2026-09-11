@@ -43,7 +43,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, {
-		e: input.text,
+		e: _source_if($scope0_reason, 1) && input.text,
 		f: $input_text__closures
 	});
 }, 1, () => [widget_default]);

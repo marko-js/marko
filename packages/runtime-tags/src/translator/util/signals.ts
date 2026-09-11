@@ -25,6 +25,7 @@ import {
   toArray,
 } from "./optional";
 import {
+  contentMayConstruct,
   getFillRoot,
   getFillConditions,
   getLocalFillUpstreams,
@@ -82,6 +83,7 @@ import {
 import {
   getExprIfSerialized,
   getSerializeGuardForAny,
+  getValueIfSerialized,
   getFilledGuard,
   getPatchWriteOwnership,
   scopeReasonIdentifier,
@@ -1708,11 +1710,13 @@ function constructsWithInit(section: Section, closure: Binding) {
   );
 }
 
-// A branch body that ships a shell, so a patch may construct it.
+// A branch body that ships a shell, or content whose record a patch may
+// rebuild (a record kept only for reference never constructs).
 export function sectionConstructs(section: Section) {
   return (
     isPersisted() &&
-    section.isBranch &&
+    (section.isBranch ||
+      (section.contentRecord === true && contentMayConstruct(section))) &&
     !inResumedStructure(section) &&
     !section.shellBlocked &&
     !sectionHasServerEffect(section)
@@ -1991,12 +1995,22 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
-  // Under persisted the reason is binary and the whole scope write rides it,
-  // so per-property guards are redundant inside it.
+  // Under persisted the scope write rides the section (or root) reason:
+  // structural props need no guard, a binding's value keeps its group's.
   const persisted = isPersisted();
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (persisted || isSameReason(sectionSerializeReason, reason)) return expr;
     return getExprIfSerialized(section, reason, expr);
+  };
+  const onBranchPath =
+    persisted && !!section.parent && isBranchPathSection(section);
+  const ifValueSerialized = (reason: SerializeReason, expr: t.Expression) => {
+    if (!onBranchPath && isSameReason(sectionSerializeReason, reason)) {
+      return expr;
+    }
+    return persisted
+      ? getValueIfSerialized(section, reason, expr)
+      : getExprIfSerialized(section, reason, expr);
   };
 
   let debugVars: t.ObjectProperty[] | undefined;
@@ -2018,7 +2032,7 @@ export function writeHTMLResumeStatements(
       expr = t.objectExpression(props);
     }
     serializedProperties.push(
-      toObjectProperty(accessor, ifSerialized(reason, expr)),
+      toObjectProperty(accessor, ifValueSerialized(reason, expr)),
     );
 
     if (debug) {

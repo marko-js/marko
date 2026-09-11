@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_title = _source_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	let open = false;
@@ -36,8 +36,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				if ($scope0_reason) forOf(["p", "q"], (item) => {
 					const $scope3_id = _scope_id();
 					_html(`<span>${_text_resume($scope3_id, "#text/0", input.title + ":" + item)}</span>`);
-					_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope3_id, {
-						item,
+					_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, {
+						item: $si__input_title && item,
 						_: _scope_with_id($scope2_id)
 					}, "__tests__/template.marko", "5:8", { item: "5:12" }));
 				});

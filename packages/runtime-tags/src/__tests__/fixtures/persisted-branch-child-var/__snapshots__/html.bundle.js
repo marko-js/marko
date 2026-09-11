@@ -44,7 +44,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<button id=c>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_reason && _scope($scope0_id, {
-		g: input.label,
+		g: _source_if($scope0_reason, 1) && input.label,
 		h: count
 	});
 }, 1, () => [box_default]);

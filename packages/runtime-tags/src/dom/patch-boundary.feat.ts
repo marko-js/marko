@@ -213,7 +213,7 @@ function resolveBoundaryContent(id: string | 0, owner: Scope) {
   if (id === 0) return 0;
   const shell = shells[id];
   if (shell) return getShellContent(shell, id, owner);
-  return (getRegisteredWithScope(id) as (owner: Scope) => unknown)(owner);
+  return getRegisteredWithScope<(owner: Scope) => unknown>(id)(owner);
 }
 
 const applyChild = patchers[PatchKey.Child];
@@ -242,8 +242,9 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     value = partial;
     if (!scope[link]) {
       const shell = shells[contentId];
-      const renderer = ((shell && getShellContent(shell, contentId)) ||
-        getRegisteredWithScope(contentId)) as Renderer;
+      const renderer =
+        (shell && getShellContent(shell, contentId)) ||
+        getRegisteredWithScope<Renderer>(contentId);
       const marker = scope[accessor as Accessor] as ChildNode;
       const inside = marker.nodeType === 1;
       const parentNode = inside

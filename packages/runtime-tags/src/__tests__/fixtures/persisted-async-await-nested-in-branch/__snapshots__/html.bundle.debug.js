@@ -26,7 +26,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 					_subscribe(_unfilled_if($scope0_owned, 4) && $await_content__outer__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
 				}, 1, "__tests__/template.marko_2_#text#0/await");
 				$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 5) && $input_inner__closures, _scope($scope2_id, {
-					outer,
+					outer: _source_if($scope0_reason, 5) && outer,
 					_: _scope_with_id($scope1_id),
 					"ClosureScopes:outer": $await_content__outer__closures
 				}, "__tests__/template.marko", "3:6", { outer: "3:12" }));
@@ -39,8 +39,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {
-		input_outer: input.outer,
-		input_inner: input.inner,
+		input_outer: _source_if($scope0_reason, 3) && input.outer,
+		input_inner: _source_if($scope0_reason, 0) && input.inner,
 		"ClosureScopes:input_inner": $input_inner__closures
 	}, "__tests__/template.marko", 0, {
 		input_outer: ["input.outer"],

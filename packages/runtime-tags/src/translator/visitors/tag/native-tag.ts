@@ -347,8 +347,9 @@ export default {
           !node.body.body.length &&
           isBranchPathSection(tagSection)
         ) {
-          const contentValue = seen.content.value;
-          ensurePersistedWriteGroups(() => contentValue.extra || {});
+          const contentExtra = (seen.content.value.extra ??= {});
+          contentExtra.contentAttr = true;
+          ensurePersistedWriteGroups(() => contentExtra);
           addRuntimeFeatureAsset("patch-dynamic-tag");
         }
 

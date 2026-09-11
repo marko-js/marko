@@ -52,7 +52,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#text/4", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		store_set: store?.set,
+		store_set: _source_if($scope0_reason, 1) && store?.set,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { store_set: ["store.set", "1:8"] });
 }, 1, () => [store_default]);

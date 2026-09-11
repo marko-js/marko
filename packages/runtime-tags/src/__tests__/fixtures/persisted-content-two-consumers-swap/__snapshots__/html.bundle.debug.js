@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 5);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 5), $si__input_show = _source_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_html("<main>");
@@ -65,8 +65,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 5);
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		input_note: input.note,
-		input_t2: input.t2,
+		input_note: $si__input_show && input.note,
+		input_t2: $si__input_show && input.t2,
 		"ClosureScopes:input_note": $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

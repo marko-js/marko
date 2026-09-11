@@ -33,5 +33,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		}
 	}, $scope0_id, "#text/1", 1, $sg__input_outer, $sg__input_outer, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 2);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, { input_inner: input.inner }, "__tests__/template.marko", 0, { input_inner: ["input.inner"] });
+	$scope0_reason && _scope($scope0_id, { input_inner: _source_if($scope0_reason, 2) && input.inner }, "__tests__/template.marko", 0, { input_inner: ["input.inner"] });
 }, 1, 0);

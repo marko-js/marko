@@ -27,8 +27,8 @@ var panel_default = _template_persisted("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_owned, 2);
 	$scope0_reason ? _scope($scope0_id, {
-		e: input.inner,
-		f: input.title,
+		e: _source_if($scope0_reason, 2) && input.inner,
+		f: _source_if($scope0_reason, 0) && input.title,
 		h: $input_title__closures
 	}) : (_filled_guard($scope0_owned, 3) && _client_guard($scope0_owned, 2) && _patch_value($scope0_id, "b0", input.inner), _filled_guard($scope0_owned, 4) && (_client_guard($scope0_owned, 3) || _client_guard($scope0_owned, 2)) && _patch_value($scope0_id, "b1", input.title));
 }, 0, 0);

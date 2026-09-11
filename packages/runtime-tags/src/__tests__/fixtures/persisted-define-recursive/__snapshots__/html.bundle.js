@@ -7,7 +7,7 @@ var template_default = _template_persisted("a", (input) => {
 	const $input_x__closures = /* @__PURE__ */ new Set();
 	const foo = { content: _content_elide("a0", (n) => {
 		const $scope1_id = _scope_id();
-		const $sg__n = _source_guard(_persisted_reason(), 0);
+		const $scope1_reason = _persisted_reason(), $sg__n = _source_guard($scope1_reason, 0);
 		_html(`<b>${_patch_text($scope1_id, "a", input.x, void 0, $scope0_owned, 0)}</b>`);
 		_if(() => {
 			if (n) {
@@ -23,7 +23,7 @@ var template_default = _template_persisted("a", (input) => {
 			}
 		}, $scope1_id, "b", 1, $sg__n, $sg__n, void 0, void 0, [0]);
 		_subscribe(_unfilled_if($scope0_owned, 0) && $input_x__closures, _scope($scope1_id, {
-			d: n,
+			d: _source_if($scope1_reason, 0) && n,
 			_: _scope_with_id($scope0_id)
 		}));
 	}, $scope0_id) };

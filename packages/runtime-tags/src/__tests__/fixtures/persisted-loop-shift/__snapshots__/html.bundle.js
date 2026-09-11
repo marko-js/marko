@@ -26,7 +26,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<p>${_patch_text($scope0_id, "c", input.note, void 0, $scope0_owned, 2)}</p><button>Count ${_text_resume($scope0_id, "e", count, 2)}</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a2");
 	$scope0_reason && _scope($scope0_id, {
-		i: input.promo,
+		i: _source_if($scope0_reason, 1) && input.promo,
 		k: count
 	});
 }, 1, 0);

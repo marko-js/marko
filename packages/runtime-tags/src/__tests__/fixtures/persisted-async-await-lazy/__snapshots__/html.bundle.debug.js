@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_slow = _source_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_related__closures = new Set();
 	const $input_slow__closures = new Set();
@@ -37,9 +37,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`</footer><button>Count ${_text_resume($scope0_id, "#text/4", count, 2)}</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {
-		input_related: input.related,
-		input_slow: input.slow,
-		input_note: input.note,
+		input_related: $si__input_slow && input.related,
+		input_slow: _source_if($scope0_reason, 1) && input.slow,
+		input_note: $si__input_slow && input.note,
 		count,
 		"ClosureScopes:input_related": $input_related__closures,
 		"ClosureScopes:input_slow": $input_slow__closures
