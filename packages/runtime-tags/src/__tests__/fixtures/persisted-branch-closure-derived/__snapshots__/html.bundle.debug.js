@@ -23,7 +23,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {
 		count,
-		double
+		double: _source_if($scope0_reason, 1) && double
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		double: "2:8"

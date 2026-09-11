@@ -29,8 +29,8 @@ var template_default = _template_persisted("c", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "c0");
 	$scope0_reason && _scope($scope0_id, {
-		f: input.mode,
-		g: input.label,
+		f: _source_if($scope0_reason, 2) && input.mode,
+		g: _source_if($scope0_reason, 1) && input.label,
 		i: n
 	});
 }, 1, 1);

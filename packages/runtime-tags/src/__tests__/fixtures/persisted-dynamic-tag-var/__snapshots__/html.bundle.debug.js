@@ -36,8 +36,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_var($scope0_id, "#scopeOffset/1", $inputwhichonetwo_scope, "__tests__/template.marko_0_x#8/var");
 	_html(`<p>${_patch_text($scope0_id, "#text/2", x, void 0, $scope0_owned, 0)}</p>`);
 	$scope0_reason && _scope($scope0_id, {
-		input_which: input.which,
-		input_a: input.a
+		input_which: _source_if($scope0_reason, 2) && input.which,
+		input_a: _source_if($scope0_reason, 1) && input.a
 	}, "__tests__/template.marko", 0, {
 		input_which: ["input.which"],
 		input_a: ["input.a"]

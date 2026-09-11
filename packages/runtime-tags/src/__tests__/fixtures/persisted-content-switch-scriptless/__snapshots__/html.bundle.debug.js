@@ -53,7 +53,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id) });
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		input_kind: input.kind,
+		input_kind: _source_if($scope0_reason, 0) && input.kind,
 		"ClosureScopes:input_kind": $input_kind__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { input_kind: ["input.kind"] });

@@ -27,5 +27,5 @@ var template_default = _template_persisted("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 1);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, { i: handler });
+	$scope0_reason && _scope($scope0_id, { i: _source_if($scope0_reason, 1) && handler });
 }, 1, 0);

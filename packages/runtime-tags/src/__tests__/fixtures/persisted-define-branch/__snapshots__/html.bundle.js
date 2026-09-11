@@ -1,14 +1,11 @@
 // template.marko
-_shells({
-	a0: "a0;D ;<em> </em>",
-	a: "a !a1;b%b ;<!><!><button>+</button>"
-});
+_shells({ a: "a !a1;b%b ;<!><!><button>+</button>" });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();
 	const $input_x__closures = /* @__PURE__ */ new Set();
 	let s = 1;
-	const foo = { content: _content_elide("a0", () => {
+	const foo = { content: _content("a0", () => {
 		const $scope1_id = _scope_id();
 		_persisted_reason();
 		_html(`<em>${_patch_text($scope1_id, "a", input.x, void 0, $scope0_owned, 0)}</em>`);

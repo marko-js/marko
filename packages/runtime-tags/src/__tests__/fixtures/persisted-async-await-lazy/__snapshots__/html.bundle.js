@@ -9,7 +9,7 @@ _shells({
 	a: "a !a6;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_slow = _source_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_related__closures = /* @__PURE__ */ new Set();
 	const $input_slow__closures = /* @__PURE__ */ new Set();
@@ -35,9 +35,9 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`</footer><button>Count ${_text_resume($scope0_id, "e", count, 2)}</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a6");
 	$scope0_reason && _scope($scope0_id, {
-		i: input.related,
-		j: input.slow,
-		k: input.note,
+		i: $si__input_slow && input.related,
+		j: _source_if($scope0_reason, 1) && input.slow,
+		k: $si__input_slow && input.note,
 		m: count,
 		n: $input_related__closures,
 		o: $input_slow__closures

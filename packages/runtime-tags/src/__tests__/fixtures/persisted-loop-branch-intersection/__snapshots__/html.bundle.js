@@ -30,7 +30,7 @@ var template_default = _template_persisted("a", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_reason ? _scope($scope0_id, {
-		f: input.flag,
+		f: _source_if($scope0_reason, 1) && input.flag,
 		g: input.suffix,
 		h: count,
 		j: $input_suffix__closures,

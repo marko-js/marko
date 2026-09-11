@@ -4,7 +4,7 @@ _shells({
 	a: "a;D bD ;<main><section></section><p> </p></main>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_mode = _source_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const frag = { content: _content_elide("a0", () => {
@@ -19,8 +19,8 @@ var template_default = _template_persisted("a", (input) => {
 	_attr_content("a", $scope0_id, $content);
 	_html(`</section>${_el_resume($scope0_id, "a")}<p>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_owned, 1)}</p></main>`);
 	$scope0_reason && _scope($scope0_id, {
-		e: input.note,
-		h: frag?.content,
+		e: $si__input_mode && input.note,
+		h: $si__input_mode && frag?.content,
 		j: $input_note__closures
 	});
 }, 1, 0);

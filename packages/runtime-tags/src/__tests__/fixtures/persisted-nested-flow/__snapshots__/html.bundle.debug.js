@@ -65,8 +65,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	badge_default({ label: input.badge });
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		input_summary: input.summary,
-		input_detail: input.detail,
+		input_summary: _source_if($scope0_reason, 2) && input.summary,
+		input_detail: _source_if($scope0_reason, 0) && input.detail,
 		"ClosureScopes:input_detail": $input_detail__closures,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

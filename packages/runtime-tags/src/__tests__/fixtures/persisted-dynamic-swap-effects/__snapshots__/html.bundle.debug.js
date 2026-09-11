@@ -36,8 +36,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, $sg__input_mode__OR__input_label, _patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, $scope0_owned, 0));
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		input_mode: input.mode,
-		input_label: input.label
+		input_mode: _source_if($scope0_reason, 2) && input.mode,
+		input_label: _source_if($scope0_reason, 1) && input.label
 	}, "__tests__/template.marko", 0, {
 		input_mode: ["input.mode"],
 		input_label: ["input.label"]

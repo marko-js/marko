@@ -36,8 +36,7 @@ patchers[PatchKey.Bind] = (scope, _key, entry) => {
           : source[link as Accessor]
       ) as Scope;
     }
-    scope[slot] = (
-      getRegisteredWithScope(registerId) as (scope: Scope) => unknown
-    )(source);
+    scope[slot] =
+      getRegisteredWithScope<(scope: Scope) => unknown>(registerId)(source);
   });
 };

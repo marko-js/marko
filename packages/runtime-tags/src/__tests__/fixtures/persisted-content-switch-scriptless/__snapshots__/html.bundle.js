@@ -50,7 +50,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id) });
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, {
-		d: input.kind,
+		d: _source_if($scope0_reason, 0) && input.kind,
 		e: $input_kind__closures,
 		a: _existing_scope($childScope)
 	});

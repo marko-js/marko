@@ -6,8 +6,8 @@ var field_default = _template_persisted("b", (input) => {
 	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange)}${_patch_bind($scope0_id, "Ea", input.valueChange, 0, 0)}${_patch_control($scope0_id, "a", 2, input.value, $scope0_owned, 0)}>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	$scope0_reason && _scope($scope0_id, {
-		d: input.value,
-		e: input.valueChange
+		d: _source_if($scope0_reason, 1) && input.value,
+		e: _source_if($scope0_reason, 0) && input.valueChange
 	});
 }, 0, 0);
 

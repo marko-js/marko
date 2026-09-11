@@ -6,8 +6,8 @@ var combo_default = _template_persisted("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "a", input.label + input.qty, void 0, $scope0_owned, 0)}</p>`);
 	$scope0_reason && _scope($scope0_id, {
-		d: input.label,
-		e: input.qty
+		d: _source_if($scope0_reason, 2) && input.label,
+		e: _source_if($scope0_reason, 1) && input.qty
 	});
 }, 0, 0);
 

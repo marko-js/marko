@@ -39,5 +39,5 @@ var template_default = _template_persisted("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_reason && _scope($scope0_id, { f: input.label });
+	$scope0_reason && _scope($scope0_id, { f: _source_if($scope0_reason, 1) && input.label });
 }, 1, () => [$Child_withLoadAssets]);

@@ -12,10 +12,7 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-_shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,text",
-	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>t</button></main>"
-});
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

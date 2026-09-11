@@ -23,5 +23,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
 	_html(`<p>${_patch_text($scope0_id, "#text/1", input.note, void 0, $scope0_owned, 3)}</p></main>`);
-	$scope0_reason && _scope($scope0_id, { input_nonce: input.nonce }, "__tests__/template.marko", 0, { input_nonce: ["input.nonce"] });
+	$scope0_reason && _scope($scope0_id, { input_nonce: _source_if($scope0_reason, 1) && input.nonce }, "__tests__/template.marko", 0, { input_nonce: ["input.nonce"] });
 }, 1, 0);

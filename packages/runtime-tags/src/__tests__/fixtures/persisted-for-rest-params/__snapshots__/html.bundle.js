@@ -13,7 +13,7 @@ var my_for_default = _template_persisted("b", (input) => {
 		const $input2 = [...args];
 		_dynamic_tag($scope1_id, "a", $tag, [...$input2], 0, 1, $sg__input_to__OR__input_content, _patch_dynamic_tag($scope1_id, "a", $tag, $input2, 0, 0, $scope0_owned, 0));
 		$scope0_reason && _scope($scope1_id, {
-			b: args,
+			b: _source_if($scope0_reason, 2) && args,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, $sg__input_to__OR__input_content, $sg__input_to, void 0, void 0, "b0", $scope0_owned, 1);

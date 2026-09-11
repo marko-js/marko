@@ -22,8 +22,8 @@ var picker_default = _template_persisted("__tests__/tags/picker/index.marko", (i
 	const $input2 = { label: input.label };
 	_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, $sg__input_on__OR__input_label, _patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, $scope0_owned, 0));
 	$scope0_reason && _scope($scope0_id, {
-		input_on: input.on,
-		input_label: input.label
+		input_on: _source_if($scope0_reason, 2) && input.on,
+		input_label: _source_if($scope0_reason, 1) && input.label
 	}, "__tests__/tags/picker/index.marko", 0, {
 		input_on: ["input.on"],
 		input_label: ["input.label"]

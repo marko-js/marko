@@ -144,6 +144,18 @@ export function getExprIfSerialized<
   return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
 }
 
+// A value's own group guard inside a scope write the section reason (or the
+// root reason on the branch path) already gates: unfed groups ship nothing.
+export function getValueIfSerialized(
+  section: Section,
+  reason: SerializeReason,
+  expr: t.Expression,
+) {
+  if (!isReasonDynamic(reason) || isCrossSection(section, reason)) return expr;
+  const guard = getDynamicGuard(section, reason, false);
+  return guard ? t.logicalExpression("&&", guard, expr) : expr;
+}
+
 // The global dimension has no param slots: it is persisted-only, where the
 // scope reason itself is `1` for a page render and `undefined` for a patch.
 function getDynamicGuard(

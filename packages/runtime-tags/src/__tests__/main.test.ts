@@ -82,6 +82,9 @@ export type TestConfig = {
   // A fixture whose patches are MEANT to reject declares it; anything else
   // rejecting fails the test rather than snapshotting the navigation.
   expect_rejection?: boolean;
+  /** Compares a patched page's control defaults, not live values, with a
+   * fresh render (a patch refreshes defaults and leaves typed input). */
+  compare_defaults?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -498,8 +501,16 @@ function testFixtures(interop?: true) {
               const freshFlush = fresh.stream(freshChunks);
               while (freshFlush());
               await fresh.runAsyncScripts();
-              const expected = formatBody(fresh.window.document.body, false);
-              const actual = formatBody(browser.window.document.body, false);
+              const expected = formatBody(
+                fresh.window.document.body,
+                false,
+                config.compare_defaults,
+              );
+              const actual = formatBody(
+                browser.window.document.body,
+                false,
+                config.compare_defaults,
+              );
               if (expected !== actual) {
                 throw new Error(
                   `A persisted patch left the page unlike a fresh render of ${JSON.stringify(input)}.\n--- fresh render\n${expected}\n--- patched page\n${actual}\n`,

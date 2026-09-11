@@ -25,8 +25,8 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("</main>");
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {
-		input_show: input.show,
-		input_label: input.label,
+		input_show: _source_if($scope0_reason, 2) && input.show,
+		input_label: _source_if($scope0_reason, 1) && input.label,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],

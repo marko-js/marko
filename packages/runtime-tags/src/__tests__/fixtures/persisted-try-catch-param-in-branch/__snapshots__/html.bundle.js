@@ -38,7 +38,7 @@ var template_default = _template_persisted("a", (input) => {
 	_script($scope0_id, "a5");
 	$scope0_reason ? _scope($scope0_id, {
 		g: input.title,
-		h: input.promise,
+		h: _source_if($scope0_reason, 1) && input.promise,
 		i: count,
 		j: $input_title__closures,
 		k: $input_promise__closures

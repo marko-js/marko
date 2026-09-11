@@ -51,6 +51,7 @@ import {
   getHTMLSectionStatements,
   getResumeRegisterId,
   getSectionEffectRegisterIds,
+  sectionConstructs,
   sectionHasServerEffect,
   setSerializedValue,
   writeHTMLResumeStatements,
@@ -243,9 +244,14 @@ export default {
         for (const id in active) {
           const section = active[id];
           // The id token carries `inits…!effects…`; a lone `!` marks a shell needing
-          // setup for seeds alone. Roots carry their own like a branch shell.
+          // setup for seeds alone. Roots and content records carry their own
+          // like a branch shell.
           let marker = "";
-          if (id === getShellId(section) || !section.parent) {
+          if (
+            id === getShellId(section) ||
+            !section.parent ||
+            (section.contentRecord === true && sectionConstructs(section))
+          ) {
             forEach(getConstructInitClosures(section), (closure) => {
               marker +=
                 (marker && " ") + getResumeRegisterId(section, closure, "init");

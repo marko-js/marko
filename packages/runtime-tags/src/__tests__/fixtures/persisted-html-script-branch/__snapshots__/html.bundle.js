@@ -21,5 +21,5 @@ var template_default = _template_persisted("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 1);
 	_html(`<p>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_owned, 3)}</p></main>`);
-	$scope0_reason && _scope($scope0_id, { f: input.nonce });
+	$scope0_reason && _scope($scope0_id, { f: _source_if($scope0_reason, 1) && input.nonce });
 }, 1, 0);

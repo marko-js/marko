@@ -21,7 +21,7 @@ _shells({
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1), /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1))
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_b = _source_guard($scope0_reason, 4), $sg__input_a = _source_guard($scope0_reason, 3);
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_b = _source_guard($scope0_reason, 4), $sg__input_a = _source_guard($scope0_reason, 3), $si__input_a__OR__input_b = _source_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = new Set();
 	const $input_label__closures = new Set();
@@ -59,9 +59,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#main/0", 1, $sg__input_a, $sg__input_a, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 3);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_a)}`);
 	$scope0_reason && _scope($scope0_id, {
-		input_b: input.b,
-		input_label: input.label,
-		input_text: input.text,
+		input_b: _source_if($scope0_reason, 3) && input.b,
+		input_label: $si__input_a__OR__input_b && input.label,
+		input_text: $si__input_a__OR__input_b && input.text,
 		"ClosureScopes:input_text": $input_text__closures,
 		"ClosureScopes:input_label": $input_label__closures
 	}, "__tests__/template.marko", 0, {

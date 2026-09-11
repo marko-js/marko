@@ -28,7 +28,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html(`<p>${_patch_text($scope0_id, "#text/2", input.note, void 0, $scope0_owned, 2)}</p><button>Count ${_text_resume($scope0_id, "#text/4", count, 2)}</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {
-		input_promo: input.promo,
+		input_promo: _source_if($scope0_reason, 1) && input.promo,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_promo: ["input.promo"],

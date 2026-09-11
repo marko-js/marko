@@ -34,6 +34,7 @@ import {
 } from "../../util/persisted/decisions";
 import { addPersistedChildRenderer } from "../../util/persisted/intrinsics";
 import { onFinalizePersisted } from "../../util/persisted/lifecycle";
+import { contentIsOwnerBound } from "../../util/persisted/refresh";
 import {
   ensurePersistedWriteGroups,
   inResumedStructure,
@@ -195,7 +196,9 @@ export default {
             ensurePersistedWriteGroups(() => tagExtra);
             if (writesPatchDynamicTag(tag, tagSection)) {
               addRuntimeFeatureAsset("patch-dynamic-tag");
-              if (hasVar) addRuntimeFeatureAsset("patch-value-bind");
+              if (hasVar || contentIsOwnerBound(bodySection)) {
+                addRuntimeFeatureAsset("patch-value-bind");
+              }
             }
           }
         });
@@ -222,6 +225,10 @@ export default {
       }
 
       const bodySection = startSection(tagBody);
+      // The body depends on the whole site as a branch body on its
+      // condition. Persisted only: the closure walk then stops forcing it.
+      if (bodySection && isPersisted())
+        bodySection.upstreamExpression = tagExtra;
       trackParamsReferences(tagBody, BindingType.param);
       // Split so the force cannot swallow the exprs' sources.
       if (hasVar) addSerializeExpr(tagSection, true, nodeBinding);
@@ -267,7 +274,12 @@ export default {
       // The import rides both outputs (interactive pages load it transitively).
       if (writesPatchDynamicTag(tag, getSection(tag))) {
         importRuntimeFeature("patch-dynamic-tag");
-        if (tag.node.var) importRuntimeFeature("patch-value-bind");
+        if (
+          tag.node.var ||
+          contentIsOwnerBound(getSectionForBody(tag.get("body")))
+        ) {
+          importRuntimeFeature("patch-value-bind");
+        }
       }
       // An unknown renderer defeats transitive `$global` knowledge; `input`
       // content is the parent's own, already counted where it was compiled.
