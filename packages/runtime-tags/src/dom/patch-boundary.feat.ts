@@ -46,6 +46,12 @@ import {
   tempDetachBranch,
 } from "./scope";
 
+declare module "./resume" {
+  interface PatchValues {
+    [PatchKey.Pending]: string | 0;
+  }
+}
+
 // Await/try bodies resume as branches on pages that never load control-flow.
 withBranches();
 
@@ -233,12 +239,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   // A boundary entry `[partial, contentId, catchId?, placeholderId?]`
   // rebuilds a missing branch from its content id, then applies the partial.
   if (Array.isArray(value)) {
-    const [partial, contentId, catchId, placeholderId] = value as [
-      Scope,
-      string,
-      string | 0 | undefined,
-      string | 0 | undefined,
-    ];
+    const [partial, contentId, catchId, placeholderId] = value;
     value = partial;
     if (!scope[link]) {
       const shell = shells[contentId];

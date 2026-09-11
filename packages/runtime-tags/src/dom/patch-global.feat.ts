@@ -10,13 +10,19 @@ import { queueRender, runId } from "./queue";
 import { patchers } from "./resume";
 import type { Signal } from "./signals";
 
+declare module "./resume" {
+  interface PatchValues {
+    [PatchKey.Globals]: Record<string, unknown>;
+  }
+}
+
 // A page with `$global` joins: a changed key queues its joins for every
 // subscribed live scope (the base patcher marked the change).
 patchers[PatchKey.Globals] = (live, key, value) => {
   applyGlobals(live, key, value);
   const globals = live[AccessorProp.Global] as unknown as Scope;
   const changed = globals[AccessorProp.PatchChanged];
-  for (const key in value as Record<string, unknown>) {
+  for (const key in value) {
     if (changed?.[key] !== runId) continue;
     const joins = globalJoins[key];
     for (const id in joins) {

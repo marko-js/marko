@@ -17,6 +17,13 @@ import {
   patchRun,
 } from "./resume";
 
+declare module "./resume" {
+  interface PatchValues {
+    [PatchKey.Setup]: Scope;
+    [PatchKey.Init]: string;
+  }
+}
+
 // Enables branch resume handling: a page swapping shipped branches needs
 // it even when no client control flow does.
 const _content = /*@__PURE__*/ withBranches(content);
@@ -30,15 +37,15 @@ patchers[PatchKey.Setup] = (scope, _key, value) => {
     scope[AccessorProp.Gen] >= patchRun &&
     scope[AccessorProp.ClosestBranch] !== scope
   ) {
-    patchConstruct(value as Scope, scope);
+    patchConstruct(value, scope);
   } else {
-    scope[AccessorProp.PatchSetup] = value as Scope;
+    scope[AccessorProp.PatchSetup] = value;
   }
 };
 // Ids the flush asks a fresh scope to run, in the shell record's grammar
 // (`inits…!effects…`): a child's mounts, a client-upstream local's inits.
 constructPatchers[PatchKey.Init] = (scope, _key, ids) =>
-  runSetupIds(resolveSetupIds(ids as string), scope);
+  runSetupIds(resolveSetupIds(ids), scope);
 
 type SetupFn = (branch: Scope) => void;
 type SetupIds = [inits: SetupFn[], effects?: SetupFn[]];
