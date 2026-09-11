@@ -12,21 +12,26 @@ import { _for_of } from "./control-flow";
 import { shells } from "./patch-shells";
 import { failPatch, patchers, patchScope, withConstructing } from "./resume";
 
+declare module "./resume" {
+  interface PatchValues {
+    [PatchKey.Loop]: unknown[];
+  }
+}
+
 // Interleaved `[key, partial, …, shellId?]`: an object head means implicit
 // index keys, and the trailing string (a partial never is one) is the shell.
 patchers[PatchKey.Loop] = (scope, key, value) => {
-  const entry = value as unknown[];
-  let len = entry.length;
+  let len = value.length;
   let shellId: string | undefined;
-  if (len && typeof entry[len - 1] === "string") {
-    shellId = entry[--len] as string;
+  if (len && typeof value[len - 1] === "string") {
+    shellId = value[--len] as string;
   }
-  const explicit = len > 0 && typeof entry[0] !== "object";
+  const explicit = len > 0 && typeof value[0] !== "object";
   const partials: Scope[] = [];
   const keys = explicit ? ([] as unknown[]) : undefined;
   for (let i = 0; i < len;) {
-    keys?.push(entry[i++]);
-    partials.push(entry[i++] as Scope);
+    keys?.push(value[i++]);
+    partials.push(value[i++] as Scope);
   }
   const suffix = key.slice(PatchKey.Loop.length) as Accessor;
   if (!shellId) {

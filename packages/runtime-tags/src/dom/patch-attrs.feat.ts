@@ -6,6 +6,16 @@ import "./patch-value-bind.feat";
 import { queueEffect } from "./queue";
 import { patchers } from "./resume";
 
+// An empty set ships as `0`.
+type AttrsRecord = Record<string, unknown>;
+type AttrsSet = AttrsRecord | 0;
+
+declare module "./resume" {
+  interface PatchValues {
+    [PatchKey.Attrs]: AttrsSet | [AttrsSet, (Record<string, 1> | 0)?, 1?];
+  }
+}
+
 // A spread's set re-applies as its render would (`[set, skip]` leaves the
 // statics alone; a trailing `1` re-claims the element's controllable).
 patchers[PatchKey.Attrs] = (scope, key, value) => {
@@ -13,7 +23,7 @@ patchers[PatchKey.Attrs] = (scope, key, value) => {
   let skip: Record<string, 1> | 0 | undefined;
   let controllable: (typeof controllableRenders)[string] | undefined;
   if (Array.isArray(value)) {
-    skip = value[1] as typeof skip;
+    skip = value[1];
     if (value[2]) {
       controllable = controllableRenders[(scope[accessor] as Element).tagName];
     }
@@ -22,15 +32,9 @@ patchers[PatchKey.Attrs] = (scope, key, value) => {
   // The wire's empty-set `0` flows through as-is: every consumer only
   // truthiness-checks or `for..in`s the set, so it acts like `undefined`.
   if (skip) {
-    _attrs_partial(
-      scope,
-      accessor,
-      value as Record<string, unknown>,
-      skip,
-      controllable,
-    );
+    _attrs_partial(scope, accessor, value as AttrsRecord, skip, controllable);
   } else {
-    _attrs(scope, accessor, value as Record<string, unknown>, controllable);
+    _attrs(scope, accessor, value as AttrsRecord, controllable);
   }
   queueEffect(scope, () => _attrs_script(scope, accessor));
 };

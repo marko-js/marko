@@ -4,6 +4,12 @@ import "./patch-write";
 import { queueEffect, runId } from "./queue";
 import { getRegisteredWithScope, patchers } from "./resume";
 
+declare module "./resume" {
+  interface PatchValues {
+    [PatchKey.Effect]: string;
+  }
+}
+
 // Key: effect register id. Entry: space-joined read accessors, a numeric
 // token switching the owner hops for those after it. A read stamped with
 // this flush's epoch re-runs the effect ONCE.
@@ -13,7 +19,7 @@ patchers[PatchKey.Effect] = (scope, key, entry) => {
   queueEffect(scope, (scope: Scope) => {
     let owner = scope;
     let depth = 0;
-    for (const token of (entry as string).split(" ")) {
+    for (const token of entry.split(" ")) {
       const hops = +token;
       if (hops === hops) {
         for (; depth < hops; depth++) owner = owner[AccessorProp.Owner]!;

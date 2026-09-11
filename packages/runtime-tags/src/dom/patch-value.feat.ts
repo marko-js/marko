@@ -6,6 +6,16 @@ import { queueEffect } from "./queue";
 import { constructPatchers, getRegisteredWithScope, patchers } from "./resume";
 import { patchFills } from "./signals";
 
+declare module "./resume" {
+  interface PatchValues {
+    [PatchKey.Bind]: [
+      registerId: string,
+      up: number,
+      ...path: (string | [string, unknown])[],
+    ];
+  }
+}
+
 // A soft miss is a fill whose intersection was tree-shaken: nothing to
 // update. A construct's seed is required, so a miss crashes to reject.
 patchers[PatchKey.Value] = (scope, key, value) =>
@@ -18,11 +28,7 @@ constructPatchers[PatchKey.Value] = (scope, key, value) =>
 // registered scope: owner hops up, then links (keyed for loops) down.
 patchers[PatchKey.Bind] = (scope, _key, entry) => {
   queueEffect(scope, (scope) => {
-    const [registerId, up, ...path] = entry as [
-      string,
-      number,
-      ...(string | [string, unknown])[],
-    ];
+    const [registerId, up, ...path] = entry;
     const slot = path.pop() as Accessor;
     let source = scope;
     for (let i = up; i--;) source = source[AccessorProp.Owner]!;

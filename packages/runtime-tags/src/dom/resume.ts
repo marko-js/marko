@@ -11,6 +11,7 @@ import {
   type AwaitCounter,
   type BranchScope,
   type EncodedAccessor,
+  PatchKey,
   ResumeSymbol,
   type Scope,
 } from "../common/types";
@@ -62,10 +63,18 @@ export interface RenderData {
   p?: Record<string | number, AwaitCounter>;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
-type Patcher = (scope: Scope, key: string, value: unknown) => void;
+// What a patch of each kind carries, declared beside the patcher that
+// reads it; a bind source's index key is its own kind.
+export interface PatchValues {}
+type PatchKind = PatchKey.Value | number;
+type Patcher<K extends PatchKind = PatchKind> = (
+  scope: Scope,
+  key: string,
+  value: K extends keyof PatchValues ? PatchValues[K] : unknown,
+) => void;
 
 export const registeredValues: Record<string, unknown> = {};
-export const patchers: Record<string, Patcher> = {};
+export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
 // Flush records ahead of the scope tree (`id;walks;template` shell
 // strings), registered by the patch feature that understands them.
 export let onPatchRecord: ((entry: string) => void) | undefined;
@@ -82,22 +91,22 @@ export const constructPatchers: typeof patchers = {};
 export const patchConstruct = (setup: Scope, live: Scope) => {
   for (const key in setup) {
     constructPatchers[
-      MARKO_DEBUG && key.indexOf(":") > 0
+      (MARKO_DEBUG && key.indexOf(":") > 0
         ? key.slice(0, key.indexOf(":") + 1)
-        : key[0]
-    ](live, key, setup[key as keyof Scope]);
+        : key[0]) as PatchKind
+    ]!(live, key, setup[key as keyof Scope]);
   }
 };
 // Applies a patch partial to its live counterpart; structural patchers
 // recurse back through here, so no scope is ever addressed by id. Debug
-// entry keys are `PatchKind:…`; a bind source's index key is its own kind.
+// entry keys are `PatchKind:…`, optimized ones a single character.
 export const patchScope = (partial: Scope, live: Scope) => {
   for (const key in partial) {
     patchers[
-      MARKO_DEBUG && key.indexOf(":") > 0
+      (MARKO_DEBUG && key.indexOf(":") > 0
         ? key.slice(0, key.indexOf(":") + 1)
-        : key[0]
-    ](live, key, partial[key as keyof Scope]);
+        : key[0]) as PatchKind
+    ]!(live, key, partial[key as keyof Scope]);
   }
 };
 export let curRenders: Renders;

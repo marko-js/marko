@@ -13,23 +13,31 @@ import { createAndSetupBranch } from "./renderer";
 import { failPatch, withConstructing, patchers, patchScope } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 
+declare module "./resume" {
+  interface PatchValues {
+    [PatchKey.Branch]:
+      | number
+      | string
+      | [Scope, string?]
+      | [number, Scope, string?];
+  }
+}
+
 // Shape-typed conditional entry: bare number = index + 1 (`0` hides),
 // bare string = a static branch's shell id, else `[index?, partial, shellId?]`.
-patchers[PatchKey.Branch] = (scope, key, value) => {
-  const entry = value as number | string | [number | Scope, ...unknown[]];
+patchers[PatchKey.Branch] = (scope, key, entry) => {
   const suffix = key.slice(PatchKey.Branch.length);
   const branchKey = (AccessorPrefix.BranchScopes + suffix) as Accessor;
   const liveBranch = scope[branchKey] as BranchScope | undefined;
   const rendererKey = (AccessorPrefix.ConditionalRenderer + suffix) as Accessor;
   let index = 0;
-  let branchPartial: Scope | number | undefined;
+  let branchPartial: Scope | undefined;
   let shellId: string | undefined;
   if (typeof entry === "object") {
-    [branchPartial, shellId] = entry as [Scope, string?];
-    if (typeof branchPartial === "number") {
-      index = branchPartial;
-      branchPartial = (entry as unknown[])[1] as Scope;
-      shellId = (entry as unknown[])[2] as string | undefined;
+    if (typeof entry[0] === "number") {
+      [index, branchPartial, shellId] = entry as [number, Scope, string?];
+    } else {
+      [branchPartial, shellId] = entry as [Scope, string?];
     }
   } else if (typeof entry === "number") {
     index = entry - 1;
@@ -48,9 +56,9 @@ patchers[PatchKey.Branch] = (scope, key, value) => {
   const current = liveBranch ? ((scope[rendererKey] as number) ?? 0) : -1;
   scope[rendererKey] = index as never;
   if (index === current) {
-    patchScope(branchPartial as Scope, liveBranch as Scope);
+    patchScope(branchPartial, liveBranch as Scope);
   } else if (shellId) {
-    construct(scope, branchKey, branchPartial as Scope, shells[shellId]);
+    construct(scope, branchKey, branchPartial, shells[shellId]);
   } else {
     // The server could not ship a shell for the new branch, so
     // this divergence cannot apply faithfully.
