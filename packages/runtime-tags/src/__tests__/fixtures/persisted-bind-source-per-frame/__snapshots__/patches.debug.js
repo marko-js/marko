@@ -14,7 +14,7 @@
   }
 }
 {
-  1: "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-source-per-frame/template.marko_0/handler",
+  1: _.a = _(0)[1],
   "PatchChild:BranchScopes:#text/1": {
     "PatchAttrs:#button/0": {
       id: "two",

@@ -4,7 +4,13 @@ import {
   PatchKey,
   type Scope,
 } from "../common/types";
-import { failPatch, patchers, patchScope } from "./resume";
+import {
+  failPatch,
+  patchers,
+  patchRun,
+  patchScope,
+  withConstructing,
+} from "./resume";
 
 // Pairs a custom tag's child scope through its parent: the entry value is
 // the child's partial and the live child sits at the same accessor.
@@ -14,5 +20,11 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   // the boundary's resumed branch (see pair-patches-into-still-streaming).
   if (!child) failPatch();
   child[AccessorProp.Owner] ??= scope;
-  patchScope(value as Scope, child);
+  // A scope this frame's shell walk created is bare (no render set it up):
+  // its entries construct, like the branch's own; a live one pairs.
+  if (child[AccessorProp.Gen] >= patchRun) {
+    withConstructing(() => patchScope(value as Scope, child));
+  } else {
+    patchScope(value as Scope, child);
+  }
 };

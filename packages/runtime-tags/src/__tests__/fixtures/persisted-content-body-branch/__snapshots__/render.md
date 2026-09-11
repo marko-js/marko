@@ -19,9 +19,6 @@
 ## Change
 ```
 INSERT: main > section
-UPDATE: main > section > h2::text " " => "t"
-INSERT: main > section > h2 + strong
-UPDATE: main > section > strong::text@2 "" => "x"
 ```
 
 # Update `{"show":true,"title":"u","alt":false,"note":"y"}`
@@ -61,7 +58,6 @@ UPDATE: main > section > strong::text@2 "x" => "y"
 UPDATE: main > section > h2::text "u" => "u"
 REMOVE: main > section > h2 + strong
 INSERT: main > section > h2 + em
-UPDATE: main > section > em::text@2 "" => "y"
 ```
 
 # Update `{"show":true,"title":"v","alt":true,"note":"z"}`
@@ -108,7 +104,4 @@ REMOVE: main > section
 ## Change
 ```
 INSERT: main > section
-UPDATE: main > section > h2::text " " => "w"
-INSERT: main > section > h2 + strong
-UPDATE: main > section > strong::text@2 "" => "w"
 ```

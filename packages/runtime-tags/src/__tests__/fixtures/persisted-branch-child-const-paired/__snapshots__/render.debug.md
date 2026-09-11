@@ -36,9 +36,6 @@
 ## Change
 ```
 INSERT: main > section:nth-of-type(1) + :is(section, p)
-UPDATE: .branch[class] null => "branch"
-UPDATE: .branch::text " " => "branch"
-UPDATE: main > p::text " " => "y"
 ```
 
 # Update `{"show":true,"note":"z"}`
@@ -112,7 +109,4 @@ REMOVE: main > section + p
 ## Change
 ```
 INSERT: main > section:nth-of-type(1) + :is(section, p)
-UPDATE: .branch[class] null => "branch"
-UPDATE: .branch::text " " => "branch"
-UPDATE: main > p::text " " => "v"
 ```

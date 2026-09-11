@@ -1,4 +1,4 @@
-// size: 28834 (min) 10651 (brotli)
+// size: 29028 (min) 10754 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -106,7 +106,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   lazyEnabled,
   patchRender,
   patching = 0,
-  patchId = 0,
   isResuming,
   cloneCache = {},
   _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
@@ -968,8 +967,8 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
-function beginPatch(render) {
-  ((patchRender = render), render.w(), (patching = 1), patchId++);
+function beginPatch(render, runAt = runId) {
+  ((patchRender = render), render.w(), (patching = 1));
 }
 function abortPatch() {
   patching = 0;
@@ -2124,22 +2123,33 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let frameChecks = [],
-  frameVars = {};
+let frameVars = {};
 /**
  * The live page's side of `template.patch`: `[headers, apply]`, the headers
  * a patch request sends (none yet) and the apply for each frame.
  */
 function patch($global) {
+  let pageCtx,
+    trees = [],
+    responseCtx = (data) => (typeof data == "number" ? trees[data] : pageCtx(data));
+  responseCtx._ = registeredValues;
+  let names = Object.keys(frameVars),
+    vars = Object.values(frameVars);
   return [
     {},
     (frame) => {
       ((patchers.$ ||= applyGlobals), beginPatch(curRenders[$global.renderId]));
       try {
-        let names = Object.keys(frameVars),
-          fn = Function("_", "$", ...names, "return " + frame);
+        let fn = Function("_", "$", ...names, "return " + frame);
         return (
-          (patchRender.r = [(ctx) => fn(ctx, void 0, ...names.map((name) => frameVars[name]))]),
+          (patchRender.r = [
+            (ctx) => {
+              pageCtx = ctx;
+              let value = fn(responseCtx, void 0, ...vars),
+                tree = Array.isArray(value) ? value[value.length - 1] : value;
+              return (typeof tree == "object" && trees.push(tree), value);
+            },
+          ]),
           commitFrame(),
           !0
         );
@@ -2160,7 +2170,6 @@ function applyGlobals(live, _key, value) {
 }
 function commitFrame() {
   (runEffects(patchRender.m([]), 1), run());
-  for (let check of frameChecks) check();
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
@@ -2179,7 +2188,8 @@ function _global_script(id, fn) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let _template = (id, template, walks, setup, inputSignal) => {
+let loads = {},
+  _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
   },
@@ -2255,6 +2265,19 @@ let _template = (id, template, walks, setup, inputSignal) => {
       };
     return apply;
   });
+/**
+ * The loader of a lazy template only frames construct. Never pure: it
+ * registers where no client code renders the site.
+ */
+function _load_lazy(id, load) {
+  let pending;
+  loads[id] = () => {
+    pending ||= load().then(
+      () => ready(id),
+      () => void 0,
+    );
+  };
+}
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,

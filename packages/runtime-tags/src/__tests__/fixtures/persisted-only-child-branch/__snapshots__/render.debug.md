@@ -41,7 +41,6 @@ UPDATE: main > button::text@2 "0" => "1"
 ## Change
 ```
 INSERT: main > div > span
-UPDATE: main > div > span::text@3 "" => "there"
 ```
 
 # Update `{"show":false}`
@@ -74,5 +73,4 @@ REMOVE: main > div > span
 ## Change
 ```
 INSERT: main > div > span
-UPDATE: main > div > span::text@3 "" => "again"
 ```

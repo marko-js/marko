@@ -81,14 +81,14 @@ function construct(
     scope,
     parentNode,
   );
+  scope[branchKey] = branch;
+  // Nested entries construct recursively (no live children); applied before
+  // insertion so a script's attributes (its nonce) are set when it runs.
+  withConstructing(() => patchScope(branchPartial, branch as Scope));
   insertChildNodes(
     parentNode,
     inside ? null : marker,
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
-  scope[branchKey] = branch as never;
-  // The fresh branch has no live children, so nested structural entries
-  // in the applied partial mismatch and construct recursively through here.
-  withConstructing(() => patchScope(branchPartial, branch as Scope));
 }

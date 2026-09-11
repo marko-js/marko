@@ -170,6 +170,5 @@ UPDATE: main > p::text "hello" => "bye"
 UPDATE: main > ul > li:nth-of-type(1)::text "Bread!" => "Bread!"
 INSERT: main > ul > li:nth-of-type(1) + li
 INSERT: main > ul + aside
-UPDATE: main > aside::text " " => "Back"
 UPDATE: main > p::text "bye" => "again"
 ```

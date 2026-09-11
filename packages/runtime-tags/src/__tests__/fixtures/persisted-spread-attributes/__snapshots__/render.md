@@ -84,9 +84,6 @@ UPDATE: .y::text "a" => "b"
 UPDATE: .y[data-id] "7" => null
 UPDATE: .y::text "b" => "b"
 INSERT: .y + img
-UPDATE: main > img[alt] null => "hero"
-UPDATE: main > img[src] null => "/i.png"
-UPDATE: main > img[width] null => "10"
 ```
 
 # Update `{"attrs":{"class":"y"},"label":"b","show":true,"img":{"src":"/j.png"}}`

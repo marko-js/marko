@@ -43,6 +43,5 @@ REMOVE: main > h1 + span
 ```
 UPDATE: main > h1::text "Store" => "Store"
 INSERT: main > h1 + span
-UPDATE: main > span::text " " => "Back"
 UPDATE: main > span[data-seen] null => "Back"
 ```

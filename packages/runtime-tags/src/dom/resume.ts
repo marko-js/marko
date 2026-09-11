@@ -14,7 +14,7 @@ import {
   ResumeSymbol,
   type Scope,
 } from "../common/types";
-import { runEffects } from "./queue";
+import { runEffects, runId } from "./queue";
 import { setParentBranch } from "./renderer";
 import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
@@ -22,7 +22,7 @@ import { getDebugKey } from "./walker";
 
 export type ResumeFn = (ctx: SerializeContext) => unknown;
 export type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
-interface SerializeContext {
+export interface SerializeContext {
   (data: number | (Scope | number)[], registryId?: string): unknown;
   _: Record<string, unknown>;
 }
@@ -116,17 +116,17 @@ let lazyEnabled: undefined | 1;
 // while `patching`.
 export let patchRender!: RenderData;
 let patching: 0 | 1 = 0;
-// Frame epoch: per-frame tables (the bind table) key off it so entries
-// from one frame can never satisfy a later frame's references.
-export let patchId = 0;
+// The run the frame began on: a scope created since is the frame's own
+// construct (its entries construct); a deferred apply restores its frame's.
+export let patchRun = 0;
 
-export function beginPatch(render: RenderData) {
+export function beginPatch(render: RenderData, runAt = runId) {
   patchRender = render;
+  patchRun = runAt;
   // A page with no effects never wrote a walk call; pairing into resumed
   // branches needs the walked links, so finish the resume before patching.
   render.w();
   patching = 1;
-  patchId++;
 }
 
 export function abortPatch() {

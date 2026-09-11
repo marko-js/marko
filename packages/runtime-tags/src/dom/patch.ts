@@ -11,26 +11,23 @@ import {
   curRenders,
   patchers,
   patchRender,
+  registeredValues,
 } from "./resume";
-import type { RenderData } from "./resume";
+import type { RenderData, SerializeContext } from "./resume";
 
-// Installed by `patch-ready`: commits a frame's ready record, settles a
-// frame holding data for a not-yet-loaded module, discards a rejected one.
+// Installed by `patch-ready`: commits a frame's guards, settles a frame
+// holding data for a not-yet-loaded module, discards a rejected one.
 let commitReady: (() => void) | undefined;
 let pendingReady: (() => Promise<boolean> | undefined) | undefined;
 let discardReady: (() => void) | undefined;
 
-// Frame-commit checks registered by patch features: one that throws
-// (`failPatch`) rejects the frame like any patcher.
-export const frameChecks: (() => void)[] = [];
-
-// Frame-scoped bindings patch features inject: the frame text references
-// each name as a free variable (`b(1)`), skipping registry indirection.
+// Frame-scoped bindings patch features inject.
 export const frameVars: Record<string, unknown> = {};
 
-// A frame and the deferred batches it drains later share one epoch, so a
-// bind source applied with the frame still serves a batch's reference.
-export let frameEpoch: object = {};
+// The frame's bind table (`patch-value-bind`): a guard the frame left
+// pending applies under it, so a source shipped with the frame serves the
+// guard's reference.
+export let frameBinds: Record<string, unknown> = {};
 
 /** The live page's `$global`: names its render. */
 export type PatchGlobal = { renderId: string };
@@ -40,41 +37,57 @@ export type PatchGlobal = { renderId: string };
  * a patch request sends (none yet) and the apply for each frame.
  */
 export function patch($global: PatchGlobal) {
-  return [
-    {},
-    (frame: string): boolean | Promise<boolean> => {
-      // Registered here so this module stays tree-shakable; a page with
-      // `$global` joins installed its own (`patch-global.feat`).
-      patchers[PatchKey.Globals] ||= applyGlobals;
-      frameEpoch = {};
-      beginPatch(curRenders[$global.renderId]);
-      try {
-        // A frame is trusted executable resume data from the same server
-        // that produced the document; `$` stays the serializer's `undefined`.
-        const names = Object.keys(frameVars);
-        // eslint-disable-next-line no-new-func
-        const fn = new Function("_", "$", ...names, "return " + frame);
-        patchRender.r = [
-          (ctx: unknown) =>
-            fn(ctx, undefined, ...names.map((name) => frameVars[name])),
-        ] as typeof patchRender.r;
-        commitFrame();
-        return pendingReady?.() || true;
-      } catch (error) {
-        // The frame did not apply faithfully, so the caller navigates; only
-        // an intentional rejection (`failPatch`) throws 0.
-        if (MARKO_DEBUG && error) console.error(error);
-        discardReady?.();
-        abortRun();
-        return false;
-      } finally {
-        // A rejected frame must not read as page data on a later walk; the
-        // array stays, a still-streaming page pushes into it.
-        patchRender.r!.length = 0;
-        abortPatch();
-      }
-    },
-  ] as const;
+  // The response's own serialize context keeps every tree the response
+  // applied, keyed as the server keys them (the k-th tree), so a later
+  // frame references into an earlier one; anything else is the page's.
+  let pageCtx: SerializeContext;
+  const trees: unknown[] = [];
+  const responseCtx = ((data: number | (Scope | number)[]) =>
+    typeof data === "number" ? trees[data] : pageCtx(data)) as SerializeContext;
+  responseCtx._ = registeredValues;
+  // Every patch feature is evaluated by now: the frame text references each
+  // binding as a free variable (`b(1)`), skipping registry indirection.
+  const names = Object.keys(frameVars);
+  const vars = Object.values(frameVars);
+  const apply = (frame: string): boolean | Promise<boolean> => {
+    // Registered here so this module stays tree-shakable; a page with
+    // `$global` joins installed its own (`patch-global.feat`).
+    patchers[PatchKey.Globals] ||= applyGlobals;
+    frameBinds = {};
+    beginPatch(curRenders[$global.renderId]);
+    try {
+      // A frame is trusted executable resume data from the same server
+      // that produced the document; `$` stays the serializer's `undefined`.
+      // eslint-disable-next-line no-new-func
+      const fn = new Function("_", "$", ...names, "return " + frame);
+      patchRender.r = [
+        (ctx: SerializeContext) => {
+          pageCtx = ctx;
+          const value = fn(responseCtx, undefined, ...vars);
+          // The tree is the frame's last value; a frame of only shells (or
+          // nothing) ends in a string (`undefined`), and the server keys none.
+          const tree = Array.isArray(value) ? value[value.length - 1] : value;
+          if (typeof tree === "object") trees.push(tree);
+          return value;
+        },
+      ] as typeof patchRender.r;
+      commitFrame();
+      return pendingReady?.() || true;
+    } catch (error) {
+      // The frame did not apply faithfully, so the caller navigates; only
+      // an intentional rejection (`failPatch`) throws 0.
+      if (MARKO_DEBUG && error) console.error(error);
+      discardReady?.();
+      abortRun();
+      return false;
+    } finally {
+      // A rejected frame must not read as page data on a later walk; the
+      // array stays, a still-streaming page pushes into it.
+      patchRender.r!.length = 0;
+      abortPatch();
+    }
+  };
+  return [{}, apply] as const;
 }
 
 // A plain patched write; a changed value is marked with the frame's epoch
@@ -112,11 +125,12 @@ export function installPatchReady(
 // frame run so it shares a frame's commit sequence and patch context.
 export function applyReadyPatch(
   render: RenderData,
-  epoch: object,
+  binds: Record<string, unknown>,
+  runAt: number,
   push: () => void,
 ) {
-  frameEpoch = epoch;
-  beginPatch(render);
+  frameBinds = binds;
+  beginPatch(render, runAt);
   try {
     push();
     commitFrame();
@@ -134,5 +148,4 @@ function commitFrame() {
   runEffects(patchRender.m!([]), 1);
   run();
   commitReady?.();
-  for (const check of frameChecks) check();
 }

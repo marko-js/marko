@@ -250,8 +250,10 @@ export default {
               marker +=
                 (marker && " ") + getResumeRegisterId(section, closure, "init");
             });
-            // Lazy sites wire their load (and channel) as construct inits.
-            for (const site of section.loadSites || []) {
+            // Lazy sites wire their load (and channel) as construct inits;
+            // a server-only site's child sits in the shell itself.
+            for (const { site, load } of section.loadSites || []) {
+              if (load.serverOnly) continue;
               marker +=
                 (marker && " ") + getResumeRegisterId(section, site, "init");
             }

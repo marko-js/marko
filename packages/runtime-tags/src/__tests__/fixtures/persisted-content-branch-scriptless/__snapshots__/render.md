@@ -16,8 +16,6 @@
 ## Change
 ```
 INSERT: main > section
-INSERT: main > section > em
-UPDATE: main > section > em::text " " => "x"
 ```
 
 # Update `{"show":true,"text":"y"}`
@@ -57,6 +55,4 @@ REMOVE: main > section
 ## Change
 ```
 INSERT: main > section
-INSERT: main > section > em
-UPDATE: main > section > em::text " " => "z"
 ```

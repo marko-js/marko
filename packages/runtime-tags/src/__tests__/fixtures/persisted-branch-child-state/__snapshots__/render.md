@@ -23,7 +23,6 @@
 ## Change
 ```
 INSERT: main > .counter
-UPDATE: .counter > span::text@0 "" => "A"
 UPDATE: .counter > span::text@3 "" => "5"
 ```
 

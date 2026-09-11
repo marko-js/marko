@@ -23,6 +23,9 @@ export const Pending = "p";
 export const Setup = "s";
 // A `<style>` interpolation: `accessor name`, the client rewrites the rule.
 export const Style = "y";
+// A channel's entries, applied once its module is ready: the key names the
+// channel (`patch-ready`).
+export const Ready = "z";
 export const Text = "t";
 // A text-only element (or comment) body: the client rewrites its content.
 export const TextContent = "m";

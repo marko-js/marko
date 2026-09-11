@@ -22,9 +22,6 @@
 ## Change
 ```
 INSERT: main > section
-INSERT: main > section > header > b
-UPDATE: main > section > h2::text " " => "b"
-INSERT: main > section > h2 + ::text("body")
 ```
 
 # Update `{"show":true,"title":"c"}`

@@ -38,9 +38,6 @@
 UPDATE: main > section:nth-of-type(1) > h2::text "a" => "b"
 UPDATE: main > section:nth-of-type(1) > em::text "Acme" => "Zed"
 INSERT: main > section:nth-of-type(1) + section
-UPDATE: main > section:nth-of-type(2) > h2::text " " => "x"
-INSERT: main > section:nth-of-type(2) > h2 + i
-UPDATE: main > section:nth-of-type(2) > i::text " " => "Zed"
 ```
 
 # Update `{"title":"c","show":true,"$global":{"brand":"Zed","serializedGlobals":["brand"]}}`

@@ -14,8 +14,8 @@
 ## Change
 ```
 INSERT: main > button
-UPDATE: main > button::text@2 "" => "0"
 UPDATE: main > button::text@0 "" => "a"
+UPDATE: main > button::text@2 "" => "0"
 ```
 
 # Update

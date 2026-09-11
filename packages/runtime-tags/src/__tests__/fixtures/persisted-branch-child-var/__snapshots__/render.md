@@ -32,7 +32,6 @@
 ## Change
 ```
 INSERT: main > :is(.box, #read)
-UPDATE: .box::text " " => "b"
 ```
 
 # Update
