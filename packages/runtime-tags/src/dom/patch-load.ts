@@ -1,11 +1,11 @@
 import { ready, readyFailed } from "./resume";
 
-// Loaders of the lazy templates only frames construct, by channel: the ready
-// feature starts one when a frame waits on its channel.
+// Loaders of the lazy templates only flushes construct, by channel: the ready
+// feature starts one when a flush waits on its channel.
 export const loads: Record<string, () => void> = {};
 
 /**
- * The loader of a lazy template only frames construct. Never pure: it
+ * The loader of a lazy template only flushes construct. Never pure: it
  * registers where no client code renders the site.
  */
 export function _load_lazy(id: string, load: () => Promise<unknown>) {

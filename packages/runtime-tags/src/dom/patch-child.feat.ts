@@ -20,7 +20,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   // the boundary's resumed branch (see pair-patches-into-still-streaming).
   if (!child) failPatch();
   child[AccessorProp.Owner] ??= scope;
-  // A scope this frame's shell walk created is bare (no render set it up):
+  // A scope this flush's shell walk created is bare (no render set it up):
   // its entries construct, like the branch's own; a live one pairs.
   if (child[AccessorProp.Gen] >= patchRun) {
     withConstructing(() => patchScope(value as Scope, child));

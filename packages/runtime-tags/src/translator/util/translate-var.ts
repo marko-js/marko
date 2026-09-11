@@ -5,7 +5,7 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isPersisted } from "./marko-config";
 import { toArray } from "./optional";
-import { isPatchFillBinding, isPatchWriteBinding } from "./persisted/delivery";
+import { isPatchFillBinding, isPatchWriteBinding } from "./persisted/refresh";
 import { getCanonicalBinding } from "./references";
 import { getOrCreateSection } from "./sections";
 import { getSerializeReason } from "./serialize-reasons";

@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
 // A patch whose `<await>` is still pending flushes ready fills now and
-// the resolved body in a later frame.
+// the resolved body in a later flush.
 export const config: TestConfig = {
   persisted: true,
   steps: () => [

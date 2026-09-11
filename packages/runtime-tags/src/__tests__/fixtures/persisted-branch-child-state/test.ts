@@ -5,7 +5,7 @@ const inc = (document: Document) => {
 };
 
 // A stateful child constructed inside a branch: its root state seeds from
-// the frame's setup entry and its mount effect attaches, so the handler
+// the flush's setup entry and its mount effect attaches, so the handler
 // works and later fills refresh it.
 export const config: TestConfig = {
   persisted: true,

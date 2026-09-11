@@ -6,7 +6,7 @@ const type = (document: Document) => {
   el.dispatchEvent(new document.defaultView!.Event("input", { bubbles: true }));
 };
 
-// The handler IDENTITY swaps between frames: the bind entry re-installs
+// The handler IDENTITY swaps between flushes: the bind entry re-installs
 // the CURRENT registration, so post-swap input reports uppercased.
 export const config: TestConfig = {
   persisted: true,

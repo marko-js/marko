@@ -5,7 +5,7 @@ import {
   type Scope,
 } from "../common/types";
 import { installLoadReady } from "./load";
-import { applyReadyPatch, frameBinds, installPatchReady } from "./patch";
+import { applyReadyPatch, flushBinds, installPatchReady } from "./patch";
 import { loads } from "./patch-load";
 import { queueEffect, run } from "./queue";
 import {
@@ -21,7 +21,7 @@ import {
   type RenderData,
 } from "./resume";
 
-// A channel's guards: its entries met in a frame's tree, each with the live
+// A channel's guards: its entries met in a flush's tree, each with the live
 // scope they apply to.
 type Guards = [entries: Scope, scope: Scope][];
 // A render's patch awaiting its channels.
@@ -61,12 +61,12 @@ installLoadReady(
   },
 );
 
-// The frame's run may construct a site of the channel (a returning lazy
+// The flush's run may construct a site of the channel (a returning lazy
 // tag), so a guard applies at commit, after the run, channels settled.
 let pendingGuards: Record<string, Guards> = {};
 patchers[PatchKey.Ready] = (scope, key, entries) => {
   const readyId = key.slice(PatchKey.Ready.length);
-  // A site whose module died at page load stays inert: a frame targeting
+  // A site whose module died at page load stays inert: a flush targeting
   // it could never apply, so it rejects (the caller navigates).
   if (failed.has(readyId)) throw 0;
   (pendingGuards[readyId] ||= []).push([entries as Scope, scope]);
@@ -87,12 +87,12 @@ function commitReady() {
           .set(patchRender, {
             [ReadyPatchProp.Channels]: new Map(),
             [ReadyPatchProp.Resolvers]: [],
-            [ReadyPatchProp.Binds]: frameBinds,
+            [ReadyPatchProp.Binds]: flushBinds,
             [ReadyPatchProp.Run]: patchRun,
           })
           .get(patchRender)!)[ReadyPatchProp.Channels];
-      // A later frame's guards append: they re-ship full state, so in-order
-      // application leaves the newest frame's values live.
+      // A later flush's guards append: they re-ship full state, so in-order
+      // application leaves the newest flush's values live.
       channels.get(readyId)?.push(...channel) || channels.set(readyId, channel);
       loads[readyId]?.();
     }
@@ -131,7 +131,7 @@ function markReady(readyId: string) {
 }
 
 // A dead channel can never make its server content whole: pending appliers
-// resolve rejected (their caller navigates) and later frames naming it reject.
+// resolve rejected (their caller navigates) and later flushes naming it reject.
 const failed = new Set<string>();
 function failReady(readyId: string) {
   failed.add(readyId);

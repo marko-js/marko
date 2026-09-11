@@ -4,7 +4,7 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A pure-state test is client-owned: frames omit the entry, patches skip
+// A pure-state test is client-owned: flushes omit the entry, patches skip
 // the body, and a branch the client reveals renders the latest fill.
 export const config: TestConfig = {
   persisted: true,

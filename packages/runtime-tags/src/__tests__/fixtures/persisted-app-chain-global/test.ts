@@ -3,7 +3,7 @@ import { wait } from "../../utils/resolve";
 
 // The app shape with a page deriving from an unserialized global: a patch
 // onto the same page re-feeds the derived value, and a return to a loaded
-// page constructs it from the frame again, never from a client re-run.
+// page constructs it from the flush again, never from a client re-run.
 export const config: TestConfig = {
   persisted: true,
   equivalent: false,

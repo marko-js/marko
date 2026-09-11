@@ -11,7 +11,7 @@ const probe = (document: Document) => {
 
 // A `checkedValue` group: each input's entry carries `[checkedValue, value]`
 // and applies through the same helper CSR uses, so a live selection survives
-// an unchanged frame while a changed server value re-selects the group.
+// an unchanged flush while a changed server value re-selects the group.
 export const config: TestConfig = {
   persisted: true,
   steps: [

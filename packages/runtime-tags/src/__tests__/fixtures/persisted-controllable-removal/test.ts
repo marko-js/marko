@@ -12,7 +12,7 @@ const check = (document: Document) => {
     document.querySelector("input")!.value;
 };
 
-// The handler is REMOVED between frames: the cleared slot returns the
+// The handler is REMOVED between flushes: the cleared slot returns the
 // input to uncontrolled behavior — typing sticks, nothing reports.
 export const config: TestConfig = {
   persisted: true,

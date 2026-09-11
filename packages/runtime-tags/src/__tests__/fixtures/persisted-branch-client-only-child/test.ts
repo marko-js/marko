@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A client-owned chain as an element's only child: skipping it on patch
-// renders must leave the sibling capture (and frame shape) intact.
+// renders must leave the sibling capture (and flush shape) intact.
 export const config: TestConfig = {
   persisted: true,
   steps: [

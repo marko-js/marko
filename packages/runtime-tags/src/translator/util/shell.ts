@@ -19,7 +19,7 @@ import { getSectionMeta, trimTrailingExits } from "./structure";
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     /** Patchable shell records by id: the branch (or await body) section
-     * whose structure the html output serializes as a frame record. */
+     * whose structure the html output serializes as a shell record. */
     shellRecords?: Record<string, Section>;
   }
 }
@@ -29,7 +29,7 @@ export function getShellRecords() {
 }
 
 // Decides every branch shell (expressibility, blockers) so the html output
-// serializes the kept sections as frame records.
+// serializes the kept sections as shell records.
 export function buildShells() {
   const interactive = getProgram().node.extra.isInteractive;
   const keep = new Set<Section>();
@@ -102,7 +102,7 @@ export function buildShells() {
   });
   forEachSection((section) => {
     // Every branch-path body ships a shell, except
-    // stateful bodies: they never construct from a frame.
+    // stateful bodies: they never construct from a flush.
     if (
       !section.isBranch ||
       !isBranchPathSection(section) ||
@@ -226,7 +226,7 @@ function getStaticShell(section: Section) {
   return [writes.value, walkLiteral?.value ?? ""] as const;
 }
 
-// The frame record `id marker;walks;template` (`,` for `;walks;` when the
+// The shell record `id marker;walks;template` (`,` for `;walks;` when the
 // walk is empty): the section's dom template parts, child imports included.
 export function buildShellRecord(id: string, section: Section, marker = "") {
   const { writes, walks } = getSectionMeta(section);

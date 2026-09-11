@@ -185,8 +185,8 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       isPersisted() && isBranchPathSection(section)
         ? getSerializeSourcesForExpr(valueExtra)
         : undefined;
-    // A state-fed hole recomputes through the signal graph, and inside
-    // client-owned structure delivery is owner fills: neither patch-writes.
+    // A state-sourced hole recomputes through the signal graph, and inside
+    // unpatched structure owner fills refresh it: neither patch-writes.
     const isPatch =
       isPersisted() &&
       isBranchPathSection(section) &&

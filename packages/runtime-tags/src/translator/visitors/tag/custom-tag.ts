@@ -211,8 +211,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const isLoad = !!loadConfig;
   const tagName = getStaticTagName(node);
 
-  // A server-only site has no client render: a frame's shell builds it
-  // and its setup entries feed it.
+  // A server-only site has no client render: a flush's shell builds it
+  // and its setup entries seed it.
   if (loadConfig?.serverOnly) {
     importRuntimeFeature("patch-child");
     tag.remove();
@@ -304,7 +304,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             : setupLoadExpr,
         );
         // A construct's client-side load drives the child's ready channel
-        // (stamped on its branch), so deferred frame data drains after insert.
+        // (stamped on its branch), so deferred flush data drains after insert.
         if (isPersisted() && getReadyId(childFile) !== undefined) {
           loadSetupCall = callRuntime(
             "_load_ready",
@@ -318,7 +318,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             t.variableDeclarator(
               setupIdent,
               // A constructing branch runs the site's load wiring as a shell
-              // init; `_resume` (impure) survives tree-shaking to deliver it.
+              // init; `_resume` (impure) survives tree-shaking to carry it.
               isPersisted() && sectionConstructs(section)
                 ? callRuntime(
                     "_resume",

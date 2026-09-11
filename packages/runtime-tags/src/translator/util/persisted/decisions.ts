@@ -5,8 +5,8 @@ import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
 import {
   getKnownTagSection,
-  getParamGroupFeeds,
-  hasServerFeed,
+  getParamGroupSources,
+  hasParamSource,
   kStaticBody,
   kTagVar,
 } from "../known-tag";
@@ -42,23 +42,23 @@ export function isContentRenderTag(tag: t.NodePath<t.MarkoTag>) {
     getCanonicalBinding(binding.upstreamAlias) === getInputBinding(program)
   );
 }
-// A dynamic tag whose renderer and every input the server owns (any client
-// state feed disqualifies); needs resolved references — call at finalize.
+// A dynamic tag with no state source upstream of its renderer, inputs or
+// attr tags, so a patch fills it whole; needs resolved references (finalize).
 export function isServerOwnedDynamicTag(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   if (t.isStringLiteral(node.name)) return false;
   // Name, attribute, spread and argument reads all merge into the tag extra.
-  if (hasStateFeed(node.extra)) return false;
+  if (hasStateSource(node.extra)) return false;
   let attrTagState = false;
   const checkAttrTags = (body: t.NodePath<t.MarkoTagBody>) => {
     for (const child of body.get("body")) {
       if (child.isMarkoTag() && isAttributeTag(child)) {
         for (const attr of child.node.attributes) {
           if (attr.type === "MarkoAttribute") {
-            attrTagState ||= hasStateFeed(attr.value.extra);
+            attrTagState ||= hasStateSource(attr.value.extra);
           }
         }
-        attrTagState ||= hasStateFeed(child.node.extra);
+        attrTagState ||= hasStateSource(child.node.extra);
         checkAttrTags(child.get("body"));
       }
     }
@@ -67,7 +67,7 @@ export function isServerOwnedDynamicTag(tag: t.NodePath<t.MarkoTag>) {
   return !attrTagState;
 }
 
-export function hasStateFeed(extra: t.NodeExtra | undefined) {
+export function hasStateSource(extra: t.NodeExtra | undefined) {
   return (
     !!getSerializeSourcesForExpr(extra || {})?.state ||
     some(
@@ -96,21 +96,21 @@ export function getChildPatchPlan(tagExtra: t.MarkoTagExtra) {
   if (!plan) {
     plan = computeChildPatchPlan(tagExtra);
     // Before known-tag finalize the groups are not yet stamped: no memo.
-    if (getParamGroupFeeds(tagExtra)) childPatchPlans.set(tagExtra, plan);
+    if (getParamGroupSources(tagExtra)) childPatchPlans.set(tagExtra, plan);
   }
   return plan;
 }
 
 function computeChildPatchPlan(tagExtra: t.MarkoTagExtra): ChildPatchPlan {
-  const feeds = getParamGroupFeeds(tagExtra);
+  const groups = getParamGroupSources(tagExtra);
   // No per-group analysis: a child that never reads its input renders
   // nothing from it, so the all-server default is exact.
-  if (!feeds) return {};
+  if (!groups) return {};
   // Argument and spread reads merge into the tag extra; groups see the rest.
-  let anyState = hasStateFeed(tagExtra as t.NodeExtra);
+  let anyState = hasStateSource(tagExtra as t.NodeExtra);
   let anyServerable = false;
-  for (const group of feeds) {
-    anyServerable ||= hasServerFeed(group.sources);
+  for (const group of groups) {
+    anyServerable ||= hasParamSource(group.sources);
     anyState ||= !!group.sources?.state;
   }
   // Skip only when nothing could change server-side; a tag variable's

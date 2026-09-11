@@ -330,7 +330,7 @@ export const IfTag = {
                     )
                   : undefined,
                 // A chain with params upstream yields to the client when
-                // the call site feeds them from state.
+                // the call site has state upstream of them.
                 ...(persistedPatch ? getExprWriteOwnership(ifTagExtra) : []),
               ),
             );

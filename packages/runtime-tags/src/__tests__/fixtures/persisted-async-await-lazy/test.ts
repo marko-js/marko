@@ -6,7 +6,7 @@ const click = (document: Document) => {
 };
 
 // Thenables derived from input (not the nav promise) settle on different
-// ticks: prefix first, then each body, with a click between frames.
+// ticks: prefix first, then each body, with a click between flushes.
 export const config: TestConfig = {
   persisted: true,
   equivalent: false,

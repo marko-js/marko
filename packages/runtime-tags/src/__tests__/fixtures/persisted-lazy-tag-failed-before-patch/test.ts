@@ -6,7 +6,7 @@ const load = (document: Document) => {
 };
 
 // The lazy chunk fails with NO patch pending on its channel: the page must
-// stay as it is (no reload), and a later frame naming the dead channel
+// stay as it is (no reload), and a later flush naming the dead channel
 // rejects into navigation instead of parking forever.
 export const config: TestConfig = {
   // Debug intentionally logs the load-failure diagnostic optimize cannot.

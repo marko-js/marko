@@ -6,7 +6,7 @@ const clickBoth = (document: Document) => {
   }
 };
 
-// Two sibling controllables constructing in one frame: each bind entry
+// Two sibling controllables constructing in one flush: each bind entry
 // carries its own child-link path, so both handlers land on the right
 // instance (First 1, Second 2).
 export const config: TestConfig = {

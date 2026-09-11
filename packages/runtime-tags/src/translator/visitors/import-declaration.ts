@@ -186,10 +186,10 @@ export default {
             node.attributes = undefined;
             return;
           } else {
-            // A persisted page's frames may carry data for this module before
+            // A persisted page's flushes may carry data for this module before
             // it loads; the feature defers them until its `ready()` call.
             if (isPersisted()) {
-              // A frame's ready batch may bind handlers before the child's
+              // A flush's ready batch may bind handlers before the child's
               // own feature loads, so the page carries the bind feature.
               importRuntimeFeature("patch-ready");
               importRuntimeFeature("patch-value-bind");
@@ -200,8 +200,8 @@ export default {
               file,
               loadFile.opts.filename,
             );
-            // Frames name a server-only template; the page registers its
-            // loader only, for the registrations its frames need.
+            // Flushes name a server-only template; the page registers its
+            // loader only, for the registrations its flushes need.
             if (loadImport.serverOnly) {
               importDecl.replaceWith(
                 t.expressionStatement(
@@ -260,7 +260,7 @@ export default {
                 t.variableDeclaration("const", [
                   t.variableDeclarator(
                     local,
-                    // A frame's data for a site this template constructs
+                    // A flush's data for a site this template constructs
                     // waits for its clone; the wrapper reports the start.
                     isPersisted()
                       ? callRuntime(

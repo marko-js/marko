@@ -383,7 +383,7 @@ export default {
                 ? t.stringLiteral(id)
                 : t.numericLiteral(0),
               // A loop with params upstream yields to the client when the call
-              // site feeds its inputs from state.
+              // site has state upstream of its inputs.
               ...getExprWriteOwnership(node.extra!),
             );
           }
@@ -394,7 +394,7 @@ export default {
         );
         if (stateful) {
           // Patch renders skip the loop: its state reads are server-stale
-          // and the frame never speaks the listing.
+          // and the flush never speaks the listing.
           let rootSection = tagSection;
           while (rootSection.parent) rootSection = rootSection.parent;
           statement = t.ifStatement(

@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
 // A content body holding an await constructs from its record (the await
-// body ships alongside) and pairs on later frames.
+// body ships alongside) and pairs on later flushes.
 export const config: TestConfig = {
   persisted: true,
   steps: [

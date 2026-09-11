@@ -30,12 +30,12 @@ import {
   push,
   Sorted,
 } from "./optional";
+import { finalizePersisted } from "./persisted/lifecycle";
 import {
   getRootGlobalReads,
   isPatchFillBinding,
   isPatchWriteBinding,
-} from "./persisted/delivery";
-import { finalizePersisted } from "./persisted/lifecycle";
+} from "./persisted/refresh";
 import { addRuntimeFeatureAsset, callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
@@ -141,15 +141,15 @@ export interface Binding {
   exposed: boolean;
   forcePersist: boolean;
   /** A root param whose reads sit upstream of a branch or loop (here, or in a
-   * child it feeds). */
+   * child it is upstream of). */
   upstreamOfStructure: boolean;
   /** Captured inside a registered function: live-scope reads reach it at
    * any later invocation. */
   registeredFnCapture: boolean;
-  /** Feeds a child input group that client state also feeds (the child
-   * re-derives that group from both). */
-  feedsStateMixedGroup: boolean;
-  /** Can hold a function a fill must deliver bind-aware: a literal fn,
+  /** Upstream of a child input group that client state is also upstream
+   * of (the child re-derives that group from both). */
+  upstreamOfStateMixedGroup: boolean;
+  /** Can hold a function a fill must carry bind-aware: a literal fn,
    * an invoked or handler-attr read, or a derivation over one. */
   functionValued: boolean;
   /** Binding-side counterpart of `Section.serializePropKeys`, keyed by
@@ -305,7 +305,7 @@ export function createBinding(
     forcePersist: false,
     upstreamOfStructure: false,
     registeredFnCapture: false,
-    feedsStateMixedGroup: false,
+    upstreamOfStateMixedGroup: false,
     functionValued: false,
     serializePropKeys: undefined,
     reserveSize: 0,
@@ -1236,7 +1236,7 @@ export function finalizeReferences() {
           }
 
           setReadsOwner(section, canonicalUpstreamAlias.section);
-          // Split so the force cannot swallow the sources' provenance.
+          // Split so the force cannot swallow the sources.
           if (isEffect) {
             addOwnerSerializeReason(
               section,
@@ -1270,7 +1270,7 @@ export function finalizeReferences() {
       section.sectionAccessor &&
       section.upstreamExpression
     ) {
-      // Split so the force cannot swallow the sources' provenance.
+      // Split so the force cannot swallow the sources.
       if (section.isHoistThrough || section.hoisted) {
         addSerializeReason(section, true, kBranchSerializeReason);
       }
@@ -1357,7 +1357,7 @@ export function finalizeReferences() {
       let branchesSources: undefined | Sources;
 
       // The walk keeps merging through a forced hop: the force decides the
-      // reason, but later hops' sources still feed provenance.
+      // reason, but later hops' sources still count as sources.
       while (currentSection !== sourceSection) {
         const upstreamReason = currentSection.downstream?.binding
           ? getSectionRegisterReasons(currentSection) || undefined
@@ -1477,7 +1477,7 @@ export function finalizeReferences() {
   forEachSection(finalizeParamSerializeReasonGroups);
   forEachSectionReverse((section) => {
     finalizeKnownTags(section);
-    // Call-site provenance (above) can make more root params fills.
+    // Call-site sources (above) can make more root params fills.
     if (isPersisted()) {
       forEach(section.bindings, (binding) => {
         const fills = isPatchFillBinding(binding);
@@ -1523,7 +1523,7 @@ export function finalizeReferences() {
       }
 
       // Renders run in id order, so a closure-only intersection must come
-      // before the owned derived binding it may feed.
+      // before the owned derived binding it may be upstream of.
       intersections.sort((a, b) => {
         const aAnchor = sectionAnchors.get(a);
         const bAnchor = sectionAnchors.get(b);
@@ -1701,7 +1701,7 @@ const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
 // A `$global` read compiles verbatim (no read slot, signal, or register
-// id) unless persisted keys it: a keyed read delivers like any reference.
+// id) unless persisted keys it: a keyed read refreshes like any reference.
 function isVerbatimGlobal(binding: Binding) {
   return (
     binding.type === BindingType.global &&
@@ -1778,7 +1778,7 @@ function resolveDerivedSources(binding: Binding) {
     const seen = new Set<Binding>();
     forEach(exprs, (expr) => {
       // A value holding a function literal (or one selected among
-      // function-valued bindings) can deliver one.
+      // function-valued bindings) can carry one.
       if (expr.functionValued) binding.functionValued = true;
       if (isReferencedExtra(expr)) {
         forEach(expr.referencedBindings, (ref) => {
@@ -2004,7 +2004,7 @@ function addReadToExpression(
   if (!fnRoot && isSerializedChangeHandlerRead(exprRoot)) {
     read.serializedValue = true;
     // The captured handler can be a scope-bound registration, so its
-    // fill must deliver bind-aware.
+    // fill must carry it bind-aware.
     binding.functionValued = true;
   }
 
@@ -3086,7 +3086,7 @@ function setReadsOwner(from: Section, to: Section) {
   }
 }
 
-// The call site expressions feeding a child template's input, keyed the way
+// The call site expressions upstream of a child template's input, keyed the way
 // the child destructures it; `value` is the whole-value expression.
 export interface KnownExprs {
   known?: Record<string, KnownExprs>;

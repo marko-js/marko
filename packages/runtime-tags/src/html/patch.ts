@@ -113,10 +113,10 @@ export function renderPatch(
 }
 
 // Serialize guards stay unset so the compiled resume payload drops at the
-// source: a frame carries only patch fills.
+// source: a flush carries only patch fills.
 class PatchState extends State {
   public sentShells?: Set<string>;
-  public shellFrames = "";
+  public pendingShells = "";
   override writesPatches = true;
 
   override shipShell(shellId: string | 0 | undefined) {
@@ -146,7 +146,7 @@ class PatchState extends State {
   constructor($global: State["$global"]) {
     super($global);
     this.hasMainRuntime = true;
-    // The live page owns its serialized globals; a frame never re-ships them.
+    // The live page owns its serialized globals; a flush never re-ships them.
     this.hasGlobals = true;
   }
 
@@ -154,7 +154,7 @@ class PatchState extends State {
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
     this.patchTrees = undefined;
-    // The client's bind table lives one frame: a later frame re-ships the
+    // The client's bind table lives one flush: a later flush re-ships the
     // sources it references.
     this.binds = undefined;
     this.patchBinds = 0;
@@ -165,8 +165,8 @@ class PatchState extends State {
   // mid-expression) hoists shells into a preceding `_()` call.
   override resumeScript(resumes: string) {
     this.patchFlushed = 1;
-    const shellChunks = this.shellFrames && this.shellFrames.slice(1);
-    this.shellFrames = "";
+    const shellChunks = this.pendingShells;
+    this.pendingShells = "";
     if (this.patchDeferred) {
       this.patchDeferred = undefined;
       return shellChunks
@@ -233,7 +233,7 @@ class PatchState extends State {
                 : [branchPartial]
               : shellId || 1,
     });
-    // Later settle frames nest under the live branch as a Child apply.
+    // Later settle flushes nest under the live branch as a Child apply.
     if (branchIndex !== undefined) {
       link[2] = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
@@ -311,7 +311,7 @@ export function _patch_attr(
   if (state.writesPatches) {
     // `0` is the removal sentinel: normalized values are always strings and
     // `undefined` entries are dropped entirely.
-    writeOwned(
+    writeFilled(
       scopeId,
       PatchKey.Attr + accessor + " " + name,
       attrValue(value) ?? 0,
@@ -385,8 +385,9 @@ export function _patch_child(
   }
 }
 
-// A server-owned local whose param group the client feeds is not written:
-// a fresh scope re-derives it by running its feeds' closure inits (setup).
+// A server-owned local whose param group the client is upstream of is not
+// written: a fresh scope re-derives it by running its upstreams' closure
+// inits (setup).
 export function _patch_init(scopeId: number, initIds: string) {
   if (getState().writesPatches) {
     for (const id of initIds.split(" ")) addSetupId(scopeId, id);
@@ -410,7 +411,7 @@ export function _patch_value(
     if (setup) {
       if (state.patchFlushed) {
         throw new Error(
-          "A persisted patch cannot write after its frame flushed (async patch content is not supported).",
+          "A persisted patch cannot write after its flush was written (async patch content is not supported).",
         );
       }
       // Setup entries nest under `s`: the client applies them only to
@@ -442,7 +443,7 @@ export function _patch_control(
   const state = getState();
   if (state.writesPatches && _filled_guard(owned, group!)) {
     writeEmbeddedBinds(state as PatchState, value);
-    writeOwned(
+    writeFilled(
       scopeId,
       PatchKey.Control + type + accessor,
       value,
@@ -641,7 +642,7 @@ export function _patch_attrs_partial_content(
   _attr_content(accessor, scopeId, content, serializeReason);
 }
 
-// The content renderer never rides the set: its entry delivers it.
+// The content renderer never rides the set: its entry carries it.
 function withoutContent(data: Record<string, unknown>) {
   if (data?.content === undefined) return data;
   const { content: _, ...set } = data;
@@ -658,7 +659,7 @@ export function _patch_text(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    writeOwned(
+    writeFilled(
       scopeId,
       PatchKey.Text + accessor,
       _to_text(value),
@@ -686,7 +687,7 @@ export function _patch_html(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    writeOwned(
+    writeFilled(
       scopeId,
       PatchKey.Html + accessor,
       _unescaped(value),
@@ -711,7 +712,7 @@ export function _patch_style(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    writeOwned(
+    writeFilled(
       scopeId,
       PatchKey.Style + accessor + " " + name,
       value,
@@ -734,7 +735,7 @@ export function _patch_text_content(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    writeOwned(scopeId, PatchKey.TextContent + accessor, value, owned, group);
+    writeFilled(scopeId, PatchKey.TextContent + accessor, value, owned, group);
   } else {
     getChunk()!.needsWalk = true;
   }
@@ -758,7 +759,7 @@ export function _patch_attrs(
       writeEmbeddedBinds(state as PatchState, data);
       // `controllable` marks a spread owning the element's controllable; the
       // array form carries `skip`/`controllable` without key bytes.
-      writeOwned(
+      writeFilled(
         scopeId,
         PatchKey.Attrs + accessor,
         controllable ? [data ?? 0, 0, 1] : (data ?? 0),
@@ -787,7 +788,7 @@ export function _patch_attrs_partial(
   if (state.writesPatches) {
     if (_filled_guard(owned, group!)) {
       writeEmbeddedBinds(state as PatchState, data);
-      writeOwned(
+      writeFilled(
         scopeId,
         PatchKey.Attrs + accessor,
         controllable ? [data ?? 0, skip, 1] : [data ?? 0, skip],
@@ -812,7 +813,7 @@ export function _patch_attr_option_value(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    writeOwned(
+    writeFilled(
       scopeId,
       PatchKey.Attr + accessor + " value",
       attrValue(value) ?? 0,
@@ -835,7 +836,7 @@ function patchStringAttr(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    writeOwned(
+    writeFilled(
       scopeId,
       PatchKey.Attr + accessor + " " + name,
       value || 0,
@@ -849,14 +850,14 @@ function patchStringAttr(
   return stringAttr(name, value);
 }
 
-// Whether a consumer withheld a content renderer the frame handed it
-// (created, never invoked): server values inside deliver as fills then.
+// Whether a consumer withheld a content renderer the flush handed it
+// (created, never invoked): server values inside fill then.
 export function _content_withheld(id: string) {
   const state = getState() as PatchState;
   return !!state.createdContents?.has(id) && !state.renderedContents?.has(id);
 }
 
-function writeOwned(
+function writeFilled(
   scopeId: number,
   key: string,
   value: unknown,
@@ -872,7 +873,7 @@ function shipShell(state: PatchState, shellId: string | 0 | undefined) {
   if (!shellId || !shells[shellId]) return undefined;
   if (!(state.sentShells ??= new Set()).has(shellId)) {
     state.sentShells.add(shellId);
-    state.shellFrames += shells[shellId];
+    state.pendingShells += (state.pendingShells && ",") + shells[shellId];
   }
   return shellId;
 }

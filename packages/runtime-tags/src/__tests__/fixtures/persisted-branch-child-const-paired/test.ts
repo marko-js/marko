@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
 // A constant fed to a child at the root and inside a branch: the setup
-// seed re-ships per frame (the server cannot tell fresh from paired) and
+// seed re-ships per flush (the server cannot tell fresh from paired) and
 // never clobbers the live value.
 export const config: TestConfig = {
   persisted: true,

@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A param+state `<const>` in a branch refreshes through its join while
-// paired and constructs from both feeds: the frame's fill lands before the
+// paired and constructs from both feeds: the flush's fill lands before the
 // construct, and the fill and state closure inits both arrive at the join.
 export const config: TestConfig = {
   persisted: true,

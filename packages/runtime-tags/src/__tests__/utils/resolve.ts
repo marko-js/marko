@@ -98,13 +98,13 @@ export function isThrows(value: any): value is Throws {
 
 export type Navigate = {
   navigateInput: Record<string, unknown>;
-  betweenFrames?: (document: Document) => unknown;
+  betweenFlushes?: (document: Document) => unknown;
 };
 export function navigate(
   input: Record<string, unknown>,
-  betweenFrames?: (document: Document) => unknown,
+  betweenFlushes?: (document: Document) => unknown,
 ): Navigate {
-  return { navigateInput: input, betweenFrames };
+  return { navigateInput: input, betweenFlushes };
 }
 export function isNavigate(value: any): value is Navigate {
   return (

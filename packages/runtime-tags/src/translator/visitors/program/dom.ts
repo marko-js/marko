@@ -12,7 +12,7 @@ import {
   hasPatchEffectReads,
   isPatchWriteBinding,
   isPatchFillBinding,
-} from "../../util/persisted/delivery";
+} from "../../util/persisted/refresh";
 import {
   type Binding,
   BindingType,
@@ -178,7 +178,7 @@ export default {
         }
       });
 
-      // Patches deliver server contributions to registered fill signals, so
+      // Patches write server contributions to registered fill signals, so
       // a template with fills in any section ships the patcher.
       let boundFills = false;
       forEachSection((fillSection) => {
@@ -202,7 +202,7 @@ export default {
         }
       });
       // Only function-carrying fills need the bind patchers; an unshipped patcher
-      // rejects the frame into navigation, never a broken bind.
+      // rejects the flush into navigation, never a broken bind.
       if (boundFills) {
         importRuntimeFeature("patch-value-bind");
       }

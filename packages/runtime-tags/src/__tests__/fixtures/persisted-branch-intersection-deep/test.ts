@@ -13,7 +13,7 @@ export const config: TestConfig = {
     click,
     { show: true, inner: true, title: "Store!" },
     click,
-    // The inner branch is destroyed in the same frame the fill changes:
+    // The inner branch is destroyed in the same flush the fill changes:
     // the dispatch skips the dropped selection cleanly.
     { show: true, inner: false, title: "Store?" },
   ],

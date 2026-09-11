@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A settled `<await>` boundary: the document render resumes the await body
-// and navigation patches values inside and around it in a single frame.
+// and navigation patches values inside and around it in a single flush.
 export const config: TestConfig = {
   persisted: true,
   steps: () => [
