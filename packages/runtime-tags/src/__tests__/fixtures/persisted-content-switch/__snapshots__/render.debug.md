@@ -39,7 +39,6 @@
 ```
 REMOVE: main > section:nth-of-type(1) > b
 INSERT: main > section:nth-of-type(1) > i
-UPDATE: main > section:nth-of-type(1) > i::text@2 "" => "b"
 ```
 
 # Update
@@ -117,7 +116,6 @@ INSERT: main > section:nth-of-type(2) > b
 ## Change
 ```
 INSERT: main > section:nth-of-type(1) > i
-UPDATE: main > section:nth-of-type(1) > i::text@2 "" => "b"
 REMOVE: main > section:nth-of-type(2) > b
 ```
 

@@ -108,7 +108,10 @@ export default {
           BindingType.dom,
           section,
         );
-        (section.loadSites ??= []).push(tagExtra[kLoadTagBinding]!);
+        (section.loadSites ??= []).push({
+          site: tagExtra[kLoadTagBinding]!,
+          load: tagExtra.tagNameLoad,
+        });
         tagExtra.tagNameLoadInput = true;
         // Reference tracking fills these same extras later, so the fact is
         // recorded ahead of it on each attr value.
@@ -134,7 +137,17 @@ export default {
       const tagName = getStaticTagName(tag.node);
       if (tagExtra.tagNameLoad) {
         structure.visit(tag, WalkCode.Replace);
-        structure.child(tag, tagName);
+        structure.child(
+          tag,
+          tagName,
+          {
+            kind: StructureKind.ExportRef,
+            program: childExtra,
+            path: getTagRelativePath(tag),
+            hint: tagName,
+          },
+          tagExtra.tagNameLoad,
+        );
         structure.enterShallow(tag);
       } else {
         structure.child(tag, tagName, {
@@ -197,6 +210,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const loadConfig = node.extra?.tagNameLoad;
   const isLoad = !!loadConfig;
   const tagName = getStaticTagName(node);
+
+  // A server-only site has no client render: a frame's shell builds it
+  // and its setup entries feed it.
+  if (loadConfig?.serverOnly) {
+    importRuntimeFeature("patch-child");
+    tag.remove();
+    return;
+  }
 
   if (isLoad) {
     const childFileName = childFile.opts.filename;

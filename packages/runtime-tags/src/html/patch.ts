@@ -6,7 +6,6 @@ import {
   toDelimitedString,
   isNotVoid,
 } from "../common/helpers";
-import { READY_FRAME_VAR } from "../common/meta";
 import type {
   Accessor,
   RenderedTemplate,
@@ -23,12 +22,7 @@ import {
 } from "./attrs";
 import { _escape_style_value } from "./content";
 import { _to_text, _unescaped } from "./content";
-import {
-  getRegistered,
-  K_SCOPE_ID,
-  Serializer,
-  toObjectKey,
-} from "./serializer";
+import { getRegistered, K_SCOPE_ID } from "./serializer";
 import { shells } from "./shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
@@ -122,17 +116,8 @@ export function renderPatch(
 class PatchState extends State {
   public sentShells?: Set<string>;
   public shellFrames = "";
-  public readyFrames?: Record<string, string>;
   override writesPatches = true;
 
-  // Ready data rides the frame as an explicit record call so it merges into
-  // (never replaces) the live ready record; each batch is a lazy thunk.
-  override writeReady(id: string, resumes: string) {
-    const frames = (this.readyFrames ??= {});
-    const batch = "_=>(" + resumes + ")";
-    frames[id] = frames[id] ? frames[id] + "," + batch : batch;
-    return "";
-  }
   override shipShell(shellId: string | 0 | undefined) {
     return shipShell(this, shellId);
   }
@@ -165,18 +150,6 @@ class PatchState extends State {
   }
 
   override flushChunk(_html: string, scripts: string) {
-    if (this.readyFrames) {
-      let record = "";
-      for (const id in this.readyFrames) {
-        record +=
-          (record && ",") + toObjectKey(id) + ":[" + this.readyFrames[id] + "]";
-      }
-      this.readyFrames = undefined;
-      const readyCall = READY_FRAME_VAR + "({" + record + "})";
-      // One frame stays one expression: the record call sequences ahead of
-      // the partial tree, which remains the frame's value.
-      scripts = scripts ? "(" + readyCall + "," + scripts + ")" : readyCall;
-    }
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
     this.patchTrees = undefined;
@@ -184,7 +157,6 @@ class PatchState extends State {
     // sources it references.
     this.binds = undefined;
     this.patchBinds = 0;
-    this.serializer = new Serializer();
     return out;
   }
 
@@ -197,10 +169,12 @@ class PatchState extends State {
     if (this.patchDeferred) {
       this.patchDeferred = undefined;
       return shellChunks
-        ? "(_([" + shellChunks + "])," + resumes + ")"
+        ? "(_([" + shellChunks + "])" + (resumes && "," + resumes) + ")"
         : resumes;
     }
-    return shellChunks ? "[" + shellChunks + "," + resumes + "]" : resumes;
+    return shellChunks
+      ? "[" + shellChunks + (resumes && "," + resumes) + "]"
+      : resumes;
   }
 
   override walkScript() {

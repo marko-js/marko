@@ -53,6 +53,7 @@ export {
   AccessorPrefix,
   AccessorProp,
   PatchKey,
+  ReadyPatchProp,
   ClosureSignalProp,
   KeyedScopesProp,
   PendingRenderProp,

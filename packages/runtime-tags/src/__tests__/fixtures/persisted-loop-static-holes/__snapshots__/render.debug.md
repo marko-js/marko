@@ -54,8 +54,6 @@ UPDATE: ul > li:nth-of-type(2)::text@2 "a" => "b"
 UPDATE: ol > li:nth-of-type(1)::text "1" => "1"
 UPDATE: ol > li:nth-of-type(2)::text "2" => "2"
 INSERT: ol + div
-INSERT: div > p
-INSERT: div > p:nth-of-type(1) + p
 ```
 
 # Update `{"show":true,"note":"c"}`
@@ -165,6 +163,4 @@ UPDATE: ul > li:nth-of-type(2)::text@2 "d" => "e"
 UPDATE: ol > li:nth-of-type(1)::text "1" => "1"
 UPDATE: ol > li:nth-of-type(2)::text "2" => "2"
 INSERT: ol + div
-INSERT: div > p
-INSERT: div > p:nth-of-type(1) + p
 ```

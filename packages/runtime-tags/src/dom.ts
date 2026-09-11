@@ -73,6 +73,7 @@ export {
 export { _on } from "./dom/event";
 export { patch } from "./dom/patch";
 export { _global_join, _global_script } from "./dom/patch-global";
+export { _load_lazy } from "./dom/patch-load";
 export {
   _load_event_trigger,
   _load_idle_trigger,

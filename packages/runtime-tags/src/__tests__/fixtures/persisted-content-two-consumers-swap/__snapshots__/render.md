@@ -38,9 +38,6 @@
 UPDATE: main > section:nth-of-type(1) > h2::text "a" => "a"
 UPDATE: main > section:nth-of-type(1) > em::text "x" => "x"
 INSERT: main > section:nth-of-type(1) + section
-UPDATE: main > section:nth-of-type(2) > h2::text " " => "b"
-INSERT: main > section:nth-of-type(2) > h2 + em
-UPDATE: main > section:nth-of-type(2) > em::text " " => "x"
 ```
 
 # Update `{"t1":"c","t2":"d","note":"y","show":true}`
@@ -118,7 +115,4 @@ REMOVE: main > section + section
 UPDATE: main > section:nth-of-type(1) > h2::text "c" => "e"
 UPDATE: main > section:nth-of-type(1) > em::text "z" => "w"
 INSERT: main > section:nth-of-type(1) + section
-UPDATE: main > section:nth-of-type(2) > h2::text " " => "f"
-INSERT: main > section:nth-of-type(2) > h2 + em
-UPDATE: main > section:nth-of-type(2) > em::text " " => "w"
 ```

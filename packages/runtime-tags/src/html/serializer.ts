@@ -301,6 +301,10 @@ const KNOWN_OBJECTS = /* @__PURE__ */ (() =>
 class State {
   ids = 0;
   flushId = 0;
+  // A frame's tree is no live scope: the response's context keeps every
+  // tree it applied, keyed as the client keys them (the k-th tree), and a
+  // later frame paths from that key.
+  trees = 0;
   wroteUndefined = false;
   buf = [] as string[];
   strs = new Map<string, Reference>();
@@ -465,24 +469,26 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
   // A patch frame is one flat entry array, so the scope run serializes with
   // no fn wrapper or list brackets.
-  const bare = state.boundary?.state?.writesPatches;
+  const patch = state.boundary?.state?.writesPatches;
   let nextSlotId = -1;
   let fillIndex = -1;
 
   for (const flush of flushes) {
     const scopeId = flush[0];
     const scope = flush[1];
-    const ref =
-      state.refs.get(scope) || newScopeReference(state, scope, scopeId);
+    // A frame's flush is its own tree (the scope object is shared).
+    const ref = patch
+      ? newFrameReference(state)
+      : state.refs.get(scope) || newScopeReference(state, scope, scopeId);
 
     // Empty scopes fold into the next emitted slot's skip count.
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
       // The skip is a SIGNED delta so a flush revisiting a lower slot steps back;
-      // a bare patch run has no cursor (its single flush is the page root).
+      // a patch run has no cursor (its single flush is the page root).
       buf[openIndex] =
         nextSlotId === -1
-          ? bare
+          ? patch
             ? "{"
             : scopeId + ",{"
           : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
@@ -491,15 +497,17 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
       buf.push("}");
     } else {
       buf.pop();
+      // An empty tree applies nothing, so the client never keys it.
+      if (patch) unkeyFrame(state, ref);
     }
   }
 
   let extras = "";
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
     extras = ",0)";
-    // A deferred bare run applies through `_()` mid-expression, so a patch
+    // A deferred patch run applies through `_()` mid-expression, so a patch
     // frame must evaluate its shell records first (see `resumeScript`).
-    if (bare) state.boundary!.state.patchDeferred = 1;
+    if (patch) state.boundary!.state.patchDeferred = 1;
     if (fillIndex !== -1) {
       buf[fillIndex] = "_([" + buf[fillIndex];
       buf.push("])");
@@ -518,7 +526,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
 
   const arrow = state.wroteUndefined ? "(_,$)=>" : "_=>";
   state.wroteUndefined = false;
-  return bare ? result : extras ? arrow + result : arrow + "[" + result + "]";
+  return patch ? result : extras ? arrow + result : arrow + "[" + result + "]";
 }
 
 function writeAssigned(state: State) {
@@ -749,6 +757,17 @@ function trackScope(state: State, val: WeakKey, scopeId: number) {
   } else {
     newScopeReference(state, val, scopeId);
   }
+}
+
+function newFrameReference(state: State) {
+  const ref = new Reference(null, null, state.flushId, null);
+  ref.id = "_(" + state.trees++ + ")";
+  return ref;
+}
+
+function unkeyFrame(state: State, ref: Reference) {
+  state.trees--;
+  ref.id = null;
 }
 
 function newScopeReference(state: State, val: WeakKey, scopeId: number) {

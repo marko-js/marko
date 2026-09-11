@@ -19,8 +19,6 @@
 ## Change
 ```
 INSERT: main > section
-UPDATE: main > section > h2::text " " => "b"
-INSERT: main > section > h2 + em
 ```
 
 # Update `{"show":true,"title":"c"}`

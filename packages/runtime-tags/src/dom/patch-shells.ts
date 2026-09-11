@@ -5,7 +5,7 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
-import { queueEffect, runId } from "./queue";
+import { queueEffect } from "./queue";
 import { _content as content } from "./renderer";
 import {
   _patch_records,
@@ -14,18 +14,20 @@ import {
   getRegisteredWithScope,
   patchConstruct,
   patchers,
+  patchRun,
 } from "./resume";
 
 // Enables branch resume handling: a page swapping shipped branches needs
 // it even when no client control flow does.
 const _content = /*@__PURE__*/ withBranches(content);
 
-// A branch stashes its setup for the shell's first render; a scope the
-// shell's walk created (a child, met while constructing) applies it now.
+// A branch stashes its setup for the shell's first render; a scope this
+// frame created (`Gen` since the frame's run, met while constructing) has
+// no render coming, so its setup applies now.
 patchers[PatchKey.Setup] = (scope, _key, value) => {
   if (
     constructing &&
-    scope[AccessorProp.Gen] === runId &&
+    scope[AccessorProp.Gen] >= patchRun &&
     scope[AccessorProp.ClosestBranch] !== scope
   ) {
     patchConstruct(value as Scope, scope);

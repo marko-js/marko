@@ -26,7 +26,6 @@
 ```
 UPDATE: main > section > h2::text "a" => "b"
 INSERT: main > section > h2 + em
-UPDATE: main > section > em::text " " => "x"
 ```
 
 # Update `{"title":"c","show":true,"note":"y"}`
@@ -81,5 +80,4 @@ REMOVE: main > section > h2 + em
 ```
 UPDATE: main > section > h2::text "d" => "e"
 INSERT: main > section > h2 + em
-UPDATE: main > section > em::text " " => "z"
 ```

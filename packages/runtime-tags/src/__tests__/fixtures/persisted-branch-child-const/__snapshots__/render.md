@@ -16,5 +16,4 @@
 ## Change
 ```
 INSERT: main > section
-UPDATE: main > section > h2::text " " => "fixed"
 ```

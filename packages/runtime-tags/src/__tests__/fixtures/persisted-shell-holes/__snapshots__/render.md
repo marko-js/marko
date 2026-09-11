@@ -25,9 +25,6 @@
 ```
 UPDATE: main > h1::text "Store" => "Store"
 INSERT: main > h1 + a
-UPDATE: main > a[href] null => "/sale"
-UPDATE: main > a[hidden] null => ""
-UPDATE: main > a::text " " => "Sale"
 ```
 
 # Update `{"title":"Store","show":true,"href":"/new","label":"New"}`
@@ -82,6 +79,4 @@ REMOVE: main > h1 + a
 ```
 UPDATE: main > h1::text "Store" => "Store"
 INSERT: main > h1 + a
-UPDATE: main > a[href] null => "/back"
-UPDATE: main > a::text " " => "Back"
 ```

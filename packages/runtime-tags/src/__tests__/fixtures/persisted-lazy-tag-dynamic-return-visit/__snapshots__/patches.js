@@ -6,27 +6,25 @@
 }
 
 // PATCH
-(y({
-  _a: [_ => ({
+[`a;D ;<button> </button>`, {
+  fc: ["a", {
+    label: "b"
+  }],
+  z_a: {
     cAc: {
       ta: "b"
     }
-  })]
-}), [`a;D ;<button> </button>`, {
-  fc: ["a", {
-    label: "b"
-  }]
-}])
+  }
+}]
 
 // PATCH
-(y({
-  _a: [_ => ({
+[`a;D ;<button> </button>`, {
+  fc: ["a", {
+    label: "c"
+  }],
+  z_a: {
     cAc: {
       ta: "c"
     }
-  })]
-}), [`a;D ;<button> </button>`, {
-  fc: ["a", {
-    label: "c"
-  }]
-}])
+  }
+}]

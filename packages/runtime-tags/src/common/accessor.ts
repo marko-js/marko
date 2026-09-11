@@ -4,12 +4,16 @@ import * as ClosureSignalProp from "./constants/closure-signal-prop";
 import * as KeyedScopesProp from "./constants/keyed-scopes-prop";
 import * as PatchKey from "./constants/patch-key";
 import * as PendingRenderProp from "./constants/pending-render-prop";
+import * as ReadyPatchProp from "./constants/ready-patch-prop";
 import * as RendererProp from "./constants/renderer-prop";
 type AccessorPrefix = AccessorPrefix.Value;
 export { AccessorPrefix };
 
 type PatchKey = PatchKey.Value;
 export { PatchKey };
+
+type ReadyPatchProp = ReadyPatchProp.Value;
+export { ReadyPatchProp };
 
 type AccessorProp = AccessorProp.Value;
 export { AccessorProp };

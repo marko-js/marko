@@ -1,38 +1,44 @@
-import { READY_FRAME_VAR } from "../common/meta";
-import { AccessorProp } from "../common/types";
-import { installLoadReady } from "./load";
 import {
-  applyReadyPatch,
-  frameEpoch,
-  frameVars,
-  installPatchReady,
-} from "./patch";
-import { queueEffect, run, runEffects } from "./queue";
+  AccessorProp,
+  PatchKey,
+  ReadyPatchProp,
+  type Scope,
+} from "../common/types";
+import { installLoadReady } from "./load";
+import { applyReadyPatch, frameBinds, installPatchReady } from "./patch";
+import { loads } from "./patch-load";
+import { queueEffect, run } from "./queue";
 import {
   installReady,
   isReady,
+  patchers,
   patchRender,
+  patchRun,
+  patchScope,
   ready,
   readyFailed,
   readyIds,
   type RenderData,
 } from "./resume";
 
-interface Pending {
-  // Deferred frame entries by ready channel, in frame arrival order.
-  c: Map<string, unknown[]>;
+// A channel's guards: its entries met in a frame's tree, each with the live
+// scope they apply to.
+type Guards = [entries: Scope, scope: Scope][];
+// A render's patch awaiting its channels.
+interface ReadyPatch {
+  [ReadyPatchProp.Channels]: Map<string, Guards>;
   // Every `applyPatch` promise awaiting this render's channels.
-  r: ((applied: boolean) => void)[];
-  epoch: object;
+  [ReadyPatchProp.Resolvers]: ((applied: boolean) => void)[];
+  [ReadyPatchProp.Binds]: Record<string, unknown>;
+  [ReadyPatchProp.Run]: number;
 }
-const pending = new Map<RenderData, Pending>();
+const readyPatches = new Map<RenderData, ReadyPatch>();
 // Sites still cloning their child, by channel: the channel is unready
 // (its data blocks like a still-loading module's) until the last lands.
 const loading: Record<string, number> = {};
 
 // Module evaluation is the enablement: the compiler injects this side-effect
 // import once per program with a lazy load import in a persisted build.
-frameVars[READY_FRAME_VAR] = acceptReady;
 installPatchReady(commitReady, pendingReady, discardReady);
 installReady(markReady, failReady);
 // Every lazy site of a persisted page stamps its channel as it starts cloning
@@ -55,100 +61,94 @@ installLoadReady(
   },
 );
 
-// Live-record pushes of the frame being applied (alternating batch, prior
-// length), undone if it rejects.
-const framePushes: (unknown[] | number)[] = [];
-
-// The frame's run may construct a site of a channel (a returning lazy
-// tag), so its record commits after the run, channels settled.
-let record: Record<string, unknown[]> = {};
-function acceptReady(frameRecord: Record<string, unknown[]>) {
-  framePushes.length = 0;
-  record = frameRecord;
-}
+// The frame's run may construct a site of the channel (a returning lazy
+// tag), so a guard applies at commit, after the run, channels settled.
+let pendingGuards: Record<string, Guards> = {};
+patchers[PatchKey.Ready] = (scope, key, entries) => {
+  const readyId = key.slice(PatchKey.Ready.length);
+  // A site whose module died at page load stays inert: a frame targeting
+  // it could never apply, so it rejects (the caller navigates).
+  if (failed.has(readyId)) throw 0;
+  (pendingGuards[readyId] ||= []).push([entries as Scope, scope]);
+};
 
 function commitReady() {
-  let pushed = false;
-  for (const readyId in record) {
-    const batch = record[readyId];
-    // A dead channel can never make its data whole: the frame rejects.
-    if (failed.has(readyId)) throw 0;
+  const guards = pendingGuards;
+  let applied = false;
+  pendingGuards = {};
+  for (const readyId in guards) {
+    const channel = guards[readyId];
     if (isReady(readyId)) {
-      pushBatch(batch, readyId);
-      pushed = true;
+      for (const guard of channel) patchScope(...guard);
+      applied = true;
     } else {
-      const entry =
-        pending.get(patchRender) ||
-        pending
-          .set(patchRender, { c: new Map(), r: [], epoch: frameEpoch })
-          .get(patchRender)!;
-      // A later frame's entries append: they re-ship full state, so
-      // in-order application leaves the newest frame's values live.
-      entry.c.get(readyId)?.push(...batch) || entry.c.set(readyId, batch);
+      const channels = (readyPatches.get(patchRender) ||
+        readyPatches
+          .set(patchRender, {
+            [ReadyPatchProp.Channels]: new Map(),
+            [ReadyPatchProp.Resolvers]: [],
+            [ReadyPatchProp.Binds]: frameBinds,
+            [ReadyPatchProp.Run]: patchRun,
+          })
+          .get(patchRender)!)[ReadyPatchProp.Channels];
+      // A later frame's guards append: they re-ship full state, so in-order
+      // application leaves the newest frame's values live.
+      channels.get(readyId)?.push(...channel) || channels.set(readyId, channel);
+      loads[readyId]?.();
     }
   }
-  record = {};
-  if (pushed) {
-    runEffects(patchRender.m!([]), 1);
-    run();
-  }
-}
-
-// Appends a frame batch (a thunk the drain evaluates) to the live ready
-// record without disturbing the page's still-pending resume data.
-function pushBatch(batch: unknown[], readyId: string) {
-  const target = ((patchRender.b ??= {})[readyId] ??= []);
-  framePushes.push(target, target.length);
-  for (const partial of batch) target.push(partial as (typeof target)[number]);
+  if (applied) run();
 }
 
 function pendingReady() {
-  const entry = pending.get(patchRender);
-  if (entry) {
-    return new Promise<boolean>((resolve) => entry.r.push(resolve));
+  const patch = readyPatches.get(patchRender);
+  if (patch) {
+    return new Promise<boolean>((resolve) =>
+      patch[ReadyPatchProp.Resolvers].push(resolve),
+    );
   }
 }
 
 function markReady(readyId: string) {
-  for (const [render, entry] of pending) {
-    if (entry.c.has(readyId) && [...entry.c.keys()].every(isReady)) {
-      pending.delete(render);
-      settle(
-        entry,
-        applyReadyPatch(render, entry.epoch, () => entry.c.forEach(pushBatch)),
+  for (const [render, patch] of readyPatches) {
+    const channels = patch[ReadyPatchProp.Channels];
+    if (channels.has(readyId) && [...channels.keys()].every(isReady)) {
+      resolvePatch(
+        render,
+        patch,
+        applyReadyPatch(
+          render,
+          patch[ReadyPatchProp.Binds],
+          patch[ReadyPatchProp.Run],
+          () =>
+            channels.forEach((channel) => {
+              for (const guard of channel) patchScope(...guard);
+            }),
+        ),
       );
     }
   }
 }
 
 // A dead channel can never make its server content whole: pending appliers
-// settle rejected (their caller navigates) and later frames naming it reject.
+// resolve rejected (their caller navigates) and later frames naming it reject.
 const failed = new Set<string>();
 function failReady(readyId: string) {
   failed.add(readyId);
-  for (const [render, entry] of pending) {
-    if (entry.c.has(readyId)) {
-      pending.delete(render);
-      settle(entry, false);
+  for (const [render, patch] of readyPatches) {
+    if (patch[ReadyPatchProp.Channels].has(readyId)) {
+      resolvePatch(render, patch, false);
     }
   }
 }
 
 function discardReady() {
-  // A rejected frame's pushes must not survive to a later run; a partially
-  // consumed batch is safe to drop since the caller is navigating anyway.
-  while (framePushes.length) {
-    const length = framePushes.pop() as number;
-    const batch = framePushes.pop() as unknown[];
-    if (batch.length > length) batch.length = length;
-  }
-  const entry = pending.get(patchRender);
-  if (entry) {
-    pending.delete(patchRender);
-    settle(entry, false);
-  }
+  pendingGuards = {};
+  const patch = readyPatches.get(patchRender);
+  if (patch) resolvePatch(patchRender, patch, false);
 }
 
-function settle(entry: Pending, applied: boolean) {
-  for (const resolve of entry.r) resolve(applied);
+function resolvePatch(render: RenderData, patch: ReadyPatch, applied: boolean) {
+  readyPatches.delete(render);
+  for (const resolve of patch[ReadyPatchProp.Resolvers]) resolve(applied);
 }

@@ -12,7 +12,6 @@
 ## Change
 ```
 INSERT: div, button
-UPDATE: div::text " " => "a"
 ```
 
 # Update
