@@ -40,6 +40,7 @@ import {
 import { getSerializeGuard } from "../util/serialize-guard";
 import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
+import { isShell } from "../util/shell";
 import {
   addStatement,
   addValue,
@@ -128,9 +129,7 @@ export default {
       addRuntimeFeatureAsset("patch-boundary");
       // A scriptless construct paints the settled body via text fills.
       addRuntimeFeatureAsset("patch-text");
-      // Recorded on every section; `buildShells` keeps only those whose
-      // shipped body shells a construct can resolve.
-      (section.constructSetups ??= []).push({
+      (section.awaits ??= []).push({
         binding: tagExtra[kDOMBinding]!,
         body: bodySection,
       });
@@ -189,7 +188,7 @@ export default {
         const patchContent =
           isPersisted() && !valueSources?.param && !valueSources?.global
             ? t.numericLiteral(0)
-            : section.constructSetups?.some((s) => s.binding === nodeRef)
+            : bodySection && isShell(bodySection)
               ? t.stringLiteral(getResumeRegisterId(section, nodeRef, "await"))
               : undefined;
 
