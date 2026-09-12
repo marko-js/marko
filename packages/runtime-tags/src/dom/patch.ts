@@ -55,15 +55,22 @@ export function patch($global: PatchGlobal) {
     patchers[PatchKey.Globals] ||= applyGlobals;
     flushBinds = {};
     beginPatch(curRenders[$global.renderId]);
+    // A flush writes ready records as `R.b[id]=[...]`, into the bucket the
+    // document's first record created (`writeReady`). A document that never
+    // wrote one (no lazy site rendered) has no bucket, so the flush's first
+    // record would throw; a flush cannot know, so the page ensures it.
+    patchRender.b ||= {};
     try {
       // A flush is trusted executable resume data from the same server
-      // that produced the document; `$` stays the serializer's `undefined`.
+      // that produced the document; `$` stays the serializer's `undefined`
+      // and `R` the page render, where ready-channel records land as the
+      // page's own (its flush vars are the only other free names).
       // eslint-disable-next-line no-new-func
-      const fn = new Function("_", "$", ...names, "return " + flush);
+      const fn = new Function("_", "$", "R", ...names, "return " + flush);
       patchRender.r = [
         (ctx: SerializeContext) => {
           pageCtx = ctx;
-          const value = fn(responseCtx, undefined, ...vars);
+          const value = fn(responseCtx, undefined, patchRender, ...vars);
           // The tree is the flush's last value; a flush of only shells (or
           // nothing) ends in a string (`undefined`), and the server keys none.
           const tree = Array.isArray(value) ? value[value.length - 1] : value;

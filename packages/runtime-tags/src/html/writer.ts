@@ -421,38 +421,43 @@ export function writeEmbeddedBinds(
   }
 }
 
+// A branch's partial opens detached before its render: the `Branch` entry
+// embeds it, so no write inside links it to the parent first.
+export function openPatchPartial(state: State, scopeId: number) {
+  return (patchTree(state, $chunk.serializeState)[scopeId] = {});
+}
+
 export function patchPartial(
   state: State,
   scopeId: number,
   serializeState: SerializeState = $chunk.serializeState,
 ): Record<string, unknown> {
   if (state.patchInert) return {};
-  // One flush-lived merge tree per serialize state (a ready channel's
-  // content must not apply before its module); `flushChunk` drops the map.
-  const trees = (state.patchTrees ??= new Map());
-  let partials = trees.get(serializeState);
-  if (!partials) trees.set(serializeState, (partials = {}));
+  const partials = patchTree(state, serializeState);
   let partial = partials[scopeId];
   if (!partial) {
     const link = state.patchLinks?.[scopeId];
     const pending = link?.[2];
     if (serializeState.readyId && !pending) {
-      // A channel's entries sit in the enclosing tree under the channel's
-      // key, at the parent's child entry (scope `link[0]`, slot `link[1]`)
-      // or the root: one flat flush, applied once the channel is ready.
-      const guard = (patchPartial(
-        state,
-        link ? link[0] : scopeId,
-        serializeState.parent || state,
-      )[PatchKey.Ready + serializeState.readyId] ??= {}) as Record<
-        string,
-        unknown
-      >;
+      // A channel's entries nest under their parent's entry in the channel's
+      // own tree (a parent the channel constructs must apply first), up to the
+      // root, whose guard sits in the enclosing tree under the channel's key.
       if (scopeId === state.rootScopeId) {
-        return (partials[scopeId] = guard);
+        return (partials[scopeId] = (patchPartial(
+          state,
+          scopeId,
+          serializeState.parent || state,
+        )[PatchKey.Ready + serializeState.readyId] ??= {}) as Record<
+          string,
+          unknown
+        >);
       }
       if (link && typeof link[1] === "string") {
-        return (partials[scopeId] = guard[PatchKey.Child + link[1]] ??=
+        return (partials[scopeId] = patchPartial(
+          state,
+          link[0],
+          serializeState,
+        )[PatchKey.Child + link[1]] ??=
           {}) as Record<string, unknown>;
       }
       // No linkable hop (keyed loop items): the write rides the main tree, so
@@ -491,6 +496,15 @@ export function patchPartial(
     }
   }
   return partial;
+}
+
+// One flush-lived merge tree per serialize state (a ready channel's
+// content must not apply before its module); `flushChunk` drops the map.
+function patchTree(state: State, serializeState: SerializeState) {
+  const trees = (state.patchTrees ??= new Map());
+  let partials = trees.get(serializeState);
+  if (!partials) trees.set(serializeState, (partials = {}));
+  return partials;
 }
 
 export function _resume_branch(scopeId: number) {
@@ -1305,11 +1319,27 @@ export function _await<T>(
   // the body's content id, letting a construct build the await branch.
   if (writesPatches && patchContent === 0) return;
   const resumeMarker = serializeMarker !== 0 || writesPatches;
+  // A construct resolves the body from this shipped record (a settled value
+  // included); an always-pairing body outside divergent contexts never
+  // constructs.
+  const { boundary } = $chunk;
+  const writePending = () => {
+    const elide = alwaysPairs && !isInResumedBranch();
+    if (!elide) $chunk.boundary.state.shipShell!(patchContent);
+    writePatch(scopeId, {
+      [PatchKey.Pending + accessor]: (!elide && patchContent) || 1,
+    });
+  };
 
   if (!isPromise(promise)) {
     if (resumeMarker) {
       const branchId = _peek_scope_id();
       $chunk.boundary.state.pairBranch?.(scopeId, accessor, branchId);
+      if (writesPatches) {
+        writePending();
+        // The Child entry settles the pending UI the entry above opens.
+        patchPartial(boundary.state, branchId);
+      }
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
       );
@@ -1327,16 +1357,7 @@ export function _await<T>(
   }
 
   const chunk = $chunk;
-  const { boundary } = chunk;
-  if (writesPatches) {
-    // A construct resolves the pending body from this shipped record; an
-    // always-pairing body outside divergent contexts never constructs.
-    const elide = alwaysPairs && !isInResumedBranch();
-    if (!elide) $chunk.boundary.state.shipShell!(patchContent);
-    writePatch(scopeId, {
-      [PatchKey.Pending + accessor]: (!elide && patchContent) || 1,
-    });
-  }
+  if (writesPatches) writePending();
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
   if (chunk.context?.[kPendingContexts]) {

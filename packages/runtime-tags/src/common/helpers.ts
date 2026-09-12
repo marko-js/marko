@@ -154,6 +154,11 @@ export function getEventHandlerName(name: `on${string}`) {
   return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
 }
 
+export function hasKeys(obj: object) {
+  for (const _ in obj) return true;
+  return false;
+}
+
 export function isVoid(value: unknown) {
   return value == null || value === false;
 }

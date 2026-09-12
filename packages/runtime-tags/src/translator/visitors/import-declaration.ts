@@ -17,7 +17,13 @@ import {
   isOutputHTML,
   isPersisted,
 } from "../util/marko-config";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import { hasStateSource } from "../util/persisted/decisions";
+import { getAllTagReferenceNodes } from "../util/references";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import { getSection } from "../util/sections";
 import { sectionConstructs } from "../util/signals";
 import { createProgramState } from "../util/state";
@@ -118,6 +124,12 @@ export default {
       }
 
       (node.extra ??= {}).loadImport = loadImport;
+      // A flush revealing the site needs its channel and the bind feature on
+      // the page, interactive or not.
+      if (isPersisted()) {
+        addRuntimeFeatureAsset("patch-ready");
+        addRuntimeFeatureAsset("patch-value-bind");
+      }
       const file = getFile();
 
       const loadFile = tagImport && loadFileForImport(file, value);
@@ -159,8 +171,16 @@ export default {
             isPersisted() &&
             loadImport.render &&
             getProgram().node.extra.page &&
-            binding.referencePaths.every((ref) =>
-              sectionConstructs(getSection(ref)),
+            binding.referencePaths.every(
+              (ref) =>
+                sectionConstructs(getSection(ref)) &&
+                // State upstream of a site re-renders it on the client.
+                !(
+                  t.isMarkoTag(ref.parent) &&
+                  getAllTagReferenceNodes(ref.parent).some((node) =>
+                    hasStateSource(node.extra),
+                  )
+                ),
             )
           ) {
             loadImport.serverOnly = true;

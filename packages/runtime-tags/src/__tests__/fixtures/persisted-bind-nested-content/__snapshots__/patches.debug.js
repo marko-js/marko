@@ -3,7 +3,7 @@
   "PatchChild:#childScope/3": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/0": {
-        "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-bind-nested-content/template.marko_2*content",
+        "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/persisted-bind-nested-content/template.marko_2*content",
         "PatchChild:BranchScopes:#text/0": {
           "PatchBranch:#text/0": [{
             "PatchSetup:": {

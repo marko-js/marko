@@ -3,7 +3,7 @@
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "a",
-      "PatchDynamicTag:#text/1": _.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-loop-content-branch/template.marko_2*content",
+      "PatchDynamicTag:#text/1": _.a = "^packages/runtime-tags/src/__tests__/fixtures/persisted-loop-content-branch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [{
           "PatchText:#text/0": "11"
@@ -38,7 +38,7 @@
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "c",
-      "PatchDynamicTag:#text/1": "packages/runtime-tags/src/__tests__/fixtures/persisted-loop-content-branch/template.marko_2*content",
+      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/persisted-loop-content-branch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [{
           "PatchText:#text/0": "33"
@@ -53,7 +53,7 @@
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "x",
-      "PatchDynamicTag:#text/1": _.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-loop-content-branch/template.marko_2*content",
+      "PatchDynamicTag:#text/1": _.a = "^packages/runtime-tags/src/__tests__/fixtures/persisted-loop-content-branch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [1, {
           "PatchText:#text/0": "9"

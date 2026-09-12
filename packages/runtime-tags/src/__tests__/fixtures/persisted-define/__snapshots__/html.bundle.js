@@ -1,6 +1,9 @@
 // template.marko
 const $thing_content__walks = "D%c%l", $thing_content__template = "<em><!> <!></em>";
-_shells({ a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)($thing_content__walks, $thing_content__template) });
+_shells({
+	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)($thing_content__walks, $thing_content__template),
+	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `b/${_w0}& b`)($thing_content__walks), ((_w0) => `<!>${_w0}<div>x</div>`)($thing_content__template))
+});
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
 	const $scope0_id = _scope_id();

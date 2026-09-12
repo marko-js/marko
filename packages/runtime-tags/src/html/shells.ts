@@ -6,7 +6,12 @@ export const shells: Record<string, string> = {};
 export function _shells(registered: Record<string, string>) {
   for (const id in registered) {
     shellRecords[id] = registered[id];
+    // Frames ride one per line, so the markup's newlines escape too.
     shells[id] =
-      "`" + registered[id].replace(/[\\`]|\$\{/g, (m) => "\\" + m) + "`";
+      "`" +
+      registered[id].replace(/[\\`\n\r]|\$\{/g, (m) =>
+        m === "\n" ? "\\n" : m === "\r" ? "\\r" : "\\" + m,
+      ) +
+      "`";
   }
 }

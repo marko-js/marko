@@ -302,7 +302,12 @@ patchers[PatchKey.Catch] = (scope, key, error) => {
   // The slot stays `0`: every rejection flush renders its own catch html.
   if (content === 0) {
     const [err, html] = error as [unknown, string | 0];
-    if (typeof html !== "string") failPatch();
+    if (typeof html !== "string") {
+      if (MARKO_DEBUG) {
+        console.warn(`A patch rejected: catch "${accessor}" shipped no html.`);
+      }
+      failPatch();
+    }
     content = _content("", html as string)(tryBranch![AccessorProp.Owner]);
     error = err;
   }

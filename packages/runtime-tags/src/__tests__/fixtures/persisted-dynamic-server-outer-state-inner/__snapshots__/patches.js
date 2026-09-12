@@ -3,10 +3,10 @@
   fa: ["b", 0, "c1"],
   cAa: {
     ta: "-",
-    fb: "c1",
+    fb: "^c1",
     cAb: {
       ca: {
-        fb: "c0",
+        fb: "^c0",
         cAb: {
           ta: "two"
         }
@@ -20,7 +20,7 @@
   fa: [0, 0, "c1"],
   cAa: {
     ca: {
-      fb: "c0",
+      fb: "^c0",
       cAb: {
         ta: "three"
       }
@@ -33,10 +33,10 @@
   fa: ["b", 0, "c1"],
   cAa: {
     ta: "-",
-    fb: "c1",
+    fb: "^c1",
     cAb: {
       ca: {
-        fb: "c0",
+        fb: "^c0",
         cAb: {
           ta: "four"
         }

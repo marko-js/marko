@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<ul><!><!></ul><button>+</button>";
 const $walks = "D%b%l b";
-const $for_content2__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for_content__v = ($scope, v) => _text($scope["#text/1"], v);
 const $for_content__$params = ($scope, $params2) => $for_content__v($scope, $params2[1]);
@@ -19,7 +18,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_label", $input_label__OR__count);
-const $for2 = /*@__PURE__*/ _for_until("#text/1", "<li> </li>", "D ", $for_content2__setup);
+const $for2 = /*@__PURE__*/ _for_until("#text/1", "<li> </li>", "D ");
 const $input_on = ($scope, input_on) => $for2($scope, [
 	input_on ? 2 : 1,
 	0,

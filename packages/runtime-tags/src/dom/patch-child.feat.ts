@@ -26,7 +26,14 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   const child = scope[key.slice(PatchKey.Child.length) as Accessor] as Scope;
   // Same-build reachable: a patch during the initial stream can precede
   // the boundary's resumed branch (see pair-patches-into-still-streaming).
-  if (!child) failPatch();
+  if (!child) {
+    if (MARKO_DEBUG) {
+      console.warn(
+        `A patch rejected: no live child scope for "${key}" (scope gen ${scope[AccessorProp.Gen]}, keys: ${Object.keys(scope).join(" ")}).`,
+      );
+    }
+    failPatch();
+  }
   child[AccessorProp.Owner] ??= scope;
   // A scope this flush's shell walk created is bare (no render set it up):
   // its entries construct, like the branch's own; a live one pairs.

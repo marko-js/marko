@@ -1,0 +1,21 @@
+import Layout from "./layout.marko" with { load: "render" }
+import PageA from "./page-a.marko" with { load: "render" }
+import PageB from "./page-b.marko" with { load: "render" }
+
+<html>
+  <body>
+    <if=input.page === 0>
+      <p>home</p>
+    </if>
+    <else>
+      <Layout list=input.list>
+        <if=input.page === 1>
+          <PageA/>
+        </if>
+        <else>
+          <PageB/>
+        </else>
+      </Layout>
+    </else>
+  </body>
+</html>

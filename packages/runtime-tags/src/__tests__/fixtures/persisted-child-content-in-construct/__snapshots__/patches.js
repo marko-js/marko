@@ -8,7 +8,7 @@
   ba: [{
     ca: {
       cc: {
-        fa: "b0",
+        fa: "^b0",
         cAa: {
           ta: "c"
         }

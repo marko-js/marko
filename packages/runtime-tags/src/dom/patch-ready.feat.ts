@@ -1,3 +1,4 @@
+import { hasKeys } from "../common/helpers";
 import {
   AccessorProp,
   PatchKey,
@@ -68,34 +69,45 @@ patchers[PatchKey.Ready] = (scope, key, entries) => {
   const readyId = key.slice(PatchKey.Ready.length);
   // A site whose module died at page load stays inert: a flush targeting
   // it could never apply, so it rejects (the caller navigates).
-  if (failed.has(readyId)) throw 0;
+  if (failed.has(readyId)) {
+    if (MARKO_DEBUG) {
+      console.warn(`A patch rejected: channel "${readyId}" failed to load.`);
+    }
+    throw 0;
+  }
   (pendingGuards[readyId] ||= []).push([entries as Scope, scope]);
 };
 
 function commitReady() {
-  const guards = pendingGuards;
   let applied = false;
-  pendingGuards = {};
-  for (const readyId in guards) {
-    const channel = guards[readyId];
-    if (isReady(readyId)) {
-      for (const guard of channel) patchScope(...guard);
-      applied = true;
-    } else {
-      const channels = (readyPatches.get(patchRender) ||
-        readyPatches
-          .set(patchRender, {
-            [ReadyPatchProp.Channels]: new Map(),
-            [ReadyPatchProp.Resolvers]: [],
-            [ReadyPatchProp.Binds]: flushBinds,
-            [ReadyPatchProp.Run]: patchRun,
-          })
-          .get(patchRender)!)[ReadyPatchProp.Channels];
-      // A later flush's guards append: they re-ship full state, so in-order
-      // application leaves the newest flush's values live.
-      channels.get(readyId)?.push(...channel) || channels.set(readyId, channel);
-      loads[readyId]?.();
+  let guards = pendingGuards;
+  // An applied guard's content can register channels nested in it (a
+  // cold page under a warm layout): each pass commits what the last met.
+  while (hasKeys(guards)) {
+    pendingGuards = {};
+    for (const readyId in guards) {
+      const channel = guards[readyId];
+      if (isReady(readyId)) {
+        for (const guard of channel) patchScope(...guard);
+        applied = true;
+      } else {
+        const channels = (readyPatches.get(patchRender) ||
+          readyPatches
+            .set(patchRender, {
+              [ReadyPatchProp.Channels]: new Map(),
+              [ReadyPatchProp.Resolvers]: [],
+              [ReadyPatchProp.Binds]: flushBinds,
+              [ReadyPatchProp.Run]: patchRun,
+            })
+            .get(patchRender)!)[ReadyPatchProp.Channels];
+        // A later flush's guards append: they re-ship full state, so in-order
+        // application leaves the newest flush's values live.
+        channels.get(readyId)?.push(...channel) ||
+          channels.set(readyId, channel);
+        loads[readyId]?.();
+      }
     }
+    guards = pendingGuards;
   }
   if (applied) run();
 }
@@ -113,19 +125,23 @@ function markReady(readyId: string) {
   for (const [render, patch] of readyPatches) {
     const channels = patch[ReadyPatchProp.Channels];
     if (channels.has(readyId) && [...channels.keys()].every(isReady)) {
-      resolvePatch(
+      const applied = applyReadyPatch(
         render,
-        patch,
-        applyReadyPatch(
-          render,
-          patch[ReadyPatchProp.Binds],
-          patch[ReadyPatchProp.Run],
-          () =>
-            channels.forEach((channel) => {
-              for (const guard of channel) patchScope(...guard);
-            }),
-        ),
+        patch[ReadyPatchProp.Binds],
+        patch[ReadyPatchProp.Run],
+        () => {
+          // Applied guards leave the map; channels they register (content
+          // nested in a lazy site) join it after this loop and hold the
+          // patch open.
+          for (const [id, channel] of channels) {
+            channels.delete(id);
+            for (const guard of channel) patchScope(...guard);
+          }
+        },
       );
+      if (!applied || [...channels.keys()].every(isReady)) {
+        resolvePatch(render, patch, applied);
+      }
     }
   }
 }
@@ -134,6 +150,9 @@ function markReady(readyId: string) {
 // resolve rejected (their caller navigates) and later flushes naming it reject.
 const failed = new Set<string>();
 function failReady(readyId: string) {
+  if (MARKO_DEBUG) {
+    console.warn(`A patch rejected: channel "${readyId}" failed to load.`);
+  }
   failed.add(readyId);
   for (const [render, patch] of readyPatches) {
     if (patch[ReadyPatchProp.Channels].has(readyId)) {

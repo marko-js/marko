@@ -47,6 +47,11 @@ patchers[PatchKey.Loop] = (scope, key, value) => {
     );
     for (let i = 0; i < partials.length; i++) {
       if (!liveKeys.has(keys ? keys[i] : i)) {
+        if (MARKO_DEBUG) {
+          console.warn(
+            `A patch rejected: loop "${suffix}" added an item without a shell.`,
+          );
+        }
         failPatch();
       }
     }

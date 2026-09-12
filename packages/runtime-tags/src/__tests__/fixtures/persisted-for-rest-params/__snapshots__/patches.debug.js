@@ -2,7 +2,7 @@
 [`packages/runtime-tags/src/__tests__/fixtures/persisted-for-rest-params/template.marko_1*content; ; `, `packages/runtime-tags/src/__tests__/fixtures/persisted-for-rest-params/tags/my-for.marko_1*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/0": {
     "PatchLoop:#text/0": [{
-      "PatchDynamicTag:#text/0": [_.a = "packages/runtime-tags/src/__tests__/fixtures/persisted-for-rest-params/template.marko_1*content", [0]],
+      "PatchDynamicTag:#text/0": [_.a = "^^packages/runtime-tags/src/__tests__/fixtures/persisted-for-rest-params/template.marko_1*content", [0]],
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "0"
       }
