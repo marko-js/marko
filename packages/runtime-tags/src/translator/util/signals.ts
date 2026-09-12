@@ -1728,7 +1728,6 @@ export function sectionConstructs(section: Section) {
     (section.isBranch ||
       (section.contentShell === true && contentMayConstruct(section))) &&
     !inResumedStructure(section) &&
-    !section.shellBlocked &&
     !sectionHasServerEffect(section)
   );
 }

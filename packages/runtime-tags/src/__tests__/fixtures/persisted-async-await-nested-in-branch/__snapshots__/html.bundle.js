@@ -4,8 +4,8 @@ _shells({
 	a1: "a1;D%c%;<em><!>:<!></em>",
 	a2: "a2;b%;<!><!><!>",
 	a: "a !a5;D%b ;<main><!><button>interactive</button></main>",
-	a4: "a4;b%;<!><!><!>",
-	a3: "a3;b%;<!><!><!>"
+	a3: "a3;b%;<!><!><!>",
+	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 3);
@@ -29,11 +29,11 @@ var template_default = _template_persisted("a", (input) => {
 					d: $await_content__outer__closures
 				}));
 				$scope0_reason && _resume_branch($scope2_id);
-			}, 1, "a4");
+			}, 1, "a3");
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a3"], $scope0_owned, 3);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a4"], $scope0_owned, 3);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a5");
 	$scope0_reason && _scope($scope0_id, {

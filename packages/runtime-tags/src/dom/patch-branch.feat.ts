@@ -10,7 +10,7 @@ import {
 import { insertChildNodes } from "./dom";
 import { getShellContent, type Shell, shells } from "./patch-shells";
 import { createAndSetupBranch } from "./renderer";
-import { failPatch, withConstructing, patchers, patchScope } from "./resume";
+import { withConstructing, patchers, patchScope } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 
 declare module "./resume" {
@@ -57,17 +57,9 @@ patchers[PatchKey.Branch] = (scope, key, entry) => {
   scope[rendererKey] = index as never;
   if (index === current) {
     patchScope(branchPartial, liveBranch as Scope);
-  } else if (shellId) {
-    construct(scope, branchKey, branchPartial, shells[shellId]);
   } else {
-    // The server could not ship a shell for the new branch, so
-    // this divergence cannot apply faithfully.
-    if (MARKO_DEBUG) {
-      console.warn(
-        `A patch rejected: branch "${suffix}" changed without a shell for the new branch.`,
-      );
-    }
-    failPatch();
+    // Every branch on the patch path ships a shell (`buildShells`).
+    construct(scope, branchKey, branchPartial, shells[shellId!]);
   }
 };
 

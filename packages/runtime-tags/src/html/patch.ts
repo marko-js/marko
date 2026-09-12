@@ -250,14 +250,6 @@ class PatchState extends State {
       branchIndex === undefined
         ? undefined
         : shipShell(this, shellIds?.[branchIndex]);
-    // A branch ships no shell when its structure is inexpressible (a child
-    // template whose own structure is, an await body only a dom module can
-    // render): a client already showing it pairs, any other cannot construct.
-    if (MARKO_DEBUG && branchIndex !== undefined && !shellId && shellIds) {
-      console.warn(
-        `A patch writes branch ${branchIndex} of "${accessor}" without a shell (siblings: ${shellIds.filter(Boolean).join(", ") || "none"}); a client showing another branch rejects.`,
-      );
-    }
     // Shape-typed entry, densest form first: a bare number is the
     // branch index + 1 (`0` hides), and empty/zero members drop.
     const branchPartial =

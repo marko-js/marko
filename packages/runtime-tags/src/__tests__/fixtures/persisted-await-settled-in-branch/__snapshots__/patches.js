@@ -1,11 +1,11 @@
 // PATCH
-[`a2;D ;<b> </b>`, `a1;D%;<section><!></section>`, {
+[`a1;D ;<b> </b>`, `a2;D%;<section><!></section>`, {
   ba: [{
-    pa: "a2",
+    pa: "a1",
     cAa: {
       ta: "x"
     }
-  }, "a1"],
+  }, "a2"],
   tb: "b"
 }]
 
@@ -16,12 +16,12 @@
 }
 
 // PATCH
-[`a2;D ;<b> </b>`, `a1;D%;<section><!></section>`, {
+[`a1;D ;<b> </b>`, `a2;D%;<section><!></section>`, {
   ba: [{
-    pa: "a2",
+    pa: "a1",
     cAa: {
       ta: "y"
     }
-  }, "a1"],
+  }, "a2"],
   tb: "d"
 }]

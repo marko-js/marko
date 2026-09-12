@@ -16,8 +16,8 @@ var counter_default = _template_persisted("b", (input) => {
 _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template),
 	a: "a !a3;D%b D ;<main><!><button id=c> </button></main>",
-	a2: /*@__PURE__*/ ((_w0, _w1) => `a2;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)($walks), $template),
-	a1: "a1;b%;<!><!><!>"
+	a1: /*@__PURE__*/ ((_w0, _w1) => `a1;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)($walks), $template),
+	a2: "a2;b%;<!><!><!>"
 });
 var template_default = _template_persisted("a", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
@@ -37,11 +37,11 @@ var template_default = _template_persisted("a", (input) => {
 					start: 1
 				});
 				_scope($scope2_id, { a: _existing_scope($childScope) });
-			}, 1, "a2");
+			}, 1, "a1");
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 1);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2"], $scope0_owned, 1);
 	_html(`<button id=c>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_reason && _scope($scope0_id, {
