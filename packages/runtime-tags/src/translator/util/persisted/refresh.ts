@@ -4,6 +4,7 @@ import type { types as t } from "@marko/compiler";
 import { getProgram, getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
+import { isTranslate } from "../get-compile-stage";
 import { getParamGroupSources, isKnownTagExtra } from "../known-tag";
 import { isPage, isPersisted } from "../marko-config";
 import {
@@ -144,7 +145,21 @@ export function getFillConditions(binding: Binding) {
   return kind === true ? undefined : kind;
 }
 
+// Memoized at translate only: analyze asks while call sites still add
+// sources, so its answers there must stay live.
+const [getFillReadKinds] = createProgramState(
+  () => new Map<Binding, true | FillConditions | undefined>(),
+);
 function getFillReadKind(binding: Binding): true | FillConditions | undefined {
+  if (!isTranslate()) return computeFillReadKind(binding);
+  const kinds = getFillReadKinds();
+  if (!kinds.has(binding)) kinds.set(binding, computeFillReadKind(binding));
+  return kinds.get(binding);
+}
+
+function computeFillReadKind(
+  binding: Binding,
+): true | FillConditions | undefined {
   if (binding.upstreamOfStateMixedGroup) return true;
   let conditions: FillConditions | undefined;
   for (const alias of binding.aliases) {

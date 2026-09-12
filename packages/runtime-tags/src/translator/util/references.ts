@@ -49,6 +49,7 @@ import {
   getOrCreateSection,
   getSectionForBody,
   getSectionRegisterReasons,
+  groupChildSections,
   isDynamicClosure,
   isSameOrChildSection,
   type Section,
@@ -1050,6 +1051,7 @@ function compareIntersections(a: Intersection, b: Intersection) {
 }
 
 export function finalizeReferences() {
+  groupChildSections();
   const bindings = getBindings();
   const readsByExpression = getReadsByExpression();
   const fnReadsByExpression = getFunctionReadsByExpression();

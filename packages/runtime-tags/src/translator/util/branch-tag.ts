@@ -20,13 +20,6 @@ export function getBranchSectionAccessor(
   };
 }
 
-declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
-    /** Upstream of a branch: its condition, collection, or renderer. */
-    branchUpstream?: true;
-  }
-}
-
 export function initBranchSection(
   bodySection: Section,
   upstreamExpression: Section["upstreamExpression"],
@@ -35,7 +28,6 @@ export function initBranchSection(
   bodySection.isBranch = true;
   bodySection.upstreamExpression = upstreamExpression;
   bodySection.sectionAccessor = sectionAccessor;
-  if (upstreamExpression) upstreamExpression.branchUpstream = true;
 }
 
 // The branch id rides the always-rendered resume marker and a state-fed

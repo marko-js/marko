@@ -338,21 +338,17 @@ export function forEachSection(fn: (section: Section) => void) {
   sections?.forEach(fn);
 }
 
-// Direct child sections by parent, grouped once per program after analyze
-// (call at finalize or later).
+// Direct child sections by parent, grouped once per program at finalize so
+// a parent can ask about a child program's sections too.
 const childSections = new WeakMap<Section, Section[]>();
 export function getChildSections(section: Section) {
-  let children = childSections.get(section);
-  if (!children) {
-    for (const child of getProgram().node.extra.sections || []) {
-      childSections.set(child, []);
-    }
-    forEachSection((child) => {
-      if (child.parent) childSections.get(child.parent)!.push(child);
-    });
-    children = childSections.get(section) || [];
-  }
-  return children;
+  return childSections.get(section) || [];
+}
+export function groupChildSections() {
+  forEachSection((section) => childSections.set(section, []));
+  forEachSection((section) => {
+    if (section.parent) childSections.get(section.parent)!.push(section);
+  });
 }
 
 export function forEachSectionReverse(fn: (section: Section) => void) {
