@@ -101,6 +101,7 @@ export default {
       // Dynamic styles write their shell statement in setup.
       addSetupStatement(getOrCreateSection(tag));
       structure.visit(tag, WalkCode.Get);
+      structure.enterShallow(tag);
       structure.writeTo(tag)`<style></style>`;
     }
   },
