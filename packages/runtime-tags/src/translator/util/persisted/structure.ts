@@ -154,28 +154,31 @@ export function isStatefulBranch(section: Section): boolean {
     computing.set(section, frame);
     const outerProvisionalAt = provisionalAt;
     provisionalAt = Infinity;
-    // A branch body or a dynamic tag body; a boundary body has no upstream
-    // of its own (its value settles, it never re-selects).
-    const expr =
-      isPersisted() && !section.isBoundary
-        ? section.upstreamExpression
-        : undefined;
-    const sources = expr && getSerializeSourcesForExpr(expr);
-    // A body the child renders stateful (any consumer), or one whose own
-    // upstream selects it from state.
-    stateful =
-      bodyRendersStateful(section) ||
-      (!!expr &&
-        (!!sources?.state || inStatefulBranch(section.parent)) &&
-        every(expr.referencedBindings, upstreamSourcesFill));
-    computing.delete(section);
-    // A frame that consumed an OUTER frame's provisional answer must not
-    // cache: that outer result may still land stateful.
-    if (provisionalAt >= frame) {
-      statefulBySection.set(section, stateful);
-      provisionalAt = outerProvisionalAt;
-    } else if (outerProvisionalAt < provisionalAt) {
-      provisionalAt = outerProvisionalAt;
+    // The walk state outlives a compile (a diagnostic may throw mid-walk),
+    // so every exit restores it.
+    try {
+      // A branch body or a dynamic tag body; a boundary body has no upstream
+      // of its own (its value settles, it never re-selects).
+      const expr =
+        isPersisted() && !section.isBoundary
+          ? section.upstreamExpression
+          : undefined;
+      const sources = expr && getSerializeSourcesForExpr(expr);
+      // A body the child renders stateful (any consumer), or one whose own
+      // upstream selects it from state.
+      stateful =
+        bodyRendersStateful(section) ||
+        (!!expr &&
+          (!!sources?.state || inStatefulBranch(section.parent)) &&
+          every(expr.referencedBindings, upstreamSourcesFill));
+      // A frame that consumed an OUTER frame's provisional answer must not
+      // cache: that outer result may still land stateful.
+      if (provisionalAt >= frame) statefulBySection.set(section, stateful);
+    } finally {
+      computing.delete(section);
+      if (provisionalAt >= frame || outerProvisionalAt < provisionalAt) {
+        provisionalAt = outerProvisionalAt;
+      }
     }
   }
   return stateful;
