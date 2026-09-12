@@ -10,7 +10,6 @@ import type { AccessorPrefix } from "../../common/accessor.debug";
 import type { WalkCode } from "../../common/types";
 import type { LoadImportConfig } from "../visitors/import-declaration";
 import * as ContentType from "./constants/content-type";
-import type * as ShellBlocker from "./constants/shell-blocker";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -184,7 +183,6 @@ export interface Section {
   loadSites: { site: Binding; load: LoadImportConfig }[] | undefined;
   /** Branch whose shell would construct unfaithfully: the first blocker's
    * reason code sticks, no shell ships, patches fail closed. */
-  shellBlocked: ShellBlocker.Value | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -276,7 +274,6 @@ export function startSection(
       contentShell: false,
       constructSetups: undefined,
       loadSites: undefined,
-      shellBlocked: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     section.program = parentSection ? parentSection.program : section;

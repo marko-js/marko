@@ -1,8 +1,8 @@
 // PATCH
-[`a2;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, `a1;b%;<!><!><!>`, {
+[`a1;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, `a2;b%;<!><!><!>`, {
   ba: [{
-    pa: "a2"
-  }, "a1"]
+    pa: "a1"
+  }, "a2"]
 }]
 {
   cAa: {

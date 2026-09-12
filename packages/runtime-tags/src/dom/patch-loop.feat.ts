@@ -1,16 +1,8 @@
 import { encodeAccessor } from "../common/helpers";
-import { forEach, type Opt } from "../common/opt";
-import {
-  type Accessor,
-  AccessorPrefix,
-  AccessorProp,
-  type BranchScope,
-  PatchKey,
-  type Scope,
-} from "../common/types";
+import { type Accessor, PatchKey, type Scope } from "../common/types";
 import { _for_of } from "./control-flow";
 import { shells } from "./patch-shells";
-import { failPatch, patchers, patchScope, withConstructing } from "./resume";
+import { patchers, patchScope, withConstructing } from "./resume";
 
 declare module "./resume" {
   interface PatchValues {
@@ -34,28 +26,8 @@ patchers[PatchKey.Loop] = (scope, key, value) => {
     partials.push(value[i++] as Scope);
   }
   const suffix = key.slice(PatchKey.Loop.length) as Accessor;
-  if (!shellId) {
-    // Additions need the item shell; a section that cannot ship one (eg
-    // holes reading parent-scope state) rejects to navigation.
-    const liveKeys = new Set<unknown>();
-    let index = 0;
-    forEach(
-      scope[
-        (AccessorPrefix.BranchScopes + suffix) as Accessor
-      ] as Opt<BranchScope>,
-      (branch) => liveKeys.add(branch[AccessorProp.LoopKey] ?? index++),
-    );
-    for (let i = 0; i < partials.length; i++) {
-      if (!liveKeys.has(keys ? keys[i] : i)) {
-        if (MARKO_DEBUG) {
-          console.warn(
-            `A patch rejected: loop "${suffix}" added an item without a shell.`,
-          );
-        }
-        failPatch();
-      }
-    }
-  }
+  // A loop with a shell constructs additions; one whose items pair only
+  // (a stateful body) ships none and never adds.
   const [template, walks, setup] = shells[shellId!] || [];
   // The reconciler applies the patch: `params` walks each partial into its
   // paired/constructed branch, and setup attaches effects to fresh ones.

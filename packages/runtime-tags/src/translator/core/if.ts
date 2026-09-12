@@ -317,12 +317,8 @@ export const IfTag = {
                 persistedPatch
                   ? t.arrayExpression(
                       branches.map(([, branchBody]) => {
-                        // Only ids with a built shell ship; a bare `0` makes
-                        // divergence to the branch reject the patch.
-                        const id =
-                          branchBody &&
-                          !branchBody.shellBlocked &&
-                          getShellId(branchBody);
+                        // An absent body (a bare `<else>`) ships `0`.
+                        const id = branchBody && getShellId(branchBody);
                         return id && getShells()?.[id]
                           ? t.stringLiteral(id)
                           : t.numericLiteral(0);

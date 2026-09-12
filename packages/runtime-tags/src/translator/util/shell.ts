@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
-import * as ShellBlocker from "./constants/shell-blocker";
 import normalizeStringExpression from "./normalize-string-expression";
 import { contentIsPatched, contentMayConstruct } from "./persisted/refresh";
 import { isBranchPathSection, isStatefulBranch } from "./persisted/structure";
@@ -111,23 +110,22 @@ export function buildShells() {
     ) {
       return;
     }
-    if (isShellExpressible(section)) {
-      // The id interns even for a blocked shell so register ids stay stable.
-      const id = getShellId(section);
-      // Each await body ships as its own shell; an inexpressible one
-      // blocks the branch (fail closed) rather than bundle extra content.
-      const chain: Section[] = [];
-      const bodyShells: Record<string, Section> = {};
-      if (!buildAwaitBodyShells(section, bodyShells, chain)) {
-        section.shellBlocked ??= ShellBlocker.inexpressibleAwaitBody;
-      }
-      if (!section.shellBlocked) {
-        keep.add(section);
-        for (const body of chain) keep.add(body);
-        Object.assign(shells, bodyShells);
-        shells[id] = section;
-      }
+    // Structure composes to a finite shell unless a template includes
+    // itself outside any branch, which never renders either.
+    const chain: Section[] = [];
+    const bodyShells: Record<string, Section> = {};
+    if (
+      !isShellExpressible(section) ||
+      !buildAwaitBodyShells(section, bodyShells, chain)
+    ) {
+      throw new Error(
+        "Invalid compiler state, a branch on the patch path has no expressible shell.",
+      );
     }
+    keep.add(section);
+    for (const body of chain) keep.add(body);
+    Object.assign(shells, bodyShells);
+    shells[getShellId(section)] = section;
   });
   // Only kept sections' awaits construct: their `Pending` patches carry a
   // content id and (interactive) their body registers in the dom output.
@@ -145,7 +143,6 @@ function buildAwaitBodyShells(
 ) {
   for (const { binding, body } of section.constructSetups || []) {
     if (
-      body.shellBlocked ||
       !isShellExpressible(body) ||
       !buildAwaitBodyShells(body, shells, chain)
     ) {

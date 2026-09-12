@@ -12,8 +12,8 @@ var pill_default = _template_persisted("b", (input) => {
 _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $template),
 	a: "a; ;<main></main>",
-	a2: /*@__PURE__*/ ((_w0, _w1) => `a2;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)("D l"), $template),
-	a1: "a1;b%;<!><!><!>",
+	a1: /*@__PURE__*/ ((_w0, _w1) => `a1;${_w0};${_w1}`)(((_w0) => `/${_w0}&`)("D l"), $template),
+	a2: "a2;b%;<!><!><!>",
 	a3: "a3,<em>closed</em>"
 });
 var template_default = _template_persisted("a", (input) => {
@@ -30,7 +30,7 @@ var template_default = _template_persisted("a", (input) => {
 				_patch_child($scope3_id, "a", $childScope);
 				pill_default({ text: value });
 				_scope($scope3_id, { a: _existing_scope($childScope) });
-			}, 1, "a2");
+			}, 1, "a1");
 			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		} else {
@@ -39,7 +39,7 @@ var template_default = _template_persisted("a", (input) => {
 			$scope0_reason && _scope($scope2_id, {});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1", "a3"], $scope0_owned, 1);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2", "a3"], $scope0_owned, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_reason && _scope($scope0_id, { e: input.promise });
 }, 1, () => [pill_default]);
