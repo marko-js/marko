@@ -96,7 +96,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   registeredValues = {},
   patchers = {},
-  onPatchRecord,
+  onPatchShell,
   patchScope = (partial, live) => {
     for (let key in partial) patchers[key[0]](live, key, partial[key]);
   },
@@ -1025,7 +1025,7 @@ function init(runtimeId = "M") {
             applyScopes = (partials) => {
               if (patching && patchRender === render) {
                 let i = 0;
-                for (; typeof partials[i] == "string";) onPatchRecord(partials[i++]);
+                for (; typeof partials[i] == "string";) onPatchShell(partials[i++]);
                 partials[i] && patchScope(partials[i], getScope(1));
                 return;
               }

@@ -154,7 +154,7 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // A settle from an earlier response must not hide this flush's pending UI.
   settled.get(scope)?.delete(accessor);
   // A construct has no live await branch: the entry's id names the body
-  // content record its flush shipped. Mirrors `_await_content`.
+  // content shell its flush shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
     const renderer = getShellContent(shells[value]);
     const pendingScopes = collectScopes(
@@ -214,7 +214,7 @@ function attachDetachedAwait(
 }
 
 // A boundary slot: `0` stays the elided sentinel; an id resolves through
-// the shipped record or the dom registration against the try's owner.
+// the shipped shell or the dom registration against the try's owner.
 function resolveBoundaryContent(id: string | 0, owner: Scope) {
   if (id === 0) return 0;
   const shell = shells[id];

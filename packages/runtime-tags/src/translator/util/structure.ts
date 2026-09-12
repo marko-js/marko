@@ -66,7 +66,7 @@ export function child(
   });
 }
 
-// Records the client template's markup into the section structure stream.
+// Shells the client template's markup into the section structure stream.
 export function writeTo(path: t.NodePath<any>) {
   const { structure } = getSection(path);
   return (strs: TemplateStringsArray, ...exprs: string[]): void => {

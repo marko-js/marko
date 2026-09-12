@@ -487,11 +487,11 @@ export function getSignal(
   return signal;
 }
 
-// A dynamic content record elides the chain's dom renderers, and with them
+// A dynamic content shell elides the chain's dom renderers, and with them
 // the `_closure_get` pending registration the replay script would look up.
-function inShellRecordChain(section: Section) {
+function inShellChain(section: Section) {
   for (let cur: Section | undefined = section; cur; cur = cur.parent) {
-    if (cur.contentRecord === true) return true;
+    if (cur.contentShell === true) return true;
   }
   return false;
 }
@@ -1711,7 +1711,7 @@ function toSequenceExpression(exprs: t.Expression[]) {
 }
 
 // A closure into a body that ships a shell whose init a construct may run:
-// state (named by the shell record) or a local fill's upstream (by the flush).
+// state (named by the shell) or a local fill's upstream (by the flush).
 function constructsWithInit(section: Section, closure: Binding) {
   return (
     sectionConstructs(section) &&
@@ -1720,13 +1720,13 @@ function constructsWithInit(section: Section, closure: Binding) {
   );
 }
 
-// A branch body that ships a shell, or content whose record a patch may
-// rebuild (a record kept only for reference never constructs).
+// A branch body that ships a shell, or content whose shell a patch may
+// rebuild (a shell kept only for reference never constructs).
 export function sectionConstructs(section: Section) {
   return (
     isPersisted() &&
     (section.isBranch ||
-      (section.contentRecord === true && contentMayConstruct(section))) &&
+      (section.contentShell === true && contentMayConstruct(section))) &&
     !inResumedStructure(section) &&
     !section.shellBlocked &&
     !sectionHasServerEffect(section)
@@ -1891,12 +1891,11 @@ export function writeHTMLResumeStatements(
           getAccessorPrefix().ClosureScopes,
         );
         if (underTryPlaceholder(section)) {
-          // A scriptless page or a shell-record chain never registers
+          // A scriptless page or a shell chain never registers
           // the pending replay, so the envelope must not reference it.
           const reason =
             isPersisted() &&
-            (!getProgram().node.extra.isInteractive ||
-              inShellRecordChain(section))
+            (!getProgram().node.extra.isInteractive || inShellChain(section))
               ? undefined
               : getSerializeReason(section);
           if (reason) {

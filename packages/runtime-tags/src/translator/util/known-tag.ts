@@ -34,7 +34,7 @@ import {
 import { getChildPatchPlan } from "./persisted/decisions";
 import { addPersistedChildRenderer } from "./persisted/intrinsics";
 import { onFinalizePersisted } from "./persisted/lifecycle";
-import { contentIsOwnerBound } from "./persisted/refresh";
+import { contentResumesForPatch } from "./persisted/refresh";
 import {
   inStatefulBranch,
   readsOnlyUpstream,
@@ -178,7 +178,7 @@ export function knownTagAnalyze(
         addRuntimeFeatureAsset("patch-child");
         // A construct seeds the tag var through the bind channel; the
         // child may hand resumed content to a patched site.
-        if (hasVar || contentIsOwnerBound(getSectionForBody(tagBody))) {
+        if (hasVar || contentResumesForPatch(getSectionForBody(tagBody))) {
           addRuntimeFeatureAsset("patch-value-bind");
         }
       }
@@ -519,7 +519,7 @@ export function knownTagTranslateDOM(
     importRuntimeFeature("patch-child");
     if (
       tag.node.var ||
-      contentIsOwnerBound(getSectionForBody(tag.get("body")))
+      contentResumesForPatch(getSectionForBody(tag.get("body")))
     ) {
       importRuntimeFeature("patch-value-bind");
     }

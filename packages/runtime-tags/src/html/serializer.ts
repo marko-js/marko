@@ -506,7 +506,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
     extras = ",0)";
     // A deferred patch run applies through `_()` mid-expression, so a patch
-    // flush must evaluate its shell records first (see `resumeScript`).
+    // flush must evaluate its shells first (see `resumeScript`).
     if (patch) state.boundary!.state.patchDeferred = 1;
     if (fillIndex !== -1) {
       buf[fillIndex] = "_([" + buf[fillIndex];

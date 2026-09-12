@@ -75,11 +75,11 @@ type Patcher<K extends PatchKind = PatchKind> = (
 
 export const registeredValues: Record<string, unknown> = {};
 export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
-// Flush records ahead of the scope tree (`id;walks;template` shell
+// Flush shells ahead of the scope tree (`id;walks;template`
 // strings), registered by the patch feature that understands them.
-export let onPatchRecord: ((entry: string) => void) | undefined;
-export const _patch_records = (handler: NonNullable<typeof onPatchRecord>) =>
-  (onPatchRecord = handler);
+export let onPatchShell: ((entry: string) => void) | undefined;
+export const _patch_shells = (handler: NonNullable<typeof onPatchShell>) =>
+  (onPatchShell = handler);
 // Rejects the applying patch so the caller falls back to a full navigation;
 // only conditions reachable in a matched build guard explicitly.
 export const failPatch = () => {
@@ -282,7 +282,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             // deferred run applies via `_()`, leaving only a trailing 0.
             let i = 0;
             while (typeof partials[i] === "string") {
-              onPatchRecord!(partials[i++] as unknown as string);
+              onPatchShell!(partials[i++] as unknown as string);
             }
             if (partials[i]) {
               patchScope(partials[i] as Scope, getScope(1));

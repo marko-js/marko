@@ -8,7 +8,7 @@ import {
 import { queueEffect } from "./queue";
 import { _content as content } from "./renderer";
 import {
-  _patch_records,
+  _patch_shells,
   constructing,
   constructPatchers,
   getRegisteredWithScope,
@@ -42,7 +42,7 @@ patchers[PatchKey.Setup] = (scope, _key, value) => {
     scope[AccessorProp.PatchSetup] = value;
   }
 };
-// Ids the flush asks a fresh scope to run, in the shell record's grammar
+// Ids the flush asks a fresh scope to run, in the shell's grammar
 // (`inits…!effects…`): a child's mounts, a client-upstream local's inits.
 constructPatchers[PatchKey.Init] = (scope, _key, ids) =>
   runSetupIds(resolveSetupIds(ids), scope);
@@ -84,16 +84,16 @@ const markShell = (renderer: Shell[3]) =>
 
 // `"id inits…!effects…;walks;template"` (`,` for `;walks;` when walk-less):
 // inits render inside the fresh scope's setup, `!` opens the mount effects.
-export const registerShell = (record: string) => {
-  const first = record.search(/[;,]/);
-  const second = record[first] === ";" ? record.indexOf(";", first + 1) : first;
-  const idToken = record.slice(0, first);
+export const registerShell = (shell: string) => {
+  const first = shell.search(/[;,]/);
+  const second = shell[first] === ";" ? shell.indexOf(";", first + 1) : first;
+  const idToken = shell.slice(0, first);
   const sep = (idToken + " ").indexOf(" ");
   const setupIds = idToken.slice(sep + 1);
   const resolved = setupIds && resolveSetupIds(setupIds);
   shells[idToken.slice(0, sep)] = [
-    record.slice(second + 1),
-    record.slice(first + 1, second),
+    shell.slice(second + 1),
+    shell.slice(first + 1, second),
     resolved
       ? (branch: Scope) => {
           if (branch[AccessorProp.PatchSetup]) {
@@ -106,4 +106,4 @@ export const registerShell = (record: string) => {
   ];
   return idToken.slice(0, sep);
 };
-_patch_records(registerShell);
+_patch_shells(registerShell);

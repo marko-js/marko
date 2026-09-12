@@ -390,7 +390,7 @@ export function finalizeSerializeReason(section: Section) {
   }
 }
 
-// Records sources without touching the reason: for upstreams that inform
+// Shells sources without touching the reason: for upstreams that inform
 // ownership but must never cause serialization (function-body reads).
 export function addSerializeSources(
   section: Section,

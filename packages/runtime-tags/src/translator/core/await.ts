@@ -129,7 +129,7 @@ export default {
       // A scriptless construct paints the settled body via text fills.
       addRuntimeFeatureAsset("patch-text");
       // Recorded on every section; `buildShells` keeps only those whose
-      // shipped body records a construct can resolve.
+      // shipped body shells a construct can resolve.
       (section.constructSetups ??= []).push({
         binding: tagExtra[kDOMBinding]!,
         body: bodySection,
@@ -265,7 +265,7 @@ export default {
               t.variableDeclarator(
                 t.identifier(bodySection.name),
                 // Constructs resolve body content from the flush's shipped
-                // record; registering here would bundle html resume elides.
+                // shell; registering here would bundle html resume elides.
                 awaitContent,
               ),
             ]),

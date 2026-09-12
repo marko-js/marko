@@ -19,36 +19,36 @@ import { getSectionMeta, trimTrailingExits } from "./structure";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    /** Patchable shell records by id: the branch (or await body) section
-     * whose structure the html output serializes as a shell record. */
-    shellRecords?: Record<string, Section>;
+    /** Patchable shells by id: the branch (or await body) section
+     * whose structure the html output serializes as a shell. */
+    shells?: Record<string, Section>;
   }
 }
 
-export function getShellRecords() {
-  return getProgram().node.extra.shellRecords;
+export function getShells() {
+  return getProgram().node.extra.shells;
 }
 
 // Decides every branch shell (expressibility, blockers) so the html output
-// serializes the kept sections as shell records.
+// serializes the kept sections as shells.
 export function buildShells() {
   const interactive = getProgram().node.extra.isInteractive;
   const keep = new Set<Section>();
-  const records = (getProgram().node.extra.shellRecords ??= {});
-  // A content body nothing registers ships as a shell record; static
-  // boundary content is a record too.
+  const shells = (getProgram().node.extra.shells ??= {});
+  // A content body nothing registers ships as a shell; static
+  // boundary content is a shell too.
   forEachSectionReverse((section) => {
-    // Kept root awaits let `Pending` carry a body record id; the root
-    // records under the template id so a dynamic tag entry can construct it.
+    // Kept root awaits let `Pending` carry a body shell id; the root
+    // ships under the template id so a dynamic tag entry can construct it.
     if (!section.parent) {
       const chain: Section[] = [];
-      const bodyRecords: Record<string, Section> = {};
-      if (buildAwaitBodyRecords(section, bodyRecords, chain)) {
+      const bodyShells: Record<string, Section> = {};
+      if (buildAwaitBodyShells(section, bodyShells, chain)) {
         keep.add(section);
         for (const body of chain) keep.add(body);
-        Object.assign(records, bodyRecords);
+        Object.assign(shells, bodyShells);
         if (isShellExpressible(section)) {
-          records[getFile().metadata.marko.id] = section;
+          shells[getFile().metadata.marko.id] = section;
         }
       }
       return;
@@ -56,48 +56,48 @@ export function buildShells() {
     if (section.isBranch || isStatefulBranch(section)) {
       return;
     }
-    // A boundary constructs from its content record; an inexpressible one
-    // stays record-less, so a construct reaching it rejects.
+    // A boundary constructs from its content shell; an inexpressible one
+    // stays shell-less, so a construct reaching it rejects.
     if (section.isBoundary) {
       const chain: Section[] = [];
-      const bodyRecords: Record<string, Section> = {};
+      const bodyShells: Record<string, Section> = {};
       if (
         isShellExpressible(section) &&
-        buildAwaitBodyRecords(section, bodyRecords, chain)
+        buildAwaitBodyShells(section, bodyShells, chain)
       ) {
         keep.add(section);
         for (const body of chain) keep.add(body);
-        Object.assign(records, bodyRecords);
-        records[getResumeRegisterId(section, "content")] = section;
+        Object.assign(shells, bodyShells);
+        shells[getResumeRegisterId(section, "content")] = section;
       }
       return;
     }
     if (section.boundaryContent) {
-      if (isStaticRecord(section)) {
-        section.contentRecord = "static";
-        records[getResumeRegisterId(section, "content")] = section;
+      if (isStaticShell(section)) {
+        section.contentShell = "static";
+        shells[getResumeRegisterId(section, "content")] = section;
         addRuntimeFeatureAsset("patch-content");
       }
     } else if (
       !isAwaitBody(section) &&
-      contentNeedsRecord(section, interactive) &&
+      contentNeedsShell(section, interactive) &&
       isShellExpressible(section)
     ) {
       const chain: Section[] = [];
-      const bodyRecords: Record<string, Section> = {};
-      if (buildAwaitBodyRecords(section, bodyRecords, chain)) {
+      const bodyShells: Record<string, Section> = {};
+      if (buildAwaitBodyShells(section, bodyShells, chain)) {
         // Only a slot the client dereferences rides in-band.
-        section.contentRecord =
-          getSectionRegisterReasons(section) && isStaticRecord(section)
+        section.contentShell =
+          getSectionRegisterReasons(section) && isStaticShell(section)
             ? "static"
             : true;
-        if (section.contentRecord === "static") {
+        if (section.contentShell === "static") {
           addRuntimeFeatureAsset("patch-content");
         }
         keep.add(section);
         for (const body of chain) keep.add(body);
-        Object.assign(records, bodyRecords);
-        records[getResumeRegisterId(section, "content")] = section;
+        Object.assign(shells, bodyShells);
+        shells[getResumeRegisterId(section, "content")] = section;
       }
     }
   });
@@ -114,18 +114,18 @@ export function buildShells() {
     if (isShellExpressible(section)) {
       // The id interns even for a blocked shell so register ids stay stable.
       const id = getShellId(section);
-      // Each await body ships as its own record; an inexpressible one
+      // Each await body ships as its own shell; an inexpressible one
       // blocks the branch (fail closed) rather than bundle extra content.
       const chain: Section[] = [];
-      const bodyRecords: Record<string, Section> = {};
-      if (!buildAwaitBodyRecords(section, bodyRecords, chain)) {
+      const bodyShells: Record<string, Section> = {};
+      if (!buildAwaitBodyShells(section, bodyShells, chain)) {
         section.shellBlocked ??= ShellBlocker.inexpressibleAwaitBody;
       }
       if (!section.shellBlocked) {
         keep.add(section);
         for (const body of chain) keep.add(body);
-        Object.assign(records, bodyRecords);
-        records[id] = section;
+        Object.assign(shells, bodyShells);
+        shells[id] = section;
       }
     }
   });
@@ -136,22 +136,22 @@ export function buildShells() {
   });
 }
 
-// Body records reuse the shell record grammar; nested awaits recurse so a
+// Body shells reuse the branch grammar; nested awaits recurse so a
 // constructed body can itself construct the awaits it contains.
-function buildAwaitBodyRecords(
+function buildAwaitBodyShells(
   section: Section,
-  records: Record<string, Section>,
+  shells: Record<string, Section>,
   chain: Section[],
 ) {
   for (const { binding, body } of section.constructSetups || []) {
     if (
       body.shellBlocked ||
       !isShellExpressible(body) ||
-      !buildAwaitBodyRecords(body, records, chain)
+      !buildAwaitBodyShells(body, shells, chain)
     ) {
       return false;
     }
-    records[getResumeRegisterId(section, binding, "await")] = body;
+    shells[getResumeRegisterId(section, binding, "await")] = body;
     chain.push(body);
   }
   return true;
@@ -197,26 +197,23 @@ function isStructureExpressible(section: Section, visiting: Set<Section>) {
       return false;
     }
   }
-  // Nested branches, boundaries, content records, and (interactive) boundary
+  // Nested branches, boundaries, content shells, and (interactive) boundary
   // content arrive through the walk or entries; nothing else is expressible.
   const interactive = getProgram().node.extra.isInteractive;
   return !getChildSections(section).some(
     (child) =>
       !child.isBranch &&
       !child.isBoundary &&
-      !child.contentRecord &&
+      !child.contentShell &&
       !(child.boundaryContent && interactive) &&
       // Content nothing names or rebuilds leaves nothing for a shell to lack.
-      contentNeedsRecord(child, interactive),
+      contentNeedsShell(child, interactive),
   );
 }
 
-// A scriptless page has only records; elsewhere a record serves content a
+// A scriptless page has only shells; elsewhere a shell serves content a
 // site names or a patch may rebuild, or a renderer that cannot mount a child.
-function contentNeedsRecord(
-  section: Section,
-  interactive: boolean | undefined,
-) {
+function contentNeedsShell(section: Section, interactive: boolean | undefined) {
   return (
     !interactive ||
     (!getSectionRegisterReasons(section) &&
@@ -226,22 +223,22 @@ function contentNeedsRecord(
 }
 
 // A known child site in a non-stateful section pairs from patches; the
-// section's client renderer never mounts it, so a construct needs the record.
+// section's client renderer never mounts it, so a construct needs the shell.
 function hasPatchedChild(section: Section) {
   return !!section.structure?.some(
     (op) => typeof op === "object" && op.kind === StructureKind.Child,
   );
 }
 
-// Await bodies ship as their construct's `await` records, never as
-// standalone content records nothing references.
+// Await bodies ship as their construct's `await` shells, never as
+// standalone content shells nothing references.
 function isAwaitBody(section: Section) {
   return !!section.parent?.constructSetups?.some((s) => s.body === section);
 }
 
 // The shell's template and walk strings when both are fully static.
-// A record the client rebuilds from its template alone (no walk, no setup).
-function isStaticRecord(section: Section) {
+// A shell the client rebuilds from its template alone (no walk, no setup).
+function isStaticShell(section: Section) {
   const shell = getStaticShell(section);
   return !!shell && !shell[1];
 }
@@ -256,9 +253,9 @@ function getStaticShell(section: Section) {
   return [writes.value, walkLiteral?.value ?? ""] as const;
 }
 
-// The shell record `id marker;walks;template` (`,` for `;walks;` when the
+// The shell `id marker;walks;template` (`,` for `;walks;` when the
 // walk is empty): the section's dom template parts, child imports included.
-export function buildShellRecord(id: string, section: Section, marker = "") {
+export function buildShell(id: string, section: Section, marker = "") {
   const { writes, walks } = getSectionMeta(section);
   const walkExpr = trimTrailingExits(walks);
   const walkless =

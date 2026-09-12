@@ -41,7 +41,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	card_default({
 		show: input.show,
-		content: _content_record("__tests__/template.marko_1*content", $scope0_id)
+		content: _content_shell("__tests__/template.marko_1*content", $scope0_id)
 	});
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
