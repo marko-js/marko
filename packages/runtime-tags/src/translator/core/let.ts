@@ -134,7 +134,7 @@ export default {
         );
       }
     } else if (isPersisted()) {
-      // A never-assigned let re-evaluates its initializer on construct, so
+      // A never-assigned let re-evaluates its initializer on creation, so
       // its sources resolve from it (never downstream: no re-derivation).
       setBindingValueExprs(binding, tagExtra);
     } else {

@@ -35,7 +35,7 @@ import {
   getRegisteredWithScope,
   patchers,
   patchScope,
-  withConstructing,
+  withCreating,
 } from "./resume";
 import {
   collectScopes,
@@ -149,11 +149,11 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   const accessor = key.slice(PatchKey.Pending.length);
   const link = (AccessorPrefix.BranchScopes + accessor) as Accessor;
   // The server now owns this await flush. Invalidate a promise started while
-  // setting up a newly constructed parent body so its stale resolution drops.
+  // setting up a newly created parent body so its stale resolution drops.
   scope[(AccessorPrefix.Promise + accessor) as Accessor] = 0 as never;
   // A settle from an earlier response must not hide this flush's pending UI.
   settled.get(scope)?.delete(accessor);
-  // A construct has no live await branch: the entry's id names the body
+  // A created scope has no live await branch: the entry's id names the body
   // content shell its flush shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
     const renderer = getShellContent(shells[value]);
@@ -198,7 +198,7 @@ function attachDetachedAwait(
     renderer[RendererProp.Setup]?.(awaitBranch);
     // A shell content's walk created the body's scopes with no setup.
     if ((renderer as { [RendererProp.Shell]?: 1 })[RendererProp.Shell]) {
-      withConstructing(applyChildPartial);
+      withCreating(applyChildPartial);
     } else {
       applyChildPartial();
     }
@@ -237,7 +237,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     dismissPlaceholder(scope[link] as BranchScope);
   }
   // A boundary entry `[partial, contentId, catchId?, placeholderId?]`
-  // rebuilds a missing branch from its content id, then applies the partial.
+  // creates a missing branch from its content id, then applies the partial.
   if (Array.isArray(value)) {
     const [partial, contentId, catchId, placeholderId] = value;
     value = partial;
@@ -273,7 +273,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
         ) as never;
       }
       if (shell) {
-        withConstructing(() => patchScope(value as Scope, branch));
+        withCreating(() => patchScope(value as Scope, branch));
       } else {
         patchScope(value as Scope, branch);
       }
@@ -285,7 +285,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     else patchScope(value as Scope, scope[link] as Scope);
     markSettled(scope, accessor);
   };
-  // A newly constructed await body may itself initialize nested boundaries.
+  // A newly created await body may itself initialize nested boundaries.
   // Run that setup before applying the settled child partial.
   if (!attachDetachedAwait(scope, accessor, apply)) {
     apply();

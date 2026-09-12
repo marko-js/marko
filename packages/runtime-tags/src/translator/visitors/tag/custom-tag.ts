@@ -49,7 +49,7 @@ import {
   addStatement,
   getResumeRegisterId,
   getSignal,
-  sectionConstructs,
+  patchCreates,
 } from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
@@ -108,10 +108,6 @@ export default {
           BindingType.dom,
           section,
         );
-        (section.loadSites ??= []).push({
-          site: tagExtra[kLoadTagBinding]!,
-          load: tagExtra.tagNameLoad,
-        });
       }
 
       if (tagExtra.tagNameLoad || !childExtra.domExports?.setupEmpty) {
@@ -141,6 +137,7 @@ export default {
             hint: tagName,
           },
           tagExtra.tagNameLoad,
+          tagExtra[kLoadTagBinding],
         );
         structure.enterShallow(tag);
       } else {
@@ -205,9 +202,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const isLoad = !!loadConfig;
   const tagName = getStaticTagName(node);
 
-  // A server-only site has no client render: a flush's shell builds it
-  // and its setup entries seed it.
-  if (loadConfig?.sitesConstruct) {
+  // A child only created scopes meet has no client render: a flush's shell
+  // builds it and its setup entries seed it.
+  if (loadConfig?.downstreamCreated) {
     importRuntimeFeature("patch-child");
     tag.remove();
     return;
@@ -297,7 +294,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               )
             : setupLoadExpr,
         );
-        // A construct's client-side load drives the child's ready channel
+        // A created scope's client-side load drives the child's ready channel
         // (stamped on its branch), so deferred flush data drains after insert.
         if (isPersisted() && getReadyId(childFile) !== undefined) {
           loadSetupCall = callRuntime(
@@ -311,9 +308,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           t.variableDeclaration("let", [
             t.variableDeclarator(
               setupIdent,
-              // A constructing branch runs the site's load wiring as a shell
+              // A branch being created runs the tag's load wiring as a shell
               // init; `_resume` (impure) survives tree-shaking to carry it.
-              isPersisted() && sectionConstructs(section)
+              isPersisted() && patchCreates(section)
                 ? callRuntime(
                     "_resume",
                     t.stringLiteral(

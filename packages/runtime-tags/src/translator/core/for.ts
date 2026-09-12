@@ -373,7 +373,7 @@ export default {
           }
 
           if (persistedPatch) {
-            // Item body shell id so patches can construct additions; the two
+            // Item body shell id so patches can create additions; the two
             // optional marker args are always unset here.
             const id = getShellId(bodySection);
             forTagArgs.push(

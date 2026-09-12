@@ -85,21 +85,21 @@ export const _patch_shells = (handler: NonNullable<typeof onPatchShell>) =>
 export const failPatch = () => {
   throw 0;
 };
-// Construct application dispatch: everything in a setup envelope is
+// Created-scope application dispatch: everything in a setup envelope is
 // REQUIRED (a shaken fill via `patchers` is a correct no-op).
-export const constructPatchers: typeof patchers = {};
-export const patchConstruct = (setup: Scope, live: Scope) => {
+export const createPatchers: typeof patchers = {};
+export const patchCreated = (setup: Scope, live: Scope) => {
   for (const key in setup) {
     if (MARKO_DEBUG) {
       const kind =
         key.indexOf(":") > 0 ? key.slice(0, key.indexOf(":") + 1) : key[0];
-      if (!constructPatchers[kind as PatchKind]) {
+      if (!createPatchers[kind as PatchKind]) {
         throw new Error(
           `No patcher applies "${key}": the live page has no "${kind}" feature.`,
         );
       }
     }
-    constructPatchers[
+    createPatchers[
       (MARKO_DEBUG && key.indexOf(":") > 0
         ? key.slice(0, key.indexOf(":") + 1)
         : key[0]) as PatchKind
@@ -144,7 +144,7 @@ let lazyEnabled: undefined | 1;
 export let patchRender!: RenderData;
 let patching: 0 | 1 = 0;
 // The run the flush began on: a scope created since is the flush's own
-// construct (its entries construct); a deferred apply restores its flush's.
+// creation (its entries create); a deferred apply restores its flush's.
 export let patchRun = 0;
 
 export function beginPatch(render: RenderData, runAt = runId) {
@@ -161,13 +161,13 @@ export function abortPatch() {
 }
 // Set while a partial applies to a tree a shell's walk just created: fresh
 // scopes met then have no renderer to set them up (see `PatchKey.Setup`).
-export let constructing = 0;
-export function withConstructing<T>(fn: () => T) {
-  constructing++;
+export let creating = 0;
+export function withCreating<T>(fn: () => T) {
+  creating++;
   try {
     return fn();
   } finally {
-    constructing--;
+    creating--;
   }
 }
 
@@ -681,7 +681,7 @@ export function _resume<T>(id: string, obj: T): T {
   return (registeredValues[id] = obj);
 }
 
-// A fill closure's construct init is the arrival at each join downstream:
+// A fill closure's creation init is the arrival at each join downstream:
 // registered from the join's own fill wrapper, so it lives exactly as long.
 export function _init_join<T extends (scope: Scope) => void>(
   id: string,

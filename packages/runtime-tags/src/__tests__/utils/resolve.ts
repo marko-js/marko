@@ -96,12 +96,14 @@ export function isThrows(value: any): value is Throws {
   return typeof value === "function" && value.throws;
 }
 
+// A function input is built as the step runs, so a promise it creates
+// (`resolveAfter`) starts pending at that render rather than at setup.
 export type Navigate = {
-  navigateInput: Record<string, unknown>;
+  navigateInput: Record<string, unknown> | (() => Record<string, unknown>);
   betweenFlushes?: (document: Document) => unknown;
 };
 export function navigate(
-  input: Record<string, unknown>,
+  input: Navigate["navigateInput"],
   betweenFlushes?: (document: Document) => unknown,
 ): Navigate {
   return { navigateInput: input, betweenFlushes };

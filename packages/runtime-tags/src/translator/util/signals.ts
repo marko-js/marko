@@ -25,8 +25,8 @@ import {
   toArray,
 } from "./optional";
 import {
-  closureInitsConstruct,
-  contentMayConstruct,
+  closureInitsCreated,
+  contentMayCreate,
   fillJoinsIn,
   getFillRoot,
   getFillConditions,
@@ -447,9 +447,9 @@ export function getSignal(
         const closure = referencedBindings;
         const render = getSignalFn(signal);
         const closureSignal = getClosureSignal(section);
-        // The construct INIT registers on the closure signal itself (pure
-        // fused helpers), so shaking the signal makes a construct fail closed.
-        const initId = constructsWithInit(section, closure)
+        // The creation INIT registers on the closure signal itself (pure
+        // fused helpers), so shaking the signal makes a creation fail closed.
+        const initId = createsWithInit(section, closure)
           ? getResumeRegisterId(section, closure, "init")
           : undefined;
 
@@ -523,7 +523,7 @@ export function initGlobalRead(binding: Binding) {
 // Client work reading a `$global` key, keyed by the scope a changed key
 // queues it on (a closure: the owner its chain dispatches from). A join is
 // `unfilled` when resumed code renders the read wherever the scope sits (an
-// effect, a state-mixed read, resumed structure); otherwise the site decides
+// effect, a state-mixed read, resumed structure); otherwise the tag decides
 // at render (a patch fills a hole under server-owned structure).
 export function getGlobalJoins(section: Section) {
   let root = section;
@@ -1456,12 +1456,12 @@ export function writeSignals(section: Section) {
                   hopExprs = [t.arrowFunctionExpression([joinId], dispatch)];
                 }
               }
-              // A constructible body's fill closure inits as the arrival at this
+              // A creatable body's fill closure inits as the arrival at this
               // join, registered under the closure's init id.
               if (
                 member.section !== signal.section &&
                 !member.sources?.state &&
-                sectionConstructs(signal.section)
+                patchCreates(signal.section)
               ) {
                 value = callRuntime(
                   "_init_join",
@@ -1816,25 +1816,25 @@ function toSequenceExpression(exprs: t.Expression[]) {
   return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
 }
 
-// A closure into a body that ships a shell whose init a construct may run,
+// A closure into a body that ships a shell whose init a created scope may run,
 // registered on its closure get: a fill feeding a state join registers on
 // the join (`_init_join`) instead, a local fill's upstream by the flush.
-function constructsWithInit(section: Section, closure: Binding) {
+function createsWithInit(section: Section, closure: Binding) {
   return (
-    sectionConstructs(section) &&
-    ((closureInitsConstruct(closure, section) &&
+    patchCreates(section) &&
+    ((closureInitsCreated(closure, section) &&
       !fillJoinsIn(closure, section)) ||
       includes(getLocalFillUpstreams(section), closure))
   );
 }
 
 // A branch body that ships a shell, or content whose shell a patch may
-// rebuild (a shell kept only for reference never constructs).
-export function sectionConstructs(section: Section) {
+// create (a shell kept only for reference never creates).
+export function patchCreates(section: Section) {
   return (
     isPersisted() &&
     (section.isBranch ||
-      (section.contentShell === true && contentMayConstruct(section))) &&
+      (section.contentShell === true && contentMayCreate(section))) &&
     !inResumedStructure(section) &&
     !sectionHasServerEffect(section)
   );
@@ -1895,14 +1895,20 @@ function isSerializedSpreadEffect(refs: ReferencedBindings) {
     !!refs &&
     some(refs, (binding) => {
       for (const read of binding.reads) {
-        if (read.referencedBindings === refs && read.attrSetSpread) return true;
+        if (
+          read.referencedBindings === refs &&
+          read.attrSetSpread &&
+          isBranchPathSection(read.section)
+        ) {
+          return true;
+        }
       }
       return false;
     })
   );
 }
 
-// An effect read the wire cannot keep current blocks constructs; fills,
+// An effect read the wire cannot keep current blocks creation; fills,
 // wire writes and direct `$global` reads stay current.
 export function sectionHasServerEffect(section: Section) {
   const hasServerEffect = (binding: Binding) => {
@@ -2298,7 +2304,7 @@ export function writeHTMLResumeStatements(
   forEach(section.referencedLocalClosures, writeSerializedBinding);
 
   // A `<return>` change handler wires like a controllable's: the bind
-  // installs it on a constructed scope, a paired one keeps its own.
+  // installs it on a created scope, a paired one keeps its own.
   if (persisted) {
     const change = serializedLookup.get(getAccessorProp().TagVariableChange);
     if (change) {
@@ -2315,7 +2321,7 @@ export function writeHTMLResumeStatements(
     }
   }
 
-  // A constructible branch (or a non-page root a parent may construct)
+  // A creatable branch (or a non-page root a parent may create)
   // seeds its state onto fresh scopes as SETUP fills.
   if (
     persisted &&

@@ -34,8 +34,8 @@ interface EntryState {
   bundledAssets: Set<string>;
   /** Whether each reached file was only ever seen below a bundled template. */
   visited: Map<string, boolean>;
-  /** Lazy sites of persisted templates reached eagerly, by channel, with
-   * whether the site's template is a root: the entry registers the loaders
+  /** Lazy children of persisted templates reached eagerly, by channel, with
+   * whether the parent template is a root: the entry registers the loaders
    * of the templates it never links, so a flush can still load them. */
   lazyLoads: Map<string, [request: string, root: boolean]>;
 }
@@ -88,7 +88,7 @@ const builder = {
 
       const linked = state.init || state.load;
       // Only a persisted page collects lazy loads (a flush can reveal a lazy
-      // site the client never rendered); a plain page's output is unchanged.
+      // child the client never rendered); a plain page's output is unchanged.
       const lazyLoads = [...state.lazyLoads].filter(
         ([, [, root]]) => !root || !linked,
       );
@@ -257,7 +257,7 @@ const builder = {
       }
     }
 
-    // A flush revealing a lazy site of a template the bundle never links
+    // A flush revealing a lazy child of a template the bundle never links
     // still needs its module: the entry registers the loader itself.
     if (entryFile.markoOpts.persisted && !state.bundled) {
       for (const tag of (loadImports as Set<string> | undefined) || []) {

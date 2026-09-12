@@ -40,7 +40,7 @@ import {
 import { sectionHasSetupStatements } from "../../util/setup-statements";
 import { buildShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
-import { recordConstructedLoadImports } from "../import-declaration";
+import { recordCreatedLoadImports } from "../import-declaration";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
@@ -130,7 +130,7 @@ export default {
 
       if (isPersisted()) {
         buildShells();
-        recordConstructedLoadImports(program);
+        recordCreatedLoadImports(program);
       }
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip
@@ -277,7 +277,7 @@ export default {
       }
 
       if (isPersisted()) {
-        // A static shell slot rebuilds client-side; the import rides both
+        // A static shell slot is created client-side; the import rides both
         // outputs (an interactive page gets assets through its dom program).
         forEachSection((section) => {
           if (section.contentShell === "static") {

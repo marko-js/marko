@@ -152,8 +152,10 @@ export default {
       const { node } = tag;
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
-        // The body reads as if at each site; the site's section exists here.
-        (definedBodySection.defineSites ??= []).push(getOrCreateSection(tag));
+        // The body reads as if at each downstream tag, whose section exists here.
+        (definedBodySection.downstreamSections ??= []).push(
+          getOrCreateSection(tag),
+        );
         addSetupStatement(getOrCreateSection(tag));
         knownTagAnalyze(
           tag,
@@ -225,7 +227,7 @@ export default {
       }
 
       const bodySection = startSection(tagBody);
-      // The body depends on the whole site as a branch body on its
+      // The body depends on the whole tag as a branch body on its
       // condition. Persisted only: the closure walk then stops forcing it.
       if (bodySection && isPersisted())
         bodySection.upstreamExpression = tagExtra;
@@ -505,13 +507,13 @@ export default {
           serializeReason,
           true,
         );
-        // The dynamic tag entry rides the tag site, ownership gated; the tag
-        // marks its branch for it whatever the site's own reason.
-        // The entry writer returns how a patch treats the site (`1` pairs,
+        // The dynamic tag entry rides the tag, ownership gated; the tag
+        // marks its branch for it whatever the tag's own reason.
+        // The entry writer returns how a patch treats the tag (`1` pairs,
         // `2` skips: a client-owned group upstream); the render takes it.
         let patchPairingArg: t.Expression | undefined;
         if (writesPatchDynamicTag(tag, tagSection)) {
-          // The site's renderer and input evaluate once: hoisted, both the
+          // The tag's renderer and input evaluate once: hoisted, both the
           // render and the entry read them.
           if (!t.isIdentifier(tagExpression)) {
             const tagId = generateUidIdentifier("tag");

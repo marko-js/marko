@@ -3,7 +3,7 @@ import { type Opt, toArray } from "../common/opt";
 import type { Accessor, Scope } from "../common/types";
 import { AccessorProp, PatchKey } from "../common/types";
 import { queueEffect } from "./queue";
-import { constructPatchers, getRegisteredWithScope, patchers } from "./resume";
+import { createPatchers, getRegisteredWithScope, patchers } from "./resume";
 import { patchFills } from "./signals";
 
 declare module "./resume" {
@@ -17,14 +17,14 @@ declare module "./resume" {
 }
 
 // A soft miss is a fill whose intersection was tree-shaken: nothing to
-// update. A construct's seed is required, so a miss crashes to reject.
+// update. A created scope's seed is required, so a miss crashes to reject.
 patchers[PatchKey.Value] = (scope, key, value) =>
   patchFills[key.slice(PatchKey.Value.length)]?.(scope, value);
-constructPatchers[PatchKey.Value] = (scope, key, value) =>
+createPatchers[PatchKey.Value] = (scope, key, value) =>
   patchFills[key.slice(PatchKey.Value.length)](scope, value);
 
 // A bind installs a handler the way CSR setup does, after the apply so
-// freshly constructed targets exist. The path walks from the site to the
+// freshly created targets exist. The path walks from the tag's scope to the
 // registered scope: owner hops up, then links (keyed for loops) down.
 patchers[PatchKey.Bind] = (scope, _key, entry) => {
   queueEffect(scope, (scope) => {

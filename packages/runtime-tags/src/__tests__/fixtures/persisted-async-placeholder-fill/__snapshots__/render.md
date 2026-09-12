@@ -10,7 +10,7 @@
 </main>
 ```
 
-# Update `{"label":"second","promise":{}}`
+# Update `{"label":"second","promise":{"value":"slow"}}`
 ```html
 <main>
   <em>

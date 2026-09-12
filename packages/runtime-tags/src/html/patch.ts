@@ -225,7 +225,7 @@ class PatchState extends State {
   }
 
   // Ships the branch index, partial, and (once per response) the shell
-  // so the client can construct on divergence without bundling content.
+  // so the client can create on divergence without bundling content.
   override writeBranch(
     scopeId: number,
     accessor: string,
@@ -278,7 +278,7 @@ class PatchState extends State {
   }
 
   // Ships ordered item partials and keys: existing keys pair, new keys
-  // construct from the shell, absent keys destroy.
+  // create from the shell, absent keys destroy.
   override writeLoop(
     iterate: (
       each: (
@@ -452,7 +452,7 @@ export function _patch_value(
         );
       }
       // Setup entries nest under `s`: the client applies them only to
-      // freshly constructed scopes; only a scope below a branch constructs.
+      // freshly created scopes; only a scope below a branch is created.
       if (!isInResumedBranch()) return "";
       const partial = patchPartial(state, scopeId);
       ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
@@ -496,7 +496,7 @@ export function _patch_control(
 }
 
 // Handler wiring: a scope-bound registration ships as a bind entry, any
-// other value rides the construct seeds as a plain write.
+// other value rides the creation seeds as a plain write.
 export function _patch_bind(
   scopeId: number,
   accessor: Accessor,
@@ -510,7 +510,7 @@ export function _patch_bind(
     const bound =
       registered && (registered.scope as ScopeInternals | undefined);
     if (bound) {
-      // A scope-bound registration is reached from the site: owner hops up
+      // A scope-bound registration is reached from the tag's scope: owner hops up
       // (a content body's owner is where it was defined) to the nearest
       // shared scope, then render links down to the bound scope.
       const links = state.patchLinks;
@@ -544,7 +544,7 @@ export function _patch_bind(
       });
     } else {
       // Both forms: the plain write clears paired scopes' slots, while the setup
-      // entry lands after a construct's seeds (which reset the change slot).
+      // entry lands after a created scope's seeds (which reset the change slot).
       writeEmbeddedBinds(state, value);
       const partial = patchPartial(state, scopeId);
       partial[PatchKey.Write + accessor] = value;
@@ -626,7 +626,7 @@ export function _patch_dynamic_tag(
       if (bound) writeEmbeddedBinds(state, renderer);
       const native = typeof renderer === "string";
       // Shipped content closes over its owner: a `^` per hop up from the
-      // site (a body forwarded through tags) rebuilds that link on construct.
+      // tag (a body forwarded through tags) restores that link on creation.
       const entry: unknown[] = [
         bound
           ? renderer
@@ -651,7 +651,7 @@ export function _patch_dynamic_tag(
       });
     }
   }
-  // How a patch treats the site (`_dynamic_tag`'s `patchPairing`): `1` pairs it,
+  // How a patch treats the tag (`_dynamic_tag`'s `patchPairing`): `1` pairs it,
   // `2` skips it (a client-owned group is upstream of the renderer).
   return _client_guard(owned, group!) ? 2 : 1;
 }
@@ -904,10 +904,10 @@ function patchStringAttr(
 }
 
 // Whether a consumer withheld a content renderer the flush handed it
-// (created, never invoked): server values inside fill then.
+// (handed over, never invoked): server values inside fill then.
 export function _content_withheld(id: string) {
   const state = getState() as PatchState;
-  return !!state.createdContents?.has(id) && !state.renderedContents?.has(id);
+  return !!state.definedContents?.has(id) && !state.renderedContents?.has(id);
 }
 
 function writeFilled(
@@ -922,7 +922,7 @@ function writeFilled(
 
 // Only a shell the server can ship rides an entry: a missing one makes a
 // divergence unapplyable and the client rejects the patch.
-// The owner chain from a site: each hop is the scope's client `_`.
+// The owner chain from a tag's scope: each hop is the scope's client `_`.
 function ownerHops(state: State, scopeId: number, ownerId?: number) {
   let up = 0;
   for (let cur: number | undefined = scopeId; cur !== ownerId; up++) {

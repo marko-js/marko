@@ -34,7 +34,7 @@ interface ReadyPatch {
   [ReadyPatchProp.Run]: number;
 }
 const readyPatches = new Map<RenderData, ReadyPatch>();
-// Sites still cloning their child, by channel: the channel is unready
+// Lazy tags still cloning their child, by channel: the channel is unready
 // (its data blocks like a still-loading module's) until the last lands.
 const loading: Record<string, number> = {};
 
@@ -42,7 +42,7 @@ const loading: Record<string, number> = {};
 // import once per program with a lazy load import in a persisted build.
 installPatchReady(commitReady, pendingReady, discardReady);
 installReady(markReady, failReady);
-// Every lazy site of a persisted page stamps its channel as it starts cloning
+// Every lazy tag of a persisted page stamps its channel as it starts cloning
 // (`_load_ready`, `_load_ready_template`) and reports its insert or failure.
 installLoadReady(
   (branch) => {
@@ -62,12 +62,12 @@ installLoadReady(
   },
 );
 
-// The flush's run may construct a site of the channel (a returning lazy
+// The flush's run may create a tag of the channel (a returning lazy
 // tag), so a guard applies at commit, after the run, channels settled.
 let pendingGuards: Record<string, Guards> = {};
 patchers[PatchKey.Ready] = (scope, key, entries) => {
   const readyId = key.slice(PatchKey.Ready.length);
-  // A site whose module died at page load stays inert: a flush targeting
+  // A lazy tag whose module died at page load stays inert: a flush targeting
   // it could never apply, so it rejects (the caller navigates).
   if (failed.has(readyId)) {
     if (MARKO_DEBUG) {
@@ -131,7 +131,7 @@ function markReady(readyId: string) {
         patch[ReadyPatchProp.Run],
         () => {
           // Applied guards leave the map; channels they register (content
-          // nested in a lazy site) join it after this loop and hold the
+          // nested in a lazy tag) join it after this loop and hold the
           // patch open.
           for (const [id, channel] of channels) {
             channels.delete(id);

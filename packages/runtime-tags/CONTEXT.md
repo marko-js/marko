@@ -138,9 +138,16 @@ The render coordinator that tracks async work, flushes chunks, and carries the
 abort signal. Not an error boundary.
 
 **Resume**:
-Filling scopes, adopting server-rendered nodes, rebuilding branches, and running
+Filling scopes, adopting server-rendered nodes, creating branches, and running
 effects without an initial client rerender.
 _Avoid_: hydrate, hydration
+
+**Created scope**:
+A scope a patch creates from a shell where the live page has none, seeded by
+its fills and set up by registered ids (`inits…!effects…`) in place of a
+renderer's setup; a live scope the patch writes into is _paired_. The same
+word as a client render's `createBranch`; the patch is just who creates.
+_Avoid_: construct, rebuild
 
 **Resume payload**:
 Server-emitted JavaScript data and fill operations for required scope slots,
@@ -189,9 +196,11 @@ What an expression or binding derives from: the expressions it reads and
 the bindings those read (`upstreamAlias`, `upstreamExpression`). Summarized
 by kind as its _sources_ (`Sources`: state, param, `$global`). Structure
 has an upstream too — an `<if>` condition, a `<for>` collection, a dynamic
-tag's renderer (`isBranchUpstream`) — and a root param read only there is
-_upstream of structure_.
-_Avoid_: selector, selection, selects (keyed `for` row select aside)
+tag's renderer (a branch section's `upstreamExpression`) — and a root param read only there is
+_upstream of structure_. A tag or read is _downstream_ of what it reads; the
+expressions at a tag are its call site's expressions.
+_Avoid_: selector, selection, selects (keyed `for` row select aside), site
+for a tag or read on its own
 
 **Stateful structure**:
 A branch body whose upstream expression has a state reason (main's `kStatefulReason`

@@ -65,7 +65,7 @@ const $input = ($scope, input) => $input_base($scope, input.base);
 var page_default = /*@__PURE__*/ _template("__tests__/page.marko", $template, $walks, $setup, $input);
 
 // template.marko
-const $template = "<p>A layout's static lead, long enough that the document outweighs a flush revealing the page below it.</p><!><!>";
+const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = () => {};
 _load_lazy("ready:__tests__/page.marko", () => import("./page.mjs").then(() => {}));

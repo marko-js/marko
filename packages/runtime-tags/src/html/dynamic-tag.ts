@@ -52,17 +52,17 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
-  // How a patch treats the site: `1` pairs and re-renders it, `2` skips
+  // How a patch treats the tag: `1` pairs and re-renders it, `2` skips
   // it (a client-owned group is upstream of the renderer), absent never patches.
   patchPairing?: 1 | 2,
 ) => {
   const shouldResume = serializeReason !== 0;
-  // A patch entry may target this site: its branch marks and pairs, while
-  // the child's data still serializes on the site's own reason.
+  // A patch entry may target this tag: its branch marks and pairs, while
+  // the child's data still serializes on the tag's own reason.
   const marks = shouldResume || patchPairing;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
-  // A patch render skips a site it never pairs (state or a client-owned
+  // A patch render skips a tag it never pairs (state or a client-owned
   // group upstream): the resumed page renders it, as with `writeBranch`.
   if (patchPairing !== 1 && state.writesPatches) return;
   const branchId = _peek_scope_id();
@@ -200,7 +200,7 @@ export let _dynamic_tag = (
         );
       }
     };
-    // A site no patch pairs renders unpatched: the resumed page
+    // A tag no patch pairs renders unpatched: the resumed page
     // re-renders it, so no patch fills its reads.
     if (patchPairing !== 1 && state.persisted) withUnpatched(renderNative);
     else renderNative();
@@ -260,7 +260,7 @@ export let _dynamic_tag = (
   }
 
   if (rendered) {
-    // A patched site keeps its key so a shell pairs by id alone.
+    // A patched tag keeps its key so a shell pairs by id alone.
     if (
       shouldResume ||
       (patchPairing &&
@@ -281,7 +281,7 @@ export let _dynamic_tag = (
 export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
   // Also called at module load (template definitions), outside any render.
   const state = getChunk()?.boundary.state;
-  if (state?.writesPatches) (state.createdContents ??= new Set()).add(id);
+  if (state?.writesPatches) (state.definedContents ??= new Set()).add(id);
   return content(id, fn, scopeId);
 }
 

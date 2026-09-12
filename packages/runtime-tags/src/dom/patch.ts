@@ -58,7 +58,7 @@ export function patch($global: PatchGlobal) {
     beginPatch(curRenders[$global.renderId]);
     // A flush writes ready batches as `R.b[id]=[...]`, into the bucket the
     // document's first batch created (`writeReady`). A document that never
-    // wrote one (no lazy site rendered) has no bucket, so the flush's first
+    // wrote one (no lazy tag rendered) has no bucket, so the flush's first
     // batch would throw; a flush cannot know, so the page ensures it.
     patchRender.b ||= {};
     try {

@@ -19,12 +19,12 @@ import { onFinalizePersisted } from "./lifecycle";
 import { isPatchFillBinding } from "./refresh";
 
 // A boundary branch live on every persisted page (serialized on every page
-// render, nothing on the chain diverges), so it pairs without a construct.
+// render, nothing on the chain diverges), so it pairs without creating.
 export function boundaryAlwaysPairs(bodySection: Section) {
   if (!bodySection.serializeReason) return false;
   for (let s: Section | undefined = bodySection; s; s = s.parent) {
     if (s.isBranch || s.boundaryContent) return false;
-    // A content section can materialize at any site (or none), so nothing
+    // A content section can materialize at any consumer (or none), so nothing
     // below it is provably live and unique on every page.
     if (s !== bodySection && !s.isBoundary && s.parent) return false;
   }

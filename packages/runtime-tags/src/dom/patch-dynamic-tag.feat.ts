@@ -12,12 +12,12 @@ import { _dynamic_tag } from "./control-flow";
 import "./patch-child.feat";
 import { getShellContent, shells } from "./patch-shells";
 import type { Renderer } from "./renderer";
-import { constructPatchers, getRegisteredWithScope, patchers } from "./resume";
+import { createPatchers, getRegisteredWithScope, patchers } from "./resume";
 
 // `[renderer, input, contentId, varId]`, a lone renderer bare; a native tag
 // name is `["div"]` alone or `>div` in a longer entry, array input is args,
 // and shipped content `^id` binds to the owner one `^` up per hop.
-patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
+patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
   scope,
   key,
   entry,
@@ -73,7 +73,7 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
 };
 
 // A shipped shell builds the content, bound to a forwarded body's owner; a
-// registered one (the page has its renderer) binds to the site's scope,
+// registered one (the page has its renderer) binds to the tag's scope,
 // which owns body content.
 function resolveContent(id: string, owner: Scope, bind?: boolean) {
   const shell = shells[id];

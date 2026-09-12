@@ -10,7 +10,7 @@
 </main>
 ```
 
-# Update `{"title":"Store!","promise":{}}`
+# Update `{"title":"Store!","promise":{"value":"slow"}}`
 ```html
 <main>
   <h1>
@@ -28,7 +28,7 @@ REMOVE: main > em
 INSERT: main > h1 + em
 ```
 
-# Update `{"title":"Store!!","promise":{}}`
+# Update `{"title":"Store!!","promise":{"value":"slower"}}`
 ```html
 <main>
   <h1>

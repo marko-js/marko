@@ -532,8 +532,8 @@ export function _closure_get(
   return closureSignal;
 }
 
-// Construct INIT registration fused into the closure helpers: pure call
-// sites let tree shaking drop signal and registration together (fail closed).
+// Creation INIT registration fused into the closure helpers: pure call
+// callers let tree shaking drop signal and registration together (fail closed).
 export function _init_closure_get(
   initId: string,
   valueAccessor: EncodedAccessor,

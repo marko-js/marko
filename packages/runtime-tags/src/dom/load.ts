@@ -73,7 +73,7 @@ export const _load_template = /*@__PURE__*/ withLazy(
 let loadReady: ((branch: BranchScope) => void) | undefined;
 let loadReadyFailed: typeof loadReady;
 // Installed by the persisted ready feature, whose wrappers below are the
-// only callers: a plain page carries no site start.
+// only callers: a plain page carries no lazy tag start.
 let loadStart: ((branch: BranchScope, readyId: string) => void) | undefined;
 export function installLoadReady(
   onReady: typeof loadReady,
@@ -84,8 +84,8 @@ export function installLoadReady(
   loadReadyFailed = onFailed;
   loadStart = onStart;
 }
-// A persisted page's `<${Lazy}>` site: flush data for a child this template
-// constructs waits for its clone, so its setup reports the start.
+// A persisted page's `<${Lazy}>` tag: flush data for a child a flush
+// creates here waits for its clone, so its setup reports the start.
 export const _load_ready_template = (
   readyId: string,
   template: Template & Renderer,

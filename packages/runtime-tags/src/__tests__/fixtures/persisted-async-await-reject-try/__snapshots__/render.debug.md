@@ -7,7 +7,7 @@
 </main>
 ```
 
-# Update `{"promise":{}}`
+# Update `{"promise":{"value":{}}}`
 ```html
 <main>
   <em>

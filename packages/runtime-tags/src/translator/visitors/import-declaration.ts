@@ -26,7 +26,7 @@ import {
   importRuntimeFeature,
 } from "../util/runtime";
 import { getSection } from "../util/sections";
-import { sectionConstructs } from "../util/signals";
+import { patchCreates } from "../util/signals";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
 import type { TemplateVisitor } from "../util/visitors";
@@ -52,20 +52,20 @@ export type LoadImportConfig = (
   | { render: true; triggers?: never }
   | { render: false; triggers: LoadTrigger[] }
 ) & {
-  /** Every site of a page's rendered import sits in structure a patch
-   * constructs, with no state upstream: only a construct ever meets it. */
-  sitesConstruct?: true;
+  /** Every tag downstream of a page's rendered import sits in structure a
+   * patch creates, with no state upstream: only creation meets it. */
+  downstreamCreated?: true;
 };
 const triggerRegExp = /\s*([\w-]+)\s*([^?|]+?)?\s*(?:\?([^|]*?))?\s*(?:\||$)/g;
 const [getHtmlLoadWrapped] = createProgramState(
   () => new Map<string, string>(),
 );
 
-// Records which of a page's rendered imports only constructs meet, once
+// Records which of a page's rendered imports only created scopes meet, once
 // every section's shell is decided. A trigger keeps its channel, so a
 // navigation never forces a load; an import is a module binding, so its
 // uses (tag names, values passed along) are its babel references.
-export function recordConstructedLoadImports(program: t.NodePath<t.Program>) {
+export function recordCreatedLoadImports(program: t.NodePath<t.Program>) {
   if (!isPersisted() || !isPage()) return;
   for (const node of program.node.body) {
     const loadImport = node.extra?.loadImport;
@@ -74,8 +74,8 @@ export function recordConstructedLoadImports(program: t.NodePath<t.Program>) {
     if (
       program.scope.getBinding(local.name)!.referencePaths.every(
         (ref) =>
-          sectionConstructs(getSection(ref)) &&
-          // State upstream of a site re-renders it on the client.
+          patchCreates(getSection(ref)) &&
+          // State upstream of a tag re-renders it on the client.
           !(
             t.isMarkoTag(ref.parent) &&
             getAllTagReferenceNodes(ref.parent).some((node) =>
@@ -84,7 +84,7 @@ export function recordConstructedLoadImports(program: t.NodePath<t.Program>) {
           ),
       )
     ) {
-      loadImport.sitesConstruct = true;
+      loadImport.downstreamCreated = true;
     }
   }
 }
@@ -152,7 +152,7 @@ export default {
       }
 
       (node.extra ??= {}).loadImport = loadImport;
-      // A flush revealing the site needs its channel and the bind feature on
+      // A flush revealing the tag needs its channel and the bind feature on
       // the page, interactive or not.
       if (isPersisted()) {
         addRuntimeFeatureAsset("patch-ready");
@@ -228,7 +228,7 @@ export default {
             );
             // Flushes name a server-only template; the page registers its
             // loader only, for the registrations its flushes need.
-            if (loadImport.sitesConstruct) {
+            if (loadImport.downstreamCreated) {
               importDecl.replaceWith(
                 t.expressionStatement(
                   callRuntime(
@@ -286,7 +286,7 @@ export default {
                 t.variableDeclaration("const", [
                   t.variableDeclarator(
                     local,
-                    // A flush's data for a site this template constructs
+                    // A flush's data for a tag this template creates
                     // waits for its clone; the wrapper reports the start.
                     isPersisted()
                       ? callRuntime(

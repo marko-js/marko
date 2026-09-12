@@ -9,7 +9,7 @@ import {
   patchers,
   patchRun,
   patchScope,
-  withConstructing,
+  withCreating,
 } from "./resume";
 
 declare module "./resume" {
@@ -36,9 +36,9 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   }
   child[AccessorProp.Owner] ??= scope;
   // A scope this flush's shell walk created is bare (no render set it up):
-  // its entries construct, like the branch's own; a live one pairs.
+  // its entries create, like the branch's own; a live one pairs.
   if (child[AccessorProp.Gen] >= patchRun) {
-    withConstructing(() => patchScope(value as Scope, child));
+    withCreating(() => patchScope(value as Scope, child));
   } else {
     patchScope(value as Scope, child);
   }

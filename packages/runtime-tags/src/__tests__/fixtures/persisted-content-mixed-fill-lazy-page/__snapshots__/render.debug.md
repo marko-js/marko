@@ -1,15 +1,7 @@
 # Render `{"show":false,"base":0}`
-```html
-<p>
-  A layout's static lead, long enough that the document outweighs a flush revealing the page below it.
-</p>
-```
 
 # Update `{"show":true,"base":0}`
 ```html
-<p>
-  A layout's static lead, long enough that the document outweighs a flush revealing the page below it.
-</p>
 <button
   class="bonus"
 >
@@ -32,7 +24,7 @@
 ```
 ## Change
 ```
-INSERT: p + :is(.bonus, section)
+INSERT: .bonus, section
 INSERT: .aside > .tick
 UPDATE: .tick::text " " => "0"
 ```
@@ -42,9 +34,6 @@ UPDATE: .tick::text " " => "0"
 document.querySelector(sel).click();
 ```
 ```html
-<p>
-  A layout's static lead, long enough that the document outweighs a flush revealing the page below it.
-</p>
 <button
   class="bonus"
 >
@@ -75,9 +64,6 @@ UPDATE: .tick::text "0" => "1"
 document.querySelector(sel).click();
 ```
 ```html
-<p>
-  A layout's static lead, long enough that the document outweighs a flush revealing the page below it.
-</p>
 <button
   class="bonus"
 >

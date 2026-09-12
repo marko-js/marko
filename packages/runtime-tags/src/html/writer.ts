@@ -223,7 +223,7 @@ export function _script(
   $chunk.boundary.state.needsMainRuntime = true;
   $chunk.writeEffect(scopeId, registryId);
   // Paired scopes keep their effects and a branch's ride its shell; a scope
-  // a construct creates below a branch (a child instance) mounts from setup.
+  // a creation below a branch (a child instance) mounts from setup.
   const { state } = $chunk.boundary;
   if (
     state.writesPatches &&
@@ -440,7 +440,7 @@ export function patchPartial(
     const pending = link?.[2];
     if (serializeState.readyId && !pending) {
       // A channel's entries nest under their parent's entry in the channel's
-      // own tree (a parent the channel constructs must apply first), up to the
+      // own tree (a parent the channel creates must apply first), up to the
       // root, whose guard sits in the enclosing tree under the channel's key.
       if (scopeId === state.rootScopeId) {
         return (partials[scopeId] = (patchPartial(
@@ -461,13 +461,13 @@ export function patchPartial(
           {}) as Record<string, unknown>;
       }
       // No linkable hop (keyed loop items): the write rides the main tree, so
-      // construct data naming an unregistered id rejects at apply.
+      // creation data naming an unregistered id rejects at apply.
       return patchPartial(state, scopeId, state);
     }
     partial = partials[scopeId] = {};
     if (pending) {
       // A child links into its parent's entry on its first write; boundary
-      // construct ids ride it and a paired branch ignores them.
+      // creation ids ride it and a paired branch ignores them.
       const [parentScopeId, , key, contentId, slotIds] =
         link as Required<PatchLink>;
       if (contentId) {
@@ -586,7 +586,7 @@ export function _var(
   writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
   // TODO: if the return value is already registered, use that.
   const wiring = _resume({}, registryId, parentScopeId);
-  // A constructed child gets the same wiring as a resumed one: a seed bound
+  // A created child gets the same wiring as a resumed one: a seed bound
   // to the parent's registration, so no separate init registers for it.
   const state = getState();
   if (state.writesPatches && isInResumedBranch()) {
@@ -837,7 +837,7 @@ function forBranches(
     iterate = (each) => withUnpatched(() => run(each));
   }
   // A patchable loop's markers must resume even on a page with no other
-  // client code: a patch pairs and constructs through them.
+  // client code: a patch pairs and creates through them.
   if (shellId !== undefined) $chunk.needsWalk = true;
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
@@ -941,7 +941,7 @@ export function _if(
   )
     return;
   // A patchable conditional's markers must resume even on a page with no
-  // other client code: a patch pairs and constructs through them.
+  // other client code: a patch pairs and creates through them.
   if (shellIds) $chunk.needsWalk = true;
   // A shell-less branch, or one with a client-owned group upstream, is the
   // resumed page's to render: no patch fills its reads.
@@ -1121,7 +1121,7 @@ export function _global_subscribe(id: string, scopeId: number, unfilled?: 1) {
   const { state } = $chunk.boundary;
   if (!unfilled && !inUnpatched()) return;
   // A flush's scopes are live already (paired) or subscribe as they render
-  // (constructed); the flush re-ships every global they could read.
+  // (created); the flush re-ships every global they could read.
   if (state.writesPatches) return;
   const key = AccessorPrefix.ClosureScopes + id;
   let subscribers = (state.globalSubscribers ??= {})[key];
@@ -1316,12 +1316,12 @@ export function _await<T>(
 ) {
   const writesPatches = $chunk.boundary.state.writesPatches;
   // `0`: a client-owned thenable, resolved by `_await_promise`. A string is
-  // the body's content id, letting a construct build the await branch.
+  // the body's content id, letting a created scope build the await branch.
   if (writesPatches && patchContent === 0) return;
   const resumeMarker = serializeMarker !== 0 || writesPatches;
-  // A construct resolves the body from this shipped shell (a settled value
+  // A created scope resolves the body from this shipped shell (a settled value
   // included); an always-pairing body outside divergent contexts never
-  // constructs.
+  // is created.
   const { boundary } = $chunk;
   const writePending = () => {
     const elide = alwaysPairs && !isInResumedBranch();
@@ -1447,7 +1447,7 @@ export function _try(
   // A patch shows `@placeholder`/`@catch` from received client state;
   // the document reorder/`<t hidden>` path must not ride the flush stream.
   const { writesPatches } = state;
-  // Construct payload (content id + slot ids, `0` = elided catch) rides the
+  // Creation payload (content id + slot ids, `0` = elided catch) rides the
   // pairing entry, except for always-pairing branches outside divergence.
   const elide = alwaysPairs && !isInResumedBranch();
   let trySlotIds: (string | 0 | undefined)[] | undefined;
@@ -1772,7 +1772,7 @@ export class State implements SerializeState {
   public globalSubscribers?: Record<string, Set<ScopeInternals>>;
   // Content renderers a flush created and invoked (by id): one created but
   // never invoked was withheld by its consumer, so its values fill.
-  public createdContents?: Set<string>;
+  public definedContents?: Set<string>;
   public renderedContents?: Set<string>;
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
@@ -1981,7 +1981,7 @@ export class Chunk {
 
   writeEffect(scopeId: number, registryId: string) {
     // A patch never ships effects: paired scopes attached theirs when the
-    // page resumed, and a fresh construct attaches its shell's.
+    // page resumed, and a freshly created scope attaches its shell's.
     if (this.boundary.state.writesPatches) return;
     countResumeWrite(this.boundary);
     if (this.lastEffect === registryId) {
@@ -2190,7 +2190,7 @@ export class Chunk {
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) {
       state.walkOnNextFlush = false;
-      // A walk with nothing else to resume (a persisted site that only
+      // A walk with nothing else to resume (a persisted lazy tag that only
       // records its node) still runs on the runtime.
       state.needsMainRuntime = true;
     }

@@ -204,7 +204,7 @@ function ensureScopeOwned(section: Section) {
 }
 
 // Ownership args for an expression's write; a value fixed for the scope's
-// lifetime (constant, `<id>`, `<define>`) only seeds a construct.
+// lifetime (constant, `<id>`, `<define>`) only seeds a created scope.
 export function getExprWriteOwnership(extra: t.NodeExtra | undefined) {
   return getPatchWriteOwnership(
     getSerializeSourcesForExpr(extra || {}),
@@ -227,7 +227,7 @@ export function getPatchWriteOwnership(
   sources: Sources | undefined,
   stable?: boolean,
 ): [t.Expression, t.Expression] | [] {
-  // Never changes: the write only seeds a construct, like a client-owned
+  // Never changes: the write only seeds a created scope, like a client-owned
   // group's (mask `0`).
   if (stable) return [t.numericLiteral(0), t.numericLiteral(0)];
   for (const [paramsSection, params] of groupParamsBySection(sources?.param)) {

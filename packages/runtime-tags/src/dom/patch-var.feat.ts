@@ -1,5 +1,5 @@
 import { AccessorProp, PatchKey, type Scope } from "../common/types";
-import { constructPatchers, getRegisteredWithScope } from "./resume";
+import { createPatchers, getRegisteredWithScope } from "./resume";
 
 declare module "./resume" {
   interface PatchValues {
@@ -8,7 +8,7 @@ declare module "./resume" {
 }
 
 // The wiring a child's `_return` writes through, registered at its owner.
-constructPatchers[PatchKey.Var] = (scope, _key, id) => {
+createPatchers[PatchKey.Var] = (scope, _key, id) => {
   scope[AccessorProp.TagVariable] = getRegisteredWithScope<
     (owner: Scope) => unknown
   >(id)(scope[AccessorProp.Owner]!);

@@ -127,7 +127,7 @@ export default {
     // when this template module does not load (a scriptless persisted await).
     if (isPersisted()) {
       addRuntimeFeatureAsset("patch-boundary");
-      // A scriptless construct paints the settled body via text fills.
+      // A scriptless created scope paints the settled body via text fills.
       addRuntimeFeatureAsset("patch-text");
       (section.awaits ??= []).push({
         binding: tagExtra[kDOMBinding]!,
@@ -215,7 +215,7 @@ export default {
                     ),
                 patchContent,
                 // An always-pairing body's Pending entry drops its
-                // construct id outside divergent contexts.
+                // creation id outside divergent contexts.
                 ...(isPersisted() &&
                 bodySection &&
                 boundaryAlwaysPairs(bodySection)
@@ -263,7 +263,7 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 t.identifier(bodySection.name),
-                // Constructs resolve body content from the flush's shipped
+                // Created scopes resolve body content from the flush's shipped
                 // shell; registering here would bundle html resume elides.
                 awaitContent,
               ),

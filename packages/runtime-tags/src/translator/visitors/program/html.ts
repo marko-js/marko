@@ -16,7 +16,7 @@ import {
   scopeReasonRuntime,
 } from "../../util/persisted/intrinsics";
 import {
-  getConstructInitClosures,
+  getCreateInitClosures,
   getPatchFillBindings,
   isPatchFillBinding,
 } from "../../util/persisted/refresh";
@@ -34,6 +34,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   type Section,
+  StructureKind,
 } from "../../util/sections";
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
 import {
@@ -47,7 +48,7 @@ import {
   getHTMLSectionStatements,
   getResumeRegisterId,
   getSectionEffectRegisterIds,
-  sectionConstructs,
+  patchCreates,
   sectionHasServerEffect,
   setSerializedValue,
   writeHTMLResumeStatements,
@@ -227,7 +228,7 @@ export default {
 
       const shells = getShells();
       if (persisted && shells) {
-        // Branch shells register at server module load so patches can construct
+        // Branch shells register at server module load so patches can create
         // them without the client bundling conditional content.
         const active = { ...shells };
         // The one translate-side blocker: `hasHTMLEffect` only exists once
@@ -246,20 +247,27 @@ export default {
           if (
             id === getShellId(section) ||
             !section.parent ||
-            (section.contentShell === true && sectionConstructs(section))
+            (section.contentShell === true && patchCreates(section))
           ) {
-            forEach(getConstructInitClosures(section), (closure) => {
+            forEach(getCreateInitClosures(section), (closure) => {
               marker +=
                 (marker && " ") + getResumeRegisterId(section, closure, "init");
             });
-            // Lazy sites wire their load (and channel) as construct inits;
-            // a server-only site's child sits in the shell itself.
-            for (const { site, load } of section.loadSites || []) {
-              if (load.sitesConstruct) continue;
-              marker +=
-                (marker && " ") + getResumeRegisterId(section, site, "init");
+            // Lazy children wire their load (and channel) as creation
+            // inits; a server-only one sits in the shell itself.
+            for (const op of section.structure || []) {
+              if (
+                typeof op === "object" &&
+                op.kind === StructureKind.Child &&
+                op.marker &&
+                !op.load?.downstreamCreated
+              ) {
+                marker +=
+                  (marker && " ") +
+                  getResumeRegisterId(section, op.marker, "init");
+              }
             }
-            // An effect the construct's own renders queue (an init, seed,
+            // An effect the created scope's own renders queue (an init, seed,
             // or item write cascades into it) is not replayed.
             const effectIds = getSectionEffectRegisterIds(
               section,

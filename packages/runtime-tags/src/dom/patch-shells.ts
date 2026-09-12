@@ -9,10 +9,10 @@ import { queueEffect } from "./queue";
 import { _content as content } from "./renderer";
 import {
   _patch_shells,
-  constructing,
-  constructPatchers,
+  creating,
+  createPatchers,
   getRegisteredWithScope,
-  patchConstruct,
+  patchCreated,
   patchers,
   patchRun,
 } from "./resume";
@@ -29,16 +29,16 @@ declare module "./resume" {
 const _content = /*@__PURE__*/ withBranches(content);
 
 // A scope this flush created (`Gen` since the flush's run, met while
-// constructing) has no render coming, so its setup applies now; a fresh
+// creating) has no render coming, so its setup applies now; a fresh
 // branch's queued shell setup runs after, over the applied values.
 patchers[PatchKey.Setup] = (scope, _key, value) => {
-  if (constructing && scope[AccessorProp.Gen] >= patchRun) {
-    patchConstruct(value, scope);
+  if (creating && scope[AccessorProp.Gen] >= patchRun) {
+    patchCreated(value, scope);
   }
 };
 // Ids the flush asks a fresh scope to run, in the shell's grammar
 // (`inits…!effects…`): a child's mounts, a client-upstream local's inits.
-constructPatchers[PatchKey.Init] = (scope, _key, ids) =>
+createPatchers[PatchKey.Init] = (scope, _key, ids) =>
   runSetupIds(resolveSetupIds(ids), scope);
 
 type SetupFn = (branch: Scope) => void;

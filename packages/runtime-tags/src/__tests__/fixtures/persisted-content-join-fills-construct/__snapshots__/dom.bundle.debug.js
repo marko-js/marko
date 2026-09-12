@@ -77,7 +77,7 @@ const $input$1 = ($scope, input) => $input_items$1($scope, input.items);
 var page_default = /*@__PURE__*/ _template("__tests__/page.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = "<p>A lead long enough that the document outweighs a flush revealing the page below it.</p><!><!>";
+const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = () => {};
 const $if_content__input_items = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$1($scope["#childScope/0"], $scope._.input_items));

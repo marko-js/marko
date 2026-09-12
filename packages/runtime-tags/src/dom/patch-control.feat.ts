@@ -10,7 +10,7 @@ import { queueRender } from "./queue";
 import { patchers } from "./resume";
 
 // Kind-keyed control applies (wire key `kind + accessor`), filled by the
-// per-kind feats; queued as a RENDER so fresh constructs take first-render.
+// per-kind feats; queued as a RENDER so freshly created scopes take first-render.
 export const patchControls: {
   [T in ControlledType]?: (
     scope: Scope,

@@ -83,7 +83,7 @@ function isPatchRefreshableBinding(binding: Binding) {
   );
 }
 
-// A scope a flush writes into: the root, or a paired/constructed branch
+// A scope a flush writes into: the root, or a paired/created branch
 // on the branch path (a stateful branch is the client's alone).
 function isPatchWrittenSection(section: Section) {
   return (
@@ -97,13 +97,13 @@ function isPatchWrittenSection(section: Section) {
 // A potential fill: a server-sourced value whose reads intersect client
 // state; the server writes all, tree-shaking decides which apply.
 export function isPatchFillBinding(binding: Binding) {
-  // State of a scope a construct may create (a branch body, a non-page
+  // State of a scope a patch may create (a branch body, a non-page
   // root) seeds through its fill signal — assigned state only (retention).
   if (
     isPersisted() &&
     ((!binding.section.parent && !isPage()) ||
       (binding.section.isBranch && isBranchPathSection(binding.section))) &&
-    // Stateful branches never construct from flushes, so their
+    // Flushes never create stateful branches, so their
     // state needs no seed fill.
     !isStatefulBranch(binding.section) &&
     getCanonicalBinding(binding) === binding &&
@@ -184,13 +184,13 @@ function computeFillReadKind(
     if (!effect && getSerializeSourcesForRef(read.referencedBindings)?.state) {
       return true;
     }
-    // A `<define>` body reads as if at each direct site of its var; a
-    // recursive define reaches its own sites once.
-    const sites = [read.section];
-    for (const site of sites) {
+    // A `<define>` body reads as if at each tag downstream of its var; a
+    // recursive define reaches its own once.
+    const readSections = [read.section];
+    for (const readAt of readSections) {
       // No patch write reaches a skipped region: reads inside stateful
       // structure (and interactive boundary content) promote to owner fills.
-      let readSection: Section | undefined = site;
+      let readSection: Section | undefined = readAt;
       let content: Section | undefined;
       while (readSection && readSection !== binding.section) {
         if (isStatefulBranch(readSection)) return true;
@@ -209,9 +209,11 @@ function computeFillReadKind(
         ) {
           content = readSection;
         }
-        if (readSection.defineSites) {
-          for (const defineSite of readSection.defineSites) {
-            if (!sites.includes(defineSite)) sites.push(defineSite);
+        if (readSection.downstreamSections) {
+          for (const downstream of readSection.downstreamSections) {
+            if (!readSections.includes(downstream)) {
+              readSections.push(downstream);
+            }
           }
           break;
         }
@@ -230,7 +232,7 @@ function computeFillReadKind(
       // Only structure with OTHER params upstream can leave this read client-owned;
       // a page's root params always come from the request.
       if (!isPage()) {
-        for (const sources of getParamUpstreamChain(site) || []) {
+        for (const sources of getParamUpstreamChain(readAt) || []) {
           if (!upstreamThrough(sources, binding)) {
             conditions = mergeConditions(conditions, { upstreams: [sources] });
           }
@@ -254,7 +256,7 @@ function upstreamThrough(sources: Sources, binding: Binding) {
 // client-fed upstream, so the runtime decides; `false`: server-owned.
 function consumerMayWithhold(content: Section) {
   const consumer = content.downstream!.tag;
-  // A `<define>` var passed on (its direct sites classify on their own)
+  // A `<define>` var passed on (its direct tags classify on their own)
   // may reach any consumer, so the runtime decides.
   if (!isKnownTagExtra(consumer)) {
     for (const read of content.downstream!.binding?.reads || []) {
@@ -313,8 +315,13 @@ export function isPatchWriteBinding(binding: Binding) {
 // id when a patch changes what they saw.
 export function hasPatchEffectReads(binding: Binding): boolean {
   for (const read of binding.reads) {
-    // A serialized spread's set is its own refresh.
-    if (read.isEffect && !read.attrSetSpread) return true;
+    // A patched spread's set is its own refresh.
+    if (
+      read.isEffect &&
+      !(read.attrSetSpread && isBranchPathSection(read.section))
+    ) {
+      return true;
+    }
   }
   for (const alias of binding.aliases) {
     if (getCanonicalBinding(alias) === binding && hasPatchEffectReads(alias)) {
@@ -337,19 +344,19 @@ function hasRegisteredFnCapture(binding: Binding): boolean {
   return false;
 }
 
-// Closures whose construct INITs render a fresh scope; a lazy child's
+// Closures whose creation INITs render a fresh scope; a lazy child's
 // server-owned input arrives through its ready channel.
-export function getConstructInitClosures(section: Section) {
+export function getCreateInitClosures(section: Section) {
   return filter(section.referencedClosures as Opt<Binding>, (closure) =>
-    closureInitsConstruct(closure, section),
+    closureInitsCreated(closure, section),
   );
 }
 
-// A closure a construct of `section` runs as an init: state (the shell
+// A closure a created scope of `section` runs as an init: state (the shell
 // names it), a fill feeding a state join (the flush's `_init_join`), or any
 // other member of such a join, since the join fires once every member
-// arrives and a construct runs only registered inits.
-export function closureInitsConstruct(closure: Binding, section: Section) {
+// arrives and a created scope runs only registered inits.
+export function closureInitsCreated(closure: Binding, section: Section) {
   return (
     !!closure.sources?.state ||
     fillJoinsIn(closure, section) ||
@@ -471,22 +478,22 @@ function patchFills(binding: Binding, seen = new Set<Binding>()): boolean {
   return every(root.sources?.param, (param) => patchFills(param, seen));
 }
 
-// Whether a patch may rebuild this content: its site can diverge, a consumer
-// renders it in constructible structure, or an enclosing branch constructs.
-const mayConstruct = new WeakMap<Section, boolean>();
-export function contentMayConstruct(section: Section): boolean {
-  let result = mayConstruct.get(section);
+// Whether a patch may create this content: its tag can diverge, a consumer
+// renders it in creatable structure, or an enclosing branch is created.
+const mayCreate = new WeakMap<Section, boolean>();
+export function contentMayCreate(section: Section): boolean {
+  let result = mayCreate.get(section);
   if (result === undefined) {
-    mayConstruct.set(section, false);
+    mayCreate.set(section, false);
     result =
-      sectionMayConstruct(section) ||
-      (!!section.parent && enclosingMayConstruct(section.parent));
-    mayConstruct.set(section, result);
+      sectionMayCreate(section) ||
+      (!!section.parent && enclosingMayCreate(section.parent));
+    mayCreate.set(section, result);
   }
   return result;
 }
 
-// Whether any consumer's site names this content in a patch entry (a
+// Whether any consumer's tag names this content in a patch entry (a
 // boundary's shells name what they render); an unknown consumer may.
 const isPatched = new WeakMap<Section, boolean>();
 export function contentIsPatched(section: Section): boolean {
@@ -509,11 +516,11 @@ export function contentIsPatched(section: Section): boolean {
   return result;
 }
 
-function sectionMayConstruct(section: Section): boolean {
+function sectionMayCreate(section: Section): boolean {
   if (section.isBranch) return !inResumedStructure(section);
-  if (section.isBoundary) return enclosingMayConstruct(section);
+  if (section.isBoundary) return enclosingMayCreate(section);
   if (section.upstreamExpression) {
-    // A dynamic tag body: the site re-renders it when its upstream changes.
+    // A dynamic tag body: the tag re-renders it when its upstream changes.
     return (
       !isStableExpr(section.upstreamExpression) && !inResumedStructure(section)
     );
@@ -524,26 +531,26 @@ function sectionMayConstruct(section: Section): boolean {
   return (
     !downstream?.binding ||
     someContentRead(downstream.binding, downstream.properties, (read) =>
-      enclosingMayConstruct(read.section),
+      enclosingMayCreate(read.section),
     )
   );
 }
 
-function enclosingMayConstruct(section: Section): boolean {
+function enclosingMayCreate(section: Section): boolean {
   for (let cur: Section | undefined = section; cur; cur = cur.parent) {
     if (cur.isBranch) return !inResumedStructure(cur);
     if (cur.upstreamExpression || cur.downstream) {
-      return contentMayConstruct(cur);
+      return contentMayCreate(cur);
     }
   }
   // A caller composes any template but the page into its own shell (a lazy
-  // page under a layout, a child in a branch), so the root constructs; a
-  // consumer's root reduces to this template's site, which the walk from
-  // the site settles.
+  // page under a layout, a child in a branch), so the root is created; a
+  // consumer's root reduces to this template's tag, which the walk from
+  // that tag settles.
   return !isPage();
 }
 
-// Resumed content (registered, no shell stands in) that a patched site
+// Resumed content (registered, no shell stands in) that a patched tag
 // names: the flush hands it over as a bind to the owner's registration.
 export function contentResumesForPatch(bodySection: Section | undefined) {
   return (

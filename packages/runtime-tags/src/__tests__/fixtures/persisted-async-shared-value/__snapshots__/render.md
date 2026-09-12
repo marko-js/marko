@@ -19,7 +19,7 @@
 </main>
 ```
 
-# Update `{"label":"b","promise":{}}`
+# Update `{"label":"b","promise":{"value":"y"}}`
 ```html
 <main>
   <div

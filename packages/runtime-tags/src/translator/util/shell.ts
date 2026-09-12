@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import normalizeStringExpression from "./normalize-string-expression";
-import { contentIsPatched, contentMayConstruct } from "./persisted/refresh";
+import { contentIsPatched, contentMayCreate } from "./persisted/refresh";
 import { isBranchPathSection, isStatefulBranch } from "./persisted/structure";
 import { addRuntimeFeatureAsset } from "./runtime";
 import {
@@ -49,7 +49,7 @@ export function buildShells() {
   // boundary content is a shell too.
   forEachSectionReverse((section) => {
     // Kept root awaits let `Pending` carry a body shell id; the root
-    // ships under the template id so a dynamic tag entry can construct it.
+    // ships under the template id so a dynamic tag entry can create it.
     if (!section.parent) {
       const chain: Section[] = [];
       const bodyShells: Record<string, Section> = {};
@@ -66,8 +66,8 @@ export function buildShells() {
     if (section.isBranch || isStatefulBranch(section)) {
       return;
     }
-    // A boundary constructs from its content shell; an inexpressible one
-    // stays shell-less, so a construct reaching it rejects.
+    // A boundary creates from its content shell; an inexpressible one
+    // stays shell-less, so a creation reaching it rejects.
     if (section.isBoundary) {
       const chain: Section[] = [];
       const bodyShells: Record<string, Section> = {};
@@ -113,7 +113,7 @@ export function buildShells() {
   });
   forEachSection((section) => {
     // Every branch-path body ships a shell, except
-    // stateful bodies: they never construct from a flush.
+    // stateful bodies: a flush never creates them.
     if (
       !section.isBranch ||
       !isBranchPathSection(section) ||
@@ -141,7 +141,7 @@ export function buildShells() {
 }
 
 // Body shells reuse the branch grammar; nested awaits recurse so a
-// constructed body can itself construct the awaits it contains.
+// created body can itself create the awaits it contains.
 function buildAwaitBodyShells(
   section: Section,
   shells: Record<string, Section>,
@@ -183,7 +183,7 @@ function isStructureExpressible(section: Section, visiting: Set<Section>) {
       // Static text is plain markup, expressible like a markup string.
       op.kind !== StructureKind.Text &&
       // A known child (a template's root or a sibling define body) composes
-      // when expressible; a lazy site expresses as its marker (the shell
+      // when expressible; a lazy child expresses as its marker (the shell
       // composes a server-only one).
       !(
         op.kind === StructureKind.Child &&
@@ -209,37 +209,37 @@ function isStructureExpressible(section: Section, visiting: Set<Section>) {
       !child.isBoundary &&
       !child.contentShell &&
       !(child.boundaryContent && interactive) &&
-      // Content nothing names or rebuilds leaves nothing for a shell to lack.
+      // Content nothing names or creates leaves nothing for a shell to lack.
       contentNeedsShell(child, interactive),
   );
 }
 
 // A scriptless page has only shells; elsewhere a shell serves content a
-// site names or a patch may rebuild, or a renderer that cannot mount a child.
+// tag names or a patch may create, or a renderer that cannot mount a child.
 function contentNeedsShell(section: Section, interactive: boolean | undefined) {
   return (
     !interactive ||
     (!getSectionRegisterReasons(section) &&
-      (contentIsPatched(section) || contentMayConstruct(section))) ||
-    (hasPatchedChild(section) && contentMayConstruct(section))
+      (contentIsPatched(section) || contentMayCreate(section))) ||
+    (hasPatchedChild(section) && contentMayCreate(section))
   );
 }
 
-// A known child site in a non-stateful section pairs from patches; the
-// section's client renderer never mounts it, so a construct needs the shell.
+// A known child in a non-stateful section pairs from patches; the
+// section's client renderer never mounts it, so a creation needs the shell.
 function hasPatchedChild(section: Section) {
   return !!section.structure?.some(
     (op) => typeof op === "object" && op.kind === StructureKind.Child,
   );
 }
 
-// Await bodies ship as their construct's `await` shells, never as
+// Await bodies ship as their await's `await` shells, never as
 // standalone content shells nothing references.
 function isAwaitBody(section: Section) {
   return !!section.parent?.awaits?.some((s) => s.body === section);
 }
 
-// A shell the client rebuilds from its template alone: static markup with
+// A shell the client creates from its template alone: static markup with
 // no walk. A child always walks, so resolving never reaches its imports.
 function isStaticShell(section: Section) {
   if (

@@ -340,17 +340,16 @@ export default {
           getProgram().node.extra.isInteractive = true;
         }
 
-        if (
-          isPersisted() &&
-          seen.content &&
-          tagName !== "meta" &&
-          !node.body.body.length &&
-          isBranchPathSection(tagSection)
-        ) {
+        if (seen.content && tagName !== "meta" && !node.body.body.length) {
           const contentExtra = (seen.content.value.extra ??= {});
           contentExtra.contentAttr = true;
-          ensurePersistedWriteGroups(() => contentExtra);
-          addRuntimeFeatureAsset("patch-dynamic-tag");
+          if (isPersisted() && isBranchPathSection(tagSection)) {
+            ensurePersistedWriteGroups(() => contentExtra);
+            addRuntimeFeatureAsset("patch-dynamic-tag");
+          }
+        }
+        if (spreadReferenceNodes && isAttrSetSpread(tagName)) {
+          (node.extra ??= {}).attrSetSpread = true;
         }
 
         if (
@@ -380,7 +379,6 @@ export default {
               addRuntimeFeatureAsset("patch-dynamic-tag");
             }
             ensurePersistedWriteGroups(() => node.extra || {});
-            (node.extra ??= {}).attrSetSpread = true;
           }
         }
 
@@ -975,7 +973,7 @@ export default {
           tagExtra[kTagContentAttr] = true;
           const contentStatements: t.Statement[] = [];
           // A server-owned `content=` re-renders from a dynamic tag entry,
-          // like a dynamic tag site (the client signal shape is the same).
+          // like a dynamic tag (the client signal shape is the same).
           const patched =
             isPersisted() &&
             isBranchPathSection(tagSection) &&

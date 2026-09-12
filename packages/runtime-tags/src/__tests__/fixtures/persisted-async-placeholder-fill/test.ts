@@ -1,4 +1,5 @@
 import type { TestConfig } from "../../main.test";
+import { navigate, resolveAfter } from "../../utils/resolve";
 
 // `@placeholder` content on an interactive page renders client-side when
 // pending shows: its server read delivers as a fill, so the label is the
@@ -7,14 +8,6 @@ export const config: TestConfig = {
   persisted: true,
   steps: () => [
     { label: "first", promise: Promise.resolve("hi") },
-    {
-      label: "second",
-      promise: {
-        then: (onFulfilled: (value: string) => unknown) =>
-          new Promise<string>((resolve) =>
-            setTimeout(resolve, 10, "slow"),
-          ).then(onFulfilled),
-      },
-    },
+    navigate(() => ({ label: "second", promise: resolveAfter("slow") })),
   ],
 };

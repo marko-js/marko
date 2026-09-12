@@ -1,15 +1,7 @@
 # Render `{"show":false,"items":[{"n":0}],"$global":{"data":{"base":0}}}`
-```html
-<p>
-  A lead long enough that the document outweighs a flush revealing the page below it.
-</p>
-```
 
 # Update `{"show":true,"items":[{"n":0},{"n":1}],"$global":{"data":{"base":0}}}`
 ```html
-<p>
-  A lead long enough that the document outweighs a flush revealing the page below it.
-</p>
 <button
   class="bonus"
 >
@@ -46,7 +38,7 @@
 ```
 ## Change
 ```
-INSERT: p + :is(.bonus, section, section)
+INSERT: .bonus, section, section
 UPDATE: section:nth-of-type(1) > div > button::text " " => "0"
 UPDATE: section:nth-of-type(2) > div > button::text " " => "1"
 ```
@@ -56,9 +48,6 @@ UPDATE: section:nth-of-type(2) > div > button::text " " => "1"
 document.querySelector(sel).click();
 ```
 ```html
-<p>
-  A lead long enough that the document outweighs a flush revealing the page below it.
-</p>
 <button
   class="bonus"
 >
@@ -103,9 +92,6 @@ UPDATE: section:nth-of-type(1) > div > button::text "0" => "1"
 document.querySelector(sel).click();
 ```
 ```html
-<p>
-  A lead long enough that the document outweighs a flush revealing the page below it.
-</p>
 <button
   class="bonus"
 >
@@ -148,9 +134,6 @@ UPDATE: section:nth-of-type(2) > div > button::text "1" => "6"
 
 # Update `{"show":true,"items":[{"n":1}],"$global":{"data":{"base":2}}}`
 ```html
-<p>
-  A lead long enough that the document outweighs a flush revealing the page below it.
-</p>
 <button
   class="bonus"
 >

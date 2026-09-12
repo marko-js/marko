@@ -10,6 +10,7 @@ import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
+import type { Binding } from "./references";
 import {
   ContentType,
   getSection,
@@ -56,6 +57,7 @@ export function child(
   name: string,
   renderer?: StructureRef,
   load?: LoadImportConfig,
+  marker?: Binding,
 ) {
   getSection(tag).structure?.push({
     kind: StructureKind.Child,
@@ -63,6 +65,7 @@ export function child(
     hasVar: !!tag.node.var,
     renderer,
     load,
+    marker,
   });
 }
 
@@ -128,8 +131,8 @@ export function resolveStructure(section: Section) {
     steps: startDynamic ? [Step.Enter, Step.Exit] : [],
   };
   let textEdge: undefined | "own" | "child";
-  // Shells are html output: a server-only lazy child composes into its
-  // site's shell like a known child (the page has no client render of it).
+  // Shells are html output: a server-only lazy child composes into the
+  // shell like a known child (the page has no client render of it).
   const html = isOutputHTML();
   let skipSteps = 0;
 
@@ -160,12 +163,12 @@ export function resolveStructure(section: Section) {
           }
           break;
         case StructureKind.Child: {
-          // A lazy site composes its child only when a flush constructs it.
-          const composed = html && op.load?.sitesConstruct;
+          // A lazy child composes into the shell only when a flush creates it.
+          const composed = html && op.load?.downstreamCreated;
           const renderer = op.load && !composed ? undefined : op.renderer;
           if (composed) {
-            // The walk steps over the site's marker into the composed child;
-            // the site's own shallow steps after the child are dropped.
+            // The walk steps over the marker into the composed child; the
+            // tag's own shallow steps after the child are dropped.
             resolved.steps.push(Step.Enter, Step.Exit);
             skipSteps = 2;
           }

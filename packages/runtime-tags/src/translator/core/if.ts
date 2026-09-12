@@ -208,7 +208,7 @@ export const IfTag = {
           const persistedPatch =
             isPersisted() && !stateful && isBranchPathSection(ifTagSection);
           // A patched chain pairs and reports its branch even with a
-          // source-less test (a constant pick): a construct needs the entry.
+          // source-less test (a constant pick): a created scope needs the entry.
           let branchSerializeReasons: SerializeReasons | undefined =
             persistedPatch || undefined;
           if (persistedPatch) {
@@ -320,7 +320,7 @@ export const IfTag = {
                     : undefined,
                 singleChild ? t.numericLiteral(1) : undefined,
                 // Shell ids per branch index: a patch ships the shell so the
-                // client constructs diverged branches without bundling them.
+                // client creates diverged branches without bundling them.
                 persistedPatch
                   ? t.arrayExpression(
                       branches.map(([, branchBody]) => {

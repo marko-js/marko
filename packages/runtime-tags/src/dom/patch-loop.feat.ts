@@ -2,7 +2,7 @@ import { encodeAccessor } from "../common/helpers";
 import { type Accessor, PatchKey, type Scope } from "../common/types";
 import { _for_of } from "./control-flow";
 import { shells } from "./patch-shells";
-import { patchers, patchScope, withConstructing } from "./resume";
+import { patchers, patchScope, withCreating } from "./resume";
 
 declare module "./resume" {
   interface PatchValues {
@@ -26,11 +26,11 @@ patchers[PatchKey.Loop] = (scope, key, value) => {
     partials.push(value[i++] as Scope);
   }
   const suffix = key.slice(PatchKey.Loop.length) as Accessor;
-  // A loop with a shell constructs additions; one whose items pair only
+  // A loop with a shell creates additions; one whose items pair only
   // (a stateful body) ships none and never adds.
   const [template, walks, setup] = shells[shellId!] || [];
   // The reconciler applies the patch: `params` walks each partial into its
-  // paired/constructed branch, and setup attaches effects to fresh ones.
+  // paired/created branch, and setup attaches effects to fresh ones.
   const apply = () =>
     _for_of(
       (MARKO_DEBUG ? suffix : encodeAccessor(suffix)) as never,
@@ -43,6 +43,6 @@ patchers[PatchKey.Loop] = (scope, key, value) => {
       scope,
       keys ? [partials, (_partial: unknown, i: number) => keys[i]] : [partials],
     );
-  if (shellId) withConstructing(apply);
+  if (shellId) withCreating(apply);
   else apply();
 };

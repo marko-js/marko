@@ -96,13 +96,12 @@ var page_default = _template_persisted("a", (input) => {
 // template.marko
 const $Page_withLoadAssets = withLoadAssets(page_default, "_a", void 0, 1);
 _shells({
-	b: "b;b%;<p>A layout's static lead, long enough that the document outweighs a flush revealing the page below it.</p><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks), /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template))
 });
 var template_default = _template_persisted("b", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html("<p>A layout's static lead, long enough that the document outweighs a flush revealing the page below it.</p>");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

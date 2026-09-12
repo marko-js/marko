@@ -10,7 +10,7 @@ import {
 import { insertChildNodes } from "./dom";
 import { getShellContent, type Shell, shells } from "./patch-shells";
 import { createAndSetupBranch } from "./renderer";
-import { withConstructing, patchers, patchScope } from "./resume";
+import { withCreating, patchers, patchScope } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 
 declare module "./resume" {
@@ -59,11 +59,11 @@ patchers[PatchKey.Branch] = (scope, key, entry) => {
     patchScope(branchPartial, liveBranch as Scope);
   } else {
     // Every branch on the patch path ships a shell (`buildShells`).
-    construct(scope, branchKey, branchPartial, shells[shellId!]);
+    create(scope, branchKey, branchPartial, shells[shellId!]);
   }
 };
 
-function construct(
+function create(
   scope: Scope,
   branchKey: Accessor,
   branchPartial: Scope,
@@ -94,9 +94,9 @@ function construct(
   if (!branch[AccessorProp.StartNode].parentNode) {
     parentNode.cloneNode().appendChild(branch[AccessorProp.StartNode]);
   }
-  // Nested entries construct recursively (no live children); applied before
+  // Nested entries create recursively (no live children); applied before
   // insertion so a script's attributes (its nonce) are set when it runs.
-  withConstructing(() => patchScope(branchPartial, branch as Scope));
+  withCreating(() => patchScope(branchPartial, branch as Scope));
   insertChildNodes(
     parentNode,
     inside ? null : marker,

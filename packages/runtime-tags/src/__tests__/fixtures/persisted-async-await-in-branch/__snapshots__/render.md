@@ -78,7 +78,7 @@ document.querySelector("button").click();
 UPDATE: main > button::text@6 "1" => "2"
 ```
 
-# Update `{"title":"Store!","show":true,"promise":{}}`
+# Update `{"title":"Store!","show":true,"promise":{"value":"slow"}}`
 ```html
 <main>
   <h1>
@@ -142,7 +142,7 @@ document.querySelector("button").click();
 UPDATE: main > button::text@6 "2" => "3"
 ```
 
-# Update `{"title":"Open","show":true,"promise":{}}`
+# Update `{"title":"Open","show":true,"promise":{"value":"back"}}`
 ```html
 <main>
   <h1>

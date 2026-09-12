@@ -99,8 +99,9 @@ export type TestConfig = {
   runtime_id?: string;
   /** Compiles the fixture with the `persisted` compiler option. */
   persisted?: boolean;
-  /** Persisted: skip checking each patched page against a fresh render of
-   * the same input (client effects leave state a fresh render lacks). */
+  /** Persisted: never render a step's input as a document (client effects
+   * leave state a fresh render lacks, or an input no document can serialize),
+   * so patches compare against the initial document instead. */
   skip_fresh_render?: boolean;
 };
 
@@ -477,8 +478,11 @@ function testFixtures(interop?: true) {
             // Until a client-side step diverges the page from what the
             // server would render for the same input, every applied patch
             // must leave the DOM as a fresh render of that input would.
-            let diverged = hasFlush || !!config.skip_fresh_render;
-            const assertPatchedLikeFresh = async (input: Input) => {
+            let diverged = false;
+            const freshRenders = !hasFlush && !config.skip_fresh_render;
+            // The document for a step's input: what the step's patch must
+            // cost less than, diverged or not.
+            const renderFresh = async (input: Input) => {
               const capture = captureConsole();
               const freshChunks: string[] = [];
               try {
@@ -490,6 +494,13 @@ function testFixtures(interop?: true) {
                 resetResolveState();
                 capture.cleanup();
               }
+              freshDocs[patches.length - 1] = stripDefaultScript(
+                freshChunks.join(""),
+              );
+              return freshChunks;
+            };
+            const assertPatchedLikeFresh = async (input: Input) => {
+              const freshChunks = await renderFresh(input);
               // The fresh page resumes like the live one did, so client
               // effects and reorders land on both sides.
               const fresh = createBrowser(
@@ -498,9 +509,6 @@ function testFixtures(interop?: true) {
                 rejectLoad || undefined,
               );
               browsers.push(fresh);
-              freshDocs[patches.length - 1] = stripDefaultScript(
-                freshChunks.join(""),
-              );
               const freshFlush = fresh.stream(freshChunks);
               while (freshFlush());
               await fresh.runAsyncScripts();
@@ -565,8 +573,9 @@ function testFixtures(interop?: true) {
                     }
                     patches.push(flushes.join(""));
                     tracker.logUpdate(input);
-                    if (applied && !diverged && !betweenFlushes) {
-                      await assertPatchedLikeFresh(input);
+                    if (applied && !betweenFlushes && freshRenders) {
+                      if (diverged) await renderFresh(input);
+                      else await assertPatchedLikeFresh(input);
                     }
                     if (!applied) {
                       if (!config.expect_rejection) {
@@ -819,7 +828,11 @@ async function runSteps(
         tracker.logUpdate(update);
       }
     } else if (opts.onInput) {
-      const input = isNavigate(update) ? update.navigateInput : update;
+      const input = isNavigate(update)
+        ? typeof update.navigateInput === "function"
+          ? update.navigateInput()
+          : update.navigateInput
+        : update;
       const between = isNavigate(update) ? update.betweenFlushes : undefined;
       if ((await opts.onInput(input, between)) === false) break;
     } else {

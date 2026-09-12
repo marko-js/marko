@@ -175,8 +175,8 @@ export function knownTagAnalyze(
     onFinalizePersisted(() => {
       if (!inStatefulBranch(section)) {
         addRuntimeFeatureAsset("patch-child");
-        // A construct seeds the tag var through the bind channel; the
-        // child may hand resumed content to a patched site.
+        // A created scope seeds the tag var through the bind channel; the
+        // child may hand resumed content to a patched tag.
         if (hasVar || contentResumesForPatch(getSectionForBody(tagBody))) {
           addRuntimeFeatureAsset("patch-value-bind");
         }
@@ -443,7 +443,7 @@ export function knownTagTranslateHTML(
     );
     if (varStatement) {
       statements.push(varStatement);
-      // A construct seeds the var (only there) unless the child's return is
+      // A created scope seeds the var (only there) unless the child's return is
       // state-fed: its own fill then returns through the wired registration.
       if (isPersisted()) {
         for (const name in t.getBindingIdentifiers(tag.node.var!)) {
@@ -549,7 +549,7 @@ export function knownTagTranslateDOM(
       }
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
-    // A flush constructing the child seeds the wiring through its setup.
+    // A flush creating the child seeds the wiring through its setup.
     if (isPersisted()) importRuntimeFeature("patch-var");
     const wireVar = callRuntime(
       "_var",
@@ -660,7 +660,7 @@ export function hasParamSource(sources: Sources | undefined) {
 
 // Per-group sources for a known templated call site, aligned
 // with the child's `paramReasonGroups` indices.
-// A tag analyzed as a known child template (vs a `<define>` site).
+// A tag analyzed as a known child template (vs a `<define>` var's tag).
 export function isKnownTagExtra(tagExtra: t.MarkoTagExtra) {
   return !!tagExtra[kKnownExprs];
 }

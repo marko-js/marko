@@ -2271,8 +2271,8 @@ let loads = {},
     return apply;
   });
 /**
- * The loader of a lazy template only flushes construct. Never pure: it
- * registers where no client code renders the site.
+ * The loader of a lazy template that only flushes create. Never pure: it
+ * registers where no client code renders the tag.
  */
 function _load_lazy(id, load) {
   let pending;

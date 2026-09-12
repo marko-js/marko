@@ -182,7 +182,7 @@ export default {
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
                 // An always-pairing branch drops its pairing entry's
-                // construct payload outside divergent contexts.
+                // creation payload outside divergent contexts.
                 ...(isPersisted() &&
                 boundaryAlwaysPairs(getSectionForBody(tagBody)!)
                   ? [t.numericLiteral(1)]

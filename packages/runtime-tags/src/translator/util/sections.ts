@@ -110,8 +110,9 @@ export interface StructureChild {
   name: string;
   hasVar: boolean;
   renderer?: StructureRef;
-  // A lazy site: its import's load config.
+  // A lazy child: its import's load config and its marker binding.
   load?: LoadImportConfig;
+  marker?: Binding;
 }
 
 export interface Section {
@@ -149,8 +150,9 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  /** For a `<define>` body: the sections of its direct `<${var}>` sites. */
-  defineSites: Section[] | undefined;
+  /** For a `<define>` body: the sections of the `<${var}>` tags downstream
+   * of its var. */
+  downstreamSections: Section[] | undefined;
   /** The content's rendering tag (its extra), and the child binding the
    * content is upstream of when the child can serialize it. */
   downstream:
@@ -168,19 +170,17 @@ export interface Section {
   readsOwner: boolean;
   isBranch: boolean;
   /** An `<await>`/`<try>` body: always-rendered like the branch path, but
-   * paired (never constructed) by patches. */
+   * paired (never created) by patches. */
   isBoundary: boolean;
   /** A content renderer slot-serialized by register id (`<try>` bodies):
    * static ones re-register from entry data, others load the dom module. */
   boundaryContent: boolean;
   /** A content body shipped as a shell: `"static"` rides its slot
-   * in-band, a dynamic one is constructed by id from a dynamic tag entry. */
+   * in-band, a dynamic one is created by id from a dynamic tag entry. */
   contentShell: false | true | "static";
   /** The section's awaits: each marker binding and body section. */
   awaits: { binding: Binding; body: Section }[] | undefined;
-  /** Lazily loaded child sites in this section, by their marker binding. */
-  loadSites: { site: Binding; load: LoadImportConfig }[] | undefined;
-  /** Branch whose shell would construct unfaithfully: the first blocker's
+  /** Branch whose shell would create unfaithfully: the first blocker's
    * reason code sticks, no shell ships, patches fail closed. */
   content: null | {
     startType: ContentType;
@@ -262,7 +262,7 @@ export function startSection(
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
-      defineSites: undefined,
+      downstreamSections: undefined,
       downstream: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
@@ -272,7 +272,6 @@ export function startSection(
       boundaryContent: false,
       contentShell: false,
       awaits: undefined,
-      loadSites: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     section.program = parentSection ? parentSection.program : section;
