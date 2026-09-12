@@ -1,4 +1,4 @@
-// size: 29092 (min) 10757 (brotli)
+// size: 29127 (min) 10797 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -693,17 +693,19 @@ function fillJoin(key, valueAccessor, join, dispatch) {
   }
   return join;
 }
-function _fill_join(key, valueAccessor, join, buildDispatch) {
-  return fillJoin(key, valueAccessor, join, buildDispatch ? buildDispatch(join) : join);
+function _fill_join(key, valueAccessor, join, run, buildDispatch) {
+  return (
+    (run ||= join), fillJoin(key, valueAccessor, join, buildDispatch ? buildDispatch(run) : run)
+  );
 }
-function _fill_join_if(key, valueAccessor, join, ...hops) {
-  let dispatch = join;
+function _fill_join_if(key, valueAccessor, join, run, ...hops) {
+  let dispatch = run || join;
   for (let i = hops.length; i > 0; i -= 2)
     dispatch = _if_closure(hops[i - 2], hops[i - 1], dispatch);
   return fillJoin(key, valueAccessor, join, dispatch);
 }
-function _fill_join_for(key, valueAccessor, join, ...hops) {
-  let dispatch = join;
+function _fill_join_for(key, valueAccessor, join, run, ...hops) {
+  let dispatch = run || join;
   for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
   return fillJoin(key, valueAccessor, join, dispatch);
 }
@@ -744,7 +746,7 @@ function _fill_join_subscribers(key, valueAccessor, value, getJoin, index) {
   });
 }
 function fill(key, signal, id, fillFn) {
-  return ((patchFills[key] = fillFn ? _const(id, fillFn) : signal), signal);
+  return ((patchFills[key] = fillFn === void 0 ? signal : _const(id, fillFn || void 0)), signal);
 }
 function _fill_let(key, id, fn, fillFn) {
   return fill(key, _let(id, fn), id, fillFn);

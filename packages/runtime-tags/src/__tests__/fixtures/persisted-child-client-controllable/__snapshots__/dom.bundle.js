@@ -7,8 +7,8 @@ const $v = /*@__PURE__*/ _fill_let("b0", 2, ($scope) => {
 });
 const $setup__script$1 = _script("b1", ($scope) => _attr_input_value_script($scope, "a"));
 function $setup($scope) {
-	$v($scope, "");
 	$setup__script$1($scope);
+	$v($scope, "");
 }
 const $valueChange = ($scope) => (_new_v) => {
 	$v($scope, _new_v);

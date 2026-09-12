@@ -17,8 +17,8 @@ const $if_content__setup = ($scope) => $if_content__try($scope, { placeholder: a
 const $if = /*@__PURE__*/ _if("#main/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_value($scope, input.value);
+	$input_show($scope, input.show);
 };
 const $input_value__closure = /*@__PURE__*/ _closure($try_content__input_value, $await_content__input_value);
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__closure);

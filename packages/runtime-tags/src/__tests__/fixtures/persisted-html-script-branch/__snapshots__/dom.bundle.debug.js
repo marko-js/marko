@@ -8,8 +8,8 @@ const $if = /*@__PURE__*/ _if("#text/0", "<script>\n      { const main = documen
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input_note = ($scope, input_note) => _text($scope["#text/1"], input_note);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_nonce($scope, input.nonce);
+	$input_show($scope, input.show);
 	$input_note($scope, input.note);
 };
 const $input_nonce = /*@__PURE__*/ _const("input_nonce", $if_content__input_nonce);

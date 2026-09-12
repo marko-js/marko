@@ -10,7 +10,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	}
 });
 function $setup($scope) {
-	$global_other($scope, $scope.$global.other);
 	$setup__script($scope);
+	$global_other($scope, $scope.$global.other);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", $setup);

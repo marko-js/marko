@@ -22,8 +22,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#main/0", "<!><!><!>", "b%", $if_content__setup, "<em>closed</em>");
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_promise($scope, input.promise);
+	$input_show($scope, input.show);
 };
 const $input_promise = /*@__PURE__*/ _const("input_promise", $if_content__input_promise);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

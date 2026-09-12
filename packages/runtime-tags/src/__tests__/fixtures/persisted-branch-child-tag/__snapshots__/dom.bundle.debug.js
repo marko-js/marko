@@ -30,9 +30,9 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup, "<em>closed</em>");
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_title($scope, input.title);
 	$input_note($scope, input.note);
+	$input_show($scope, input.show);
 };
 const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);
 const $input_note = /*@__PURE__*/ _const("input_note", $if_content__input_note);

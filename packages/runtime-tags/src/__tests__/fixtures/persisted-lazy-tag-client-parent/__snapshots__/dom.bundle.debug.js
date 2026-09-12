@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/components/child.marko_0", ($scope) =>
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$count($scope, 0);
 	$setup__script($scope);
+	$count($scope, 0);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);

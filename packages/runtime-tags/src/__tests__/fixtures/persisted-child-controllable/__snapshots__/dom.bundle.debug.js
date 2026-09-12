@@ -31,8 +31,8 @@ function $setup($scope) {
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/2"], input_show);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_show($scope, input.show);
+	$input_title($scope, input.title);
 };
 const $onCount = ($scope) => function(next) {
 	$last($scope, next);

@@ -125,17 +125,20 @@ function fillJoin<T extends SignalFn>(
   }
   return join;
 }
+// A fill runs the join, or `run` where the flush does part of its work.
 export function _fill_join<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
   join: T,
+  run?: SignalFn | 0,
   buildDispatch?: (join: SignalFn) => SignalFn,
 ): T {
+  run ||= join;
   return fillJoin(
     key,
     valueAccessor,
     join,
-    buildDispatch ? buildDispatch(join) : join,
+    buildDispatch ? buildDispatch(run) : run,
   );
 }
 // Owner-side dispatch for cross-section joins over branch scopes; per-kind
@@ -144,9 +147,10 @@ export function _fill_join_if<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
   join: T,
+  run: SignalFn | 0,
   ...hops: (EncodedAccessor | number)[]
 ): T {
-  let dispatch: SignalFn = join;
+  let dispatch: SignalFn = run || join;
   for (let i = hops.length; i > 0; i -= 2) {
     dispatch = _if_closure(
       hops[i - 2] as EncodedAccessor,
@@ -160,9 +164,10 @@ export function _fill_join_for<T extends SignalFn>(
   key: string,
   valueAccessor: EncodedAccessor,
   join: T,
+  run: SignalFn | 0,
   ...hops: EncodedAccessor[]
 ): T {
-  let dispatch: SignalFn = join;
+  let dispatch: SignalFn = run || join;
   for (let i = hops.length; i--;) {
     dispatch = _for_closure(hops[i], dispatch);
   }
@@ -243,22 +248,23 @@ export function _fill_join_subscribers<T extends SignalFn>(
   });
 }
 
-// A declaration doubles as its fill; `fillFn` (renders minus flush writes)
-// is the fill-driven run when it has any.
+// A declaration doubles as its fill; `fillFn` (renders minus what the
+// flush does itself) is the fill's run when it differs, `0` when nothing is left.
 function fill<T extends Signal<any>>(
   key: string,
   signal: T,
   id: EncodedAccessor,
-  fillFn: SignalFn | undefined,
+  fillFn: SignalFn | 0 | undefined,
 ) {
-  patchFills[key] = fillFn ? _const(id, fillFn) : signal;
+  patchFills[key] =
+    fillFn === undefined ? signal : _const(id, fillFn || undefined);
   return signal;
 }
 export function _fill_let<T>(
   key: string,
   id: EncodedAccessor,
   fn?: SignalFn,
-  fillFn?: SignalFn,
+  fillFn?: SignalFn | 0,
 ) {
   return fill(
     key,
@@ -271,7 +277,7 @@ export function _fill_let_change<T>(
   key: string,
   id: EncodedAccessor,
   fn?: SignalFn,
-  fillFn?: SignalFn,
+  fillFn?: SignalFn | 0,
 ) {
   return fill(
     key,
@@ -284,7 +290,7 @@ export function _fill_const<T>(
   key: string,
   id: EncodedAccessor,
   fn?: SignalFn,
-  fillFn?: SignalFn,
+  fillFn?: SignalFn | 0,
 ) {
   return fill(key, _const<T>(id, fn), id, fillFn);
 }

@@ -29,8 +29,8 @@ const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope
 const $if = /*@__PURE__*/ _if("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_value($scope, input.value);
+	$input_show($scope, input.show);
 };
 const $input_value__closure = /*@__PURE__*/ _closure($try_content__input_value, $await_content__input_value);
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__closure);

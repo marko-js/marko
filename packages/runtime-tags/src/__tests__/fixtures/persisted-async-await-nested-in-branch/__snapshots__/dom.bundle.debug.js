@@ -27,9 +27,9 @@ const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {}));
 const $setup = $setup__script;
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_outer($scope, input.outer);
 	$input_inner($scope, input.inner);
+	$input_show($scope, input.show);
 };
 const $input_outer = /*@__PURE__*/ _const("input_outer", $if_content__input_outer);
 const $input_inner__closure = /*@__PURE__*/ _closure($await_content__input_inner);

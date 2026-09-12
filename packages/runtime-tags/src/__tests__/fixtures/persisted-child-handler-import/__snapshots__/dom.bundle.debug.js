@@ -11,8 +11,8 @@ const $setup__script$1 = _script("__tests__/tags/widget/index.marko_0", ($scope)
 	$last($scope, format($scope.input_label));
 }));
 function $setup$1($scope) {
-	$last($scope, "");
 	$setup__script$1($scope);
+	$last($scope, "");
 }
 const $input_label$1 = /*@__PURE__*/ _const("input_label", ($scope) => _text($scope["#text/0"], $scope.input_label));
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);

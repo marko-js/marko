@@ -20,8 +20,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_title($scope, input.title);
+	$input_show($scope, input.show);
 };
 const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

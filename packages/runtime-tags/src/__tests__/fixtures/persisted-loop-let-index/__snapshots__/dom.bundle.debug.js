@@ -8,8 +8,8 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 	$for_content__picks($scope, +$scope.picks + 1);
 }));
 const $for_content__setup = ($scope) => {
-	$for_content__picks($scope, 0);
 	$for_content__setup__script($scope);
+	$for_content__picks($scope, 0);
 };
 const $for_content__$params = ($scope, $params2) => $for_content__label($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> <span> </span><button>+</button></li>", "D bD l ", $for_content__setup, $for_content__$params);

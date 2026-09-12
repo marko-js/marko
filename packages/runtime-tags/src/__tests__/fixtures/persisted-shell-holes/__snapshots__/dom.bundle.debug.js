@@ -14,11 +14,11 @@ const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_tit
 const $if = /*@__PURE__*/ _if("#text/1", "<a> </a>", " D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
-	$input_show($scope, input.show);
 	$input_href($scope, input.href);
 	$input_hidden($scope, input.hidden);
 	$input_label($scope, input.label);
+	$input_title($scope, input.title);
+	$input_show($scope, input.show);
 };
 const $input_href = /*@__PURE__*/ _const("input_href", $if_content__input_href);
 const $input_hidden = /*@__PURE__*/ _const("input_hidden", $if_content__input_hidden);

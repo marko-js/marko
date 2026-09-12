@@ -23,8 +23,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$count($scope, 0);
-	$global_prefix($scope, $scope.$global.prefix);
 	$setup__script($scope);
+	$global_prefix($scope, $scope.$global.prefix);
 }
 const $input = ($scope, input) => $input_name($scope, input.name);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

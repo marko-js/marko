@@ -14,8 +14,8 @@ const $input$1 = ($scope, input) => {
 	$input_content($scope, input.content);
 };
 const $input_meta = ($scope, input_meta) => {
-	$input_meta_n($scope, input_meta?.n);
 	$input_meta_content($scope, input_meta?.content);
+	$input_meta_n($scope, input_meta?.n);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/card.marko", $template$1, $walks$1, 0, $input$1);
 

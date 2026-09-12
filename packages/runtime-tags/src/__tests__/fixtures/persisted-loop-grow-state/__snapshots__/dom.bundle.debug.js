@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $for_content__input_title__OR__count__OR__item = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "item", /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_title#5/init", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope._.input_title + " " + $scope.item + " #" + $scope._.count), 2)), "#text/0"));
+const $for_content__input_title__OR__count__OR__item = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "item", /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_title#5/init", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope._.input_title + " " + $scope.item + " #" + $scope._.count), 2)), 0, "#text/0"));
 const $for_content__input_title = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_title__OR__count__OR__item);
 const $for_content__setup = ($scope) => {
 	$for_content__input_title._($scope);

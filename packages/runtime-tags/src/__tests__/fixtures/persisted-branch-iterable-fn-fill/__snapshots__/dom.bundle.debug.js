@@ -8,9 +8,9 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__api_label = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "api_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.api_label)));
 const $api2 = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "api", ($scope) => {
-	$api_label($scope, $scope.api.label);
 	$if_content__api($scope);
-});
+	$api_label($scope, $scope.api.label);
+}, $if_content__api);
 const $input_title__OR__getTitle = ($scope) => {
 	$api2($scope, {
 		label: $scope.input_title,

@@ -7,8 +7,8 @@ const $setup__script$2 = _script("__tests__/tags/widget/tags/inner/index.marko_0
 }));
 function $setup$2($scope) {
 	_return_change($scope, $valueChange($scope));
-	$n($scope, 1);
 	$setup__script$2($scope);
+	$n($scope, 1);
 }
 const $valueChange = ($scope) => function(v) {
 	$n($scope, v);

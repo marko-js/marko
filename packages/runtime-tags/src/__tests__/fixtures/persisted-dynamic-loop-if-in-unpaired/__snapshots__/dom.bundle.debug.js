@@ -7,8 +7,8 @@ const $input_meta = ($scope, input_meta) => _text($scope["#text/0"], input_meta 
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => {
-	$input_meta($scope, input.meta);
 	$input_content($scope, input.content);
+	$input_meta($scope, input.meta);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/card.marko", $template$1, $walks$1, 0, $input$1);
 

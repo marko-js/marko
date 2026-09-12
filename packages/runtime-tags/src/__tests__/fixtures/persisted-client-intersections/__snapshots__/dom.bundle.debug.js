@@ -7,8 +7,8 @@ const $setup__script$1 = _script("__tests__/tags/price-card.marko_0", ($scope) =
 	$qty($scope, +$scope.qty + 1);
 }));
 function $setup$3($scope) {
-	$qty($scope, 1);
 	$setup__script$1($scope);
+	$qty($scope, 1);
 }
 const $input_label$1 = /*@__PURE__*/ _fill_const("__tests__/tags/price-card.marko0", "input_label", $input_label__OR__qty);
 const $input$3 = ($scope, input) => $input_label$1($scope, input.label);
@@ -23,8 +23,8 @@ const $setup__script = _script("__tests__/tags/promo-tag.marko_0", ($scope) => _
 	$seen($scope, +$scope.seen + 1);
 }));
 function $setup$2($scope) {
-	$seen($scope, 0);
 	$setup__script($scope);
+	$seen($scope, 0);
 }
 const $input_text = /*@__PURE__*/ _fill_const("__tests__/tags/promo-tag.marko0", "input_text", $input_text__OR__seen);
 const $input$2 = ($scope, input) => $input_text($scope, input.text);
@@ -59,8 +59,8 @@ function $setup($scope) {
 const $input_label = ($scope, input_label) => $input_label$1($scope["#childScope/3"], input_label);
 const $input_year = ($scope, input_year) => $input_year$1($scope["#childScope/5"], input_year);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_label($scope, input.label);
 	$input_year($scope, input.year);
+	$input_title($scope, input.title);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

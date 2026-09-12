@@ -11,12 +11,12 @@ const $for_content__item_id = ($scope, item_id) => _text($scope["#text/0"], item
 const $for_content__if = /*@__PURE__*/ _if("#text/1", "<ul></ul>", " ", $if_content__setup);
 const $for_content__item_children_length = ($scope, item_children_length) => $for_content__if($scope, item_children_length ? 0 : 1);
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__item_id($scope, $params2[0]?.id);
 	$for_content__item_children($scope, $params2[0]?.children);
+	$for_content__item_id($scope, $params2[0]?.id);
 };
 const $for_content__item_children = /*@__PURE__*/ _const("item_children", ($scope) => {
-	$for_content__item_children_length($scope, $scope.item_children?.length);
 	$if_content__item_children($scope);
+	$for_content__item_children_length($scope, $scope.item_children?.length);
 });
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!><!></li>", "D%b%", 0, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);

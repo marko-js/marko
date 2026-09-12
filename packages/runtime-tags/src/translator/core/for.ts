@@ -477,6 +477,10 @@ export default {
 
         const forType = getForType(node)!;
         const signal = getSignal(tagSection, nodeRef, "for");
+        signal.patchedStructure =
+          isPersisted() &&
+          !isStatefulBranch(bodySection) &&
+          isBranchPathSection(tagSection);
         signal.build = () => {
           return callRuntime(
             forTypeToBranchRuntime(forType),

@@ -7,16 +7,16 @@ const $if_content2__setup__script = _script("__tests__/template.marko_2", ($scop
 	$if_content2__y($scope, +$scope.y + 1);
 }));
 const $if_content2__setup = ($scope) => {
-	$if_content2__y($scope, 10);
 	$if_content2__setup__script($scope);
+	$if_content2__y($scope, 10);
 };
 const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko0", "x/2", ($scope) => _text($scope["#text/0"], $scope.x));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__x($scope, +$scope.x + 1);
 }));
 const $if_content__setup = ($scope) => {
-	$if_content__x($scope, 0);
 	$if_content__setup__script($scope);
+	$if_content__x($scope, 0);
 };
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $if = /*@__PURE__*/ _if("#text/1", "<p class=pa>A <!></p><button class=ba>+</button>", "Db%l ", $if_content__setup);

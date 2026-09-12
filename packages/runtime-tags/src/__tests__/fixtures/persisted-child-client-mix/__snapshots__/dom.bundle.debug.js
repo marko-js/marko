@@ -9,7 +9,7 @@ var label_default = /*@__PURE__*/ _template("__tests__/tags/label/index.marko", 
 // template.marko
 const $template = "<main><!><button>+</button><button class=t>t</button></main>";
 const $walks = "D%b b l";
-const $if_content__input_suffix__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _or(1, ($scope) => $input_text($scope["#childScope/0"], $scope._.count + $scope._.input_suffix)), "#text/0", 0);
+const $if_content__input_suffix__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _or(1, ($scope) => $input_text($scope["#childScope/0"], $scope._.count + $scope._.input_suffix)), 0, "#text/0", 0);
 const $if_content__input_suffix = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_suffix__OR__count);
 const $if_content__setup = ($scope) => {
 	$if_content__input_suffix._($scope);

@@ -9,8 +9,8 @@ const $setup__script$1 = _script("b0", ($scope) => _on($scope.c, "click", functi
 	$count($scope, +$scope.g + 1);
 }));
 function $setup($scope) {
-	$count($scope, 1);
 	$setup__script$1($scope);
+	$count($scope, 1);
 }
 const $input_label = ($scope, input_label) => _text($scope.a, input_label);
 

@@ -14,8 +14,8 @@ const $setup__script$1 = _script("d0", ($scope) => _on($scope.a, "click", functi
 	$tick($scope, +$scope.f + 1);
 }));
 function $setup($scope) {
-	$tick($scope, 0);
 	$setup__script$1($scope);
+	$tick($scope, 0);
 }
 const $input_base = /*@__PURE__*/ _fill_const("d0", 4, $input_base__OR__tick);
 

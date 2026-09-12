@@ -17,7 +17,7 @@ const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "inp
 const $show = /*@__PURE__*/ _show("#text/3", "#text/1");
 const $input_on = $show;
 const $input = ($scope, input) => {
-	$input_label($scope, input.label);
 	$input_on($scope, input.on);
+	$input_label($scope, input.label);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

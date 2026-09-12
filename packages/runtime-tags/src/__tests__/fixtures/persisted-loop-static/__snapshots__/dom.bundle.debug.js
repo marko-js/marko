@@ -11,8 +11,8 @@ function $setup($scope) {
 	$for($scope, [["a", "b"]]);
 }
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_note($scope, input.note);
+	$input_title($scope, input.title);
 };
 const $input_note = /*@__PURE__*/ _const("input_note", $for_content__input_note);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

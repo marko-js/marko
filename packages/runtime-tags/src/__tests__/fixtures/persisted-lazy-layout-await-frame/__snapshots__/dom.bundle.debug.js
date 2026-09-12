@@ -49,9 +49,9 @@ const $if_content__input_name = /*@__PURE__*/ _if_closure("#svg/0", 0, ($scope) 
 const $if_content__setup$1 = $if_content__input_name;
 const $if = /*@__PURE__*/ _if("#svg/0", "<path></path>", " ", $if_content__setup$1);
 const $input_name = /*@__PURE__*/ _const("input_name", ($scope) => {
-	$if($scope, $scope.input_name ? 0 : 1);
 	$if_content__input_name($scope);
 	_attr($scope["#svg/0"], "viewBox", $scope.input_name);
+	$if($scope, $scope.input_name ? 0 : 1);
 });
 const $input$1 = ($scope, input) => $input_name($scope, input.name);
 var icon_default = /*@__PURE__*/ _template("__tests__/tags/icon.marko", $template$1, " b", 0, $input$1);
@@ -80,8 +80,8 @@ const $await_content__list = ($scope, list) => {
 };
 const $await_content__if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
 const $await_content__list_ = /*@__PURE__*/ _const("list_0", ($scope) => {
-	$await_content__if($scope, $scope.list_0 ? 0 : 1);
 	$if_content__list_($scope);
+	$await_content__if($scope, $scope.list_0 ? 0 : 1);
 });
 const $await_content__$params = ($scope, $params2) => $await_content__list($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!><!>", "b%b%");

@@ -11,8 +11,8 @@ const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag2;
 const $input$1 = ($scope, input) => {
 	$input_header($scope, input.header);
-	$input_title$1($scope, input.title);
 	$input_content($scope, input.content);
+	$input_title$1($scope, input.title);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, 0, $input$1);
 
@@ -31,8 +31,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_title($scope, input.title);
+	$input_show($scope, input.show);
 };
 const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

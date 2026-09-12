@@ -7,9 +7,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_s
 const $setup = $setup__script;
 const $input_many = ($scope, input_many) => _attr($scope["#select/1"], "multiple", input_many);
 const $input = ($scope, input) => {
+	$input_choice($scope, input.choice);
 	$input_title($scope, input.title);
 	$input_many($scope, input.many);
-	$input_choice($scope, input.choice);
 };
 function $valueChange(next) {
 	document.querySelector("main").dataset.choice = String(next);

@@ -7,8 +7,8 @@ const $setup__script = _script("__tests__/tags/mixer/index.marko_0", ($scope) =>
 	$local($scope, +$scope.local + 1);
 }));
 function $setup$1($scope) {
-	$local($scope, 0);
 	$setup__script($scope);
+	$local($scope, 0);
 }
 const $input_value = /*@__PURE__*/ _fill_const("__tests__/tags/mixer/index.marko0", "input_value", $input_value__OR__local);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);

@@ -22,8 +22,8 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => {
-	$input_msg($scope, input.msg);
 	$input_promise($scope, input.promise);
+	$input_msg($scope, input.msg);
 };
 const $input_msg__closure = /*@__PURE__*/ _closure($placeholder_content__input_msg);
 const $input_msg = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_msg", $input_msg__closure);

@@ -5,8 +5,8 @@ const $input_meta_n = ($scope, input_meta_n) => _text($scope.a, input_meta_n);
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag(1);
 const $input_content = $dynamicTag$1;
 const $input = ($scope, input) => {
-	$input_meta($scope, input.meta);
 	$input_content($scope, input.content);
+	$input_meta($scope, input.meta);
 };
 const $input_meta = ($scope, input_meta) => $input_meta_n($scope, input_meta?.n);
 var card_default = /*@__PURE__*/ _template("a", $template, $walks, 0, $input);

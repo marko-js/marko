@@ -28,8 +28,8 @@ const $for_content__item = /*@__PURE__*/ _const("item", $for_content__item__clos
 const $for = /*@__PURE__*/ _for_of("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $for_content__setup, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 const $input = ($scope, input) => {
-	$input_items($scope, input.items);
 	$input_prefix($scope, input.prefix);
+	$input_items($scope, input.items);
 };
 const $input_prefix__closure = /*@__PURE__*/ _closure($card_content__input_prefix);
 const $input_prefix = /*@__PURE__*/ _const("input_prefix", $input_prefix__closure);

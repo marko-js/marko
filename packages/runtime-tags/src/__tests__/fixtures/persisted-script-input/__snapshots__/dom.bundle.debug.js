@@ -12,7 +12,7 @@ const $input_announce__script = _script("__tests__/template.marko_0_input_announ
 });
 const $input_announce = /*@__PURE__*/ _const("input_announce", $input_announce__script);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_announce($scope, input.announce);
+	$input_title($scope, input.title);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", 0, $input);

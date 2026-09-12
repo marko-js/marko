@@ -5,8 +5,8 @@ const $setup__script$1 = _script("c0", ($scope) => _on($scope.a, "click", functi
 	$n($scope, +$scope.b + 1);
 }));
 function $setup$1($scope) {
-	$n($scope, 1);
 	$setup__script$1($scope);
+	$n($scope, 1);
 }
 
 // tags/widget/index.marko

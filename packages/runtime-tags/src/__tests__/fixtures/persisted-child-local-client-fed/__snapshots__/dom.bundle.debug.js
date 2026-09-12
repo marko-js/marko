@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<div><!><button id=c>c</button></div>";
 const $walks$1 = "D%b l";
-const $if_content__c__OR__l = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko2", "l", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko1", "c", /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/0"], $scope.l + "#" + $scope._.c)), "#text/0", 0));
+const $if_content__c__OR__l = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko2", "l", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko1", "c", /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/0"], $scope.l + "#" + $scope._.c)), 0, "#text/0", 0));
 const $if_content__l = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko2", "l", $if_content__c__OR__l);
 const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko0", "input_label", /*@__PURE__*/ _init_if_closure("__tests__/tags/child.marko_1_input_label#5/init", "#text/0", 0, ($scope) => $if_content__l($scope, $scope._.input_label + "!")));
 const $if_content__setup = ($scope) => {
@@ -14,8 +14,8 @@ const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => _on
 	$c($scope, +$scope.c + 1);
 }));
 function $setup$1($scope) {
-	$c($scope, 0);
 	$setup__script$1($scope);
+	$c($scope, 0);
 }
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

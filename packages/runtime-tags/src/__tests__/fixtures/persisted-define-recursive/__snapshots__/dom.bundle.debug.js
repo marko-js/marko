@@ -11,8 +11,8 @@ const $foo_content__input_x = /*@__PURE__*/ _closure_get("input_x", ($scope) => 
 const $foo_content__setup = /*@__PURE__*/ _child_setup($foo_content__input_x);
 const $foo_content__if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($foo_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($foo_content__walks), $if_content__setup);
 const $foo_content__tag_param_ = /*@__PURE__*/ _const("n", ($scope) => {
-	$foo_content__if($scope, $scope.n ? 0 : 1);
 	$if_content__n($scope);
+	$foo_content__if($scope, $scope.n ? 0 : 1);
 });
 const $foo_content__$params = ($scope, $params2) => $foo_content__tag_param_($scope, $params2[0]);
 function $setup($scope) {

@@ -18,8 +18,8 @@ const $setup__script = _script("__tests__/tags/row.marko_0", ($scope) => _on($sc
 	$clicks($scope, +$scope.clicks + 1);
 }));
 function $setup$1($scope) {
-	$clicks($scope, 0);
 	$setup__script($scope);
+	$clicks($scope, 0);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);

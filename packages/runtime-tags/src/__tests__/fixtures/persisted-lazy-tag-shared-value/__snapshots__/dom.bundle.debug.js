@@ -8,8 +8,8 @@ const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope
 	document.body.dataset.item = JSON.stringify($scope.input_item);
 }));
 function $setup($scope) {
-	$open($scope, false);
 	$setup__script($scope);
+	$open($scope, false);
 }
 const $input = ($scope, input) => $input_item($scope, input.item);
 const $input_item = /*@__PURE__*/ _const("input_item");

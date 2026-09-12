@@ -20,8 +20,8 @@ const $setup__script = _script("__tests__/tags/card/index.marko_0", ($scope) => 
 }));
 function $setup$1($scope) {
 	$input_content_direct($scope["#childScope/2"], $wrap_content($scope));
-	$n($scope, 0);
 	$setup__script($scope);
+	$n($scope, 0);
 }
 const $input$1 = ($scope, input) => $input_note$1($scope, input.note);
 const $input_note__closure = /*@__PURE__*/ _closure($wrap_content__input_note);
@@ -40,8 +40,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_note($scope, input.note);
+	$input_show($scope, input.show);
 };
 const $input_note = /*@__PURE__*/ _const("input_note", $if_content__input_note);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

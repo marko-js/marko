@@ -12,16 +12,16 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 }));
 const $if_content__setup = ($scope) => {
 	$if_content__input_inner._($scope);
-	$if_content__count($scope, 0);
 	$if_content__setup__script($scope);
+	$if_content__count($scope, 0);
 };
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $if = /*@__PURE__*/ _if("#text/1", "<button>+</button><!><!>", " b%", $if_content__setup);
 const $input_outer = ($scope, input_outer) => $if($scope, input_outer ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_inner($scope, input.inner);
 	$input_title($scope, input.title);
 	$input_outer($scope, input.outer);
-	$input_inner($scope, input.inner);
 };
 const $input_inner = /*@__PURE__*/ _const("input_inner", $if_content__input_inner);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

@@ -7,8 +7,8 @@ const $v = /*@__PURE__*/ _fill_let("__tests__/tags/field/index.marko0", "v/2", (
 });
 const $setup__script$1 = _script("__tests__/tags/field/index.marko_0", ($scope) => _attr_input_value_script($scope, "#input/0"));
 function $setup$1($scope) {
-	$v($scope, "");
 	$setup__script$1($scope);
+	$v($scope, "");
 }
 const $valueChange = ($scope) => (_new_v) => {
 	$v($scope, _new_v);

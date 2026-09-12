@@ -6,8 +6,8 @@ const $if_content__input_label = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope
 const $if_content__setup = $if_content__input_label;
 const $if = /*@__PURE__*/ _if("#text/0", "<b> </b>", "D ", $if_content__setup);
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
-	$if($scope, $scope.input_label ? 0 : 1);
 	$if_content__input_label($scope);
+	$if($scope, $scope.input_label ? 0 : 1);
 });
 const $input_note = ($scope, input_note) => _text($scope["#text/1"], input_note);
 const $input$1 = ($scope, input) => {

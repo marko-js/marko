@@ -21,8 +21,8 @@ const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _
 	$tick($scope, +$scope.tick + 1);
 }));
 function $setup$3($scope) {
-	$tick($scope, 0);
 	$setup__script$1($scope);
+	$tick($scope, 0);
 }
 const $input_base = /*@__PURE__*/ _fill_const("__tests__/tags/counter.marko0", "input_base", $input_base__OR__tick);
 const $input$3 = ($scope, input) => $input_base($scope, input.base);
@@ -66,8 +66,8 @@ const $setup__script = _script("__tests__/page.marko_0", ($scope) => _on($scope[
 function $setup$1($scope) {
 	_var($scope, "#childScope/0", $bonus);
 	$setup$4($scope["#childScope/0"]);
-	$global_data($scope, $scope.$global.data);
 	$setup__script($scope);
+	$global_data($scope, $scope.$global.data);
 }
 const $p_base__closure = /*@__PURE__*/ _closure($aside_content__p_base);
 const $p_base = /*@__PURE__*/ _fill_const("__tests__/page.marko1", "p_base", $p_base__closure);
@@ -88,8 +88,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_items($scope, input.items);
+	$input_show($scope, input.show);
 };
 const $input_items = /*@__PURE__*/ _const("input_items", $if_content__input_items);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

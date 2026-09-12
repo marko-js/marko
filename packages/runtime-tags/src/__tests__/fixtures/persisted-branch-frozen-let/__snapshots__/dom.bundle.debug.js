@@ -9,8 +9,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	;
 }));
 function $setup($scope) {
-	$count($scope, 0);
 	$setup__script($scope);
+	$count($scope, 0);
 }
 const $input = ($scope, input) => $input_title($scope, input.title);
 const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);

@@ -411,6 +411,12 @@ export const IfTag = {
           }
 
           const signal = getSignal(ifTagSection, nodeRef, "if");
+          signal.patchedStructure =
+            isPersisted() &&
+            !branches.some(
+              ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
+            ) &&
+            isBranchPathSection(ifTagSection);
           signal.build = () => {
             const rendererArgs: (t.Expression | undefined)[] = [];
             for (const [_, branchBodySection] of branches) {

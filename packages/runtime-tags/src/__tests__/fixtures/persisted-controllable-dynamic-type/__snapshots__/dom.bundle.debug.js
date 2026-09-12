@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_i
 const $setup = $setup__script;
 const $input_kind = ($scope, input_kind) => _attr($scope["#input/0"], "type", input_kind);
 const $input = ($scope, input) => {
-	$input_kind($scope, input.kind);
 	$input_value($scope, input.value);
+	$input_kind($scope, input.kind);
 };
 function $valueChange(next) {}
 _resume("__tests__/template.marko_0/valueChange", $valueChange);

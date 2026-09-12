@@ -2,8 +2,8 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 12749,
-        "brotli": 5391
+        "min": 12757,
+        "brotli": 5397
       },
       "files": {
         "tags/panel/index.marko": 421,

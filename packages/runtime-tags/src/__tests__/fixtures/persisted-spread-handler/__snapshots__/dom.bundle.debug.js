@@ -17,8 +17,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", "<a>go</a>", " ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_attrs($scope, input.attrs);
+	$input_show($scope, input.show);
 };
 const $input_attrs = /*@__PURE__*/ _const("input_attrs", $if_content__input_attrs);
 const $onClick = ($scope) => function() {

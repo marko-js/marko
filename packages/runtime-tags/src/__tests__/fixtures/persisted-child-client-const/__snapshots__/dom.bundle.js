@@ -6,8 +6,8 @@ const $setup__script$1 = _script("c0", ($scope) => _on($scope.a, "click", functi
 	$n($scope, $scope.g + 1);
 }));
 function $setup($scope) {
-	$n($scope, 0);
 	$setup__script$1($scope);
+	$n($scope, 0);
 }
 const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 

@@ -38,8 +38,8 @@ function $setup($scope) {
 	$for($scope, [["a", "b"]]);
 }
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_show($scope, input.show);
+	$input_title($scope, input.title);
 };
 const $input_show = /*@__PURE__*/ _const("input_show", $for_content__input_show);
 const $onCount = ($scope) => function(next) {

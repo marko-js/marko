@@ -1,8 +1,8 @@
 // tags/duo/index.marko
 const $input_label = ($scope, input_label) => _text($scope.a, input_label);
 const $input = ($scope, input) => {
-	$input_label($scope, input.label);
 	_text($scope.b, JSON.stringify(input));
+	$input_label($scope, input.label);
 };
 
 // template.marko

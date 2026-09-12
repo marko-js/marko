@@ -4,8 +4,8 @@ const $walks$1 = "b%c";
 const ITEMS = ["a", "b"];
 const $for_content__if = /*@__PURE__*/ _if("#text/1", "<p>last</p>");
 const $for_content__m = ($scope, m) => {
-	$for_content__if($scope, m === "b" ? 0 : 1);
 	_text($scope["#text/0"], m);
+	$for_content__if($scope, m === "b" ? 0 : 1);
 };
 const $for_content__$params = ($scope, $params2) => $for_content__m($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of("#text/0", "<span> </span><!><!>", "D l%", 0, $for_content__$params);

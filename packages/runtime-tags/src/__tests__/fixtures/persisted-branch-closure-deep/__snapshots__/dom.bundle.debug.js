@@ -19,9 +19,9 @@ const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_tit
 const $if = /*@__PURE__*/ _if("#text/1", "<p>promo</p><!><!>", "b%", $if_content__setup);
 const $input_outer = ($scope, input_outer) => $if($scope, input_outer ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_inner($scope, input.inner);
 	$input_title($scope, input.title);
 	$input_outer($scope, input.outer);
-	$input_inner($scope, input.inner);
 };
 const $input_inner = /*@__PURE__*/ _const("input_inner", $if_content__input_inner);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
