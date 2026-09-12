@@ -112,12 +112,6 @@ export default {
           site: tagExtra[kLoadTagBinding]!,
           load: tagExtra.tagNameLoad,
         });
-        tagExtra.tagNameLoadInput = true;
-        // Reference tracking fills these same extras later, so the fact is
-        // recorded ahead of it on each attr value.
-        for (const attr of tag.node.attributes) {
-          (attr.value.extra ??= {}).tagNameLoadInput = true;
-        }
       }
 
       if (tagExtra.tagNameLoad || !childExtra.domExports?.setupEmpty) {

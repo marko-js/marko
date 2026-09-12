@@ -131,8 +131,9 @@ const kContentSection = Symbol("known tag content section");
 const kSourcesRecordedGroups = Symbol("known tag sources recorded groups");
 const kChildScopeBinding = Symbol("known tag scope binding");
 export const kStaticBody = Symbol("known tag static body");
-export const kTagVar = Symbol("known tag var");
-const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
+export const kChildOffsetScopeBinding = Symbol(
+  "known tag scope offset binding",
+);
 const kKnownExprs = Symbol("known tag exprs");
 
 declare module "@marko/compiler/dist/types" {
@@ -141,7 +142,6 @@ declare module "@marko/compiler/dist/types" {
     [kSourcesRecordedGroups]?: number;
     [kChildScopeBinding]?: Binding;
     [kStaticBody]?: boolean;
-    [kTagVar]?: true;
     [kChildOffsetScopeBinding]?: Binding;
     [kKnownExprs]?: KnownExprs;
   }
@@ -165,7 +165,6 @@ export function knownTagAnalyze(
   let staticBody = true;
   for (const child of tagBody.get("body")) staticBody &&= isStatic(child);
   tagExtra[kStaticBody] = staticBody;
-  if (tag.node.var) tagExtra[kTagVar] = true;
   const attrExprs = new Set([tagExtra]);
   if (isPersisted()) {
     // The ref must serialize so a patch can pair the child scope through a
@@ -575,12 +574,6 @@ export function knownTagTranslateDOM(
       attrTagCallsByTag: undefined,
     });
   }
-}
-
-// The child's return reason for call-site classification (persisted
-// rejects returns whose sources cannot map through ownership).
-export function getKnownTagReturnReason(tagExtra: t.MarkoTagExtra) {
-  return tagExtra[kContentSection]?.returnSerializeReason;
 }
 
 export function finalizeKnownTags(section: Section) {
