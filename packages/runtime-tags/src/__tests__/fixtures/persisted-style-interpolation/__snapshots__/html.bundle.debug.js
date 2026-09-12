@@ -3,7 +3,7 @@ var v_template_marko_default = "\n  .box {\n    color: var(--M_packages-1bruntim
 
 // template.marko
 const $template = "<style></style><div class=box>Hi</div>";
-const $walks = " b";
+const $walks = " c";
 _shells({ "__tests__/template.marko": "__tests__/template.marko; ;<style></style><div class=box>Hi</div>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
 	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();

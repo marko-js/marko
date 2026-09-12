@@ -20,7 +20,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		const $scope1_reason = _persisted_reason();
 		_await($scope1_id, "#text/0", input.promise, () => {
 			const $scope2_id = _scope_id();
-			_script($scope2_id, "__tests__/template.marko_2_input_msg#6/pending");
+			_source_if($scope0_reason, 2) && _script($scope2_id, "__tests__/template.marko_2_input_msg#6/pending");
 			_html(`<div id=done>${_patch_text($scope2_id, "#text/0", input.msg, void 0, $scope0_owned, 2)} done</div>`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");
 		}, 1, "__tests__/template.marko_1_#text#0/await", 1);

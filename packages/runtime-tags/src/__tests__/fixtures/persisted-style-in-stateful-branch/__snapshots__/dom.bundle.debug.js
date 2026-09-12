@@ -11,7 +11,7 @@ const $if_content__setup = ($scope) => {
 	_style_shell($scope, "#style/0");
 };
 const $if_content__input_x = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "input_x", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.input_x)));
-const $if = /*@__PURE__*/ _if("#text/0", "<style></style><b class=x> </b>", " D ", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<style></style><b class=x> </b>", " bD ", $if_content__setup);
 const $s = /*@__PURE__*/ _let("s/6", ($scope) => $if($scope, $scope.s ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$s($scope, !$scope.s);

@@ -18,7 +18,7 @@ var template_default = _template_persisted("a", (input) => {
 		_persisted_reason();
 		_await($scope1_id, "a", input.promise, () => {
 			const $scope2_id = _scope_id();
-			_script($scope2_id, "a4");
+			_source_if($scope0_reason, 2) && _script($scope2_id, "a4");
 			_html(`<div id=done>${_patch_text($scope2_id, "a", input.msg, void 0, $scope0_owned, 2)} done</div>`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 		}, 1, "a2", 1);

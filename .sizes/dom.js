@@ -1,4 +1,4 @@
-// size: 29028 (min) 10754 (brotli)
+// size: 29078 (min) 10769 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -112,13 +112,14 @@ let unsafeStyleAttrReg = /[\\;]/g,
     let firstChild = scope[accessor],
       parentNode = firstChild.parentNode,
       lastChild = scope["H" + accessor] || firstChild,
-      newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
-    (insertChildNodes(
-      parentNode,
-      firstChild,
-      (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
-      (scope["H" + accessor] = newContent.lastChild),
-    ),
+      newContent = parseHTML(_to_text(value), parentNode.namespaceURI),
+      newFirstChild = (scope[accessor] =
+        newContent.firstChild || newContent.appendChild(new Text())),
+      newLastChild = (scope["H" + accessor] = newContent.lastChild),
+      branch = scope.F;
+    (branch?.S === firstChild && (branch.S = newFirstChild),
+      branch?.K === lastChild && (branch.K = newLastChild),
+      insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild),
       removeChildNodes(firstChild, lastChild));
   }),
   R = /[\p{L}\p{N}]/gu,
