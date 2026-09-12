@@ -1138,6 +1138,16 @@ export function addStatement(
   statement: t.Statement | t.Statement[],
   isPure?: boolean,
 ): void {
+  // A page's patched hole with no client sources is the flush's alone (a
+  // child may still render client-side): neither its write nor what the
+  // write reads ships.
+  if (
+    type === "patched" &&
+    !referencedBindings &&
+    getProgram().node.extra.page
+  ) {
+    return;
+  }
   const signal = getSignal(targetSection, referencedBindings);
   const statements = (signal[type] ??= []);
 

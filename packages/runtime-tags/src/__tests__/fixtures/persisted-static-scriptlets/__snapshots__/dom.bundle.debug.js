@@ -19,7 +19,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
-	_text($scope["#text/1"], stamp);
 }
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", ($scope) => {
 	$if_content__input_title($scope);

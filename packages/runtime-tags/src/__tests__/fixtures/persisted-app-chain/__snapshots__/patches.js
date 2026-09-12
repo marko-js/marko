@@ -1,8 +1,8 @@
 // PATCH
 [`d2;b%b/ Db%l&b;<!><!><button class=b>b:<!></button><!>`, {
-  ca: {
-    cAc: {
-      z_c: {
+  z_c: {
+    ca: {
+      cAc: {
         cAa: {
           cb: {
             s: {
@@ -11,7 +11,11 @@
             }
           }
         }
-      },
+      }
+    }
+  },
+  ca: {
+    cAc: {
       ba: [1, {}, "d2"]
     }
   }
@@ -19,9 +23,9 @@
 
 // PATCH
 [`d1;b%b/ Db%l&b;<!><!><button class=a>a:<!></button><!>`, {
-  ca: {
-    cAc: {
-      z_b: {
+  z_b: {
+    ca: {
+      cAc: {
         cAa: {
           cb: {
             s: {
@@ -30,7 +34,11 @@
             }
           }
         }
-      },
+      }
+    }
+  },
+  ca: {
+    cAc: {
       ba: "d1"
     }
   }

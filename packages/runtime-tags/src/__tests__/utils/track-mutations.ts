@@ -10,10 +10,15 @@ import * as nodeInfo from "./get-node-info";
 
 const { DOMElement, DOMCollection } = plugins;
 
-export default function createMutationTracker(browser: {
-  window: JSDOM["window"];
-  virtualConsole: VirtualConsole;
-}) {
+// `ignoreConsole` drops records the fixture expects (a debug-only
+// rejection warning), so debug and optimize logs still match.
+export default function createMutationTracker(
+  browser: {
+    window: JSDOM["window"];
+    virtualConsole: VirtualConsole;
+  },
+  ignoreConsole?: RegExp,
+) {
   let cleaned = false;
   let hasRendered = false;
   let pendingMutations: undefined | MutationRecord[];
@@ -98,7 +103,9 @@ export default function createMutationTracker(browser: {
     const entry = getStatusString(
       window.document.body,
       pendingMutations || [],
-      consoleCapture.records(),
+      consoleCapture
+        .records()
+        .filter((record) => !ignoreConsole?.test(String(record.args[0]))),
       update,
       hasRendered,
     );

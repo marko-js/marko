@@ -2,6 +2,7 @@ import { encodeAccessor } from "../common/helpers";
 import {
   type Accessor,
   AccessorPrefix,
+  AccessorProp,
   type EncodedAccessor,
   PatchKey,
   type Scope,
@@ -14,7 +15,8 @@ import type { Renderer } from "./renderer";
 import { constructPatchers, getRegisteredWithScope, patchers } from "./resume";
 
 // `[renderer, input, contentId, varId]`, a lone renderer bare; a native tag
-// name is `["div"]` alone or `>div` in a longer entry, array input is args.
+// name is `["div"]` alone or `>div` in a longer entry, array input is args,
+// and shipped content `^id` binds to the owner one `^` up per hop.
 patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
   scope,
   key,
@@ -37,8 +39,19 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
       const current = scope[
         (AccessorPrefix.ConditionalRenderer + accessor) as Accessor
       ] as string | undefined;
-      if (!input && current?.split(" ")[0] === renderer) return;
-      renderer = resolveContent(renderer, scope);
+      let id = renderer;
+      let owner = scope;
+      while (id[0] === "^") {
+        owner = owner[AccessorProp.Owner]!;
+        id = id.slice(1);
+      }
+      if (!input && current?.split(" ")[0] === id) return;
+      renderer = resolveContent(id, owner, owner !== scope);
+      if (MARKO_DEBUG && !renderer) {
+        console.warn(
+          `A patch names content "${entry}" the page cannot resolve.`,
+        );
+      }
     }
   }
   (
@@ -59,11 +72,12 @@ patchers[PatchKey.DynamicTag] = constructPatchers[PatchKey.DynamicTag] = (
   )(scope, renderer || undefined, input ? () => input : undefined);
 };
 
-// A shipped shell builds the content; a registered one (the page has its
-// renderer) binds to the site's scope, which owns body content.
-function resolveContent(id: string, owner: Scope) {
+// A shipped shell builds the content, bound to a forwarded body's owner; a
+// registered one (the page has its renderer) binds to the site's scope,
+// which owns body content.
+function resolveContent(id: string, owner: Scope, bind?: boolean) {
   const shell = shells[id];
   return shell
-    ? getShellContent(shell, id)
+    ? getShellContent(shell, id, bind ? owner : undefined)
     : getRegisteredWithScope<Renderer>(id, owner);
 }

@@ -179,14 +179,19 @@ function isStructureExpressible(section: Section, visiting: Set<Section>) {
       op.kind !== StructureKind.Visit &&
       // Static text is plain markup, expressible like a markup string.
       op.kind !== StructureKind.Text &&
-      // A known child composes when its root is expressible; a lazy site
-      // expresses as its marker (the shell composes a server-only one).
+      // A known child (a template's root or a sibling define body) composes
+      // when expressible; a lazy site expresses as its marker (the shell
+      // composes a server-only one).
       !(
         op.kind === StructureKind.Child &&
         (op.load ||
           !op.renderer ||
-          (op.renderer.kind === StructureKind.ExportRef &&
-            isShellExpressible(op.renderer.program.section!, visiting)))
+          isShellExpressible(
+            op.renderer.kind === StructureKind.ExportRef
+              ? op.renderer.program.section!
+              : op.renderer.section,
+            visiting,
+          ))
       )
     ) {
       return false;

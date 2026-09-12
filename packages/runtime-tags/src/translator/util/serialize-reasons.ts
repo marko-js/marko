@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
+import { isPersisted } from "./marko-config";
 import {
   concat,
   forEach,
@@ -20,6 +21,7 @@ import {
   isReferencedExtra,
   type KnownExprs,
   mapParamBindingToExpr,
+  globalSources,
   mergeSources,
   type ReferencedBindings,
   type Sources,
@@ -177,9 +179,17 @@ export function getSerializeReason(
 }
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
-  return isReferencedExtra(expr)
-    ? getSerializeSourcesForRef(expr.referencedBindings)
-    : undefined;
+  if (isReferencedExtra(expr)) {
+    const sources = getSerializeSourcesForRef(expr.referencedBindings);
+    // A keyed `$global` read aliases a property binding and is a reference
+    // like any other. An opaque read (`fn($global)`) compiles verbatim: no
+    // read slot, no signal, so it is not among the references (joining them
+    // would make it a closure) and contributes here, as request identity a
+    // persisted flush re-ships what reads.
+    return expr.globalBindings && isPersisted()
+      ? mergeSources(sources, globalSources)
+      : sources;
+  }
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

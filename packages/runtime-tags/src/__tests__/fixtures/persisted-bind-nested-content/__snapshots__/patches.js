@@ -3,7 +3,7 @@
   cd: {
     cAa: {
       ca: {
-        fa: "a0",
+        fa: "^a0",
         cAa: {
           ba: [{
             s: {

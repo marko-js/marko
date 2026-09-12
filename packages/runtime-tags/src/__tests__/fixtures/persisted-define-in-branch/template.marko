@@ -1,0 +1,9 @@
+<define/row|label|>
+  <li>${label}: ${input.suffix}</li>
+</define>
+<ul>
+  <if=input.show>
+    <${row}("a")/>
+    <${row}("b")/>
+  </if>
+</ul>

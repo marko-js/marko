@@ -90,6 +90,15 @@ export const failPatch = () => {
 export const constructPatchers: typeof patchers = {};
 export const patchConstruct = (setup: Scope, live: Scope) => {
   for (const key in setup) {
+    if (MARKO_DEBUG) {
+      const kind =
+        key.indexOf(":") > 0 ? key.slice(0, key.indexOf(":") + 1) : key[0];
+      if (!constructPatchers[kind as PatchKind]) {
+        throw new Error(
+          `No patcher applies "${key}": the live page has no "${kind}" feature.`,
+        );
+      }
+    }
     constructPatchers[
       (MARKO_DEBUG && key.indexOf(":") > 0
         ? key.slice(0, key.indexOf(":") + 1)
@@ -102,6 +111,15 @@ export const patchConstruct = (setup: Scope, live: Scope) => {
 // entry keys are `PatchKind:…`, optimized ones a single character.
 export const patchScope = (partial: Scope, live: Scope) => {
   for (const key in partial) {
+    if (MARKO_DEBUG) {
+      const kind =
+        key.indexOf(":") > 0 ? key.slice(0, key.indexOf(":") + 1) : key[0];
+      if (!patchers[kind as PatchKind]) {
+        throw new Error(
+          `No patcher applies "${key}": the live page has no "${kind}" feature.`,
+        );
+      }
+    }
     patchers[
       (MARKO_DEBUG && key.indexOf(":") > 0
         ? key.slice(0, key.indexOf(":") + 1)

@@ -149,6 +149,12 @@ export interface Binding {
   /** Upstream of a child input group that client state is also upstream
    * of (the child re-derives that group from both). */
   upstreamOfStateMixedGroup: boolean;
+  /** The bindings a derived value's expressions read directly. `sources`
+   * flattens a derivation chain to its root params, but an intermediate
+   * derivation (`<const/ws=input.workspace>`) is itself the canonical
+   * binding that fills (`upstreamSourcesFill`), and the value expressions
+   * drop after resolution. */
+  upstreams: Opt<Binding>;
   /** Can hold a function a fill must carry bind-aware: a literal fn,
    * an invoked or handler-attr read, or a derivation over one. */
   functionValued: boolean;
@@ -306,6 +312,7 @@ export function createBinding(
     upstreamOfStructure: false,
     registeredFnCapture: false,
     upstreamOfStateMixedGroup: false,
+    upstreams: undefined,
     functionValued: false,
     serializePropKeys: undefined,
     reserveSize: 0,
@@ -1785,10 +1792,14 @@ function resolveDerivedSources(binding: Binding) {
           if (!seen.has(ref)) {
             seen.add(ref);
             resolveBindingSources(ref);
-            binding.sources = mergeSources(binding.sources, ref.sources);
+            binding.upstreams = bindingUtil.add(binding.upstreams, ref);
             if (ref.functionValued) binding.functionValued = true;
           }
         });
+        binding.sources = mergeSources(
+          binding.sources,
+          getSerializeSourcesForExpr(expr),
+        );
       }
     });
   }
@@ -2926,6 +2937,20 @@ export function getAllSerializeReasonsForBinding(
 
   if (reason === undefined) {
     reason = getSerializeReason(binding.section, binding);
+    // A let with a change handler serializes it under its own accessor
+    // (`let.ts`); the whole-binding answer carries that reason, so a parent
+    // inferring what to register for the value it passes registers the
+    // handler it serializes.
+    if (binding.reserveSize && reason !== true) {
+      reason = mergeSerializeReasons(
+        reason,
+        getSerializeReason(
+          binding.section,
+          binding,
+          getAccessorPrefix().TagVariableChange,
+        ),
+      );
+    }
 
     if (reason !== true) {
       cache.set(binding, reason || false);

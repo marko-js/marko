@@ -1,0 +1,7 @@
+<let/sessions=null as { id: string }[] | null>
+<const/ws=input.workspace>
+<const/shown=(ws ? (sessions ?? ws.sessions) : [])>
+<button onClick() { sessions = [{ id: "c" }] }>load</button>
+<for|s| of=(input.active ? shown : shown.slice(0, 1)) by="id">
+  <div>${s.id}</div>
+</for>

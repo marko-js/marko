@@ -112,7 +112,9 @@ UPDATE: article > b::text "1" => "2"
     -
   </em>
   <article>
-    <b />
+    <b>
+      2
+    </b>
     four
   </article>
 </section>
@@ -128,5 +130,5 @@ UPDATE: section > em::text " " => "-"
 INSERT: section > em + article
 INSERT: section > article > b + ::text("four")
 UPDATE: section > article::text " " => "four"
-UPDATE: section > article > b::text " " => ""
+UPDATE: section > article > b::text " " => "2"
 ```

@@ -62,6 +62,11 @@ patchers[PatchKey.Branch] = (scope, key, entry) => {
   } else {
     // The server could not ship a shell for the new branch, so
     // this divergence cannot apply faithfully.
+    if (MARKO_DEBUG) {
+      console.warn(
+        `A patch rejected: branch "${suffix}" changed without a shell for the new branch.`,
+      );
+    }
     failPatch();
   }
 };
@@ -82,7 +87,9 @@ function construct(
     branchKey.slice(AccessorPrefix.BranchScopes.length) as Accessor
   ] as Comment | Element;
   const inside = marker.nodeType === NodeType.Element;
-  const parentNode = inside ? (marker as Element) : marker.parentNode!;
+  const parentNode = inside
+    ? (marker as Element)
+    : (marker.parentNode as Element);
   const branch = createAndSetupBranch(
     scope[AccessorProp.Global],
     getShellContent(shell),
@@ -90,6 +97,11 @@ function construct(
     parentNode,
   );
   scope[branchKey] = branch;
+  // A lone text node clones detached; an html hole there needs a parent
+  // (a shallow clone keeps the namespace).
+  if (!branch[AccessorProp.StartNode].parentNode) {
+    parentNode.cloneNode().appendChild(branch[AccessorProp.StartNode]);
+  }
   // Nested entries construct recursively (no live children); applied before
   // insertion so a script's attributes (its nonce) are set when it runs.
   withConstructing(() => patchScope(branchPartial, branch as Scope));

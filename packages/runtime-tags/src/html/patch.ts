@@ -4,6 +4,7 @@ import {
   stringifyClassObject,
   stringifyStyleObject,
   toDelimitedString,
+  hasKeys,
   isNotVoid,
 } from "../common/helpers";
 import type {
@@ -37,6 +38,7 @@ import {
   _filled_guard,
   patchPartial,
   writeEmbeddedBinds,
+  openPatchPartial,
   peekPatchPartial,
   type ScopeInternals,
   type SerializeReasonValue,
@@ -117,7 +119,23 @@ export function renderPatch(
 class PatchState extends State {
   public sentShells?: Set<string>;
   public pendingShells = "";
+  // Ready-channel records written this flush; they join the tree
+  // expression, since a flush evaluates as one expression.
+  public readyScripts = "";
   override writesPatches = true;
+
+  // A flush evaluates with the page render bound as `R` (`dom/patch`), so
+  // ready records write where the page's own do.
+  override get runtimePrefix() {
+    return "R";
+  }
+  override writeReady(id: string, resumes: string) {
+    const script = super.writeReady(id, resumes);
+    this.readyScripts = this.readyScripts
+      ? this.readyScripts + "," + script
+      : script;
+    return "";
+  }
 
   override shipShell(shellId: string | 0 | undefined) {
     return shipShell(this, shellId);
@@ -146,11 +164,28 @@ class PatchState extends State {
   constructor($global: State["$global"]) {
     super($global);
     this.hasMainRuntime = true;
+    // The page render already holds a ready bucket the flush writes into.
+    this.hasReadyRuntime = true;
     // The live page owns its serialized globals; a flush never re-ships them.
     this.hasGlobals = true;
   }
 
+  // Records left over from a chunk that wrote no tree still evaluate as the
+  // frame's one expression: the trailing `0` keeps a record's array from
+  // reading as the tree (the frame's last value). Defensive: a rendered
+  // channel scope writes its pairing entry beside its records, and the
+  // reads that subscribe without entries sit in structure a patch skips.
   override flushChunk(_html: string, scripts: string) {
+    if (this.readyScripts) {
+      scripts =
+        "(" + (scripts ? scripts + "," : "") + this.readyScripts + ",0)";
+      this.readyScripts = "";
+    }
+    // The client reads one frame per line: everything a flush embeds is
+    // escaped (serializer strings, shell records), so a newline is a bug.
+    if (MARKO_DEBUG && scripts.includes("\n")) {
+      throw new Error("A persisted flush spans lines.");
+    }
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
     this.patchTrees = undefined;
@@ -166,16 +201,16 @@ class PatchState extends State {
   override resumeScript(resumes: string) {
     this.patchFlushed = 1;
     const shellChunks = this.pendingShells;
-    this.pendingShells = "";
+    const ready = this.readyScripts;
+    this.pendingShells = this.readyScripts = "";
+    const tree = ready ? "(" + ready + "," + (resumes || "0") + ")" : resumes;
     if (this.patchDeferred) {
       this.patchDeferred = undefined;
       return shellChunks
-        ? "(_([" + shellChunks + "])" + (resumes && "," + resumes) + ")"
-        : resumes;
+        ? "(_([" + shellChunks + "])" + (tree && "," + tree) + ")"
+        : tree;
     }
-    return shellChunks
-      ? "[" + shellChunks + (resumes && "," + resumes) + "]"
-      : resumes;
+    return shellChunks ? "[" + shellChunks + (tree && "," + tree) + "]" : tree;
   }
 
   override walkScript() {
@@ -208,15 +243,24 @@ class PatchState extends State {
       scopeId,
       AccessorPrefix.BranchScopes + accessor,
     ]);
+    const opened = openPatchPartial(this, branchId);
     const branchIndex = withBranchId(branchId, cb);
     const shellId =
       branchIndex === undefined
         ? undefined
         : shipShell(this, shellIds?.[branchIndex]);
+    // A branch ships no shell when its structure is inexpressible (a child
+    // template whose own structure is, an await body only a dom module can
+    // render): a client already showing it pairs, any other cannot construct.
+    if (MARKO_DEBUG && branchIndex !== undefined && !shellId && shellIds) {
+      console.warn(
+        `A patch writes branch ${branchIndex} of "${accessor}" without a shell (siblings: ${shellIds.filter(Boolean).join(", ") || "none"}); a client showing another branch rejects.`,
+      );
+    }
     // Shape-typed entry, densest form first: a bare number is the
     // branch index + 1 (`0` hides), and empty/zero members drop.
     const branchPartial =
-      branchIndex === undefined ? undefined : peekPatchPartial(this, branchId);
+      branchIndex === undefined || !hasKeys(opened) ? undefined : opened;
     writePatch(scopeId, {
       [PatchKey.Branch + accessor]:
         branchIndex === undefined
@@ -588,8 +632,20 @@ export function _patch_dynamic_tag(
       writeEmbeddedBinds(state, args);
       if (bound) writeEmbeddedBinds(state, renderer);
       const native = typeof renderer === "string";
+      // Shipped content closes over its owner: a `^` per hop up from the
+      // site (a body forwarded through tags) rebuilds that link on construct.
       const entry: unknown[] = [
-        bound ? renderer : id || renderer || 0,
+        bound
+          ? renderer
+          : id
+            ? "^".repeat(
+                ownerHops(
+                  state,
+                  scopeId,
+                  (renderer as ServerRenderer)[RendererProp.Owner],
+                ),
+              ) + id
+            : renderer || 0,
         args || 0,
         contentId,
         varId,
@@ -873,6 +929,17 @@ function writeFilled(
 
 // Only a shell the server can ship rides an entry: a missing one makes a
 // divergence unapplyable and the client rejects the patch.
+// The owner chain from a site: each hop is the scope's client `_`.
+function ownerHops(state: State, scopeId: number, ownerId?: number) {
+  let up = 0;
+  for (let cur: number | undefined = scopeId; cur !== ownerId; up++) {
+    const link: PatchLink | undefined = state.patchLinks?.[cur!];
+    if (!link) return 0;
+    cur = link[5] ?? link[0];
+  }
+  return up;
+}
+
 function shipShell(state: PatchState, shellId: string | 0 | undefined) {
   if (!shellId || !shells[shellId]) return undefined;
   if (!(state.sentShells ??= new Set()).has(shellId)) {

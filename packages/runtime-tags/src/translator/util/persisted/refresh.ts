@@ -61,12 +61,6 @@ export function getPatchFillBindings(section: { bindings: Opt<Binding> }) {
   return filter(section.bindings as Opt<Binding>, isPatchFillBinding);
 }
 
-// Whether every param source promotes to a fill: the client can then
-// re-evaluate an expression mixing them with state at any time.
-export function paramsFill(params: Sources["param"]) {
-  return every(params, (param) => isPatchFillBinding(getFillRoot(param)));
-}
-
 // A canonical root server value a patch can keep current (aliases never
 // get ordinals; `$global` readers recompute from the re-shipped bag).
 function isPatchRefreshableBinding(binding: Binding) {
@@ -342,9 +336,13 @@ export function readAsTagNameLoadInput(closure: Binding, section: Section) {
 }
 
 // A fill closure upstream of a state intersection read in `section` (which
-// then rides a `_fill_join_*` wrapper registering the closure's init).
+// then rides a `_fill_join_*` wrapper registering the closure's init); a
+// chain leaving the branch ladder refreshes through the closure instead.
 function fillJoinsIn(closure: Binding, section: Section) {
   if (closure.sources?.state || !isPatchFillBinding(closure)) return false;
+  for (let cur = section; cur !== closure.section; cur = cur.parent!) {
+    if (!cur.isBranch) return false;
+  }
   for (const read of closure.reads) {
     if (
       read.section === section &&

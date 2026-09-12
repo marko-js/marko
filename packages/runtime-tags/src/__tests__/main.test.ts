@@ -451,7 +451,10 @@ function testFixtures(interop?: true) {
             };
             // Attach the tracker's error listener before the first flush so
             // errors thrown by inline resume scripts in it aren't swallowed.
-            const tracker = createMutationTracker(browser);
+            const tracker = createMutationTracker(
+              browser,
+              config.expect_rejection ? /^A patch rejected/ : undefined,
+            );
             let hasFlush = flushNext();
             for (let i = config.entry_delay || 0; i && hasFlush; i--) {
               hasFlush = flushNext();
@@ -506,6 +509,11 @@ function testFixtures(interop?: true) {
                 false,
                 config.compare_defaults,
               );
+              // Effects the patch re-ran render on the scheduler's next
+              // frame turn, as the fresh page's did before its snapshot.
+              browser.flush("raf");
+              await new Promise((resolve) => setImmediate(resolve));
+              await new Promise((resolve) => setImmediate(resolve));
               const actual = formatBody(
                 browser.window.document.body,
                 false,
@@ -539,9 +547,13 @@ function testFixtures(interop?: true) {
                         tracker.beginUpdate();
                       }
                       flushes.push(flush);
+                      // The wire delimits frames by newline (as the run
+                      // client reads them), so a flush must be one line.
+                      const frames = flush.split("\n").filter(Boolean);
+                      assert.equal(frames.length, 1, "a flush spans lines");
                       // A production caller navigates on the first failed
                       // flush; later flushes must not mutate further.
-                      const result = applyPatch!(flush);
+                      const result = applyPatch!(frames[0]);
                       if (typeof result !== "boolean") {
                         // A deferred patch is waiting on a lazy module; load
                         // triggers schedule via setTimeout, so a macrotask

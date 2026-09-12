@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <if=$global.meta.headings>
+      <a href="#main">Skip to content</a>
+    </if>
+    <main>${input.msg}</main>
+    <if=!$global.meta.hideFooter>
+      <site-footer/>
+    </if>
+  </body>
+</html>

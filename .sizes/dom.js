@@ -1,4 +1,4 @@
-// size: 29078 (min) 10769 (brotli)
+// size: 29092 (min) 10757 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2139,14 +2139,16 @@ function patch($global) {
   return [
     {},
     (flush) => {
-      ((patchers.$ ||= applyGlobals), beginPatch(curRenders[$global.renderId]));
+      ((patchers.$ ||= applyGlobals),
+        beginPatch(curRenders[$global.renderId]),
+        (patchRender.b ||= {}));
       try {
-        let fn = Function("_", "$", ...names, "return " + flush);
+        let fn = Function("_", "$", "R", ...names, "return " + flush);
         return (
           (patchRender.r = [
             (ctx) => {
               pageCtx = ctx;
-              let value = fn(responseCtx, void 0, ...vars),
+              let value = fn(responseCtx, void 0, patchRender, ...vars),
                 tree = Array.isArray(value) ? value[value.length - 1] : value;
               return (typeof tree == "object" && trees.push(tree), value);
             },

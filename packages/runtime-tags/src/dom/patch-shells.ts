@@ -49,13 +49,14 @@ constructPatchers[PatchKey.Init] = (scope, _key, ids) =>
 
 type SetupFn = (branch: Scope) => void;
 type SetupIds = [inits: SetupFn[], effects?: SetupFn[]];
-// Closure renders ride as `._`.
+// Each id resolves as it runs: a lazy channel's register with the module
+// that lands after the flush shipping the shell. Closure renders ride as `._`.
 export const resolveSetupIds = (ids: string) =>
   ids.split("!").map((part) =>
     part
-      ? part.split(" ").map((id) => {
-          const fn = getRegisteredWithScope<{ _?: unknown }>(id);
-          return (fn._ || fn) as SetupFn;
+      ? part.split(" ").map((id) => (scope: Scope) => {
+          const fn = getRegisteredWithScope<{ _?: SetupFn } & SetupFn>(id);
+          (fn._ || fn)(scope);
         })
       : [],
   ) as SetupIds;

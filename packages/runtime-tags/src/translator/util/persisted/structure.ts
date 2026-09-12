@@ -13,7 +13,7 @@ import {
   getSerializeSourcesForRef,
 } from "../serialize-reasons";
 import { onFinalizePersisted } from "./lifecycle";
-import { isPatchFillBinding, paramsFill } from "./refresh";
+import { isPatchFillBinding } from "./refresh";
 
 // A boundary branch live on every persisted page (serialized on every page
 // render, nothing on the chain diverges), so it pairs without a construct.
@@ -182,14 +182,17 @@ export function isStatefulBranch(section: Section): boolean {
   return stateful;
 }
 
-// A state-mixed ref recomputes client-side, so its param ORIGINS must fill;
-// a pure-param ref ships its own computed value.
-function upstreamSourcesFill(binding: Binding) {
+// The client recomputes a state-mixed ref from what it holds: its state, a
+// fill, or a derivation it can recompute the same way.
+function upstreamSourcesFill(binding: Binding): boolean {
   const sources = getSerializeSourcesForRef(binding);
   return (
     !sources?.param ||
-    (sources.state ? paramsFill(sources.param) : isPatchFillBinding(binding)) ||
-    inStatefulBranch(binding.section)
+    isPatchFillBinding(binding) ||
+    inStatefulBranch(binding.section) ||
+    (binding.upstreamAlias
+      ? upstreamSourcesFill(binding.upstreamAlias)
+      : !!binding.upstreams && every(binding.upstreams, upstreamSourcesFill))
   );
 }
 

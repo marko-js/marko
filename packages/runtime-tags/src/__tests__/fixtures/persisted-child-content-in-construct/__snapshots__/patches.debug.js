@@ -8,7 +8,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/2": {
-        "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/persisted-child-content-in-construct/tags/card/index.marko_1*content",
+        "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/persisted-child-content-in-construct/tags/card/index.marko_1*content",
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "c"
         }
