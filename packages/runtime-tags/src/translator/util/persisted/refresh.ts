@@ -1,4 +1,3 @@
-import type { types as t } from "@marko/compiler";
 // Translate-side patch fills: which bindings a patch fills or writes, fill
 // identity, and what a fresh scope can render. Analyze facts: ./structure.
 import { getProgram, getFile } from "@marko/compiler/babel-utils";
@@ -16,9 +15,14 @@ import {
   push,
   some,
 } from "../optional";
-import { type Binding, getCanonicalBinding, type Sources } from "../references";
 import {
-  forEachSection,
+  type Binding,
+  getCanonicalBinding,
+  type ReferencedExtra,
+  type Sources,
+} from "../references";
+import {
+  getChildSections,
   getSectionRegisterReasons,
   type Section,
 } from "../sections";
@@ -272,12 +276,12 @@ function consumerMayWithhold(content: Section) {
   return false;
 }
 
-function isBoundaryValueRead(read: t.NodeExtra) {
-  let boundaryValue = false;
-  forEachSection((section) => {
-    boundaryValue ||= section.isBoundary && section.upstreamExpression === read;
-  });
-  return boundaryValue;
+// The read is an `<await>`'s value: its body is a boundary child of the
+// read's section with the read as its upstream.
+function isBoundaryValueRead(read: ReferencedExtra) {
+  return getChildSections(read.section).some(
+    (child) => child.isBoundary && child.upstreamExpression === read,
+  );
 }
 
 function mergeConditions(
