@@ -63,7 +63,7 @@ import {
   type SerializeReasons,
   sourcesUtil,
 } from "../util/serialize-reasons";
-import { getShellId, getShellRecords } from "../util/shell";
+import { getShellId, getShells } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -323,7 +323,7 @@ export const IfTag = {
                           branchBody &&
                           !branchBody.shellBlocked &&
                           getShellId(branchBody);
-                        return id && getShellRecords()?.[id]
+                        return id && getShells()?.[id]
                           ? t.stringLiteral(id)
                           : t.numericLiteral(0);
                       }),

@@ -11,7 +11,7 @@ var widget_default = _template_persisted("b", (input) => {
 		_scope_id();
 		_persisted_reason();
 		_html("<em>ok</em>");
-	}, $scope0_id), { catch: attrTag({ content: _content_record("b0", $scope0_id) }) });
+	}, $scope0_id), { catch: attrTag({ content: _content_shell("b0", $scope0_id) }) });
 }, 0, 0);
 
 // template.marko

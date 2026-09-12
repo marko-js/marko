@@ -1,11 +1,11 @@
-// Shell records (`id marker;walks;template`): raw for the server's static
+// Shells (`id marker;walks;template`): raw for the server's static
 // renders, quoted once per response as flush list members for constructs.
-export const shellRecords: Record<string, string> = {};
+export const rawShells: Record<string, string> = {};
 export const shells: Record<string, string> = {};
 
 export function _shells(registered: Record<string, string>) {
   for (const id in registered) {
-    shellRecords[id] = registered[id];
+    rawShells[id] = registered[id];
     // Frames ride one per line, so the markup's newlines escape too.
     shells[id] =
       "`" +

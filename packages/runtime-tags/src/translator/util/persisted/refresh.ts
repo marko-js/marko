@@ -451,7 +451,7 @@ export function contentMayConstruct(section: Section): boolean {
 }
 
 // Whether any consumer's site names this content in a patch entry (a
-// boundary's records name what they render); an unknown consumer may.
+// boundary's shells name what they render); an unknown consumer may.
 const isPatched = new WeakMap<Section, boolean>();
 export function contentIsPatched(section: Section): boolean {
   let result = isPatched.get(section);
@@ -503,12 +503,12 @@ function enclosingMayConstruct(section: Section): boolean {
   return false;
 }
 
-// Resumed content (registered, no record stands in) that a patched site
-// names through its owner binding: the only case that writes a bind.
-export function contentIsOwnerBound(bodySection: Section | undefined) {
+// Resumed content (registered, no shell stands in) that a patched site
+// names: the flush hands it over as a bind to the owner's registration.
+export function contentResumesForPatch(bodySection: Section | undefined) {
   return (
     !!bodySection &&
-    !bodySection.contentRecord &&
+    !bodySection.contentShell &&
     !!getSectionRegisterReasons(bodySection) &&
     contentIsPatched(bodySection)
   );

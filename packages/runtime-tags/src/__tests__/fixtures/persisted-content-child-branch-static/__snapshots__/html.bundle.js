@@ -38,7 +38,7 @@ var template_default = _template_persisted("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	card_default({
 		show: input.show,
-		content: _content_record("a0", $scope0_id)
+		content: _content_shell("a0", $scope0_id)
 	});
 	_html("</main>");
 	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });

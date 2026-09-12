@@ -174,9 +174,9 @@ export interface Section {
   /** A content renderer slot-serialized by register id (`<try>` bodies):
    * static ones re-register from entry data, others load the dom module. */
   boundaryContent: boolean;
-  /** A content body shipped as a shell record: `"static"` rides its slot
+  /** A content body shipped as a shell: `"static"` rides its slot
    * in-band, a dynamic one is constructed by id from a dynamic tag entry. */
-  contentRecord: false | true | "static";
+  contentShell: false | true | "static";
   /** Awaits a construct must supply body content for (marker binding +
    * body section); `buildShells` prunes those no shipped shell reaches. */
   constructSetups: { binding: Binding; body: Section }[] | undefined;
@@ -273,7 +273,7 @@ export function startSection(
       isBranch: false,
       isBoundary: false,
       boundaryContent: false,
-      contentRecord: false,
+      contentShell: false,
       constructSetups: undefined,
       loadSites: undefined,
       shellBlocked: undefined,

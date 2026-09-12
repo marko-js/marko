@@ -34,7 +34,7 @@ import {
 } from "../../util/persisted/decisions";
 import { addPersistedChildRenderer } from "../../util/persisted/intrinsics";
 import { onFinalizePersisted } from "../../util/persisted/lifecycle";
-import { contentIsOwnerBound } from "../../util/persisted/refresh";
+import { contentResumesForPatch } from "../../util/persisted/refresh";
 import {
   ensurePersistedWriteGroups,
   inResumedStructure,
@@ -196,7 +196,7 @@ export default {
             ensurePersistedWriteGroups(() => tagExtra);
             if (writesPatchDynamicTag(tag, tagSection)) {
               addRuntimeFeatureAsset("patch-dynamic-tag");
-              if (hasVar || contentIsOwnerBound(bodySection)) {
+              if (hasVar || contentResumesForPatch(bodySection)) {
                 addRuntimeFeatureAsset("patch-value-bind");
               }
             }
@@ -244,7 +244,7 @@ export default {
       }
 
       // A class API tag without a tags template renders only through the
-      // interop: dom output removes it, so it and its body record nothing.
+      // interop: dom output removes it, so it and its body shell nothing.
       if (tagExtra.featureType !== "class" || getTagTemplate(tag)) {
         structure.visit(
           tag,
@@ -276,7 +276,7 @@ export default {
         importRuntimeFeature("patch-dynamic-tag");
         if (
           tag.node.var ||
-          contentIsOwnerBound(getSectionForBody(tag.get("body")))
+          contentResumesForPatch(getSectionForBody(tag.get("body")))
         ) {
           importRuntimeFeature("patch-value-bind");
         }

@@ -110,17 +110,17 @@ function someRead(
 
 // A read inside stateful structure renders the content there (directly, or
 // by the child it is upstream of).
-function rendersStatefulLeaf(read: ReferencedExtra) {
+function isStatefulLeaf(read: ReferencedExtra) {
   return (
     !!(read[kDirectContent] || read.downstream) &&
     inStatefulBranch(read.section)
   );
 }
 function rendersStateful(binding: Binding) {
-  return someBindingRead(binding, rendersStatefulLeaf);
+  return someBindingRead(binding, isStatefulLeaf);
 }
 function rendersStatefulProp(binding: Binding, prop: string) {
-  return someContentRead(binding, prop, rendersStatefulLeaf);
+  return someContentRead(binding, prop, isStatefulLeaf);
 }
 // A tag body is stateful when the prop it is upstream of renders so in the
 // child; the last hop stays a prop query so whole reads of its owner count.
@@ -128,11 +128,7 @@ function bodyRendersStateful(section: Section) {
   const downstream = section.downstream;
   return (
     !!downstream?.binding &&
-    someContentRead(
-      downstream.binding,
-      downstream.properties,
-      rendersStatefulLeaf,
-    )
+    someContentRead(downstream.binding, downstream.properties, isStatefulLeaf)
   );
 }
 

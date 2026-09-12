@@ -7,6 +7,7 @@ import {
   hasKeys,
   isNotVoid,
 } from "../common/helpers";
+import { RENDER_FLUSH_VAR } from "../common/meta";
 import type {
   Accessor,
   RenderedTemplate,
@@ -119,15 +120,15 @@ export function renderPatch(
 class PatchState extends State {
   public sentShells?: Set<string>;
   public pendingShells = "";
-  // Ready-channel records written this flush; they join the tree
+  // Ready batches written this flush; they join the tree
   // expression, since a flush evaluates as one expression.
   public readyScripts = "";
   override writesPatches = true;
 
-  // A flush evaluates with the page render bound as `R` (`dom/patch`), so
-  // ready records write where the page's own do.
+  // A flush evaluates with the page render bound as the render var
+  // (`dom/patch`), so ready batches write where the page's own do.
   override get runtimePrefix() {
-    return "R";
+    return RENDER_FLUSH_VAR;
   }
   override writeReady(id: string, resumes: string) {
     const script = super.writeReady(id, resumes);
@@ -170,10 +171,10 @@ class PatchState extends State {
     this.hasGlobals = true;
   }
 
-  // Records left over from a chunk that wrote no tree still evaluate as the
-  // frame's one expression: the trailing `0` keeps a record's array from
+  // Shells left over from a chunk that wrote no tree still evaluate as the
+  // frame's one expression: the trailing `0` keeps a batch's array from
   // reading as the tree (the frame's last value). Defensive: a rendered
-  // channel scope writes its pairing entry beside its records, and the
+  // channel scope writes its pairing entry beside its batches, and the
   // reads that subscribe without entries sit in structure a patch skips.
   override flushChunk(_html: string, scripts: string) {
     if (this.readyScripts) {
@@ -182,7 +183,7 @@ class PatchState extends State {
       this.readyScripts = "";
     }
     // The client reads one frame per line: everything a flush embeds is
-    // escaped (serializer strings, shell records), so a newline is a bug.
+    // escaped (serializer strings, shells), so a newline is a bug.
     if (MARKO_DEBUG && scripts.includes("\n")) {
       throw new Error("A persisted flush spans lines.");
     }
@@ -604,7 +605,7 @@ export function _patch_effect(
   return "";
 }
 
-// The dynamic tag entry of `input` content: a shell record ships its id
+// The dynamic tag entry of `input` content: a shell ships its id
 // alone, a registered renderer rides the serializer, `0` marks none.
 export function _patch_dynamic_tag(
   scopeId: number,

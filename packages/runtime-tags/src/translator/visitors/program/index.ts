@@ -275,10 +275,10 @@ export default {
       }
 
       if (isPersisted()) {
-        // A static record slot rebuilds client-side; the import rides both
+        // A static shell slot rebuilds client-side; the import rides both
         // outputs (an interactive page gets assets through its dom program).
         forEachSection((section) => {
-          if (section.contentRecord === "static") {
+          if (section.contentShell === "static") {
             importRuntimeFeature("patch-content");
           }
         });

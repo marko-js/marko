@@ -14,7 +14,7 @@ import {
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import { registerAccess, toAccess, toObjectKey } from "./serializer";
-import { shellRecords, shells } from "./shells";
+import { rawShells, shells } from "./shells";
 import type { ServerRenderer } from "./template";
 import {
   _el,
@@ -260,7 +260,7 @@ export let _dynamic_tag = (
   }
 
   if (rendered) {
-    // A patched site keeps its key so a shell record pairs by id alone.
+    // A patched site keeps its key so a shell pairs by id alone.
     if (
       shouldResume ||
       (patchPairing &&
@@ -314,15 +314,15 @@ export function _content_elide(
   return registerAccess(content(id, fn, scopeId), placeholder ? "void 0" : "0");
 }
 
-// A static shell record renders server-side and rides its slot in-band, so
+// A static shell renders server-side and rides its slot in-band, so
 // gated markup only reaches responses rendered for this user.
 const contentAccessPrefix =
   "_._" +
   /*@__PURE__*/ toAccess(/*@__PURE__*/ toObjectKey(CONTENT_REGISTER_ID)) +
   "(";
-export function _content_record(id: string, scopeId: number | undefined) {
-  const record = shellRecords[id];
-  const template = record.slice(record.indexOf(",") + 1);
+export function _content_shell(id: string, scopeId: number | undefined) {
+  const shell = rawShells[id];
+  const template = shell.slice(shell.indexOf(",") + 1);
   return registerAccess(
     _content(
       id,

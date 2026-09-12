@@ -71,7 +71,7 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "../util/serialize-reasons";
-import { getShellId, getShellRecords } from "../util/shell";
+import { getShellId, getShells } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -379,7 +379,7 @@ export default {
             forTagArgs.push(
               undefined,
               undefined,
-              id && getShellRecords()?.[id]
+              id && getShells()?.[id]
                 ? t.stringLiteral(id)
                 : t.numericLiteral(0),
               // A loop with params upstream yields to the client when the call

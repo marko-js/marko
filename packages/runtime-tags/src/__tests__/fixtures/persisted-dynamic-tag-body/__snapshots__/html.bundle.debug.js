@@ -26,7 +26,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $input_note__closures = new Set();
 	const $tag = input.tag;
 	const $input2 = { class: input.cls };
-	_dynamic_tag($scope0_id, "#text/0", $tag, $input2, _content_record("__tests__/template.marko_2*content", $scope0_id), 0, $sg__input_tag__OR__input_cls, _patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, "__tests__/template.marko_2*content", 0, $scope0_owned, 0));
+	_dynamic_tag($scope0_id, "#text/0", $tag, $input2, _content_shell("__tests__/template.marko_2*content", $scope0_id), 0, $sg__input_tag__OR__input_cls, _patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, "__tests__/template.marko_2*content", 0, $scope0_owned, 0));
 	const $tag2 = input.wrap ? wrap_default : null;
 	_dynamic_tag($scope0_id, "#text/1", $tag2, {}, _content_elide("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();

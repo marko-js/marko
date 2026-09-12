@@ -13,7 +13,7 @@ var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (i
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _persisted_reason();
 		_html("<em>ok</em>");
-	}, $scope0_id), { catch: attrTag({ content: _content_record("__tests__/tags/widget/index.marko_2*content", $scope0_id) }) });
+	}, $scope0_id), { catch: attrTag({ content: _content_shell("__tests__/tags/widget/index.marko_2*content", $scope0_id) }) });
 }, 0, 0);
 
 // template.marko

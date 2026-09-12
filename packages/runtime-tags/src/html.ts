@@ -41,7 +41,7 @@ export {
 export {
   _content,
   _content_elide,
-  _content_record,
+  _content_shell,
   _content_resume,
   _dynamic_tag,
 } from "./html/dynamic-tag";

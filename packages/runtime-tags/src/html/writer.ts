@@ -235,7 +235,7 @@ export function _script(
   }
 }
 
-// Setup ids share the shell record grammar (`inits…!effects…`); each side
+// Setup ids share the shell grammar (`inits…!effects…`); each side
 // dedupes so an upstream shared by several locals arrives once.
 export function addSetupId(scopeId: number, id: string, effect?: 1) {
   const { state } = $chunk.boundary;
@@ -1319,7 +1319,7 @@ export function _await<T>(
   // the body's content id, letting a construct build the await branch.
   if (writesPatches && patchContent === 0) return;
   const resumeMarker = serializeMarker !== 0 || writesPatches;
-  // A construct resolves the body from this shipped record (a settled value
+  // A construct resolves the body from this shipped shell (a settled value
   // included); an always-pairing body outside divergent contexts never
   // constructs.
   const { boundary } = $chunk;

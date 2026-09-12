@@ -24,7 +24,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		}, 1, 0, 1);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }) }, 1);
+	}, $scope0_id), { placeholder: attrTag({ content: _content_shell("__tests__/template.marko_2*content", $scope0_id) }) }, 1);
 	_html(`<button>Next</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_reason && _scope($scope0_id, {

@@ -23,7 +23,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		$scope0_reason && _resume_branch($scope1_id);
 	}, $scope0_id), {
-		placeholder: attrTag({ content: _content_record("__tests__/template.marko_2*content", $scope0_id) }),
+		placeholder: attrTag({ content: _content_shell("__tests__/template.marko_2*content", $scope0_id) }),
 		catch: attrTag({ content: _content_elide("__tests__/template.marko_3*content", (err) => {
 			const $scope3_reason = _persisted_reason();
 			const $scope3_id = _scope_id();

@@ -43,7 +43,7 @@ var template_default = _template_persisted("a", (input) => {
 			}, 1, "a2");
 			$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			$scope0_reason && _resume_branch($scope2_id);
-		}, $scope1_id), { placeholder: attrTag({ content: _content_record("a0", $scope1_id) }) });
+		}, $scope1_id), { placeholder: attrTag({ content: _content_shell("a0", $scope1_id) }) });
 		$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) });
 	_script($scope0_id, "a5");

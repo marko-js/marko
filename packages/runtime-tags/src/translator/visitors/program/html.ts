@@ -40,11 +40,7 @@ import {
   getSerializeSourcesForRef,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
-import {
-  buildShellRecord,
-  getShellId,
-  getShellRecords,
-} from "../../util/shell";
+import { buildShell, getShellId, getShells } from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -229,7 +225,7 @@ export default {
         );
       }
 
-      const shells = getShellRecords();
+      const shells = getShells();
       if (persisted && shells) {
         // Branch shells register at server module load so patches can construct
         // them without the client bundling conditional content.
@@ -240,17 +236,17 @@ export default {
           const id = getShellId(section);
           if (active[id] && sectionHasServerEffect(section)) delete active[id];
         });
-        const records: t.ObjectProperty[] = [];
+        const shellProps: t.ObjectProperty[] = [];
         for (const id in active) {
           const section = active[id];
           // The id token carries `inits…!effects…`; a lone `!` marks a shell needing
-          // setup for seeds alone. Roots and content records carry their own
+          // setup for seeds alone. Roots and content shells carry their own
           // like a branch shell.
           let marker = "";
           if (
             id === getShellId(section) ||
             !section.parent ||
-            (section.contentRecord === true && sectionConstructs(section))
+            (section.contentShell === true && sectionConstructs(section))
           ) {
             forEach(getConstructInitClosures(section), (closure) => {
               marker +=
@@ -277,14 +273,14 @@ export default {
             if (effectIds) marker += "!" + effectIds;
             marker ||= getPatchFillBindings(section) ? "!" : "";
           }
-          records.push(
-            toObjectProperty(id, buildShellRecord(id, section, marker)),
+          shellProps.push(
+            toObjectProperty(id, buildShell(id, section, marker)),
           );
         }
-        if (records.length) {
+        if (shellProps.length) {
           program.node.body.push(
             t.expressionStatement(
-              callRuntime("_shells", t.objectExpression(records)),
+              callRuntime("_shells", t.objectExpression(shellProps)),
             ),
           );
         }

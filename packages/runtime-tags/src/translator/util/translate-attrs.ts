@@ -434,11 +434,11 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         );
       }
 
-      // A static record rides its slot; a dynamic one (or, with no dom
+      // A static shell rides its slot; a dynamic one (or, with no dom
       // module, unrecorded boundary content) elides it.
       if (
         isPersisted() &&
-        (bodySection.contentRecord ||
+        (bodySection.contentShell ||
           (bodySection.boundaryContent &&
             serialized &&
             !getProgram().node.extra.isInteractive))
@@ -448,9 +448,9 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
             getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
           )!,
         );
-        return bodySection.contentRecord === "static"
+        return bodySection.contentShell === "static"
           ? callRuntime(
-              "_content_record",
+              "_content_shell",
               t.stringLiteral(getResumeRegisterId(bodySection, "content")),
               ownerScopeId,
             )
