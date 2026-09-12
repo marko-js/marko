@@ -32,8 +32,8 @@ const $input_attrs = /*@__PURE__*/ _const("input_attrs", ($scope) => {
 	$input_attrs__script($scope);
 });
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_attrs($scope, input.attrs);
+	$input_title($scope, input.title);
 };
 const $input_title__closure = /*@__PURE__*/ _closure($extra_content__input_title);
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $input_title__closure);

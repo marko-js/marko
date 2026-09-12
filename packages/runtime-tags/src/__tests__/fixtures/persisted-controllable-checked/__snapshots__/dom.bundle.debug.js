@@ -6,8 +6,8 @@ const $input_agree = /*@__PURE__*/ _const("input_agree", ($scope) => _attr_input
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_checked_script($scope, "#input/1"));
 const $setup = $setup__script;
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_agree($scope, input.agree);
+	$input_title($scope, input.title);
 };
 function $checkedChange(next) {
 	document.querySelector("main").dataset.agree = String(next);

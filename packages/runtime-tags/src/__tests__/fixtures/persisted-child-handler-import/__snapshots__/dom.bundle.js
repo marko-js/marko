@@ -11,8 +11,8 @@ const $setup__script$1 = _script("b0", ($scope) => _on($scope.c, "click", functi
 	$last($scope, format($scope.f));
 }));
 function $setup($scope) {
-	$last($scope, "");
 	$setup__script$1($scope);
+	$last($scope, "");
 }
 const $input_label = /*@__PURE__*/ _const(5, ($scope) => _text($scope.a, $scope.f));
 

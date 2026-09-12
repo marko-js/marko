@@ -12,9 +12,9 @@ const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_tit
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__input_wire__OR__handler);
 const $input_wire = /*@__PURE__*/ _const("input_wire", $input_value__OR__input_wire__OR__handler);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_value($scope, input.value);
 	$input_wire($scope, input.wire);
+	$input_title($scope, input.title);
 };
 function $handler(next) {
 	document.querySelector("main").dataset.got = next;

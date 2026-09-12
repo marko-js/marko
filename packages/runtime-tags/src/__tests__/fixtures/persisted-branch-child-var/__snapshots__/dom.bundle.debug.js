@@ -34,8 +34,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<button id=read>read</button>`)($template$1), /*@__PURE__*/ ((_w0) => `0${_w0}& b`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_label($scope, input.label);
+	$input_show($scope, input.show);
 };
 const $input_label = /*@__PURE__*/ _const("input_label", $if_content__input_label);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

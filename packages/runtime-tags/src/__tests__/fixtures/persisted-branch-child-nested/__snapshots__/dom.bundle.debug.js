@@ -17,8 +17,8 @@ const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$open($scope, false);
 	$setup__script($scope);
+	$open($scope, false);
 }
 const $input_title$1 = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko0", "input_title", ($scope) => {
 	$if_content__input_title$1($scope);
@@ -39,8 +39,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_title($scope, input.title);
+	$input_show($scope, input.show);
 };
 const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

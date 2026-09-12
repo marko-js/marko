@@ -7,8 +7,8 @@ const $input_label$1 = ($scope, input_label) => _text($scope["#text/0"], input_l
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => {
-	$input_label$1($scope, input.label);
 	$input_content($scope, input.content);
+	$input_label$1($scope, input.label);
 };
 var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, $walks$1, 0, $input$1);
 
@@ -30,10 +30,10 @@ const $if_content__setup = $if_content__input_b;
 const $if = /*@__PURE__*/ _if("#main/0", "<div></div>", " ", $if_content__setup);
 const $input_a = ($scope, input_a) => $if($scope, input_a ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_a($scope, input.a);
 	$input_b($scope, input.b);
 	$input_label($scope, input.label);
 	$input_text($scope, input.text);
+	$input_a($scope, input.a);
 };
 const $input_b = /*@__PURE__*/ _const("input_b", $if_content__input_b);
 const $input_label__closure = /*@__PURE__*/ _closure($if_content2__input_label);

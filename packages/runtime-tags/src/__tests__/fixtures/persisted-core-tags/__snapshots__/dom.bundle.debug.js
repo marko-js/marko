@@ -21,8 +21,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$count($scope, 0);
-	$uid($scope, _id($scope));
 	$setup__script($scope);
+	$uid($scope, _id($scope));
 }
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__count);
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => console.log($scope.input_title));

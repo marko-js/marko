@@ -6,8 +6,8 @@ const $setup__script$1 = _script("b0", ($scope) => _on($scope.a, "click", functi
 	$n($scope, $scope.c + 1);
 }));
 function $setup($scope) {
-	$n($scope, 0);
 	$setup__script$1($scope);
+	$n($scope, 0);
 }
 
 // template.marko

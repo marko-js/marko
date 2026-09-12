@@ -36,8 +36,8 @@ const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scop
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	$n($scope, 0);
 	$setup__script($scope);
+	$n($scope, 0);
 }
 const $input_note = ($scope, input_note) => _text($scope["#text/0"], input_note);
 const $if = /*@__PURE__*/ _if("#text/1", "<p>wide</p>");
@@ -57,8 +57,8 @@ const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_tit
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_content($scope, input.content);
+	$input_title($scope, input.title);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
 
@@ -87,9 +87,9 @@ const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scop
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
+	$setup__script($scope);
 	$count($scope, 0);
 	$for($scope, [[1, 2]]);
-	$setup__script($scope);
 }
 const $p__closure = /*@__PURE__*/ _closure($card_content__p);
 const $p = /*@__PURE__*/ _const("p", $p__closure);
@@ -125,8 +125,8 @@ const $else_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#body/0", "<p>home</p>", 0, 0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1), $else_content__setup);
 const $input_page__closure = /*@__PURE__*/ _closure($Layout_content__input_page);
 const $input_page = /*@__PURE__*/ _const("input_page", ($scope) => {
-	$if($scope, $scope.input_page === 0 ? 0 : 1);
 	$input_page__closure($scope);
+	$if($scope, $scope.input_page === 0 ? 0 : 1);
 });
 const $input = ($scope, input) => {
 	$input_page($scope, input.page);

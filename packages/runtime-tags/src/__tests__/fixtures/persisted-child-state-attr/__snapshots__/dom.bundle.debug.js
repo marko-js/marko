@@ -6,8 +6,8 @@ const $setup__script$1 = _script("__tests__/tags/counter/index.marko_0", ($scope
 	$spins($scope, +$scope.spins + 1);
 }));
 function $setup$1($scope) {
-	$spins($scope, 0);
 	$setup__script$1($scope);
+	$spins($scope, 0);
 }
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);

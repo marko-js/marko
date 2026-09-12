@@ -7,8 +7,8 @@ const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_val
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => {
-	$input_value($scope, input.value);
 	$input_content($scope, input.content);
+	$input_value($scope, input.value);
 };
 var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, $walks$1, 0, $input);
 

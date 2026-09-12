@@ -28,8 +28,8 @@ const $if_content__input_html = /*@__PURE__*/ _if_closure("#main/0", 0, ($scope)
 });
 const $if = /*@__PURE__*/ _if("#main/0", "<div> </div><div class=x> </div><!><!>", "D lD l%", $if_content__setup);
 const $input_show = /*@__PURE__*/ _const("input_show", ($scope) => {
-	$if($scope, $scope.input_show ? 0 : 1);
 	$if_content__input_show($scope);
+	$if($scope, $scope.input_show ? 0 : 1);
 });
 const $input = ($scope, input) => {
 	$input_show($scope, input.show);

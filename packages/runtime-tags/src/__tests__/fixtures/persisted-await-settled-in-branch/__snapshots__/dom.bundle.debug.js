@@ -15,8 +15,8 @@ const $if = /*@__PURE__*/ _if("#text/0", "<section><!></section>", "D%", $if_con
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_value($scope, input.value);
+	$input_show($scope, input.show);
 	$input_label($scope, input.label);
 };
 const $input_value = /*@__PURE__*/ _const("input_value", $if_content__input_value);

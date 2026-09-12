@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $for_content__input_suffix__OR__count__OR__item = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "item", /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _init_join("__tests__/template.marko_2_input_suffix#6/init", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.item + ":" + $scope._._.input_suffix + "@" + $scope._._.count), 2)), ($join) => /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join))));
+const $for_content__input_suffix__OR__count__OR__item = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "item", /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _init_join("__tests__/template.marko_2_input_suffix#6/init", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.item + ":" + $scope._._.input_suffix + "@" + $scope._._.count), 2)), 0, ($join) => /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join))));
 const $for_content__input_suffix = /*@__PURE__*/ _closure_get("input_suffix", $for_content__input_suffix__OR__count__OR__item, ($scope) => $scope._._);
 const $for_content__setup = ($scope) => {
 	$for_content__input_suffix($scope);
@@ -25,8 +25,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_items($scope, input.items);
+	$input_show($scope, input.show);
 	$input_suffix($scope, input.suffix);
 };
 const $input_items = /*@__PURE__*/ _const("input_items", $if_content__input_items);

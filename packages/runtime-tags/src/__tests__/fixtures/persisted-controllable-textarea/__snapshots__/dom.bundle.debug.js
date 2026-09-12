@@ -6,8 +6,8 @@ const $input_text = /*@__PURE__*/ _const("input_text", ($scope) => _attr_textare
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_textarea_value_script($scope, "#textarea/1"));
 const $setup = $setup__script;
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_text($scope, input.text);
+	$input_title($scope, input.title);
 };
 function $valueChange(next) {
 	document.querySelector("main").dataset.text = next;

@@ -14,8 +14,8 @@ const $setup__script = _script("__tests__/card-live.marko_0", ($scope) => _on($s
 	$n($scope, +$scope.n + 1);
 }));
 function $setup$1($scope) {
-	$n($scope, 0);
 	$setup__script($scope);
+	$n($scope, 0);
 }
 const $input_label$1 = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);

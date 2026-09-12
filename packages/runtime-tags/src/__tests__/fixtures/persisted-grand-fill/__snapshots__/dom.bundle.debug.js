@@ -13,8 +13,8 @@ const $setup$1 = () => {};
 const $input_title$1 = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $input_subtitle$1 = ($scope, input_subtitle) => $input_text($scope["#childScope/1"], input_subtitle);
 const $input$1 = ($scope, input) => {
-	$input_title$1($scope, input.title);
 	$input_subtitle$1($scope, input.subtitle);
+	$input_title$1($scope, input.title);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, 0, $input$1);
 

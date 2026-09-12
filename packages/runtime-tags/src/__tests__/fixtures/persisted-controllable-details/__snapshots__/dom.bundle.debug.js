@@ -6,8 +6,8 @@ const $input_show = /*@__PURE__*/ _const("input_show", ($scope) => _attr_details
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_details_open_script($scope, "#details/1"));
 const $setup = $setup__script;
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_show($scope, input.show);
+	$input_title($scope, input.title);
 };
 function $openChange(next) {
 	document.querySelector("main").dataset.open = String(next);

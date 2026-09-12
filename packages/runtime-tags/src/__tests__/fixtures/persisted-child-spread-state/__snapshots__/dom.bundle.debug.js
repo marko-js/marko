@@ -14,8 +14,8 @@ const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on(
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$open($scope, false);
 	$setup__script$1($scope);
+	$open($scope, false);
 }
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $input_note = ($scope, input_note) => _text($scope["#text/1"], input_note);

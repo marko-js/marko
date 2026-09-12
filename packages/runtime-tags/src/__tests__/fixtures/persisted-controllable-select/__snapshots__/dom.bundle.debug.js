@@ -6,8 +6,8 @@ const $input_choice = /*@__PURE__*/ _const("input_choice", ($scope) => _attr_sel
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_select_value_script($scope, "#select/1"));
 const $setup = $setup__script;
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_choice($scope, input.choice);
+	$input_title($scope, input.title);
 };
 function $valueChange(next) {
 	document.querySelector("main").dataset.choice = next;

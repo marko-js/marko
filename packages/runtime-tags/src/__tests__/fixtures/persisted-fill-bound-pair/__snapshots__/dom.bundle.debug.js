@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content__fa__OR__fb = /*@__PURE__*/ _fill_join_if("__tests__/template.marko1", "fb", /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "fa", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.fa() + ":" + $scope._.fb())), "#text/0", 0), "#text/0", 0);
+const $if_content__fa__OR__fb = /*@__PURE__*/ _fill_join_if("__tests__/template.marko1", "fb", /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "fa", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.fa() + ":" + $scope._.fb())), 0, "#text/0", 0), 0, "#text/0", 0);
 const $if_content__fa = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__fa__OR__fb);
 const $if_content__setup = ($scope) => {
 	$if_content__fa._($scope);

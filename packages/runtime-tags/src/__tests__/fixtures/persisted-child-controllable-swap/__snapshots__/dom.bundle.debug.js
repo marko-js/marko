@@ -36,9 +36,9 @@ const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_tit
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/2"], input_show);
 const $input_big = /*@__PURE__*/ _const("input_big", $input_big__OR__plain__OR__tenfold);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_show($scope, input.show);
 	$input_big($scope, input.big);
+	$input_title($scope, input.title);
 };
 const $plain = ($scope) => (next) => {
 	$last($scope, next);

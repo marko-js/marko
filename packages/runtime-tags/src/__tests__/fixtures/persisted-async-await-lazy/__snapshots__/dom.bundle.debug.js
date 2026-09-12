@@ -38,10 +38,10 @@ const $input_slow = /*@__PURE__*/ _const("input_slow", ($scope) => {
 });
 const $input_note = /*@__PURE__*/ _const("input_note", $input_slow__OR__input_note);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_related($scope, input.related);
 	$input_slow($scope, input.slow);
 	$input_note($scope, input.note);
+	$input_title($scope, input.title);
 };
 const $input_related__closure = /*@__PURE__*/ _closure($try_content__input_related);
 const $input_related = /*@__PURE__*/ _const("input_related", $input_related__closure);

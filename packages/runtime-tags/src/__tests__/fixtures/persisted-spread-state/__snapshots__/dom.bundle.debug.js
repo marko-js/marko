@@ -8,7 +8,7 @@ const $if_content__input_attrs__OR__on = /*@__PURE__*/ _fill_join_if("__tests__/
 		class: $scope._.on ? "on" : "off"
 	});
 	$if_content__input_attrs__OR__on__script($scope);
-})), "#text/0", 0);
+})), 0, "#text/0", 0);
 const $if_content__input_attrs = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_attrs__OR__on);
 const $if_content__setup = ($scope) => {
 	$if_content__input_attrs._($scope);

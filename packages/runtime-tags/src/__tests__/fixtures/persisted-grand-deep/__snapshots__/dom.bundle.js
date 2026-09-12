@@ -10,8 +10,8 @@ const $setup__script$1 = _script("c0", ($scope) => _on($scope.a, "click", functi
 	$n($scope, $scope.g + 1);
 }));
 function $setup$1($scope) {
-	$n($scope, 0);
 	$setup__script$1($scope);
+	$n($scope, 0);
 }
 const $input_note$1 = ($scope, input_note) => $input_note$2($scope.c, input_note);
 

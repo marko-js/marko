@@ -6,8 +6,8 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 	$if_content__count($scope, +$scope.count + 1);
 }));
 const $if_content__setup = ($scope) => {
-	$if_content__count($scope, 0, $valueChange($scope));
 	$if_content__setup__script($scope);
+	$if_content__count($scope, 0, $valueChange($scope));
 };
 const $last = /*@__PURE__*/ _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
 function $setup($scope) {

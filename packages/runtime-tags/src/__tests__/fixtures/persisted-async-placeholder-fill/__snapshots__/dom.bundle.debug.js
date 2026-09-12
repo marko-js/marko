@@ -24,8 +24,8 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => {
-	$input_label($scope, input.label);
 	$input_promise($scope, input.promise);
+	$input_label($scope, input.label);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($placeholder_content__input_label);
 const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_label", $input_label__closure);

@@ -6,8 +6,8 @@ const $setup__script$1 = _script("__tests__/tags/counter/index.marko_0", ($scope
 	$n($scope, $scope.n + 1);
 }));
 function $setup$1($scope) {
-	$n($scope, 0);
 	$setup__script$1($scope);
+	$n($scope, 0);
 }
 var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$1, $walks$1, $setup$1);
 

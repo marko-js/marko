@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
-const $for_content__input_content__OR__args = /*@__PURE__*/ _fill_join_for("__tests__/tags/my-for.marko0", "input_content", /*@__PURE__*/ _init_join("__tests__/tags/my-for.marko_1_input_content#4/init", /*@__PURE__*/ _or(2, ($scope) => $for_content__dynamicTag($scope, $scope._.input_content, () => [...$scope.args]))), "#text/0");
+const $for_content__input_content__OR__args = /*@__PURE__*/ _fill_join_for("__tests__/tags/my-for.marko0", "input_content", /*@__PURE__*/ _init_join("__tests__/tags/my-for.marko_1_input_content#4/init", /*@__PURE__*/ _or(2, ($scope) => $for_content__dynamicTag($scope, $scope._.input_content, () => [...$scope.args]))), 0, "#text/0");
 const $for_content__input_content = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_content__OR__args);
 const $for_content__setup = $for_content__input_content;
 const $for_content__args = /*@__PURE__*/ _const("args", $for_content__input_content__OR__args);

@@ -7,8 +7,8 @@ const $if_content__setup__script = _script("__tests__/template.marko_2", ($scope
 	$if_content__notes($scope, +$scope.notes + 1);
 }));
 const $if_content__setup = ($scope) => {
-	$if_content__notes($scope, 0);
 	$if_content__setup__script($scope);
+	$if_content__notes($scope, 0);
 };
 const $for_content__item_label = ($scope, item_label) => _text($scope["#text/0"], item_label);
 const $for_content__if = /*@__PURE__*/ _if("#text/1", "<span> </span><button>note</button>", "D l ", $if_content__setup);

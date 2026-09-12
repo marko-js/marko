@@ -10,8 +10,8 @@ const $input_content = ($scope, input_content) => {
 	$dynamicTag2($scope, input_content);
 };
 const $input$1 = ($scope, input) => {
-	$input_title$1($scope, input.title);
 	$input_content($scope, input.content);
+	$input_title$1($scope, input.title);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, 0, $input$1);
 

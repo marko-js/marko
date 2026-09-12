@@ -2,7 +2,7 @@
 const $template = "<main><ul></ul><button>+</button></main>";
 const $walks = "D b l";
 const $for_content__if = /*@__PURE__*/ _if("#text/1", "<span>*</span>");
-const $for_content__input_selected__OR__item_id = /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "input_selected", /*@__PURE__*/ _or(5, ($scope) => $for_content__if($scope, $scope._.input_selected === $scope.item_id ? 0 : 1)), "#ul/0");
+const $for_content__input_selected__OR__item_id = /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "input_selected", /*@__PURE__*/ _or(5, ($scope) => $for_content__if($scope, $scope._.input_selected === $scope.item_id ? 0 : 1)), 0, "#ul/0");
 const $for_content__input_selected = /*@__PURE__*/ _for_closure("#ul/0", $for_content__input_selected__OR__item_id);
 const $for_content__setup = $for_content__input_selected;
 const $for_content__item_id = /*@__PURE__*/ _const("item_id", ($scope) => {

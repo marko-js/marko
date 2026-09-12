@@ -67,6 +67,7 @@ import {
   intersectionMeta,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
+  type Intersection,
   type ReferencedBindings,
   type ReferencedExtra,
 } from "./references";
@@ -129,10 +130,14 @@ export interface Signal {
    * synchronous `_return` may reach before the registering tag's own setup. */
   prepare: t.Statement[];
   render: t.Statement[];
-  /** Renders of holes a persisted flush writes itself: a client render
-   * needs them, a fill (refreshing a paired scope) does not. */
+  /** Renders a patch does itself (its hole writes, forwards into work it
+   * renders): a client render needs them, a fill's run does not. */
   patched: t.Statement[];
-  /** The fill-driven run of a declaration that has `patched` renders. */
+  /** Structure a patch renders whenever it writes the scope. */
+  patchedStructure?: boolean;
+  /** Whether a patch renders every render of this signal (`patchRenders`). */
+  patchRendered?: boolean;
+  /** A fill's run when it differs from the render (`render` without `patched`). */
   fillFn: t.Expression | undefined;
   effect: t.Statement[];
   hasHTMLEffect: boolean;
@@ -431,18 +436,8 @@ export function getSignal(
         });
         signal.build = () => getSignalFn(signal);
       } else {
-        signal.build = () => {
-          const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
-          return callRuntime(
-            "_or",
-            t.numericLiteral(id),
-            getSignalFn(signal),
-            scopeOffset || referencedBindings.length > 2
-              ? t.numericLiteral(referencedBindings.length - 1)
-              : undefined,
-            scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
-          );
-        };
+        signal.build = () =>
+          buildIntersection(referencedBindings, getSignalFn(signal));
       }
     } else if (
       referencedBindings.section !== section &&
@@ -744,6 +739,73 @@ function isPureMemberForwarder(binding: Binding): boolean {
   return false;
 }
 
+// A forward a patch renders is a patched render, like a hole it writes.
+function pushForward(signal: Signal, target: Signal, statement: t.Statement) {
+  (isPersisted() && patchRendersInto(target)
+    ? signal.patched
+    : signal.render
+  ).push(statement);
+}
+
+// A patch renders a signal when every render is a hole it writes or a
+// forward it renders (a cycle resolves as the client's).
+export function patchRenders(signal: Signal): boolean {
+  if (signal.patchRendered === undefined) {
+    signal.patchRendered = false;
+    signal.patchRendered =
+      !!signal.patchedStructure || !hasClientRender(signal);
+  }
+  return signal.patchRendered;
+}
+
+// A patch renders a forward into a value it fills itself as well.
+function patchRendersInto(target: Signal) {
+  const binding = target.referencedBindings;
+  return (
+    patchRenders(target) ||
+    (!!binding &&
+      !Array.isArray(binding) &&
+      binding.section === target.section &&
+      isPatchFillBinding(binding))
+  );
+}
+
+function hasClientRender(signal: Signal): boolean {
+  if (
+    signal.extraArgs ||
+    signal.register ||
+    signal.prepare.length ||
+    signal.effect.length ||
+    signal.hasHTMLEffect ||
+    signal.render.length ||
+    signal.values.some(
+      (value) => !value.signal.inline && !patchRendersInto(value.signal),
+    ) ||
+    some(signal.intersection, (intersection) => !patchRenders(intersection))
+  ) {
+    return true;
+  }
+  const binding = signal.referencedBindings;
+  if (binding) {
+    return (
+      !Array.isArray(binding) &&
+      (some(
+        binding.closureSections,
+        (closureSection) => !patchRenders(getSignal(closureSection, binding)),
+      ) ||
+        binding.type === BindingType.dom ||
+        (binding.section === signal.section &&
+          (!!binding.hoists ||
+            [...binding.aliases, ...binding.propertyAliases.values()].some(
+              (alias) =>
+                alias.type !== BindingType.constant &&
+                !patchRendersInto(getSignal(alias.section, alias)),
+            ))))
+    );
+  }
+  return !!signal.section.referencedClosures;
+}
+
 function pushMemberForwards(
   signal: Signal,
   value: t.Expression,
@@ -762,7 +824,9 @@ function pushMemberForwards(
   } else {
     const aliasSignal = getSignal(alias.section, alias);
     signal.forwards = push(signal.forwards, aliasSignal);
-    signal.render.push(
+    pushForward(
+      signal,
+      aliasSignal,
       t.expressionStatement(
         t.callExpression(aliasSignal.identifier, [
           scopeIdentifier,
@@ -772,6 +836,19 @@ function pushMemberForwards(
       ),
     );
   }
+}
+
+function buildIntersection(referencedBindings: Intersection, fn: t.Expression) {
+  const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
+  return callRuntime(
+    "_or",
+    t.numericLiteral(id),
+    fn,
+    scopeOffset || referencedBindings.length > 2
+      ? t.numericLiteral(referencedBindings.length - 1)
+      : undefined,
+    scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
+  );
 }
 
 export function getSignalFn(signal: Signal): t.Expression {
@@ -818,7 +895,9 @@ export function getSignalFn(signal: Signal): t.Expression {
             pattern = t.objectPattern(props);
           }
 
-          signal.render.push(
+          pushForward(
+            signal,
+            aliasSignal,
             t.expressionStatement(
               t.callExpression(
                 t.arrowFunctionExpression(
@@ -844,7 +923,9 @@ export function getSignalFn(signal: Signal): t.Expression {
             ),
           );
         } else {
-          signal.render.push(
+          pushForward(
+            signal,
+            aliasSignal,
             t.expressionStatement(
               t.callExpression(aliasSignal.identifier, [
                 scopeIdentifier,
@@ -884,29 +965,28 @@ export function getSignalFn(signal: Signal): t.Expression {
     if (value.signal.inline) {
       continue;
     }
-    if (signalHasStatements(value.signal)) {
-      const invocation = t.expressionStatement(
-        t.callExpression(value.signal.identifier, [
-          scopeIdentifier,
-          value.value,
-          ...getTranslatedExtraArgs(value.signal),
-        ]),
-      );
-      signal.render.push(invocation);
-    } else {
-      signal.render.push(
-        t.expressionStatement(
-          withLeadingComment(
-            value.value,
-            getDebugNames(value.signal.referencedBindings),
-          ),
-        ),
-      );
-    }
+    pushForward(
+      signal,
+      value.signal,
+      t.expressionStatement(
+        signalHasStatements(value.signal)
+          ? t.callExpression(value.signal.identifier, [
+              scopeIdentifier,
+              value.value,
+              ...getTranslatedExtraArgs(value.signal),
+            ])
+          : withLeadingComment(
+              value.value,
+              getDebugNames(value.signal.referencedBindings),
+            ),
+      ),
+    );
   }
 
   forEach(signal.intersection, (intersection) => {
-    signal.render.push(
+    pushForward(
+      signal,
+      intersection,
       t.expressionStatement(
         t.callExpression(intersection.identifier, [scopeIdentifier]),
       ),
@@ -935,11 +1015,12 @@ export function getSignalFn(signal: Signal): t.Expression {
 
         dynamicClosureArgs.push(getSignal(closureSection, binding).identifier);
       } else {
-        signal.render.push(
+        const closureSignal = getSignal(closureSection, binding);
+        pushForward(
+          signal,
+          closureSignal,
           t.expressionStatement(
-            t.callExpression(getSignal(closureSection, binding).identifier, [
-              scopeIdentifier,
-            ]),
+            t.callExpression(closureSignal.identifier, [scopeIdentifier]),
           ),
         );
       }
@@ -973,10 +1054,18 @@ export function getSignalFn(signal: Signal): t.Expression {
   let render = signal.prepare.length
     ? signal.prepare.concat(signal.render)
     : signal.render;
-  // A fill's run is the render without the flush's own writes.
+  // A fill's run is the render without what the patch renders itself.
   if (signal.patched.length) {
-    if (isValue && isPatchFillBinding(binding)) {
-      signal.fillFn = t.cloneNode(toScopeFn(render), true);
+    if (
+      (isValue && isPatchFillBinding(binding)) ||
+      (isIntersection &&
+        binding.some((ref) => isPatchFillBinding(getCanonicalBinding(ref))))
+    ) {
+      const fillFn = t.cloneNode(toScopeFn(render), true);
+      signal.fillFn =
+        isIntersection && intersectionMeta.has(binding)
+          ? buildIntersection(binding, fillFn)
+          : fillFn;
     }
     render = render.concat(signal.patched);
   }
@@ -1285,9 +1374,13 @@ export function writeSignals(section: Section) {
 
       // Fill registration rides the intersection's own declaration, so
       // tree-shaking keeps it exactly when the intersection is retained.
+      // Work a patch renders is no join: no fill ever runs it.
       if (isPersisted()) {
         if (Array.isArray(signal.referencedBindings)) {
-          for (const ref of signal.referencedBindings) {
+          const fillRun = signal.fillFn;
+          for (const ref of patchRenders(signal)
+            ? []
+            : signal.referencedBindings) {
             const member = getCanonicalBinding(ref);
             if (isPatchFillBinding(member)) {
               let helper: "_fill_join" | "_fill_join_if" | "_fill_join_for" =
@@ -1369,6 +1462,7 @@ export function writeSignals(section: Section) {
                 t.stringLiteral(getPatchFillKey(member)),
                 getScopeAccessorLiteral(member, true),
                 value,
+                hopExprs.length ? fillRun || t.numericLiteral(0) : fillRun,
                 ...hopExprs,
               );
             }

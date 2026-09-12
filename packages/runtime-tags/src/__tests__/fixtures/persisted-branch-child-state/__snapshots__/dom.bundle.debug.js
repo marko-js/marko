@@ -28,9 +28,9 @@ const $if_content__input_start = /*@__PURE__*/ _if_closure("#main/0", 0, ($scope
 const $if = /*@__PURE__*/ _if("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_title($scope, input.title);
 	$input_start($scope, input.start);
+	$input_show($scope, input.show);
 };
 const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);
 const $input_start = /*@__PURE__*/ _const("input_start", $if_content__input_start);

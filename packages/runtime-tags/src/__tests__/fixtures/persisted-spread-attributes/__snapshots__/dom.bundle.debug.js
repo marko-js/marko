@@ -31,9 +31,9 @@ const $if = /*@__PURE__*/ _if("#text/2", "<img>", " ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
 	$input_attrs($scope, input.attrs);
+	$input_img($scope, input.img);
 	$input_label($scope, input.label);
 	$input_show($scope, input.show);
-	$input_img($scope, input.img);
 };
 const $input_img = /*@__PURE__*/ _const("input_img", $if_content__input_img);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

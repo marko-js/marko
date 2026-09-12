@@ -20,8 +20,8 @@ function $setup($scope) {
 }
 const $input_which = /*@__PURE__*/ _const("input_which", $input_which__OR__one__OR__two);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_which($scope, input.which);
+	$input_title($scope, input.title);
 };
 const $input_title__closure = /*@__PURE__*/ _closure($one_content__input_title, $two_content__input_title);
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $input_title__closure);

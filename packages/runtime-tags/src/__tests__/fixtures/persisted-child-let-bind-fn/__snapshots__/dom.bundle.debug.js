@@ -14,9 +14,9 @@ const $setup__script$1 = _script("__tests__/tags/picker.marko_0", ($scope) => _o
 	$scope.load(true);
 }));
 function $setup$1($scope) {
-	$catalog($scope, null);
 	$load2($scope, $load($scope));
 	$setup__script$1($scope);
+	$catalog($scope, null);
 }
 const $input = ($scope, input) => {
 	$input_refreshing($scope, input.refreshing);

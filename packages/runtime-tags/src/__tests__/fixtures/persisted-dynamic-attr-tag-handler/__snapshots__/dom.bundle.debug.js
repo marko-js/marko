@@ -7,8 +7,8 @@ const $if_content__button = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => 
 const $if_content__setup = $if_content__button;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $for_content__button = /*@__PURE__*/ _const("button", ($scope) => {
-	$for_content__if($scope, $scope.button ? 0 : 1);
 	$if_content__button($scope);
+	$for_content__if($scope, $scope.button ? 0 : 1);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__button($scope, $params2[0]);
 const $htmlInput__script = _script("__tests__/tags/child.marko_0_htmlInput#4", ($scope) => _attrs_script($scope, "#div/0"));

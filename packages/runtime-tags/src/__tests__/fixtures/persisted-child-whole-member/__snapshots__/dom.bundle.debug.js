@@ -4,8 +4,8 @@ const $walks$1 = "D lD l";
 const $setup$1 = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$1 = ($scope, input) => {
-	$input_label($scope, input.label);
 	_text($scope["#text/1"], JSON.stringify(input));
+	$input_label($scope, input.label);
 };
 var duo_default = /*@__PURE__*/ _template("__tests__/tags/duo/index.marko", $template$1, $walks$1, 0, $input$1);
 

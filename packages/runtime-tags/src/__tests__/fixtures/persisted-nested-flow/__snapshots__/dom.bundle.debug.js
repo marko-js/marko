@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/tags/badge.marko_0", ($scope) => _on($
 	$seen($scope, +$scope.seen + 1);
 }));
 function $setup$1($scope) {
-	$seen($scope, 0);
 	$setup__script($scope);
+	$seen($scope, 0);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$1 = ($scope, input) => $input_label($scope, input.label);
@@ -36,18 +36,18 @@ const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!><!></li>", "D%b%", 0, $for_c
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);
 const $if = /*@__PURE__*/ _if("#text/1", "<section><!><!></section>", "D%b%", $if_content__setup);
 const $input_summary = /*@__PURE__*/ _const("input_summary", ($scope) => {
-	$if($scope, $scope.input_summary ? 0 : 1);
 	$if_content__input_summary($scope);
+	$if($scope, $scope.input_summary ? 0 : 1);
 });
 function $setup($scope) {
 	$setup$1($scope["#childScope/2"]);
 }
 const $input_badge = ($scope, input_badge) => $input_label($scope["#childScope/2"], input_badge);
 const $input = ($scope, input) => {
-	$input_items($scope, input.items);
 	$input_summary($scope, input.summary);
 	$input_detail($scope, input.detail);
 	$input_badge($scope, input.badge);
+	$input_items($scope, input.items);
 };
 const $input_detail__closure = /*@__PURE__*/ _closure($if_content2__input_detail);
 const $input_detail = /*@__PURE__*/ _const("input_detail", ($scope) => {

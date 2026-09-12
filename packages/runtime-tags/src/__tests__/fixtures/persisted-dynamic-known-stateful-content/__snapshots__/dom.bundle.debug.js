@@ -10,8 +10,8 @@ const $setup__script = _script("__tests__/card.marko_0", ($scope) => _on($scope[
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$open($scope, true);
 	$setup__script($scope);
+	$open($scope, true);
 }
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
 const $input_content = /*@__PURE__*/ _fill_const("__tests__/card.marko0", "input_content", $if_content__input_content);

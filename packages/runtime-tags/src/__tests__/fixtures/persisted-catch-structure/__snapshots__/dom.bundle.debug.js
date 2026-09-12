@@ -25,8 +25,8 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => {
-	$input_detail($scope, input.detail);
 	$input_promise($scope, input.promise);
+	$input_detail($scope, input.detail);
 };
 const $input_detail__closure = /*@__PURE__*/ _closure($catch_content__input_detail, $if_content__input_detail);
 const $input_detail = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_detail", $input_detail__closure);

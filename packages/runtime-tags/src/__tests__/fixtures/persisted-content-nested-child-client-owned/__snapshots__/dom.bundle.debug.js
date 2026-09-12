@@ -10,8 +10,8 @@ const $setup__script = _script("__tests__/tags/grand/index.marko_0", ($scope) =>
 	$open($scope, !$scope.open);
 }));
 function $setup$2($scope) {
-	$open($scope, true);
 	$setup__script($scope);
+	$open($scope, true);
 }
 const $input$2 = ($scope, input) => $input_content$1($scope, input.content);
 const $input_content$1 = /*@__PURE__*/ _fill_const("__tests__/tags/grand/index.marko0", "input_content", $if_content__input_content);
@@ -26,8 +26,8 @@ function $setup$1($scope) {
 }
 const $input_content = ($scope, input_content) => $input_content$1($scope["#childScope/1"], input_content);
 const $input$1 = ($scope, input) => {
-	$input_title$1($scope, input.title);
 	$input_content($scope, input.content);
+	$input_title$1($scope, input.title);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 

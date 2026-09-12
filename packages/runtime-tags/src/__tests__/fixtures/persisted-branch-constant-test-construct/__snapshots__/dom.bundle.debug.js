@@ -17,8 +17,8 @@ const $if_content__input_down$1 = /*@__PURE__*/ _closure_get("input_down", ($sco
 const $if_content__setup$1 = $if_content__input_down$1;
 const $aside_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup$1);
 const $aside_content__m = /*@__PURE__*/ _closure_get("m", ($scope) => {
-	$aside_content__if($scope, $scope._.m === "b" ? 0 : 1);
 	_text($scope["#text/0"], $scope._.m);
+	$aside_content__if($scope, $scope._.m === "b" ? 0 : 1);
 });
 const $aside_content__setup = $aside_content__m;
 const $aside_content = /*@__PURE__*/ _content("__tests__/page.marko_2*content", "<span> </span><!><!>", "D l%", $aside_content__setup);
@@ -46,8 +46,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_down($scope, input.down);
+	$input_show($scope, input.show);
 };
 const $input_down = /*@__PURE__*/ _const("input_down", $if_content__input_down);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

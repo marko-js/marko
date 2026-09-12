@@ -14,9 +14,9 @@ const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_tit
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__input_big__OR__plain__OR__loud);
 const $input_big = /*@__PURE__*/ _const("input_big", $input_value__OR__input_big__OR__plain__OR__loud);
 const $input = ($scope, input) => {
-	$input_title($scope, input.title);
 	$input_value($scope, input.value);
 	$input_big($scope, input.big);
+	$input_title($scope, input.title);
 };
 function $plain(next) {
 	document.querySelector("main").dataset.got = next;

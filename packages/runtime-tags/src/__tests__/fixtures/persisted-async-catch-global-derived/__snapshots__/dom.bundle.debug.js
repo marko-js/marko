@@ -24,8 +24,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$n($scope, 0);
 	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
-	$global_brand($scope, $scope.$global.brand);
 	$setup__script($scope);
+	$global_brand($scope, $scope.$global.brand);
 }
 const $input = ($scope, input) => $input_promise($scope, input.promise);
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promise);

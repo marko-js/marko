@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content2__input_title__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_2_input_title#6/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.input_title + " #" + $scope._._.count))), "#text/0", 0, "#text/0", 0);
+const $if_content2__input_title__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_2_input_title#6/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.input_title + " #" + $scope._._.count))), 0, "#text/0", 0, "#text/0", 0);
 const $if_content2__input_title = /*@__PURE__*/ _closure_get("input_title", $if_content2__input_title__OR__count, ($scope) => $scope._._);
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_title($scope);
@@ -23,8 +23,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_inner($scope, input.inner);
+	$input_show($scope, input.show);
 	$input_title($scope, input.title);
 };
 const $input_inner = /*@__PURE__*/ _const("input_inner", $if_content__input_inner);

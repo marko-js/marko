@@ -23,8 +23,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}&D l`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_note($scope, input.note);
+	$input_show($scope, input.show);
 };
 const $input_note = /*@__PURE__*/ _const("input_note", $if_content__input_note);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -24,10 +24,10 @@ const $if_content__input_inner = /*@__PURE__*/ _if_closure("#main/0", 0, ($scope
 const $if = /*@__PURE__*/ _if("#main/0", "<p> </p><!><!>", "D l%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_title($scope, input.title);
 	$input_inner($scope, input.inner);
 	$input_suffix($scope, input.suffix);
+	$input_show($scope, input.show);
 };
 const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);
 const $input_inner = /*@__PURE__*/ _const("input_inner", $if_content__input_inner);

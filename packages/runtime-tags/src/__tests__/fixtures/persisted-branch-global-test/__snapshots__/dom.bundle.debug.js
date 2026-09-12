@@ -12,7 +12,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$count($scope, 0);
-	$global_enabled($scope, $scope.$global.enabled);
 	$setup__script($scope);
+	$global_enabled($scope, $scope.$global.enabled);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

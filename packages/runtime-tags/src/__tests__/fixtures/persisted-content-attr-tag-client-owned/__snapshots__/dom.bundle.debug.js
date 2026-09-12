@@ -10,8 +10,8 @@ const $setup__script = _script("__tests__/tags/card/index.marko_0", ($scope) => 
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$open($scope, true);
 	$setup__script($scope);
+	$open($scope, true);
 }
 const $input$1 = ($scope, input) => $input_header($scope, input.header);
 const $input_header = /*@__PURE__*/ _fill_const("__tests__/tags/card/index.marko0", "input_header", $if_content__input_header);

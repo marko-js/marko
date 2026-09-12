@@ -17,27 +17,27 @@ const $for_content__input_path__OR__item_href = /*@__PURE__*/ _or(6, ($scope) =>
 const $for_content__input_path = /*@__PURE__*/ _for_closure("#nav/0", $for_content__input_path__OR__item_href);
 const $for_content__setup = $for_content__input_path;
 const $for_content__item_href = /*@__PURE__*/ _const("item_href", ($scope) => {
-	$for_content__input_path__OR__item_href($scope);
 	_attr($scope["#a/0"], "href", $scope.item_href);
+	$for_content__input_path__OR__item_href($scope);
 });
 const $for_content__item_icon = ($scope, item_icon) => $input_name($scope["#childScope/1"], item_icon);
 const $for_content__item_label = ($scope, item_label) => _text($scope["#text/2"], item_label);
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__item_href($scope, $params2[0]?.href);
 	$for_content__item_icon($scope, $params2[0]?.icon);
+	$for_content__item_href($scope, $params2[0]?.href);
 	$for_content__item_label($scope, $params2[0]?.label);
 };
 const $for = /*@__PURE__*/ _for_of("#nav/0", /*@__PURE__*/ ((_w0) => `<a class=link>${_w0}<span> </span></a>`)($template$1), /*@__PURE__*/ ((_w0) => ` D/${_w0}&D m`)("D l"), $for_content__setup, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 const $if = /*@__PURE__*/ _if("#main/1", "<p> </p>", "D ", $if_content__setup);
 const $input_page = /*@__PURE__*/ _const("input_page", ($scope) => {
-	$if($scope, $scope.input_page ? 0 : 1);
 	$if_content__input_page($scope);
+	$if($scope, $scope.input_page ? 0 : 1);
 });
 const $input = ($scope, input) => {
-	$input_items($scope, input.items);
 	$input_path($scope, input.path);
 	$input_page($scope, input.page);
+	$input_items($scope, input.items);
 };
 const $input_path = /*@__PURE__*/ _const("input_path", $for_content__input_path);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

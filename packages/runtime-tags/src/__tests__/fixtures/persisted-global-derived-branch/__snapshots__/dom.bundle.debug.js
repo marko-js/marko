@@ -13,8 +13,8 @@ const $for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", 0, $for_content_
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 const $if = /*@__PURE__*/ _if("#text/1", "<style></style>", " ", $if_content__setup);
 const $summary = /*@__PURE__*/ _const("summary", ($scope) => {
-	$if($scope, $scope.summary ? 0 : 1);
 	$if_content__summary($scope);
+	$if($scope, $scope.summary ? 0 : 1);
 });
 function $setup($scope) {
 	$summary($scope, collected($scope.$global));

@@ -14,8 +14,8 @@ const $setup__script$1 = _script("__tests__/tags/l1/tags/l2/index.marko_0", ($sc
 	$n($scope, $scope.n + 1);
 }));
 function $setup$2($scope) {
-	$n($scope, 0);
 	$setup__script$1($scope);
+	$n($scope, 0);
 }
 const $input_note$2 = ($scope, input_note) => $input_note$3($scope["#childScope/2"], input_note);
 const $input$2 = ($scope, input) => $input_note$2($scope, input.note);

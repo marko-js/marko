@@ -9,8 +9,8 @@ const $setup__script$1 = _script("__tests__/tags/widget/index.marko_0", ($scope)
 	$count($scope, +$scope.count + 1);
 }));
 function $setup$1($scope) {
-	$count($scope, 1);
 	$setup__script$1($scope);
+	$count($scope, 1);
 }
 const $input_label$1 = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);

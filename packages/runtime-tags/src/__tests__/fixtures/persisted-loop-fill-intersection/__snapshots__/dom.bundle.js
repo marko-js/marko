@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__input_note__OR__count__OR__item = /*@__PURE__*/ _fill_join_for("a0", 5, /*@__PURE__*/ _or(3, ($scope) => _text($scope.a, $scope._.f + $scope.c + $scope._.h), 2), 0);
+const $for_content__input_note__OR__count__OR__item = /*@__PURE__*/ _fill_join_for("a0", 5, /*@__PURE__*/ _or(3, ($scope) => _text($scope.a, $scope._.f + $scope.c + $scope._.h), 2), 0, 0);
 const $for_content__input_note = /*@__PURE__*/ _for_closure(0, $for_content__input_note__OR__count__OR__item);
 const $for_content__setup = ($scope) => {
 	$for_content__input_note._($scope);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $for_content2__count__OR__row_id = /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "row_id", /*@__PURE__*/ _init_join("__tests__/template.marko_2_row_id#4/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.row_id + "@" + $scope._._.count))), "#text/0");
+const $for_content2__count__OR__row_id = /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "row_id", /*@__PURE__*/ _init_join("__tests__/template.marko_2_row_id#4/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.row_id + "@" + $scope._._.count))), 0, "#text/0");
 const $for_content2__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_2_count#5/init", "count", $for_content2__count__OR__row_id, ($scope) => $scope._._);
 const $for_content2__setup = ($scope) => {
 	$for_content2__count($scope);

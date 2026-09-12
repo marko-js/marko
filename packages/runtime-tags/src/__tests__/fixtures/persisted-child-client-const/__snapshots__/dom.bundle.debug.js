@@ -6,8 +6,8 @@ const $setup__script$1 = _script("__tests__/tags/widget/index.marko_0", ($scope)
 	$n($scope, $scope.n + 1);
 }));
 function $setup$1($scope) {
-	$n($scope, 0);
 	$setup__script$1($scope);
+	$n($scope, 0);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
