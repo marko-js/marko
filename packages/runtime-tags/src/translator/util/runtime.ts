@@ -116,39 +116,42 @@ export function callRuntime(
 
 // A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
 // import: it enables optional runtime behavior that referenced imports alone
-// cannot keep alive under tree shaking (eg catch enablement).
-export type DOMRuntimeFeature =
-  | "catch"
-  | "controllable"
-  | "controllable-input"
-  | "controllable-open"
-  | "controllable-select"
-  | "controllable-textarea"
-  | "dynamic-tag-var"
-  | "patch-attr"
-  | "patch-attrs"
-  | "patch-boundary"
-  | "patch-branch"
-  | "patch-child"
-  | "patch-content"
-  | "patch-control"
-  | "patch-control-checked-value"
-  | "patch-control-input"
-  | "patch-control-open"
-  | "patch-control-select"
-  | "patch-dynamic-tag"
-  | "patch-effect"
-  | "patch-global"
-  | "patch-html"
-  | "patch-loop"
-  | "patch-ready"
-  | "patch-style"
-  | "patch-text"
-  | "patch-text-content"
-  | "patch-value"
-  | "patch-value-bind"
-  | "patch-var"
-  | "placeholder";
+// cannot keep alive under tree shaking (eg catch enablement). A page entry
+// may import one no template does, so a dev optimizer includes them all.
+export const domRuntimeFeatures = [
+  "catch",
+  "controllable",
+  "controllable-input",
+  "controllable-open",
+  "controllable-select",
+  "controllable-textarea",
+  "dynamic-tag-var",
+  "patch-attr",
+  "patch-attrs",
+  "patch-boundary",
+  "patch-branch",
+  "patch-child",
+  "patch-content",
+  "patch-control",
+  "patch-control-checked-value",
+  "patch-control-input",
+  "patch-control-open",
+  "patch-control-select",
+  "patch-dynamic-tag",
+  "patch-effect",
+  "patch-global",
+  "patch-html",
+  "patch-loop",
+  "patch-ready",
+  "patch-style",
+  "patch-text",
+  "patch-text-content",
+  "patch-value",
+  "patch-value-bind",
+  "patch-var",
+  "placeholder",
+] as const;
+export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
 // The analyze-phase half of `importRuntimeFeature`: the page entry links
 // client assets from analyze metadata.
 export function addRuntimeFeatureAsset(feature: DOMRuntimeFeature) {
