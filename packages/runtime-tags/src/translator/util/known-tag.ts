@@ -37,7 +37,7 @@ import { onFinalizePersisted } from "./persisted/lifecycle";
 import { contentResumesForPatch } from "./persisted/refresh";
 import {
   inStatefulBranch,
-  readsOnlyUpstream,
+  isReadAsValue,
   recordStructuralParams,
 } from "./persisted/structure";
 import {
@@ -630,7 +630,7 @@ export function finalizeKnownTags(section: Section) {
               const paramSources = getAllSourcesForExprs(
                 mapParamBindingToExpr(knownExprs, param),
               );
-              if (paramSources?.state || !readsOnlyUpstream(param)) {
+              if (paramSources?.state || isReadAsValue(param)) {
                 forEach(paramSources?.param, (binding) => {
                   binding.upstreamOfStateMixedGroup = true;
                 });

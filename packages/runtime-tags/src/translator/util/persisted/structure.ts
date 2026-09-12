@@ -6,7 +6,11 @@ import { kDirectContent } from "../binding-prop-tree";
 import { isPersisted } from "../marko-config";
 import { every, forEach, type Opt, some, toArray } from "../optional";
 import type { Binding, ReferencedExtra, Sources } from "../references";
-import { ensureReasonGroups, type Section } from "../sections";
+import {
+  ensureReasonGroups,
+  getChildSections,
+  type Section,
+} from "../sections";
 import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
@@ -191,13 +195,27 @@ function upstreamSourcesFill(binding: Binding): boolean {
   );
 }
 
-// A param read only upstream of branches: its value never joins a client
-// derivation, so pairing carries it and no fill is needed.
-export function readsOnlyUpstream(binding: Binding) {
+// Read as a value: anywhere but as the upstream of a branch in the read's
+// section, or passed to a child param that is. Call at finalize or later.
+export function isReadAsValue(
+  binding: Binding,
+  seen = new Set<Binding>(),
+): boolean {
+  if (seen.has(binding)) return false;
+  seen.add(binding);
   for (const read of binding.reads) {
-    if (!read.branchUpstream) return false;
+    if (
+      !getChildSections(read.section).some(
+        (child) => child.isBranch && child.upstreamExpression === read,
+      ) &&
+      (read.referencedBindings !== binding ||
+        !read.downstream ||
+        some(read.downstream, (downstream) => isReadAsValue(downstream, seen)))
+    ) {
+      return true;
+    }
   }
-  return true;
+  return false;
 }
 
 // Params alone upstream: a call site with state upstream of them hands the
