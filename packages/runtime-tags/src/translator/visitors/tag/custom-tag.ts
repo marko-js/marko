@@ -213,7 +213,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
   // A server-only site has no client render: a flush's shell builds it
   // and its setup entries seed it.
-  if (loadConfig?.serverOnly) {
+  if (loadConfig?.sitesConstruct) {
     importRuntimeFeature("patch-child");
     tag.remove();
     return;

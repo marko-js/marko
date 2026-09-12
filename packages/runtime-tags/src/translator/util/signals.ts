@@ -99,7 +99,7 @@ import {
   type SerializeReason,
 } from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
-import { createSectionState } from "./state";
+import { createProgramState, createSectionState } from "./state";
 import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
 import {
   toMemberExpression,
@@ -1829,7 +1829,7 @@ export function sectionConstructs(section: Section) {
 // Plain fill write of a server-owned branch local, gated by its param
 // group's ownership; a client-fed instance re-derives via closure inits.
 export function writeLocalFill(section: Section, binding: Binding) {
-  writtenLocalFills.add(binding);
+  getWrittenLocalFills().add(binding);
   const write = callRuntime(
     "_patch_value",
     getScopeIdIdentifier(section),
@@ -1859,7 +1859,7 @@ export function writeLocalFill(section: Section, binding: Binding) {
 // Plain write of a server-owned branch local that effects or handlers read,
 // gated by its ownership like the root's writes.
 export function writeLocalWrite(section: Section, binding: Binding) {
-  writtenLocalFills.add(binding);
+  getWrittenLocalFills().add(binding);
   const write = callRuntime(
     "_patch_write",
     getScopeIdIdentifier(section),
@@ -1872,12 +1872,11 @@ export function writeLocalWrite(section: Section, binding: Binding) {
 
 // Locals whose declaration already wrote their fill or write
 // (`translateVar`), so the section's leading writes cover only the rest.
-const writtenLocalFills = new WeakSet<Binding>();
+const [getWrittenLocalFills] = createProgramState(() => new Set<Binding>());
 
 // A spread's effect re-attaches what its serialized set carried: the flush's
 // attribute set is the refresh, so its reads need no other channel.
-function isSerializedSpreadEffect(signal: Signal) {
-  const refs = signal.referencedBindings;
+function isSerializedSpreadEffect(refs: ReferencedBindings) {
   return (
     !!refs &&
     some(refs, (binding) => {
@@ -1892,14 +1891,23 @@ function isSerializedSpreadEffect(signal: Signal) {
 // An effect read the wire cannot keep current blocks constructs; fills,
 // wire writes and direct `$global` reads stay current.
 export function sectionHasServerEffect(section: Section) {
-  for (const signal of getSignals(section).values()) {
-    if (signal.hasHTMLEffect && !isSerializedSpreadEffect(signal)) {
-      if (hasUnfillablePatchReads(signal.referencedBindings)) {
+  const hasServerEffect = (binding: Binding) => {
+    for (const read of binding.reads) {
+      if (
+        read.section === section &&
+        read.isEffect &&
+        !isSerializedSpreadEffect(read.referencedBindings) &&
+        hasUnfillablePatchReads(read.referencedBindings)
+      ) {
         return true;
       }
     }
-  }
-  return false;
+    return false;
+  };
+  return (
+    some(section.bindings, hasServerEffect) ||
+    some(section.referencedClosures, hasServerEffect)
+  );
 }
 
 // The section's mount effects as space-joined register ids, in hydration
@@ -2232,7 +2240,7 @@ export function writeHTMLResumeStatements(
         // branch bindings up front; root writes ride the reason's complement.
         if (!section.parent) {
           fillCalls.push(write);
-        } else if (!writtenLocalFills.has(binding)) {
+        } else if (!getWrittenLocalFills().has(binding)) {
           getHTMLSectionStatements(section).push(t.expressionStatement(write));
         }
       }
@@ -2303,7 +2311,7 @@ export function writeHTMLResumeStatements(
       if (!binding.sources?.state) {
         // A server-owned local writes plainly as soon as it exists (root fills
         // already write as the scope reason's complement).
-        if (section.parent && !writtenLocalFills.has(binding)) {
+        if (section.parent && !getWrittenLocalFills().has(binding)) {
           getHTMLSectionStatements(section).push(
             t.expressionStatement(writeLocalFill(section, binding)),
           );

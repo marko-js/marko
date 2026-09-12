@@ -40,6 +40,7 @@ import {
 import { sectionHasSetupStatements } from "../../util/setup-statements";
 import { buildShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
+import { recordConstructedLoadImports } from "../import-declaration";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
@@ -129,6 +130,7 @@ export default {
 
       if (isPersisted()) {
         buildShells();
+        recordConstructedLoadImports(program);
       }
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip

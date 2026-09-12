@@ -3,7 +3,6 @@
 import type { types as t } from "@marko/compiler";
 
 import { kDirectContent } from "../binding-prop-tree";
-import { isBranchUpstream } from "../branch-tag";
 import { isPersisted } from "../marko-config";
 import { every, forEach, type Opt, some, toArray } from "../optional";
 import type { Binding, ReferencedExtra, Sources } from "../references";
@@ -196,7 +195,7 @@ function upstreamSourcesFill(binding: Binding): boolean {
 // derivation, so pairing carries it and no fill is needed.
 export function readsOnlyUpstream(binding: Binding) {
   for (const read of binding.reads) {
-    if (!isBranchUpstream(read)) return false;
+    if (!read.branchUpstream) return false;
   }
   return true;
 }

@@ -52,15 +52,42 @@ export type LoadImportConfig = (
   | { render: true; triggers?: never }
   | { render: false; triggers: LoadTrigger[] }
 ) & {
-  // Under persisted: a page's import whose every site sits in structure only
-  // the server renders (the client never instantiates a page or that
-  // structure), so the server alone renders it and no client render ships.
-  serverOnly?: true;
+  /** Every site of a page's rendered import sits in structure a patch
+   * constructs, with no state upstream: only a construct ever meets it. */
+  sitesConstruct?: true;
 };
 const triggerRegExp = /\s*([\w-]+)\s*([^?|]+?)?\s*(?:\?([^|]*?))?\s*(?:\||$)/g;
 const [getHtmlLoadWrapped] = createProgramState(
   () => new Map<string, string>(),
 );
+
+// Records which of a page's rendered imports only constructs meet, once
+// every section's shell is decided. A trigger keeps its channel, so a
+// navigation never forces a load; an import is a module binding, so its
+// uses (tag names, values passed along) are its babel references.
+export function recordConstructedLoadImports(program: t.NodePath<t.Program>) {
+  if (!isPersisted() || !isPage()) return;
+  for (const node of program.node.body) {
+    const loadImport = node.extra?.loadImport;
+    if (!t.isImportDeclaration(node) || !loadImport?.render) continue;
+    const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
+    if (
+      program.scope.getBinding(local.name)!.referencePaths.every(
+        (ref) =>
+          sectionConstructs(getSection(ref)) &&
+          // State upstream of a site re-renders it on the client.
+          !(
+            t.isMarkoTag(ref.parent) &&
+            getAllTagReferenceNodes(ref.parent).some((node) =>
+              hasStateSource(node.extra),
+            )
+          ),
+      )
+    ) {
+      loadImport.sitesConstruct = true;
+    }
+  }
+}
 
 export default {
   analyze(importDecl) {
@@ -165,28 +192,6 @@ export default {
         if (loadImport) {
           const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
           const binding = importDecl.scope.getBinding(local.name)!;
-          // A trigger keeps its channel, so a navigation never forces a load.
-          // An import is a module binding, so its uses (tag names, values
-          // passed along) are its babel references.
-          if (
-            isPersisted() &&
-            loadImport.render &&
-            isPage() &&
-            binding.referencePaths.every(
-              (ref) =>
-                sectionConstructs(getSection(ref)) &&
-                // State upstream of a site re-renders it on the client.
-                !(
-                  t.isMarkoTag(ref.parent) &&
-                  getAllTagReferenceNodes(ref.parent).some((node) =>
-                    hasStateSource(node.extra),
-                  )
-                ),
-            )
-          ) {
-            loadImport.serverOnly = true;
-          }
-
           if (isOutputHTML()) {
             const file = getFile();
             const loadFile = loadFileForImport(file, node.source.value)!;
@@ -223,7 +228,7 @@ export default {
             );
             // Flushes name a server-only template; the page registers its
             // loader only, for the registrations its flushes need.
-            if (loadImport.serverOnly) {
+            if (loadImport.sitesConstruct) {
               importDecl.replaceWith(
                 t.expressionStatement(
                   callRuntime(
