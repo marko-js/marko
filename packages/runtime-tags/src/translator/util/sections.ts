@@ -176,9 +176,8 @@ export interface Section {
   /** A content body shipped as a shell: `"static"` rides its slot
    * in-band, a dynamic one is constructed by id from a dynamic tag entry. */
   contentShell: false | true | "static";
-  /** Awaits a construct must supply body content for (marker binding +
-   * body section); `buildShells` prunes those no shipped shell reaches. */
-  constructSetups: { binding: Binding; body: Section }[] | undefined;
+  /** The section's awaits: each marker binding and body section. */
+  awaits: { binding: Binding; body: Section }[] | undefined;
   /** Lazily loaded child sites in this section, by their marker binding. */
   loadSites: { site: Binding; load: LoadImportConfig }[] | undefined;
   /** Branch whose shell would construct unfaithfully: the first blocker's
@@ -272,7 +271,7 @@ export function startSection(
       isBoundary: false,
       boundaryContent: false,
       contentShell: false,
-      constructSetups: undefined,
+      awaits: undefined,
       loadSites: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };

@@ -14,7 +14,11 @@ import {
   StructureKind,
 } from "./sections";
 import { getResumeRegisterId } from "./signals";
-import { getSectionMeta, trimTrailingExits } from "./structure";
+import {
+  getSectionMeta,
+  resolveStructure,
+  trimTrailingExits,
+} from "./structure";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -26,6 +30,13 @@ declare module "@marko/compiler/dist/types" {
 
 export function getShells() {
   return getProgram().node.extra.shells;
+}
+
+// Whether a section ships as a shell (under any id).
+export function isShell(section: Section) {
+  const shells = getShells();
+  for (const id in shells) if (shells[id] === section) return true;
+  return false;
 }
 
 // Decides every branch shell (expressibility, blockers) so the html output
@@ -127,11 +138,6 @@ export function buildShells() {
     Object.assign(shells, bodyShells);
     shells[getShellId(section)] = section;
   });
-  // Only kept sections' awaits construct: their `Pending` patches carry a
-  // content id and (interactive) their body registers in the dom output.
-  forEachSection((section) => {
-    if (!keep.has(section)) section.constructSetups = undefined;
-  });
 }
 
 // Body shells reuse the branch grammar; nested awaits recurse so a
@@ -141,7 +147,7 @@ function buildAwaitBodyShells(
   shells: Record<string, Section>,
   chain: Section[],
 ) {
-  for (const { binding, body } of section.constructSetups || []) {
+  for (const { binding, body } of section.awaits || []) {
     if (
       !isShellExpressible(body) ||
       !buildAwaitBodyShells(body, shells, chain)
@@ -230,24 +236,27 @@ function hasPatchedChild(section: Section) {
 // Await bodies ship as their construct's `await` shells, never as
 // standalone content shells nothing references.
 function isAwaitBody(section: Section) {
-  return !!section.parent?.constructSetups?.some((s) => s.body === section);
+  return !!section.parent?.awaits?.some((s) => s.body === section);
 }
 
-// The shell's template and walk strings when both are fully static.
-// A shell the client rebuilds from its template alone (no walk, no setup).
+// A shell the client rebuilds from its template alone: static markup with
+// no walk. A child always walks, so resolving never reaches its imports.
 function isStaticShell(section: Section) {
-  const shell = getStaticShell(section);
-  return !!shell && !shell[1];
-}
-
-function getStaticShell(section: Section) {
-  if (!isShellExpressible(section)) return;
-  const { writes, walks } = getSectionMeta(section);
-  const walkLiteral = trimTrailingExits(walks);
-  if (!t.isStringLiteral(writes) || !writes.value) return;
-  // A fully static branch claims nothing, so an empty walk string is valid.
-  if (walkLiteral && !t.isStringLiteral(walkLiteral)) return;
-  return [writes.value, walkLiteral?.value ?? ""] as const;
+  if (
+    !isShellExpressible(section) ||
+    section.structure!.some(
+      (op) => typeof op === "object" && op.kind === StructureKind.Child,
+    )
+  ) {
+    return false;
+  }
+  const { writes, walks } = resolveStructure(section);
+  const writesLiteral = normalizeStringExpression(writes, true);
+  return (
+    t.isStringLiteral(writesLiteral) &&
+    !!writesLiteral.value &&
+    !trimTrailingExits(normalizeStringExpression(walks, true))
+  );
 }
 
 // The shell `id marker;walks;template` (`,` for `;walks;` when the
