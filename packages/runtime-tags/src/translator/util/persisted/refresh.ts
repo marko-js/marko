@@ -5,7 +5,7 @@ import { getProgram, getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
 import { getParamGroupSources, isKnownTagExtra } from "../known-tag";
-import { isPersisted } from "../marko-config";
+import { isPage, isPersisted } from "../marko-config";
 import {
   every,
   filter,
@@ -96,7 +96,7 @@ export function isPatchFillBinding(binding: Binding) {
   // root) seeds through its fill signal — assigned state only (retention).
   if (
     isPersisted() &&
-    ((!binding.section.parent && !getProgram().node.extra.page) ||
+    ((!binding.section.parent && !isPage()) ||
       (binding.section.isBranch && isBranchPathSection(binding.section))) &&
     // Stateful branches never construct from flushes, so their
     // state needs no seed fill.
@@ -210,7 +210,7 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
       }
       // Only structure with OTHER params upstream can leave this read client-owned;
       // a page's root params always come from the request.
-      if (!getProgram().node.extra.page) {
+      if (!isPage()) {
         for (const sources of getParamUpstreamChain(site) || []) {
           if (!upstreamThrough(sources, binding)) {
             conditions = mergeConditions(conditions, { upstreams: [sources] });
@@ -321,10 +321,35 @@ function hasRegisteredFnCapture(binding: Binding): boolean {
 // Closures whose construct INITs render a fresh scope; a lazy child's
 // server-owned input arrives through its ready channel.
 export function getConstructInitClosures(section: Section) {
-  return filter(
-    section.referencedClosures as Opt<Binding>,
-    (closure) => !!closure.sources?.state || fillJoinsIn(closure, section),
+  return filter(section.referencedClosures as Opt<Binding>, (closure) =>
+    closureInitsConstruct(closure, section),
   );
+}
+
+// A closure a construct of `section` runs as an init: state (the shell
+// names it), a fill feeding a state join (the flush's `_init_join`), or any
+// other member of such a join, since the join fires once every member
+// arrives and a construct runs only registered inits.
+export function closureInitsConstruct(closure: Binding, section: Section) {
+  return (
+    !!closure.sources?.state ||
+    fillJoinsIn(closure, section) ||
+    joinsStateIn(closure, section)
+  );
+}
+
+// A closure joined with state in an intersection read in `section`.
+export function joinsStateIn(closure: Binding, section: Section) {
+  for (const read of closure.reads) {
+    if (
+      read.section === section &&
+      Array.isArray(read.referencedBindings) &&
+      getSerializeSourcesForRef(read.referencedBindings)?.state
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // A closure read in `section` that is a `tagNameLoad` tag's input.
@@ -338,7 +363,7 @@ export function readAsTagNameLoadInput(closure: Binding, section: Section) {
 // A fill closure upstream of a state intersection read in `section` (which
 // then rides a `_fill_join_*` wrapper registering the closure's init); a
 // chain leaving the branch ladder refreshes through the closure instead.
-function fillJoinsIn(closure: Binding, section: Section) {
+export function fillJoinsIn(closure: Binding, section: Section) {
   if (closure.sources?.state || !isPatchFillBinding(closure)) return false;
   for (let cur = section; cur !== closure.section; cur = cur.parent!) {
     if (!cur.isBranch) return false;
@@ -500,7 +525,11 @@ function enclosingMayConstruct(section: Section): boolean {
       return contentMayConstruct(cur);
     }
   }
-  return false;
+  // A caller composes any template but the page into its own shell (a lazy
+  // page under a layout, a child in a branch), so the root constructs; a
+  // consumer's root reduces to this template's site, which the walk from
+  // the site settles.
+  return !isPage();
 }
 
 // Resumed content (registered, no shell stands in) that a patched site

@@ -1,0 +1,6 @@
+import Page from "./page.marko" with { load: "render" }
+
+<p>A layout's static lead, long enough that the document outweighs a flush revealing the page below it.</p>
+<if=input.show>
+  <Page base=input.base/>
+</if>

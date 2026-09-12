@@ -13,7 +13,7 @@ import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputHTML, isPersisted } from "./marko-config";
+import { isOptimize, isOutputHTML, isPage, isPersisted } from "./marko-config";
 import {
   filter,
   find,
@@ -25,7 +25,9 @@ import {
   toArray,
 } from "./optional";
 import {
+  closureInitsConstruct,
   contentMayConstruct,
+  fillJoinsIn,
   getFillRoot,
   getFillConditions,
   getLocalFillUpstreams,
@@ -1141,11 +1143,7 @@ export function addStatement(
   // A page's patched hole with no client sources is the flush's alone (a
   // child may still render client-side): neither its write nor what the
   // write reads ships.
-  if (
-    type === "patched" &&
-    !referencedBindings &&
-    getProgram().node.extra.page
-  ) {
+  if (type === "patched" && !referencedBindings && isPage()) {
     return;
   }
   const signal = getSignal(targetSection, referencedBindings);
@@ -1710,12 +1708,14 @@ function toSequenceExpression(exprs: t.Expression[]) {
   return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
 }
 
-// A closure into a body that ships a shell whose init a construct may run:
-// state (named by the shell) or a local fill's upstream (by the flush).
+// A closure into a body that ships a shell whose init a construct may run,
+// registered on its closure get: a fill feeding a state join registers on
+// the join (`_init_join`) instead, a local fill's upstream by the flush.
 function constructsWithInit(section: Section, closure: Binding) {
   return (
     sectionConstructs(section) &&
-    (!!closure.sources?.state ||
+    ((closureInitsConstruct(closure, section) &&
+      !fillJoinsIn(closure, section)) ||
       includes(getLocalFillUpstreams(section), closure))
   );
 }

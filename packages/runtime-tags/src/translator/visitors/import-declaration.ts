@@ -15,6 +15,7 @@ import {
   getMarkoOpts,
   getReadyId,
   isOutputHTML,
+  isPage,
   isPersisted,
 } from "../util/marko-config";
 import { hasStateSource } from "../util/persisted/decisions";
@@ -170,7 +171,7 @@ export default {
           if (
             isPersisted() &&
             loadImport.render &&
-            getProgram().node.extra.page &&
+            isPage() &&
             binding.referencePaths.every(
               (ref) =>
                 sectionConstructs(getSection(ref)) &&

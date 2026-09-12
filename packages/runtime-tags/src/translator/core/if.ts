@@ -195,7 +195,6 @@ export const IfTag = {
             nodeBinding,
           );
           const nextTag = tag.getNextSibling();
-          let branchSerializeReasons: SerializeReasons | undefined;
           let statement: t.Statement | undefined;
           let singleChild = true;
 
@@ -208,6 +207,10 @@ export const IfTag = {
           // swap anchors at the marker node, which elision would remove.
           const persistedPatch =
             isPersisted() && !stateful && isBranchPathSection(ifTagSection);
+          // A patched chain pairs and reports its branch even with a
+          // source-less test (a constant pick): a construct needs the entry.
+          let branchSerializeReasons: SerializeReasons | undefined =
+            persistedPatch || undefined;
           if (persistedPatch) {
             singleChild = false;
           } else {
@@ -243,6 +246,10 @@ export const IfTag = {
                           branchSerializeReason,
                         );
                 }
+              }
+              // Every branch of a patched chain reports its index, with or
+              // without a reason of its own: the patch names it by index.
+              if (branchSerializeReason || persistedPatch) {
                 bodyStatements.push(
                   t.returnStatement(t.numericLiteral(i)) as any,
                 );
