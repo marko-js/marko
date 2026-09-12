@@ -234,9 +234,6 @@ declare module "@marko/compiler/dist/types" {
      * (dynamic/aliased) read, a property alias names the key. */
     globalBindings?: ReferencedBindings;
     spreadFrom?: Binding;
-    /** An input expression of a `tagNameLoad` tag (its value stashes until
-     * the child's module arrives). */
-    tagNameLoadInput?: true;
     nativeTagSpread?: true;
     /** A native tag spread that is the element's whole attribute set (no
      * content renderer it could carry). */

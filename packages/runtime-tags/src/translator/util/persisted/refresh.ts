@@ -367,14 +367,6 @@ export function joinsStateIn(closure: Binding, section: Section) {
   return false;
 }
 
-// A closure read in `section` that is a `tagNameLoad` tag's input.
-export function readAsTagNameLoadInput(closure: Binding, section: Section) {
-  for (const read of closure.reads) {
-    if (read.section === section && read.tagNameLoadInput) return true;
-  }
-  return false;
-}
-
 // A fill closure upstream of a state intersection read in `section` (which
 // then rides a `_fill_join_*` wrapper registering the closure's init); a
 // chain leaving the branch ladder refreshes through the closure instead.

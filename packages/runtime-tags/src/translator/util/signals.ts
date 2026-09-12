@@ -43,6 +43,7 @@ import {
   getParamUpstreamChain,
   inStatefulBranch,
   isBranchPathSection,
+  isStatefulBranch,
 } from "./persisted/structure";
 import {
   type AssignedBindingExtra,
@@ -76,6 +77,7 @@ import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   getDynamicClosureIndex,
   getScopeIdIdentifier,
+  getChildSections,
   getSectionForBody,
   groupParamsBySection,
   isDynamicClosure,
@@ -133,8 +135,6 @@ export interface Signal {
   /** Renders a patch does itself (its hole writes, forwards into work it
    * renders): a client render needs them, a fill's run does not. */
   patched: t.Statement[];
-  /** Structure a patch renders whenever it writes the scope. */
-  patchedStructure?: boolean;
   /** Whether a patch renders every render of this signal (`patchRenders`). */
   patchRendered?: boolean;
   /** A fill's run when it differs from the render (`render` without `patched`). */
@@ -752,10 +752,24 @@ function pushForward(signal: Signal, target: Signal, statement: t.Statement) {
 export function patchRenders(signal: Signal): boolean {
   if (signal.patchRendered === undefined) {
     signal.patchRendered = false;
-    signal.patchRendered =
-      !!signal.patchedStructure || !hasClientRender(signal);
+    signal.patchRendered = patchesStructure(signal) || !hasClientRender(signal);
   }
   return signal.patchRendered;
+}
+
+// A loop or branch chain a patch renders whenever it writes the scope: its
+// bodies are the signal's branch sections, none stateful, on the branch path.
+function patchesStructure(signal: Signal) {
+  const bodies = getChildSections(signal.section).filter(
+    (child) =>
+      child.isBranch &&
+      child.sectionAccessor?.binding === signal.referencedBindings,
+  );
+  return (
+    bodies.length > 0 &&
+    isBranchPathSection(signal.section) &&
+    !bodies.some(isStatefulBranch)
+  );
 }
 
 // A patch renders a forward into a value it fills itself as well.

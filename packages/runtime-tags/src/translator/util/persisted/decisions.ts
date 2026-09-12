@@ -8,7 +8,7 @@ import {
   getParamGroupSources,
   hasParamSource,
   kStaticBody,
-  kTagVar,
+  kChildOffsetScopeBinding,
 } from "../known-tag";
 import { some } from "../optional";
 import { getCanonicalBinding, type ReferencedExtra } from "../references";
@@ -123,7 +123,7 @@ function computeChildPatchPlan(tagExtra: t.MarkoTagExtra): ChildPatchPlan {
     anyState &&
     !anyServerable &&
     tagExtra[kStaticBody] &&
-    !tagExtra[kTagVar] &&
+    !tagExtra[kChildOffsetScopeBinding] &&
     !inStatefulBranch(getKnownTagSection(tagExtra))
   ) {
     return { skipsPatchRender: true };
