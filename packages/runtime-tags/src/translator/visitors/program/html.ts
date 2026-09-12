@@ -255,7 +255,7 @@ export default {
             // Lazy sites wire their load (and channel) as construct inits;
             // a server-only site's child sits in the shell itself.
             for (const { site, load } of section.loadSites || []) {
-              if (load.serverOnly) continue;
+              if (load.sitesConstruct) continue;
               marker +=
                 (marker && " ") + getResumeRegisterId(section, site, "init");
             }

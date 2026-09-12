@@ -1,5 +1,3 @@
-import type { types as t } from "@marko/compiler";
-
 import { getAccessorPrefix } from "./get-accessor-enums";
 import { type Binding, kBranchSerializeReason } from "./references";
 import type { Section } from "./sections";
@@ -22,11 +20,11 @@ export function getBranchSectionAccessor(
   };
 }
 
-// Expressions upstream of a branch (a condition, collection, renderer),
-// across every program in the compile.
-const branchUpstreams = new WeakSet<t.NodeExtra>();
-export function isBranchUpstream(extra: t.NodeExtra) {
-  return branchUpstreams.has(extra);
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    /** Upstream of a branch: its condition, collection, or renderer. */
+    branchUpstream?: true;
+  }
 }
 
 export function initBranchSection(
@@ -37,7 +35,7 @@ export function initBranchSection(
   bodySection.isBranch = true;
   bodySection.upstreamExpression = upstreamExpression;
   bodySection.sectionAccessor = sectionAccessor;
-  if (upstreamExpression) branchUpstreams.add(upstreamExpression);
+  if (upstreamExpression) upstreamExpression.branchUpstream = true;
 }
 
 // The branch id rides the always-rendered resume marker and a state-fed

@@ -161,7 +161,7 @@ export function resolveStructure(section: Section) {
           break;
         case StructureKind.Child: {
           // A lazy site composes its child only when a flush constructs it.
-          const composed = html && op.load?.serverOnly;
+          const composed = html && op.load?.sitesConstruct;
           const renderer = op.load && !composed ? undefined : op.renderer;
           if (composed) {
             // The walk steps over the site's marker into the composed child;
