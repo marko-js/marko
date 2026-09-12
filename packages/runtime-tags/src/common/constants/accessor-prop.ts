@@ -29,8 +29,7 @@ export const TagVariableChange = "U";
 // Past `Z` the run continues two-lettered (still dot-accessible; no prefixed
 // key matches, accessors being lowercase).
 export const PatchChanged = "AA";
-export const PatchSetup = "AB";
-export const ReadyId = "AC";
+export const ReadyId = "AB";
 
 type Self = typeof import("./accessor-prop");
 export type Value = Self[keyof Self];

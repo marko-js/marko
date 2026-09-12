@@ -27,7 +27,6 @@ export const Subscriptions = "#Subscriptions";
 export const TagVariable = "#TagVariable";
 export const TagVariableChange = "#TagVariableChange";
 export const PatchChanged = "#PatchChanged";
-export const PatchSetup = "#PatchSetup";
 export const ReadyId = "#ReadyId";
 
 type Self = typeof import("./accessor-prop.debug");

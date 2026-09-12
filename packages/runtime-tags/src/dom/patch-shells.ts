@@ -28,18 +28,12 @@ declare module "./resume" {
 // it even when no client control flow does.
 const _content = /*@__PURE__*/ withBranches(content);
 
-// A branch stashes its setup for the shell's first render; a scope this
-// flush created (`Gen` since the flush's run, met while constructing) has
-// no render coming, so its setup applies now.
+// A scope this flush created (`Gen` since the flush's run, met while
+// constructing) has no render coming, so its setup applies now; a fresh
+// branch's queued shell setup runs after, over the applied values.
 patchers[PatchKey.Setup] = (scope, _key, value) => {
-  if (
-    constructing &&
-    scope[AccessorProp.Gen] >= patchRun &&
-    scope[AccessorProp.ClosestBranch] !== scope
-  ) {
+  if (constructing && scope[AccessorProp.Gen] >= patchRun) {
     patchConstruct(value, scope);
-  } else {
-    scope[AccessorProp.PatchSetup] = value;
   }
 };
 // Ids the flush asks a fresh scope to run, in the shell's grammar
@@ -94,15 +88,7 @@ export const registerShell = (shell: string) => {
   shells[idToken.slice(0, sep)] = [
     shell.slice(second + 1),
     shell.slice(first + 1, second),
-    resolved
-      ? (branch: Scope) => {
-          if (branch[AccessorProp.PatchSetup]) {
-            patchConstruct(branch[AccessorProp.PatchSetup] as Scope, branch);
-            branch[AccessorProp.PatchSetup] = 0;
-          }
-          runSetupIds(resolved, branch);
-        }
-      : 0,
+    resolved ? (branch: Scope) => runSetupIds(resolved, branch) : 0,
   ];
   return idToken.slice(0, sep);
 };
