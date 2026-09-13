@@ -8,6 +8,7 @@ import { flush, resolveAfter, wait } from "../../utils/resolve";
 export const config: TestConfig = {
   persisted: true,
   expect_rejection: true,
+  patch_while_streaming: true,
   steps: () => [
     { msg: "a", promise: resolveAfter(2) },
     { msg: "b", promise: resolveAfter(2) },
