@@ -103,6 +103,9 @@ export type TestConfig = {
    * leave state a fresh render lacks, or an input no document can serialize),
    * so patches compare against the initial document instead. */
   skip_fresh_render?: boolean;
+  /** Persisted: applies a step's patch while the document is still
+   * streaming; by default the remaining flushes land first. */
+  patch_while_streaming?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -460,6 +463,14 @@ function testFixtures(interop?: true) {
             for (let i = config.entry_delay || 0; i && hasFlush; i--) {
               hasFlush = flushNext();
             }
+            const drainFlushes = async () => {
+              while (hasFlush) {
+                await resolveAfter(0, 1);
+                tracker.beginUpdate();
+                await flushAndRun();
+                tracker.logUpdate();
+              }
+            };
 
             for (const group of logs) {
               for (const { type, args } of group) {
@@ -479,7 +490,6 @@ function testFixtures(interop?: true) {
             // server would render for the same input, every applied patch
             // must leave the DOM as a fresh render of that input would.
             let diverged = false;
-            const freshRenders = !hasFlush && !config.skip_fresh_render;
             // The document for a step's input: what the step's patch must
             // cost less than, diverged or not.
             const renderFresh = async (input: Input) => {
@@ -540,6 +550,12 @@ function testFixtures(interop?: true) {
               },
               onInput: persisted
                 ? async (input, betweenFlushes) => {
+                    // A navigation follows the delivered document unless the
+                    // fixture wants the race with a still-streaming one.
+                    if (hasFlush && !config.patch_while_streaming) {
+                      await drainFlushes();
+                    }
+                    const freshRenders = !hasFlush && !config.skip_fresh_render;
                     tracker.beginUpdate();
                     let applied = true;
                     const flushes: string[] = [];
@@ -596,13 +612,7 @@ function testFixtures(interop?: true) {
               );
             }
 
-            while (hasFlush) {
-              await resolveAfter(0, 1);
-              tracker.beginUpdate();
-              await flushAndRun();
-              tracker.logUpdate();
-            }
-
+            await drainFlushes();
             tracker.cleanup();
 
             return { browser, tracker, chunks, patches, freshDocs };
