@@ -8,7 +8,7 @@ import {
   type Scope,
 } from "../common/types";
 import { insertChildNodes } from "./dom";
-import { getShellContent, type Shell, shells } from "./patch-shells";
+import { getContent } from "./patch-shells";
 import { createAndSetupBranch } from "./renderer";
 import { withCreating, patchers, patchScope } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
@@ -59,7 +59,7 @@ patchers[PatchKey.Branch] = (scope, key, entry) => {
     patchScope(branchPartial, liveBranch as Scope);
   } else {
     // Every branch on the patch path ships a shell (`buildShells`).
-    create(scope, branchKey, branchPartial, shells[shellId!]);
+    create(scope, branchKey, branchPartial, shellId!);
   }
 };
 
@@ -67,7 +67,7 @@ function create(
   scope: Scope,
   branchKey: Accessor,
   branchPartial: Scope,
-  shell: Shell,
+  shellId: string,
 ) {
   const liveBranch = scope[branchKey] as BranchScope | undefined;
   if (liveBranch) {
@@ -84,7 +84,7 @@ function create(
     : (marker.parentNode as Element);
   const branch = createAndSetupBranch(
     scope[AccessorProp.Global],
-    getShellContent(shell),
+    getContent(shellId)!,
     scope,
     parentNode,
   );
