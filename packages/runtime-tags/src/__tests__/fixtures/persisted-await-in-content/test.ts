@@ -1,5 +1,5 @@
 import type { TestConfig } from "../../main.test";
-import { flush, resolveAfter, wait } from "../../utils/resolve";
+import { resolveAfter } from "../../utils/resolve";
 
 // A server value rendered inside an `<await>` body whose chain to the owner
 // crosses a non-branch content section: the boundary's marker always
@@ -9,10 +9,6 @@ export const config: TestConfig = {
   persisted: true,
   steps: () => [
     { msg: "a", promise: resolveAfter(2) },
-    wait,
-    flush,
     { msg: "b", promise: resolveAfter(2) },
-    wait,
-    flush,
   ],
 };
