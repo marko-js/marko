@@ -17,7 +17,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason($sg__input);
+			_set_serialize_reason($sg__input << 1);
 			const $childScope = _peek_scope_id();
 			render_input_default({ data: input });
 			_scope($scope1_id, { "#childScope/0": _serialize_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/tags/my-box.marko", "8:4");

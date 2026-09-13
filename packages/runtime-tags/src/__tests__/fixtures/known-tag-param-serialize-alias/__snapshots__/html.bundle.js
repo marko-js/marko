@@ -11,10 +11,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a2", $sg__input_a || $sg__b);
 		_scope($scope1_id, { e: input.a });
 	}, $scope0_id) };
-	_set_serialize_reason({
-		0: _serialize_guard($scope0_reason, 1),
-		1: _serialize_guard($scope0_reason, 2)
-	});
+	_set_serialize_reason(_serialize_guard($scope0_reason, 1) << 1 | _serialize_guard($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id();
 	Child.content({
 		a: input.a,

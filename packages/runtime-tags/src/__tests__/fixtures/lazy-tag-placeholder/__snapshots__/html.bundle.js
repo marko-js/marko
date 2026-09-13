@@ -16,7 +16,7 @@ var template_default = _template("b", (input) => {
 	_try($scope0_id, "a", _content_resume("b1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_set_serialize_reason(1);
+		_set_serialize_reason(2);
 		const $childScope = _peek_scope_id();
 		$Child_withLoadAssets({ value: count });
 		_subscribe($count__closures, _scope($scope1_id, {

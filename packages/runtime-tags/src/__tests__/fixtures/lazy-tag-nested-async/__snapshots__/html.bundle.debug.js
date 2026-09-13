@@ -23,7 +23,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_await($scope0_id, "#text/2", resolveAfter(10, 1), (value) => {
 		const $scope1_id = _scope_id();
 		_html(`<span id=child-await>${_escape(value)}</span>`);
-		_set_serialize_reason(1);
+		_set_serialize_reason(2);
 		const $childScope = _peek_scope_id();
 		$GrandChild_withLoadAssets({ value: count });
 		_subscribe($count__closures, _scope($scope1_id, {

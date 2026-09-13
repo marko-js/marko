@@ -12,7 +12,7 @@ var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let value = 0;
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value });
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "c")}`);

@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = true;
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	let $item;
 	$item = attrTag({ content: _content("a0", (y) => {
 		const $scope1_reason = _scope_reason(), $sg__y = _serialize_guard($scope1_reason, 0);

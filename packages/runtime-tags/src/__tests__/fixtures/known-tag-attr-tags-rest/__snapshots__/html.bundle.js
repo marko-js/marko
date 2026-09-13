@@ -17,12 +17,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { title, ...rest } = input;
 	_html(`<h1>${_text_resume($scope0_id, "a", title, $sg__input_title)}</h1>`);
-	_set_serialize_reason({
-		0: $sg__rest,
-		1: $sg__rest,
-		2: $sg__rest,
-		3: $sg__rest
-	});
+	_set_serialize_reason($sg__rest << 1 | $sg__rest << 3 | $sg__rest << 5 | $sg__rest << 7);
 	const $childScope = _peek_scope_id();
 	inner_default({ stuff: rest });
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _serialize_if($scope0_reason, 2) && _existing_scope($childScope) });
@@ -34,7 +29,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let cond = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(10);
+	_set_serialize_reason(34);
 	let $cond;
 	$cond = attrTag({ a: 1 });
 	const $childScope = _peek_scope_id();

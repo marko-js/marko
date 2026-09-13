@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<div>Hello ${_text_resume($scope1_id, "#text/0", name, $sg__name * 2)} ${_text_resume($scope1_id, "#text/1", count, $sg__count * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "6:2");
 	}, $scope0_id) };
-	_set_serialize_reason(10);
+	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
 	MyTag.content({
 		name: "Ryan",

@@ -10,10 +10,10 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	let n = 2;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(42);
 	const $childScope = _peek_scope_id();
 	Wrap.content([void 0, n]);
-	_set_serialize_reason(1);
+	_set_serialize_reason(42);
 	const $childScope2 = _peek_scope_id();
 	Wrap.content([n, 10]);
 	_script($scope0_id, "a1");

@@ -6,7 +6,7 @@ const $content = (input) => {
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason($sg__input_depth);
+			_set_serialize_reason($sg__input_depth << 1);
 			const $childScope = _peek_scope_id();
 			$content({ depth: input.depth - 1 });
 			$si__input_depth && _scope($scope1_id, {
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 2;
 	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	tree_default({ depth: n });
 	_script($scope0_id, "a0");

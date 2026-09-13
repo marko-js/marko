@@ -11,11 +11,7 @@ const $content = (input) => {
 		_if(() => {
 			if (comment.comments) {
 				const $scope2_id = _scope_id();
-				_set_serialize_reason({
-					0: $sg__input_comments__OR__input_path,
-					1: $sg__input_comments,
-					2: _serialize_guard($scope0_reason, 2)
-				});
+				_set_serialize_reason($sg__input_comments__OR__input_path << 1 | $sg__input_comments << 3 | _serialize_guard($scope0_reason, 2) << 5);
 				const $childScope = _peek_scope_id();
 				$content({
 					comments: comment.comments,
@@ -46,11 +42,7 @@ var comments_default = _template("b", $content);
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_comments__OR__input_path = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason({
-		0: $sg__input_comments__OR__input_path,
-		1: _serialize_guard($scope0_reason, 1),
-		2: _serialize_guard($scope0_reason, 2)
-	});
+	_set_serialize_reason($sg__input_comments__OR__input_path << 1 | _serialize_guard($scope0_reason, 1) << 3 | _serialize_guard($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id();
 	comments_default(input);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });

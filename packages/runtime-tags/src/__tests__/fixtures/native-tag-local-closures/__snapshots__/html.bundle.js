@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		}, 0, $scope1_id, "a", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	let $item;
 	forUntil(size, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content_resume("a2", () => {

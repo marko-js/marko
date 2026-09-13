@@ -12,7 +12,7 @@ var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { first, group: { keep, ...rest } } = input;
 	_html(`<p>${_text_resume($scope0_id, "#text/0", first, $sg__input_first)} ${_text_resume($scope0_id, "#text/1", keep, $sg__input_group_keep * 2)}</p>`);
-	_set_serialize_reason($sg__rest);
+	_set_serialize_reason($sg__rest << 1);
 	const $childScope = _peek_scope_id();
 	leaf_default({ data: rest });
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/2": _serialize_if($scope0_reason, 3) && _existing_scope($childScope) }, "__tests__/tags/mid.marko", 0);
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 1;
 	_html(`<button>inc ${_text_resume($scope0_id, "#text/1", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(26);
+	_set_serialize_reason(162);
 	const $childScope = _peek_scope_id();
 	mid_default({
 		first: "f",

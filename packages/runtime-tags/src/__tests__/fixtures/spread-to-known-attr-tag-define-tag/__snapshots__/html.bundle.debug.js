@@ -19,10 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Wrap = { content: _content("__tests__/template.marko_2*content", ({ class: _class, ...rest }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $sg___class__OR__rest_option = _serialize_guard($scope2_reason, 0);
-		_set_serialize_reason({
-			0: $sg___class__OR__rest_option,
-			1: _serialize_guard($scope2_reason, 1)
-		});
+		_set_serialize_reason($sg___class__OR__rest_option << 1 | _serialize_guard($scope2_reason, 1) << 3);
 		const $childScope = _peek_scope_id();
 		Child.content({
 			class: _class,

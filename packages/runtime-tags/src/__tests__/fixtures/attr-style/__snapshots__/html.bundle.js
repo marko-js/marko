@@ -25,10 +25,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_color = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_style({ color: input.color })}></div>${_el_resume($scope0_id, "a", $sg__input_color)}<div style=width:100px></div><div style="color: green"></div><div${input.color ? " style=color:red" : ""}></div>${_el_resume($scope0_id, "b", $sg__input_color)}`);
-	_set_serialize_reason({
-		0: $sg__input_color,
-		2: $sg__input_color
-	});
+	_set_serialize_reason($sg__input_color << 1 | $sg__input_color << 5);
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ style: { color: input.color } });
 	custom_tag_default({ style: { width: "100px" } });

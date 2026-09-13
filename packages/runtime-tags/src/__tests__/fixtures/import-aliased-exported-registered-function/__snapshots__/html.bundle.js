@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	let quiet = whisper;
 	let message = "Hello";
 	_html(`<button>shout</button>${_el_resume($scope0_id, "a")}<button>whisper</button>${_el_resume($scope0_id, "b")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	greeting_default({ message });
 	_script($scope0_id, "a0");

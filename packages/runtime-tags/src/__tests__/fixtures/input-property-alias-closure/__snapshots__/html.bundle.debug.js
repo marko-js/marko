@@ -11,10 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:1");
 	}, $scope0_id) };
 	const { text } = input;
-	_set_serialize_reason({
-		0: $sg__input_text2,
-		1: $sg__input_text2
-	});
+	_set_serialize_reason($sg__input_text2 << 1 | $sg__input_text2 << 3);
 	const $childScope = _peek_scope_id();
 	Child.content({
 		text: input.text,

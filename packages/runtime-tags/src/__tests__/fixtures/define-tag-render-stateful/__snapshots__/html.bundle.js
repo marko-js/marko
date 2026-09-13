@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		_html(`<div>Hello ${_text_resume($scope1_id, "a", name, $sg__name * 2)} ${_text_resume($scope1_id, "b", count, $sg__count * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
-	_set_serialize_reason(10);
+	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
 	MyTag.content({
 		name: "Ryan",

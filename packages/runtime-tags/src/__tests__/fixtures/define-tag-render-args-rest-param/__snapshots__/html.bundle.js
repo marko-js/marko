@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		_html(`<div>${_text_resume($scope1_id, "a", a, $sg__a)}|${_text_resume($scope1_id, "b", JSON.stringify(rest), $sg__rest * 2)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
-	_set_serialize_reason(1);
+	_set_serialize_reason(42);
 	const $childScope = _peek_scope_id();
 	MyTag.content(x, "two", "three");
 	_html(`<button>${_text_resume($scope0_id, "c", x)}</button>${_el_resume($scope0_id, "b")}`);

@@ -82,9 +82,10 @@ combined work becomes relevant.
 
 Across known tags, `finalizeParamSerializeReasonGroups()` groups child parameter
 dependencies. The parent calls `_set_serialize_reason(...)`; the child consumes
-and clears it with `_scope_reason()`. HTML runtime encoding is `1` for all,
-`0`/missing for none, a bitmask from bit 1 for static groups, or a keyed object
-for dynamic guards. `serialize-guard.ts` emits/hoists `_serialize_if` and
+and clears it with `_scope_reason()`. HTML runtime encoding is two bits per
+group at `1 + 2 * group` (the low bit says the group serializes; a dynamic
+guard shifts into its place), a keyed object of group values past fifteen
+groups, or none. `serialize-guard.ts` emits/hoists `_serialize_if` and
 `_serialize_guard` calls.
 
 ### Signal lowering

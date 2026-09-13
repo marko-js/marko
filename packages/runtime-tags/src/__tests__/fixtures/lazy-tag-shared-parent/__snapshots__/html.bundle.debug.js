@@ -12,7 +12,7 @@ const $Child_withLoadAssets$1 = withLoadAssets(child_default, "ready:__tests__/t
 var parent_a_default = _template("__tests__/tags/parent-a.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason($sg__input_value);
+	_set_serialize_reason($sg__input_value << 1);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets$1({ value: input.value });
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/tags/parent-a.marko", 0);
@@ -23,7 +23,7 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/tag
 var parent_b_default = _template("__tests__/tags/parent-b.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason($sg__input_value);
+	_set_serialize_reason($sg__input_value << 1);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value * 2 });
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/tags/parent-b.marko", 0);
@@ -35,10 +35,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let value = 1;
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	parent_a_default({ value });
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope2 = _peek_scope_id();
 	parent_b_default({ value });
 	_script($scope0_id, "__tests__/template.marko_0");

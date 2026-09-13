@@ -32,10 +32,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const { c, d, e, f, g, h } = input;
 	_html(`<div class=${$class[(c ? 1 : 0) + (d ? 2 : 0)]}></div>${_el_resume($scope0_id, "a", $sg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${c ? " class=active" : ""}></div>${_el_resume($scope0_id, "b", $sg__input_c)}<div${_attr_class("base" + (c ? " c" : "") + (d ? " d" : "") + (e ? " e" : "") + (f ? " f" : "") + (g ? " g" : "") + (h ? " h" : ""))}></div>${_el_resume($scope0_id, "c", $sg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
-	_set_serialize_reason({
-		0: $sg__input_c__OR__input_d,
-		2: $sg__input_c__OR__input_d
-	});
+	_set_serialize_reason($sg__input_c__OR__input_d << 1 | $sg__input_c__OR__input_d << 5);
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ class: ["a", {
 		b: c,

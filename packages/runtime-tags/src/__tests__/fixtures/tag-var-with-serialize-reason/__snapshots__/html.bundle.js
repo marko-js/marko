@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	child_default({ value: count });
 	_var($scope0_id, "d", $childScope, "a0");

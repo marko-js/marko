@@ -7,10 +7,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (input.bar) {
 				const $scope2_id = _scope_id();
-				_set_serialize_reason({
-					0: $sg__input_bar,
-					2: $sg__input_bar
-				});
+				_set_serialize_reason($sg__input_bar << 1 | $sg__input_bar << 5);
 				const $childScope = _peek_scope_id();
 				Foo.content({ message: input.bar });
 				$si__input_bar && _scope($scope2_id, {

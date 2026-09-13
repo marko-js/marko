@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_await($scope3_id, "#text/0", resolveAfter("inner", 4), (inner) => {
 					const $scope4_id = _scope_id();
 					_script($scope4_id, "__tests__/template.marko_4_clicks#3/pending");
-					_set_serialize_reason(1);
+					_set_serialize_reason(2);
 					const $childScope = _peek_scope_id();
 					note_default({ label: `${inner} ${clicks}` });
 					_scope($scope4_id, {

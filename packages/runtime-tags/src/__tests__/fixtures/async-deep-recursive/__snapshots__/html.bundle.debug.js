@@ -13,7 +13,7 @@ const $content = (input) => {
 				_await($scope2_id, "#text/0", resolveAfter(0), () => {
 					const $scope3_id = _scope_id();
 					$si__input_level && _script($scope3_id, "__tests__/tags/recurse.marko_3_input_level#3/pending", $sg__input_level);
-					_set_serialize_reason($sg__input_level);
+					_set_serialize_reason($sg__input_level << 1);
 					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
 					$si__input_level && _scope($scope3_id, {

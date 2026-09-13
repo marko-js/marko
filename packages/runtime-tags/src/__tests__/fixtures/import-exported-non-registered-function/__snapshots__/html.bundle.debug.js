@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let message = "hello";
 	_html(`<button>add</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	greeting_default({ message: shout(message) });
 	_script($scope0_id, "__tests__/template.marko_0");

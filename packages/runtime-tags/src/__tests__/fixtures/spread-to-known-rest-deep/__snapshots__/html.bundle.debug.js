@@ -11,7 +11,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_value__OR__rest_class = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { value, ...rest } = input;
-	_set_serialize_reason($sg__input_value__OR__rest_class);
+	_set_serialize_reason($sg__input_value__OR__rest_class << 1);
 	const $childScope = _peek_scope_id();
 	child_default({
 		value,
@@ -25,7 +25,7 @@ var wrap_outer_default = _template("__tests__/tags/wrap-outer.marko", (input) =>
 	const $scope0_reason = _scope_reason(), $sg__rest_class = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { value, ...rest } = input;
-	_set_serialize_reason($sg__rest_class);
+	_set_serialize_reason($sg__rest_class << 1);
 	const $childScope = _peek_scope_id();
 	wrap_default({
 		value: "abcd",
