@@ -3,7 +3,7 @@ const $template$1 = "";
 const $walks$1 = "";
 _shells({ "__tests__/tags/store.marko": "__tests__/tags/store.marko !," });
 var store_default = _template_persisted("__tests__/tags/store.marko", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	const $return = {
@@ -24,7 +24,7 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*shell !__tests__/template.marko_1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `0${_w0}&D lDb%l b`)(""), /*@__PURE__*/ ((_w0) => `${_w0}<p> </p><span>Seen <!></span><button>+</button>`)(""))
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -48,6 +48,6 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			});
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 0);
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, () => [store_default]);

@@ -62,7 +62,7 @@ import {
 import {
   getExprWriteOwnership,
   getSerializeGuard,
-  scopeReasonIdentifier,
+  scopePageIdentifier,
 } from "../util/serialize-guard";
 import {
   addSerializeExpr,
@@ -398,7 +398,7 @@ export default {
           let rootSection = tagSection;
           while (rootSection.parent) rootSection = rootSection.parent;
           statement = t.ifStatement(
-            scopeReasonIdentifier(rootSection),
+            scopePageIdentifier(rootSection),
             statement,
           );
         }

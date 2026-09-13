@@ -3,11 +3,11 @@ const $template$1 = "<input><em> </em>";
 const $walks$1 = " bD l";
 _shells({ "__tests__/tags/field/index.marko": "__tests__/tags/field/index.marko !__tests__/tags/field/index.marko_0; bD ;<input><em> </em>" });
 var field_default = _template_persisted("__tests__/tags/field/index.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", input.valueChange, 0, 0)}${_patch_control($scope0_id, "#input/0", 2, input.value, $scope0_owned, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", input.value, void 0, $scope0_owned, 1)}</em>`);
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", input.valueChange, 0, 0)}${_patch_control($scope0_id, "#input/0", 2, input.value, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", input.value, void 0, $scope0_reason, 1)}</em>`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		input_value: _source_if($scope0_reason, 2) && input.value,
 		input_valueChange: _source_if($scope0_reason, 0) && input.valueChange
 	}, "__tests__/tags/field/index.marko", 0, {
@@ -22,15 +22,14 @@ const $template = "<main><!><p> </p><button>+</button></main>";
 const $walks = "D%bD l l";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%bD l ;<main><!><p> </p><button>+</button></main>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let text = "hi";
 	let open = true;
 	_html("<main>");
-	if ($scope0_reason) _if(() => {
+	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			field_default({
 				value: text,
@@ -44,7 +43,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id, "#text/0");
 	_html(`<p>${_text_resume($scope0_id, "#text/1", text)}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		text,
 		open
 	}, "__tests__/template.marko", 0, {

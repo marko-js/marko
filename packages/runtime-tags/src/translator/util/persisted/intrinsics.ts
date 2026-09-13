@@ -1,8 +1,7 @@
-// Program-level runtime knowledge for persisted pages: child renderers,
-// `$global` reads, and the scope-reason runtime name.
+// Program-level runtime knowledge for persisted pages: child renderers
+// and `$global` reads.
 import type { types as t } from "@marko/compiler";
 
-import { isPersisted } from "../marko-config";
 import { createProgramState } from "../state";
 
 // Child renderers for the html intrinsics export; transitive global
@@ -33,10 +32,4 @@ declare module "@marko/compiler/dist/types" {
 
 export function getPersistedIntrinsics() {
   return getPersistedChildRenderers();
-}
-
-export function scopeReasonRuntime() {
-  return isPersisted()
-    ? ("_persisted_reason" as const)
-    : ("_scope_reason" as const);
 }

@@ -1157,8 +1157,8 @@ export function _unfilled_if(owned?: SerializeReasonValue, group?: number) {
   return fed & 1 || (fed && inUnpatched()) ? 1 : undefined;
 }
 
-// A reason: two bits per param-reason group at `1 + 2 * group` (the low
-// bit says the group serializes), a keyed object of group values, or none.
+// A reason: two bits per param-reason group at `1 + 2 * group` (client and
+// server contribute), a keyed object of group values, or none.
 export type SerializeReasonValue =
   | undefined
   | number
@@ -1168,42 +1168,21 @@ export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
 }
 
-// Replaces `_scope_reason` in persisted templates: a page render serializes
-// by the sources mask (none = fully), a patch only its own fills.
-export function _persisted_reason() {
-  const { state } = $chunk.boundary;
-  const reason = state.serializeReason;
-  state.serializeReason = undefined;
-  if (state.writesPatches) {
-    // The first persisted template of the render is the page root, about to
-    // allocate the next id — the flush names it as the walk's entry pair.
-    if (!state.rootScopeId) {
-      state.rootScopeId = _peek_scope_id();
-      // Globals re-ship with every flush (undefined included) so the live
-      // page's global object never reads stale.
-      const globals = getFilteredGlobals(state.$global, 1);
-      if (globals) {
-        patchPartial(state, state.rootScopeId)[PatchKey.Globals] = globals;
-      }
-    }
-    return undefined;
-  }
-  state.persisted = true;
-  // No mask is the all-server root default. A pass-through mask can compose
-  // to 0 at runtime: the scope and markers still pair, no group's values ship.
-  return reason === undefined ? 1 : reason || UNFED;
-}
-const UNFED: SerializeReasonValue = {};
-
-// The instance's sources mask (2 bits per group: client/server contribute;
-// `1` = all-server root default), read before `_persisted_reason` clears it.
-export function _persisted_ownership() {
-  return $chunk.boundary.state.serializeReason ?? 1;
+// A page render's resume payload rides this; a patch carries fills alone.
+export function _page_render() {
+  return $chunk.boundary.state.writesPatches ? undefined : 1;
 }
 
-// An absent mask is statically server-owned (the compiler emitted no args).
+// Every group client-fed, or every group server-fed: for a child whose
+// groups the caller cannot see (a dynamic tag, a persisted root).
+export const CLIENT_ALL = 0x2aaaaaaa;
+export const SERVER_ALL = 0x55555554;
+
+// A group's 2-bit sources value (client and server contribute). No mask
+// means no client contribution: server-fed, as for a write the compiler
+// emitted no ownership args for.
 export function maskGroup(mask: SerializeReasonValue, group: number) {
-  return mask === undefined || mask === 1
+  return mask === undefined
     ? 2
     : typeof mask === "number"
       ? (mask >>> (1 + 2 * group)) & 3
@@ -1222,15 +1201,21 @@ export function _client_guard(mask: SerializeReasonValue, group: number) {
   return maskGroup(mask, group) & 1 ? 1 : 0;
 }
 
-// Page-side group guards (patch renders have no reason): any contribution,
-// client or server, can change — the group's resume data serializes.
+// Page-side group guards (a patch serializes no resume data): any
+// contribution, client or server, can change — the group's data serializes.
 export function _source_if(mask: SerializeReasonValue, group: number) {
-  return mask && maskGroup(mask, group) ? 1 : undefined;
+  return !$chunk.boundary.state.writesPatches && maskGroup(mask, group)
+    ? 1
+    : undefined;
 }
 
-// An unfed instance still resumes its markers (patches pair on them).
+// An unfed instance (a mask composed to `0`) still resumes its markers,
+// since patches pair on them.
 export function _source_guard(mask: SerializeReasonValue, group: number) {
-  return mask && (mask === UNFED || maskGroup(mask, group)) ? 1 : 0;
+  return !$chunk.boundary.state.writesPatches &&
+    (mask === 0 || maskGroup(mask, group))
+    ? 1
+    : 0;
 }
 
 // A group's 2-bit value, composed into a child mask by pass-through.
@@ -1244,6 +1229,8 @@ export function _scope_reason() {
   return reason;
 }
 
+// Any contribution to the group means its resume data serializes; no mask
+// at all means the caller had nothing to serialize.
 export function _serialize_if(condition: SerializeReasonValue, key: number) {
   return condition && maskGroup(condition, key) ? 1 : undefined;
 }
@@ -2478,7 +2465,7 @@ function depsMarker(deps: Set<string> | null) {
 
 // `all` keeps undefined-valued keys: a patch must overwrite them, where a
 // resume elides.
-function getFilteredGlobals($global: Record<string, unknown>, all?: 1) {
+export function getFilteredGlobals($global: Record<string, unknown>, all?: 1) {
   if (!$global) return 0;
 
   const serializedGlobals = $global.serializedGlobals as

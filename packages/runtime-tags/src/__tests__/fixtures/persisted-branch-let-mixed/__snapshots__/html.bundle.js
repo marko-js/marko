@@ -4,7 +4,7 @@ _shells({
 	a0: "a0 !a1;Db%l ;<p>Seen <!></p><button class=inner>+</button>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<div><h1>${_text_resume($scope0_id, "a", input.title + " #0")}</h1><button class=root>+</button>${_el_resume($scope0_id, "b")}`);
@@ -18,11 +18,11 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { c: n });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 1);
+	}, $scope0_id, "c", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_html("</div>");
 	_script($scope0_id, "a2");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		f: input.title,
 		h: count
-	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.title);
 }, 1, 0);

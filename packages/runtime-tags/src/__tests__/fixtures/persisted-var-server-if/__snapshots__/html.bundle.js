@@ -2,7 +2,7 @@
 const $template = "<span>x2</span>";
 _shells({ b: "b,<span>x2</span>" });
 var doubler_default = _template_persisted("b", (input) => {
-	_persisted_reason();
+	_scope_reason();
 	_scope_id();
 	const double = input.value * 2;
 	_html("<span>x2</span>");
@@ -15,11 +15,11 @@ _shells({
 	a0: "a0 a4;Db%;<p>big <!></p>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_n = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_n = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_serialize_reason({ 0: _mask_group($scope0_owned, 0) });
+	_set_serialize_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
 	let double = doubler_default({ value: input.n });
@@ -32,10 +32,10 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, $sg__input_n, $sg__input_n, void 0, void 0, ["a0"], $scope0_owned, 0);
+	}, $scope0_id, "c", 1, $sg__input_n, $sg__input_n, void 0, void 0, ["a0"], $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		h: count,
 		a: _existing_scope($childScope)
 	});

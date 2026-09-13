@@ -3,13 +3,13 @@ const $template$1 = "<div class=card><h2> </h2><p> </p><button class=t> </button
 const $walks$1 = "E lD l D m";
 _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0;E lD l D ;<div class=card><h2> </h2><p> </p><button class=t> </button></div>" });
 var card_default = _template_persisted("__tests__/tags/card.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<div class=card><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h2><p>${_patch_text($scope0_id, "#text/1", input.note, void 0, $scope0_owned, 1)}</p><button class=t>${_text_resume($scope0_id, "#text/3", open ? "hide" : "show")}</button>${_el_resume($scope0_id, "#button/2")}</div>`);
+	_html(`<div class=card><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2><p>${_patch_text($scope0_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</p><button class=t>${_text_resume($scope0_id, "#text/3", open ? "hide" : "show")}</button>${_el_resume($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_value($scope0_id, "__tests__/tags/card.marko0", open, 1);
-	$scope0_reason && _scope($scope0_id, { open }, "__tests__/tags/card.marko", 0, { open: "1:6" });
+	$scope0_page && _scope($scope0_id, { open }, "__tests__/tags/card.marko", 0, { open: "1:6" });
 }, 0, 0);
 
 // template.marko
@@ -20,24 +20,18 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_serialize_reason({
-		0: _mask_group($scope0_owned, 3),
-		1: _mask_group($scope0_owned, 4)
-	});
+	_set_serialize_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 4) << 3);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	card_default(input.props);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason({
-				0: _mask_group($scope0_owned, 2),
-				1: _mask_group($scope0_owned, 2)
-			});
+			_set_serialize_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3);
 			const $childScope2 = _peek_scope_id();
 			_patch_child($scope1_id, "#childScope/0", $childScope2);
 			card_default({
@@ -50,10 +44,10 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
+	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`<button id=c>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		input_more: _source_if($scope0_reason, 1) && input.more,
 		count,
 		"#childScope/0": _existing_scope($childScope)

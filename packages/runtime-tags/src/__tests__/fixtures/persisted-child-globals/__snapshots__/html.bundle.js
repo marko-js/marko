@@ -1,21 +1,23 @@
 // tags/widget/index.marko
 _shells({ b: "b;D ;<em> </em>" });
 var widget_default = _template_persisted("b", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "a", $global().brand)}</em>`);
 	_global_subscribe("b0", $scope0_id);
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 }, 0, 1);
 
 // template.marko
 _shells({ a: "a !a0;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = true;
 	_html("<main>");
-	if ($scope0_reason) _if(() => {
+	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
 			const $childScope = _peek_scope_id();
@@ -26,5 +28,5 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && _scope($scope0_id, { c: show });
+	$scope0_page && _scope($scope0_id, { c: show });
 }, 1, () => [widget_default]);

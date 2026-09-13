@@ -2,7 +2,8 @@
 const $template = "<button class=bump>+</button>";
 _shells({ c: "c !c1; ;<button class=bump>+</button>" });
 var inner_default = _template_persisted("c", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 1;
 	_html(`<button class=bump>+</button>${_el_resume($scope0_id, "a")}`);
@@ -12,7 +13,7 @@ var inner_default = _template_persisted("c", (input) => {
 		n = v;
 	}, "c0", $scope0_id) || void 0);
 	_patch_value($scope0_id, "c0", n, 1);
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		b: n,
 		U: _resume(function(v) {
 			n = v;
@@ -24,7 +25,8 @@ var inner_default = _template_persisted("c", (input) => {
 // tags/widget/index.marko
 _shells({ b: /*@__PURE__*/ ((_w0, _w1) => `b !b1;${_w0};${_w1}`)(((_w0) => `0${_w0}&D l b`)(" b"), ((_w0) => `${_w0}<em> </em><button class=reset>r</button>`)($template)) });
 var widget_default = _template_persisted("b", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
@@ -32,17 +34,18 @@ var widget_default = _template_persisted("b", (input) => {
 	_var($scope0_id, "b", $childScope, "b0");
 	_html(`<em>${_text_resume($scope0_id, "c", v)}</em><button class=reset>r</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "b1");
-	$scope0_reason && _scope($scope0_id, { a: _existing_scope($childScope) });
+	$scope0_page && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 0, () => [inner_default]);
 
 // template.marko
 _shells({ a: "a !a0;D%b ;<main><!><button class=toggle>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = true;
 	_html("<main>");
-	if ($scope0_reason) _if(() => {
+	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
 			const $childScope = _peek_scope_id();
@@ -53,5 +56,5 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && _scope($scope0_id, { c: show });
+	$scope0_page && _scope($scope0_id, { c: show });
 }, 1, () => [widget_default]);

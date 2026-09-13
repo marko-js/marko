@@ -3,7 +3,6 @@ import { types as t } from "@marko/compiler";
 import { generateUid, getSharedUid } from "./generate-uid";
 import { isPersisted } from "./marko-config";
 import { forEach, type Opt, some } from "./optional";
-import { scopeReasonRuntime } from "./persisted/intrinsics";
 import { isBranchPathSection } from "./persisted/structure";
 import {
   getDebugNames,
@@ -34,7 +33,7 @@ interface SectionReasonState {
   if: TypeState;
   guard: TypeState;
   declarators: t.VariableDeclarator[];
-  owned?: true;
+  page?: true;
 }
 
 interface TypeState {
@@ -52,7 +51,7 @@ const [getSectionReasonState] = createSectionState<SectionReasonState>(
     declarators: [
       t.variableDeclarator(
         t.identifier(getSharedUid(`scope${section.id}_reason`, section)),
-        callRuntime(scopeReasonRuntime()),
+        callRuntime("_scope_reason"),
       ),
     ],
   }),
@@ -164,14 +163,10 @@ export function getExprIfSerialized<
 >(section: Section, reason: T, expr: t.Expression): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
     if (!reason) return undefined as R;
-    // A patch has no ordinary resume payload, so a statically serialized value
-    // rides the scope reason (`1` page / `undefined` patch); the root declares it.
+    // A patch has no ordinary resume payload, so a statically serialized
+    // value rides the page render's gate; the root declares it.
     if (isPersisted() && !section.parent) {
-      return t.logicalExpression(
-        "&&",
-        scopeReasonIdentifier(section),
-        expr,
-      ) as R;
+      return t.logicalExpression("&&", scopePageIdentifier(section), expr) as R;
     }
     return expr as R;
   }
@@ -183,7 +178,7 @@ export function getExprIfSerialized<
     while (rootSection.parent) rootSection = rootSection.parent;
     return t.logicalExpression(
       "&&",
-      scopeReasonIdentifier(rootSection),
+      scopePageIdentifier(rootSection),
       expr,
     ) as R;
   }
@@ -204,8 +199,8 @@ export function getValueIfSerialized(
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
-// The global dimension has no param slots: it is persisted-only, where the
-// scope reason itself is `1` for a page render and `undefined` for a patch.
+// The global dimension has no param slots: it is persisted-only, where a
+// page render serializes it and a patch re-ships every global instead.
 function getDynamicGuard(
   section: Section,
   reason: DynamicSerializeReason,
@@ -213,7 +208,9 @@ function getDynamicGuard(
 ) {
   const paramGuard = reason.param ? getOrHoist(reason, isGuard) : undefined;
   if (!reason.global) return paramGuard;
-  const globalGuard = scopeReasonIdentifier(getReasonSection(section));
+  const globalGuard = isPersisted()
+    ? scopePageIdentifier(getReasonSection(section))
+    : scopeReasonIdentifier(getReasonSection(section));
   return paramGuard
     ? t.logicalExpression("||", globalGuard, paramGuard)
     : globalGuard;
@@ -232,23 +229,18 @@ export function scopeReasonIdentifier(section: Section) {
   return t.identifier(getSharedUid(`scope${section.id}_reason`, section));
 }
 
-export function scopeOwnedIdentifier(section: Section) {
-  return t.identifier(getSharedUid(`scope${section.id}_owned`, section));
-}
-
-// The ownership mask local reads the ambient slot the parent set, so its
-// declarator leads the reason's (which clears that slot).
-function ensureScopeOwned(section: Section) {
+// A page render's gate: statically serialized values and structure a patch
+// never speaks ride it, so a flush carries fills alone.
+export function scopePageIdentifier(section: Section) {
   const state = getSectionReasonState(section);
-  if (!state.owned) {
-    state.owned = true;
-    state.declarators.unshift(
-      t.variableDeclarator(
-        scopeOwnedIdentifier(section),
-        callRuntime("_persisted_ownership"),
-      ),
+  const id = t.identifier(getSharedUid(`scope${section.id}_page`, section));
+  if (!state.page) {
+    state.page = true;
+    state.declarators.push(
+      t.variableDeclarator(t.cloneNode(id), callRuntime("_page_render")),
     );
   }
+  return id;
 }
 
 // Ownership args for an expression's write; a value fixed for the scope's
@@ -280,9 +272,8 @@ export function getPatchWriteOwnership(
   if (stable) return [t.numericLiteral(0), t.numericLiteral(0)];
   for (const [paramsSection, params] of groupParamsBySection(sources?.param)) {
     if (!paramsSection.parent) {
-      ensureScopeOwned(paramsSection);
       return [
-        scopeOwnedIdentifier(paramsSection),
+        scopeReasonIdentifier(paramsSection),
         withLeadingComment(
           t.numericLiteral(getParamReasonGroupIndex(paramsSection, params)),
           getDebugNames(params),
@@ -305,10 +296,9 @@ export function getOwnershipGroupValue(
   section: Section,
   params: NonNullable<Sources["param"]>,
 ) {
-  ensureScopeOwned(section);
   return callRuntime(
     "_mask_group",
-    scopeOwnedIdentifier(section),
+    scopeReasonIdentifier(section),
     withLeadingComment(
       t.numericLiteral(getParamReasonGroupIndex(section, params)),
       getDebugNames(params),

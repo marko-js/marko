@@ -3,12 +3,12 @@ const $template = "<div class=box> </div>";
 const $walks = " D l";
 _shells({ b: "b; D ;<div class=box> </div>" });
 var box_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const root = _el($scope0_id, "b0");
-	_html(`<div class=box>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_owned, 0)}</div>${_el_resume($scope0_id, "a")}`);
+	_html(`<div class=box>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}</div>${_el_resume($scope0_id, "a")}`);
 	const $return = root;
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 	return $return;
 }, 0, 0);
 
@@ -18,14 +18,14 @@ _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 !a2;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `0${_w0}& b`)($walks), /*@__PURE__*/ ((_w0) => `${_w0}<button id=read>read</button>`)($template))
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason({ 0: _mask_group($scope0_owned, 2) });
+			_set_serialize_reason(_mask_group($scope0_reason, 2) << 1);
 			const $childScope = _peek_scope_id();
 			_patch_child($scope1_id, "a", $childScope);
 			let el = box_default({ label: input.label });
@@ -40,10 +40,10 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 1);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_html(`<button id=c>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		g: _source_if($scope0_reason, 1) && input.label,
 		h: count
 	});

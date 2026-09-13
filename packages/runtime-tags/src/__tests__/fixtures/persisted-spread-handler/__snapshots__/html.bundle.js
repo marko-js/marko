@@ -4,7 +4,7 @@ _shells({
 	a1: "a1 !a2; ;<a>go</a>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -16,14 +16,14 @@ var template_default = _template_persisted("a", (input) => {
 				onClick: _resume(function() {
 					count++;
 				}, "a0", $scope1_id)
-			}, "a", $scope1_id, "a", void 0, $scope0_owned, 2)}>go</a>${_el_resume($scope1_id, "a")}`);
+			}, "a", $scope1_id, "a", void 0, $scope0_reason, 2)}>go</a>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a2");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 1);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_reason, 1);
 	_html(`<em>${_text_resume($scope0_id, "b", count)}</em></main>`);
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		f: input.attrs,
 		g: count
 	});

@@ -3,13 +3,13 @@ const $template$1 = "<section><!></section>";
 const $walks$1 = "D%l";
 _shells({ "__tests__/tags/frame.marko": "__tests__/tags/frame.marko;D%;<section><!></section>" });
 var frame_default = _template_persisted("__tests__/tags/frame.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0));
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</section>");
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
+	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -21,7 +21,7 @@ _shells({
 	"__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !__tests__/template.marko_0;${_w0};${_w1}`)(((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l"), ((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template$1, $template$1))
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_label = _source_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $si__input_label = _source_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $a__closures = new Set();
@@ -33,7 +33,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	frame_default({ content: _content_elide("__tests__/template.marko_1*content", () => {
-		const $scope1_reason = _persisted_reason();
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<p class=a>${_text_resume($scope1_id, "#text/0", input.label + ":" + a)}</p>`);
 		_subscribe($a__closures, _subscribe($si__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4")));
@@ -42,7 +42,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/1", $childScope2);
 	frame_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
-		const $scope2_reason = _persisted_reason();
+		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p class=b>${_text_resume($scope2_id, "#text/0", input.label + ":" + b)}</p>`);
 		_subscribe($b__closures, _subscribe($si__input_label && $input_label__closures, _scope($scope2_id, {
@@ -52,7 +52,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id) });
 	_html(`<button class=a>a</button>${_el_resume($scope0_id, "#button/2")}<button class=b>b</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,
 		a,
 		b,
@@ -65,5 +65,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		input_label: ["input.label"],
 		a: "1:6",
 		b: "2:6"
-	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
 }, 1, () => [frame_default]);

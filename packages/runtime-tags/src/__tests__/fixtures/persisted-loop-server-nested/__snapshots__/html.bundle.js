@@ -1,13 +1,13 @@
 // template.marko
 _shells({ a: "a !a0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_list = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_list = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let items = ["a"];
 	_html("<main>");
-	if ($scope0_reason) _for_of(items, (item) => {
+	if ($scope0_page) _for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		if ($scope0_reason) _for_of(input.list, (s) => {
+		if ($scope0_page) _for_of(input.list, (s) => {
 			const $scope2_id = _scope_id();
 			_html(`<li>${_text_resume($scope2_id, "a", item)}${_text_resume($scope2_id, "b", s, 2)}</li>`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
@@ -16,8 +16,8 @@ var template_default = _template_persisted("a", (input) => {
 	}, 0, $scope0_id, "a");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		e: input.list,
 		f: items
-	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.list);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.list);
 }, 1, 0);

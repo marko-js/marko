@@ -3,7 +3,7 @@ const $template = "<div></div><section></section><span></span>";
 const $walks = " b b b";
 _shells({ "__tests__/template.marko": "__tests__/template.marko; b b ;<div></div><section></section><span></span>" });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	_patch_dynamic_tag($scope0_id, "#div/0", undefined, 0, 0, 0);

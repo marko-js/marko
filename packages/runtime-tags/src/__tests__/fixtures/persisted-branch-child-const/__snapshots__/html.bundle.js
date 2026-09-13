@@ -2,10 +2,10 @@
 const $template = "<section><h2> </h2></section>";
 _shells({ b: "b;E ;<section><h2> </h2></section>" });
 var card_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h2></section>`);
-	$scope0_reason && _scope($scope0_id, {});
+	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2></section>`);
+	$scope0_page && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -14,7 +14,7 @@ _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("E m"), $template)
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -27,7 +27,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 0);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 }, 1, () => [card_default]);

@@ -1,13 +1,13 @@
 // tags/wrap/index.marko
 _shells({ b: "b;D%;<div><!></div>" });
 var wrap_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	const $tag = input.content;
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</div>");
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -16,19 +16,18 @@ _shells({
 	a: "a !a1; b%;<button>inc</button><!><!>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_reason) _if(() => {
+	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			wrap_default({ content: _content_elide("a0", () => {
-				_persisted_reason();
+				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_resume($scope2_id, "a", input.msg + ":0")}</span>`);
 				_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 0) && $input_msg__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
@@ -38,10 +37,10 @@ var template_default = _template_persisted("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a1");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		e: input.msg,
 		f: count,
 		g: $input_msg__closures,
 		h: $count__closures
-	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.msg);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.msg);
 }, 1, () => [wrap_default]);

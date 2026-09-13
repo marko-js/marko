@@ -65,8 +65,11 @@ _Avoid_: lifecycle hook, arbitrary JavaScript side effect
 **Serialize reason**:
 Why a section, scope property, marker, or registration must reach the browser.
 `true` and state-backed `Sources` are unconditional; parameter-only sources
-produce per-call guards; absence means omit.
-_Avoid_: serialization flag, serialized value
+produce per-call guards; absence means omit. At a call site it is one runtime
+value for plain and persisted templates: two bits per param-reason group,
+client contributes and server contributes; a persisted template reads the
+pair as the group's ownership.
+_Avoid_: serialization flag, serialized value, ownership mask as a second value
 
 ## DOM runtime
 

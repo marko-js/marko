@@ -37,6 +37,7 @@ import {
   isInResumedBranch,
   _client_guard,
   _filled_guard,
+  getFilteredGlobals,
   patchPartial,
   writeEmbeddedBinds,
   openPatchPartial,
@@ -63,9 +64,15 @@ export function _template_persisted(
   page?: 0 | 1,
   intrinsics?: Intrinsics,
 ) {
-  const template = _template(templateId, renderer, page as 1) as Template &
-    ServerRenderer &
-    WithIntrinsics;
+  // A page render of persisted templates tracks unpatched context.
+  const template = _template(
+    templateId,
+    ((input) => {
+      getState().persisted = true;
+      return renderer(input);
+    }) as ServerRenderer,
+    page as 1,
+  ) as Template & ServerRenderer & WithIntrinsics;
   template.patch = renderPatch;
   if (intrinsics !== undefined) template[kIntrinsics] = intrinsics;
   return template;
@@ -112,7 +119,25 @@ export function renderPatch(
   this: Template & ServerRenderer,
   input: TemplateInput = {},
 ): RenderedTemplate {
-  return startRender(this, input, PatchState);
+  // The page root is about to allocate the first id: the flush names it
+  // as the walk's entry pair, and globals re-ship with every flush
+  // (undefined included) so the live page's global object never reads stale.
+  const root = Object.assign(
+    (input: TemplateInput) => {
+      const state = getState();
+      state.rootScopeId = _peek_scope_id();
+      const globals = getFilteredGlobals(state.$global, 1);
+      if (globals) {
+        patchPartial(state, state.rootScopeId)[PatchKey.Globals] = globals;
+      }
+      return this(input);
+    },
+    {
+      [RendererProp.Embed]: this[RendererProp.Embed],
+      [RendererProp.Id]: this[RendererProp.Id],
+    },
+  ) as unknown as typeof this;
+  return startRender(root, input, PatchState);
 }
 
 // Serialize guards stay unset so the compiled resume payload drops at the

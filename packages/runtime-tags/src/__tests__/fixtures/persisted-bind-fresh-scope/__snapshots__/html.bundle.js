@@ -1,7 +1,7 @@
 // tags/store.marko
 _shells({ b: "b !," });
 var store_default = _template_persisted("b", (input) => {
-	_persisted_reason();
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	const $return = {
@@ -20,7 +20,7 @@ _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 !a2;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `0${_w0}&D lDb%l b`)(""), /*@__PURE__*/ ((_w0) => `${_w0}<p> </p><span>Seen <!></span><button>+</button>`)(""))
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -41,6 +41,6 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 0);
-	$scope0_reason && _scope($scope0_id, {});
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, {});
 }, 1, () => [store_default]);

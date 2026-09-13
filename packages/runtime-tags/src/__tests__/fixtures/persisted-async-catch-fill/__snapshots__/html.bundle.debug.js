@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -16,23 +16,23 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	_html("<main>");
 	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _persisted_reason();
+		const $scope2_reason = _scope_reason();
 		_await($scope2_id, "#text/0", input.promise, (value) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_owned, 1)}</em>`);
+			_html(`<em>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "4:6");
 		}, 1, "__tests__/template.marko_2_#text#0/await", 1);
-		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
-		$scope0_reason && _resume_branch($scope2_id);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+		$scope0_page && _resume_branch($scope2_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_1*content", (err) => {
-		const $scope1_reason = _persisted_reason();
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_resume($scope1_id, "#text/0", input.title)} ${_text_resume($scope1_id, "#text/1", err.message, 2)}</p>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"));
 	}, $scope0_id) }) }, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
 		n,
 		"ClosureScopes:input_title": $input_title__closures,
@@ -40,5 +40,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		n: "1:6"
-	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
 }, 1, 0);

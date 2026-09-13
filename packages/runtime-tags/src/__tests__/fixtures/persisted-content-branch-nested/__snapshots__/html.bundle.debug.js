@@ -3,12 +3,12 @@ const $template$1 = "<p> </p><!><!>";
 const $walks$1 = "D l%c";
 _shells({ "__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.marko;D l%;<p> </p><!><!>" });
 var widget_default = _template_persisted("__tests__/tags/widget/index.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_owned, 0)}</p>`);
+	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p>`);
 	const $tag = input.content;
-	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1));
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
+	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_reason, 1));
+	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -21,7 +21,7 @@ _shells({
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1), /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1))
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_b = _source_guard($scope0_reason, 4), $sg__input_a = _source_guard($scope0_reason, 3), $si__input_a__OR__input_b = _source_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_b = _source_guard($scope0_reason, 4), $scope0_page = _page_render(), $sg__input_a = _source_guard($scope0_reason, 3), $si__input_a__OR__input_b = _source_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = new Set();
 	const $input_label__closures = new Set();
@@ -33,32 +33,32 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_if(() => {
 				if (input.b) {
 					const $scope2_id = _scope_id();
-					_set_serialize_reason({ 0: _mask_group($scope0_owned, 5) });
+					_set_serialize_reason(_mask_group($scope0_reason, 5) << 1);
 					const $childScope = _peek_scope_id();
 					_patch_child($scope2_id, "#childScope/0", $childScope);
 					widget_default({
 						label: input.label,
 						content: _content_elide("__tests__/template.marko_3*content", () => {
-							const $scope3_reason = _persisted_reason();
+							const $scope3_reason = _scope_reason();
 							const $scope3_id = _scope_id();
-							_html(`<em>${_patch_text($scope3_id, "#text/0", input.text, void 0, $scope0_owned, 6)}</em>`);
-							_subscribe(_unfilled_if($scope0_owned, 6) && $input_text__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"));
+							_html(`<em>${_patch_text($scope3_id, "#text/0", input.text, void 0, $scope0_reason, 6)}</em>`);
+							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"));
 						}, $scope2_id)
 					});
-					_subscribe(_unfilled_if($scope0_owned, 5) && $input_label__closures, _scope($scope2_id, {
+					_subscribe(_unfilled_if($scope0_reason, 5) && $input_label__closures, _scope($scope2_id, {
 						_: _scope_with_id($scope1_id),
 						"#childScope/0": _existing_scope($childScope)
 					}, "__tests__/template.marko", "4:8"));
 					return 0;
 				}
-			}, $scope1_id, "#div/0", 1, $sg__input_b, $sg__input_b, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 4);
+			}, $scope1_id, "#div/0", 1, $sg__input_b, $sg__input_b, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 4);
 			_html(`</div>${_el_resume($scope1_id, "#div/0", $sg__input_b)}`);
-			$scope0_reason && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
+			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#main/0", 1, $sg__input_a, $sg__input_a, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 3);
+	}, $scope0_id, "#main/0", 1, $sg__input_a, $sg__input_a, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_a)}`);
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		input_b: _source_if($scope0_reason, 3) && input.b,
 		input_label: $si__input_a__OR__input_b && input.label,
 		input_text: $si__input_a__OR__input_b && input.text,

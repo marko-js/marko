@@ -6,7 +6,7 @@ _shells({
 	a2: "a2 a9;Db%;<p>None <!></p>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_kind = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_kind = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main><div>");
@@ -31,11 +31,11 @@ var template_default = _template_persisted("a", (input) => {
 		"a0",
 		"a1",
 		"a2"
-	], $scope0_owned, 0);
+	], $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "a", $sg__input_kind)}<span>${_text_resume($scope0_id, "b", input.title + " root #0")}</span><button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a3");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		g: input.title,
 		h: count
-	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.title);
 }, 1, 0);

@@ -9,14 +9,14 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E l%b ;<main><h1> </h1><!><button>Next</button></main>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
 	let n = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _persisted_reason();
+		const $scope1_reason = _scope_reason();
 		_await($scope1_id, "#text/0", resolveAfter("v" + n, n), (value) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_text_resume($scope3_id, "#text/0", value)}</em>`);
@@ -27,7 +27,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id), { placeholder: attrTag({ content: _content_shell("__tests__/template.marko_2*content", $scope0_id) }) }, 1);
 	_html(`<button>Next</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		n,
 		"ClosureScopes:n": $n__closures
 	}, "__tests__/template.marko", 0, { n: "3:6" });

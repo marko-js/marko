@@ -3,13 +3,13 @@ const $template$1 = "<section><h2> </h2><!></section>";
 const $walks$1 = "E l%l";
 _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;E l%;<section><h2> </h2><!></section>" });
 var card_default = _template_persisted("__tests__/tags/card/index.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h2>`);
+	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	const $tag = input.content;
-	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_owned, 1));
+	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_reason, 1));
 	_html("</section>");
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
+	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -22,35 +22,35 @@ _shells({
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 5), $si__input_show = _source_if($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 5), $si__input_show = _source_if($scope0_reason, 5), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_html("<main>");
-	_set_serialize_reason({ 0: _mask_group($scope0_owned, 3) });
+	_set_serialize_reason(_mask_group($scope0_reason, 3) << 1);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	card_default({
 		title: input.t1,
 		content: _content_elide("__tests__/template.marko_1*content", () => {
-			const $scope1_reason = _persisted_reason();
+			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_owned, 4)}</em>`);
-			_subscribe(_unfilled_if($scope0_owned, 4) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 4)}</em>`);
+			_subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		}, $scope0_id)
 	});
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
-			_set_serialize_reason({ 0: _mask_group($scope0_owned, 6) });
+			_set_serialize_reason(_mask_group($scope0_reason, 6) << 1);
 			const $childScope2 = _peek_scope_id();
 			_patch_child($scope2_id, "#childScope/0", $childScope2);
 			card_default({
 				title: input.t2,
 				content: _content_elide("__tests__/template.marko_3*content", () => {
-					const $scope3_reason = _persisted_reason();
+					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`<em>${_patch_text($scope3_id, "#text/0", input.note, void 0, $scope0_owned, 4)}</em>`);
-					_subscribe(_unfilled_if($scope0_owned, 4) && $input_note__closures, _scope($scope3_id, {
+					_html(`<em>${_patch_text($scope3_id, "#text/0", input.note, void 0, $scope0_reason, 4)}</em>`);
+					_subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_note": 1
 					}, "__tests__/template.marko", "6:6"));
@@ -62,9 +62,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			}, "__tests__/template.marko", "5:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 5);
+	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 5);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		input_note: $si__input_show && input.note,
 		input_t2: $si__input_show && input.t2,
 		"ClosureScopes:input_note": $input_note__closures,

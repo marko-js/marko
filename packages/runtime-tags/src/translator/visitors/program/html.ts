@@ -11,10 +11,7 @@ import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach, some } from "../../util/optional";
-import {
-  getPersistedIntrinsics,
-  scopeReasonRuntime,
-} from "../../util/persisted/intrinsics";
+import { getPersistedIntrinsics } from "../../util/persisted/intrinsics";
 import {
   getCreateInitClosures,
   getPatchFillBindings,
@@ -185,9 +182,7 @@ export default {
         // values ride it so patch renders drop them.
         renderContent.push(getScopeReasonDeclaration(section));
       } else {
-        renderContent.push(
-          t.expressionStatement(callRuntime(scopeReasonRuntime())),
-        );
+        renderContent.push(t.expressionStatement(callRuntime("_scope_reason")));
       }
 
       for (const child of program.get("body")) {

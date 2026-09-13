@@ -82,10 +82,10 @@ import {
   type ParamSerializeReasonGroups,
 } from "./sections";
 import {
-  buildGroupMask,
   getOwnershipGroupValue,
   getSerializeGuard,
-  scopeReasonIdentifier,
+  scopePageIdentifier,
+  buildGroupMask,
 } from "./serialize-guard";
 import {
   addSerializeExpr,
@@ -118,7 +118,6 @@ import {
   translateAttrs,
 } from "./translate-attrs";
 import translateVar from "./translate-var";
-import { withLeadingComment } from "./with-comment";
 import * as writer from "./writer";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -332,25 +331,22 @@ export function knownTagTranslateHTML(
   if (contentSection.paramReasonGroups) {
     let childSerializeReasonExpr: t.Expression | undefined;
     if (isPersisted()) {
-      if (inStatefulBranch(section)) {
-        // The client owns this instance after the page render (patches
-        // skip the region), so it serializes fully like a page.
-        childSerializeReasonExpr = t.numericLiteral(1);
-      } else {
-        // Pages serialize fully, so the ambient slot carries the ownership
-        // mask (needed exactly when a `_must_render` patch renders it).
-        const groups = getParamGroupSources(tagExtra);
-        if (groups) {
-          childSerializeReasonExpr = buildOwnershipMaskExpr(
-            section,
-            childScopeBinding,
-            contentSection.paramReasonGroups,
-            groups,
-          );
-        }
+      // The client owns an instance in a stateful branch after the page
+      // render (patches skip the region): no mask, the all-server default.
+      // Elsewhere the ambient slot carries the ownership mask (needed
+      // exactly when a `_must_render` patch renders it).
+      const groups =
+        !inStatefulBranch(section) && getParamGroupSources(tagExtra);
+      if (groups) {
+        childSerializeReasonExpr = buildOwnershipMaskExpr(
+          section,
+          childScopeBinding,
+          contentSection.paramReasonGroups,
+          groups,
+        );
       }
     } else {
-      // Each group's serialize guard is its bit.
+      // Each group's serialize guard is its client bit.
       childSerializeReasonExpr = buildGroupMask(
         contentSection.paramReasonGroups.map((group) => {
           const reason = getSerializeReason(
@@ -436,8 +432,8 @@ export function knownTagTranslateHTML(
       }
     }
   } else if (clientOwnedStatements) {
-    // The persisted reason is the page-vs-patch bit; a patch still renders
-    // when the child's intrinsics demand it.
+    // A page render always renders the child; a patch does when the
+    // child's intrinsics demand it.
     let rootSection = section;
     while (rootSection.parent) rootSection = rootSection.parent;
     clientOwnedStatements.push(callStatement(tagIdentifier, ...getArgs()));
@@ -445,7 +441,7 @@ export function knownTagTranslateHTML(
       t.ifStatement(
         t.logicalExpression(
           "||",
-          scopeReasonIdentifier(rootSection),
+          scopePageIdentifier(rootSection),
           callRuntime("_must_render", t.cloneNode(tagIdentifier)),
         ),
         t.blockStatement(clientOwnedStatements),
@@ -681,34 +677,12 @@ function buildOwnershipMaskExpr(
   if (!values.some((value) => typeof value !== "number" || value !== 2)) {
     return;
   }
-
-  let mask = 0;
-  let maskNames = "";
-  let needsObject = false;
-  const props: t.ObjectExpression["properties"] = [];
-  for (let i = 0; i < values.length; i++) {
-    const value = values[i];
-    if (value === 0) continue;
-    if (typeof value === "number" && i < 15) {
-      mask |= value << (1 + 2 * i);
-      const names = getDebugNames(groups[i].params);
-      if (names) maskNames += maskNames ? ` | ${names}` : names;
-    } else {
-      needsObject = true;
-    }
-    props.push(
-      t.objectProperty(
-        withLeadingComment(
-          t.numericLiteral(i),
-          getDebugNames(groups[i].params),
-        ),
-        typeof value === "number" ? t.numericLiteral(value) : value,
-      ),
-    );
-  }
-  return needsObject
-    ? t.objectExpression(props)
-    : withLeadingComment(t.numericLiteral(mask), maskNames);
+  return buildGroupMask(
+    values.map((value, i) => ({
+      value,
+      names: getDebugNames(groups[i].params),
+    })),
+  );
 }
 
 function analyzeParams(

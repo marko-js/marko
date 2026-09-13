@@ -1,12 +1,13 @@
 // template.marko
 _shells({ a: "a !a0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = false;
 	_html("<main>");
-	if ($scope0_reason) _if(() => {}, $scope0_id, "a", 1, 1, 1, 0, 1);
+	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && _scope($scope0_id, { c: show });
+	$scope0_page && _scope($scope0_id, { c: show });
 }, 1, 0);

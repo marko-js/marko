@@ -5,43 +5,41 @@ _shells({
 	b1: "b1,<span>b</span>"
 });
 var tabs_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_tab = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_tab = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.tab) {
 			const $scope1_id = _scope_id();
-			_html(`<div>a ${_patch_text($scope1_id, "a", input.tab.on, 2, $scope0_owned, 1)}</div>`);
+			_html(`<div>a ${_patch_text($scope1_id, "a", input.tab.on, 2, $scope0_reason, 1)}</div>`);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<span>b</span>");
-			$scope0_reason && _scope($scope2_id, {});
+			$scope0_page && _scope($scope2_id, {});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $sg__input_tab, $sg__input_tab, void 0, void 0, ["b0", "b1"], $scope0_owned, 0);
-	$scope0_reason && _scope($scope0_id, { e: input.tab?.on });
+	}, $scope0_id, "a", 1, $sg__input_tab, $sg__input_tab, void 0, void 0, ["b0", "b1"], $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, { e: input.tab?.on });
 }, 0, 0);
 
 // template.marko
 _shells({ a: "a !a0;D%b b ;<main><!><button class=flip>f</button><button class=toggle>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = true;
 	let on = false;
 	const o = { on };
 	_html("<main>");
-	if ($scope0_reason) _if(() => {
+	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(1);
 			const $childScope = _peek_scope_id();
 			tabs_default({ tab: attrTag({ on }) });
-			_set_serialize_reason(1);
 			const $childScope2 = _peek_scope_id();
 			tabs_default({ tab: attrTag({ ...o }) });
-			_set_serialize_reason(1);
 			const $childScope3 = _peek_scope_id();
 			tabs_default({ tab: { on } });
 			_scope($scope1_id, {
@@ -54,7 +52,7 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button class=flip>f</button>${_el_resume($scope0_id, "b")}<button class=toggle>t</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		d: show,
 		e: on,
 		f: o

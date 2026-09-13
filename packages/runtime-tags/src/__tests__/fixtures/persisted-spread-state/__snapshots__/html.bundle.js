@@ -4,7 +4,7 @@ _shells({
 	a0: "a0 a4 a5; ;<a>go</a>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let on = false;
 	_html("<main>");
@@ -19,11 +19,11 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 0);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 0);
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		f: input.attrs,
 		g: on
-	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "a0", input.attrs);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.attrs);
 }, 1, 0);

@@ -3,10 +3,10 @@ const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 _shells({ "__tests__/child.marko": "__tests__/child.marko;D ;<span> </span>" });
 var child_default = _template_persisted("__tests__/child.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_owned, 0)}</span>`);
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/child.marko", 0);
+	_html(`<span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</span>`);
+	$scope0_page && _scope($scope0_id, {}, "__tests__/child.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -18,7 +18,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_label#6/init __tests__/template.marko_1_n#7/init __tests__/template.marko_1_#text#0/init;b%/&;<!><!><!>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=n>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}<main>`);
@@ -35,14 +35,14 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			}, "__tests__/template.marko", "6:4");
 			return 0;
 		}
-	}, $scope0_id, "#main/2", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 0);
+	}, $scope0_id, "#main/2", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "#main/2", $sg__input_show)}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		n: "3:6"
-	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
 }, 1, () => [$Child_withLoadAssets]);

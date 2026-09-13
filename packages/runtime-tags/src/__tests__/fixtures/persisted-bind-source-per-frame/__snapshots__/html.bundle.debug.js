@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%b%bD ;<main><!><!><em> </em></main>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_title = _source_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $si__input_title = _source_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $handler2__closures = new Set();
@@ -24,7 +24,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				title: input.title,
 				onClick: handler
 			}
-		}, "#button/0", $scope1_id, "button", void 0, $scope0_owned, 0)}>one</button>${_el_resume($scope1_id, "#button/0")}`);
+		}, "#button/0", $scope1_id, "button", void 0, $scope0_reason, 0)}>one</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1_input_title#5_handler#9");
 		_subscribe($si__input_title && $handler2__closures, _subscribe($si__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "5:25"] })));
 	}, 1, "__tests__/template.marko_0_#text#0/await", 1);
@@ -36,7 +36,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				title: input.title,
 				onClick: handler
 			}
-		}, "#button/0", $scope2_id, "button", void 0, $scope0_owned, 0)}>two</button>${_el_resume($scope2_id, "#button/0")}`);
+		}, "#button/0", $scope2_id, "button", void 0, $scope0_reason, 0)}>two</button>${_el_resume($scope2_id, "#button/0")}`);
 		_script($scope2_id, "__tests__/template.marko_2_input_title#5_handler#9");
 		_subscribe($si__input_title && $handler2__closures, _subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
@@ -45,7 +45,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		}, "__tests__/template.marko", "7:4", { "EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "8:25"] })));
 	}, 1, "__tests__/template.marko_0_#text#1/await", 1);
 	_html(`<em>${_patch_text($scope0_id, "#text/2", count)}</em></main>`);
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
 		handler,
 		"ClosureScopes:input_title": $input_title__closures,
@@ -53,5 +53,5 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		handler: "2:8"
-	}) : _filled_guard($scope0_owned, 0) && _patch_write($scope0_id, "input_title", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "input_title", input.title);
 }, 1, 0);

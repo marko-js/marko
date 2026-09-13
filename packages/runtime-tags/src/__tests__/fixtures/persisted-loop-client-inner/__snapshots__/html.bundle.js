@@ -4,7 +4,7 @@ _shells({
 	a0: "a0 a4; ;<ul></ul>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let items = ["a"];
 	_html("<main>");
@@ -12,7 +12,7 @@ var template_default = _template_persisted("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<ul>");
-			if ($scope0_reason) _for_of(items, (item) => {
+			if ($scope0_page) _for_of(items, (item) => {
 				const $scope2_id = _scope_id();
 				_html(`<li>${_text_resume($scope2_id, "a", item)}</li>`);
 				_scope($scope2_id, {});
@@ -20,8 +20,8 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 0);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_reason && _scope($scope0_id, { f: items });
+	$scope0_page && _scope($scope0_id, { f: items });
 }, 1, 0);

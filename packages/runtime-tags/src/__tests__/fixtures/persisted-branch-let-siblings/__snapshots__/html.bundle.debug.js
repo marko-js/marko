@@ -7,9 +7,9 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell !__tests__/template.marko_2;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_a__OR__input_b = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_b = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 1)}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1>`);
 	_if(() => {
 		if (input.a) {
 			const $scope1_id = _scope_id();
@@ -20,7 +20,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_scope($scope1_id, { x }, "__tests__/template.marko", "3:4", { x: "4:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 2);
+	}, $scope0_id, "#text/1", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
@@ -31,7 +31,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			_scope($scope2_id, { y }, "__tests__/template.marko", "8:4", { y: "9:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 3);
+	}, $scope0_id, "#text/2", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

@@ -5,7 +5,7 @@ _shells({
 	b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var counter_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -22,14 +22,14 @@ var counter_default = _template_persisted("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_owned, 1);
-	$scope0_reason ? _scope($scope0_id, { e: input.onCount }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.onCount);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_reason, 1);
+	$scope0_page ? _scope($scope0_id, { e: input.onCount }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.onCount);
 }, 0, 0);
 
 // template.marko
 _shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `E lDb%l/${_w0}&l`)("b%c"), ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $si__input_big = _source_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $si__input_big = _source_if($scope0_reason, 3), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	const plain = _resume((next) => {
@@ -38,12 +38,8 @@ var template_default = _template_persisted("a", (input) => {
 	const tenfold = _resume((next) => {
 		last = next * 10;
 	}, "a1", $scope0_id);
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 1)}</h1><p>Last ${_text_resume($scope0_id, "b", last, 2)}</p>`);
-	_set_serialize_reason({
-		0: _mask_group($scope0_owned, 0),
-		1: _mask_group($scope0_owned, 2),
-		2: _mask_group($scope0_owned, 3)
-	});
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 1)}</h1><p>Last ${_text_resume($scope0_id, "b", last, 2)}</p>`);
+	_set_serialize_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 3) << 5);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "c", $childScope);
 	counter_default({
@@ -51,7 +47,7 @@ var template_default = _template_persisted("a", (input) => {
 		onCount: input.big ? tenfold : plain
 	});
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		j: $si__input_big && plain,
 		k: $si__input_big && tenfold,
 		c: _existing_scope($childScope)

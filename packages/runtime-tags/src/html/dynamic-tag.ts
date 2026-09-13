@@ -20,7 +20,9 @@ import {
   _el,
   _html,
   _peek_scope_id,
-  _persisted_reason,
+  _scope_reason,
+  CLIENT_ALL,
+  SERVER_ALL,
   _resume,
   _scope,
   _scope_id,
@@ -224,8 +226,14 @@ export let _dynamic_tag = (
       }
       if (renderer) {
         try {
+          // The child's groups are unknown here: a persisted page renders
+          // the tag server-side, elsewhere the client may re-render it.
           _set_serialize_reason(
-            shouldResume && inputOrArgs !== undefined ? 1 : 0,
+            shouldResume && inputOrArgs !== undefined
+              ? state.persisted
+                ? SERVER_ALL
+                : CLIENT_ALL
+              : 0,
           );
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
@@ -327,7 +335,7 @@ export function _content_shell(id: string, scopeId: number | undefined) {
     _content(
       id,
       () => {
-        _persisted_reason();
+        _scope_reason();
         _scope_id();
         _html(template);
       },

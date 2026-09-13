@@ -6,7 +6,7 @@ _shells({
 	a: "a !a4;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_detail = _source_guard($scope0_reason, 0), $si__input_detail = _source_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_detail = _source_guard($scope0_reason, 0), $si__input_detail = _source_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -14,15 +14,15 @@ var template_default = _template_persisted("a", (input) => {
 	_html("<main>");
 	_try($scope0_id, "a", _content_resume("a2", () => {
 		const $scope3_id = _scope_id();
-		_persisted_reason();
+		_scope_reason();
 		_await($scope3_id, "a", input.promise, () => {
 			_scope_id();
 			_html("<span>ok</span>");
 		}, 1, "a1");
-		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }));
-		$scope0_reason && _resume_branch($scope3_id);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }));
+		$scope0_page && _resume_branch($scope3_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a3", () => {
-		_persisted_reason();
+		_scope_reason();
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (input.detail) {
@@ -40,10 +40,10 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id) }) }, 1);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		f: input.detail,
 		h: count,
 		i: $input_detail__closures,
 		j: $input_promise__closures
-	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.detail);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.detail);
 }, 1, 0);

@@ -3,13 +3,13 @@ const $template$3 = "<html><body><header>site</header><main><!></main></body></h
 const $walks$1 = "EbD%n";
 _shells({ d: "d;EbD%;<html><body><header>site</header><main><!></main></body></html>" });
 var root_default = _template_persisted("d", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<html>${_flush_head()}<body><header>site</header><main>`);
 	const $tag = input.content;
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</main>"), _trailers("</body></html>");
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 }, 1, 0);
 
 // docs.marko
@@ -17,20 +17,20 @@ const $template$2 = "<nav>docs</nav><article><!></article>";
 const $walks = "bD%l";
 _shells({ a: "a;bD%;<nav>docs</nav><article><!></article>" });
 var docs_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<nav>docs</nav><article>");
 	const $tag = input.content;
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</article>");
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 }, 0, 0);
 
 // page-a.marko
 const $template$1 = "<h1>A</h1>";
 _shells({ b: "b,<h1>A</h1>" });
 var page_a_default = _template_persisted("b", (input) => {
-	_persisted_reason();
+	_scope_reason();
 	_scope_id();
 	_html("<h1>A</h1>");
 }, 0, 0);
@@ -39,7 +39,7 @@ var page_a_default = _template_persisted("b", (input) => {
 const $template = "<h1>B</h1>";
 _shells({ c: "c,<h1>B</h1>" });
 var page_b_default = _template_persisted("c", (input) => {
-	_persisted_reason();
+	_scope_reason();
 	_scope_id();
 	_html("<h1>B</h1>");
 }, 0, 0);
@@ -58,20 +58,20 @@ _shells({
 	e5: /*@__PURE__*/ ((_w0, _w1) => `e5;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("b"), /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template))
 });
 var template_default = _template_persisted("e", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_page = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_page = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = /* @__PURE__ */ new Set();
 	_set_serialize_reason(0);
 	const $childScope4 = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope4);
 	root_default({ content: _content_elide("e1", () => {
-		_persisted_reason();
+		_scope_reason();
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (input.page === 0) {
 				const $scope4_id = _scope_id();
 				_html("<p>home</p>");
-				$scope0_reason && _scope($scope4_id, {});
+				$scope0_page && _scope($scope4_id, {});
 				return 0;
 			} else {
 				const $scope2_id = _scope_id();
@@ -79,7 +79,7 @@ var template_default = _template_persisted("e", (input) => {
 				const $childScope3 = _peek_scope_id();
 				_patch_child($scope2_id, "a", $childScope3);
 				$Docs_withLoadAssets({ content: _content_elide("e0", () => {
-					_persisted_reason();
+					_scope_reason();
 					const $scope3_id = _scope_id();
 					_if(() => {
 						if (input.page === 1) {
@@ -97,12 +97,12 @@ var template_default = _template_persisted("e", (input) => {
 							_scope($scope6_id, { b: _existing_scope($childScope2) });
 							return 1;
 						}
-					}, $scope3_id, "a", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["e4", "e5"], $scope0_owned, 0);
-					$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 0) && $input_page__closures, _scope($scope3_id, {
+					}, $scope3_id, "a", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["e4", "e5"], $scope0_reason, 0);
+					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						Ce: 1
 					}));
-					$sg__input_page || $scope0_reason && _resume_branch($scope3_id);
+					$sg__input_page || $scope0_page && _resume_branch($scope3_id);
 				}, $scope2_id) });
 				_scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
@@ -110,11 +110,11 @@ var template_default = _template_persisted("e", (input) => {
 				});
 				return 1;
 			}
-		}, $scope1_id, "a", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["e3", "e2"], $scope0_owned, 0);
-		$scope0_reason && _subscribe(_unfilled_if($scope0_owned, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		$sg__input_page || $scope0_reason && _resume_branch($scope1_id);
+		}, $scope1_id, "a", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["e3", "e2"], $scope0_reason, 0);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$sg__input_page || $scope0_page && _resume_branch($scope1_id);
 	}, $scope0_id) });
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		d: _source_if($scope0_reason, 0) && input.page,
 		e: $input_page__closures,
 		a: _existing_scope($childScope4)

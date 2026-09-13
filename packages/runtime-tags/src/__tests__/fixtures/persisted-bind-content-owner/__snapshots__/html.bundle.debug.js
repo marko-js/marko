@@ -3,7 +3,7 @@ const $template$2 = "";
 const $walks$2 = "";
 _shells({ "__tests__/tags/store.marko": "__tests__/tags/store.marko !," });
 var store_default = _template_persisted("__tests__/tags/store.marko", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	const $return = {
@@ -21,13 +21,13 @@ const $template$1 = "<section><!></section>";
 const $walks$1 = "D%l";
 _shells({ "__tests__/tags/frame.marko": "__tests__/tags/frame.marko;D%;<section><!></section>" });
 var frame_default = _template_persisted("__tests__/tags/frame.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_owned, 0));
+	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</section>");
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
+	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -39,7 +39,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_store_set#9/init!__tests__/template.marko_2;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $store_set__closures = new Set();
 	const $input_show__closures = new Set();
@@ -52,7 +52,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/3", $childScope2);
 	frame_default({ content: _content_elide("__tests__/template.marko_1*content", () => {
-		const $scope1_reason = _persisted_reason();
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (input.show) {
@@ -72,11 +72,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				}));
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_owned, 0);
-		_subscribe(_unfilled_if($scope0_owned, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
+		}, $scope1_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
 		$sg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) });
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		store_set: _source_if($scope0_reason, 0) && store?.set,
 		"#childScope/0": _existing_scope($childScope),
 		"ClosureScopes:store_set": $store_set__closures,

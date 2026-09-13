@@ -3,18 +3,18 @@ const $template = "<div> </div><!><button>t</button>";
 const $walks = "D l%b b";
 _shells({ b: "b !b0;D l%b ;<div> </div><!><button>t</button>" });
 var kid_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let on = false;
-	_html(`<div>${_patch_text($scope0_id, "a", input.a, void 0, $scope0_owned, 0)}</div>`);
-	if ($scope0_reason) _if(() => {}, $scope0_id, "b", 1, 1, 1, 0, 1);
+	_html(`<div>${_patch_text($scope0_id, "a", input.a, void 0, $scope0_reason, 0)}</div>`);
+	if ($scope0_page) _if(() => {}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	_patch_value($scope0_id, "b1", on, 1);
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		g: input.b,
 		h: on
-	}) : _filled_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.b);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.b);
 }, 0, 0);
 
 // template.marko
@@ -23,12 +23,12 @@ _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template)
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason({ 0: _mask_group($scope0_owned, 2) });
+			_set_serialize_reason(_mask_group($scope0_reason, 2) << 1);
 			const $childScope = _peek_scope_id();
 			_patch_child($scope1_id, "a", $childScope);
 			kid_default({
@@ -41,6 +41,6 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_owned, 1);
-	$scope0_reason && _scope($scope0_id, { e: input.a });
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 1);
+	$scope0_page && _scope($scope0_id, { e: input.a });
 }, 1, () => [kid_default]);

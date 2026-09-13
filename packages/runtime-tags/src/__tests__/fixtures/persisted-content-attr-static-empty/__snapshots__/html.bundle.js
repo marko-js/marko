@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a; b b ;<div></div><section></section><span></span>" });
 var template_default = _template_persisted("a", (input) => {
-	_persisted_reason();
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	_patch_dynamic_tag($scope0_id, "a", void 0, 0, 0, 0);

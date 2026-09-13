@@ -1,7 +1,8 @@
 // tags/counter-box/index.marko
 _shells({ b: "b !;Db%;<span>box <!></span>" });
 var counter_box_default = _template_persisted("b", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = input.start;
 	_html(`<span>box ${_text_resume($scope0_id, "a", count, 2)}</span>`);
@@ -10,7 +11,7 @@ var counter_box_default = _template_persisted("b", (input) => {
 		count = v;
 	}, "b0", $scope0_id) || void 0);
 	_patch_value($scope0_id, "b0", count, 1);
-	$scope0_reason && _scope($scope0_id, { U: _resume(function(v) {
+	$scope0_page && _scope($scope0_id, { U: _resume(function(v) {
 		count = v;
 	}, "b0", $scope0_id) || void 0 });
 	return $return;
@@ -19,11 +20,12 @@ var counter_box_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({ a: "a !a2;D%b ;<main><!><button class=toggle>t</button></main>" });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = true;
 	_html("<main>");
-	if ($scope0_reason) _if(() => {
+	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
 			const $childScope = _peek_scope_id();
@@ -37,5 +39,5 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_reason && _scope($scope0_id, { c: show });
+	$scope0_page && _scope($scope0_id, { c: show });
 }, 1, () => [counter_box_default]);

@@ -2,7 +2,8 @@
 const $template$1 = "<p> </p>";
 _shells({ c: "c !;D ;<p> </p>" });
 var store_default = _template_persisted("c", (input) => {
-	const $scope0_reason = _persisted_reason();
+	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	_html(`<p>${_text_resume($scope0_id, "a", last)}</p>`);
@@ -10,7 +11,7 @@ var store_default = _template_persisted("c", (input) => {
 		last = next;
 	}, "c0", $scope0_id);
 	_patch_value($scope0_id, "c0", last, 1);
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 	return $return;
 }, 0, 0);
 
@@ -18,13 +19,13 @@ var store_default = _template_persisted("c", (input) => {
 const $template = "<section><!></section>";
 _shells({ b: "b;D%;<section><!></section>" });
 var frame_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_content = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	const $tag = input.content;
-	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_owned, 0));
+	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</section>");
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko
@@ -34,7 +35,7 @@ _shells({
 	a1: "a1 !a4;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $setLast_getter = _hoist($scope0_id, "a2");
 	const $frame_content__subscribers = /* @__PURE__ */ new Set();
@@ -42,7 +43,7 @@ var template_default = _template_persisted("a", (input) => {
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope2);
 	frame_default({ content: _content_elide("a0", () => {
-		_persisted_reason();
+		_scope_reason();
 		const $scope1_id = _scope_id();
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "a", $childScope);
@@ -69,8 +70,8 @@ var template_default = _template_persisted("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_owned, 0);
-	$scope0_reason && _scope($scope0_id, {
+	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, {
 		B1: $frame_content__subscribers,
 		a: _existing_scope($childScope2)
 	});

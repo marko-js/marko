@@ -3,10 +3,10 @@ const $template$1 = "<section><h2> </h2></section>";
 const $walks$1 = "D D m";
 _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D D ;<section><h2> </h2></section>" });
 var card_default = _template_persisted("__tests__/tags/card/index.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2${_patch_attr_class($scope0_id, "#h2/0", input.title, $scope0_owned, 0)}>${_patch_text($scope0_id, "#text/1", input.title, void 0, $scope0_owned, 0)}</h2>${_el_resume($scope0_id, "#h2/0")}</section>`);
-	$scope0_reason && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
+	_html(`<section><h2${_patch_attr_class($scope0_id, "#h2/0", input.title, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "#h2/0")}</section>`);
+	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 }, 0, 0);
 
 // template.marko
@@ -17,7 +17,7 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&D l`)($walks$1), /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1))
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_set_serialize_reason(0);
@@ -31,16 +31,16 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			const $childScope2 = _peek_scope_id();
 			_patch_child($scope1_id, "#childScope/0", $childScope2);
 			card_default({ title: "branch" });
-			_html(`<p>${_patch_text($scope1_id, "#text/1", input.note, void 0, $scope0_owned, 2)}</p>`);
+			_html(`<p>${_patch_text($scope1_id, "#text/1", input.note, void 0, $scope0_reason, 2)}</p>`);
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope2)
 			}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
+	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		input_note: _source_if($scope0_reason, 1) && input.note,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { input_note: ["input.note"] });

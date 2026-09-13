@@ -5,7 +5,7 @@ _shells({
 	b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var counter_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -22,22 +22,19 @@ var counter_default = _template_persisted("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_owned, 1);
-	$scope0_reason ? _scope($scope0_id, { e: input.onCount }) : _filled_guard($scope0_owned, 2) && _client_guard($scope0_owned, 1) && _patch_value($scope0_id, "b0", input.onCount);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_reason, 1);
+	$scope0_page ? _scope($scope0_id, { e: input.onCount }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.onCount);
 }, 0, 0);
 
 // template.marko
 _shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0, _w1) => `E lDb%c%l/${_w0}&/${_w1}&l`)("b%c", "b%c"), ((_w0, _w1) => `<main><h1> </h1><p>First <!> Second <!></p>${_w0}${_w1}</main>`)($template, $template)) });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let first = 0;
 	let second = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 0)}</h1><p>First ${_text_resume($scope0_id, "b", first, 2)} Second ${_text_resume($scope0_id, "c", second, 2)}</p>`);
-	_set_serialize_reason({
-		0: _mask_group($scope0_owned, 1),
-		1: _mask_group($scope0_owned, 1)
-	});
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><p>First ${_text_resume($scope0_id, "b", first, 2)} Second ${_text_resume($scope0_id, "c", second, 2)}</p>`);
+	_set_serialize_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "d", $childScope);
 	counter_default({
@@ -46,10 +43,7 @@ var template_default = _template_persisted("a", (input) => {
 			first = next;
 		}, "a0", $scope0_id)
 	});
-	_set_serialize_reason({
-		0: _mask_group($scope0_owned, 1),
-		1: _mask_group($scope0_owned, 1)
-	});
+	_set_serialize_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "e", $childScope2);
 	counter_default({
@@ -59,7 +53,7 @@ var template_default = _template_persisted("a", (input) => {
 		}, "a1", $scope0_id)
 	});
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		d: _existing_scope($childScope),
 		e: _existing_scope($childScope2)
 	});

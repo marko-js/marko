@@ -91,7 +91,7 @@ import {
   getValueIfSerialized,
   getFilledGuard,
   getPatchWriteOwnership,
-  scopeReasonIdentifier,
+  scopePageIdentifier,
 } from "./serialize-guard";
 import {
   getSerializeReason,
@@ -2455,15 +2455,11 @@ export function writeHTMLResumeStatements(
         persisted && !section.parent
           ? fillCalls.length
             ? t.conditionalExpression(
-                scopeReasonIdentifier(section),
+                scopePageIdentifier(section),
                 writeCall,
                 toSequenceExpression(fillCalls),
               )
-            : t.logicalExpression(
-                "&&",
-                scopeReasonIdentifier(section),
-                writeCall,
-              )
+            : t.logicalExpression("&&", scopePageIdentifier(section), writeCall)
           : getExprIfSerialized(section, sectionSerializeReason, writeCall),
       ),
     );
@@ -2472,7 +2468,7 @@ export function writeHTMLResumeStatements(
       t.expressionStatement(
         t.logicalExpression(
           "||",
-          scopeReasonIdentifier(section),
+          scopePageIdentifier(section),
           toSequenceExpression(fillCalls),
         ),
       ),

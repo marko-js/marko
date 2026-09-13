@@ -5,9 +5,9 @@ _shells({
 	a1: "a1 !a3;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_a__OR__input_b = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_b = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_owned, 1)}</h1>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 1)}</h1>`);
 	_if(() => {
 		if (input.a) {
 			const $scope1_id = _scope_id();
@@ -18,7 +18,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope1_id, { c: x });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["a0"], $scope0_owned, 2);
+	}, $scope0_id, "b", 1, _source_guard($scope0_reason, 2), $sg__input_a__OR__input_b, void 0, void 0, ["a0"], $scope0_reason, 2);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
@@ -29,7 +29,7 @@ var template_default = _template_persisted("a", (input) => {
 			_scope($scope2_id, { c: y });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["a1"], $scope0_owned, 3);
+	}, $scope0_id, "c", 1, _source_guard($scope0_reason, 3), $sg__input_a__OR__input_b, void 0, void 0, ["a1"], $scope0_reason, 3);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {});
+	$scope0_page && _scope($scope0_id, {});
 }, 1, 0);

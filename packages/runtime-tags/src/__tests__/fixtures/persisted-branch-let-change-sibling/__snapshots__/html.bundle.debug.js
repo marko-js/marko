@@ -3,7 +3,7 @@ const $template$1 = "";
 const $walks$1 = "";
 _shells({ "__tests__/tags/store.marko": "__tests__/tags/store.marko !," });
 var store_default = _template_persisted("__tests__/tags/store.marko", (input) => {
-	const $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	const $return = {
@@ -24,13 +24,13 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_store_set#11/init!__tests__/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let store = store_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store#9/var");
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/2", input.title, void 0, $scope0_owned, 0)}</h1><p>Last ${_text_resume($scope0_id, "#text/3", store.last, 2)}</p>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "#text/2", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "#text/3", store.last, 2)}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
@@ -49,9 +49,9 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 			});
 			return 0;
 		}
-	}, $scope0_id, "#text/4", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_owned, 1);
+	}, $scope0_id, "#text/4", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_reason && _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		store_set: _source_if($scope0_reason, 1) && store?.set,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { store_set: ["store.set", "1:8"] });

@@ -2,10 +2,10 @@
 const $template = "<span> </span>";
 _shells({ b: "b;D ;<span> </span>" });
 var kid_default = _template_persisted("b", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_patch_text($scope0_id, "a", input.a + input.b, void 0, $scope0_owned, 0)}</span>`);
-	$scope0_reason && _scope($scope0_id, {
+	_html(`<span>${_patch_text($scope0_id, "a", input.a + input.b, void 0, $scope0_reason, 0)}</span>`);
+	$scope0_page && _scope($scope0_id, {
 		d: _source_if($scope0_reason, 2) && input.a,
 		e: _source_if($scope0_reason, 1) && input.b
 	});
@@ -14,14 +14,10 @@ var kid_default = _template_persisted("b", (input) => {
 // template.marko
 _shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !a0;${_w0};${_w1}`)(((_w0) => `/${_w0}& b`)("D l"), ((_w0) => `${_w0}<button>+</button>`)($template)) });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let s = 1;
-	_set_serialize_reason({
-		0: 3,
-		1: 1,
-		2: _mask_group($scope0_owned, 0)
-	});
+	_set_serialize_reason(14 | _mask_group($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
 	kid_default({
@@ -30,8 +26,8 @@ var template_default = _template_persisted("a", (input) => {
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	$scope0_reason ? _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		f: s,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_owned, 0) && _patch_value($scope0_id, "a0", input.x);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.x);
 }, 1, () => [kid_default]);
