@@ -1,0 +1,9 @@
+<let/open=false/>
+<main>
+  <if=open>
+    <const/mk=() => input.title/>
+    <const/label=(fn = mk) => fn()/>
+    <p>${label()}</p>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

@@ -1,0 +1,8 @@
+<let/count=0/>
+<main>
+  <doubler/double value=input.n/>
+  <if=(double > 4)>
+    <p>big ${count}</p>
+  </if>
+  <button onClick() { count++ }>+</button>
+</main>

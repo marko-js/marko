@@ -4,14 +4,24 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
+import { find, forEach } from "../../util/optional";
 import {
+  getFillConditions,
+  getPatchFillBindings,
+  getRootGlobalReads,
+  hasPatchEffectReads,
+  isPatchWriteBinding,
+  isPatchFillBinding,
+} from "../../util/persisted/refresh";
+import {
+  type Binding,
   BindingType,
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
 } from "../../util/references";
-import { callRuntime } from "../../util/runtime";
+import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import {
+  forEachSection,
   forEachSectionReverse,
   getSectionForBody,
   getSectionParentIsOwner,
@@ -25,6 +35,7 @@ import {
   getSetup,
   getSignal,
   getSignalFn,
+  initGlobalRead,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
   signalHasStatements,
@@ -167,6 +178,36 @@ export default {
         }
       });
 
+      // Patches write server contributions to registered fill signals, so
+      // a template with fills in any section ships the patcher.
+      let boundFills = false;
+      forEachSection((fillSection) => {
+        // A fill only structure with a client upstream needs ships its
+        // patcher from the call site that hands over that structure.
+        if (
+          find(
+            getPatchFillBindings(fillSection),
+            (binding) => !getFillConditions(binding)?.upstreams,
+          )
+        ) {
+          importRuntimeFeature("patch-value");
+          boundFills ||= !!find(
+            fillSection.bindings,
+            (binding) =>
+              isPatchFillBinding(binding) && upstreamFunctionValued(binding),
+          );
+        }
+        if (find(fillSection.bindings, needsPatchEffectRuntime)) {
+          importRuntimeFeature("patch-effect");
+        }
+      });
+      // Only function-carrying fills need the bind patchers; an unshipped patcher
+      // rejects the flush into navigation, never a broken bind.
+      if (boundFills) {
+        importRuntimeFeature("patch-value-bind");
+      }
+
+      forEach(getRootGlobalReads(section), initGlobalRead);
       const written = writeSignals(section);
       writeRegisteredFns();
 
@@ -231,3 +272,16 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+// A destructured property alias inherits its declaration's function-carrying
+// potential through the alias chain.
+function needsPatchEffectRuntime(binding: Binding) {
+  return isPatchWriteBinding(binding) && hasPatchEffectReads(binding);
+}
+
+function upstreamFunctionValued(binding: Binding) {
+  for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
+    if (cur.functionValued) return true;
+  }
+  return false;
+}

@@ -10,10 +10,15 @@ import * as nodeInfo from "./get-node-info";
 
 const { DOMElement, DOMCollection } = plugins;
 
-export default function createMutationTracker(browser: {
-  window: JSDOM["window"];
-  virtualConsole: VirtualConsole;
-}) {
+// `ignoreConsole` drops records the fixture expects (a debug-only
+// rejection warning), so debug and optimize logs still match.
+export default function createMutationTracker(
+  browser: {
+    window: JSDOM["window"];
+    virtualConsole: VirtualConsole;
+  },
+  ignoreConsole?: RegExp,
+) {
   let cleaned = false;
   let hasRendered = false;
   let pendingMutations: undefined | MutationRecord[];
@@ -63,6 +68,9 @@ export default function createMutationTracker(browser: {
       this.logUpdate(input);
       hasRendered = true;
     },
+    logStatus(status: string) {
+      logs.push(status);
+    },
     logUpdate(update?: unknown) {
       const pending = observer.takeRecords();
       if (pending.length) {
@@ -95,7 +103,9 @@ export default function createMutationTracker(browser: {
     const entry = getStatusString(
       window.document.body,
       pendingMutations || [],
-      consoleCapture.records(),
+      consoleCapture
+        .records()
+        .filter((record) => !ignoreConsole?.test(String(record.args[0]))),
       update,
       hasRendered,
     );
@@ -129,6 +139,37 @@ export default function createMutationTracker(browser: {
   }
 }
 
+// The body as the render log prints it (markers, scripts and whitespace
+// dropped): two documents that print alike render alike. `defaults` off
+// drops the `default-*` annotations (a patched control keeps the defaults
+// it loaded with; a fresh render's defaults are its current values).
+// `asDefaults` prints a control's default in place of its live value: a
+// patch refreshes defaults and leaves what the user may have typed.
+export function formatBody(
+  body: Document["body"],
+  defaults = true,
+  asDefaults = false,
+) {
+  printDefaults = asDefaults;
+  const clone = cloneAndSanitize(body);
+  if (!defaults) {
+    for (const el of (clone as Element).querySelectorAll(
+      "[default-value],[default-checked],[default-selected]",
+    )) {
+      el.removeAttribute("default-value");
+      el.removeAttribute("default-checked");
+      el.removeAttribute("default-selected");
+    }
+  }
+  return Array.from(clone.childNodes, (node) =>
+    format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
+  )
+    .filter(Boolean)
+    .join("\n")
+    .trim();
+}
+
+let printDefaults = false;
 function cloneAndSanitize(body: Document["body"]) {
   const clone = body.cloneNode(true) as ParentNode;
   const ignoredNodes: ChildNode[] = [];
@@ -172,7 +213,7 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
         if (source.defaultChecked && !source.checked) {
           target.setAttribute("default-checked", "");
         }
-        if (source.checked) {
+        if (printDefaults ? source.defaultChecked : source.checked) {
           target.setAttribute("checked", "");
         } else {
           target.removeAttribute("checked");
@@ -181,8 +222,9 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
         if (source.defaultValue && source.defaultValue !== source.value) {
           target.setAttribute("default-value", source.defaultValue);
         }
-        if (source.value) {
-          target.setAttribute("value", source.value);
+        const value = printDefaults ? source.defaultValue : source.value;
+        if (value) {
+          target.setAttribute("value", value);
         } else {
           target.removeAttribute("value");
         }
@@ -194,7 +236,7 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
       if (source.defaultValue && source.defaultValue !== source.value) {
         target.setAttribute("default-value", source.defaultValue);
       }
-      target.textContent = source.value;
+      target.textContent = printDefaults ? source.defaultValue : source.value;
     } else if (
       nodeInfo.isOptionElement(target) &&
       nodeInfo.isOptionElement(source)
@@ -244,14 +286,7 @@ function getStatusString(
     .filter(Boolean)
     .join("\n");
   const formattedHTML =
-    !body || (hasRendered && !formattedMutations)
-      ? ""
-      : Array.from(cloneAndSanitize(body).childNodes, (node) =>
-          format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
-        )
-          .filter(Boolean)
-          .join("\n")
-          .trim();
+    !body || (hasRendered && !formattedMutations) ? "" : formatBody(body);
 
   if (
     hasRendered &&

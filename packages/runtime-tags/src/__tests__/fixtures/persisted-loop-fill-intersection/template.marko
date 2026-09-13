@@ -1,0 +1,11 @@
+<let/items=["a"]/>
+<let/count=0/>
+<main>
+  <ul>
+    <for|item| of=items>
+      <li>${input.note + item + count}</li>
+    </for>
+  </ul>
+  <button.add onClick() { items = [...items, "b"] }>+</button>
+  <button.inc onClick() { count = count + 1 }>c</button>
+</main>

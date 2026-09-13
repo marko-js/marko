@@ -8,7 +8,7 @@ export const param = 3;
 export const local = 4;
 export const derived = 5;
 export const constant = 6;
-// `$global` and its property aliases: tracked for provenance, inert in
+// `$global` and its property aliases: tracked as sources, inert in
 // the signal graph (no slot, no subscription, no closure, no ordinal).
 export const global = 7;
 

@@ -1,0 +1,7 @@
+<let/count=0/>
+<main>
+  <if=(count > input.min && input.check())>
+    <p>ok</p>
+  </if>
+  <button onClick() { count = count + 1 }>+</button>
+</main>

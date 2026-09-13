@@ -1,0 +1,8 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <const/mixed=(input.title + "@" + count)/>
+    <p>${mixed}</p>
+  </if>
+  <button onClick() { count++ }>+</button>
+</main>

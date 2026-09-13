@@ -1,5 +1,9 @@
 import { types as t } from "@marko/compiler";
-import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
+import {
+  getProgram,
+  isAttributeTag,
+  loadFileForTag,
+} from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from "../visitors/program";
 import {
@@ -10,7 +14,8 @@ import {
 } from "./binding-prop-tree";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
-import { isOptimize } from "./marko-config";
+import isStatic from "./is-static";
+import { isOptimize, isPersisted } from "./marko-config";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -18,7 +23,23 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, includes, type Opt, toIter } from "./optional";
+import {
+  forEach,
+  fromIter,
+  includes,
+  type Opt,
+  some,
+  toIter,
+} from "./optional";
+import { getChildPatchPlan } from "./persisted/decisions";
+import { addPersistedChildRenderer } from "./persisted/intrinsics";
+import { onFinalizePersisted } from "./persisted/lifecycle";
+import { contentResumesForPatch } from "./persisted/refresh";
+import {
+  inStatefulBranch,
+  isReadAsValue,
+  recordStructuralParams,
+} from "./persisted/structure";
 import {
   addRead,
   type Binding,
@@ -33,29 +54,48 @@ import {
   type InputBinding,
   isInvokeOnlyBinding,
   type KnownExprs,
+  mapParamBindingToExpr,
   mapParamReasonToExpr,
   mergeReferences,
+  mergeSources,
   type ReferencedExtra,
   setBindingDownstream,
+  type Sources,
   trackParamsReferences,
   trackVarReferences,
 } from "./references";
-import { callRuntime, importRuntime } from "./runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntime,
+  importRuntimeFeature,
+} from "./runtime";
 import { createScopeReadExpression } from "./scope-read";
 import {
+  ensureReasonGroups,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
   type Section,
   startSection,
+  type ParamSerializeReasonGroups,
 } from "./sections";
-import { buildGroupMask, getSerializeGuard } from "./serialize-guard";
+import {
+  getOwnershipGroupValue,
+  getSerializeGuard,
+  scopePageIdentifier,
+  buildGroupMask,
+} from "./serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeSources,
   addSerializeReason,
+  getAllSourcesForExprs,
+  getSerializeSources,
   getSerializeReason,
   getSerializeSourcesForExprs,
+  getSerializeSourcesForRef,
 } from "./serialize-reasons";
 import { setTagDownstream } from "./set-tag-sections-downstream";
 import { addSetupExpr, addSetupStatement } from "./setup-statements";
@@ -88,14 +128,20 @@ const [getKnownTags] = createSectionState(
 );
 
 const kContentSection = Symbol("known tag content section");
+const kSourcesRecordedGroups = Symbol("known tag sources recorded groups");
 const kChildScopeBinding = Symbol("known tag scope binding");
-const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
+export const kStaticBody = Symbol("known tag static body");
+export const kChildOffsetScopeBinding = Symbol(
+  "known tag scope offset binding",
+);
 const kKnownExprs = Symbol("known tag exprs");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kContentSection]?: Section;
+    [kSourcesRecordedGroups]?: number;
     [kChildScopeBinding]?: Binding;
+    [kStaticBody]?: boolean;
     [kChildOffsetScopeBinding]?: Binding;
     [kKnownExprs]?: KnownExprs;
   }
@@ -116,7 +162,27 @@ export function knownTagAnalyze(
     BindingType.dom,
     section,
   ));
+  let staticBody = true;
+  for (const child of tagBody.get("body")) staticBody &&= isStatic(child);
+  tagExtra[kStaticBody] = staticBody;
   const attrExprs = new Set([tagExtra]);
+  if (isPersisted()) {
+    // The ref must serialize so a patch can pair the child scope through a
+    // parent entry, even for a scriptless child.
+    addSerializeReason(section, true, childScopeBinding);
+    // Children inside client-owned structure never pair from a patch.
+    const hasVar = !!tag.node.var;
+    onFinalizePersisted(() => {
+      if (!inStatefulBranch(section)) {
+        addRuntimeFeatureAsset("patch-child");
+        // A created scope seeds the tag var through the bind channel; the
+        // child may hand resumed content to a patched tag.
+        if (hasVar || contentResumesForPatch(getSectionForBody(tagBody))) {
+          addRuntimeFeatureAsset("patch-value-bind");
+        }
+      }
+    });
+  }
   startSection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
@@ -156,7 +222,7 @@ export function knownTagAnalyze(
       section,
     );
     setBindingDownstream(varBinding, varExpr);
-    // Split so the force cannot swallow the exprs' provenance.
+    // Split so the force cannot swallow the exprs' sources.
     if (mutatesTagVar) addSerializeExpr(section, true, childScopeBinding);
     addSerializeExpr(section, varExpr, childScopeBinding);
   }
@@ -194,6 +260,16 @@ export function knownTagTranslateHTML(
     section,
     childScopeBinding,
   );
+  // Every child renderer joins this template's intrinsics union, so a
+  // parent's patch-skip decision sees the whole subtree at render time.
+  if (isPersisted()) addPersistedChildRenderer(tagIdentifier);
+  // A client-owned instance renders nothing into a patch: the link and the
+  // child render skip together, and the absent entry keeps the live child.
+  const skipsPatchRender =
+    isPersisted() && getChildPatchPlan(tag.node.extra!).skipsPatchRender;
+  let clientOwnedStatements: t.Statement[] | undefined = skipsPatchRender
+    ? []
+    : undefined;
 
   let varStatement: t.Statement | undefined;
   if (childScopeSerializeReason) {
@@ -212,7 +288,30 @@ export function knownTagTranslateHTML(
       callRuntime("_existing_scope", peekScopeId),
     );
 
-    if (tagVar) {
+    if (isPersisted() && !inStatefulBranch(section)) {
+      const patchChildStatement = t.expressionStatement(
+        callRuntime(
+          "_patch_child",
+          getScopeIdIdentifier(section),
+          getScopeAccessorLiteral(childScopeBinding),
+          peekScopeId,
+        ),
+      );
+      if (skipsPatchRender) {
+        clientOwnedStatements = [patchChildStatement];
+      } else {
+        statements.push(patchChildStatement);
+      }
+    }
+
+    // A persisted page serializes the child scope for pairing even with no
+    // client code, where nothing could resolve the var's registration.
+    if (
+      tagVar &&
+      (!isPersisted() ||
+        getProgram().node.extra.isInteractive ||
+        loadFileForTag(tag)?.ast.program.extra?.isInteractive)
+    ) {
       // Deferred below the render call: `_var` mints the post-render scope id
       // for the scope offset.
       varStatement = t.expressionStatement(
@@ -230,28 +329,53 @@ export function knownTagTranslateHTML(
   }
 
   if (contentSection.paramReasonGroups) {
-    // Each group's serialize guard is its bit.
-    const childSerializeReasonExpr = buildGroupMask(
-      contentSection.paramReasonGroups.map((group) => {
-        const reason = getSerializeReason(section, childScopeBinding, group.id);
-        const guard = reason && getSerializeGuard(section, reason, false)!;
-        return {
-          value: !guard
-            ? undefined
-            : guard.type === "NumericLiteral"
-              ? guard.value
-              : guard,
-          names: getDebugNames(group.reason),
-        };
-      }),
-    );
+    let childSerializeReasonExpr: t.Expression | undefined;
+    if (isPersisted()) {
+      // The client owns an instance in a stateful branch after the page
+      // render (patches skip the region): no mask, the all-server default.
+      // Elsewhere the ambient slot carries the ownership mask (needed
+      // exactly when a `_must_render` patch renders it).
+      const groups =
+        !inStatefulBranch(section) && getParamGroupSources(tagExtra);
+      if (groups) {
+        childSerializeReasonExpr = buildOwnershipMaskExpr(
+          section,
+          childScopeBinding,
+          contentSection.paramReasonGroups,
+          groups,
+        );
+      }
+    } else {
+      // Each group's serialize guard is its client bit.
+      childSerializeReasonExpr = buildGroupMask(
+        contentSection.paramReasonGroups.map((group) => {
+          const reason = getSerializeReason(
+            section,
+            childScopeBinding,
+            group.id,
+          );
+          const guard = reason && getSerializeGuard(section, reason, false)!;
+          return {
+            value: !guard
+              ? undefined
+              : guard.type === "NumericLiteral"
+                ? guard.value
+                : guard,
+            names: getDebugNames(group.reason),
+          };
+        }),
+      );
+    }
 
     if (childSerializeReasonExpr) {
-      tag.insertBefore(
-        t.expressionStatement(
-          callRuntime("_set_serialize_reason", childSerializeReasonExpr),
-        ),
+      const setReason = t.expressionStatement(
+        callRuntime("_set_serialize_reason", childSerializeReasonExpr),
       );
+      if (clientOwnedStatements) {
+        clientOwnedStatements.unshift(setReason);
+      } else {
+        tag.insertBefore(setReason);
+      }
     }
   }
 
@@ -276,7 +400,53 @@ export function knownTagTranslateHTML(
       "let",
       statements,
     );
-    if (varStatement) statements.push(varStatement);
+    if (varStatement) {
+      statements.push(varStatement);
+      // A created scope seeds the var (only there) unless the child's return is
+      // state-fed: its own fill then returns through the wired registration.
+      if (isPersisted()) {
+        for (const name in t.getBindingIdentifiers(tag.node.var!)) {
+          const varBinding = tag.scope.getBinding(name)?.identifier.extra
+            ?.binding as Binding | undefined;
+          if (!varBinding || varBinding.sources?.state) continue;
+          statements.push(
+            t.expressionStatement(
+              t.logicalExpression(
+                "&&",
+                callRuntime(
+                  "_filled_guard",
+                  t.numericLiteral(0),
+                  t.numericLiteral(0),
+                ),
+                callRuntime(
+                  "_patch_write",
+                  getScopeIdIdentifier(section),
+                  getScopeAccessorLiteral(varBinding),
+                  t.identifier(name),
+                  t.numericLiteral(1),
+                ),
+              ),
+            ),
+          );
+        }
+      }
+    }
+  } else if (clientOwnedStatements) {
+    // A page render always renders the child; a patch does when the
+    // child's intrinsics demand it.
+    let rootSection = section;
+    while (rootSection.parent) rootSection = rootSection.parent;
+    clientOwnedStatements.push(callStatement(tagIdentifier, ...getArgs()));
+    statements.push(
+      t.ifStatement(
+        t.logicalExpression(
+          "||",
+          scopePageIdentifier(rootSection),
+          callRuntime("_must_render", t.cloneNode(tagIdentifier)),
+        ),
+        t.blockStatement(clientOwnedStatements),
+      ),
+    );
   } else {
     statements.push(callStatement(tagIdentifier, ...getArgs()));
   }
@@ -301,6 +471,26 @@ export function knownTagTranslateDOM(
   const extra = node.extra!;
   const childScopeBinding = extra[kChildScopeBinding]!;
 
+  // An interactive page receives assets transitively through its dom
+  // program, so the feature import rides both outputs.
+  if (isPersisted() && !inStatefulBranch(getSection(tag))) {
+    importRuntimeFeature("patch-child");
+    if (
+      tag.node.var ||
+      contentResumesForPatch(getSectionForBody(tag.get("body")))
+    ) {
+      importRuntimeFeature("patch-value-bind");
+    }
+    for (const group of getParamGroupSources(extra) || []) {
+      if (
+        group.sources?.state &&
+        some(group.params, (binding) => binding.upstreamOfStructure)
+      ) {
+        importRuntimeFeature("patch-value");
+      }
+    }
+  }
+
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
     const source = initValue(varBinding);
@@ -318,18 +508,19 @@ export function knownTagTranslateDOM(
       }
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
+    // A flush creating the child seeds the wiring through its setup.
+    if (isPersisted()) importRuntimeFeature("patch-var");
+    const wireVar = callRuntime(
+      "_var",
+      scopeIdentifier,
+      getScopeAccessorLiteral(childScopeBinding, true),
+      source.identifier,
+    );
     addStatement(
       "prepare",
       tagSection,
       undefined,
-      t.expressionStatement(
-        callRuntime(
-          "_var",
-          scopeIdentifier,
-          getScopeAccessorLiteral(childScopeBinding, true),
-          source.identifier,
-        ),
-      ),
+      t.expressionStatement(wireVar),
     );
   }
   callSetup?.(tagSection, childScopeBinding);
@@ -350,18 +541,148 @@ export function finalizeKnownTags(section: Section) {
     const knownExprs = tagExtra[kKnownExprs];
     const contentSection = tagExtra[kContentSection]!;
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
+      if (isPersisted()) {
+        tagExtra[kSourcesRecordedGroups] =
+          contentSection.paramReasonGroups.length;
+      }
       for (const group of contentSection.paramReasonGroups) {
+        const exprs = mapParamReasonToExpr(knownExprs, group.reason);
         addSerializeReason(
           section,
-          getSerializeSourcesForExprs(
-            mapParamReasonToExpr(knownExprs, group.reason),
-          ),
+          getSerializeSourcesForExprs(exprs),
           scopeBinding,
           group.id,
         );
+        if (isPersisted()) {
+          // Fn-body reads inform ownership but never serialization, so
+          // they join the group's sources only.
+          let fnSources: Sources | undefined;
+          forEach(exprs as Opt<t.NodeExtra>, (extra) => {
+            forEach(
+              (extra as t.FunctionExtra).referencedBindingsInFunction,
+              (binding) => {
+                fnSources = mergeSources(
+                  fnSources,
+                  getSerializeSourcesForRef(binding),
+                );
+              },
+            );
+          });
+          addSerializeSources(section, fnSources, scopeBinding, group.id);
+          const sources = getSerializeSources(section, scopeBinding, group.id);
+          // The ownership mask composes over these groups at translate
+          // time; group order freezes here.
+          ensureReasonGroups(sources);
+          // Under client state the child re-derives the group, so its
+          // server sources must keep reaching it. A member only upstream of
+          // branches (its params nest into the group) is served by pairing
+          // when its own sources have no state.
+          if (sources?.state) {
+            forEach(group.reason, (param) => {
+              const paramSources = getAllSourcesForExprs(
+                mapParamBindingToExpr(knownExprs, param),
+              );
+              if (paramSources?.state || isReadAsValue(param)) {
+                forEach(paramSources?.param, (binding) => {
+                  binding.upstreamOfStateMixedGroup = true;
+                });
+              }
+            });
+          }
+          // The fact rolls up: a param upstream of a child's structural param
+          // makes this template's params so too.
+          if (some(group.reason, (binding) => binding.upstreamOfStructure)) {
+            recordStructuralParams(sources);
+            // Client state upstream of the child's structure hands it the
+            // structure at run time: its fills need the value patcher.
+            if (sources?.state) addRuntimeFeatureAsset("patch-value");
+          }
+        }
       }
     }
   }
+}
+
+export interface ParamGroupSources {
+  /** The child params this group covers. */
+  params: NonNullable<Opt<Binding>>;
+  /** The call site's sources for this group (fn-body reads included;
+   * survives any force on the key). */
+  sources: Sources | undefined;
+}
+
+// Whether a group has a source only the server can supply (params); state
+// and `$global` both recompute client-side.
+export function hasParamSource(sources: Sources | undefined) {
+  return !!(sources?.param || sources?.global);
+}
+
+// Per-group sources for a known templated call site, aligned
+// with the child's `paramReasonGroups` indices.
+// A tag analyzed as a known child template (vs a `<define>` var's tag).
+export function isKnownTagExtra(tagExtra: t.MarkoTagExtra) {
+  return !!tagExtra[kKnownExprs];
+}
+
+export function getParamGroupSources(
+  tagExtra: t.MarkoTagExtra,
+): ParamGroupSources[] | undefined {
+  const scopeBinding = tagExtra[kChildScopeBinding];
+  const contentSection = tagExtra[kContentSection];
+  const groups = contentSection?.paramReasonGroups;
+  if (!tagExtra[kKnownExprs] || !scopeBinding || !groups) return;
+  // Groups born after the record (circular same-file tags) have no
+  // sources: fail closed as unanalyzable input.
+  if (groups.length !== tagExtra[kSourcesRecordedGroups]) return;
+  return groups.map((group) => ({
+    params: group.reason,
+    sources: getSerializeSources(scopeBinding.section, scopeBinding, group.id),
+  }));
+}
+
+// The instance's sources mask (2 bits per group at `1 + 2i`; keyed when
+// dynamic), or undefined when the all-server default is equivalent.
+function buildOwnershipMaskExpr(
+  section: Section,
+  childScopeBinding: Binding,
+  reasonGroups: ParamSerializeReasonGroups,
+  groups: ParamGroupSources[],
+): t.Expression | undefined {
+  const rootSection = getRootSection(section);
+  const values = groups.map(({ sources }, i) => {
+    if (sources?.state) return hasParamSource(sources) ? 3 : 1;
+    let subset: Opt<Binding>;
+    forEach(sources?.param, (binding) => {
+      if (binding.section === rootSection) {
+        subset = bindingUtil.add(subset, binding);
+      }
+    });
+    if (!subset) {
+      if (hasParamSource(sources)) return 2;
+      // An unfed group (a call-site constant) the child still reads
+      // client-side is the server's to supply; one it never reads ships not.
+      return getSerializeReason(section, childScopeBinding, reasonGroups[i].id)
+        ? 2
+        : 0;
+    }
+    const composed = getOwnershipGroupValue(
+      rootSection,
+      subset as NonNullable<Sources["param"]>,
+    );
+    // A `$global` source adds a static server bit beside the composition.
+    return sources!.global
+      ? t.binaryExpression("|", t.numericLiteral(2), composed)
+      : composed;
+  });
+  if (!values.some((value) => typeof value !== "number" || value !== 2)) {
+    return;
+  }
+  return buildGroupMask(
+    values.map((value, i) => ({
+      value,
+      names: getDebugNames(groups[i].params),
+    })),
+  );
 }
 
 function analyzeParams(
@@ -1433,4 +1754,9 @@ function isSimpleReference(expr: t.Expression): boolean {
 function getRootSection(section: Section) {
   while (section.parent) section = section.parent;
   return section;
+}
+
+// The section a known tag renders in (its child scope binding's).
+export function getKnownTagSection(tagExtra: t.MarkoTagExtra) {
+  return tagExtra[kChildScopeBinding]!.section;
 }

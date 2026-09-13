@@ -1,0 +1,6 @@
+<let/count=0/>
+<ul>
+  <for|k, v| in={ a: input.label, b: count }><li>${k}=${v}</li></for>
+  <for|i| until=(input.on ? 2 : 1)><li>${i}</li></for>
+</ul>
+<button onClick() { count++ }>+</button>
