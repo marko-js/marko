@@ -30,8 +30,8 @@ export function initBranchSection(
   bodySection.sectionAccessor = sectionAccessor;
 }
 
-// The branch id rides the always-rendered resume marker and the state
-// driven selection keeps the branch-visiting signal, so the owner links at
+// The branch id rides the always-rendered resume marker and a state-fed
+// upstream keeps the branch-visiting signal, so the owner links at
 // resume instead of serializing.
 export function resumeOwnerByMarkerWhenStatic(
   tagSection: Section,

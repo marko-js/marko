@@ -11,8 +11,22 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
-import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPage,
+  isPersisted,
+} from "../util/marko-config";
+import { hasStateSource } from "../util/persisted/decisions";
+import { getAllTagReferenceNodes } from "../util/references";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
+import { getSection } from "../util/sections";
+import { patchCreates } from "../util/signals";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
 import type { TemplateVisitor } from "../util/visitors";
@@ -34,13 +48,46 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export type LoadImportConfig =
+export type LoadImportConfig = (
   | { render: true; triggers?: never }
-  | { render: false; triggers: LoadTrigger[] };
+  | { render: false; triggers: LoadTrigger[] }
+) & {
+  /** Every tag downstream of a page's rendered import sits in structure a
+   * patch creates, with no state upstream: only creation meets it. */
+  downstreamCreated?: true;
+};
 const triggerRegExp = /\s*([\w-]+)\s*([^?|]+?)?\s*(?:\?([^|]*?))?\s*(?:\||$)/g;
 const [getHtmlLoadWrapped] = createProgramState(
   () => new Map<string, string>(),
 );
+
+// Records which of a page's rendered imports only created scopes meet, once
+// every section's shell is decided. A trigger keeps its channel, so a
+// navigation never forces a load; an import is a module binding, so its
+// uses (tag names, values passed along) are its babel references.
+export function recordCreatedLoadImports(program: t.NodePath<t.Program>) {
+  if (!isPersisted() || !isPage()) return;
+  for (const node of program.node.body) {
+    const loadImport = node.extra?.loadImport;
+    if (!t.isImportDeclaration(node) || !loadImport?.render) continue;
+    const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
+    if (
+      program.scope.getBinding(local.name)!.referencePaths.every(
+        (ref) =>
+          patchCreates(getSection(ref)) &&
+          // State upstream of a tag re-renders it on the client.
+          !(
+            t.isMarkoTag(ref.parent) &&
+            getAllTagReferenceNodes(ref.parent).some((node) =>
+              hasStateSource(node.extra),
+            )
+          ),
+      )
+    ) {
+      loadImport.downstreamCreated = true;
+    }
+  }
+}
 
 export default {
   analyze(importDecl) {
@@ -105,6 +152,12 @@ export default {
       }
 
       (node.extra ??= {}).loadImport = loadImport;
+      // A flush revealing the tag needs its channel and the bind feature on
+      // the page, interactive or not.
+      if (isPersisted()) {
+        addRuntimeFeatureAsset("patch-ready");
+        addRuntimeFeatureAsset("patch-value-bind");
+      }
       const file = getFile();
 
       const loadFile = tagImport && loadFileForImport(file, value);
@@ -139,7 +192,6 @@ export default {
         if (loadImport) {
           const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
           const binding = importDecl.scope.getBinding(local.name)!;
-
           if (isOutputHTML()) {
             const file = getFile();
             const loadFile = loadFileForImport(file, node.source.value)!;
@@ -160,6 +212,47 @@ export default {
             node.attributes = undefined;
             return;
           } else {
+            // A persisted page's flushes may carry data for this module before
+            // it loads; the feature defers them until its `ready()` call.
+            if (isPersisted()) {
+              // A flush's ready batch may bind handlers before the child's
+              // own feature loads, so the page carries the bind feature.
+              importRuntimeFeature("patch-ready");
+              importRuntimeFeature("patch-value-bind");
+            }
+            const file = getFile();
+            const loadFile = loadFileForImport(file, node.source.value)!;
+            const resolvedPath = resolveRelativePath(
+              file,
+              loadFile.opts.filename,
+            );
+            // Flushes name a server-only template; the page registers its
+            // loader only, for the registrations its flushes need.
+            if (loadImport.downstreamCreated) {
+              importDecl.replaceWith(
+                t.expressionStatement(
+                  callRuntime(
+                    "_load_lazy",
+                    t.stringLiteral(getReadyId(loadFile)!),
+                    // `.then(() => {})` drops the namespace, so the bundler
+                    // keeps the registrations alone (no export, no render).
+                    t.arrowFunctionExpression(
+                      [],
+                      t.callExpression(
+                        t.memberExpression(
+                          t.callExpression(t.import(), [
+                            t.stringLiteral(resolvedPath),
+                          ]),
+                          t.identifier("then"),
+                        ),
+                        [t.arrowFunctionExpression([], t.blockStatement([]))],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+              return;
+            }
             const allKnownTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,
@@ -167,41 +260,41 @@ export default {
             if (allKnownTagReferences) {
               importDecl.remove();
             } else {
-              const file = getFile();
-              const loadFile = loadFileForImport(file, node.source.value)!;
-              const resolvedPath = resolveRelativePath(
-                file,
-                loadFile.opts.filename,
-              );
               importRuntimeFeature("catch");
+              const loadTemplate = callRuntime(
+                "_load_template",
+                t.stringLiteral(loadFile.metadata.marko.id),
+                t.arrowFunctionExpression(
+                  [],
+                  t.callExpression(
+                    t.memberExpression(
+                      t.callExpression(t.import(), [
+                        t.stringLiteral(resolvedPath),
+                      ]),
+                      t.identifier("then"),
+                    ),
+                    [
+                      t.arrowFunctionExpression(
+                        [t.identifier("mod")],
+                        toMemberExpression(t.identifier("mod"), "default"),
+                      ),
+                    ],
+                  ),
+                ),
+              );
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(
                     local,
-                    callRuntime(
-                      "_load_template",
-                      t.stringLiteral(loadFile.metadata.marko.id),
-                      t.arrowFunctionExpression(
-                        [],
-                        t.callExpression(
-                          t.memberExpression(
-                            t.callExpression(t.import(), [
-                              t.stringLiteral(resolvedPath),
-                            ]),
-                            t.identifier("then"),
-                          ),
-                          [
-                            t.arrowFunctionExpression(
-                              [t.identifier("mod")],
-                              toMemberExpression(
-                                t.identifier("mod"),
-                                "default",
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // A flush's data for a tag this template creates
+                    // waits for its clone; the wrapper reports the start.
+                    isPersisted()
+                      ? callRuntime(
+                          "_load_ready_template",
+                          t.stringLiteral(getReadyId(loadFile)!),
+                          loadTemplate,
+                        )
+                      : loadTemplate,
                   ),
                 ]),
               );
@@ -246,7 +339,10 @@ function getOrCreateHtmlLoadWrapped(
               "withLoadAssets",
               originalIdentifier,
               t.stringLiteral(readyId),
-              triggers ? t.valueToNode(triggers) : undefined,
+              triggers && t.valueToNode(triggers),
+              // A persisted page may hold a deferred patch on this channel,
+              // so its loader scripts report load errors.
+              isPersisted() && t.numericLiteral(1),
             ),
           ),
         ]),

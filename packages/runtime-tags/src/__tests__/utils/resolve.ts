@@ -96,6 +96,24 @@ export function isThrows(value: any): value is Throws {
   return typeof value === "function" && value.throws;
 }
 
+// A function input is built as the step runs, so a promise it creates
+// (`resolveAfter`) starts pending at that render rather than at setup.
+export type Navigate = {
+  navigateInput: Record<string, unknown> | (() => Record<string, unknown>);
+  betweenFlushes?: (document: Document) => unknown;
+};
+export function navigate(
+  input: Navigate["navigateInput"],
+  betweenFlushes?: (document: Document) => unknown,
+): Navigate {
+  return { navigateInput: input, betweenFlushes };
+}
+export function isNavigate(value: any): value is Navigate {
+  return (
+    typeof value === "object" && value !== null && "navigateInput" in value
+  );
+}
+
 export function resolveAfter<T>(value: T, id?: number) {
   const promise = getSharedPromise(id);
   return Object.assign(

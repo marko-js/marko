@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import {
-  assertAttributesOrArgs,
   getFile,
+  assertAttributesOrArgs,
   getProgram,
   getTagTemplate,
   importDefault,
@@ -26,8 +26,19 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
+import {
+  isContentRenderTag,
+  isServerOwnedDynamicTag,
+} from "../../util/persisted/decisions";
+import { addPersistedChildRenderer } from "../../util/persisted/intrinsics";
+import { onFinalizePersisted } from "../../util/persisted/lifecycle";
+import { contentResumesForPatch } from "../../util/persisted/refresh";
+import {
+  ensurePersistedWriteGroups,
+  inResumedStructure,
+} from "../../util/persisted/structure";
 import {
   type Binding,
   BindingType,
@@ -37,9 +48,11 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
   trackParamsReferences,
+  setBindingValueExprs,
   trackVarReferences,
 } from "../../util/references";
 import {
+  addRuntimeFeatureAsset,
   callRuntime,
   getCompatRuntimeFile,
   importRuntime,
@@ -58,7 +71,10 @@ import {
   startSection,
   StructureKind,
 } from "../../util/sections";
-import { getSerializeGuard } from "../../util/serialize-guard";
+import {
+  getExprWriteOwnership,
+  getSerializeGuard,
+} from "../../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
@@ -70,8 +86,8 @@ import {
   getResumeRegisterId,
   getSignal,
   initValue,
-  type Signal,
   signalHasStatements,
+  type Signal,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { createProgramState } from "../../util/state";
@@ -136,6 +152,10 @@ export default {
       const { node } = tag;
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
+        // The body reads as if at each downstream tag, whose section exists here.
+        (definedBodySection.downstreamSections ??= []).push(
+          getOrCreateSection(tag),
+        );
         addSetupStatement(getOrCreateSection(tag));
         knownTagAnalyze(
           tag,
@@ -170,6 +190,21 @@ export default {
         BindingType.dom,
         tagSection,
       ));
+      // The dynamic tag entry applies without this template's dom module;
+      // decided once references and structure resolve, as translate decides.
+      if (isPersisted() && !t.isStringLiteral(node.name)) {
+        onFinalizePersisted(() => {
+          if (isContentRenderTag(tag) || isServerOwnedDynamicTag(tag)) {
+            ensurePersistedWriteGroups(() => tagExtra);
+            if (writesPatchDynamicTag(tag, tagSection)) {
+              addRuntimeFeatureAsset("patch-dynamic-tag");
+              if (hasVar || contentResumesForPatch(bodySection)) {
+                addRuntimeFeatureAsset("patch-value-bind");
+              }
+            }
+          }
+        });
+      }
 
       if (
         hasVar ||
@@ -182,15 +217,22 @@ export default {
       }
 
       if (hasVar) {
-        trackVarReferences(tag, BindingType.derived);
+        const varBinding = trackVarReferences(tag, BindingType.derived)!;
+        // A flush writes the variable from what the tag renders: its inputs
+        // are its sources (a client render drives it through `_var`).
+        if (isPersisted()) setBindingValueExprs(varBinding, tagExtra);
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
         ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
       }
 
       const bodySection = startSection(tagBody);
+      // The body depends on the whole tag as a branch body on its
+      // condition. Persisted only: the closure walk then stops forcing it.
+      if (bodySection && isPersisted())
+        bodySection.upstreamExpression = tagExtra;
       trackParamsReferences(tagBody, BindingType.param);
-      // Split so the force cannot swallow the exprs' provenance.
+      // Split so the force cannot swallow the exprs' sources.
       if (hasVar) addSerializeExpr(tagSection, true, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
 
@@ -204,7 +246,7 @@ export default {
       }
 
       // A class API tag without a tags template renders only through the
-      // interop: dom output removes it, so it and its body record nothing.
+      // interop: dom output removes it, so it and its body shell nothing.
       if (tagExtra.featureType !== "class" || getTagTemplate(tag)) {
         structure.visit(
           tag,
@@ -230,6 +272,25 @@ export default {
 
       if (isOutputHTML()) {
         writer.flushBefore(tag);
+      }
+      // The import rides both outputs (interactive pages load it transitively).
+      if (writesPatchDynamicTag(tag, getSection(tag))) {
+        importRuntimeFeature("patch-dynamic-tag");
+        if (
+          tag.node.var ||
+          contentResumesForPatch(getSectionForBody(tag.get("body")))
+        ) {
+          importRuntimeFeature("patch-value-bind");
+        }
+      }
+      // An unknown renderer defeats transitive `$global` knowledge; `input`
+      // content is the parent's own, already counted where it was compiled.
+      if (
+        isPersisted() &&
+        !t.isStringLiteral(tag.node.name) &&
+        !isContentRenderTag(tag)
+      ) {
+        addPersistedChildRenderer(tag.node.name);
       }
     },
     exit(tag) {
@@ -446,6 +507,71 @@ export default {
           serializeReason,
           true,
         );
+        // The dynamic tag entry rides the tag, ownership gated; the tag
+        // marks its branch for it whatever the tag's own reason.
+        // The entry writer returns how a patch treats the tag (`1` pairs,
+        // `2` skips: a client-owned group upstream); the render takes it.
+        let patchPairingArg: t.Expression | undefined;
+        if (writesPatchDynamicTag(tag, tagSection)) {
+          // The tag's renderer and input evaluate once: hoisted, both the
+          // render and the entry read them.
+          if (!t.isIdentifier(tagExpression)) {
+            const tagId = generateUidIdentifier("tag");
+            statements.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(tagId, tagExpression),
+              ]),
+            );
+            tagExpression = tagId;
+          }
+          // A statically empty input is no input.
+          let input: t.Expression | undefined = hasTagArgs
+            ? t.arrayExpression([...args])
+            : (args[0] as t.Expression | undefined);
+          if (t.isObjectExpression(input) && !input.properties.length) {
+            input = undefined;
+          }
+          if (input && !t.isIdentifier(input)) {
+            const inputId = generateUidIdentifier("input");
+            statements.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(inputId, input),
+              ]),
+            );
+            if (hasTagArgs) {
+              args.length = 0;
+              args.push(t.spreadElement(inputId));
+            } else {
+              args[0] = inputId;
+            }
+            input = inputId;
+          }
+          patchPairingArg = callRuntime(
+            "_patch_dynamic_tag",
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeBinding),
+            t.cloneNode(tagExpression),
+            input ? t.cloneNode(input) : t.numericLiteral(0),
+            contentProp
+              ? t.stringLiteral(
+                  getResumeRegisterId(
+                    getSectionForBody(tag.get("body"))!,
+                    "content",
+                  ),
+                )
+              : t.numericLiteral(0),
+            node.var
+              ? t.stringLiteral(
+                  getResumeRegisterId(
+                    tagSection,
+                    node.var.extra?.binding,
+                    "var",
+                  ),
+                )
+              : t.numericLiteral(0),
+            ...getExprWriteOwnership(tagExtra),
+          );
+        }
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -458,6 +584,7 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
+              patchPairingArg,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -468,6 +595,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
+              patchPairingArg,
             );
 
         if (node.var) {
@@ -547,7 +675,7 @@ export default {
         }
 
         signal.build = () => {
-          return callRuntime(
+          const tagSignal = callRuntime(
             "_dynamic_tag",
             getScopeAccessorLiteral(nodeBinding, true),
             bodySection && t.identifier(bodySection.name),
@@ -556,6 +684,7 @@ export default {
               : undefined,
             hasTagArgs && t.numericLiteral(1),
           );
+          return tagSignal;
         };
 
         // Additional optimized export a known parent calls instead of the
@@ -664,4 +793,14 @@ function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
       }
     }
   }
+}
+
+// A tag whose dynamic tag entry re-renders it from the server's value:
+// `input` content, or a fully server-owned renderer and input.
+function writesPatchDynamicTag(tag: t.NodePath<t.MarkoTag>, section: Section) {
+  return (
+    isPersisted() &&
+    (isContentRenderTag(tag) || isServerOwnedDynamicTag(tag)) &&
+    !inResumedStructure(section)
+  );
 }

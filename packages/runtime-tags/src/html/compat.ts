@@ -12,7 +12,6 @@ import {
   _scope_id,
   _script,
   _set_serialize_reason,
-  CLIENT_ALL,
   $global,
   Boundary,
   Chunk,
@@ -158,7 +157,7 @@ export const compat = {
         _script(scopeId, SET_SCOPE_REGISTER_ID);
       }
 
-      _set_serialize_reason(willRerender ? CLIENT_ALL : 0);
+      _set_serialize_reason(willRerender ? 1 : 0);
       try {
         renderer(normalizedInput);
       } finally {

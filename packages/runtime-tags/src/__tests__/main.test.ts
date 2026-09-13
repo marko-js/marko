@@ -6,8 +6,9 @@ import path from "path";
 import * as compiler from "@marko/compiler";
 import jsBeautify from "js-beautify";
 
-const { html_beautify } = jsBeautify;
+const { html_beautify, js_beautify } = jsBeautify;
 
+import { DEFAULT_RENDER_ID } from "../common/meta";
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
@@ -24,8 +25,10 @@ import {
   type FlushType,
   isDestroy,
   isFlush,
+  isNavigate,
   isThrows,
   isWait,
+  type Navigate,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -36,7 +39,7 @@ import {
   stripDebugRuntime,
   stripOptimizeRuntime,
 } from "./utils/strip-inline-runtime";
-import createMutationTracker from "./utils/track-mutations";
+import createMutationTracker, { formatBody } from "./utils/track-mutations";
 
 const require = createRequire(import.meta.url);
 
@@ -46,6 +49,7 @@ type Step =
   | Flush
   | Destroy
   | Throws
+  | Navigate
   | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
@@ -75,6 +79,12 @@ export type TestConfig = {
   skip_optimize?: boolean;
   /** Debug intentionally logs a dev-only diagnostic the optimized build cannot. */
   skip_parity?: boolean;
+  // A fixture whose patches are MEANT to reject declares it; anything else
+  // rejecting fails the test rather than snapshotting the navigation.
+  expect_rejection?: boolean;
+  /** Compares a patched page's control defaults, not live values, with a
+   * fresh render (a patch refreshes defaults and leaves typed input). */
+  compare_defaults?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -87,6 +97,12 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** Compiles the fixture with the `persisted` compiler option. */
+  persisted?: boolean;
+  /** Persisted: never render a step's input as a document (client effects
+   * leave state a fresh render lacks, or an input no document can serialize),
+   * so patches compare against the initial document instead. */
+  skip_fresh_render?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -149,6 +165,7 @@ function testFixtures(interop?: true) {
       const hasCompilerError = !!config.error_compiler;
       // Render logs by file, then mode, for the parity check below.
       const renderLogs = new Map<string, Map<string, string>>();
+      const persisted = !!config.persisted;
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
       const stripFixtureDir = async (str: string | Promise<string>) =>
@@ -185,16 +202,27 @@ function testFixtures(interop?: true) {
           const equivalent = config.equivalent !== false;
           const skipSSR =
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
+          // Persisted mode is inherently SSR: the client only resumes and
+          // applies patches, so there is no meaningful CSR mount.
           const skipCSR =
-            optimize || hasCompilerError || skipDOM || config.skip_csr;
+            optimize ||
+            persisted ||
+            hasCompilerError ||
+            skipDOM ||
+            config.skip_csr;
           const stats: {
             dom?: Record<string, ChunkSizes | Sizes>;
             html?: Sizes;
+            patch?: Sizes;
           } = {};
           const browsers: ReturnType<typeof createBrowser>[] = [];
           const rejectLoad =
             config.reject_load &&
-            ((id: string) => config.reject_load!.some((s) => id.includes(s)));
+            // Only a fixture asset can fail to load, never a runtime module
+            // (the prebuilt runtime splits `dom/load.ts` into a chunk).
+            ((id: string) =>
+              !id.includes("/dist/dom-") &&
+              config.reject_load!.some((s) => id.includes(s)));
 
           // Mocha retains suite closures for the entire run, so the cached
           // browsers/bundles are released once the fixture finishes to keep
@@ -218,6 +246,9 @@ function testFixtures(interop?: true) {
           const getModeOpts = once(
             (): compiler.Config => ({
               translator,
+              // A compile cache is scoped to one configuration, and the
+              // per-fixture `optimizeKnownTemplates` are part of it.
+              cache: new Map(),
               runtimeId: config.runtime_id,
               writeVersionComment: false,
               babelConfig: {
@@ -226,6 +257,7 @@ function testFixtures(interop?: true) {
                 browserslistConfigFile: false,
               },
               optimize,
+              persisted,
               optimizeKnownTemplates: optimize
                 ? (
                     fs.readdirSync(fixtureDir, {
@@ -352,11 +384,17 @@ function testFixtures(interop?: true) {
               abortController?.signal,
             );
             const chunks: string[] = [];
+            const patches: string[] = [];
+            // The document each patch is measured against (same input).
+            const freshDocs: string[] = [];
             const logs: ConsoleRecord[][] = [];
+            let template!: Awaited<
+              ReturnType<typeof runner.runServer>
+            >["template"];
             const capture = captureConsole();
 
             try {
-              const { template } = await runner.runServer();
+              ({ template } = await runner.runServer());
               if (abortController) {
                 input.$global = {
                   ...(input.$global as any),
@@ -414,7 +452,10 @@ function testFixtures(interop?: true) {
             };
             // Attach the tracker's error listener before the first flush so
             // errors thrown by inline resume scripts in it aren't swallowed.
-            const tracker = createMutationTracker(browser);
+            const tracker = createMutationTracker(
+              browser,
+              config.expect_rejection ? /^A patch rejected/ : undefined,
+            );
             let hasFlush = flushNext();
             for (let i = config.entry_delay || 0; i && hasFlush; i--) {
               hasFlush = flushNext();
@@ -427,12 +468,133 @@ function testFixtures(interop?: true) {
             }
 
             await browser.runAsyncScripts(() => tracker.logRender(input));
-            const { run } =
+            const { patch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
+            const [, applyPatch] = persisted
+              ? patch({ renderId: DEFAULT_RENDER_ID })
+              : [];
+            let rejected = false;
 
+            // Until a client-side step diverges the page from what the
+            // server would render for the same input, every applied patch
+            // must leave the DOM as a fresh render of that input would.
+            let diverged = false;
+            const freshRenders = !hasFlush && !config.skip_fresh_render;
+            // The document for a step's input: what the step's patch must
+            // cost less than, diverged or not.
+            const renderFresh = async (input: Input) => {
+              const capture = captureConsole();
+              const freshChunks: string[] = [];
+              try {
+                resetResolveState();
+                for await (const data of template.render(input)) {
+                  freshChunks.push(data);
+                }
+              } finally {
+                resetResolveState();
+                capture.cleanup();
+              }
+              freshDocs[patches.length - 1] = stripDefaultScript(
+                freshChunks.join(""),
+              );
+              return freshChunks;
+            };
+            const assertPatchedLikeFresh = async (input: Input) => {
+              const freshChunks = await renderFresh(input);
+              // The fresh page resumes like the live one did, so client
+              // effects and reorders land on both sides.
+              const fresh = createBrowser(
+                runner.assets,
+                config.load_order,
+                rejectLoad || undefined,
+              );
+              browsers.push(fresh);
+              const freshFlush = fresh.stream(freshChunks);
+              while (freshFlush());
+              await fresh.runAsyncScripts();
+              const expected = formatBody(
+                fresh.window.document.body,
+                false,
+                config.compare_defaults,
+              );
+              // Effects the patch re-ran render on the scheduler's next
+              // frame turn, as the fresh page's did before its snapshot.
+              browser.flush("raf");
+              await new Promise((resolve) => setImmediate(resolve));
+              await new Promise((resolve) => setImmediate(resolve));
+              const actual = formatBody(
+                browser.window.document.body,
+                false,
+                config.compare_defaults,
+              );
+              if (expected !== actual) {
+                throw new Error(
+                  `A persisted patch left the page unlike a fresh render of ${JSON.stringify(input)}.\n--- fresh render\n${expected}\n--- patched page\n${actual}\n`,
+                );
+              }
+            };
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
+              onStep: () => {
+                diverged = true;
+              },
+              onInput: persisted
+                ? async (input, betweenFlushes) => {
+                    tracker.beginUpdate();
+                    let applied = true;
+                    const flushes: string[] = [];
+                    for await (const flush of template.patch(input)) {
+                      if (flushes.length && betweenFlushes) {
+                        tracker.logUpdate(input);
+                        tracker.beginUpdate();
+                        await betweenFlushes(browser.window.document);
+                        run();
+                        await browser.runAsyncScripts();
+                        run();
+                        tracker.logUpdate(betweenFlushes);
+                        tracker.beginUpdate();
+                      }
+                      flushes.push(flush);
+                      // The wire delimits frames by newline (as the run
+                      // client reads them), so a flush must be one line.
+                      const frames = flush.split("\n").filter(Boolean);
+                      assert.equal(frames.length, 1, "a flush spans lines");
+                      // A production caller navigates on the first failed
+                      // flush; later flushes must not mutate further.
+                      const result = applyPatch!(frames[0]);
+                      if (typeof result !== "boolean") {
+                        // A deferred patch is waiting on a lazy module; load
+                        // triggers schedule via setTimeout, so a macrotask
+                        // tick must pass before the chunk can be imported.
+                        await resolveAfter(0, 1);
+                        await browser.runAsyncScripts();
+                      }
+                      if (!(applied = await result)) break;
+                    }
+                    patches.push(flushes.join(""));
+                    tracker.logUpdate(input);
+                    if (applied && !betweenFlushes && freshRenders) {
+                      if (diverged) await renderFresh(input);
+                      else await assertPatchedLikeFresh(input);
+                    }
+                    if (!applied) {
+                      if (!config.expect_rejection) {
+                        throw new Error(
+                          "A persisted patch unexpectedly rejected (set `expect_rejection` if intended).",
+                        );
+                      }
+                      rejected = true;
+                      tracker.logStatus("## Patch rejected (navigate)");
+                    }
+                    return applied;
+                  }
+                : undefined,
             });
+            if (config.expect_rejection && !rejected) {
+              throw new Error(
+                "No persisted patch rejected (drop `expect_rejection` if the case now applies).",
+              );
+            }
 
             while (hasFlush) {
               await resolveAfter(0, 1);
@@ -443,7 +605,7 @@ function testFixtures(interop?: true) {
 
             tracker.cleanup();
 
-            return { browser, tracker, chunks };
+            return { browser, tracker, chunks, patches, freshDocs };
           });
 
           skipHTML || it("html", () => snapCompile("html"));
@@ -483,6 +645,9 @@ function testFixtures(interop?: true) {
               // scoped or failed run both the assert and the rewrite would use
               // partial numbers.
               if (!allTestsPassed(this.test!.parent!)) return;
+              // A grep that skips the dom/html tests collects no stats;
+              // nothing ran, so there is nothing to compare.
+              if (!Object.keys(stats).length) return;
               const sizesFile = path.join(fixtureDir, "sizes.json");
               const actual = JSON.stringify(stats, null, 2) + "\n";
               // Assert instead of rewriting: a --grep test:update refreshes only
@@ -505,7 +670,31 @@ function testFixtures(interop?: true) {
             it("ssr", async () => {
               await snapMode(
                 async () => {
-                  const { tracker, chunks } = await ssr();
+                  const { tracker, chunks, patches, freshDocs } = await ssr();
+                  if (persisted) {
+                    // Each wire flush is one expression; format them
+                    // independently so beautify cannot glue `}{`.
+                    await snapMode(
+                      () =>
+                        patches
+                          .map((joined) => {
+                            const flushes = joined
+                              .split("\n")
+                              .map((flush) => flush.trimEnd())
+                              .filter(Boolean)
+                              .map((flush) =>
+                                js_beautify(flush, {
+                                  indent_size: 2,
+                                }).trimEnd(),
+                              )
+                              .join("\n");
+                            return "// PATCH\n" + flushes;
+                          })
+                          .join("\n\n")
+                          .trimEnd() + "\n",
+                      "patches.js",
+                    );
+                  }
                   await snapMode(async () => {
                     const pretty = html_beautify(
                       (optimize ? stripOptimizeRuntime : stripDebugRuntime)(
@@ -524,6 +713,22 @@ function testFixtures(interop?: true) {
                       stats.html = await getSizes(
                         stripDefaultScript(chunks.join("")),
                       );
+                      if (persisted) {
+                        stats.patch = await getSizes(patches.join(""));
+                        // A response must cost less on the wire, raw and
+                        // compressed, than the document for the same input;
+                        // a larger one ships what the client already has.
+                        for (let i = 0; i < patches.length; i++) {
+                          const doc: Sizes = freshDocs[i]
+                            ? await getSizes(freshDocs[i])
+                            : stats.html;
+                          const flush = await getSizes(patches[i]);
+                          assert.ok(
+                            flush.min < doc.min && flush.brotli < doc.brotli,
+                            `persisted response ${i} (${flush.min}b/${flush.brotli}b brotli) is not smaller than its document (${doc.min}b/${doc.brotli}b) for "${entry}"`,
+                          );
+                        }
+                      }
                     }
 
                     return `${pretty}\n`;
@@ -574,7 +779,11 @@ async function runSteps(
   browser: ReturnType<typeof createBrowser>,
   run: () => void,
   opts: {
-    onInput?: (input: Input) => void;
+    onStep?: () => void;
+    onInput?: (
+      input: Input,
+      betweenFlushes?: (document: Document) => unknown,
+    ) => void | boolean | Promise<void | boolean>;
     onFlush?: () => Promise<void>;
     onDestroy?: () => void;
   },
@@ -593,6 +802,7 @@ async function runSteps(
       run();
       tracker.logUpdate();
     } else if (isFlush(update)) {
+      opts.onStep?.();
       if (update.flushType === "stream") {
         if (opts.onFlush) {
           tracker.beginUpdate();
@@ -606,6 +816,7 @@ async function runSteps(
         tracker.logUpdate();
       }
     } else if (typeof update === "function") {
+      opts.onStep?.();
       tracker.beginUpdate();
       await update(browser.window.document);
       run();
@@ -617,7 +828,13 @@ async function runSteps(
         tracker.logUpdate(update);
       }
     } else if (opts.onInput) {
-      opts.onInput(update);
+      const input = isNavigate(update)
+        ? typeof update.navigateInput === "function"
+          ? update.navigateInput()
+          : update.navigateInput
+        : update;
+      const between = isNavigate(update) ? update.betweenFlushes : undefined;
+      if ((await opts.onInput(input, between)) === false) break;
     } else {
       // if new input is detected, stop testing
       // this will be covered by the client tests

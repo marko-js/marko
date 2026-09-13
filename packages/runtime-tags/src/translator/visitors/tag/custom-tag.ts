@@ -2,8 +2,8 @@ import path from "path";
 
 import { types as t } from "@marko/compiler";
 import {
-  assertAttributesOrSingleArg,
   getFile,
+  assertAttributesOrSingleArg,
   getProgram,
   getTagDef,
   getTaglibLookup,
@@ -29,7 +29,12 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPersisted,
+} from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -40,7 +45,12 @@ import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection, StructureKind } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
-import { addStatement, getSignal } from "../../util/signals";
+import {
+  addStatement,
+  getResumeRegisterId,
+  getSignal,
+  patchCreates,
+} from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -92,10 +102,11 @@ export default {
       }
 
       if (tagExtra.tagNameLoad) {
+        const section = getOrCreateSection(tag);
         tagExtra[kLoadTagBinding] = createBinding(
           "#text",
           BindingType.dom,
-          getOrCreateSection(tag),
+          section,
         );
       }
 
@@ -116,7 +127,18 @@ export default {
       const tagName = getStaticTagName(tag.node);
       if (tagExtra.tagNameLoad) {
         structure.visit(tag, WalkCode.Replace);
-        structure.child(tag, tagName);
+        structure.child(
+          tag,
+          tagName,
+          {
+            kind: StructureKind.ExportRef,
+            program: childExtra,
+            path: getTagRelativePath(tag),
+            hint: tagName,
+          },
+          tagExtra.tagNameLoad,
+          tagExtra[kLoadTagBinding],
+        );
         structure.enterShallow(tag);
       } else {
         structure.child(tag, tagName, {
@@ -179,6 +201,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const loadConfig = node.extra?.tagNameLoad;
   const isLoad = !!loadConfig;
   const tagName = getStaticTagName(node);
+
+  // A child only created scopes meet has no client render: a flush's shell
+  // builds it and its setup entries seed it.
+  if (loadConfig?.downstreamCreated) {
+    importRuntimeFeature("patch-child");
+    tag.remove();
+    return;
+  }
 
   if (isLoad) {
     const childFileName = childFile.opts.filename;
@@ -252,22 +282,47 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           ]),
         );
         importRuntimeFeature("catch");
+        let loadSetupCall = callRuntime(
+          "_load_setup",
+          getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
+          getScopeAccessorLiteral(childBinding, true),
+          triggerIdent
+            ? t.addComment(
+                t.callExpression(triggerIdent, [setupLoadExpr]),
+                "leading",
+                "@__PURE__",
+              )
+            : setupLoadExpr,
+        );
+        // A created scope's client-side load drives the child's ready channel
+        // (stamped on its branch), so deferred flush data drains after insert.
+        if (isPersisted() && getReadyId(childFile) !== undefined) {
+          loadSetupCall = callRuntime(
+            "_load_ready",
+            t.stringLiteral(getReadyId(childFile)!),
+            getScopeAccessorLiteral(childBinding, true),
+            loadSetupCall,
+          );
+        }
         getProgram().node.body.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(
               setupIdent,
-              callRuntime(
-                "_load_setup",
-                getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
-                getScopeAccessorLiteral(childBinding, true),
-                triggerIdent
-                  ? t.addComment(
-                      t.callExpression(triggerIdent, [setupLoadExpr]),
-                      "leading",
-                      "@__PURE__",
-                    )
-                  : setupLoadExpr,
-              ),
+              // A branch being created runs the tag's load wiring as a shell
+              // init; `_resume` (impure) survives tree-shaking to carry it.
+              isPersisted() && patchCreates(section)
+                ? callRuntime(
+                    "_resume",
+                    t.stringLiteral(
+                      getResumeRegisterId(
+                        section,
+                        node.extra![kLoadTagBinding]!,
+                        "init",
+                      ),
+                    ),
+                    loadSetupCall,
+                  )
+                : loadSetupCall,
             ),
           ]),
         );

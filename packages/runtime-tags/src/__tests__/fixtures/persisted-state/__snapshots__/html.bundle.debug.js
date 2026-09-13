@@ -1,0 +1,12 @@
+// template.marko
+const $template = "<div><h1> </h1><button>Count <!></button></div>";
+const $walks = "E l Db%m";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E l Db%;<div><h1> </h1><button>Count <!></button></div>" });
+var template_default = _template_persisted("__tests__/template.marko", (input) => {
+	const $scope0_owned = _persisted_ownership(), $scope0_reason = _persisted_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html(`<div><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_owned, 0)}</h1><button>Count ${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/1")}</div>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_reason && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+}, 1, 0);

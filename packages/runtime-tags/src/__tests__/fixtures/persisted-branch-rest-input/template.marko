@@ -1,0 +1,6 @@
+<const/{ label, ...rest }=input/>
+<let/on=true/>
+<button onClick() { on = !on }>${label}</button>
+<if=rest.show && on>
+  <span>shown</span>
+</if>

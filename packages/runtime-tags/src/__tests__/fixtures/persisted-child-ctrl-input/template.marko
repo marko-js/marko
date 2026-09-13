@@ -1,0 +1,9 @@
+<let/text="hi"/>
+<let/open=true/>
+<main>
+  <if=open>
+    <field value:=text/>
+  </if>
+  <p>${text}</p>
+  <button onClick() { open = !open }>+</button>
+</main>
