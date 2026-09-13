@@ -1,7 +1,7 @@
 import { encodeAccessor } from "../common/helpers";
 import { type Accessor, PatchKey, type Scope } from "../common/types";
 import { _for_of } from "./control-flow";
-import { shells } from "./patch-shells";
+import { getShell } from "./patch-shells";
 import { patchers, patchScope, withCreating } from "./resume";
 
 declare module "./resume" {
@@ -28,7 +28,7 @@ patchers[PatchKey.Loop] = (scope, key, value) => {
   const suffix = key.slice(PatchKey.Loop.length) as Accessor;
   // A loop with a shell creates additions; one whose items pair only
   // (a stateful body) ships none and never adds.
-  const [template, walks, setup] = shells[shellId!] || [];
+  const [template, walks, setup] = getShell(shellId!) || [];
   // The reconciler applies the patch: `params` walks each partial into its
   // paired/created branch, and setup attaches effects to fresh ones.
   const apply = () =>

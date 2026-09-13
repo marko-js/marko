@@ -9,6 +9,7 @@ import { queueEffect } from "./queue";
 import { _content as content } from "./renderer";
 import {
   _patch_shells,
+  _resume,
   creating,
   createPatchers,
   getRegisteredWithScope,
@@ -59,22 +60,22 @@ export const runSetupIds = ([inits, effects]: SetupIds, scope: Scope) => {
   for (const init of inits) init(scope);
   if (effects) for (const effect of effects) queueEffect(scope, effect);
 };
-export type Shell = [
-  template: string,
-  walks: string,
-  setup?: SetupFn | 0,
-  content?: ReturnType<ReturnType<typeof _content>>,
-];
-export const shells: Record<string, Shell> = {};
+// A shell's parts, kept on the registered factory (and its renderers) for
+// the loop patcher, which reconciles from them rather than a renderer.
+export type Shell = [template: string, walks: string, setup: SetupFn | 0];
+type ShellFactory = ((owner?: Scope) => Renderer) & {
+  [RendererProp.Shell]: Shell;
+};
+type Renderer = ReturnType<ReturnType<typeof _content>> & {
+  [RendererProp.Shell]?: Shell;
+};
 
-export const getShellContent = (shell: Shell, id = "", owner?: Scope) =>
-  owner
-    ? markShell(contentFactory(shell, id)(owner))
-    : (shell[3] ??= markShell(contentFactory(shell, id)()));
-const contentFactory = (shell: Shell, id: string) =>
-  _content(id, shell[0], shell[1], shell[2]);
-const markShell = (renderer: Shell[3]) =>
-  Object.assign(renderer!, { [RendererProp.Shell]: 1 });
+// A shell registers where the dom module would register the same content,
+// so every consumer resolves one id one way; a later flush's shell wins.
+export const getContent = (id: string, owner?: Scope) =>
+  getRegisteredWithScope<ShellFactory | undefined>(id)?.(owner);
+export const getShell = (id: string) =>
+  getRegisteredWithScope<ShellFactory | undefined>(id)?.[RendererProp.Shell];
 
 // `"id inits…!effects…;walks;template"` (`,` for `;walks;` when walk-less):
 // inits render inside the fresh scope's setup, `!` opens the mount effects.
@@ -83,13 +84,23 @@ export const registerShell = (shell: string) => {
   const second = shell[first] === ";" ? shell.indexOf(";", first + 1) : first;
   const idToken = shell.slice(0, first);
   const sep = (idToken + " ").indexOf(" ");
+  const id = idToken.slice(0, sep);
   const setupIds = idToken.slice(sep + 1);
   const resolved = setupIds && resolveSetupIds(setupIds);
-  shells[idToken.slice(0, sep)] = [
+  const parts: Shell = [
     shell.slice(second + 1),
     shell.slice(first + 1, second),
     resolved ? (branch: Scope) => runSetupIds(resolved, branch) : 0,
   ];
-  return idToken.slice(0, sep);
+  const factory = _content(id, parts[0], parts[1], parts[2]);
+  _resume(
+    id,
+    Object.assign(
+      (owner?: Scope) =>
+        Object.assign(factory(owner), { [RendererProp.Shell]: parts }),
+      { [RendererProp.Shell]: parts },
+    ),
+  );
+  return id;
 };
 _patch_shells(registerShell);

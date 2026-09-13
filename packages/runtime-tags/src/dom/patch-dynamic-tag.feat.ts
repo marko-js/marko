@@ -10,8 +10,7 @@ import {
 import { _dynamic_tag } from "./control-flow";
 // The tag's branch pairs through a `PatchChild` entry.
 import "./patch-child.feat";
-import { getShellContent, shells } from "./patch-shells";
-import type { Renderer } from "./renderer";
+import { getContent } from "./patch-shells";
 import { createPatchers, getRegisteredWithScope, patchers } from "./resume";
 
 // `[renderer, input, contentId, varId]`, a lone renderer bare; a native tag
@@ -58,7 +57,7 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
     _dynamic_tag(
       (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
       contentId
-        ? (owner: Scope) => resolveContent(contentId as string, owner)
+        ? (owner: Scope) => resolveContent(contentId as string, owner)!
         : 0,
       varId
         ? () => (owner: Scope, value: unknown) =>
@@ -72,12 +71,8 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
   )(scope, renderer || undefined, input ? () => input : undefined);
 };
 
-// A shipped shell builds the content, bound to a forwarded body's owner; a
-// registered one (the page has its renderer) binds to the tag's scope,
-// which owns body content.
+// Shipped content binds to a forwarded body's owner; the tag's own scope
+// owns body content, so that binding is implicit.
 function resolveContent(id: string, owner: Scope, bind?: boolean) {
-  const shell = shells[id];
-  return shell
-    ? getShellContent(shell, id, bind ? owner : undefined)
-    : getRegisteredWithScope<Renderer>(id, owner);
+  return getContent(id, bind ? owner : undefined);
 }

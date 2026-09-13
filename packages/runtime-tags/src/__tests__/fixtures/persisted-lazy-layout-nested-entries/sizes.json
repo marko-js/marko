@@ -6,27 +6,27 @@
     },
     "page-a.marko.load.mjs": {
       "min": 99,
-      "brotli": 82
+      "brotli": 81
     },
     "page-b.marko.load.mjs": {
       "min": 99,
-      "brotli": 82
+      "brotli": 81
     },
     "template.marko.page.mjs": {
       "min": 1419,
-      "brotli": 673
+      "brotli": 676
     },
     "layout.mjs": {
-      "min": 3431,
-      "brotli": 1611
+      "min": 3357,
+      "brotli": 1586
     },
     "page-a.mjs": {
       "min": 235,
-      "brotli": 139
+      "brotli": 136
     },
     "shared": {
-      "min": 14685,
-      "brotli": 6629
+      "min": 14681,
+      "brotli": 6611
     }
   },
   "html": {
