@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $x__closures = new Set();
 	let x = 0;
-	_set_serialize_reason(8);
+	_set_serialize_reason(32);
 	const $childScope = _peek_scope_id();
 	counter_default({
 		count: x,
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
 		}, $scope0_id)
 	});
-	_set_serialize_reason(8);
+	_set_serialize_reason(32);
 	const $childScope2 = _peek_scope_id();
 	counter_default({
 		count: x,

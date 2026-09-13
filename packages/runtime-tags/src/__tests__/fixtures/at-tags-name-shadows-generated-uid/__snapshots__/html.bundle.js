@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let cond = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	let $scope;
 	$scope = attrTag({ a: 1 });
 	const $childScope = _peek_scope_id();

@@ -16,7 +16,7 @@ var template_default = _template("b", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(10);
+			_set_serialize_reason(34);
 			const $childScope = _peek_scope_id();
 			$Child_withLoadAssets({
 				label: "x",

@@ -11,10 +11,10 @@ var row_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 1), $sg__input_quantity = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<div class=row>");
-	_set_serialize_reason($sg__input_name);
+	_set_serialize_reason($sg__input_name << 1);
 	const $childScope = _peek_scope_id();
 	cell_default({ value: input.name });
-	_set_serialize_reason($sg__input_quantity);
+	_set_serialize_reason($sg__input_quantity << 1);
 	const $childScope2 = _peek_scope_id();
 	cell_default({ value: input.quantity });
 	_html("</div>");
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let quantity = 2;
 	_html(`<button>add</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(10);
+	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
 	row_default({
 		name: "Widget",

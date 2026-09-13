@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 				_await($scope3_id, "a", resolveAfter("inner", 4), (inner) => {
 					const $scope4_id = _scope_id();
 					_script($scope4_id, "a0");
-					_set_serialize_reason(1);
+					_set_serialize_reason(2);
 					const $childScope = _peek_scope_id();
 					note_default({ label: `${inner} ${clicks}` });
 					_scope($scope4_id, {

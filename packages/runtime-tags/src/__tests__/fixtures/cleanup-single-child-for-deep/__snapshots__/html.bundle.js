@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_for_of(items, (outerItem) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		_set_serialize_reason(1);
+		_set_serialize_reason(2);
 		const $childScope = _peek_scope_id();
 		child_default({
 			write,
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		_for_of(items, (middleItem) => {
 			const $scope2_id = _scope_id();
 			_html("<div>");
-			_set_serialize_reason(1);
+			_set_serialize_reason(2);
 			const $childScope2 = _peek_scope_id();
 			child_default({
 				write,

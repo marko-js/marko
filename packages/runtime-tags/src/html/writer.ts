@@ -833,10 +833,22 @@ export function _subscribe(
 }
 
 // A reason is 1, empty, an offset group bitmask, or a keyed dynamic guard.
+// A reason: two bits per param-reason group at `1 + 2 * group` (the low
+// bit says the group serializes), a keyed object of group values, or none.
 export type SerializeReasonValue =
   | undefined
   | number
-  | Partial<Record<string, 0 | 1>>;
+  | Partial<Record<string, number>>;
+
+// Every group serializes: for a child whose groups the caller cannot see.
+export const CLIENT_ALL = 0x2aaaaaaa;
+
+// A group's 2-bit value; no mask at all means nothing serializes.
+export function maskGroup(mask: SerializeReasonValue, group: number) {
+  return typeof mask === "number"
+    ? (mask >>> (1 + 2 * group)) & 3
+    : ((mask as Partial<Record<number, number>>)[group] ?? 0);
+}
 
 export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
@@ -849,13 +861,7 @@ export function _scope_reason() {
 }
 
 export function _serialize_if(condition: SerializeReasonValue, key: number) {
-  return condition &&
-    (condition === 1 ||
-      (typeof condition === "number"
-        ? (condition >>> (key + 1)) & 1
-        : condition[key]))
-    ? 1
-    : undefined;
+  return condition && maskGroup(condition, key) ? 1 : undefined;
 }
 
 export function _serialize_guard(condition: SerializeReasonValue, key: number) {

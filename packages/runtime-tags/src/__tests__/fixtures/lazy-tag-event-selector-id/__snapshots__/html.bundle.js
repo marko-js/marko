@@ -15,7 +15,7 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "_a", [{
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason($sg__input_value);
+	_set_serialize_reason($sg__input_value << 1);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_html("<button id=load>load</button>");

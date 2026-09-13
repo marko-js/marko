@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 1;
 	_html(`<button>inc ${_text_resume($scope0_id, "#text/1", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	if (true) {} else if (false) {} else {}
 	const $childScope = _peek_scope_id();
 	child_default({

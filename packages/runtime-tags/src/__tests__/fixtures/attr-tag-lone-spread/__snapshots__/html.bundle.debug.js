@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<div>${_text_resume($scope1_id, "#text/0", input.cell.label, $sg__input_cell_label)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
-	_set_serialize_reason($sg__input_obj_label);
+	_set_serialize_reason($sg__input_obj_label << 1);
 	const $childScope = _peek_scope_id();
 	Row.content({ cell: attrTag({ ...input.obj }) });
 	_html(`<div>added=${_text_resume($scope0_id, "#text/1", Object.getOwnPropertySymbols(input.obj).length, $sg__input_obj * 2)}</div>`);

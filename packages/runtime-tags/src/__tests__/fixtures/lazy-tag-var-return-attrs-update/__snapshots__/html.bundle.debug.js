@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (mounted) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(1);
+			_set_serialize_reason(2);
 			const $childScope = _peek_scope_id();
 			let focusChild = $Child_withLoadAssets({ label: `x${n}` });
 			_var($scope1_id, "#scopeOffset/2", $childScope, "__tests__/template.marko_1_focusChild#4/var");

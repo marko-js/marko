@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_set_serialize_reason(1);
+		_set_serialize_reason(2);
 		const $childScope = _peek_scope_id();
 		n1_default({ label: `placeholder ${clicks}` });
 		_subscribe($clicks__closures, _scope($scope1_id, {

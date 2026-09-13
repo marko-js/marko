@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(1);
+			_set_serialize_reason(2);
 			const $childScope = _peek_scope_id();
 			$Child_withLoadAssets({ value });
 			_scope($scope1_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "6:2");

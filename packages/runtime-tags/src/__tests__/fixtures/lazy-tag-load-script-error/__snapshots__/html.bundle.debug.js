@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_set_serialize_reason($sg__input_label);
+		_set_serialize_reason($sg__input_label << 1);
 		const $childScope = _peek_scope_id();
 		$Child_withLoadAssets({ label: input.label });
 		$si__input_label && _subscribe($input_label__closures, _scope($scope1_id, {

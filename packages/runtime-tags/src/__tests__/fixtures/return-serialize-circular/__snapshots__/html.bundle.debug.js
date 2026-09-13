@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_set_serialize_reason(4);
+	_set_serialize_reason(8);
 	const $childScope = _peek_scope_id();
 	let setCount = setter_default({
 		value: count,

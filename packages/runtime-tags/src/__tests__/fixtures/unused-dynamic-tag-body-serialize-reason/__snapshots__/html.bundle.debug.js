@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	}, $scope0_id) };
 	let x = 1;
-	_set_serialize_reason(26);
+	_set_serialize_reason(162);
 	const $childScope = _peek_scope_id();
 	Wrap.content({
 		as: "div",

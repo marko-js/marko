@@ -11,10 +11,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	let n = 2;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(42);
 	const $childScope = _peek_scope_id();
 	Wrap.content([undefined, n]);
-	_set_serialize_reason(1);
+	_set_serialize_reason(42);
 	const $childScope2 = _peek_scope_id();
 	Wrap.content([n, 10]);
 	_script($scope0_id, "__tests__/template.marko_0");

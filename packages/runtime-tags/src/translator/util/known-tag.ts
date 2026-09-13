@@ -50,7 +50,7 @@ import {
   type Section,
   startSection,
 } from "./sections";
-import { getSerializeGuard } from "./serialize-guard";
+import { buildGroupMask, getSerializeGuard } from "./serialize-guard";
 import {
   addSerializeExpr,
   addSerializeReason,
@@ -78,7 +78,6 @@ import {
   translateAttrs,
 } from "./translate-attrs";
 import translateVar from "./translate-var";
-import { withLeadingComment } from "./with-comment";
 import * as writer from "./writer";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -231,66 +230,21 @@ export function knownTagTranslateHTML(
   }
 
   if (contentSection.paramReasonGroups) {
-    let childSerializeReasonExpr: t.Expression | undefined;
-    if (contentSection.paramReasonGroups.length === 1) {
-      // Special case single reason to pass either 1 or undefined.
-      const [group] = contentSection.paramReasonGroups;
-      const reason = getSerializeReason(section, childScopeBinding, group.id);
-      childSerializeReasonExpr =
-        reason && getSerializeGuard(section, reason, false);
-    } else {
-      const props: t.ObjectExpression["properties"] = [];
-      // Reason groups whose guard is statically `1` are encoded as a bitmask
-      // (offset by one bit so a lone group 0 cannot collide with the plain
-      // `1` "serialize everything" sentinel); -1 means a group's guard was
-      // dynamic or out of bit range and an object must be used instead.
-      let bitmask = 0;
-      let bitmaskNames = "";
-      let hasDynamicReasons = false;
-      let hasSkippedReasons = false;
-      for (let i = 0; i < contentSection.paramReasonGroups.length; i++) {
-        const group = contentSection.paramReasonGroups[i];
+    // Each group's serialize guard is its bit.
+    const childSerializeReasonExpr = buildGroupMask(
+      contentSection.paramReasonGroups.map((group) => {
         const reason = getSerializeReason(section, childScopeBinding, group.id);
-        if (reason) {
-          hasDynamicReasons ||= reason !== true && !reason.state;
-          const guard = getSerializeGuard(section, reason, false)!;
-          if (bitmask >= 0) {
-            if (
-              guard.type === "NumericLiteral" &&
-              guard.value === 1 &&
-              i < 30
-            ) {
-              bitmask |= 1 << (i + 1);
-              const names = getDebugNames(group.reason);
-              if (names) {
-                bitmaskNames += bitmaskNames ? ` | ${names}` : names;
-              }
-            } else {
-              bitmask = -1;
-            }
-          }
-          props.push(
-            t.objectProperty(
-              withLeadingComment(
-                t.numericLiteral(i),
-                getDebugNames(group.reason),
-              ),
-              guard,
-            ),
-          );
-        } else {
-          hasSkippedReasons = true;
-        }
-      }
-
-      if (props.length) {
-        childSerializeReasonExpr = !(hasDynamicReasons || hasSkippedReasons)
-          ? t.numericLiteral(1)
-          : bitmask > 0
-            ? withLeadingComment(t.numericLiteral(bitmask), bitmaskNames)
-            : t.objectExpression(props);
-      }
-    }
+        const guard = reason && getSerializeGuard(section, reason, false)!;
+        return {
+          value: !guard
+            ? undefined
+            : guard.type === "NumericLiteral"
+              ? guard.value
+              : guard,
+          names: getDebugNames(group.reason),
+        };
+      }),
+    );
 
     if (childSerializeReasonExpr) {
       tag.insertBefore(

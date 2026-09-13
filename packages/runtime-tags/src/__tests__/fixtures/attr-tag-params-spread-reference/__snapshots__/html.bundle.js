@@ -10,7 +10,7 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason($sg__input);
+	_set_serialize_reason($sg__input << 1);
 	let $item;
 	forUntil(1, 0, 1, (i) => {
 		$item = attrTags($item, { value: i });

@@ -17,7 +17,7 @@ var panel_default = _template("c", (input) => {
 	let format = shout;
 	let message = "panel";
 	_html(`<button>panel</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	greeting_default({ message });
 	_script($scope0_id, "c0");
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	let format = shout;
 	let message = "page";
 	_html(`<button>page</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	greeting_default({ message });
 	panel_default({});

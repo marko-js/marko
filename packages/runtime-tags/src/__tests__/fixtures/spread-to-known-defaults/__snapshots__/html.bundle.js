@@ -10,13 +10,13 @@ var child_default = _template("b", (input) => {
 var wrap_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0), $sg__input_class = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason($sg__input_class);
+	_set_serialize_reason($sg__input_class << 1);
 	const $childScope = _peek_scope_id();
 	child_default({
 		...input,
 		value: "override"
 	});
-	_set_serialize_reason($sg__input);
+	_set_serialize_reason($sg__input << 1);
 	const $childScope2 = _peek_scope_id();
 	child_default({
 		value: "default",

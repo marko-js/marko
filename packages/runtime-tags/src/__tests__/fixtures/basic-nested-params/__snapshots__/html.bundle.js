@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	let y = 2;
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(10);
+	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: x,

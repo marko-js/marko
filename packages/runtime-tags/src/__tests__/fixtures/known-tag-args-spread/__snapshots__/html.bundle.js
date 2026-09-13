@@ -12,11 +12,11 @@ var template_default = _template("a", (input) => {
 		(_serialize_if($scope0_reason, 0) || _serialize_if($scope1_reason, 0)) && _subscribe($si__input && $input__closures, _scope($scope1_id, { _: $si__input && _scope_with_id($scope0_id) }));
 		$sg__input || $sg__a || $sg__b || (_serialize_if($scope0_reason, 0) || _serialize_if($scope1_reason, 0)) && _resume_branch($scope1_id);
 	}, $scope0_id) };
-	_set_serialize_reason(1);
+	_set_serialize_reason(42);
 	const $childScope = _peek_scope_id();
 	MyTag.content(...args);
 	MyTag.content(7, 8, 9);
-	_set_serialize_reason(1);
+	_set_serialize_reason(42);
 	let $cgrp;
 	$cgrp = attrTag({ y: 1 });
 	const $childScope2 = _peek_scope_id();

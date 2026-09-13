@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(1);
+			_set_serialize_reason(2);
 			const $childScope = _peek_scope_id();
 			list_default({ count });
 			_scope($scope1_id, { a: _existing_scope($childScope) });

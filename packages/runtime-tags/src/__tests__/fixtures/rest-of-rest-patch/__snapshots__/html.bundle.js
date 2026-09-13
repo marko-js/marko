@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let label = "a";
 	_html("<main>");
-	_set_serialize_reason(10);
+	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
 	echo_default({
 		skip: "k",

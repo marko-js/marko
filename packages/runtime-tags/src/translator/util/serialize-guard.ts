@@ -52,6 +52,54 @@ const [getSectionReasonState] = createSectionState<SectionReasonState>(
   }),
 );
 
+// A call site's reason from its groups' 2-bit values: static ones fold into
+// a literal, a dynamic one shifts into its place; only a group past the
+// bit range (15) makes it a keyed object. A group with no value contributes
+// nothing; one known unfed (`0`) still makes the reason an explicit `0`.
+export function buildGroupMask(
+  groups: { value: number | t.Expression | undefined; names: string }[],
+): t.Expression | undefined {
+  let mask = 0;
+  let maskNames = "";
+  let dynamic: t.Expression | undefined;
+  const props: t.ObjectExpression["properties"] = [];
+  let needsObject = false;
+  let any = false;
+  for (let i = 0; i < groups.length; i++) {
+    const { value, names } = groups[i];
+    if (value === undefined) continue;
+    any = true;
+    if (value === 0) continue;
+    if (i >= 15) {
+      needsObject = true;
+    } else if (typeof value === "number") {
+      mask |= value << (1 + 2 * i);
+      if (names) maskNames += maskNames ? ` | ${names}` : names;
+    } else {
+      const shifted = t.binaryExpression(
+        "<<",
+        value,
+        withLeadingComment(t.numericLiteral(1 + 2 * i), names),
+      );
+      dynamic = dynamic ? t.binaryExpression("|", dynamic, shifted) : shifted;
+    }
+    props.push(
+      t.objectProperty(
+        withLeadingComment(t.numericLiteral(i), names),
+        typeof value === "number" ? t.numericLiteral(value) : value,
+      ),
+    );
+  }
+  if (needsObject) return t.objectExpression(props);
+  if (!any) return;
+  const literal = mask
+    ? withLeadingComment(t.numericLiteral(mask), maskNames)
+    : undefined;
+  return literal && dynamic
+    ? t.binaryExpression("|", literal, dynamic)
+    : literal || dynamic || t.numericLiteral(0);
+}
+
 export function getScopeReasonDeclaration(
   section: Section,
 ): t.VariableDeclaration {

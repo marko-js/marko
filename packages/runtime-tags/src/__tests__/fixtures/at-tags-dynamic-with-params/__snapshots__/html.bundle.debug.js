@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = true;
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	let $item;
 	if (x) {
 		$item = attrTag({ content: _content("__tests__/template.marko_1*content", (y) => {

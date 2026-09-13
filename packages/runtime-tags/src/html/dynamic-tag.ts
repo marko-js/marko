@@ -22,6 +22,7 @@ import {
   _scope_id,
   _script,
   _set_serialize_reason,
+  CLIENT_ALL,
   applyBranchStart,
   deferBranchStart,
   getChunk,
@@ -184,7 +185,7 @@ export let _dynamic_tag = (
       if (renderer) {
         try {
           _set_serialize_reason(
-            shouldResume && inputOrArgs !== undefined ? 1 : 0,
+            shouldResume && inputOrArgs !== undefined ? CLIENT_ALL : 0,
           );
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))

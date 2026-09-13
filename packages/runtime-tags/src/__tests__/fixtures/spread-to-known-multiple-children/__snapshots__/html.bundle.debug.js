@@ -10,10 +10,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_class__OR__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason($sg__input_class__OR__input_value);
+	_set_serialize_reason($sg__input_class__OR__input_value << 1);
 	const $childScope = _peek_scope_id();
 	child_default(input);
-	_set_serialize_reason($sg__input_class__OR__input_value);
+	_set_serialize_reason($sg__input_class__OR__input_value << 1);
 	const $childScope2 = _peek_scope_id();
 	child_default(input);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {

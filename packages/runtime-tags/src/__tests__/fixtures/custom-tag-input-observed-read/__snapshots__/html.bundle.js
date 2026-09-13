@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	show_result_default({ get: function() {
 		return count;

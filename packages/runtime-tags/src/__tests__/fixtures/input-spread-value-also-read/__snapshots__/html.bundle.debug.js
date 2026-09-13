@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let value = "hi";
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	my_input_default({
 		value,

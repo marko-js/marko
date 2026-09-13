@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
-	_set_serialize_reason(10);
+	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
 	child_default({
 		tag: "button",

@@ -11,10 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1_a#8", $sg__input_a || $sg__b);
 		_scope($scope1_id, { input_a: input.a }, "__tests__/template.marko", "1:2", { input_a: ["input.a", "1:15"] });
 	}, $scope0_id) };
-	_set_serialize_reason({
-		0: _serialize_guard($scope0_reason, 1),
-		1: _serialize_guard($scope0_reason, 2)
-	});
+	_set_serialize_reason(_serialize_guard($scope0_reason, 1) << 1 | _serialize_guard($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id();
 	Child.content({
 		a: input.a,

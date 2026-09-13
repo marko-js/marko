@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let label = "a";
 	_html("<main>");
-	_set_serialize_reason(1);
+	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	echo_default({ label });
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);

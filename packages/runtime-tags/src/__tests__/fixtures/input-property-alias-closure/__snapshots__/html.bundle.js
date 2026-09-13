@@ -11,10 +11,7 @@ var template_default = _template("a", (input) => {
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	const { text } = input;
-	_set_serialize_reason({
-		0: $sg__input_text2,
-		1: $sg__input_text2
-	});
+	_set_serialize_reason($sg__input_text2 << 1 | $sg__input_text2 << 3);
 	const $childScope = _peek_scope_id();
 	Child.content({
 		text: input.text,

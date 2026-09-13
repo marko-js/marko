@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		});
 	}, $scope0_id) };
 	_html(`<button>Increment</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(10);
+	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
 	Foo.content({
 		value: count,
