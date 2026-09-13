@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.3.52
+
+### Patch Changes
+
+- [#4149](https://github.com/marko-js/marko/pull/4149) [`b1f6f86`](https://github.com/marko-js/marko/commit/b1f6f863915a003a64b0e0732060e6e3e85e2b2d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Encode a call site's serialize reason as two bits per param-reason group, composing dynamic guards arithmetically instead of allocating a keyed object.
+
+- [#4132](https://github.com/marko-js/marko/pull/4132) [`66c2882`](https://github.com/marko-js/marko/commit/66c2882d89ead4041f1ad96bacf5cb0bcdba8e4c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix the client walk for a `<style>` with dynamic rules followed by sibling elements, and move a branch's edges with an unescaped `$!{}` hole that is the branch's whole content.
+
 ## 6.3.51
 
 ### Patch Changes
