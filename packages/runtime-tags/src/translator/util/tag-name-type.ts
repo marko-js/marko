@@ -19,6 +19,10 @@ declare module "@marko/compiler/dist/types" {
     /** Set by the Class API translator when Tags content resumes below here. */
     hydratesTags?: boolean;
   }
+  export interface NodeExtra {
+    /** A tag extra's name kind (reads merge into it, so a read reaches it). */
+    tagNameType?: TagNameType;
+  }
   export interface MarkoTagExtra {
     tagNameType?: TagNameType;
     // Kept unread for a planned nullable tag name optimization; incomplete when

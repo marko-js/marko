@@ -78,6 +78,15 @@ export default {
       case "$global": {
         // An HTML read resolves to the `$global` const the program declares.
         if (isOutputHTML()) break;
+        // Only a persisted keyed `$global.key` read becomes a tracked binding (a
+        // fill needs an identity); every other shape stays a bag access.
+        if (
+          (t.isMemberExpression(identifier.parent) ||
+            t.isOptionalMemberExpression(identifier.parent)) &&
+          identifier.parent.extra?.read
+        ) {
+          break;
+        }
 
         const globalRead = t.memberExpression(
           scopeIdentifier,

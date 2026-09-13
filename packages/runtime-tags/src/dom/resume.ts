@@ -11,18 +11,19 @@ import {
   type AwaitCounter,
   type BranchScope,
   type EncodedAccessor,
+  PatchKey,
   ResumeSymbol,
   type Scope,
 } from "../common/types";
-import { runEffects } from "./queue";
+import { runEffects, runId } from "./queue";
 import { setParentBranch } from "./renderer";
 import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
-type ResumeFn = (ctx: SerializeContext) => unknown;
-type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
-interface SerializeContext {
+export type ResumeFn = (ctx: SerializeContext) => unknown;
+export type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
+export interface SerializeContext {
   (data: number | (Scope | number)[], registryId?: string): unknown;
   _: Record<string, unknown>;
 }
@@ -43,6 +44,11 @@ export interface RenderData {
   m?(effects: unknown[]): unknown[];
   // Blocking resumes keyed by ready id.
   b?: Record<string, ResumeData>;
+  // Load-error sink: a lazy loader script's `onerror` reports its channel
+  // id here once the runtime has installed it (`init`)...
+  e?(readyId?: string): void;
+  // ...and parks it here before then (`init` drains this queue).
+  f?: string[] | void;
   /* --- Used by inline runtime --- */
 
   // Document
@@ -57,39 +63,145 @@ export interface RenderData {
   p?: Record<string | number, AwaitCounter>;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
+// What a patch of each kind carries, declared beside the patcher that
+// reads it; a bind source's index key is its own kind.
+export interface PatchValues {}
+type PatchKind = PatchKey.Value | number;
+type Patcher<K extends PatchKind = PatchKind> = (
+  scope: Scope,
+  key: string,
+  value: K extends keyof PatchValues ? PatchValues[K] : unknown,
+) => void;
 
 export const registeredValues: Record<string, unknown> = {};
-let curRenders: Renders;
+export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
+// Flush shells ahead of the scope tree (`id;walks;template`
+// strings), registered by the patch feature that understands them.
+export let onPatchShell: ((entry: string) => void) | undefined;
+export const _patch_shells = (handler: NonNullable<typeof onPatchShell>) =>
+  (onPatchShell = handler);
+// Rejects the applying patch so the caller falls back to a full navigation;
+// only conditions reachable in a matched build guard explicitly.
+export const failPatch = () => {
+  throw 0;
+};
+// Created-scope application dispatch: everything in a setup envelope is
+// REQUIRED (a shaken fill via `patchers` is a correct no-op).
+export const createPatchers: typeof patchers = {};
+export const patchCreated = (setup: Scope, live: Scope) => {
+  for (const key in setup) {
+    if (MARKO_DEBUG) {
+      const kind =
+        key.indexOf(":") > 0 ? key.slice(0, key.indexOf(":") + 1) : key[0];
+      if (!createPatchers[kind as PatchKind]) {
+        throw new Error(
+          `No patcher applies "${key}": the live page has no "${kind}" feature.`,
+        );
+      }
+    }
+    createPatchers[
+      (MARKO_DEBUG && key.indexOf(":") > 0
+        ? key.slice(0, key.indexOf(":") + 1)
+        : key[0]) as PatchKind
+    ]!(live, key, setup[key as keyof Scope]);
+  }
+};
+// Applies a patch partial to its live counterpart; structural patchers
+// recurse back through here, so no scope is ever addressed by id. Debug
+// entry keys are `PatchKind:…`, optimized ones a single character.
+export const patchScope = (partial: Scope, live: Scope) => {
+  for (const key in partial) {
+    if (MARKO_DEBUG) {
+      const kind =
+        key.indexOf(":") > 0 ? key.slice(0, key.indexOf(":") + 1) : key[0];
+      if (!patchers[kind as PatchKind]) {
+        throw new Error(
+          `No patcher applies "${key}": the live page has no "${kind}" feature.`,
+        );
+      }
+    }
+    patchers[
+      (MARKO_DEBUG && key.indexOf(":") > 0
+        ? key.slice(0, key.indexOf(":") + 1)
+        : key[0]) as PatchKind
+    ]!(live, key, partial[key as keyof Scope]);
+  }
+};
+export let curRenders: Renders;
 let embedRenders:
   | undefined
   | Map<Text, [renderId: string, scopes: Record<string | number, Scope>]>;
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
-let readyIds: undefined | Set<string>;
-let failedIds: undefined | Set<string>;
+export let readyIds: undefined | Set<string>;
+let patchReady: undefined | ((readyId: string) => void);
+let patchReadyFailed: undefined | ((readyId: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
+// The render a flush is applying against (set by `beginPatch`); read only
+// while `patching`.
+export let patchRender!: RenderData;
+let patching: 0 | 1 = 0;
+// The run the flush began on: a scope created since is the flush's own
+// creation (its entries create); a deferred apply restores its flush's.
+export let patchRun = 0;
+
+export function beginPatch(render: RenderData, runAt = runId) {
+  patchRender = render;
+  patchRun = runAt;
+  // A page with no effects never wrote a walk call; pairing into resumed
+  // branches needs the walked links, so finish the resume before patching.
+  render.w();
+  patching = 1;
+}
+
+export function abortPatch() {
+  patching = 0;
+}
+// Set while a partial applies to a tree a shell's walk just created: fresh
+// scopes met then have no renderer to set them up (see `PatchKey.Setup`).
+export let creating = 0;
+export function withCreating<T>(fn: () => T) {
+  creating++;
+  try {
+    return fn();
+  } finally {
+    creating--;
+  }
+}
 
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
+  patchReady?.(readyId);
 }
 
-// A lazy module that will never arrive can never deliver its channel's
-// pending resume data: the debug build records the failure per channel
-// (repeat reports fold) and says so instead of staying silent. Production
-// builds compile no reporting call sites, so this strips away entirely.
+export function installReady(
+  onReady: (readyId: string) => void,
+  onFail: (readyId: string) => void,
+) {
+  patchReady = onReady;
+  patchReadyFailed = onFail;
+}
+
+// A channel module that never arrives can never drain its data: the
+// persisted feature settles pending patches and rejects later flushes.
 export function readyFailed(readyId: string) {
   if (MARKO_DEBUG) {
-    if (failedIds?.has(readyId) || readyIds?.has(readyId)) return;
-    (failedIds ||= new Set()).add(readyId);
-    console.error(
-      `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
-    );
+    if (!readyIds?.has(readyId)) {
+      console.error(
+        `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
+      );
+    }
   }
+  patchReadyFailed?.(readyId);
+}
+
+export function isReady(readyId: string) {
+  return !!readyIds?.has(readyId);
 }
 
 export function withLazy<T>(runtime: T) {
@@ -165,6 +277,19 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           return scope;
         };
         const applyScopes = (partials: (Scope | number)[]) => {
+          if (patching && patchRender === render) {
+            // `[...shells, tree]`, anchored at the page root (scope 1); a
+            // deferred run applies via `_()`, leaving only a trailing 0.
+            let i = 0;
+            while (typeof partials[i] === "string") {
+              onPatchShell!(partials[i++] as unknown as string);
+            }
+            if (partials[i]) {
+              patchScope(partials[i] as Scope, getScope(1));
+            }
+            return;
+          }
+
           let scopeId = partials[0] as number;
           for (let i = 1; i < partials.length; i++) {
             const partial = partials[i];
@@ -378,7 +503,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               // Gates can't reach here (only in ready streams, readyIds set);
               // a payload returns its fill or applies it and ends in `,0`.
               const scopes = (serialized as ResumeFn)(serializeContext);
-              if (Array.isArray(scopes)) applyScopes(scopes);
+              if (Array.isArray(scopes)) {
+                applyScopes(scopes);
+              } else if (patching && patchRender === render && scopes) {
+                // A shell-less flush is its bare tree object.
+                applyScopes([scopes as Scope]);
+              }
             }
           }
           resumes.splice(0, i);
@@ -405,6 +535,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           }
         }
 
+        // Loader `onerror` sink, installed only when patch-ready latches; a loader
+        // that failed before this evaluated parked its id on the queue.
+        if (patchReadyFailed) {
+          render.e = readyFailed;
+          render.f = render.f?.forEach(readyFailed);
+        }
         render.m = (effects: unknown[]) => {
           processResumes(render.r, effects);
 
@@ -536,13 +672,29 @@ function runResumeEffects(render: RenderData) {
   }
 }
 
-export function getRegisteredWithScope(id: string, scope?: Scope) {
+export function getRegisteredWithScope<T = unknown>(id: string, scope?: Scope) {
   const val = registeredValues[id];
-  return scope ? (val as RegisteredFn)(scope) : val;
+  return (scope ? (val as RegisteredFn)(scope) : val) as T;
 }
 
 export function _resume<T>(id: string, obj: T): T {
   return (registeredValues[id] = obj);
+}
+
+// A fill closure's creation init is the arrival at each join downstream:
+// registered from the join's own fill wrapper, so it lives exactly as long.
+export function _init_join<T extends (scope: Scope) => void>(
+  id: string,
+  join: T,
+): T {
+  const prev = registeredValues[id] as T | undefined;
+  registeredValues[id] = prev
+    ? (scope: Scope) => {
+        prev(scope);
+        join(scope);
+      }
+    : join;
+  return join;
 }
 
 export function _var_resume<T extends Signal<unknown>>(

@@ -1,0 +1,21 @@
+<ul>
+  <li>a<!--M_$2 #text/0-->=<!>one<!--M_$2 #text/1--></li>
+  <li>b<!--M_$3 #text/0-->=<!>0<!--M_$3 #text/1--></li>
+  <!--M_|1 #text/0 3 2--><!--M_[-->
+  <li>0<!--M_$4 #text/0--></li><!--M_[4-->
+  <li>1<!--M_$5 #text/0--></li><!--M_]1 #text/1 5-->
+</ul><button>+</button><!--M_$1 #button/2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      input_label: "one",
+      count: 0
+    }, {
+      "#LoopKey": "a"
+    }, {
+      "#LoopKey": "b"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-for-in-until/template.marko_0 1"
+  ];
+  M._.w()
+</script>

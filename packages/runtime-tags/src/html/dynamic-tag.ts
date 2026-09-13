@@ -1,6 +1,7 @@
 import { assertValidTagName } from "../common/errors";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import {
+  CONTENT_REGISTER_ID,
   DYNAMIC_TAG_SCRIPT_REGISTER_ID,
   DYNAMIC_TAG_VAR_REGISTER_ID,
 } from "../common/meta";
@@ -12,24 +13,30 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
+import { registerAccess, toAccess, toObjectKey } from "./serializer";
+import { rawShells, shells } from "./shells";
 import type { ServerRenderer } from "./template";
 import {
   _el,
   _html,
   _peek_scope_id,
+  _scope_reason,
+  CLIENT_ALL,
+  SERVER_ALL,
   _resume,
   _scope,
   _scope_id,
   _script,
   _set_serialize_reason,
-  CLIENT_ALL,
   applyBranchStart,
   deferBranchStart,
   getChunk,
+  elidedContents,
   getScopeById,
   getState,
   rendererKey,
   withBranchId,
+  withUnpatched,
 } from "./writer";
 
 const voidElementsReg =
@@ -47,11 +54,31 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  // How a patch treats the tag: `1` pairs and re-renders it, `2` skips
+  // it (a client-owned group is upstream of the renderer), absent never patches.
+  patchPairing?: 1 | 2,
 ) => {
   const shouldResume = serializeReason !== 0;
+  // A patch entry may target this tag: its branch marks and pairs, while
+  // the child's data still serializes on the tag's own reason.
+  const marks = shouldResume || patchPairing;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
+  // A patch render skips a tag it never pairs (state or a client-owned
+  // group upstream): the resumed page renders it, as with `writeBranch`.
+  if (patchPairing !== 1 && state.writesPatches) return;
   const branchId = _peek_scope_id();
+  // A null renderer still renders the body: its writes pair too.
+  if (patchPairing && (renderer || content)) {
+    state.pairBranch?.(
+      scopeId,
+      accessor,
+      branchId,
+      undefined,
+      undefined,
+      typeof renderer === "function" ? renderer[RendererProp.Owner] : undefined,
+    );
+  }
   let rendered: boolean;
   let result: unknown;
 
@@ -118,11 +145,13 @@ export let _dynamic_tag = (
                       0,
                       undefined,
                       serializeReason,
+                      patchPairing,
                     )
                 : undefined,
               1,
             );
           } else if (renderContent) {
+            // The body is a branch of the native tag's scope: it pairs too.
             _dynamic_tag(
               branchId,
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
@@ -131,6 +160,7 @@ export let _dynamic_tag = (
               0,
               undefined,
               serializeReason,
+              patchPairing,
             );
           }
         }
@@ -163,7 +193,7 @@ export let _dynamic_tag = (
         _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
       }
 
-      if (shouldResume || needsScript) {
+      if (marks || needsScript) {
         _html(
           state.mark(
             ResumeSymbol.BranchEndNativeTag,
@@ -172,20 +202,38 @@ export let _dynamic_tag = (
         );
       }
     };
-    renderNative();
+    // A tag no patch pairs renders unpatched: the resumed page
+    // re-renders it, so no patch fills its reads.
+    if (patchPairing !== 1 && state.persisted) withUnpatched(renderNative);
+    else renderNative();
 
     // Registered, not written: the getter only reaches the wire when a tag
     // variable holds it, so a native dynamic tag without one pays nothing.
     result = _el(branchId, DYNAMIC_TAG_VAR_REGISTER_ID);
   } else {
     const chunk = getChunk()!;
-    const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;
+    const beforeBranch = marks ? deferBranchStart(chunk) : undefined;
 
     const render = () => {
+      const { state } = chunk.boundary;
+      if (state.writesPatches) {
+        const rendered = (renderer || content) as
+          | { [RendererProp.Id]?: string }
+          | 0
+          | undefined;
+        const id = rendered ? rendered[RendererProp.Id] : undefined;
+        if (id) (state.renderedContents ??= new Set()).add(id);
+      }
       if (renderer) {
         try {
+          // The child's groups are unknown here: a persisted page renders
+          // the tag server-side, elsewhere the client may re-render it.
           _set_serialize_reason(
-            shouldResume && inputOrArgs !== undefined ? CLIENT_ALL : 0,
+            shouldResume && inputOrArgs !== undefined
+              ? state.persisted
+                ? SERVER_ALL
+                : CLIENT_ALL
+              : 0,
           );
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
@@ -201,7 +249,11 @@ export let _dynamic_tag = (
         return content();
       }
     };
-    result = shouldResume ? withBranchId(branchId, render) : render();
+    const run =
+      patchPairing !== 1 && state.persisted
+        ? () => withUnpatched(render)
+        : render;
+    result = marks ? withBranchId(branchId, run) : run();
     rendered = _peek_scope_id() !== branchId;
 
     if (beforeBranch !== undefined) {
@@ -216,7 +268,13 @@ export let _dynamic_tag = (
   }
 
   if (rendered) {
-    if (shouldResume) {
+    // A patched tag keeps its key so a shell pairs by id alone.
+    if (
+      shouldResume ||
+      (patchPairing &&
+        typeof renderer === "function" &&
+        shells[renderer[RendererProp.Id]!])
+    ) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]: rendererKey(renderer),
       });
@@ -229,6 +287,13 @@ export let _dynamic_tag = (
 };
 
 export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
+  // Also called at module load (template definitions), outside any render.
+  const state = getChunk()?.boundary.state;
+  if (state?.writesPatches) (state.definedContents ??= new Set()).add(id);
+  return content(id, fn, scopeId);
+}
+
+function content(id: string, fn: ServerRenderer, scopeId?: number) {
   fn[RendererProp.Id] = id;
   // The owner id the client derives from `RendererProp.Owner`; both sides key a
   // content instance by it, so they must be written from the same scope.
@@ -244,6 +309,44 @@ export function _content_resume(
   return _resume(_content(id, fn, scopeId), id, scopeId);
 }
 
+// Content with no client renderer elides its slot: a catch slot serializes
+// `0` (its flush carries html), a placeholder slot `undefined`.
+export function _content_elide(
+  id: string,
+  fn: ServerRenderer,
+  scopeId: number | undefined,
+  placeholder?: 1,
+) {
+  elidedContents.add(fn);
+  // No client renderer registers for it, so no fill could reach it.
+  return registerAccess(content(id, fn, scopeId), placeholder ? "void 0" : "0");
+}
+
+// A static shell renders server-side and rides its slot in-band, so
+// gated markup only reaches responses rendered for this user.
+const contentAccessPrefix =
+  "_._" +
+  /*@__PURE__*/ toAccess(/*@__PURE__*/ toObjectKey(CONTENT_REGISTER_ID)) +
+  "(";
+export function _content_shell(id: string, scopeId: number | undefined) {
+  const shell = rawShells[id];
+  const template = shell.slice(shell.indexOf(",") + 1);
+  return registerAccess(
+    _content(
+      id,
+      () => {
+        _scope_reason();
+        _scope_id();
+        _html(template);
+      },
+      scopeId,
+    ),
+    contentAccessPrefix +
+      shells[id] +
+      (scopeId === undefined ? ")" : ",_(" + scopeId + "))"),
+  );
+}
+
 export const patchDynamicTag = /* @__PURE__ */ (
   (originalDynamicTag) =>
   (patch: (tag: unknown, scopeId: number, accessor: Accessor) => unknown) => {
@@ -255,6 +358,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
       content,
       inputIsArgs,
       resume,
+      patchPairing,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -267,6 +371,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
         content,
         inputIsArgs,
         resume,
+        patchPairing,
       );
     };
   }
