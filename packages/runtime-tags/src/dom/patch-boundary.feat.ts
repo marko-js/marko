@@ -14,7 +14,7 @@ import {
   dismissPlaceholder,
   runPendingEffects,
 } from "./control-flow";
-import { getShellContent, shells } from "./patch-shells";
+import { getContent } from "./patch-shells";
 import "./patch-child.feat";
 import {
   caughtError,
@@ -30,13 +30,7 @@ import {
   createBranch,
   type Renderer,
 } from "./renderer";
-import {
-  failPatch,
-  getRegisteredWithScope,
-  patchers,
-  patchScope,
-  withCreating,
-} from "./resume";
+import { failPatch, patchers, patchScope, withCreating } from "./resume";
 import {
   collectScopes,
   findBranchWithKey,
@@ -156,7 +150,7 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // A created scope has no live await branch: the entry's id names the body
   // content shell its flush shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
-    const renderer = getShellContent(shells[value]);
+    const renderer = getContent(value)!;
     const pendingScopes = collectScopes(
       () =>
         ((
@@ -213,13 +207,10 @@ function attachDetachedAwait(
   return true;
 }
 
-// A boundary slot: `0` stays the elided sentinel; an id resolves through
-// the shipped shell or the dom registration against the try's owner.
+// A boundary slot: `0` stays the elided sentinel; an id resolves its
+// content (shipped shell or dom registration) against the try's owner.
 function resolveBoundaryContent(id: string | 0, owner: Scope) {
-  if (id === 0) return 0;
-  const shell = shells[id];
-  if (shell) return getShellContent(shell, id, owner);
-  return getRegisteredWithScope<(owner: Scope) => unknown>(id)(owner);
+  return id === 0 ? 0 : getContent(id, owner);
 }
 
 const applyChild = patchers[PatchKey.Child];
@@ -242,10 +233,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     const [partial, contentId, catchId, placeholderId] = value;
     value = partial;
     if (!scope[link]) {
-      const shell = shells[contentId];
-      const renderer =
-        (shell && getShellContent(shell, contentId)) ||
-        getRegisteredWithScope<Renderer>(contentId);
+      const renderer = getContent(contentId)!;
       const marker = scope[accessor as Accessor] as ChildNode;
       const inside = marker.nodeType === 1;
       const parentNode = inside
@@ -272,7 +260,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
           scope,
         ) as never;
       }
-      if (shell) {
+      if (renderer[RendererProp.Shell]) {
         withCreating(() => patchScope(value as Scope, branch));
       } else {
         patchScope(value as Scope, branch);
