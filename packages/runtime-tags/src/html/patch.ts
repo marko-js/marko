@@ -37,6 +37,7 @@ import {
   isInResumedBranch,
   _client_guard,
   _filled_guard,
+  patchFills,
   getFilteredGlobals,
   patchPartial,
   writeEmbeddedBinds,
@@ -369,21 +370,13 @@ export function _patch_attr(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    // `0` is the removal sentinel: normalized values are always strings and
-    // `undefined` entries are dropped entirely.
-    writeFilled(
-      scopeId,
-      PatchKey.Attr + accessor + " " + name,
-      attrValue(value) ?? 0,
-      owned,
-      group,
-    );
-  } else {
-    getChunk()!.needsWalk = true;
+  // `0` is the removal sentinel: normalized values are always strings and
+  // `undefined` entries are dropped entirely.
+  if (patchFills(owned, group!)) {
+    writePatch(scopeId, {
+      [PatchKey.Attr + accessor + " " + name]: attrValue(value) ?? 0,
+    });
   }
-
   return _attr(name, value);
 }
 
@@ -502,20 +495,9 @@ export function _patch_control(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    if (_filled_guard(owned, group!)) {
-      writeEmbeddedBinds(state, value);
-      writeFilled(
-        scopeId,
-        PatchKey.Control + type + accessor,
-        value,
-        owned,
-        group,
-      );
-    }
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writeEmbeddedBinds(getState(), value);
+    writePatch(scopeId, { [PatchKey.Control + type + accessor]: value });
   }
   return "";
 }
@@ -722,7 +704,7 @@ export function _patch_attrs_partial_content(
 
 // The content renderer never rides the set: its entry carries it.
 function withoutContent(data: Record<string, unknown>) {
-  if (data?.content === undefined) return data;
+  if (!data?.content) return data;
   const { content: _, ...set } = data;
   return set;
 }
@@ -735,19 +717,9 @@ export function _patch_text(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    writeFilled(
-      scopeId,
-      PatchKey.Text + accessor,
-      _to_text(value),
-      owned,
-      group,
-    );
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writePatch(scopeId, { [PatchKey.Text + accessor]: _to_text(value) });
   }
-
   // The patch write doubles as the output writer, so the text rides the
   // same resume marking a plain placeholder gets.
   return _text_resume(scopeId, accessor, value, shouldResume);
@@ -763,17 +735,8 @@ export function _patch_html(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    writeFilled(
-      scopeId,
-      PatchKey.Html + accessor,
-      _unescaped(value),
-      owned,
-      group,
-    );
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writePatch(scopeId, { [PatchKey.Html + accessor]: _unescaped(value) });
   }
   return _html_resume(scopeId, accessor, value, shouldResume);
 }
@@ -788,17 +751,8 @@ export function _patch_style(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    writeFilled(
-      scopeId,
-      PatchKey.Style + accessor + " " + name,
-      value,
-      owned,
-      group,
-    );
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writePatch(scopeId, { [PatchKey.Style + accessor + " " + name]: value });
   }
   return _escape_style_value(value);
 }
@@ -811,11 +765,8 @@ export function _patch_text_content(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    writeFilled(scopeId, PatchKey.TextContent + accessor, value, owned, group);
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writePatch(scopeId, { [PatchKey.TextContent + accessor]: value });
   }
   return escape(value);
 }
@@ -831,22 +782,15 @@ export function _patch_attrs(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    if (_filled_guard(owned, group!)) {
-      writeEmbeddedBinds(state, data);
-      // `controllable` marks a spread owning the element's controllable; the
-      // array form carries `skip`/`controllable` without key bytes.
-      writeFilled(
-        scopeId,
-        PatchKey.Attrs + accessor,
-        controllable ? [data ?? 0, 0, 1] : (data ?? 0),
-        owned,
-        group,
-      );
-    }
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writeEmbeddedBinds(getState(), data);
+    // `controllable` marks a spread owning the element's controllable; the
+    // array form carries `skip`/`controllable` without key bytes.
+    writePatch(scopeId, {
+      [PatchKey.Attrs + accessor]: controllable
+        ? [data ?? 0, 0, 1]
+        : (data ?? 0),
+    });
   }
   return _attrs(data, accessor, scopeId, tagName);
 }
@@ -862,20 +806,13 @@ export function _patch_attrs_partial(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    if (_filled_guard(owned, group!)) {
-      writeEmbeddedBinds(state, data);
-      writeFilled(
-        scopeId,
-        PatchKey.Attrs + accessor,
-        controllable ? [data ?? 0, skip, 1] : [data ?? 0, skip],
-        owned,
-        group,
-      );
-    }
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writeEmbeddedBinds(getState(), data);
+    writePatch(scopeId, {
+      [PatchKey.Attrs + accessor]: controllable
+        ? [data ?? 0, skip, 1]
+        : [data ?? 0, skip],
+    });
   }
   return _attrs_partial(data, skip, accessor, scopeId, tagName);
 }
@@ -889,17 +826,10 @@ export function _patch_attr_option_value(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    writeFilled(
-      scopeId,
-      PatchKey.Attr + accessor + " value",
-      attrValue(value) ?? 0,
-      owned,
-      group,
-    );
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writePatch(scopeId, {
+      [PatchKey.Attr + accessor + " value"]: attrValue(value) ?? 0,
+    });
   }
   return _attr_option_value(value);
 }
@@ -912,19 +842,11 @@ function patchStringAttr(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  const state = getState();
-  if (state.writesPatches) {
-    writeFilled(
-      scopeId,
-      PatchKey.Attr + accessor + " " + name,
-      value || 0,
-      owned,
-      group,
-    );
-  } else {
-    getChunk()!.needsWalk = true;
+  if (patchFills(owned, group!)) {
+    writePatch(scopeId, {
+      [PatchKey.Attr + accessor + " " + name]: value || 0,
+    });
   }
-
   return stringAttr(name, value);
 }
 
@@ -933,16 +855,6 @@ function patchStringAttr(
 export function _content_withheld(id: string) {
   const state = getState() as PatchState;
   return !!state.definedContents?.has(id) && !state.renderedContents?.has(id);
-}
-
-function writeFilled(
-  scopeId: number,
-  key: string,
-  value: unknown,
-  owned?: SerializeReasonValue,
-  group?: number,
-) {
-  if (_filled_guard(owned, group!)) writePatch(scopeId, { [key]: value });
 }
 
 // Only a shell the server can ship rides an entry: a missing one makes a

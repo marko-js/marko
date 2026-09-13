@@ -1189,6 +1189,15 @@ export function maskGroup(mask: SerializeReasonValue, group: number) {
       : ((mask as Partial<Record<number, number>>)[group] ?? 0);
 }
 
+// Whether a patch render fills the hole here (the caller then builds the
+// entry); a page render instead needs the walk so a later patch can reach
+// the node.
+export function patchFills(mask: SerializeReasonValue, group: number) {
+  if ($chunk.boundary.state.writesPatches) return _filled_guard(mask, group);
+  $chunk.needsWalk = true;
+  return 0;
+}
+
 // On when a patch fills the group here: server-owned, or unfed (`0`, a
 // call-site constant) where a fresh scope may need the seed.
 export function _filled_guard(mask: SerializeReasonValue, group: number) {
