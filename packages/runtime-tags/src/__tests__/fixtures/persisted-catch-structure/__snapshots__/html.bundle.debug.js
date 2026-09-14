@@ -29,7 +29,7 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		_if(() => {
 			if (input.detail) {
 				const $scope2_id = _scope_id();
-				_html(`<p>${_text_resume($scope2_id, "#text/0", input.detail)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "#text/0", input.detail, $sg__input_detail)}</p>`);
 				_subscribe($si__input_detail && $input_detail__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_detail": 1

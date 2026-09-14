@@ -25,10 +25,10 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_shell("__tests__/template.marko_2*content", $scope0_id) }),
 		catch: attrTag({ content: _content_elide("__tests__/template.marko_3*content", (err) => {
-			const $scope3_reason = _scope_reason();
+			const $scope3_reason = _scope_reason(), $sg__err_message = _source_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(`<em>${_text_resume($scope3_id, "#text/0", err.message)}</em>`);
-			_scope($scope3_id, {}, "__tests__/template.marko", "7:6");
+			_html(`<em>${_text_resume($scope3_id, "#text/0", err.message, $sg__err_message)}</em>`);
+			_source_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "7:6");
 		}, $scope0_id) })
 	}, 1);
 	_html("</main>");

@@ -6,7 +6,7 @@ _shells({
 	a: "a !a4;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_label = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -25,8 +25,9 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "a", input.label)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.label, $sg__input_label)}</p>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$sg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id) }) }, 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");

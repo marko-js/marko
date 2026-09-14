@@ -27,7 +27,7 @@ var template_default = _template_persisted("a", (input) => {
 		_if(() => {
 			if (input.detail) {
 				const $scope2_id = _scope_id();
-				_html(`<p>${_text_resume($scope2_id, "a", input.detail)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "a", input.detail, $sg__input_detail)}</p>`);
 				_subscribe($si__input_detail && $input_detail__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ci: 1

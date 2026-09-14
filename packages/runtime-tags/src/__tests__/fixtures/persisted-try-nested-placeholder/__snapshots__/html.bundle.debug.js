@@ -23,10 +23,10 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				_html(`<span>${_patch_text($scope4_id, "#text/0", value, void 0, $scope0_reason, 0)}</span>`);
 				_scope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "5:8");
 			}, $scope3_id), { catch: attrTag({ content: _content_elide("__tests__/template.marko_5*content", (err) => {
-				const $scope5_reason = _scope_reason();
+				const $scope5_reason = _scope_reason(), $sg__err_message = _source_guard($scope5_reason, 0);
 				const $scope5_id = _scope_id();
-				_html(`<em>${_text_resume($scope5_id, "#text/0", err.message)}</em>`);
-				_scope($scope5_id, {}, "__tests__/template.marko", "6:10");
+				_html(`<em>${_text_resume($scope5_id, "#text/0", err.message, $sg__err_message)}</em>`);
+				_source_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "6:10");
 			}, $scope3_id) }) }, 1);
 			$scope0_page && _scope($scope3_id, { "ClosureScopes:value": $await_content__value__closures }, "__tests__/template.marko", "4:6");
 		}, 1, void 0, 1);

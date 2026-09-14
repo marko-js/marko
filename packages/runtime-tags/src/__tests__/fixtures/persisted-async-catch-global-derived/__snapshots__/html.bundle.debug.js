@@ -27,10 +27,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"));
 		$scope0_page && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
-		const $scope2_reason = _scope_reason();
+		const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", tag)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", tag, $scope2_page)}</p>`);
 		_subscribe($tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:6"));
+		$scope2_page || _resume_branch($scope2_id);
 	}, $scope0_id) }) }, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_global_subscribe("__tests__/template.marko_0_$global_brand#7/global", $scope0_id);

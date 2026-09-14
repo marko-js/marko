@@ -117,16 +117,20 @@ export default {
       }
     },
     exit(tag) {
-      // The attr tag bodies' sections exist once their own analyze ran; a
-      // shape this cannot flag falls back to loading the dom module.
+      // Content without a section (its body never analyzed) cannot be
+      // classified as boundary content: fall back to loading the dom module.
       if (!isPersisted()) return;
       for (const attrTag of getAttrTagPaths(tag)) {
-        const section =
-          attrTag.isMarkoTag() && isAttributeTag(attrTag)
-            ? attrTag.node.body.extra?.section
-            : undefined;
-        if (section) section.boundaryContent = true;
-        else getProgram().node.extra.isInteractive = true;
+        if (
+          !(
+            attrTag.isMarkoTag() &&
+            isAttributeTag(attrTag) &&
+            attrTag.node.body.extra?.section
+          )
+        ) {
+          getProgram().node.extra.isInteractive = true;
+          break;
+        }
       }
     },
   },
