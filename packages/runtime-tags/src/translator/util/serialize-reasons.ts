@@ -2,14 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
-import {
-  concat,
-  forEach,
-  type OneMany,
-  type Opt,
-  Sorted,
-  toIter,
-} from "./optional";
+import { concat, forEach, type OneMany, type Opt, Sorted } from "./optional";
 import {
   type Binding,
   BindingType,
@@ -285,7 +278,7 @@ export function applySerializeExprs(section: Section) {
 }
 
 export function finalizeSerializeReason(section: Section) {
-  for (const binding of toIter(section.bindings)) {
+  forEach(section.bindings, (binding) => {
     const reason =
       binding.type === BindingType.dom && getSerializeReason(section, binding);
     if (reason) {
@@ -294,7 +287,7 @@ export function finalizeSerializeReason(section: Section) {
         reason,
       );
     }
-  }
+  });
 
   const curReason = section.serializeReason;
   let newReason: undefined | SerializeReason = curReason;
