@@ -46,7 +46,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input_flag = ($scope, input_flag) => $input_flag$1($scope["#childScope/0"], input_flag);
-const $input_label = _fill_const("__tests__/template.marko0", "input_label", ($scope) => $input_label$1($scope["#childScope/0"], $scope.input_label));
+const $input_label = _fill_const_resume("__tests__/template.marko0", "input_label", ($scope) => $input_label$1($scope["#childScope/0"], $scope.input_label));
 const $input = ($scope, input) => {
 	$input_flag($scope, input.flag);
 	$input_label($scope, input.label);

@@ -72,7 +72,11 @@ export {
 } from "./dom/dom";
 export { _on } from "./dom/event";
 export { patch } from "./dom/patch";
-export { _global_join, _global_script } from "./dom/patch-global";
+export {
+  _global_join,
+  _global_join as _global_join_resume,
+  _global_script,
+} from "./dom/patch-global";
 export { _load_lazy } from "./dom/patch-load";
 export {
   _load_event_trigger,
@@ -106,8 +110,11 @@ export {
   _const,
   _el_read,
   _fill_const,
+  _fill_const as _fill_const_resume,
   _fill_let,
+  _fill_let as _fill_let_resume,
   _fill_let_change,
+  _fill_let_change as _fill_let_change_resume,
   _fill_join,
   _fill_join_for,
   _fill_join_if,

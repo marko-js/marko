@@ -161,10 +161,30 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
   return kinds.get(binding);
 }
 
+// A root value a downstream join derives from: its fill registration
+// alone keeps the join current.
+export function joinsStateDownstream(binding: Binding): boolean {
+  return getProgram().node.extra.sections!.some((section) =>
+    some(section.bindings, (derived) => {
+      for (const read of derived.reads) {
+        if (
+          read.downstreamSources?.state &&
+          includes(
+            getSerializeSourcesForRef(read.referencedBindings)?.param,
+            binding,
+          )
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }),
+  );
+}
+
 function computeFillReadKind(
   binding: Binding,
 ): true | FillConditions | undefined {
-  if (binding.upstreamOfStateMixedGroup) return true;
   let conditions: FillConditions | undefined;
   for (const alias of binding.aliases) {
     // A property alias or rest fills on its own; a direct alias reads this.
@@ -181,7 +201,11 @@ function computeFillReadKind(
     // A handler reads the slot at call time: the owner write keeps it
     // current with no registration to shake.
     if (effect && read.invokeOnly) continue;
-    if (!effect && getSerializeSourcesForRef(read.referencedBindings)?.state) {
+    if (
+      !effect &&
+      (getSerializeSourcesForRef(read.referencedBindings)?.state ||
+        read.downstreamSources?.state)
+    ) {
       return true;
     }
     // A `<define>` body reads as if at each tag downstream of its var; a

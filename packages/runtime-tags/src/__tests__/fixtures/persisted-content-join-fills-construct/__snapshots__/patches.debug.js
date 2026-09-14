@@ -10,7 +10,7 @@
         }
       },
       "PatchLoop:#text/3": [{
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko2": 0,
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko1": 0,
         "PatchChild:#childScope/0": {
           "PatchDynamicTag:#text/0": _.a = "^packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
@@ -23,7 +23,7 @@
           }
         }
       }, {
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko2": 1,
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko1": 1,
         "PatchChild:#childScope/0": {
           "PatchDynamicTag:#text/0": _.a,
           "PatchChild:BranchScopes:#text/0": {
@@ -39,12 +39,7 @@
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko_0"
       },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko0": [{
-        n: 0
-      }, {
-        n: 1
-      }],
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko1": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/template.marko_1*shell"]
 }]
@@ -61,7 +56,7 @@
         }
       },
       "PatchLoop:#text/3": [{
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko2": 1,
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko1": 1,
         "PatchChild:#childScope/0": {
           "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
@@ -77,10 +72,7 @@
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko_0"
       },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko0": [{
-        n: 1
-      }],
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko1": 2
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/page.marko0": 2
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/persisted-content-join-fills-construct/template.marko_1*shell"]
 }]
