@@ -1,0 +1,9 @@
+<let/count=0/>
+<main>
+  <ul>
+    <for|item| of=input.items by="id">
+      <li>${item.label} (${count})</li>
+    </for>
+  </ul>
+  <button onClick() { count++ }>Count ${count}</button>
+</main>
