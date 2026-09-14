@@ -101,15 +101,19 @@ export function callRuntime(
 // A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
 // import: it enables optional runtime behavior that referenced imports alone
 // cannot keep alive under tree shaking (eg catch enablement).
-export type DOMRuntimeFeature =
-  | "catch"
-  | "controllable"
-  | "controllable-input"
-  | "controllable-open"
-  | "controllable-select"
-  | "controllable-textarea"
-  | "dynamic-tag-var"
-  | "placeholder";
+// Every dom feature module, listed as a runtime entry so a dev optimizer
+// sees each `.feat` chunk up front instead of discovering it from a template.
+export const domRuntimeFeatures = [
+  "catch",
+  "controllable",
+  "controllable-input",
+  "controllable-open",
+  "controllable-select",
+  "controllable-textarea",
+  "dynamic-tag-var",
+  "placeholder",
+] as const;
+export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
 const importedFeatures = new WeakMap<t.Program, Set<string>>();
 export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!isTranslate()) {
