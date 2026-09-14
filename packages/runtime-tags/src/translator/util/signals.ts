@@ -34,7 +34,7 @@ import {
   getPatchFillBindings,
   getPatchFillKey,
   hasUnfillablePatchReads,
-  hasPatchEffectReads,
+  hasPatchEffectRead,
   isPatchWriteBinding,
   isPatchFillBinding,
   joinsStateDownstream,
@@ -54,11 +54,11 @@ import {
   FORCED,
   getCanonicalBinding,
   getClosureAccessorId,
-  getGlobalKey,
   getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
   getDebugScopeAccess,
+  getGlobalKey,
   getLocalsScopeAccessor,
   getPrefixedScopeAccessor,
   getReadReplacement,
@@ -67,13 +67,14 @@ import {
   getSectionInstancesAccessorLiteral,
   type Getter,
   hasNonConstantPropertyAlias,
+  type Intersection,
   intersectionMeta,
   isAssignedBindingExtra,
   isDirectAlias,
   isRegisteredFnExtra,
-  type Intersection,
   type ReferencedBindings,
   type ReferencedExtra,
+  someAlias,
 } from "./references";
 import { callRuntime, importRuntimeFeature } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
@@ -2269,7 +2270,10 @@ export function writeHTMLResumeStatements(
         const byHops: string[][] = [];
         forEach(signal.referencedBindings, (binding) => {
           const root = getFillRoot(binding);
-          if (isPatchWriteBinding(root) && hasPatchEffectReads(root)) {
+          if (
+            isPatchWriteBinding(root) &&
+            someAlias(root, hasPatchEffectRead, undefined, true)
+          ) {
             (byHops[section.depth - root.section.depth] ??= []).push(
               getScopeAccessor(root),
             );

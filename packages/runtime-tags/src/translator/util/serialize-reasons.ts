@@ -12,10 +12,10 @@ import {
   createSources,
   FORCED,
   getCanonicalBinding,
+  globalSources,
   isReferencedExtra,
   type KnownExprs,
   mapParamBindingToExpr,
-  globalSources,
   mergeSources,
   type ReferencedBindings,
   type Sources,
@@ -62,13 +62,10 @@ export function addSerializeReason(
   prefix?: AccessorPrefix | symbol,
 ) {
   if (reason) {
+    // A `$global` read alone never serializes (the client reads the
+    // globals object, as without persisted pages); it stays a source.
+    if (!reason.state && !reason.param && !reason.forced) return;
     const key = prop && getPropKey(section, prop, prefix);
-    if (!reason.forced) {
-      addSources(section, reason, key);
-      // A `$global` read alone never serializes (the client reads the
-      // globals object, as without persisted pages); it stays a source.
-      if (!reason.state && !reason.param) return;
-    }
     if (key) {
       const curReason = section.serializeReasons.get(key);
       const newReason = mergeSerializeReasons(curReason, reason);
@@ -268,7 +265,7 @@ export function applySerializeExprs(section: Section) {
   if (propExprs) {
     section.propSerializeExprs = undefined;
     for (const [key, exprs] of propExprs) {
-      const reason = addExprSources(section, exprs, key);
+      const reason = getSerializeSourcesForExprs(exprs);
       if (reason) {
         const curReason = section.serializeReasons.get(key);
         const newReason = mergeSerializeReasons(curReason, reason);
@@ -282,7 +279,7 @@ export function applySerializeExprs(section: Section) {
   const scopeExprs = section.serializeExprs;
   if (scopeExprs) {
     section.serializeExprs = undefined;
-    const reason = addExprSources(section, scopeExprs);
+    const reason = getSerializeSourcesForExprs(scopeExprs);
     if (reason) {
       const curReason = section.serializeReason;
       const newReason = mergeSerializeReasons(curReason, reason);
@@ -291,29 +288,6 @@ export function applySerializeExprs(section: Section) {
       }
     }
   }
-}
-
-// One walk: records the sources (reads inside function values included,
-// since a consumer may invoke them at render) and returns the reason,
-// which excludes them.
-function addExprSources(
-  section: Section,
-  exprs: Opt<t.NodeExtra>,
-  key?: SerializeKey,
-) {
-  let reason: Sources | undefined;
-  let fnSources: Sources | undefined;
-  forEach(exprs, (expr) => {
-    reason = mergeSources(reason, getSerializeSourcesForExpr(expr));
-    forEach(
-      (expr as t.FunctionExtra).referencedBindingsInFunction,
-      (binding) => {
-        fnSources = mergeSources(fnSources, getSerializeSourcesForRef(binding));
-      },
-    );
-  });
-  addSources(section, mergeSources(reason, fnSources), key);
-  return reason;
 }
 
 export function finalizeSerializeReason(section: Section) {
@@ -337,66 +311,6 @@ export function finalizeSerializeReason(section: Section) {
   if (newReason && curReason !== newReason) {
     setSerializeReason(section, newReason);
   }
-  // Prop sources fold into the scope's, mirroring the reason merge.
-  const propSources = section.propSerializeSources;
-  if (propSources) {
-    for (const sources of propSources.values()) {
-      addSources(section, sources);
-    }
-  }
-}
-
-// Shells sources without touching the reason: for upstreams that inform
-// ownership but must never cause serialization (function-body reads).
-export function addSerializeSources(
-  section: Section,
-  sources: Sources | undefined,
-  prop?: Binding | AccessorProp | symbol,
-  prefix?: AccessorPrefix | symbol,
-) {
-  addSources(section, sources, prop && getPropKey(section, prop, prefix));
-}
-
-// The sources of a serialization decision, complete after reference finalize;
-// EMPTY under a forced reason means unrecorded, never "sourceless".
-export function getSerializeSources(
-  section: Section,
-  prop?: Binding | AccessorProp | symbol,
-  prefix?: AccessorPrefix | symbol,
-): Sources | undefined {
-  return prop
-    ? section.propSerializeSources?.get(getPropKey(section, prop, prefix))
-    : section.serializeSources;
-}
-
-function addSources(
-  section: Section,
-  sources: Sources | undefined,
-  key?: SerializeKey,
-) {
-  if (!sources) return;
-  if (key) {
-    const propSources = (section.propSerializeSources ??= new Map());
-    propSources.set(key, mergeSources(propSources.get(key), sources)!);
-  } else {
-    section.serializeSources = mergeSources(section.serializeSources, sources)!;
-  }
-}
-
-// Unlike the reason resolution, these sources count reads inside function
-// values: a consumer may invoke them at render time.
-export function getAllSourcesForExprs(exprs: Opt<t.NodeExtra>) {
-  let sources: Sources | undefined;
-  forEach(exprs, (expr) => {
-    sources = mergeSources(sources, getSerializeSourcesForExpr(expr));
-    forEach(
-      (expr as t.FunctionExtra).referencedBindingsInFunction,
-      (binding) => {
-        sources = mergeSources(sources, getSerializeSourcesForRef(binding));
-      },
-    );
-  });
-  return sources;
 }
 
 function getPropKey(

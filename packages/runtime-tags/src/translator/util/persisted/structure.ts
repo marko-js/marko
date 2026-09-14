@@ -3,12 +3,13 @@
 import type { types as t } from "@marko/compiler";
 
 import { kDirectContent } from "../binding-prop-tree";
+import { createCyclicMemo } from "../cyclic-memo";
 import { isPersisted } from "../marko-config";
 import { every, forEach, type Opt, some, toArray } from "../optional";
 import type { Binding, ReferencedExtra, Sources } from "../references";
 import {
   ensureReasonGroups,
-  getChildSections,
+  getChildSectionOf,
   type Section,
 } from "../sections";
 import {
@@ -114,52 +115,23 @@ function bodyRendersStateful(section: Section) {
 
 // A branch body whose upstream has a state reason (or nested in one) and
 // whose param sources a patch fills; needs resolved sources (finalize or later).
-const statefulBySection = new WeakMap<Section, boolean>();
-const computing = new Map<Section, number>();
-let provisionalAt = Infinity;
-export function isStatefulBranch(section: Section): boolean {
-  let stateful = statefulBySection.get(section);
-  if (stateful === undefined) {
-    // An in-flight re-ask (a read inside the branch its own upstream walk hits)
-    // answers false: statefulness needs a grounded source, never itself.
-    const at = computing.get(section);
-    if (at !== undefined) {
-      if (at < provisionalAt) provisionalAt = at;
-      return false;
-    }
-    const frame = computing.size;
-    computing.set(section, frame);
-    const outerProvisionalAt = provisionalAt;
-    provisionalAt = Infinity;
-    // The walk state outlives a compile (a diagnostic may throw mid-walk),
-    // so every exit restores it.
-    try {
-      // A branch body or a dynamic tag body; a boundary body has no upstream
-      // of its own (its value settles, it never re-selects).
-      const expr =
-        isPersisted() && !section.isBoundary
-          ? section.upstreamExpression
-          : undefined;
-      const sources = expr && getSerializeSourcesForExpr(expr);
-      // A body the child renders stateful (any consumer), or one whose own
-      // upstream selects it from state.
-      stateful =
-        bodyRendersStateful(section) ||
-        (!!expr &&
-          (!!sources?.state || inStatefulBranch(section.parent)) &&
-          every(expr.referencedBindings, upstreamSourcesFill));
-      // A frame that consumed an OUTER frame's provisional answer must not
-      // cache: that outer result may still land stateful.
-      if (provisionalAt >= frame) statefulBySection.set(section, stateful);
-    } finally {
-      computing.delete(section);
-      if (provisionalAt >= frame || outerProvisionalAt < provisionalAt) {
-        provisionalAt = outerProvisionalAt;
-      }
-    }
-  }
-  return stateful;
-}
+export const isStatefulBranch = createCyclicMemo((section: Section) => {
+  // A branch body or a dynamic tag body; a boundary body has no upstream
+  // of its own (its value settles, it never re-selects).
+  const expr =
+    isPersisted() && !section.isBoundary
+      ? section.upstreamExpression
+      : undefined;
+  const sources = expr && getSerializeSourcesForExpr(expr);
+  // A body the child renders stateful (any consumer), or one whose own
+  // upstream selects it from state.
+  return (
+    bodyRendersStateful(section) ||
+    (!!expr &&
+      (!!sources?.state || inStatefulBranch(section.parent)) &&
+      every(expr.referencedBindings, upstreamSourcesFill))
+  );
+}, false);
 
 // The client recomputes a state-mixed ref from what it holds: its state, a
 // fill, or a derivation it can recompute the same way.
@@ -177,26 +149,19 @@ function upstreamSourcesFill(binding: Binding): boolean {
 
 // Read as a value: anywhere but as the upstream of a branch in the read's
 // section, or passed to a child param that is. Call at finalize or later.
-export function isReadAsValue(
-  binding: Binding,
-  seen = new Set<Binding>(),
-): boolean {
-  if (seen.has(binding)) return false;
-  seen.add(binding);
+export const isReadAsValue = createCyclicMemo((binding: Binding) => {
   for (const read of binding.reads) {
     if (
-      !getChildSections(read.section).some(
-        (child) => child.isBranch && child.upstreamExpression === read,
-      ) &&
+      !getChildSectionOf(read)?.isBranch &&
       (read.referencedBindings !== binding ||
         !read.downstream ||
-        some(read.downstream, (downstream) => isReadAsValue(downstream, seen)))
+        some(read.downstream, isReadAsValue))
     ) {
       return true;
     }
   }
   return false;
-}
+}, false);
 
 // Params alone upstream: a call site with state upstream of them hands the
 // branch to the client at run time. Call at finalize or later.

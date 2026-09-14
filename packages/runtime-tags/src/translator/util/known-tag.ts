@@ -90,11 +90,9 @@ import {
 } from "./serialize-guard";
 import {
   addSerializeExpr,
-  addSerializeSources,
   addSerializeReason,
-  getAllSourcesForExprs,
-  getSerializeSources,
   getSerializeReason,
+  getSerializeSourcesForExpr,
   getSerializeSourcesForExprs,
   getSerializeSourcesForRef,
 } from "./serialize-reasons";
@@ -129,7 +127,7 @@ const [getKnownTags] = createSectionState(
 );
 
 const kContentSection = Symbol("known tag content section");
-const kSourcesRecordedGroups = Symbol("known tag sources recorded groups");
+const kGroupSources = Symbol("known tag group sources");
 const kChildScopeBinding = Symbol("known tag scope binding");
 export const kStaticBody = Symbol("known tag static body");
 export const kChildOffsetScopeBinding = Symbol(
@@ -140,7 +138,7 @@ const kKnownExprs = Symbol("known tag exprs");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kContentSection]?: Section;
-    [kSourcesRecordedGroups]?: number;
+    [kGroupSources]?: ParamGroupSources[];
     [kChildScopeBinding]?: Binding;
     [kStaticBody]?: boolean;
     [kChildOffsetScopeBinding]?: Binding;
@@ -543,10 +541,8 @@ export function finalizeKnownTags(section: Section) {
     const knownExprs = tagExtra[kKnownExprs];
     const contentSection = tagExtra[kContentSection]!;
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
-      if (isPersisted()) {
-        tagExtra[kSourcesRecordedGroups] =
-          contentSection.paramReasonGroups.length;
-      }
+      const groupSources: ParamGroupSources[] = [];
+      if (isPersisted()) tagExtra[kGroupSources] = groupSources;
       for (const group of contentSection.paramReasonGroups) {
         const exprs = mapParamReasonToExpr(knownExprs, group.reason);
         addSerializeReason(
@@ -556,22 +552,10 @@ export function finalizeKnownTags(section: Section) {
           group.id,
         );
         if (isPersisted()) {
-          // Fn-body reads inform ownership but never serialization, so
-          // they join the group's sources only.
-          let fnSources: Sources | undefined;
-          forEach(exprs as Opt<t.NodeExtra>, (extra) => {
-            forEach(
-              (extra as t.FunctionExtra).referencedBindingsInFunction,
-              (binding) => {
-                fnSources = mergeSources(
-                  fnSources,
-                  getSerializeSourcesForRef(binding),
-                );
-              },
-            );
-          });
-          addSerializeSources(section, fnSources, scopeBinding, group.id);
-          const sources = getSerializeSources(section, scopeBinding, group.id);
+          // Everything the group's expressions may read, function-body
+          // reads included: they inform ownership, never serialization.
+          const sources = getAllSourcesForExprs(exprs as Opt<t.NodeExtra>);
+          groupSources.push({ params: group.reason, sources });
           // The ownership mask composes over these groups at translate
           // time; group order freezes here.
           ensureReasonGroups(sources);
@@ -635,11 +619,8 @@ export function getParamGroupSources(
   if (!tagExtra[kKnownExprs] || !scopeBinding || !groups) return;
   // Groups born after the record (circular same-file tags) have no
   // sources: fail closed as unanalyzable input.
-  if (groups.length !== tagExtra[kSourcesRecordedGroups]) return;
-  return groups.map((group) => ({
-    params: group.reason,
-    sources: getSerializeSources(scopeBinding.section, scopeBinding, group.id),
-  }));
+  const recorded = tagExtra[kGroupSources];
+  return recorded?.length === groups.length ? recorded : undefined;
 }
 
 // The instance's sources mask (2 bits per group at `1 + 2i`; keyed when
@@ -1761,4 +1742,20 @@ function getRootSection(section: Section) {
 // The section a known tag renders in (its child scope binding's).
 export function getKnownTagSection(tagExtra: t.MarkoTagExtra) {
   return tagExtra[kChildScopeBinding]!.section;
+}
+
+// Everything the expressions may read, reads inside function values
+// included: a consumer may invoke them at render time.
+function getAllSourcesForExprs(exprs: Opt<t.NodeExtra>) {
+  let sources: Sources | undefined;
+  forEach(exprs, (expr) => {
+    sources = mergeSources(sources, getSerializeSourcesForExpr(expr));
+    forEach(
+      (expr as t.FunctionExtra).referencedBindingsInFunction,
+      (binding) => {
+        sources = mergeSources(sources, getSerializeSourcesForRef(binding));
+      },
+    );
+  });
+  return sources;
 }

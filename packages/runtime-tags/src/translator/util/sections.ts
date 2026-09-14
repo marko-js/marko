@@ -34,6 +34,7 @@ import {
   type KnownExprs,
   type ParamBinding,
   type ReferencedBindings,
+  type ReferencedExtra,
   type Sources,
 } from "./references";
 import {
@@ -139,10 +140,6 @@ export interface Section {
    * once references finalize. */
   serializeExprs: Opt<t.NodeExtra>;
   propSerializeExprs: Map<SerializeKey, OneMany<t.NodeExtra>> | undefined;
-  /** The sources of each serialization decision — survives force-`true`
-   * and counts function-body reads; complete after reference finalize. */
-  serializeSources: Sources | undefined;
-  propSerializeSources: Map<SerializeKey, Sources> | undefined;
   /** Interned per-prop reason keys for string/symbol props. */
   serializePropKeys: Map<string | symbol, SerializeKey> | undefined;
   paramReasonGroups: ParamSerializeReasonGroups | undefined;
@@ -254,8 +251,6 @@ export function startSection(
       domSerializeReasons: undefined,
       serializeExprs: undefined,
       propSerializeExprs: undefined,
-      serializeSources: undefined,
-      propSerializeSources: undefined,
       serializePropKeys: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
@@ -346,22 +341,39 @@ export function forEachSection(fn: (section: Section) => void) {
   sections?.forEach(fn);
 }
 
+export function someSection<A>(
+  test: (section: Section, arg: A) => boolean,
+  arg: A,
+): boolean {
+  for (const section of getProgram().node.extra.sections || []) {
+    if (test(section, arg)) return true;
+  }
+  return false;
+}
+
 // Direct child sections by parent, grouped once per program at finalize so
 // a parent can ask about a child program's sections too.
 const childSections = new WeakMap<Section, Section[]>();
 export function getChildSections(section: Section) {
   return childSections.get(section) || [];
 }
-export function groupChildSections() {
-  forEachSection((section) => childSections.set(section, []));
-  forEachSection((section) => {
-    if (section.parent) childSections.get(section.parent)!.push(section);
-  });
+
+// The child section a read selects (a branch, a boundary), if any.
+export function getChildSectionOf(read: ReferencedExtra) {
+  for (const child of getChildSections(read.section)) {
+    if (child.upstreamExpression === read) return child;
+  }
 }
 
 // `from` and its parents below `to`.
 export function* ancestorSections(from: Section, to: Section) {
   for (let cur = from; cur !== to && cur.parent; cur = cur.parent) yield cur;
+}
+export function groupChildSections() {
+  forEachSection((section) => childSections.set(section, []));
+  forEachSection((section) => {
+    if (section.parent) childSections.get(section.parent)!.push(section);
+  });
 }
 
 export function forEachSectionReverse(fn: (section: Section) => void) {

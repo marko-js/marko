@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
+import { createCyclicMemo } from "./cyclic-memo";
 import normalizeStringExpression from "./normalize-string-expression";
 import { contentIsPatched, contentMayCreate } from "./persisted/refresh";
 import { isBranchPathSection, isStatefulBranch } from "./persisted/structure";
@@ -166,16 +167,13 @@ export function getShellId(section: Section) {
 
 // A branch's shell is its resolved structure (known child templates
 // included); anything else leaves it shell-less, so divergence fails closed.
-function isShellExpressible(section: Section, visiting = new Set<Section>()) {
+const isShellExpressible = createCyclicMemo(
   // A template cycle never resolves to a finite shell.
-  if (!section.structure || visiting.has(section)) return false;
-  visiting.add(section);
-  const expressible = isStructureExpressible(section, visiting);
-  visiting.delete(section);
-  return expressible;
-}
+  (section: Section) => !!section.structure && isStructureExpressible(section),
+  false,
+);
 
-function isStructureExpressible(section: Section, visiting: Set<Section>) {
+function isStructureExpressible(section: Section) {
   for (const op of section.structure!) {
     if (
       typeof op === "object" &&
@@ -193,7 +191,6 @@ function isStructureExpressible(section: Section, visiting: Set<Section>) {
             op.renderer.kind === StructureKind.ExportRef
               ? op.renderer.program.section!
               : op.renderer.section,
-            visiting,
           ))
       )
     ) {

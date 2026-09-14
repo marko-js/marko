@@ -3,10 +3,12 @@
 import { getProgram, getFile } from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
+import { createCyclicMemo } from "../cyclic-memo";
 import { isTranslate } from "../get-compile-stage";
 import { getParamGroupSources, isKnownTagExtra } from "../known-tag";
 import { isPage, isPersisted } from "../marko-config";
 import {
+  addUnique,
   every,
   filter,
   forEach,
@@ -18,13 +20,17 @@ import {
 import {
   type Binding,
   getCanonicalBinding,
+  isDirectAlias,
+  someAlias,
+  someUpstream,
   type ReferencedExtra,
   type Sources,
 } from "../references";
 import {
-  getChildSections,
+  getChildSectionOf,
   getSectionRegisterReasons,
   type Section,
+  someSection,
 } from "../sections";
 import { isStableExpr } from "../serialize-guard";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
@@ -125,10 +131,7 @@ export function isPatchFillBinding(binding: Binding) {
 // their own, their root does.
 export function getFillRoot(binding: Binding) {
   let root = binding;
-  for (let cur = getCanonicalBinding(root); cur !== root;) {
-    root = cur;
-    cur = getCanonicalBinding(root);
-  }
+  while (isDirectAlias(root)) root = root.upstreamAlias!;
   return root;
 }
 
@@ -164,21 +167,23 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
 // A root value a downstream join derives from: its fill registration
 // alone keeps the join current.
 export function joinsStateDownstream(binding: Binding): boolean {
-  return getProgram().node.extra.sections!.some((section) =>
-    some(section.bindings, (derived) => {
-      for (const read of derived.reads) {
-        if (
-          read.downstreamSources?.state &&
-          includes(
-            getSerializeSourcesForRef(read.referencedBindings)?.param,
-            binding,
-          )
-        ) {
-          return true;
-        }
-      }
-      return false;
-    }),
+  return someSection(sectionJoinsStateDownstream, binding);
+}
+
+function sectionJoinsStateDownstream(section: Section, binding: Binding) {
+  return some(section.bindings, (derived) => {
+    for (const read of derived.reads) {
+      if (readJoinsStateDownstream(read, binding)) return true;
+    }
+    return false;
+  });
+}
+
+// A read the child re-derives with state, of a value this binding sources.
+function readJoinsStateDownstream(read: ReferencedExtra, binding: Binding) {
+  return (
+    !!read.downstreamSources?.state &&
+    includes(getSerializeSourcesForRef(read.referencedBindings)?.param, binding)
   );
 }
 
@@ -188,7 +193,7 @@ function computeFillReadKind(
   let conditions: FillConditions | undefined;
   for (const alias of binding.aliases) {
     // A property alias or rest fills on its own; a direct alias reads this.
-    if (getCanonicalBinding(alias) === binding) {
+    if (isDirectAlias(alias)) {
       const kind = getFillReadKind(alias);
       if (kind === true) return true;
       if (kind) conditions = mergeConditions(conditions, kind);
@@ -270,10 +275,11 @@ function computeFillReadKind(
 // Whether the upstream's params include the binding or a value it is a
 // property of (both reach the client together).
 function upstreamThrough(sources: Sources, binding: Binding) {
-  for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
-    if (includes(sources.param, cur)) return true;
-  }
-  return false;
+  return someUpstream(binding, isParamOf, sources);
+}
+
+function isParamOf(binding: Binding, sources: Sources) {
+  return includes(sources.param, binding);
 }
 
 // `true`: a pure client consumer patches never render; `"upstream"`: a
@@ -305,9 +311,7 @@ function consumerMayWithhold(content: Section) {
 // The read is an `<await>`'s value: its body is a boundary child of the
 // read's section with the read as its upstream.
 function isBoundaryValueRead(read: ReferencedExtra) {
-  return getChildSections(read.section).some(
-    (child) => child.isBoundary && child.upstreamExpression === read,
-  );
+  return !!getChildSectionOf(read)?.isBoundary;
 }
 
 function mergeConditions(
@@ -331,13 +335,14 @@ export function isPatchWriteBinding(binding: Binding) {
   return (
     isPatchRefreshableBinding(binding) &&
     !isPatchFillBinding(binding) &&
-    (hasRegisteredFnCapture(binding) || hasPatchEffectReads(binding))
+    (someAlias(binding, isRegisteredFnCapture, undefined, true) ||
+      someAlias(binding, hasPatchEffectRead, undefined, true))
   );
 }
 
-// Effect reads of a written value (through any alias) re-run by register
-// id when a patch changes what they saw.
-export function hasPatchEffectReads(binding: Binding): boolean {
+// An effect read of a written value re-runs by register id when a patch
+// changes what it saw; ask through `someAlias` (direct aliases only).
+export function hasPatchEffectRead(binding: Binding) {
   for (const read of binding.reads) {
     // A patched spread's set is its own refresh.
     if (
@@ -347,25 +352,11 @@ export function hasPatchEffectReads(binding: Binding): boolean {
       return true;
     }
   }
-  for (const alias of binding.aliases) {
-    if (getCanonicalBinding(alias) === binding && hasPatchEffectReads(alias)) {
-      return true;
-    }
-  }
   return false;
 }
 
-function hasRegisteredFnCapture(binding: Binding): boolean {
-  if (binding.registeredFnCapture) return true;
-  for (const alias of binding.aliases) {
-    if (
-      getCanonicalBinding(alias) === binding &&
-      hasRegisteredFnCapture(alias)
-    ) {
-      return true;
-    }
-  }
-  return false;
+function isRegisteredFnCapture(binding: Binding) {
+  return binding.registeredFnCapture;
 }
 
 // Closures whose creation INITs render a fresh scope; a lazy child's
@@ -410,16 +401,7 @@ export function fillJoinsIn(closure: Binding, section: Section) {
   for (let cur = section; cur !== closure.section; cur = cur.parent!) {
     if (!cur.isBranch) return false;
   }
-  for (const read of closure.reads) {
-    if (
-      read.section === section &&
-      Array.isArray(read.referencedBindings) &&
-      getSerializeSourcesForRef(read.referencedBindings)?.state
-    ) {
-      return true;
-    }
-  }
-  return false;
+  return joinsStateIn(closure, section);
 }
 
 // Closures a section's server-owned local fills derive from: when a flush
@@ -429,8 +411,8 @@ export function getLocalFillUpstreams(section: Section) {
   forEach(getPatchFillBindings(section), (fill) => {
     if (fill.section === section && !fill.sources?.state) {
       forEach(fill.sources?.param, (upstream) => {
-        if (upstream.section !== section && !includes(upstreams, upstream)) {
-          upstreams = push(upstreams, upstream);
+        if (upstream.section !== section) {
+          upstreams = addUnique(upstreams, upstream);
         }
       });
     }
@@ -451,11 +433,14 @@ function isSeedableLocal(binding: Binding) {
 
 // A property alias of the section's own params (a loop item, its property).
 function isSectionParam(binding: Binding) {
-  const { params } = binding.section;
-  for (let alias = binding.upstreamAlias; alias; alias = alias.upstreamAlias) {
-    if (alias === params) return true;
-  }
-  return binding === params || binding.type === BindingType.param;
+  return (
+    binding.type === BindingType.param ||
+    someUpstream(binding, isSectionParams, binding.section.params)
+  );
+}
+
+function isSectionParams(binding: Binding, params: Binding | undefined) {
+  return binding === params;
 }
 
 // Keyed `$global` reads a root section renders itself; effect-only reads
@@ -490,55 +475,43 @@ export function hasUnfillablePatchReads(refs: Opt<Binding>) {
 
 // A patch fills a root value (a fill or a write) and a local derivation
 // when every server source it derives from (it recomputes client-side).
-function patchFills(binding: Binding, seen = new Set<Binding>()): boolean {
-  const root = getFillRoot(binding);
-  if (seen.has(root)) return true;
-  seen.add(root);
+function patchFills(binding: Binding): boolean {
+  return rootFills(getFillRoot(binding));
+}
+const rootFills = createCyclicMemo((root: Binding): boolean => {
   if (!root.section.parent) {
     return isPatchFillBinding(root) || isPatchWriteBinding(root);
   }
   // A branch's own param (a loop item) arrives with the structure.
   if (isSectionParam(root)) return true;
-  return every(root.sources?.param, (param) => patchFills(param, seen));
-}
+  return every(root.sources?.param, patchFills);
+}, true);
 
 // Whether a patch may create this content: its tag can diverge, a consumer
 // renders it in creatable structure, or an enclosing branch is created.
-const mayCreate = new WeakMap<Section, boolean>();
-export function contentMayCreate(section: Section): boolean {
-  let result = mayCreate.get(section);
-  if (result === undefined) {
-    mayCreate.set(section, false);
-    result =
-      sectionMayCreate(section) ||
-      (!!section.parent && enclosingMayCreate(section.parent));
-    mayCreate.set(section, result);
-  }
-  return result;
-}
+export const contentMayCreate = createCyclicMemo(
+  (section: Section) =>
+    sectionMayCreate(section) ||
+    (!!section.parent && enclosingMayCreate(section.parent)),
+  false,
+);
 
 // Whether any consumer's tag names this content in a patch entry (a
 // boundary's shells name what they render); an unknown consumer may.
-const isPatched = new WeakMap<Section, boolean>();
-export function contentIsPatched(section: Section): boolean {
-  let result = isPatched.get(section);
-  if (result === undefined) {
-    isPatched.set(section, false);
-    const { downstream } = section;
-    result =
-      !downstream?.binding ||
-      someContentRead(
-        downstream.binding,
-        downstream.properties,
-        (read) =>
-          isPatchedSite(read) ||
-          !!read.section.boundaryContent ||
-          !!read.section.isBoundary,
-      );
-    isPatched.set(section, result);
-  }
-  return result;
-}
+export const contentIsPatched = createCyclicMemo((section: Section) => {
+  const { downstream } = section;
+  return (
+    !downstream?.binding ||
+    someContentRead(
+      downstream.binding,
+      downstream.properties,
+      (read) =>
+        isPatchedSite(read) ||
+        !!read.section.boundaryContent ||
+        !!read.section.isBoundary,
+    )
+  );
+}, false);
 
 function sectionMayCreate(section: Section): boolean {
   if (section.isBranch) return !inResumedStructure(section);

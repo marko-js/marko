@@ -9,7 +9,7 @@ import {
   getFillConditions,
   getPatchFillBindings,
   getRootGlobalReads,
-  hasPatchEffectReads,
+  hasPatchEffectRead,
   isPatchWriteBinding,
   isPatchFillBinding,
 } from "../../util/persisted/refresh";
@@ -18,6 +18,8 @@ import {
   BindingType,
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
+  someAlias,
+  someUpstream,
 } from "../../util/references";
 import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import {
@@ -276,12 +278,16 @@ export default {
 // A destructured property alias inherits its declaration's function-carrying
 // potential through the alias chain.
 function needsPatchEffectRuntime(binding: Binding) {
-  return isPatchWriteBinding(binding) && hasPatchEffectReads(binding);
+  return (
+    isPatchWriteBinding(binding) &&
+    someAlias(binding, hasPatchEffectRead, undefined, true)
+  );
 }
 
 function upstreamFunctionValued(binding: Binding) {
-  for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
-    if (cur.functionValued) return true;
-  }
-  return false;
+  return someUpstream(binding, isFunctionValued, undefined);
+}
+
+function isFunctionValued(binding: Binding) {
+  return binding.functionValued;
 }
