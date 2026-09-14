@@ -71,7 +71,7 @@ export {
   _patch_init,
   _patch_value,
   _patch_write,
-  _template_persisted,
+  _template_patch,
   renderPatch,
 } from "./html/patch";
 export {

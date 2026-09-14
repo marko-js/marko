@@ -43,7 +43,7 @@ export const _template = (
     };
     (renderer as unknown as Template).patch = () => {
       throw new Error(
-        `patch() is only implemented for templates compiled with the \`persisted\` option`,
+        `patch() is only implemented for templates compiled with the \`patches\` option`,
       );
     };
   }

@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
-import { isPersisted } from "./marko-config";
+import { isPatch } from "./marko-config";
 import { concat, forEach, type OneMany, type Opt, Sorted } from "./optional";
 import {
   type Binding,
@@ -63,7 +63,7 @@ export function addSerializeReason(
 ) {
   if (reason) {
     // A `$global` read alone never serializes (the client reads the
-    // globals object, as without persisted pages); it stays a source.
+    // globals object, as without patches); it stays a source.
     if (!reason.state && !reason.param && !reason.forced) return;
     const key = prop && getPropKey(section, prop, prefix);
     if (key) {
@@ -154,8 +154,8 @@ export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
     // like any other. An opaque read (`fn($global)`) compiles verbatim: no
     // read slot, no signal, so it is not among the references (joining them
     // would make it a closure) and contributes here, as request identity a
-    // persisted flush re-ships what reads.
-    return expr.globalBindings && isPersisted()
+    // patch flush re-ships what reads.
+    return expr.globalBindings && isPatch()
       ? mergeSources(sources, globalSources)
       : sources;
   }

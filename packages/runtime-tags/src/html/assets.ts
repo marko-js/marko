@@ -44,7 +44,7 @@ type Trigger = LoadTrigger;
 interface Asset {
   id: string;
   triggers?: Trigger[];
-  /** A persisted page's loader reports load errors to the ready-failed
+  /** A patch page's loader reports load errors to the ready-failed
    * sink (`render.e`) in production, so pending patches settle. */
   reportErrors?: 1;
 }

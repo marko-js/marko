@@ -8,15 +8,15 @@ import {
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
-import { getMarkoOpts, isPersisted } from "../../util/marko-config";
+import { getMarkoOpts, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach, some } from "../../util/optional";
-import { getPersistedIntrinsics } from "../../util/persisted/intrinsics";
+import { getPatchIntrinsics } from "../../util/patch/intrinsics";
 import {
   getCreateInitClosures,
   getPatchFillBindings,
   isPatchFillBinding,
-} from "../../util/persisted/refresh";
+} from "../../util/patch/refresh";
 import {
   BindingType,
   getReadReplacement,
@@ -159,7 +159,7 @@ export default {
         );
       }
 
-      const persisted = isPersisted();
+      const patches = isPatch();
       flushInto(program);
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
@@ -177,8 +177,8 @@ export default {
         }
       }
 
-      if (dynamicSerializeReason || persisted) {
-        // Persisted output always declares the reason: statically serialized
+      if (dynamicSerializeReason || patches) {
+        // Patch output always declares the reason: statically serialized
         // values ride it so patch renders drop them.
         renderContent.push(getScopeReasonDeclaration(section));
       } else {
@@ -200,7 +200,7 @@ export default {
 
       writeModuleRegistrations(program);
 
-      if (persisted) {
+      if (patches) {
         // A parent's shell composes this template's inert markup and walks
         // (its dom template parts), exported under the dom module's names.
         const { writes, walks } = getSectionMeta(section);
@@ -222,7 +222,7 @@ export default {
       }
 
       const shells = getShells();
-      if (persisted && shells) {
+      if (patches && shells) {
         // Branch shells register at server module load so patches can create
         // them without the client bundling conditional content.
         const active = { ...shells };
@@ -289,7 +289,7 @@ export default {
         }
       }
 
-      if (persisted) {
+      if (patches) {
         // Hoisted content declarations go ahead of every use, deepest first (a
         // section's parts may reference its children's).
         let decls: t.VariableDeclarator[] | undefined;
@@ -316,12 +316,12 @@ export default {
           : undefined;
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
-          persisted ? "_template_persisted" : "_template",
+          patches ? "_template_patch" : "_template",
           t.stringLiteral(getFile().metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
-          // Persisted templates always carry intrinsics (absent = FOREIGN renderer,
+          // Patch templates always carry intrinsics (absent = FOREIGN renderer,
           // which parents must render through).
-          ...(persisted
+          ...(patches
             ? buildIntrinsicsArgs(pageArg ?? t.numericLiteral(0))
             : [pageArg]),
         ),
@@ -344,7 +344,7 @@ export default {
 // Intrinsics arg: `1` reads globals/opaque, a lazy child list (an arrow, so
 // module cycles stay lazy) is locally clean, `0` proven clean.
 function buildIntrinsicsArgs(pageArg: t.Expression) {
-  const { names, opaque } = getPersistedIntrinsics();
+  const { names, opaque } = getPatchIntrinsics();
   return [
     pageArg,
     opaque || getProgram().node.extra!.readsGlobals

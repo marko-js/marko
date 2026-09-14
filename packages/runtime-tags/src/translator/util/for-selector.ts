@@ -1,8 +1,8 @@
 import type { types as t } from "@marko/compiler";
 
 import { forEach } from "./optional";
-import { isPatchFillBinding } from "./persisted/refresh";
-import { inStatefulBranch } from "./persisted/structure";
+import { isPatchFillBinding } from "./patch/refresh";
+import { inStatefulBranch } from "./patch/structure";
 import {
   type Binding,
   BindingType,

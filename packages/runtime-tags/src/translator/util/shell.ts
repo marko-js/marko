@@ -3,8 +3,8 @@ import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import { createCyclicMemo } from "./cyclic-memo";
 import normalizeStringExpression from "./normalize-string-expression";
-import { contentIsPatched, contentMayCreate } from "./persisted/refresh";
-import { isBranchPathSection, isStatefulBranch } from "./persisted/structure";
+import { contentIsPatched, contentMayCreate } from "./patch/refresh";
+import { isBranchPathSection, isStatefulBranch } from "./patch/structure";
 import { addRuntimeFeatureAsset } from "./runtime";
 import {
   forEachSection,

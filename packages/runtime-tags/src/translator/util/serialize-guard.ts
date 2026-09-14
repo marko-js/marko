@@ -1,9 +1,9 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
-import { isPersisted } from "./marko-config";
+import { isPatch } from "./marko-config";
 import { forEach, type Opt, some } from "./optional";
-import { isBranchPathSection } from "./persisted/structure";
+import { isBranchPathSection } from "./patch/structure";
 import {
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -168,7 +168,7 @@ export function getExprIfSerialized<
     if (!reason) return undefined as R;
     // A patch has no ordinary resume payload, so a statically serialized
     // value rides the page render's gate; the root declares it.
-    if (isPersisted() && !section.parent) {
+    if (isPatch() && !section.parent) {
       return t.logicalExpression("&&", scopePageIdentifier(section), expr) as R;
     }
     return expr as R;
@@ -176,7 +176,7 @@ export function getExprIfSerialized<
 
   // Branch-path pairing never prunes with a value group: interior patch
   // writes anchor through it, so it rides the root page/patch reason.
-  if (isPersisted() && isBranchPathSection(section) && section.parent) {
+  if (isPatch() && isBranchPathSection(section) && section.parent) {
     let rootSection = section;
     while (rootSection.parent) rootSection = rootSection.parent;
     return t.logicalExpression(
@@ -202,7 +202,7 @@ export function getValueIfSerialized(
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
-// The global dimension has no param slots: it is persisted-only, where a
+// The global dimension has no param slots: it is patch-only, where a
 // page render serializes it and a patch re-ships every global instead.
 function getDynamicGuard(
   section: Section,
@@ -211,7 +211,7 @@ function getDynamicGuard(
 ) {
   const paramGuard = reason.param ? getOrHoist(reason, isGuard) : undefined;
   if (!reason.global) return paramGuard;
-  const globalGuard = isPersisted()
+  const globalGuard = isPatch()
     ? scopePageIdentifier(getReasonSection(section))
     : scopeReasonIdentifier(getReasonSection(section));
   return paramGuard
@@ -368,7 +368,7 @@ function buildGuardExpr(
   );
   return paramsSection.paramReasonGroups
     ? callRuntime(
-        (isPersisted()
+        (isPatch()
           ? isGuard
             ? "_source_guard"
             : "_source_if"

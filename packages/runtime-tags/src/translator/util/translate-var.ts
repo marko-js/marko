@@ -3,9 +3,9 @@ import { types as t } from "@marko/compiler";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isPersisted } from "./marko-config";
+import { isPatch } from "./marko-config";
 import { toArray } from "./optional";
-import { isPatchFillBinding, isPatchWriteBinding } from "./persisted/refresh";
+import { isPatchFillBinding, isPatchWriteBinding } from "./patch/refresh";
 import { getCanonicalBinding } from "./references";
 import { getOrCreateSection } from "./sections";
 import { getSerializeReason } from "./serialize-reasons";
@@ -115,7 +115,7 @@ export default function translateVar(
   ]);
   const inserted: t.Statement[] = [declaration];
   // A server-owned branch local that fills writes right after it exists.
-  if (isPersisted()) {
+  if (isPatch()) {
     forEachIdentifierPath(tag.get("var"), (id) => {
       const binding = id.node.extra?.binding;
       if (

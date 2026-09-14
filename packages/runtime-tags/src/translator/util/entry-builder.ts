@@ -34,7 +34,7 @@ interface EntryState {
   bundledAssets: Set<string>;
   /** Whether each reached file was only ever seen below a bundled template. */
   visited: Map<string, boolean>;
-  /** Lazy children of persisted templates reached eagerly, by channel, with
+  /** Lazy children of patch template reached eagerly, by channel, with
    * whether the parent template is a root: the entry registers the loaders
    * of the templates it never links, so a flush can still load them. */
   lazyLoads: Map<string, [request: string, root: boolean]>;
@@ -61,12 +61,12 @@ const builder = {
       body.push(t.importDeclaration([], t.stringLiteral(asset)));
     }
 
-    // A persisted page's patches apply against the runtime, so its entry
+    // A patch page's patches apply against the runtime, so its entry
     // initializes it (as the document's render) even with no client code.
-    const persisted = !!entryFile.markoOpts.persisted;
-    const init = state.init || persisted;
+    const patches = !!entryFile.markoOpts.patches;
+    const init = state.init || patches;
     if (init || state.load) {
-      const isPage = entryFile.path.node.extra.page || persisted;
+      const isPage = entryFile.path.node.extra.page || patches;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
       if (init) {
         body.push(
@@ -87,7 +87,7 @@ const builder = {
       }
 
       const linked = state.init || state.load;
-      // Only a persisted page collects lazy loads (a flush can reveal a lazy
+      // Only a patch page collects lazy loads (a flush can reveal a lazy
       // child the client never rendered); a plain page's output is unchanged.
       const lazyLoads = [...state.lazyLoads].filter(
         ([, [, root]]) => !root || !linked,
@@ -259,7 +259,7 @@ const builder = {
 
     // A flush revealing a lazy child of a template the bundle never links
     // still needs its module: the entry registers the loader itself.
-    if (entryFile.markoOpts.persisted && !state.bundled) {
+    if (entryFile.markoOpts.patches && !state.bundled) {
       for (const tag of (loadImports as Set<string> | undefined) || []) {
         const request = resolveRelativeToEntry(entryFile, file, tag);
         const loadFile = loadFileForImport(entryFile, request);

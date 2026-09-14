@@ -8,7 +8,7 @@ import {
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
-import { isOutputDOM, isPersisted } from "../util/marko-config";
+import { isOutputDOM, isPatch } from "../util/marko-config";
 import {
   BindingType,
   FORCED,
@@ -134,7 +134,7 @@ export default {
           getAccessorPrefix().TagVariableChange,
         );
       }
-    } else if (isPersisted()) {
+    } else if (isPatch()) {
       // A never-assigned let re-evaluates its initializer on creation, so
       // its sources resolve from it (never downstream: no re-derivation).
       setBindingValueExprs(binding, tagExtra);

@@ -364,7 +364,7 @@ export function writePatch(
   if (state.patchInert) return;
   if (state.patchFlushed) {
     throw new Error(
-      "A persisted patch cannot write after its flush was written (async patch content is not supported).",
+      "A patch cannot write after its flush was written (async patch content is not supported).",
     );
   }
   const partial = patchPartial($chunk.boundary.state, scopeId, serializeState);
@@ -830,7 +830,7 @@ function forBranches(
   )
     return;
   if (
-    $chunk.boundary.state.persisted &&
+    $chunk.boundary.state.patchPage &&
     (!shellId || _client_guard(owned, group!))
   ) {
     const run = iterate;
@@ -946,7 +946,7 @@ export function _if(
   // A shell-less branch, or one with a client-owned group upstream, is the
   // resumed page's to render: no patch fills its reads.
   if (
-    $chunk.boundary.state.persisted &&
+    $chunk.boundary.state.patchPage &&
     (!shellIds || _client_guard(owned, group!))
   ) {
     const render = cb;
@@ -1174,7 +1174,7 @@ export function _page_render() {
 }
 
 // Every group client-fed, or every group server-fed: for a child whose
-// groups the caller cannot see (a dynamic tag, a persisted root).
+// groups the caller cannot see (a dynamic tag, a patch root).
 export const CLIENT_ALL = 0x2aaaaaaa;
 export const SERVER_ALL = 0x55555554;
 
@@ -1492,7 +1492,7 @@ export function _try(
   } else if (!writesPatches) {
     withBranchId(branchId, content);
   } else if (catchContent && elidedContents.has(catchContent as WeakKey)) {
-    // A patch body stays outside the branch id context: the persisted writers
+    // A patch body stays outside the branch id context: the patch writers
     // read it as "inside a divergent branch" (see isInResumedBranch).
     withContext(kElidedCatch, catchContent, content);
   } else {
@@ -1708,8 +1708,8 @@ export class State implements SerializeState {
   public nonceAttr = "";
   public serializer = new Serializer();
   declare writesPatches?: boolean;
-  /** A page render of persisted templates: structure tracks unpatched context. */
-  public persisted?: true;
+  /** A page render of patch template: structure tracks unpatched context. */
+  public patchPage?: true;
   // Patch rendering intercepts branch/loop writes; defined only by the patch
   // entry's State subclass so normal SSR bundles carry none of it.
   writeBranch?(
@@ -2181,7 +2181,7 @@ export class Chunk {
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) {
       state.walkOnNextFlush = false;
-      // A walk with nothing else to resume (a persisted lazy tag that only
+      // A walk with nothing else to resume (a patch lazy tag that only
       // records its node) still runs on the runtime.
       state.needsMainRuntime = true;
     }

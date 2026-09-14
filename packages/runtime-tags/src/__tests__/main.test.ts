@@ -97,13 +97,13 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
-  /** Compiles the fixture with the `persisted` compiler option. */
-  persisted?: boolean;
-  /** Persisted: never render a step's input as a document (client effects
+  /** Compiles the fixture with the `patches` compiler option. */
+  patches?: boolean;
+  /** Patch: never render a step's input as a document (client effects
    * leave state a fresh render lacks, or an input no document can serialize),
    * so patches compare against the initial document instead. */
   skip_fresh_render?: boolean;
-  /** Persisted: applies a step's patch while the document is still
+  /** Patch: applies a step's patch while the document is still
    * streaming; by default the remaining flushes land first. */
   patch_while_streaming?: boolean;
 };
@@ -168,7 +168,7 @@ function testFixtures(interop?: true) {
       const hasCompilerError = !!config.error_compiler;
       // Render logs by file, then mode, for the parity check below.
       const renderLogs = new Map<string, Map<string, string>>();
-      const persisted = !!config.persisted;
+      const usesPatches = !!config.patches;
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
       const stripFixtureDir = async (str: string | Promise<string>) =>
@@ -205,11 +205,11 @@ function testFixtures(interop?: true) {
           const equivalent = config.equivalent !== false;
           const skipSSR =
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
-          // Persisted mode is inherently SSR: the client only resumes and
+          // Patch mode is inherently SSR: the client only resumes and
           // applies patches, so there is no meaningful CSR mount.
           const skipCSR =
             optimize ||
-            persisted ||
+            usesPatches ||
             hasCompilerError ||
             skipDOM ||
             config.skip_csr;
@@ -260,7 +260,7 @@ function testFixtures(interop?: true) {
                 browserslistConfigFile: false,
               },
               optimize,
-              persisted,
+              patches: usesPatches,
               optimizeKnownTemplates: optimize
                 ? (
                     fs.readdirSync(fixtureDir, {
@@ -481,7 +481,7 @@ function testFixtures(interop?: true) {
             await browser.runAsyncScripts(() => tracker.logRender(input));
             const { patch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
-            const [, applyPatch] = persisted
+            const [, applyPatch] = usesPatches
               ? patch({ renderId: DEFAULT_RENDER_ID })
               : [];
             let rejected = false;
@@ -539,7 +539,7 @@ function testFixtures(interop?: true) {
               );
               if (expected !== actual) {
                 throw new Error(
-                  `A persisted patch left the page unlike a fresh render of ${JSON.stringify(input)}.\n--- fresh render\n${expected}\n--- patched page\n${actual}\n`,
+                  `A patch left the page unlike a fresh render of ${JSON.stringify(input)}.\n--- fresh render\n${expected}\n--- patched page\n${actual}\n`,
                 );
               }
             };
@@ -548,7 +548,7 @@ function testFixtures(interop?: true) {
               onStep: () => {
                 diverged = true;
               },
-              onInput: persisted
+              onInput: usesPatches
                 ? async (input, betweenFlushes) => {
                     // A navigation follows the delivered document unless the
                     // fixture wants the race with a still-streaming one.
@@ -596,7 +596,7 @@ function testFixtures(interop?: true) {
                     if (!applied) {
                       if (!config.expect_rejection) {
                         throw new Error(
-                          "A persisted patch unexpectedly rejected (set `expect_rejection` if intended).",
+                          "A patch unexpectedly rejected (set `expect_rejection` if intended).",
                         );
                       }
                       rejected = true;
@@ -608,7 +608,7 @@ function testFixtures(interop?: true) {
             });
             if (config.expect_rejection && !rejected) {
               throw new Error(
-                "No persisted patch rejected (drop `expect_rejection` if the case now applies).",
+                "No patch rejected (drop `expect_rejection` if the case now applies).",
               );
             }
 
@@ -681,7 +681,7 @@ function testFixtures(interop?: true) {
               await snapMode(
                 async () => {
                   const { tracker, chunks, patches, freshDocs } = await ssr();
-                  if (persisted) {
+                  if (usesPatches) {
                     // Each wire flush is one expression; format them
                     // independently so beautify cannot glue `}{`.
                     await snapMode(
@@ -723,7 +723,7 @@ function testFixtures(interop?: true) {
                       stats.html = await getSizes(
                         stripDefaultScript(chunks.join("")),
                       );
-                      if (persisted) {
+                      if (usesPatches) {
                         stats.patch = await getSizes(patches.join(""));
                         // A response must cost less on the wire, raw and
                         // compressed, than the document for the same input;
@@ -735,7 +735,7 @@ function testFixtures(interop?: true) {
                           const flush = await getSizes(patches[i]);
                           assert.ok(
                             flush.min < doc.min && flush.brotli < doc.brotli,
-                            `persisted response ${i} (${flush.min}b/${flush.brotli}b brotli) is not smaller than its document (${doc.min}b/${doc.brotli}b) for "${entry}"`,
+                            `patch response ${i} (${flush.min}b/${flush.brotli}b brotli) is not smaller than its document (${doc.min}b/${doc.brotli}b) for "${entry}"`,
                           );
                         }
                       }

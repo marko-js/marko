@@ -20,7 +20,7 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
-  isPersisted,
+  isPatch,
 } from "../../util/marko-config";
 import {
   BindingType,
@@ -128,7 +128,7 @@ export default {
         );
       });
 
-      if (isPersisted()) {
+      if (isPatch()) {
         buildShells();
         recordCreatedLoadImports(program);
       }
@@ -174,8 +174,8 @@ export default {
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
           // A rejected chunk blocks this ready id forever: debug reports it;
-          // persisted also reports in production so deferred patches settle.
-          const report = !markoOpts.optimize || isPersisted();
+          // patches also report in production so deferred patches settle.
+          const report = !markoOpts.optimize || isPatch();
           program.node.body = [
             t.importDeclaration(
               [
@@ -276,7 +276,7 @@ export default {
         }
       }
 
-      if (isPersisted()) {
+      if (isPatch()) {
         // A static shell slot is created client-side; the import rides both
         // outputs (an interactive page gets assets through its dom program).
         forEachSection((section) => {

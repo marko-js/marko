@@ -15,7 +15,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
+import { isOptimize, isOutputDOM, isPatch } from "./marko-config";
 import {
   addSorted,
   addUnique,
@@ -35,12 +35,12 @@ import {
   some,
   Sorted,
 } from "./optional";
-import { finalizePersisted } from "./persisted/lifecycle";
+import { finalizePatch } from "./patch/lifecycle";
 import {
   getRootGlobalReads,
   isPatchFillBinding,
   isPatchWriteBinding,
-} from "./persisted/refresh";
+} from "./patch/refresh";
 import { addRuntimeFeatureAsset, callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
@@ -740,7 +740,7 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
-// One root binding per template, minted on first access; persisted keys
+// One root binding per template, minted on first access; patches key
 // its property aliases as client-reactive reads of the globals object.
 const [getGlobalBinding] = createProgramState(() =>
   createBinding(
@@ -1178,7 +1178,7 @@ export function finalizeReferences() {
       resolveBindingSources(binding);
       // LOCAL-only bit (no cross-file roll-up): the html output exports it
       // as the template's intrinsics, composed across templates at render.
-      if (isPersisted()) getProgram().node.extra!.readsGlobals = true;
+      if (isPatch()) getProgram().node.extra!.readsGlobals = true;
       continue;
     }
     if (binding.type !== BindingType.dom) {
@@ -1462,8 +1462,8 @@ export function finalizeReferences() {
 
   // Ownership gates query fill/effect groups at translate time; group order
   // freezes during analyze, so ensure them alongside the resume groups.
-  if (isPersisted()) {
-    finalizePersisted();
+  if (isPatch()) {
+    finalizePatch();
     // Setup renders a root's keyed `$global` reads (see `initGlobalRead`).
     const rootSection = getProgram().node.extra.section!;
     if (getRootGlobalReads(rootSection)) addSetupStatement(rootSection);
@@ -1476,7 +1476,7 @@ export function finalizeReferences() {
     programSection.returnSerializeReason = getSerializeSourcesForExpr(
       programSection.returnValueExpr,
     );
-    if (isPersisted()) {
+    if (isPatch()) {
       ensureReasonGroups(programSection.returnSerializeReason);
     }
   }
@@ -1485,7 +1485,7 @@ export function finalizeReferences() {
   forEachSectionReverse((section) => {
     finalizeKnownTags(section);
     // Call-site sources (above) can make more root params fills.
-    if (isPersisted()) {
+    if (isPatch()) {
       forEach(section.bindings, (binding) => {
         const fills = isPatchFillBinding(binding);
         // A fill entry needs its patcher on every page this template
@@ -1704,11 +1704,10 @@ const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
 // A `$global` read compiles verbatim (no read slot, signal, or register
-// id) unless persisted keys it: a keyed read refreshes like any reference.
+// id) unless patches key it: a keyed read refreshes like any reference.
 function isVerbatimGlobal(binding: Binding) {
   return (
-    binding.type === BindingType.global &&
-    !(isPersisted() && binding.upstreamAlias)
+    binding.type === BindingType.global && !(isPatch() && binding.upstreamAlias)
   );
 }
 

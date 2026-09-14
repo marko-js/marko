@@ -11,11 +11,11 @@ import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
-import { isOutputHTML, isPersisted } from "../util/marko-config";
+import { isOutputHTML, isPatch } from "../util/marko-config";
 import {
-  ensurePersistedWriteGroups,
+  ensurePatchWriteGroups,
   isBranchPathSection,
-} from "../util/persisted/structure";
+} from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -111,13 +111,13 @@ export default {
       if (tagVar) addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
       if (
-        isPersisted() &&
+        isPatch() &&
         referenceNodes.length &&
         isBranchPathSection(tagSection)
       ) {
         addSerializeReason(tagSection, FORCED, nodeBinding);
         addRuntimeFeatureAsset("patch-text-content");
-        ensurePersistedWriteGroups(() => tagExtra);
+        ensurePatchWriteGroups(() => tagExtra);
       }
     }
 

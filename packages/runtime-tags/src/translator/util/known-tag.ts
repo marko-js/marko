@@ -15,7 +15,7 @@ import {
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
 import isStatic from "./is-static";
-import { isOptimize, isPersisted } from "./marko-config";
+import { isOptimize, isPatch } from "./marko-config";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -31,15 +31,15 @@ import {
   some,
   toIter,
 } from "./optional";
-import { getChildPatchPlan } from "./persisted/decisions";
-import { addPersistedChildRenderer } from "./persisted/intrinsics";
-import { onFinalizePersisted } from "./persisted/lifecycle";
-import { contentResumesForPatch } from "./persisted/refresh";
+import { getChildPatchPlan } from "./patch/decisions";
+import { addPatchChildRenderer } from "./patch/intrinsics";
+import { onFinalizePatch } from "./patch/lifecycle";
+import { contentResumesForPatch } from "./patch/refresh";
 import {
   inStatefulBranch,
   isReadAsValue,
   recordStructuralParams,
-} from "./persisted/structure";
+} from "./patch/structure";
 import {
   addRead,
   type Binding,
@@ -165,13 +165,13 @@ export function knownTagAnalyze(
   for (const child of tagBody.get("body")) staticBody &&= isStatic(child);
   tagExtra[kStaticBody] = staticBody;
   const attrExprs = new Set([tagExtra]);
-  if (isPersisted()) {
+  if (isPatch()) {
     // The ref must serialize so a patch can pair the child scope through a
     // parent entry, even for a scriptless child.
     addSerializeReason(section, FORCED, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
     const hasVar = !!tag.node.var;
-    onFinalizePersisted(() => {
+    onFinalizePatch(() => {
       if (!inStatefulBranch(section)) {
         addRuntimeFeatureAsset("patch-child");
         // A created scope seeds the tag var through the bind channel; the
@@ -262,11 +262,11 @@ export function knownTagTranslateHTML(
   );
   // Every child renderer joins this template's intrinsics union, so a
   // parent's patch-skip decision sees the whole subtree at render time.
-  if (isPersisted()) addPersistedChildRenderer(tagIdentifier);
+  if (isPatch()) addPatchChildRenderer(tagIdentifier);
   // A client-owned instance renders nothing into a patch: the link and the
   // child render skip together, and the absent entry keeps the live child.
   const skipsPatchRender =
-    isPersisted() && getChildPatchPlan(tag.node.extra!).skipsPatchRender;
+    isPatch() && getChildPatchPlan(tag.node.extra!).skipsPatchRender;
   let clientOwnedStatements: t.Statement[] | undefined = skipsPatchRender
     ? []
     : undefined;
@@ -288,7 +288,7 @@ export function knownTagTranslateHTML(
       callRuntime("_existing_scope", peekScopeId),
     );
 
-    if (isPersisted() && !inStatefulBranch(section)) {
+    if (isPatch() && !inStatefulBranch(section)) {
       const patchChildStatement = t.expressionStatement(
         callRuntime(
           "_patch_child",
@@ -304,11 +304,11 @@ export function knownTagTranslateHTML(
       }
     }
 
-    // A persisted page serializes the child scope for pairing even with no
+    // A patch page serializes the child scope for pairing even with no
     // client code, where nothing could resolve the var's registration.
     if (
       tagVar &&
-      (!isPersisted() ||
+      (!isPatch() ||
         getProgram().node.extra.isInteractive ||
         loadFileForTag(tag)?.ast.program.extra?.isInteractive)
     ) {
@@ -330,7 +330,7 @@ export function knownTagTranslateHTML(
 
   if (contentSection.paramReasonGroups) {
     let childSerializeReasonExpr: t.Expression | undefined;
-    if (isPersisted()) {
+    if (isPatch()) {
       // The client owns an instance in a stateful branch after the page
       // render (patches skip the region): no mask, the all-server default.
       // Elsewhere the ambient slot carries the ownership mask (needed
@@ -404,7 +404,7 @@ export function knownTagTranslateHTML(
       statements.push(varStatement);
       // A created scope seeds the var (only there) unless the child's return is
       // state-fed: its own fill then returns through the wired registration.
-      if (isPersisted()) {
+      if (isPatch()) {
         for (const name in t.getBindingIdentifiers(tag.node.var!)) {
           const varBinding = tag.scope.getBinding(name)?.identifier.extra
             ?.binding as Binding | undefined;
@@ -473,7 +473,7 @@ export function knownTagTranslateDOM(
 
   // An interactive page receives assets transitively through its dom
   // program, so the feature import rides both outputs.
-  if (isPersisted() && !inStatefulBranch(getSection(tag))) {
+  if (isPatch() && !inStatefulBranch(getSection(tag))) {
     importRuntimeFeature("patch-child");
     if (
       tag.node.var ||
@@ -509,7 +509,7 @@ export function knownTagTranslateDOM(
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
     // A flush creating the child seeds the wiring through its setup.
-    if (isPersisted()) importRuntimeFeature("patch-var");
+    if (isPatch()) importRuntimeFeature("patch-var");
     const wireVar = callRuntime(
       "_var",
       scopeIdentifier,
@@ -542,7 +542,7 @@ export function finalizeKnownTags(section: Section) {
     const contentSection = tagExtra[kContentSection]!;
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
       const groupSources: ParamGroupSources[] = [];
-      if (isPersisted()) tagExtra[kGroupSources] = groupSources;
+      if (isPatch()) tagExtra[kGroupSources] = groupSources;
       for (const group of contentSection.paramReasonGroups) {
         const exprs = mapParamReasonToExpr(knownExprs, group.reason);
         addSerializeReason(
@@ -551,7 +551,7 @@ export function finalizeKnownTags(section: Section) {
           scopeBinding,
           group.id,
         );
-        if (isPersisted()) {
+        if (isPatch()) {
           // Everything the group's expressions may read, function-body
           // reads included: they inform ownership, never serialization.
           const sources = getAllSourcesForExprs(exprs as Opt<t.NodeExtra>);

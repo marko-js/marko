@@ -59,17 +59,17 @@ type Intrinsics = 0 | 1 | (() => unknown[]);
 const kIntrinsics = Symbol();
 type WithIntrinsics = { [kIntrinsics]?: Intrinsics };
 
-export function _template_persisted(
+export function _template_patch(
   templateId: string,
   renderer: ServerRenderer,
   page?: 0 | 1,
   intrinsics?: Intrinsics,
 ) {
-  // A page render of persisted templates tracks unpatched context.
+  // A page render of patch template tracks unpatched context.
   const template = _template(
     templateId,
     ((input) => {
-      getState().persisted = true;
+      getState().patchPage = true;
       return renderer(input);
     }) as ServerRenderer,
     page as 1,
@@ -211,7 +211,7 @@ class PatchState extends State {
     // The client reads one frame per line: everything a flush embeds is
     // escaped (serializer strings, shells), so a newline is a bug.
     if (MARKO_DEBUG && scripts.includes("\n")) {
-      throw new Error("A persisted flush spans lines.");
+      throw new Error("A patch flush spans lines.");
     }
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
@@ -451,7 +451,7 @@ export function _patch_init(scopeId: number, initIds: string) {
 }
 
 // Emitted as the scope reason's complement, so only a patch (the falsy
-// persisted reason) ever reaches here.
+// patch reason) ever reaches here.
 export function _patch_value(
   scopeId: number,
   key: string,
@@ -466,7 +466,7 @@ export function _patch_value(
     if (setup) {
       if (state.patchFlushed) {
         throw new Error(
-          "A persisted patch cannot write after its flush was written (async patch content is not supported).",
+          "A patch cannot write after its flush was written (async patch content is not supported).",
         );
       }
       // Setup entries nest under `s`: the client applies them only to
@@ -533,9 +533,7 @@ export function _patch_bind(
       while (up < 0) {
         const link = links?.[cur];
         if (MARKO_DEBUG && !link) {
-          throw new Error(
-            "A persisted patch could not link a handler to its scope.",
-          );
+          throw new Error("A patch could not link a handler to its scope.");
         }
         down.push(link![1]);
         cur = link![0];

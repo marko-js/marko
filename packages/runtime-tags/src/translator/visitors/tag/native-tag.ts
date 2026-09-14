@@ -37,16 +37,16 @@ import {
   getMarkoOpts,
   isOptimize,
   isOutputHTML,
-  isPersisted,
+  isPatch,
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
-import { hasStateSource } from "../../util/persisted/decisions";
+import { hasStateSource } from "../../util/patch/decisions";
 import {
-  ensurePersistedWriteGroups,
+  ensurePatchWriteGroups,
   inStatefulBranch,
   isBranchPathSection,
-} from "../../util/persisted/structure";
+} from "../../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -301,7 +301,7 @@ export default {
       // assets, so the template module stays unloaded when nothing needs it.
       if (
         relatedControllable &&
-        isPersisted() &&
+        isPatch() &&
         isBranchPathSection(getOrCreateSection(tag))
       ) {
         // Handler writes/binds ride the value feat's patchers.
@@ -310,7 +310,7 @@ export default {
         addRuntimeFeatureAsset(getPatchControlFeature(relatedControllable));
         const controlValue = relatedControllable.attrs[0]?.value;
         if (controlValue) {
-          ensurePersistedWriteGroups(() => controlValue.extra || {});
+          ensurePatchWriteGroups(() => controlValue.extra || {});
         }
       }
 
@@ -344,8 +344,8 @@ export default {
         if (seen.content && tagName !== "meta" && !node.body.body.length) {
           const contentExtra = (seen.content.value.extra ??= {});
           contentExtra.contentAttr = true;
-          if (isPersisted() && isBranchPathSection(tagSection)) {
-            ensurePersistedWriteGroups(() => contentExtra);
+          if (isPatch() && isBranchPathSection(tagSection)) {
+            ensurePatchWriteGroups(() => contentExtra);
             addRuntimeFeatureAsset("patch-dynamic-tag");
           }
         }
@@ -354,7 +354,7 @@ export default {
         }
 
         if (
-          isPersisted() &&
+          isPatch() &&
           hasDynamicAttributes &&
           isBranchPathSection(tagSection)
         ) {
@@ -363,7 +363,7 @@ export default {
           for (const attr of node.attributes) {
             if (t.isMarkoAttribute(attr) && !isEventHandler(attr.name)) {
               const { value } = attr;
-              ensurePersistedWriteGroups(() => value.extra || {});
+              ensurePatchWriteGroups(() => value.extra || {});
             }
           }
           if (spreadReferenceNodes && isAttrSetSpread(tagName)) {
@@ -379,7 +379,7 @@ export default {
             ) {
               addRuntimeFeatureAsset("patch-dynamic-tag");
             }
-            ensurePersistedWriteGroups(() => node.extra || {});
+            ensurePatchWriteGroups(() => node.extra || {});
           }
         }
 
@@ -463,10 +463,10 @@ export default {
           exprExtras = push(exprExtras, textExtra);
           addSetupExpr(tagSection, textPlaceholders[0]);
           tagExtra[kTextContentExtra] = textExtra;
-          if (isPersisted() && isBranchPathSection(tagSection)) {
+          if (isPatch() && isBranchPathSection(tagSection)) {
             addSerializeReason(tagSection, FORCED, nodeBinding);
             addRuntimeFeatureAsset("patch-text-content");
-            ensurePersistedWriteGroups(() => textExtra);
+            ensurePatchWriteGroups(() => textExtra);
           }
         }
 
@@ -665,7 +665,7 @@ export default {
 
           // A patched control wires like a fill: the handler installs first
           // (binds queue ahead), then the value entry applies authoritatively.
-          if (isPersisted() && isBranchPathSection(tagSection)) {
+          if (isPatch() && isBranchPathSection(tagSection)) {
             const [valueAttr, changeAttr, groupValueAttr] =
               staticControllable.attrs;
             // A state-fed control (value or handler) is the client's: no
@@ -974,7 +974,7 @@ export default {
           // A server-owned `content=` re-renders from a dynamic tag entry,
           // like a dynamic tag (the client signal shape is the same).
           const patched =
-            isPersisted() &&
+            isPatch() &&
             isBranchPathSection(tagSection) &&
             !inStatefulBranch(tagSection) &&
             !hasStateSource(staticContentAttr.value.extra);
@@ -1261,7 +1261,7 @@ export default {
 
           // An interactive page receives features through its dom module,
           // so the imports ride here beside the analyze-phase assets.
-          if (isPersisted() && isBranchPathSection(tagSection)) {
+          if (isPatch() && isBranchPathSection(tagSection)) {
             importRuntimeFeature("patch-value");
             importRuntimeFeature("patch-control");
             importRuntimeFeature(getPatchControlFeature(staticControllable));
@@ -1397,7 +1397,7 @@ export default {
           const controllable =
             !staticControllable && controllableClaimFor(staticName);
           if (
-            isPersisted() &&
+            isPatch() &&
             isBranchPathSection(tagSection) &&
             isAttrSetSpread(staticName)
           ) {
@@ -1537,7 +1537,7 @@ export function writesPatchAttr(
   extra: t.NodeExtra | undefined,
 ) {
   if (
-    !(isPersisted() && isBranchPathSection(tagSection)) ||
+    !(isPatch() && isBranchPathSection(tagSection)) ||
     inStatefulBranch(tagSection)
   ) {
     return false;

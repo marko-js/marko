@@ -4,7 +4,7 @@ declare const Config: {
   output?: "html" | "dom" | "migrate" | "source" | "hydrate";
   entry?: EntryKind;
   /** Enables translation for documents that persist across navigations. */
-  persisted?: boolean;
+  patches?: boolean;
   linkAssets?: {
     runtime: string;
     onAsset(kind: EntryKind, file: string, id: string): void;

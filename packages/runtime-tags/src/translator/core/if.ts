@@ -21,13 +21,13 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
-import { isPersisted } from "../util/marko-config";
-import { onClassifyStructure } from "../util/persisted/lifecycle";
+import { isPatch } from "../util/marko-config";
+import { onClassifyStructure } from "../util/patch/lifecycle";
 import {
   isBranchPathSection,
   isStatefulBranch,
   recordStructuralParams,
-} from "../util/persisted/structure";
+} from "../util/patch/structure";
 import {
   FORCED,
   getScopeAccessorLiteral,
@@ -122,7 +122,7 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
-      if (isPersisted()) {
+      if (isPatch()) {
         onClassifyStructure(ifTagSection, () => {
           // Patches render a chain that is not stateful.
           if (
@@ -206,13 +206,14 @@ export const IfTag = {
           );
           // A patchable conditional keeps its markers: the shipped-branch
           // swap anchors at the marker node, which elision would remove.
-          const persistedPatch =
-            isPersisted() && !stateful && isBranchPathSection(ifTagSection);
+          const patchChain =
+            isPatch() && !stateful && isBranchPathSection(ifTagSection);
           // A patched chain pairs and reports its branch even with a
           // source-less test (a constant pick): a created scope needs the entry.
-          let branchSerializeReasons: SerializeReasons | undefined =
-            persistedPatch ? FORCED : undefined;
-          if (persistedPatch) {
+          let branchSerializeReasons: SerializeReasons | undefined = patchChain
+            ? FORCED
+            : undefined;
+          if (patchChain) {
             singleChild = false;
           } else {
             for (const [, branchBodySection] of branches) {
@@ -244,7 +245,7 @@ export const IfTag = {
               }
               // Every branch of a patched chain reports its index, with or
               // without a reason of its own: the patch names it by index.
-              if (branchSerializeReason || persistedPatch) {
+              if (branchSerializeReason || patchChain) {
                 bodyStatements.push(
                   t.returnStatement(t.numericLiteral(i)) as any,
                 );
@@ -269,9 +270,7 @@ export const IfTag = {
 
           if (branchSerializeReasons) {
             const skipParentEnd =
-              !persistedPatch &&
-              onlyChildParentTagName &&
-              markerSerializeReason;
+              !patchChain && onlyChildParentTagName && markerSerializeReason;
             if (skipParentEnd) {
               getParentTag(ifTag)!.node.extra![kSkipEndTag] = true;
             }
@@ -297,9 +296,9 @@ export const IfTag = {
                 cbNode,
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
-                // Pairing stays statically on under persisted: the patch
+                // Pairing stays statically on under patches: the patch
                 // intercept preempts, and interior writes anchor through it.
-                persistedPatch
+                patchChain
                   ? t.numericLiteral(1)
                   : getSerializeGuardForAny(
                       ifTagSection,
@@ -316,7 +315,7 @@ export const IfTag = {
                 singleChild ? t.numericLiteral(1) : undefined,
                 // Shell ids per branch index: a patch ships the shell so the
                 // client creates diverged branches without bundling them.
-                persistedPatch
+                patchChain
                   ? t.arrayExpression(
                       branches.map(([, branchBody]) => {
                         // An absent body (a bare `<else>`) ships `0`.
@@ -329,7 +328,7 @@ export const IfTag = {
                   : undefined,
                 // A chain with params upstream yields to the client when
                 // the call site has state upstream of them.
-                ...(persistedPatch ? getExprWriteOwnership(ifTagExtra) : []),
+                ...(patchChain ? getExprWriteOwnership(ifTagExtra) : []),
               ),
             );
           }
@@ -368,7 +367,7 @@ export const IfTag = {
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
           if (
-            isPersisted() &&
+            isPatch() &&
             isBranchPathSection(ifTagSection) &&
             !branches.some(
               ([, branchBody]) => branchBody && isStatefulBranch(branchBody),

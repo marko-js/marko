@@ -66,8 +66,8 @@ _Avoid_: lifecycle hook, arbitrary JavaScript side effect
 Why a section, scope property, marker, or registration must reach the browser.
 `true` and state-backed `Sources` are unconditional; parameter-only sources
 produce per-call guards; absence means omit. At a call site it is one runtime
-value for plain and persisted templates: two bits per param-reason group,
-client contributes and server contributes; a persisted template reads the
+value for plain and patch templates: two bits per param-reason group,
+client contributes and server contributes; a patch template reads the
 pair as the group's ownership.
 _Avoid_: serialization flag, serialized value, ownership mask as a second value
 
@@ -177,13 +177,13 @@ A `readyId`-keyed serialization channel that withholds lazy resume data until
 its module registers and earlier data drains.
 _Avoid_: async HTML stream
 
-## Persisted pages
+## Patch protocol
 
 Analyze names observations in template terms; translate names conclusions
 (ownership, wire channels, masks) and keeps them out of shared metadata.
 
 **Patch**:
-A server rerender of a persisted page applied to the live client DOM by
+A server rerender of a patch page applied to the live client DOM by
 refreshing values and navigating structure, without a full page render.
 _Avoid_: rerender, hydration update
 

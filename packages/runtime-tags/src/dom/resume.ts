@@ -188,7 +188,7 @@ export function installReady(
 }
 
 // A channel module that never arrives can never drain its data: the
-// persisted feature settles pending patches and rejects later flushes.
+// patch feature settles pending patches and rejects later flushes.
 export function readyFailed(readyId: string) {
   if (MARKO_DEBUG) {
     if (!readyIds?.has(readyId)) {

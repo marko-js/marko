@@ -21,14 +21,14 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
-import { isPersisted } from "../util/marko-config";
+import { isPatch } from "../util/marko-config";
 import { some } from "../util/optional";
-import { onClassifyStructure } from "../util/persisted/lifecycle";
+import { onClassifyStructure } from "../util/patch/lifecycle";
 import {
   isBranchPathSection,
   isStatefulBranch,
   recordStructuralParams,
-} from "../util/persisted/structure";
+} from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -218,7 +218,7 @@ export default {
       getBranchSectionAccessor(nodeBinding),
     );
 
-    if (isPersisted()) {
+    if (isPatch()) {
       onClassifyStructure(tagSection, () => {
         // Patches render a loop that is not stateful.
         if (!isStatefulBranch(bodySection) && isBranchPathSection(tagSection)) {
@@ -293,10 +293,10 @@ export default {
         const stateful = isStatefulBranch(bodySection);
         // A patchable loop keeps its markers: item pairing and insertion
         // anchor at branch marks, which elision would remove.
-        const persistedPatch =
-          isPersisted() && !stateful && isBranchPathSection(tagSection);
+        const patchChain =
+          isPatch() && !stateful && isBranchPathSection(tagSection);
         const singleChild =
-          !persistedPatch &&
+          !patchChain &&
           bodySection.content?.singleChild &&
           bodySection.content.startType !== ContentType.Text;
 
@@ -332,7 +332,7 @@ export default {
 
         if (branchSerializeReason) {
           const skipParentEnd =
-            !persistedPatch && onlyChildParentTagName && markerSerializeReason;
+            !patchChain && onlyChildParentTagName && markerSerializeReason;
           const statefulSerializeArg = getSerializeGuard(
             tagSection,
             getSerializeReason(tagSection, kStatefulReason),
@@ -348,9 +348,9 @@ export default {
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
-            // Pairing stays statically on under persisted: the patch
+            // Pairing stays statically on under patches: the patch
             // intercept preempts, and interior writes anchor through it.
-            persistedPatch
+            patchChain
               ? t.numericLiteral(1)
               : getSerializeGuard(
                   tagSection,
@@ -374,7 +374,7 @@ export default {
             forTagArgs.push(t.numericLiteral(1));
           }
 
-          if (persistedPatch) {
+          if (patchChain) {
             // Item body shell id so patches can create additions; the two
             // optional marker args are always unset here.
             const id = getShellId(bodySection);
@@ -424,7 +424,7 @@ export default {
         }
 
         if (
-          isPersisted() &&
+          isPatch() &&
           isBranchPathSection(getSection(tag)) &&
           !isStatefulBranch(bodySection)
         ) {

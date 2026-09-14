@@ -12,7 +12,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML, isPersisted } from "./marko-config";
+import { isOutputHTML, isPatch } from "./marko-config";
 import {
   type AttrTagLookup,
   getAttrTagIdentifier,
@@ -423,8 +423,8 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         }
       }
 
-      if (dynamicSerializeReason || isPersisted()) {
-        // Persisted output always declares the reason: statically serialized
+      if (dynamicSerializeReason || isPatch()) {
+        // Patch output always declares the reason: statically serialized
         // values ride it so patch renders drop them.
         body.node.body.unshift(getScopeReasonDeclaration(bodySection) as any);
       } else {
@@ -436,7 +436,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       // A static shell rides its slot; a dynamic one (or, with no dom
       // module, unrecorded boundary content) elides it.
       if (
-        isPersisted() &&
+        isPatch() &&
         (bodySection.contentShell ||
           (bodySection.boundaryContent &&
             serialized &&

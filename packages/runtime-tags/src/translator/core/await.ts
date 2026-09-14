@@ -9,11 +9,8 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
-import { isPersisted } from "../util/marko-config";
-import {
-  boundaryAlwaysPairs,
-  inStatefulBranch,
-} from "../util/persisted/structure";
+import { isPatch } from "../util/marko-config";
+import { boundaryAlwaysPairs, inStatefulBranch } from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -124,8 +121,8 @@ export default {
     const bodySection = startSection(tagBody)!;
     bodySection.isBoundary = true;
     // Page entry must ship the child patcher and branch-resume latch even
-    // when this template module does not load (a scriptless persisted await).
-    if (isPersisted()) {
+    // when this template module does not load (a scriptless patch await).
+    if (isPatch()) {
       addRuntimeFeatureAsset("patch-boundary");
       // A scriptless created scope paints the settled body via text fills.
       addRuntimeFeatureAsset("patch-text");
@@ -164,7 +161,7 @@ export default {
         setSectionParentIsOwner(bodySection, true);
         // A patch pairs the body scope through a `PatchChild` entry, so the
         // page must ship its patcher (the import rides both outputs).
-        if (isPersisted()) {
+        if (isPatch()) {
           importRuntimeFeature("patch-boundary");
         }
         writer.flushBefore(tag);
@@ -186,7 +183,7 @@ export default {
         // Client-owned thenables resolve via `_await_promise`, so a patch must not
         // Pending them; otherwise Pending carries the body content id.
         const patchContent =
-          isPersisted() && !valueSources?.param && !valueSources?.global
+          isPatch() && !valueSources?.param && !valueSources?.global
             ? t.numericLiteral(0)
             : bodySection && isShell(bodySection)
               ? t.stringLiteral(getResumeRegisterId(section, nodeRef, "await"))
@@ -204,9 +201,9 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                // A persisted page always marks a patchable boundary: the
+                // A patch page always marks a patchable boundary: the
                 // flush pairs its body through the resumed branch link.
-                isPersisted() && !inStatefulBranch(section)
+                isPatch() && !inStatefulBranch(section)
                   ? t.numericLiteral(1)
                   : getSerializeGuard(
                       section,
@@ -216,9 +213,7 @@ export default {
                 patchContent,
                 // An always-pairing body's Pending entry drops its
                 // creation id outside divergent contexts.
-                ...(isPersisted() &&
-                bodySection &&
-                boundaryAlwaysPairs(bodySection)
+                ...(isPatch() && bodySection && boundaryAlwaysPairs(bodySection)
                   ? [t.numericLiteral(1)]
                   : []),
               ),
@@ -238,7 +233,7 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        if (isPersisted()) {
+        if (isPatch()) {
           importRuntimeFeature("patch-boundary");
         }
       },

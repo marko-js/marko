@@ -204,7 +204,7 @@ export let _dynamic_tag = (
     };
     // A tag no patch pairs renders unpatched: the resumed page
     // re-renders it, so no patch fills its reads.
-    if (patchPairing !== 1 && state.persisted) withUnpatched(renderNative);
+    if (patchPairing !== 1 && state.patchPage) withUnpatched(renderNative);
     else renderNative();
 
     // Registered, not written: the getter only reaches the wire when a tag
@@ -226,11 +226,11 @@ export let _dynamic_tag = (
       }
       if (renderer) {
         try {
-          // The child's groups are unknown here: a persisted page renders
+          // The child's groups are unknown here: a patch page renders
           // the tag server-side, elsewhere the client may re-render it.
           _set_serialize_reason(
             shouldResume && inputOrArgs !== undefined
-              ? state.persisted
+              ? state.patchPage
                 ? SERVER_ALL
                 : CLIENT_ALL
               : 0,
@@ -250,7 +250,7 @@ export let _dynamic_tag = (
       }
     };
     const run =
-      patchPairing !== 1 && state.persisted
+      patchPairing !== 1 && state.patchPage
         ? () => withUnpatched(render)
         : render;
     result = marks ? withBranchId(branchId, run) : run();

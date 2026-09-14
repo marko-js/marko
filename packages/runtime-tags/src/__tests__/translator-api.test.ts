@@ -83,7 +83,7 @@ describe("runtime-tags/translator-api", () => {
         cache: new Map(),
         output: "html",
         optimize: true,
-        persisted: true,
+        patches: true,
       },
     );
     assert.deepEqual(

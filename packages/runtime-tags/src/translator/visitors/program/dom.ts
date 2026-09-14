@@ -12,7 +12,7 @@ import {
   hasPatchEffectRead,
   isPatchWriteBinding,
   isPatchFillBinding,
-} from "../../util/persisted/refresh";
+} from "../../util/patch/refresh";
 import {
   type Binding,
   BindingType,

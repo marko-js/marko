@@ -26,19 +26,19 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
   isContentRenderTag,
   isServerOwnedDynamicTag,
-} from "../../util/persisted/decisions";
-import { addPersistedChildRenderer } from "../../util/persisted/intrinsics";
-import { onFinalizePersisted } from "../../util/persisted/lifecycle";
-import { contentResumesForPatch } from "../../util/persisted/refresh";
+} from "../../util/patch/decisions";
+import { addPatchChildRenderer } from "../../util/patch/intrinsics";
+import { onFinalizePatch } from "../../util/patch/lifecycle";
+import { contentResumesForPatch } from "../../util/patch/refresh";
 import {
-  ensurePersistedWriteGroups,
+  ensurePatchWriteGroups,
   inResumedStructure,
-} from "../../util/persisted/structure";
+} from "../../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -194,10 +194,10 @@ export default {
       ));
       // The dynamic tag entry applies without this template's dom module;
       // decided once references and structure resolve, as translate decides.
-      if (isPersisted() && !t.isStringLiteral(node.name)) {
-        onFinalizePersisted(() => {
+      if (isPatch() && !t.isStringLiteral(node.name)) {
+        onFinalizePatch(() => {
           if (isContentRenderTag(tag) || isServerOwnedDynamicTag(tag)) {
-            ensurePersistedWriteGroups(() => tagExtra);
+            ensurePatchWriteGroups(() => tagExtra);
             if (writesPatchDynamicTag(tag, tagSection)) {
               addRuntimeFeatureAsset("patch-dynamic-tag");
               if (hasVar || contentResumesForPatch(bodySection)) {
@@ -222,7 +222,7 @@ export default {
         const varBinding = trackVarReferences(tag, BindingType.derived)!;
         // A flush writes the variable from what the tag renders: its inputs
         // are its sources (a client render drives it through `_var`).
-        if (isPersisted()) setBindingValueExprs(varBinding, tagExtra);
+        if (isPatch()) setBindingValueExprs(varBinding, tagExtra);
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
         ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
@@ -230,9 +230,8 @@ export default {
 
       const bodySection = startSection(tagBody);
       // The body depends on the whole tag as a branch body on its
-      // condition. Persisted only: the closure walk then stops forcing it.
-      if (bodySection && isPersisted())
-        bodySection.upstreamExpression = tagExtra;
+      // condition. Patches only: the closure walk then stops forcing it.
+      if (bodySection && isPatch()) bodySection.upstreamExpression = tagExtra;
       trackParamsReferences(tagBody, BindingType.param);
       if (hasVar) addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
@@ -287,11 +286,11 @@ export default {
       // An unknown renderer defeats transitive `$global` knowledge; `input`
       // content is the parent's own, already counted where it was compiled.
       if (
-        isPersisted() &&
+        isPatch() &&
         !t.isStringLiteral(tag.node.name) &&
         !isContentRenderTag(tag)
       ) {
-        addPersistedChildRenderer(tag.node.name);
+        addPatchChildRenderer(tag.node.name);
       }
     },
     exit(tag) {
@@ -800,7 +799,7 @@ function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
 // `input` content, or a fully server-owned renderer and input.
 function writesPatchDynamicTag(tag: t.NodePath<t.MarkoTag>, section: Section) {
   return (
-    isPersisted() &&
+    isPatch() &&
     (isContentRenderTag(tag) || isServerOwnedDynamicTag(tag)) &&
     !inResumedStructure(section)
   );

@@ -13,7 +13,7 @@ import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputHTML, isPage, isPersisted } from "./marko-config";
+import { isOptimize, isOutputHTML, isPage, isPatch } from "./marko-config";
 import {
   filter,
   find,
@@ -38,14 +38,14 @@ import {
   isPatchWriteBinding,
   isPatchFillBinding,
   joinsStateDownstream,
-} from "./persisted/refresh";
+} from "./patch/refresh";
 import {
   inResumedStructure,
   getParamUpstreamChain,
   inStatefulBranch,
   isBranchPathSection,
   isStatefulBranch,
-} from "./persisted/structure";
+} from "./patch/structure";
 import {
   type AssignedBindingExtra,
   type Binding,
@@ -533,7 +533,7 @@ export function getGlobalJoins(section: Section) {
   let root = section;
   while (root.parent) root = root.parent;
   const joins = new Map<string, boolean>();
-  if (isPersisted()) {
+  if (isPatch()) {
     forEach(root.bindings, (binding) => {
       if (binding.type !== BindingType.global || !binding.upstreamAlias) return;
       for (const read of binding.reads) {
@@ -630,7 +630,7 @@ export function initValue(binding: Binding, isLet = false) {
     }
 
     // A fill runs from its scope slot, never as a value forwarder.
-    const fills = isPersisted() && isPatchFillBinding(binding);
+    const fills = isPatch() && isPatchFillBinding(binding);
     if (fills) signal.hasSideEffect = true;
     const fn = getSignalFn(signal);
     const helper = isLet
@@ -742,10 +742,9 @@ function isPureMemberForwarder(binding: Binding): boolean {
 
 // A forward a patch renders is a patched render, like a hole it writes.
 function pushForward(signal: Signal, target: Signal, statement: t.Statement) {
-  (isPersisted() && patchRendersInto(target)
-    ? signal.patched
-    : signal.render
-  ).push(statement);
+  (isPatch() && patchRendersInto(target) ? signal.patched : signal.render).push(
+    statement,
+  );
 }
 
 // A patch renders a signal when every render is a hole it writes or a
@@ -1350,7 +1349,7 @@ export function writeSignals(section: Section) {
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
-          isPersisted() && getGlobalJoinKeys(signal).length
+          isPatch() && getGlobalJoinKeys(signal).length
             ? "_global_script"
             : "_script",
           t.stringLiteral(
@@ -1387,7 +1386,7 @@ export function writeSignals(section: Section) {
       // Fill registration rides the intersection's own declaration, so
       // tree-shaking keeps it exactly when the intersection is retained.
       // Work a patch renders is no join: no fill ever runs it.
-      if (isPersisted()) {
+      if (isPatch()) {
         if (Array.isArray(signal.referencedBindings)) {
           const fillRun = signal.fillFn;
           for (const ref of patchRenders(signal)
@@ -1523,7 +1522,7 @@ export function writeSignals(section: Section) {
         }
       }
 
-      if (isPersisted()) value = wrapGlobalJoins(signal, value);
+      if (isPatch()) value = wrapGlobalJoins(signal, value);
 
       if (signal.register) {
         value = callRuntime(
@@ -1830,7 +1829,7 @@ function createsWithInit(section: Section, closure: Binding) {
 // create (a shell kept only for reference never creates).
 export function patchCreates(section: Section) {
   return (
-    isPersisted() &&
+    isPatch() &&
     (section.isBranch ||
       (section.contentShell === true && contentMayCreate(section))) &&
     !inResumedStructure(section) &&
@@ -2013,7 +2012,7 @@ export function writeHTMLResumeStatements(
           // A scriptless page or a shell chain never registers
           // the pending replay, so the envelope must not reference it.
           const reason =
-            isPersisted() &&
+            isPatch() &&
             (!getProgram().node.extra.isInteractive || inShellChain(section))
               ? undefined
               : getSerializeReason(section);
@@ -2046,10 +2045,10 @@ export function writeHTMLResumeStatements(
             );
           }
         } else {
-          // A persisted reader a patch fills needs no dispatch unless the
+          // A patch-filled reader a patch fills needs no dispatch unless the
           // client can change the owner value (`_unfilled_if`).
           const ownership =
-            isPersisted() &&
+            isPatch() &&
             !closure.sources.state &&
             !hasResumedRead(closure, section)
               ? getPatchWriteOwnership(closure.sources)
@@ -2123,20 +2122,20 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
-  // Under persisted the scope write rides the section (or root) reason:
+  // Under patches the scope write rides the section (or root) reason:
   // structural props need no guard, a binding's value keeps its group's.
-  const persisted = isPersisted();
+  const patches = isPatch();
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
-    if (persisted || isSameReason(sectionSerializeReason, reason)) return expr;
+    if (patches || isSameReason(sectionSerializeReason, reason)) return expr;
     return getExprIfSerialized(section, reason, expr);
   };
   const onBranchPath =
-    persisted && !!section.parent && isBranchPathSection(section);
+    patches && !!section.parent && isBranchPathSection(section);
   const ifValueSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (!onBranchPath && isSameReason(sectionSerializeReason, reason)) {
       return expr;
     }
-    return persisted
+    return patches
       ? getValueIfSerialized(section, reason, expr)
       : getExprIfSerialized(section, reason, expr);
   };
@@ -2242,7 +2241,7 @@ export function writeHTMLResumeStatements(
 
   // Effect-read values need no client registration: the wire writes the
   // accessor and each reading effect re-runs by register id on change.
-  if (isPersisted()) {
+  if (isPatch()) {
     forEach(section.bindings, (binding) => {
       if (isPatchWriteBinding(binding)) {
         const write = gatePatchWrite(
@@ -2306,7 +2305,7 @@ export function writeHTMLResumeStatements(
 
   // A `<return>` change handler wires like a controllable's: the bind
   // installs it on a created scope, a paired one keeps its own.
-  if (persisted) {
+  if (patches) {
     const change = serializedLookup.get(getAccessorProp().TagVariableChange);
     if (change) {
       body.push(
@@ -2325,7 +2324,7 @@ export function writeHTMLResumeStatements(
   // A creatable branch (or a non-page root a parent may create)
   // seeds its state onto fresh scopes as SETUP fills.
   if (
-    persisted &&
+    patches &&
     (!section.parent || (section.isBranch && isBranchPathSection(section)))
   ) {
     forEach(getPatchFillBindings(section), (binding) => {
@@ -2453,8 +2452,8 @@ export function writeHTMLResumeStatements(
     body.push(
       t.expressionStatement(
         // Child sections gate through their cross-section guards (derived
-        // from the root reason, so still binary under persisted).
-        persisted && !section.parent
+        // from the root reason, so still binary under patches).
+        patches && !section.parent
           ? fillCalls.length
             ? t.conditionalExpression(
                 scopePageIdentifier(section),

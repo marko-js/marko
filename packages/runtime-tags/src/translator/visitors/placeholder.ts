@@ -5,13 +5,13 @@ import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML, isPersisted } from "../util/marko-config";
+import { isOutputHTML, isPatch } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
-  ensurePersistedWriteGroups,
+  ensurePatchWriteGroups,
   inStatefulBranch,
   isBranchPathSection,
-} from "../util/persisted/structure";
+} from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -90,10 +90,10 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
-        if (isPersisted() && isBranchPathSection(section)) {
+        if (isPatch() && isBranchPathSection(section)) {
           addSerializeReason(section, FORCED, nodeBinding);
           addRuntimeFeatureAsset(node.escape ? "patch-text" : "patch-html");
-          ensurePersistedWriteGroups(() => valueExtra);
+          ensurePatchWriteGroups(() => valueExtra);
         }
       }
     },
@@ -183,21 +183,21 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
     const holeSources =
-      isPersisted() && isBranchPathSection(section)
+      isPatch() && isBranchPathSection(section)
         ? getSerializeSourcesForExpr(valueExtra)
         : undefined;
     // A state-sourced hole recomputes through the signal graph, and inside
     // unpatched structure owner fills refresh it: neither patch-writes.
-    const isPatch =
-      isPersisted() &&
+    const patchWrites =
+      isPatch() &&
       isBranchPathSection(section) &&
       !inStatefulBranch(section) &&
       !!nodeBinding &&
       !holeSources?.state;
-    const isPatchText = isHTML && isPatch;
+    const isPatchText = isHTML && patchWrites;
     // An interactive page receives assets transitively through its dom
     // program, so the feature import rides both outputs.
-    if (isPatch && !isHTML) {
+    if (patchWrites && !isHTML) {
       importRuntimeFeature(node.escape ? "patch-text" : "patch-html");
     }
 
@@ -241,7 +241,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       }`;
     } else {
       addStatement(
-        isPatch ? "patched" : "render",
+        patchWrites ? "patched" : "render",
         section,
         valueExtra.referencedBindings,
         t.expressionStatement(

@@ -10,12 +10,12 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
-import { isPersisted } from "../util/marko-config";
+import { isPatch } from "../util/marko-config";
 import {
   analyzeAttributeTags,
   getAttrTagPaths,
 } from "../util/nested-attribute-tags";
-import { boundaryAlwaysPairs } from "../util/persisted/structure";
+import { boundaryAlwaysPairs } from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -106,7 +106,7 @@ export default {
       if (bodySection) {
         bodySection.isBoundary = true;
         bodySection.upstreamExpression = tagExtra;
-        if (isPersisted()) {
+        if (isPatch()) {
           // Page entry must ship the boundary patchers even when this template's
           // dom module never loads (a scriptless `<try>`).
           addRuntimeFeatureAsset("patch-boundary");
@@ -119,7 +119,7 @@ export default {
     exit(tag) {
       // Content without a section (its body never analyzed) cannot be
       // classified as boundary content: fall back to loading the dom module.
-      if (!isPersisted()) return;
+      if (!isPatch()) return;
       for (const attrTag of getAttrTagPaths(tag)) {
         if (
           !(
@@ -151,7 +151,7 @@ export default {
         setSectionParentIsOwner(bodySection, true);
         // A patch pairs the body scope through a `PatchChild` entry, so the
         // page must ship its patcher (the import rides both outputs).
-        if (isPersisted()) importRuntimeFeature("patch-child");
+        if (isPatch()) importRuntimeFeature("patch-child");
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -187,7 +187,7 @@ export default {
                 propsToExpression(translatedAttrs.properties),
                 // An always-pairing branch drops its pairing entry's
                 // creation payload outside divergent contexts.
-                ...(isPersisted() &&
+                ...(isPatch() &&
                 boundaryAlwaysPairs(getSectionForBody(tagBody)!)
                   ? [t.numericLiteral(1)]
                   : []),
@@ -207,7 +207,7 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        if (isPersisted()) importRuntimeFeature("patch-child");
+        if (isPatch()) importRuntimeFeature("patch-child");
       },
       exit(tag) {
         const { node } = tag;

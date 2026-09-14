@@ -33,7 +33,7 @@ import {
   getMarkoOpts,
   getReadyId,
   isOutputHTML,
-  isPersisted,
+  isPatch,
 } from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import {
@@ -296,7 +296,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         );
         // A created scope's client-side load drives the child's ready channel
         // (stamped on its branch), so deferred flush data drains after insert.
-        if (isPersisted() && getReadyId(childFile) !== undefined) {
+        if (isPatch() && getReadyId(childFile) !== undefined) {
           loadSetupCall = callRuntime(
             "_load_ready",
             t.stringLiteral(getReadyId(childFile)!),
@@ -310,7 +310,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               setupIdent,
               // A branch being created runs the tag's load wiring as a shell
               // init; `_resume` (impure) survives tree-shaking to carry it.
-              isPersisted() && patchCreates(section)
+              isPatch() && patchCreates(section)
                 ? callRuntime(
                     "_resume",
                     t.stringLiteral(

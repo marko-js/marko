@@ -39,10 +39,10 @@ const readyPatches = new Map<RenderData, ReadyPatch>();
 const loading: Record<string, number> = {};
 
 // Module evaluation is the enablement: the compiler injects this side-effect
-// import once per program with a lazy load import in a persisted build.
+// import once per program with a lazy load import in a patch build.
 installPatchReady(commitReady, pendingReady, discardReady);
 installReady(markReady, failReady);
-// Every lazy tag of a persisted page stamps its channel as it starts cloning
+// Every lazy tag of a patch page stamps its channel as it starts cloning
 // (`_load_ready`, `_load_ready_template`) and reports its insert or failure.
 installLoadReady(
   (branch) => {

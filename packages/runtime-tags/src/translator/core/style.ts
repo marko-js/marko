@@ -19,15 +19,15 @@ import MagicString, { type SourceMap } from "magic-string";
 import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";
 import { isCoreTagName } from "../util/is-core-tag";
-import { isOutputDOM, isPersisted } from "../util/marko-config";
+import { isOutputDOM, isPatch } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
-import { onFinalizePersisted } from "../util/persisted/lifecycle";
+import { onFinalizePatch } from "../util/patch/lifecycle";
 import {
-  ensurePersistedWriteGroups,
+  ensurePatchWriteGroups,
   inStatefulBranch,
   isBranchPathSection,
-} from "../util/persisted/structure";
+} from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -149,11 +149,11 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   addSerializeExpr(section, exprExtras, binding);
   // Stateful structure is known only once sources resolve.
   const valueExtras = dynamicStyleValues(node).map((value) => value.extra!);
-  onFinalizePersisted(() => {
+  onFinalizePatch(() => {
     if (patchesStyle(section)) {
       addSerializeReason(section, FORCED, binding);
       addRuntimeFeatureAsset("patch-style");
-      for (const extra of valueExtras) ensurePersistedWriteGroups(() => extra);
+      for (const extra of valueExtras) ensurePatchWriteGroups(() => extra);
     }
   });
 }
@@ -162,7 +162,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
 // (a state-fed interpolation recomputes through the signal graph).
 function patchesStyle(section: Section) {
   return (
-    isPersisted() && isBranchPathSection(section) && !inStatefulBranch(section)
+    isPatch() && isBranchPathSection(section) && !inStatefulBranch(section)
   );
 }
 function patchesStyleValue(section: Section, value: t.Expression) {

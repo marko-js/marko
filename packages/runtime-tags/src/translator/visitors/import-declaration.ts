@@ -16,9 +16,9 @@ import {
   getReadyId,
   isOutputHTML,
   isPage,
-  isPersisted,
+  isPatch,
 } from "../util/marko-config";
-import { hasStateSource } from "../util/persisted/decisions";
+import { hasStateSource } from "../util/patch/decisions";
 import { getAllTagReferenceNodes } from "../util/references";
 import {
   addRuntimeFeatureAsset,
@@ -66,7 +66,7 @@ const [getHtmlLoadWrapped] = createProgramState(
 // navigation never forces a load; an import is a module binding, so its
 // uses (tag names, values passed along) are its babel references.
 export function recordCreatedLoadImports(program: t.NodePath<t.Program>) {
-  if (!isPersisted() || !isPage()) return;
+  if (!isPatch() || !isPage()) return;
   for (const node of program.node.body) {
     const loadImport = node.extra?.loadImport;
     if (!t.isImportDeclaration(node) || !loadImport?.render) continue;
@@ -154,7 +154,7 @@ export default {
       (node.extra ??= {}).loadImport = loadImport;
       // A flush revealing the tag needs its channel and the bind feature on
       // the page, interactive or not.
-      if (isPersisted()) {
+      if (isPatch()) {
         addRuntimeFeatureAsset("patch-ready");
         addRuntimeFeatureAsset("patch-value-bind");
       }
@@ -212,9 +212,9 @@ export default {
             node.attributes = undefined;
             return;
           } else {
-            // A persisted page's flushes may carry data for this module before
+            // A patch page's flushes may carry data for this module before
             // it loads; the feature defers them until its `ready()` call.
-            if (isPersisted()) {
+            if (isPatch()) {
               // A flush's ready batch may bind handlers before the child's
               // own feature loads, so the page carries the bind feature.
               importRuntimeFeature("patch-ready");
@@ -288,7 +288,7 @@ export default {
                     local,
                     // A flush's data for a tag this template creates
                     // waits for its clone; the wrapper reports the start.
-                    isPersisted()
+                    isPatch()
                       ? callRuntime(
                           "_load_ready_template",
                           t.stringLiteral(getReadyId(loadFile)!),
@@ -340,9 +340,9 @@ function getOrCreateHtmlLoadWrapped(
               originalIdentifier,
               t.stringLiteral(readyId),
               triggers && t.valueToNode(triggers),
-              // A persisted page may hold a deferred patch on this channel,
+              // A patch page may hold a deferred patch on this channel,
               // so its loader scripts report load errors.
-              isPersisted() && t.numericLiteral(1),
+              isPatch() && t.numericLiteral(1),
             ),
           ),
         ]),
