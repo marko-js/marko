@@ -6,6 +6,7 @@ import { decode } from "@jridgewell/sourcemap-codec";
 import * as compiler from "@marko/compiler";
 
 import * as translator from "../translator";
+import { domRuntimeFeatures } from "../translator/util/runtime";
 
 const require = createRequire(import.meta.url);
 
@@ -30,6 +31,9 @@ describe("runtime-tags/translator-api", () => {
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", false), [
         "@marko/runtime-tags/debug/dom",
+        ...domRuntimeFeatures.map(
+          (feature) => `@marko/runtime-tags/debug/dom/${feature}.feat`,
+        ),
       ]);
     });
 
@@ -39,6 +43,9 @@ describe("runtime-tags/translator-api", () => {
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", true), [
         "@marko/runtime-tags/dom",
+        ...domRuntimeFeatures.map(
+          (feature) => `@marko/runtime-tags/dom/${feature}.feat`,
+        ),
       ]);
     });
 

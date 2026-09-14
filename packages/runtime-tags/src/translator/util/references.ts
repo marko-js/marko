@@ -315,7 +315,10 @@ export function createBinding(
   return binding;
 }
 
+// A property of a direct alias is the root's property: one binding, one
+// read, however many local names the value passes through.
 export function getOrCreatePropertyAlias(binding: Binding, property: string) {
+  while (isDirectAlias(binding)) binding = binding.upstreamAlias!;
   return (
     binding.propertyAliases.get(property) ||
     createBinding(
