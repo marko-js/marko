@@ -11,6 +11,7 @@ import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
+  FORCED,
   mergeReferences,
   setBindingDownstream,
   trackVarReferences,
@@ -127,7 +128,7 @@ export default {
       if (binding.assignmentSections) {
         addSerializeReason(
           tagSection,
-          true,
+          FORCED,
           binding,
           getAccessorPrefix().TagVariableChange,
         );

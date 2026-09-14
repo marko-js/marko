@@ -1,4 +1,4 @@
-import type { Opt } from "./optional";
+import { first, type Opt, rest } from "./optional";
 import type { Binding } from "./references";
 import type { Section } from "./sections";
 
@@ -24,21 +24,10 @@ export function bindingHasProperty(binding: Binding, properties: Opt<string>) {
     return true;
   }
 
-  let property: string;
-  let rest: Opt<string>;
-
-  if (Array.isArray(properties)) {
-    property = properties[0];
-    rest =
-      properties.length === 2
-        ? properties[1]
-        : (properties.slice(1) as Opt<string>);
-  } else {
-    property = properties;
-  }
+  const property = first(properties);
 
   const propBinding = binding.propertyAliases.get(property);
-  if (propBinding && bindingHasProperty(propBinding, rest)) {
+  if (propBinding && bindingHasProperty(propBinding, rest(properties))) {
     return true;
   }
 

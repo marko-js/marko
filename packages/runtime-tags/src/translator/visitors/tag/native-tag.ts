@@ -43,6 +43,7 @@ import {
   BindingType,
   createBinding,
   dropNodes,
+  FORCED,
   getPrefixedScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
@@ -65,6 +66,7 @@ import {
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
@@ -406,11 +408,9 @@ export default {
           }
         }
 
-        addSerializeExpr(
-          tagSection,
-          !!(node.var || hasEventHandlers),
-          nodeBinding,
-        );
+        if (node.var || hasEventHandlers) {
+          addSerializeReason(tagSection, FORCED, nodeBinding);
+        }
 
         trackDomVarReferences(tag, nodeBinding);
 

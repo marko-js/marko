@@ -16,6 +16,7 @@ import {
   type Binding,
   BindingType,
   createBinding,
+  FORCED,
   mergeReferences,
   trackDomVarReferences,
 } from "../util/references";
@@ -25,6 +26,7 @@ import { createScopeReadExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
 } from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
@@ -89,8 +91,7 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      // Split so the force cannot swallow the exprs' provenance.
-      if (tagVar) addSerializeExpr(tagSection, true, nodeBinding);
+      if (tagVar) addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
     }
 

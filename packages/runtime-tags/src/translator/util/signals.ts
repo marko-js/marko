@@ -20,15 +20,16 @@ import {
   type Binding,
   BindingType,
   collapsedIntersectionSource,
+  FORCED,
   getCanonicalBinding,
   getClosureAccessorId,
   getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
   getDebugScopeAccess,
+  getLocalsScopeAccessor,
   getPrefixedScopeAccessor,
   getReadReplacement,
-  getLocalsScopeAccessor,
   getScopeAccessor,
   getScopeAccessorLiteral,
   getSectionInstancesAccessorLiteral,
@@ -36,6 +37,7 @@ import {
   hasNonConstantPropertyAlias,
   intersectionMeta,
   isAssignedBindingExtra,
+  isDirectAlias,
   isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
@@ -206,7 +208,7 @@ export function setSerializedValue(
   expression: t.Expression,
 ) {
   nonAnalyzedForceSerializedSection.add(section);
-  getSerializedAccessors(section).set(key, { expression, reason: true });
+  getSerializedAccessors(section).set(key, { expression, reason: FORCED });
 }
 const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
   createSectionState<undefined | ((expr: t.Expression) => t.Expression)>(
@@ -426,13 +428,11 @@ export function initValue(binding: Binding, isLet = false) {
     }
 
     const fn = getSignalFn(signal);
-    const isDirectAlias =
-      binding.upstreamAlias &&
-      binding.property === undefined &&
-      binding.excludeProperties === undefined;
     if (
       !signal.forcePersist &&
-      (isDirectAlias || !signal.hasSideEffect || !signalHasStatements(signal))
+      (isDirectAlias(binding) ||
+        !signal.hasSideEffect ||
+        !signalHasStatements(signal))
     ) {
       return fn;
     }
@@ -835,10 +835,7 @@ function subscribe(references: ReferencedBindings, subscriber: Signal) {
     forEach(references, (binding) => {
       if (binding.type !== BindingType.constant) {
         const source =
-          (binding.property === undefined &&
-            binding.excludeProperties === undefined &&
-            binding.upstreamAlias) ||
-          binding;
+          (isDirectAlias(binding) && binding.upstreamAlias) || binding;
         const providerSignal = getSignal(subscriber.section, source);
         providerSignal.hasSideEffect = true;
         providerSignal.intersection = push(
@@ -1248,7 +1245,7 @@ export function writeHTMLResumeStatements(
     true,
   );
   const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
-    ? true
+    ? FORCED
     : section.serializeReason;
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {

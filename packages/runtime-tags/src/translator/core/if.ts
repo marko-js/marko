@@ -188,16 +188,10 @@ export const IfTag = {
                 kBranchSerializeReason,
               );
               if (branchSerializeReason) {
-                if (branchSerializeReasons !== true) {
-                  branchSerializeReasons =
-                    branchSerializeReason === true ||
-                    branchSerializeReason.state
-                      ? true
-                      : sourcesUtil.add(
-                          branchSerializeReasons,
-                          branchSerializeReason,
-                        );
-                }
+                branchSerializeReasons = sourcesUtil.add(
+                  branchSerializeReasons,
+                  branchSerializeReason,
+                );
                 bodyStatements.push(
                   t.returnStatement(t.numericLiteral(i)) as any,
                 );

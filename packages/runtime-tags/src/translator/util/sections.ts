@@ -37,7 +37,7 @@ import {
 } from "./references";
 import {
   isReasonDynamic,
-  mapCrossProgramReason,
+  mapParamReason,
   type SerializeKey,
   type SerializeReason,
   type SerializeReasons,
@@ -131,14 +131,10 @@ export interface Section {
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
    * (not merged) so each one's guard stays buildable. */
   domSerializeReasons: undefined | SerializeReasons;
-  /** Pending serialize exprs, resolved into the reasons (and provenance)
-   * once references finalize. */
+  /** Pending serialize exprs, resolved into the reasons once references
+   * finalize. */
   serializeExprs: Opt<t.NodeExtra>;
   propSerializeExprs: Map<SerializeKey, OneMany<t.NodeExtra>> | undefined;
-  /** Whose values feed each serialization decision — survives force-`true`
-   * and counts function-body reads; complete after reference finalize. */
-  serializeProvenance: Sources | undefined;
-  propSerializeProvenance: Map<SerializeKey, Sources> | undefined;
   /** Interned per-prop reason keys for string/symbol props. */
   serializePropKeys: Map<string | symbol, SerializeKey> | undefined;
   paramReasonGroups: ParamSerializeReasonGroups | undefined;
@@ -234,8 +230,6 @@ export function startSection(
       domSerializeReasons: undefined,
       serializeExprs: undefined,
       propSerializeExprs: undefined,
-      serializeProvenance: undefined,
-      propSerializeProvenance: undefined,
       serializePropKeys: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
@@ -327,6 +321,11 @@ export function getChildSections(section: Section) {
     children = childSections.get(section) || [];
   }
   return children;
+}
+
+// `from` and its parents below `to`.
+export function* ancestorSections(from: Section, to: Section) {
+  for (let cur = from; cur !== to && cur.parent; cur = cur.parent) yield cur;
 }
 
 export function forEachSectionReverse(fn: (section: Section) => void) {
@@ -448,11 +447,12 @@ export function getSectionRegisterReasons(section: Section) {
       downstream.binding,
       downstream.properties,
     );
-    if (downstreamReasons && downstreamReasons !== true) {
-      downstreamReasons = mapCrossProgramReason(
+    if (downstreamReasons) {
+      downstreamReasons = mapParamReason(
         section.program,
         downstreamReasons,
         downstream.exprs,
+        false,
       );
     }
     if (!downstreamReasons) return false;

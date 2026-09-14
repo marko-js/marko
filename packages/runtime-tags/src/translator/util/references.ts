@@ -7,6 +7,7 @@ import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
 import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import * as BindingType from "./constants/binding-type";
+import { createCyclicMemo, createCyclicPathMemo } from "./cyclic-memo";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-enums";
@@ -17,8 +18,10 @@ import { finalizeKnownTags } from "./known-tag";
 import { isOptimize, isOutputDOM } from "./marko-config";
 import {
   addSorted,
+  addUnique,
   concat,
   filter,
+  first,
   findSorted,
   forEach,
   fromIter,
@@ -28,7 +31,10 @@ import {
   type OneMany,
   type Opt,
   push,
+  rest,
+  some,
   Sorted,
+  toIter,
 } from "./optional";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
@@ -44,6 +50,7 @@ import {
   getSectionRegisterReasons,
   isDynamicClosure,
   isSameOrChildSection,
+  ancestorSections,
   type Section,
   sectionUtil,
 } from "./sections";
@@ -57,8 +64,7 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
   isForceSerialized,
-  mapDownstreamReason,
-  mergeSerializeReasons,
+  mapParamReason,
   type SerializeKey,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -87,7 +93,18 @@ export interface Sources {
   state: Opt<Binding>;
   param: Opt<InputBinding | ParamBinding>;
   global: true | undefined;
+  /** Serialized unconditionally; the sources still say what it reads. */
+  forced: true | undefined;
 }
+
+// The reason of a value serialized for its own sake: forced, and the
+// sources the other terms add to it survive the merge.
+export const FORCED: Sources = {
+  state: undefined,
+  param: undefined,
+  global: undefined,
+  forced: true,
+};
 
 // `$global` is request identity: sources carry one bit (granularity lives
 // in the global bindings' property aliases, not in invalidation).
@@ -95,6 +112,7 @@ export const globalSources: Sources = {
   state: undefined,
   param: undefined,
   global: true,
+  forced: undefined,
 };
 
 export interface Binding {
@@ -361,7 +379,7 @@ export function trackDomVarReferences(
 
     if (refSection !== binding.section) {
       setReadsOwner(refSection, section);
-      addOwnerSerializeReason(refSection, section, true);
+      addOwnerSerializeReason(refSection, section, FORCED);
     }
   }
 
@@ -1031,13 +1049,13 @@ export function finalizeReferences() {
 
       if (expr.isEffect) {
         forEach(exprBindings.referencedBindings, (binding) => {
-          addSerializeReason(binding.section, true, binding);
+          addSerializeReason(binding.section, FORCED, binding);
         });
         forEach(exprBindings.constantBindings, (binding) => {
-          addSerializeReason(binding.section, true, binding);
+          addSerializeReason(binding.section, FORCED, binding);
         });
         forEach(exprBindings.lazyBindings, (binding) => {
-          addSerializeReason(binding.section, true, binding);
+          addSerializeReason(binding.section, FORCED, binding);
         });
       } else {
         forEach(reads, (read) => {
@@ -1119,7 +1137,7 @@ export function finalizeReferences() {
       forEach(binding.assignmentSections, (assignedSection) => {
         setReadsOwner(assignedSection, section);
         // Deliberately `true`, not `binding.sources`: narrowing is a 0-byte no-op until a state-dropping pass exists.
-        addOwnerSerializeReason(assignedSection, section, true);
+        addOwnerSerializeReason(assignedSection, section, FORCED);
       });
 
       let bindingNames = bindingNamesBySection.get(section);
@@ -1148,7 +1166,7 @@ export function finalizeReferences() {
           binding,
         );
 
-        addSerializeReason(binding.section, true, binding);
+        addSerializeReason(binding.section, FORCED, binding);
       });
 
       binding.section.hoisted = bindingUtil.add(
@@ -1190,18 +1208,12 @@ export function finalizeReferences() {
           }
 
           setReadsOwner(section, canonicalUpstreamAlias.section);
-          // Split so the force cannot swallow the sources' provenance.
-          if (isEffect) {
-            addOwnerSerializeReason(
-              section,
-              canonicalUpstreamAlias.section,
-              true,
-            );
-          }
           addOwnerSerializeReason(
             section,
             canonicalUpstreamAlias.section,
-            canonicalUpstreamAlias.sources,
+            isEffect
+              ? mergeSources(FORCED, canonicalUpstreamAlias.sources)
+              : canonicalUpstreamAlias.sources,
           );
         }
       }
@@ -1210,12 +1222,12 @@ export function finalizeReferences() {
 
   forEachSection((section) => {
     if (section.isHoistThrough) {
-      addSerializeReason(section, true);
+      addSerializeReason(section, FORCED);
     }
 
     forEach(section.referencedHoists, (hoistedBinding) => {
       setReadsOwner(section, hoistedBinding.section);
-      addOwnerSerializeReason(section, hoistedBinding.section, true);
+      addOwnerSerializeReason(section, hoistedBinding.section, FORCED);
     });
 
     if (
@@ -1224,13 +1236,14 @@ export function finalizeReferences() {
       section.sectionAccessor &&
       section.upstreamExpression
     ) {
-      // Split so the force cannot swallow the sources' provenance.
-      if (section.isHoistThrough || section.hoisted) {
-        addSerializeReason(section, true, kBranchSerializeReason);
-      }
+      const closureSources = getSerializeSourcesForRef(
+        getDirectClosures(section),
+      );
       addSerializeReason(
         section,
-        getSerializeSourcesForRef(getDirectClosures(section)),
+        section.isHoistThrough || section.hoisted
+          ? mergeSources(FORCED, closureSources)
+          : closureSources,
         kBranchSerializeReason,
       );
       addSerializeExpr(
@@ -1310,8 +1323,6 @@ export function finalizeReferences() {
       let branchesForced = false;
       let branchesSources: undefined | Sources;
 
-      // The walk keeps merging through a forced hop: the force decides the
-      // reason, but later hops' sources still feed provenance.
       while (currentSection !== sourceSection) {
         const upstreamReason = currentSection.downstream?.binding
           ? getSectionRegisterReasons(currentSection) || undefined
@@ -1325,10 +1336,9 @@ export function finalizeReferences() {
         currentSection = currentSection.parent!;
       }
 
-      const branchesReason = branchesForced || branchesSources;
-      if (branchesForced) {
-        addSerializeReason(sourceSection, branchesSources, closure);
-      }
+      const branchesReason = branchesForced
+        ? mergeSources(FORCED, branchesSources)
+        : branchesSources;
       addSerializeReason(sourceSection, branchesReason, closure);
       addSerializeReason(
         sourceSection,
@@ -1570,11 +1580,7 @@ function getCollapsibleIntersectionSource(
   let sources: Sources | undefined;
   for (const member of intersection) {
     if (!member.sources) return undefined;
-    const isDirectAlias =
-      member.upstreamAlias &&
-      member.property === undefined &&
-      member.excludeProperties === undefined;
-    if (member.section !== section || isDirectAlias) return undefined;
+    if (member.section !== section || isDirectAlias(member)) return undefined;
     sources = mergeSources(sources, member.sources);
   }
 
@@ -1694,20 +1700,22 @@ export function createSources(
   state: Sources["state"],
   param: Sources["param"],
   global?: Sources["global"],
+  forced?: Sources["forced"],
 ): Sources {
   /* v8 ignore next 6 -- every caller passes at least one source */
-  if (!(state || param || global)) {
+  if (!(state || param || global || forced)) {
     throw new Error(
       "Cannot create a serialize reason that does not reference state, a param, or $global.",
     );
   }
 
-  return { state, param, global };
+  return { state, param, global, forced };
 }
 
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;
 
+  if (a.forced !== b.forced) return a.forced ? 1 : -1;
   if (a.global !== b.global) return a.global ? 1 : -1;
 
   if (a.param) {
@@ -1730,13 +1738,19 @@ export function compareSources(a: Sources, b: Sources) {
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;
-  if (a.state === b.state && a.param === b.param && a.global === b.global) {
+  if (
+    a.state === b.state &&
+    a.param === b.param &&
+    a.global === b.global &&
+    a.forced === b.forced
+  ) {
     return a;
   }
   return createSources(
     bindingUtil.union(a.state, b.state),
     unionParamSources(a.param, b.param),
     a.global || b.global,
+    a.forced || b.forced,
   );
 }
 
@@ -1939,15 +1953,52 @@ function addReadToExpression(
 
 export function getCanonicalBinding(binding: Binding) {
   const alias = binding.upstreamAlias;
-  if (
-    alias &&
-    binding.property === undefined &&
-    binding.excludeProperties === undefined
-  ) {
+  if (alias && isDirectAlias(binding)) {
     return alias;
   }
 
   return binding;
+}
+
+// Whether the binding, or any alias of it (transitively), passes `test`;
+// `directOnly` follows only aliases of the whole value.
+export function someAlias<A>(
+  binding: Binding,
+  test: (binding: Binding, arg: A) => boolean,
+  arg: A,
+  directOnly?: boolean,
+): boolean {
+  if (test(binding, arg)) return true;
+  for (const alias of binding.aliases) {
+    if (
+      (!directOnly || isDirectAlias(alias)) &&
+      someAlias(alias, test, arg, directOnly)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Whether the binding, or a value it aliases (transitively), passes `test`.
+export function someUpstream<A>(
+  binding: Binding,
+  test: (binding: Binding, arg: A) => boolean,
+  arg: A,
+): boolean {
+  for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
+    if (test(cur, arg)) return true;
+  }
+  return false;
+}
+
+// Aliases the whole of another value: no property, no rest exclusions.
+export function isDirectAlias(binding: Binding) {
+  return (
+    binding.upstreamAlias !== undefined &&
+    binding.property === undefined &&
+    binding.excludeProperties === undefined
+  );
 }
 
 export function getAllTagReferenceNodes(
@@ -2315,6 +2366,10 @@ export function getReadReplacement(
 // A binding the receiving template can never observe: every read is in an
 // `invokeOnly` expression and nothing else (assignment, hoist, getter, access) sees it.
 export function isInvokeOnlyBinding(binding: Binding): boolean {
+  return !someAlias(binding, isReadBeyondInvoking, undefined);
+}
+
+function isReadBeyondInvoking(binding: Binding) {
   if (
     binding.assignmentSections ||
     binding.hoists ||
@@ -2322,18 +2377,12 @@ export function isInvokeOnlyBinding(binding: Binding): boolean {
     binding.propertyAliases.size ||
     binding.excludeProperties
   ) {
-    return false;
+    return true;
   }
-
   for (const expr of binding.reads) {
-    if (!expr.invokeOnly) return false;
+    if (!expr.invokeOnly) return true;
   }
-
-  for (const alias of binding.aliases) {
-    if (!isInvokeOnlyBinding(alias)) return false;
-  }
-
-  return true;
+  return false;
 }
 
 export function hasNonConstantPropertyAlias(ref: Binding) {
@@ -2761,205 +2810,241 @@ export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
   return extra;
 }
 
-type ReasonCache = WeakMap<t.NodeExtra | Binding, boolean | SerializeReason>;
-const serializeReasonCache: ReasonCache = new WeakMap();
-// A native dynamic tag serializes its event attributes unguarded, so function
-// registration treats a dynamic tag's input as an unconditional reason. That
-// stays out of the serialize walk: unlike an effect it reads nothing itself.
-const registerReasonCache: ReasonCache = new WeakMap();
+// How a value serializes, through its aliases and downstream links (a
+// cyclic graph): the reason its scope values serialize, and the reads it
+// lands in, each recording its position (an effect, a dynamic tag's input).
+interface Serialization {
+  reason: undefined | SerializeReason;
+  reads: Opt<ReferencedExtra>;
+}
+const UNSERIALIZED: Serialization = { reason: undefined, reads: undefined };
+const FORCED_SERIALIZATION: Serialization = {
+  reason: FORCED,
+  reads: undefined,
+};
+const extraSerialization = createCyclicMemo(
+  computeExtraSerialization,
+  UNSERIALIZED,
+);
+// A binding's answer is per asked path: the value itself, one of its
+// properties (a destructured part), or the whole with every property.
+const bindingSerialization = createCyclicPathMemo(
+  computeBindingSerialization,
+  UNSERIALIZED,
+);
+
+// Resume: do the value's scope values serialize, and why.
 export function getAllSerializeReasonsForExtra(
   extra: t.NodeExtra,
-  register?: boolean,
 ): undefined | SerializeReason {
-  if (extra.isEffect || (register && extra.dynamicTagInput)) return true;
-  const cache = register ? registerReasonCache : serializeReasonCache;
-  let reason = cache.get(extra);
-  if (reason === false) return;
-  if (reason === undefined) {
-    if (extra === getProgram().node.extra?.section!.returnValueExpr) {
-      reason = true;
-    } else {
-      cache.set(extra, false);
-      forEach(extra.downstream, (binding) => {
-        let linked = getAllSerializeReasonsForBinding(binding, true, register);
-        if (linked && linked !== true) {
-          const exprs = extra.downstreamExprs;
-          if (exprs) {
-            linked = mapDownstreamReason(
-              binding.section.program,
-              linked,
-              exprs,
-            );
-          }
-        }
-        reason = mergeSerializeReasons(reason as SerializeReason, linked);
-      });
-    }
-
-    if (reason) {
-      cache.set(extra, reason);
-    }
-  }
-
-  return reason;
+  return serializationForExtra(extra).reason;
 }
 
 export function getAllSerializeReasonsForBinding(
   binding: Binding,
   properties?: Opt<string> | true,
-  register?: boolean,
 ): undefined | SerializeReason {
-  // The upstream-alias term is merged only for `properties !== true`, but it can
-  // only promote a binding that has no other reason — i.e. one never read in an
-  // expression, so never queried with `true`. A binding seen in both flavors
-  // therefore can't differ by flavor, so a single binding key is safe.
-  const cache = register ? registerReasonCache : serializeReasonCache;
-  let reason = cache.get(binding);
+  return serializationForBinding(binding, properties).reason;
+}
 
-  if (reason === undefined) {
-    reason = getSerializeReason(binding.section, binding);
+// Registration: does the value reach the client at all. A native element
+// writes its attributes into html, and a dynamic tag's input may be one.
+export function getRegisterReasonForExtra(
+  extra: t.NodeExtra,
+): undefined | SerializeReason {
+  const { reason, reads } = serializationForExtra(extra);
+  return some(reads, isDynamicTagInput) ? FORCED : reason;
+}
 
-    if (reason !== true) {
-      cache.set(binding, reason || false);
+function isDynamicTagInput(read: ReferencedExtra) {
+  return !!read.dynamicTagInput;
+}
 
-      if (properties !== true && binding.upstreamAlias) {
-        reason = mergeSerializeReasons(
-          reason,
-          getAllSerializeReasonsForBinding(
-            binding.upstreamAlias,
-            binding.property,
-            register,
-          ),
-        );
-      }
+function serializationForExtra(extra: t.NodeExtra): Serialization {
+  if (extra.isEffect) return FORCED_SERIALIZATION;
+  const serialization = extraSerialization(extra);
+  const reads = isReferencedExtra(extra)
+    ? addUnique(serialization.reads, extra)
+    : serialization.reads;
+  return reads === serialization.reads
+    ? serialization
+    : { reason: serialization.reason, reads };
+}
 
-      if (reason !== true) {
-        for (const expr of binding.reads) {
-          reason = mergeSerializeReasons(
-            reason,
-            getAllSerializeReasonsForExtra(expr, register),
-          );
-          if (reason === true) break;
-        }
+function serializationForBinding(
+  binding: Binding,
+  properties: Opt<string> | true | undefined,
+): Serialization {
+  return bindingSerialization(binding, properties);
+}
 
-        if (reason !== true) {
-          for (const alias of binding.aliases) {
-            reason = mergeSerializeReasons(
-              reason,
-              getAllSerializeReasonsForBinding(alias, properties, register),
-            );
-            if (reason === true) break;
-          }
-        }
-      }
-    }
+function computeExtraSerialization(extra: t.NodeExtra): Serialization {
+  return readSerialization(extra, undefined);
+}
 
-    if (reason) {
-      cache.set(binding, reason);
-    }
+// What an expression serializes for: the template's return, or what the
+// bindings it feeds serialize for, except `part`'s own destructured parts
+// (they answer for their own path).
+function readSerialization(
+  extra: t.NodeExtra,
+  part: Binding | undefined,
+): Serialization {
+  if (extra === getProgram().node.extra?.section!.returnValueExpr) {
+    return FORCED_SERIALIZATION;
   }
-
-  if (reason === false) {
-    reason = undefined;
-  }
-
-  if (properties !== undefined) {
-    if (properties === true) {
-      if (reason !== true) {
-        for (const propBinding of binding.propertyAliases.values()) {
-          reason = mergeSerializeReasons(
-            reason,
-            getAllSerializeReasonsForBinding(propBinding, true, register),
-          );
-          if (reason === true) break;
-        }
-      }
-    } else {
-      let property: string;
-      let rest: Opt<string>;
-
-      if (Array.isArray(properties)) {
-        property = properties[0];
-        rest =
-          properties.length === 2
-            ? properties[1]
-            : (properties.slice(1) as Opt<string>);
-      } else {
-        property = properties;
-      }
-
-      if (includes(binding.excludeProperties, property)) {
-        reason = undefined;
-      } else {
-        const propBinding = binding.propertyAliases.get(property);
-        if (propBinding) {
-          reason = mergeSerializeReasons(
-            reason,
-            getAllSerializeReasonsForBinding(propBinding, rest, register),
-          );
-        }
-
-        if (reason !== true) {
-          for (const alias of binding.aliases) {
-            const propBinding = alias.propertyAliases.get(property);
-            if (propBinding) {
-              reason = mergeSerializeReasons(
-                reason,
-                getAllSerializeReasonsForBinding(propBinding, rest, register),
-              );
-              if (reason === true) break;
-            }
-          }
-        }
-      }
+  let serialization = UNSERIALIZED;
+  for (const binding of toIter(extra.downstream)) {
+    if (!isPartOf(binding, part)) {
+      serialization = mergeSerialization(
+        serialization,
+        downstreamSerialization(extra, binding),
+      );
     }
   }
+  return serialization;
+}
 
-  return reason;
+// What a downstream binding serializes for, in this program's terms.
+function downstreamSerialization(
+  extra: t.NodeExtra,
+  binding: Binding,
+): Serialization {
+  const linked = serializationForBinding(binding, true);
+  const exprs = extra.downstreamExprs;
+  return linked.reason && exprs
+    ? {
+        reason: mapParamReason(
+          binding.section.program,
+          linked.reason,
+          exprs,
+          true,
+        ),
+        reads: linked.reads,
+      }
+    : linked;
+}
+
+// A destructured property or rest of the value (a direct alias is not).
+function isPartOf(binding: Binding, value: Binding | undefined) {
+  return !!value && binding.upstreamAlias === value && !isDirectAlias(binding);
+}
+
+function computeBindingSerialization(
+  binding: Binding,
+  properties: Opt<string> | true | undefined,
+): Serialization {
+  let reason = getSerializeReason(binding.section, binding);
+  let serialization: Serialization = reason
+    ? { reason, reads: undefined }
+    : UNSERIALIZED;
+  // A property serializes with the value it is read from, unless that
+  // value's serialization leaves the property out.
+  const upstream = binding.upstreamAlias;
+  if (
+    properties !== true &&
+    upstream &&
+    !upstream.noSerialize &&
+    !includes(upstream.noSerializeProperties, binding.property!)
+  ) {
+    serialization = mergeSerialization(
+      serialization,
+      serializationForBinding(
+        upstream,
+        properties === undefined
+          ? binding.property
+          : concat(binding.property, properties as Opt<string>),
+      ),
+    );
+  }
+  for (const expr of binding.reads) {
+    if (expr.isEffect) {
+      serialization = mergeSerialization(serialization, FORCED_SERIALIZATION);
+      continue;
+    }
+    const reads = addUnique(serialization.reads, expr);
+    if (reads !== serialization.reads) {
+      serialization = { reason: serialization.reason, reads };
+    }
+    serialization = mergeSerialization(
+      serialization,
+      readSerialization(expr, binding),
+    );
+  }
+  for (const alias of binding.aliases) {
+    serialization = mergeSerialization(
+      serialization,
+      serializationForBinding(alias, properties),
+    );
+  }
+  if (properties === undefined) return serialization;
+  if (properties === true) {
+    for (const propBinding of binding.propertyAliases.values()) {
+      serialization = mergeSerialization(
+        serialization,
+        serializationForBinding(propBinding, true),
+      );
+    }
+    return serialization;
+  }
+  const property = first(properties);
+  if (includes(binding.excludeProperties, property)) return UNSERIALIZED;
+  const propBinding = binding.propertyAliases.get(property);
+  if (propBinding) {
+    serialization = mergeSerialization(
+      serialization,
+      serializationForBinding(propBinding, rest(properties)),
+    );
+  }
+  for (const alias of binding.aliases) {
+    const propBinding = alias.propertyAliases.get(property);
+    if (propBinding) {
+      serialization = mergeSerialization(
+        serialization,
+        serializationForBinding(propBinding, rest(properties)),
+      );
+    }
+  }
+  return serialization;
+}
+
+function mergeSerialization(a: Serialization, b: Serialization): Serialization {
+  if (a === UNSERIALIZED) return b;
+  if (b === UNSERIALIZED) return a;
+  const reason = mergeSources(a.reason, b.reason);
+  // Reads are a set (their order never matters); a merge that adds none
+  // keeps the identity.
+  let reads = a.reads;
+  for (const read of toIter(b.reads)) reads = addUnique(reads, read);
+  if (reason === a.reason && reads === a.reads) return a;
+  if (reason === b.reason && reads === b.reads) return b;
+  return { reason, reads };
 }
 
 function isPureSpreadResolved(binding: Binding): boolean {
+  return !someAlias(binding, hasReadBeyondSpreading, undefined);
+}
+
+function hasReadBeyondSpreading(binding: Binding) {
   for (const read of binding.reads) {
-    if (!read.nativeTagSpread || read.nativeTagSpreadMerged) {
-      return false;
-    }
+    if (!read.nativeTagSpread || read.nativeTagSpreadMerged) return true;
   }
-
-  for (const alias of binding.aliases) {
-    if (!isPureSpreadResolved(alias)) {
-      return false;
-    }
-  }
-
-  return true;
+  return false;
 }
 
 function hasAnyMemberAccess(binding: Binding): boolean {
-  if (binding.propertyAliases.size) {
-    return true;
-  }
+  return someAlias(binding, hasPropertyAliases, undefined);
+}
 
-  for (const alias of binding.aliases) {
-    if (hasAnyMemberAccess(alias)) {
-      return true;
-    }
-  }
-
-  return false;
+function hasPropertyAliases(binding: Binding) {
+  return binding.propertyAliases.size > 0;
 }
 
 function isPropertyMemberAccessed(binding: Binding, property: string): boolean {
-  if (binding.propertyAliases.has(property)) {
-    return true;
-  }
+  return someAlias(binding, hasPropertyAlias, property);
+}
 
-  for (const alias of binding.aliases) {
-    if (isPropertyMemberAccessed(alias, property)) {
-      return true;
-    }
-  }
-
-  return false;
+function hasPropertyAlias(binding: Binding, property: string) {
+  return binding.propertyAliases.has(property);
 }
 
 function addNumericPropertiesUntil(props: Opt<string>, len: number) {
@@ -2971,11 +3056,7 @@ function addNumericPropertiesUntil(props: Opt<string>, len: number) {
 }
 
 function setReadsOwner(from: Section, to: Section) {
-  let cur = from;
-  while (cur !== to && cur.parent) {
-    cur.readsOwner = true;
-    cur = cur.parent;
-  }
+  for (const section of ancestorSections(from, to)) section.readsOwner = true;
 }
 
 // The call site expressions feeding a child template's input, keyed the way

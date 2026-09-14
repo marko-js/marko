@@ -26,6 +26,7 @@ import {
   bindingUtil,
   createBinding,
   dropNodes,
+  FORCED,
   getAllTagReferenceNodes,
   getDebugNames,
   getOrCreatePropertyAlias,
@@ -145,7 +146,7 @@ export function knownTagAnalyze(
       : mapParamReasonToExpr(
           exprs,
           contentSection.returnSerializeReason &&
-            (contentSection.returnSerializeReason === true ||
+            (contentSection.returnSerializeReason.forced ||
               !!contentSection.returnSerializeReason.state ||
               (contentSection.returnSerializeReason
                 .param as Opt<InputBinding>)),
@@ -156,9 +157,10 @@ export function knownTagAnalyze(
       section,
     );
     setBindingDownstream(varBinding, varExpr);
-    // Split so the force cannot swallow the exprs' provenance.
-    if (mutatesTagVar) addSerializeExpr(section, true, childScopeBinding);
-    addSerializeExpr(section, varExpr, childScopeBinding);
+    if (mutatesTagVar || varExpr === true) {
+      addSerializeReason(section, FORCED, childScopeBinding);
+    }
+    if (varExpr !== true) addSerializeExpr(section, varExpr, childScopeBinding);
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
