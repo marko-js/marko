@@ -2,12 +2,15 @@ import { types as t } from "@marko/compiler";
 import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import { WalkCode, WalkRangeSize } from "../../common/types";
+import type { LoadImportConfig } from "../visitors/import-declaration";
 import * as Step from "./constants/step";
 import { generateUidIdentifier } from "./generate-uid";
 import { importOrSelfReferenceName } from "./import-reference";
+import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
+import type { Binding } from "./references";
 import {
   ContentType,
   getSection,
@@ -53,16 +56,20 @@ export function child(
   tag: t.NodePath<t.MarkoTag>,
   name: string,
   renderer?: StructureRef,
+  load?: LoadImportConfig,
+  marker?: Binding,
 ) {
   getSection(tag).structure?.push({
     kind: StructureKind.Child,
     name,
     hasVar: !!tag.node.var,
     renderer,
+    load,
+    marker,
   });
 }
 
-// Records the client template's markup into the section structure stream.
+// Shells the client template's markup into the section structure stream.
 export function writeTo(path: t.NodePath<any>) {
   const { structure } = getSection(path);
   return (strs: TemplateStringsArray, ...exprs: string[]): void => {
@@ -124,13 +131,18 @@ export function resolveStructure(section: Section) {
     steps: startDynamic ? [Step.Enter, Step.Exit] : [],
   };
   let textEdge: undefined | "own" | "child";
+  // Shells are html output: a server-only lazy child composes into the
+  // shell like a known child (the page has no client render of it).
+  const html = isOutputHTML();
+  let skipSteps = 0;
 
   for (const op of section.structure!) {
     if (typeof op === "string") {
       appendLiteral(resolved.writes, op);
       textEdge = undefined;
     } else if (typeof op === "number") {
-      resolved.steps.push(op);
+      if (skipSteps) skipSteps--;
+      else resolved.steps.push(op);
     } else {
       switch (op.kind) {
         case StructureKind.Text:
@@ -151,14 +163,23 @@ export function resolveStructure(section: Section) {
           }
           break;
         case StructureKind.Child: {
-          const content = refContent(op.renderer);
+          // A lazy child composes into the shell only when a flush creates it.
+          const composed = html && op.load?.downstreamCreated;
+          const renderer = op.load && !composed ? undefined : op.renderer;
+          if (composed) {
+            // The walk steps over the marker into the composed child; the
+            // tag's own shallow steps after the child are dropped.
+            resolved.steps.push(Step.Enter, Step.Exit);
+            skipSteps = 2;
+          }
+          const content = refContent(renderer);
           if (textEdge && content?.startType === ContentType.Text) {
             separate(resolved);
           }
           textEdge =
             content?.endType === ContentType.Text ? "child" : undefined;
           flushSteps(resolved);
-          const template = op.renderer && resolveRef(op.renderer, "template");
+          const template = renderer && resolveRef(renderer, "template");
           if (template) {
             resolved.writes.push(template, "");
           }
@@ -169,7 +190,7 @@ export function resolveStructure(section: Section) {
               op.hasVar ? WalkCode.BeginChildWithVar : WalkCode.BeginChild,
             ),
           );
-          const walks = op.renderer && resolveRef(op.renderer, "walks");
+          const walks = renderer && resolveRef(renderer, "walks");
           if (walks) {
             resolved.walks.push(walks, "");
           }

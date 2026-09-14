@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getFile } from "@marko/compiler/babel-utils";
+import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import {
   generateUidIdentifier,
@@ -8,9 +8,15 @@ import {
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
-import { getMarkoOpts } from "../../util/marko-config";
+import { getMarkoOpts, isPersisted } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
+import { forEach, some } from "../../util/optional";
+import { getPersistedIntrinsics } from "../../util/persisted/intrinsics";
+import {
+  getCreateInitClosures,
+  getPatchFillBindings,
+  isPatchFillBinding,
+} from "../../util/persisted/refresh";
 import {
   BindingType,
   getReadReplacement,
@@ -21,21 +27,31 @@ import {
 import { callRuntime, importRuntime } from "../../util/runtime";
 import {
   forEachSection,
+  forEachSectionReverse,
   getScopeIdIdentifier,
   getSection,
   type Section,
+  StructureKind,
 } from "../../util/sections";
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
-import { isReasonDynamic } from "../../util/serialize-reasons";
+import {
+  getSerializeSourcesForRef,
+  isReasonDynamic,
+} from "../../util/serialize-reasons";
+import { buildShell, getShellId, getShells } from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegisterId,
+  getSectionEffectRegisterIds,
+  patchCreates,
+  sectionHasServerEffect,
   setSerializedValue,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
+import { getSectionMeta } from "../../util/structure";
 import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -143,6 +159,7 @@ export default {
         );
       }
 
+      const persisted = isPersisted();
       flushInto(program);
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
@@ -160,7 +177,9 @@ export default {
         }
       }
 
-      if (dynamicSerializeReason) {
+      if (dynamicSerializeReason || persisted) {
+        // Persisted output always declares the reason: statically serialized
+        // values ride it so patch renders drop them.
         renderContent.push(getScopeReasonDeclaration(section));
       } else {
         renderContent.push(t.expressionStatement(callRuntime("_scope_reason")));
@@ -181,21 +200,130 @@ export default {
 
       writeModuleRegistrations(program);
 
+      if (persisted) {
+        // A parent's shell composes this template's inert markup and walks
+        // (its dom template parts), exported under the dom module's names.
+        const { writes, walks } = getSectionMeta(section);
+        const domExports = program.node.extra.domExports!;
+        program.node.body.push(
+          t.exportNamedDeclaration(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                t.identifier(domExports.template),
+                writes || t.stringLiteral(""),
+              ),
+              t.variableDeclarator(
+                t.identifier(domExports.walks),
+                walks || t.stringLiteral(""),
+              ),
+            ]),
+          ),
+        );
+      }
+
+      const shells = getShells();
+      if (persisted && shells) {
+        // Branch shells register at server module load so patches can create
+        // them without the client bundling conditional content.
+        const active = { ...shells };
+        // The one translate-side blocker: `hasHTMLEffect` only exists once
+        // translate registers effects, so this drop cannot move to analyze.
+        forEachSection((section) => {
+          const id = getShellId(section);
+          if (active[id] && sectionHasServerEffect(section)) delete active[id];
+        });
+        const shellProps: t.ObjectProperty[] = [];
+        for (const id in active) {
+          const section = active[id];
+          // The id token carries `inits…!effects…`; a lone `!` marks a shell needing
+          // setup for seeds alone. Roots and content shells carry their own
+          // like a branch shell.
+          let marker = "";
+          if (
+            id === getShellId(section) ||
+            !section.parent ||
+            (section.contentShell === true && patchCreates(section))
+          ) {
+            forEach(getCreateInitClosures(section), (closure) => {
+              marker +=
+                (marker && " ") + getResumeRegisterId(section, closure, "init");
+            });
+            // Lazy children wire their load (and channel) as creation
+            // inits; a server-only one sits in the shell itself.
+            for (const op of section.structure || []) {
+              if (
+                typeof op === "object" &&
+                op.kind === StructureKind.Child &&
+                op.marker &&
+                !op.load?.downstreamCreated
+              ) {
+                marker +=
+                  (marker && " ") +
+                  getResumeRegisterId(section, op.marker, "init");
+              }
+            }
+            // An effect the created scope's own renders queue (an init, seed,
+            // or item write cascades into it) is not replayed.
+            const effectIds = getSectionEffectRegisterIds(
+              section,
+              (refs) =>
+                !!getSerializeSourcesForRef(refs)?.state ||
+                some(
+                  refs,
+                  (ref) => ref.section === section && isPatchFillBinding(ref),
+                ),
+            );
+            if (effectIds) marker += "!" + effectIds;
+            marker ||= getPatchFillBindings(section) ? "!" : "";
+          }
+          shellProps.push(
+            toObjectProperty(id, buildShell(id, section, marker)),
+          );
+        }
+        if (shellProps.length) {
+          program.node.body.push(
+            t.expressionStatement(
+              callRuntime("_shells", t.objectExpression(shellProps)),
+            ),
+          );
+        }
+      }
+
+      if (persisted) {
+        // Hoisted content declarations go ahead of every use, deepest first (a
+        // section's parts may reference its children's).
+        let decls: t.VariableDeclarator[] | undefined;
+        forEachSectionReverse((childSection) => {
+          const meta = getSectionMeta(childSection);
+          if (meta.decls)
+            decls = decls ? [...meta.decls, ...decls] : meta.decls;
+        });
+        if (decls) {
+          program.node.body.unshift(t.variableDeclaration("const", decls));
+        }
+      }
+
       const contentId = usedSharedUid("content") && getTemplateContentName();
       const contentFn = t.arrowFunctionExpression(
         [t.identifier("input")],
         t.blockStatement(renderContent),
       );
+      // A non-page template gets a randomized render id ("embed") so several
+      // can share a document without colliding; without linkAssets, use a fixed page id.
+      const pageArg =
+        program.node.extra!.page || !getMarkoOpts().linkAssets
+          ? t.numericLiteral(1)
+          : undefined;
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
-          "_template",
+          persisted ? "_template_persisted" : "_template",
           t.stringLiteral(getFile().metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
-          // A non-page template gets a randomized render id ("embed") so several
-          // can share a document without colliding; without linkAssets, use a fixed page id.
-          program.node.extra!.page || !getMarkoOpts().linkAssets
-            ? t.numericLiteral(1)
-            : undefined,
+          // Persisted templates always carry intrinsics (absent = FOREIGN renderer,
+          // which parents must render through).
+          ...(persisted
+            ? buildIntrinsicsArgs(pageArg ?? t.numericLiteral(0))
+            : [pageArg]),
         ),
       );
 
@@ -212,6 +340,23 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+// Intrinsics arg: `1` reads globals/opaque, a lazy child list (an arrow, so
+// module cycles stay lazy) is locally clean, `0` proven clean.
+function buildIntrinsicsArgs(pageArg: t.Expression) {
+  const { names, opaque } = getPersistedIntrinsics();
+  return [
+    pageArg,
+    opaque || getProgram().node.extra!.readsGlobals
+      ? t.numericLiteral(1)
+      : names.size
+        ? t.arrowFunctionExpression(
+            [],
+            t.arrayExpression([...names].map((name) => t.identifier(name))),
+          )
+        : t.numericLiteral(0),
+  ];
+}
 
 function replaceNode(node: t.Node) {
   return replaceBindingReadNode(node) || replaceRegisteredFunctionNode(node);

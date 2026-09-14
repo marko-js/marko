@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { isAttributeTag } from "@marko/compiler/babel-utils";
+import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier } from "../visitors/program";
@@ -12,7 +12,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPersisted } from "./marko-config";
 import {
   type AttrTagLookup,
   getAttrTagIdentifier,
@@ -423,7 +423,9 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         }
       }
 
-      if (dynamicSerializeReason) {
+      if (dynamicSerializeReason || isPersisted()) {
+        // Persisted output always declares the reason: statically serialized
+        // values ride it so patch renders drop them.
         body.node.body.unshift(getScopeReasonDeclaration(bodySection) as any);
       } else {
         body.node.body.unshift(
@@ -431,6 +433,42 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         );
       }
 
+      // A static shell rides its slot; a dynamic one (or, with no dom
+      // module, unrecorded boundary content) elides it.
+      if (
+        isPersisted() &&
+        (bodySection.contentShell ||
+          (bodySection.boundaryContent &&
+            serialized &&
+            !getProgram().node.extra.isInteractive))
+      ) {
+        const ownerScopeId = getScopeIdIdentifier(
+          getSection(
+            getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
+          )!,
+        );
+        return bodySection.contentShell === "static"
+          ? callRuntime(
+              "_content_shell",
+              t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+              ownerScopeId,
+            )
+          : callRuntime(
+              "_content_elide",
+              t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+              t.arrowFunctionExpression(
+                body.node.params,
+                t.blockStatement(body.node.body),
+              ),
+              ownerScopeId,
+              (body.parentPath.node as t.MarkoTag).name &&
+                t.isStringLiteral((body.parentPath.node as t.MarkoTag).name) &&
+                ((body.parentPath.node as t.MarkoTag).name as t.StringLiteral)
+                  .value === "@placeholder"
+                ? t.numericLiteral(1)
+                : undefined,
+            );
+      }
       return callRuntime(
         serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegisterId(bodySection, "content")),

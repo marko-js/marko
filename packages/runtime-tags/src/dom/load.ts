@@ -1,5 +1,6 @@
 import { decodeAccessor } from "../common/helpers";
 import {
+  type Accessor,
   AccessorProp,
   type BranchScope,
   type EncodedAccessor,
@@ -67,6 +68,52 @@ export const _load_template = /*@__PURE__*/ withLazy(
   },
 );
 
+// A persisted page's ready feature drives a branch's stamped channel once
+// loaded content is live (or fails), so deferred flush data drains after.
+let loadReady: ((branch: BranchScope) => void) | undefined;
+let loadReadyFailed: typeof loadReady;
+// Installed by the persisted ready feature, whose wrappers below are the
+// only callers: a plain page carries no lazy tag start.
+let loadStart: ((branch: BranchScope, readyId: string) => void) | undefined;
+export function installLoadReady(
+  onReady: typeof loadReady,
+  onFailed: typeof loadReadyFailed,
+  onStart: typeof loadStart,
+) {
+  loadReady = onReady;
+  loadReadyFailed = onFailed;
+  loadStart = onStart;
+}
+// A persisted page's `<${Lazy}>` tag: flush data for a child a flush
+// creates here waits for its clone, so its setup reports the start.
+export const _load_ready_template = (
+  readyId: string,
+  template: Template & Renderer,
+) => {
+  template[RendererProp.Setup] = ((setup) => (branch) => {
+    loadStart!(branch as BranchScope, readyId);
+    setup(branch);
+  })(template[RendererProp.Setup]!);
+  return template;
+};
+export const _load_ready =
+  (
+    readyId: string,
+    childScopeAccessor: EncodedAccessor,
+    setup: (owner: Scope) => void,
+  ) =>
+  (owner: Scope) => {
+    loadStart!(
+      owner[
+        (MARKO_DEBUG
+          ? childScopeAccessor
+          : decodeAccessor(childScopeAccessor as number)) as Accessor
+      ] as BranchScope,
+      readyId,
+    );
+    setup(owner);
+  };
+
 export const _load_setup = /*@__PURE__*/ withLazy(
   (
     nodeAccessor: EncodedAccessor,
@@ -131,6 +178,7 @@ function insertLoaded(
       insertBranchBefore(branch, parent, marker);
       marker.remove();
       awaitCounter?.c();
+      loadReady?.(branch);
     };
   let remaining: number;
   if ((remaining = values?.size as number)) {
@@ -171,6 +219,7 @@ function loadFailed(
       if (awaitCounter.m) awaitCounter.i = 0;
       else awaitCounter.c();
     }
+    loadReadyFailed?.(scope);
     queueAsyncRender(scope, renderCatch, error);
   };
 }

@@ -9,6 +9,9 @@ const config = {
   // Specifies whether this is a page or load entry point.
   entry: undefined,
 
+  // Enables translation for documents that persist across navigations.
+  persisted: false,
+
   /**
    * Provides browser asset resolution and runtime hooks for lazy loading and server entries.
    */

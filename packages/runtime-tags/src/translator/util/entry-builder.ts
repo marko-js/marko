@@ -5,6 +5,7 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
+import { getReadyId } from "./marko-config";
 import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
 import type { DOMRuntimeHelpers } from "./runtime";
 import runtimeInfo from "./runtime-info";
@@ -33,6 +34,10 @@ interface EntryState {
   bundledAssets: Set<string>;
   /** Whether each reached file was only ever seen below a bundled template. */
   visited: Map<string, boolean>;
+  /** Lazy children of persisted templates reached eagerly, by channel, with
+   * whether the parent template is a root: the entry registers the loaders
+   * of the templates it never links, so a flush can still load them. */
+  lazyLoads: Map<string, [request: string, root: boolean]>;
 }
 type EntryFile = t.BabelFile & {
   [kState]?: EntryState;
@@ -56,10 +61,14 @@ const builder = {
       body.push(t.importDeclaration([], t.stringLiteral(asset)));
     }
 
-    if (state.init || state.load) {
-      const isPage = entryFile.path.node.extra.page;
+    // A persisted page's patches apply against the runtime, so its entry
+    // initializes it (as the document's render) even with no client code.
+    const persisted = !!entryFile.markoOpts.persisted;
+    const init = state.init || persisted;
+    if (init || state.load) {
+      const isPage = entryFile.path.node.extra.page || persisted;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
-      if (state.init) {
+      if (init) {
         body.push(
           t.importDeclaration(
             [
@@ -77,13 +86,66 @@ const builder = {
         );
       }
 
-      // The topmost templates with client side work; everything below one of
-      // them (and its client assets) arrives through its imports.
-      for (const root of state.roots) {
-        body.push(t.importDeclaration([], t.stringLiteral(root)));
+      const linked = state.init || state.load;
+      // Only a persisted page collects lazy loads (a flush can reveal a lazy
+      // child the client never rendered); a plain page's output is unchanged.
+      const lazyLoads = [...state.lazyLoads].filter(
+        ([, [, root]]) => !root || !linked,
+      );
+      if (lazyLoads.length) {
+        body.push(
+          t.importDeclaration(
+            [
+              t.importSpecifier(
+                t.identifier("_load_lazy"),
+                t.identifier("_load_lazy"),
+              ),
+            ],
+            t.stringLiteral(
+              `${runtimeInfo.name}/${
+                entryFile.markoOpts.optimize ? "" : "debug/"
+              }dom`,
+            ),
+          ),
+        );
+        for (const [readyId, [request]] of lazyLoads) {
+          body.push(
+            t.expressionStatement(
+              t.callExpression(t.identifier("_load_lazy"), [
+                t.stringLiteral(readyId),
+                // `.then(() => {})` drops the namespace, so the bundler keeps
+                // the registrations alone (no export, no render).
+                t.arrowFunctionExpression(
+                  [],
+                  t.callExpression(
+                    t.memberExpression(
+                      t.callExpression(t.import(), [t.stringLiteral(request)]),
+                      t.identifier("then"),
+                    ),
+                    [t.arrowFunctionExpression([], t.blockStatement([]))],
+                  ),
+                ),
+              ]),
+            ),
+          );
+        }
       }
 
-      if (!state.init) {
+      if (linked) {
+        // The topmost templates with client side work; everything below one
+        // of them (and its client assets) arrives through its imports.
+        for (const root of state.roots) {
+          body.push(t.importDeclaration([], t.stringLiteral(root)));
+        }
+      } else {
+        // No client work: the page needs its patch features, not its
+        // templates' modules.
+        for (const asset of state.bundledAssets) {
+          body.push(t.importDeclaration([], t.stringLiteral(asset)));
+        }
+      }
+
+      if (!init) {
         // Client statements ran when the modules above loaded; with nothing
         // to resume there is no runtime to initialize.
         if (exportInit) {
@@ -152,7 +214,7 @@ const builder = {
       if (childFile) builder.visit(childFile, entryFile);
     },
   ) {
-    const state = (entryFile[kState] ||= {
+    const state: EntryState = (entryFile[kState] ||= {
       init: false,
       load: false,
       bundled: 0,
@@ -165,6 +227,7 @@ const builder = {
           false,
         ],
       ]),
+      lazyLoads: new Map(),
     });
     const programExtra = file.path.node.extra;
     const { analyzedTags, assetImports } = file.metadata.marko;
@@ -191,6 +254,17 @@ const builder = {
         isRoot || state.bundled ? state.bundledAssets : state.assets;
       for (const request of assetImports) {
         assets.add(resolveRelativeToEntry(entryFile, file, request));
+      }
+    }
+
+    // A flush revealing a lazy child of a template the bundle never links
+    // still needs its module: the entry registers the loader itself.
+    if (entryFile.markoOpts.persisted && !state.bundled) {
+      for (const tag of (loadImports as Set<string> | undefined) || []) {
+        const request = resolveRelativeToEntry(entryFile, file, tag);
+        const loadFile = loadFileForImport(entryFile, request);
+        const readyId = loadFile && getReadyId(loadFile);
+        if (readyId) state.lazyLoads.set(readyId, [request, isRoot]);
       }
     }
 
