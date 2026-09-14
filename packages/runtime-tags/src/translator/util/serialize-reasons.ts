@@ -64,14 +64,14 @@ export function addSerializeReason(
   prefix?: AccessorPrefix | symbol,
 ) {
   if (reason) {
+    const key = prop && getPropKey(section, prop, prefix);
     if (reason !== true) {
-      addSources(section, reason, prop && getPropKey(section, prop, prefix));
+      addSources(section, reason, key);
       // A `$global` read alone never serializes (the client reads the
       // globals object, as without persisted pages); it stays a source.
       if (!reason.state && !reason.param) return;
     }
-    if (prop) {
-      const key = getPropKey(section, prop, prefix);
+    if (key) {
       const curReason = section.serializeReasons.get(key);
       if (curReason !== true) {
         if (reason === true) {
@@ -230,24 +230,7 @@ export function mapCrossProgramReason(
   reason: Sources,
   exprs: KnownExprs | undefined,
 ): SerializeReason | undefined {
-  let params: Sources["param"];
-  let mapped: SerializeReason | undefined;
-  let crossProgram = false;
-  forEach(reason.param, (param) => {
-    if (param.section.program === program) {
-      params = bindingUtil.add(params, param) as Sources["param"];
-    } else {
-      crossProgram = true;
-      mapped = exprs
-        ? mergeSerializeReasons(
-            mapped,
-            getSerializeSourcesForExprs(mapParamBindingToExpr(exprs, param)),
-          )
-        : true;
-    }
-  });
-  if (!crossProgram) return reason;
-  return mergeRemappedSources(reason, params, mapped);
+  return mapParamReason(program, reason, exprs, false);
 }
 
 // The inverse split of `mapCrossProgramReason`: dereferences params belonging
@@ -257,21 +240,34 @@ export function mapDownstreamReason(
   reason: Sources,
   exprs: KnownExprs,
 ): SerializeReason | undefined {
+  return mapParamReason(program, reason, exprs, true);
+}
+
+// Dereferences the program's own params (`own`) or every other program's
+// through the call site's expressions (all of them without expressions).
+function mapParamReason(
+  program: Section,
+  reason: Sources,
+  exprs: KnownExprs | undefined,
+  own: boolean,
+): SerializeReason | undefined {
   let params: Sources["param"];
   let mapped: SerializeReason | undefined;
-  let downstream = false;
+  let any = false;
   forEach(reason.param, (param) => {
-    if (param.section.program === program) {
-      downstream = true;
-      mapped = mergeSerializeReasons(
-        mapped,
-        getSerializeSourcesForExprs(mapParamBindingToExpr(exprs, param)),
-      );
+    if ((param.section.program === program) === own) {
+      any = true;
+      mapped = exprs
+        ? mergeSerializeReasons(
+            mapped,
+            getSerializeSourcesForExprs(mapParamBindingToExpr(exprs, param)),
+          )
+        : true;
     } else {
       params = bindingUtil.add(params, param) as Sources["param"];
     }
   });
-  if (!downstream) return reason;
+  if (!any) return reason;
   return mergeRemappedSources(reason, params, mapped);
 }
 
@@ -319,11 +315,10 @@ export function applySerializeExprs(section: Section) {
   if (propExprs) {
     section.propSerializeExprs = undefined;
     for (const [key, exprs] of propExprs) {
-      addSources(section, getAllSourcesForExprs(exprs), key);
-      const exprReason = getSerializeSourcesForExprs(exprs);
-      if (exprReason) {
+      const reason = addExprSources(section, exprs, key);
+      if (reason) {
         const curReason = section.serializeReasons.get(key);
-        const newReason = mergeSerializeReasons(curReason, exprReason);
+        const newReason = mergeSerializeReasons(curReason, reason);
         if (curReason !== newReason) {
           setPropSerializeReason(section, key, newReason);
         }
@@ -334,16 +329,38 @@ export function applySerializeExprs(section: Section) {
   const scopeExprs = section.serializeExprs;
   if (scopeExprs) {
     section.serializeExprs = undefined;
-    addSources(section, getAllSourcesForExprs(scopeExprs));
-    const exprReason = getSerializeSourcesForExprs(scopeExprs);
-    if (exprReason) {
+    const reason = addExprSources(section, scopeExprs);
+    if (reason) {
       const curReason = section.serializeReason;
-      const newReason = mergeSerializeReasons(curReason, exprReason);
+      const newReason = mergeSerializeReasons(curReason, reason);
       if (curReason !== newReason) {
         setSerializeReason(section, newReason);
       }
     }
   }
+}
+
+// One walk: records the sources (reads inside function values included,
+// since a consumer may invoke them at render) and returns the reason,
+// which excludes them.
+function addExprSources(
+  section: Section,
+  exprs: Opt<t.NodeExtra>,
+  key?: SerializeKey,
+) {
+  let reason: Sources | undefined;
+  let fnSources: Sources | undefined;
+  forEach(exprs, (expr) => {
+    reason = mergeSources(reason, getSerializeSourcesForExpr(expr));
+    forEach(
+      (expr as t.FunctionExtra).referencedBindingsInFunction,
+      (binding) => {
+        fnSources = mergeSources(fnSources, getSerializeSourcesForRef(binding));
+      },
+    );
+  });
+  addSources(section, mergeSources(reason, fnSources), key);
+  return reason;
 }
 
 export function finalizeSerializeReason(section: Section) {
