@@ -1,4 +1,4 @@
-import { type Opt, toIter } from "./optional";
+import { forEach, type Opt } from "./optional";
 
 // A memo whose computation may re-ask itself through a cycle: a re-ask
 // answers `cycleAnswer`, and a frame that consumed one does not cache.
@@ -57,11 +57,11 @@ export function createCyclicPathMemo<K extends object, R>(
     let node: PathKeys<K> | undefined = keys.get(key);
     if (!node) keys.set(key, (node = {}));
     if (path === true) return memo((node.all ??= [key, path]));
-    for (const property of toIter(path)) {
-      let next: PathKeys<K> | undefined = node.props?.get(property);
-      if (!next) (node.props ??= new Map()).set(property, (next = {}));
+    forEach(path, (property) => {
+      let next: PathKeys<K> | undefined = node!.props?.get(property);
+      if (!next) (node!.props ??= new Map()).set(property, (next = {}));
       node = next;
-    }
-    return memo((node.value ??= [key, path]));
+    });
+    return memo((node!.value ??= [key, path]));
   };
 }

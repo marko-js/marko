@@ -34,7 +34,6 @@ import {
   rest,
   some,
   Sorted,
-  toIter,
 } from "./optional";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
@@ -2893,14 +2892,14 @@ function readSerialization(
     return FORCED_SERIALIZATION;
   }
   let serialization = UNSERIALIZED;
-  for (const binding of toIter(extra.downstream)) {
+  forEach(extra.downstream, (binding) => {
     if (!isPartOf(binding, part)) {
       serialization = mergeSerialization(
         serialization,
         downstreamSerialization(extra, binding),
       );
     }
-  }
+  });
   return serialization;
 }
 
@@ -3014,7 +3013,9 @@ function mergeSerialization(a: Serialization, b: Serialization): Serialization {
   // Reads are a set (their order never matters); a merge that adds none
   // keeps the identity.
   let reads = a.reads;
-  for (const read of toIter(b.reads)) reads = addUnique(reads, read);
+  forEach(b.reads, (read) => {
+    reads = addUnique(reads, read);
+  });
   if (reason === a.reason && reads === a.reads) return a;
   if (reason === b.reason && reads === b.reads) return b;
   return { reason, reads };
