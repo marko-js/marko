@@ -14,6 +14,7 @@ import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
+import { FORCED } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSerializeReason } from "../util/serialize-reasons";
@@ -99,7 +100,7 @@ export default {
       (attrs.valueChange.extra ??= {}).isEffect = true;
       addSetupExpr(section, attrs.valueChange);
       // TODO: this should be based on the parent actually mutating the tag variable.
-      addSerializeReason(section, true, getAccessorProp().TagVariableChange);
+      addSerializeReason(section, FORCED, getAccessorProp().TagVariableChange);
     }
 
     addSetupExpr(section, attrs.value);

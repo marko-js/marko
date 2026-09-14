@@ -121,7 +121,7 @@ export function getSerializeGuard(
       ? undefined
       : withLeadingComment(
           t.numericLiteral(1),
-          getDebugNames(reason === true ? undefined : reason.state),
+          getDebugNames(reason.forced ? undefined : reason.state),
         );
   }
 
@@ -137,14 +137,17 @@ export function getSerializeGuardForAny(
     return getSerializeGuard(section, reasons, optional);
   }
 
-  let expr!: t.Expression;
+  // A static member decides before any dynamic guard is built (and hoisted).
   for (const reason of reasons) {
     if (!isReasonDynamic(reason)) {
       return optional
         ? undefined
         : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
     }
+  }
 
+  let expr!: t.Expression;
+  for (const reason of reasons) {
     const guard = getSerializeGuard(section, reason, false)!;
     expr = expr ? t.logicalExpression("||", expr, guard) : guard;
   }

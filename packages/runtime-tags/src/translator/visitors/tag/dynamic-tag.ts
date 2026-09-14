@@ -32,6 +32,7 @@ import {
   type Binding,
   BindingType,
   createBinding,
+  FORCED,
   getAllTagReferenceNodes,
   getScopeAccessor,
   getScopeAccessorLiteral,
@@ -61,6 +62,7 @@ import {
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
 } from "../../util/serialize-reasons";
 import { addSetupStatement } from "../../util/setup-statements";
@@ -190,8 +192,7 @@ export default {
 
       const bodySection = startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
-      // Split so the force cannot swallow the exprs' provenance.
-      if (hasVar) addSerializeExpr(tagSection, true, nodeBinding);
+      if (hasVar) addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
 
       if (

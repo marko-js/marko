@@ -429,3 +429,22 @@ function joinRepeatable<T>(compare: Compare<T>, a: T, b: T): OneMany<T> {
   const compareResult = compare(a, b);
   return compareResult === 0 ? a : compareResult < 0 ? [a, b] : [b, a];
 }
+
+// Adds to an unordered set: the same value when already present, so a
+// caller can tell by identity that nothing was added.
+export function addUnique<T>(data: Opt<T>, item: T): OneMany<T> {
+  return includes(data, item) ? (data as OneMany<T>) : push(data, item);
+}
+
+export function first<T>(data: OneMany<T>): T {
+  return Array.isArray(data) ? data[0] : data;
+}
+
+// Everything after the first item, in the same shape.
+export function rest<T>(data: OneMany<T>): Opt<T> {
+  return Array.isArray(data)
+    ? data.length === 2
+      ? data[1]
+      : (data.slice(1) as Opt<T>)
+    : undefined;
+}
