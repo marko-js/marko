@@ -5,7 +5,7 @@ _shells({
 	a2: "a2;b%;<!><!><!>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_title = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -23,8 +23,9 @@ var template_default = _template_persisted("a", (input) => {
 	}, $scope0_id), { catch: attrTag({ content: _content_elide("a3", (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "a", input.title)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.title, $sg__input_title)}</em>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$sg__input_title || _resume_branch($scope1_id);
 	}, $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {

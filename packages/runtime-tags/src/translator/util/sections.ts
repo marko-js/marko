@@ -269,7 +269,8 @@ export function startSection(
       readsOwner: false,
       isBranch: false,
       isBoundary: false,
-      boundaryContent: false,
+      // Known at creation so descendants analyzing under it see it.
+      boundaryContent: !!parentTag && isTryAttrTag(parentTag),
       contentShell: false,
       awaits: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
@@ -279,6 +280,14 @@ export function startSection(
   }
 
   return section;
+}
+
+// A `<try>`'s `@catch`/`@placeholder` content.
+function isTryAttrTag(tag: t.NodePath<t.MarkoTag>) {
+  if (!isAttributeTag(tag)) return false;
+  let owner: t.NodePath | null = tag.parentPath;
+  while (owner && !owner.isMarkoTag()) owner = owner.parentPath;
+  return !!owner && isCoreTagName(owner, "try");
 }
 
 export function getOrCreateSection(path: t.NodePath<any>) {

@@ -20,7 +20,7 @@ _shells({
 	a: /*@__PURE__*/ ((_w0, _w1) => `a !a5;${_w0};${_w1}`)(((_w0) => ` D l/${_w0}&`)("D%l"), ((_w0) => `<button> </button>${_w0}`)($template))
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_msg = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -44,8 +44,9 @@ var template_default = _template_persisted("a", (input) => {
 		}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<em>loading ${_text_resume($scope2_id, "a", input.msg, 2)}</em>`);
+			_html(`<em>loading ${_text_resume($scope2_id, "a", input.msg, $sg__input_msg * 2)}</em>`);
 			_subscribe(_source_if($scope0_reason, 0) && $input_msg__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+			$sg__input_msg || _resume_branch($scope2_id);
 		}, $scope1_id) }) });
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) });

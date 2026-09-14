@@ -6,7 +6,7 @@ _shells({
 	a: "a !a4;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_title = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -23,10 +23,11 @@ var template_default = _template_persisted("a", (input) => {
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		$scope0_page && _resume_branch($scope2_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a3", (err) => {
-		_scope_reason();
+		const $sg__err_message = _source_guard(_scope_reason(), 0);
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "a", input.title)} ${_text_resume($scope1_id, "b", err.message, 2)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.title, $sg__input_title)} ${_text_resume($scope1_id, "b", err.message, $sg__err_message * 2)}</p>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$sg__input_title || $sg__err_message || _resume_branch($scope1_id);
 	}, $scope0_id) }) }, 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");

@@ -7,7 +7,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template_persisted("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_title = _source_guard($scope0_reason, 2), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -26,10 +26,11 @@ var template_default = _template_persisted("a", (input) => {
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }));
 				$scope0_page && _resume_branch($scope3_id);
 			}, $scope1_id), { catch: attrTag({ content: _content_resume("a4", (err) => {
-				_scope_reason();
+				const $sg__err_message = _source_guard(_scope_reason(), 0);
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "a", err.message)} ${_text_resume($scope2_id, "b", input.title, 2)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "a", err.message, $sg__err_message)} ${_text_resume($scope2_id, "b", input.title, $sg__input_title * 2)}</em>`);
 				_subscribe(_source_if($scope0_reason, 2) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+				$sg__input_title || $sg__err_message || _resume_branch($scope2_id);
 			}, $scope1_id) }) });
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

@@ -20,10 +20,10 @@ var template_default = _template_persisted("a", (input) => {
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$scope0_page && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_elide("a3", (err) => {
-		_scope_reason();
+		const $scope2_reason = _scope_reason(), $sg__err_message = _source_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(`<em>${_text_resume($scope2_id, "a", err.message)}</em>`);
-		_scope($scope2_id, {});
+		_html(`<em>${_text_resume($scope2_id, "a", err.message, $sg__err_message)}</em>`);
+		_source_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) }) }, 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { e: $input_promise__closures });
