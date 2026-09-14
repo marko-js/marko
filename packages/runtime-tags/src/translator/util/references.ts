@@ -147,9 +147,6 @@ export interface Binding {
   /** Captured inside a registered function: live-scope reads reach it at
    * any later invocation. */
   registeredFnCapture: boolean;
-  /** Upstream of a child input group that client state is also upstream
-   * of (the child re-derives that group from both). */
-  upstreamOfStateMixedGroup: boolean;
   /** The bindings a derived value's expressions read directly. `sources`
    * flattens a derivation chain to its root params, but an intermediate
    * derivation (`<const/ws=input.workspace>`) is itself the canonical
@@ -220,6 +217,9 @@ declare module "@marko/compiler/dist/types" {
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a downstream template's binding, for dereferencing its reasons. */
     downstreamExprs?: KnownExprs;
+    /** The sources a downstream template re-derives this expression's
+     * value with (its input group's other members). */
+    downstreamSources?: Sources;
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
@@ -309,7 +309,6 @@ export function createBinding(
     forcePersist: false,
     upstreamOfStructure: false,
     registeredFnCapture: false,
-    upstreamOfStateMixedGroup: false,
     upstreams: undefined,
     functionValued: false,
     serializePropKeys: undefined,

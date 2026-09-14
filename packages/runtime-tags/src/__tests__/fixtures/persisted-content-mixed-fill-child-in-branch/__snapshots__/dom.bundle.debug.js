@@ -60,7 +60,7 @@ function $setup$1($scope) {
 	$input_aside($scope["#childScope/3"], attrTag({ content: $aside_content($scope) }));
 	$setup__script($scope);
 }
-const $input_base$1 = _fill_const("__tests__/page.marko0", "input_base", $input_base__OR__bonus);
+const $input_base$1 = _fill_const_resume("__tests__/page.marko0", "input_base", $input_base__OR__bonus);
 const $input$1 = ($scope, input) => $input_base$1($scope, input.base);
 var page_default = /*@__PURE__*/ _template("__tests__/page.marko", $template$1, $walks$1, $setup$1, $input$1);
 

@@ -37,6 +37,7 @@ import {
   hasPatchEffectReads,
   isPatchWriteBinding,
   isPatchFillBinding,
+  joinsStateDownstream,
 } from "./persisted/refresh";
 import {
   inResumedStructure,
@@ -604,14 +605,13 @@ function getGlobalJoinId(signal: Signal) {
 function wrapGlobalJoins(signal: Signal, value: t.Expression): t.Expression {
   for (const key of getGlobalJoinKeys(signal)) {
     importRuntimeFeature("patch-global");
+    // A join carrying an effect must outlive its other readers.
     value = callRuntime(
-      "_global_join",
+      signal.effect.length ? "_global_join_resume" : "_global_join",
       t.stringLiteral(key),
       t.stringLiteral(getGlobalJoinId(signal)),
       value,
     );
-    // A join carrying an effect must outlive its other readers.
-    if (signal.effect.length) t.removeComments(value);
   }
   return value;
 }
@@ -642,17 +642,17 @@ export function initValue(binding: Binding, isLet = false) {
     // A fill binding's own declaration doubles as its fill registration
     // (even a pure forwarder); renders the flush writes itself stay out.
     if (fills) {
-      const call = callRuntime(
-        `_fill${helper}`,
+      // Its consumer may be a child's state join, retained without this
+      // declaration: the registration must survive on its own.
+      return callRuntime(
+        joinsStateDownstream(binding)
+          ? `_fill${helper}_resume`
+          : `_fill${helper}`,
         t.stringLiteral(getPatchFillKey(binding)),
         getScopeAccessorLiteral(binding, true, isLet),
         fn,
         signal.fillFn,
       );
-      // Its consumer is a child's state join, retained without this
-      // declaration: the registration must survive on its own.
-      if (binding.upstreamOfStateMixedGroup) t.removeComments(call);
-      return call;
     }
     if (
       !signal.forcePersist &&

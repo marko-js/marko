@@ -75,7 +75,7 @@ var page_default = _template_persisted("__tests__/page.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_n__closures = new Set();
-		_filled_guard($scope0_reason, 0) ? _patch_value($scope1_id, "__tests__/page.marko2", item?.n) : _patch_init($scope1_id, "__tests__/page.marko_1_input_items#6/init");
+		_filled_guard($scope0_reason, 0) ? _patch_value($scope1_id, "__tests__/page.marko1", item?.n) : _patch_init($scope1_id, "__tests__/page.marko_1_input_items#6/init");
 		_set_serialize_reason(0);
 		const $childScope3 = _peek_scope_id();
 		_patch_child($scope1_id, "#childScope/0", $childScope3);
@@ -108,7 +108,7 @@ var page_default = _template_persisted("__tests__/page.marko", (input) => {
 	}, "__tests__/page.marko", 0, {
 		bonus: "1:6",
 		p_base: ["p.base", "2:8"]
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/page.marko0", input.items), _patch_value($scope0_id, "__tests__/page.marko1", p?.base));
+	}) : _patch_value($scope0_id, "__tests__/page.marko0", p?.base);
 }, 0, 1);
 
 // template.marko

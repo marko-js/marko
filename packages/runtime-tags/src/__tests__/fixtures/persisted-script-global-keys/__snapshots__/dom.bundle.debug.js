@@ -8,7 +8,7 @@ const $global_brand__OR__$global_locale__script = _global_script("__tests__/temp
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope.$global.brand + ":" + $scope.$global.locale + "]";
 	}
 });
-const $global_brand__OR__$global_locale = _global_join("locale", "__tests__/template.marko_0_$global_brand#2_$global_locale#3/global", _global_join("brand", "__tests__/template.marko_0_$global_brand#2_$global_locale#3/global", /*@__PURE__*/ _or(4, $global_brand__OR__$global_locale__script)));
+const $global_brand__OR__$global_locale = _global_join_resume("locale", "__tests__/template.marko_0_$global_brand#2_$global_locale#3/global", _global_join_resume("brand", "__tests__/template.marko_0_$global_brand#2_$global_locale#3/global", /*@__PURE__*/ _or(4, $global_brand__OR__$global_locale__script)));
 function $setup($scope) {
 	$global_other($scope, $scope.$global.other);
 }
