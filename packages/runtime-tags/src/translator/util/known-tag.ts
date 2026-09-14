@@ -573,18 +573,18 @@ export function finalizeKnownTags(section: Section) {
           // The ownership mask composes over these groups at translate
           // time; group order freezes here.
           ensureReasonGroups(sources);
-          // Under client state the child re-derives the group, so its
-          // server sources must keep reaching it. A member only upstream of
-          // branches (its params nest into the group) is served by pairing
-          // when its own sources have no state.
+          // Under client state the child re-derives the group from every
+          // member expression. A member only upstream of branches (its
+          // params nest into the group) is served by pairing without state.
           if (sources?.state) {
             forEach(group.reason, (param) => {
-              const paramSources = getAllSourcesForExprs(
-                mapParamBindingToExpr(knownExprs, param),
-              );
-              if (paramSources?.state || isReadAsValue(param)) {
-                forEach(paramSources?.param, (binding) => {
-                  binding.upstreamOfStateMixedGroup = true;
+              const exprs = mapParamBindingToExpr(knownExprs, param);
+              if (getAllSourcesForExprs(exprs)?.state || isReadAsValue(param)) {
+                forEach(exprs, (expr) => {
+                  expr.downstreamSources = mergeSources(
+                    expr.downstreamSources,
+                    sources,
+                  );
                 });
               }
             });

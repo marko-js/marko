@@ -36,7 +36,7 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 	$input_label($scope, input.label);
 };
-const $input_label = _fill_const("__tests__/template.marko0", "input_label", $if_content__input_label);
+const $input_label = _fill_const_resume("__tests__/template.marko0", "input_label", $if_content__input_label);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // v:child.marko.setup.js

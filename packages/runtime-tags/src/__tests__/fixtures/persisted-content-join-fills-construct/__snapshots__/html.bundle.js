@@ -71,7 +71,7 @@ var page_default = _template_persisted("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_n__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) ? _patch_value($scope1_id, "a2", item?.n) : _patch_init($scope1_id, "a4");
+		_filled_guard($scope0_reason, 0) ? _patch_value($scope1_id, "a1", item?.n) : _patch_init($scope1_id, "a4");
 		_set_serialize_reason(0);
 		const $childScope3 = _peek_scope_id();
 		_patch_child($scope1_id, "a", $childScope3);
@@ -101,7 +101,7 @@ var page_default = _template_persisted("a", (input) => {
 		j: p?.base,
 		a: _existing_scope($childScope),
 		l: $bonus__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.items), _patch_value($scope0_id, "a1", p?.base));
+	}) : _patch_value($scope0_id, "a0", p?.base);
 }, 0, 1);
 
 // template.marko

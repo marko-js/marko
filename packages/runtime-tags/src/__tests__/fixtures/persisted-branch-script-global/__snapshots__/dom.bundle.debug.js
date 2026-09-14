@@ -7,7 +7,7 @@ const $if_content__$global_brand__script = _global_script("__tests__/template.ma
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope.$global.brand + "]";
 	}
 });
-const $if_content__$global_brand = _global_join("brand", "__tests__/template.marko_1_$global_brand#5/global", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__$global_brand__script));
+const $if_content__$global_brand = _global_join_resume("brand", "__tests__/template.marko_1_$global_brand#5/global", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__$global_brand__script));
 const $if_content__setup = $if_content__$global_brand;
 const $global_brand = /*@__PURE__*/ _global_join("brand", "__tests__/template.marko_0_$global_brand#5/global", ($scope) => {
 	$if_content__$global_brand($scope);
