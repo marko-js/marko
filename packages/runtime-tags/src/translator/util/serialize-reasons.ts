@@ -268,8 +268,7 @@ export function applySerializeExprs(section: Section) {
   if (propExprs) {
     section.propSerializeExprs = undefined;
     for (const [key, exprs] of propExprs) {
-      addSources(section, getAllSourcesForExprs(exprs), key);
-      const reason = getSerializeSourcesForExprs(exprs);
+      const reason = addExprSources(section, exprs, key);
       if (reason) {
         const curReason = section.serializeReasons.get(key);
         const newReason = mergeSerializeReasons(curReason, reason);
@@ -283,8 +282,7 @@ export function applySerializeExprs(section: Section) {
   const scopeExprs = section.serializeExprs;
   if (scopeExprs) {
     section.serializeExprs = undefined;
-    addSources(section, getAllSourcesForExprs(scopeExprs));
-    const reason = getSerializeSourcesForExprs(scopeExprs);
+    const reason = addExprSources(section, scopeExprs);
     if (reason) {
       const curReason = section.serializeReason;
       const newReason = mergeSerializeReasons(curReason, reason);
@@ -293,6 +291,29 @@ export function applySerializeExprs(section: Section) {
       }
     }
   }
+}
+
+// One walk: records the sources (reads inside function values included,
+// since a consumer may invoke them at render) and returns the reason,
+// which excludes them.
+function addExprSources(
+  section: Section,
+  exprs: Opt<t.NodeExtra>,
+  key?: SerializeKey,
+) {
+  let reason: Sources | undefined;
+  let fnSources: Sources | undefined;
+  forEach(exprs, (expr) => {
+    reason = mergeSources(reason, getSerializeSourcesForExpr(expr));
+    forEach(
+      (expr as t.FunctionExtra).referencedBindingsInFunction,
+      (binding) => {
+        fnSources = mergeSources(fnSources, getSerializeSourcesForRef(binding));
+      },
+    );
+  });
+  addSources(section, mergeSources(reason, fnSources), key);
+  return reason;
 }
 
 export function finalizeSerializeReason(section: Section) {

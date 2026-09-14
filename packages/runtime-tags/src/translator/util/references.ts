@@ -1467,13 +1467,6 @@ export function finalizeReferences() {
     // Setup renders a root's keyed `$global` reads (see `initGlobalRead`).
     const rootSection = getProgram().node.extra.section!;
     if (getRootGlobalReads(rootSection)) addSetupStatement(rootSection);
-    forEachSection((section) => {
-      forEach(section.bindings, (binding) => {
-        if (isPatchFillBinding(binding) || isPatchWriteBinding(binding)) {
-          ensureReasonGroups(getSerializeSourcesForRef(binding));
-        }
-      });
-    });
   }
 
   // The RETURN classifies like a patch write, BEFORE group finalize and

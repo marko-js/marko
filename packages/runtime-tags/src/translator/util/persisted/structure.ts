@@ -41,23 +41,6 @@ export function inStatefulBranch(section: Section | undefined) {
   return false;
 }
 
-// Whether a child renders this prop (any prop, unnamed) inside stateful
-// structure; a child still mid-analysis (a cycle) counts as yes.
-export function childRendersStateful(
-  childExtra: t.ProgramExtra | undefined,
-  prop?: string,
-) {
-  const params = childExtra?.domExports?.params;
-  const input = params?.props?.[0]?.binding;
-  if (!input) {
-    const paramsBinding = (childExtra as t.NodeExtra | undefined)?.binding;
-    return !params && !!paramsBinding && !paramsBinding.pruned;
-  }
-  return prop === undefined
-    ? rendersStateful(input)
-    : rendersStatefulProp(input, prop);
-}
-
 // The one walk over a content body's consumers (the binding it feeds
 // through its property path, aliases, bindings its reads hand it to).
 export function someContentRead(
@@ -118,12 +101,6 @@ function isStatefulLeaf(read: ReferencedExtra) {
     !!(read[kDirectContent] || read.downstream) &&
     inStatefulBranch(read.section)
   );
-}
-function rendersStateful(binding: Binding) {
-  return someBindingRead(binding, isStatefulLeaf);
-}
-function rendersStatefulProp(binding: Binding, prop: string) {
-  return someContentRead(binding, prop, isStatefulLeaf);
 }
 // A tag body is stateful when the prop it is upstream of renders so in the
 // child; the last hop stays a prop query so whole reads of its owner count.
