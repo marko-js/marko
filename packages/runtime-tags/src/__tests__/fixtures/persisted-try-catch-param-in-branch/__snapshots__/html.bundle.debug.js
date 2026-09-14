@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template_persisted("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_title = _source_guard($scope0_reason, 2), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -28,10 +28,11 @@ var template_default = _template_persisted("__tests__/template.marko", (input) =
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
 				$scope0_page && _resume_branch($scope3_id);
 			}, $scope1_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", (err) => {
-				const $scope2_reason = _scope_reason();
+				const $scope2_reason = _scope_reason(), $sg__err_message = _source_guard($scope2_reason, 0);
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", err.message)} ${_text_resume($scope2_id, "#text/1", input.title, 2)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", err.message, $sg__err_message)} ${_text_resume($scope2_id, "#text/1", input.title, $sg__input_title * 2)}</em>`);
 				_subscribe(_source_if($scope0_reason, 2) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"));
+				$sg__input_title || $sg__err_message || _resume_branch($scope2_id);
 			}, $scope1_id) }) });
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;

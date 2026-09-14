@@ -28,10 +28,10 @@ var template_default = _template_persisted("a", (input) => {
 		}, $scope1_id), {
 			placeholder: attrTag({ content: _content_shell("a1", $scope1_id) }),
 			catch: attrTag({ content: _content_elide("a5", (err) => {
-				_scope_reason();
+				const $scope5_reason = _scope_reason(), $sg__err_message = _source_guard($scope5_reason, 0);
 				const $scope5_id = _scope_id();
-				_html(`<em>${_text_resume($scope5_id, "a", err.message)}</em>`);
-				_scope($scope5_id, {});
+				_html(`<em>${_text_resume($scope5_id, "a", err.message, $sg__err_message)}</em>`);
+				_source_if($scope5_reason, 0) && _scope($scope5_id, {});
 			}, $scope1_id) })
 		}, 1);
 		$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
