@@ -380,12 +380,18 @@ export function getSignal(
           return closureSignalBuilder(closure, render);
         }
 
-        // Match the HTML registration, which is gated on this subscriber
-        // section (writeHTMLResumeStatements); keying on any sibling closure
-        // section would ship a pending id that nothing looks up.
-        const pendingRegisterId = underTryPlaceholder(section)
-          ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
-          : undefined;
+        // Match the HTML registration exactly (writeHTMLResumeStatements):
+        // it writes the pending id only for a serialized dynamic closure with
+        // sources, under this subscriber section's try placeholder. A wider
+        // gate here ships ids nothing looks up and, unannotated, retains
+        // their whole render graph in the bundle.
+        const pendingRegisterId =
+          closure.sources &&
+          isDynamicClosure(section, closure) &&
+          underTryPlaceholder(section) &&
+          getSerializeReason(section)
+            ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
+            : undefined;
         const expr = callRuntime(
           "_closure_get",
           // Optimized builds pass the reserved closure accessor id.
