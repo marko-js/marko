@@ -2,10 +2,18 @@ import * as AccessorPrefix from "./constants/accessor-prefix.debug";
 import * as AccessorProp from "./constants/accessor-prop.debug";
 import * as ClosureSignalProp from "./constants/closure-signal-prop.debug";
 import * as KeyedScopesProp from "./constants/keyed-scopes-prop.debug";
+import * as PatchKey from "./constants/patch-key.debug";
 import * as PendingRenderProp from "./constants/pending-render-prop.debug";
+import * as ReadyPatchProp from "./constants/ready-patch-prop.debug";
 import * as RendererProp from "./constants/renderer-prop.debug";
 type AccessorPrefix = AccessorPrefix.Value;
 export { AccessorPrefix };
+
+type PatchKey = PatchKey.Value;
+export { PatchKey };
+
+type ReadyPatchProp = ReadyPatchProp.Value;
+export { ReadyPatchProp };
 
 type AccessorProp = AccessorProp.Value;
 export { AccessorProp };
