@@ -6,6 +6,9 @@ const config = { hosts: "a,b" };
 const $template = "<html><head><meta name=hosts></head><body><p> </p></body></html>";
 const $walks = "E lE n";
 const $setup = () => {};
-const $input_msg = ($scope, input_msg) => _text($scope["#text/1"], input_msg);
+const $input_msg = ($scope, input_msg) => {
+	_attr($scope["#meta/0"], "content", `${config.hosts};${input_msg}`);
+	_text($scope["#text/1"], input_msg);
+};
 const $input = ($scope, input) => $input_msg($scope, input.msg);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

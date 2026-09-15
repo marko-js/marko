@@ -12,7 +12,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><p>${_patch_text($scope0_id, "#text/0", shout(input.title), void 0, $scope0_reason, 0)} ${_patch_text($scope0_id, "#text/1", stamp, 2)}</p>`);
+	_html(`<main><p>${_patch_text($scope0_id, "#text/0", shout(input.title), void 0, $scope0_reason, 0)} ${_patch_text($scope0_id, "#text/1", stamp, 2, 0, 0)}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

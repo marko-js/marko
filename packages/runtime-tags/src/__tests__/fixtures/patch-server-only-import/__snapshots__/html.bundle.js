@@ -7,6 +7,6 @@ _shells({ a: "a;E lE ;<html><head><meta name=hosts></head><body><p> </p></body><
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<html><head><meta name=hosts${_patch_attr($scope0_id, "a", "content", config.hosts)}>${_el_resume($scope0_id, "a")}${_flush_head()}</head><body><p>${_patch_text($scope0_id, "b", input.msg, void 0, $scope0_reason, 0)}</p>`), _trailers("</body></html>");
+	_html(`<html><head><meta name=hosts${_patch_attr($scope0_id, "a", "content", `${config.hosts};${input.msg}`, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}${_flush_head()}</head><body><p>${_patch_text($scope0_id, "b", input.msg, void 0, $scope0_reason, 0)}</p>`), _trailers("</body></html>");
 	$scope0_page && _scope($scope0_id, {});
 }, 1, 0);

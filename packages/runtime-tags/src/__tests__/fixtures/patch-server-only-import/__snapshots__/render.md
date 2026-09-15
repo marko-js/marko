@@ -13,5 +13,6 @@
 ```
 ## Change
 ```
+UPDATE: #document > html > head > meta[content] "a,b;a" => "a,b;b"
 UPDATE: p::text "a" => "b"
 ```

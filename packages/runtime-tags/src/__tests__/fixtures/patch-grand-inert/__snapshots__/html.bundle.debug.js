@@ -10,7 +10,7 @@ _shells({ "__tests__/tags/stamp/index.marko": "__tests__/tags/stamp/index.marko;
 var stamp_default = _template_patch("__tests__/tags/stamp/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "#text/0", stamp())}</p>`);
+	_html(`<p>${_patch_text($scope0_id, "#text/0", stamp(), void 0, 0, 0)}</p>`);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/stamp/index.marko", 0);
 }, 0, 0);
 
