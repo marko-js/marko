@@ -1,0 +1,9 @@
+<let/count=0/>
+<const/{ known, ...rest }=input/>
+<main>
+  <div>${known}</div>
+  <if=(rest && count > 1)>
+    <p>ok</p>
+  </if>
+  <button onClick() { count = count + 1 }>+</button>
+</main>

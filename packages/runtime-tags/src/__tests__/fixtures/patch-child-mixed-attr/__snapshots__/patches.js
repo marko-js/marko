@@ -1,0 +1,6 @@
+// PATCH
+{
+  ca: {
+    ta: "Store!"
+  }
+}
