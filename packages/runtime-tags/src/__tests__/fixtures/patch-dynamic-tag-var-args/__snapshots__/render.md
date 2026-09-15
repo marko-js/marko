@@ -56,7 +56,6 @@ UPDATE: main > p::text "2" => "5"
 ```
 REMOVE: main > button
 UPDATE: main > p::text "5" => ""
-UPDATE: main > p::text "" => ""
 ```
 
 # Update `{"on":true,"start":7}`

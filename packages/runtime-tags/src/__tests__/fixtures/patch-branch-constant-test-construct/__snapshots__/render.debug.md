@@ -67,8 +67,6 @@ INSERT: section, section
 ```
 ## Change
 ```
-UPDATE: section:nth-of-type(1) > div > span::text "a" => "a"
-UPDATE: section:nth-of-type(2) > div > span::text "b" => "b"
 REMOVE: section:nth-of-type(2) > div > span + p
 INSERT: section:nth-of-type(2) > div > span + p
 ```

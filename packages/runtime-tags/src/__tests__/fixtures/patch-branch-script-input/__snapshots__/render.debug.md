@@ -27,7 +27,6 @@
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 UPDATE: main[data-value] "a" => "b"
 ```
 
@@ -43,7 +42,6 @@ UPDATE: main[data-value] "a" => "b"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 REMOVE: main > h1 + p
 ```
 
@@ -62,7 +60,6 @@ REMOVE: main > h1 + p
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 INSERT: main > h1 + p
 UPDATE: main[data-value] "b" => "d"
 ```

@@ -4,9 +4,10 @@
     "PatchBranch:#div/0": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell;/D l%c&b;<p> </p><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell; ;<div></div>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell;/D l%c&b;<p> </p><!><!><!>`, {
   "PatchBranch:#main/0": [{
     "PatchBranch:#div/0": [{
       "PatchChild:#childScope/0": {
@@ -19,9 +20,10 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell;/D l%c&b;<p> </p><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell; ;<div></div>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchBranch:#div/0": [{
       "PatchChild:#childScope/0": {
@@ -33,15 +35,15 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
-}]
+}
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ
 {
   "PatchBranch:#main/0": 0
 }
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell;/D l%c&b;<p> </p><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell; ;<div></div>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchBranch:#div/0": [{
       "PatchChild:#childScope/0": {
@@ -53,4 +55,4 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
-}]
+}

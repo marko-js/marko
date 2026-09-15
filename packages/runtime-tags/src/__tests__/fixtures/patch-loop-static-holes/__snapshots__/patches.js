@@ -22,9 +22,10 @@
     }, "a2"]
   }, "a1"]
 }]
+"a:Hg"
 
-// PATCH
-[`a0;D%c%;<li><!>:<!></li>`, `a3;D ;<li> </li>`, `a2;D%c%;<p><!>:<!></p>`, `a1; ;<div></div>`, {
+// PATCH holding a:Hg
+{
   la: [{
     ta: "1",
     tb: "c"
@@ -46,10 +47,10 @@
       tb: "c"
     }, "a2"]
   }, "a1"]
-}]
+}
 
-// PATCH
-[`a0;D%c%;<li><!>:<!></li>`, `a3;D ;<li> </li>`, {
+// PATCH holding a:Hg
+{
   la: [{
     ta: "1",
     tb: "d"
@@ -63,10 +64,10 @@
     ta: "2"
   }, "a3"],
   bc: 0
-}]
+}
 
-// PATCH
-[`a0;D%c%;<li><!>:<!></li>`, `a3;D ;<li> </li>`, `a2;D%c%;<p><!>:<!></p>`, `a1; ;<div></div>`, {
+// PATCH holding a:Hg
+{
   la: [{
     ta: "1",
     tb: "e"
@@ -88,4 +89,4 @@
       tb: "e"
     }, "a2"]
   }, "a1"]
-}]
+}

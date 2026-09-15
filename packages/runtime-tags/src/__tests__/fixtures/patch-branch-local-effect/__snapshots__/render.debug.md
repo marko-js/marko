@@ -32,19 +32,3 @@ UPDATE: main[data-label] "a!" => "b!"
 ```
 
 # Update `{"show":true,"inner":true,"title":"b","suffix":"?"}`
-```html
-<main
-  data-label="b!"
->
-  <p>
-    b!
-  </p>
-  <span>
-    inner
-  </span>
-</main>
-```
-## Change
-```
-UPDATE: main > p::text "b!" => "b!"
-```

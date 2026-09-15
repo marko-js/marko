@@ -5,13 +5,14 @@
   }, "a0"],
   va0: "n2"
 }]
+"a:Ag"
 
-// PATCH
-[`a0 a4;D%b%;<li><!><!></li>`, {
+// PATCH holding a:Ag
+{
   la: [{
     ta: "x"
   }, {
     ta: "y"
   }, "a0"],
   va0: "n2"
-}]
+}

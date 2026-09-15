@@ -16,3 +16,4 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-bind-nested-content/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-bind-nested-content/template.marko_3*shell:AQ"

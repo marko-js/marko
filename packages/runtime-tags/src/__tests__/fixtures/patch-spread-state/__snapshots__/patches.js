@@ -5,8 +5,9 @@
     href: "/b"
   }
 }]
+"a:Ag"
 
-// PATCH
+// PATCH holding a:Ag
 {
   ba: 0,
   va0: {
@@ -14,11 +15,11 @@
   }
 }
 
-// PATCH
-[`a0 a4 a5; ;<a>go</a>`, {
+// PATCH holding a:Ag
+{
   ba: "a0",
   va0: {
     href: "/c",
     title: "C"
   }
-}]
+}

@@ -13,3 +13,4 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko0": "y"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_1*shell:AQ"

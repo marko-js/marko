@@ -13,9 +13,10 @@
     }
   }, "a1"]
 }]
+"a:BA"
 
-// PATCH
-[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, `a1;b/b%c&b;<!><!><!><!><!>`, {
+// PATCH holding a:BA
+[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   ta: "Store!",
   lc: [{
     ca: {
@@ -39,3 +40,4 @@
     }
   }, "a1"]
 }]
+"b:Ag,a:BA"

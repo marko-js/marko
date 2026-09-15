@@ -5,11 +5,12 @@
   }, "a0"],
   va0: "Store!"
 }]
+"a:Bg"
 
-// PATCH
-[`a0;b%;<!><!><!>`, {
+// PATCH holding a:Bg
+{
   ba: [{
     ba: 0
   }, "a0"],
   va0: "Store?"
-}]
+}

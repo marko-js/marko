@@ -4,15 +4,16 @@
     va0: "[Store!]"
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
+// PATCH holding a:Ag
 {
   ba: 0
 }
 
-// PATCH
-[`a0 a4;D ;<p> </p>`, {
+// PATCH holding a:Ag
+{
   ba: [{
     va0: "[Fresh]"
   }, "a0"]
-}]
+}

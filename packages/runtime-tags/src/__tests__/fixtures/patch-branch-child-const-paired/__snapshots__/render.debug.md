@@ -62,7 +62,6 @@ INSERT: main > section:nth-of-type(1) + :is(section, p)
 ```
 ## Change
 ```
-UPDATE: .branch::text "branch" => "branch"
 UPDATE: main > p::text "y" => "z"
 ```
 

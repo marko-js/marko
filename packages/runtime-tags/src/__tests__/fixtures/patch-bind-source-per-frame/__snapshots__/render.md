@@ -41,7 +41,6 @@
 ```
 ## Change
 ```
-UPDATE: main > em::text "0" => "0"
 UPDATE: #one[title] "a" => "b"
 REMOVE: main > #two
 INSERT: #one + #two

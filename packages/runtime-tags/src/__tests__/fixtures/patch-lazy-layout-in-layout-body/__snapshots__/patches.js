@@ -20,9 +20,10 @@
     }
   }
 }]
+"e:Kg"
 
-// PATCH
-[`e0;b%;<!><!><!>`, `e5;b%b/b&b;<!><!><h1>B</h1><!>`, `e2;b/bD%l&b;<!><nav>docs</nav><article><!></article><!>`, {
+// PATCH holding e:Kg
+[`e5;b%b/b&b;<!><!><h1>B</h1><!>`, {
   z_a: {
     ca: {
       cAa: {
@@ -43,8 +44,9 @@
     }
   }
 }]
+"e:ag"
 
-// PATCH
+// PATCH holding e:ag
 [`e3,<p>home</p>`, {
   ca: {
     cAa: {
@@ -52,3 +54,4 @@
     }
   }
 }]
+"e:eg"

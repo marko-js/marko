@@ -31,9 +31,7 @@
 ```
 ## Change
 ```
-UPDATE: p:nth-of-type(1)::text@0 "x" => "x"
 INSERT: p:nth-of-type(1) + :is(span, button)
-UPDATE: p:nth-of-type(2)::text@0 "y" => "y"
 INSERT: p:nth-of-type(2) + :is(span, button)
 UPDATE: span:nth-of-type(1)::text@5 "" => "0"
 UPDATE: span:nth-of-type(2)::text@5 "" => "0"

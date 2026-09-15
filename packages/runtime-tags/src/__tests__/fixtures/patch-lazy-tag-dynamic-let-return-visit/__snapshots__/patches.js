@@ -19,9 +19,10 @@
     }
   }
 }]
+"a:AQ"
 
-// PATCH
-[`a !a0; D%c%;<button class=count><!>:<!></button>`, {
+// PATCH holding a:AQ
+{
   fc: ["a", {
     label: "c"
   }],
@@ -33,4 +34,4 @@
       }
     }
   }
-}]
+}

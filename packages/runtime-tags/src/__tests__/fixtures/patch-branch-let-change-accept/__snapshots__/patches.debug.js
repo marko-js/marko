@@ -14,3 +14,4 @@
     "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1/valueChange", 0, "TagVariableChange:count"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1*shell:AQ"

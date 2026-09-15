@@ -32,22 +32,6 @@ UPDATE: main > button[data-seen] null => "a"
 ```
 
 # Update `{"title":"Store","show":true,"tag":"b"}`
-```html
-<main>
-  <h1>
-    Store
-  </h1>
-  <button
-    data-seen="a"
-  >
-    read
-  </button>
-</main>
-```
-## Change
-```
-UPDATE: main > h1::text "Store" => "Store"
-```
 
 # Update
 ```js
@@ -80,7 +64,6 @@ UPDATE: main > button[data-seen] "a" => "b"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 REMOVE: main > h1 + button
 ```
 
@@ -97,7 +80,6 @@ REMOVE: main > h1 + button
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 INSERT: main > h1 + button
 ```
 

@@ -11,3 +11,4 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-bind-content-owner/template.marko_2*shell:AQ"

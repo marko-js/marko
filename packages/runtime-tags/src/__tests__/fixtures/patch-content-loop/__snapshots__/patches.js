@@ -23,9 +23,10 @@
     }
   }, "a1"]
 }]
+"a:Bg"
 
-// PATCH
-[`a0;D ;<b> </b>`, `a1;D/b%c&l;<li><!><!><!></li>`, {
+// PATCH holding a:Bg
+{
   la: [{
     ca: {
       fa: "^a0",
@@ -34,15 +35,15 @@
       }
     }
   }, "a1"]
-}]
+}
 
-// PATCH
+// PATCH holding a:Bg
 {
   la: []
 }
 
-// PATCH
-[`a0;D ;<b> </b>`, `a1;D/b%c&l;<li><!><!><!></li>`, {
+// PATCH holding a:Bg
+{
   la: [{
     ca: {
       fa: "^a0",
@@ -58,4 +59,4 @@
       }
     }
   }, "a1"]
-}]
+}

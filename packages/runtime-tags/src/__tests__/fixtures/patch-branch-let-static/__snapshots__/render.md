@@ -24,7 +24,6 @@
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
-UPDATE: main > p::text@6 "1" => "1"
 ```
 
 # Update `{"title":"Store!","show":false}`
@@ -37,7 +36,6 @@ UPDATE: main > p::text@6 "1" => "1"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 REMOVE: main > h1 + p
 ```
 
@@ -54,6 +52,5 @@ REMOVE: main > h1 + p
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 INSERT: main > h1 + p
 ```

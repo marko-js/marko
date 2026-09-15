@@ -6,18 +6,19 @@
   },
   tb: "two"
 }]
+"a:Ag"
 
-// PATCH
+// PATCH holding a:Ag
 {
   fa: 0,
   tb: "three"
 }
 
-// PATCH
-[`a0;D ;<em> </em>`, {
+// PATCH holding a:Ag
+{
   fa: "a0",
   cAa: {
     ta: "four"
   },
   tb: "four"
-}]
+}

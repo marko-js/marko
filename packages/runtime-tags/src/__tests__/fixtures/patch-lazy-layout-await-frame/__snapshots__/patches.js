@@ -48,9 +48,10 @@
     }
   }
 }]
+"a:HA,e:Kg,f:Ag"
 
-// PATCH
-[`a1;b%b%;<!><!><!><!>`, `e0;b%;<!><!><!>`, `e5;b%b/b&b;<!><!><h1>B</h1><!>`, `e2;b/D%lD%l&b;<!><nav><!></nav><article><!></article><!>`, `a3;D ;<a> </a>`, `f0; ;<path></path>`, `a2;/ b&;<svg></svg>`, {
+// PATCH holding a:HA,e:Kg,f:Ag
+[`e5;b%b/b&b;<!><!><h1>B</h1><!>`, {
   z_a: {
     ca: {
       cAa: {
@@ -85,8 +86,9 @@
     }
   }
 }]
+"e:ag,a:HA,f:Ag"
 
-// PATCH
+// PATCH holding e:ag,a:HA,f:Ag
 [`e3,<p>home</p>`, {
   ca: {
     cAa: {
@@ -94,3 +96,4 @@
     }
   }
 }]
+"e:eg,a:HA,f:Ag"

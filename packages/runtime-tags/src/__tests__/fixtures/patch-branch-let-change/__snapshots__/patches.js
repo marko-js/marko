@@ -9,15 +9,16 @@
     wd: _._.a0
   }, "a1"]
 }]
+"a:BA"
 
-// PATCH
+// PATCH holding a:BA
 {
   ta: "Store!",
   bb: 0
 }
 
-// PATCH
-[`a1 !a2;Db%l ;<p>Seen <!></p><button>+</button>`, {
+// PATCH holding a:BA
+{
   ta: "Store!",
   bb: [{
     s: {
@@ -26,4 +27,4 @@
     },
     wd: _._.a0
   }, "a1"]
-}]
+}

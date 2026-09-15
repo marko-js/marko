@@ -8,17 +8,6 @@
 ```
 
 # Update `{}`
-```html
-<div
-  id="sM_2"
->
-  sM_1 sM_3 sM_2
-</div>
-```
-## Change
-```
-UPDATE: #sM_2::text@10 "sM_2" => "sM_2"
-```
 
 # Update `{"z":"explicit"}`
 ```html

@@ -22,9 +22,10 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1*shell;D%c%;<li><!>:<!></li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell;D ;<li> </li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell;D%c%;<p><!>:<!></p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell; ;<div></div>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell:AQ
+{
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "1",
     "PatchText:#text/1": "c"
@@ -46,10 +47,10 @@
       "PatchText:#text/1": "c"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"]
-}]
+}
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1*shell;D%c%;<li><!>:<!></li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell;D ;<li> </li>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell:AQ
+{
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "1",
     "PatchText:#text/1": "d"
@@ -63,10 +64,10 @@
     "PatchText:#text/0": "2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell"],
   "PatchBranch:#text/2": 0
-}]
+}
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1*shell;D%c%;<li><!>:<!></li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell;D ;<li> </li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell;D%c%;<p><!>:<!></p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell; ;<div></div>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell:AQ
+{
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "1",
     "PatchText:#text/1": "e"
@@ -88,4 +89,4 @@
       "PatchText:#text/1": "e"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"]
-}]
+}

@@ -6,10 +6,11 @@
     "ya --M_a0": "blue"
   }, "a1"]
 }]
+"a:BA"
 
-// PATCH
-[`a1; ;<style></style><b class=k>item</b>`, {
+// PATCH holding a:BA
+{
   la: ["b", {
     "ya --M_a0": "green"
   }, "a1"]
-}]
+}

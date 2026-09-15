@@ -19,9 +19,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content;D ;<i> </i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell:AQ
+{
   "$global:": {
     brand: "Zed"
   },
@@ -40,10 +41,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
-}]
+}
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content;D ;<i> </i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell:AQ
+{
   "$global:": {
     brand: "Qux"
   },
@@ -62,4 +63,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
-}]
+}

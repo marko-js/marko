@@ -48,7 +48,6 @@ UPDATE: main > section > p::text "x" => "y"
 ```
 ## Change
 ```
-UPDATE: main > section > p::text "y" => "y"
 INSERT: main > section > p + span
 REMOVE: main > section > span + div
 ```
@@ -83,6 +82,5 @@ REMOVE: main > section > em + span
 ```
 ## Change
 ```
-UPDATE: main > section > p::text "z" => "z"
 REMOVE: main > section > p + em
 ```

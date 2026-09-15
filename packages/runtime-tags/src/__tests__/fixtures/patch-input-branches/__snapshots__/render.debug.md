@@ -43,8 +43,6 @@
 ## Change
 ```
 UPDATE: .wrap > h1::text@6 "world" => "marko"
-UPDATE: .wrap > li:nth-of-type(1)::text "1" => "1"
-UPDATE: .wrap > li:nth-of-type(2)::text "2" => "2"
 INSERT: .wrap > li:nth-of-type(2) + li
 ```
 
@@ -63,7 +61,6 @@ INSERT: .wrap > li:nth-of-type(2) + li
 ```
 ## Change
 ```
-UPDATE: .wrap > h1::text@6 "marko" => "marko"
 REMOVE: .wrap > h1 + p
 UPDATE: .wrap > li::text "1" => "3"
 REMOVE: .wrap > li + li
@@ -90,5 +87,4 @@ REMOVE: .wrap > li + li
 ```
 UPDATE: .wrap > h1::text@6 "marko" => "mark"
 INSERT: .wrap > h1 + p
-UPDATE: .wrap > li::text "3" => "3"
 ```

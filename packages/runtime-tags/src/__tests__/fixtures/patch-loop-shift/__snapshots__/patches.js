@@ -12,18 +12,19 @@
   }, "a0"],
   tc: "hello"
 }]
+"a:Bg"
 
-// PATCH
-[`a1;D ;<li> </li>`, {
+// PATCH holding a:Bg
+{
   la: [2, {
     ta: "Bread!"
   }, "a1"],
   bb: 0,
   tc: "bye"
-}]
+}
 
-// PATCH
-[`a1;D ;<li> </li>`, `a0;D ;<aside> </aside>`, {
+// PATCH holding a:Bg
+{
   la: [2, {
     ta: "Bread!"
   }, 4, {
@@ -33,4 +34,4 @@
     ta: "Back"
   }, "a0"],
   tc: "again"
-}]
+}

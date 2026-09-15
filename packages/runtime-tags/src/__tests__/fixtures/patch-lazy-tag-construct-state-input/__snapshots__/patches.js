@@ -3,9 +3,10 @@
   bc: "b0",
   vb0: "b"
 }]
+"b:Ag"
 
-// PATCH
-[`b0 b3 b4 b5;b%/&;<!><!><!>`, {
+// PATCH holding b:Ag
+{
   bc: "b0",
   vb0: "c"
-}]
+}

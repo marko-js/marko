@@ -15,12 +15,13 @@
   ta: "Fresh",
   bb: "a0"
 }]
+"a:Ag"
 
-// PATCH
-[`a0 !a3,<p>promo</p>`, {
+// PATCH holding a:Ag
+{
   $: {
     brand: "Patch"
   },
   ta: "Patch",
   bb: "a0"
-}]
+}

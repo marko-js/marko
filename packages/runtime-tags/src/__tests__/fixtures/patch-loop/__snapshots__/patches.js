@@ -7,9 +7,10 @@
     ta: "Bread"
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0;D ;<li> </li>`, {
+// PATCH holding a:Ag
+{
   ta: "Store",
   lb: [1, {
     ta: "Apples!"
@@ -18,30 +19,30 @@
   }, 3, {
     ta: "Milk"
   }, "a0"]
-}]
+}
 
-// PATCH
-[`a0;D ;<li> </li>`, {
+// PATCH holding a:Ag
+{
   ta: "Store",
   lb: [3, {
     ta: "Milk"
   }, 1, {
     ta: "Apples!"
   }, "a0"]
-}]
+}
 
-// PATCH
+// PATCH holding a:Ag
 {
   ta: "Store",
   lb: []
 }
 
-// PATCH
-[`a0;D ;<li> </li>`, {
+// PATCH holding a:Ag
+{
   ta: "Store",
   lb: [2, {
     ta: "Rye"
   }, 3, {
     ta: "Milk"
   }, "a0"]
-}]
+}

@@ -17,19 +17,20 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0 !a1;D bD l ;<li> <span> </span><button>+</button></li>`, {
+// PATCH holding a:Ag
+{
   la: [{
     ta: "Apples",
     s: {
       va0: 0
     }
   }, "a0"]
-}]
+}
 
-// PATCH
-[`a0 !a1;D bD l ;<li> <span> </span><button>+</button></li>`, {
+// PATCH holding a:Ag
+{
   la: [{
     ta: "Apples",
     s: {
@@ -46,4 +47,4 @@
       va0: 0
     }
   }, "a0"]
-}]
+}

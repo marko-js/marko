@@ -14,3 +14,4 @@
     "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-cross/template.marko_0/handler", 1, "TagVariableChange:count"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-cross/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-cross/template.marko_1*shell:AQ"

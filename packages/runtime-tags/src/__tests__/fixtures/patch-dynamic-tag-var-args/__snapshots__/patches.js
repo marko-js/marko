@@ -9,15 +9,16 @@
   },
   tc: "5"
 }]
+"a:AQ"
 
-// PATCH
+// PATCH holding a:AQ
 {
   fa: [0, [5], 0, "b0"],
   tc: ""
 }
 
-// PATCH
-[`a !a1; D ;<button> </button>`, {
+// PATCH holding a:AQ
+{
   fa: ["a", [7], 0, "b0"],
   cAa: {
     d1: ["a0", 0, "U"],
@@ -26,4 +27,4 @@
     }
   },
   tc: "7"
-}]
+}

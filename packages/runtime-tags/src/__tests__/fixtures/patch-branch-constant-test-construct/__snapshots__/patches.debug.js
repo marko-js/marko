@@ -24,9 +24,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content;D l%;<span> </span><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_4*shell,<p>down</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_1*shell;/DbD%m&;<section><h2>Panel</h2><div class=aside><!></div></section>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell;b/b%c&b;<!><!><!><!><!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell:AQ
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_4*shell,<p>down</p>`, {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchLoop:#text/0": [{
@@ -51,3 +52,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell:AQ"

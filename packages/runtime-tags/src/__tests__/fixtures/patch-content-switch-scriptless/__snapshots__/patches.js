@@ -8,8 +8,9 @@
     }
   }
 }]
+"a:BA"
 
-// PATCH
+// PATCH holding a:BA
 {
   ca: {
     cAa: {
@@ -18,7 +19,7 @@
   }
 }
 
-// PATCH
+// PATCH holding a:BA
 [`a2,<b>A</b>`, {
   ca: {
     cAa: {
@@ -26,3 +27,4 @@
     }
   }
 }]
+"a:DA"

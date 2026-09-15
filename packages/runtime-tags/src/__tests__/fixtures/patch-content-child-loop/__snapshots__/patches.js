@@ -16,9 +16,10 @@
     }, "b0"]
   }
 }]
+"a:Ag,b:Ag"
 
-// PATCH
-[`a0;D ;<em> </em>`, `b0;D%b%;<li><!><!></li>`, {
+// PATCH holding a:Ag,b:Ag
+{
   ca: {
     la: [{
       ta: "1",
@@ -28,10 +29,10 @@
       }
     }, "b0"]
   }
-}]
+}
 
-// PATCH
-[`a0;D ;<em> </em>`, `b0;D%b%;<li><!><!></li>`, {
+// PATCH holding a:Ag,b:Ag
+{
   ca: {
     la: [{
       ta: "1",
@@ -53,4 +54,4 @@
       }
     }, "b0"]
   }
-}]
+}

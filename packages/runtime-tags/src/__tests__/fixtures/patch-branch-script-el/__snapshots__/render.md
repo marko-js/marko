@@ -22,7 +22,6 @@
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 REMOVE: main > h1 + span
 ```
 
@@ -41,7 +40,6 @@ REMOVE: main > h1 + span
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 INSERT: main > h1 + span
 UPDATE: main > span[data-seen] null => "Back"
 ```

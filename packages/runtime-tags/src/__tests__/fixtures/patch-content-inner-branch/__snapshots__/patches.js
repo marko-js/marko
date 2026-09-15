@@ -9,9 +9,10 @@
     }
   }
 }]
+"a:BA"
 
-// PATCH
-[`a1;D ;<em> </em>`, {
+// PATCH holding a:BA
+{
   ca: {
     ta: "c",
     cAb: {
@@ -20,9 +21,9 @@
       }, "a1"]
     }
   }
-}]
+}
 
-// PATCH
+// PATCH holding a:BA
 {
   ca: {
     ta: "d",
@@ -32,8 +33,8 @@
   }
 }
 
-// PATCH
-[`a1;D ;<em> </em>`, {
+// PATCH holding a:BA
+{
   ca: {
     ta: "e",
     cAb: {
@@ -42,4 +43,4 @@
       }, "a1"]
     }
   }
-}]
+}

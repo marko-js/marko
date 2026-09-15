@@ -12,11 +12,12 @@
     "PatchText:#text/1": "2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1_item_attrs#4; D ;<li> </li>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1*shell:AQ
+{
   "PatchLoop:#ul/0": [2, {
     "PatchAttrs:#li/0": {},
     "PatchText:#text/1": "2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1*shell"]
-}]
+}

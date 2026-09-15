@@ -9,3 +9,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/tags/loader.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/template.marko_1*shell:AQ"

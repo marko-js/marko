@@ -12,14 +12,15 @@
     }
   }, "b0"]
 }]
+"a:Bg,b:Ag"
 
-// PATCH
+// PATCH holding a:Bg,b:Ag
 {
   ba: 0
 }
 
-// PATCH
-[`a1,<p>last</p>`, `a0;D l%;<span> </span><!><!>`, `b0;b/b%c&b;<!><!><!><!><!>`, {
+// PATCH holding a:Bg,b:Ag
+{
   ba: [{
     ca: {
       la: [{
@@ -31,4 +32,4 @@
       }, "a0"]
     }
   }, "b0"]
-}]
+}

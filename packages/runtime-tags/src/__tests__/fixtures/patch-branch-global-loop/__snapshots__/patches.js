@@ -33,17 +33,19 @@
     }, "a2"]
   }, "a0"]
 }]
+"a:Cg"
 
-// PATCH
+// PATCH holding a:Cg
 [`a1,<p>invalid</p>`, {
   $: {
     search: [null, !0]
   },
   ba: "a1"
 }]
+"a:Dg"
 
-// PATCH
-[`a2;/D b D m&;<p> <button> </button></p>`, `a0; ;<div></div>`, {
+// PATCH holding a:Dg
+{
   $: {
     search: [{
       q: "c"
@@ -76,4 +78,4 @@
       }
     }, "a2"]
   }, "a0"]
-}]
+}

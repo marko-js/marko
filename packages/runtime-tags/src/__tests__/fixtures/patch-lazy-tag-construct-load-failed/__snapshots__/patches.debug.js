@@ -13,3 +13,4 @@
   },
   "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-load-failed/template.marko_1*shell"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-load-failed/template.marko_1*shell:AQ"

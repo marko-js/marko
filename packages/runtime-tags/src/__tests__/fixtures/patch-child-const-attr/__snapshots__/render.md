@@ -57,7 +57,6 @@ UPDATE: main > button::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: main > div > b::text "hi" => "hi"
 UPDATE: main > div > i::text "a" => "b"
 ```
 

@@ -11,11 +11,12 @@
   }, "a0"],
   va0: "y"
 }]
+"a:Dg"
 
-// PATCH
-[`a0;b%;<!><!><!>`, {
+// PATCH holding a:Dg
+{
   ba: [{
     ba: 0
   }, "a0"],
   va0: "z"
-}]
+}

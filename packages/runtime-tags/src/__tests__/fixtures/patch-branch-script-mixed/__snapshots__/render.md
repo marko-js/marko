@@ -27,7 +27,6 @@
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 UPDATE: main[data-log] "[a:Marko]" => "[a:Marko][b:Marko]"
 ```
 
@@ -83,6 +82,5 @@ UPDATE: main[data-log] "[a:Marko][b:Marko]" => "[a:Marko][b:Marko][b:Fresh]"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 UPDATE: main[data-log] "[a:Marko][b:Marko][b:Fresh]" => "[a:Marko][b:Marko][b:Fresh][c:Patch]"
 ```

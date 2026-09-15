@@ -136,7 +136,6 @@ UPDATE: main > button::text@6 "1" => "2"
 ```
 ## Change
 ```
-UPDATE: main > ul > li::text "Bread!" => "Bread!"
 REMOVE: main > ul > li
 REMOVE: main > ul > li
 REMOVE: main > ul + aside
@@ -167,7 +166,6 @@ UPDATE: main > p::text "hello" => "bye"
 ```
 ## Change
 ```
-UPDATE: main > ul > li:nth-of-type(1)::text "Bread!" => "Bread!"
 INSERT: main > ul > li:nth-of-type(1) + li
 INSERT: main > ul + aside
 UPDATE: main > p::text "bye" => "again"

@@ -23,9 +23,10 @@
     }
   }, "a1"]
 }]
+"a:Bg"
 
-// PATCH
-[`a0;D%c%c%;<i><!>:<!>:<!></i>`, `a1;/D%l&;<section><!></section>`, {
+// PATCH holding a:Bg
+{
   $: {
     brand: "Zed"
   },
@@ -57,4 +58,4 @@
       }
     }
   }, "a1"]
-}]
+}

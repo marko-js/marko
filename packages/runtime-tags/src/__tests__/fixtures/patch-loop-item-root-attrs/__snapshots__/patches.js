@@ -19,9 +19,10 @@
     ta: "b"
   }, "a1"]
 }]
+"a:Bg"
 
-// PATCH
-[`a0; D/D l&D m;<a class=link><svg viewBox="0 0 1 1"><title></title></svg><span> </span></a>`, {
+// PATCH holding a:Bg
+{
   la: [{
     "aa class": "link active",
     "aa href": "/b",
@@ -31,4 +32,4 @@
     tc: "B"
   }, "a0"],
   bb: 0
-}]
+}

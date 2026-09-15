@@ -32,9 +32,10 @@
     }
   }, "a1"]
 }]
+"a:Hg"
 
-// PATCH
-[`a0;b%;<!><!><!>`, `a2;D ;<em> </em>`, `a1;/E l%l&;<li><b> </b><!></li>`, {
+// PATCH holding a:Hg
+{
   la: [{
     ca: {
       ta: "c",
@@ -46,10 +47,10 @@
       }
     }
   }, "a1"]
-}]
+}
 
-// PATCH
-[`a0;b%;<!><!><!>`, `a3;D ;<span> </span>`, `a2;D ;<em> </em>`, `a1;/E l%l&;<li><b> </b><!></li>`, {
+// PATCH holding a:Hg
+{
   la: [{
     ca: {
       ta: "x",
@@ -71,4 +72,4 @@
       }
     }
   }, "a1"]
-}]
+}

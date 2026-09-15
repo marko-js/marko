@@ -16,9 +16,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell:AQ
+{
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
     "PatchChild:BranchScopes:#text/1": {
@@ -34,9 +35,9 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
-}]
+}
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell:AQ
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
@@ -47,8 +48,8 @@
   "PatchBranch:#text/1": 0
 }
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell:AQ
+{
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "e",
     "PatchChild:BranchScopes:#text/1": {
@@ -64,4 +65,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
-}]
+}

@@ -11,3 +11,4 @@
     "PatchText:#text/1": "Back"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-el/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-el/template.marko_1*shell:AQ"

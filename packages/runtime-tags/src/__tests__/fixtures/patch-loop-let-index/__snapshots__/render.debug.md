@@ -87,8 +87,6 @@ UPDATE: ul > li:nth-of-type(1) > span::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text "Apples" => "Apples"
-UPDATE: ul > li:nth-of-type(2)::text "Bread" => "Bread"
 INSERT: ul > li:nth-of-type(2) + li
 UPDATE: ul > li:nth-of-type(3) > span::text " " => "0"
 ```
@@ -149,7 +147,6 @@ UPDATE: ul > li:nth-of-type(3) > span::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: ul > li::text "Apples" => "Apples"
 REMOVE: ul > li + li
 REMOVE: ul > li + li
 ```
@@ -188,7 +185,6 @@ REMOVE: ul > li + li
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text "Apples" => "Apples"
 INSERT: ul > li:nth-of-type(1) + li
 INSERT: ul > li:nth-of-type(2) + li
 UPDATE: ul > li:nth-of-type(2) > span::text " " => "0"

@@ -57,7 +57,6 @@ UPDATE: main > button::text@6 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 UPDATE: .promo.banner::text "Sale" => "Big Sale"
 ```
 
@@ -115,7 +114,6 @@ UPDATE: main > button::text@6 "1" => "2"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 INSERT: main > h1 + .promo.banner
 ```
 

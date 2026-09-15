@@ -51,7 +51,6 @@ UPDATE: main > p::text "Store@0" => "Store@1"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "H" => "H"
 UPDATE: main > p::text "Store@1" => "Fresh@1"
 ```
 

@@ -11,9 +11,10 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0;/D l%b b&;<div> </div><!><button>t</button>`, {
+// PATCH holding a:Ag
+{
   ba: [{
     ca: {
       ta: "b",
@@ -24,4 +25,4 @@
       vb0: "const"
     }
   }, "a0"]
-}]
+}

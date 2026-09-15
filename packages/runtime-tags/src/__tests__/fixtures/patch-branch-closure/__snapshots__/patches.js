@@ -3,15 +3,16 @@
   ta: "Store!",
   bb: "a0"
 }]
+"a:Ag"
 
-// PATCH
+// PATCH holding a:Ag
 {
   ta: "Store!",
   bb: 0
 }
 
-// PATCH
-[`a0 a3;Db%;<p>Seen <!></p>`, {
+// PATCH holding a:Ag
+{
   ta: "Store!",
   bb: "a0"
-}]
+}

@@ -10,9 +10,10 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, {
+// PATCH holding a:Ag
+{
   ba: [{
     ca: {
       ta: "B",
@@ -22,4 +23,4 @@
       }
     }
   }, "a0"]
-}]
+}

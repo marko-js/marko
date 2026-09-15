@@ -15,3 +15,4 @@
     }, _.a]
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-define-recursive/template.marko_2*shell:AQ"

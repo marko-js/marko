@@ -11,9 +11,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/template.marko_1*shell;/E l b%l&;<section class=card><h2> </h2><button class=toggle>toggle</button><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "B",
@@ -24,4 +25,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/tags/card.marko0": "B"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/template.marko_1*shell"]
-}]
+}

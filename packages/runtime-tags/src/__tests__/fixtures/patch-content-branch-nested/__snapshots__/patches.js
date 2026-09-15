@@ -4,9 +4,10 @@
     ba: 0
   }, "a1"]
 }]
+"a:BA"
 
-// PATCH
-[`a0;D ;<em> </em>`, `a2;/D l%c&b;<p> </p><!><!><!>`, `a1; ;<div></div>`, {
+// PATCH holding a:BA
+[`a0;D ;<em> </em>`, `a2;/D l%c&b;<p> </p><!><!><!>`, {
   ba: [{
     ba: [{
       ca: {
@@ -19,9 +20,10 @@
     }, "a2"]
   }, "a1"]
 }]
+"a:Dg"
 
-// PATCH
-[`a0;D ;<em> </em>`, `a2;/D l%c&b;<p> </p><!><!><!>`, `a1; ;<div></div>`, {
+// PATCH holding a:Dg
+{
   ba: [{
     ba: [{
       ca: {
@@ -33,15 +35,15 @@
       }
     }, "a2"]
   }, "a1"]
-}]
+}
 
-// PATCH
+// PATCH holding a:Dg
 {
   ba: 0
 }
 
-// PATCH
-[`a0;D ;<em> </em>`, `a2;/D l%c&b;<p> </p><!><!><!>`, `a1; ;<div></div>`, {
+// PATCH holding a:Dg
+{
   ba: [{
     ba: [{
       ca: {
@@ -53,4 +55,4 @@
       }
     }, "a2"]
   }, "a1"]
-}]
+}

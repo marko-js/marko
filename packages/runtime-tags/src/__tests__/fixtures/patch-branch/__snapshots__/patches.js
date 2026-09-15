@@ -5,17 +5,18 @@
     ta: "Big Sale"
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
+// PATCH holding a:Ag
 {
   ta: "Store!",
   bb: 0
 }
 
-// PATCH
-[`a0;D ;<aside class="promo banner"> </aside>`, {
+// PATCH holding a:Ag
+{
   ta: "Store!",
   bb: [{
     ta: "Back"
   }, "a0"]
-}]
+}

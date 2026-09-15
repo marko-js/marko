@@ -10,9 +10,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "B",
@@ -22,4 +23,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell"]
-}]
+}

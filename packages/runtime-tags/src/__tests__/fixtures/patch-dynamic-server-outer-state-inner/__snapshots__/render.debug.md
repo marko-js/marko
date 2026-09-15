@@ -35,7 +35,6 @@
 ```
 ## Change
 ```
-UPDATE: section > em::text "-" => "-"
 UPDATE: section > article::text "one" => "two"
 ```
 

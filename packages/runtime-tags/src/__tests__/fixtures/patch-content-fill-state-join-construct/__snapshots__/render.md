@@ -47,9 +47,6 @@
 ```
 ## Change
 ```
-UPDATE: main > section:nth-of-type(1) > h2::text "a" => "a"
-UPDATE: main > section:nth-of-type(1) > div > span::text@0 "n" => "n"
-UPDATE: main > section:nth-of-type(1) > div > span::text@4 "1" => "1"
 INSERT: main > section:nth-of-type(1) + section
 UPDATE: main > section:nth-of-type(2) > div > span::text@2 "" => "0"
 ```

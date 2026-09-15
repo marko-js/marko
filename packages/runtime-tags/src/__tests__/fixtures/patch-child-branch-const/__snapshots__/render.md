@@ -42,6 +42,5 @@ INSERT: main > section > :is(.fixed, p)
 ```
 ## Change
 ```
-UPDATE: .fixed::text "fixed" => "fixed"
 UPDATE: main > section > p::text "b" => "c"
 ```

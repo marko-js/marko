@@ -53,7 +53,6 @@ REMOVE: main > p + button
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 INSERT: main > p + :is(span, button)
 UPDATE: main > span::text@5 "" => "0"
 ```

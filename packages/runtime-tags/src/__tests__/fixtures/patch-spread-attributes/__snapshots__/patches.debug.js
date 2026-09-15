@@ -24,9 +24,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1_input_img#10; ;<img>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1*shell:AQ
+{
   "PatchAttrs:#a/0": {
     href: "/static",
     class: "y"
@@ -38,4 +39,4 @@
       src: "/j.png"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1*shell"]
-}]
+}

@@ -35,8 +35,6 @@
 ```
 ## Change
 ```
-UPDATE: main > section:nth-of-type(1) > h2::text "a" => "a"
-UPDATE: main > section:nth-of-type(1) > em::text "x" => "x"
 INSERT: main > section:nth-of-type(1) + section
 ```
 
@@ -84,7 +82,6 @@ UPDATE: main > section:nth-of-type(2) > em::text "x" => "y"
 ```
 ## Change
 ```
-UPDATE: main > section > h2::text "c" => "c"
 UPDATE: main > section > em::text "y" => "z"
 REMOVE: main > section + section
 ```

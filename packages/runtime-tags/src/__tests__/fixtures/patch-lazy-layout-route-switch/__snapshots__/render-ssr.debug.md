@@ -46,7 +46,6 @@ INSERT: nav > :is(a, a)
 ```
 REMOVE: main > h1
 INSERT: main > h1
-UPDATE: nav > a::text "x" => "x"
 REMOVE: nav > a + a
 ```
 

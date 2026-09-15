@@ -15,9 +15,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell;/E lD l D m&;<div class=card><h2> </h2><p> </p><button class=t> </button></div>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell:AQ
+{
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "B",
     "PatchText:#text/1": "n2"
@@ -32,4 +33,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell"]
-}]
+}

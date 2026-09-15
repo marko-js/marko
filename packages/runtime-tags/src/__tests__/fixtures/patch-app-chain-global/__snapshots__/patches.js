@@ -22,9 +22,10 @@
     }
   }
 }]
+"d:CA"
 
-// PATCH
-[`d2;b%b/ Db%c%c%l&b;<!><!><button class=b>b:<!>:<!>:<!></button><!>`, {
+// PATCH holding d:CA
+{
   z_c: {
     ca: {
       cAc: {
@@ -46,9 +47,9 @@
       ba: [1, {}, "d2"]
     }
   }
-}]
+}
 
-// PATCH
+// PATCH holding d:CA
 [`d1;b%b/ Db%l&b;<!><!><button class=a>a:<!></button><!>`, {
   z_b: {
     ca: {
@@ -70,9 +71,10 @@
     }
   }
 }]
+"d:DA"
 
-// PATCH
-[`d2;b%b/ Db%c%c%l&b;<!><!><button class=b>b:<!>:<!>:<!></button><!>`, {
+// PATCH holding d:DA
+{
   z_c: {
     ca: {
       cAc: {
@@ -94,4 +96,4 @@
       ba: [1, {}, "d2"]
     }
   }
-}]
+}

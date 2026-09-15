@@ -64,7 +64,6 @@ UPDATE: ul > li::text "Apples" => "Fuji Apples"
 ```
 ## Change
 ```
-UPDATE: ul > li::text "Fuji Apples" => "Fuji Apples"
 REMOVE: ul > li::text + span
 REMOVE: ul > li::text + button
 ```
@@ -85,7 +84,6 @@ REMOVE: ul > li::text + button
 ```
 ## Change
 ```
-UPDATE: ul > li::text "Fuji Apples" => "Fuji Apples"
 INSERT: ul > li::text + :is(span, button)
 UPDATE: ul > li > span::text " " => "0"
 ```
@@ -115,7 +113,6 @@ UPDATE: ul > li > span::text " " => "0"
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(2)::text "Fuji Apples" => "Fuji Apples"
 INSERT: ul > li
 UPDATE: ul > li:nth-of-type(1) > span::text " " => "0"
 ```

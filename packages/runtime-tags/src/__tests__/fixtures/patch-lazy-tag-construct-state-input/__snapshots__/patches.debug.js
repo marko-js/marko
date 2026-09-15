@@ -3,9 +3,10 @@
   "PatchBranch:#main/2": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko0": "b"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1_input_label#6/init packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1_n#7/init packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1_#text#0/init;b%/&;<!><!><!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/2": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko0": "c"
-}]
+}

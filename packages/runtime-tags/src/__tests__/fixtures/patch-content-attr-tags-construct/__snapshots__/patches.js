@@ -8,9 +8,10 @@
     }
   }, "a2"]
 }]
+"a:Dg"
 
-// PATCH
-[`a0,<b>static header</b>`, `a1,body`, `a2;/E%lD l%l&;<section><header><!></header><h2> </h2><!></section>`, {
+// PATCH holding a:Dg
+{
   ba: [{
     ca: {
       fa: "^a0",
@@ -18,4 +19,4 @@
       fc: "^a1"
     }
   }, "a2"]
-}]
+}

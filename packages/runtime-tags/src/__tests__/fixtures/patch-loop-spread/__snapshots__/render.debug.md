@@ -33,7 +33,6 @@
 ## Change
 ```
 UPDATE: .b[class] "a" => "b"
-UPDATE: .b::text "1" => "1"
 INSERT: .b + li
 ```
 
@@ -51,6 +50,5 @@ INSERT: .b + li
 ## Change
 ```
 UPDATE: ul > li[title] "two" => null
-UPDATE: ul > li::text "2" => "2"
 REMOVE: ul > li
 ```

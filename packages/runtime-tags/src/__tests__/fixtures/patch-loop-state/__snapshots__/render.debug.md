@@ -78,7 +78,6 @@ REMOVE: main > ul > li
 ```
 ## Change
 ```
-UPDATE: main > ul > li:nth-of-type(1)::text@0 "Rye" => "Rye"
 INSERT: main > ul > li:nth-of-type(1) + li
 UPDATE: main > ul > li:nth-of-type(2)::text@6 "" => "1"
 ```

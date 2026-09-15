@@ -6,14 +6,15 @@
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-catch-then-pending/template.marko0": "b"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-catch-then-pending/template.marko_3_#text#0/await:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-then-pending/template.marko_3_#text#0/await,<span>ok</span>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-catch-then-pending/template.marko_3_#text#0/await:AQ
+{
   "PatchChild:BranchScopes:#text/0": {
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-then-pending/template.marko_3_#text#0/await"
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-catch-then-pending/template.marko0": "c"
-}]
+}
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": {}

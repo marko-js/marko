@@ -24,7 +24,6 @@
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Marko" => "Marko"
 REMOVE: main > h1 + p
 ```
 

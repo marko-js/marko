@@ -55,7 +55,6 @@ UPDATE: main > section > strong::text@2 "x" => "y"
 ```
 ## Change
 ```
-UPDATE: main > section > h2::text "u" => "u"
 REMOVE: main > section > h2 + strong
 INSERT: main > section > h2 + em
 ```

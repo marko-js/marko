@@ -9,8 +9,9 @@
     "PatchTextContent:#style/0": "a+b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_2*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_2*shell:AQ"
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_2*shell:AQ
 {
   "PatchLoop:#text/0": [],
   "PatchBranch:#text/1": 0

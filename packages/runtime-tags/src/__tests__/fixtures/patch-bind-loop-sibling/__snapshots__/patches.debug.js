@@ -38,3 +38,4 @@
     }, _.f]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_1*shell:AQ"

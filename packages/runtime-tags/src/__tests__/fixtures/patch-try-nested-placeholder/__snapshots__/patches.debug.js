@@ -9,3 +9,4 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-try-nested-placeholder/template.marko_4*content:AQ"

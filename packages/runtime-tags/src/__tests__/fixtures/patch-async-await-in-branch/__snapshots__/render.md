@@ -51,7 +51,6 @@ UPDATE: main > button::text@6 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 REMOVE: main > h1 + em
 INSERT: main > h1 + em
 ```
@@ -115,7 +114,6 @@ INSERT: main > h1 + em
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 REMOVE: main > h1 + em
 INSERT: main > h1 + em
 ```

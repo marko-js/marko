@@ -7,19 +7,20 @@
     }
   }
 }]
+"b:Ag"
 
-// PATCH
-[`b0;b%;body <!>`, {
+// PATCH holding b:Ag
+{
   fa: [">div", 0, "b0"],
   cAa: {
     cAa: {
       ta: "c"
     }
   }
-}]
+}
 
-// PATCH
-[`a;D%;<section><!></section>`, `b0;b%;body <!>`, {
+// PATCH holding b:Ag
+[`a;D%;<section><!></section>`, {
   fa: ["a", 0, "b0"],
   cAa: {
     fa: "^b0",
@@ -28,3 +29,4 @@
     }
   }
 }]
+"a:AQ,b:Ag"

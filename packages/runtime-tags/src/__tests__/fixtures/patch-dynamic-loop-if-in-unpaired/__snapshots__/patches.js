@@ -17,8 +17,9 @@
     }
   }
 }]
+"c:DA"
 
-// PATCH
+// PATCH holding c:DA
 {
   ca: {
     cAb: {
@@ -27,8 +28,8 @@
   }
 }
 
-// PATCH
-[`c2;D%c%;<li><!>:<!></li>`, `c1; ;<ul></ul>`, {
+// PATCH holding c:DA
+{
   ca: {
     cAb: {
       ba: [{
@@ -39,4 +40,4 @@
       }, "c1"]
     }
   }
-}]
+}

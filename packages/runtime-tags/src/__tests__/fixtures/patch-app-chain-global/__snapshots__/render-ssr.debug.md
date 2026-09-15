@@ -34,7 +34,6 @@
 REMOVE: main > button
 INSERT: main > .b
 UPDATE: .b::text@2 "" => "a"
-UPDATE: .b::text "" => ""
 UPDATE: .b::text@5 "" => "0"
 ```
 
@@ -147,7 +146,6 @@ UPDATE: .a::text@2 "" => "0"
 REMOVE: main > button
 INSERT: main > .b
 UPDATE: .b::text@2 "" => "c"
-UPDATE: .b::text "" => ""
 UPDATE: .b::text@5 "" => "0"
 ```
 

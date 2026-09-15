@@ -15,9 +15,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell;/ D l&;<div id=fixed> </div>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchAttrs:#div/0": [{
@@ -32,4 +33,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell"]
-}]
+}

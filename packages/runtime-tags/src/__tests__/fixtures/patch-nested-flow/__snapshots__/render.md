@@ -87,8 +87,6 @@ UPDATE: main > footer > span::text@5 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: main > ul > li:nth-of-type(2)::text "Apples" => "Apples"
-UPDATE: main > ul > li:nth-of-type(3)::text "Bread" => "Bread"
 REMOVE: main > ul > li:nth-of-type(3)::text + em
 INSERT: main > ul > li
 INSERT: main > ul + section
@@ -127,14 +125,11 @@ UPDATE: main > footer > span::text@0 "new" => "hot"
 ```
 ## Change
 ```
-UPDATE: main > ul > li:nth-of-type(1)::text "Milk" => "Milk"
 REMOVE: main > ul > li:nth-of-type(1)::text + em
-UPDATE: main > ul > li:nth-of-type(2)::text "Bread" => "Bread"
 INSERT: main > ul > li:nth-of-type(2)::text + em
 REMOVE: main > ul > li:nth-of-type(1) + li
 UPDATE: main > section::text "2 deals" => "1 deal"
 INSERT: main > section::text + small
-UPDATE: main > footer > span::text@0 "hot" => "hot"
 ```
 
 # Update `{"items":[{"id":2,"label":"Bread","sale":true}],"badge":"sold"}`
@@ -160,7 +155,6 @@ UPDATE: main > footer > span::text@0 "hot" => "hot"
 ```
 ## Change
 ```
-UPDATE: main > ul > li::text "Bread" => "Bread"
 REMOVE: main > ul > li
 REMOVE: main > ul + section
 UPDATE: main > footer > span::text@0 "hot" => "sold"

@@ -14,3 +14,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_3_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_5*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_1*shell:AQ"

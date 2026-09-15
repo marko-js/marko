@@ -9,3 +9,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-bind-dynamic-tag/tags/child.marko_1*shell"]
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-bind-dynamic-tag/tags/child.marko_1*shell:AQ"

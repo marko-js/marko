@@ -51,10 +51,8 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1) > b::text "a" => "a"
 REMOVE: ul > li:nth-of-type(1) > b + span
 INSERT: ul > li:nth-of-type(1) > b + em
-UPDATE: ul > li:nth-of-type(2) > b::text "b" => "b"
 REMOVE: ul > li:nth-of-type(2) > b + em
 INSERT: ul > li:nth-of-type(2) > b + span
 INSERT: ul > li:nth-of-type(2) + li

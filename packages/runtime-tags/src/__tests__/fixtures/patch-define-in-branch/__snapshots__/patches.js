@@ -11,9 +11,10 @@
     }
   }, "a1"]
 }]
+"a:BA"
 
-// PATCH
-[`a1;b/D%c%l&/D%c%l&b;<!><li><!>: <!></li><li><!>: <!></li><!>`, {
+// PATCH holding a:BA
+{
   ba: [{
     ca: {
       ta: "a",
@@ -24,9 +25,9 @@
       tb: "2"
     }
   }, "a1"]
-}]
+}
 
-// PATCH
+// PATCH holding a:BA
 {
   ba: 0
 }

@@ -6,14 +6,15 @@
   },
   va0: "b"
 }]
+"a:BA"
 
-// PATCH
-[`a1,<span>ok</span>`, {
+// PATCH holding a:BA
+{
   cAa: {
     pa: "a1"
   },
   va0: "c"
-}]
+}
 {
   cAa: {
     cAa: {}

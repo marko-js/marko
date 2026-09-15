@@ -71,9 +71,14 @@ type Renderer = ReturnType<ReturnType<typeof _content>> & {
 };
 
 // A shell registers where the dom module would register the same content,
-// so every consumer resolves one id one way; a later flush's shell wins.
-export const getContent = (id: string, owner?: Scope) =>
-  getRegisteredWithScope<ShellFactory | undefined>(id)?.(owner);
+// so every consumer resolves one id one way; a later flush's shell wins,
+// and a template's own module (a renderer, once resident) serves as is.
+export const getContent = (id: string, owner?: Scope) => {
+  const registered = getRegisteredWithScope<
+    ShellFactory | Renderer | undefined
+  >(id);
+  return typeof registered === "function" ? registered(owner) : registered;
+};
 export const getShell = (id: string) =>
   getRegisteredWithScope<ShellFactory | undefined>(id)?.[RendererProp.Shell];
 

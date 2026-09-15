@@ -47,7 +47,6 @@ INSERT: button + span
 ```
 ## Change
 ```
-UPDATE: button::text "x" => "x"
 REMOVE: button + span
 ```
 
@@ -62,6 +61,5 @@ REMOVE: button + span
 ```
 ## Change
 ```
-UPDATE: button::text "x" => "x"
 INSERT: button + span
 ```

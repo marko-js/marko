@@ -61,9 +61,10 @@
     }
   }
 }]
+"a:DA,d:Fg,c:Bg"
 
-// PATCH
-[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `b0,<p>wide</p>`, `d2;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, `a2;D ;<a> </a>`, {
+// PATCH holding a:DA,d:Fg,c:Bg
+[`b0,<p>wide</p>`, `d2;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, {
   z_a: {
     cAa: {
       ca: {
@@ -100,9 +101,10 @@
   },
   ba: [1, {}, "d1"]
 }]
+"d:Hg,c:Bg,a:DA,b:Ag"
 
-// PATCH
-[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, `a2;D ;<a> </a>`, {
+// PATCH holding d:Hg,c:Bg,a:DA,b:Ag
+{
   z_a: {
     cAa: {
       ca: {
@@ -155,4 +157,4 @@
     }
   },
   ba: [1, {}, "d1"]
-}]
+}

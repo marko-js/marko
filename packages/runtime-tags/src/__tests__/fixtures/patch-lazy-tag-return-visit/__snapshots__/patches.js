@@ -18,9 +18,10 @@
   },
   ba: "b0"
 }]
+"b:Ag"
 
-// PATCH
-[`b0;b%b/ D%c%l&b;<!><!><button><!>:<!></button><!>`, {
+// PATCH holding b:Ag
+{
   z_a: {
     cAa: {
       cb: {
@@ -33,4 +34,4 @@
     }
   },
   ba: "b0"
-}]
+}

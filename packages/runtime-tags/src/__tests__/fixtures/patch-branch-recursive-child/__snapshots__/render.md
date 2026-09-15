@@ -36,6 +36,5 @@ INSERT: main > li
 ```
 ## Change
 ```
-UPDATE: main > li::text "a" => "a"
 UPDATE: main > li > ul > li::text "b" => "c"
 ```

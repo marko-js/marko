@@ -48,9 +48,10 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/tags/icon.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_2*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_0_#text#0/await;b%b%;<!><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_3*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell;b%b/b&b;<!><!><h1>B</h1><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_2*shell;b/D%lD%l&b;<!><nav><!></nav><article><!></article><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_3*shell;D ;<a> </a>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/tags/icon.marko_1*shell; ;<path></path>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_2*shell;/ b&;<svg></svg>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/tags/icon.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_2*shell:AQ
+[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell;b%b/b&b;<!><!><h1>B</h1><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": {
@@ -85,8 +86,9 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/tags/icon.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_2*shell:AQ"
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/tags/icon.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_2*shell:AQ
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_4*shell,<p>home</p>`, {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
@@ -94,3 +96,4 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/tags/icon.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_4*shell:AQ"

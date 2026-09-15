@@ -17,8 +17,9 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell:AQ"
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell:AQ
 {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
@@ -27,8 +28,8 @@
   }
 }
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_3*shell;D%c%;<li><!>:<!></li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell; ;<ul></ul>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell:AQ
+{
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchBranch:#text/0": [{
@@ -39,4 +40,4 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell"]
     }
   }
-}]
+}

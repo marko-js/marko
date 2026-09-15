@@ -41,8 +41,6 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(3)::text "0" => "0"
-UPDATE: ul > li:nth-of-type(4)::text "1" => "1"
 UPDATE: ul > li:nth-of-type(1)::text@2 "one" => "two"
 ```
 
@@ -93,7 +91,6 @@ UPDATE: ul > li:nth-of-type(2)::text@2 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(3)::text "0" => "0"
 REMOVE: ul > li:nth-of-type(3) + li
 UPDATE: ul > li:nth-of-type(1)::text@2 "two" => "three"
 ```
@@ -145,7 +142,6 @@ UPDATE: ul > li:nth-of-type(2)::text@2 "1" => "2"
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(3)::text "0" => "0"
 INSERT: ul > li:nth-of-type(3) + li
 UPDATE: ul > li:nth-of-type(1)::text@2 "three" => "four"
 ```

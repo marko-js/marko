@@ -25,7 +25,6 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text "a" => "a"
 INSERT: ul > li:nth-of-type(1) + li
 ```
 
@@ -50,8 +49,6 @@ INSERT: ul > li:nth-of-type(1) + li
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text "b" => "b"
-UPDATE: ul > li:nth-of-type(1) > ul > li:nth-of-type(1)::text "x" => "x"
 INSERT: ul > li:nth-of-type(1) > ul > li:nth-of-type(1) + li
 REMOVE: ul > li
 INSERT: ul > li:nth-of-type(1) + li

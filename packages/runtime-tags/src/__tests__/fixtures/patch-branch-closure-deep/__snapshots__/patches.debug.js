@@ -5,3 +5,4 @@
     "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-deep/template.marko_2*shell"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-deep/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-deep/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-deep/template.marko_1*shell:AQ"

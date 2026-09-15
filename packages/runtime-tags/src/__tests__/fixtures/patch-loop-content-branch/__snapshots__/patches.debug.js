@@ -32,9 +32,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_3*shell;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell;/E l%l&;<li><b> </b><!></li>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell:AQ
+{
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "c",
@@ -46,10 +47,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell"]
-}]
+}
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_4*shell;D ;<span> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_3*shell;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell;/E l%l&;<li><b> </b><!></li>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell:AQ
+{
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "x",
@@ -71,4 +72,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell"]
-}]
+}

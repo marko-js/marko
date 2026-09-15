@@ -9,9 +9,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell;/D%l&;<section><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content",
@@ -20,15 +21,15 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell"]
-}]
+}
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell:AQ
 {
   "PatchBranch:#main/0": 0
 }
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell;/D%l&;<section><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content",
@@ -37,4 +38,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell"]
-}]
+}

@@ -16,9 +16,10 @@
     }
   }, "a2"]
 }]
+"a:Cg"
 
-// PATCH
-[`a0;D ;<em> </em>`, `a2;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding a:Cg
+{
   ca: {
     ta: "c",
     cAb: {
@@ -34,9 +35,9 @@
       }
     }
   }, "a2"]
-}]
+}
 
-// PATCH
+// PATCH holding a:Cg
 {
   ca: {
     ta: "c",
@@ -47,8 +48,8 @@
   bb: 0
 }
 
-// PATCH
-[`a0;D ;<em> </em>`, `a2;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding a:Cg
+{
   ca: {
     ta: "e",
     cAb: {
@@ -64,4 +65,4 @@
       }
     }
   }, "a2"]
-}]
+}

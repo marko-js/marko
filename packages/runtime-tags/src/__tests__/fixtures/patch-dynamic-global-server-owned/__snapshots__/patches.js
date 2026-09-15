@@ -8,8 +8,9 @@
     ta: "b"
   }
 }]
+"a:AQ"
 
-// PATCH
+// PATCH holding a:AQ
 {
   $: {
     brand: "b"
@@ -17,8 +18,8 @@
   fa: 0
 }
 
-// PATCH
-[`a;D ;<em> </em>`, {
+// PATCH holding a:AQ
+{
   $: {
     brand: "c"
   },
@@ -26,4 +27,4 @@
   cAa: {
     ta: "c"
   }
-}]
+}

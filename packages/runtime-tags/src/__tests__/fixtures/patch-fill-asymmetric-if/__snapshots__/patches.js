@@ -5,9 +5,11 @@
   }, "a0"],
   va0: "Fresh"
 }]
+"a:Bg"
 
-// PATCH
+// PATCH holding a:Bg
 [`a2,<p>shown</p>`, {
   ba: "a2",
   va0: "Fresh"
 }]
+"a:Dg"

@@ -15,9 +15,10 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0;/E lD l D m&;<div class=card><h2> </h2><p> </p><button class=t> </button></div>`, {
+// PATCH holding a:Ag
+{
   ca: {
     ta: "B",
     tb: "n2"
@@ -32,4 +33,4 @@
       }
     }
   }, "a0"]
-}]
+}

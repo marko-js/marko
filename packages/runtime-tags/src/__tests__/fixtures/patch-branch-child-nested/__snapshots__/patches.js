@@ -11,9 +11,10 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0;/E l b%l&;<section class=card><h2> </h2><button class=toggle>toggle</button><!></section>`, {
+// PATCH holding a:Ag
+{
   ba: [{
     ca: {
       ta: "B",
@@ -24,4 +25,4 @@
       vc0: "B"
     }
   }, "a0"]
-}]
+}

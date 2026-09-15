@@ -112,8 +112,6 @@ UPDATE: main > div:nth-of-type(2) > button::text " " => "show"
 ```
 ## Change
 ```
-UPDATE: main > div:nth-of-type(1) > h2::text "B" => "B"
 UPDATE: main > div:nth-of-type(1) > p::text "" => "n2"
-UPDATE: main > div:nth-of-type(2) > h2::text "fixed" => "fixed"
 UPDATE: main > div:nth-of-type(2) > p::text "m1" => "m2"
 ```

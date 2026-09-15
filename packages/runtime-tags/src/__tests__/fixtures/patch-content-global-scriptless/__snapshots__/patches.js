@@ -19,9 +19,10 @@
     }
   }, "a2"]
 }]
+"a:Cg"
 
-// PATCH
-[`a0;D ;<i> </i>`, `a2;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding a:Cg
+{
   $: {
     brand: "Zed"
   },
@@ -40,10 +41,10 @@
       }
     }
   }, "a2"]
-}]
+}
 
-// PATCH
-[`a0;D ;<i> </i>`, `a2;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding a:Cg
+{
   $: {
     brand: "Qux"
   },
@@ -62,4 +63,4 @@
       }
     }
   }, "a2"]
-}]
+}

@@ -19,9 +19,10 @@
     "PatchText:#text/0": "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_2*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_2*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell; D/D l&D m;<a class=link><svg viewBox="0 0 1 1"><title></title></svg><span> </span></a>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_2*shell:AQ
+{
   "PatchLoop:#nav/0": [{
     "PatchAttr:#a/0 class": "link active",
     "PatchAttr:#a/0 href": "/b",
@@ -31,4 +32,4 @@
     "PatchText:#text/2": "B"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell"],
   "PatchBranch:#main/1": 0
-}]
+}

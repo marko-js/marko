@@ -8,9 +8,10 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a1 a4;Db%;<p>Seen <!></p>`, `a0 !a2; b%;<button>+</button><!><!>`, {
+// PATCH holding a:Ag
+[`a1 a4;Db%;<p>Seen <!></p>`, {
   ta: "Store!",
   bb: [{
     bb: "a1",
@@ -19,15 +20,16 @@
     }
   }, "a0"]
 }]
+"a:Bg"
 
-// PATCH
+// PATCH holding a:Bg
 {
   ta: "Store!",
   bb: 0
 }
 
-// PATCH
-[`a1 a4;Db%;<p>Seen <!></p>`, `a0 !a2; b%;<button>+</button><!><!>`, {
+// PATCH holding a:Bg
+{
   ta: "Store!",
   bb: [{
     bb: "a1",
@@ -35,4 +37,4 @@
       va0: 0
     }
   }, "a0"]
-}]
+}

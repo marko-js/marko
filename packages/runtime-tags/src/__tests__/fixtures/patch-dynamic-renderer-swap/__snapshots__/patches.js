@@ -7,8 +7,9 @@
     ta: "two"
   }
 }]
+"a:AQ"
 
-// PATCH
+// PATCH holding a:AQ
 [`b;D%;<article class=b><!>!</article>`, {
   fa: ["b", {
     label: "three"
@@ -17,3 +18,4 @@
     ta: "three"
   }
 }]
+"a:AQ,b:AQ"

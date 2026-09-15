@@ -11,9 +11,10 @@
     }
   }
 }]
+"a:Bg,b:AQ"
 
-// PATCH
-[`a0,hi`, `a1; ; `, {
+// PATCH holding a:Bg,b:AQ
+{
   fa: [">section", {
     class: "b"
   }, "a0"],
@@ -21,10 +22,10 @@
   cAb: {
     ta: "z"
   }
-}]
+}
 
-// PATCH
-[`a0,hi`, `b;D%;<section><!></section>`, `a1; ; `, {
+// PATCH holding a:Bg,b:AQ
+{
   fa: [">section", {
     class: "c"
   }, "a0"],
@@ -35,4 +36,4 @@
       ta: "w"
     }
   }
-}]
+}

@@ -39,7 +39,6 @@ UPDATE: main > h1::text "Store" => "Store!"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 UPDATE: main[data-pair] "xy" => "zw"
 UPDATE: main[data-runs] "1" => "2"
 ```
@@ -57,7 +56,6 @@ UPDATE: main[data-runs] "1" => "2"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 UPDATE: main[data-pair] "zw" => "xw"
 UPDATE: main[data-runs] "2" => "3"
 ```

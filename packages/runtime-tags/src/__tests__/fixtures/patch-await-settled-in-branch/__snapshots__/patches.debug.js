@@ -8,15 +8,16 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1*shell"],
   "PatchText:#text/1": "b"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1*shell:AQ"
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1*shell:AQ
 {
   "PatchBranch:#text/0": 0,
   "PatchText:#text/1": "c"
 }
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1_#text#0/await;D ;<b> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1*shell;D%;<section><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1*shell:AQ
+{
   "PatchBranch:#text/0": [{
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1_#text#0/await",
     "PatchChild:BranchScopes:#text/0": {
@@ -24,4 +25,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-settled-in-branch/template.marko_1*shell"],
   "PatchText:#text/1": "d"
-}]
+}

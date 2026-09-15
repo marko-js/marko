@@ -70,7 +70,6 @@ UPDATE: main > h1::text "Store" => "Store!"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 REMOVE: main > h1 + p
 REMOVE: main > h1 + button
 ```
@@ -93,7 +92,6 @@ REMOVE: main > h1 + button
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 INSERT: main > h1 + :is(p, button)
 UPDATE: main > p::text@5 "" => "0"
 ```

@@ -9,3 +9,4 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-intersection-deep/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-intersection-deep/template.marko0": "y"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-loop-intersection-deep/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-intersection-deep/template.marko_1*shell:AQ"

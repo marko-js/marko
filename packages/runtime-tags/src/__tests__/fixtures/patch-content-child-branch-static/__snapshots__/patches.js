@@ -6,28 +6,29 @@
     }, "b0"]
   }
 }]
+"a:Ag,b:Ag"
 
-// PATCH
-[`a0,<em>static</em>`, `b0;b%;<!><!><!>`, {
+// PATCH holding a:Ag,b:Ag
+{
   ca: {
     ba: [{
       fa: "^^a0"
     }, "b0"]
   }
-}]
+}
 
-// PATCH
+// PATCH holding a:Ag,b:Ag
 {
   ca: {
     ba: 0
   }
 }
 
-// PATCH
-[`a0,<em>static</em>`, `b0;b%;<!><!><!>`, {
+// PATCH holding a:Ag,b:Ag
+{
   ca: {
     ba: [{
       fa: "^^a0"
     }, "b0"]
   }
-}]
+}

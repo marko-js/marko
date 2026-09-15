@@ -47,12 +47,8 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text@0 "1" => "1"
 UPDATE: ul > li:nth-of-type(1)::text@2 "a" => "b"
-UPDATE: ul > li:nth-of-type(2)::text@0 "2" => "2"
 UPDATE: ul > li:nth-of-type(2)::text@2 "a" => "b"
-UPDATE: ol > li:nth-of-type(1)::text "1" => "1"
-UPDATE: ol > li:nth-of-type(2)::text "2" => "2"
 INSERT: ol + div
 ```
 
@@ -85,15 +81,9 @@ INSERT: ol + div
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text@0 "1" => "1"
 UPDATE: ul > li:nth-of-type(1)::text@2 "b" => "c"
-UPDATE: ul > li:nth-of-type(2)::text@0 "2" => "2"
 UPDATE: ul > li:nth-of-type(2)::text@2 "b" => "c"
-UPDATE: ol > li:nth-of-type(1)::text "1" => "1"
-UPDATE: ol > li:nth-of-type(2)::text "2" => "2"
-UPDATE: div > p:nth-of-type(1)::text@0 "1" => "1"
 UPDATE: div > p:nth-of-type(1)::text@2 "b" => "c"
-UPDATE: div > p:nth-of-type(2)::text@0 "2" => "2"
 UPDATE: div > p:nth-of-type(2)::text@2 "b" => "c"
 ```
 
@@ -118,12 +108,8 @@ UPDATE: div > p:nth-of-type(2)::text@2 "b" => "c"
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text@0 "1" => "1"
 UPDATE: ul > li:nth-of-type(1)::text@2 "c" => "d"
-UPDATE: ul > li:nth-of-type(2)::text@0 "2" => "2"
 UPDATE: ul > li:nth-of-type(2)::text@2 "c" => "d"
-UPDATE: ol > li:nth-of-type(1)::text "1" => "1"
-UPDATE: ol > li:nth-of-type(2)::text "2" => "2"
 REMOVE: ol + div
 ```
 
@@ -156,11 +142,7 @@ REMOVE: ol + div
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text@0 "1" => "1"
 UPDATE: ul > li:nth-of-type(1)::text@2 "d" => "e"
-UPDATE: ul > li:nth-of-type(2)::text@0 "2" => "2"
 UPDATE: ul > li:nth-of-type(2)::text@2 "d" => "e"
-UPDATE: ol > li:nth-of-type(1)::text "1" => "1"
-UPDATE: ol > li:nth-of-type(2)::text "2" => "2"
 INSERT: ol + div
 ```

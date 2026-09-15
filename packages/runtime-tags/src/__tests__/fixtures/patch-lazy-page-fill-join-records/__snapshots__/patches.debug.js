@@ -61,9 +61,10 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell,<p>wide</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell;D ;<a> </a>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell:AQ
+[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell,<p>wide</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko": {
     "PatchChild:BranchScopes:#body/0": {
       "PatchChild:#childScope/0": {
@@ -100,9 +101,10 @@
   },
   "PatchBranch:#body/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2_count#6/init;D%c%c%;<span><!>/<!>/<!></span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell;/E l%l&;<section><h2> </h2><!></section>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell;D ;<a> </a>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell:AQ
+{
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko": {
     "PatchChild:BranchScopes:#body/0": {
       "PatchChild:#childScope/0": {
@@ -155,4 +157,4 @@
     }
   },
   "PatchBranch:#body/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell"]
-}]
+}

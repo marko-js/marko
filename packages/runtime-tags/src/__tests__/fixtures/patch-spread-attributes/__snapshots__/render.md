@@ -82,7 +82,6 @@ UPDATE: .y::text "a" => "b"
 ## Change
 ```
 UPDATE: .y[data-id] "7" => null
-UPDATE: .y::text "b" => "b"
 INSERT: .y + img
 ```
 
@@ -106,7 +105,6 @@ INSERT: .y + img
 ```
 ## Change
 ```
-UPDATE: .y::text "b" => "b"
 UPDATE: main > img[width] "10" => null
 UPDATE: main > img[src] "/i.png" => "/j.png"
 ```

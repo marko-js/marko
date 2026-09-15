@@ -66,9 +66,7 @@ UPDATE: main > button::text@6 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 UPDATE: main > ul > li:nth-of-type(1)::text "Apples" => "Apples!"
-UPDATE: main > ul > li:nth-of-type(2)::text "Bread" => "Bread"
 ```
 
 # Update `{"title":"Store","items":[{"id":1,"label":"Apples!"},{"id":2,"label":"Bread"},{"id":3,"label":"Milk"}]}`
@@ -95,9 +93,6 @@ UPDATE: main > ul > li:nth-of-type(2)::text "Bread" => "Bread"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
-UPDATE: main > ul > li:nth-of-type(1)::text "Apples!" => "Apples!"
-UPDATE: main > ul > li:nth-of-type(2)::text "Bread" => "Bread"
 INSERT: main > ul > li:nth-of-type(2) + li
 ```
 
@@ -152,9 +147,6 @@ UPDATE: main > button::text@6 "1" => "2"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
-UPDATE: main > ul > li:nth-of-type(1)::text "Milk" => "Milk"
-UPDATE: main > ul > li:nth-of-type(2)::text "Apples!" => "Apples!"
 REMOVE: main > ul > li:nth-of-type(2) + li
 REMOVE: main > ul > li:nth-of-type(2) + li
 INSERT: main > ul > li
@@ -174,7 +166,6 @@ INSERT: main > ul > li
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 REMOVE: main > ul > :is(li, li)
 ```
 
@@ -219,7 +210,6 @@ UPDATE: main > button::text@6 "2" => "3"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 INSERT: main > ul > li
 INSERT: main > ul > li:nth-of-type(1) + li
 ```

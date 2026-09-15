@@ -7,19 +7,20 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
+// PATCH holding a:Ag
 {
   ta: "Store!",
   bb: 0
 }
 
-// PATCH
-[`a0 !a1;Db%l ;<p>Seen <!></p><button>+</button>`, {
+// PATCH holding a:Ag
+{
   ta: "Store!",
   bb: [{
     s: {
       va0: 0
     }
   }, "a0"]
-}]
+}

@@ -3,9 +3,10 @@
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-derived/template.marko_1*shell"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-derived/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-derived/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-derived/template.marko_1_double#8/init;Db%;<p>Twice <!></p>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-derived/template.marko_1*shell:AQ
+{
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-derived/template.marko_1*shell"
-}]
+}

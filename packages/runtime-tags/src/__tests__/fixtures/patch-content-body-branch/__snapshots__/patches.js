@@ -12,9 +12,10 @@
     }
   }, "a1"]
 }]
+"a:Fg"
 
-// PATCH
-[`a0;b%;<!><!><!>`, `a3;Db%;<strong>B:<!></strong>`, `a1;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding a:Fg
+{
   ba: [{
     ca: {
       ta: "u",
@@ -26,10 +27,10 @@
       }
     }
   }, "a1"]
-}]
+}
 
-// PATCH
-[`a0;b%;<!><!><!>`, `a2;Db%;<em>A:<!></em>`, `a1;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding a:Fg
+[`a2;Db%;<em>A:<!></em>`, {
   ba: [{
     ca: {
       ta: "u",
@@ -42,9 +43,10 @@
     }
   }, "a1"]
 }]
+"a:Hg"
 
-// PATCH
-[`a0;b%;<!><!><!>`, `a2;Db%;<em>A:<!></em>`, `a1;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding a:Hg
+{
   ba: [{
     ca: {
       ta: "v",
@@ -56,15 +58,15 @@
       }
     }
   }, "a1"]
-}]
+}
 
-// PATCH
+// PATCH holding a:Hg
 {
   ba: 0
 }
 
-// PATCH
-[`a0;b%;<!><!><!>`, `a3;Db%;<strong>B:<!></strong>`, `a1;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding a:Hg
+{
   ba: [{
     ca: {
       ta: "w",
@@ -76,4 +78,4 @@
       }
     }
   }, "a1"]
-}]
+}

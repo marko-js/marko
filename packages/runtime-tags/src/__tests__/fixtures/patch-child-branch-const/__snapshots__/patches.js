@@ -8,9 +8,10 @@
     }, "b0"]
   }
 }]
+"b:Ag"
 
-// PATCH
-[`b0; D lD ;<h2> </h2><p> </p>`, {
+// PATCH holding b:Ag
+{
   ca: {
     ba: [{
       "aa class": "fixed",
@@ -18,4 +19,4 @@
       tc: "c"
     }, "b0"]
   }
-}]
+}

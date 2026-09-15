@@ -12,9 +12,10 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-nested-body-in-unpaired/template.marko_2*content:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-nested-body-in-unpaired/template.marko_2*content;%c%;<!>!<!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-nested-body-in-unpaired/template.marko_2*content:AQ
+{
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:#childScope/0": {
@@ -26,10 +27,10 @@
       }
     }
   }
-}]
+}
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-nested-body-in-unpaired/template.marko_2*content;%c%;<!>!<!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-nested-body-in-unpaired/template.marko_2*content:AQ
+{
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:#childScope/0": {
@@ -41,4 +42,4 @@
       }
     }
   }
-}]
+}

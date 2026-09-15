@@ -13,3 +13,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-rest-state/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-loop-rest-state/template.marko_1*shell:AQ"

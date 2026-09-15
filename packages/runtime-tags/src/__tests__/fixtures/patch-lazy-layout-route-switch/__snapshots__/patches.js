@@ -28,9 +28,10 @@
     }
   }
 }]
+"a:DA,d:Fg"
 
-// PATCH
-[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `d4;b%b/b&b;<!><!><h1>B</h1><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, `a2;D ;<a> </a>`, {
+// PATCH holding a:DA,d:Fg
+[`d4;b%b/b&b;<!><!><h1>B</h1><!>`, {
   z_a: {
     cAa: {
       ca: {
@@ -49,8 +50,10 @@
   },
   ba: [1, {}, "d1"]
 }]
+"d:Ng,a:DA"
 
-// PATCH
+// PATCH holding d:Ng,a:DA
 [`d2,<p>home</p>`, {
   ba: "d2"
 }]
+"d:Pg,a:DA"

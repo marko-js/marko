@@ -5,3 +5,4 @@
   "PatchBranch:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-static-scriptlets/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-static-scriptlets/template.marko0": "yo"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-static-scriptlets/template.marko_1*shell:AQ"

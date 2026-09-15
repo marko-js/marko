@@ -23,9 +23,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content;D%c%c%;<i><!>:<!>:<!></i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell;/D%l&;<section><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell:AQ
+{
   "$global:": {
     brand: "Zed"
   },
@@ -57,4 +58,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell"]
-}]
+}

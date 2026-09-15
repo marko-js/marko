@@ -11,3 +11,4 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-await-in-content/template.marko_2_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-await-in-content/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-await-in-content/template.marko_4*content:AQ"

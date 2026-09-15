@@ -5,9 +5,11 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko0": "Fresh"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell:AQ"
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell:AQ
 [`packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell,<p>shown</p>`, {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko0": "Fresh"
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell:AQ"

@@ -10,19 +10,6 @@
 ```
 
 # Update `{"$global":{"brand":"Marko","serializedGlobals":["brand"]}}`
-```html
-<main
-  data-log="[Marko]"
->
-  <h1>
-    Marko
-  </h1>
-</main>
-```
-## Change
-```
-UPDATE: main > h1::text "Marko" => "Marko"
-```
 
 # Update `{"$global":{"brand":"Runtime","serializedGlobals":["brand"]}}`
 ```html

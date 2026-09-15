@@ -16,9 +16,10 @@
     }
   }
 }]
+"a:AQ"
 
-// PATCH
-[`a;D ;<button> </button>`, {
+// PATCH holding a:AQ
+{
   fc: ["a", {
     label: "c"
   }],
@@ -27,4 +28,4 @@
       ta: "c"
     }
   }
-}]
+}

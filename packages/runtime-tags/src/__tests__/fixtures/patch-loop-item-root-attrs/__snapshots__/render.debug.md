@@ -63,7 +63,6 @@
 ## Change
 ```
 UPDATE: nav > a:nth-of-type(1)[class] "link active" => "link"
-UPDATE: nav > a:nth-of-type(1) > span::text "A" => "A"
 INSERT: nav > a:nth-of-type(1) + .link.active
 INSERT: main > p
 ```

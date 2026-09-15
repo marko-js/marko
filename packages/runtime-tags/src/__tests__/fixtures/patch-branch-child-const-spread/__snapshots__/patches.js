@@ -15,9 +15,10 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0;/ D l&;<div id=fixed> </div>`, {
+// PATCH holding a:Ag
+{
   ba: [{
     ca: {
       ja: [{
@@ -32,4 +33,4 @@
       }
     }
   }, "a0"]
-}]
+}

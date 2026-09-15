@@ -7,13 +7,14 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_2*content,<em>static body</em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_1*shell;/E l%l&;<section><h2> </h2><!></section>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "c",
       "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_2*content"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_1*shell"]
-}]
+}

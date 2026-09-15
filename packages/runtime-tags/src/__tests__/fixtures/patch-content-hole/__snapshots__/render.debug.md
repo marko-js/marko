@@ -46,6 +46,5 @@ UPDATE: main > section > em::text "x" => "y"
 ```
 ## Change
 ```
-UPDATE: main > section > h2::text "b" => "b"
 UPDATE: main > section > em::text "y" => "z"
 ```

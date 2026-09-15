@@ -18,3 +18,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/tags/counter/index.marko_1*shell"]
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/tags/counter/index.marko_1*shell:AQ"

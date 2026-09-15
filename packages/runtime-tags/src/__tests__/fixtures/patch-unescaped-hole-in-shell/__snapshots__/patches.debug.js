@@ -6,9 +6,10 @@
     "PatchBranch:#text/2": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_3*shell;D lD ;<div> </div><div class=y> </div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell; ; `, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell;b%b%;<!><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell;D lD l%;<div> </div><div class=x> </div><!><!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell:AQ
+[`packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_3*shell;D lD ;<div> </div><div class=y> </div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell; ; `, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell;b%b%;<!><!><!><!>`, {
   "PatchBranch:#main/0": [{
     "PatchHtml:#text/0": "\x3Ci>b\x3C/i> c",
     "PatchHtml:#text/1": "\x3Ci>b\x3C/i> c",
@@ -23,9 +24,10 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_3*shell;D lD ;<div> </div><div class=y> </div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell; ; `, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell;b%b%;<!><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell;D lD l%;<div> </div><div class=x> </div><!><!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchHtml:#text/0": "\x3Cu>d\x3C/u>",
     "PatchHtml:#text/1": "\x3Cu>d\x3C/u>",
@@ -39,9 +41,9 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell"]
-}]
+}
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell:AQ
 {
   "PatchBranch:#main/0": 0
 }

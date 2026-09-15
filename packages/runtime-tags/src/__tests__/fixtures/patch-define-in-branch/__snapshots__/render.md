@@ -32,9 +32,7 @@ INSERT: ul > :is(li, li)
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text@0 "a" => "a"
 UPDATE: ul > li:nth-of-type(1)::text@3 "1" => "2"
-UPDATE: ul > li:nth-of-type(2)::text@0 "b" => "b"
 UPDATE: ul > li:nth-of-type(2)::text@3 "1" => "2"
 ```
 

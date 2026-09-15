@@ -18,9 +18,10 @@
     ta: "hot"
   }
 }]
+"a:Gg"
 
-// PATCH
-[`a3,<em>on sale</em>`, `a2;D%b%;<li><!><!></li>`, `a1;D ;<small> </small>`, `a0;D%b%;<section><!><!></section>`, {
+// PATCH holding a:Gg
+[`a1;D ;<small> </small>`, {
   la: [3, {
     ta: "Milk",
     bb: 0
@@ -38,9 +39,10 @@
     ta: "hot"
   }
 }]
+"a:Hg"
 
-// PATCH
-[`a3,<em>on sale</em>`, `a2;D%b%;<li><!><!></li>`, {
+// PATCH holding a:Hg
+{
   la: [2, {
     ta: "Bread",
     bb: "a3"
@@ -49,4 +51,4 @@
   cc: {
     ta: "sold"
   }
-}]
+}

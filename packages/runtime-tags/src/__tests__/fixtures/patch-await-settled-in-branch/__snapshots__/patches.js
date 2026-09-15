@@ -8,15 +8,16 @@
   }, "a2"],
   tb: "b"
 }]
+"a:DA"
 
-// PATCH
+// PATCH holding a:DA
 {
   ba: 0,
   tb: "c"
 }
 
-// PATCH
-[`a1;D ;<b> </b>`, `a2;D%;<section><!></section>`, {
+// PATCH holding a:DA
+{
   ba: [{
     pa: "a1",
     cAa: {
@@ -24,4 +25,4 @@
     }
   }, "a2"],
   tb: "d"
-}]
+}

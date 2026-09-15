@@ -9,17 +9,18 @@
     }, "a1"]
   }, "a0"]
 }]
+"a:Bg"
 
-// PATCH
-[`a0;D%b%;<li><!><!></li>`, {
+// PATCH holding a:Bg
+{
   la: [1, {
     ta: "Fuji Apples",
     bb: 0
   }, "a0"]
-}]
+}
 
-// PATCH
-[`a1 !a2;D l ;<span> </span><button>note</button>`, `a0;D%b%;<li><!><!></li>`, {
+// PATCH holding a:Bg
+{
   la: [1, {
     ta: "Fuji Apples",
     bb: [{
@@ -28,10 +29,10 @@
       }
     }, "a1"]
   }, "a0"]
-}]
+}
 
-// PATCH
-[`a1 !a2;D l ;<span> </span><button>note</button>`, `a0;D%b%;<li><!><!></li>`, {
+// PATCH holding a:Bg
+{
   la: [2, {
     ta: "Milk",
     bb: [{
@@ -47,4 +48,4 @@
       }
     }, "a1"]
   }, "a0"]
-}]
+}

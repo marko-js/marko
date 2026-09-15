@@ -8,9 +8,10 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell"]
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell; D lD ;<h2> </h2><p> </p>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell:AQ
+{
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{
       "PatchAttr:#h2/0 class": "fixed",
@@ -18,4 +19,4 @@
       "PatchText:#text/2": "c"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell"]
   }
-}]
+}

@@ -14,9 +14,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_2*shell;/D%b%l&;<li><!><!></li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_1*shell; ;<ul></ul>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell;/D%b%l&;<li><!><!></li>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "a",
@@ -30,4 +31,4 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_1*shell"]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell"]
-}]
+}

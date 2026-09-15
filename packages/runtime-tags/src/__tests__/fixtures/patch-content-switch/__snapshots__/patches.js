@@ -9,8 +9,9 @@
   },
   va0: "b"
 }]
+"a:CA"
 
-// PATCH
+// PATCH holding a:CA
 {
   ca: {
     cAa: {
@@ -20,8 +21,8 @@
   va0: "a"
 }
 
-// PATCH
-[`a2;Db%;<i>B:<!></i>`, {
+// PATCH holding a:CA
+{
   ca: {
     cAa: {
       ba: [1, {
@@ -30,9 +31,9 @@
     }
   },
   va0: $
-}]
+}
 
-// PATCH
+// PATCH holding a:CA
 [`a3,<b>A</b>`, {
   ca: {
     cAa: {
@@ -41,3 +42,4 @@
   },
   va0: "a"
 }]
+"a:GA"

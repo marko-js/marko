@@ -7,19 +7,20 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1*shell:AQ"
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1*shell:AQ
 {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": 0
 }
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1;Db%l ;<p>Seen <!></p><button>+</button>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1*shell:AQ
+{
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1*shell"]
-}]
+}

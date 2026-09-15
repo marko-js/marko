@@ -12,9 +12,10 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_3*shell;D ;<li> </li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_2*shell; ;<ul></ul>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell;D%b%;<li><!><!></li>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell:AQ
+{
   "PatchLoop:#ul/0": ["b", {
     "PatchText:#text/0": "b",
     "PatchBranch:#text/1": [{
@@ -28,4 +29,4 @@
     "PatchText:#text/0": "c",
     "PatchBranch:#text/1": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell"]
-}]
+}

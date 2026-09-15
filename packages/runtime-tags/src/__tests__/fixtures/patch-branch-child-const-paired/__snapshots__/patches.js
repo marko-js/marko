@@ -8,9 +8,10 @@
     tb: "y"
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0;/D D m&D l;<section><h2> </h2></section><p> </p>`, {
+// PATCH holding a:Ag
+{
   bb: [{
     ca: {
       "aa class": "branch",
@@ -18,15 +19,15 @@
     },
     tb: "z"
   }, "a0"]
-}]
+}
 
-// PATCH
+// PATCH holding a:Ag
 {
   bb: 0
 }
 
-// PATCH
-[`a0;/D D m&D l;<section><h2> </h2></section><p> </p>`, {
+// PATCH holding a:Ag
+{
   bb: [{
     ca: {
       "aa class": "branch",
@@ -34,4 +35,4 @@
     },
     tb: "v"
   }, "a0"]
-}]
+}

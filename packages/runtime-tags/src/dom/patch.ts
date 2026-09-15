@@ -43,7 +43,8 @@ export type PatchGlobal = { renderId: string };
 
 /**
  * The live page's side of `template.patch`: `[headers, apply]`, the headers
- * a patch request sends (none yet) and the apply for each flush.
+ * a patch request sends (what the page holds, for the server to elide) and
+ * the apply for each flush.
  */
 export function patch($global: PatchGlobal) {
   // The response's own serialize context keeps every tree the response
@@ -58,50 +59,61 @@ export function patch($global: PatchGlobal) {
   // binding as a free variable (`b(1)`), skipping registry indirection.
   const names = Object.keys(flushVars);
   const vars = Object.values(flushVars);
-  const apply = (flush: string): Applied | Promise<unknown> => {
-    // Registered here so this module stays tree-shakable; a page with
-    // `$global` joins installed its own (`patch-global.feat`).
-    patchers[PatchKey.Globals] ||= applyGlobals;
-    // The response's context is its token: its flushes share it, and a
-    // later response supersedes what an earlier one left waiting.
-    patchResponse = responseCtx;
-    flushBinds = {};
-    deferred = 0;
-    beginPatch(curRenders[$global.renderId]);
-    try {
-      // A flush is trusted executable resume data from the same server
-      // that produced the document; `$` (the serializer's spelling of
-      // `undefined`) is the unpassed last parameter.
-      // eslint-disable-next-line no-new-func
-      const fn = new Function("_", ...names, "$", "return " + flush);
-      patchRender.r = [
-        (ctx: SerializeContext) => {
-          pageCtx = ctx;
-          const value = fn(responseCtx, ...vars);
-          // The tree is the flush's last value; a flush of only shells (or
-          // nothing) ends in a shell string, which the server keys no tree for.
-          const tree = Array.isArray(value) ? value[value.length - 1] : value;
-          if (typeof tree === "object") trees.push(tree);
-          return value;
-        },
-      ] as typeof patchRender.r;
-      commitFlush();
-      return deferred || 1;
-    } catch (error) {
-      // The flush did not apply faithfully, so the caller navigates; only
-      // an intentional rejection (`failPatch`) throws 0.
-      if (MARKO_DEBUG && error) console.error(error);
-      discardReady?.();
-      abortRun();
-      return 0;
-    } finally {
-      // A rejected flush must not read as page data on a later walk; the
-      // array stays, a still-streaming page pushes into it.
-      patchRender.r!.length = 0;
-      abortPatch();
-    }
-  };
-  return [{}, apply] as const;
+  // The render's token, once a response has issued one.
+  const held = curRenders?.[$global.renderId]?.k;
+  return [
+    held ? { "x-marko-patch": held } : {},
+    (flush: string): Applied | Promise<unknown> => {
+      // Registered here so this module stays tree-shakable; a page with
+      // `$global` joins installed its own (`patch-global.feat`).
+      patchers[PatchKey.Globals] ||= applyGlobals;
+      // The response's context is its token: its flushes share it, and a
+      // later response supersedes what an earlier one left waiting.
+      patchResponse = responseCtx;
+      flushBinds = {};
+      deferred = 0;
+      beginPatch(curRenders[$global.renderId]);
+      try {
+        // A flush is trusted executable resume data from the same server
+        // that produced the document; `$` (the serializer's spelling of
+        // `undefined`) is the unpassed last parameter.
+        // eslint-disable-next-line no-new-func
+        const fn = new Function("_", ...names, "$", "return " + flush);
+        patchRender.r = [
+          (ctx: SerializeContext) => {
+            pageCtx = ctx;
+            const value = fn(responseCtx, ...vars);
+            // A response ends with the token naming what the page now holds.
+            if (typeof value === "string") {
+              patchRender.k = value;
+            } else {
+              // The tree is the flush's last value; a flush of only shells (or
+              // nothing) ends in a shell string, which the server keys no tree for.
+              const tree = Array.isArray(value)
+                ? value[value.length - 1]
+                : value;
+              if (typeof tree === "object") trees.push(tree);
+              return value;
+            }
+          },
+        ] as typeof patchRender.r;
+        commitFlush();
+        return deferred || 1;
+      } catch (error) {
+        // The flush did not apply faithfully, so the caller navigates; only
+        // an intentional rejection (`failPatch`) throws 0.
+        if (MARKO_DEBUG && error) console.error(error);
+        discardReady?.();
+        abortRun();
+        return 0;
+      } finally {
+        // A rejected flush must not read as page data on a later walk; the
+        // array stays, a still-streaming page pushes into it.
+        patchRender.r!.length = 0;
+        abortPatch();
+      }
+    },
+  ] as const;
 }
 
 // A plain patched write; a changed value is marked with the flush's epoch

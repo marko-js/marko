@@ -36,7 +36,6 @@ UPDATE: main > h1::text "x" => "y"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "y" => "y"
 UPDATE: main[data-log] "[Marko:en]" => "[Marko:en][Marko:fr]"
 ```
 
@@ -52,6 +51,5 @@ UPDATE: main[data-log] "[Marko:en]" => "[Marko:en][Marko:fr]"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "y" => "y"
 UPDATE: main[data-log] "[Marko:en][Marko:fr]" => "[Marko:en][Marko:fr][Fresh:fr]"
 ```

@@ -9,16 +9,17 @@
     }
   }
 }]
+"a:AQ"
 
-// PATCH
+// PATCH holding a:AQ
 {
   fa: [0, {
     label: "b"
   }]
 }
 
-// PATCH
-[`a;D ;<p class=child> </p>`, {
+// PATCH holding a:AQ
+{
   fa: ["a", {
     label: "c"
   }],
@@ -27,4 +28,4 @@
       ta: "c"
     }
   }
-}]
+}

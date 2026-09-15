@@ -12,9 +12,10 @@
     }
   }, "a3"]
 }]
+"a:HA"
 
-// PATCH
-[`a2;b%;<!><!><!>`, `a1;D ;<em> </em>`, `a3;/D%l&;<section><!></section>`, {
+// PATCH holding a:HA
+{
   ba: [{
     ca: {
       fa: "^a2",
@@ -26,15 +27,15 @@
       }
     }
   }, "a3"]
-}]
+}
 
-// PATCH
+// PATCH holding a:HA
 {
   ba: 0
 }
 
-// PATCH
-[`a2;b%;<!><!><!>`, `a1;D ;<em> </em>`, `a3;/D%l&;<section><!></section>`, {
+// PATCH holding a:HA
+{
   ba: [{
     ca: {
       fa: "^a2",
@@ -46,4 +47,4 @@
       }
     }
   }, "a3"]
-}]
+}

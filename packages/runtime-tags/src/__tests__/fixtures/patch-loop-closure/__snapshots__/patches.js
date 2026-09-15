@@ -6,9 +6,10 @@
     ta: "Bread"
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0 a3;D bD ;<li> <span> </span></li>`, {
+// PATCH holding a:Ag
+{
   la: [{
     ta: "Apples"
   }, {
@@ -16,4 +17,4 @@
   }, {
     ta: "Milk"
   }, "a0"]
-}]
+}

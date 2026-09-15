@@ -118,14 +118,22 @@ function mustRenderWalk(
 export function renderPatch(
   this: Template & ServerRenderer,
   input: TemplateInput = {},
+  headers?: PatchHeaders,
 ): RenderedTemplate {
   // The page root is about to allocate the first id: the flush names it
   // as the walk's entry pair, and globals re-ship with every flush
   // (undefined included) so the live page's global object never reads stale.
   const root = Object.assign(
     (input: TemplateInput) => {
-      const state = getState();
+      const state = getState() as PatchState;
       state.rootScopeId = _peek_scope_id();
+      // The request's token: what the page holds, which this render adds to.
+      const token = headers && readHeader(headers, "x-marko-patch");
+      const held = token && token.slice(token.lastIndexOf(";") + 1);
+      if (held) {
+        state.sentShells = decodeHeld(held);
+        state.heldCount = state.sentShells.size;
+      }
       const globals = getFilteredGlobals(state.$global, 1);
       if (globals) {
         patchPartial(state, state.rootScopeId)[PatchKey.Globals] = globals;
@@ -140,10 +148,68 @@ export function renderPatch(
   return startRender(root, input, PatchState);
 }
 
+/** A request's headers: a `Headers` or a plain record. */
+export type PatchHeaders =
+  | Record<string, string | undefined>
+  | { get(name: string): string | null };
+
+function readHeader(headers: PatchHeaders, name: string) {
+  return typeof headers.get === "function"
+    ? headers.get(name)
+    : (headers as Record<string, string | undefined>)[name];
+}
+
+// The shells the requesting page holds (`x-marko-patch`, after the build
+// id), as the last response's closing token named them: an id splits at
+// its trailing ordinal, so a template's shells are one base64 bitmap under
+// its prefix; bit 0 is the bare prefix. The client never reads the token.
+// A token stays under a header-safe budget by forgetting whole templates,
+// oldest first: their shells ship again, nothing else changes.
+const TOKEN_BUDGET = 1024;
+export function encodeHeld(ids: Set<string>) {
+  const held = new Map<string, number[]>();
+  for (const id of ids) {
+    const prefix = id.replace(/\d+$/, "");
+    const bit = prefix === id ? 0 : +id.slice(prefix.length) + 1;
+    let bits = held.get(prefix);
+    if (!bits) held.set(prefix, (bits = []));
+    bits[bit >> 3] |= 1 << (bit & 7);
+  }
+  const segments: string[] = [];
+  let size = 0;
+  for (const [prefix, bits] of held) {
+    const segment =
+      prefix + ":" + btoa(String.fromCharCode(...bits)).replace(/=+$/, "");
+    segments.push(segment);
+    size += segment.length + 1;
+  }
+  let drop = 0;
+  while (size > TOKEN_BUDGET) size -= segments[drop++].length + 1;
+  return segments.slice(drop).join(",");
+}
+export function decodeHeld(held: string) {
+  const ids = new Set<string>();
+  for (const segment of held.split(",")) {
+    const sep = segment.lastIndexOf(":");
+    const prefix = segment.slice(0, sep);
+    let bit = 0;
+    for (const byte of atob(segment.slice(sep + 1))) {
+      const n = byte.charCodeAt(0);
+      for (let i = 0; i < 8; i++, bit++) {
+        if (n & (1 << i)) ids.add(bit ? prefix + (bit - 1) : prefix);
+      }
+    }
+  }
+  return ids;
+}
+
 // Serialize guards stay unset so the compiled resume payload drops at the
 // source: a flush carries only patch fills.
 class PatchState extends State {
   public sentShells?: Set<string>;
+  // How many shells the request's token named: a response that shipped
+  // none leaves the page's token as it is.
+  public heldCount = 0;
   public pendingShells = "";
   override writesPatches = true;
 
@@ -182,7 +248,7 @@ class PatchState extends State {
 
   // A flush is one line the client evaluates as one expression, so the
   // wire ends it with a newline and debug checks it embeds neither.
-  override flushChunk(_html: string, scripts: string) {
+  override flushChunk(_html: string, scripts: string, pending: number) {
     if (MARKO_DEBUG) {
       if (scripts.includes("\n")) throw new Error("A patch flush spans lines.");
       // The client returns the flush as one expression; a `;`-joined
@@ -193,7 +259,19 @@ class PatchState extends State {
         throw new Error("A patch flush is not a single expression.");
       }
     }
-    const out = scripts ? scripts + "\n" : "";
+    let out = scripts ? scripts + "\n" : "";
+    // A response that added a shell closes with the token the next request
+    // sends back: id prefixes (the compiler escapes quotes, separators and
+    // control characters out of ids) and base64, so it quotes as is. The
+    // set only grows from what the token named, so an unchanged size is
+    // the same set and the page keeps the token it has.
+    if (
+      !pending &&
+      this.sentShells &&
+      this.sentShells.size !== this.heldCount
+    ) {
+      out += '"' + encodeHeld(this.sentShells) + '"\n';
+    }
     this.patchFlushed = undefined;
     this.patchTrees = undefined;
     // The client's bind table lives one flush: a later flush re-ships the
@@ -841,13 +919,15 @@ function ownerHops(state: State, scopeId: number, ownerId?: number) {
   return up;
 }
 
+// A named shell moves to the end of the set: the token forgets the least
+// recently used templates first when it runs past its budget.
 function shipShell(state: PatchState, shellId: string | 0 | undefined) {
   if (shellId && rawShells[shellId]) {
-    if (!(state.sentShells ??= new Set()).has(shellId)) {
-      state.sentShells.add(shellId);
+    if (!(state.sentShells ??= new Set()).delete(shellId)) {
       state.pendingShells +=
         (state.pendingShells && ",") + quotedShell(shellId);
     }
+    state.sentShells.add(shellId);
     return shellId;
   }
 }

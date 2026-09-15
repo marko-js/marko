@@ -24,9 +24,10 @@
     }
   }, "a1"]
 }]
+"a:Bg"
 
-// PATCH
-[`a0 a5;D%c%c%;<span><!>/<!>/<!></span>`, `a1;/E l/D%l&l&;<section><h2> </h2><div><!></div></section>`, {
+// PATCH holding a:Bg
+{
   la: [{
     ca: {
       ta: "b",
@@ -39,4 +40,4 @@
       }
     }
   }, "a1"]
-}]
+}

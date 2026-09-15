@@ -9,9 +9,10 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell"],
   "PatchWrite:input_suffix": "."
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell;D l%;<p> </p><!><!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell:AQ
+{
   "PatchBranch:#main/0": [{
     "PatchWrite:label": "b!",
     "PatchText:#text/0": "b!",
@@ -20,4 +21,4 @@
     }]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell"],
   "PatchWrite:input_suffix": "?"
-}]
+}

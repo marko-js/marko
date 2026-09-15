@@ -42,10 +42,8 @@
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
-UPDATE: main > p:nth-of-type(1)::text@0 "a" => "a"
 REMOVE: main > p:nth-of-type(1) + span
 REMOVE: main > p:nth-of-type(1) + button
-UPDATE: main > p:nth-of-type(2)::text@0 "b" => "b"
 REMOVE: main > p:nth-of-type(2) + span
 REMOVE: main > p:nth-of-type(2) + button
 ```
@@ -78,10 +76,7 @@ REMOVE: main > p:nth-of-type(2) + button
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
-UPDATE: main > p:nth-of-type(1)::text@0 "a" => "a"
 INSERT: main > p:nth-of-type(1) + :is(span, button)
-UPDATE: main > p:nth-of-type(2)::text@0 "b" => "b"
 INSERT: main > p:nth-of-type(2) + :is(span, button)
 UPDATE: main > span:nth-of-type(1)::text@5 "" => "0"
 UPDATE: main > span:nth-of-type(2)::text@5 "" => "0"

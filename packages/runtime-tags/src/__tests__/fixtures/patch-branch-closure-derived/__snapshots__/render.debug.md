@@ -26,7 +26,6 @@
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store" => "Store"
 INSERT: main > h1 + p
 UPDATE: main > p::text@6 "" => "0"
 ```

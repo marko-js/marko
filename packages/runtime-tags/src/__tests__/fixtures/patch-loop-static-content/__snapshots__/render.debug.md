@@ -30,6 +30,4 @@
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
-UPDATE: main > p:nth-of-type(1)::text@5 "a" => "a"
-UPDATE: main > p:nth-of-type(2)::text@5 "b" => "b"
 ```

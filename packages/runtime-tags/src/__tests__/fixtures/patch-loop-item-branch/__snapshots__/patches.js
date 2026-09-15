@@ -12,9 +12,10 @@
     }, "a1"]
   }, "a0"]
 }]
+"a:Dg"
 
-// PATCH
-[`a2;D ;<li> </li>`, `a1; ;<ul></ul>`, `a0;D%b%;<li><!><!></li>`, {
+// PATCH holding a:Dg
+{
   la: ["b", {
     ta: "b",
     bb: [{
@@ -28,4 +29,4 @@
     ta: "c",
     bb: 0
   }, "a0"]
-}]
+}

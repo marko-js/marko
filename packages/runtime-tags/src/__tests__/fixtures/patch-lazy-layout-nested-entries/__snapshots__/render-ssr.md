@@ -64,7 +64,6 @@ REMOVE: main > p
 REMOVE: main > p
 REMOVE: main > button
 INSERT: main > :is(h1, p)
-UPDATE: nav > a::text "x" => "x"
 REMOVE: nav > a + a
 UPDATE: main > p::text " " => "b1"
 ```

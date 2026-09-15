@@ -45,7 +45,6 @@
 ```
 UPDATE: ul > li:nth-of-type(1) > b::text "a" => "c"
 UPDATE: ul > li:nth-of-type(1) > em::text "1" => "3"
-UPDATE: ul > li:nth-of-type(2) > b::text "b" => "b"
 UPDATE: ul > li:nth-of-type(2) > em::text "2" => "4"
 ```
 

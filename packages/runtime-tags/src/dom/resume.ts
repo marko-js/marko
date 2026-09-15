@@ -61,6 +61,9 @@ export interface RenderData {
   j?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
+  // The server's account of what this render holds: the opaque token its
+  // last patch response ended with, sent with the next request.
+  k?: string;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 // What a patch of each kind carries, declared beside the patcher that

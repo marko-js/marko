@@ -39,7 +39,6 @@ UPDATE: main > h1::text "Store" => "Store!"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "Store!" => "Store!"
 UPDATE: main[data-announce] "sale" => "clearance"
 UPDATE: main[data-runs] "1" => "2"
 ```

@@ -24,9 +24,10 @@
     }
   }, "b0"]
 }]
+"a:Lg,b:Ag"
 
-// PATCH
-[`a0;D l%;<span> </span><!><!>`, `a3,<p>down</p>`, `a2;b%;<!><!><!>`, `a1;/DbD%m&;<section><h2>Panel</h2><div class=aside><!></div></section>`, `b0;b/b%c&b;<!><!><!><!><!>`, {
+// PATCH holding a:Lg,b:Ag
+[`a3,<p>down</p>`, {
   ba: [{
     ca: {
       la: [{
@@ -51,3 +52,4 @@
     }
   }, "b0"]
 }]
+"a:Pg,b:Ag"

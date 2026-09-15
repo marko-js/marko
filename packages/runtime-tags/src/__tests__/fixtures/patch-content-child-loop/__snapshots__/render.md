@@ -39,9 +39,7 @@
 ```
 ## Change
 ```
-UPDATE: main > ul > li:nth-of-type(1)::text "1" => "1"
 UPDATE: main > ul > li:nth-of-type(1) > em::text "x" => "y"
-UPDATE: main > ul > li:nth-of-type(2)::text "2" => "2"
 UPDATE: main > ul > li:nth-of-type(2) > em::text "x" => "y"
 ```
 
@@ -60,7 +58,6 @@ UPDATE: main > ul > li:nth-of-type(2) > em::text "x" => "y"
 ```
 ## Change
 ```
-UPDATE: main > ul > li::text "1" => "1"
 UPDATE: main > ul > li > em::text "y" => "z"
 REMOVE: main > ul > li + li
 ```
@@ -92,7 +89,6 @@ REMOVE: main > ul > li + li
 ```
 ## Change
 ```
-UPDATE: main > ul > li:nth-of-type(1)::text "1" => "1"
 UPDATE: main > ul > li:nth-of-type(1) > em::text "z" => "w"
 INSERT: main > ul > li:nth-of-type(1) + li
 INSERT: main > ul > li:nth-of-type(2) + li

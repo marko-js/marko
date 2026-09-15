@@ -37,7 +37,6 @@
 ## Change
 ```
 UPDATE: ul > li:nth-of-type(1) > b::text "a" => "c"
-UPDATE: ul > li:nth-of-type(2) > b::text "b" => "b"
 INSERT: ul > li:nth-of-type(2) + li
 ```
 

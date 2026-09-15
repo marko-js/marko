@@ -8,14 +8,15 @@
     }
   }, "a1"]
 }]
+"a:BA"
 
-// PATCH
+// PATCH holding a:BA
 {
   ba: 0
 }
 
-// PATCH
-[`a1 !a2; ;<a>go</a>`, {
+// PATCH holding a:BA
+{
   ba: [{
     1: "a0",
     ja: {
@@ -23,4 +24,4 @@
       onClick: b(1)
     }
   }, "a1"]
-}]
+}

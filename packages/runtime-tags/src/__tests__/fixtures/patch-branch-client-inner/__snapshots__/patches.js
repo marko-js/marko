@@ -3,21 +3,22 @@
   ba: "a0",
   va0: "b"
 }]
+"a:Ag"
 
-// PATCH
-[`a0 a4;b%;<!><!><!>`, {
+// PATCH holding a:Ag
+{
   ba: "a0",
   va0: "c"
-}]
+}
 
-// PATCH
+// PATCH holding a:Ag
 {
   ba: 0,
   va0: "d"
 }
 
-// PATCH
-[`a0 a4;b%;<!><!><!>`, {
+// PATCH holding a:Ag
+{
   ba: "a0",
   va0: "e"
-}]
+}

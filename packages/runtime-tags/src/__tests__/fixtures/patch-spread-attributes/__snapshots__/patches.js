@@ -24,9 +24,10 @@
     }
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0 !a1; ;<img>`, {
+// PATCH holding a:Ag
+{
   ja: {
     href: "/static",
     class: "y"
@@ -38,4 +39,4 @@
       src: "/j.png"
     }
   }, "a0"]
-}]
+}

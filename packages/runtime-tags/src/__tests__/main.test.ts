@@ -398,6 +398,8 @@ function testFixtures(interop?: true) {
             );
             const chunks: string[] = [];
             const patches: string[] = [];
+            // The header each input's request sent, alongside its flushes.
+            const patchHeaders: string[] = [];
             // The document each patch is measured against (same input).
             const freshDocs: string[] = [];
             const logs: ConsoleRecord[][] = [];
@@ -570,10 +572,11 @@ function testFixtures(interop?: true) {
                     let applied = true;
                     const flushes: string[] = [];
                     // One response per input, as a navigation is.
-                    const [, applyPatch] = patch({
+                    const [headers, applyPatch] = patch({
                       renderId: DEFAULT_RENDER_ID,
                     });
-                    for await (const flush of template.patch(input)) {
+                    patchHeaders.push(headers["x-marko-patch"] || "");
+                    for await (const flush of template.patch(input, headers)) {
                       if (flushes.length && betweenFlushes) {
                         tracker.logUpdate(input);
                         tracker.beginUpdate();
@@ -586,9 +589,15 @@ function testFixtures(interop?: true) {
                       }
                       flushes.push(flush);
                       // The wire delimits flushes by newline (as the run
-                      // client reads them), so a flush must be one line.
+                      // client reads them), so a flush must be one line; the
+                      // response's last chunk adds the token line.
                       const lines = flush.split("\n").filter(Boolean);
-                      assert.equal(lines.length, 1, "a flush spans lines");
+                      assert.ok(
+                        lines.length === 1 ||
+                          (lines.length === 2 && lines[1][0] === '"'),
+                        "a flush spans lines",
+                      );
+                      if (lines[1]) applyPatch(lines[1]);
                       // A production caller navigates on the first failed
                       // flush; later flushes must not mutate further.
                       const result = applyPatch(lines[0]);
@@ -642,7 +651,14 @@ function testFixtures(interop?: true) {
             await drainFlushes();
             tracker.cleanup();
 
-            return { browser, tracker, chunks, patches, freshDocs };
+            return {
+              browser,
+              tracker,
+              chunks,
+              patches,
+              patchHeaders,
+              freshDocs,
+            };
           });
 
           skipHTML || it("html", () => snapCompile("html"));
@@ -707,14 +723,16 @@ function testFixtures(interop?: true) {
             it("ssr", async () => {
               await snapMode(
                 async () => {
-                  const { tracker, chunks, patches, freshDocs } = await ssr();
+                  const { tracker, chunks, patches, patchHeaders, freshDocs } =
+                    await ssr();
                   if (usesPatches) {
                     // Each wire flush is one expression; format them
                     // independently so beautify cannot glue `}{`.
                     await snapMode(
                       () =>
                         patches
-                          .map((joined) => {
+                          .map((joined, i) => {
+                            const held = patchHeaders[i];
                             const flushes = joined
                               .split("\n")
                               .map((flush) => flush.trimEnd())
@@ -725,7 +743,12 @@ function testFixtures(interop?: true) {
                                 }).trimEnd(),
                               )
                               .join("\n");
-                            return "// PATCH\n" + flushes;
+                            return (
+                              "// PATCH" +
+                              (held ? " holding " + held : "") +
+                              "\n" +
+                              flushes
+                            );
                           })
                           .join("\n\n")
                           .trimEnd() + "\n",

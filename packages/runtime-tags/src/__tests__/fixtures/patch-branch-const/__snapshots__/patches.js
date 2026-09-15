@@ -4,15 +4,16 @@
     ta: "Store?!"
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
+// PATCH holding a:Ag
 {
   ba: 0
 }
 
-// PATCH
-[`a0 a3;D%c%;<p><!> <!></p>`, {
+// PATCH holding a:Ag
+{
   ba: [{
     ta: "Fresh!"
   }, "a0"]
-}]
+}

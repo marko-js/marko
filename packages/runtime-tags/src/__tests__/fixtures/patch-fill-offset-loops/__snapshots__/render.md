@@ -61,7 +61,6 @@ UPDATE: main > p:nth-of-type(2)::text "b:x@0" => "b:x@1"
 ```
 ## Change
 ```
-UPDATE: main > h1::text "H" => "H"
 REMOVE: main > p:nth-of-type(2) + p
 INSERT: main > h1 + p
 UPDATE: main > p:nth-of-type(2)::text "a:x@1" => "a:y@1"

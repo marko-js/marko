@@ -12,11 +12,12 @@
     tb: "2"
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
-[`a0 !a1; D ;<li> </li>`, {
+// PATCH holding a:Ag
+{
   la: [2, {
     ja: {},
     tb: "2"
   }, "a0"]
-}]
+}

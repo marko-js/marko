@@ -64,9 +64,6 @@ INSERT: main > section:nth-of-type(1) + section
 ## Change
 ```
 UPDATE: main > section:nth-of-type(1) > h2::text "b" => "c"
-UPDATE: main > section:nth-of-type(1) > em::text "Zed" => "Zed"
-UPDATE: main > section:nth-of-type(2) > h2::text "x" => "x"
-UPDATE: main > section:nth-of-type(2) > i::text "Zed" => "Zed"
 ```
 
 # Update `{"title":"d","show":true,"$global":{"brand":"Qux","serializedGlobals":["brand"]}}`
@@ -94,6 +91,5 @@ UPDATE: main > section:nth-of-type(2) > i::text "Zed" => "Zed"
 ```
 UPDATE: main > section:nth-of-type(1) > h2::text "c" => "d"
 UPDATE: main > section:nth-of-type(1) > em::text "Zed" => "Qux"
-UPDATE: main > section:nth-of-type(2) > h2::text "x" => "x"
 UPDATE: main > section:nth-of-type(2) > i::text "Zed" => "Qux"
 ```

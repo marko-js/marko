@@ -43,9 +43,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_bonus#7/init packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_p_base#9/init packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_item_n#3/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell !;/DbD%m&;<section><h2>Panel</h2><div class=aside><!></div></section>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell;b/0& b%c&b;<!><button class=bonus>bonus</button><!><!><!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell:AQ
+{
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
@@ -75,4 +76,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko0": 2
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
-}]
+}

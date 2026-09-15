@@ -26,8 +26,6 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)::text "one" => "one"
-UPDATE: ul > li:nth-of-type(1)::text "" => ""
 INSERT: ul > li:nth-of-type(1) + li
 ```
 

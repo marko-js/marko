@@ -10,21 +10,22 @@
     ta: "3"
   }, "a1"]
 }]
+"a:Bg"
 
-// PATCH
-[`a1;D ;<li> </li>`, {
+// PATCH holding a:Bg
+{
   ta: "marko",
   bb: 0,
   lc: [{
     ta: "3"
   }, "a1"]
-}]
+}
 
-// PATCH
-[`a0,<p>shown</p>`, `a1;D ;<li> </li>`, {
+// PATCH holding a:Bg
+{
   ta: "mark",
   bb: "a0",
   lc: [{
     ta: "3"
   }, "a1"]
-}]
+}

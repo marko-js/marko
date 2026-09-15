@@ -46,6 +46,5 @@ UPDATE: main[data-label] "a!." => "b!."
 ```
 ## Change
 ```
-UPDATE: main > p::text "b!" => "b!"
 UPDATE: main[data-label] "b!." => "b!?"
 ```

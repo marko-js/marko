@@ -23,9 +23,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content;D ;<b> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell;D/b%c&l;<li><!><!><!></li>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell:AQ
+{
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content",
@@ -34,15 +35,15 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell"]
-}]
+}
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell:AQ
 {
   "PatchLoop:#ul/0": []
 }
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content;D ;<b> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell;D/b%c&l;<li><!><!><!></li>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell:AQ
+{
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": _.a = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content",
@@ -58,4 +59,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell"]
-}]
+}

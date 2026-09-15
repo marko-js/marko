@@ -1,4 +1,4 @@
-// size: 29115 (min) 10792 (brotli)
+// size: 29197 (min) 10799 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2130,7 +2130,8 @@ let deferred,
   flushVars = {};
 /**
  * The live page's side of `template.patch`: `[headers, apply]`, the headers
- * a patch request sends (none yet) and the apply for each flush.
+ * a patch request sends (what the page holds, for the server to elide) and
+ * the apply for each flush.
  */
 function patch($global) {
   let pageCtx,
@@ -2138,9 +2139,10 @@ function patch($global) {
     responseCtx = (data) => (typeof data == "number" ? trees[data] : pageCtx(data));
   responseCtx._ = registeredValues;
   let names = Object.keys(flushVars),
-    vars = Object.values(flushVars);
+    vars = Object.values(flushVars),
+    held = curRenders?.[$global.renderId]?.k;
   return [
-    {},
+    held ? { "x-marko-patch": held } : {},
     (flush) => {
       ((patchers.$ ||= applyGlobals), (deferred = 0), beginPatch(curRenders[$global.renderId]));
       try {
@@ -2149,9 +2151,12 @@ function patch($global) {
           (patchRender.r = [
             (ctx) => {
               pageCtx = ctx;
-              let value = fn(responseCtx, ...vars),
-                tree = Array.isArray(value) ? value[value.length - 1] : value;
-              return (typeof tree == "object" && trees.push(tree), value);
+              let value = fn(responseCtx, ...vars);
+              if (typeof value == "string") patchRender.k = value;
+              else {
+                let tree = Array.isArray(value) ? value[value.length - 1] : value;
+                return (typeof tree == "object" && trees.push(tree), value);
+              }
             },
           ]),
           commitFlush(),

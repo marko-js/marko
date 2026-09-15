@@ -16,9 +16,10 @@
     }
   }
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-return-visit/child.marko:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-return-visit/child.marko;D ;<button> </button>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-return-visit/child.marko:AQ
+{
   "PatchDynamicTag:#text/2": ["packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-return-visit/child.marko", {
     label: "c"
   }],
@@ -27,4 +28,4 @@
       "PatchText:#text/0": "c"
     }
   }
-}]
+}

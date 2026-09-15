@@ -50,7 +50,6 @@ UPDATE: main[data-flag] null => "cli"
 ## Change
 ```
 UPDATE: main > p::text@0 "HI!" => "YO!"
-UPDATE: main > p::text@4 "srv" => "srv"
 INSERT: main > p + span
 UPDATE: main > span::text " " => "YO! #1"
 ```

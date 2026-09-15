@@ -9,9 +9,10 @@
     }
   }, "a2"]
 }]
+"a:DA"
 
-// PATCH
-[`a1;/D l&;<b class=pill> </b>`, `a2;b%;<!><!><!>`, {
+// PATCH holding a:DA
+{
   ba: [{
     pa: "a1",
     cAa: {
@@ -20,4 +21,4 @@
       }
     }
   }, "a2"]
-}]
+}

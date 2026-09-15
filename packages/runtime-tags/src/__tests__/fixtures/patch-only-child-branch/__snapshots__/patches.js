@@ -4,15 +4,16 @@
     ta: "there"
   }, "a0"]
 }]
+"a:Ag"
 
-// PATCH
+// PATCH holding a:Ag
 {
   ba: 0
 }
 
-// PATCH
-[`a0;Db%;<span>hi <!></span>`, {
+// PATCH holding a:Ag
+{
   ba: [{
     ta: "again"
   }, "a0"]
-}]
+}

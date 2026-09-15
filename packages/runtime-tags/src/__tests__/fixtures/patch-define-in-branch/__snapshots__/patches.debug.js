@@ -11,9 +11,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell;b/D%c%l&/D%c%l&b;<!><li><!>: <!></li><li><!>: <!></li><!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell:AQ
+{
   "PatchBranch:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "a",
@@ -24,9 +25,9 @@
       "PatchText:#text/1": "2"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
-}]
+}
 
-// PATCH
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell:AQ
 {
   "PatchBranch:#ul/0": 0
 }

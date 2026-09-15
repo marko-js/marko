@@ -19,9 +19,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1*shell:AQ"
 
-// PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1*shell !;D%c%l/b%c&b;<p><!> hit <!></p><!><!><!><!>`, {
+// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1*shell:AQ
+[`packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   "PatchText:#text/0": "Store!",
   "PatchLoop:#text/1": [{
     "PatchText:#text/0": "a",
@@ -51,3 +52,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1*shell"]
 }]
+"packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1*shell:AQ"
