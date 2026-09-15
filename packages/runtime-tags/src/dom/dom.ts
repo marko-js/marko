@@ -8,12 +8,12 @@ import {
   escapeStyleValue,
   getEventHandlerName,
   isEventHandler,
-  isNotVoid,
   withDynamicHtml,
   normalizeDynamicRenderer,
   stringifyClassObject,
   stringifyStyleObject,
   toDelimitedString,
+  isNotVoid,
 } from "../common/helpers";
 import {
   type Accessor,
@@ -47,7 +47,7 @@ export function _attr(element: Element, name: string, value: unknown) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 
-function setAttribute(
+export function setAttribute(
   element: Element,
   name: string,
   value: string | undefined,

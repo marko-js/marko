@@ -1,0 +1,9 @@
+<main>
+  <if=input.show>
+    <card>
+      <await=Promise.resolve(input.value)>
+        <em>${input.value}</em>
+      </await>
+    </card>
+  </if>
+</main>
