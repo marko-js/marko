@@ -1,0 +1,11 @@
+<let/count=0/>
+<let/on=false/>
+<main>
+  <if=(count > 1)>
+    <h2>${input.outer}</h2>
+    <if=on>
+      <p>${input.inner}</p>
+    </if>
+  </if>
+  <button onClick() { count++; on = !on }>+</button>
+</main>
