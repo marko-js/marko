@@ -14,7 +14,7 @@ document.querySelector("button").click();
 ```
 ```html
 <div>
-  low
+  off
 </div>
 <button>
   zero
@@ -22,5 +22,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div::text "high" => "low"
+UPDATE: div::text "high" => "off"
 ```

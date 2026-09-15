@@ -1,0 +1,15 @@
+static function feed(inc: { status: string }, sfx: string) {
+  return { status: inc.status, label: inc.status + sfx };
+}
+
+export interface Input {
+  inc: { status: string; pending?: boolean };
+}
+
+<let/sfx="!"/>
+<const/item=feed(input.inc, sfx)/>
+<div class=["row", item.status, input.inc.pending && "pending"]>
+  <span class="badge">${item.label}</span>
+  <if=(item.status !== "resolved" && !input.inc.pending)><form class="derived"/></if>
+  <if=(input.inc.status !== "resolved" && !input.inc.pending)><form class="direct"/></if>
+</div>

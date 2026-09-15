@@ -1543,7 +1543,7 @@ function getCollapsibleIntersectionSource(
 ) {
   let sources: Sources | undefined;
   for (const member of intersection) {
-    if (!member.sources) return undefined;
+    if (!member.sources || isDeferred(member)) return undefined;
     const isDirectAlias =
       member.upstreamAlias &&
       member.property === undefined &&
@@ -1565,6 +1565,16 @@ function getCollapsibleIntersectionSource(
     : undefined;
 }
 
+function isDeferred(binding: Binding | undefined) {
+  const deferredBindings = getDeferredBindings();
+  while (binding) {
+    if (deferredBindings.has(binding)) return true;
+    binding = binding.upstreamAlias;
+  }
+
+  return false;
+}
+
 export function setBindingDownstream(
   binding: Binding,
   expr: boolean | Opt<t.NodeExtra>,
@@ -1580,6 +1590,7 @@ export function setBindingDownstream(
 }
 
 const [getResolvedSources] = createProgramState(() => new Set<Binding>());
+const [getDeferredBindings] = createProgramState(() => new Set<Binding>());
 const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
@@ -1661,6 +1672,13 @@ function resolveDerivedSources(binding: Binding) {
         });
       }
     });
+
+    // Reading more than one other binding means this value is recomputed from
+    // a queued render, so readers must subscribe to it rather than collapse.
+    seen.delete(binding);
+    if (seen.size > 1) {
+      getDeferredBindings().add(binding);
+    }
   }
 }
 

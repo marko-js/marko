@@ -1,11 +1,9 @@
 // template.marko
 const $template = "<div> </div><button>zero</button>";
 const $walks = "D l b";
-const $audioOff = /*@__PURE__*/ _const("audioOff");
+const $volume__OR__audioOff = /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.audioOff ? "off" : $scope.volume < .5 ? "low" : "high"));
+const $audioOff = /*@__PURE__*/ _const("audioOff", $volume__OR__audioOff);
 const $volume__OR__muted = /*@__PURE__*/ _or(4, ($scope) => $audioOff($scope, $scope.muted || $scope.volume === 0));
-const $volume__OR__audioOff = ($scope) => {
-	_text($scope["#text/0"], $scope.audioOff ? "off" : $scope.volume < .5 ? "low" : "high");
-};
 const $volume = /*@__PURE__*/ _let("volume/2", ($scope) => {
 	$volume__OR__muted($scope);
 	$volume__OR__audioOff($scope);
