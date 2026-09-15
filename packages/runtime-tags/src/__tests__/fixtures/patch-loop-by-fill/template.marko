@@ -1,0 +1,9 @@
+<let/items=[{ n: 1, id: "x" }, { n: 2, id: "y" }]/>
+<main>
+  <ul>
+    <for|item| of=items by(item) { return item[input.keyField]; }>
+      <li>${item.n}</li>
+    </for>
+  </ul>
+  <button onClick() { items = [...items, { n: 3, id: "z" }] }>+</button>
+</main>

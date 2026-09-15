@@ -1,0 +1,32 @@
+{
+  "dom": {
+    "child.marko.load.mjs": {
+      "min": 98,
+      "brotli": 81
+    },
+    "template.marko.page.mjs": {
+      "min": 3568,
+      "brotli": 1762
+    },
+    "child.mjs": {
+      "min": 391,
+      "brotli": 257
+    },
+    "v:child.marko.setup.mjs": {
+      "min": 86,
+      "brotli": 73
+    },
+    "shared": {
+      "min": 10632,
+      "brotli": 4628
+    }
+  },
+  "html": {
+    "min": 331,
+    "brotli": 239
+  },
+  "patch": {
+    "min": 233,
+    "brotli": 116
+  }
+}
