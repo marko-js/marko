@@ -2,30 +2,6 @@
      value=1>One</span><!--M_$6 a--><span value=1>Two</span><!--M_$8 a--></span>
  <script>
    WALKER_RUNTIME("M")("_");
-   M._.r = [_ => [2, {
-     d: {
-       value: 1,
-       desc: {
-         content: _(1, "a0"),
-         *[Symbol.iterator]() {
-           yield this
-         }
-       },
-       *[(_.a = [{
-         value: 1,
-         desc: {
-           content: _(1, "a1"),
-           *[Symbol.iterator]() {
-             yield this
-           }
-         }
-       }], Symbol.iterator)]() {
-         yield this;
-         yield* _.a
-       }
-     }
-   }, 1, {
-     _: _(2)
-   }], "b0 6 8"];
+   M._.r = ["b0 6 8"];
    M._.w()
  </script>
