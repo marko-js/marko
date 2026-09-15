@@ -1,4 +1,4 @@
-// size: 29106 (min) 10767 (brotli)
+// size: 29115 (min) 10792 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2126,7 +2126,8 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let flushVars = {};
+let deferred,
+  flushVars = {};
 /**
  * The live page's side of `template.patch`: `[headers, apply]`, the headers
  * a patch request sends (none yet) and the apply for each flush.
@@ -2141,7 +2142,7 @@ function patch($global) {
   return [
     {},
     (flush) => {
-      ((patchers.$ ||= applyGlobals), beginPatch(curRenders[$global.renderId]));
+      ((patchers.$ ||= applyGlobals), (deferred = 0), beginPatch(curRenders[$global.renderId]));
       try {
         let fn = Function("_", ...names, "$", "return " + flush);
         return (
@@ -2154,10 +2155,10 @@ function patch($global) {
             },
           ]),
           commitFlush(),
-          !0
+          deferred || 1
         );
       } catch {
-        return (abortRun(), !1);
+        return (abortRun(), 0);
       } finally {
         ((patchRender.r.length = 0), abortPatch());
       }

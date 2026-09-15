@@ -14,8 +14,14 @@ import {
   dismissPlaceholder,
   runPendingEffects,
 } from "./control-flow";
-import { getContent } from "./patch-shells";
+import {
+  applyReadyPatch,
+  deferApply,
+  flushBinds,
+  type ReadyGuard,
+} from "./patch";
 import "./patch-child.feat";
+import { getContent } from "./patch-shells";
 import {
   caughtError,
   pendingEffects,
@@ -30,7 +36,15 @@ import {
   createBranch,
   type Renderer,
 } from "./renderer";
-import { failPatch, patchers, patchScope, withCreating } from "./resume";
+import {
+  failPatch,
+  patchers,
+  patchRender,
+  patchRun,
+  patchScope,
+  withCreating,
+} from "./resume";
+import { schedule } from "./schedule";
 import {
   collectScopes,
   findBranchWithKey,
@@ -132,7 +146,8 @@ function endAwaitPending(scope: Scope, nodeAccessor: string) {
     detachedParent !== anchor.parentNode
   ) {
     awaitCounter.c();
-  } else {
+  } else if (!awaitCounter.m) {
+    // A resumed counter is the document's: its reorder completes it.
     awaitCounter.i = 0;
   }
 }
@@ -165,9 +180,15 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
     (scope[link] as BranchScope)[AccessorProp.PendingScopes] = pendingScopes;
   }
   // Same-flush settle (Promise.resolve) also writes Child; skip pending UI.
-  queueMicrotask(() => {
-    if (!settled.get(scope)?.has(accessor)) beginAwaitPending(scope, accessor);
-  });
+  // A document still streaming the body shows its own: the flush's pending
+  // takes over when the body lands, unless the flush settled it by then.
+  (!scope[link] && (scope[AccessorProp.AwaitCounter] as AwaitCounter)?.m
+    ? onStreamLanded
+    : queueMicrotask)(
+    () =>
+      !settled.get(scope)?.has(accessor) && beginAwaitPending(scope, accessor),
+    scope,
+  );
 };
 
 function markSettled(scope: Scope, accessor: string) {
@@ -213,10 +234,53 @@ function resolveBoundaryContent(id: string | 0, owner: Scope) {
   return id === 0 ? 0 : getContent(id, owner);
 }
 
+// A try the document is still streaming into: `fn` runs in the run after
+// the reorder's script, once its walk has linked the body and replayed
+// its closures. Queued on the owner, since the try's own effects park.
+function onStreamLanded(fn: () => void, tryBranch: Scope) {
+  const awaitCounter = tryBranch[AccessorProp.AwaitCounter] as AwaitCounter;
+  const complete = awaitCounter.c;
+  awaitCounter.c = () =>
+    complete() || (queueEffect(tryBranch[AccessorProp.Owner]!, fn), schedule());
+}
+// The flush's body partial waits as a guard applied at landing (the await
+// counts as settled: no pending UI takes over); a body that never came
+// (the document rendered its catch) rejects the patch.
+function holdForStream(
+  scope: Scope,
+  key: string,
+  link: Accessor,
+  accessor: string,
+  value: Scope,
+) {
+  markSettled(scope, accessor);
+  const guard: ReadyGuard = [
+    { [key]: value } as Scope,
+    scope,
+    flushBinds,
+    patchRun,
+  ];
+  const render = patchRender;
+  deferApply(
+    new Promise((resolve) =>
+      onStreamLanded(
+        () => resolve(scope[link] && applyReadyPatch(render, [guard])),
+        scope,
+      ),
+    ),
+  );
+}
+
 const applyChild = patchers[PatchKey.Child];
 patchers[PatchKey.Child] = (scope, key, value) => {
   const link = key.slice(PatchKey.Child.length) as Accessor;
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
+  // Only a resumed counter carries the render's marker hook: the document
+  // owns the pending UI, and its reorder completes the counter.
+  if (!scope[link] && (scope[AccessorProp.AwaitCounter] as AwaitCounter)?.m) {
+    holdForStream(scope, key, link, accessor, value as Scope);
+    return;
+  }
   // A try showing its catch render (shown like a placeholder, with no await
   // pending) takes its body back first: the flush's partial addresses the body.
   if (

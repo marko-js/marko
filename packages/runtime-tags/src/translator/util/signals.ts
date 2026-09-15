@@ -2017,20 +2017,28 @@ export function writeHTMLResumeStatements(
               ? undefined
               : getSerializeReason(section);
           if (reason) {
+            let script: t.Expression = callRuntime(
+              "_script",
+              getScopeIdIdentifier(section),
+              t.stringLiteral(getResumeRegisterId(section, closure, "pending")),
+              markerSerializeArg,
+            );
+            // A patch page replays only a closure the client can change: a
+            // server-fed body keeps the html it landed with, filled by flushes.
+            const ownership =
+              isPatch() && !closure.sources.state
+                ? getPatchWriteOwnership(closure.sources)
+                : undefined;
+            if (ownership?.length) {
+              script = t.logicalExpression(
+                "&&",
+                callRuntime("_client_guard", ...ownership),
+                script,
+              );
+            }
             // The pending effect replays the closure on resume, so it must be
             // gated the same way the closure's value is serialized.
-            const script = getExprIfSerialized(
-              section,
-              reason,
-              callRuntime(
-                "_script",
-                getScopeIdIdentifier(section),
-                t.stringLiteral(
-                  getResumeRegisterId(section, closure, "pending"),
-                ),
-                markerSerializeArg,
-              ),
-            );
+            script = getExprIfSerialized(section, reason, script);
             getHTMLSectionStatements(section).push(
               t.expressionStatement(
                 isReasonDynamic(closureScopesReason) &&

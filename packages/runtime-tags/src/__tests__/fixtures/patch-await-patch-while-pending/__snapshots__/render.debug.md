@@ -10,19 +10,22 @@
 
 # Update `{"msg":"b","promise":{"value":2}}`
 
-## Patch rejected (navigate)
-
 # Update
 ```html
 <button>
   0
 </button>
-<em>
-  loading
-</em>
+<div
+  id="done"
+>
+  b done
+</div>
 ```
 ## Change
 ```
-INSERT: #done::text("a")
+INSERT: #done::text("b")
 INSERT: #done::text@0 + ::text(" done")
+REMOVE: em
+INSERT: button + #done
+UPDATE: #done::text@0 "a" => "b"
 ```

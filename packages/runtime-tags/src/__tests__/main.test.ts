@@ -493,7 +493,7 @@ function testFixtures(interop?: true) {
             const { patch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
             let rejected = false;
-            const held: Promise<boolean>[] = [];
+            const held: Promise<unknown>[] = [];
 
             // Until a client-side step diverges the page from what the
             // server would render for the same input, every applied patch
@@ -592,18 +592,23 @@ function testFixtures(interop?: true) {
                       // A production caller navigates on the first failed
                       // flush; later flushes must not mutate further.
                       const result = applyPatch(lines[0]);
-                      if (typeof result !== "boolean" && holdLoad) {
+                      // A held load or a still-streaming document settles
+                      // the wait later; the patch must have applied by the end.
+                      if (
+                        typeof result === "object" &&
+                        (holdLoad || config.patch_while_streaming)
+                      ) {
                         held.push(result);
                         continue;
                       }
-                      if (typeof result !== "boolean") {
+                      if (typeof result === "object") {
                         // A deferred patch is waiting on a lazy module; load
                         // triggers schedule via setTimeout, so a macrotask
                         // tick must pass before the chunk can be imported.
                         await resolveAfter(0, 1);
                         await browser.runAsyncScripts();
                       }
-                      if (!(applied = await result)) break;
+                      if (!(applied = !!(await result))) break;
                     }
                     patches.push(flushes.join(""));
                     tracker.logUpdate(input);

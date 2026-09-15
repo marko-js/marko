@@ -16,11 +16,18 @@ import {
 } from "./resume";
 import type { RenderData, SerializeContext } from "./resume";
 
-// Installed by `patch-ready`: commits a flush's guards, settles a flush
-// holding data for a not-yet-loaded module, discards a rejected one.
+// Installed by `patch-ready`: commits a flush's guards, discards a
+// rejected flush's.
 let commitReady: (() => void) | undefined;
-let pendingReady: (() => Promise<boolean> | undefined) | undefined;
 let discardReady: (() => void) | undefined;
+/** Whether a flush applied: truthy when it did. */
+export type Applied = 0 | 1;
+// What the flush being applied left waiting (a module, a streaming body):
+// its apply settles once every one has, truthy only if all applied.
+let deferred: Promise<unknown> | 0;
+export function deferApply(applied: Promise<unknown>) {
+  deferred = deferred ? deferred.then((ok) => ok && applied) : applied;
+}
 
 // Flush-scoped bindings patch features inject.
 export const flushVars: Record<string, unknown> = {};
@@ -51,7 +58,7 @@ export function patch($global: PatchGlobal) {
   // binding as a free variable (`b(1)`), skipping registry indirection.
   const names = Object.keys(flushVars);
   const vars = Object.values(flushVars);
-  const apply = (flush: string): boolean | Promise<boolean> => {
+  const apply = (flush: string): Applied | Promise<unknown> => {
     // Registered here so this module stays tree-shakable; a page with
     // `$global` joins installed its own (`patch-global.feat`).
     patchers[PatchKey.Globals] ||= applyGlobals;
@@ -59,6 +66,7 @@ export function patch($global: PatchGlobal) {
     // later response supersedes what an earlier one left waiting.
     patchResponse = responseCtx;
     flushBinds = {};
+    deferred = 0;
     beginPatch(curRenders[$global.renderId]);
     try {
       // A flush is trusted executable resume data from the same server
@@ -78,14 +86,14 @@ export function patch($global: PatchGlobal) {
         },
       ] as typeof patchRender.r;
       commitFlush();
-      return pendingReady?.() || true;
+      return deferred || 1;
     } catch (error) {
       // The flush did not apply faithfully, so the caller navigates; only
       // an intentional rejection (`failPatch`) throws 0.
       if (MARKO_DEBUG && error) console.error(error);
       discardReady?.();
       abortRun();
-      return false;
+      return 0;
     } finally {
       // A rejected flush must not read as page data on a later walk; the
       // array stays, a still-streaming page pushes into it.
@@ -119,11 +127,9 @@ export function applyGlobals(live: Scope, _key: string, value: unknown) {
 
 export function installPatchReady(
   commit: typeof commitReady,
-  pending: typeof pendingReady,
   discard: typeof discardReady,
 ) {
   commitReady = commit;
-  pendingReady = pending;
   discardReady = discard;
 }
 
@@ -145,11 +151,11 @@ export function applyReadyPatch(render: RenderData, guards: ReadyGuard[]) {
       patchScope(entries, scope);
     }
     commitFlush();
-    return true;
+    return 1;
   } catch (error) {
     if (MARKO_DEBUG && error) console.error(error);
     abortRun();
-    return false;
+    return 0;
   } finally {
     abortPatch();
   }

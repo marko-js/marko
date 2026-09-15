@@ -7,7 +7,9 @@ import {
 } from "../common/types";
 import { installLoadReady } from "./load";
 import {
+  type Applied,
   applyReadyPatch,
+  deferApply,
   flushBinds,
   installPatchReady,
   patchResponse,
@@ -32,7 +34,7 @@ import {
 // order, and every `applyPatch` promise awaiting them.
 interface ReadyPatch {
   [ReadyPatchProp.Channels]: Map<string, ReadyGuard[]>;
-  [ReadyPatchProp.Resolvers]: ((applied: boolean) => void)[];
+  [ReadyPatchProp.Resolvers]: ((applied: Applied) => void)[];
   [ReadyPatchProp.Response]: object;
 }
 const readyPatches = new Map<RenderData, ReadyPatch>();
@@ -42,7 +44,7 @@ const loading: Record<string, number> = {};
 
 // Module evaluation is the enablement: the compiler injects this side-effect
 // import once per program with a lazy load import in a patch build.
-installPatchReady(commitReady, pendingReady, discardReady);
+installPatchReady(commitReady, discardReady);
 installReady(markReady, failReady);
 // Every lazy tag of a patch page stamps its channel as it starts cloning
 // (`_load_ready`, `_load_ready_template`) and reports its insert or failure.
@@ -87,18 +89,14 @@ patchers[PatchKey.Ready] = (scope, key, entries) => {
   ]);
 };
 
-// Whether the flush being committed deferred anything: only then does its
-// `applyPatch` promise wait on the channels.
-let deferred: 1 | undefined;
 function commitReady() {
   let applied = false;
   let guards = pendingGuards;
   const pending = readyPatches.get(patchRender);
-  deferred = undefined;
   // A response re-ships full state: what an earlier one left waiting is
   // superseded, and its appliers settle as applied.
   if (pending && pending[ReadyPatchProp.Response] !== patchResponse) {
-    resolvePatch(patchRender, pending, true);
+    resolvePatch(patchRender, pending, 1);
   }
   // An applied guard's content can register channels nested in it (a
   // cold page under a warm layout): each pass commits what the last met.
@@ -110,15 +108,22 @@ function commitReady() {
         for (const guard of channel) patchScope(guard[0], guard[1]);
         applied = true;
       } else {
-        deferred = 1;
-        const channels = (readyPatches.get(patchRender) ||
+        const patch =
+          readyPatches.get(patchRender) ||
           readyPatches
             .set(patchRender, {
               [ReadyPatchProp.Channels]: new Map(),
               [ReadyPatchProp.Resolvers]: [],
               [ReadyPatchProp.Response]: patchResponse,
             })
-            .get(patchRender)!)[ReadyPatchProp.Channels];
+            .get(patchRender)!;
+        const channels = patch[ReadyPatchProp.Channels];
+        // The flush's apply waits on the channel.
+        deferApply(
+          new Promise((resolve) =>
+            patch[ReadyPatchProp.Resolvers].push(resolve),
+          ),
+        );
         // A later flush's guards append: they re-ship full state, so in-order
         // application leaves the newest flush's values live.
         channels.get(readyId)?.push(...channel) ||
@@ -129,16 +134,6 @@ function commitReady() {
     guards = pendingGuards;
   }
   if (applied) run();
-}
-
-function pendingReady() {
-  // Deferred data a channel drained during this commit needs no wait.
-  const patch = deferred && readyPatches.get(patchRender);
-  if (patch) {
-    return new Promise<boolean>((resolve) =>
-      patch[ReadyPatchProp.Resolvers].push(resolve),
-    );
-  }
 }
 
 // A channel's guards apply as it readies; channels they register (content
@@ -165,7 +160,7 @@ function failReady(readyId: string) {
   failed.add(readyId);
   for (const [render, patch] of readyPatches) {
     if (patch[ReadyPatchProp.Channels].has(readyId)) {
-      resolvePatch(render, patch, false);
+      resolvePatch(render, patch, 0);
     }
   }
 }
@@ -173,10 +168,10 @@ function failReady(readyId: string) {
 function discardReady() {
   pendingGuards = {};
   const patch = readyPatches.get(patchRender);
-  if (patch) resolvePatch(patchRender, patch, false);
+  if (patch) resolvePatch(patchRender, patch, 0);
 }
 
-function resolvePatch(render: RenderData, patch: ReadyPatch, applied: boolean) {
+function resolvePatch(render: RenderData, patch: ReadyPatch, applied: Applied) {
   readyPatches.delete(render);
   for (const resolve of patch[ReadyPatchProp.Resolvers]) resolve(applied);
 }
