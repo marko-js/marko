@@ -1,0 +1,9 @@
+<let/count=0/>
+<main>
+  <if=(count > 1)>
+    <button.read onClick() {
+      document.querySelector("main")!.dataset.title = input.title;
+    }>read</button>
+  </if>
+  <button.step onClick() { count++ }>+</button>
+</main>

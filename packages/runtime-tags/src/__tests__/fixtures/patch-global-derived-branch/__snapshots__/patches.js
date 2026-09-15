@@ -1,0 +1,18 @@
+// PATCH
+[`a0;D ;<p> </p>`, `a1; ;<style></style>`, {
+  la: [{
+    ta: "a"
+  }, {
+    ta: "b"
+  }, "a0"],
+  bb: [{
+    ma: "a+b"
+  }, "a1"]
+}]
+"a:Bg"
+
+// PATCH holding a:Bg
+{
+  la: [],
+  bb: 0
+}

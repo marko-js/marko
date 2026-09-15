@@ -1,0 +1,16 @@
+<let/count=0/>
+<main>
+  <div>
+    <if=input.kind === "a">
+      <p>A ${input.title + " #" + count}</p>
+    </if>
+    <else-if=input.kind === "b">
+      <p>B ${input.title + " @" + count}</p>
+    </else-if>
+    <else>
+      <p>None ${count}</p>
+    </else>
+  </div>
+  <span>${input.title + " root #" + count}</span>
+  <button onClick() { count++ }>+</button>
+</main>

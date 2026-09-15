@@ -3,6 +3,8 @@ declare const Config: {
   /** `"hydrate"` is deprecated; Marko 6 resumes rather than hydrates. Prefer `output: "dom", entry: "page"` for new page entries, noting that unlike `"hydrate"` it also enables taglib translators. */
   output?: "html" | "dom" | "migrate" | "source" | "hydrate";
   entry?: EntryKind;
+  /** Enables the patch protocol: pages patched in place across navigations. */
+  patches?: boolean;
   linkAssets?: {
     runtime: string;
     onAsset(kind: EntryKind, file: string, id: string): void;
