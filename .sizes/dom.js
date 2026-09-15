@@ -2153,7 +2153,7 @@ function patch($global) {
               return (typeof tree == "object" && trees.push(tree), value);
             },
           ]),
-          commitFrame(),
+          commitFlush(),
           !0
         );
       } catch {
@@ -2171,7 +2171,7 @@ function patchWrite(scope, accessor, value) {
 function applyGlobals(live, _key, value) {
   for (let key in value) patchWrite(live.$, key, value[key]);
 }
-function commitFrame() {
+function commitFlush() {
   (runEffects(patchRender.m([]), 1), run());
 }
 //#endregion

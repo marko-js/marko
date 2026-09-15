@@ -498,7 +498,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     } else {
       buf.pop();
       // An empty tree applies nothing, so the client never keys it.
-      if (patch) unkeyFrame(state, ref);
+      if (patch) unkeyFlush(state, ref);
     }
   }
 
@@ -772,7 +772,7 @@ function newFlushReference(state: State) {
   return ref;
 }
 
-function unkeyFrame(state: State, ref: Reference) {
+function unkeyFlush(state: State, ref: Reference) {
   state.trees--;
   ref.id = null;
 }

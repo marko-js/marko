@@ -585,13 +585,13 @@ function testFixtures(interop?: true) {
                         tracker.beginUpdate();
                       }
                       flushes.push(flush);
-                      // The wire delimits frames by newline (as the run
+                      // The wire delimits flushes by newline (as the run
                       // client reads them), so a flush must be one line.
-                      const frames = flush.split("\n").filter(Boolean);
-                      assert.equal(frames.length, 1, "a flush spans lines");
+                      const lines = flush.split("\n").filter(Boolean);
+                      assert.equal(lines.length, 1, "a flush spans lines");
                       // A production caller navigates on the first failed
                       // flush; later flushes must not mutate further.
-                      const result = applyPatch(frames[0]);
+                      const result = applyPatch(lines[0]);
                       if (typeof result !== "boolean" && holdLoad) {
                         held.push(result);
                         continue;

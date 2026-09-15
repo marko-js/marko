@@ -1711,7 +1711,7 @@ export class State implements SerializeState {
   public serializer = new Serializer();
   declare writesPatches?: boolean;
   /** A page render of patch template: structure tracks unpatched context. */
-  public patchPage?: true;
+  declare patchPage?: true;
   // Patch rendering intercepts branch/loop writes; defined only by the patch
   // entry's State subclass so normal SSR bundles carry none of it.
   writeBranch?(
@@ -1761,11 +1761,11 @@ export class State implements SerializeState {
   declare patchInert?: 1;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
-  public globalSubscribers?: Record<string, Set<ScopeInternals>>;
+  declare globalSubscribers?: Record<string, Set<ScopeInternals>>;
   // Content renderers a flush created and invoked (by id): one created but
   // never invoked was withheld by its consumer, so its values fill.
-  public definedContents?: Set<string>;
-  public renderedContents?: Set<string>;
+  declare definedContents?: Set<string>;
+  declare renderedContents?: Set<string>;
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;

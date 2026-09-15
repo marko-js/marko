@@ -14,7 +14,7 @@ import {
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import { registerAccess, toAccess, toObjectKey } from "./serializer";
-import { rawShells, shells } from "./shells";
+import { quotedShell, rawShells } from "./shells";
 import type { ServerRenderer } from "./template";
 import {
   _el,
@@ -273,7 +273,7 @@ export let _dynamic_tag = (
       shouldResume ||
       (patchPairing &&
         typeof renderer === "function" &&
-        shells[renderer[RendererProp.Id]!])
+        rawShells[renderer[RendererProp.Id]!])
     ) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]: rendererKey(renderer),
@@ -342,7 +342,7 @@ export function _content_shell(id: string, scopeId: number | undefined) {
       scopeId,
     ),
     contentAccessPrefix +
-      shells[id] +
+      quotedShell(id) +
       (scopeId === undefined ? ")" : ",_(" + scopeId + "))"),
   );
 }

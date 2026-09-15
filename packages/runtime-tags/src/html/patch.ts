@@ -24,7 +24,7 @@ import {
 import { _escape_style_value } from "./content";
 import { _to_text, _unescaped } from "./content";
 import { getRegistered, K_SCOPE_ID } from "./serializer";
-import { shells } from "./shells";
+import { quotedShell, rawShells } from "./shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
   _peek_scope_id,
@@ -87,11 +87,11 @@ export function _must_render(child: unknown) {
   return mustRenderWalk(child as WithIntrinsics, new Set(), { t: false });
 }
 
-const mustRenderWalk = (
+function mustRenderWalk(
   holder: WithIntrinsics,
   visiting: Set<() => unknown[]>,
   taint: { t: boolean },
-): boolean => {
+): boolean {
   const intrinsics = holder?.[kIntrinsics];
   if (intrinsics === undefined) return true;
   if (typeof intrinsics !== "function") return !!intrinsics;
@@ -113,7 +113,7 @@ const mustRenderWalk = (
   if (result || !taint.t) holder[kIntrinsics] = result ? 1 : 0;
   taint.t ||= outerTaint;
   return result;
-};
+}
 
 export function renderPatch(
   this: Template & ServerRenderer,
@@ -180,14 +180,9 @@ class PatchState extends State {
     this.hasGlobals = true;
   }
 
-  // Shells left over from a chunk that wrote no tree still evaluate as the
-  // frame's one expression: the trailing `0` keeps a batch's array from
-  // reading as the tree (the frame's last value). Defensive: a rendered
-  // channel scope writes its pairing entry beside its batches, and the
-  // reads that subscribe without entries sit in structure a patch skips.
+  // A flush is one line the client evaluates as one expression, so the
+  // wire ends it with a newline and debug checks it embeds neither.
   override flushChunk(_html: string, scripts: string) {
-    // The client reads one frame per line: everything a flush embeds is
-    // escaped (serializer strings, shells), so a newline is a bug.
     if (MARKO_DEBUG) {
       if (scripts.includes("\n")) throw new Error("A patch flush spans lines.");
       // The client returns the flush as one expression; a `;`-joined
@@ -847,12 +842,14 @@ function ownerHops(state: State, scopeId: number, ownerId?: number) {
 }
 
 function shipShell(state: PatchState, shellId: string | 0 | undefined) {
-  if (!shellId || !shells[shellId]) return undefined;
-  if (!(state.sentShells ??= new Set()).has(shellId)) {
-    state.sentShells.add(shellId);
-    state.pendingShells += (state.pendingShells && ",") + shells[shellId];
+  if (shellId && rawShells[shellId]) {
+    if (!(state.sentShells ??= new Set()).has(shellId)) {
+      state.sentShells.add(shellId);
+      state.pendingShells +=
+        (state.pendingShells && ",") + quotedShell(shellId);
+    }
+    return shellId;
   }
-  return shellId;
 }
 
 function attrValue(value: unknown) {

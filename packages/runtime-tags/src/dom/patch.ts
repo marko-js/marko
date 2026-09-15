@@ -77,7 +77,7 @@ export function patch($global: PatchGlobal) {
           return value;
         },
       ] as typeof patchRender.r;
-      commitFrame();
+      commitFlush();
       return pendingReady?.() || true;
     } catch (error) {
       // The flush did not apply faithfully, so the caller navigates; only
@@ -144,7 +144,7 @@ export function applyReadyPatch(render: RenderData, guards: ReadyGuard[]) {
       beginPatch(render, runAt);
       patchScope(entries, scope);
     }
-    commitFrame();
+    commitFlush();
     return true;
   } catch (error) {
     if (MARKO_DEBUG && error) console.error(error);
@@ -155,7 +155,7 @@ export function applyReadyPatch(render: RenderData, guards: ReadyGuard[]) {
   }
 }
 
-function commitFrame() {
+function commitFlush() {
   runEffects(patchRender.m!([]), 1);
   run();
   commitReady?.();
