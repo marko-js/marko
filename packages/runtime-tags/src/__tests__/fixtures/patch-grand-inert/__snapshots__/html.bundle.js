@@ -9,7 +9,7 @@ var stamp_default = _template_patch("b", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "a", stamp())}</p>`);
+	_html(`<p>${_patch_text($scope0_id, "a", stamp(), void 0, 0, 0)}</p>`);
 	$scope0_page && _scope($scope0_id, {});
 }, 0, 0);
 

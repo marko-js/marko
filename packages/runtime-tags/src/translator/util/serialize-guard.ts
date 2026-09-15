@@ -255,8 +255,11 @@ export function getExprWriteOwnership(extra: t.NodeExtra | undefined) {
   );
 }
 
+// An expression with no bindings behind it (a module constant, a call with
+// no request-derived argument) renders once: a patch never re-fills it.
 export function isStableExpr(extra: t.NodeExtra | undefined) {
-  if (!extra || !isReferencedExtra(extra)) return false;
+  if (!extra) return false;
+  if (!isReferencedExtra(extra)) return true;
   let stable = true;
   forEach(extra.referencedBindings, (binding) => {
     stable &&= !!binding.stable;
