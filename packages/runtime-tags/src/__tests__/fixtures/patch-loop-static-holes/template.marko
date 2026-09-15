@@ -1,0 +1,17 @@
+<ul>
+  <for|x| of=[1, 2]>
+    <li>${x}:${input.note}</li>
+  </for>
+</ul>
+<ol>
+  <for|x| of=[1, 2]>
+    <li>${x}</li>
+  </for>
+</ol>
+<if=input.show>
+  <div>
+    <for|x| of=[1, 2]>
+      <p>${x}:${input.note}</p>
+    </for>
+  </div>
+</if>

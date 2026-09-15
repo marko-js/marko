@@ -1,0 +1,11 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/open=false/>
+<button class="toggle" onClick() { open = !open }>toggle</button>
+<main>
+  <if=open>
+    <if=input.show>
+      <Child label=input.label/>
+    </if>
+  </if>
+</main>

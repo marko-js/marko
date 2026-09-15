@@ -9,7 +9,7 @@ import {
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPatch } from "../util/marko-config";
 import {
   BindingType,
   FORCED,
@@ -140,9 +140,11 @@ export default {
       });
     } else {
       // A `<let>` returns state it controls rather than that value, so the
-      // binding has no downstream; an unread let drops it.
+      // binding has no downstream; a patch still resolves a never assigned
+      // let's sources from it, and an unread let drops it.
       tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
-      setBindingValueExprs(binding, tagExtra);
+      if (isPatch()) setBindingDownstream(binding, tagExtra);
+      else setBindingValueExprs(binding, tagExtra);
     }
   },
   translate: {
