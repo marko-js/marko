@@ -378,7 +378,10 @@ class PatchState extends State {
               : shellId || 1,
     });
     // Later settle flushes nest under the live branch as a Child apply.
-    if (branchIndex !== undefined) {
+    if (branchIndex === undefined) {
+      delete this.patchTrees!.get(getChunk()!.serializeState)![branchId];
+      delete this.patchLinks![branchId];
+    } else {
       link[2] = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
     return 1 as const;
