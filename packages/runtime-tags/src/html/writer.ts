@@ -1769,7 +1769,8 @@ export class State implements SerializeState {
   declare rootScopeId?: number;
   declare patchTrees?: Map<
     SerializeState,
-    Record<number, Record<string, unknown>>
+    // `0`: a hidden branch released this id; reads treat it as absent.
+    Record<number, Record<string, unknown> | 0>
   >;
   declare patchBinds?: number;
   declare binds?: Map<WeakKey, number>;

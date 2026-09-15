@@ -379,8 +379,9 @@ class PatchState extends State {
     });
     // Later settle flushes nest under the live branch as a Child apply.
     if (branchIndex === undefined) {
-      delete this.patchTrees!.get(getChunk()!.serializeState)![branchId];
-      delete this.patchLinks![branchId];
+      // `0` frees the released id: a reusing branch's pair guard must not
+      // see the dead partial (the stale link is overwritten on reuse).
+      this.patchTrees!.get(getChunk()!.serializeState)![branchId] = 0;
     } else {
       link[2] = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
