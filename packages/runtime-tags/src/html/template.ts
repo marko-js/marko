@@ -46,12 +46,21 @@ export const _template = (
 };
 
 function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
+  return startRender(this, input, State);
+}
+
+// A render's entry, parameterized on the State a template's mode uses.
+export function startRender(
+  template: Template & ServerRenderer,
+  input: TemplateInput,
+  StateClass: typeof State,
+): RenderedTemplate {
   let { $global } = input;
   if ($global) {
     ({ $global, ...input } = input);
     $global = {
       runtimeId: DEFAULT_RUNTIME_ID,
-      renderId: getDefaultRenderId(this),
+      renderId: getDefaultRenderId(template),
       ...$global,
     };
 
@@ -71,11 +80,11 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
   } else {
     $global = {
       runtimeId: DEFAULT_RUNTIME_ID,
-      renderId: getDefaultRenderId(this),
+      renderId: getDefaultRenderId(template),
     };
   }
 
-  const state = new State($global as State["$global"]);
+  const state = new StateClass($global as State["$global"]);
   const head = new Chunk(
     new Boundary(state, $global.signal),
     null,
@@ -83,10 +92,12 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
     state,
   );
 
-  if (this[RendererProp.Embed]) {
-    head.render(() => writeWaitReady(this[RendererProp.Id]!, this, input));
+  if (template[RendererProp.Embed]) {
+    head.render(() =>
+      writeWaitReady(template[RendererProp.Id]!, template, input),
+    );
   } else {
-    head.render(this, input);
+    head.render(template, input);
   }
   return new ServerRendered(head);
 }

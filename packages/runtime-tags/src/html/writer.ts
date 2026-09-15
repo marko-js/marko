@@ -1228,6 +1228,34 @@ export class State implements SerializeState {
     }
   }
 
+  flushChunk(html: string, scripts: string, pending: number) {
+    const { $global, nonceAttr } = this;
+    const { __flush__ } = $global;
+
+    if (scripts) {
+      html += "<script" + nonceAttr + ">" + scripts + "</script>";
+    }
+
+    if (__flush__) {
+      $global.__flush__ = undefined;
+      html = __flush__($global, html);
+    }
+
+    return pending ? html : html + this.trailerHTML;
+  }
+
+  walkScript() {
+    return this.runtimePrefix + RuntimeKey.Walk + "()";
+  }
+
+  resumeScript(resumes: string) {
+    if (this.hasWrittenResume) {
+      return this.runtimePrefix + RuntimeKey.Resume + ".push(" + resumes + ")";
+    }
+    this.hasWrittenResume = true;
+    return this.runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]";
+  }
+
   get runtimePrefix() {
     const { $global } = this;
     return $global.runtimeId + "." + $global.renderId;
@@ -1407,6 +1435,7 @@ export class Chunk {
 
   append(chunk: Chunk) {
     this.html += chunk.html;
+    this.needsWalk ||= chunk.needsWalk;
     this.effects = concatEffects(this.effects, chunk.effects);
     this.scripts = concatScripts(this.scripts, chunk.scripts);
     this.lastEffect = chunk.lastEffect || this.lastEffect;
@@ -1754,33 +1783,17 @@ export class Chunk {
 
     // Placeholders render during this pass; their scopes go out with it.
     flushSerializer(boundary, state);
-    if (state.resumes) {
-      if (state.hasWrittenResume) {
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
-        );
-      } else {
-        state.hasWrittenResume = true;
-        scripts = concatScripts(
-          scripts,
-          runtimePrefix + RuntimeKey.Resume + "=[" + state.resumes + "]",
-        );
-      }
-    } else if (needsResumeArray && !state.hasWrittenResume) {
-      // A reordered chunk's script pushes its effects into the resume array.
-      state.hasWrittenResume = true;
-      scripts = concatScripts(
-        scripts,
-        runtimePrefix + RuntimeKey.Resume + "=[]",
-      );
+    // A reordered chunk's script pushes its effects into the resume array,
+    // so one opens even with nothing to resume yet.
+    if (state.resumes || (needsResumeArray && !state.hasWrittenResume)) {
+      scripts = concatScripts(scripts, state.resumeScript(state.resumes));
     }
 
     // Reordered scripts follow the resume data they push after.
     scripts = concatScripts(scripts, reordered);
 
     if (needsWalk) {
-      scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
+      scripts = concatScripts(scripts, state.walkScript());
     }
 
     this.html = html;
@@ -1799,26 +1812,9 @@ export class Chunk {
     }
 
     this.flushScript();
-    const { scripts } = this;
-    const { $global, nonceAttr } = state;
-    const { __flush__ } = $global;
-    let { html } = this;
+    const { html, scripts } = this;
     this.html = this.scripts = "";
-
-    if (scripts) {
-      html += "<script" + nonceAttr + ">" + scripts + "</script>";
-    }
-
-    if (__flush__) {
-      $global.__flush__ = undefined;
-      html = __flush__($global, html);
-    }
-
-    if (!boundary.count) {
-      html += state.trailerHTML;
-    }
-
-    return html;
+    return state.flushChunk(html, scripts, boundary.count);
   }
 }
 
