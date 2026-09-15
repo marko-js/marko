@@ -21,18 +21,33 @@ LOG "placeholder mounted"
 document.querySelector("button").click();
 ```
 ```html
+<button>
+  retry 2
+</button>
+```
+## Change
+```
+UPDATE: button::text@6 "1" => "2"
+```
+
+# Update
+## Change
+```
+REMOVE: button
+```
+## Console
+```
+LOG "placeholder destroyed"
+```
+
+# Update
+```html
 <b>
   nope
 </b>
 ```
 ## Change
 ```
-UPDATE: button::text@6 "1" => "2"
-REMOVE: button
 INSERT: b
 UPDATE: b::text " " => "nope"
-```
-## Console
-```
-LOG "placeholder destroyed"
 ```

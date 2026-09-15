@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $count__closures = new Set();
 	let count = 0;
 	_html("<div>");
-	_await($scope0_id, "#text/0", Promise.resolve("a"), (value) => {
+	_await($scope0_id, "#text/0", resolveAfter("a", 0), (value) => {
 		const $scope1_id = _scope_id();
 		_html(`Got: ${_escape(value)} ${_text_resume($scope1_id, "#text/1", count, 2)}`);
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));

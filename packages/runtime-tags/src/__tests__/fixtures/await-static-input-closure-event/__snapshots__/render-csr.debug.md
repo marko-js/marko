@@ -2,6 +2,15 @@
 
 # Update
 ```html
+Loading
+```
+## Change
+```
+INSERT: ::text("Loading")
+```
+
+# Update
+```html
 <p>
   hello
 </p>
@@ -12,6 +21,7 @@
 ## Change
 ```
 INSERT: p, button
+REMOVE: button + ::text("Loading")
 UPDATE: p::text " " => "hello"
 UPDATE: button::text " " => "0"
 ```

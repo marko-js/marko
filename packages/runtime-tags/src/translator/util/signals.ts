@@ -51,6 +51,7 @@ import {
   isImmediateOwner,
   type Section,
   sectionUtil,
+  underTryPlaceholder,
 } from "./sections";
 import {
   getExprIfSerialized,
@@ -124,10 +125,6 @@ export function setClosureSignalBuilder(
 ) {
   _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, builder);
 }
-
-export const [getTryHasPlaceholder, setTryHasPlaceholder] = createSectionState<
-  true | undefined
->("tryWithPlaceholder");
 
 // A branch section whose scope ids ride a resume marker carrying the parent scope
 // id when its scopes serialize, so the client links the owner and `_` is not serialized.
@@ -404,17 +401,6 @@ export function getSignal(
     }
   }
   return signal;
-}
-
-function underTryPlaceholder(section: Section) {
-  let curSection = section.parent;
-  while (curSection) {
-    if (getTryHasPlaceholder(curSection)) {
-      return true;
-    }
-    curSection = curSection.parent;
-  }
-  return false;
 }
 
 export function initValue(binding: Binding, isLet = false) {

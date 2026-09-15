@@ -2,7 +2,7 @@ import { resolveAfter } from "../../utils/resolve";
 
 <let/count = 0/>
 <div>
-  <await|value|=Promise.resolve("a")>
+  <await|value|=resolveAfter("a", 0)>
     Got: ${value} ${count}
   </await>
 

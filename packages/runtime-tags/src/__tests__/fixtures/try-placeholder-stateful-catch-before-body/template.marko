@@ -1,4 +1,4 @@
-import { resolveAfter } from "../../utils/resolve";
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
 
 <let/attempt=1>
 <try>
@@ -9,7 +9,7 @@ import { resolveAfter } from "../../utils/resolve";
     />
     <button onClick() { attempt++ }>retry ${attempt}</button>
   </@placeholder>
-  <await|value|=(attempt === 1 ? resolveAfter("body", 3) : Promise.reject(new Error("nope")))>
+  <await|value|=(attempt === 1 ? resolveAfter("body", 3) : rejectAfter(new Error("nope"), 0))>
     <p>${value}</p>
   </await>
   <@catch|err|>
