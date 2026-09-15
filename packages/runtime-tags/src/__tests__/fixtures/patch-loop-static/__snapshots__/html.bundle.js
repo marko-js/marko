@@ -9,7 +9,7 @@ var template_default = _template_patch("a", (input) => {
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_for_of(["a", "b"], (name) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_patch_text($scope1_id, "a", name)} ${_patch_text($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_patch_text($scope1_id, "a", name, void 0, 0, 0)} ${_patch_text($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "b", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "a0", 0, 0);
 	_html("</main>");

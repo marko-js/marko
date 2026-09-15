@@ -35,7 +35,7 @@ var page_default = _template_patch("a", (input) => {
 		panel_default({ aside: attrTag({ content: _content_elide("a0", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<span>${_patch_text($scope2_id, "a", m)}</span>`);
+			_html(`<span>${_patch_text($scope2_id, "a", m, void 0, 0, 0)}</span>`);
 			_if(() => {
 				if (m === "b") {
 					const $scope3_id = _scope_id();
@@ -55,7 +55,7 @@ var page_default = _template_patch("a", (input) => {
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_down__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 					return 0;
 				}
-			}, $scope2_id, "b", 1, 0, 0, void 0, void 0, ["a2"]);
+			}, $scope2_id, "b", 1, 0, 0, void 0, void 0, ["a2"], 0, 0);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 		}, $scope1_id) }) });
 		_scope($scope1_id, {

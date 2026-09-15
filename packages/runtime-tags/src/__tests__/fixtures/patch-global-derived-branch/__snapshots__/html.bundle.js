@@ -28,11 +28,11 @@ var template_default = _template_patch("a", (input) => {
 	_if(() => {
 		if (summary) {
 			const $scope2_id = _scope_id();
-			_html(`<style${_attr_nonce()}>${_patch_text_content($scope2_id, "a", summary, _escape_style)}</style>${_el_resume($scope2_id, "a")}`);
+			_html(`<style${_attr_nonce()}>${_patch_text_content($scope2_id, "a", summary, _escape_style, 0, 0)}</style>${_el_resume($scope2_id, "a")}`);
 			_scope($scope2_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $scope0_page, $scope0_page, void 0, void 0, ["a1"]);
+	}, $scope0_id, "b", 1, $scope0_page, $scope0_page, void 0, void 0, ["a1"], 0, 0);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {});
 }, 1, 1);

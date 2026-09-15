@@ -9,7 +9,7 @@ var widget_default = _template_patch("b", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "a", brand())}</em>`);
+	_html(`<em>${_patch_text($scope0_id, "a", brand(), void 0, 0, 0)}</em>`);
 	$scope0_page && _scope($scope0_id, {});
 }, 0, 0);
 

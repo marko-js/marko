@@ -30,11 +30,11 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (summary) {
 			const $scope2_id = _scope_id();
-			_html(`<style${_attr_nonce()}>${_patch_text_content($scope2_id, "#style/0", summary, _escape_style)}</style>${_el_resume($scope2_id, "#style/0")}`);
+			_html(`<style${_attr_nonce()}>${_patch_text_content($scope2_id, "#style/0", summary, _escape_style, 0, 0)}</style>${_el_resume($scope2_id, "#style/0")}`);
 			_scope($scope2_id, {}, "__tests__/template.marko", "7:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $scope0_page, $scope0_page, void 0, void 0, ["__tests__/template.marko_2*shell"]);
+	}, $scope0_id, "#text/1", 1, $scope0_page, $scope0_page, void 0, void 0, ["__tests__/template.marko_2*shell"], 0, 0);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 1);

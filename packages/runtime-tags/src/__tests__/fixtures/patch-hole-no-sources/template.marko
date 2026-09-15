@@ -1,8 +1,12 @@
 static let renders = 0
+static const names = ["x", "y"]
+<const/label=names.join("+")/>
 <main>
-  <p>${++renders}</p>
+  <p>${++renders} ${label}</p>
   <h1>${input.title}</h1>
+  <for|name| of=names><i>${name}</i></for>
   <if=input.show>
-    <span>${++renders}</span>
+    <span>${++renders} ${label}</span>
+    <for|name| of=names><b>${name}</b></for>
   </if>
 </main>

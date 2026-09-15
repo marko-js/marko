@@ -36,7 +36,7 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 		panel_default({ aside: attrTag({ content: _content_elide("__tests__/page.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<span>${_patch_text($scope2_id, "#text/0", m)}</span>`);
+			_html(`<span>${_patch_text($scope2_id, "#text/0", m, void 0, 0, 0)}</span>`);
 			_if(() => {
 				if (m === "b") {
 					const $scope3_id = _scope_id();
@@ -56,7 +56,7 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_down__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/page.marko", "6:8"));
 					return 0;
 				}
-			}, $scope2_id, "#text/1", 1, 0, 0, void 0, void 0, ["__tests__/page.marko_3*shell"]);
+			}, $scope2_id, "#text/1", 1, 0, 0, void 0, void 0, ["__tests__/page.marko_3*shell"], 0, 0);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/page.marko", "4:6");
 		}, $scope1_id) }) });
 		_scope($scope1_id, {

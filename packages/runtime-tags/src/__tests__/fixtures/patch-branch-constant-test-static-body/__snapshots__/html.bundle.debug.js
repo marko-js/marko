@@ -12,14 +12,14 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_for_of(ITEMS, (m) => {
 		const $scope1_id = _scope_id();
-		_html(`<span>${_patch_text($scope1_id, "#text/0", m)}</span>`);
+		_html(`<span>${_patch_text($scope1_id, "#text/0", m, void 0, 0, 0)}</span>`);
 		_if(() => {
 			if (m === "b") {
 				const $scope2_id = _scope_id();
 				_html("<p>last</p>");
 				return 0;
 			}
-		}, $scope1_id, "#text/1", 1, 0, 0, void 0, void 0, ["__tests__/page.marko_2*shell"]);
+		}, $scope1_id, "#text/1", 1, 0, 0, void 0, void 0, ["__tests__/page.marko_2*shell"], 0, 0);
 		_scope($scope1_id, {}, "__tests__/page.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", 1, 1, 0, void 0, void 0, "__tests__/page.marko_1*shell", 0, 0);
 }, 0, 0);

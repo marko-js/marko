@@ -401,7 +401,11 @@ class PatchState extends State {
     group?: number,
   ) {
     if (this.patchInert) return;
-    if (_client_guard(owned, group!)) return 1;
+    // A client-owned list, or a stable one (nothing request-derived behind
+    // it) outside a branch a flush creates, keeps its rows: the entry ships
+    // only for what the rows themselves fill.
+    const rowsKept =
+      _client_guard(owned, group!) || !_filled_guard(owned, group!);
     const partials: object[] = [];
     const keys: unknown[] = [];
     let indexKeys = true;
@@ -425,6 +429,7 @@ class PatchState extends State {
       withBranchId(branchId, render);
       partials.push(patchPartial(this, branchId));
     });
+    if (rowsKept && !partials.some(hasKeys)) return 1;
     const sentShellId = partials.length ? shipShell(this, shellId) : undefined;
     // Interleaved `[key, partial, …, shellId?]`: keys drop when every key
     // is its index, and the shell rides as a trailing string.

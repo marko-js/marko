@@ -670,6 +670,8 @@ export function _for_of(
   parentEndTag?: string | 0,
   singleNode?: 1,
   shellId?: string | 0,
+  owned?: SerializeReasonValue,
+  group?: number,
 ): void {
   forBranches(
     by,
@@ -688,6 +690,8 @@ export function _for_of(
     parentEndTag,
     singleNode,
     shellId,
+    owned,
+    group,
   );
 }
 
@@ -703,6 +707,8 @@ export function _for_in(
   parentEndTag?: string | 0,
   singleNode?: 1,
   shellId?: string | 0,
+  owned?: SerializeReasonValue,
+  group?: number,
 ): void {
   forBranches(
     by,
@@ -722,6 +728,8 @@ export function _for_in(
     parentEndTag,
     singleNode,
     shellId,
+    owned,
+    group,
   );
 }
 
@@ -739,6 +747,8 @@ export function _for_to(
   parentEndTag?: string | 0,
   singleNode?: 1,
   shellId?: string | 0,
+  owned?: SerializeReasonValue,
+  group?: number,
 ): void {
   forBranches(
     by,
@@ -759,6 +769,8 @@ export function _for_to(
     parentEndTag,
     singleNode,
     shellId,
+    owned,
+    group,
   );
 }
 
@@ -776,6 +788,8 @@ export function _for_until(
   parentEndTag?: string | 0,
   singleNode?: 1,
   shellId?: string | 0,
+  owned?: SerializeReasonValue,
+  group?: number,
 ): void {
   forBranches(
     by,
@@ -796,6 +810,8 @@ export function _for_until(
     parentEndTag,
     singleNode,
     shellId,
+    owned,
+    group,
   );
 }
 

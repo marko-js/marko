@@ -13,13 +13,13 @@ var template_default = _template_patch("a", (input) => {
 	_html("<ul>");
 	_for_of([1, 2], (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "a", x)}:${_patch_text($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</li>`);
+		_html(`<li>${_patch_text($scope1_id, "a", x, void 0, 0, 0)}:${_patch_text($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</li>`);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, $sg__input_note, 0, void 0, void 0, "a0", 0, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_note)}<ol>`);
 	_for_of([1, 2], (x) => {
 		const $scope4_id = _scope_id();
-		_html(`<li>${_patch_text($scope4_id, "a", x)}</li>`);
+		_html(`<li>${_patch_text($scope4_id, "a", x, void 0, 0, 0)}</li>`);
 		_scope($scope4_id, {});
 	}, 0, $scope0_id, "b", 1, 1, 0, void 0, void 0, "a3", 0, 0);
 	_html(`</ol>${_el_resume($scope0_id, "b")}`);
@@ -29,7 +29,7 @@ var template_default = _template_patch("a", (input) => {
 			_html("<div>");
 			_for_of([1, 2], (x) => {
 				const $scope3_id = _scope_id();
-				_html(`<p>${_patch_text($scope3_id, "a", x)}:${_patch_text($scope3_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
+				_html(`<p>${_patch_text($scope3_id, "a", x, void 0, 0, 0)}:${_patch_text($scope3_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
 				_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 			}, 0, $scope2_id, "a", 1, 1, 0, void 0, void 0, "a2", 0, 0);
 			_html(`</div>${_el_resume($scope2_id, "a")}`);

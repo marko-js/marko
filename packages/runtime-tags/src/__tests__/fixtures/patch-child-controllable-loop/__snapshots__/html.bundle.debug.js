@@ -44,7 +44,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_for_of(["a", "b"], (name) => {
 		const $scope1_id = _scope_id();
 		let hits = 0;
-		_html(`<p>${_patch_text($scope1_id, "#text/0", name)} hit ${_text_resume($scope1_id, "#text/1", hits, 2)}</p>`);
+		_html(`<p>${_patch_text($scope1_id, "#text/0", name, void 0, 0, 0)} hit ${_text_resume($scope1_id, "#text/1", hits, 2)}</p>`);
 		_set_serialize_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "#childScope/2", $childScope);

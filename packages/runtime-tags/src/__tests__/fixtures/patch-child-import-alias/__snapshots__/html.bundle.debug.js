@@ -11,7 +11,7 @@ var widget_default = _template_patch("__tests__/tags/widget/index.marko", (input
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const b = brand;
-	_html(`<em>${_patch_text($scope0_id, "#text/0", b())}</em>`);
+	_html(`<em>${_patch_text($scope0_id, "#text/0", b(), void 0, 0, 0)}</em>`);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
 }, 0, 0);
 

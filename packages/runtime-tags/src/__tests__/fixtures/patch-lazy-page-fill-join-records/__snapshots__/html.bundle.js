@@ -93,7 +93,7 @@ var page_b_default = _template_patch("c", (input) => {
 			content: _content_elide("c0", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<span>${_patch_text($scope2_id, "a", p, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "b", count, 2)}/${_patch_text($scope2_id, "c", item, 2)}</span>`);
+				_html(`<span>${_patch_text($scope2_id, "a", p, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "b", count, 2)}/${_patch_text($scope2_id, "c", item, 2, 0, 0)}</span>`);
 				_subscribe(_unfilled_if($scope0_reason, 0) && $p__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
 			}, $scope1_id)
 		});

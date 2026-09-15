@@ -1757,6 +1757,7 @@ function resolveBindingSources(binding: Binding) {
     }
 
     binding.sources = aliasRoot.sources;
+    if (aliasRoot.stable) binding.stable = true;
   } else {
     resolveDerivedSources(binding);
   }
@@ -1781,6 +1782,9 @@ function resolveDerivedSources(binding: Binding) {
     binding.sources = createSources(binding, undefined);
   } else if (exprs) {
     const seen = new Set<Binding>();
+    // A derived value (a `<const>`, a loop param) of stable upstreams alone
+    // is stable itself: nothing request-derived or client-owned reaches it.
+    let stable = binding.type === BindingType.derived;
     forEach(exprs, (expr) => {
       // A value holding a function literal (or one selected among
       // function-valued bindings) can carry one.
@@ -1793,6 +1797,7 @@ function resolveDerivedSources(binding: Binding) {
             binding.upstreams = bindingUtil.add(binding.upstreams, ref);
             if (ref.functionValued) binding.functionValued = true;
           }
+          stable &&= !!ref.stable;
         });
         binding.sources = mergeSources(
           binding.sources,
@@ -1800,6 +1805,7 @@ function resolveDerivedSources(binding: Binding) {
         );
       }
     });
+    if (stable) binding.stable = true;
   }
 }
 
