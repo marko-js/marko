@@ -8,4 +8,4 @@
     "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-sibling/tags/store.marko_0/_return", 1, "#childScope/0", "TagVariableChange:count"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-sibling/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-sibling/template.marko_1*shell:AQ"
+"AwI"

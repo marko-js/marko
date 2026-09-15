@@ -12,9 +12,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell:AQ"
+"BgIAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell:AQ
+// PATCH holding BgIAAA
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
@@ -29,12 +29,12 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell:AQ
+// PATCH holding BgIAAA
 {
   "PatchBranch:#main/0": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell:AQ
+// PATCH holding BgIAAA
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

@@ -12,9 +12,9 @@
     }
   }, "a1"]
 }]
-"a:Bg"
+"AwEA"
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   ta: "Store!",
   bb: 0,
@@ -25,7 +25,7 @@
   }, "a1"]
 }
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   ta: "Store!",
   bb: [{

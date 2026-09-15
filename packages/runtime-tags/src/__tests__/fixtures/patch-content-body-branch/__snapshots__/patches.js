@@ -12,9 +12,9 @@
     }
   }, "a1"]
 }]
-"a:Fg"
+"BgEAAQ"
 
-// PATCH holding a:Fg
+// PATCH holding BgEAAQ
 {
   ba: [{
     ca: {
@@ -29,7 +29,7 @@
   }, "a1"]
 }
 
-// PATCH holding a:Fg
+// PATCH holding BgEAAQ
 [`a2;Db%;<em>A:<!></em>`, {
   ba: [{
     ca: {
@@ -43,9 +43,9 @@
     }
   }, "a1"]
 }]
-"a:Hg"
+"BgEAAAA"
 
-// PATCH holding a:Hg
+// PATCH holding BgEAAAA
 {
   ba: [{
     ca: {
@@ -60,12 +60,12 @@
   }, "a1"]
 }
 
-// PATCH holding a:Hg
+// PATCH holding BgEAAAA
 {
   ba: 0
 }
 
-// PATCH holding a:Hg
+// PATCH holding BgEAAAA
 {
   ba: [{
     ca: {

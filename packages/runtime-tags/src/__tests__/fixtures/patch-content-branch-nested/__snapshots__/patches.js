@@ -4,9 +4,9 @@
     ba: 0
   }, "a1"]
 }]
-"a:BA"
+"BQI"
 
-// PATCH holding a:BA
+// PATCH holding BQI
 [`a0;D ;<em> </em>`, `a2;/D l%c&b;<p> </p><!><!><!>`, {
   ba: [{
     ba: [{
@@ -20,9 +20,9 @@
     }, "a2"]
   }, "a1"]
 }]
-"a:Dg"
+"BQEAAA"
 
-// PATCH holding a:Dg
+// PATCH holding BQEAAA
 {
   ba: [{
     ba: [{
@@ -37,12 +37,12 @@
   }, "a1"]
 }
 
-// PATCH holding a:Dg
+// PATCH holding BQEAAA
 {
   ba: 0
 }
 
-// PATCH holding a:Dg
+// PATCH holding BQEAAA
 {
   ba: [{
     ba: [{

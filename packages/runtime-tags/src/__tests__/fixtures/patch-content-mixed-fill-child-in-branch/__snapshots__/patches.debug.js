@@ -27,9 +27,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/template.marko_1*shell:AQ"
+"BwEE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/template.marko_1*shell:AQ
+// PATCH holding BwEE
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

@@ -18,9 +18,9 @@
     "PatchText:#text/0": "hot"
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_1*shell:AQ"
+"BgIBAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_1*shell:AQ
+// PATCH holding BgIBAA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_2*shell;D ;<small> </small>`, {
   "PatchLoop:#ul/0": [3, {
     "PatchText:#text/0": "Milk",
@@ -39,9 +39,9 @@
     "PatchText:#text/0": "hot"
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_1*shell:AQ"
+"BgIAAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_1*shell:AQ
+// PATCH holding BgIAAAA
 {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",

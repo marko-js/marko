@@ -8,9 +8,9 @@
     "PatchText:#text/1": "y"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-paired/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-paired/template.marko_1*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-paired/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {
@@ -21,12 +21,12 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-paired/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-paired/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#text/1": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-paired/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {

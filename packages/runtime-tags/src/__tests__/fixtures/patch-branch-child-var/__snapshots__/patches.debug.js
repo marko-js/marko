@@ -13,4 +13,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/template.marko_1*shell:AQ"
+"AwI"

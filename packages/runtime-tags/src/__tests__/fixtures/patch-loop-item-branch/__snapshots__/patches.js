@@ -12,9 +12,9 @@
     }, "a1"]
   }, "a0"]
 }]
-"a:Dg"
+"BAEAAA"
 
-// PATCH holding a:Dg
+// PATCH holding BAEAAA
 {
   la: ["b", {
     ta: "b",

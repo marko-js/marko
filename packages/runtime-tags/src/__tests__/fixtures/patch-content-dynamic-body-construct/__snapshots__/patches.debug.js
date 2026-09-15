@@ -10,4 +10,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-dynamic-body-construct/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-dynamic-body-construct/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-dynamic-body-construct/template.marko_1*shell:AQ"
+"BAIA"

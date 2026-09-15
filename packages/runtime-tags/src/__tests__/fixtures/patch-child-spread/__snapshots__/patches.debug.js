@@ -15,9 +15,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "B",

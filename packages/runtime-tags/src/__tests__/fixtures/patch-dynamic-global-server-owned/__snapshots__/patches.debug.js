@@ -8,9 +8,9 @@
     "PatchText:#text/0": "b"
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-global-server-owned/card.marko:AQ"
+"AgA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-global-server-owned/card.marko:AQ
+// PATCH holding AgA
 {
   "$global:": {
     brand: "b"
@@ -18,7 +18,7 @@
   "PatchDynamicTag:#text/0": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-global-server-owned/card.marko:AQ
+// PATCH holding AgA
 {
   "$global:": {
     brand: "c"

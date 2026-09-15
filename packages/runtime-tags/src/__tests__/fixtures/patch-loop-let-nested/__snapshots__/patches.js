@@ -9,9 +9,9 @@
     }, "a1"]
   }, "a0"]
 }]
-"a:Bg"
+"AwEA"
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   la: [1, {
     ta: "Fuji Apples",
@@ -19,7 +19,7 @@
   }, "a0"]
 }
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   la: [1, {
     ta: "Fuji Apples",
@@ -31,7 +31,7 @@
   }, "a0"]
 }
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   la: [2, {
     ta: "Milk",

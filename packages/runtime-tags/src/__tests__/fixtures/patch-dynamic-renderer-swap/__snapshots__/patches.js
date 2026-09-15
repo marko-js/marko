@@ -7,9 +7,9 @@
     ta: "two"
   }
 }]
-"a:AQ"
+"AwA"
 
-// PATCH holding a:AQ
+// PATCH holding AwA
 [`b;D%;<article class=b><!>!</article>`, {
   fa: ["b", {
     label: "three"
@@ -18,4 +18,4 @@
     ta: "three"
   }
 }]
-"a:AQ,b:AQ"
+"AwAA"

@@ -8,4 +8,4 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko0": "B"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko_1*shell:AQ"
+"AgE"

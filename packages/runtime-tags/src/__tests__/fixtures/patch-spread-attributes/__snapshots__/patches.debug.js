@@ -24,9 +24,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-spread-attributes/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchAttrs:#a/0": {
     href: "/static",

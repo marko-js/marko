@@ -43,9 +43,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell:AQ"
+"CAEABA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell:AQ
+// PATCH holding CAEABA
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

@@ -4,16 +4,16 @@
   tb: "docs",
   bc: "a1"
 }]
-"a:Bg"
+"BAEA"
 
-// PATCH holding a:Bg
+// PATCH holding BAEA
 {
   ba: "a0",
   tb: "bare",
   bc: 0
 }
 
-// PATCH holding a:Bg
+// PATCH holding BAEA
 {
   ba: 0,
   tb: "home",

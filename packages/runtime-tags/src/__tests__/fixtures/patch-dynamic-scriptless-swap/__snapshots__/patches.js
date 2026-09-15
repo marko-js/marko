@@ -7,9 +7,9 @@
     ta: "two"
   }
 }]
-"bxKgxqJ:AQ"
+"AwE"
 
-// PATCH holding bxKgxqJ:AQ
+// PATCH holding AwE
 [`dGN_Fub;D%;<article class=b><!>!</article>`, {
   fa: ["dGN_Fub", {
     label: "three"
@@ -18,4 +18,4 @@
     ta: "three"
   }
 }]
-"bxKgxqJ:AQ,dGN_Fub:AQ"
+"AwEA"

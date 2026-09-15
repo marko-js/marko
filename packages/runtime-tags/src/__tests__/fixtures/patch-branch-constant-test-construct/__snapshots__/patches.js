@@ -24,9 +24,9 @@
     }
   }, "b0"]
 }]
-"a:Lg,b:Ag"
+"CQEAAAEB"
 
-// PATCH holding a:Lg,b:Ag
+// PATCH holding CQEAAAEB
 [`a3,<p>down</p>`, {
   ba: [{
     ca: {
@@ -52,4 +52,4 @@
     }
   }, "b0"]
 }]
-"a:Pg,b:Ag"
+"CQEAAAAAAQ"

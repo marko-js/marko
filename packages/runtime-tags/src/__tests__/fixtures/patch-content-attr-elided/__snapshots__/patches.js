@@ -6,15 +6,15 @@
   },
   tb: "two"
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   fa: 0,
   tb: "three"
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   fa: "a0",
   cAa: {

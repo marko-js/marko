@@ -12,9 +12,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell"],
   "PatchText:#text/2": "hello"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell:AQ"
+"AwEA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell:AQ
+// PATCH holding AwEA
 {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread!"
@@ -23,7 +23,7 @@
   "PatchText:#text/2": "bye"
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell:AQ
+// PATCH holding AwEA
 {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread!"

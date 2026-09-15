@@ -20,9 +20,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_2*shell:AQ"
+"CwYAAQ"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_2*shell:AQ
+// PATCH holding CwYAAQ
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_6*shell;b%b/b&b;<!><!><h1>B</h1><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/docs.marko": {
     "PatchChild:#childScope/0": {
@@ -44,9 +44,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_6*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_2*shell:AQ"
+"CwYAAQA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_6*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_2*shell:AQ
+// PATCH holding CwYAAQA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_4*shell,<p>home</p>`, {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
@@ -54,4 +54,4 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_6*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_4*shell:AQ"
+"CwYAAAAA"

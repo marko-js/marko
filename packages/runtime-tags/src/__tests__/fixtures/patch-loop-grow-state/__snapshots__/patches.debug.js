@@ -7,4 +7,4 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-grow-state/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-grow-state/template.marko0": "Store!"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-grow-state/template.marko_1*shell:AQ"
+"AgE"

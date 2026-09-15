@@ -20,4 +20,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-content-in-construct/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-child-content-in-construct/tags/card/index.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-child-content-in-construct/template.marko_1*shell:AQ"
+"BQEC"

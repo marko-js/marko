@@ -9,4 +9,4 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-grow/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-grow/template.marko0": "x"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-grow/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-grow/template.marko_1*shell:AQ"
+"AwEA"

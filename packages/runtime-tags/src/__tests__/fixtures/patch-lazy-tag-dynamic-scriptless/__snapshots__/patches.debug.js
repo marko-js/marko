@@ -9,16 +9,16 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-scriptless/child.marko:AQ"
+"AgA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-scriptless/child.marko:AQ
+// PATCH holding AgA
 {
   "PatchDynamicTag:#text/0": [0, {
     label: "b"
   }]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-scriptless/child.marko:AQ
+// PATCH holding AgA
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-scriptless/child.marko", {
     label: "c"

@@ -18,9 +18,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_1*shell:AQ"
+"BAIA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_1*shell:AQ
+// PATCH holding BAIA
 {
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
@@ -33,7 +33,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_1*shell:AQ
+// PATCH holding BAIA
 {
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {

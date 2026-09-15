@@ -24,9 +24,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_1*shell:AQ"
+"BQMA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_1*shell:AQ
+// PATCH holding BQMA
 {
   "PatchLoop:#text/0": [{
     "PatchChild:#childScope/0": {

@@ -8,9 +8,9 @@
     }
   }, "a0"]
 }]
-"a:Ag"
+"AwE"
 
-// PATCH holding a:Ag
+// PATCH holding AwE
 [`a1 a4;Db%;<p>Seen <!></p>`, {
   ta: "Store!",
   bb: [{
@@ -20,15 +20,15 @@
     }
   }, "a0"]
 }]
-"a:Bg"
+"AwEA"
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   ta: "Store!",
   bb: 0
 }
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   ta: "Store!",
   bb: [{

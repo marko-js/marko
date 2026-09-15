@@ -9,9 +9,9 @@
   }, "a0"],
   va0: "y"
 }]
-"a:Bg"
+"AwEA"
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   la: ["a", {
     va1: "a",

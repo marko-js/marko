@@ -8,9 +8,9 @@
     }
   }, "a2"]
 }]
-"a:DA"
+"BQIA"
 
-// PATCH holding a:DA
+// PATCH holding BQIA
 {
   ta: "Store!",
   bb: [{
@@ -25,14 +25,14 @@
   }
 }
 
-// PATCH holding a:DA
+// PATCH holding BQIA
 [`a3,<em>closed</em>`, {
   ta: "Store!",
   bb: [1, {}, "a3"]
 }]
-"a:HA"
+"BQIAAA"
 
-// PATCH holding a:HA
+// PATCH holding BQIAAA
 {
   ta: "Open",
   bb: [{

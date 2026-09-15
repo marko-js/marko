@@ -8,15 +8,15 @@
   }, "a2"],
   tb: "b"
 }]
-"a:DA"
+"BAIA"
 
-// PATCH holding a:DA
+// PATCH holding BAIA
 {
   ba: 0,
   tb: "c"
 }
 
-// PATCH holding a:DA
+// PATCH holding BAIA
 {
   ba: [{
     pa: "a1",

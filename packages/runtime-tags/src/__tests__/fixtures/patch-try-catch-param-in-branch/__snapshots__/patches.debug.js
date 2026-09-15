@@ -8,9 +8,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko0": "b"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_1*shell:AQ"
+"BQEAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_1*shell:AQ
+// PATCH holding BQEAAA
 {
   "PatchBranch:#text/2": [{
     "PatchChild:BranchScopes:#text/0": [{

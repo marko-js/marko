@@ -8,9 +8,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-switch-scriptless/template.marko_2*shell:AQ"
+"BQM"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-switch-scriptless/template.marko_2*shell:AQ
+// PATCH holding BQM
 {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
@@ -19,7 +19,7 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-switch-scriptless/template.marko_2*shell:AQ
+// PATCH holding BQM
 [`packages/runtime-tags/src/__tests__/fixtures/patch-content-switch-scriptless/template.marko_3*shell,<b>A</b>`, {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
@@ -27,4 +27,4 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-switch-scriptless/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-switch-scriptless/template.marko_3*shell:AQ"
+"BQMA"

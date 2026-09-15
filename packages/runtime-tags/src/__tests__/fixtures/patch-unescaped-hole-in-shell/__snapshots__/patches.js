@@ -6,9 +6,9 @@
     bc: 0
   }, "a0"]
 }]
-"a:Ag"
+"BQE"
 
-// PATCH holding a:Ag
+// PATCH holding BQE
 [`a2;D lD ;<div> </div><div class=y> </div>`, `a3; ; `, `a1;b%b%;<!><!><!><!>`, {
   ba: [{
     qa: "\x3Ci>b\x3C/i> c",
@@ -24,9 +24,9 @@
     }, "a1"]
   }, "a0"]
 }]
-"a:Hg"
+"BQEAAAA"
 
-// PATCH holding a:Hg
+// PATCH holding BQEAAAA
 {
   ba: [{
     qa: "\x3Cu>d\x3C/u>",
@@ -43,7 +43,7 @@
   }, "a0"]
 }
 
-// PATCH holding a:Hg
+// PATCH holding BQEAAAA
 {
   ba: 0
 }

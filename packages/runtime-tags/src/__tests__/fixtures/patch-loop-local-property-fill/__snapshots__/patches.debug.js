@@ -4,4 +4,4 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-local-property-fill/template.marko0": "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-local-property-fill/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-local-property-fill/template.marko_1*shell:AQ"
+"AwI"

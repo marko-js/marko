@@ -13,9 +13,9 @@
   },
   "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/template.marko_1*shell"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/template.marko_1*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#main/0": 0
 }

@@ -14,9 +14,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell:AQ"
+"BQEAAQ"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell:AQ
+// PATCH holding BQEAAQ
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

@@ -22,9 +22,9 @@
     }
   }
 }]
-"d:CA"
+"BwY"
 
-// PATCH holding d:CA
+// PATCH holding BwY
 {
   z_c: {
     ca: {
@@ -49,7 +49,7 @@
   }
 }
 
-// PATCH holding d:CA
+// PATCH holding BwY
 [`d1;b%b/ Db%l&b;<!><!><button class=a>a:<!></button><!>`, {
   z_b: {
     ca: {
@@ -71,9 +71,9 @@
     }
   }
 }]
-"d:DA"
+"BwUA"
 
-// PATCH holding d:DA
+// PATCH holding BwUA
 {
   z_c: {
     ca: {

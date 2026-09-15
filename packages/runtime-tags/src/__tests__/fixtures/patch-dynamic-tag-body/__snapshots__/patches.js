@@ -11,9 +11,9 @@
     }
   }
 }]
-"a:Bg,b:AQ"
+"BAEAAA"
 
-// PATCH holding a:Bg,b:AQ
+// PATCH holding BAEAAA
 {
   fa: [">section", {
     class: "b"
@@ -24,7 +24,7 @@
   }
 }
 
-// PATCH holding a:Bg,b:AQ
+// PATCH holding BAEAAA
 {
   fa: [">section", {
     class: "c"

@@ -2,9 +2,9 @@
 [`a0 a4;Db%;<p>big <!></p>`, {
   bc: "a0"
 }]
-"a:Ag"
+"AwE"
 
-// PATCH holding a:Ag
+// PATCH holding AwE
 {
   bc: 0
 }

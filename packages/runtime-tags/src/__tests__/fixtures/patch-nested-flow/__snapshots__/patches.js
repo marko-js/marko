@@ -18,9 +18,9 @@
     ta: "hot"
   }
 }]
-"a:Gg"
+"BgEBAA"
 
-// PATCH holding a:Gg
+// PATCH holding BgEBAA
 [`a1;D ;<small> </small>`, {
   la: [3, {
     ta: "Milk",
@@ -39,9 +39,9 @@
     ta: "hot"
   }
 }]
-"a:Hg"
+"BgEAAAA"
 
-// PATCH holding a:Hg
+// PATCH holding BgEAAAA
 {
   la: [2, {
     ta: "Bread",

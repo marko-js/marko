@@ -20,9 +20,9 @@
   bc: "b0",
   td: "b"
 }]
-"a:Ag,b:Ag"
+"BAEB"
 
-// PATCH holding a:Ag,b:Ag
+// PATCH holding BAEB
 {
   z_a: {
     cAc: {

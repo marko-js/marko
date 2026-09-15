@@ -13,4 +13,4 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko0": "Fresh"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_1*shell:AQ"
+"AgE"

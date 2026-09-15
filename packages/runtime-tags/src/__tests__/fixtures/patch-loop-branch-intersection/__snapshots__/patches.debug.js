@@ -9,9 +9,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko0": "y"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_1*shell:AQ"
+"AwEA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_1*shell:AQ
+// PATCH holding AwEA
 {
   "PatchLoop:#text/0": ["a", {
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko1": "a",

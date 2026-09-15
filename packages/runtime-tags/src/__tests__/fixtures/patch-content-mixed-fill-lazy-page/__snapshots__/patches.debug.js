@@ -30,9 +30,9 @@
   },
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell:AQ"
+"BwEE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell:AQ
+// PATCH holding BwEE
 {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko": {
     "PatchChild:BranchScopes:#text/0": {

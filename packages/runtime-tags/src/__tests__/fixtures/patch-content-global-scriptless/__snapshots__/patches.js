@@ -19,9 +19,9 @@
     }
   }, "a2"]
 }]
-"a:Cg"
+"BQEB"
 
-// PATCH holding a:Cg
+// PATCH holding BQEB
 {
   $: {
     brand: "Zed"
@@ -43,7 +43,7 @@
   }, "a2"]
 }
 
-// PATCH holding a:Cg
+// PATCH holding BQEB
 {
   $: {
     brand: "Qux"

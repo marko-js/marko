@@ -20,9 +20,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-app-chain/template.marko_3*shell:AQ"
+"BwY"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-app-chain/template.marko_3*shell:AQ
+// PATCH holding BwY
 [`packages/runtime-tags/src/__tests__/fixtures/patch-app-chain/template.marko_2*shell;b%b/ Db%l&b;<!><!><button class=a>a:<!></button><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain/page-a.marko": {
     "PatchChild:#childScope/0": {
@@ -44,4 +44,4 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-app-chain/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-app-chain/template.marko_2*shell:AQ"
+"BwUA"

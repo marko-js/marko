@@ -9,4 +9,4 @@
     "PatchText:#text/1": "sale"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-static/template.marko_1*shell:AQ"
+"AgE"

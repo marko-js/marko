@@ -11,9 +11,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#ul/0": [{
     "PatchChild:#childScope/0": {
@@ -27,7 +27,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#ul/0": 0
 }

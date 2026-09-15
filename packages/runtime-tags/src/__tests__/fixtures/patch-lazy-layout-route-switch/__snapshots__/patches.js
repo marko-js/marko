@@ -28,9 +28,9 @@
     }
   }
 }]
-"a:DA,d:Fg"
+"DAIAAwAB"
 
-// PATCH holding a:DA,d:Fg
+// PATCH holding DAIAAwAB
 [`d4;b%b/b&b;<!><!><h1>B</h1><!>`, {
   z_a: {
     cAa: {
@@ -50,10 +50,10 @@
   },
   ba: [1, {}, "d1"]
 }]
-"d:Ng,a:DA"
+"DAIAAwABAA"
 
-// PATCH holding d:Ng,a:DA
+// PATCH holding DAIAAwABAA
 [`d2,<p>home</p>`, {
   ba: "d2"
 }]
-"d:Pg,a:DA"
+"DAIAAwAAAAA"

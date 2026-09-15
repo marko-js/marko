@@ -2,9 +2,9 @@
 [`a0;/b&/b&;<b>child</b><b>child</b>`, {
   ba: "a0"
 }]
-"a:Ag"
+"AwE"
 
-// PATCH holding a:Ag
+// PATCH holding AwE
 {
   ba: 0
 }

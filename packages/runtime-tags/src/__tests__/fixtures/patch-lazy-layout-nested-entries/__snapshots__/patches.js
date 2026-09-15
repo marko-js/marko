@@ -46,9 +46,9 @@
     }
   }
 }]
-"a:DA,d:Dg,b:Ag"
+"DgIAAQMAAA"
 
-// PATCH holding a:DA,d:Dg,b:Ag
+// PATCH holding DgIAAQMAAA
 [`d3;b%b/bD l%c&b;<!><!><h1>B</h1><p> </p><!><!><!>`, {
   z_a: {
     cAa: {
@@ -82,9 +82,9 @@
   },
   ba: [1, {}, "d1"]
 }]
-"d:Hg,b:Ag,a:DA"
+"DgIAAQMAAAA"
 
-// PATCH holding d:Hg,b:Ag,a:DA
+// PATCH holding DgIAAQMAAAA
 {
   z_a: {
     cAa: {
@@ -123,8 +123,8 @@
   ba: [1, {}, "d1"]
 }
 
-// PATCH holding d:Hg,b:Ag,a:DA
+// PATCH holding DgIAAQMAAAA
 [`d4,<p>home</p>`, {
   ba: "d4"
 }]
-"d:Pg,b:Ag,a:DA"
+"DgIAAQMAAAAA"

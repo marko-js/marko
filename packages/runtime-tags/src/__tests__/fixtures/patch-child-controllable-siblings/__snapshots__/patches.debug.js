@@ -29,4 +29,4 @@
     }, _.b]
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_1*shell:AQ"
+"AwE"

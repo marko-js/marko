@@ -6,15 +6,15 @@
   },
   "PatchText:#text/1": "two"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-elided/template.marko_1*content:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-elided/template.marko_1*content:AQ
+// PATCH holding AgE
 {
   "PatchDynamicTag:#section/0": 0,
   "PatchText:#text/1": "three"
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-elided/template.marko_1*content:AQ
+// PATCH holding AgE
 {
   "PatchDynamicTag:#section/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-elided/template.marko_1*content",
   "PatchChild:BranchScopes:#section/0": {

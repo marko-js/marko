@@ -5,9 +5,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko0": "n2"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchLoop:#text/0": [{
     "PatchText:#text/0": "x"

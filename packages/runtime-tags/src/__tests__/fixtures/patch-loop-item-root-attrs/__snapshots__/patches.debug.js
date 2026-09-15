@@ -19,9 +19,9 @@
     "PatchText:#text/0": "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_2*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_2*shell:AQ"
+"BAIA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_2*shell:AQ
+// PATCH holding BAIA
 {
   "PatchLoop:#nav/0": [{
     "PatchAttr:#a/0 class": "link active",

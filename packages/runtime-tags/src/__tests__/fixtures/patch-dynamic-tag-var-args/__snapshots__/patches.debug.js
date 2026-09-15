@@ -9,15 +9,15 @@
   },
   "PatchText:#text/2": "5"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko:AQ"
+"AgA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko:AQ
+// PATCH holding AgA
 {
   "PatchDynamicTag:#text/0": [0, [5], 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/template.marko_0_n#8/var"],
   "PatchText:#text/2": ""
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko:AQ
+// PATCH holding AgA
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko", [7], 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/template.marko_0_n#8/var"],
   "PatchChild:BranchScopes:#text/0": {

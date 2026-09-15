@@ -12,9 +12,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
@@ -34,7 +34,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
@@ -49,7 +49,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",

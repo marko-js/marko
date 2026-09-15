@@ -5,13 +5,13 @@
   }, 0, "a0"],
   tc: "b!"
 }]
-"b:AQ"
+"AwE"
 
-// PATCH holding b:AQ
+// PATCH holding AwE
 [`c,<b>two</b>`, {
   fa: ["c", {
     a: "c"
   }, 0, "a0"],
   tc: "c?"
 }]
-"b:AQ,c:AQ"
+"AwEA"

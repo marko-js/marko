@@ -46,9 +46,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_2*shell:AQ"
+"DgEBAQMAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_2*shell:AQ
+// PATCH holding DgEBAQMAAA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_4*shell;b%b/bD l%c&b;<!><!><h1>B</h1><p> </p><!><!><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko": {
     "PatchChild:BranchScopes:#body/0": {
@@ -82,9 +82,9 @@
   },
   "PatchBranch:#body/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_2*shell:AQ"
+"DgEBAQMAAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_2*shell:AQ
+// PATCH holding DgEBAQMAAAA
 {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko": {
     "PatchChild:BranchScopes:#body/0": {
@@ -123,8 +123,8 @@
   "PatchBranch:#body/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_2*shell:AQ
+// PATCH holding DgEBAQMAAAA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_5*shell,<p>home</p>`, {
   "PatchBranch:#body/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_5*shell"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_5*shell:AQ"
+"DgEBAQMAAAAA"

@@ -7,9 +7,9 @@
     }
   }, "a0"]
 }]
-"a:Ag"
+"BAE"
 
-// PATCH holding a:Ag
+// PATCH holding BAE
 {
   ba: [{
     ca: {
@@ -19,8 +19,8 @@
   }, "a0"]
 }
 
-// PATCH holding a:Ag
+// PATCH holding BAE
 [`a1,<em>closed</em>`, {
   ba: [1, {}, "a1"]
 }]
-"a:Bg"
+"BAEA"

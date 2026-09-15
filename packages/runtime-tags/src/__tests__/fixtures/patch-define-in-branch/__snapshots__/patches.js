@@ -11,9 +11,9 @@
     }
   }, "a1"]
 }]
-"a:BA"
+"AwI"
 
-// PATCH holding a:BA
+// PATCH holding AwI
 {
   ba: [{
     ca: {
@@ -27,7 +27,7 @@
   }, "a1"]
 }
 
-// PATCH holding a:BA
+// PATCH holding AwI
 {
   ba: 0
 }

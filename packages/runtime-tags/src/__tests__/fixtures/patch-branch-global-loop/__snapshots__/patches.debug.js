@@ -33,18 +33,18 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell:AQ"
+"BQIB"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell:AQ
+// PATCH holding BQIB
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_2*shell,<p>invalid</p>`, {
   "$global:": {
     search: [null, !0]
   },
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_2*shell"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_2*shell:AQ"
+"BQIAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_2*shell:AQ
+// PATCH holding BQIAAA
 {
   "$global:": {
     search: [{

@@ -3,9 +3,9 @@
   bc: "b0",
   vb0: "b"
 }]
-"b:Ag"
+"AwI"
 
-// PATCH holding b:Ag
+// PATCH holding AwI
 {
   bc: "b0",
   vb0: "c"

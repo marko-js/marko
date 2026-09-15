@@ -7,15 +7,15 @@
   }, "a0"],
   va0: "Store!"
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   bc: 0,
   va0: "Store!"
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   bc: [{
     s: {

@@ -8,4 +8,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-attr-tag-handler/tags/child.marko_1*shell"]
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-attr-tag-handler/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-attr-tag-handler/tags/child.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-attr-tag-handler/tags/child.marko_1*shell:AQ"
+"BQEAAQ"

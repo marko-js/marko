@@ -43,9 +43,9 @@
     }
   }, "b0"]
 }]
-"a:Bg,b:Ag"
+"CAEAAQ"
 
-// PATCH holding a:Bg,b:Ag
+// PATCH holding CAEAAQ
 {
   ba: [{
     ca: {

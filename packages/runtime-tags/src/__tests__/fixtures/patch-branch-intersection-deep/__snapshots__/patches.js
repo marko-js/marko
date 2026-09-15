@@ -5,9 +5,9 @@
   }, "a0"],
   va0: "Store!"
 }]
-"a:Bg"
+"AwEA"
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   ba: [{
     ba: 0

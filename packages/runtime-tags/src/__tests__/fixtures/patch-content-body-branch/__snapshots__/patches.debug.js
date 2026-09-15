@@ -12,9 +12,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell:AQ"
+"BgIAAQ"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell:AQ
+// PATCH holding BgIAAQ
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
@@ -29,7 +29,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell:AQ
+// PATCH holding BgIAAQ
 [`packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_3*shell;Db%;<em>A:<!></em>`, {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
@@ -43,9 +43,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell:AQ"
+"BgIAAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell:AQ
+// PATCH holding BgIAAAA
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
@@ -60,12 +60,12 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell:AQ
+// PATCH holding BgIAAAA
 {
   "PatchBranch:#main/0": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_1*shell:AQ
+// PATCH holding BgIAAAA
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

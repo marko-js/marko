@@ -18,9 +18,9 @@
   },
   "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko": {
     "PatchChild:BranchScopes:#main/0": {

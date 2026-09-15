@@ -9,16 +9,16 @@
     }
   }
 }]
-"a:AQ"
+"AgA"
 
-// PATCH holding a:AQ
+// PATCH holding AgA
 {
   fa: [0, {
     label: "b"
   }]
 }
 
-// PATCH holding a:AQ
+// PATCH holding AgA
 {
   fa: ["a", {
     label: "c"

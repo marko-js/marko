@@ -5,15 +5,15 @@
     ta: "1"
   }, "a0"]
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ta: "Store!",
   bb: 0
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ta: "Store!",
   bb: [{

@@ -15,9 +15,9 @@
   "PatchText:#text/0": "Fresh",
   "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-global/template.marko_1*shell"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-global/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-global/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "$global:": {
     brand: "Patch"

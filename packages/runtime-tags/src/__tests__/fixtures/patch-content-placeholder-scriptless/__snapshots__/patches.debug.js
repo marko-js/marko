@@ -7,4 +7,4 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-placeholder-scriptless/tags/card/index.marko_2_#text#0/await:AQ"
+"BAE"

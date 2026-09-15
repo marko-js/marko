@@ -4,9 +4,9 @@
     "PatchBranch:#div/0": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ"
+"BQI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ
+// PATCH holding BQI
 [`packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell;/D l%c&b;<p> </p><!><!><!>`, {
   "PatchBranch:#main/0": [{
     "PatchBranch:#div/0": [{
@@ -20,9 +20,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ"
+"BQIAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ
+// PATCH holding BQIAAA
 {
   "PatchBranch:#main/0": [{
     "PatchBranch:#div/0": [{
@@ -37,12 +37,12 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ
+// PATCH holding BQIAAA
 {
   "PatchBranch:#main/0": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell:AQ
+// PATCH holding BQIAAA
 {
   "PatchBranch:#main/0": [{
     "PatchBranch:#div/0": [{

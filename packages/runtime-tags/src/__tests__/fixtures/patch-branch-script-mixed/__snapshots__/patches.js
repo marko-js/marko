@@ -9,9 +9,9 @@
   }, "a0"],
   wg: "b"
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   $: {
     brand: "Marko"
@@ -23,7 +23,7 @@
   wg: "b"
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   $: {
     brand: "Fresh"
@@ -35,7 +35,7 @@
   wg: "b"
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   $: {
     brand: "Patch"

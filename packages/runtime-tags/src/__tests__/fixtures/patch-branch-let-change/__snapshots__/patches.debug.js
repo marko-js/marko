@@ -9,15 +9,15 @@
     "PatchWrite:TagVariableChange:count": _._["packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change/template.marko_1/valueChange"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{

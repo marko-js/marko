@@ -10,9 +10,9 @@
     "PatchText:#text/0": "3"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_2*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_2*shell:AQ"
+"AwEA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_2*shell:AQ
+// PATCH holding AwEA
 {
   "PatchText:#text/0": "marko",
   "PatchBranch:#text/1": 0,
@@ -21,7 +21,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_2*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_2*shell:AQ
+// PATCH holding AwEA
 {
   "PatchText:#text/0": "mark",
   "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-input-branches/template.marko_1*shell",

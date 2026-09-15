@@ -12,9 +12,9 @@
     "PatchText:#text/1": "2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-spread/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchLoop:#ul/0": [2, {
     "PatchAttrs:#li/0": {},

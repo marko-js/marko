@@ -6,4 +6,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-const-branch/tags/badge/index.marko_1*shell"]
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-child-const-branch/tags/badge/index.marko_1*shell:AQ"
+"AwE"

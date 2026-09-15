@@ -9,9 +9,9 @@
   }, "a0"],
   wg: "."
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ba: [{
     wc: "b!",

@@ -11,9 +11,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content:AQ"
+"BAABAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content:AQ
+// PATCH holding BAABAA
 {
   "PatchDynamicTag:#text/0": [">section", {
     class: "b"
@@ -24,7 +24,7 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content:AQ
+// PATCH holding BAABAA
 {
   "PatchDynamicTag:#text/0": [">section", {
     class: "c"

@@ -3,15 +3,15 @@
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure/template.marko_1*shell"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure/template.marko_1*shell"

@@ -4,14 +4,14 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-param-const-state/template.marko0": "[Store!]"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-param-const-state/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-param-const-state/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-param-const-state/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/0": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-param-const-state/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/0": [{
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-param-const-state/template.marko0": "[Fresh]"

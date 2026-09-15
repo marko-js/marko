@@ -6,9 +6,9 @@
     }, "b2"]
   }
 }]
-"b:CA"
+"BAM"
 
-// PATCH holding b:CA
+// PATCH holding BAM
 [`b1;D ;<div> </div>`, {
   ca: {
     ba: [{
@@ -16,4 +16,4 @@
     }, "b1"]
   }
 }]
-"b:DA"
+"BAIA"

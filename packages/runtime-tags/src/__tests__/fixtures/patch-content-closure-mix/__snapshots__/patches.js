@@ -23,9 +23,9 @@
     }
   }, "a1"]
 }]
-"a:Bg"
+"BAEA"
 
-// PATCH holding a:Bg
+// PATCH holding BAEA
 {
   $: {
     brand: "Zed"

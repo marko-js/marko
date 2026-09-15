@@ -7,9 +7,9 @@
     ta: "Bread"
   }, "a0"]
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ta: "Store",
   lb: [1, {
@@ -21,7 +21,7 @@
   }, "a0"]
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ta: "Store",
   lb: [3, {
@@ -31,13 +31,13 @@
   }, "a0"]
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ta: "Store",
   lb: []
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ta: "Store",
   lb: [2, {

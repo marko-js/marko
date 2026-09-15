@@ -4,4 +4,4 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-static-const-state/template.marko0": 20
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-static-const-state/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-static-const-state/template.marko_1*shell:AQ"
+"AgE"

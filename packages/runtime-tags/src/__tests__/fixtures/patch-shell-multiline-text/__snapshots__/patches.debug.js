@@ -4,16 +4,16 @@
     "PatchText:#text/0": "a"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-shell-multiline-text/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-shell-multiline-text/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-shell-multiline-text/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#main/0": [{
     "PatchText:#text/0": "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-shell-multiline-text/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-shell-multiline-text/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#main/0": 0
 }

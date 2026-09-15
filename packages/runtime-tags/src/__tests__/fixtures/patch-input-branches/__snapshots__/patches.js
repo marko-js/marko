@@ -10,9 +10,9 @@
     ta: "3"
   }, "a1"]
 }]
-"a:Bg"
+"AwEA"
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   ta: "marko",
   bb: 0,
@@ -21,7 +21,7 @@
   }, "a1"]
 }
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   ta: "mark",
   bb: "a0",

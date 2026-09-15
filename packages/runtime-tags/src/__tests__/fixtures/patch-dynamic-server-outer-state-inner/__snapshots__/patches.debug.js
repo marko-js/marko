@@ -14,9 +14,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/card.marko:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_2*content:AQ"
+"BQEBAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/card.marko:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_2*content:AQ
+// PATCH holding BQEBAA
 {
   "PatchDynamicTag:#text/0": [0, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
@@ -29,7 +29,7 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/card.marko:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_2*content:AQ
+// PATCH holding BQEBAA
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/card.marko", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {

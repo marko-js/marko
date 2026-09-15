@@ -14,9 +14,9 @@
     }
   }
 }]
-"b:AQ,c:Bg"
+"BQEBAA"
 
-// PATCH holding b:AQ,c:Bg
+// PATCH holding BQEBAA
 {
   fa: [0, 0, "c1"],
   cAa: {
@@ -29,7 +29,7 @@
   }
 }
 
-// PATCH holding b:AQ,c:Bg
+// PATCH holding BQEBAA
 {
   fa: ["b", 0, "c1"],
   cAa: {

@@ -8,9 +8,9 @@
     ta: "b"
   }
 }]
-"a:AQ"
+"AgA"
 
-// PATCH holding a:AQ
+// PATCH holding AgA
 {
   $: {
     brand: "b"
@@ -18,7 +18,7 @@
   fa: 0
 }
 
-// PATCH holding a:AQ
+// PATCH holding AgA
 {
   $: {
     brand: "c"

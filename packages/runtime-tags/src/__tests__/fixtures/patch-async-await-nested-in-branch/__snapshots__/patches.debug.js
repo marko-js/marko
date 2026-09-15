@@ -11,4 +11,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_2_#text#0/await:AQ"
+"BgEAAQ"

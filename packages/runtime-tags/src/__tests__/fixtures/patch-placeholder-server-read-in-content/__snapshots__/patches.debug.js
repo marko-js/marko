@@ -10,4 +10,4 @@
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read-in-content/template.marko0": "b"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read-in-content/template.marko_3_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read-in-content/template.marko_3*content:AQ"
+"BgMA"

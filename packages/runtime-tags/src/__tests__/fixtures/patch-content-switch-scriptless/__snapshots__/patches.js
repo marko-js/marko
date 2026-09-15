@@ -8,9 +8,9 @@
     }
   }
 }]
-"a:BA"
+"BQI"
 
-// PATCH holding a:BA
+// PATCH holding BQI
 {
   ca: {
     cAa: {
@@ -19,7 +19,7 @@
   }
 }
 
-// PATCH holding a:BA
+// PATCH holding BQI
 [`a2,<b>A</b>`, {
   ca: {
     cAa: {
@@ -27,4 +27,4 @@
     }
   }
 }]
-"a:DA"
+"BQIA"

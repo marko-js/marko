@@ -7,9 +7,9 @@
     }
   }
 }]
-"b:Ag"
+"AwI"
 
-// PATCH holding b:Ag
+// PATCH holding AwI
 {
   fa: [">div", 0, "b0"],
   cAa: {
@@ -19,7 +19,7 @@
   }
 }
 
-// PATCH holding b:Ag
+// PATCH holding AwI
 [`a;D%;<section><!></section>`, {
   fa: ["a", 0, "b0"],
   cAa: {
@@ -29,4 +29,4 @@
     }
   }
 }]
-"a:AQ,b:Ag"
+"AwAB"

@@ -7,9 +7,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content:AQ
+// PATCH holding AwI
 {
   "PatchDynamicTag:#text/0": [">div", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
@@ -19,7 +19,7 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content:AQ
+// PATCH holding AwI
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/outer.marko;D%;<section><!></section>`, {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/outer.marko", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
@@ -29,4 +29,4 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/outer.marko:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content:AQ"
+"AwAB"

@@ -8,9 +8,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_1*shell:AQ"
+"BQIAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_1*shell:AQ
+// PATCH holding BQIAAA
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

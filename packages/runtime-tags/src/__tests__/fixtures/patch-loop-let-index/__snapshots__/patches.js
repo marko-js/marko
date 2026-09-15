@@ -17,9 +17,9 @@
     }
   }, "a0"]
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   la: [{
     ta: "Apples",
@@ -29,7 +29,7 @@
   }, "a0"]
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   la: [{
     ta: "Apples",

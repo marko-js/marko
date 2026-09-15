@@ -19,9 +19,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell:AQ"
+"BQMA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell:AQ
+// PATCH holding BQMA
 {
   "$global:": {
     brand: "Zed"
@@ -43,7 +43,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell:AQ
+// PATCH holding BQMA
 {
   "$global:": {
     brand: "Qux"

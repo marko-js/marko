@@ -11,9 +11,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/template.marko_1*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

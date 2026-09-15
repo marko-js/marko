@@ -7,9 +7,9 @@
     "PatchText:#text/0": "two"
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-renderer-swap/card-a.marko:AQ"
+"AwA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-renderer-swap/card-a.marko:AQ
+// PATCH holding AwA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-renderer-swap/card-b.marko;D%;<article class=b><!>!</article>`, {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-renderer-swap/card-b.marko", {
     label: "three"
@@ -18,4 +18,4 @@
     "PatchText:#text/0": "three"
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-renderer-swap/card-a.marko:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-renderer-swap/card-b.marko:AQ"
+"AwAA"

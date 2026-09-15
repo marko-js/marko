@@ -3,29 +3,29 @@
   ba: "a0",
   va0: "Store!"
 }]
-"a:Ag"
+"BAE"
 
-// PATCH holding a:Ag
+// PATCH holding BAE
 [`a1 a7 a8;Db%;<p>B <!></p>`, {
   ba: [1, {}, "a1"],
   va0: "Store!"
 }]
-"a:Bg"
+"BAEA"
 
-// PATCH holding a:Bg
+// PATCH holding BAEA
 {
   ba: [1, {}, "a1"],
   va0: "Plaza"
 }
 
-// PATCH holding a:Bg
+// PATCH holding BAEA
 [`a2 a9;Db%;<p>None <!></p>`, {
   ba: [2, {}, "a2"],
   va0: "Plaza"
 }]
-"a:Dg"
+"BAEAAA"
 
-// PATCH holding a:Dg
+// PATCH holding BAEAAA
 {
   ba: [2, {}, "a2"],
   va0: "Plaza!"

@@ -12,9 +12,9 @@
     }
   }, "a3"]
 }]
-"a:HA"
+"BgIAAA"
 
-// PATCH holding a:HA
+// PATCH holding BgIAAA
 {
   ba: [{
     ca: {
@@ -29,12 +29,12 @@
   }, "a3"]
 }
 
-// PATCH holding a:HA
+// PATCH holding BgIAAA
 {
   ba: 0
 }
 
-// PATCH holding a:HA
+// PATCH holding BgIAAA
 {
   ba: [{
     ca: {

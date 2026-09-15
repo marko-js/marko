@@ -8,4 +8,4 @@
     "PatchLoop:#text/0": ["c", {}, _.a]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-nested-grow-outer/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-nested-grow-outer/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-nested-grow-outer/template.marko_1*shell:AQ"
+"AwEA"

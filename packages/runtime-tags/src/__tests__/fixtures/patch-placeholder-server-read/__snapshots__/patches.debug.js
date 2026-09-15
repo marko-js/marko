@@ -6,4 +6,4 @@
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read/template.marko0": "b"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read/template.marko_2_#text#0/await:AQ"
+"BAI"

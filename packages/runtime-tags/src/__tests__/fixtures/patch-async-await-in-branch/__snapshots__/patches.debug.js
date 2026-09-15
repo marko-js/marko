@@ -8,9 +8,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1*shell:AQ"
+"BQEA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1*shell:AQ
+// PATCH holding BQEA
 {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
@@ -25,14 +25,14 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1*shell:AQ
+// PATCH holding BQEA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_2*shell,<em>closed</em>`, {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_2*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_2*shell:AQ"
+"BQEAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_2*shell:AQ
+// PATCH holding BQEAAA
 {
   "PatchText:#text/0": "Open",
   "PatchBranch:#text/1": [{

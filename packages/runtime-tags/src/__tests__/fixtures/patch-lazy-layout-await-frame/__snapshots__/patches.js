@@ -48,9 +48,9 @@
     }
   }
 }]
-"a:HA,e:Kg,f:Ag"
+"EQIAAAQBAQI"
 
-// PATCH holding a:HA,e:Kg,f:Ag
+// PATCH holding EQIAAAQBAQI
 [`e5;b%b/b&b;<!><!><h1>B</h1><!>`, {
   z_a: {
     ca: {
@@ -86,9 +86,9 @@
     }
   }
 }]
-"e:ag,a:HA,f:Ag"
+"EQIAAAQBAQAB"
 
-// PATCH holding e:ag,a:HA,f:Ag
+// PATCH holding EQIAAAQBAQAB
 [`e3,<p>home</p>`, {
   ca: {
     cAa: {
@@ -96,4 +96,4 @@
     }
   }
 }]
-"e:eg,a:HA,f:Ag"
+"EQIAAAQBAAAAAQ"

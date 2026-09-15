@@ -17,14 +17,14 @@
   },
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#text/0": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko": {
     "PatchChild:BranchScopes:#text/0": {

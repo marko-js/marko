@@ -9,9 +9,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/tags/card/index.marko_1*shell"]
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/tags/card/index.marko_1*shell:AQ"
+"BAEB"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/tags/card/index.marko_1*shell:AQ
+// PATCH holding BAEB
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{
@@ -23,14 +23,14 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/tags/card/index.marko_1*shell:AQ
+// PATCH holding BAEB
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": 0
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch/tags/card/index.marko_1*shell:AQ
+// PATCH holding BAEB
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{

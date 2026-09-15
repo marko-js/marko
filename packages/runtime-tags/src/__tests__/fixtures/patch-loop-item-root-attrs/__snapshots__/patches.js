@@ -19,9 +19,9 @@
     ta: "b"
   }, "a1"]
 }]
-"a:Bg"
+"BAEA"
 
-// PATCH holding a:Bg
+// PATCH holding BAEA
 {
   la: [{
     "aa class": "link active",

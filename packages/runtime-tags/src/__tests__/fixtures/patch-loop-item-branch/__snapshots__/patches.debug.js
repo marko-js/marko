@@ -12,9 +12,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell:AQ"
+"BAEAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell:AQ
+// PATCH holding BAEAAA
 {
   "PatchLoop:#ul/0": ["b", {
     "PatchText:#text/0": "b",

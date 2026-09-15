@@ -5,9 +5,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-deep/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-deep/template.marko0": "Store!"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-deep/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-deep/template.marko_1*shell:AQ"
+"AwEA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-deep/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-deep/template.marko_1*shell:AQ
+// PATCH holding AwEA
 {
   "PatchBranch:#text/0": [{
     "PatchBranch:#text/0": 0

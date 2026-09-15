@@ -61,9 +61,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell:AQ"
+"EAEBAwACAAE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell:AQ
+// PATCH holding EAEBAwACAAE
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell,<p>wide</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko": {
     "PatchChild:BranchScopes:#body/0": {
@@ -101,9 +101,9 @@
   },
   "PatchBranch:#body/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell:AQ"
+"EAEBAQEAAgAAAA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_0_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko_2*shell:AQ
+// PATCH holding EAEBAQEAAgAAAA
 {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko": {
     "PatchChild:BranchScopes:#body/0": {

@@ -4,16 +4,16 @@
     ta: "a"
   }, "a0"]
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ba: [{
     ta: "b"
   }, "a0"]
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ba: 0
 }

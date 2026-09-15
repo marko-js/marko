@@ -24,9 +24,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell:AQ"
+"CQEAAAEC"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell:AQ
+// PATCH holding CQEAAAEC
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_4*shell,<p>down</p>`, {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -52,4 +52,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_4*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell:AQ"
+"CQEAAAAAAg"

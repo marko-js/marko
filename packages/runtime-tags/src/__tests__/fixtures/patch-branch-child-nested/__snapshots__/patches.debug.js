@@ -11,9 +11,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/template.marko_1*shell:AQ"
+"BAM"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/template.marko_1*shell:AQ
+// PATCH holding BAM
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

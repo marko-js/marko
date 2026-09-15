@@ -61,9 +61,9 @@
     }
   }
 }]
-"a:DA,d:Fg,c:Bg"
+"EAIAAwABAAE"
 
-// PATCH holding a:DA,d:Fg,c:Bg
+// PATCH holding EAIAAwABAAE
 [`b0,<p>wide</p>`, `d2;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, {
   z_a: {
     cAa: {
@@ -101,9 +101,9 @@
   },
   ba: [1, {}, "d1"]
 }]
-"d:Hg,c:Bg,a:DA,b:Ag"
+"EAIAAQEAAQAAAA"
 
-// PATCH holding d:Hg,c:Bg,a:DA,b:Ag
+// PATCH holding EAIAAQEAAQAAAA
 {
   z_a: {
     cAa: {

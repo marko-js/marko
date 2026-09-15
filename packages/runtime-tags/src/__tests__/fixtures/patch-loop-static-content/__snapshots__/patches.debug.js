@@ -7,4 +7,4 @@
     "PatchText:#text/0": "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-content/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-content/template.marko_1*shell:AQ"
+"AgE"

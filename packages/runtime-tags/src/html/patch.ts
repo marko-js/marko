@@ -132,7 +132,7 @@ export function renderPatch(
       const held = token && token.slice(token.lastIndexOf(";") + 1);
       if (held) {
         state.sentShells = decodeHeld(held);
-        state.heldCount = state.sentShells.size;
+        state.heldCount = state.sentShells?.size || 0;
       }
       const globals = getFilteredGlobals(state.$global, 1);
       if (globals) {
@@ -160,47 +160,77 @@ function readHeader(headers: PatchHeaders, name: string) {
 }
 
 // The shells the requesting page holds (`x-marko-patch`, after the build
-// id), as the last response's closing token named them: an id splits at
-// its trailing ordinal, so a template's shells are one base64 bitmap under
-// its prefix; bit 0 is the bare prefix. The client never reads the token.
-// A token stays under a header-safe budget by forgetting whole templates,
-// oldest first: their shells ship again, nothing else changes.
+// id), as the last response's closing token named them. The server's shell
+// registry numbers every shell of the build in sorted order, so a token is
+// the registry size, then the held indices sorted and delta-coded as
+// varints, base64. A registry of another size (a lazily registered chunk,
+// another build) voids the token. The client never reads it. A token stays
+// under a header-safe budget by forgetting its highest indices: their
+// shells ship again, nothing else changes.
 const TOKEN_BUDGET = 1024;
-export function encodeHeld(ids: Set<string>) {
-  const held = new Map<string, number[]>();
-  for (const id of ids) {
-    const prefix = id.replace(/\d+$/, "");
-    const bit = prefix === id ? 0 : +id.slice(prefix.length) + 1;
-    let bits = held.get(prefix);
-    if (!bits) held.set(prefix, (bits = []));
-    bits[bit >> 3] |= 1 << (bit & 7);
+let registry: { size: number; ids: string[]; at: Map<string, number> };
+function shellRegistry() {
+  const size = Object.keys(rawShells).length;
+  if (registry?.size !== size) {
+    const ids = Object.keys(rawShells).sort();
+    registry = { size, ids, at: new Map(ids.map((id, i) => [id, i])) };
   }
-  const segments: string[] = [];
-  let size = 0;
-  for (const [prefix, bits] of held) {
-    const segment =
-      prefix + ":" + btoa(String.fromCharCode(...bits)).replace(/=+$/, "");
-    segments.push(segment);
-    size += segment.length + 1;
-  }
-  let drop = 0;
-  while (size > TOKEN_BUDGET) size -= segments[drop++].length + 1;
-  return segments.slice(drop).join(",");
+  return registry;
 }
-export function decodeHeld(held: string) {
-  const ids = new Set<string>();
-  for (const segment of held.split(",")) {
-    const sep = segment.lastIndexOf(":");
-    const prefix = segment.slice(0, sep);
-    let bit = 0;
-    for (const byte of atob(segment.slice(sep + 1))) {
-      const n = byte.charCodeAt(0);
-      for (let i = 0; i < 8; i++, bit++) {
-        if (n & (1 << i)) ids.add(bit ? prefix + (bit - 1) : prefix);
+function pushVarint(bytes: number[], n: number) {
+  for (; n > 127; n >>>= 7) bytes.push((n & 127) | 128);
+  bytes.push(n);
+}
+export function encodeHeld(ids: Set<string>) {
+  const { size, at } = shellRegistry();
+  // A bitmap over the registry orders the held indices without a sort.
+  const bits = new Uint8Array((size >> 3) + 1);
+  for (const id of ids) {
+    const index = at.get(id)!;
+    bits[index >> 3] |= 1 << (index & 7);
+  }
+  const bytes: number[] = [];
+  pushVarint(bytes, size);
+  // Base64 grows bytes by a third; the token ends at the last delta that fits.
+  const limit = (TOKEN_BUDGET * 3) >> 2;
+  let end = bytes.length;
+  for (
+    let byte = 0, prev = -1;
+    byte < bits.length && end === bytes.length;
+    byte++
+  ) {
+    for (let bit = 0; bits[byte] >> bit; bit++) {
+      if (bits[byte] & (1 << bit)) {
+        const index = byte * 8 + bit;
+        pushVarint(bytes, index - prev - 1);
+        prev = index;
+        if (bytes.length > limit) break;
+        end = bytes.length;
       }
     }
   }
-  return ids;
+  bytes.length = end;
+  return btoa(String.fromCharCode(...bytes)).replace(/=+$/, "");
+}
+export function decodeHeld(held: string) {
+  const { size, ids } = shellRegistry();
+  const bytes = atob(held);
+  let i = 0;
+  const next = () => {
+    let n = 0;
+    for (let shift = 0, byte = 128; byte & 128; shift += 7) {
+      byte = bytes.charCodeAt(i++);
+      n += (byte & 127) << shift;
+    }
+    return n;
+  };
+  if (next() !== size) return;
+  const held_ = new Set<string>();
+  for (let index = -1; i < bytes.length;) {
+    index += next() + 1;
+    held_.add(ids[index]);
+  }
+  return held_;
 }
 
 // Serialize guards stay unset so the compiled resume payload drops at the

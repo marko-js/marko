@@ -7,9 +7,9 @@
     "PatchText:#text/1": "Sale"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-shell-holes/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-shell-holes/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-shell-holes/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{
@@ -19,13 +19,13 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-shell-holes/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-shell-holes/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-shell-holes/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{

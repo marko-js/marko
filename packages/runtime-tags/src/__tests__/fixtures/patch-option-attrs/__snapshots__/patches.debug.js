@@ -11,4 +11,4 @@
   "PatchAttr:#option/1 selected": 0,
   "PatchAttr:#option/2 selected": ""
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-option-attrs/template.marko_1*shell:AQ"
+"AgE"

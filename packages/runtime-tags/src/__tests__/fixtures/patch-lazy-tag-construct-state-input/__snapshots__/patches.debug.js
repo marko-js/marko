@@ -3,9 +3,9 @@
   "PatchBranch:#main/2": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko0": "b"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchBranch:#main/2": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko0": "c"

@@ -6,9 +6,9 @@
     "ya --M_a0": "blue"
   }, "a1"]
 }]
-"a:BA"
+"AgE"
 
-// PATCH holding a:BA
+// PATCH holding AgE
 {
   la: ["b", {
     "ya --M_a0": "green"

@@ -5,9 +5,9 @@
   }, "a0"],
   tb: "a"
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ba: [{
     "aa nonce": "n1"
@@ -15,13 +15,13 @@
   tb: "b"
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ba: 0,
   tb: "b"
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ba: [{
     "aa nonce": "n2"

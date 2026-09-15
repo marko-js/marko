@@ -8,9 +8,9 @@
     }]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#main/0": [{
     "PatchWrite:label": "b!",

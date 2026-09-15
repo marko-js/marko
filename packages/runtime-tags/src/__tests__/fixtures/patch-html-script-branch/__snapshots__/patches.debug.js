@@ -5,9 +5,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-html-script-branch/template.marko_1*shell"],
   "PatchText:#text/1": "a"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-html-script-branch/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-html-script-branch/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/0": [{
     "PatchAttr:#script/0 nonce": "n1"
@@ -15,13 +15,13 @@
   "PatchText:#text/1": "b"
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-html-script-branch/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/0": 0,
   "PatchText:#text/1": "b"
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-html-script-branch/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/0": [{
     "PatchAttr:#script/0 nonce": "n2"

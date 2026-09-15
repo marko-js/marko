@@ -34,4 +34,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-for-rest-params/tags/my-for.marko_1*shell"]
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-for-rest-params/template.marko_1*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-for-rest-params/tags/my-for.marko_1*shell:AQ"
+"BAEB"

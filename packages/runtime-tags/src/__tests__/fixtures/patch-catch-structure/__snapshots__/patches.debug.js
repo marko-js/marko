@@ -6,9 +6,9 @@
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-catch-structure/template.marko0": "b"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-catch-structure/template.marko_3_#text#0/await:AQ"
+"BAI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-catch-structure/template.marko_3_#text#0/await:AQ
+// PATCH holding BAI
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-structure/template.marko_3_#text#0/await",

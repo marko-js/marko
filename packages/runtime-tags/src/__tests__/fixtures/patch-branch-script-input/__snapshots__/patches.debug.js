@@ -6,16 +6,16 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-input/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-input/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-input/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": 0,
   "PatchWrite:input_value": "c"
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-input/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{

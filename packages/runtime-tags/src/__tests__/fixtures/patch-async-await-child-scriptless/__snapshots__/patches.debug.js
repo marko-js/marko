@@ -9,9 +9,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1*shell:AQ"
+"BgIA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1_#text#0/await:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1*shell:AQ
+// PATCH holding BgIA
 {
   "PatchBranch:#main/0": [{
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1_#text#0/await",

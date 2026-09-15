@@ -33,18 +33,18 @@
     }, "a2"]
   }, "a0"]
 }]
-"a:Cg"
+"BQEB"
 
-// PATCH holding a:Cg
+// PATCH holding BQEB
 [`a1,<p>invalid</p>`, {
   $: {
     search: [null, !0]
   },
   ba: "a1"
 }]
-"a:Dg"
+"BQEAAA"
 
-// PATCH holding a:Dg
+// PATCH holding BQEAAA
 {
   $: {
     search: [{

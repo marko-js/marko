@@ -8,9 +8,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell"]
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell:AQ"
+"AwE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell:AQ
+// PATCH holding AwE
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{

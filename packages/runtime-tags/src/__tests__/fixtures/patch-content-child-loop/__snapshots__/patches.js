@@ -16,9 +16,9 @@
     }, "b0"]
   }
 }]
-"a:Ag,b:Ag"
+"BAEB"
 
-// PATCH holding a:Ag,b:Ag
+// PATCH holding BAEB
 {
   ca: {
     la: [{
@@ -31,7 +31,7 @@
   }
 }
 
-// PATCH holding a:Ag,b:Ag
+// PATCH holding BAEB
 {
   ca: {
     la: [{

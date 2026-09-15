@@ -13,9 +13,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/template.marko_1*shell:AQ"
+"BAM"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/template.marko_1*shell:AQ
+// PATCH holding BAM
 [`packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/tags/counter/index.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   "PatchText:#text/0": "Store!",
   "PatchLoop:#text/2": [{
@@ -40,4 +40,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/tags/counter/index.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/template.marko_1*shell:AQ"
+"BAEB"

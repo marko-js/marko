@@ -9,15 +9,15 @@
   },
   tc: "5"
 }]
-"a:AQ"
+"AgA"
 
-// PATCH holding a:AQ
+// PATCH holding AgA
 {
   fa: [0, [5], 0, "b0"],
   tc: ""
 }
 
-// PATCH holding a:AQ
+// PATCH holding AgA
 {
   fa: ["a", [7], 0, "b0"],
   cAa: {

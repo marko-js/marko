@@ -7,15 +7,15 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko0": "Store!"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/2": 0,
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko0": "Store!"
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/2": [{
     "PatchSetup:": {

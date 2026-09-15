@@ -3,11 +3,11 @@
   fa: "a",
   tb: "two"
 }]
-"a:AQ"
+"AwA"
 
-// PATCH holding a:AQ
+// PATCH holding AwA
 [`b,<strong>beta</strong>`, {
   fa: "b",
   tb: "three"
 }]
-"a:AQ,b:AQ"
+"AwAA"

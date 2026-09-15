@@ -9,9 +9,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_1*shell:AQ"
+"AwEA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_1*shell:AQ
+// PATCH holding AwEA
 {
   "PatchLoop:#ul/0": [1, {
     "PatchText:#text/0": "Fuji Apples",
@@ -19,7 +19,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_1*shell:AQ
+// PATCH holding AwEA
 {
   "PatchLoop:#ul/0": [1, {
     "PatchText:#text/0": "Fuji Apples",
@@ -31,7 +31,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_2*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-nested/template.marko_1*shell:AQ
+// PATCH holding AwEA
 {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Milk",

@@ -6,9 +6,9 @@
     "PatchText:#text/0": "Bread"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-closure/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-closure/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-closure/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "Apples"

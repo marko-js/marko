@@ -12,9 +12,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-child-tag/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop-child-tag/template.marko_1*shell:AQ"
+"AwI"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop-child-tag/template.marko_1*shell:AQ
+// PATCH holding AwI
 {
   "PatchLoop:#ul/0": [2, {
     "PatchChild:#childScope/0": {

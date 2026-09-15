@@ -6,16 +6,16 @@
   }, "a0"],
   wg: "b"
 }]
-"a:Ag"
+"AgE"
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ta: "Store",
   bb: 0,
   wg: "c"
 }
 
-// PATCH holding a:Ag
+// PATCH holding AgE
 {
   ta: "Store",
   bb: [{

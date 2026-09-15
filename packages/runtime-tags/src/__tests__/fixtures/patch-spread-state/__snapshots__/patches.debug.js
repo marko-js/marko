@@ -5,9 +5,9 @@
     href: "/b"
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-spread-state/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-spread-state/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/0": 0,
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-spread-state/template.marko0": {
@@ -15,7 +15,7 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-spread-state/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-spread-state/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-spread-state/template.marko0": {

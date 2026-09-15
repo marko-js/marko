@@ -19,9 +19,9 @@
     }
   }
 }]
-"a:AQ"
+"AgA"
 
-// PATCH holding a:AQ
+// PATCH holding AgA
 {
   fc: ["a", {
     label: "c"

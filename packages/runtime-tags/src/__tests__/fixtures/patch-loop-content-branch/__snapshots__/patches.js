@@ -32,9 +32,9 @@
     }
   }, "a1"]
 }]
-"a:Hg"
+"BgEAAAA"
 
-// PATCH holding a:Hg
+// PATCH holding BgEAAAA
 {
   la: [{
     ca: {
@@ -49,7 +49,7 @@
   }, "a1"]
 }
 
-// PATCH holding a:Hg
+// PATCH holding BgEAAAA
 {
   la: [{
     ca: {

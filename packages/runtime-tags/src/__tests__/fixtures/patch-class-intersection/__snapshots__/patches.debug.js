@@ -5,4 +5,4 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-class-intersection/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-class-intersection/template.marko0": "warn"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-class-intersection/template.marko_1*shell:AQ"
+"AgE"

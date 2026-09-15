@@ -7,4 +7,4 @@
     "PatchText:#text/1": "b"
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-child-const-attr/tags/badge/index.marko_1*shell:AQ"
+"AwE"

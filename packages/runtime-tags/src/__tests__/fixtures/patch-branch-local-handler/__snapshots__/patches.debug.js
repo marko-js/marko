@@ -5,4 +5,4 @@
     "PatchText:#text/0": "b!"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-handler/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-handler/template.marko_1*shell:AQ"
+"AgE"

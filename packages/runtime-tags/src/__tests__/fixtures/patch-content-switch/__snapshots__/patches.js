@@ -9,9 +9,9 @@
   },
   va0: "b"
 }]
-"a:CA"
+"BgM"
 
-// PATCH holding a:CA
+// PATCH holding BgM
 {
   ca: {
     cAa: {
@@ -21,7 +21,7 @@
   va0: "a"
 }
 
-// PATCH holding a:CA
+// PATCH holding BgM
 {
   ca: {
     cAa: {
@@ -33,7 +33,7 @@
   va0: $
 }
 
-// PATCH holding a:CA
+// PATCH holding BgM
 [`a3,<b>A</b>`, {
   ca: {
     cAa: {
@@ -42,4 +42,4 @@
   },
   va0: "a"
 }]
-"a:GA"
+"BgMA"

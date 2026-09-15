@@ -17,9 +17,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell:AQ"
+"BQMA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell:AQ
+// PATCH holding BQMA
 {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
@@ -28,7 +28,7 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_3*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell:AQ
+// PATCH holding BQMA
 {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {

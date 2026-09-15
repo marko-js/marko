@@ -7,9 +7,9 @@
     "PatchText:#text/0": "Bread"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop/template.marko_1*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-loop/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchLoop:#ul/1": [1, {
@@ -21,7 +21,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchLoop:#ul/1": [3, {
@@ -31,13 +31,13 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop/template.marko_1*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchLoop:#ul/1": []
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-loop/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "PatchText:#text/0": "Store",
   "PatchLoop:#ul/1": [2, {

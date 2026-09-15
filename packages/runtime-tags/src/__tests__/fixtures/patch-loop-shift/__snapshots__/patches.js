@@ -12,9 +12,9 @@
   }, "a0"],
   tc: "hello"
 }]
-"a:Bg"
+"AwEA"
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   la: [2, {
     ta: "Bread!"
@@ -23,7 +23,7 @@
   tc: "bye"
 }
 
-// PATCH holding a:Bg
+// PATCH holding AwEA
 {
   la: [2, {
     ta: "Bread!"

@@ -19,9 +19,9 @@
     }
   }, "a1"]
 }]
-"a:BA"
+"BAE"
 
-// PATCH holding a:BA
+// PATCH holding BAE
 [`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   ta: "Store!",
   lb: [{
@@ -52,4 +52,4 @@
     }
   }, "a1"]
 }]
-"b:Ag,a:BA"
+"BAEB"

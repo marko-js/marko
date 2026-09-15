@@ -9,9 +9,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell:AQ"
+"AgE"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "$global:": {
     brand: "Marko"
@@ -23,7 +23,7 @@
   "PatchWrite:input_value": "b"
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "$global:": {
     brand: "Fresh"
@@ -35,7 +35,7 @@
   "PatchWrite:input_value": "b"
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell:AQ
+// PATCH holding AgE
 {
   "$global:": {
     brand: "Patch"

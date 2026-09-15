@@ -16,9 +16,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell:AQ"
+"BQMA"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell:AQ
+// PATCH holding BQMA
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
@@ -37,7 +37,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell:AQ
+// PATCH holding BQMA
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
@@ -48,7 +48,7 @@
   "PatchBranch:#text/1": 0
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell:AQ
+// PATCH holding BQMA
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "e",

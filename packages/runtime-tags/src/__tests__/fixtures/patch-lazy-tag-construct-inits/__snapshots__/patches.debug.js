@@ -20,9 +20,9 @@
   "PatchBranch:#main/2": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell",
   "PatchText:#text/3": "b"
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell:AQ"
+"BAEB"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_1*shell:AQ,packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell:AQ
+// PATCH holding BAEB
 {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko": {
     "PatchChild:BranchScopes:#main/2": {

@@ -9,9 +9,9 @@
     }
   }
 }]
-"packages/runtime-tags/src/__tests__/fixtures/patch-content-inner-branch/template.marko_2*shell:AQ"
+"BAM"
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-inner-branch/template.marko_2*shell:AQ
+// PATCH holding BAM
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
@@ -23,7 +23,7 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-inner-branch/template.marko_2*shell:AQ
+// PATCH holding BAM
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "d",
@@ -33,7 +33,7 @@
   }
 }
 
-// PATCH holding packages/runtime-tags/src/__tests__/fixtures/patch-content-inner-branch/template.marko_2*shell:AQ
+// PATCH holding BAM
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "e",
