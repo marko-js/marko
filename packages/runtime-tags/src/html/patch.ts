@@ -379,9 +379,12 @@ class PatchState extends State {
     });
     // Later settle flushes nest under the live branch as a Child apply.
     if (branchIndex === undefined) {
-      // `0` frees the released id: a reusing branch's pair guard must not
-      // see the dead partial (the stale link is overwritten on reuse).
+      // `0` frees the released id in both structures: a reusing branch's
+      // pair guard must not see the dead partial, and a settle-flush write
+      // following the dead link would nest under a branch the client
+      // destroyed instead of riding the main tree.
       this.patchTrees!.get(getChunk()!.serializeState)![branchId] = 0;
+      this.patchLinks![branchId] = 0;
     } else {
       link[2] = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
@@ -614,8 +617,8 @@ export function _patch_bind(
       const siteChain: number[] = [];
       for (let cur: number | undefined = scopeId; cur !== undefined;) {
         siteChain.push(cur);
-        const link: PatchLink | undefined = links?.[cur];
-        cur = link && (link[5] ?? link[0]);
+        const link: PatchLink | 0 | undefined = links?.[cur];
+        cur = link ? (link[5] ?? link[0]) : undefined;
       }
       const down: PatchLink[1][] = [];
       let cur = bound[K_SCOPE_ID]!;
@@ -625,8 +628,8 @@ export function _patch_bind(
         if (MARKO_DEBUG && !link) {
           throw new Error("A patch could not link a handler to its scope.");
         }
-        down.push(link![1]);
-        cur = link![0];
+        down.push((link as PatchLink)[1]);
+        cur = (link as PatchLink)[0];
         up = siteChain.indexOf(cur);
       }
       writePatch(scopeId, {
@@ -951,7 +954,7 @@ export function _content_withheld(id: string) {
 function ownerHops(state: State, scopeId: number, ownerId?: number) {
   let up = 0;
   for (let cur: number | undefined = scopeId; cur !== ownerId; up++) {
-    const link: PatchLink | undefined = state.patchLinks?.[cur!];
+    const link: PatchLink | 0 | undefined = state.patchLinks?.[cur!];
     if (!link) return 0;
     cur = link[5] ?? link[0];
   }

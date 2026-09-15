@@ -437,7 +437,7 @@ export function patchPartial(
   let partial = partials[scopeId];
   if (!partial) {
     const link = state.patchLinks?.[scopeId];
-    const pending = link?.[2];
+    const pending = link && link[2];
     if (serializeState.readyId && !pending) {
       // A channel's entries nest under their parent's entry in the channel's
       // own tree (a parent the channel creates must apply first), up to the
@@ -1776,7 +1776,7 @@ export class State implements SerializeState {
   declare binds?: Map<WeakKey, number>;
   // How a scope hangs off its parent: the link a bind walk follows and, until
   // its first write, the entry key its partial nests under.
-  declare patchLinks?: Record<number, PatchLink>;
+  declare patchLinks?: Record<number, PatchLink | 0>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;
   public writeReorders: Chunk[] | null = null;
