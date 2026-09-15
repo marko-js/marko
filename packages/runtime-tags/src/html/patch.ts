@@ -210,8 +210,15 @@ class PatchState extends State {
     }
     // The client reads one frame per line: everything a flush embeds is
     // escaped (serializer strings, shells), so a newline is a bug.
-    if (MARKO_DEBUG && scripts.includes("\n")) {
-      throw new Error("A patch flush spans lines.");
+    if (MARKO_DEBUG) {
+      if (scripts.includes("\n")) throw new Error("A patch flush spans lines.");
+      // The client returns the flush as one expression; a `;`-joined
+      // second script would never run.
+      try {
+        if (scripts) new Function("(" + scripts + ")");
+      } catch {
+        throw new Error("A patch flush is not a single expression.");
+      }
     }
     const out = scripts ? scripts + "\n" : "";
     this.patchFlushed = undefined;
