@@ -1,0 +1,11 @@
+<let/open=false/>
+<main>
+  <if=open>
+    <box>
+      <if=input.show>
+        <p>${"t:" + input.title}</p>
+      </if>
+    </box>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

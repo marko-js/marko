@@ -1,0 +1,9 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <for|item| of=input.items by=(item) => item>
+      <p>${item + ":" + input.suffix + "@" + count}</p>
+    </for>
+  </if>
+  <button onClick() { count++ }>+</button>
+</main>
