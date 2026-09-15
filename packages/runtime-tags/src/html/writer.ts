@@ -843,11 +843,14 @@ export type SerializeReasonValue =
 // Every group serializes: for a child whose groups the caller cannot see.
 export const CLIENT_ALL = 0x2aaaaaaa;
 
-// A group's 2-bit value; no mask at all means nothing serializes.
+// A group's 2-bit value; no mask at all means nothing serializes. The all
+// mask is a sentinel: its bits cover the groups a keyed object takes over.
 export function maskGroup(mask: SerializeReasonValue, group: number) {
-  return typeof mask === "number"
-    ? (mask >>> (1 + 2 * group)) & 3
-    : ((mask as Partial<Record<number, number>>)[group] ?? 0);
+  return mask === CLIENT_ALL
+    ? 1
+    : typeof mask === "number"
+      ? (mask >>> (1 + 2 * group)) & 3
+      : ((mask as Partial<Record<number, number>>)[group] ?? 0);
 }
 
 export function _set_serialize_reason(reason: SerializeReasonValue) {
