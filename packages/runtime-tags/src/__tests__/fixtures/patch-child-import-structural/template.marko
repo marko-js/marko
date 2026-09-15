@@ -1,0 +1,8 @@
+import { structuralOpen } from "./helper";
+<let/show=false/>
+<main>
+  <if=show>
+    <badge open=structuralOpen text=input.a/>
+  </if>
+  <button onClick() { show = !show }>+</button>
+</main>

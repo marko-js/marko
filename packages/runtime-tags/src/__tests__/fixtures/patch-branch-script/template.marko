@@ -1,0 +1,10 @@
+<main>
+  <h1>${input.title}</h1>
+  <if=input.show>
+    <p>promo</p>
+    <script>
+      const el = document.querySelector("main")!;
+      el.dataset.inserts = String(+(el.dataset.inserts || 0) + 1);
+    </script>
+  </if>
+</main>
