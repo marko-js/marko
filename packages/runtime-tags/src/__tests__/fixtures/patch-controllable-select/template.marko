@@ -1,0 +1,9 @@
+<main>
+  <h1>${input.title}</h1>
+  <select value=input.choice valueChange(next: string) {
+    document.querySelector("main")!.dataset.choice = next;
+  }>
+    <option value="a">A</option>
+    <option value="b">B</option>
+  </select>
+</main>
