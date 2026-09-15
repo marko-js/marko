@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 6.3.52
+
+### Patch Changes
+
+- [#4164](https://github.com/marko-js/marko/pull/4164) [`1597fc1`](https://github.com/marko-js/marko/commit/1597fc18e8d492811bbdee6622115f1e060429d0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A dynamic tag's body depends on the tag expression the way a branch body depends on its condition, so its scope only serializes when that expression can change client side.
+
+- [#4158](https://github.com/marko-js/marko/pull/4158) [`a8ea554`](https://github.com/marko-js/marko/commit/a8ea554bbba9a0a598330b3e3d1d4a3fddd445fb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize reasons keep their sources when forced, the serialize walk answers once per value and property path, and a guard used once is no longer hoisted.
+
+- [#4162](https://github.com/marko-js/marko/pull/4162) [`3ea218a`](https://github.com/marko-js/marko/commit/3ea218a69cfcd9606a5b75dce236e4f6987a4182) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A property read through a renamed value (`<const/a=item/>` then `a.id`, or `rest.label` after `<const/{ ...rest }=input/>`) is the root value's property: one read, and a child template asks its caller for that property alone. Dev runtime entries list every dom feature module so the optimizer sees them up front.
+
+- [#4149](https://github.com/marko-js/marko/pull/4149) [`b1f6f86`](https://github.com/marko-js/marko/commit/b1f6f863915a003a64b0e0732060e6e3e85e2b2d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Encode a call site's serialize reason as two bits per param-reason group, composing dynamic guards arithmetically instead of allocating a keyed object.
+
+- [#4132](https://github.com/marko-js/marko/pull/4132) [`66c2882`](https://github.com/marko-js/marko/commit/66c2882d89ead4041f1ad96bacf5cb0bcdba8e4c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix the client walk for a `<style>` with dynamic rules followed by sibling elements, and move a branch's edges with an unescaped `$!{}` hole that is the branch's whole content.
+
 ## 6.3.51
 
 ### Patch Changes
