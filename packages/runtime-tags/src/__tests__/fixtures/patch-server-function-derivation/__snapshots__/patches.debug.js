@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2_count#11/init;D%c%;<p><!>/<!></p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2_count#11/init;D%c%;<p><!>/<!></p>`, (_.a = {
   "$global:": {
     data: {
       items: ["a", "b", "c"]
@@ -18,5 +18,5 @@
     },
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko1": 3
   }
-}]
+}, _.a)]
 "AwE"

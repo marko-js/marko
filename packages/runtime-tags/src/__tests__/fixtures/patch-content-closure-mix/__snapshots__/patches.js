@@ -1,5 +1,5 @@
 // PATCH
-[`a0;D%c%c%;<i><!>:<!>:<!></i>`, `a1;/D%l&;<section><!></section>`, {
+[`a0;D%c%c%;<i><!>:<!>:<!></i>`, `a1;/D%l&;<section><!></section>`, (_.a = {
   $: {
     brand: "Acme"
   },
@@ -22,11 +22,11 @@
       }
     }
   }, "a1"]
-}]
+}, _.a)]
 "BAEA"
 
 // PATCH holding BAEA
-{
+(_.a = {
   $: {
     brand: "Zed"
   },
@@ -58,4 +58,4 @@
       }
     }
   }, "a1"]
-}
+}, _.a)

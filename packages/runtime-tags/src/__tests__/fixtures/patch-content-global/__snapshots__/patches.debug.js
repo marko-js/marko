@@ -1,5 +1,5 @@
 // PATCH
-{
+(_.a = {
   "$global:": {
     brand: "Zed"
   },
@@ -8,4 +8,4 @@
       "PatchText:#text/0": "Zed"
     }
   }
-}
+}, _.a)

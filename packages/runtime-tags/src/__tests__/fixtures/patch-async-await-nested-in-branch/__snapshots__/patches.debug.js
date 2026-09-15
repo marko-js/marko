@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1_#text#0/await;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_2_#text#0/await;D%c%;<em><!>:<!></em>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1_#text#0/await;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_2_#text#0/await;D%c%;<em><!>:<!></em>`, (_.a = {
   "PatchBranch:#text/0": [{
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1_#text#0/await",
     "PatchChild:BranchScopes:#text/0": {
@@ -10,5 +10,5 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-nested-in-branch/template.marko_1*shell"]
-}]
+}, _.a)]
 "BgEAAQ"

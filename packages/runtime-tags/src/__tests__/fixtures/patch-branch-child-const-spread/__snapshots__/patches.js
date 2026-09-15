@@ -1,5 +1,5 @@
 // PATCH
-[`a0;/ D l&;<div id=fixed> </div>`, {
+[`a0;/ D l&;<div id=fixed> </div>`, (_.a = {
   ba: [{
     ca: {
       ja: [{
@@ -14,11 +14,11 @@
       }
     }
   }, "a0"]
-}]
+}, _.a)]
 "AwE"
 
 // PATCH holding AwE
-{
+(_.a = {
   ba: [{
     ca: {
       ja: [{
@@ -33,4 +33,4 @@
       }
     }
   }, "a0"]
-}
+}, _.a)

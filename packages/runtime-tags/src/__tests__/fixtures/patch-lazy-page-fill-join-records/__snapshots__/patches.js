@@ -1,5 +1,5 @@
 // PATCH
-[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
+[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, (_.a = {
   z_a: {
     cAa: {
       ca: {
@@ -47,8 +47,8 @@
     }
   },
   ba: [1, {}, "d1"]
-}]
-[`a2;D ;<a> </a>`, {
+}, _.a)]
+[`a2;D ;<a> </a>`, (_.b = {
   z_a: {
     cAa: {
       ca: {
@@ -60,11 +60,11 @@
       }
     }
   }
-}]
+}, _.b)]
 "EAIAAwABAAE"
 
 // PATCH holding EAIAAwABAAE
-[`b0,<p>wide</p>`, `d2;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, {
+[`b0,<p>wide</p>`, `d2;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, (_.a = {
   z_a: {
     cAa: {
       ca: {
@@ -100,11 +100,11 @@
     }
   },
   ba: [1, {}, "d1"]
-}]
+}, _.a)]
 "EAIAAQEAAQAAAA"
 
 // PATCH holding EAIAAQEAAQAAAA
-{
+(_.a = {
   z_a: {
     cAa: {
       ca: {
@@ -157,4 +157,4 @@
     }
   },
   ba: [1, {}, "d1"]
-}
+}, _.a)

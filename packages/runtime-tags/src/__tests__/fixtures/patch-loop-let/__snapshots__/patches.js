@@ -1,5 +1,5 @@
 // PATCH
-[`a0 !a1;D bD l ;<li> <span> </span><button>+</button></li>`, {
+[`a0 !a1;D bD l ;<li> <span> </span><button>+</button></li>`, (_.a = {
   la: [2, {
     ta: "Bread",
     s: {
@@ -11,11 +11,11 @@
       va0: 0
     }
   }, "a0"]
-}]
+}, _.a)]
 "AgE"
 
 // PATCH holding AgE
-{
+(_.a = {
   la: [2, {
     ta: "Bread",
     s: {
@@ -32,10 +32,10 @@
       va0: 0
     }
   }, "a0"]
-}
+}, _.a)
 
 // PATCH holding AgE
-{
+(_.a = {
   la: [2, {
     ta: "Bread",
     s: {
@@ -47,10 +47,10 @@
       va0: 0
     }
   }, "a0"]
-}
+}, _.a)
 
 // PATCH holding AgE
-{
+(_.a = {
   la: [2, {
     ta: "Bread",
     s: {
@@ -67,4 +67,4 @@
       va0: 0
     }
   }, "a0"]
-}
+}, _.a)

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_2*content;D l%;<p> </p><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_1*shell;/D%l&;<section><!></section>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_2*content;D l%;<p> </p><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_1*shell;/D%l&;<section><!></section>`, (_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_2*content",
@@ -9,11 +9,11 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_1*shell"]
-}]
+}, _.a)]
 "BAIA"
 
 // PATCH holding BAIA
-{
+(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_2*content",
@@ -23,10 +23,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_1*shell"]
-}
+}, _.a)
 
 // PATCH holding BAIA
-{
+(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_2*content",
@@ -36,10 +36,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_1*shell"]
-}
+}, _.a)
 
 // PATCH holding BAIA
-{
+(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_2*content",
@@ -49,10 +49,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_1*shell"]
-}
+}, _.a)
 
 // PATCH holding BAIA
-{
+(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_2*content",
@@ -62,4 +62,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-renderer/template.marko_1*shell"]
-}
+}, _.a)

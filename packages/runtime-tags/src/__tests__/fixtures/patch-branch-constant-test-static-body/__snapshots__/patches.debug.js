@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_2*shell,<p>last</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_1*shell;D l%;<span> </span><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/template.marko_1*shell;b/b%c&b;<!><!><!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_2*shell,<p>last</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_1*shell;D l%;<span> </span><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/template.marko_1*shell;b/b%c&b;<!><!><!><!><!>`, (_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchLoop:#text/0": [{
@@ -11,16 +11,16 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_1*shell"]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/template.marko_1*shell"]
-}]
+}, _.a)]
 "BQEAAQ"
 
 // PATCH holding BQEAAQ
-{
+(_.a = {
   "PatchBranch:#text/0": 0
-}
+}, _.a)
 
 // PATCH holding BQEAAQ
-{
+(_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchLoop:#text/0": [{
@@ -32,4 +32,4 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_1*shell"]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/template.marko_1*shell"]
-}
+}, _.a)

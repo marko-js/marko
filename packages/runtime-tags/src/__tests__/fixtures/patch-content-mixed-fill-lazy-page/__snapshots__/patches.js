@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a5;/ D l&;<button class=tick> </button>`, `b0;b%b/0& b/DbD%m&&b;<!><!><button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section><!>`, {
+[`a0 a5;/ D l&;<button class=tick> </button>`, `b0;b%b/0& b/DbD%m&&b;<!><!><button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section><!>`, (_.a = {
   z_a: {
     cAa: {
       cb: {
@@ -29,11 +29,11 @@
     }
   },
   ba: "b0"
-}]
+}, _.a)]
 "BwEB"
 
 // PATCH holding BwEB
-{
+(_.a = {
   z_a: {
     cAa: {
       cb: {
@@ -63,4 +63,4 @@
     }
   },
   ba: "b0"
-}
+}, _.a)

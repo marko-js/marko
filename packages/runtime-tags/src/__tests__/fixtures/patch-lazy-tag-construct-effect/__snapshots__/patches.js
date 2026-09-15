@@ -1,5 +1,5 @@
 // PATCH
-[`b0 !b1; b%b/ D%c%l&b;<div>x</div><!><button><!>:<!></button><!>`, {
+[`b0 !b1; b%b/ D%c%l&b;<div>x</div><!><button><!>:<!></button><!>`, (_.a = {
   z_a: {
     cAa: {
       cc: {
@@ -16,5 +16,5 @@
       title: "t"
     }
   }, "b0"]
-}]
+}, _.a)]
 "AwI"

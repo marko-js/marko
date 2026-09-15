@@ -1,10 +1,10 @@
 // PATCH
-{
+(_.a = {
   ba: 0
-}
+}, _.a)
 
 // PATCH
-[`b0;D ;<em> </em>`, `a0;/ D l/D%l&&;<button> </button><section><!></section>`, {
+[`b0;D ;<em> </em>`, `a0;/ D l/D%l&&;<button> </button><section><!></section>`, (_.a = {
   ba: [{
     ca: {
       cc: {
@@ -19,5 +19,5 @@
       }
     }
   }, "a0"]
-}]
+}, _.a)]
 "BQEB"

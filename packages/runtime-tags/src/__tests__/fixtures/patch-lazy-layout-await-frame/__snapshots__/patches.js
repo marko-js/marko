@@ -1,5 +1,5 @@
 // PATCH
-[`a1;b%b%;<!><!><!><!>`, `e0;b%;<!><!><!>`, `e4;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b/D%lD%l&b;<!><nav><!></nav><article><!></article><!>`, {
+[`a1;b%b%;<!><!><!><!>`, `e0;b%;<!><!><!>`, `e4;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b/D%lD%l&b;<!><nav><!></nav><article><!></article><!>`, (_.a = {
   z_a: {
     ca: {
       cAa: {
@@ -20,8 +20,8 @@
       ba: [1, {}, "e2"]
     }
   }
-}]
-[`a3;D ;<a> </a>`, `f0; ;<path></path>`, `a2;/ b&;<svg></svg>`, {
+}, _.a)]
+[`a3;D ;<a> </a>`, `f0; ;<path></path>`, `a2;/ b&;<svg></svg>`, (_.b = {
   z_a: {
     ca: {
       cAa: {
@@ -47,11 +47,11 @@
       }
     }
   }
-}]
+}, _.b)]
 "EQIAAAQBAQI"
 
 // PATCH holding EQIAAAQBAQI
-[`e5;b%b/b&b;<!><!><h1>B</h1><!>`, {
+[`e5;b%b/b&b;<!><!><h1>B</h1><!>`, (_.a = {
   z_a: {
     ca: {
       cAa: {
@@ -85,15 +85,15 @@
       ba: [1, {}, "e2"]
     }
   }
-}]
+}, _.a)]
 "EQIAAAQBAQAB"
 
 // PATCH holding EQIAAAQBAQAB
-[`e3,<p>home</p>`, {
+[`e3,<p>home</p>`, (_.a = {
   ca: {
     cAa: {
       ba: "e3"
     }
   }
-}]
+}, _.a)]
 "EQIAAAQBAAAAAQ"

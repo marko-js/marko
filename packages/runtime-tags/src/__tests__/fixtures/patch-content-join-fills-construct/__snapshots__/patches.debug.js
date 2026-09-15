@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_bonus#7/init packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_p_base#9/init packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_item_n#3/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell !;/DbD%m&;<section><h2>Panel</h2><div class=aside><!></div></section>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell;b/0& b%c&b;<!><button class=bonus>bonus</button><!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_bonus#7/init packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_p_base#9/init packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_item_n#3/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell !;/DbD%m&;<section><h2>Panel</h2><div class=aside><!></div></section>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell;b/0& b%c&b;<!><button class=bonus>bonus</button><!><!><!>`, (_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
@@ -12,11 +12,11 @@
       "PatchLoop:#text/3": [{
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko1": 0,
         "PatchChild:#childScope/0": {
-          "PatchDynamicTag:#text/0": _.a = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content",
+          "PatchDynamicTag:#text/0": _.b = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
             "PatchChild:#childScope/0": {
               "PatchSetup:": {
-                "PatchInit:": _.b = "!packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_0",
+                "PatchInit:": _.c = "!packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_0",
                 "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko1": 0
               }
             }
@@ -25,11 +25,11 @@
       }, {
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko1": 1,
         "PatchChild:#childScope/0": {
-          "PatchDynamicTag:#text/0": _.a,
+          "PatchDynamicTag:#text/0": _.b,
           "PatchChild:BranchScopes:#text/0": {
             "PatchChild:#childScope/0": {
               "PatchSetup:": {
-                "PatchInit:": _.b,
+                "PatchInit:": _.c,
                 "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko1": 0
               }
             }
@@ -42,11 +42,11 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
-}]
+}, _.a)]
 "CAEABA"
 
 // PATCH holding CAEABA
-{
+(_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
@@ -76,4 +76,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko0": 2
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
-}
+}, _.a)

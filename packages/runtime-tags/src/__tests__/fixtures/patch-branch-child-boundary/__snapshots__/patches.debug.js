@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/tags/loader.marko_0_#text#0/await; ; `, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/template.marko_1*shell;/D%l&;<div class=ld><!></div>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/tags/loader.marko_0_#text#0/await; ; `, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/template.marko_1*shell;/D%l&;<div class=ld><!></div>`, (_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/tags/loader.marko_0_#text#0/await",
@@ -8,5 +8,5 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-boundary/template.marko_1*shell"]
-}]
+}, _.a)]
 "BgEC"

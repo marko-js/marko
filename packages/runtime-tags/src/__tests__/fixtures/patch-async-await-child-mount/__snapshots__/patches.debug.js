@@ -1,10 +1,10 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1_#text#0/await;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1_#text#0/await;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1*shell;b%;<!><!><!>`, (_.a = {
   "PatchBranch:#text/0": [{
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1_#text#0/await"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1*shell"]
-}]
-{
+}, _.a)]
+(_.b = {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/0": {
@@ -16,5 +16,5 @@
       }
     }
   }
-}
+}, _.b)
 "BQIA"

@@ -1,5 +1,5 @@
 // PATCH
-[`b;b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%;<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>`, {
+[`b;b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%;<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>`, (_.a = {
   fa: ["b", {
     p0: "",
     p1: "",
@@ -36,11 +36,11 @@
     bo: 0,
     bp: 0
   }
-}]
+}, _.a)]
 "EgE"
 
 // PATCH holding EgE
-[`b0;D ;<span id=s0> </span>`, `b1;D ;<span id=s1> </span>`, `b2;D ;<span id=s2> </span>`, `b3;D ;<span id=s3> </span>`, `b4;D ;<span id=s4> </span>`, `b5;D ;<span id=s5> </span>`, `b6;D ;<span id=s6> </span>`, `b7;D ;<span id=s7> </span>`, `b8;D ;<span id=s8> </span>`, `b9;D ;<span id=s9> </span>`, `b10;D ;<span id=s10> </span>`, `b11;D ;<span id=s11> </span>`, `b12;D ;<span id=s12> </span>`, `b13;D ;<span id=s13> </span>`, `b14;D ;<span id=s14> </span>`, `b15;D ;<span id=s15> </span>`, {
+[`b0;D ;<span id=s0> </span>`, `b1;D ;<span id=s1> </span>`, `b2;D ;<span id=s2> </span>`, `b3;D ;<span id=s3> </span>`, `b4;D ;<span id=s4> </span>`, `b5;D ;<span id=s5> </span>`, `b6;D ;<span id=s6> </span>`, `b7;D ;<span id=s7> </span>`, `b8;D ;<span id=s8> </span>`, `b9;D ;<span id=s9> </span>`, `b10;D ;<span id=s10> </span>`, `b11;D ;<span id=s11> </span>`, `b12;D ;<span id=s12> </span>`, `b13;D ;<span id=s13> </span>`, `b14;D ;<span id=s14> </span>`, `b15;D ;<span id=s15> </span>`, (_.a = {
   fa: ["b", {
     p0: "v0-b",
     p1: "v1-b",
@@ -109,5 +109,5 @@
       ta: "v15-b"
     }, "b15"]
   }
-}]
+}, _.a)]
 "EgEAAAAAAAAAAAAAAAAAAAAA"

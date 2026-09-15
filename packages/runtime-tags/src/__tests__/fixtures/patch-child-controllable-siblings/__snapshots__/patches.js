@@ -1,5 +1,5 @@
 // PATCH
-{
+(_.a = {
   ta: "Store!",
   cd: {
     ba: 0
@@ -7,10 +7,10 @@
   ce: {
     ba: 0
   }
-}
+}, _.a)
 
 // PATCH
-[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, (_.a = {
   ta: "Store!",
   cd: {
     ba: [{
@@ -28,5 +28,5 @@
       d2: ["a1", 2, "d"]
     }, "b0"]
   }
-}]
+}, _.a)]
 "AwI"

@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a3;D%c%;<span><!>:<!></span>`, `b0;b%b/ b%c&b;<!><!><button>+</button><!><!><!>`, {
+[`a0 a3;D%c%;<span><!>:<!></span>`, `b0;b%b/ b%c&b;<!><!><button>+</button><!><!><!>`, (_.a = {
   z_a: {
     cAc: {
       cb: {
@@ -19,11 +19,11 @@
   },
   bc: "b0",
   td: "b"
-}]
+}, _.a)]
 "BAEB"
 
 // PATCH holding BAEB
-{
+(_.a = {
   z_a: {
     cAc: {
       cb: {
@@ -43,4 +43,4 @@
   },
   bc: "b0",
   td: "c"
-}
+}, _.a)

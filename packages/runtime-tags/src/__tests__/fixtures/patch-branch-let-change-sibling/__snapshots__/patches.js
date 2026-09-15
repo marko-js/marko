@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a4!a2;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`a0 a4!a2;Db%l ;<span>Seen <!></span><button>+</button>`, (_.a = {
   tc: "b",
   be: [{
     s: {
@@ -7,5 +7,5 @@
     },
     d1: ["b0", 1, "a", "d"]
   }, "a0"]
-}]
+}, _.a)]
 "AwE"

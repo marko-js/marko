@@ -1,5 +1,5 @@
 // PATCH
-[`a0;b%;<!><!><!>`, `a2 a8!a4;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`a0;b%;<!><!><!>`, `a2 a8!a4;Db%l ;<span>Seen <!></span><button>+</button>`, (_.a = {
   cd: {
     cAa: {
       ca: {
@@ -15,5 +15,5 @@
       }
     }
   }
-}]
+}, _.a)]
 "BgEB"

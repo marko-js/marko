@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell;/ D l&;<div id=fixed> </div>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell;/ D l&;<div id=fixed> </div>`, (_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchAttrs:#div/0": [{
@@ -14,11 +14,11 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell"]
-}]
+}, _.a)]
 "AwI"
 
 // PATCH holding AwI
-{
+(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchAttrs:#div/0": [{
@@ -33,4 +33,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell"]
-}
+}, _.a)

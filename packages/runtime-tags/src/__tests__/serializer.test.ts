@@ -2556,13 +2556,13 @@ describe("serializer", () => {
         state: { writesPatches: true },
       }) as any as Boundary;
 
-    it("serializes a scope run bare", () => {
+    it("names the tree so a same-chunk channel can reference it", () => {
       assert.equal(
         new Serializer().stringifyScopes(
           [[1, {}, { value: 1 }]],
           patchBoundary(),
         ),
-        `{value:1}`,
+        `(_.a={value:1},_.a)`,
       );
     });
 
@@ -2575,7 +2575,7 @@ describe("serializer", () => {
           [[1, {}, { value: { wrapper } }]],
           patchBoundary(),
         ),
-        `(_.c={value:{wrapper:_.a={err:_.b=new Error("boom")}}},_.b.cause=_.a,_.c)`,
+        `(_.a={value:{wrapper:_.b={err:_.c=new Error("boom")}}},_.c.cause=_.b,_.a)`,
       );
     });
   });

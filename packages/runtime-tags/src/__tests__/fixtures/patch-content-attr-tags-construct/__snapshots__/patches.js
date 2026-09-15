@@ -1,5 +1,5 @@
 // PATCH
-[`a0,<b>static header</b>`, `a1,body`, `a2;/E%lD l%l&;<section><header><!></header><h2> </h2><!></section>`, {
+[`a0,<b>static header</b>`, `a1,body`, `a2;/E%lD l%l&;<section><header><!></header><h2> </h2><!></section>`, (_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -7,11 +7,11 @@
       fc: "^a1"
     }
   }, "a2"]
-}]
+}, _.a)]
 "BQEAAA"
 
 // PATCH holding BQEAAA
-{
+(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -19,4 +19,4 @@
       fc: "^a1"
     }
   }, "a2"]
-}
+}, _.a)

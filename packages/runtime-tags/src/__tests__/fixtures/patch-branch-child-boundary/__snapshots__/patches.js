@@ -1,5 +1,5 @@
 // PATCH
-[`b1; ; `, `a0;/D%l&;<div class=ld><!></div>`, {
+[`b1; ; `, `a0;/D%l&;<div class=ld><!></div>`, (_.a = {
   ba: [{
     ca: {
       pa: "b1",
@@ -8,5 +8,5 @@
       }
     }
   }, "a0"]
-}]
+}, _.a)]
 "BgED"

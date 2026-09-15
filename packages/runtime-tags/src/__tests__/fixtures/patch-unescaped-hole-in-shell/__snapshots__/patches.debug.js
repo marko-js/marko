@@ -1,15 +1,15 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell;D lD l%;<div> </div><div class=x> </div><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell;D lD l%;<div> </div><div class=x> </div><!><!>`, (_.a = {
   "PatchBranch:#main/0": [{
     "PatchHtml:#text/0": "\x3Cb>a\x3C/b>",
     "PatchHtml:#text/1": "\x3Cb>a\x3C/b>",
     "PatchBranch:#text/2": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell"]
-}]
+}, _.a)]
 "BQE"
 
 // PATCH holding BQE
-[`packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_3*shell;D lD ;<div> </div><div class=y> </div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell; ; `, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell;b%b%;<!><!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_3*shell;D lD ;<div> </div><div class=y> </div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell; ; `, `packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell;b%b%;<!><!><!><!>`, (_.a = {
   "PatchBranch:#main/0": [{
     "PatchHtml:#text/0": "\x3Ci>b\x3C/i> c",
     "PatchHtml:#text/1": "\x3Ci>b\x3C/i> c",
@@ -23,11 +23,11 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell"]
-}]
+}, _.a)]
 "BQEAAAA"
 
 // PATCH holding BQEAAAA
-{
+(_.a = {
   "PatchBranch:#main/0": [{
     "PatchHtml:#text/0": "\x3Cu>d\x3C/u>",
     "PatchHtml:#text/1": "\x3Cu>d\x3C/u>",
@@ -41,9 +41,9 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell"]
-}
+}, _.a)
 
 // PATCH holding BQEAAAA
-{
+(_.a = {
   "PatchBranch:#main/0": 0
-}
+}, _.a)

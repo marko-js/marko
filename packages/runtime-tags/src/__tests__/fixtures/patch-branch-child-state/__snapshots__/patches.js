@@ -1,5 +1,5 @@
 // PATCH
-[`a0;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, {
+[`a0;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, (_.a = {
   ba: [{
     ca: {
       ta: "A",
@@ -9,11 +9,11 @@
       }
     }
   }, "a0"]
-}]
+}, _.a)]
 "AwE"
 
 // PATCH holding AwE
-{
+(_.a = {
   ba: [{
     ca: {
       ta: "B",
@@ -23,4 +23,4 @@
       }
     }
   }, "a0"]
-}
+}, _.a)

@@ -1,5 +1,5 @@
 // PATCH
-{
+(_.a = {
   "$global:": {
     brand: "bmce"
   },
@@ -8,4 +8,4 @@
     "PatchCatch:#text/0": new Error("boom")
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-global-derived/template.marko0": "bmce!"
-}
+}, _.a)

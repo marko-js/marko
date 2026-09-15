@@ -1,13 +1,13 @@
 // PATCH
-{
+(_.a = {
   1: "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-arrow-curried/template.marko_0/mk",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-arrow-curried/template.marko0": bind(1),
   "PatchWrite:input_title": "b"
-}
+}, _.a)
 
 // PATCH
-{
+(_.a = {
   1: "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-arrow-curried/template.marko_0/mk",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-arrow-curried/template.marko0": bind(1),
   "PatchWrite:input_title": "c"
-}
+}, _.a)

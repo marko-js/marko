@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content,hi`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko;D%;<section><!></section>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content; ; `, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content,hi`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko;D%;<section><!></section>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content; ; `, (_.a = {
   "PatchDynamicTag:#text/0": [">div", {
     class: "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content"],
@@ -10,11 +10,11 @@
       "PatchText:#text/0": "y"
     }
   }
-}]
+}, _.a)]
 "BAABAA"
 
 // PATCH holding BAABAA
-{
+(_.a = {
   "PatchDynamicTag:#text/0": [">section", {
     class: "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content"],
@@ -22,10 +22,10 @@
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "z"
   }
-}
+}, _.a)
 
 // PATCH holding BAABAA
-{
+(_.a = {
   "PatchDynamicTag:#text/0": [">section", {
     class: "c"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content"],
@@ -36,4 +36,4 @@
       "PatchText:#text/0": "w"
     }
   }
-}
+}, _.a)

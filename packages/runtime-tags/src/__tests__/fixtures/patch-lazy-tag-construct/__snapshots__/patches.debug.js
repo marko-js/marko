@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct/template.marko_1*shell;b%b/ D%c%l&b;<!><!><button><!>:<!></button><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct/template.marko_1*shell;b%b/ D%c%l&b;<!><!><button><!>:<!></button><!>`, (_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct/child.marko": {
     "PatchChild:BranchScopes:#main/0": {
       "PatchChild:#childScope/1": {
@@ -12,5 +12,5 @@
     }
   },
   "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct/template.marko_1*shell"
-}]
+}, _.a)]
 "AwI"

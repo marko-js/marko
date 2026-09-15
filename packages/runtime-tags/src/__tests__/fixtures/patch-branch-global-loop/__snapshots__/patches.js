@@ -1,5 +1,5 @@
 // PATCH
-[`a2;/D b D m&;<p> <button> </button></p>`, `a0; ;<div></div>`, {
+[`a2;/D b D m&;<p> <button> </button></p>`, `a0; ;<div></div>`, (_.a = {
   $: {
     search: [{
       q: "b"
@@ -32,20 +32,20 @@
       }
     }, "a2"]
   }, "a0"]
-}]
+}, _.a)]
 "BQEB"
 
 // PATCH holding BQEB
-[`a1,<p>invalid</p>`, {
+[`a1,<p>invalid</p>`, (_.a = {
   $: {
     search: [null, !0]
   },
   ba: "a1"
-}]
+}, _.a)]
 "BQEAAA"
 
 // PATCH holding BQEAAA
-{
+(_.a = {
   $: {
     search: [{
       q: "c"
@@ -78,4 +78,4 @@
       }
     }, "a2"]
   }, "a0"]
-}
+}, _.a)

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko;b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%;<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko;b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%;<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>`, (_.a = {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko", {
     p0: "",
     p1: "",
@@ -36,11 +36,11 @@
     "PatchBranch:#text/14": 0,
     "PatchBranch:#text/15": 0
   }
-}]
+}, _.a)]
 "EgA"
 
 // PATCH holding EgA
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_1*shell;D ;<span id=s0> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_2*shell;D ;<span id=s1> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_3*shell;D ;<span id=s2> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_4*shell;D ;<span id=s3> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_5*shell;D ;<span id=s4> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_6*shell;D ;<span id=s5> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_7*shell;D ;<span id=s6> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_8*shell;D ;<span id=s7> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_9*shell;D ;<span id=s8> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_10*shell;D ;<span id=s9> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_11*shell;D ;<span id=s10> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_12*shell;D ;<span id=s11> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_13*shell;D ;<span id=s12> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_14*shell;D ;<span id=s13> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_15*shell;D ;<span id=s14> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_16*shell;D ;<span id=s15> </span>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_1*shell;D ;<span id=s0> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_2*shell;D ;<span id=s1> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_3*shell;D ;<span id=s2> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_4*shell;D ;<span id=s3> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_5*shell;D ;<span id=s4> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_6*shell;D ;<span id=s5> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_7*shell;D ;<span id=s6> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_8*shell;D ;<span id=s7> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_9*shell;D ;<span id=s8> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_10*shell;D ;<span id=s9> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_11*shell;D ;<span id=s10> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_12*shell;D ;<span id=s11> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_13*shell;D ;<span id=s12> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_14*shell;D ;<span id=s13> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_15*shell;D ;<span id=s14> </span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_16*shell;D ;<span id=s15> </span>`, (_.a = {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko", {
     p0: "v0-b",
     p1: "v1-b",
@@ -109,5 +109,5 @@
       "PatchText:#text/0": "v15-b"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-sixteen-groups/tags/child.marko_16*shell"]
   }
-}]
+}, _.a)]
 "EgAAAAAAAAAAAAAAAAAAAAAA"

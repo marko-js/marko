@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell;/E l%l&;<section><h2> </h2><!></section>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell;/E l%l&;<section><h2> </h2><!></section>`, (_.a = {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "a",
     "PatchChild:BranchScopes:#text/1": {
@@ -15,11 +15,11 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
-}]
+}, _.a)]
 "BQMA"
 
 // PATCH holding BQMA
-{
+(_.a = {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
     "PatchChild:BranchScopes:#text/1": {
@@ -35,10 +35,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
-}
+}, _.a)
 
 // PATCH holding BQMA
-{
+(_.a = {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
     "PatchChild:BranchScopes:#text/1": {
@@ -46,10 +46,10 @@
     }
   },
   "PatchBranch:#text/1": 0
-}
+}, _.a)
 
 // PATCH holding BQMA
-{
+(_.a = {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "e",
     "PatchChild:BranchScopes:#text/1": {
@@ -65,4 +65,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
-}
+}, _.a)

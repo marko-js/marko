@@ -1,11 +1,11 @@
 // PATCH
-{
+(_.a = {
   "PatchHtml:#text/0": "\x3Ci>b\x3C/i> c",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole/template.marko0": "\x3Ci>b\x3C/i> c"
-}
+}, _.a)
 
 // PATCH
-{
+(_.a = {
   "PatchHtml:#text/0": "\x3Cb>d\x3C/b>",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole/template.marko0": "\x3Cb>d\x3C/b>"
-}
+}, _.a)

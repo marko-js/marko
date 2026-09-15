@@ -301,10 +301,6 @@ const KNOWN_OBJECTS = /* @__PURE__ */ (() =>
 class State {
   ids = 0;
   flushId = 0;
-  // A flush's tree is no live scope: the response's context keeps every
-  // tree it applied, keyed as the client keys them (the k-th tree), and a
-  // later flush paths from that key.
-  trees = 0;
   wroteUndefined = false;
   buf = [] as string[];
   strs = new Map<string, Reference>();
@@ -472,6 +468,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const patch = state.boundary?.state?.writesPatches;
   let nextSlotId = -1;
   let fillIndex = -1;
+  let treeRef: Reference | undefined;
 
   for (const flush of flushes) {
     const scopeId = flush[0];
@@ -498,27 +495,29 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     } else {
       buf.pop();
       // An empty tree applies nothing, so the client never keys it.
-      if (patch) unkeyFlush(state, ref);
+      if (patch) unkeyFlush(ref);
     }
+    if (patch) treeRef = ref;
   }
 
   let extras = "";
-  if (state.pendingAssignments.size || hasChannelMutations(state)) {
-    if (patch && fillIndex !== -1) {
-      // A patch flush names its tree, runs the assignments, then yields
-      // the tree, so it applies like any other: `(_.a={…},_.b.c=_.b,_.a)`.
-      const id = nextRefAccess(state);
-      buf[fillIndex] = "(" + id + "=" + buf[fillIndex];
-      writeAssigned(state);
-      buf.push("," + id + ")");
-    } else {
-      extras = ",0)";
-      if (fillIndex !== -1) {
-        buf[fillIndex] = "_([" + buf[fillIndex];
-        buf.push("])");
-      }
-      writeAssigned(state);
+  const hasExtras =
+    state.pendingAssignments.size !== 0 || hasChannelMutations(state);
+  if (patch && fillIndex !== -1) {
+    // A patch flush names its tree, runs the assignments, then yields the
+    // tree, so it applies like any other: `(_.a={…},_.b.c=_.b,_.a)`. The
+    // name always writes: a channel serialized into the same chunk has
+    // already spelled its references with it.
+    buf[fillIndex] = "(" + treeRef!.id + "=" + buf[fillIndex];
+    if (hasExtras) writeAssigned(state);
+    buf.push("," + treeRef!.id + ")");
+  } else if (hasExtras) {
+    extras = ",0)";
+    if (fillIndex !== -1) {
+      buf[fillIndex] = "_([" + buf[fillIndex];
+      buf.push("])");
     }
+    writeAssigned(state);
   }
 
   let result = extras && "(";
@@ -765,15 +764,16 @@ function trackScope(state: State, val: WeakKey, scopeId: number) {
   }
 }
 
-// A patch addresses no scope by id, so `_(k)` is only ever the k-th tree.
+// A patch tree is named by a register the flush assigns before anything
+// dereferences it, so a same-chunk fill and a later flush read it alike;
+// an index into applied trees only resolves after its flush evaluates.
 function newFlushReference(state: State) {
   const ref = new Reference(null, null, state.flushId, null);
-  ref.id = "_(" + state.trees++ + ")";
+  ref.id = nextRefAccess(state);
   return ref;
 }
 
-function unkeyFlush(state: State, ref: Reference) {
-  state.trees--;
+function unkeyFlush(ref: Reference) {
   ref.id = null;
 }
 

@@ -1,5 +1,5 @@
 // PATCH
-[`b0 b2;D%/&;<main><!></main>`, {
+[`b0 b2;D%/&;<main><!></main>`, (_.a = {
   z_a: {
     cAa: {
       cb: {
@@ -16,16 +16,16 @@
     }
   },
   ba: "b0"
-}]
+}, _.a)]
 "AwI"
 
 // PATCH holding AwI
-{
+(_.a = {
   ba: 0
-}
+}, _.a)
 
 // PATCH holding AwI
-{
+(_.a = {
   z_a: {
     cAa: {
       cb: {
@@ -42,4 +42,4 @@
     }
   },
   ba: "b0"
-}
+}, _.a)

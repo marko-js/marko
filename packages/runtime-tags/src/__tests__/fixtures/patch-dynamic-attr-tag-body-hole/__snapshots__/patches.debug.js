@@ -1,5 +1,5 @@
 // PATCH
-{
+(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchText:#text/0": "two"
@@ -8,10 +8,10 @@
       "PatchText:#text/0": "two"
     }
   }
-}
+}, _.a)
 
 // PATCH
-{
+(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchText:#text/0": "three"
@@ -20,10 +20,10 @@
       "PatchText:#text/0": "three"
     }
   }
-}
+}, _.a)
 
 // PATCH
-{
+(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchText:#text/0": "four"
@@ -32,4 +32,4 @@
       "PatchText:#text/0": "four"
     }
   }
-}
+}, _.a)

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko_1_count#5/init;D ;<p> </p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko_1_count#5/init;D ;<p> </p>`, (_.a = {
   "PatchLoop:#text/0": ["a", {
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko1": "a",
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko0": "A!"
@@ -7,5 +7,5 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko1": "b",
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko0": "B"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-alias-state/template.marko_1*shell"]
-}]
+}, _.a)]
 "AgE"

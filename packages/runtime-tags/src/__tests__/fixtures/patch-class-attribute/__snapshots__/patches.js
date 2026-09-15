@@ -1,23 +1,23 @@
 // PATCH
-{
+(_.a = {
   "aa class": "dark compact",
   "ab style": "color:red",
   "ac class": "base compact",
   "ac style": "color:red;margin:0"
-}
+}, _.a)
 
 // PATCH
-{
+(_.a = {
   "aa class": "dark",
   "ab style": 0,
   "ac class": "base",
   "ac style": "margin:0"
-}
+}, _.a)
 
 // PATCH
-{
+(_.a = {
   "aa class": 0,
   "ab style": "color:blue",
   "ac class": "base compact",
   "ac style": "color:blue;margin:0"
-}
+}, _.a)

@@ -1,5 +1,5 @@
 // PATCH
-[`a;D ;<p class=child> </p>`, {
+[`a;D ;<p class=child> </p>`, (_.a = {
   fa: ["a", {
     label: "b"
   }],
@@ -8,18 +8,18 @@
       ta: "b"
     }
   }
-}]
+}, _.a)]
 "AgA"
 
 // PATCH holding AgA
-{
+(_.a = {
   fa: [0, {
     label: "b"
   }]
-}
+}, _.a)
 
 // PATCH holding AgA
-{
+(_.a = {
   fa: ["a", {
     label: "c"
   }],
@@ -28,4 +28,4 @@
       ta: "c"
     }
   }
-}
+}, _.a)

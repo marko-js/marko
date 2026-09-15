@@ -1,5 +1,5 @@
 // PATCH
-{
+(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-handler-ready/child.marko": {
     "PatchChild:#childScope/1": {
       1: "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-handler-ready/child.marko_0/handler",
@@ -10,10 +10,10 @@
       "PatchWrite:input_title": "second"
     }
   }
-}
+}, _.a)
 
 // PATCH
-{
+(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-handler-ready/child.marko": {
     "PatchChild:#childScope/1": {
       1: "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-handler-ready/child.marko_0/handler",
@@ -24,4 +24,4 @@
       "PatchWrite:input_title": "third"
     }
   }
-}
+}, _.a)

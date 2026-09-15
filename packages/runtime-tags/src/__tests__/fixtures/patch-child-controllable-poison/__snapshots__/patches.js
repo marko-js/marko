@@ -1,5 +1,5 @@
 // PATCH
-[`a1;b/b%c&b;<!><!><!><!><!>`, {
+[`a1;b/b%c&b;<!><!><!><!><!>`, (_.a = {
   ta: "Store!",
   lc: [{
     ca: {
@@ -12,11 +12,11 @@
       wf: 2
     }
   }, "a1"]
-}]
+}, _.a)]
 "BAE"
 
 // PATCH holding BAE
-[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, (_.a = {
   ta: "Store!",
   lc: [{
     ca: {
@@ -39,5 +39,5 @@
       wf: 2
     }
   }, "a1"]
-}]
+}, _.a)]
 "BAEB"

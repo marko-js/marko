@@ -1,18 +1,18 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1_expand#6/init;D%b%;<li><!><!></li>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1_expand#6/init;D%b%;<li><!><!></li>`, (_.a = {
   "PatchLoop:#text/0": [{
     "PatchText:#text/0": "x"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko0": "n2"
-}]
+}, _.a)]
 "AgE"
 
 // PATCH holding AgE
-{
+(_.a = {
   "PatchLoop:#text/0": [{
     "PatchText:#text/0": "x"
   }, {
     "PatchText:#text/0": "y"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-loop-outer/template.marko0": "n2"
-}
+}, _.a)

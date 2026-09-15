@@ -1,5 +1,5 @@
 // PATCH
-[`a1 !a4;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`a1 !a4;Db%l ;<span>Seen <!></span><button>+</button>`, (_.a = {
   ca: {
     cAa: {
       ca: {
@@ -20,5 +20,5 @@
     },
     d2: ["a2", 1, "d"]
   }, "a1"]
-}]
+}, _.a)]
 "BQI"

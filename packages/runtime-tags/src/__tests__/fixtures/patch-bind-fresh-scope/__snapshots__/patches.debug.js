@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1;0&D lDb%l b;<p> </p><span>Seen <!></span><button>+</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1;0&D lDb%l b;<p> </p><span>Seen <!></span><button>+</button>`, (_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
@@ -12,5 +12,5 @@
     },
     "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_0/_return", 0, "#childScope/0", "TagVariableChange:count"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1*shell"]
-}]
+}, _.a)]
 "AwI"

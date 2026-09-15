@@ -1,5 +1,5 @@
 // PATCH
-[`a0;D ;<span> </span>`, {
+[`a0;D ;<span> </span>`, (_.a = {
   cAa: {
     pa: 1,
     cAa: {
@@ -8,5 +8,5 @@
       }, "a0", 0, $]
     }
   }
-}]
+}, _.a)]
 "AwE"

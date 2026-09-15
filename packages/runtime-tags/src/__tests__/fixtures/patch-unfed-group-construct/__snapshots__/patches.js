@@ -1,5 +1,5 @@
 // PATCH
-[`a0;/D l%b b&;<div> </div><!><button>t</button>`, {
+[`a0;/D l%b b&;<div> </div><!><button>t</button>`, (_.a = {
   ba: [{
     ca: {
       ta: "a",
@@ -10,11 +10,11 @@
       vb0: "const"
     }
   }, "a0"]
-}]
+}, _.a)]
 "AwE"
 
 // PATCH holding AwE
-{
+(_.a = {
   ba: [{
     ca: {
       ta: "b",
@@ -25,4 +25,4 @@
       vb0: "const"
     }
   }, "a0"]
-}
+}, _.a)

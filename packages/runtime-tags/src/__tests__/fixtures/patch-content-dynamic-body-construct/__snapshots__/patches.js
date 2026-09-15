@@ -1,5 +1,5 @@
 // PATCH
-[`a0;D ;<em> </em>`, `a1;/E l%l&;<section><h2> </h2><!></section>`, {
+[`a0;D ;<em> </em>`, `a1;/E l%l&;<section><h2> </h2><!></section>`, (_.a = {
   ba: [{
     ca: {
       ta: "b",
@@ -9,5 +9,5 @@
       }
     }
   }, "a1"]
-}]
+}, _.a)]
 "BAEA"

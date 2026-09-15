@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/template.marko_1;0 D l& b;<div class=box> </div><button id=read>read</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/template.marko_1;0 D l& b;<div class=box> </div><button id=read>read</button>`, (_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       1: "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/tags/box.marko_0_#div#0",
@@ -12,5 +12,5 @@
       "PatchWrite:el": bind(1)
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/template.marko_1*shell"]
-}]
+}, _.a)]
 "AwI"
