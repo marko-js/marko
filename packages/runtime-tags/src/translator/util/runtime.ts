@@ -22,9 +22,10 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 
 // Marked `@__PURE__` (see callRuntime) so a bundler may drop a call whose
 // result is unused, despite call-time side effects: `_resume` registration
-// (`_template`, `_dynamic_tag`). This is sound because registration only
-// matters when the value is referenced by a serialized register id, which
-// keeps it in the module graph.
+// (`_template`, `_dynamic_tag`). This is sound only while every register id
+// the server can serialize also has a static reference in the client graph;
+// a registration that is itself the only anchor (the pending id passed to
+// `_closure_get`) must have its annotation stripped at the call site.
 //
 const pureDOMFunctions = new Set<string>([
   "_await_promise",

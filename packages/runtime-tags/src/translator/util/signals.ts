@@ -380,7 +380,19 @@ export function getSignal(
           return closureSignalBuilder(closure, render);
         }
 
-        return callRuntime(
+        // Match the HTML registration exactly (writeHTMLResumeStatements):
+        // it writes the pending id only for a serialized dynamic closure with
+        // sources, under this subscriber section's try placeholder. A wider
+        // gate here ships ids nothing looks up and, unannotated, retains
+        // their whole render graph in the bundle.
+        const pendingRegisterId =
+          closure.sources &&
+          isDynamicClosure(section, closure) &&
+          underTryPlaceholder(section) &&
+          getSerializeReason(section)
+            ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
+            : undefined;
+        const expr = callRuntime(
           "_closure_get",
           // Optimized builds pass the reserved closure accessor id.
           isOptimize()
@@ -393,13 +405,11 @@ export function getSignal(
                 [scopeIdentifier],
                 getScopeExpression(section, closure.section),
               ),
-          // Match the HTML registration, which is gated on this subscriber
-          // section (writeHTMLResumeStatements); keying on any sibling closure
-          // section would ship a pending id that nothing looks up.
-          underTryPlaceholder(section)
-            ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
-            : undefined,
+          pendingRegisterId,
         );
+        // Resume data references the pending id with no static import, so the
+        // registration side effect is the only anchor: never pure-annotate it.
+        return pendingRegisterId ? t.removeComments(expr) : expr;
       };
     }
   }

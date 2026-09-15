@@ -36,8 +36,8 @@ const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 // template.marko
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $await_content__clicks__OR__tag__OR__body = /*@__PURE__*/ _or(3, ($scope) => $await_content__dynamicTag($scope, $scope._._.f, () => ({ label: `${$scope.c} ${$scope._._.e}` })), 2);
-const $await_content__clicks = /*@__PURE__*/ _closure_get(6, $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "a0");
-const $await_content__tag = /*@__PURE__*/ _closure_get(7, $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "a1");
+const $await_content__clicks = _closure_get(6, $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "a0");
+const $await_content__tag = _closure_get(7, $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "a1");
 const $placeholder_content__clicks = /*@__PURE__*/ _closure_get(6, ($scope) => $input_label($scope.a, `placeholder ${$scope._.e}`));
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);

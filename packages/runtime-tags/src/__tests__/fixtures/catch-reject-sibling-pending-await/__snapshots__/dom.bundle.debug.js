@@ -16,7 +16,7 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__await_promise2($scope, rejectAfter(new Error("ERROR!"), 2));
 };
 const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading outer...");
-const $await_content__changes = /*@__PURE__*/ _closure_get("changes", ($scope) => _text($scope["#text/2"], $scope._._.changes), ($scope) => $scope._._, "__tests__/template.marko_2_changes#1/pending");
+const $await_content__changes = _closure_get("changes", ($scope) => _text($scope["#text/2"], $scope._._.changes), ($scope) => $scope._._, "__tests__/template.marko_2_changes#1/pending");
 const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content2__setup);
 const $await_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#div/1"], "change", function() {
 	$changes($scope._._, +$scope._._.changes + 1);
