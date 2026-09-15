@@ -191,6 +191,8 @@ export default {
       }
 
       const bodySection = startSection(tagBody);
+      // The body depends on the whole tag, as a branch body on its condition.
+      if (bodySection) bodySection.upstreamExpression = tagExtra;
       trackParamsReferences(tagBody, BindingType.param);
       if (hasVar) addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
