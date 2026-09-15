@@ -8,12 +8,13 @@ import {
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPatch } from "../util/marko-config";
 import {
   BindingType,
   FORCED,
   mergeReferences,
   setBindingDownstream,
+  setBindingValueExprs,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -133,6 +134,10 @@ export default {
           getAccessorPrefix().TagVariableChange,
         );
       }
+    } else if (isPatch()) {
+      // A never-assigned let re-evaluates its initializer on creation, so
+      // its sources resolve from it (never downstream: no re-derivation).
+      setBindingValueExprs(binding, tagExtra);
     } else {
       // The value expression stays reactive and re-runs, but a `<let>` returns
       // state it controls rather than that value, so the binding has no downstream.

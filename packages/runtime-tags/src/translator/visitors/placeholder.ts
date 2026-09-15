@@ -5,15 +5,26 @@ import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPatch } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
+import {
+  ensurePatchWriteGroups,
+  inStatefulBranch,
+  isBranchPathSection,
+} from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
   createBinding,
+  FORCED,
   getScopeAccessorLiteral,
 } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import {
+  callRuntime,
+  getHTMLRuntime,
+  addRuntimeFeatureAsset,
+  importRuntimeFeature,
+} from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   ContentType,
@@ -22,10 +33,16 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
 import {
+  isStableExpr,
+  getPatchWriteOwnership,
+  getSerializeGuard,
+} from "../util/serialize-guard";
+import {
+  addSerializeReason,
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
@@ -73,6 +90,11 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
+        if (isPatch() && isBranchPathSection(section)) {
+          addSerializeReason(section, FORCED, nodeBinding);
+          addRuntimeFeatureAsset(node.escape ? "patch-text" : "patch-html");
+          ensurePatchWriteGroups(() => valueExtra);
+        }
       }
     },
     exit(placeholder) {
@@ -160,33 +182,66 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const siblingText = extra[kSiblingText]!;
     const markerSerializeReason =
       nodeBinding && getSerializeReason(section, nodeBinding);
+    const holeSources =
+      isPatch() && isBranchPathSection(section)
+        ? getSerializeSourcesForExpr(valueExtra)
+        : undefined;
+    // A state-sourced hole recomputes through the signal graph, and inside
+    // unpatched structure owner fills refresh it: neither patch-writes.
+    const patchWrites =
+      isPatch() &&
+      isBranchPathSection(section) &&
+      !inStatefulBranch(section) &&
+      !!nodeBinding &&
+      !holeSources?.state;
+    const isPatchText = isHTML && patchWrites;
+    // An interactive page receives assets transitively through its dom
+    // program, so the feature import rides both outputs.
+    if (patchWrites && !isHTML) {
+      importRuntimeFeature(node.escape ? "patch-text" : "patch-html");
+    }
 
     if (isHTML) {
-      if (markerSerializeReason) {
-        // `2` (or a guard scaled to 0/2) also asks the runtime to write a
-        // `<!>` between non-empty text and the mergeable text before it.
-        const guard = getSerializeGuard(section, markerSerializeReason, true);
-        write`${callRuntime(
-          node.escape ? "_text_resume" : "_html_resume",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(nodeBinding!),
-          value,
-          siblingText === SiblingText.Before
-            ? guard
-              ? t.binaryExpression("*", guard, t.numericLiteral(2))
-              : t.numericLiteral(2)
-            : guard,
-        )}`;
-      } else {
-        write`${
-          method === "_escape"
-            ? buildEscapedTextExpression(value)
-            : callRuntime(method as HTMLMethod, value)
-        }`;
-      }
+      // `2` also asks the runtime to write a `<!>` before mergeable text; `0`
+      // skips the resume marker entirely (a patched but unresumed node).
+      const guard =
+        markerSerializeReason &&
+        getSerializeGuard(section, markerSerializeReason, true);
+      const shouldResume = markerSerializeReason
+        ? siblingText === SiblingText.Before
+          ? guard
+            ? t.binaryExpression("*", guard, t.numericLiteral(2))
+            : t.numericLiteral(2)
+          : guard
+        : isPatchText && t.numericLiteral(0);
+      write`${
+        isPatchText
+          ? // The patch write doubles as the output (and resume) writer, so
+            // the expression appears (and evaluates) once; a param-fed
+            // write's ownership bit rides as trailing args.
+            callRuntime(
+              node.escape ? "_patch_text" : "_patch_html",
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(nodeBinding),
+              value,
+              shouldResume,
+              ...getPatchWriteOwnership(holeSources, isStableExpr(valueExtra)),
+            )
+          : markerSerializeReason
+            ? callRuntime(
+                node.escape ? "_text_resume" : "_html_resume",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(nodeBinding!),
+                value,
+                shouldResume,
+              )
+            : method === "_escape"
+              ? buildEscapedTextExpression(value)
+              : callRuntime(method as HTMLMethod, value)
+      }`;
     } else {
       addStatement(
-        "render",
+        patchWrites ? "patched" : "render",
         section,
         valueExtra.referencedBindings,
         t.expressionStatement(
