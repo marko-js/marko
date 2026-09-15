@@ -40,6 +40,7 @@ import {
   getFilteredGlobals,
   patchPartial,
   writeEmbeddedBinds,
+  dropPatchPartial,
   openPatchPartial,
   peekPatchPartial,
   type ScopeInternals,
@@ -270,7 +271,10 @@ class PatchState extends State {
               : shellId || 1,
     });
     // Later settle flushes nest under the live branch as a Child apply.
-    if (branchIndex !== undefined) {
+    if (branchIndex === undefined) {
+      dropPatchPartial(this, branchId);
+      delete this.patchLinks![branchId];
+    } else {
       link[2] = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
     return 1 as const;

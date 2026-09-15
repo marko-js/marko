@@ -427,6 +427,10 @@ export function openPatchPartial(state: State, scopeId: number) {
   return (patchTree(state, $chunk.serializeState)[scopeId] = {});
 }
 
+export function dropPatchPartial(state: State, scopeId: number) {
+  delete patchTree(state, $chunk.serializeState)[scopeId];
+}
+
 export function patchPartial(
   state: State,
   scopeId: number,
