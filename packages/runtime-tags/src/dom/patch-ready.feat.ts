@@ -6,7 +6,13 @@ import {
   type Scope,
 } from "../common/types";
 import { installLoadReady } from "./load";
-import { applyReadyPatch, flushBinds, installPatchReady } from "./patch";
+import {
+  applyReadyPatch,
+  flushBinds,
+  installPatchReady,
+  patchResponse,
+  type ReadyGuard,
+} from "./patch";
 import { loads } from "./patch-load";
 import { queueEffect, run } from "./queue";
 import {
@@ -22,16 +28,12 @@ import {
   type RenderData,
 } from "./resume";
 
-// A channel's guards: its entries met in a flush's tree, each with the live
-// scope they apply to.
-type Guards = [entries: Scope, scope: Scope][];
-// A render's patch awaiting its channels.
+// A render's patch awaiting its channels: each channel's guards in flush
+// order, and every `applyPatch` promise awaiting them.
 interface ReadyPatch {
-  [ReadyPatchProp.Channels]: Map<string, Guards>;
-  // Every `applyPatch` promise awaiting this render's channels.
+  [ReadyPatchProp.Channels]: Map<string, ReadyGuard[]>;
   [ReadyPatchProp.Resolvers]: ((applied: boolean) => void)[];
-  [ReadyPatchProp.Binds]: Record<string, unknown>;
-  [ReadyPatchProp.Run]: number;
+  [ReadyPatchProp.Response]: object;
 }
 const readyPatches = new Map<RenderData, ReadyPatch>();
 // Lazy tags still cloning their child, by channel: the channel is unready
@@ -64,7 +66,7 @@ installLoadReady(
 
 // The flush's run may create a tag of the channel (a returning lazy
 // tag), so a guard applies at commit, after the run, channels settled.
-let pendingGuards: Record<string, Guards> = {};
+let pendingGuards: Record<string, ReadyGuard[]> = {};
 patchers[PatchKey.Ready] = (scope, key, entries) => {
   const readyId = key.slice(PatchKey.Ready.length);
   // A lazy tag whose module died at page load stays inert: a flush targeting
@@ -75,12 +77,29 @@ patchers[PatchKey.Ready] = (scope, key, entries) => {
     }
     throw 0;
   }
-  (pendingGuards[readyId] ||= []).push([entries as Scope, scope]);
+  // A guard keeps its own flush's bind table and run: a later flush that
+  // waits on the same channel resolves its binds against its own sources.
+  (pendingGuards[readyId] ||= []).push([
+    entries as Scope,
+    scope,
+    flushBinds,
+    patchRun,
+  ]);
 };
 
+// Whether the flush being committed deferred anything: only then does its
+// `applyPatch` promise wait on the channels.
+let deferred: 1 | undefined;
 function commitReady() {
   let applied = false;
   let guards = pendingGuards;
+  const pending = readyPatches.get(patchRender);
+  deferred = undefined;
+  // A response re-ships full state: what an earlier one left waiting is
+  // superseded, and its appliers settle as applied.
+  if (pending && pending[ReadyPatchProp.Response] !== patchResponse) {
+    resolvePatch(patchRender, pending, true);
+  }
   // An applied guard's content can register channels nested in it (a
   // cold page under a warm layout): each pass commits what the last met.
   while (hasKeys(guards)) {
@@ -88,16 +107,16 @@ function commitReady() {
     for (const readyId in guards) {
       const channel = guards[readyId];
       if (isReady(readyId)) {
-        for (const guard of channel) patchScope(...guard);
+        for (const guard of channel) patchScope(guard[0], guard[1]);
         applied = true;
       } else {
+        deferred = 1;
         const channels = (readyPatches.get(patchRender) ||
           readyPatches
             .set(patchRender, {
               [ReadyPatchProp.Channels]: new Map(),
               [ReadyPatchProp.Resolvers]: [],
-              [ReadyPatchProp.Binds]: flushBinds,
-              [ReadyPatchProp.Run]: patchRun,
+              [ReadyPatchProp.Response]: patchResponse,
             })
             .get(patchRender)!)[ReadyPatchProp.Channels];
         // A later flush's guards append: they re-ship full state, so in-order
@@ -113,7 +132,8 @@ function commitReady() {
 }
 
 function pendingReady() {
-  const patch = readyPatches.get(patchRender);
+  // Deferred data a channel drained during this commit needs no wait.
+  const patch = deferred && readyPatches.get(patchRender);
   if (patch) {
     return new Promise<boolean>((resolve) =>
       patch[ReadyPatchProp.Resolvers].push(resolve),
@@ -121,27 +141,16 @@ function pendingReady() {
   }
 }
 
+// A channel's guards apply as it readies; channels they register (content
+// nested in a lazy tag) join the map and hold the patch open.
 function markReady(readyId: string) {
   for (const [render, patch] of readyPatches) {
     const channels = patch[ReadyPatchProp.Channels];
-    if (channels.has(readyId) && [...channels.keys()].every(isReady)) {
-      const applied = applyReadyPatch(
-        render,
-        patch[ReadyPatchProp.Binds],
-        patch[ReadyPatchProp.Run],
-        () => {
-          // Applied guards leave the map; channels they register (content
-          // nested in a lazy tag) join it after this loop and hold the
-          // patch open.
-          for (const [id, channel] of channels) {
-            channels.delete(id);
-            for (const guard of channel) patchScope(...guard);
-          }
-        },
-      );
-      if (!applied || [...channels.keys()].every(isReady)) {
-        resolvePatch(render, patch, applied);
-      }
+    const guards = channels.get(readyId);
+    if (guards) {
+      channels.delete(readyId);
+      const applied = applyReadyPatch(render, guards);
+      if (!applied || !channels.size) resolvePatch(render, patch, applied);
     }
   }
 }

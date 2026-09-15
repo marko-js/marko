@@ -6,8 +6,8 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { isPatch } from "./marko-config";
 import { toArray } from "./optional";
 import { isPatchFillBinding, isPatchWriteBinding } from "./patch/refresh";
-import { getCanonicalBinding } from "./references";
-import { getOrCreateSection } from "./sections";
+import { type Binding, getCanonicalBinding } from "./references";
+import { getOrCreateSection, type Section } from "./sections";
 import { getSerializeReason } from "./serialize-reasons";
 import { writeLocalFill, writeLocalWrite } from "./signals";
 import { toPropertyName } from "./to-property-name";
@@ -118,21 +118,8 @@ export default function translateVar(
   if (isPatch()) {
     forEachIdentifierPath(tag.get("var"), (id) => {
       const binding = id.node.extra?.binding;
-      if (
-        binding &&
-        binding.section === tagSection &&
-        tagSection.parent &&
-        !binding.sources?.state
-      ) {
-        if (isPatchFillBinding(binding)) {
-          inserted.push(
-            t.expressionStatement(writeLocalFill(tagSection, binding)),
-          );
-        } else if (isPatchWriteBinding(binding)) {
-          inserted.push(
-            t.expressionStatement(writeLocalWrite(tagSection, binding)),
-          );
-        }
+      if (binding && binding.section === tagSection && tagSection.parent) {
+        writeLocalAfterDeclaration(tagSection, binding, inserted);
       }
     });
   }
@@ -151,5 +138,26 @@ function getDestructurePattern(id: t.NodePath<t.Identifier>) {
       return cur as t.NodePath<t.ObjectPattern>;
     }
     cur = cur.parentPath;
+  }
+}
+
+// The local's fill or write, and its properties' (each reads the local, so
+// none can precede the declaration).
+function writeLocalAfterDeclaration(
+  section: Section,
+  binding: Binding,
+  statements: t.Statement[],
+) {
+  if (!binding.sources?.state) {
+    if (isPatchFillBinding(binding)) {
+      statements.push(t.expressionStatement(writeLocalFill(section, binding)));
+    } else if (isPatchWriteBinding(binding)) {
+      statements.push(t.expressionStatement(writeLocalWrite(section, binding)));
+    }
+  }
+  for (const alias of binding.propertyAliases.values()) {
+    if (alias.section === section) {
+      writeLocalAfterDeclaration(section, alias, statements);
+    }
   }
 }

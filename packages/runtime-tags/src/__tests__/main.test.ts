@@ -27,6 +27,7 @@ import {
   isFlush,
   isNavigate,
   isThrows,
+  isRelease,
   isWait,
   type Navigate,
   resetResolveState,
@@ -66,6 +67,12 @@ export type TestConfig = {
    * substrings, simulating a network-level lazy-chunk load failure.
    */
   reject_load?: string[];
+  /**
+   * Keeps lazy load module scripts whose file name contains one of these
+   * substrings in flight until a `release` step lands them; a patch waiting
+   * on one is not awaited, and must have applied by the end of the steps.
+   */
+  hold_load?: string[];
   /**
    * Streams this many extra flushes into the document before the page's
    * entry module runs, simulating a bundle that loads slower than the
@@ -219,6 +226,9 @@ function testFixtures(interop?: true) {
             patch?: Sizes;
           } = {};
           const browsers: ReturnType<typeof createBrowser>[] = [];
+          const holdLoad =
+            config.hold_load &&
+            ((id: string) => config.hold_load!.some((s) => id.includes(s)));
           const rejectLoad =
             config.reject_load &&
             // Only a fixture asset can fail to load, never a runtime module
@@ -444,6 +454,7 @@ function testFixtures(interop?: true) {
               runner.assets,
               config.load_order,
               rejectLoad || undefined,
+              holdLoad,
             );
             browsers.push(browser);
             const { window } = browser;
@@ -481,10 +492,8 @@ function testFixtures(interop?: true) {
             await browser.runAsyncScripts(() => tracker.logRender(input));
             const { patch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
-            const [, applyPatch] = usesPatches
-              ? patch({ renderId: DEFAULT_RENDER_ID })
-              : [];
             let rejected = false;
+            const held: Promise<boolean>[] = [];
 
             // Until a client-side step diverges the page from what the
             // server would render for the same input, every applied patch
@@ -517,6 +526,7 @@ function testFixtures(interop?: true) {
                 runner.assets,
                 config.load_order,
                 rejectLoad || undefined,
+                holdLoad,
               );
               browsers.push(fresh);
               const freshFlush = fresh.stream(freshChunks);
@@ -559,6 +569,10 @@ function testFixtures(interop?: true) {
                     tracker.beginUpdate();
                     let applied = true;
                     const flushes: string[] = [];
+                    // One response per input, as a navigation is.
+                    const [, applyPatch] = patch({
+                      renderId: DEFAULT_RENDER_ID,
+                    });
                     for await (const flush of template.patch(input)) {
                       if (flushes.length && betweenFlushes) {
                         tracker.logUpdate(input);
@@ -577,7 +591,11 @@ function testFixtures(interop?: true) {
                       assert.equal(frames.length, 1, "a flush spans lines");
                       // A production caller navigates on the first failed
                       // flush; later flushes must not mutate further.
-                      const result = applyPatch!(frames[0]);
+                      const result = applyPatch(frames[0]);
+                      if (typeof result !== "boolean" && holdLoad) {
+                        held.push(result);
+                        continue;
+                      }
                       if (typeof result !== "boolean") {
                         // A deferred patch is waiting on a lazy module; load
                         // triggers schedule via setTimeout, so a macrotask
@@ -589,6 +607,7 @@ function testFixtures(interop?: true) {
                     }
                     patches.push(flushes.join(""));
                     tracker.logUpdate(input);
+                    if (held.length) return applied;
                     if (applied && !betweenFlushes && freshRenders) {
                       if (diverged) await renderFresh(input);
                       else await assertPatchedLikeFresh(input);
@@ -605,6 +624,9 @@ function testFixtures(interop?: true) {
                     return applied;
                   }
                 : undefined,
+            });
+            (await Promise.all(held)).forEach((applied, i) => {
+              assert.ok(applied, `Held patch ${i + 1} did not apply.`);
             });
             if (config.expect_rejection && !rejected) {
               throw new Error(
@@ -811,6 +833,11 @@ async function runSteps(
       await browser.runAsyncScripts();
       run();
       tracker.logUpdate();
+    } else if (isRelease(update)) {
+      await browser.releaseLoads();
+      await browser.runAsyncScripts();
+      run();
+      tracker.logUpdate("Release");
     } else if (isFlush(update)) {
       opts.onStep?.();
       if (update.flushType === "stream") {

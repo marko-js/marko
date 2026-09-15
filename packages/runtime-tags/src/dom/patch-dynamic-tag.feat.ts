@@ -46,9 +46,11 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
       }
       if (!input && current?.split(" ")[0] === id) return;
       renderer = resolveContent(id, owner, owner !== scope);
+      // Every template of the build has a record; the transport refuses
+      // another build's patch, so an unresolved id is a bug.
       if (MARKO_DEBUG && !renderer) {
-        console.warn(
-          `A patch names content "${entry}" the page cannot resolve.`,
+        throw new Error(
+          `A patch names content "${id}" the page cannot resolve.`,
         );
       }
     }

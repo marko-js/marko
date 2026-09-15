@@ -80,6 +80,14 @@ export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
 }
 
+// Lands the lazy load scripts a fixture's `hold_load` kept in flight.
+export type Release = typeof release;
+export const release = Object.assign(async () => {}, { release: true });
+
+export function isRelease(value: any): value is Release {
+  return typeof value === "function" && value.release;
+}
+
 export function isWait(value: any): value is Wait {
   return typeof value === "function" && value.wait;
 }

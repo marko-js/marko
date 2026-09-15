@@ -1136,7 +1136,9 @@ export function _subscribe(
   subscribers: Set<ScopeInternals> | undefined,
   scope: ScopeInternals,
 ) {
-  if (subscribers) {
+  // A flush's scopes are live already (paired) or subscribe as they render
+  // (created); a patch never records a subscription.
+  if (subscribers && !$chunk.boundary.state.writesPatches) {
     const { serializer } = $chunk.boundary.state;
     if (!$chunk.serializeState.readyId && !serializer.written(subscribers)) {
       // An unflushed set carries its subscriber in the same payload.
@@ -1757,7 +1759,6 @@ export class State implements SerializeState {
   declare patchLinks?: Record<number, PatchLink>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;
-  declare patchDeferred?: 1;
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   public globalSubscribers?: Record<string, Set<ScopeInternals>>;

@@ -504,15 +504,21 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
 
   let extras = "";
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
-    extras = ",0)";
-    // A deferred patch run applies through `_()` mid-expression, so a patch
-    // flush must evaluate its shells first (see `resumeScript`).
-    if (patch) state.boundary!.state.patchDeferred = 1;
-    if (fillIndex !== -1) {
-      buf[fillIndex] = "_([" + buf[fillIndex];
-      buf.push("])");
+    if (patch && fillIndex !== -1) {
+      // A patch flush names its tree, runs the assignments, then yields
+      // the tree, so it applies like any other: `(_.a={…},_.b.c=_.b,_.a)`.
+      const id = nextRefAccess(state);
+      buf[fillIndex] = "(" + id + "=" + buf[fillIndex];
+      writeAssigned(state);
+      buf.push("," + id + ")");
+    } else {
+      extras = ",0)";
+      if (fillIndex !== -1) {
+        buf[fillIndex] = "_([" + buf[fillIndex];
+        buf.push("])");
+      }
+      writeAssigned(state);
     }
-    writeAssigned(state);
   }
 
   let result = extras && "(";
@@ -759,6 +765,7 @@ function trackScope(state: State, val: WeakKey, scopeId: number) {
   }
 }
 
+// A patch addresses no scope by id, so `_(k)` is only ever the k-th tree.
 function newFlushReference(state: State) {
   const ref = new Reference(null, null, state.flushId, null);
   ref.id = "_(" + state.trees++ + ")";
@@ -795,9 +802,14 @@ function writeRegistered(
     const n = (
       state.boundary.state as { binds?: Map<WeakKey, number> }
     ).binds?.get(val);
-    // Bind `0` is never written, so a registration the render-time scan
-    // could not reach rejects at the flush's commit check (navigation).
-    state.buf.push(BIND_FLUSH_VAR + "(" + (n || 0) + ")");
+    // The render-time scan walks what the serializer walks, so every
+    // scoped registration it reaches was bound.
+    if (MARKO_DEBUG && !n) {
+      throw new Error(
+        `A patch cannot deliver the scoped registration "${registered.id}".`,
+      );
+    }
+    state.buf.push(BIND_FLUSH_VAR + "(" + n + ")");
   } else if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(

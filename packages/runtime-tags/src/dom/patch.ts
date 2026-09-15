@@ -1,4 +1,3 @@
-import { RENDER_FLUSH_VAR } from "../common/meta";
 import {
   type Accessor,
   AccessorProp,
@@ -9,6 +8,7 @@ import { abortRun, run, runEffects, runId } from "./queue";
 import {
   abortPatch,
   beginPatch,
+  patchScope,
   curRenders,
   patchers,
   patchRender,
@@ -29,6 +29,7 @@ export const flushVars: Record<string, unknown> = {};
 // pending applies under it, so a source shipped with the flush serves the
 // guard's reference.
 export let flushBinds: Record<string, unknown> = {};
+export let patchResponse: object;
 
 /** The live page's `$global`: names its render. */
 export type PatchGlobal = { renderId: string };
@@ -54,32 +55,23 @@ export function patch($global: PatchGlobal) {
     // Registered here so this module stays tree-shakable; a page with
     // `$global` joins installed its own (`patch-global.feat`).
     patchers[PatchKey.Globals] ||= applyGlobals;
+    // The response's context is its token: its flushes share it, and a
+    // later response supersedes what an earlier one left waiting.
+    patchResponse = responseCtx;
     flushBinds = {};
     beginPatch(curRenders[$global.renderId]);
-    // A flush writes ready batches as `R.b[id]=[...]`, into the bucket the
-    // document's first batch created (`writeReady`). A document that never
-    // wrote one (no lazy tag rendered) has no bucket, so the flush's first
-    // batch would throw; a flush cannot know, so the page ensures it.
-    patchRender.b ||= {};
     try {
       // A flush is trusted executable resume data from the same server
-      // that produced the document; `$` stays the serializer's `undefined`
-      // and the render var the page render, where ready batches land as the
-      // page's own (its flush vars are the only other free names).
+      // that produced the document; `$` (the serializer's spelling of
+      // `undefined`) is the unpassed last parameter.
       // eslint-disable-next-line no-new-func
-      const fn = new Function(
-        "_",
-        "$",
-        RENDER_FLUSH_VAR,
-        ...names,
-        "return " + flush,
-      );
+      const fn = new Function("_", ...names, "$", "return " + flush);
       patchRender.r = [
         (ctx: SerializeContext) => {
           pageCtx = ctx;
-          const value = fn(responseCtx, undefined, patchRender, ...vars);
+          const value = fn(responseCtx, ...vars);
           // The tree is the flush's last value; a flush of only shells (or
-          // nothing) ends in a string (`undefined`), and the server keys none.
+          // nothing) ends in a shell string, which the server keys no tree for.
           const tree = Array.isArray(value) ? value[value.length - 1] : value;
           if (typeof tree === "object") trees.push(tree);
           return value;
@@ -137,16 +129,21 @@ export function installPatchReady(
 
 // Commits deferred ready-channel data after its module loads, as an empty
 // flush run so it shares a flush's commit sequence and patch context.
-export function applyReadyPatch(
-  render: RenderData,
+// A channel's deferred entries with the live scope they apply to, and the
+// bind table and run of the flush that shipped them.
+export type ReadyGuard = [
+  entries: Scope,
+  scope: Scope,
   binds: Record<string, unknown>,
-  runAt: number,
-  push: () => void,
-) {
-  flushBinds = binds;
-  beginPatch(render, runAt);
+  run: number,
+];
+export function applyReadyPatch(render: RenderData, guards: ReadyGuard[]) {
   try {
-    push();
+    for (const [entries, scope, binds, runAt] of guards) {
+      flushBinds = binds;
+      beginPatch(render, runAt);
+      patchScope(entries, scope);
+    }
     commitFrame();
     return true;
   } catch (error) {

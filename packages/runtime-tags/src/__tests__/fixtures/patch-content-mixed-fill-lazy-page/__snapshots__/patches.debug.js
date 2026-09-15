@@ -1,5 +1,5 @@
 // PATCH
-(_([`packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1_live#9/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell;b%b/0& b/DbD%m&&b;<!><!><button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section><!>`]), (render.b["ready:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko"] = [((_.a = new Set).add(_(7)), 0)], {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1_live#9/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell;b%b/0& b/DbD%m&&b;<!><!><button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/1": {
@@ -29,10 +29,10 @@
     }
   },
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell"
-}))
+}]
 
 // PATCH
-(_([`packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1_live#9/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell;b%b/0& b/DbD%m&&b;<!><!><button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section><!>`]), (render.b["ready:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko"] = [((_.a = new Set).add(_(7)), 0)], {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko_1_live#9/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell;b%b/0& b/DbD%m&&b;<!><!><button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/1": {
@@ -62,4 +62,4 @@
     }
   },
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell"
-}))
+}]

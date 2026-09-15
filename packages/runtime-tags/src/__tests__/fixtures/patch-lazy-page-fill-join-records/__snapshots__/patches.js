@@ -1,5 +1,5 @@
 // PATCH
-(_([`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`]), (R.b._c = [((_.a = new Set).add(_(9)), _.a.add(_(12)), 0)], {
+[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
   z_a: {
     cAa: {
       ca: {
@@ -47,7 +47,7 @@
     }
   },
   ba: [1, {}, "d1"]
-}))
+}]
 [`a2;D ;<a> </a>`, {
   z_a: {
     cAa: {
@@ -102,7 +102,7 @@
 }]
 
 // PATCH
-(_([`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, `a2;D ;<a> </a>`]), (R.b._c = [((_.a = new Set).add(_(9)), _.a.add(_(12)), 0)], {
+[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, `a2;D ;<a> </a>`, {
   z_a: {
     cAa: {
       ca: {
@@ -155,4 +155,4 @@
     }
   },
   ba: [1, {}, "d1"]
-}))
+}]

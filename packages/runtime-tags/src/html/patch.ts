@@ -7,7 +7,6 @@ import {
   hasKeys,
   isNotVoid,
 } from "../common/helpers";
-import { RENDER_FLUSH_VAR } from "../common/meta";
 import type {
   Accessor,
   RenderedTemplate,
@@ -146,23 +145,7 @@ export function renderPatch(
 class PatchState extends State {
   public sentShells?: Set<string>;
   public pendingShells = "";
-  // Ready batches written this flush; they join the tree
-  // expression, since a flush evaluates as one expression.
-  public readyScripts = "";
   override writesPatches = true;
-
-  // A flush evaluates with the page render bound as the render var
-  // (`dom/patch`), so ready batches write where the page's own do.
-  override get runtimePrefix() {
-    return RENDER_FLUSH_VAR;
-  }
-  override writeReady(id: string, resumes: string) {
-    const script = super.writeReady(id, resumes);
-    this.readyScripts = this.readyScripts
-      ? this.readyScripts + "," + script
-      : script;
-    return "";
-  }
 
   override shipShell(shellId: string | 0 | undefined) {
     return shipShell(this, shellId);
@@ -203,11 +186,6 @@ class PatchState extends State {
   // channel scope writes its pairing entry beside its batches, and the
   // reads that subscribe without entries sit in structure a patch skips.
   override flushChunk(_html: string, scripts: string) {
-    if (this.readyScripts) {
-      scripts =
-        "(" + (scripts ? scripts + "," : "") + this.readyScripts + ",0)";
-      this.readyScripts = "";
-    }
     // The client reads one frame per line: everything a flush embeds is
     // escaped (serializer strings, shells), so a newline is a bug.
     if (MARKO_DEBUG) {
@@ -230,21 +208,14 @@ class PatchState extends State {
     return out;
   }
 
-  // `[...shells, tree]` — only a deferred run (its inner `_()` walks
-  // mid-expression) hoists shells into a preceding `_()` call.
+  // `[...shells, tree]`, or the tree alone.
   override resumeScript(resumes: string) {
     this.patchFlushed = 1;
     const shellChunks = this.pendingShells;
-    const ready = this.readyScripts;
-    this.pendingShells = this.readyScripts = "";
-    const tree = ready ? "(" + ready + "," + (resumes || "0") + ")" : resumes;
-    if (this.patchDeferred) {
-      this.patchDeferred = undefined;
-      return shellChunks
-        ? "(_([" + shellChunks + "])" + (tree && "," + tree) + ")"
-        : tree;
-    }
-    return shellChunks ? "[" + shellChunks + (tree && "," + tree) + "]" : tree;
+    this.pendingShells = "";
+    return shellChunks
+      ? "[" + shellChunks + (resumes && "," + resumes) + "]"
+      : resumes;
   }
 
   override walkScript() {
