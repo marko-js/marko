@@ -7,13 +7,13 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-param-const-state/template.marko0": "[Fresh]"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-param-const-state/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

@@ -12,7 +12,7 @@
 "BAIA"
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content",
@@ -21,15 +21,15 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_2*content",
@@ -38,4 +38,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-scriptless/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

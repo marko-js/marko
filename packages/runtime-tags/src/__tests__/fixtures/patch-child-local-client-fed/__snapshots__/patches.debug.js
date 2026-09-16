@@ -1,9 +1,9 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0
   }
-}, _.a)
+}, _.a)]
 
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-child-local-client-fed/tags/child.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-child-local-client-fed/tags/child.marko_1_c#6/init;D ;<p> </p>`, (_.a = {

@@ -1,5 +1,5 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-async-shared-value/child.marko_0_input_name#3_input_item#4": _.b = "input_name input_item",
     "PatchWrite:input_item": _.c = {
@@ -13,8 +13,8 @@
   "PatchChild:BranchScopes:#text/2": {
     "PatchPending:#text/0": 1
   }
-}, _.a)
-(_.d = {
+}, _.a)]
+[(_.d = {
   "PatchChild:BranchScopes:#text/2": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchText:#text/0": "y",
@@ -29,4 +29,4 @@
       }
     }
   }
-}, _.d)
+}, _.d)]

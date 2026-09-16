@@ -7,15 +7,15 @@
 "BAEA"
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   ba: "a0",
   tb: "bare",
   bc: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   ba: 0,
   tb: "home",
   bc: "a1"
-}, _.a)
+}, _.a)]

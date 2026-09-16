@@ -8,23 +8,23 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: [{
     "aa nonce": "n1"
   }, "a0"],
   tb: "b"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: 0,
   tb: "b"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: [{
     "aa nonce": "n2"
   }, "a0"],
   tb: "b"
-}, _.a)
+}, _.a)]

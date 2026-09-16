@@ -8,9 +8,9 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   ba: [{
     ba: 0
   }, "a0"],
   va0: "Store?"
-}, _.a)
+}, _.a)]

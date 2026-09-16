@@ -16,6 +16,6 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": 0
-}, _.a)
+}, _.a)]

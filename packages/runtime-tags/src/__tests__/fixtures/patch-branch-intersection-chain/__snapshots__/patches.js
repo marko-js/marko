@@ -13,10 +13,10 @@
 "BAEA"
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   ba: [1, {}, "a1"],
   va0: "Plaza"
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEA
 [`a2 a9;Db%;<p>None <!></p>`, (_.a = {
@@ -26,7 +26,7 @@
 "BAEAAA"
 
 // PATCH holding BAEAAA
-(_.a = {
+[(_.a = {
   ba: [2, {}, "a2"],
   va0: "Plaza!"
-}, _.a)
+}, _.a)]

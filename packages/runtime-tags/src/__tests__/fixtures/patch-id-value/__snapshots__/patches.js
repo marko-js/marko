@@ -1,17 +1,17 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "aa id": "sM_2",
   td: "sM_2"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "aa id": "explicit",
   td: "explicit"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "aa id": "sM_2",
   td: "sM_2"
-}, _.a)
+}, _.a)]

@@ -23,7 +23,7 @@
 "BQEAAA"
 
 // PATCH holding BQEAAA
-(_.a = {
+[(_.a = {
   ba: [{
     ba: [{
       ca: {
@@ -35,15 +35,15 @@
       }
     }, "a2"]
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAA
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAA
-(_.a = {
+[(_.a = {
   ba: [{
     ba: [{
       ca: {
@@ -55,4 +55,4 @@
       }
     }, "a2"]
   }, "a1"]
-}, _.a)
+}, _.a)]

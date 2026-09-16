@@ -7,15 +7,15 @@
 "BAIA"
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-global-branch/template.marko_1*shell",
   "PatchText:#text/1": "bare",
   "PatchBranch:#text/2": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0,
   "PatchText:#text/1": "home",
   "PatchBranch:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-global-branch/template.marko_2*shell"
-}, _.a)
+}, _.a)]

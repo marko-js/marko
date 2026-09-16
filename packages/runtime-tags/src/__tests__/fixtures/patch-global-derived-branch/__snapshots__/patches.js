@@ -12,7 +12,7 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   la: [],
   bb: 0
-}, _.a)
+}, _.a)]

@@ -15,12 +15,12 @@
 "BQEAAQ"
 
 // PATCH holding BQEAAQ
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAQ
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchLoop:#text/0": [{
@@ -32,4 +32,4 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_1*shell"]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

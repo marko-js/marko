@@ -5,6 +5,6 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0
-}, _.a)
+}, _.a)]

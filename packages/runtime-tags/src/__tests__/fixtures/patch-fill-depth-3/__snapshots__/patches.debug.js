@@ -14,9 +14,9 @@
 "BAEAAA"
 
 // PATCH holding BAEAAA
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchBranch:#text/0": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-depth-3/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-depth-3/template.marko0": "z"
-}, _.a)
+}, _.a)]

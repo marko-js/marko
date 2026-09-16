@@ -12,7 +12,7 @@
 "BAI"
 
 // PATCH holding BAI
-(_.a = {
+[(_.a = {
   ca: {
     ta: "c",
     cAb: {
@@ -21,20 +21,20 @@
       }, "a1"]
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAI
-(_.a = {
+[(_.a = {
   ca: {
     ta: "d",
     cAb: {
       ba: 0
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAI
-(_.a = {
+[(_.a = {
   ca: {
     ta: "e",
     cAb: {
@@ -43,4 +43,4 @@
       }, "a1"]
     }
   }
-}, _.a)
+}, _.a)]

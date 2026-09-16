@@ -30,7 +30,7 @@
 "BwEE"
 
 // PATCH holding BwEE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
@@ -57,4 +57,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko0": 2
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

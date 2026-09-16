@@ -12,17 +12,17 @@
 "BgM"
 
 // PATCH holding BgM
-(_.a = {
+[(_.a = {
   ca: {
     cAa: {
       ba: 0
     }
   },
   va0: "a"
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgM
-(_.a = {
+[(_.a = {
   ca: {
     cAa: {
       ba: [1, {
@@ -31,7 +31,7 @@
     }
   },
   va0: $
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgM
 [`a3,<b>A</b>`, (_.a = {

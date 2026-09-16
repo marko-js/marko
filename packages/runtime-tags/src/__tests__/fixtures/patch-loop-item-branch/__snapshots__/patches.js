@@ -15,7 +15,7 @@
 "BAEAAA"
 
 // PATCH holding BAEAAA
-(_.a = {
+[(_.a = {
   la: ["b", {
     ta: "b",
     bb: [{
@@ -29,4 +29,4 @@
     ta: "c",
     bb: 0
   }, "a0"]
-}, _.a)
+}, _.a)]

@@ -6,13 +6,13 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0,
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko0": "Store?"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko0": "Fresh"
-}, _.a)
+}, _.a)]

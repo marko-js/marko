@@ -1,15 +1,15 @@
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     prefix: "yo"
   },
   va0: "yo:amy"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     prefix: "yo"
   },
   va0: "yo:bob"
-}, _.a)
+}, _.a)]

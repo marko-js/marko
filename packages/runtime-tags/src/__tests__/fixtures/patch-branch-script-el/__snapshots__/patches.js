@@ -1,8 +1,8 @@
 // PATCH
-(_.a = {
+[(_.a = {
   ta: "Store",
   bb: 0
-}, _.a)
+}, _.a)]
 
 // PATCH
 [`a0 !a1; D ;<span> </span>`, (_.a = {

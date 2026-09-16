@@ -1,6 +1,6 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "Runtime"
   }
-}, _.a)
+}, _.a)]

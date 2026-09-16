@@ -1,15 +1,15 @@
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     locale: "fr"
   },
   tc: "fr!"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     locale: "de"
   },
   tc: "de!"
-}, _.a)
+}, _.a)]

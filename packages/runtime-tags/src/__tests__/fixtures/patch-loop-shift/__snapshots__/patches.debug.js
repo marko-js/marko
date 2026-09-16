@@ -15,16 +15,16 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread!"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_2*shell"],
   "PatchBranch:#text/1": 0,
   "PatchText:#text/2": "bye"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread!"
   }, 4, {
@@ -34,4 +34,4 @@
     "PatchText:#text/0": "Back"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell"],
   "PatchText:#text/2": "again"
-}, _.a)
+}, _.a)]

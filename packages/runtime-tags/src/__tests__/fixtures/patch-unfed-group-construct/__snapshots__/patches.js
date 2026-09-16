@@ -14,7 +14,7 @@
 "AwE"
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       ta: "b",
@@ -25,4 +25,4 @@
       vb0: "const"
     }
   }, "a0"]
-}, _.a)
+}, _.a)]

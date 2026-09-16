@@ -11,13 +11,13 @@
 "BAIA"
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   ba: 0,
   tb: "c"
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   ba: [{
     pa: "a1",
     cAa: {
@@ -25,4 +25,4 @@
     }
   }, "a2"],
   tb: "d"
-}, _.a)
+}, _.a)]

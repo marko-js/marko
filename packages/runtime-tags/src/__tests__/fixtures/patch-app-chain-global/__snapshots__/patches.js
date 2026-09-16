@@ -25,7 +25,7 @@
 "BwY"
 
 // PATCH holding BwY
-(_.a = {
+[(_.a = {
   z_c: {
     ca: {
       cAc: {
@@ -47,7 +47,7 @@
       ba: [1, {}, "d2"]
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BwY
 [`d1;b%b/ Db%l&b;<!><!><button class=a>a:<!></button><!>`, (_.a = {
@@ -74,7 +74,7 @@
 "BwUA"
 
 // PATCH holding BwUA
-(_.a = {
+[(_.a = {
   z_c: {
     ca: {
       cAc: {
@@ -96,4 +96,4 @@
       ba: [1, {}, "d2"]
     }
   }
-}, _.a)
+}, _.a)]

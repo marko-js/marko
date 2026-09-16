@@ -9,14 +9,14 @@
 "BAI"
 
 // PATCH holding BAI
-(_.a = {
+[(_.a = {
   cAa: {
     pa: "a1"
   },
   va0: "c"
-}, _.a)
-(_.b = {
+}, _.a)]
+[(_.b = {
   cAa: {
     cAa: {}
   }
-}, _.b)
+}, _.b)]

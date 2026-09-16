@@ -14,7 +14,7 @@
 "BAABAA"
 
 // PATCH holding BAABAA
-(_.a = {
+[(_.a = {
   "PatchDynamicTag:#text/0": [">section", {
     class: "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content"],
@@ -22,10 +22,10 @@
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "z"
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAABAA
-(_.a = {
+[(_.a = {
   "PatchDynamicTag:#text/0": [">section", {
     class: "c"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content"],
@@ -36,4 +36,4 @@
       "PatchText:#text/0": "w"
     }
   }
-}, _.a)
+}, _.a)]

@@ -14,7 +14,7 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       ta: "a",
@@ -25,9 +25,9 @@
       tb: "2"
     }
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]

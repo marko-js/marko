@@ -20,17 +20,17 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "Apples",
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "Apples",
     "PatchSetup:": {
@@ -47,4 +47,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

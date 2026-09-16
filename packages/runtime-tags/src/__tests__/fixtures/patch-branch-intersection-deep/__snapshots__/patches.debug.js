@@ -8,9 +8,9 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchBranch:#text/0": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-deep/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-deep/template.marko0": "Store?"
-}, _.a)
+}, _.a)]

@@ -19,7 +19,7 @@
 "BAEB"
 
 // PATCH holding BAEB
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchLoop:#ul/0": [{
       "PatchText:#text/0": "1",
@@ -29,10 +29,10 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/tags/card/index.marko_1*shell"]
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEB
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchLoop:#ul/0": [{
       "PatchText:#text/0": "1",
@@ -54,4 +54,4 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/tags/card/index.marko_1*shell"]
   }
-}, _.a)
+}, _.a)]

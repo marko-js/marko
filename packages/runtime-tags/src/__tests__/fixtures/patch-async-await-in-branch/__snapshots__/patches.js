@@ -11,19 +11,19 @@
 "BQIA"
 
 // PATCH holding BQIA
-(_.a = {
+[(_.a = {
   ta: "Store!",
   bb: [{
     pa: "a1"
   }, "a2"]
-}, _.a)
-(_.b = {
+}, _.a)]
+[(_.b = {
   cAb: {
     cAa: {
       ta: "slow"
     }
   }
-}, _.b)
+}, _.b)]
 
 // PATCH holding BQIA
 [`a3,<em>closed</em>`, (_.a = {
@@ -33,16 +33,16 @@
 "BQIAAA"
 
 // PATCH holding BQIAAA
-(_.a = {
+[(_.a = {
   ta: "Open",
   bb: [{
     pa: "a1"
   }, "a2"]
-}, _.a)
-(_.b = {
+}, _.a)]
+[(_.b = {
   cAb: {
     cAa: {
       ta: "back"
     }
   }
-}, _.b)
+}, _.b)]

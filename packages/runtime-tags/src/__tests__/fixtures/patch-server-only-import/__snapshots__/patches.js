@@ -1,5 +1,5 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "aa content": "a,b;b",
   tb: "b"
-}, _.a)
+}, _.a)]

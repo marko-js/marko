@@ -9,8 +9,8 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   la: ["b", {
     "ya --M_a0": "green"
   }, "a1"]
-}, _.a)
+}, _.a)]

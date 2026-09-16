@@ -12,7 +12,7 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   "PatchLoop:#text/0": [],
   "PatchBranch:#text/1": 0
-}, _.a)
+}, _.a)]

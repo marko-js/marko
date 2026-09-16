@@ -1,6 +1,6 @@
 // PATCH
-(_.a = {
+[(_.a = {
   va0: {
     placeholder: "p2"
   }
-}, _.a)
+}, _.a)]

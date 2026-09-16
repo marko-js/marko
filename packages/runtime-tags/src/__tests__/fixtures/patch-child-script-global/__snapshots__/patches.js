@@ -1,19 +1,19 @@
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     brand: "Marko"
   },
   ca: {
     ta: "Marko"
   }
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     brand: "Runtime"
   },
   ca: {
     ta: "Runtime"
   }
-}, _.a)
+}, _.a)]

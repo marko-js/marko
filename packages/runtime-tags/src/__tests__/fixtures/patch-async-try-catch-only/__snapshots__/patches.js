@@ -1,6 +1,6 @@
 // PATCH
-(_.a = {
+[(_.a = {
   cAa: {
     ta: "still ok"
   }
-}, _.a)
+}, _.a)]

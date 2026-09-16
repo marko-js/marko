@@ -26,7 +26,7 @@
 "BAIA"
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "Zed"
   },
@@ -58,4 +58,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

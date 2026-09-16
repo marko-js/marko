@@ -15,11 +15,11 @@
 "AwE"
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   la: [2, {
     ca: {
       ta: "two!",
       tb: ""
     }
   }, "a0"]
-}, _.a)
+}, _.a)]

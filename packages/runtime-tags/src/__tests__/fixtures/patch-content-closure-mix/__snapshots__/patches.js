@@ -26,7 +26,7 @@
 "BAEA"
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   $: {
     brand: "Zed"
   },
@@ -58,4 +58,4 @@
       }
     }
   }, "a1"]
-}, _.a)
+}, _.a)]

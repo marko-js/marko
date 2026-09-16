@@ -14,7 +14,7 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "a",
@@ -25,9 +25,9 @@
       "PatchText:#text/1": "2"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#ul/0": 0
-}, _.a)
+}, _.a)]

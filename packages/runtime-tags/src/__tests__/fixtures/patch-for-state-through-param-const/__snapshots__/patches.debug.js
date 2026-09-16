@@ -1,5 +1,5 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko0": !1,
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko1": {
     sessions: [{
@@ -8,20 +8,20 @@
       id: "b"
     }]
   }
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko0": !0,
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko1": {
     sessions: [{
       id: "d"
     }]
   }
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko0": !0,
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko1": null
-}, _.a)
+}, _.a)]

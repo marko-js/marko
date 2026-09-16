@@ -1,5 +1,5 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-shared-value/child.marko": {
     "PatchChild:#childScope/3": {
       "PatchWrite:input_item": _.b = {
@@ -8,4 +8,4 @@
     }
   },
   "PatchWrite:item": _.b
-}, _.a)
+}, _.a)]

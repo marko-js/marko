@@ -1,4 +1,4 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchText:#text/0": "Store!"
-}, _.a)
+}, _.a)]

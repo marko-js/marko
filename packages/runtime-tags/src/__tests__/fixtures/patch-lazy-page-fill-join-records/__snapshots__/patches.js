@@ -104,7 +104,7 @@
 "EAIAAQEAAQAAAA"
 
 // PATCH holding EAIAAQEAAQAAAA
-(_.a = {
+[(_.a = {
   z_a: {
     cAa: {
       ca: {
@@ -157,4 +157,4 @@
     }
   },
   ba: [1, {}, "d1"]
-}, _.a)
+}, _.a)]

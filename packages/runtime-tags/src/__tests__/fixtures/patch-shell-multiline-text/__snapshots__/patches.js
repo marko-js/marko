@@ -7,13 +7,13 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: [{
     ta: "b"
   }, "a0"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]

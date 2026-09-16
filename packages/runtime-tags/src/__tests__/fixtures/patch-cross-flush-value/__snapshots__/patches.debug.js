@@ -1,9 +1,9 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchPending:#text/0": 1,
   "PatchPending:#text/1": 1
-}, _.a)
-(_.b = {
+}, _.a)]
+[(_.b = {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:#childScope/0": {
       "PatchAttr:#button/0 id": "a",
@@ -17,8 +17,8 @@
       }
     }
   }
-}, _.b)
-(_.c = {
+}, _.b)]
+[(_.c = {
   "PatchChild:BranchScopes:#text/1": {
     "PatchChild:#childScope/0": {
       "PatchAttr:#button/0 id": "b",
@@ -30,4 +30,4 @@
       "PatchWrite:input_tag": _.e = _.b["PatchChild:BranchScopes:#text/0"]["PatchChild:#childScope/0"]["PatchWrite:input_tag"]
     }
   }
-}, _.c)
+}, _.c)]

@@ -6,19 +6,19 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko0": "c"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0,
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko0": "d"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko0": "e"
-}, _.a)
+}, _.a)]

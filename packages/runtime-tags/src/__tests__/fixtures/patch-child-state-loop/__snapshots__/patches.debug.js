@@ -11,7 +11,7 @@
 "AwE"
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchLoop:#ul/0": [{
       "PatchText:#text/1": "."
@@ -19,10 +19,10 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-loop/tags/list/index.marko0": "."
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-loop/template.marko0": "."
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchLoop:#ul/0": [{
       "PatchText:#text/1": ","
@@ -30,4 +30,4 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-loop/tags/list/index.marko0": ","
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-loop/template.marko0": ","
-}, _.a)
+}, _.a)]

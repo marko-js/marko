@@ -11,7 +11,7 @@
 "AwE"
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{
       "PatchAttr:#h2/0 class": "fixed",
@@ -19,4 +19,4 @@
       "PatchText:#text/2": "c"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell"]
   }
-}, _.a)
+}, _.a)]

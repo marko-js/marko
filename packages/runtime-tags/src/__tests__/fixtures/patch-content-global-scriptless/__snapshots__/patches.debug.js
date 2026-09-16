@@ -22,7 +22,7 @@
 "BQMA"
 
 // PATCH holding BQMA
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "Zed"
   },
@@ -41,10 +41,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQMA
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "Qux"
   },
@@ -63,4 +63,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
-}, _.a)
+}, _.a)]

@@ -11,13 +11,13 @@
 "BQM"
 
 // PATCH holding BQM
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchBranch:#text/0": 0
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQM
 [`packages/runtime-tags/src/__tests__/fixtures/patch-content-switch-scriptless/template.marko_3*shell,<b>A</b>`, (_.a = {

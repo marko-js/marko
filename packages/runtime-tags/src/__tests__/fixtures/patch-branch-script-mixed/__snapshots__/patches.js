@@ -12,7 +12,7 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   $: {
     brand: "Marko"
   },
@@ -21,10 +21,10 @@
     ea2: "1 g"
   }, "a0"],
   wg: "b"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   $: {
     brand: "Fresh"
   },
@@ -33,10 +33,10 @@
     ea2: "1 g"
   }, "a0"],
   wg: "b"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   $: {
     brand: "Patch"
   },
@@ -45,4 +45,4 @@
     ea2: "1 g"
   }, "a0"],
   wg: "c"
-}, _.a)
+}, _.a)]

@@ -17,7 +17,7 @@
 "BQEAAQ"
 
 // PATCH holding BQEAAQ
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "a",
@@ -31,4 +31,4 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/tags/tree.marko_1*shell"]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-recursive-child/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

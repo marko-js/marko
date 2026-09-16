@@ -6,7 +6,7 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ta: "Store!",
   bb: "a0"
-}, _.a)
+}, _.a)]

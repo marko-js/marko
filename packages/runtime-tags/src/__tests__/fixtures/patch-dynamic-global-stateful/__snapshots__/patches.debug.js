@@ -1,13 +1,13 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "b"
   }
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "c"
   }
-}, _.a)
+}, _.a)]

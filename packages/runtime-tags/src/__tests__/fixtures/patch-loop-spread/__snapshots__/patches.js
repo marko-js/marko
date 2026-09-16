@@ -15,9 +15,9 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   la: [2, {
     ja: {},
     tb: "2"
   }, "a0"]
-}, _.a)
+}, _.a)]

@@ -2,16 +2,19 @@ import type { TestConfig } from "../../main.test";
 import { navigate } from "../../utils/resolve";
 
 const SHARED = "a-string-long-enough-to-dedup-across-the-tree-and-the-fill";
-const settleSoon = () => Promise.resolve().then(() => ({ name: SHARED }));
+const settleSoon = (n: number) =>
+  Promise.resolve().then(() => ({ name: SHARED + "-" + n }));
 
 export const config: TestConfig = {
   patches: true,
   steps: () => [
     {
       $global: { tag: SHARED, serializedGlobals: ["tag"] },
-      promise: settleSoon(),
+      promise: settleSoon(0),
     },
-    navigate(() => ({ promise: settleSoon() })),
-    navigate(() => ({ promise: settleSoon() })),
+    navigate(() => ({ promise: settleSoon(1) })),
+    navigate(() => ({ promise: settleSoon(2) })),
+    navigate(() => ({ promise: settleSoon(3) })),
+    navigate(() => ({ promise: settleSoon(4) })),
   ],
 };

@@ -1,17 +1,17 @@
 // PATCH
-(_.a = {
+[(_.a = {
   ea1: "e",
   we: "two"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   ea1: "e",
   we: "three"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   ea1: "e",
   we: "four"
-}, _.a)
+}, _.a)]

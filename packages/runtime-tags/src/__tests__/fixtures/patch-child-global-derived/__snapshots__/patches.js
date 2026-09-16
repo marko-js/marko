@@ -1,7 +1,7 @@
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     brand: "bmce"
   },
   va0: "bmce"
-}, _.a)
+}, _.a)]

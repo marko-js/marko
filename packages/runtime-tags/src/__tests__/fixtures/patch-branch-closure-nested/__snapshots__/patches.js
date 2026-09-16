@@ -23,13 +23,13 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   ta: "Store!",
   bb: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   ta: "Store!",
   bb: [{
     bb: "a1",
@@ -37,4 +37,4 @@
       va0: 0
     }
   }, "a0"]
-}, _.a)
+}, _.a)]

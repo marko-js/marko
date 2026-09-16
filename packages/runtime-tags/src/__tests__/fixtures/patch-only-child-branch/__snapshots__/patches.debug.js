@@ -7,13 +7,13 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#div/0": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#div/0": [{
     "PatchText:#text/0": "again"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-only-child-branch/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

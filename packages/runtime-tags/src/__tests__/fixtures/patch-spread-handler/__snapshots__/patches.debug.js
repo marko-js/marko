@@ -11,12 +11,12 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     1: "packages/runtime-tags/src/__tests__/fixtures/patch-spread-handler/template.marko_1/onClick",
     "PatchAttrs:#a/0": {
@@ -24,4 +24,4 @@
       onClick: bind(1)
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-spread-handler/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

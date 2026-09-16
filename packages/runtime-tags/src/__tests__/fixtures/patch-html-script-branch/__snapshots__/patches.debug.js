@@ -8,23 +8,23 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchAttr:#script/0 nonce": "n1"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-html-script-branch/template.marko_1*shell"],
   "PatchText:#text/1": "b"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0,
   "PatchText:#text/1": "b"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchAttr:#script/0 nonce": "n2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-html-script-branch/template.marko_1*shell"],
   "PatchText:#text/1": "b"
-}, _.a)
+}, _.a)]

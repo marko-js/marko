@@ -45,7 +45,7 @@
 "BQEAAA"
 
 // PATCH holding BQEAAA
-(_.a = {
+[(_.a = {
   $: {
     search: [{
       q: "c"
@@ -78,4 +78,4 @@
       }
     }, "a2"]
   }, "a0"]
-}, _.a)
+}, _.a)]

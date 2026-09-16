@@ -15,7 +15,7 @@
 "BAEAAA"
 
 // PATCH holding BAEAAA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": ["b", {
     "PatchText:#text/0": "b",
     "PatchBranch:#text/1": [{
@@ -29,4 +29,4 @@
     "PatchText:#text/0": "c",
     "PatchBranch:#text/1": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-branch/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

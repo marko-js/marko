@@ -18,7 +18,7 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "B",
     "PatchText:#text/1": "n2"
@@ -33,4 +33,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

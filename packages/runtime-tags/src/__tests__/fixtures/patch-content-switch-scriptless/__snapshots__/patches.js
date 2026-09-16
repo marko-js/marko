@@ -11,13 +11,13 @@
 "BQI"
 
 // PATCH holding BQI
-(_.a = {
+[(_.a = {
   ca: {
     cAa: {
       ba: 0
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQI
 [`a2,<b>A</b>`, (_.a = {

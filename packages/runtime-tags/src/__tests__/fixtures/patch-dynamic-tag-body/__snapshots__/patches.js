@@ -14,7 +14,7 @@
 "BAEAAA"
 
 // PATCH holding BAEAAA
-(_.a = {
+[(_.a = {
   fa: [">section", {
     class: "b"
   }, "a0"],
@@ -22,10 +22,10 @@
   cAb: {
     ta: "z"
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEAAA
-(_.a = {
+[(_.a = {
   fa: [">section", {
     class: "c"
   }, "a0"],
@@ -36,4 +36,4 @@
       ta: "w"
     }
   }
-}, _.a)
+}, _.a)]

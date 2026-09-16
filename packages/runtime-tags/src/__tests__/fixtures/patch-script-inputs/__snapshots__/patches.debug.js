@@ -1,23 +1,23 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchText:#text/0": "Store!",
   "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5": "input_a input_b",
   "PatchWrite:input_a": "x",
   "PatchWrite:input_b": "y"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchText:#text/0": "Store!",
   "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5": "input_a input_b",
   "PatchWrite:input_a": "z",
   "PatchWrite:input_b": "w"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchText:#text/0": "Store!",
   "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5": "input_a input_b",
   "PatchWrite:input_a": "x",
   "PatchWrite:input_b": "w"
-}, _.a)
+}, _.a)]

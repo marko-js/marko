@@ -1,19 +1,19 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "ya --M_a0": "red/* ("
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "ya --M_a0": "red; background: blue"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "ya --M_a0": "green\\"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "ya --M_a0": "green"
-}, _.a)
+}, _.a)]

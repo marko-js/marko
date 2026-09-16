@@ -15,16 +15,16 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   la: [2, {
     ta: "Bread!"
   }, "a1"],
   bb: 0,
   tc: "bye"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   la: [2, {
     ta: "Bread!"
   }, 4, {
@@ -34,4 +34,4 @@
     ta: "Back"
   }, "a0"],
   tc: "again"
-}, _.a)
+}, _.a)]

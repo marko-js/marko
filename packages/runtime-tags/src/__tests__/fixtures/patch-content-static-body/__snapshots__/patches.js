@@ -10,11 +10,11 @@
 "BAEA"
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       ta: "c",
       fb: "^a0"
     }
   }, "a1"]
-}, _.a)
+}, _.a)]

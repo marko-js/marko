@@ -27,7 +27,7 @@
 "BQMA"
 
 // PATCH holding BQMA
-(_.a = {
+[(_.a = {
   "PatchLoop:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "b",
@@ -40,4 +40,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

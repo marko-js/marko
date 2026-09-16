@@ -1,9 +1,9 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-client-owned-const/template.marko0": "y"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-client-owned-const/template.marko0": "z"
-}, _.a)
+}, _.a)]

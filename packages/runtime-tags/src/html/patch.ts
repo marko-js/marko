@@ -311,13 +311,15 @@ class PatchState extends State {
     return out;
   }
 
-  // `[...shells, tree]`, or the tree alone.
+  // Always `[...shells, tree, ...fills]`: a bare `tree,fill` sequence
+  // would evaluate to the fill's trailing 0 and the client, which applies
+  // a flush's value, would silently apply nothing.
   override resumeScript(resumes: string) {
     this.patchFlushed = 1;
     const shellChunks = this.pendingShells;
     this.pendingShells = "";
-    return shellChunks
-      ? "[" + shellChunks + (resumes && "," + resumes) + "]"
+    return shellChunks || resumes
+      ? "[" + shellChunks + (shellChunks && resumes ? "," : "") + resumes + "]"
       : resumes;
   }
 

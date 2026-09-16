@@ -1,11 +1,11 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchText:#text/0": "Second",
   "PatchText:#text/1": "two"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchText:#text/0": "0",
   "PatchText:#text/1": ""
-}, _.a)
+}, _.a)]

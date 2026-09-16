@@ -1,8 +1,8 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/2": 0
-}, _.a)
+}, _.a)]
 
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-ref/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-ref/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, (_.a = {

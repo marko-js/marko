@@ -1,5 +1,5 @@
 // PATCH
-(_.a = {
+[(_.a = {
   ca: {
     cAb: {
       ta: "two"
@@ -8,10 +8,10 @@
       ta: "two"
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   ca: {
     cAb: {
       ta: "three"
@@ -20,10 +20,10 @@
       ta: "three"
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   ca: {
     cAb: {
       ta: "four"
@@ -32,4 +32,4 @@
       ta: "four"
     }
   }
-}, _.a)
+}, _.a)]

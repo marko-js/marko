@@ -9,17 +9,17 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ta: "Store",
   bb: 0,
   wg: "c"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ta: "Store",
   bb: [{
     ea1: "1 g"
   }, "a0"],
   wg: "d"
-}, _.a)
+}, _.a)]

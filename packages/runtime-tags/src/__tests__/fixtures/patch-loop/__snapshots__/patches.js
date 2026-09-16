@@ -10,7 +10,7 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ta: "Store",
   lb: [1, {
     ta: "Apples!"
@@ -19,30 +19,30 @@
   }, 3, {
     ta: "Milk"
   }, "a0"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ta: "Store",
   lb: [3, {
     ta: "Milk"
   }, 1, {
     ta: "Apples!"
   }, "a0"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ta: "Store",
   lb: []
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ta: "Store",
   lb: [2, {
     ta: "Rye"
   }, 3, {
     ta: "Milk"
   }, "a0"]
-}, _.a)
+}, _.a)]

@@ -1,15 +1,15 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "Marko"
   },
   "PatchText:#text/0": "Marko"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "Runtime"
   },
   "PatchText:#text/0": "Runtime"
-}, _.a)
+}, _.a)]

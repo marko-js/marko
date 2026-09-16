@@ -1,11 +1,11 @@
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     brand: "Marko"
   },
   ta: "Marko",
   bb: 0
-}, _.a)
+}, _.a)]
 
 // PATCH
 [`a0 !a3,<p>promo</p>`, (_.a = {
@@ -18,10 +18,10 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   $: {
     brand: "Patch"
   },
   ta: "Patch",
   bb: "a0"
-}, _.a)
+}, _.a)]

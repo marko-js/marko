@@ -15,7 +15,7 @@
 "BQM"
 
 // PATCH holding BQM
-(_.a = {
+[(_.a = {
   ca: {
     cAb: {
       ca: {
@@ -27,10 +27,10 @@
       }
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQM
-(_.a = {
+[(_.a = {
   ca: {
     cAb: {
       ca: {
@@ -42,4 +42,4 @@
       }
     }
   }
-}, _.a)
+}, _.a)]

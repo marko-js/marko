@@ -1,7 +1,7 @@
 // PATCH
-(_.a = {
+[(_.a = {
   ca: {
     vb0: "Widget"
   },
   tc: "Cart!"
-}, _.a)
+}, _.a)]

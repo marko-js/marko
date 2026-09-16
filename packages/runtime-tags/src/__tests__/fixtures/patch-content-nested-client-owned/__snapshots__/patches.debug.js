@@ -1,11 +1,11 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko0": "b",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko1": "y"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko0": "c",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko1": "z"
-}, _.a)
+}, _.a)]

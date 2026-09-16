@@ -6,7 +6,7 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/2": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko_1*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-state-input/template.marko0": "c"
-}, _.a)
+}, _.a)]

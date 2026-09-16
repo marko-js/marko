@@ -19,7 +19,7 @@
 "BQEB"
 
 // PATCH holding BQEB
-(_.a = {
+[(_.a = {
   ca: {
     ta: "c",
     cAb: {
@@ -35,10 +35,10 @@
       }
     }
   }, "a2"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEB
-(_.a = {
+[(_.a = {
   ca: {
     ta: "c",
     cAb: {
@@ -46,10 +46,10 @@
     }
   },
   bb: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEB
-(_.a = {
+[(_.a = {
   ca: {
     ta: "e",
     cAb: {
@@ -65,4 +65,4 @@
       }
     }
   }, "a2"]
-}, _.a)
+}, _.a)]

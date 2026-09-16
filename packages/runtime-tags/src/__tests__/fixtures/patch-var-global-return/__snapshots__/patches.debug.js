@@ -1,15 +1,15 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     locale: "fr"
   },
   "PatchText:#text/2": "fr!"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     locale: "de"
   },
   "PatchText:#text/2": "de!"
-}, _.a)
+}, _.a)]

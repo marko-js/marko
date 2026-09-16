@@ -1,8 +1,8 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": 0
-}, _.a)
+}, _.a)]
 
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-el/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-el/template.marko_1; D ;<span> </span>`, (_.a = {

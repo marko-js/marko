@@ -1,6 +1,6 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-var-assign/tags/counter-box/index.marko_0/valueChange", 0, "#TagVariableChange"]
   }
-}, _.a)
+}, _.a)]

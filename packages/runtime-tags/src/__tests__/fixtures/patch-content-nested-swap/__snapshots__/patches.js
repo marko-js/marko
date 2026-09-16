@@ -7,15 +7,15 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: [{
     fa: ["div"]
   }, "a0"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: [{
     fa: ["span"]
   }, "a0"]
-}, _.a)
+}, _.a)]

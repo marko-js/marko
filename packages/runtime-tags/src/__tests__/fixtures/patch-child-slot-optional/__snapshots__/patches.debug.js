@@ -1,13 +1,13 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "b"
   }
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c"
   }
-}, _.a)
+}, _.a)]

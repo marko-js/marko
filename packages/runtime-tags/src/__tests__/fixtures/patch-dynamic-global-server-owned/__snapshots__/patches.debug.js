@@ -11,15 +11,15 @@
 "AgA"
 
 // PATCH holding AgA
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "b"
   },
   "PatchDynamicTag:#text/0": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgA
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "c"
   },
@@ -27,4 +27,4 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "c"
   }
-}, _.a)
+}, _.a)]

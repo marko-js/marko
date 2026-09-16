@@ -12,7 +12,7 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   "PatchLoop:#text/0": ["a", {
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko1": "a",
     "PatchBranch:#text/0": 0
@@ -21,4 +21,4 @@
     "PatchBranch:#text/0": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko0": "z"
-}, _.a)
+}, _.a)]

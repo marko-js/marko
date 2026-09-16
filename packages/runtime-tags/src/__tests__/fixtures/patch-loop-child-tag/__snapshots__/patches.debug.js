@@ -15,11 +15,11 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [2, {
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "two!",
       "PatchText:#text/1": ""
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-child-tag/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

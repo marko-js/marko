@@ -11,12 +11,12 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: [{
     1: "a0",
     ja: {
@@ -24,4 +24,4 @@
       onClick: b(1)
     }
   }, "a1"]
-}, _.a)
+}, _.a)]

@@ -45,7 +45,7 @@
 "BQIAAA"
 
 // PATCH holding BQIAAA
-(_.a = {
+[(_.a = {
   "$global:": {
     search: [{
       q: "c"
@@ -78,4 +78,4 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

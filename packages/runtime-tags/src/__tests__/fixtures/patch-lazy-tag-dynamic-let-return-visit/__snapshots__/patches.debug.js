@@ -1,9 +1,9 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchDynamicTag:#text/2": [0, {
     label: "a"
   }]
-}, _.a)
+}, _.a)]
 
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-let-return-visit/child.marko !packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-let-return-visit/child.marko_0; D%c%;<button class=count><!>:<!></button>`, (_.a = {
@@ -22,7 +22,7 @@
 "AgA"
 
 // PATCH holding AgA
-(_.a = {
+[(_.a = {
   "PatchDynamicTag:#text/2": ["packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-let-return-visit/child.marko", {
     label: "c"
   }],
@@ -34,4 +34,4 @@
       }
     }
   }
-}, _.a)
+}, _.a)]

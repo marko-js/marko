@@ -1,17 +1,17 @@
 // PATCH
-(_.a = {
+[(_.a = {
   tc: "two",
   va0: "two"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   tc: "three",
   va0: "three"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   tc: "four",
   va0: "four"
-}, _.a)
+}, _.a)]

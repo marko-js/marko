@@ -21,7 +21,7 @@
 "BAIA"
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "f",
@@ -31,10 +31,10 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "c",
@@ -60,4 +60,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-content/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

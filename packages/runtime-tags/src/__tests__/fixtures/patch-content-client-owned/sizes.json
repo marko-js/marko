@@ -16,7 +16,7 @@
     "brotli": 348
   },
   "patch": {
-    "min": 84,
-    "brotli": 58
+    "min": 90,
+    "brotli": 59
   }
 }

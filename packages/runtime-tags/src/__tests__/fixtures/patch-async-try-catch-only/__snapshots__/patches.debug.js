@@ -1,6 +1,6 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "still ok"
   }
-}, _.a)
+}, _.a)]

@@ -27,7 +27,7 @@
 "BQEAAAA"
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   ba: [{
     qa: "\x3Cu>d\x3C/u>",
     qb: "\x3Cu>d\x3C/u>",
@@ -41,9 +41,9 @@
       }, "a3"]
     }, "a1"]
   }, "a0"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]

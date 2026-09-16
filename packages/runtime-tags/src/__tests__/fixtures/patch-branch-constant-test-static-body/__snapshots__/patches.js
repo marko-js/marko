@@ -15,12 +15,12 @@
 "BQEAAQ"
 
 // PATCH holding BQEAAQ
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAQ
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       la: [{
@@ -32,4 +32,4 @@
       }, "a0"]
     }
   }, "b0"]
-}, _.a)
+}, _.a)]

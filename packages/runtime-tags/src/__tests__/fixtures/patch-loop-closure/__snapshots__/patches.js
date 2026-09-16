@@ -9,7 +9,7 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   la: [{
     ta: "Apples"
   }, {
@@ -17,4 +17,4 @@
   }, {
     ta: "Milk"
   }, "a0"]
-}, _.a)
+}, _.a)]

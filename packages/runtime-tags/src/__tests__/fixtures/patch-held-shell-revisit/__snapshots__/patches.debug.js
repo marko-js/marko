@@ -47,7 +47,7 @@
 "BwUA"
 
 // PATCH holding BwUA
-(_.a = {
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-b.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
@@ -67,4 +67,4 @@
       "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/template.marko_3*shell"]
     }
   }
-}, _.a)
+}, _.a)]

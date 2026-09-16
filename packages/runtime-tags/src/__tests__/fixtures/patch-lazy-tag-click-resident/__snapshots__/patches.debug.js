@@ -20,12 +20,12 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/1": {
@@ -42,4 +42,4 @@
     }
   },
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell"
-}, _.a)
+}, _.a)]

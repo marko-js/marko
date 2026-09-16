@@ -23,7 +23,7 @@
 "BAEB"
 
 // PATCH holding BAEB
-(_.a = {
+[(_.a = {
   z_a: {
     cAc: {
       cb: {
@@ -43,4 +43,4 @@
   },
   bc: "b0",
   td: "c"
-}, _.a)
+}, _.a)]

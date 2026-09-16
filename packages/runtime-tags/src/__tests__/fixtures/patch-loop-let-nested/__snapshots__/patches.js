@@ -12,15 +12,15 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   la: [1, {
     ta: "Fuji Apples",
     bb: 0
   }, "a0"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   la: [1, {
     ta: "Fuji Apples",
     bb: [{
@@ -29,10 +29,10 @@
       }
     }, "a1"]
   }, "a0"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   la: [2, {
     ta: "Milk",
     bb: [{
@@ -48,4 +48,4 @@
       }
     }, "a1"]
   }, "a0"]
-}, _.a)
+}, _.a)]

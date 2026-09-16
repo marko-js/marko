@@ -13,19 +13,19 @@
 "AwEA"
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   ta: "marko",
   bb: 0,
   lc: [{
     ta: "3"
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwEA
-(_.a = {
+[(_.a = {
   ta: "mark",
   bb: "a0",
   lc: [{
     ta: "3"
   }, "a1"]
-}, _.a)
+}, _.a)]

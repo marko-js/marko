@@ -85,7 +85,7 @@
 "DgIAAQMAAAA"
 
 // PATCH holding DgIAAQMAAAA
-(_.a = {
+[(_.a = {
   z_a: {
     cAa: {
       ca: {
@@ -121,7 +121,7 @@
     }
   },
   ba: [1, {}, "d1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding DgIAAQMAAAA
 [`d4,<p>home</p>`, (_.a = {

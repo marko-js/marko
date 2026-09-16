@@ -1,5 +1,5 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "Acme Co",
     locale: "fr"
@@ -13,4 +13,4 @@
   "PatchChild:#childScope/5": {
     "PatchText:#text/0": "2027"
   }
-}, _.a)
+}, _.a)]

@@ -1,7 +1,7 @@
 // PATCH
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]
 
 // PATCH
 [`b0;D ;<em> </em>`, `a0;/ D l/D%l&&;<button> </button><section><!></section>`, (_.a = {

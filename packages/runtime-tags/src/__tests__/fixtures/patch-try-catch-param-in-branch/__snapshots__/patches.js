@@ -11,7 +11,7 @@
 "BQIAAA"
 
 // PATCH holding BQIAAA
-(_.a = {
+[(_.a = {
   bc: [{
     cAa: [{
       pa: "a1",
@@ -19,4 +19,4 @@
     }, "a2", "a4", $]
   }, "a3"],
   va0: "c"
-}, _.a)
+}, _.a)]

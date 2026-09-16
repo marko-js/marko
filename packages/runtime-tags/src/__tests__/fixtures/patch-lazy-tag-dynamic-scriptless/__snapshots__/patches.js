@@ -12,14 +12,14 @@
 "AgA"
 
 // PATCH holding AgA
-(_.a = {
+[(_.a = {
   fa: [0, {
     label: "b"
   }]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgA
-(_.a = {
+[(_.a = {
   fa: ["a", {
     label: "c"
   }],
@@ -28,4 +28,4 @@
       ta: "c"
     }
   }
-}, _.a)
+}, _.a)]

@@ -8,18 +8,18 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: 0,
   va0: {
     href: "/b"
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   ba: "a0",
   va0: {
     href: "/c",
     title: "C"
   }
-}, _.a)
+}, _.a)]

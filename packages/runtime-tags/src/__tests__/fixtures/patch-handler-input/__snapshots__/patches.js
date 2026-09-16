@@ -1,5 +1,5 @@
 // PATCH
-(_.a = {
+[(_.a = {
   ta: "Store!",
   we: "Store!"
-}, _.a)
+}, _.a)]

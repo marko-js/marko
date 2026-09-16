@@ -7,10 +7,10 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Rye"
   }, 3, {
     "PatchText:#text/0": "Milk"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-state/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

@@ -15,7 +15,7 @@
 "BgEAAQ"
 
 // PATCH holding BgEAAQ
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       ta: "u",
@@ -27,7 +27,7 @@
       }
     }
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgEAAQ
 [`a2;Db%;<em>A:<!></em>`, (_.a = {
@@ -46,7 +46,7 @@
 "BgEAAAA"
 
 // PATCH holding BgEAAAA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       ta: "v",
@@ -58,15 +58,15 @@
       }
     }
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgEAAAA
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgEAAAA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       ta: "w",
@@ -78,4 +78,4 @@
       }
     }
   }, "a1"]
-}, _.a)
+}, _.a)]

@@ -11,7 +11,7 @@
 "BQIAAA"
 
 // PATCH holding BQIAAA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_3*content",
@@ -19,4 +19,4 @@
       "PatchDynamicTag:#text/2": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_2*content"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

@@ -1,13 +1,13 @@
 // PATCH
-(_.a = {
+[(_.a = {
   ta: "Store!",
   ea0: "e",
   we: "sale"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   ta: "Store!",
   ea0: "e",
   we: "clearance"
-}, _.a)
+}, _.a)]

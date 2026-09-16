@@ -22,7 +22,7 @@
 "BAIA"
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchLoop:#nav/0": [{
     "PatchAttr:#a/0 class": "link active",
     "PatchAttr:#a/0 href": "/b",
@@ -32,4 +32,4 @@
     "PatchText:#text/2": "B"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell"],
   "PatchBranch:#main/1": 0
-}, _.a)
+}, _.a)]

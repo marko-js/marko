@@ -23,7 +23,7 @@
 "BQIAAA"
 
 // PATCH holding BQIAAA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchBranch:#div/0": [{
       "PatchChild:#childScope/0": {
@@ -35,15 +35,15 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQIAAA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQIAAA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchBranch:#div/0": [{
       "PatchChild:#childScope/0": {
@@ -55,4 +55,4 @@
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

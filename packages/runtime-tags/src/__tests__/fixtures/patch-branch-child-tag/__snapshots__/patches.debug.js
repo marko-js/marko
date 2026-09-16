@@ -10,14 +10,14 @@
 "BAI"
 
 // PATCH holding BAI
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "c",
       "PatchText:#text/1": " (n)"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-tag/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAI
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-tag/template.marko_2*shell,<em>closed</em>`, (_.a = {

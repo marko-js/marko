@@ -18,7 +18,7 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchAttrs:#div/0": [{
@@ -33,4 +33,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-spread/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

@@ -9,26 +9,26 @@
 "BAEB"
 
 // PATCH holding BAEB
-(_.a = {
+[(_.a = {
   ca: {
     ba: [{
       fa: "^^a0"
     }, "b0"]
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEB
-(_.a = {
+[(_.a = {
   ca: {
     ba: 0
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEB
-(_.a = {
+[(_.a = {
   ca: {
     ba: [{
       fa: "^^a0"
     }, "b0"]
   }
-}, _.a)
+}, _.a)]

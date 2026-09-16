@@ -23,7 +23,7 @@
     }
   }
 }, _.a)]
-(_.b = {
+[(_.b = {
   "PatchChild:#childScope/1": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:BranchScopes:#text/0": {
@@ -31,19 +31,19 @@
       }
     }
   }
-}, _.b)
+}, _.b)]
 "BgIB"
 
 // PATCH holding BgIB
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": 0,
   "PatchChild:#childScope/1": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-hidden-before-content/template.marko_2_#text#0/await"
     }
   }
-}, _.a)
-(_.b = {
+}, _.a)]
+[(_.b = {
   "PatchChild:#childScope/1": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:BranchScopes:#text/0": {
@@ -51,4 +51,4 @@
       }
     }
   }
-}, _.b)
+}, _.b)]

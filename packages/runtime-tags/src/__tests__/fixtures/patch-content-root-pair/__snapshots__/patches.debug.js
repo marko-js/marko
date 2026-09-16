@@ -1,4 +1,4 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchDynamicTag:#text/0": ["div"]
-}, _.a)
+}, _.a)]

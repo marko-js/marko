@@ -27,7 +27,7 @@
 "BQEAAAA"
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchHtml:#text/0": "\x3Cu>d\x3C/u>",
     "PatchHtml:#text/1": "\x3Cu>d\x3C/u>",
@@ -41,9 +41,9 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_4*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unescaped-hole-in-shell/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   "PatchBranch:#main/0": 0
-}, _.a)
+}, _.a)]

@@ -16,6 +16,6 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]

@@ -25,7 +25,7 @@
 "BQEAAAA"
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   la: [{
     ta: "1",
     tb: "c"
@@ -47,10 +47,10 @@
       tb: "c"
     }, "a2"]
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   la: [{
     ta: "1",
     tb: "d"
@@ -64,10 +64,10 @@
     ta: "2"
   }, "a3"],
   bc: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   la: [{
     ta: "1",
     tb: "e"
@@ -89,4 +89,4 @@
       tb: "e"
     }, "a2"]
   }, "a1"]
-}, _.a)
+}, _.a)]

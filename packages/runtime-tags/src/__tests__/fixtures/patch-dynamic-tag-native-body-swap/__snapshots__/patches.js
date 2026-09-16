@@ -10,14 +10,14 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   fa: [">div", 0, "b0"],
   cAa: {
     cAa: {
       ta: "c"
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwI
 [`a;D%;<section><!></section>`, (_.a = {

@@ -1,7 +1,7 @@
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     title: "second"
   },
   wc: "second!"
-}, _.a)
+}, _.a)]

@@ -15,7 +15,7 @@
 "BQQ"
 
 // PATCH holding BQQ
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:#childScope/0": {
@@ -27,10 +27,10 @@
       }
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQQ
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:#childScope/0": {
@@ -42,4 +42,4 @@
       }
     }
   }
-}, _.a)
+}, _.a)]

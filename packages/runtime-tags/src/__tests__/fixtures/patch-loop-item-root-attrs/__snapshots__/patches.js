@@ -22,7 +22,7 @@
 "BAEA"
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   la: [{
     "aa class": "link active",
     "aa href": "/b",
@@ -32,4 +32,4 @@
     tc: "B"
   }, "a0"],
   bb: 0
-}, _.a)
+}, _.a)]

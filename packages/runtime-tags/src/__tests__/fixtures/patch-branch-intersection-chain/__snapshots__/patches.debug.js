@@ -13,10 +13,10 @@
 "BAEA"
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   "PatchBranch:#div/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_2*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko0": "Plaza"
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3_count#7/init;Db%;<p>None <!></p>`, (_.a = {
@@ -26,7 +26,7 @@
 "BAEAAA"
 
 // PATCH holding BAEAAA
-(_.a = {
+[(_.a = {
   "PatchBranch:#div/0": [2, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko0": "Plaza!"
-}, _.a)
+}, _.a)]

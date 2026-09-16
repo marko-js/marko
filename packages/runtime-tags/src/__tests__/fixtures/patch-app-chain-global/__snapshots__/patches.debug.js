@@ -25,7 +25,7 @@
 "BwY"
 
 // PATCH holding BwY
-(_.a = {
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
@@ -47,7 +47,7 @@
       "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BwY
 [`packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_2*shell;b%b/ Db%l&b;<!><!><button class=a>a:<!></button><!>`, (_.a = {
@@ -74,7 +74,7 @@
 "BwUA"
 
 // PATCH holding BwUA
-(_.a = {
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
@@ -96,4 +96,4 @@
       "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
     }
   }
-}, _.a)
+}, _.a)]

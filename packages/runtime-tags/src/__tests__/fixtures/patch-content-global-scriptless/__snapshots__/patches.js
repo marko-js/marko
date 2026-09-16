@@ -22,7 +22,7 @@
 "BQEB"
 
 // PATCH holding BQEB
-(_.a = {
+[(_.a = {
   $: {
     brand: "Zed"
   },
@@ -41,10 +41,10 @@
       }
     }
   }, "a2"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEB
-(_.a = {
+[(_.a = {
   $: {
     brand: "Qux"
   },
@@ -63,4 +63,4 @@
       }
     }
   }, "a2"]
-}, _.a)
+}, _.a)]

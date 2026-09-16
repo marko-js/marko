@@ -12,14 +12,14 @@
 "AgA"
 
 // PATCH holding AgA
-(_.a = {
+[(_.a = {
   "PatchDynamicTag:#text/0": [0, {
     label: "b"
   }]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgA
-(_.a = {
+[(_.a = {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-scriptless/child.marko", {
     label: "c"
   }],
@@ -28,4 +28,4 @@
       "PatchText:#text/0": "c"
     }
   }
-}, _.a)
+}, _.a)]

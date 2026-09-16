@@ -14,9 +14,9 @@
 "BAEAAA"
 
 // PATCH holding BAEAAA
-(_.a = {
+[(_.a = {
   ba: [{
     ba: 0
   }, "a0"],
   va0: "z"
-}, _.a)
+}, _.a)]

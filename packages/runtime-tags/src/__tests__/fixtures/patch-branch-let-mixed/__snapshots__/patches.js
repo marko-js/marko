@@ -10,17 +10,17 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   bc: 0,
   va0: "Store!"
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   bc: [{
     s: {
       va1: 0
     }
   }, "a0"],
   va0: "Store!"
-}, _.a)
+}, _.a)]

@@ -33,7 +33,7 @@
 "BwEE"
 
 // PATCH holding BwEE
-(_.a = {
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/1": {
@@ -63,4 +63,4 @@
     }
   },
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell"
-}, _.a)
+}, _.a)]

@@ -13,7 +13,7 @@
 "BAEA"
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -23,10 +23,10 @@
       }
     }
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -36,10 +36,10 @@
       }
     }
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -49,10 +49,10 @@
       }
     }
   }, "a1"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAEA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -62,4 +62,4 @@
       }
     }
   }, "a1"]
-}, _.a)
+}, _.a)]

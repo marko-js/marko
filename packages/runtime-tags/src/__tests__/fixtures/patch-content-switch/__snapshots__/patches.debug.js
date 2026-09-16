@@ -12,17 +12,17 @@
 "BgM"
 
 // PATCH holding BgM
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchBranch:#text/0": 0
     }
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko0": "a"
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgM
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchBranch:#text/0": [1, {
@@ -31,7 +31,7 @@
     }
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko0": $
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgM
 [`packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_6*shell,<b>A</b>`, (_.a = {

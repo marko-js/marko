@@ -26,7 +26,7 @@
 "BAIA"
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content",
@@ -35,15 +35,15 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": []
-}, _.a)
+}, _.a)]
 
 // PATCH holding BAIA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": _.b = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_2*content",
@@ -59,4 +59,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

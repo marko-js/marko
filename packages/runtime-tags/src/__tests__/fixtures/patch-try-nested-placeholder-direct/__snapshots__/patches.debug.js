@@ -1,5 +1,5 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchPending:#text/0": 1,
@@ -8,4 +8,4 @@
       }
     }
   }
-}, _.a)
+}, _.a)]

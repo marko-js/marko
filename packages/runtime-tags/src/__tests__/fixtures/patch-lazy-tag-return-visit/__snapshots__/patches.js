@@ -1,7 +1,7 @@
 // PATCH
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]
 
 // PATCH
 [`b0;b%b/ D%c%l&b;<!><!><button><!>:<!></button><!>`, (_.a = {
@@ -21,7 +21,7 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   z_a: {
     cAa: {
       cb: {
@@ -34,4 +34,4 @@
     }
   },
   ba: "b0"
-}, _.a)
+}, _.a)]

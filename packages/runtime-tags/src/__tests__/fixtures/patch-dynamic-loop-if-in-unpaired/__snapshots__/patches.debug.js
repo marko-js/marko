@@ -20,16 +20,16 @@
 "BQMA"
 
 // PATCH holding BQMA
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchBranch:#text/0": 0
     }
   }
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQMA
-(_.a = {
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchBranch:#text/0": [{
@@ -40,4 +40,4 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-loop-if-in-unpaired/template.marko_2*shell"]
     }
   }
-}, _.a)
+}, _.a)]

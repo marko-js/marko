@@ -1,7 +1,7 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "$global:": {
     brand: "bmce"
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-global-derived/template.marko0": "bmce"
-}, _.a)
+}, _.a)]

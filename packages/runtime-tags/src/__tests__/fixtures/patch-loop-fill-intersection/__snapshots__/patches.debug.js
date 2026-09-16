@@ -1,9 +1,9 @@
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-fill-intersection/template.marko0": "n2"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-fill-intersection/template.marko0": "n3"
-}, _.a)
+}, _.a)]

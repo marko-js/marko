@@ -15,7 +15,7 @@
 "AgE"
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
     "PatchSetup:": {
@@ -32,10 +32,10 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
     "PatchSetup:": {
@@ -47,10 +47,10 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AgE
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
     "PatchSetup:": {
@@ -67,4 +67,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

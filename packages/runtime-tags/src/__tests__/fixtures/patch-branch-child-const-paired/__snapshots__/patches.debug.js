@@ -11,7 +11,7 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchAttr:#h2/0 class": "branch",
@@ -19,15 +19,15 @@
     },
     "PatchText:#text/1": "z"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-paired/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/1": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchAttr:#h2/0 class": "branch",
@@ -35,4 +35,4 @@
     },
     "PatchText:#text/1": "v"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-const-paired/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

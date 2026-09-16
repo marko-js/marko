@@ -46,7 +46,7 @@
 "CAEABA"
 
 // PATCH holding CAEABA
-(_.a = {
+[(_.a = {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
@@ -76,4 +76,4 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko0": 2
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
-}, _.a)
+}, _.a)]

@@ -5,6 +5,6 @@
 "AwE"
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   bc: 0
-}, _.a)
+}, _.a)]

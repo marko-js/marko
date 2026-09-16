@@ -1,23 +1,23 @@
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     brand: "b"
   },
   va0: "two"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     brand: "c"
   },
   va0: "three"
-}, _.a)
+}, _.a)]
 
 // PATCH
-(_.a = {
+[(_.a = {
   $: {
     brand: "d"
   },
   va0: "four"
-}, _.a)
+}, _.a)]

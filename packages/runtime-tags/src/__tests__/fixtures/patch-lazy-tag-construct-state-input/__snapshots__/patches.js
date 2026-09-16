@@ -6,7 +6,7 @@
 "AwI"
 
 // PATCH holding AwI
-(_.a = {
+[(_.a = {
   bc: "b0",
   vb0: "c"
-}, _.a)
+}, _.a)]

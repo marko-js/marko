@@ -9,10 +9,10 @@
 "BAI"
 
 // PATCH holding BAI
-(_.a = {
+[(_.a = {
   cAa: {
     pa: "a1",
     ka: new Error("x")
   },
   va0: "c"
-}, _.a)
+}, _.a)]

@@ -85,7 +85,7 @@
 "DgEBAQMAAAA"
 
 // PATCH holding DgEBAQMAAAA
-(_.a = {
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko": {
     "PatchChild:BranchScopes:#body/0": {
       "PatchChild:#childScope/0": {
@@ -121,7 +121,7 @@
     }
   },
   "PatchBranch:#body/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding DgEBAQMAAAA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_5*shell,<p>home</p>`, (_.a = {

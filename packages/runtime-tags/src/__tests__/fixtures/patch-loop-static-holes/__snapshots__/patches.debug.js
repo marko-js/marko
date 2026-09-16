@@ -25,7 +25,7 @@
 "BQEAAAA"
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "1",
     "PatchText:#text/1": "c"
@@ -47,10 +47,10 @@
       "PatchText:#text/1": "c"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "1",
     "PatchText:#text/1": "d"
@@ -64,10 +64,10 @@
     "PatchText:#text/0": "2"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_4*shell"],
   "PatchBranch:#text/2": 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BQEAAAA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "1",
     "PatchText:#text/1": "e"
@@ -89,4 +89,4 @@
       "PatchText:#text/1": "e"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"]
-}, _.a)
+}, _.a)]

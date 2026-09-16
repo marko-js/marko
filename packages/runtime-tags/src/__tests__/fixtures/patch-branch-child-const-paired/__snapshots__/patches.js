@@ -11,7 +11,7 @@
 "AwE"
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   bb: [{
     ca: {
       "aa class": "branch",
@@ -19,15 +19,15 @@
     },
     tb: "z"
   }, "a0"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   bb: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding AwE
-(_.a = {
+[(_.a = {
   bb: [{
     ca: {
       "aa class": "branch",
@@ -35,4 +35,4 @@
     },
     tb: "v"
   }, "a0"]
-}, _.a)
+}, _.a)]

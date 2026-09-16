@@ -42,7 +42,7 @@
 "BgIAAAA"
 
 // PATCH holding BgIAAAA
-(_.a = {
+[(_.a = {
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
     "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-nested-flow/template.marko_4*shell"
@@ -51,4 +51,4 @@
   "PatchChild:#childScope/2": {
     "PatchText:#text/0": "sold"
   }
-}, _.a)
+}, _.a)]

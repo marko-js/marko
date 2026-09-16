@@ -15,7 +15,7 @@
 "BgIAAA"
 
 // PATCH holding BgIAAA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a2",
@@ -27,15 +27,15 @@
       }
     }
   }, "a3"]
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgIAAA
-(_.a = {
+[(_.a = {
   ba: 0
-}, _.a)
+}, _.a)]
 
 // PATCH holding BgIAAA
-(_.a = {
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a2",
@@ -47,4 +47,4 @@
       }
     }
   }, "a3"]
-}, _.a)
+}, _.a)]
