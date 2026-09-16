@@ -1,5 +1,5 @@
 // PATCH
-[`a4;b%;<!><!><!>`, `a2;D ;<em> </em>`, `a3;b%;<!><!><!>`, `a0,loading`, `a5;/D%l&;<section><!></section>`, {
+[`a4;b%;<!><!><!>`, `a2;D ;<em> </em>`, `a3;b%;<!><!><!>`, `a0,loading`, `a5;/D%l&;<section><!></section>`, (_.a = {
   ba: [{
     ca: {
       fa: "^a4",
@@ -13,5 +13,5 @@
       }
     }
   }, "a5"]
-}]
+}, _.a)]
 "CAEBAAAA"

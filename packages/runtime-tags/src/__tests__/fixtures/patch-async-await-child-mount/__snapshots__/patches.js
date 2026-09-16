@@ -1,10 +1,10 @@
 // PATCH
-[`a1;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, `a2;b%;<!><!><!>`, {
+[`a1;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, `a2;b%;<!><!><!>`, (_.a = {
   ba: [{
     pa: "a1"
   }, "a2"]
-}]
-{
+}, _.a)]
+[(_.b = {
   cAa: {
     cAa: {
       ca: {
@@ -16,5 +16,5 @@
       }
     }
   }
-}
+}, _.b)]
 "BQIA"

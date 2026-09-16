@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7,<p>promo</p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7,<p>promo</p>`, (_.a = {
   "$global:": {
     brand: "Marko"
   },
@@ -8,11 +8,11 @@
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "1 input_value"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
-}]
+}, _.a)]
 "AgE"
 
 // PATCH holding AgE
-{
+[(_.a = {
   "$global:": {
     brand: "Marko"
   },
@@ -21,10 +21,10 @@
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "1 input_value"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
-}
+}, _.a)]
 
 // PATCH holding AgE
-{
+[(_.a = {
   "$global:": {
     brand: "Fresh"
   },
@@ -33,10 +33,10 @@
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "1 input_value"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "b"
-}
+}, _.a)]
 
 // PATCH holding AgE
-{
+[(_.a = {
   "$global:": {
     brand: "Patch"
   },
@@ -45,4 +45,4 @@
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#6_$global_brand#7": "1 input_value"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchWrite:input_value": "c"
-}
+}, _.a)]

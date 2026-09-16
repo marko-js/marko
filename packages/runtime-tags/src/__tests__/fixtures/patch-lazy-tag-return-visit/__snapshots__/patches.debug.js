@@ -1,10 +1,10 @@
 // PATCH
-{
+[(_.a = {
   "PatchBranch:#main/0": 0
-}
+}, _.a)]
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell;b%b/ D%c%l&b;<!><!><button><!>:<!></button><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell;b%b/ D%c%l&b;<!><!><button><!>:<!></button><!>`, (_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko": {
     "PatchChild:BranchScopes:#main/0": {
       "PatchChild:#childScope/1": {
@@ -17,11 +17,11 @@
     }
   },
   "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"
-}]
+}, _.a)]
 "AwI"
 
 // PATCH holding AwI
-{
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko": {
     "PatchChild:BranchScopes:#main/0": {
       "PatchChild:#childScope/1": {
@@ -34,4 +34,4 @@
     }
   },
   "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"
-}
+}, _.a)]

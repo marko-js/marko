@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/child.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/child.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/child.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/child.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, (_.a = {
   "PatchChild:#childScope/3": {
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
@@ -8,5 +8,5 @@
       "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/store.marko_0/_return", 2, "#childScope/0", "TagVariableChange:count"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/child.marko_1*shell"]
   }
-}]
+}, _.a)]
 "BAE"

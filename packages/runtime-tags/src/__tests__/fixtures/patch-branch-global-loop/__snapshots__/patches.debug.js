@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell;/D b D m&;<p> <button> </button></p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell; ;<div></div>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell;/D b D m&;<p> <button> </button></p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell; ;<div></div>`, (_.a = {
   "$global:": {
     search: [{
       q: "b"
@@ -10,7 +10,7 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "b1",
         "PatchSetup:": {
-          "PatchInit:": _.a = "!packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_0",
+          "PatchInit:": _.b = "!packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_0",
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
         }
       }
@@ -18,7 +18,7 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "b2",
         "PatchSetup:": {
-          "PatchInit:": _.a,
+          "PatchInit:": _.b,
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
         }
       }
@@ -26,26 +26,26 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "b3",
         "PatchSetup:": {
-          "PatchInit:": _.a,
+          "PatchInit:": _.b,
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell"]
-}]
+}, _.a)]
 "BQIB"
 
 // PATCH holding BQIB
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_2*shell,<p>invalid</p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_2*shell,<p>invalid</p>`, (_.a = {
   "$global:": {
     search: [null, !0]
   },
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_2*shell"
-}]
+}, _.a)]
 "BQIAAA"
 
 // PATCH holding BQIAAA
-{
+[(_.a = {
   "$global:": {
     search: [{
       q: "c"
@@ -56,7 +56,7 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "c1",
         "PatchSetup:": {
-          "PatchInit:": _.a = "!packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_0",
+          "PatchInit:": _.b = "!packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_0",
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
         }
       }
@@ -64,7 +64,7 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "c2",
         "PatchSetup:": {
-          "PatchInit:": _.a,
+          "PatchInit:": _.b,
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
         }
       }
@@ -72,10 +72,10 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "c3",
         "PatchSetup:": {
-          "PatchInit:": _.a,
+          "PatchInit:": _.b,
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_1*shell"]
-}
+}, _.a)]

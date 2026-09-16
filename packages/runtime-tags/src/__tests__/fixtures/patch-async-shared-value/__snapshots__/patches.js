@@ -1,20 +1,20 @@
 // PATCH
-{
+[(_.a = {
   ca: {
     ea0: "d e",
-    we: _.a = {
+    we: _.b = {
       label: "b"
     }
   },
   cb: {
     ea0: "d e",
-    we: _.a
+    we: _.b
   },
   cAc: {
     pa: 1
   }
-}
-{
+}, _.a)]
+[(_.c = {
   cAc: {
     cAa: {
       ta: "y",
@@ -25,8 +25,8 @@
         },
         ea0: "d e",
         wd: "c",
-        we: _.a
+        we: _.b
       }
     }
   }
-}
+}, _.c)]

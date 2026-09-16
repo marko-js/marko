@@ -1,11 +1,11 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content;D%c%c%;<i><!>:<!>:<!></i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell;/D%l&;<section><!></section>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content;D%c%c%;<i><!>:<!>:<!></i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell;/D%l&;<section><!></section>`, (_.a = {
   "$global:": {
     brand: "Acme"
   },
   "PatchLoop:#main/0": [{
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": _.a = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content",
+      "PatchDynamicTag:#text/0": _.b = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Acme",
         "PatchText:#text/1": "q",
@@ -14,7 +14,7 @@
     }
   }, {
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": _.a,
+      "PatchDynamicTag:#text/0": _.b,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Acme",
         "PatchText:#text/1": "q",
@@ -22,17 +22,17 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell"]
-}]
+}, _.a)]
 "BAIA"
 
 // PATCH holding BAIA
-{
+[(_.a = {
   "$global:": {
     brand: "Zed"
   },
   "PatchLoop:#main/0": [{
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": _.a = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content",
+      "PatchDynamicTag:#text/0": _.b = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Zed",
         "PatchText:#text/1": "q",
@@ -41,7 +41,7 @@
     }
   }, {
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": _.a,
+      "PatchDynamicTag:#text/0": _.b,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Zed",
         "PatchText:#text/1": "q",
@@ -50,7 +50,7 @@
     }
   }, {
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": _.a,
+      "PatchDynamicTag:#text/0": _.b,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "Zed",
         "PatchText:#text/1": "q",
@@ -58,4 +58,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell"]
-}
+}, _.a)]

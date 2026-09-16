@@ -1,5 +1,5 @@
 // PATCH
-[`c2;D%c%;<li><!>:<!></li>`, `c1; ;<ul></ul>`, {
+[`c2;D%c%;<li><!>:<!></li>`, `c1; ;<ul></ul>`, (_.a = {
   ca: {
     cAb: {
       ba: [{
@@ -16,20 +16,20 @@
       }, "c1"]
     }
   }
-}]
+}, _.a)]
 "BQMA"
 
 // PATCH holding BQMA
-{
+[(_.a = {
   ca: {
     cAb: {
       ba: 0
     }
   }
-}
+}, _.a)]
 
 // PATCH holding BQMA
-{
+[(_.a = {
   ca: {
     cAb: {
       ba: [{
@@ -40,4 +40,4 @@
       }, "c1"]
     }
   }
-}
+}, _.a)]

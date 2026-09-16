@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-dynamic-body/template.marko_2*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-dynamic-body/template.marko_1*shell;/E l%l&;<section><h2> </h2><!></section>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-dynamic-body/template.marko_2*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-dynamic-body/template.marko_1*shell;/E l%l&;<section><h2> </h2><!></section>`, (_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "b",
@@ -9,5 +9,5 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-dynamic-body/template.marko_1*shell"]
-}]
+}, _.a)]
 "BAIA"

@@ -1,15 +1,15 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2_input_title#6/init packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2_count#7/init;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2_input_title#6/init packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2_count#7/init;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell;b%;<!><!><!>`, (_.a = {
   "PatchBranch:#text/0": [1, {
     "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2*shell"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko0": "Fresh"
-}]
+}, _.a)]
 "BAEA"
 
 // PATCH holding BAEA
-[`packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell,<p>shown</p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell,<p>shown</p>`, (_.a = {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko0": "Fresh"
-}]
+}, _.a)]
 "BAEAAA"

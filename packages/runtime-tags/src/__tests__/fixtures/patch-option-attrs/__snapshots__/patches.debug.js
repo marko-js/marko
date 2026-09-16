@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-option-attrs/template.marko_1*shell; D ;<option> </option>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-option-attrs/template.marko_1*shell; D ;<option> </option>`, (_.a = {
   "PatchControl:3#select/0": "z",
   "PatchLoop:#select/0": [1, {
     "PatchAttr:#option/0 value": "x",
@@ -10,5 +10,5 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-option-attrs/template.marko_1*shell"],
   "PatchAttr:#option/1 selected": 0,
   "PatchAttr:#option/2 selected": ""
-}]
+}, _.a)]
 "AgE"

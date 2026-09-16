@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/template.marko_1_input_attrs#4; b%b/ D%c%l&b;<div>x</div><!><button><!>:<!></button><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/template.marko_1_input_attrs#4; b%b/ D%c%l&b;<div>x</div><!><button><!>:<!></button><!>`, (_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/child.marko": {
     "PatchChild:BranchScopes:#main/0": {
       "PatchChild:#childScope/2": {
@@ -16,5 +16,5 @@
       title: "t"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/template.marko_1*shell"]
-}]
+}, _.a)]
 "AwI"

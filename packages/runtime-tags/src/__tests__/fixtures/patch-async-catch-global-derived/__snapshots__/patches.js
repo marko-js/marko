@@ -1,5 +1,5 @@
 // PATCH
-{
+[(_.a = {
   $: {
     brand: "bmce"
   },
@@ -8,4 +8,4 @@
     ka: new Error("boom")
   },
   va0: "bmce!"
-}
+}, _.a)]

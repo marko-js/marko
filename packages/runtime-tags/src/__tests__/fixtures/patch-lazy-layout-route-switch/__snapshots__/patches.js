@@ -1,5 +1,5 @@
 // PATCH
-[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `d3;b%b/b&b;<!><!><h1>A</h1><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
+[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `d3;b%b/b&b;<!><!><h1>A</h1><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, (_.a = {
   z_a: {
     cAa: {
       ca: {
@@ -12,8 +12,8 @@
     }
   },
   ba: [1, {}, "d1"]
-}]
-[`a2;D ;<a> </a>`, {
+}, _.a)]
+[`a2;D ;<a> </a>`, (_.b = {
   z_a: {
     cAa: {
       ca: {
@@ -27,11 +27,11 @@
       }
     }
   }
-}]
+}, _.b)]
 "DAIAAwAB"
 
 // PATCH holding DAIAAwAB
-[`d4;b%b/b&b;<!><!><h1>B</h1><!>`, {
+[`d4;b%b/b&b;<!><!><h1>B</h1><!>`, (_.a = {
   z_a: {
     cAa: {
       ca: {
@@ -49,11 +49,11 @@
     }
   },
   ba: [1, {}, "d1"]
-}]
+}, _.a)]
 "DAIAAwABAA"
 
 // PATCH holding DAIAAwABAA
-[`d2,<p>home</p>`, {
+[`d2,<p>home</p>`, (_.a = {
   ba: "d2"
-}]
+}, _.a)]
 "DAIAAwAAAAA"

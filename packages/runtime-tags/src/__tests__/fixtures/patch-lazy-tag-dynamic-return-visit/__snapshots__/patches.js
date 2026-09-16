@@ -1,12 +1,12 @@
 // PATCH
-{
+[(_.a = {
   fc: [0, {
     label: "a"
   }]
-}
+}, _.a)]
 
 // PATCH
-[`a;D ;<button> </button>`, {
+[`a;D ;<button> </button>`, (_.a = {
   fc: ["a", {
     label: "b"
   }],
@@ -15,11 +15,11 @@
       ta: "b"
     }
   }
-}]
+}, _.a)]
 "AgA"
 
 // PATCH holding AgA
-{
+[(_.a = {
   fc: ["a", {
     label: "c"
   }],
@@ -28,4 +28,4 @@
       ta: "c"
     }
   }
-}
+}, _.a)]

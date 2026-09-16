@@ -1,8 +1,8 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-controllable-branch-default/template.marko_1*shell; ;<input>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-controllable-branch-default/template.marko_1*shell; ;<input>`, (_.a = {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
     "PatchControl:2#input/0": "second"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-controllable-branch-default/template.marko_1*shell"]
-}]
+}, _.a)]
 "AgE"

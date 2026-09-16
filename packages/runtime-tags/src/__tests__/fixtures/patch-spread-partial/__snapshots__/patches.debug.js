@@ -1,5 +1,5 @@
 // PATCH
-{
+[(_.a = {
   "PatchAttrs:#button/0": [{
     title: "B"
   }, {
@@ -12,4 +12,4 @@
     class: 1
   }],
   "PatchText:#text/3": "l2"
-}
+}, _.a)]

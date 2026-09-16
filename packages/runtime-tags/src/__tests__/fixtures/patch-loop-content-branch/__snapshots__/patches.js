@@ -1,5 +1,5 @@
 // PATCH
-[`a0;b%;<!><!><!>`, `a2;D ;<em> </em>`, `a3;D ;<span> </span>`, `a1;/E l%l&;<li><b> </b><!></li>`, {
+[`a0;b%;<!><!><!>`, `a2;D ;<em> </em>`, `a3;D ;<span> </span>`, `a1;/E l%l&;<li><b> </b><!></li>`, (_.a = {
   la: [{
     ca: {
       ta: "a",
@@ -31,11 +31,11 @@
       }
     }
   }, "a1"]
-}]
+}, _.a)]
 "BgEAAAA"
 
 // PATCH holding BgEAAAA
-{
+[(_.a = {
   la: [{
     ca: {
       ta: "c",
@@ -47,10 +47,10 @@
       }
     }
   }, "a1"]
-}
+}, _.a)]
 
 // PATCH holding BgEAAAA
-{
+[(_.a = {
   la: [{
     ca: {
       ta: "x",
@@ -72,4 +72,4 @@
       }
     }
   }, "a1"]
-}
+}, _.a)]

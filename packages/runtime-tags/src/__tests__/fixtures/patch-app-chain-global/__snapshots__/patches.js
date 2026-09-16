@@ -1,5 +1,5 @@
 // PATCH
-[`d2;b%b/ Db%c%c%l&b;<!><!><button class=b>b:<!>:<!>:<!></button><!>`, {
+[`d2;b%b/ Db%c%c%l&b;<!><!><button class=b>b:<!>:<!>:<!></button><!>`, (_.a = {
   z_c: {
     ca: {
       cAc: {
@@ -21,11 +21,11 @@
       ba: [1, {}, "d2"]
     }
   }
-}]
+}, _.a)]
 "BwY"
 
 // PATCH holding BwY
-{
+[(_.a = {
   z_c: {
     ca: {
       cAc: {
@@ -47,10 +47,10 @@
       ba: [1, {}, "d2"]
     }
   }
-}
+}, _.a)]
 
 // PATCH holding BwY
-[`d1;b%b/ Db%l&b;<!><!><button class=a>a:<!></button><!>`, {
+[`d1;b%b/ Db%l&b;<!><!><button class=a>a:<!></button><!>`, (_.a = {
   z_b: {
     ca: {
       cAc: {
@@ -70,11 +70,11 @@
       ba: "d1"
     }
   }
-}]
+}, _.a)]
 "BwUA"
 
 // PATCH holding BwUA
-{
+[(_.a = {
   z_c: {
     ca: {
       cAc: {
@@ -96,4 +96,4 @@
       ba: [1, {}, "d2"]
     }
   }
-}
+}, _.a)]

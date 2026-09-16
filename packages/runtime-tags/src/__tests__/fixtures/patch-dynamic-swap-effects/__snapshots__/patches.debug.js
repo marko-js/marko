@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-effects/card-live.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-effects/card-live.marko_0; D%c%;<button><!> <!></button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-effects/card-live.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-effects/card-live.marko_0; D%c%;<button><!> <!></button>`, (_.a = {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-effects/card-live.marko", {
     label: "b"
   }],
@@ -9,5 +9,5 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-effects/card-live.marko0": 0
     }
   }
-}]
+}, _.a)]
 "AwA"

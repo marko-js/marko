@@ -1,5 +1,5 @@
 // PATCH
-[`a0; D/D l&D m;<a class=link><svg viewBox="0 0 1 1"><title></title></svg><span> </span></a>`, `a1;D ;<p> </p>`, {
+[`a0; D/D l&D m;<a class=link><svg viewBox="0 0 1 1"><title></title></svg><span> </span></a>`, `a1;D ;<p> </p>`, (_.a = {
   la: [{
     "aa class": "link",
     "aa href": "/a",
@@ -18,11 +18,11 @@
   bb: [{
     ta: "b"
   }, "a1"]
-}]
+}, _.a)]
 "BAEA"
 
 // PATCH holding BAEA
-{
+[(_.a = {
   la: [{
     "aa class": "link active",
     "aa href": "/b",
@@ -32,4 +32,4 @@
     tc: "B"
   }, "a0"],
   bb: 0
-}
+}, _.a)]

@@ -1,5 +1,5 @@
 // PATCH
-{
+[(_.a = {
   $: {
     brand: "Acme Co",
     locale: "fr"
@@ -13,4 +13,4 @@
   cf: {
     ta: "2027"
   }
-}
+}, _.a)]

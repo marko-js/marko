@@ -1,5 +1,5 @@
 // PATCH
-[`e0;b%;<!><!><!>`, `e4;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b/bD%l&b;<!><nav>docs</nav><article><!></article><!>`, {
+[`e0;b%;<!><!><!>`, `e4;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b/bD%l&b;<!><nav>docs</nav><article><!></article><!>`, (_.a = {
   z_a: {
     ca: {
       cAa: {
@@ -19,11 +19,11 @@
       ba: [1, {}, "e2"]
     }
   }
-}]
+}, _.a)]
 "CwUBAQ"
 
 // PATCH holding CwUBAQ
-[`e5;b%b/b&b;<!><!><h1>B</h1><!>`, {
+[`e5;b%b/b&b;<!><!><h1>B</h1><!>`, (_.a = {
   z_a: {
     ca: {
       cAa: {
@@ -43,15 +43,15 @@
       ba: [1, {}, "e2"]
     }
   }
-}]
+}, _.a)]
 "CwUBAQA"
 
 // PATCH holding CwUBAQA
-[`e3,<p>home</p>`, {
+[`e3,<p>home</p>`, (_.a = {
   ca: {
     cAa: {
       ba: "e3"
     }
   }
-}]
+}, _.a)]
 "CwUBAAAA"

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-nested-body-in-unpaired/template.marko_2*content;%c%;<!>!<!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-nested-body-in-unpaired/template.marko_2*content;%c%;<!>!<!>`, (_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:#childScope/0": {
@@ -11,11 +11,11 @@
       }
     }
   }
-}]
+}, _.a)]
 "BQQ"
 
 // PATCH holding BQQ
-{
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:#childScope/0": {
@@ -27,10 +27,10 @@
       }
     }
   }
-}
+}, _.a)]
 
 // PATCH holding BQQ
-{
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:#childScope/0": {
@@ -42,4 +42,4 @@
       }
     }
   }
-}
+}, _.a)]

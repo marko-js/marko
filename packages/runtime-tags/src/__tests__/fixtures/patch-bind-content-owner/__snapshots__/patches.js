@@ -1,5 +1,5 @@
 // PATCH
-[`a1 a6!a3;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`a1 a6!a3;Db%l ;<span>Seen <!></span><button>+</button>`, (_.a = {
   cd: {
     cAa: {
       ba: [{
@@ -10,5 +10,5 @@
       }, "a1"]
     }
   }
-}]
+}, _.a)]
 "BQI"

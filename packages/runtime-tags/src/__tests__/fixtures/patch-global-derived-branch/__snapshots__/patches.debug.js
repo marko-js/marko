@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_1*shell;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_2*shell; ;<style></style>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_1*shell;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_2*shell; ;<style></style>`, (_.a = {
   "PatchLoop:#text/0": [{
     "PatchText:#text/0": "a"
   }, {
@@ -8,11 +8,11 @@
   "PatchBranch:#text/1": [{
     "PatchTextContent:#style/0": "a+b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-global-derived-branch/template.marko_2*shell"]
-}]
+}, _.a)]
 "AwEA"
 
 // PATCH holding AwEA
-{
+[(_.a = {
   "PatchLoop:#text/0": [],
   "PatchBranch:#text/1": 0
-}
+}, _.a)]

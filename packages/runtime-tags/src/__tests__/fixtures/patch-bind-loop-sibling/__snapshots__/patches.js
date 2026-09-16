@@ -1,5 +1,5 @@
 // PATCH
-[`a2 a6!a4;Db%l ;<span>Seen <!></span><button>+</button>`, `a1;b%;<!><!><!>`, `a0;0&D%c%l%c;<p><!>:<!></p><!><!>`, {
+[`a2 a6!a4;Db%l ;<span>Seen <!></span><button>+</button>`, `a1;b%;<!><!><!>`, `a0;0&D%c%l%c;<p><!>:<!></p><!><!>`, (_.a = {
   la: ["x", {
     ca: {
       s: {
@@ -37,5 +37,5 @@
       ba: 0
     }, "a1"]
   }, "a0"]
-}]
+}, _.a)]
 "BQEAAA"

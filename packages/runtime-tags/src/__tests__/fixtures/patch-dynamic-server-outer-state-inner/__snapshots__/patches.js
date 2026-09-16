@@ -1,5 +1,5 @@
 // PATCH
-[`b;E l%;<section><em> </em><!></section>`, `c1 c6;b/E l%l&b;<!><article><b> </b><!></article><!>`, `c0; ; `, {
+[`b;E l%;<section><em> </em><!></section>`, `c1 c6;b/E l%l&b;<!><article><b> </b><!></article><!>`, `c0; ; `, (_.a = {
   fa: ["b", 0, "c1"],
   cAa: {
     ta: "-",
@@ -13,11 +13,11 @@
       }
     }
   }
-}]
+}, _.a)]
 "BQEBAA"
 
 // PATCH holding BQEBAA
-{
+[(_.a = {
   fa: [0, 0, "c1"],
   cAa: {
     ca: {
@@ -27,10 +27,10 @@
       }
     }
   }
-}
+}, _.a)]
 
 // PATCH holding BQEBAA
-{
+[(_.a = {
   fa: ["b", 0, "c1"],
   cAa: {
     ta: "-",
@@ -44,4 +44,4 @@
       }
     }
   }
-}
+}, _.a)]

@@ -1,5 +1,5 @@
 // PATCH
-[`a !a0; D%c%;<button><!> <!></button>`, {
+[`a !a0; D%c%;<button><!> <!></button>`, (_.a = {
   fa: ["a", {
     label: "b"
   }],
@@ -9,5 +9,5 @@
       va0: 0
     }
   }
-}]
+}, _.a)]
 "AwA"

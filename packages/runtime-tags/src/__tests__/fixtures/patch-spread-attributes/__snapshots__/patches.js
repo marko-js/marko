@@ -1,5 +1,5 @@
 // PATCH
-{
+[(_.a = {
   ja: {
     href: "/static",
     class: "y",
@@ -7,10 +7,10 @@
   },
   tb: "b",
   bc: 0
-}
+}, _.a)]
 
 // PATCH
-[`a0 !a1; ;<img>`, {
+[`a0 !a1; ;<img>`, (_.a = {
   ja: {
     href: "/static",
     class: "y"
@@ -23,11 +23,11 @@
       width: 10
     }
   }, "a0"]
-}]
+}, _.a)]
 "AgE"
 
 // PATCH holding AgE
-{
+[(_.a = {
   ja: {
     href: "/static",
     class: "y"
@@ -39,4 +39,4 @@
       src: "/j.png"
     }
   }, "a0"]
-}
+}, _.a)]

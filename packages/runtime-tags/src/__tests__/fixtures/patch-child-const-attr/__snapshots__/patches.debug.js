@@ -1,10 +1,10 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-child-const-attr/tags/badge/index.marko_1*shell;D ;<b> </b>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-child-const-attr/tags/badge/index.marko_1*shell;D ;<b> </b>`, (_.a = {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchText:#text/0": "hi"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-const-attr/tags/badge/index.marko_1*shell"],
     "PatchText:#text/1": "b"
   }
-}]
+}, _.a)]
 "AwE"

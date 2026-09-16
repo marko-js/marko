@@ -1,5 +1,5 @@
 // PATCH
-[`a0 !a2;0 D l& b;<div class=box> </div><button id=read>read</button>`, {
+[`a0 !a2;0 D l& b;<div class=box> </div><button id=read>read</button>`, (_.a = {
   ba: [{
     ca: {
       1: "b0",
@@ -12,5 +12,5 @@
       wd: b(1)
     }
   }, "a0"]
-}]
+}, _.a)]
 "AwE"

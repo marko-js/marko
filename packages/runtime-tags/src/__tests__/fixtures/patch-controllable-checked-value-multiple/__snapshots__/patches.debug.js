@@ -1,11 +1,11 @@
 // PATCH
-{
-  "PatchControl:1#input/0": [_.a = ["a", "b"], "a"],
-  "PatchControl:1#input/1": [_.a, "b"]
-}
+[(_.a = {
+  "PatchControl:1#input/0": [_.b = ["a", "b"], "a"],
+  "PatchControl:1#input/1": [_.b, "b"]
+}, _.a)]
 
 // PATCH
-{
-  "PatchControl:1#input/0": [_.a = [], "a"],
-  "PatchControl:1#input/1": [_.a, "b"]
-}
+[(_.a = {
+  "PatchControl:1#input/0": [_.b = [], "a"],
+  "PatchControl:1#input/1": [_.b, "b"]
+}, _.a)]

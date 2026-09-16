@@ -1,11 +1,11 @@
 // PATCH
-{
+[(_.a = {
   z_a: {
     cd: {
-      we: _.a = {
+      we: _.b = {
         label: "b"
       }
     }
   },
-  wh: _.a
-}
+  wh: _.b
+}, _.a)]

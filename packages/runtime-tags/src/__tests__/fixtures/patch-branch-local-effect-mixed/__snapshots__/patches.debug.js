@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell;D l%;<p> </p><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell;D l%;<p> </p><!><!>`, (_.a = {
   "PatchBranch:#main/0": [{
     "PatchWrite:label": "b!",
     "PatchText:#text/0": "b!",
@@ -8,11 +8,11 @@
     }]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell"],
   "PatchWrite:input_suffix": "."
-}]
+}, _.a)]
 "AgE"
 
 // PATCH holding AgE
-{
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchWrite:label": "b!",
     "PatchText:#text/0": "b!",
@@ -21,4 +21,4 @@
     }]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-mixed/template.marko_1*shell"],
   "PatchWrite:input_suffix": "?"
-}
+}, _.a)]

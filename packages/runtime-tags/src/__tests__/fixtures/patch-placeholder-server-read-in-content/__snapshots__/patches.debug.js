@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read-in-content/template.marko_3_#text#0/await,<div id=done>done</div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read-in-content/template.marko_3*content;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read-in-content/template.marko_3_#text#0/await,<div id=done>done</div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read-in-content/template.marko_3*content;b%;<!><!><!>`, (_.a = {
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:BranchScopes:#text/0": [{
@@ -9,5 +9,5 @@
     }
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read-in-content/template.marko0": "b"
-}]
+}, _.a)]
 "BgMA"

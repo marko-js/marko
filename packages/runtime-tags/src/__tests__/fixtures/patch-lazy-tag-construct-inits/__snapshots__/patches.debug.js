@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_1_count#5/init;D%c%;<span><!>:<!></span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell;b%b/ b%c&b;<!><!><button>+</button><!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_1_count#5/init;D%c%;<span><!>:<!></span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell;b%b/ b%c&b;<!><!><button>+</button><!><!><!>`, (_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko": {
     "PatchChild:BranchScopes:#main/2": {
       "PatchChild:#childScope/1": {
@@ -19,11 +19,11 @@
   },
   "PatchBranch:#main/2": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell",
   "PatchText:#text/3": "b"
-}]
+}, _.a)]
 "BAEB"
 
 // PATCH holding BAEB
-{
+[(_.a = {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko": {
     "PatchChild:BranchScopes:#main/2": {
       "PatchChild:#childScope/1": {
@@ -43,4 +43,4 @@
   },
   "PatchBranch:#main/2": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell",
   "PatchText:#text/3": "c"
-}
+}, _.a)]

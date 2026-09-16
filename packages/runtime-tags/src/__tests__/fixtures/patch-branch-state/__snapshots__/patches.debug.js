@@ -1,6 +1,6 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-state/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-state/template.marko_1_count#8/init;Db%;<p>Seen <!> times</p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-state/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-state/template.marko_1_count#8/init;Db%;<p>Seen <!> times</p>`, (_.a = {
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-state/template.marko_1*shell"
-}]
+}, _.a)]
 "AgE"

@@ -1,5 +1,5 @@
 // PATCH
-[`a0;/E lD l D m&;<div class=card><h2> </h2><p> </p><button class=t> </button></div>`, {
+[`a0;/E lD l D m&;<div class=card><h2> </h2><p> </p><button class=t> </button></div>`, (_.a = {
   ca: {
     ta: "B",
     tb: ""
@@ -14,11 +14,11 @@
       }
     }
   }, "a0"]
-}]
+}, _.a)]
 "AwE"
 
 // PATCH holding AwE
-{
+[(_.a = {
   ca: {
     ta: "B",
     tb: "n2"
@@ -33,4 +33,4 @@
       }
     }
   }, "a0"]
-}
+}, _.a)]

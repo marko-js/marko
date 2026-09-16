@@ -1,13 +1,13 @@
 // PATCH
-[`a1; ;<div></div>`, {
+[`a1; ;<div></div>`, (_.a = {
   ba: [{
     ba: 0
   }, "a1"]
-}]
+}, _.a)]
 "BQI"
 
 // PATCH holding BQI
-[`a0;D ;<em> </em>`, `a2;/D l%c&b;<p> </p><!><!><!>`, {
+[`a0;D ;<em> </em>`, `a2;/D l%c&b;<p> </p><!><!><!>`, (_.a = {
   ba: [{
     ba: [{
       ca: {
@@ -19,11 +19,11 @@
       }
     }, "a2"]
   }, "a1"]
-}]
+}, _.a)]
 "BQEAAA"
 
 // PATCH holding BQEAAA
-{
+[(_.a = {
   ba: [{
     ba: [{
       ca: {
@@ -35,15 +35,15 @@
       }
     }, "a2"]
   }, "a1"]
-}
+}, _.a)]
 
 // PATCH holding BQEAAA
-{
+[(_.a = {
   ba: 0
-}
+}, _.a)]
 
 // PATCH holding BQEAAA
-{
+[(_.a = {
   ba: [{
     ba: [{
       ca: {
@@ -55,4 +55,4 @@
       }
     }, "a2"]
   }, "a1"]
-}
+}, _.a)]

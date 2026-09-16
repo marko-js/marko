@@ -1,5 +1,5 @@
 // PATCH
-[`a0;D l%;<p> </p><!><!>`, `a1;/D%l&;<section><!></section>`, {
+[`a0;D l%;<p> </p><!><!>`, `a1;/D%l&;<section><!></section>`, (_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -9,11 +9,11 @@
       }
     }
   }, "a1"]
-}]
+}, _.a)]
 "BAEA"
 
 // PATCH holding BAEA
-{
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -23,10 +23,10 @@
       }
     }
   }, "a1"]
-}
+}, _.a)]
 
 // PATCH holding BAEA
-{
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -36,10 +36,10 @@
       }
     }
   }, "a1"]
-}
+}, _.a)]
 
 // PATCH holding BAEA
-{
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -49,10 +49,10 @@
       }
     }
   }, "a1"]
-}
+}, _.a)]
 
 // PATCH holding BAEA
-{
+[(_.a = {
   ba: [{
     ca: {
       fa: "^a0",
@@ -62,4 +62,4 @@
       }
     }
   }, "a1"]
-}
+}, _.a)]

@@ -1,5 +1,5 @@
 // PATCH
-[`a0,hi`, `b;D%;<section><!></section>`, `a1; ; `, {
+[`a0,hi`, `b;D%;<section><!></section>`, `a1; ; `, (_.a = {
   fa: [">div", {
     class: "b"
   }, "a0"],
@@ -10,11 +10,11 @@
       ta: "y"
     }
   }
-}]
+}, _.a)]
 "BAEAAA"
 
 // PATCH holding BAEAAA
-{
+[(_.a = {
   fa: [">section", {
     class: "b"
   }, "a0"],
@@ -22,10 +22,10 @@
   cAb: {
     ta: "z"
   }
-}
+}, _.a)]
 
 // PATCH holding BAEAAA
-{
+[(_.a = {
   fa: [">section", {
     class: "c"
   }, "a0"],
@@ -36,4 +36,4 @@
       ta: "w"
     }
   }
-}
+}, _.a)]

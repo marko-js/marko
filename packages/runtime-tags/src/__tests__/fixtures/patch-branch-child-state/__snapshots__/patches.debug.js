@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, (_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "A",
@@ -9,11 +9,11 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell"]
-}]
+}, _.a)]
 "AwI"
 
 // PATCH holding AwI
-{
+[(_.a = {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "B",
@@ -23,4 +23,4 @@
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-state/template.marko_1*shell"]
-}
+}, _.a)]

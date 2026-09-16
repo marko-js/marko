@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell; D lD ;<h2> </h2><p> </p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell; D lD ;<h2> </h2><p> </p>`, (_.a = {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{
       "PatchAttr:#h2/0 class": "fixed",
@@ -7,11 +7,11 @@
       "PatchText:#text/2": "b"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell"]
   }
-}]
+}, _.a)]
 "AwE"
 
 // PATCH holding AwE
-{
+[(_.a = {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{
       "PatchAttr:#h2/0 class": "fixed",
@@ -19,4 +19,4 @@
       "PatchText:#text/2": "c"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-branch-const/tags/card/index.marko_1*shell"]
   }
-}
+}, _.a)]
