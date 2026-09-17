@@ -69,6 +69,29 @@ describe("compiler/compile", () => {
       ));
   });
 
+  describe("synthetic filenames", () => {
+    const missingDir = path.join(os.tmpdir(), "marko-missing-dir", "x.marko");
+
+    it("compiles a source whose directory does not exist", () =>
+      assert.match(
+        compileSync("<let/x=1><p>${x}</p>", missingDir, {
+          translator,
+          output: "html",
+        }).code,
+        /<p>/,
+      ));
+
+    it("compiles a class api source whose directory does not exist", () =>
+      assert.match(
+        compileSync(
+          "class { onCreate() { this.state = { a: 1 } } }\n<div>${state.a}</div>",
+          missingDir,
+          { translator: "marko/translator", output: "html" },
+        ).code,
+        /<div>/,
+      ));
+  });
+
   describe("template id", () => {
     it("keeps paths with unusual characters distinct", () => {
       const dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-id-"));

@@ -14,7 +14,13 @@ export default function getComponentFiles({ hub: { file } }) {
   const { filename } = file.opts;
   const fs = file.markoOpts.fileSystem;
   const dirname = path.dirname(filename);
-  const dirFiles = fs.readdirSync(dirname).sort();
+  let dirFiles;
+  try {
+    dirFiles = fs.readdirSync(dirname).sort();
+  } catch {
+    // An in-memory source may name a directory that does not exist.
+    dirFiles = [];
+  }
   const base = getBase(filename);
   const isEntry = "index" === base || "template" === base;
   const fileMatch = `(${escapeRegExp(base)}\\.${isEntry ? "|" : ""})`;
