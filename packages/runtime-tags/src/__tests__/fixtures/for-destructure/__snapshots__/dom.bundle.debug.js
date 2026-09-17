@@ -21,7 +21,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
-	0;
 	$items($scope, [{
 		name: "Marko",
 		description: "HTML Reimagined"

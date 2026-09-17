@@ -13,7 +13,6 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/chi
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let show = true;
 	let value = 0;
 	_html(`<button class=parent>Inc</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {

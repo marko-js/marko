@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(42);
 	const $childScope = _peek_scope_id();
 	MyTag.content(...args);
-	MyTag.content(7, 8, 9);
+	MyTag.content(7, 8, void 0);
 	_set_serialize_reason(42);
 	let $cgrp;
 	$cgrp = attrTag({ y: 1 });

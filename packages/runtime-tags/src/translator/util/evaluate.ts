@@ -1,11 +1,15 @@
 import type { types as t } from "@marko/compiler";
 import { computeNode } from "@marko/compiler/babel-utils";
 
+import { skip, traverseContains } from "./traverse";
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     confident?: boolean;
     computed?: unknown;
     nullable?: boolean;
+    /** Evaluating it has no side effects, so an unread value can go. */
+    pure?: boolean;
   }
 }
 
@@ -22,10 +26,12 @@ export default function evaluate<T extends t.Expression>(value: T) {
       extra.computed = computed.value;
       extra.confident = true;
       extra.nullable = computed.value == null;
+      extra.pure = true;
     } else {
       extra.computed = undefined;
       extra.confident = false;
       extra.nullable = isNullableExpr(value);
+      extra.pure = !traverseContains(value, isImpure);
     }
   }
 
@@ -34,6 +40,47 @@ export default function evaluate<T extends t.Expression>(value: T) {
     nullable: boolean;
     computed: unknown;
   };
+}
+
+// Marko expressions treat reads (member access included) as pure, so only
+// what runs other code or writes counts; a function or method body does not
+// run where it is declared.
+function isImpure(node: t.Node) {
+  switch (node.type) {
+    case "ArrowFunctionExpression":
+    case "ClassPrivateMethod":
+    case "ClassPrivateProperty":
+    case "FunctionExpression":
+      return skip;
+    case "ClassMethod":
+    case "ObjectMethod":
+      // A computed key runs where the member is declared; the body does not.
+      return (node.computed && traverseContains(node.key, isImpure)) || skip;
+    case "ClassAccessorProperty":
+    case "ClassProperty":
+      // Only a static field's value runs where the class is declared.
+      return node.static
+        ? undefined
+        : (node.computed && traverseContains(node.key, isImpure)) || skip;
+    case "CallExpression":
+      // An immediately invoked function is as pure as what its body runs.
+      return node.callee.type === "ArrowFunctionExpression" ||
+        node.callee.type === "FunctionExpression"
+        ? traverseContains(node.arguments, isImpure) ||
+            traverseContains(node.callee.params, isImpure) ||
+            traverseContains(node.callee.body, isImpure) ||
+            skip
+        : true;
+    case "AssignmentExpression":
+    case "NewExpression":
+    case "OptionalCallExpression":
+    case "TaggedTemplateExpression":
+    case "ThrowStatement":
+    case "UpdateExpression":
+      return true;
+    case "UnaryExpression":
+      return node.operator === "delete";
+  }
 }
 
 function isNullableExpr(expr: t.Expression): boolean {

@@ -27,9 +27,9 @@ declare module "@marko/compiler/dist/types" {
 // per-translate state is which roots already emitted their `$signalReset`
 // this pass (`createSectionState` keys off the current program; each
 // translate works on a fresh AST clone).
-const [getAbortResetEmitted] = createSectionState<Set<t.NodePath<t.Node>>>(
+const [getAbortResetEmitted] = createSectionState<Set<t.NodeExtra>>(
   "abortResetEmitted",
-  () => new Set<t.NodePath<t.Node>>(),
+  () => new Set<t.NodeExtra>(),
 );
 
 export default {
@@ -64,8 +64,8 @@ export default {
       setReferencesScope(identifier);
       // Stamped on the raw (not canonical) extra: ids stay one-per-root
       // even if this extra later merges with another expression's.
-      const exprRoot = getExprRoot(identifier);
-      const rootExtra = (exprRoot.node.extra ??= { section });
+      const rootExtra = (getExprRoot(identifier).node.extra ??= { section });
+      (identifier.node.extra ??= {}).exprRoot = rootExtra;
       if (rootExtra.abortId === undefined) {
         rootExtra.abortId = section.abortSignalExprs++;
       }
@@ -112,8 +112,8 @@ export default {
           );
         } else {
           const section = getSection(identifier);
-          const exprRoot = getExprRoot(identifier);
-          const exprId = exprRoot.node.extra!.abortId!;
+          const exprRoot = identifier.node.extra!.exprRoot!;
+          const exprId = exprRoot.abortId!;
           const resetEmitted = getAbortResetEmitted(section);
 
           if (!resetEmitted.has(exprRoot)) {
@@ -121,7 +121,7 @@ export default {
             addStatement(
               "render",
               section,
-              exprRoot.node.extra?.referencedBindings,
+              exprRoot.referencedBindings,
               t.expressionStatement(
                 t.callExpression(importRuntime("$signalReset"), [
                   scopeIdentifier,

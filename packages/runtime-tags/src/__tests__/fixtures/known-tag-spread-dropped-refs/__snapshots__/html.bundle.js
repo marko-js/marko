@@ -10,17 +10,11 @@ var child_b_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const j1 = { a: 5 };
-	const j2 = { a: 6 };
 	let n = 1;
 	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
-	child_b_default({
-		...j1,
-		...j2,
-		a: n
-	});
+	child_b_default({ a: n });
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d: n,

@@ -102,6 +102,7 @@ export default {
     const section = getSection(fn);
     const fnExtra = (node.extra ??= {}) as RegisteredFnExtra;
     fnExtra.section = section;
+    fnExtra.exprRoot = exprRoot.node.extra ??= {};
     fnExtra.name =
       (node as t.FunctionExpression).id?.name ||
       (isMarkoAttribute(markoRoot)
@@ -131,7 +132,7 @@ export default {
     } else if (shouldAlwaysRegister(markoRoot)) {
       registerFunction(fnExtra, FORCED);
     } else {
-      getReferencesByFn().set(fnExtra, new Set([(exprRoot.node.extra ??= {})]));
+      getReferencesByFn().set(fnExtra, new Set([fnExtra.exprRoot]));
     }
   },
 } satisfies TemplateVisitor<t.Function>;

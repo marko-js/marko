@@ -34,7 +34,7 @@ export default function translateVar(
     const binding = idExtra.binding;
     if (!binding?.upstreamAlias) return;
 
-    if (binding.assignmentSections && binding.property !== undefined) {
+    if (binding.assignments && binding.property !== undefined) {
       const changeName = binding.property + "Change";
       const changeBinding =
         binding.upstreamAlias.propertyAliases.get(changeName);

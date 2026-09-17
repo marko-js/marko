@@ -1,0 +1,12 @@
+static function track(value: unknown) {
+  return value;
+}
+<const/member=input.a.b>
+<const/iife=(() => input.a && 1)()>
+<const/shape=class { run() { track(1) } }>
+<const/tracked=class { static made = track(3) }>
+<const/keyed={ [track(4)]() {} }>
+<const/field=class { [track(5)] = 1 }>
+<const/called=track(input.a)>
+<const/impureIife=(() => track(2))()>
+<div>${input.a?.b}</div>

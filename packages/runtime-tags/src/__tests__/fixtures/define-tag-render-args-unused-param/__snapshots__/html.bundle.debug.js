@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
-	MyTag.content(1, "Hello", x);
+	MyTag.content(void 0, "Hello", x);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", x)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

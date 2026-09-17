@@ -10,7 +10,7 @@ import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
-  dropNodes,
+  untrackNode,
   setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
@@ -74,7 +74,8 @@ export default {
       : undefined;
 
     if (upstreamAlias) {
-      dropNodes(valueAttr.value);
+      // The alias reads through its upstream; the value itself stays as is.
+      untrackNode(valueAttr.value);
     }
 
     const binding = trackVarReferences(tag, BindingType.derived, upstreamAlias);
@@ -96,15 +97,17 @@ export default {
       const [valueAttr] = node.attributes;
       const { value } = valueAttr;
 
+      const varBinding = node.var!.extra?.binding;
+
       if (isOutputDOM()) {
         const section = getSection(tag);
-        const varBinding = node.var!.extra?.binding;
 
-        if (varBinding && !varBinding.upstreamAlias) {
+        // An unread pure value was dropped, so there is nothing to derive.
+        if (varBinding && !varBinding.upstreamAlias && !value.extra?.pruned) {
           const derivation = initValue(varBinding)!;
           addValue(section, value.extra?.referencedBindings, derivation, value);
         }
-      } else {
+      } else if (!varBinding?.pruned || !value.extra?.pruned) {
         translateVar(tag, value);
       }
 

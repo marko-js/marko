@@ -26,6 +26,7 @@ import {
   bindingUtil,
   createBinding,
   dropNodes,
+  untrackNode,
   FORCED,
   getAllTagReferenceNodes,
   getDebugNames,
@@ -166,6 +167,25 @@ export function knownTagAnalyze(
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
 }
 
+// Arguments a child reads none of are dropped, so the render call passes
+// none; among ones it reads, a dropped argument holds its place as undefined.
+function getRenderArgs(tag: t.NodePath<t.MarkoTag>) {
+  const args = tag.node.arguments;
+  return args?.length && !args.every(isPrunedNode)
+    ? args.map(toRenderArg)
+    : null;
+}
+
+function isPrunedNode(node: t.Node) {
+  return !!node.extra?.pruned;
+}
+
+function toRenderArg(arg: t.Expression | t.SpreadElement) {
+  return isPrunedNode(arg)
+    ? t.unaryExpression("void", t.numericLiteral(0))
+    : arg;
+}
+
 export function knownTagTranslateHTML(
   tag: t.NodePath<t.MarkoTag>,
   tagIdentifier: t.Expression,
@@ -259,11 +279,11 @@ export function knownTagTranslateHTML(
 
   // TODO: make this better
   const getArgs = () => {
-    let renderArgs: (t.Expression | t.SpreadElement)[] = [];
-    if (tag.node.arguments) {
-      renderArgs = [...renderArgs, ...tag.node.arguments];
-    }
-    if (!tag.node.arguments?.length || properties.length) {
+    const args = getRenderArgs(tag);
+    const renderArgs: (t.Expression | t.SpreadElement)[] = args
+      ? [...args]
+      : [];
+    if (!args || properties.length) {
       renderArgs.push(propsToExpression(properties));
     }
     return renderArgs;
@@ -406,7 +426,6 @@ function analyzeParams(
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
       } else {
-        // drop references for duplicated attributes and unused attributes.
         dropNodes(arg);
       }
 
@@ -663,7 +682,7 @@ function analyzeAttrs(
         : undefined;
 
       if (knownSpread) {
-        dropNodes(attr.value);
+        untrackNode(attr.value);
       } else {
         (spreadReferenceNodes = restReferenceNodes || []).push(attr.value);
       }
@@ -790,10 +809,11 @@ function writeParamsToSignals(
       );
     }
 
-    const renderParams: (t.Expression | t.SpreadElement)[] = tag.node.arguments
-      ? [...tag.node.arguments]
+    const args = getRenderArgs(tag);
+    const renderParams: (t.Expression | t.SpreadElement)[] = args
+      ? [...args]
       : [];
-    if (!tag.node.arguments?.length || translatedAttrs.properties.length) {
+    if (!args || translatedAttrs.properties.length) {
       renderParams.push(propsToExpression(translatedAttrs.properties));
     }
 
