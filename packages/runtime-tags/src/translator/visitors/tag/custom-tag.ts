@@ -13,7 +13,7 @@ import {
   loadFileForTag,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
-import { closest, distance } from "fastest-levenshtein";
+import { distance } from "fastest-levenshtein";
 
 import { WalkCode } from "../../../common/types";
 import type { LoadTrigger } from "../../../html/assets";
@@ -413,13 +413,7 @@ export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
     // A bare line of words parses as a tag; the author likely meant text.
     didYouMean = ` If this line is meant to be text, prefix it with \`--\` (e.g. \`-- ${proseText}\`) or wrap it in an element such as \`<p>${proseText}</p>\`.`;
   } else if (tagName) {
-    const closestTag = closest(
-      tagName,
-      Object.keys((getTaglibLookup(getFile()) as any).merged.tags),
-    );
-    if (distance(tagName, closestTag) < 4) {
-      didYouMean = ` Did you mean \`<${closestTag}>\`?`;
-    }
+    didYouMean = getSimilarTagHint(tagName);
   }
   return tag
     .get("name")
@@ -475,6 +469,29 @@ function collectProseWords(node: t.MarkoTag, tagName: string) {
     text += " " + attr.name;
   }
   return text;
+}
+
+function getSimilarTagHint(tagName: string) {
+  const lookup = getTaglibLookup(getFile());
+  if (lookup.getTag(tagName)) return "";
+  const lowerTagName = tagName.toLowerCase();
+  let closestTag: string | undefined;
+  let closestDistance = 4;
+  for (const name in (lookup as any).merged.tags) {
+    // Edit distance is at least the length difference.
+    const lengthDelta = Math.abs(name.length - tagName.length);
+    if (lengthDelta < closestDistance) {
+      if (!lengthDelta && name.toLowerCase() === lowerTagName) {
+        return ` Tag names are case-sensitive: did you mean \`<${name}>\`?`;
+      }
+      const nameDistance = distance(tagName, name);
+      if (nameDistance < closestDistance) {
+        closestTag = name;
+        closestDistance = nameDistance;
+      }
+    }
+  }
+  return closestTag ? ` Did you mean \`<${closestTag}>\`?` : "";
 }
 
 function buildLoadSetupVirtualModule(
