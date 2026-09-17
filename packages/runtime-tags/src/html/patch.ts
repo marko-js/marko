@@ -740,6 +740,10 @@ export function _patch_dynamic_tag(
         [PatchKey.DynamicTag + accessor]:
           entry.length > 1 || native ? entry : entry[0],
       });
+    } else if (!_client_guard(owned, group!)) {
+      // No entry ships, so the live branch stays paired: its body is no
+      // divergence for an unfed hole to seed.
+      return 3;
     }
   }
   // How a patch treats the tag (`_dynamic_tag`'s `patchPairing`): `1` pairs it,
