@@ -10,7 +10,15 @@ export default function getStyleFile(file: t.BabelFile) {
     `^(${escapeRegExp(base)}\\.${"index" === base ? "|" : ""})style\\.\\w+$`,
   );
 
-  for (const file of fs.readdirSync(path.dirname(filename)).sort()) {
+  let dirFiles: string[];
+  try {
+    dirFiles = fs.readdirSync(path.dirname(filename)).sort();
+  } catch {
+    // An in-memory source may name a directory that does not exist.
+    return;
+  }
+
+  for (const file of dirFiles) {
     if (styleMatch.test(file)) {
       return `./${file}`;
     }
