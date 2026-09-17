@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => _text($scope["#text/1"], $scope._._.clicks), ($scope) => $scope._._, "__tests__/template.marko_3_clicks#1/pending");
+const $await_content__clicks = _closure_get("clicks", ($scope) => _text($scope["#text/1"], $scope._._.clicks), ($scope) => $scope._._, "__tests__/template.marko_3_clicks#1/pending");
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clicks($scope._._, +$scope._._.clicks + 1);
 }));
