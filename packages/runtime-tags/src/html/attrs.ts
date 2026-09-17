@@ -488,6 +488,8 @@ function nonVoidAttr(name: string, value: unknown) {
     case "string":
       return " " + name + attrAssignment(value);
     case "boolean":
+      // Every attribute takes a boolean as presence, `data-*` and `aria-*` too:
+      // `x=cond` adds or omits it; writing a value needs a string.
       return " " + name;
     case "number":
       return " " + name + "=" + value;
