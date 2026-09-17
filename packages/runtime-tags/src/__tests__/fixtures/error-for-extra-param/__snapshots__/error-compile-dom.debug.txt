@@ -1,0 +1,25 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-extra-param/template.marko:1:19
+    > 1 | <for|item, index, extra| of=[1, 2, 3]>
+        |                   ^^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) only provides `|item, index|` with `of=`, so this parameter is never supplied.
+      2 |   <div>${item} ${index} ${extra}</div>
+      3 | </for>
+      4 | <for|key, value, extra = 1| in={ a: 1 }>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-extra-param/template.marko:4:18
+      2 |   <div>${item} ${index} ${extra}</div>
+      3 | </for>
+    > 4 | <for|key, value, extra = 1| in={ a: 1 }>
+        |                  ^^^^^^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) only provides `|key, value|` with `in=`, so this parameter is never supplied.
+      5 |   <div>${key} ${value} ${extra}</div>
+      6 | </for>
+      7 | <for|num, { extra }| until=3>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-extra-param/template.marko:7:11
+       5 |   <div>${key} ${value} ${extra}</div>
+       6 | </for>
+    >  7 | <for|num, { extra }| until=3>
+         |           ^^^^^^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) only provides `|num|` with `until=`, so this parameter is never supplied.
+       8 |   <div>${num} ${extra}</div>
+       9 | </for>
+      10 | <for|...args| of=[1, 2, 3]>

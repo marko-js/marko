@@ -1,0 +1,12 @@
+<for|item, index, extra| of=[1, 2, 3]>
+  <div>${item} ${index} ${extra}</div>
+</for>
+<for|key, value, extra = 1| in={ a: 1 }>
+  <div>${key} ${value} ${extra}</div>
+</for>
+<for|num, { extra }| until=3>
+  <div>${num} ${extra}</div>
+</for>
+<for|...args| of=[1, 2, 3]>
+  <div>${args[0]}</div>
+</for>

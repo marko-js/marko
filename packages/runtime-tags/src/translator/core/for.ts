@@ -123,6 +123,21 @@ export default {
 
     assertAllowedAttributes(tag, allowAttrs);
 
+    const extraParam =
+      tag.node.body.params[forType === "of" || forType === "in" ? 2 : 1];
+    if (extraParam && extraParam.type !== "RestElement") {
+      throw tag.hub.buildError(
+        extraParam,
+        `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) only provides \`|${
+          forType === "of"
+            ? "item, index"
+            : forType === "in"
+              ? "key, value"
+              : "num"
+        }|\` with \`${forType}=\`, so this parameter is never supplied.`,
+      );
+    }
+
     if (isAttrTag) return;
 
     const byAttr = getKnownAttrValues(tag.node).by;
