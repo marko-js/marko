@@ -1581,7 +1581,8 @@ function replaceBindingReadNode(node: t.Node, signal?: Signal) {
     case "OptionalMemberExpression": {
       return getReadReplacement(node, signal);
     }
-    case "CallExpression": {
+    case "CallExpression":
+    case "OptionalCallExpression": {
       const { extra } = node.callee;
 
       if (extra?.read) {

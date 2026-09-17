@@ -1,2 +1,5 @@
 // template.marko
-const $setup__script = _script("a0", ($scope) => $scope.a.innerHTML = "Hello World");
+const $setup__script = _script("a0", ($scope) => {
+	$scope.a.innerHTML = "Hello World";
+	$scope.a.classList.add("optional");
+});

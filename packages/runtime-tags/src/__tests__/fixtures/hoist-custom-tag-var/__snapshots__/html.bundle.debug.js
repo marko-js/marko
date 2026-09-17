@@ -61,6 +61,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope5_id, "__tests__/template.marko_5", 0);
 		_scope($scope5_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "26:2");
 	}
+	_if(() => {
+		if (true) {
+			const $scope6_id = _scope_id();
+			let setHtml4 = child_default({});
+			_scope($scope6_id, { setHtml4 }, "__tests__/template.marko", "33:2", { setHtml4: "34:10" });
+			_assert_hoist(setHtml4);
+			return 0;
+		}
+	}, $scope0_id, "#text/5", 1, 0, $sg__input_show, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
 	$si__input_show && _scope($scope0_id, { input_show: input.show }, "__tests__/template.marko", 0, { input_show: ["input.show"] });
 }, 1);

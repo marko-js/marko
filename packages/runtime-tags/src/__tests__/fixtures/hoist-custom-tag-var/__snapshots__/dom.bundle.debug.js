@@ -18,8 +18,14 @@ const $input$1 = ($scope, input) => $input_value($scope, input.value);
 var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", "", "", 0, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!><!><!>`)("");
-const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&%b%b%c`)("");
+const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!><!><!><!>`)("");
+const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&%b%b%b%c`)("");
+const $setHtml4_getter = /*@__PURE__*/ _hoist("setHtml4", "BranchScopes:#text/5");
+const $if_content6__setHtml = /*@__PURE__*/ _const("setHtml4", ($scope) => _assert_hoist($scope.setHtml4));
+const $if_content6__setup = ($scope) => {
+	_var($scope, "#childScope/0", $if_content6__setHtml);
+	$setup$2($scope["#childScope/0"]);
+};
 const $if_content5__setup__script = _script("__tests__/template.marko_5", ($scope) => $setHtml3_getter($scope._)()("Hello world"));
 const $if_content5__setup = $if_content5__setup__script;
 const $setHtml3_getter = /*@__PURE__*/ _hoist("setHtml3", "BranchScopes:#text/3");
@@ -51,15 +57,18 @@ const $input_show = /*@__PURE__*/ _const("input_show", ($scope) => {
 const $if2 = /*@__PURE__*/ _if("#text/2", $template$2, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $if_content3__setup);
 const $if3 = /*@__PURE__*/ _if("#text/3", $template$2, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $if_content4__setup);
 const $if4 = /*@__PURE__*/ _if("#text/4", 0, 0, $if_content5__setup);
+const $if5 = /*@__PURE__*/ _if("#text/5", $template$2, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $if_content6__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	$setHtml_getter($scope)()("Hello world");
 	$setHtml2_getter($scope)()("Hello world");
+	$setHtml4_getter($scope)?.()("Hello world");
 });
 function $setup($scope) {
 	$input_value($scope["#childScope/1"], $setHtml_getter($scope));
 	$if2($scope, true ? 0 : 1);
 	$if3($scope, true ? 0 : 1);
 	$if4($scope, true ? 0 : 1);
+	$if5($scope, true ? 0 : 1);
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_show($scope, input.show);
