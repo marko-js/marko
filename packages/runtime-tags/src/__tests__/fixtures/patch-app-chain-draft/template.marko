@@ -1,0 +1,12 @@
+import Layout from "./layout.marko"
+import Home from "./home.marko" with { load: "render" }
+import Page from "./page.marko" with { load: "render" }
+
+<${Layout}>
+  <if=input.page<=0>
+    <Home/>
+  </>
+  <else>
+    <Page/>
+  </>
+</>

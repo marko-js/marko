@@ -143,6 +143,9 @@ export interface Binding {
   assignments: Opt<AssignedBindingExtra>;
   /** Emitted code the graph stopped tracking still names it. */
   untracked?: true;
+  // Assigned, yet still derives from its value expressions (a `<draft>`):
+  // its guesses are state, its source keeps feeding it.
+  rederives?: true;
   sources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one upstream. Set on alias roots only. */
   upstreamIntersection: Intersection | undefined;
@@ -286,6 +289,11 @@ declare module "@marko/compiler/dist/types" {
     // Reserved for a function reachable through an export: importing templates
     // resolve it to register the function without this template registering it.
     exportRegisterId?: string;
+    // An `<action>` body: `1` runs as a generator the act drives (its awaits
+    // compiled to yields), `0` keeps its native awaits.
+    action?: 0 | 1;
+    // The action tag's signal, which the act re-runs when its pending flips.
+    actionSignal?: t.Identifier;
   }
 
   export interface ArrowFunctionExpressionExtra extends FunctionExtra {}
@@ -1802,6 +1810,9 @@ function resolveBindingSources(binding: Binding) {
         binding.sources = aliasRoot.sources;
       } else if (binding.assignments) {
         binding.sources = createSources(binding, undefined);
+        // A rederiving binding (a `<draft>`) still derives underneath an
+        // assigned guess, so its value expressions keep landing.
+        if (binding.rederives) resolveDerivedSources(binding);
       } else {
         resolveDerivedSources(binding);
       }

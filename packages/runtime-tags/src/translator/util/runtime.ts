@@ -29,7 +29,12 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 // keeps it in the module graph.
 //
 const pureDOMFunctions = new Set<string>([
+  "_act",
+  "_action",
   "_await_promise",
+  "_draft",
+  "_fill_action",
+  "_fill_draft",
   "_fill_join",
   "_global_join",
   "_fill_join_closure",

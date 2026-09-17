@@ -1,0 +1,9 @@
+import { rejectAfter } from "../../utils/resolve";
+<let/count=0/>
+<draft/shown=count/>
+<action/bump=async () => {
+  shown = shown + 1;
+  await rejectAfter(new Error("refused"));
+}/>
+<button onClick() { bump().catch(() => {}) }>${shown}</button>
+<span>${bump.pending ? "pending" : "idle"}</span>

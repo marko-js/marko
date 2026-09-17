@@ -1,4 +1,4 @@
-// size: 2789 (min) 1360 (brotli)
+// size: 2819 (min) 1364 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -12,11 +12,11 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
     render.c(render.b, render.d);
   },
   catchEnabled,
-  delegate = (type, handler) =>
-    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   isScheduled,
   channel,
-  _resumed = {},
+  delegate = (type, handler) =>
+    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
+  registeredValues = {},
   curRenders,
   readyIds;
 function isNotVoid(value) {
@@ -85,16 +85,6 @@ function runRenders() {
     runRender(render);
   }
 }
-function _on(element, type, handler) {
-  (element[1 + type] === void 0 && delegate(type, handleDelegated),
-    (element[1 + type] = handler || null));
-}
-function handleDelegated(ev) {
-  let target = !rendering && ev.target;
-  for (; target;)
-    (target[1 + ev.type]?.(ev, target),
-      (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
-}
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
@@ -109,24 +99,49 @@ function triggerMacroTask() {
     })),
     channel.port2.postMessage(0));
 }
-function _let(id, fn) {
-  let valueAccessor = decodeAccessor(id);
-  return (scope, value) => (
-    rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
-      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn) &&
-        (schedule(), queueRender(scope, fn, id)),
-    value
-  );
+function _on(element, type, handler) {
+  (element[1 + type] === void 0 && delegate(type, handleDelegated),
+    (element[1 + type] = handler || null));
 }
-function _script(id, fn) {
-  return (
-    (_resumed[id] = fn),
-    (scope) => {
-      queueEffect(scope, fn);
+function handleDelegated(ev) {
+  let target = !rendering && ev.target;
+  for (; target;)
+    (target[1 + ev.type]?.(ev, target),
+      (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
+}
+function _to_text(value) {
+  return value || value === 0 ? value + "" : "";
+}
+function _attr(element, name, value) {
+  setAttribute(element, name, normalizeAttrValue(value));
+}
+function setAttribute(element, name, value) {
+  element.getAttribute(name) != value &&
+    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+}
+function _text(node, value) {
+  let normalizedValue = _to_text(value);
+  node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
+function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
+  if (parentNode.isConnected)
+    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  else {
+    let stop = endNode.nextSibling;
+    for (; startNode !== stop;) {
+      let next = startNode.nextSibling;
+      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
     }
-  );
+  }
+  return parentNode;
+}
+function toInsertNode(startNode, endNode) {
+  return startNode === endNode
+    ? startNode
+    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
 function init(runtimeId = "M") {
   if (curRenders) return;
@@ -166,7 +181,7 @@ function init(runtimeId = "M") {
             serializeContext = (data, registryId) =>
               typeof data == "number"
                 ? registryId
-                  ? _resumed[registryId](getScope(data))
+                  ? registeredValues[registryId](getScope(data))
                   : getScope(data)
                 : applyScopes(data),
             nextToken = () =>
@@ -182,7 +197,7 @@ function init(runtimeId = "M") {
                 if (typeof serialized == "string")
                   for (lastTokenIndex = 0, visitText = serialized; nextToken();)
                     /\D/.test(lastToken)
-                      ? (lastEffect = _resumed[lastToken])
+                      ? (lastEffect = registeredValues[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
                 else if (Array.isArray(serialized)) break;
                 else {
@@ -201,7 +216,7 @@ function init(runtimeId = "M") {
             lastToken,
             lastTokenIndex;
           return (
-            (serializeContext._ = _resumed),
+            (serializeContext._ = registeredValues),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds));
               let retained = 0;
@@ -239,38 +254,26 @@ function runResumeEffects(render) {
   } finally {
   }
 }
-function _to_text(value) {
-  return value || value === 0 ? value + "" : "";
+function _resume(id, obj) {
+  return (registeredValues[id] = obj);
 }
-function _attr(element, name, value) {
-  setAttribute(element, name, normalizeAttrValue(value));
+function _let(id, fn) {
+  let valueAccessor = decodeAccessor(id);
+  return (scope, value) => (
+    rendering
+      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn) &&
+        (schedule(), queueRender(scope, fn, id)),
+    value
+  );
 }
-function setAttribute(element, name, value) {
-  element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
-}
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
-  node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
-}
-function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  if (parentNode.isConnected)
-    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-  else {
-    let stop = endNode.nextSibling;
-    for (; startNode !== stop;) {
-      let next = startNode.nextSibling;
-      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
+function _script(id, fn) {
+  return (
+    _resume(id, fn),
+    (scope) => {
+      queueEffect(scope, fn);
     }
-  }
-  return parentNode;
-}
-function toInsertNode(startNode, endNode) {
-  return startNode === endNode
-    ? startNode
-    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
+  );
 }
 //#endregion

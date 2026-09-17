@@ -167,9 +167,13 @@ function getFillReadKind(binding: Binding): true | FillConditions | undefined {
 }
 
 // A root value a downstream join derives from: its fill registration
-// alone keeps the join current.
+// alone keeps the join current. So too a draft's source: the draft
+// re-derives from it through a forward nothing else retains.
 export function joinsStateDownstream(binding: Binding): boolean {
-  return someSection(sectionJoinsStateDownstream, binding);
+  return (
+    someSection(sectionJoinsStateDownstream, binding) ||
+    rederivesDownstream(binding)
+  );
 }
 
 function sectionJoinsStateDownstream(section: Section, binding: Binding) {
@@ -187,6 +191,19 @@ function readJoinsStateDownstream(read: ReferencedExtra, binding: Binding) {
     !!read.downstreamSources?.state &&
     includes(getSerializeSourcesForRef(read.referencedBindings)?.param, binding)
   );
+}
+
+// A draft derives from this binding, read directly or through an alias.
+function rederivesDownstream(binding: Binding): boolean {
+  for (const read of binding.reads) {
+    if (some(read.downstream, (downstream) => !!downstream.rederives)) {
+      return true;
+    }
+  }
+  for (const alias of binding.aliases) {
+    if (isDirectAlias(alias) && rederivesDownstream(alias)) return true;
+  }
+  return false;
 }
 
 function computeFillReadKind(
@@ -208,10 +225,12 @@ function computeFillReadKind(
     // A handler reads the slot at call time: the owner write keeps it
     // current with no registration to shake.
     if (effect && read.invokeOnly) continue;
+    // A draft's source re-derives with the draft's guesses.
     if (
       !effect &&
       (getSerializeSourcesForRef(read.referencedBindings)?.state ||
-        read.downstreamSources?.state)
+        read.downstreamSources?.state ||
+        some(read.downstream, (downstream) => !!downstream.rederives))
     ) {
       return true;
     }

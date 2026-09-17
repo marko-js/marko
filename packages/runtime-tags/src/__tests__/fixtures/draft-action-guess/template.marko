@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/count=0/>
+<draft/shown=count/>
+<action/bump=async () => {
+  shown = shown + 1;
+  await resolveAfter(0);
+  count = count + 1;
+}/>
+<button onClick() { bump() }>${shown}</button>
+<span>${bump.pending ? "pending" : "idle"}</span>

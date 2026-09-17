@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/count=0/>
+<draft/shown=count/>
+<action/late=async () => {
+  await resolveAfter(0);
+  shown = 7;
+  await resolveAfter(0);
+}/>
+<action/native=async function () {
+  void arguments;
+  shown = 8;
+  await resolveAfter(0);
+  shown = 9;
+}/>
+<button id="late" onClick() { late() }>${shown}</button>
+<button id="native" onClick() { native() }>
+  ${late.pending ? "late" : "-"} ${native.pending ? "native" : "-"}
+</button>
