@@ -54,19 +54,21 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
-  // How a patch treats the tag: `1` pairs and re-renders it, `2` skips
+  // How a patch treats the tag: `1` pairs and re-renders it, `3` pairs a
+  // kept renderer (no entry ships, so the live branch stays), `2` skips
   // it (a client-owned group is upstream of the renderer), absent never patches.
-  patchPairing?: 1 | 2,
+  patchPairing?: 1 | 2 | 3,
 ) => {
   const shouldResume = serializeReason !== 0;
   // A patch entry may target this tag: its branch marks and pairs, while
   // the child's data still serializes on the tag's own reason.
   const marks = shouldResume || patchPairing;
+  const pairs = patchPairing === 1 || patchPairing === 3;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   // A patch render skips a tag it never pairs (state or a client-owned
   // group upstream): the resumed page renders it, as with `writeBranch`.
-  if (patchPairing !== 1 && state.writesPatches) return;
+  if (!pairs && state.writesPatches) return;
   const branchId = _peek_scope_id();
   // A null renderer still renders the body: its writes pair too.
   if (patchPairing && (renderer || content)) {
@@ -204,7 +206,7 @@ export let _dynamic_tag = (
     };
     // A tag no patch pairs renders unpatched: the resumed page
     // re-renders it, so no patch fills its reads.
-    if (patchPairing !== 1 && state.patchPage) withUnpatched(renderNative);
+    if (!pairs && state.patchPage) withUnpatched(renderNative);
     else renderNative();
 
     // Registered, not written: the getter only reaches the wire when a tag
@@ -250,10 +252,10 @@ export let _dynamic_tag = (
       }
     };
     const run =
-      patchPairing !== 1 && state.patchPage
-        ? () => withUnpatched(render)
-        : render;
-    result = marks ? withBranchId(branchId, run) : run();
+      !pairs && state.patchPage ? () => withUnpatched(render) : render;
+    // A kept renderer's body pairs with the live branch, so it renders
+    // outside the branch id context that seeds unfed holes.
+    result = marks && patchPairing !== 3 ? withBranchId(branchId, run) : run();
     rendered = _peek_scope_id() !== branchId;
 
     if (beforeBranch !== undefined) {
