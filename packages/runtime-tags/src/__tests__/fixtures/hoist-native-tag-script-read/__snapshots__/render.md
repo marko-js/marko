@@ -1,6 +1,8 @@
 # Render
 ```html
-<div>
+<div
+  class="optional"
+>
   Hello World
 </div>
 ```

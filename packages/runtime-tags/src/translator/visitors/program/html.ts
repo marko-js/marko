@@ -236,7 +236,8 @@ function replaceBindingReadNode(node: t.Node) {
       }
       break;
     }
-    case "CallExpression": {
+    case "CallExpression":
+    case "OptionalCallExpression": {
       const read = node.callee.extra?.read;
       if (
         read &&
