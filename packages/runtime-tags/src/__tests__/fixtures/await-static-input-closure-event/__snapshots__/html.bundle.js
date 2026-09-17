@@ -1,5 +1,4 @@
 // template.marko
-const data = Promise.resolve({ items: ["a", "b"] });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $si__input_foo = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
@@ -9,7 +8,7 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "a", _content_resume("a4", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_await($scope1_id, "a", data, (d) => {
+		_await($scope1_id, "a", resolveAfter({ items: ["a", "b"] }, 1), (d) => {
 			const $scope2_id = _scope_id();
 			$si__input_foo && _script($scope2_id, "a0");
 			_script($scope2_id, "a1");
@@ -24,6 +23,7 @@ var template_default = _template("a", (input) => {
 		_html("Loading");
 	}, $scope0_id) }) });
 	_scope($scope0_id, {
+		d: $si__input_foo && input.foo,
 		e: count,
 		f: $si__input_foo && $input_foo__closures,
 		g: $count__closures

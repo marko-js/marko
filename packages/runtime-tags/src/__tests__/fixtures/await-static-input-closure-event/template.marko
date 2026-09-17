@@ -1,10 +1,10 @@
-static const data = Promise.resolve({ items: ["a", "b"] });
+import { resolveAfter } from "../../utils/resolve";
 
 <let/count=0>
 
 <try>
   <@placeholder>Loading</>
-  <await|d|=data>
+  <await|d|=resolveAfter({ items: ["a", "b"] }, 1)>
     <p>${input.foo}</p>
     <button onClick() { count++; }>${count}</button>
   </await>

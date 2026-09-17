@@ -1,12 +1,18 @@
-# Render `{"foo":"hello"}`
+# Render
+
+# Update
 ```html
-Loading
+loading
+```
+## Change
+```
+INSERT: ::text("loading")
 ```
 
 # Update
 ```html
 <p>
-  hello
+  0
 </p>
 <button>
   0
@@ -14,10 +20,10 @@ Loading
 ```
 ## Change
 ```
-INSERT: p::text("hello")
-INSERT: button::text("0")
-REMOVE: ::text("Loading")
 INSERT: p, button
+REMOVE: button + ::text("loading")
+UPDATE: button::text " " => "0"
+UPDATE: p::text " " => "0"
 ```
 
 # Update
@@ -26,7 +32,7 @@ document.querySelector("button").click();
 ```
 ```html
 <p>
-  hello
+  1
 </p>
 <button>
   1
@@ -34,5 +40,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+UPDATE: p::text "0" => "1"
 UPDATE: button::text "0" => "1"
 ```
