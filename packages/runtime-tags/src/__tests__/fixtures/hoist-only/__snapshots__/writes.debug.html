@@ -1,17 +1,26 @@
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
-    "BranchScopes:#text/0": _(2),
-    hoist1: _(1,
-      "packages/runtime-tags/src/__tests__/fixtures/hoist-only/template.marko_0/hoist"
-      )
-  }, {
-    "BranchScopes:#text/0": _(3),
-    _: _(1)
-  }, {
-    hoist3: _(3,
-      "packages/runtime-tags/src/__tests__/fixtures/hoist-only/template.marko_2/hoist2"
-      ),
-    _: _(2)
-  }]]
+      "BranchScopes:#text/0": _(2),
+      x: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/hoist-only/template.marko_0_hoist1#5/hoist"
+        ),
+      hoist1: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/hoist-only/template.marko_0/hoist"
+        )
+    }, {
+      "BranchScopes:#text/0": _(3),
+      _: _(1)
+    }, {
+      z: _(3,
+        "packages/runtime-tags/src/__tests__/fixtures/hoist-only/template.marko_2_hoist3#2/hoist"
+        ),
+      hoist3: _(3,
+        "packages/runtime-tags/src/__tests__/fixtures/hoist-only/template.marko_2/hoist2"
+        ),
+      _: _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/hoist-only/template.marko_2_x#4_z#0 3"
+  ];
+  M._.w()
 </script>

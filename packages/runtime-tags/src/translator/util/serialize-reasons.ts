@@ -17,6 +17,7 @@ import {
   mergeSources,
   type ReferencedBindings,
   type Sources,
+  getCanonicalExtra,
 } from "./references";
 import { ancestorSections, type Section } from "./sections";
 
@@ -143,8 +144,9 @@ export function getSerializeReason(
 }
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
-  return isReferencedExtra(expr)
-    ? getSerializeSourcesForRef(expr.referencedBindings)
+  const root = getCanonicalExtra(expr);
+  return isReferencedExtra(root)
+    ? getSerializeSourcesForRef(root.referencedBindings)
     : undefined;
 }
 

@@ -149,7 +149,8 @@ export function translateAttrs(
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
-      attrProperties.push(t.spreadElement(value));
+      // Analysis drops a spread the child reads nothing from.
+      if (!value.extra?.pruned) attrProperties.push(t.spreadElement(value));
     } else if (
       !seen.has(attr.name) &&
       getKnownFromPropTree(propTree, attr.name)

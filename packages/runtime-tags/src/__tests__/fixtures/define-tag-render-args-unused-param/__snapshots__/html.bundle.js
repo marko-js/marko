@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_set_serialize_reason(34);
 	const $childScope = _peek_scope_id();
-	MyTag.content(1, "Hello", x);
+	MyTag.content(void 0, "Hello", x);
 	_html(`<button>${_text_resume($scope0_id, "c", x)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {

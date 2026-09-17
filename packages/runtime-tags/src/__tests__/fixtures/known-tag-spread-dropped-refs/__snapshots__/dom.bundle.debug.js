@@ -17,8 +17,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	({ a: 5 });
-	({ a: 6 });
 	$n($scope, 1);
 	$setup__script($scope);
 }

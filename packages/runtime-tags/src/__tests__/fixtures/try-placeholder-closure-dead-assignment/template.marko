@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/on=1>
+<child q=2 on=3 toggle() { on++ }/>
+<try>
+  <@placeholder>loading...</@placeholder>
+  <await=resolveAfter(0, 4)>
+    <child q=1 on=on/>
+  </await>
+</try>

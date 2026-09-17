@@ -2,7 +2,6 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let id = 0;
 	let items = [{
 		name: "Marko",
 		description: "HTML Reimagined"

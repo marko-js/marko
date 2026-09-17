@@ -20,6 +20,7 @@ import {
   addSorted,
   addUnique,
   concat,
+  every,
   filter,
   first,
   findSorted,
@@ -125,7 +126,10 @@ export interface Binding {
   loc: t.SourceLocation | null;
   section: Section;
   closureSections: Opt<Section>;
-  assignmentSections: Opt<Section>;
+  /** The identifier of each emitted assignment to it (set in finalize). */
+  assignments: Opt<AssignedBindingExtra>;
+  /** Emitted code the graph stopped tracking still names it. */
+  untracked?: true;
   sources: undefined | Sources;
   reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
@@ -211,6 +215,8 @@ declare module "@marko/compiler/dist/types" {
     assignmentTo?: Binding;
     read?: ExtraRead;
     pruned?: true;
+    /** The expression this node sits in: dropped or merged as one. */
+    exprRoot?: NodeExtra;
     isEffect?: true;
     /** The expression is a dynamic tag's input (attrs, args, attr tags). */
     dynamicTagInput?: true;
@@ -270,7 +276,7 @@ export function createBinding(
     property,
     declared,
     closureSections: undefined,
-    assignmentSections: undefined,
+    assignments: undefined,
     excludeProperties,
     noSerialize: false,
     noSerializeProperties: undefined,
@@ -659,14 +665,13 @@ function trackAssignment(
       const idExtra = (id.node.extra ??= {}) as AssignedBindingExtra;
       idExtra.assignment = binding;
       idExtra.section = section;
-      binding.assignmentSections = sectionUtil.add(
-        binding.assignmentSections,
-        section,
-      );
+      idExtra.exprRoot = getExprRoot(fnRoot || assignment).node.extra ??= {};
+      idExtra.fnRoot = fnExtra;
+      getAssignments().push(idExtra);
 
       if (fnExtra) {
-        idExtra.assignmentFunction = fnExtra;
-        fnExtra.section = idExtra.section = section;
+        fnExtra.section = section;
+        fnExtra.exprRoot = idExtra.exprRoot;
       }
 
       if (binding.upstreamAlias && binding.property !== undefined) {
@@ -803,13 +808,6 @@ function createBindingsAndTrackReferences(
               key,
               undefined,
             );
-
-            if (hasRest && prop.value.extra?.binding?.assignmentSections) {
-              excludeProperties = propsUtil.add(
-                excludeProperties,
-                `${key}Change`,
-              );
-            }
           }
         }
       }
@@ -1024,6 +1022,65 @@ export function finalizeReferences() {
   const fnReadsByExpression = getFunctionReadsByExpression();
   const intersectionsBySection = new Map<Section, Intersection[]>();
 
+  // Assignments settle now so pruning can ask each binding directly; an
+  // assignment inside a value pruning drops leaves again below.
+  const assignments = getAssignments();
+  for (const idExtra of assignments) {
+    if (inEmittedExpr(idExtra)) {
+      const binding = idExtra.assignment;
+      binding.assignments = push(binding.assignments, idExtra);
+    }
+  }
+
+  for (const binding of bindings) {
+    if (binding.type !== BindingType.dom) {
+      if (pruneBinding(binding, true)) {
+        bindings.delete(binding);
+      }
+    }
+
+    if (binding.noSerialize) {
+      if (isPureSpreadResolved(binding)) {
+        if (hasAnyMemberAccess(binding)) {
+          binding.noSerialize = false;
+          binding.noSerializeProperties = filter(
+            binding.noSerializeProperties,
+            (property) => !isPropertyMemberAccessed(binding, property),
+          );
+        } else {
+          binding.noSerializeProperties = undefined;
+        }
+      } else {
+        binding.noSerialize = false;
+        binding.noSerializeProperties = undefined;
+      }
+    }
+  }
+
+  const excluded = new Set<Binding>();
+  for (const idExtra of assignments) {
+    const binding = idExtra.assignment;
+    if (!inEmittedExpr(idExtra)) {
+      binding.assignments = filter(binding.assignments, inEmittedExpr);
+    } else if (
+      !excluded.has(binding) &&
+      binding.upstreamAlias &&
+      binding.property !== undefined
+    ) {
+      excluded.add(binding);
+      // Translate pulls an assigned property's change handler out of its
+      // pattern, so the rest of that same pattern no longer holds it.
+      for (const alias of binding.upstreamAlias.aliases) {
+        if (propsUtil.has(alias.excludeProperties, binding.property)) {
+          alias.excludeProperties = propsUtil.add(
+            alias.excludeProperties,
+            binding.property + "Change",
+          );
+        }
+      }
+    }
+  }
+
   for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {
       const exprBindings = resolveReferencedBindings(
@@ -1094,34 +1151,6 @@ export function finalizeReferences() {
   }
 
   const bindingNamesBySection = new Map<Section, Set<string>>();
-  for (const binding of bindings) {
-    if (binding.type !== BindingType.dom) {
-      if (pruneBinding(binding)) {
-        bindings.delete(binding);
-      }
-    }
-
-    if (binding.noSerialize) {
-      if (isPureSpreadResolved(binding)) {
-        if (hasAnyMemberAccess(binding)) {
-          let kept: Opt<string> = undefined;
-          binding.noSerialize = false;
-          forEach(binding.noSerializeProperties, (property) => {
-            if (!isPropertyMemberAccessed(binding, property)) {
-              kept = push(kept, property);
-            }
-          });
-          binding.noSerializeProperties = kept;
-        } else {
-          binding.noSerializeProperties = undefined;
-        }
-      } else {
-        binding.noSerialize = false;
-        binding.noSerializeProperties = undefined;
-      }
-    }
-  }
-
   forEachSection(finalizeTagDownstreams);
 
   for (const binding of bindings) {
@@ -1136,7 +1165,7 @@ export function finalizeReferences() {
     if (binding.type !== BindingType.dom) {
       resolveBindingSources(binding);
 
-      forEach(binding.assignmentSections, (assignedSection) => {
+      forEach(binding.assignments, ({ section: assignedSection }) => {
         setReadsOwner(assignedSection, section);
         // Deliberately `true`, not `binding.sources`: narrowing is a 0-byte no-op until a state-dropping pass exists.
         addOwnerSerializeReason(assignedSection, section, FORCED);
@@ -1371,16 +1400,8 @@ export function finalizeReferences() {
   });
 
   finalizeFunctionRegistry();
-  const referencedExprs = new Set<ReferencedExtra>();
-  for (const binding of bindings) {
-    for (const expr of binding.reads) {
-      referencedExprs.add(expr);
-    }
-  }
-
-  for (const expr of referencedExprs) {
-    const exprFnReads = fnReadsByExpression.get(expr);
-    if (exprFnReads) {
+  for (const exprFnReads of fnReadsByExpression.values()) {
+    {
       for (const fn of exprFnReads.keys()) {
         if (fn.registerReason) {
           forEach(fn.referencedBindingsInFunction, (binding) => {
@@ -1604,13 +1625,23 @@ export function setBindingDownstream(
   expr: boolean | Opt<t.NodeExtra>,
   exprs?: KnownExprs,
 ) {
-  getBindingValueExprs().set(binding, expr || false);
+  setBindingValueExprs(binding, expr);
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
       expr.downstream = bindingUtil.add(expr.downstream, binding);
       if (exprs) expr.downstreamExprs = exprs;
     });
   }
+}
+
+// The expressions a binding's value is made of: pruning drops a pure one
+// nothing reads, and the binding derives its sources from those it is
+// downstream of (a let holds its initializer without deriving from it).
+export function setBindingValueExprs(
+  binding: Binding,
+  expr: boolean | Opt<t.NodeExtra>,
+) {
+  getBindingValueExprs().set(binding, expr || false);
 }
 
 const [getResolvedSources] = createProgramState(() => new Set<Binding>());
@@ -1628,7 +1659,7 @@ function resolveBindingSources(binding: Binding) {
       if (aliasRoot) {
         resolveBindingSources(aliasRoot);
         binding.sources = aliasRoot.sources;
-      } else if (binding.assignmentSections) {
+      } else if (binding.assignments) {
         binding.sources = createSources(binding, undefined);
       } else {
         resolveDerivedSources(binding);
@@ -1676,16 +1707,17 @@ function getAliasRoot(binding: Binding) {
 }
 
 function resolveDerivedSources(binding: Binding) {
-  const bindingValueExprs = getBindingValueExprs();
-  const exprs = bindingValueExprs.get(binding);
-  bindingValueExprs.delete(binding);
+  const exprs = getBindingValueExprs().get(binding);
 
   if (exprs === undefined || exprs === true) {
     binding.sources = createSources(binding, undefined);
   } else if (exprs) {
     const seen = new Set<Binding>();
     forEach(exprs, (expr) => {
-      if (isReferencedExtra(expr)) {
+      if (
+        isReferencedExtra(expr) &&
+        bindingUtil.has(expr.downstream, binding)
+      ) {
         forEach(expr.referencedBindings, (ref) => {
           if (!seen.has(ref)) {
             seen.add(ref);
@@ -1798,6 +1830,7 @@ export const propsUtil = new Sorted(function compareProps(
   return a < b ? -1 : a > b ? 1 : 0;
 });
 
+const [getAssignments] = createProgramState<AssignedBindingExtra[]>(() => []);
 const [getReadsByExpression] = createProgramState(
   () => new Map<ReferencedExtra, Opt<Read>>(),
 );
@@ -1839,6 +1872,33 @@ export function addRead(
   return read;
 }
 
+// Whether an expression (or the one a node's extra sits in) is emitted.
+function isEmitted(exprExtra: t.NodeExtra) {
+  return !getCanonicalExtra(exprExtra).pruned;
+}
+
+function inEmittedExpr({ exprRoot }: AssignedBindingExtra) {
+  return isEmitted(exprRoot);
+}
+
+function isDroppableValue(expr: t.NodeExtra) {
+  return !!expr.pure && !expr.merged && !expr.pruned;
+}
+
+// A value feeding another binding too (one call site's attribute expression
+// feeds each child that reads it) stays while any of them is read.
+function dropPureExtra(expr: t.NodeExtra) {
+  if (isDroppableValue(expr) && every(expr.downstream, isPrunedBinding)) {
+    dropExtra(expr as ReferencedExtra);
+  }
+}
+
+function isPrunedBinding(binding: Binding) {
+  return !!binding.pruned;
+}
+
+// A dropped expression is never emitted by either output (its bindings can
+// prune); an untracked one is emitted but read some other way.
 export function dropNodes(node: t.Node | t.Node[]) {
   if (Array.isArray(node)) {
     for (const item of node) {
@@ -1849,7 +1909,18 @@ export function dropNodes(node: t.Node | t.Node[]) {
   }
 }
 
+export function untrackNode(node: t.Node) {
+  untrackExtra((node.extra ??= {}) as ReferencedExtra);
+}
+
 function dropExtra(exprExtra: ReferencedExtra) {
+  exprExtra.pruned = true;
+  untrackExtra(exprExtra);
+}
+
+// A merged expression is never dropped and a dropped one never merged:
+// both would strand reads the target already took.
+function untrackExtra(exprExtra: ReferencedExtra) {
   /* v8 ignore next 3 -- a merged reference is never dropped */
   if (exprExtra.merged) {
     throw new Error("Cannot drop a merged reference");
@@ -1857,11 +1928,12 @@ function dropExtra(exprExtra: ReferencedExtra) {
 
   const readsByExpr = getReadsByExpression();
   const reads = readsByExpr.get(exprExtra);
-  exprExtra.pruned = true;
   if (reads) {
     readsByExpr.delete(exprExtra);
+    getFunctionReadsByExpression().delete(exprExtra);
     forEach(reads, (read) => {
       read.binding.reads.delete(exprExtra);
+      if (!exprExtra.pruned) read.binding.untracked = true;
     });
   }
 }
@@ -1902,16 +1974,11 @@ function addReadToExpression(
   const section = getOrCreateSection(exprRoot);
   // Reads recorded after the owning expression merged into another node's extra
   // must land on the merge target, else its references split and the read is lost.
-  const exprExtra = getCanonicalExtra(
-    (exprRoot.node.extra ??= { section }) as ReferencedExtra,
-  );
-  const read = addRead(
-    exprExtra,
-    (node.extra ??= {}),
-    binding,
-    section,
-    getter,
-  );
+  const rootExtra = (exprRoot.node.extra ??= { section }) as ReferencedExtra;
+  const exprExtra = getCanonicalExtra(rootExtra);
+  const extra = (node.extra ??= {});
+  extra.exprRoot = rootExtra;
+  const read = addRead(exprExtra, extra, binding, section, getter);
 
   if (!fnRoot && isSerializedChangeHandlerRead(exprRoot)) {
     read.serializedValue = true;
@@ -1949,6 +2016,7 @@ function addReadToExpression(
     }
     const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
     fnExtra.section = section;
+    fnExtra.exprRoot = rootExtra;
     exprFnReads.set(fnExtra, push(exprFnReads.get(fnExtra), read));
   }
 }
@@ -2373,7 +2441,7 @@ export function isInvokeOnlyBinding(binding: Binding): boolean {
 
 function isReadBeyondInvoking(binding: Binding) {
   if (
-    binding.assignmentSections ||
+    binding.assignments ||
     binding.hoists ||
     binding.getters.size ||
     binding.propertyAliases.size ||
@@ -2396,9 +2464,24 @@ export function hasNonConstantPropertyAlias(ref: Binding) {
   return false;
 }
 
-export function pruneBinding(binding: Binding) {
+// The answer is only kept once finalize asks: a read tracked while analysis
+// is still running (a tag of this same program peeks early) can be dropped.
+export function pruneBinding(binding: Binding, settled?: true) {
   if (binding.pruned !== undefined) {
     return binding.pruned;
+  }
+
+  if (settled) {
+    // A read from an unread binding's pure value is no read: judge those
+    // bindings first (one met again mid way counts as read).
+    binding.pruned = false;
+    for (const read of binding.reads) {
+      if (isDroppableValue(read)) {
+        forEach(read.downstream, pruneSettledBinding);
+      }
+    }
+    // Likewise an assignment from such a value.
+    forEach(binding.assignments, pruneSettledWriter);
   }
 
   for (const read of binding.reads) {
@@ -2417,7 +2500,7 @@ export function pruneBinding(binding: Binding) {
   let shouldPrune = !binding.reads.size && !binding.reserveSize;
 
   for (const alias of binding.aliases) {
-    if (pruneBinding(alias)) {
+    if (pruneBinding(alias, settled)) {
       binding.aliases.delete(alias);
     } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
@@ -2425,15 +2508,38 @@ export function pruneBinding(binding: Binding) {
   }
 
   for (const [key, alias] of binding.propertyAliases) {
-    if (pruneBinding(alias)) {
+    if (pruneBinding(alias, settled)) {
       binding.propertyAliases.delete(key);
     } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
     }
   }
 
-  binding.pruned = shouldPrune;
+  if (settled) {
+    binding.pruned = shouldPrune;
+    if (
+      shouldPrune &&
+      !binding.untracked &&
+      !some(binding.assignments, inEmittedExpr)
+    ) {
+      // Its value is never emitted if that has no side effects, and the reads
+      // and assignments inside the value go with it.
+      const exprs = getBindingValueExprs().get(binding);
+      if (exprs && exprs !== true) forEach(exprs, dropPureExtra);
+    }
+  }
+
   return shouldPrune;
+}
+
+function pruneSettledBinding(binding: Binding) {
+  pruneBinding(binding, true);
+}
+
+function pruneSettledWriter({ exprRoot }: AssignedBindingExtra) {
+  if (isDroppableValue(exprRoot)) {
+    forEach(exprRoot.downstream, pruneSettledBinding);
+  }
 }
 
 function resolveReferencedBindingsInFunction(
@@ -2782,7 +2888,19 @@ export function isReferencedExtra(
 
 export interface AssignedBindingExtra extends ReferencedExtra {
   assignment: Binding;
-  assignmentFunction: ReferencedFunctionExtra;
+  exprRoot: t.NodeExtra;
+  /** The outermost function holding it; none when that escapes into a call. */
+  fnRoot: ReferencedFunctionExtra | undefined;
+}
+
+// A resumed instance runs only its effects and its registered functions, so
+// only an assignment inside one of those can still write on the client.
+export function hasResumableWriter(binding: Binding) {
+  return some(binding.assignments, isResumableWriter);
+}
+
+function isResumableWriter({ exprRoot, fnRoot }: AssignedBindingExtra) {
+  return !!getCanonicalExtra(exprRoot).isEffect || isRegisteredFnExtra(fnRoot);
 }
 export function isAssignedBindingExtra(
   extra: t.NodeExtra | undefined,

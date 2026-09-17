@@ -6,8 +6,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$clickCount($scope, +$scope.clickCount + 1);
 }));
 function $setup($scope) {
-	123;
-	456;
 	$clickCount($scope, 0);
 	$setup__script($scope);
 }

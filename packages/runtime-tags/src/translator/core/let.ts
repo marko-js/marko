@@ -7,13 +7,16 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
+import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
   FORCED,
   mergeReferences,
+  onFinalizeReferences,
   setBindingDownstream,
+  setBindingValueExprs,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -125,23 +128,31 @@ export default {
       setBindingDownstream(binding, tagExtra);
       // The serialized change handler is only invoked by an assignment to the
       // tag variable, so it does not resume when nothing assigns.
-      if (binding.assignmentSections) {
-        addSerializeReason(
-          tagSection,
-          FORCED,
-          binding,
-          getAccessorPrefix().TagVariableChange,
-        );
-      }
+      onFinalizeReferences(() => {
+        if (binding.assignments) {
+          addSerializeReason(
+            tagSection,
+            FORCED,
+            binding,
+            getAccessorPrefix().TagVariableChange,
+          );
+        }
+      });
     } else {
-      // The value expression stays reactive and re-runs, but a `<let>` returns
-      // state it controls rather than that value, so the binding has no downstream.
-      setBindingDownstream(binding, false);
+      // A `<let>` returns state it controls rather than that value, so the
+      // binding has no downstream; an unread let drops it.
+      tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
+      setBindingValueExprs(binding, tagExtra);
     }
   },
   translate: {
     exit(tag) {
       const { node } = tag;
+      // Nothing reads or assigns it and its value was dropped.
+      if (node.extra?.pruned) {
+        tag.remove();
+        return;
+      }
       const tagVar = node.var!;
       const valueAttr =
         node.attributes.find(

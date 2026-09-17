@@ -14,7 +14,7 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
-import { find, forEach, type Opt, push } from "./optional";
+import { find, forEach, type Opt, push, some } from "./optional";
 import {
   type AssignedBindingExtra,
   type Binding,
@@ -35,6 +35,7 @@ import {
   getSectionInstancesAccessorLiteral,
   type Getter,
   hasNonConstantPropertyAlias,
+  hasResumableWriter,
   intersectionMeta,
   isAssignedBindingExtra,
   isDirectAlias,
@@ -396,7 +397,7 @@ export function getSignal(
           // Match the HTML registration, which is gated on this subscriber
           // section (writeHTMLResumeStatements); keying on any sibling closure
           // section would ship a pending id that nothing looks up.
-          underTryPlaceholder(section)
+          underTryPlaceholder(section) && closureResumes(closure)
             ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
             : undefined,
         );
@@ -404,6 +405,14 @@ export function getSignal(
     }
   }
   return signal;
+}
+
+// A closure over state no resumed instance can write never replays: the
+// pending registration would name an id the client bundle has no reason
+// to keep.
+function closureResumes(closure: Binding) {
+  const state = closure.sources?.state;
+  return !state || some(state, hasResumableWriter);
 }
 
 function underTryPlaceholder(section: Section) {
@@ -497,7 +506,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.reads.size ||
     binding.exposed ||
     binding.aliases.size ||
-    binding.assignmentSections ||
+    binding.assignments ||
     isForSelectorValue(binding) ||
     getSerializeReason(binding.section, binding) ||
     getSignal(binding.section, binding).hasSideEffect
@@ -1292,7 +1301,7 @@ export function writeHTMLResumeStatements(
           closure,
           getAccessorPrefix().ClosureScopes,
         );
-        if (underTryPlaceholder(section)) {
+        if (underTryPlaceholder(section) && closureResumes(closure)) {
           const reason = getSerializeReason(section);
           if (reason) {
             // The pending effect replays the closure on resume, so it must be
