@@ -9,7 +9,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $placeholder_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $placeholder_content__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $placeholder_content__dynamicTag($scope, $scope._.input_content));
+const $placeholder_content__input_content = /*@__PURE__*/ _fill_join_closure("__tests__/tags/card/index.marko0", "input_content", /*@__PURE__*/ _closure_get("input_content", ($scope) => $placeholder_content__dynamicTag($scope, $scope._.input_content)), 0);
 const $placeholder_content__setup = $placeholder_content__input_content;
 const $placeholder_content = _content_resume("__tests__/tags/card/index.marko_1*content", "<!><!><!>", "b%", $placeholder_content__setup);
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
@@ -17,11 +17,11 @@ function $setup$1($scope) {
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 }
 const $input$1 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_promise$1($scope, input.promise);
+	$input_content($scope, input.content);
 };
 const $input_content__closure = /*@__PURE__*/ _closure($placeholder_content__input_content);
-const $input_content = /*@__PURE__*/ _const("input_content", $input_content__closure);
+const $input_content = /*@__PURE__*/ _fill_const("__tests__/tags/card/index.marko0", "input_content", $input_content__closure);
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promise);
 const $input_promise$1 = /*@__PURE__*/ _const("input_promise", $input_promise__closure);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, "D%l", $setup$1, $input$1);

@@ -171,6 +171,9 @@ export interface Section {
   /** A content renderer slot-serialized by register id (`<try>` bodies):
    * static ones re-register from entry data, others load the dom module. */
   boundaryContent: boolean;
+  /** A `<try>`'s `@placeholder` content: the browser constructs it when a
+   * patch pends the boundary, so a non-static one needs the dom module. */
+  tryPlaceholder: boolean;
   /** A content body shipped as a shell: `"static"` rides its slot
    * in-band, a dynamic one is created by id from a dynamic tag entry. */
   contentShell: false | true | "static";
@@ -219,6 +222,7 @@ export function startSection(
     const parentSection = path.parentPath
       ? getOrCreateSection(path.parentPath)
       : undefined;
+    const tryAttrTag = !!parentTag && isTryAttrTag(parentTag);
     const sectionName = parentTag
       ? generateUid(
           (isCoreTagName(parentTag, "define") &&
@@ -264,7 +268,11 @@ export function startSection(
       isBranch: false,
       isBoundary: false,
       // Known at creation so descendants analyzing under it see it.
-      boundaryContent: !!parentTag && isTryAttrTag(parentTag),
+      boundaryContent: tryAttrTag,
+      tryPlaceholder:
+        tryAttrTag &&
+        t.isStringLiteral(parentTag!.node.name) &&
+        parentTag!.node.name.value === "@placeholder",
       contentShell: false,
       awaits: undefined,
       structure: parentSection && !parentSection.structure ? null : [],

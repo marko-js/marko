@@ -10,7 +10,7 @@ import {
 import { insertChildNodes } from "./dom";
 import { getContent } from "./patch-shells";
 import { createAndSetupBranch } from "./renderer";
-import { withCreating, patchers, patchScope } from "./resume";
+import { failPatch, patchers, patchScope, withCreating } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 
 declare module "./resume" {
@@ -82,9 +82,20 @@ function create(
   const parentNode = inside
     ? (marker as Element)
     : (marker.parentNode as Element);
+  const content = getContent(shellId);
+  // Every branch on the patch path ships a shell; a missing one (an
+  // unregistered id) rejects the flush instead of mounting nothing.
+  if (!content) {
+    if (MARKO_DEBUG) {
+      console.warn(
+        `A patch rejected: no shell to create the branch at "${branchKey}" from ("${shellId}").`,
+      );
+    }
+    return failPatch();
+  }
   const branch = createAndSetupBranch(
     scope[AccessorProp.Global],
-    getContent(shellId)!,
+    content,
     scope,
     parentNode,
   );

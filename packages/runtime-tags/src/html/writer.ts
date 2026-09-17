@@ -378,6 +378,13 @@ export function peekPatchPartial(state: State, scopeId: number) {
   return state.patchTrees?.get($chunk.serializeState)?.[scopeId];
 }
 
+// Forgets a partial opened for a scope id nothing took (a branch that
+// rendered no scope), so the next scope under that id starts clean.
+export function dropPatchPartial(state: State, scopeId: number) {
+  const partials = state.patchTrees?.get($chunk.serializeState);
+  if (partials) delete partials[scopeId];
+}
+
 // Binds each scope-bound registration in a patch value while the
 // partial tree still accepts writes; the serialized slot references it.
 export function writeEmbeddedBinds(

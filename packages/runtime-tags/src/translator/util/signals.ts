@@ -2032,16 +2032,22 @@ export function writeHTMLResumeStatements(
               t.stringLiteral(getResumeRegisterId(section, closure, "pending")),
               markerSerializeArg,
             );
-            // A patch page replays only a closure the client can change: a
-            // server-fed body keeps the html it landed with, filled by flushes.
+            // A patch page replays only a closure the resumed page renders
+            // (`_unfilled_if`: the client is upstream, or the read sits in
+            // unpatched structure), as the `_subscribe` branch below gates
+            // its dispatch. A server-fed body keeps the html it landed with,
+            // filled by flushes: replaying it would re-render from an owner
+            // value the page never serialized.
             const ownership =
-              isPatch() && !closure.sources.state
+              isPatch() &&
+              !closure.sources.state &&
+              !hasResumedRead(closure, section)
                 ? getPatchWriteOwnership(closure.sources)
                 : undefined;
-            if (ownership?.length) {
+            if (ownership) {
               script = t.logicalExpression(
                 "&&",
-                callRuntime("_client_guard", ...ownership),
+                callRuntime("_unfilled_if", ...ownership),
                 script,
               );
             }

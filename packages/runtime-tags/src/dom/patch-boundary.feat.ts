@@ -165,7 +165,15 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // A created scope has no live await branch: the entry's id names the body
   // content shell its flush shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
-    const renderer = getContent(value)!;
+    const renderer = getContent(value);
+    if (!renderer) {
+      if (MARKO_DEBUG) {
+        console.warn(
+          `A patch rejected: no content to create the await at "${key}" from ("${value}").`,
+        );
+      }
+      return failPatch();
+    }
     const pendingScopes = collectScopes(
       () =>
         ((
@@ -274,6 +282,15 @@ function holdForStream(
 const applyChild = patchers[PatchKey.Child];
 patchers[PatchKey.Child] = (scope, key, value) => {
   const link = key.slice(PatchKey.Child.length) as Accessor;
+  // Only a boundary link (a try or await body) settles a pending await. A
+  // child scope link pairs as is: settling from it would count down the
+  // enclosing boundary's counter (and reattach its parked body) while a
+  // branch being created above it still inserts into the parked range.
+  if (!link.startsWith(AccessorPrefix.BranchScopes)) {
+    if (applyChild) applyChild(scope, key, value);
+    else patchScope(value as Scope, scope[link] as Scope);
+    return;
+  }
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
   // Only a resumed counter carries the render's marker hook: the document
   // owns the pending UI, and its reorder completes the counter.
@@ -297,7 +314,17 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     const [partial, contentId, catchId, placeholderId] = value;
     value = partial;
     if (!scope[link]) {
-      const renderer = getContent(contentId)!;
+      const renderer = getContent(contentId);
+      // A body no shell expresses and no module registers cannot be
+      // created: reject the flush rather than mount nothing.
+      if (!renderer) {
+        if (MARKO_DEBUG) {
+          console.warn(
+            `A patch rejected: no content to create the boundary at "${key}" from ("${contentId}").`,
+          );
+        }
+        return failPatch();
+      }
       const marker = scope[accessor as Accessor] as ChildNode;
       const inside = marker.nodeType === 1;
       const parentNode = inside

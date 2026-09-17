@@ -4,7 +4,8 @@ const $walks$1 = "D%l";
 _shells({
 	"__tests__/tags/card/index.marko_3*content": "__tests__/tags/card/index.marko_3*content,<span>done</span>",
 	"__tests__/tags/card/index.marko_2_#text#0/await": "__tests__/tags/card/index.marko_2_#text#0/await,<span>done</span>",
-	"__tests__/tags/card/index.marko_2*content": "__tests__/tags/card/index.marko_2*content;b%;<!><!><!>"
+	"__tests__/tags/card/index.marko_2*content": "__tests__/tags/card/index.marko_2*content;b%;<!><!><!>",
+	"__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko !;D%;<section><!></section>"
 });
 var card_default = _template_patch("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -21,25 +22,28 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 		}, 1, "__tests__/tags/card/index.marko_2_#text#0/await");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4"));
 		$scope0_page && _resume_branch($scope2_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_elide("__tests__/tags/card/index.marko_1*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/tags/card/index.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
 		_subscribe(_source_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "4:6"));
 		$sg__input_content || _resume_branch($scope1_id);
-	}, $scope0_id, 1) }) }, 1);
+	}, $scope0_id) }) }, 1);
 	_html("</section>");
-	$scope0_page && _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		input_content: input.content,
 		"ClosureScopes:input_content": $input_content__closures,
 		"ClosureScopes:input_promise": $input_promise__closures
-	}, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] });
+	}, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
 }, 0, 0);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D%l");
-_shells({ "__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>" });
+_shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>",
+	"__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)("D%l"), ((_w0) => `<main>${_w0}</main>`)($template$1))
+});
 var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

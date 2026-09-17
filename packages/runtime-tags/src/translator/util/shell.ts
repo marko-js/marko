@@ -43,6 +43,18 @@ export function isShell(section: Section) {
 // Decides every branch shell (expressibility, blockers) so the html output
 // serializes the kept sections as shells.
 export function buildShells() {
+  // A patch that creates or pends a `<try>` shows its `@placeholder` from
+  // the browser. Static placeholder markup rides in-band as a content shell;
+  // any other placeholder needs this template's dom module, so the template
+  // ships it: a scriptless one would elide the slot, leaving the boundary
+  // holding it with no expressible shell, so its creation would reject.
+  if (!getProgram().node.extra.isInteractive) {
+    forEachSection((section) => {
+      if (section.tryPlaceholder && !isStaticMarkup(section)) {
+        getProgram().node.extra.isInteractive = true;
+      }
+    });
+  }
   const interactive = getProgram().node.extra.isInteractive;
   const keep = new Set<Section>();
   const shells = (getProgram().node.extra.shells ??= {});
@@ -237,11 +249,18 @@ function isAwaitBody(section: Section) {
 }
 
 // A shell the client creates from its template alone: static markup with
-// no walk. A child always walks, so resolving never reaches its imports.
+// no walk.
 function isStaticShell(section: Section) {
+  return isShellExpressible(section) && isStaticMarkup(section);
+}
+
+// Static markup with no walk, judged from the structure alone (no
+// expressibility, which this template's interactivity feeds back into). A
+// child always walks, so resolving never reaches its imports.
+function isStaticMarkup(section: Section) {
   if (
-    !isShellExpressible(section) ||
-    section.structure!.some(
+    !section.structure ||
+    section.structure.some(
       (op) => typeof op === "object" && op.kind === StructureKind.Child,
     )
   ) {
