@@ -757,13 +757,21 @@ function pushForward(signal: Signal, target: Signal, statement: t.Statement) {
 }
 
 // A patch renders a signal when every render is a hole it writes or a
-// forward it renders (a cycle resolves as the client's).
+// forward it renders (a cycle resolves as the client's). A draft is the
+// client's: its guesses show through it, so a flush only feeds its source.
 export function patchRenders(signal: Signal): boolean {
   if (signal.patchRendered === undefined) {
     signal.patchRendered = false;
-    signal.patchRendered = patchesStructure(signal) || !hasClientRender(signal);
+    signal.patchRendered =
+      !isDraftSignal(signal) &&
+      (patchesStructure(signal) || !hasClientRender(signal));
   }
   return signal.patchRendered;
+}
+
+function isDraftSignal(signal: Signal) {
+  const binding = signal.referencedBindings;
+  return !!binding && !Array.isArray(binding) && !!binding.rederives;
 }
 
 // A loop or branch chain a patch renders whenever it writes the scope: its
@@ -781,13 +789,15 @@ function patchesStructure(signal: Signal) {
   );
 }
 
-// A patch renders a forward into a value it fills itself as well.
+// A patch renders a forward into a value it fills itself as well (a
+// draft's seed is for a created scope only; a paired one derives).
 function patchRendersInto(target: Signal) {
   const binding = target.referencedBindings;
   return (
     patchRenders(target) ||
     (!!binding &&
       !Array.isArray(binding) &&
+      !binding.rederives &&
       binding.section === target.section &&
       isPatchFillBinding(binding))
   );
@@ -1750,6 +1760,19 @@ export function writeRegisteredFns() {
         // A const arrow (unlike a function declaration) lets the minifier fold
         // the factory into its lone `_resume` call site.
         const body = toReturnedFunction(registeredFn.node, prologue);
+        const { action, actionSignal } = registeredFn.node
+          .extra as t.FunctionExtra;
+        // An `<action>` body resolves to its act, made for this scope.
+        if (action !== undefined) {
+          const returned = body[body.length - 1] as t.ReturnStatement;
+          returned.argument = callRuntime(
+            "_act",
+            returned.argument!,
+            t.numericLiteral(action),
+            scopeIdentifier,
+            actionSignal!,
+          );
+        }
         fn = t.variableDeclaration("const", [
           t.variableDeclarator(
             t.identifier(registeredFn.id),
@@ -1834,13 +1857,15 @@ function createsWithInit(section: Section, closure: Binding) {
   );
 }
 
-// A branch body that ships a shell, or content whose shell a patch may
-// create (a shell kept only for reference never creates).
+// A branch body that ships a shell, a boundary body a created enclosing
+// scope brings along, or content whose shell a patch may create (a shell
+// kept only for reference never creates).
 export function patchCreates(section: Section) {
   return (
     isPatch() &&
     (section.isBranch ||
-      (section.contentShell === true && contentMayCreate(section))) &&
+      ((section.isBoundary || section.contentShell === true) &&
+        contentMayCreate(section))) &&
     !inResumedStructure(section) &&
     !sectionHasServerEffect(section)
   );

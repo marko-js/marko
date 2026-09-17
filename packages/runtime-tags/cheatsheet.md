@@ -168,6 +168,22 @@ Imperative libs (charts, maps) needing mount/update/destroy: use `<lifecycle>`, 
 />
 ```
 
+## Optimistic updates (`<draft>`, `<action>`)
+
+A `<draft/x=source>` derives like a `<const>` but takes a provisional assignment (a guess) from an `<action>` body or an event handler. The guess shows at once and holds for the act's lifetime (its body plus the promise it returns); then the draft re-derives from the source. A guess the source confirms costs no DOM work; a wrong or failed one is discarded. Never write the source through a draft: there is no commit path.
+
+`<action/act=fn>` declares a user act. `act.pending` is a readonly reactive boolean, refcounted across overlapping calls and always `false` during SSR. Awaits in the body compile to transaction re-entry, so an assignment after an `await` (or in `catch`/`finally`) still joins the act; a body that uses `this`, `arguments` or `for await` keeps native awaits, so assign its guesses before the first `await`. A value-less `<action/apply/>` is the identity: `apply(fetchThing())` is a pending-only act tracking that promise. An act called inside another act is its own transaction; `await inner()` keeps the outer open across it. Declare an `<action>` inside a `<for>` row for a per-row act.
+
+```marko
+<const/page=input.page>
+<draft/shown=page>
+<action/go=async (next) => {
+  shown = next;                       // guess, held until the act settles
+  await navigate(`/?page=${next}`);   // the page's `input.page` confirms it
+}/>
+<button disabled=go.pending onClick() { go(page + 1) }>Page ${shown}</button>
+```
+
 ## Lazy loading
 
 Defer a tag's JS into its own bundle until a trigger fires: `visible#sel`, `idle`, `media(...)`, `on-click#sel` (combine with `|`), or `render` alone. Server HTML renders immediately; in the browser `<try>` shows a `@placeholder` while loading. Don't hand-roll an `IntersectionObserver`.
@@ -212,6 +228,7 @@ Each left-hand habit is an error or silently wrong.
 | `<let x=0>`                                                 | `<let/x=0>`                                                                          |
 | `<if(cond)>`                                                | `<if=cond>`                                                                          |
 | `items.push(x)`                                             | `items = items.concat(x)`                                                            |
+| `<let/x=input.x>` then `x = guess` to show a value early    | `<draft/x=input.x>`; a `<let>` never re-derives, a draft does once its act settles   |
 | `input.renderBody` (renders nothing, no error)              | `input.content`                                                                      |
 | `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                                                      |
 | `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                                             |

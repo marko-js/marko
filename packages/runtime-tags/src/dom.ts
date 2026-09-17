@@ -3,6 +3,7 @@ export { _assert_hoist, _hoist_read_error } from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _call } from "./common/helpers";
 export { $signal, $signalReset } from "./dom/abort-signal";
+export { _act, _action, _draft, _fill_action, _fill_draft } from "./dom/action";
 export { compat } from "./dom/compat";
 export {
   _await_content,

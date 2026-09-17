@@ -1,0 +1,5 @@
+import { resolveAfter } from "../../utils/resolve";
+<for|item| of=input.items by="id">
+  <action/act=async () => { await resolveAfter(item.id) }/>
+  <button onClick() { act() }>${item.id} ${act.pending ? "pending" : "idle"}</button>
+</for>

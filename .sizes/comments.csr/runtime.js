@@ -1,4 +1,4 @@
-// size: 6348 (min) 2808 (brotli)
+// size: 6345 (min) 2808 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -13,62 +13,14 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
     (!branchesEnabled || render.b.F?.H !== 0) && render.c(render.b, render.d);
   },
   catchEnabled,
+  isScheduled,
+  channel,
   delegate = (type, handler) =>
     (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
-  parsers = {},
   nextScopeId = 1e6,
   destroyNestedScopes = function destroyNestedScopes(scope) {
     ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
   },
-  isScheduled,
-  channel,
-  _var_change = (scope, value) => scope.U?.(value),
-  currentNode,
-  walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
-    let value,
-      currentMultiplier,
-      storedMultiplier = 0,
-      currentScopeIndex = 0;
-    for (; currentWalkIndex < walkCodes.length;)
-      if (
-        ((value = walkCodes.charCodeAt(currentWalkIndex++)),
-        (currentMultiplier = storedMultiplier),
-        (storedMultiplier = 0),
-        value === 32)
-      )
-        scope[decodeAccessor(currentScopeIndex++)] = currentNode;
-      else if (value === 37 || value === 49)
-        (currentNode.replaceWith(
-          (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
-        ),
-          value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-      else if (value === 38) return currentWalkIndex;
-      else if (value === 47 || value === 48)
-        ((currentWalkIndex = walkInternal(
-          currentWalkIndex,
-          walkCodes,
-          (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
-        )),
-          value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-      else if (value < 92)
-        for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
-      else if (value < 107)
-        for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
-      else if (value < 117) {
-        for (value = 10 * currentMultiplier + value - 107; value--;)
-          currentNode = currentNode.parentNode || currentNode;
-        walkNextSibling();
-      } else storedMultiplier = currentMultiplier * 10 + value - 117;
-  },
-  walkNextNode = () => {
-    if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
-    for (; !currentNode.nextSibling && currentNode.parentNode;)
-      currentNode = currentNode.parentNode;
-    walkNextSibling();
-  },
-  walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
-  registeredValues = {},
-  cloneCache = {},
   _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let branchAccessor = "D" + nodeAccessor,
@@ -188,7 +140,55 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
       typeof by == "string"
         ? forOf(all, (item, i) => cb(item[by], [item, i]))
         : forOf(all, (item, i) => cb(by(item, i), [item, i])));
-  });
+  }),
+  parsers = {},
+  currentNode,
+  walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
+    let value,
+      currentMultiplier,
+      storedMultiplier = 0,
+      currentScopeIndex = 0;
+    for (; currentWalkIndex < walkCodes.length;)
+      if (
+        ((value = walkCodes.charCodeAt(currentWalkIndex++)),
+        (currentMultiplier = storedMultiplier),
+        (storedMultiplier = 0),
+        value === 32)
+      )
+        scope[decodeAccessor(currentScopeIndex++)] = currentNode;
+      else if (value === 37 || value === 49)
+        (currentNode.replaceWith(
+          (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
+        ),
+          value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+      else if (value === 38) return currentWalkIndex;
+      else if (value === 47 || value === 48)
+        ((currentWalkIndex = walkInternal(
+          currentWalkIndex,
+          walkCodes,
+          (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
+        )),
+          value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+      else if (value < 92)
+        for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
+      else if (value < 107)
+        for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
+      else if (value < 117) {
+        for (value = 10 * currentMultiplier + value - 107; value--;)
+          currentNode = currentNode.parentNode || currentNode;
+        walkNextSibling();
+      } else storedMultiplier = currentMultiplier * 10 + value - 117;
+  },
+  walkNextNode = () => {
+    if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
+    for (; !currentNode.nextSibling && currentNode.parentNode;)
+      currentNode = currentNode.parentNode;
+    walkNextSibling();
+  },
+  walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
+  cloneCache = {},
+  registeredValues = {},
+  _var_change = (scope, value) => scope.U?.(value);
 function isNotVoid(value) {
   return value != null && value !== !1;
 }
@@ -276,6 +276,20 @@ function runRenders() {
     runRender(render);
   }
 }
+function schedule() {
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+}
+function flushAndWaitFrame() {
+  (requestAnimationFrame(triggerMacroTask), run());
+}
+function triggerMacroTask() {
+  (channel ||
+    ((channel = new MessageChannel()),
+    (channel.port1.onmessage = () => {
+      ((isScheduled = 0), run());
+    })),
+    channel.port2.postMessage(0));
+}
 function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
 }
@@ -288,10 +302,6 @@ function handleDelegated(ev) {
   for (; target;)
     (target[1 + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
-}
-function parseHTML(html, ns) {
-  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
-  return ((parser.innerHTML = html), parser.content || parser);
 }
 function createScope($global, closestBranch) {
   return {
@@ -314,86 +324,75 @@ function removeAndDestroyBranch(branch) {
 function insertBranchBefore(branch, parentNode, nextSibling) {
   insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
 }
-function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) {
+  let referenceNode = scope[nodeAccessor],
+    prevBranch = scope["A" + nodeAccessor],
+    parentNode =
+      referenceNode.nodeType > 1 ? (prevBranch?.S || referenceNode).parentNode : referenceNode,
+    newBranch = (scope["A" + nodeAccessor] =
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  referenceNode === parentNode
+    ? (prevBranch && (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+      newBranch && insertBranchBefore(newBranch, parentNode, null))
+    : prevBranch
+      ? (newBranch
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
+          : parentNode.insertBefore(referenceNode, prevBranch.S),
+        removeAndDestroyBranch(prevBranch))
+      : newBranch &&
+        (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
 }
-function flushAndWaitFrame() {
-  (requestAnimationFrame(triggerMacroTask), run());
+function bySecondArg(_item, index) {
+  return index;
 }
-function triggerMacroTask() {
-  (channel ||
-    ((channel = new MessageChannel()),
-    (channel.port1.onmessage = () => {
-      ((isScheduled = 0), run());
-    })),
-    channel.port2.postMessage(0));
+function parseHTML(html, ns) {
+  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
+  return ((parser.innerHTML = html), parser.content || parser);
 }
-function _let(id, fn) {
-  let valueAccessor = decodeAccessor(id);
-  return (scope, value) => (
-    rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
-      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn) &&
-        (schedule(), queueRender(scope, fn, id)),
-    value
-  );
+function _to_text(value) {
+  return value || value === 0 ? value + "" : "";
 }
-function _const(valueAccessor, fn) {
-  return (
-    (valueAccessor = decodeAccessor(valueAccessor)),
-    (scope, value) => {
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn?.(scope));
+function _attr(element, name, value) {
+  setAttribute(element, name, normalizeAttrValue(value));
+}
+function setAttribute(element, name, value) {
+  element.getAttribute(name) != value &&
+    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+}
+function _text(node, value) {
+  let normalizedValue = _to_text(value);
+  node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function normalizeAttrValue(value) {
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+}
+function removeChildNodes(startNode, endNode) {
+  let stop = endNode.nextSibling;
+  for (; startNode !== stop;) {
+    let next = startNode.nextSibling;
+    (startNode.remove(), (startNode = next));
+  }
+}
+function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
+  if (parentNode.isConnected)
+    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+  else {
+    let stop = endNode.nextSibling;
+    for (; startNode !== stop;) {
+      let next = startNode.nextSibling;
+      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
     }
-  );
+  }
+  return parentNode;
 }
-function _for_closure(ownerLoopNodeAccessor, fn) {
-  ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor);
-  let scopeAccessor = "A" + ownerLoopNodeAccessor,
-    ownerSignal = (ownerScope) => {
-      let scopes = toArray(ownerScope[scopeAccessor]);
-      scopes.length &&
-        queueRender(
-          ownerScope,
-          () => {
-            for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
-          },
-          -1,
-          0,
-          scopes[0].L,
-        );
-    };
-  return ((ownerSignal._ = fn), ownerSignal);
-}
-function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
-  ownerConditionalNodeAccessor = decodeAccessor(ownerConditionalNodeAccessor);
-  let scopeAccessor = "A" + ownerConditionalNodeAccessor,
-    branchAccessor = "D" + ownerConditionalNodeAccessor,
-    ownerSignal = (scope) => {
-      let ifScope = scope[scopeAccessor];
-      ifScope &&
-        ifScope.H > 0 &&
-        ifScope.H < runId &&
-        (scope[branchAccessor] || 0) === branch &&
-        queueRender(ifScope, fn, -1);
-    };
-  return ((ownerSignal._ = fn), ownerSignal);
-}
-function _script(id, fn) {
-  return (
-    _resume(id, fn),
-    (scope) => {
-      queueEffect(scope, fn);
-    }
-  );
+function toInsertNode(startNode, endNode) {
+  return startNode === endNode
+    ? startNode
+    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
-}
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
 }
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);
@@ -455,67 +454,68 @@ function createCloneableHTML(html, ns) {
         }
   );
 }
-function _to_text(value) {
-  return value || value === 0 ? value + "" : "";
+function _resume(id, obj) {
+  return (registeredValues[id] = obj);
 }
-function _attr(element, name, value) {
-  setAttribute(element, name, normalizeAttrValue(value));
+function _let(id, fn) {
+  let valueAccessor = decodeAccessor(id);
+  return (scope, value) => (
+    rendering
+      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn) &&
+        (schedule(), queueRender(scope, fn, id)),
+    value
+  );
 }
-function setAttribute(element, name, value) {
-  element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
-}
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
-  node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
-}
-function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
-    let next = startNode.nextSibling;
-    (startNode.remove(), (startNode = next));
-  }
-}
-function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  if (parentNode.isConnected)
-    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-  else {
-    let stop = endNode.nextSibling;
-    for (; startNode !== stop;) {
-      let next = startNode.nextSibling;
-      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
+function _const(valueAccessor, fn) {
+  return (
+    (valueAccessor = decodeAccessor(valueAccessor)),
+    (scope, value) => {
+      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn?.(scope));
     }
-  }
-  return parentNode;
+  );
 }
-function toInsertNode(startNode, endNode) {
-  return startNode === endNode
-    ? startNode
-    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
+function _for_closure(ownerLoopNodeAccessor, fn) {
+  ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor);
+  let scopeAccessor = "A" + ownerLoopNodeAccessor,
+    ownerSignal = (ownerScope) => {
+      let scopes = toArray(ownerScope[scopeAccessor]);
+      scopes.length &&
+        queueRender(
+          ownerScope,
+          () => {
+            for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
+          },
+          -1,
+          0,
+          scopes[0].L,
+        );
+    };
+  return ((ownerSignal._ = fn), ownerSignal);
 }
-function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) {
-  let referenceNode = scope[nodeAccessor],
-    prevBranch = scope["A" + nodeAccessor],
-    parentNode =
-      referenceNode.nodeType > 1 ? (prevBranch?.S || referenceNode).parentNode : referenceNode,
-    newBranch = (scope["A" + nodeAccessor] =
-      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
-  referenceNode === parentNode
-    ? (prevBranch && (destroyBranch(prevBranch), (referenceNode.textContent = "")),
-      newBranch && insertBranchBefore(newBranch, parentNode, null))
-    : prevBranch
-      ? (newBranch
-          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
-          : parentNode.insertBefore(referenceNode, prevBranch.S),
-        removeAndDestroyBranch(prevBranch))
-      : newBranch &&
-        (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
+function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
+  ownerConditionalNodeAccessor = decodeAccessor(ownerConditionalNodeAccessor);
+  let scopeAccessor = "A" + ownerConditionalNodeAccessor,
+    branchAccessor = "D" + ownerConditionalNodeAccessor,
+    ownerSignal = (scope) => {
+      let ifScope = scope[scopeAccessor];
+      ifScope &&
+        ifScope.H > 0 &&
+        ifScope.H < runId &&
+        (scope[branchAccessor] || 0) === branch &&
+        queueRender(ifScope, fn, -1);
+    };
+  return ((ownerSignal._ = fn), ownerSignal);
 }
-function bySecondArg(_item, index) {
-  return index;
+function _script(id, fn) {
+  return (
+    _resume(id, fn),
+    (scope) => {
+      queueEffect(scope, fn);
+    }
+  );
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs

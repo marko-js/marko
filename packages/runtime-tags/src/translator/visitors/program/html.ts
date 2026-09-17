@@ -236,13 +236,14 @@ export default {
         for (const id in active) {
           const section = active[id];
           // The id token carries `inits…!effects…`; a lone `!` marks a shell needing
-          // setup for seeds alone. Roots and content shells carry their own
-          // like a branch shell.
+          // setup for seeds alone. Roots, content shells and boundary bodies
+          // carry their own like a branch shell.
           let marker = "";
           if (
             id === getShellId(section) ||
             !section.parent ||
-            (section.contentShell === true && patchCreates(section))
+            ((section.contentShell === true || section.isBoundary) &&
+              patchCreates(section))
           ) {
             forEach(getCreateInitClosures(section), (closure) => {
               marker +=

@@ -1,3 +1,4 @@
+export { _act } from "./html/action";
 export { attrTag, attrTags } from "./common/attr-tag";
 export {
   _assert_hoist,

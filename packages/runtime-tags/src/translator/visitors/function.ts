@@ -418,6 +418,7 @@ function shouldAlwaysRegister(markoRoot: MarkoExprRootPath) {
   const tag = getTagFromMarkoRoot(markoRoot);
   if (!tag) return false;
   if (isCoreTagName(tag, "let")) return true;
+  if (isCoreTagName(tag, "action")) return true;
   if (isCoreTagName(tag, "return")) return true;
 
   // Native-tag event handlers are already skipped in `canIgnoreRegister`, so
