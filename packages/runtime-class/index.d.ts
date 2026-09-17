@@ -1,10 +1,5 @@
 import "./tags-html";
 
-declare module "*.marko" {
-  const template: Marko.Template;
-  export default template;
-}
-
 declare global {
   namespace NodeJS {
     interface ReadableStream {}
