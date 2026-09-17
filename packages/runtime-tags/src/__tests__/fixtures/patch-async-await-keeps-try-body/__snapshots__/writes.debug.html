@@ -1,0 +1,25 @@
+<main>
+  <h1>Store<!--M_$1 #text/0--></h1>
+  <!--M_[--><!--M_[--><em>closed</em><!--M_]3 #text/0 4--><!--M_]1 #text/1 3-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    input_promise: (p => p = new Promise((f, r) => _.a = {
+      f,
+      r(e) {
+        p.catch(_ => 0);
+        r(e)
+      }
+    }))(),
+    "ClosureScopes:input_promise": new Set,
+    "ClosureScopes:input_show": new Set
+  }, 1, {
+    "ConditionalRenderer:#text/0": 1,
+    _: _(1),
+    "#PlaceholderContent": _._._content(
+      `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-keeps-try-body/template.marko_3*content,<em>loading</em>`,
+      _(1))
+  }], _ => (_.a.f("hi"), 0)];
+  M._.w()
+</script>

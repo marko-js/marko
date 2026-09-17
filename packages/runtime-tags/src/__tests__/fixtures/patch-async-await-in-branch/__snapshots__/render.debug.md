@@ -94,8 +94,7 @@ UPDATE: main > button::text@6 "1" => "2"
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
-REMOVE: main > em
-INSERT: main > h1 + em
+UPDATE: main > em::text "hi" => "slow"
 ```
 
 # Update `{"title":"Store!","show":false,"promise":{}}`

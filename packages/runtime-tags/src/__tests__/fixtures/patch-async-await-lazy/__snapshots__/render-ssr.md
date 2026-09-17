@@ -56,9 +56,15 @@ UPDATE: main > button::text@6 "0" => "1"
     Store!
   </h1>
   <section>
-    loading
+    <em>
+      hats
+    </em>
   </section>
-  <footer />
+  <footer>
+    <span>
+      ready
+    </span>
+  </footer>
   <button>
     Count 1
   </button>
@@ -67,9 +73,6 @@ UPDATE: main > button::text@6 "0" => "1"
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
-INSERT: main > section::text("loading")
-REMOVE: main > section::text + em
-REMOVE: main > footer > span
 ```
 
 # Update
@@ -82,9 +85,15 @@ document.querySelector("button").click();
     Store!
   </h1>
   <section>
-    loading
+    <em>
+      hats
+    </em>
   </section>
-  <footer />
+  <footer>
+    <span>
+      ready
+    </span>
+  </footer>
   <button>
     Count 2
   </button>
@@ -106,7 +115,11 @@ UPDATE: main > button::text@6 "1" => "2"
       boots
     </em>
   </section>
-  <footer />
+  <footer>
+    <span>
+      ready
+    </span>
+  </footer>
   <button>
     Count 2
   </button>
@@ -114,8 +127,7 @@ UPDATE: main > button::text@6 "1" => "2"
 ```
 ## Change
 ```
-INSERT: main > section > em
-REMOVE: main > section > em + ::text("loading")
+UPDATE: main > section > em::text "hats" => "boots"
 ```
 
 # Update
@@ -132,7 +144,11 @@ document.querySelector("button").click();
       boots
     </em>
   </section>
-  <footer />
+  <footer>
+    <span>
+      ready
+    </span>
+  </footer>
   <button>
     Count 3
   </button>
@@ -166,7 +182,7 @@ UPDATE: main > button::text@6 "2" => "3"
 ```
 ## Change
 ```
-INSERT: main > footer > span
+UPDATE: main > footer > span::text "ready" => "backordered"
 ```
 
 # Update

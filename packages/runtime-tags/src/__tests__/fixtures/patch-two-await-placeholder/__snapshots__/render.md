@@ -19,10 +19,6 @@
 ```
 ## Change
 ```
-INSERT: em
-REMOVE: em + span
-REMOVE: em + span
-INSERT: span, span
-REMOVE: span:nth-of-type(2) + em
+UPDATE: span:nth-of-type(1)::text "a1" => "a2"
 UPDATE: span:nth-of-type(2)::text "b1" => "b2"
 ```

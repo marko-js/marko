@@ -17,8 +17,6 @@
 ```
 ## Change
 ```
-INSERT: main::text("loading")
-REMOVE:  + em
 INSERT: main > em
-REMOVE: main > em + ::text("loading")
+REMOVE: main > em + em
 ```

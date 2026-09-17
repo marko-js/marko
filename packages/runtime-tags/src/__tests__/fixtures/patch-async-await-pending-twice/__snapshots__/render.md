@@ -24,8 +24,7 @@
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
-REMOVE: main > em
-INSERT: main > h1 + em
+UPDATE: main > em::text "hi" => "slow"
 ```
 
 # Update `{"title":"Store!!","promise":{"value":"slower"}}`
@@ -42,6 +41,5 @@ INSERT: main > h1 + em
 ## Change
 ```
 UPDATE: main > h1::text "Store!" => "Store!!"
-REMOVE: main > em
-INSERT: main > h1 + em
+UPDATE: main > em::text "slow" => "slower"
 ```

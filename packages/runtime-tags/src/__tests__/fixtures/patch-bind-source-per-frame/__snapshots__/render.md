@@ -42,8 +42,7 @@
 ## Change
 ```
 UPDATE: #one[title] "a" => "b"
-REMOVE: main > #two
-INSERT: #one + #two
+UPDATE: #two[title] "a" => "b"
 ```
 
 # Update

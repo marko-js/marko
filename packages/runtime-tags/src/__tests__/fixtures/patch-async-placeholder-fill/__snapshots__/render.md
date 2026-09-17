@@ -23,8 +23,5 @@
 ```
 ## Change
 ```
-INSERT: main > p
-REMOVE: p + em
-INSERT: main > em
-REMOVE: main > em + p
+UPDATE: main > em::text "hi" => "slow"
 ```

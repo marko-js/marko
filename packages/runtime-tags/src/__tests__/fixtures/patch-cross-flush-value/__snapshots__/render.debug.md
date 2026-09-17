@@ -27,10 +27,8 @@
 ```
 ## Change
 ```
-REMOVE: #a
-REMOVE: #b
-INSERT: #a
-INSERT: #a + #b
+UPDATE: #a::text@0 "x" => "y"
+UPDATE: #b::text@0 "x" => "y"
 ```
 
 # Update

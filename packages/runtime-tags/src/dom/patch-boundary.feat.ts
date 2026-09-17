@@ -63,7 +63,9 @@ declare module "./resume" {
 // Await/try bodies resume as branches on pages that never load control-flow.
 withBranches();
 
-function beginAwaitPending(scope: Scope, nodeAccessor: string) {
+// `run`: the flush's run, so a boundary created since (its own creation)
+// tells from one the page showed before.
+function beginAwaitPending(scope: Scope, nodeAccessor: string, run: number) {
   const awaitBranch = scope[
     AccessorPrefix.BranchScopes + nodeAccessor
   ] as BranchScope;
@@ -74,10 +76,21 @@ function beginAwaitPending(scope: Scope, nodeAccessor: string) {
   const tryBranch = tryPlaceholder || awaitBranch;
   if (!tryBranch) return;
 
-  placeholderShown.add(pendingEffects);
   let awaitCounter = tryBranch[AccessorProp.AwaitCounter] as
     | AwaitCounter
     | undefined;
+  // A boundary the page showed before this flush keeps its body up while
+  // the await is pending; the pending UI is for one with nothing else to
+  // show: created by the flush, or parked behind its placeholder or catch.
+  if (
+    tryBranch[AccessorProp.Gen] < run &&
+    !awaitCounter?.i &&
+    !tryBranch[AccessorProp.PlaceholderBranch]
+  ) {
+    return;
+  }
+
+  placeholderShown.add(pendingEffects);
   if (!awaitCounter?.i) {
     awaitCounter = createAwaitCounter(tryBranch, () =>
       tryPlaceholder
@@ -190,11 +203,13 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // Same-flush settle (Promise.resolve) also writes Child; skip pending UI.
   // A document still streaming the body shows its own: the flush's pending
   // takes over when the body lands, unless the flush settled it by then.
+  const run = patchRun;
   (!scope[link] && (scope[AccessorProp.AwaitCounter] as AwaitCounter)?.m
     ? onStreamLanded
     : queueMicrotask)(
     () =>
-      !settled.get(scope)?.has(accessor) && beginAwaitPending(scope, accessor),
+      !settled.get(scope)?.has(accessor) &&
+      beginAwaitPending(scope, accessor, run),
     scope,
   );
 };

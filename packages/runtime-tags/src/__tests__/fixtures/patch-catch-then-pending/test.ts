@@ -2,7 +2,7 @@ import type { TestConfig } from "../../main.test";
 import { flush, resolveAfter, wait } from "../../utils/resolve";
 
 // A rejected boundary followed by a flush whose await is still pending:
-// the pending UI replaces the live catch content, then the settle lands.
+// the live catch content stays up until the settle lands and takes it over.
 export const config: TestConfig = {
   patches: true,
   skip_fresh_render: true,

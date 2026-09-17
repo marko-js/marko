@@ -43,6 +43,4 @@ UPDATE: main > p::text " " => "b"
 ```
 INSERT: main > span
 REMOVE: main > span + p
-REMOVE: main > span
-INSERT: main > span
 ```

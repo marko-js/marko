@@ -43,10 +43,6 @@
 ```
 UPDATE: .a[data-item] "{\"label\":\"a\"}" => "{\"label\":\"b\"}"
 UPDATE: .b[data-item] "{\"label\":\"a\"}" => "{\"label\":\"b\"}"
-INSERT: .b + ::text("loading")
-REMOVE:  + span
-REMOVE:  + .c
-INSERT: .b + :is(span, .c)
-REMOVE: .c + ::text("loading")
+UPDATE: main > span::text "x" => "y"
 UPDATE: .c[data-item] "{\"label\":\"a\"}" => "{\"label\":\"b\"}"
 ```

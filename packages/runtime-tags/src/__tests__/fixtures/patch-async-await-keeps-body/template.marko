@@ -1,0 +1,17 @@
+<main>
+  <h1>${input.title}</h1>
+  <try>
+    <await|value|=input.promise>
+      <em>${value}</em>
+    </await>
+    <@placeholder><em>loading</em></@placeholder>
+  </try>
+  <if=input.more>
+    <try>
+      <await|value|=input.morePromise>
+        <strong>${value}</strong>
+      </await>
+      <@placeholder><strong>more loading</strong></@placeholder>
+    </try>
+  </if>
+</main>
