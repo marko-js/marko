@@ -8,7 +8,6 @@ import { isTranslate } from "../get-compile-stage";
 import { getParamGroupSources, isKnownTagExtra } from "../known-tag";
 import { isPage, isPatch } from "../marko-config";
 import {
-  addUnique,
   every,
   filter,
   forEach,
@@ -16,9 +15,11 @@ import {
   type Opt,
   push,
   some,
+  type SortedOpt,
 } from "../optional";
 import {
   type Binding,
+  bindingUtil,
   getCanonicalBinding,
   isDirectAlias,
   someAlias,
@@ -407,14 +408,17 @@ export function fillJoinsIn(closure: Binding, section: Section) {
 // Closures a section's server-owned local fills derive from: when a flush
 // withholds such a write, the fresh scope re-derives through their inits.
 export function getLocalFillUpstreams(section: Section) {
-  let upstreams: Opt<Binding>;
+  let upstreams: SortedOpt<Binding>;
   forEach(getPatchFillBindings(section), (fill) => {
     if (fill.section === section && !fill.sources?.state) {
-      forEach(fill.sources?.param, (upstream) => {
-        if (upstream.section !== section) {
-          upstreams = addUnique(upstreams, upstream);
-        }
-      });
+      // Params sort by section, so this drops one contiguous run.
+      upstreams = bindingUtil.union(
+        upstreams,
+        bindingUtil.filter(
+          fill.sources?.param,
+          (upstream) => upstream.section !== section,
+        ),
+      );
     }
   });
   return upstreams;

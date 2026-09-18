@@ -28,6 +28,7 @@ import { quotedShell, rawShells } from "./shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
   _peek_scope_id,
+  _scope_id,
   _html_resume,
   _text_resume,
   addSetupId,
@@ -377,8 +378,12 @@ class PatchState extends State {
                 : [branchPartial]
               : shellId || 1,
     });
-    // Later settle flushes nest under the live branch as a Child apply.
-    if (branchIndex !== undefined) {
+    if (branchIndex === undefined) {
+      // Nothing rendered took the peeked id: consume it so no later scope
+      // finds this branch's partial or link.
+      _scope_id();
+    } else {
+      // Later settle flushes nest under the live branch as a Child apply.
       link[2] = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
     return 1 as const;
