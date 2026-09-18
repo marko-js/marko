@@ -1902,6 +1902,8 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
     if (hasOwnProperty.call(val, key)) {
       const escapedKey = toObjectKey(key);
       state.buf.push(sep + escapedKey + ":");
+      // A getter runs here, once, and the browser receives its result as a plain
+      // property; a throw escapes as is, since its own stack points at the getter.
       if (
         writeProp(
           state,
