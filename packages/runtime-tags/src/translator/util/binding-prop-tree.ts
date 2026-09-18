@@ -1,5 +1,5 @@
 import { generateUid } from "./generate-uid";
-import { forEach, includes, type Opt } from "./optional";
+import { forEach, type Opt } from "./optional";
 import {
   type Binding,
   BindingType,
@@ -110,7 +110,7 @@ export function getKnownFromPropTree(
     : propTree.props
       ? propTree.props[name] ||
         (propTree.rest ? getKnownFromPropTree(propTree.rest, name) : undefined)
-      : includes(propTree.binding.excludeProperties, name)
+      : propsUtil.has(propTree.binding.excludeProperties, name)
         ? undefined
         : true;
 }

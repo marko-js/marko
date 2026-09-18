@@ -2,6 +2,8 @@ export type Many<T> = [T, T, ...T[]];
 export type OneMany<T> = T | Many<T>;
 export type Opt<T> = undefined | OneMany<T>;
 export type Compare<T> = (a: T, b: T) => number;
+// A list one `Sorted` builds is looked up by binary search: write it only
+// through that instance (`push`/`concat` break the order its `has` assumes).
 export class Sorted<T> {
   public compare: Compare<T>;
   constructor(compare: Compare<T>) {

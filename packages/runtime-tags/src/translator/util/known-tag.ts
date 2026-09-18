@@ -18,7 +18,7 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, includes, type Opt, toIter } from "./optional";
+import { forEach, fromIter, type Opt, toIter } from "./optional";
 import {
   addRead,
   type Binding,
@@ -41,6 +41,7 @@ import {
   setBindingDownstream,
   trackParamsReferences,
   trackVarReferences,
+  propsUtil,
 } from "./references";
 import { callRuntime, importRuntime } from "./runtime";
 import { createScopeReadExpression } from "./scope-read";
@@ -665,7 +666,7 @@ function analyzeAttrs(
         }
         if (
           knownSpread &&
-          !includes(knownSpread.binding.excludeProperties, attr.name)
+          !propsUtil.has(knownSpread.binding.excludeProperties, attr.name)
         ) {
           const propBinding = getOrCreatePropertyAlias(
             knownSpread.binding,
@@ -753,7 +754,7 @@ function getSingleKnownSpread(
     if (
       attr.type === "MarkoSpreadAttribute"
         ? binding || !(binding = (extra = attr.value.extra)?.spreadFrom)
-        : binding && !includes(binding.excludeProperties, attr.name)
+        : binding && !propsUtil.has(binding.excludeProperties, attr.name)
     ) {
       return;
     }

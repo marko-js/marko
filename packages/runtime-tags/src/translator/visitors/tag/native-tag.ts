@@ -37,7 +37,7 @@ import {
   isOutputHTML,
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
-import { includes, type Opt, push } from "../../util/optional";
+import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -48,6 +48,7 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
   trackDomVarReferences,
+  propsUtil,
 } from "../../util/references";
 import {
   callRuntime,
@@ -351,14 +352,10 @@ export default {
               spreadBinding.noSerialize = true;
               if (carveProperties) {
                 for (const property of carveProperties) {
-                  if (
-                    !includes(spreadBinding.noSerializeProperties, property)
-                  ) {
-                    spreadBinding.noSerializeProperties = push(
-                      spreadBinding.noSerializeProperties,
-                      property,
-                    );
-                  }
+                  spreadBinding.noSerializeProperties = propsUtil.add(
+                    spreadBinding.noSerializeProperties,
+                    property,
+                  );
                 }
               }
             }
