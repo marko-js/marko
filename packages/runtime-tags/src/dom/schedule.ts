@@ -1,3 +1,4 @@
+import { currentEvent } from "./event";
 import { run } from "./queue";
 let runTask: undefined | (() => void);
 let isScheduled: undefined | 0 | 1;
@@ -15,7 +16,10 @@ export function schedule() {
     }
 
     isScheduled = 1;
-    queueMicrotask(flushAndWaitFrame);
+    // Trusted events let microtasks run between their own listeners, so a
+    // later listener (e.g. a router) must not see this flush's write yet.
+    if (currentEvent) setTimeout(flushAndWaitFrame);
+    else queueMicrotask(flushAndWaitFrame);
   }
 }
 
