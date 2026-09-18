@@ -1,4 +1,4 @@
-// size: 30470 (min) 11225 (brotli)
+// size: 30438 (min) 11215 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2653,11 +2653,13 @@ function _fill_draft(key, id, fn) {
 }
 /**
  * The `<draft>` tag's signal: a derived value that takes provisional
- * assignments (`guess`). A guess shows at once and holds while the
- * transaction that made it is open; the derivation keeps landing underneath
- * (`DraftSource`), and once every holding transaction settles the draft
- * shows the derivation again, with no DOM work when the guess was right.
- * A guess outside a transaction holds only until the next derivation.
+ * assignments (`guess`). Showing a value — guessed, derived, or reverted —
+ * is always the same write (`show`, a `<let>` assignment); a draft only
+ * adds remembering the derivation to resume (`DraftSource`) and counting
+ * the guesses currently holding it open (`DraftHolds`), so that once every
+ * holding transaction settles the draft shows the derivation again, with no
+ * DOM work when the guess was right. A guess outside a transaction holds
+ * only until the next derivation.
  */
 function _draft(id, fn) {
   let valueAccessor = decodeAccessor(id),
@@ -2678,10 +2680,7 @@ function _draft(id, fn) {
             --scope[holdsAccessor] || show(scope, scope[sourceAccessor]);
           })),
         show(scope, value))
-      : ((scope[sourceAccessor] = value),
-        scope[holdsAccessor] ||
-          ((scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-            ((scope[valueAccessor] = value), fn?.(scope)))),
+      : ((scope[sourceAccessor] = value), scope[holdsAccessor] || show(scope, value)),
     value
   );
 }
