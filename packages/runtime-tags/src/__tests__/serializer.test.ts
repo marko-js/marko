@@ -2566,7 +2566,7 @@ describe("serializer", () => {
       );
     });
 
-    it("names the tree, assigns, then yields it", () => {
+    it("assigns on the built tree and yields it", () => {
       const err = new Error("boom") as Error & { cause: unknown };
       const wrapper = { err };
       err.cause = wrapper;
@@ -2575,7 +2575,7 @@ describe("serializer", () => {
           [[1, {}, { value: { wrapper } }]],
           patchBoundary(),
         ),
-        `(_.c={value:{wrapper:_.a={err:_.b=new Error("boom")}}},_.b.cause=_.a,_.c)`,
+        `[{value:{wrapper:_.a={err:_.b=new Error("boom")}}},_.b.cause=_.a][0]`,
       );
     });
   });

@@ -508,12 +508,11 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   let extras = "";
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
     if (patch && fillIndex !== -1) {
-      // A patch flush names its tree, runs the assignments, then yields
-      // the tree, so it applies like any other: `(_.a={…},_.b.c=_.b,_.a)`.
-      const id = nextRefAccess(state);
-      buf[fillIndex] = "(" + id + "=" + buf[fillIndex];
+      // The assignments run on the built tree, which stays the flush's
+      // value: `[{…},_.b.c=_.b][0]`.
+      buf[fillIndex] = "[" + buf[fillIndex];
       writeAssigned(state);
-      buf.push("," + id + ")");
+      buf.push("][0]");
     } else {
       extras = ",0)";
       if (fillIndex !== -1) {

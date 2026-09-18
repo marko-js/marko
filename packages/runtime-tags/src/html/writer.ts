@@ -43,7 +43,7 @@ import type { ServerRenderer } from "./template";
 
 export type PartialScope = Record<Accessor, unknown>;
 
-interface SerializeState {
+export interface SerializeState {
   readyId?: string;
   parent?: SerializeState;
   resumes: string;
@@ -1817,6 +1817,10 @@ export class State implements SerializeState {
     return this.runtimePrefix + RuntimeKey.Walk + "()";
   }
 
+  addResumes(serializeState: SerializeState, resumes: string) {
+    serializeState.resumes = concatSequence(serializeState.resumes, resumes);
+  }
+
   resumeScript(resumes: string) {
     if (this.hasWrittenResume) {
       return this.runtimePrefix + RuntimeKey.Resume + ".push(" + resumes + ")";
@@ -2447,8 +2451,8 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
         // Globals serialize before ready data that may reference them.
         flushSerializerGlobals(boundary);
       }
-      serializeState.resumes = concatSequence(
-        serializeState.resumes,
+      state.addResumes(
+        serializeState,
         serializer.stringifyScopes(flushes, boundary, serializeState),
       );
     }
