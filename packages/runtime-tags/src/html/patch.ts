@@ -51,6 +51,7 @@ import {
   _attr_content,
   _html,
   type PatchLink,
+  type SerializeState,
 } from "./writer";
 
 // Intrinsic render summary as ONE self-resolving value: `1` must render,
@@ -242,6 +243,8 @@ class PatchState extends State {
   // none leaves the page's token as it is.
   public heldCount = 0;
   public pendingShells = "";
+  // The chunk's items after the first, each on its own line.
+  public laterResumes = "";
   override writesPatches = true;
 
   override shipShell(shellId: string | 0 | undefined) {
@@ -277,19 +280,8 @@ class PatchState extends State {
     this.hasGlobals = true;
   }
 
-  // A flush is one line the client evaluates as one expression, so the
-  // wire ends it with a newline and debug checks it embeds neither.
+  // The client evaluates and applies each line as one expression.
   override flushChunk(_html: string, scripts: string, pending: number) {
-    if (MARKO_DEBUG) {
-      if (scripts.includes("\n")) throw new Error("A patch flush spans lines.");
-      // The client returns the flush as one expression; a `;`-joined
-      // second script would never run.
-      try {
-        if (scripts) new Function("(" + scripts + ")");
-      } catch {
-        throw new Error("A patch flush is not a single expression.");
-      }
-    }
     let out = scripts ? scripts + "\n" : "";
     // A response that added a shell closes with the token the next request
     // sends back: id prefixes (the compiler escapes quotes, separators and
@@ -312,14 +304,27 @@ class PatchState extends State {
     return out;
   }
 
-  // `[...shells, tree]`, or the tree alone.
+  // Each item is its own line, applied before the next evaluates (like a
+  // page's resume items), so a later one can reference an applied tree.
+  override addResumes(serializeState: SerializeState, resumes: string) {
+    if (!resumes) return;
+    if (serializeState.resumes) {
+      this.laterResumes += "\n" + resumes;
+    } else {
+      serializeState.resumes = resumes;
+    }
+  }
+
+  // `[...shells, tree]`, or the tree alone; shells ride the first line.
   override resumeScript(resumes: string) {
     this.patchFlushed = 1;
-    const shellChunks = this.pendingShells;
-    this.pendingShells = "";
-    return shellChunks
-      ? "[" + shellChunks + (resumes && "," + resumes) + "]"
-      : resumes;
+    const { pendingShells, laterResumes } = this;
+    this.pendingShells = this.laterResumes = "";
+    return (
+      (pendingShells
+        ? "[" + pendingShells + (resumes && "," + resumes) + "]"
+        : resumes) + laterResumes
+    );
   }
 
   override walkScript() {
