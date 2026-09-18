@@ -3,8 +3,8 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { getTagName } from "./get-tag-name";
 import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
-import { concat, forEach, includes, type Opt } from "./optional";
-import type { Binding, KnownExprs } from "./references";
+import { concat, forEach, type Opt } from "./optional";
+import { type Binding, type KnownExprs, propsUtil } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
 
@@ -51,7 +51,7 @@ function crawlSectionsAndSetBinding(
       const serialized = !(
         target &&
         (target.noSerialize ||
-          includes(target.noSerializeProperties, "content"))
+          propsUtil.has(target.noSerializeProperties, "content"))
       );
       contentSection.downstream = {
         tag: downstreamTag,

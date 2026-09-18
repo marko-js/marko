@@ -26,7 +26,6 @@ import {
   findSorted,
   forEach,
   fromIter,
-  includes,
   type Many,
   mapToString,
   type OneMany,
@@ -137,8 +136,10 @@ export interface Binding {
   getters: Map<Getter["hoisted"], boolean>;
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
+  /** Sorted: only `propsUtil` writes it, so `propsUtil.has` can look it up. */
   excludeProperties: Opt<string>;
   noSerialize: boolean;
+  /** Sorted: only `propsUtil` writes it, so `propsUtil.has` can look it up. */
   noSerializeProperties: Opt<string>;
   upstreamAlias: Binding | undefined;
   restOffset: number | undefined;
@@ -3064,7 +3065,7 @@ function computeBindingSerialization(
     properties !== true &&
     upstream &&
     !upstream.noSerialize &&
-    !includes(upstream.noSerializeProperties, binding.property!)
+    !propsUtil.has(upstream.noSerializeProperties, binding.property!)
   ) {
     serialization = mergeSerialization(
       serialization,
@@ -3107,7 +3108,7 @@ function computeBindingSerialization(
     return serialization;
   }
   const property = first(properties);
-  if (includes(binding.excludeProperties, property)) return UNSERIALIZED;
+  if (propsUtil.has(binding.excludeProperties, property)) return UNSERIALIZED;
   const propBinding = binding.propertyAliases.get(property);
   if (propBinding) {
     serialization = mergeSerialization(
@@ -3239,7 +3240,7 @@ export function mapParamBindingToExpr(
     let result: Opt<t.NodeExtra> = curExpr.value;
     if (curExpr.known) {
       for (const key in curExpr.known) {
-        if (!includes(binding.excludeProperties, key)) {
+        if (!propsUtil.has(binding.excludeProperties, key)) {
           result = concat(result, curExpr.known[key].value);
         }
       }
