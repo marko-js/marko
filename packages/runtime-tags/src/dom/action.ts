@@ -6,6 +6,7 @@ import {
   type EncodedAccessor,
   type Scope,
 } from "../common/types";
+import { currentEvent } from "./event";
 import { queueRender, rendering, runId } from "./queue";
 import { schedule } from "./schedule";
 import { patchFills, type Signal, type SignalFn } from "./signals";
@@ -19,6 +20,14 @@ export type Act = ((...args: unknown[]) => unknown) & {
 // runs (its body, then each re-entry after an await) release when it settles.
 type Transaction = (() => void)[];
 let transaction: Transaction | undefined;
+
+// The hook an act started during an event puts on it: a listener later in
+// the same dispatch (a router taking the link or form) passes the promise
+// of the work the event started, and the act stays open until it settles.
+const EVENT_HOLD = Symbol.for("marko.act");
+type EventHold = ((promise: unknown) => void) & {
+  h: ((promise: unknown) => void)[];
+};
 
 /**
  * Wraps an `<action>` body into its act: a call opens a transaction that
@@ -36,11 +45,17 @@ export function _act(
   let count = 0;
   const act = function (this: unknown, ...args: unknown[]) {
     const tx: Transaction = [];
-    const settle = () => {
-      for (const release of tx) release();
-      if (!--count) notify();
+    // Open while its body, the promise it returned, and any promise the
+    // event that started it was handed are pending.
+    let holds = 1;
+    const release = () => {
+      if (!--holds) {
+        for (const releaseGuess of tx) releaseGuess();
+        if (!--count) notify();
+      }
     };
     if (!count++) notify();
+    if (currentEvent) holdForEvent(currentEvent, release, () => holds++);
     const prev = transaction;
     transaction = tx;
     let result: unknown;
@@ -50,12 +65,12 @@ export function _act(
         : fn.apply(this, args);
     } catch (err) {
       transaction = prev;
-      settle();
+      release();
       throw err;
     }
     transaction = prev;
-    if (isThenable(result)) result.then(settle, settle);
-    else settle();
+    if (isThenable(result)) result.then(release, release);
+    else release();
     return result;
   } as Act;
   const notify = () => {
@@ -64,6 +79,35 @@ export function _act(
   };
   Object.defineProperty(act, "pending", { get: () => count > 0 });
   return act;
+}
+
+// Holds the act for the rest of the event's dispatch: a listener that
+// takes over the event (after the delegated handlers) hands its promise
+// to the event's hook; nobody claiming it releases the hold a task later
+// (microtasks run between a user event's listeners, so a task it is).
+function holdForEvent(ev: Event, release: () => void, open: () => void) {
+  open();
+  let hook = (ev as unknown as Record<symbol, EventHold | undefined>)[
+    EVENT_HOLD
+  ];
+  if (!hook) {
+    hook = ((promise) => {
+      for (const extend of hook!.h) extend(promise);
+    }) as EventHold;
+    hook.h = [];
+    (ev as unknown as Record<symbol, EventHold>)[EVENT_HOLD] = hook;
+  }
+  let claimable = true;
+  hook.h.push((promise) => {
+    if (claimable) {
+      open();
+      Promise.resolve(promise).then(release, release);
+    }
+  });
+  setTimeout(() => {
+    claimable = false;
+    release();
+  });
 }
 
 // Runs a generator body like the async function it was written as, with

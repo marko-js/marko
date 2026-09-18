@@ -1,4 +1,4 @@
-// size: 6345 (min) 2808 (brotli)
+// size: 6359 (min) 2819 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -13,10 +13,11 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
     (!branchesEnabled || render.b.F?.H !== 0) && render.c(render.b, render.d);
   },
   catchEnabled,
-  isScheduled,
-  channel,
+  currentEvent,
   delegate = (type, handler) =>
     (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
+  isScheduled,
+  channel,
   nextScopeId = 1e6,
   destroyNestedScopes = function destroyNestedScopes(scope) {
     ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
@@ -276,6 +277,20 @@ function runRenders() {
     runRender(render);
   }
 }
+/** The event whose delegated handlers are running (an act started in one
+ * lets the rest of the dispatch hold it open). */
+function _on(element, type, handler) {
+  (element[1 + type] === void 0 && delegate(type, handleDelegated),
+    (element[1 + type] = handler || null));
+}
+function handleDelegated(ev) {
+  let target = !rendering && ev.target,
+    prevEvent = currentEvent;
+  for (currentEvent = ev; target;)
+    (target[1 + ev.type]?.(ev, target),
+      (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
+  currentEvent = prevEvent;
+}
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
@@ -292,16 +307,6 @@ function triggerMacroTask() {
 }
 function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
-}
-function _on(element, type, handler) {
-  (element[1 + type] === void 0 && delegate(type, handleDelegated),
-    (element[1 + type] = handler || null));
-}
-function handleDelegated(ev) {
-  let target = !rendering && ev.target;
-  for (; target;)
-    (target[1 + ev.type]?.(ev, target),
-      (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function createScope($global, closestBranch) {
   return {

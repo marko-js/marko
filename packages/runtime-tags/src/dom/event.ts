@@ -3,6 +3,10 @@ import { rendering } from "./queue";
 
 type EventNames = keyof GlobalEventHandlersEventMap;
 
+/** The event whose delegated handlers are running (an act started in one
+ * lets the rest of the dispatch hold it open). */
+export let currentEvent: Event | undefined;
+
 export function _on<
   T extends EventNames,
   H extends
@@ -47,10 +51,15 @@ function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
     });
   }
 
+  // No `finally` (size): a throwing handler leaves the event current, which
+  // at worst gives a later act a hold released a task on.
+  const prevEvent = currentEvent;
+  currentEvent = ev;
   while (target) {
     (target as any)[1 + ev.type]?.(ev, target);
     target = ev.bubbles && !ev.cancelBubble && target.parentNode;
   }
+  currentEvent = prevEvent;
 
   if (MARKO_DEBUG) {
     delete (ev as any).currentTarget;

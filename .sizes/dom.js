@@ -1,4 +1,4 @@
-// size: 30219 (min) 11104 (brotli)
+// size: 30470 (min) 11225 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -35,10 +35,11 @@ let unsafeStyleAttrReg = /[\\;]/g,
   catchEnabled,
   abortsEnabled,
   subscriptionsEnabled,
-  isScheduled,
-  channel,
+  currentEvent,
   delegate = (type, handler) =>
     (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
+  isScheduled,
+  channel,
   R = /[\p{L}\p{N}]/gu,
   inputType = "",
   controllableScripts = {},
@@ -549,6 +550,20 @@ function trackCleanup(scope, subscribers) {
 function abort(ctrl) {
   ctrl.abort();
 }
+/** The event whose delegated handlers are running (an act started in one
+ * lets the rest of the dispatch hold it open). */
+function _on(element, type, handler) {
+  (element[1 + type] === void 0 && delegate(type, handleDelegated),
+    (element[1 + type] = handler || null));
+}
+function handleDelegated(ev) {
+  let target = !rendering && ev.target,
+    prevEvent = currentEvent;
+  for (currentEvent = ev; target;)
+    (target[1 + ev.type]?.(ev, target),
+      (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
+  currentEvent = prevEvent;
+}
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
@@ -573,16 +588,6 @@ function forEach(opt, cb) {
 }
 function push(opt, item) {
   return opt ? (Array.isArray(opt) ? (opt.push(item), opt) : [opt, item]) : item;
-}
-function _on(element, type, handler) {
-  (element[1 + type] === void 0 && delegate(type, handleDelegated),
-    (element[1 + type] = handler || null));
-}
-function handleDelegated(ev) {
-  let target = !rendering && ev.target;
-  for (; target;)
-    (target[1 + ev.type]?.(ev, target),
-      (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function resolveCursorPosition(inputType, initialPosition, initialValue, updatedValue) {
   if (
@@ -2434,6 +2439,7 @@ function getSelectorOrResolve(selector, resolve) {
 let empty = [],
   rest = Symbol(),
   transaction,
+  EVENT_HOLD = Symbol.for("marko.act"),
   classIdToBranch = /* @__PURE__ */ new Map(),
   classEventResolver,
   scopesByRender = /* @__PURE__ */ new WeakMap(),
@@ -2558,27 +2564,47 @@ function _act(fn, gen, scope, signal) {
   let count = 0,
     act = function (...args) {
       let tx = [],
-        settle = () => {
-          for (let release of tx) release();
-          --count || notify();
+        holds = 1,
+        release = () => {
+          if (!--holds) {
+            for (let releaseGuess of tx) releaseGuess();
+            --count || notify();
+          }
         };
-      count++ || notify();
+      (count++ || notify(), currentEvent && holdForEvent(currentEvent, release, () => holds++));
       let prev = transaction;
       transaction = tx;
       let result;
       try {
         result = gen ? drive(tx, fn.apply(this, args)) : fn.apply(this, args);
       } catch (err) {
-        throw ((transaction = prev), settle(), err);
+        throw ((transaction = prev), release(), err);
       }
       return (
-        (transaction = prev), isThenable(result) ? result.then(settle, settle) : settle(), result
+        (transaction = prev), isThenable(result) ? result.then(release, release) : release(), result
       );
     },
     notify = () => {
       (schedule(), queueRender(scope, signal, -1, act));
     };
   return (Object.defineProperty(act, "pending", { get: () => count > 0 }), act);
+}
+function holdForEvent(ev, release, open) {
+  open();
+  let hook = ev[EVENT_HOLD];
+  hook ||
+    ((hook = (promise) => {
+      for (let extend of hook.h) extend(promise);
+    }),
+    (hook.h = []),
+    (ev[EVENT_HOLD] = hook));
+  let claimable = !0;
+  (hook.h.push((promise) => {
+    claimable && (open(), Promise.resolve(promise).then(release, release));
+  }),
+    setTimeout(() => {
+      ((claimable = !1), release());
+    }));
 }
 function drive(tx, it) {
   return new Promise((resolve, reject) => {

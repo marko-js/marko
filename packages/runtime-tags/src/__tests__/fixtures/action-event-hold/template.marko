@@ -1,0 +1,19 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/count=0/>
+<draft/shown=count/>
+<action/bump=() => { shown = shown + 1 }/>
+<script>
+  // A listener after the delegated handlers takes over the claimed button's
+  // clicks, as a router takes a link, and hands the event its promise.
+  const takeOver = (event: Event) => {
+    if ((event.target as Element).id === "claimed") {
+      (event as unknown as Record<symbol, (promise: unknown) => void>)[
+        Symbol.for("marko.act")
+      ]?.(resolveAfter(0).then(() => (count = count + 1)));
+    }
+  };
+  document.addEventListener("click", takeOver);
+  $signal.onabort = () => document.removeEventListener("click", takeOver);
+</script>
+<button id="claimed" onClick() { bump() }>${shown}</button>
+<button id="unclaimed" onClick() { bump() }>${bump.pending ? "pending" : "idle"}</button>

@@ -174,14 +174,13 @@ A `<draft/x=source>` derives like a `<const>` but takes a provisional assignment
 
 `<action/act=fn>` declares a user act. `act.pending` is a readonly reactive boolean, refcounted across overlapping calls and always `false` during SSR. Awaits in the body compile to transaction re-entry, so an assignment after an `await` (or in `catch`/`finally`) still joins the act; a body that uses `this`, `arguments` or `for await` keeps native awaits, so assign its guesses before the first `await`. A value-less `<action/apply/>` is the identity: `apply(fetchThing())` is a pending-only act tracking that promise. An act called inside another act is its own transaction; `await inner()` keeps the outer open across it. Declare an `<action>` inside a `<for>` row for a per-row act.
 
+An act called from an event handler also stays open for whatever a later listener in the same dispatch takes over: a router handling the clicked link or submitted form holds it until the new page has applied, so the guess needs no navigation code. An event nobody takes over releases the act a task later. Don't `preventDefault()` in that handler, or the router leaves the event alone.
+
 ```marko
 <const/page=input.page>
 <draft/shown=page>
-<action/go=async (next) => {
-  shown = next;                       // guess, held until the act settles
-  await navigate(`/?page=${next}`);   // the page's `input.page` confirms it
-}/>
-<button disabled=go.pending onClick() { go(page + 1) }>Page ${shown}</button>
+<action/go=(next) => { shown = next }/>  // guess, held until the page lands
+<a href=`/?page=${page + 1}` onClick() { go(page + 1) }>Page ${shown}</a>
 ```
 
 ## Lazy loading
