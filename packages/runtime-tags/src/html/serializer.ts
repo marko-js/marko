@@ -331,6 +331,9 @@ class Reference {
   public flushId: number;
   public pos: number | null;
   public id: string | null;
+  // The access path a reference in another flush spelled; a second one
+  // claims an id off it, so a value read once never pays for a binding.
+  public path: string | null = null;
   constructor(
     parent: Reference | null,
     accessor: string | null,
@@ -707,7 +710,7 @@ function writeReferenceOr(
       return false;
     }
 
-    state.buf.push(ensureId(state, ref));
+    writeRef(state, ref);
     return true;
   }
 
@@ -798,7 +801,7 @@ function writeString(
     const ref = state.strs.get(val);
     if (ref) {
       if (trackChannel(state, ref)) {
-        state.buf.push(ensureId(state, ref));
+        writeRef(state, ref);
         return true;
       }
     } else {
@@ -2270,7 +2273,26 @@ export function quote(str: string, startPos: number): string {
   return '"' + (lastPos === startPos ? str : result + str.slice(lastPos)) + '"';
 }
 
-function ensureId(state: State, ref: Reference) {
+// Writes the value as its id, or as a path to where it was written; the
+// path then stands where a later read names it, like the value itself.
+function writeRef(state: State, ref: Reference) {
+  if (
+    ref.id === null &&
+    ref.scopeId === undefined &&
+    ref.path === null &&
+    (ref.pos === null || ref.flushId !== state.flushId)
+  ) {
+    ref.path = accessPath(state, ref);
+    ref.pos = state.buf.length;
+    ref.flushId = state.flushId;
+    ref.channel = state.channel;
+    state.buf.push(ref.path);
+  } else {
+    state.buf.push(ensureId(state, ref));
+  }
+}
+
+function ensureId(state: State, ref: Reference): string {
   if (ref.scopeId !== undefined) {
     trackChannel(state, ref);
     return "_(" + ref.scopeId + ")";
@@ -2284,12 +2306,12 @@ function ensureId(state: State, ref: Reference) {
   return assignId(state, ref);
 }
 
-function accessId(state: State, ref: Reference) {
+function accessId(state: State, ref: Reference): string {
   const id = ensureId(state, ref);
   return id === ref.id || ref.scopeId !== undefined ? id : "(" + id + ")";
 }
 
-function assignId(state: State, ref: Reference) {
+function assignId(state: State, ref: Reference): string {
   const { pos } = ref;
   ref.id = nextRefAccess(state);
 
@@ -2304,7 +2326,10 @@ function assignId(state: State, ref: Reference) {
   }
 
   ref.channel = state.channel;
+  return ref.id + "=" + (ref.path || accessPath(state, ref));
+}
 
+function accessPath(state: State, ref: Reference): string {
   let cur = ref;
   let accessPrevValue = "";
 
@@ -2314,20 +2339,18 @@ function assignId(state: State, ref: Reference) {
 
     if (parent.id) {
       if (trackChannel(state, parent) || !parent.parent) {
-        accessPrevValue = parent.id + accessPrevValue;
-        break;
+        return parent.id + accessPrevValue;
       }
     }
 
     if (parent.flushId === state.flushId || parent.scopeId !== undefined) {
-      accessPrevValue = accessId(state, parent) + accessPrevValue;
-      break;
+      return accessId(state, parent) + accessPrevValue;
     }
 
     cur = parent;
   } while (cur);
 
-  return ref.id + "=" + accessPrevValue;
+  return accessPrevValue;
 }
 
 function assignmentsToString(assignments: string[], value: string) {
