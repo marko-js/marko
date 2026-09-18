@@ -2,7 +2,13 @@ import { types as t } from "@marko/compiler";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getAccessorProp } from "./get-accessor-enums";
-import { concat, forEach, type OneMany, type Opt, Sorted } from "./optional";
+import {
+  concat,
+  forEach,
+  type Opt,
+  Sorted,
+  type SortedOneMany,
+} from "./optional";
 import {
   type Binding,
   BindingType,
@@ -23,7 +29,7 @@ import { ancestorSections, type Section } from "./sections";
 
 // Reasons any one of which serializes (a chain's branches, a section's
 // dom nodes); the guard builder answers for the set.
-export type SerializeReasons = OneMany<Sources>;
+export type SerializeReasons = SortedOneMany<Sources>;
 
 export const sourcesUtil = new Sorted(compareSources);
 // A `Sources` that may be forced: unconditional, but still saying what

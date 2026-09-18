@@ -2,29 +2,38 @@ export type Many<T> = [T, T, ...T[]];
 export type OneMany<T> = T | Many<T>;
 export type Opt<T> = undefined | OneMany<T>;
 export type Compare<T> = (a: T, b: T) => number;
-// A list one `Sorted` builds is looked up by binary search: write it only
-// through that instance (`push`/`concat` break the order its `has` assumes).
+
+// A list only a `Sorted` instance wrote, so its lookups can binary search;
+// `push`/`concat` results are not one, and one element has no order yet.
+declare const kSorted: unique symbol;
+export type SortedMany<T> = Many<T> & { readonly [kSorted]: true };
+export type SortedOneMany<T> = T | SortedMany<T>;
+export type SortedOpt<T> = undefined | SortedOneMany<T>;
+
 export class Sorted<T> {
   public compare: Compare<T>;
   constructor(compare: Compare<T>) {
     this.compare = compare;
   }
-  add<U extends NonNullable<T>>(data: Opt<U>, item: U): OneMany<U> {
+  add<U extends NonNullable<T>>(data: SortedOpt<U>, item: U): SortedOneMany<U> {
     return data !== undefined
       ? Array.isArray(data)
-        ? (addSorted(this.compare, data, item) as Many<U>)
-        : joinRepeatable(this.compare, data, item)
+        ? (addSorted(this.compare, data, item) as SortedMany<U>)
+        : (joinRepeatable(this.compare, data, item) as SortedOneMany<U>)
       : item;
   }
 
-  union<U extends NonNullable<T>>(a: Opt<U>, b: Opt<U>): Opt<U> {
+  union<U extends NonNullable<T>>(
+    a: SortedOpt<U>,
+    b: SortedOpt<U>,
+  ): SortedOpt<U> {
     if (a !== undefined) {
       if (Array.isArray(a)) {
         if (b !== undefined) {
           if (Array.isArray(b)) {
-            return unionSortedRepeatable(this.compare, a, b);
+            return unionSortedRepeatable(this.compare, a, b) as SortedOpt<U>;
           } else {
-            return addSorted(this.compare, a, b) as OneMany<U>;
+            return addSorted(this.compare, a, b) as SortedOneMany<U>;
           }
         }
 
@@ -33,10 +42,10 @@ export class Sorted<T> {
 
       if (b !== undefined) {
         if (Array.isArray(b)) {
-          return addSorted(this.compare, b, a) as Many<U>;
+          return addSorted(this.compare, b, a) as SortedMany<U>;
         }
 
-        return joinRepeatable(this.compare, b, a);
+        return joinRepeatable(this.compare, b, a) as SortedOneMany<U>;
       }
 
       return a;
@@ -44,7 +53,16 @@ export class Sorted<T> {
 
     return b;
   }
-  find<U extends NonNullable<T>>(data: Opt<U>, item: U): U | undefined {
+
+  // Dropping items keeps the order.
+  filter<U extends NonNullable<T>>(
+    data: SortedOpt<U>,
+    cb: (item: U) => boolean,
+  ): SortedOpt<U> {
+    return filter(data, cb) as SortedOpt<U>;
+  }
+
+  find<U extends NonNullable<T>>(data: SortedOpt<U>, item: U): U | undefined {
     if (data !== undefined) {
       if (Array.isArray(data)) {
         return findSorted(this.compare, data, item);
@@ -53,10 +71,10 @@ export class Sorted<T> {
       }
     }
   }
-  has<U extends NonNullable<T>>(data: Opt<U>, item: U): boolean {
+  has<U extends NonNullable<T>>(data: SortedOpt<U>, item: U): boolean {
     return this.findIndex(data, item) !== -1;
   }
-  findIndex<U extends NonNullable<T>>(data: Opt<U>, item: U) {
+  findIndex<U extends NonNullable<T>>(data: SortedOpt<U>, item: U) {
     if (data !== undefined) {
       if (Array.isArray(data)) {
         return findIndexSorted(this.compare, data, item);
@@ -68,15 +86,15 @@ export class Sorted<T> {
     return -1;
   }
   groupBy<U extends NonNullable<T>, K>(
-    data: Opt<U>,
+    data: SortedOpt<U>,
     cb: (item: U) => K,
-  ): Map<K, OneMany<U>> {
-    const group = new Map<K, OneMany<U>>();
+  ): Map<K, SortedOneMany<U>> {
+    const group = new Map<K, SortedOneMany<U>>();
     if (data !== undefined) {
       if (Array.isArray(data)) {
         for (const item of data) {
           const key = cb(item);
-          group.set(key, this.union(group.get(key), item) as OneMany<U>);
+          group.set(key, this.union(group.get(key), item) as SortedOneMany<U>);
         }
       } else {
         group.set(cb(data), data);
@@ -84,7 +102,10 @@ export class Sorted<T> {
     }
     return group;
   }
-  isSuperset<U extends NonNullable<T>>(superset: Opt<U>, subset: Opt<U>) {
+  isSuperset<U extends NonNullable<T>>(
+    superset: SortedOpt<U>,
+    subset: SortedOpt<U>,
+  ) {
     if (subset === undefined) {
       return true;
     }
