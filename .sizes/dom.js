@@ -1,4 +1,4 @@
-// size: 30413 (min) 11222 (brotli)
+// size: 30430 (min) 11230 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -565,7 +565,9 @@ function handleDelegated(ev) {
   currentEvent = prevEvent;
 }
 function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+  isScheduled ||
+    ((isScheduled = 1),
+    currentEvent ? setTimeout(flushAndWaitFrame) : queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame() {
   (requestAnimationFrame(triggerMacroTask), run());

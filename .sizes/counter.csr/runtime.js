@@ -1,4 +1,4 @@
-// size: 3889 (min) 1750 (brotli)
+// size: 3905 (min) 1759 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -159,7 +159,9 @@ function handleDelegated(ev) {
   currentEvent = prevEvent;
 }
 function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+  isScheduled ||
+    ((isScheduled = 1),
+    currentEvent ? setTimeout(flushAndWaitFrame) : queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame() {
   (requestAnimationFrame(triggerMacroTask), run());
