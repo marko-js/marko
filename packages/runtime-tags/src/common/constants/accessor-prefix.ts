@@ -7,7 +7,6 @@ export const ControlledHandler = "E";
 export const ControlledType = "F";
 export const ControlledValue = "G";
 export const DraftHolds = "Q";
-export const DraftSource = "P";
 export const DynamicHTMLLastChild = "H";
 export const EventAttributes = "I";
 export const IdFallback = "J";

@@ -13,8 +13,8 @@ const $count = /*@__PURE__*/ _let(4, ($scope) => {
 	$_shownSource($scope, $scope.e);
 	$count__script($scope);
 });
-const $bump2 = /*@__PURE__*/ _action(8, ($scope) => $bump_pending($scope, $scope.i.pending));
-const $shown = /*@__PURE__*/ _draft(5, ($scope) => {
+const $bump2 = /*@__PURE__*/ _action(7, ($scope) => $bump_pending($scope, $scope.h.pending));
+const $shown = /*@__PURE__*/ _draft(5, 4, ($scope) => {
 	_text($scope.b, $scope.f);
 	$bump2($scope, $bump($scope));
 });
@@ -23,13 +23,13 @@ const $_shownSource = ($scope) => {
 };
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.a, "click", function() {
-		$scope.i();
+		$scope.h();
 	});
 	_on($scope.c, "click", function() {
-		$scope.i();
+		$scope.h();
 	});
 });
-const $bump_pending = /*@__PURE__*/ _const(9, ($scope) => _text($scope.d, $scope.j ? "pending" : "idle"));
+const $bump_pending = /*@__PURE__*/ _const(8, ($scope) => _text($scope.d, $scope.i ? "pending" : "idle"));
 const $bump = ($scope) => /*@__PURE__*/ _act(() => {
 	$shown($scope, $scope.f + 1, 1);
 }, 0, $scope, $bump2);

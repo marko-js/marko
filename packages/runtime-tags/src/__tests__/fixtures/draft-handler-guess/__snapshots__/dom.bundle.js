@@ -1,6 +1,6 @@
 // template.marko
 const $count = /*@__PURE__*/ _let(3, ($scope) => $_shownSource($scope, $scope.d));
-const $shown = /*@__PURE__*/ _draft(4, ($scope) => _text($scope.b, $scope.e));
+const $shown = /*@__PURE__*/ _draft(4, 3, ($scope) => _text($scope.b, $scope.e));
 const $_shownSource = ($scope) => {
 	$shown($scope, $scope.d);
 };

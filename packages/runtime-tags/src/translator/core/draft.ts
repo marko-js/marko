@@ -16,6 +16,7 @@ import {
   onFinalizeReferences,
   setBindingDownstream,
   trackVarReferences,
+  type Binding,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -25,6 +26,14 @@ import { addSerializeReason } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addValue, getSignalFn, initValue } from "../util/signals";
 import translateVar from "../util/translate-var";
+
+const kSourceBinding = Symbol("draft source binding");
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kSourceBinding]?: Binding;
+  }
+}
 
 export default {
   transform(tag: t.NodePath<t.MarkoTag>) {
@@ -95,17 +104,28 @@ export default {
     // assigns it (its reads then resume), derived from the source otherwise.
     const binding = trackVarReferences(tag, BindingType.let)!;
     binding.rederives = true;
-    // The derivation and the count of open guesses ride the next two slots.
-    binding.reserveSize = 2;
+    // The count of open guesses rides the next slot; the derivation to
+    // resume is read straight from the source `<const>` `transform` made,
+    // never copied into a slot of its own.
+    binding.reserveSize = 1;
     if (!valueExtra.nullable) binding.nullable = false;
     setBindingDownstream(binding, valueExtra);
     const tagSection = getOrCreateSection(tag);
     addSetupExpr(tagSection, valueAttr.value);
+    node.extra ??= {};
+    const sourceBinding = t.isIdentifier(valueAttr.value)
+      ? tag.scope.getBinding(valueAttr.value.name)?.identifier.extra?.binding
+      : undefined;
+    node.extra[kSourceBinding] = sourceBinding;
     // A guessed draft releases to the derivation it resumed with, so that
-    // value ships even when nothing on the client reads it.
+    // value ships even when nothing on the client reads it; the source
+    // itself is only ever read the same lazy way (to revert to), so it
+    // needs the same push or a resumed scope never gets it either.
     onFinalizeReferences(() => {
       if (binding.assignments) {
         addSerializeReason(tagSection, FORCED, binding);
+        if (sourceBinding)
+          addSerializeReason(tagSection, FORCED, sourceBinding);
       }
     });
   },
@@ -120,6 +140,7 @@ export default {
         const binding = node.var!.extra!.binding!;
         // A draft nothing reads is dead.
         if (binding.pruned) return tag.remove();
+        const sourceBinding = node.extra![kSourceBinding]!;
         const signal = initValue(binding);
         signal.forcePersist = true;
         signal.build = () =>
@@ -129,11 +150,13 @@ export default {
                 "_fill_draft",
                 t.stringLiteral(getPatchFillKey(binding)),
                 getScopeAccessorLiteral(binding, true, true),
+                getScopeAccessorLiteral(sourceBinding, true, true),
                 getSignalFn(signal),
               )
             : callRuntime(
                 "_draft",
                 getScopeAccessorLiteral(binding, true, true),
+                getScopeAccessorLiteral(sourceBinding, true, true),
                 getSignalFn(signal),
               );
         addValue(section, value.extra?.referencedBindings, signal, value);

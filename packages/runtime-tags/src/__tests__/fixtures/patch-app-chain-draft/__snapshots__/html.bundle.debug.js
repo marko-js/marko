@@ -38,7 +38,7 @@ _shells({
 	"__tests__/page.marko_4_#text#0/await": "__tests__/page.marko_4_#text#0/await;Db%;<span class=limit>of <!></span>",
 	"__tests__/page.marko_4*content": "__tests__/page.marko_4*content;b%;<!><!><!>",
 	"__tests__/page.marko_3*content": "__tests__/page.marko_3*content,failed",
-	"__tests__/page.marko_1*content": "__tests__/page.marko_1*content __tests__/page.marko_1_page#5/init __tests__/page.marko_1_go_pending#9/init!__tests__/page.marko_1; b%bD%b%l%;<button class=next>next</button><!><span class=of><!><!></span><!><!>",
+	"__tests__/page.marko_1*content": "__tests__/page.marko_1*content __tests__/page.marko_1_page#5/init __tests__/page.marko_1_go_pending#8/init!__tests__/page.marko_1; b%bD%b%l%;<button class=next>next</button><!><span class=of><!><!></span><!><!>",
 	"__tests__/page.marko": "__tests__/page.marko !;b%;<!><!><!>",
 	"__tests__/page.marko_2*shell": "__tests__/page.marko_2*shell;Db%;<span class=prev>prev <!></span>"
 });
@@ -79,7 +79,7 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 				_html(`<span class=limit>of ${_patch_text($scope6_id, "#text/0", limit, 2)}</span>`);
 				_scope($scope6_id, {}, "__tests__/page.marko", "12:6");
 			}, 1, "__tests__/page.marko_4_#text#0/await", 1);
-			_global_subscribe("__tests__/page.marko_4_$global_total#10/global", $scope4_id);
+			_global_subscribe("__tests__/page.marko_4_$global_total#9/global", $scope4_id);
 		}, $scope1_id), { placeholder: attrTag({ content: _content_shell("__tests__/page.marko_5*content", $scope1_id) }) });
 		_script($scope1_id, "__tests__/page.marko_1");
 		_subscribe($go_pending__closures, _subscribe($page__closures, _subscribe($current__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/page.marko", "5:2"))));

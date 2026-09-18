@@ -20,7 +20,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__total($sco
 const $placeholder_content = _content_resume("__tests__/page.marko_5*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span class=limit>of <!></span>", "Db%");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content2__$global_total = /*@__PURE__*/ _global_join("total", "__tests__/page.marko_4_$global_total#10/global", /*@__PURE__*/ _closure_get("$global_total", ($scope) => $try_content2__await_promise($scope, $scope.$global.total), ($scope) => $scope._._));
+const $try_content2__$global_total = /*@__PURE__*/ _global_join("total", "__tests__/page.marko_4_$global_total#9/global", /*@__PURE__*/ _closure_get("$global_total", ($scope) => $try_content2__await_promise($scope, $scope.$global.total), ($scope) => $scope._._));
 const $try_content2__setup = ($scope) => {
 	$try_content2__$global_total($scope);
 	$await_content($scope);
@@ -42,7 +42,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__setup__script($scope);
 };
 const $try_content__page = /*@__PURE__*/ _init_closure_get("__tests__/page.marko_1_page#5/init", "page", ($scope) => _text($scope["#text/2"], $scope._.page));
-const $try_content__go_pending = /*@__PURE__*/ _init_closure_get("__tests__/page.marko_1_go_pending#9/init", "go_pending", ($scope) => _text($scope["#text/3"], $scope._.go_pending ? "…" : ""));
+const $try_content__go_pending = /*@__PURE__*/ _init_closure_get("__tests__/page.marko_1_go_pending#8/init", "go_pending", ($scope) => _text($scope["#text/3"], $scope._.go_pending ? "…" : ""));
 const $params3 = ($scope, params) => $params_page($scope, params?.page);
 const $current__closure = /*@__PURE__*/ _closure($try_content__current, $if_content__current);
 const $current = _fill_const_resume("__tests__/page.marko0", "current", ($scope) => {
@@ -52,11 +52,11 @@ const $current = _fill_const_resume("__tests__/page.marko0", "current", ($scope)
 const $params_page = $current;
 const $global_params = /*@__PURE__*/ _global_join("params", "__tests__/page.marko_0_$global_params#3/global", ($scope, $global_params) => $params3($scope, $scope.$global.params));
 const $page__closure = /*@__PURE__*/ _closure($try_content__page);
-const $page = /*@__PURE__*/ _fill_draft("__tests__/page.marko1", "page/5", $page__closure);
+const $page = /*@__PURE__*/ _fill_draft("__tests__/page.marko1", "page/5", "current/4", $page__closure);
 const $_pageSource = ($scope) => {
 	$page($scope, $scope.current);
 };
-const $go2 = /*@__PURE__*/ _fill_action("__tests__/page.marko2", "go/8", ($scope) => $go_pending($scope, $scope.go.pending));
+const $go2 = /*@__PURE__*/ _fill_action("__tests__/page.marko2", "go/7", ($scope) => $go_pending($scope, $scope.go.pending));
 const $go_pending__closure = /*@__PURE__*/ _closure($try_content__go_pending);
 const $go_pending = /*@__PURE__*/ _const("go_pending", $go_pending__closure);
 const $try = /*@__PURE__*/ _try("#text/0", "<button class=next>next</button><!><span class=of><!><!></span><!><!>", " b%bD%b%l%", $try_content__setup);

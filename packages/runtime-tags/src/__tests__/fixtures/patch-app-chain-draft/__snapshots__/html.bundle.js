@@ -87,9 +87,9 @@ var page_default = _template_patch("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: current,
 		f: page,
-		i: go,
-		m: $page__closures,
-		n: $go_pending__closures
+		h: go,
+		l: $page__closures,
+		m: $go_pending__closures
 	}) : _patch_value($scope0_id, "c0", current);
 	$scope0_page && _resume_branch($scope0_id);
 }, 0, 1);

@@ -9,5 +9,11 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	let page = _pageSource;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", page)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, { page }, "__tests__/template.marko", 0, { page: "1:8" }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", _pageSource);
+	$scope0_page ? _scope($scope0_id, {
+		_pageSource,
+		page
+	}, "__tests__/template.marko", 0, {
+		_pageSource: 0,
+		page: "1:8"
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", _pageSource);
 }, 1, 0);
