@@ -272,11 +272,11 @@ describe("serializer", () => {
       const map = new Map<unknown, unknown>([[objA, objB]]);
 
       serializer.assertStringify(map, `new Map(_.a=[[{a:1},{b:2}]])`);
-      serializer.assertStringify({ c: objA }, `{c:_.b=_.a[0][0]}`);
-      serializer.assertStringify({ d: objB }, `{d:_.c=_.a[0][1]}`);
+      serializer.assertStringify({ c: objA }, `{c:_.a[0][0]}`);
+      serializer.assertStringify({ d: objB }, `{d:_.a[0][1]}`);
       serializer.assertStringify(
         { e: map, f: objA, g: objB },
-        `{e:_.d=_(1).value,f:_.b,g:_.c}`,
+        `{e:_(1).value,f:_.b=_.a[0][0],g:_.c=_.a[0][1]}`,
       );
     });
   });
@@ -317,11 +317,11 @@ describe("serializer", () => {
       const objB = { b: 2 };
       const set = new Set<unknown>([objA, objB]);
       serializer.assertStringify(set, `new Set(_.a=[{a:1},{b:2}])`);
-      serializer.assertStringify({ c: objA }, `{c:_.b=_.a[0]}`);
-      serializer.assertStringify({ d: objB }, `{d:_.c=_.a[1]}`);
+      serializer.assertStringify({ c: objA }, `{c:_.a[0]}`);
+      serializer.assertStringify({ d: objB }, `{d:_.a[1]}`);
       serializer.assertStringify(
         { e: set, f: objA, g: objB },
-        `{e:_.d=_(1).value,f:_.b,g:_.c}`,
+        `{e:_(1).value,f:_.b=_.a[0],g:_.c=_.a[1]}`,
       );
     });
   });
@@ -522,7 +522,7 @@ describe("serializer", () => {
       );
       serializer.assertStringify(
         { c: nested },
-        `{c:_.a=_(1).value["9007199254740993"]}`,
+        `{c:_(1).value["9007199254740993"]}`,
       );
     });
     // An own `__proto__` data property (e.g. from `JSON.parse`) must serialize
@@ -874,7 +874,7 @@ describe("serializer", () => {
 
       assertStringify(
         { view1, view2, view3 },
-        `{view1:_.b=new Uint8Array(32),view2:new Uint16Array(_.a=_.b.buffer),view3:new Uint32Array(_.a)}`,
+        `{view1:_.a=new Uint8Array(32),view2:new Uint16Array(_.b=_.a.buffer),view3:new Uint32Array(_.b)}`,
       );
     });
 
@@ -890,7 +890,7 @@ describe("serializer", () => {
 
       assertStringify(
         { view1, view2, view3 },
-        `{view1:_.b=new Uint8Array([1,0,2,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]),view2:new Uint16Array(_.a=_.b.buffer),view3:new Uint32Array(_.a)}`,
+        `{view1:_.a=new Uint8Array([1,0,2,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]),view2:new Uint16Array(_.b=_.a.buffer),view3:new Uint32Array(_.b)}`,
       );
     });
 
@@ -922,7 +922,7 @@ describe("serializer", () => {
 
       assertStringify(
         { view1, view2, view3, buffer },
-        `{view1:_.b=new Uint8Array([1,0,2,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]),view2:new Uint16Array(_.a=_.b.buffer),view3:new Uint32Array(_.a),buffer:_.a}`,
+        `{view1:_.a=new Uint8Array([1,0,2,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]),view2:new Uint16Array(_.b=_.a.buffer),view3:new Uint32Array(_.b),buffer:_.b}`,
       );
     });
 
@@ -934,7 +934,7 @@ describe("serializer", () => {
 
       assertStringify(
         { view1, view2, view3 },
-        `{view1:_.b=new Uint8Array,view2:new Uint16Array(_.a=_.b.buffer),view3:new Uint32Array(_.a)}`,
+        `{view1:_.a=new Uint8Array,view2:new Uint16Array(_.b=_.a.buffer),view3:new Uint32Array(_.b)}`,
       );
     });
 
@@ -990,7 +990,7 @@ describe("serializer", () => {
 
       const [result] = assertSerializer().assertStringify(
         { full, partial },
-        `{full:_.b=new Int32Array([0,9,0,5]),partial:new Int32Array(_.a=_.b.buffer,0,2)}`,
+        `{full:_.a=new Int32Array([0,9,0,5]),partial:new Int32Array(_.a.buffer,0,2)}`,
       ) as [{ full: Int32Array; partial: Int32Array }];
       assert.equal(result.partial.length, 2);
       assert.deepEqual([...result.partial], [0, 9]);
@@ -1506,7 +1506,7 @@ describe("serializer", () => {
         yield shared;
       })();
       serializer.assertStringify(gen, `(function*(a){yield*a})(_.a=[{x:1}])`);
-      serializer.assertStringify({ c: shared }, `{c:_.b=_.a[0]}`);
+      serializer.assertStringify({ c: shared }, `{c:_.a[0]}`);
     });
 
     it("dedupes a returned value reused across flushes", () => {
@@ -1832,7 +1832,7 @@ describe("serializer", () => {
       const serializer = assertSerializer();
       const obj = { a: 1 };
       serializer.assertStringify(obj, `{a:1}`);
-      serializer.assertStringify(obj, `_.a=_(1).value`);
+      serializer.assertStringify(obj, `_(1).value`);
     });
 
     it("multiple flushes with shared references and nested", () => {
@@ -1840,8 +1840,8 @@ describe("serializer", () => {
       const nested = { b: 1 };
       const obj = { a: nested };
       serializer.assertStringify(obj, `{a:{b:1}}`);
-      serializer.assertStringify({ c: nested }, `{c:_.a=_(1).value.a}`);
-      serializer.assertStringify({ d: nested }, `{d:_.a}`);
+      serializer.assertStringify({ c: nested }, `{c:_(1).value.a}`);
+      serializer.assertStringify({ d: nested }, `{d:_.a=_(1).value.a}`);
     });
   });
 
@@ -1921,7 +1921,7 @@ describe("serializer", () => {
           readyId: "b",
           parent,
         }),
-        `_=>[2,{shared:_.a=_(1).shared}]`,
+        `_=>[2,{shared:_(1).shared}]`,
       );
       assert.deepEqual([...serializer.takeChannelDeps()!], ["a"]);
       assert.deepEqual(aborted, []);
@@ -1948,7 +1948,7 @@ describe("serializer", () => {
         [[1, {}, { data: { text: msg } }]],
         boundary,
       );
-      assert.equal(second, `_=>[1,{data:{text:_.a=_(0).settings.msg}}]`);
+      assert.equal(second, `_=>[1,{data:{text:_(0).settings.msg}}]`);
       apply(second);
       assert.equal(
         (scopes.get(1)!.data as { text: string }).text,
@@ -1972,7 +1972,7 @@ describe("serializer", () => {
         [[1, {}, { settings }]],
         boundary,
       );
-      assert.equal(second, `_=>[1,{settings:_.a=_(0).settings}]`);
+      assert.equal(second, `_=>[1,{settings:_(0).settings}]`);
       apply(second);
       assert.equal(scopes.get(1)!.settings, scopes.get(0)!.settings);
     });
@@ -2274,7 +2274,7 @@ describe("serializer", () => {
 
       assertStringify(
         { req: req, headers: req.headers },
-        `{req:_.b=new Request("https://ebay.com/",{headers:{"content-type":"text/plain"},method:"POST"}),headers:_.a=_.b.headers}`,
+        `{req:_.a=new Request("https://ebay.com/",{headers:{"content-type":"text/plain"},method:"POST"}),headers:_.a.headers}`,
       );
     });
 
@@ -2396,7 +2396,7 @@ describe("serializer", () => {
 
       assertStringify(
         { res: res, headers: res.headers },
-        `{res:_.b=new Response(null,{headers:{a:"1",b:"2"}}),headers:_.a=_.b.headers}`,
+        `{res:_.a=new Response(null,{headers:{a:"1",b:"2"}}),headers:_.a.headers}`,
       );
     });
 
