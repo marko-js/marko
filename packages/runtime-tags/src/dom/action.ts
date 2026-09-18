@@ -170,9 +170,10 @@ export function _fill_action(
 export function _fill_draft<T>(
   key: string,
   id: EncodedAccessor,
+  sourceId: EncodedAccessor,
   fn?: SignalFn,
 ) {
-  const signal = _draft<T>(id, fn);
+  const signal = _draft<T>(id, sourceId, fn);
   patchFills[key] = signal as Signal<unknown>;
   return signal;
 }
@@ -181,22 +182,27 @@ export function _fill_draft<T>(
  * The `<draft>` tag's signal: a derived value that takes provisional
  * assignments (`guess`). Showing a value — guessed, derived, or reverted —
  * is always the same write (`show`, a `<let>` assignment); a draft only
- * adds remembering the derivation to resume (`DraftSource`) and counting
- * the guesses currently holding it open (`DraftHolds`), so that once every
- * holding transaction settles the draft shows the derivation again, with no
- * DOM work when the guess was right. A guess outside a transaction holds
- * only until the next derivation.
+ * adds counting the guesses currently holding it open (`DraftHolds`), so
+ * that once every holding transaction settles the draft shows the
+ * derivation again, with no DOM work when the guess was right. The
+ * derivation to resume is read straight from `source`'s own scope slot (the
+ * `<const>` `transform` made), never copied into one of its own. A guess
+ * outside a transaction holds only until the next derivation.
  */
-export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
+export function _draft<T>(
+  id: EncodedAccessor,
+  sourceId: EncodedAccessor,
+  fn?: SignalFn,
+) {
   const valueAccessor = MARKO_DEBUG
     ? (id as string).slice(0, (id as string).lastIndexOf("/"))
     : decodeAccessor(id as number);
   const sourceAccessor = MARKO_DEBUG
-    ? AccessorPrefix.DraftSource + valueAccessor
-    : decodeAccessor((id as number) + 1);
+    ? (sourceId as string).slice(0, (sourceId as string).lastIndexOf("/"))
+    : decodeAccessor(sourceId as number);
   const holdsAccessor = MARKO_DEBUG
     ? AccessorPrefix.DraftHolds + valueAccessor
-    : decodeAccessor((id as number) + 2);
+    : decodeAccessor((id as number) + 1);
   if (MARKO_DEBUG) {
     id = +(id as string).slice((id as string).lastIndexOf("/") + 1);
   }
@@ -221,9 +227,6 @@ export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
 
   return (scope: Scope, value: T, guess?: 1) => {
     if (guess) {
-      // A resumed slot is its own derivation until one lands.
-      if (!(sourceAccessor in scope))
-        scope[sourceAccessor] = scope[valueAccessor];
       if (transaction) {
         scope[holdsAccessor] = ((scope[holdsAccessor] as number) || 0) + 1;
         transaction.push(() => {
@@ -233,9 +236,8 @@ export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
         });
       }
       show(scope, value);
-    } else {
-      scope[sourceAccessor] = value;
-      if (!scope[holdsAccessor]) show(scope, value);
+    } else if (!scope[holdsAccessor]) {
+      show(scope, value);
     }
     return value;
   };

@@ -1,17 +1,17 @@
 // template.marko
-const $shown = /*@__PURE__*/ _draft(6, ($scope) => _text($scope.b, $scope.g));
-const $late2 = /*@__PURE__*/ _action(9, ($scope) => $late_pending($scope, $scope.j.pending));
-const $native2 = /*@__PURE__*/ _action(11, ($scope) => $native_pending($scope, $scope.l.pending));
+const $shown = /*@__PURE__*/ _draft(6, 5, ($scope) => _text($scope.b, $scope.g));
+const $late2 = /*@__PURE__*/ _action(8, ($scope) => $late_pending($scope, $scope.i.pending));
+const $native2 = /*@__PURE__*/ _action(10, ($scope) => $native_pending($scope, $scope.k.pending));
 const $setup__script = _script("a2", ($scope) => {
 	_on($scope.a, "click", function() {
-		$scope.j();
+		$scope.i();
 	});
 	_on($scope.c, "click", function() {
-		$scope.l();
+		$scope.k();
 	});
 });
-const $late_pending = /*@__PURE__*/ _const(10, ($scope) => _text($scope.d, $scope.k ? "late" : "-"));
-const $native_pending = /*@__PURE__*/ _const(12, ($scope) => _text($scope.e, $scope.m ? "native" : "-"));
+const $late_pending = /*@__PURE__*/ _const(9, ($scope) => _text($scope.d, $scope.j ? "late" : "-"));
+const $native_pending = /*@__PURE__*/ _const(11, ($scope) => _text($scope.e, $scope.l ? "native" : "-"));
 const $late = ($scope) => /*@__PURE__*/ _act(function* () {
 	yield resolveAfter(0);
 	$shown($scope, 7, 1);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $page = /*@__PURE__*/ _draft("page/6", ($scope) => _text($scope["#text/1"], $scope.page));
+const $page = /*@__PURE__*/ _draft("page/6", "_pageSource/5", ($scope) => _text($scope["#text/1"], $scope.page));
 const $_pageSource = _fill_const_resume("__tests__/template.marko0", "_pageSource", ($scope) => $page($scope, $scope._pageSource));
 const $input_page = $_pageSource;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

@@ -2,8 +2,8 @@
 const $template = "<button> </button><span> </span>";
 const $walks = " D lD l";
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => $_shownSource($scope, $scope.count));
-const $bump2 = /*@__PURE__*/ _action("bump/7", ($scope) => $bump_pending($scope, $scope.bump.pending));
-const $shown = /*@__PURE__*/ _draft("shown/4", ($scope) => {
+const $bump2 = /*@__PURE__*/ _action("bump/6", ($scope) => $bump_pending($scope, $scope.bump.pending));
+const $shown = /*@__PURE__*/ _draft("shown/4", "count/3", ($scope) => {
 	_text($scope["#text/1"], $scope.shown);
 	$bump2($scope, $bump($scope));
 });

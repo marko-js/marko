@@ -2,12 +2,12 @@
 const $template = "<button id=late> </button><button id=native><!> <!></button>";
 const $walks = " D l D%c%l";
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => $_shownSource($scope, $scope.count));
-const $shown = /*@__PURE__*/ _draft("shown/6", ($scope) => _text($scope["#text/1"], $scope.shown));
+const $shown = /*@__PURE__*/ _draft("shown/6", "count/5", ($scope) => _text($scope["#text/1"], $scope.shown));
 const $_shownSource = ($scope) => {
 	$shown($scope, $scope.count);
 };
-const $late2 = /*@__PURE__*/ _action("late/9", ($scope) => $late_pending($scope, $scope.late.pending));
-const $native2 = /*@__PURE__*/ _action("native/11", ($scope) => $native_pending($scope, $scope.native.pending));
+const $late2 = /*@__PURE__*/ _action("late/8", ($scope) => $late_pending($scope, $scope.late.pending));
+const $native2 = /*@__PURE__*/ _action("native/10", ($scope) => $native_pending($scope, $scope.native.pending));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$scope.late();

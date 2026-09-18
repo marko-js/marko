@@ -2120,7 +2120,6 @@ const accessorPrefixDescriptions: Record<string, string> = {
   ControlledObserver: "the controlled observer",
   ControlledHandler: "the change handler",
   DraftHolds: "the draft guess count",
-  DraftSource: "the draft source",
   ControlledType: "the controlled type",
   ControlledValue: "the controlled value",
   DynamicHTMLLastChild: "the dynamic html",

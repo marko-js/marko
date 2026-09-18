@@ -1,4 +1,4 @@
-// size: 30438 (min) 11215 (brotli)
+// size: 30413 (min) 11222 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2647,24 +2647,25 @@ function _action(id, fn) {
 function _fill_action(key, id, fn) {
   return (patchFills[key] = _action(id, fn));
 }
-function _fill_draft(key, id, fn) {
-  let signal = _draft(id, fn);
+function _fill_draft(key, id, sourceId, fn) {
+  let signal = _draft(id, sourceId, fn);
   return ((patchFills[key] = signal), signal);
 }
 /**
  * The `<draft>` tag's signal: a derived value that takes provisional
  * assignments (`guess`). Showing a value — guessed, derived, or reverted —
  * is always the same write (`show`, a `<let>` assignment); a draft only
- * adds remembering the derivation to resume (`DraftSource`) and counting
- * the guesses currently holding it open (`DraftHolds`), so that once every
- * holding transaction settles the draft shows the derivation again, with no
- * DOM work when the guess was right. A guess outside a transaction holds
- * only until the next derivation.
+ * adds counting the guesses currently holding it open (`DraftHolds`), so
+ * that once every holding transaction settles the draft shows the
+ * derivation again, with no DOM work when the guess was right. The
+ * derivation to resume is read straight from `source`'s own scope slot (the
+ * `<const>` `transform` made), never copied into one of its own. A guess
+ * outside a transaction holds only until the next derivation.
  */
-function _draft(id, fn) {
+function _draft(id, sourceId, fn) {
   let valueAccessor = decodeAccessor(id),
-    sourceAccessor = decodeAccessor(id + 1),
-    holdsAccessor = decodeAccessor(id + 2),
+    sourceAccessor = decodeAccessor(sourceId),
+    holdsAccessor = decodeAccessor(id + 1),
     show = (scope, value) => {
       (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value),
@@ -2673,14 +2674,13 @@ function _draft(id, fn) {
     };
   return (scope, value, guess) => (
     guess
-      ? (sourceAccessor in scope || (scope[sourceAccessor] = scope[valueAccessor]),
-        transaction &&
+      ? (transaction &&
           ((scope[holdsAccessor] = (scope[holdsAccessor] || 0) + 1),
           transaction.push(() => {
             --scope[holdsAccessor] || show(scope, scope[sourceAccessor]);
           })),
         show(scope, value))
-      : ((scope[sourceAccessor] = value), scope[holdsAccessor] || show(scope, value)),
+      : scope[holdsAccessor] || show(scope, value),
     value
   );
 }

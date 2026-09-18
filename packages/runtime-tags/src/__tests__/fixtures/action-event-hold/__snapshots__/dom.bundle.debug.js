@@ -17,8 +17,8 @@ const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
 	$_shownSource($scope, $scope.count);
 	$count__script($scope);
 });
-const $bump2 = /*@__PURE__*/ _action("bump/8", ($scope) => $bump_pending($scope, $scope.bump.pending));
-const $shown = /*@__PURE__*/ _draft("shown/5", ($scope) => {
+const $bump2 = /*@__PURE__*/ _action("bump/7", ($scope) => $bump_pending($scope, $scope.bump.pending));
+const $shown = /*@__PURE__*/ _draft("shown/5", "count/4", ($scope) => {
 	_text($scope["#text/1"], $scope.shown);
 	$bump2($scope, $bump($scope));
 });

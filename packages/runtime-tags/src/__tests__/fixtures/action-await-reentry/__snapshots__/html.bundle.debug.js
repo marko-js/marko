@@ -19,10 +19,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button id=late>${_text_resume($scope0_id, "#text/1", shown)}</button>${_el_resume($scope0_id, "#button/0")}<button id=native>${_text_resume($scope0_id, "#text/3", late.pending ? "late" : "-")} ${_text_resume($scope0_id, "#text/4", native.pending ? "native" : "-", 2)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
+		count,
 		shown,
 		late,
 		native
 	}, "__tests__/template.marko", 0, {
+		count: "2:6",
 		shown: "3:8",
 		late: "4:9",
 		native: "9:9"

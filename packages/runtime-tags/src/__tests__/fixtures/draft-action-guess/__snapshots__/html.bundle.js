@@ -14,6 +14,6 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		d: count,
 		e: shown,
-		i: bump
+		h: bump
 	});
 }, 1);
