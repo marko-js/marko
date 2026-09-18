@@ -72,6 +72,38 @@ document.querySelector(".next").click();
   <span
     class="of"
   >
+    2
+  </span>
+  <span
+    class="limit"
+  >
+    of 9
+  </span>
+</main>
+```
+## Change
+```
+UPDATE: .of::text "1" => "2"
+```
+
+# Update
+```html
+<header>
+  <button
+    class="menu"
+  >
+    open
+  </button>
+</header>
+<main>
+  <button
+    class="next"
+  >
+    next
+  </button>
+  <span
+    class="of"
+  >
     1
   </span>
   <span
@@ -83,7 +115,6 @@ document.querySelector(".next").click();
 ```
 ## Change
 ```
-UPDATE: .of::text "1" => "1"
 UPDATE: .of::text "2" => "1"
 ```
 
@@ -257,6 +288,43 @@ document.querySelector(".next").click();
   <span
     class="of"
   >
+    4
+  </span>
+  <span
+    class="limit"
+  >
+    of 9
+  </span>
+</main>
+```
+## Change
+```
+UPDATE: .of::text "3" => "4"
+```
+
+# Update
+```html
+<header>
+  <button
+    class="menu"
+  >
+    open
+  </button>
+</header>
+<main>
+  <button
+    class="next"
+  >
+    next
+  </button>
+  <span
+    class="prev"
+  >
+    prev 2
+  </span>
+  <span
+    class="of"
+  >
     3
   </span>
   <span
@@ -268,6 +336,5 @@ document.querySelector(".next").click();
 ```
 ## Change
 ```
-UPDATE: .of::text "3" => "3"
 UPDATE: .of::text "4" => "3"
 ```

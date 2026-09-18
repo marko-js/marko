@@ -15,12 +15,14 @@ export const config: TestConfig = {
     { page: 1, $global: { params: { page: 1 }, total: 90 } },
     wait,
     click,
+    wait,
     { page: 1, $global: { params: { page: 2 }, total: 90 } },
     { page: 1, $global: { params: { page: 5 }, total: 90 } },
     { page: 0, $global: { params: { page: 5 }, total: 90 } },
     { page: 1, $global: { params: { page: 3 }, total: 90 } },
     wait,
     click,
+    wait,
   ],
 };
 
