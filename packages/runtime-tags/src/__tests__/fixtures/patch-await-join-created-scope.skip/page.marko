@@ -1,0 +1,19 @@
+<const/params=$global.params/>
+<const/current=params.page/>
+<draft/page=current/>
+<action/go=async (next: number) => { page = next }/>
+<try>
+  <button class="next" onClick() { go(current + 1) }>next</button>
+  <if=(current > 1)>
+    <span class="prev">prev ${current - 1}</span>
+  </if>
+  <span class="of">${page}${go.pending ? "…" : ""}</span>
+  <try>
+    <await|total|=$global.total>
+      <const/limit=Math.ceil(total / 10)>
+      <span class="limit">${Math.min(page, limit)} of ${limit}</span>
+    </await>
+    <@placeholder>loading</@placeholder>
+  </try>
+  <@catch>failed</@catch>
+</try>
