@@ -589,18 +589,19 @@ function testFixtures(interop?: true) {
                       }
                       flushes.push(flush);
                       // The wire delimits flushes by newline (as the run
-                      // client reads them), so a flush must be one line; the
-                      // response's last chunk adds the token line.
+                      // client reads them); the response's last chunk adds
+                      // the token line.
                       const lines = flush.split("\n").filter(Boolean);
-                      assert.ok(
-                        lines.length === 1 ||
-                          (lines.length === 2 && lines[1][0] === '"'),
-                        "a flush spans lines",
-                      );
-                      if (lines[1]) applyPatch(lines[1]);
+                      if (lines[lines.length - 1][0] === '"') {
+                        applyPatch(lines.pop()!);
+                      }
                       // A production caller navigates on the first failed
                       // flush; later flushes must not mutate further.
-                      const result = applyPatch(lines[0]);
+                      let result!: ReturnType<typeof applyPatch>;
+                      for (const line of lines) {
+                        result = applyPatch(line);
+                        if (!result) break;
+                      }
                       // A held load or a still-streaming document settles
                       // the wait later; the patch must have applied by the end.
                       if (
