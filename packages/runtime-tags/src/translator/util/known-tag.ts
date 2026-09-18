@@ -18,7 +18,13 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, type Opt, toIter } from "./optional";
+import {
+  forEach,
+  fromIter,
+  type Opt,
+  type SortedOpt,
+  toIter,
+} from "./optional";
 import {
   addRead,
   type Binding,
@@ -565,7 +571,7 @@ function analyzeAttrs(
         referenceNodes,
       },
     ] of nodeReferencesByGroup) {
-      let bindings: Opt<Binding>;
+      let bindings: SortedOpt<Binding>;
       let hasRest = false;
 
       for (const tagName of group) {

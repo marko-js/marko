@@ -13,6 +13,7 @@ import {
   push,
   some,
   Sorted,
+  type SortedOpt,
   toIter,
 } from "../translator/util/optional";
 
@@ -36,10 +37,9 @@ function randomSortedValues(random: () => number, len: number) {
     .map((n) => n + 1);
 }
 
-function fromValues(values: number[]): Opt<number> {
-  return values.length > 1
-    ? (values as [number, number, ...number[]])
-    : values[0];
+// The test builds its sorted lists by hand.
+function fromValues(values: number[]): SortedOpt<number> {
+  return values.length > 1 ? (values as SortedOpt<number>) : values[0];
 }
 
 describe("runtime-tags/translator/util/optional", () => {
@@ -71,8 +71,8 @@ describe("runtime-tags/translator/util/optional", () => {
     });
 
     it("returns the first argument for a union with equal content", () => {
-      const a: Opt<number> = [1, 2, 3];
-      assert.equal(sorted.union(a, [1, 2, 3]), a);
+      const a = fromValues([1, 2, 3]);
+      assert.equal(sorted.union(a, fromValues([1, 2, 3])), a);
       assert.equal(sorted.union(a, undefined), a);
       assert.equal(sorted.union(undefined, a), a);
       assert.equal(sorted.union(1, 1), 1);
@@ -94,7 +94,7 @@ describe("runtime-tags/translator/util/optional", () => {
     });
 
     it("groups items unioned per key", () => {
-      const group = sorted.groupBy([1, 2, 3, 4] as Opt<number>, (n) => n % 2);
+      const group = sorted.groupBy(fromValues([1, 2, 3, 4]), (n) => n % 2);
       assert.deepEqual(toArray(group.get(0)), [2, 4]);
       assert.deepEqual(toArray(group.get(1)), [1, 3]);
       assert.deepEqual([...sorted.groupBy(5, (n) => n % 2)], [[1, 5]]);
@@ -102,12 +102,18 @@ describe("runtime-tags/translator/util/optional", () => {
     });
 
     it("matches naive set isSuperset", () => {
-      assert.equal(sorted.isSuperset([1, 2, 3], undefined), true);
-      assert.equal(sorted.isSuperset([1, 2, 3], 2), true);
-      assert.equal(sorted.isSuperset([1, 2, 3], 4), false);
-      assert.equal(sorted.isSuperset(1, [1, 2] as Opt<number>), false);
-      assert.equal(sorted.isSuperset([1, 2, 3], [1, 2, 3]), true);
-      assert.equal(sorted.isSuperset([1, 2, 3], [2, 3]), true);
+      assert.equal(sorted.isSuperset(fromValues([1, 2, 3]), undefined), true);
+      assert.equal(sorted.isSuperset(fromValues([1, 2, 3]), 2), true);
+      assert.equal(sorted.isSuperset(fromValues([1, 2, 3]), 4), false);
+      assert.equal(sorted.isSuperset(1, fromValues([1, 2])), false);
+      assert.equal(
+        sorted.isSuperset(fromValues([1, 2, 3]), fromValues([1, 2, 3])),
+        true,
+      );
+      assert.equal(
+        sorted.isSuperset(fromValues([1, 2, 3]), fromValues([2, 3])),
+        true,
+      );
       const random = createRandom(6);
       for (let run = 0; run < 100; run++) {
         const sup = randomSortedValues(random, (random() * 8) | 0);

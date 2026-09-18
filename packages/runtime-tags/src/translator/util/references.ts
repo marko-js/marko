@@ -30,6 +30,9 @@ import {
   mapToString,
   type OneMany,
   type Opt,
+  type SortedMany,
+  type SortedOneMany,
+  type SortedOpt,
   push,
   rest,
   some,
@@ -89,8 +92,8 @@ type BindingType = BindingType.Value;
 export { BindingType };
 
 export interface Sources {
-  state: Opt<Binding>;
-  param: Opt<InputBinding | ParamBinding>;
+  state: SortedOpt<Binding>;
+  param: SortedOpt<InputBinding | ParamBinding>;
   global: true | undefined;
   /** Serialized unconditionally; the sources still say what it reads. */
   forced: true | undefined;
@@ -124,7 +127,7 @@ export interface Binding {
   type: BindingType;
   loc: t.SourceLocation | null;
   section: Section;
-  closureSections: Opt<Section>;
+  closureSections: SortedOpt<Section>;
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
   /** Emitted code the graph stopped tracking still names it. */
@@ -132,15 +135,13 @@ export interface Binding {
   sources: undefined | Sources;
   reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
-  hoists: Opt<Section>;
+  hoists: SortedOpt<Section>;
   getters: Map<Getter["hoisted"], boolean>;
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
-  /** Sorted: only `propsUtil` writes it, so `propsUtil.has` can look it up. */
-  excludeProperties: Opt<string>;
+  excludeProperties: SortedOpt<string>;
   noSerialize: boolean;
-  /** Sorted: only `propsUtil` writes it, so `propsUtil.has` can look it up. */
-  noSerializeProperties: Opt<string>;
+  noSerializeProperties: SortedOpt<string>;
   upstreamAlias: Binding | undefined;
   restOffset: number | undefined;
   scopeOffset: Binding | undefined;
@@ -169,8 +170,8 @@ export interface ParamBinding extends Binding {
   type: typeof BindingType.param;
 }
 
-export type ReferencedBindings = Opt<Binding>;
-export type Intersection = Many<Binding>;
+export type ReferencedBindings = SortedOpt<Binding>;
+export type Intersection = SortedMany<Binding>;
 
 interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
 
@@ -207,7 +208,7 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     section?: Section;
     referencedBindings?: ReferencedBindings;
-    downstream?: Opt<Binding>;
+    downstream?: SortedOpt<Binding>;
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a downstream template's binding, for dereferencing its reasons. */
     downstreamExprs?: KnownExprs;
@@ -235,7 +236,7 @@ declare module "@marko/compiler/dist/types" {
   export interface FunctionExtra {
     referencesScope?: boolean;
     referencedBindingsInFunction?: ReferencedBindings;
-    referencedLocalBindingsInFunction?: Opt<Binding>;
+    referencedLocalBindingsInFunction?: SortedOpt<Binding>;
     constantBindingsInFunction?: ReferencedBindings;
     name?: string;
     registerId?: string;
@@ -258,7 +259,7 @@ export function createBinding(
   refSection: Section,
   upstreamAlias?: Binding["upstreamAlias"],
   property?: string,
-  excludeProperties?: Opt<string>,
+  excludeProperties?: SortedOpt<string>,
   loc: t.SourceLocation | null = null,
   refDeclared = false,
 ): Binding {
@@ -734,7 +735,7 @@ function createBindingsAndTrackReferences(
   section: Section,
   upstreamAlias: Binding["upstreamAlias"] | undefined,
   property: string | undefined,
-  excludeProperties: Opt<string>,
+  excludeProperties: SortedOpt<string>,
   restOffset?: number,
 ) {
   switch (lVal.type) {
@@ -1044,7 +1045,7 @@ export function finalizeReferences() {
       if (isPureSpreadResolved(binding)) {
         if (hasAnyMemberAccess(binding)) {
           binding.noSerialize = false;
-          binding.noSerializeProperties = filter(
+          binding.noSerializeProperties = propsUtil.filter(
             binding.noSerializeProperties,
             (property) => !isPropertyMemberAccessed(binding, property),
           );
@@ -1794,7 +1795,7 @@ function unionParamSources(a: Sources["param"], b: Sources["param"]) {
   if (merged && Array.isArray(merged)) {
     // Filter out property aliases already in the merged set (eg drop `input.foo`
     // when `input` is present); params otherwise treat properties as discrete sources.
-    return filter(merged, (binding) => {
+    return bindingUtil.filter(merged, (binding) => {
       let alias = binding.upstreamAlias;
       while (alias) {
         if (bindingUtil.has(merged, alias)) return false;
@@ -2544,7 +2545,7 @@ function pruneSettledWriter({ exprRoot }: AssignedBindingExtra) {
 }
 
 function resolveReferencedBindingsInFunction(
-  refs: OneMany<Binding>,
+  refs: SortedOneMany<Binding>,
   reads: Opt<Read>,
 ) {
   let referencedBindings: ReferencedBindings;
@@ -2592,7 +2593,7 @@ function resolveReferencedBindingsInFunction(
 
 function findClosestReference(
   from: Binding,
-  refs: OneMany<Binding>,
+  refs: SortedOneMany<Binding>,
 ): undefined | Binding {
   if (Array.isArray(refs)) {
     if (bindingUtil.has(refs, from)) {
@@ -2618,9 +2619,9 @@ function findClosestUpstream(from: Binding, to: Binding) {
   } while ((closest = closest.upstreamAlias));
 }
 
-function getRootBindings(reads: Many<Read>): OneMany<Binding> {
-  let rootRefs!: OneMany<Binding>;
-  let allBindings!: OneMany<Binding>;
+function getRootBindings(reads: Many<Read>): SortedOneMany<Binding> {
+  let rootRefs!: SortedOneMany<Binding>;
+  let allBindings!: SortedOneMany<Binding>;
 
   for (const { binding } of reads) {
     allBindings = bindingUtil.add(allBindings, binding);
@@ -2826,7 +2827,7 @@ function resolveReferencedBindings(
 }
 
 function resolveExpressionReference(
-  rootBindings: OneMany<Binding>,
+  rootBindings: SortedOneMany<Binding>,
   readBinding: Binding,
 ) {
   const upstreamRoot =
@@ -3170,7 +3171,7 @@ function hasPropertyAlias(binding: Binding, property: string) {
   return binding.propertyAliases.has(property);
 }
 
-function addNumericPropertiesUntil(props: Opt<string>, len: number) {
+function addNumericPropertiesUntil(props: SortedOpt<string>, len: number) {
   let result = props;
   for (let i = len; i--;) {
     result = propsUtil.add(result, i + "");

@@ -1,5 +1,5 @@
 import { generateUid } from "./generate-uid";
-import { forEach, type Opt } from "./optional";
+import { forEach, type SortedOpt } from "./optional";
 import {
   type Binding,
   BindingType,
@@ -86,7 +86,7 @@ function isDirectContentBinding(binding: Binding) {
 
 function hasSupersetExcludeProperties(
   binding: Binding,
-  excludeProperties: Opt<string>,
+  excludeProperties: SortedOpt<string>,
 ) {
   if (excludeProperties === undefined) {
     return false;

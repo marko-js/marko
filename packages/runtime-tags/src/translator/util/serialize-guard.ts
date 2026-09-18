@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
-import { type Opt, some } from "./optional";
+import { type Opt, some, type SortedOpt } from "./optional";
 import {
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -34,8 +34,8 @@ interface SectionReasonState {
 interface TypeState {
   names: Map<Sources, string>;
   pending: Map<Sources, t.ParenthesizedExpression>;
-  seenReasons: Opt<Sources>;
-  hoistedReasons: Opt<Sources>;
+  seenReasons: SortedOpt<Sources>;
+  hoistedReasons: SortedOpt<Sources>;
 }
 
 const [getSectionReasonState] = createSectionState<SectionReasonState>(

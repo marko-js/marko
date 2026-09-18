@@ -15,7 +15,6 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import {
   addSorted,
-  filter,
   find,
   findIndexSorted,
   findSorted,
@@ -503,7 +502,7 @@ export function getDynamicClosureIndex(
 
 export function getDirectClosures(section: Section) {
   if (section.isBranch) {
-    return filter(section.referencedClosures, (closure) =>
+    return bindingUtil.filter(section.referencedClosures, (closure) =>
       isImmediateOwner(section, closure),
     );
   }
