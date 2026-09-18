@@ -179,11 +179,13 @@ export function _fill_draft<T>(
 
 /**
  * The `<draft>` tag's signal: a derived value that takes provisional
- * assignments (`guess`). A guess shows at once and holds while the
- * transaction that made it is open; the derivation keeps landing underneath
- * (`DraftSource`), and once every holding transaction settles the draft
- * shows the derivation again, with no DOM work when the guess was right.
- * A guess outside a transaction holds only until the next derivation.
+ * assignments (`guess`). Showing a value — guessed, derived, or reverted —
+ * is always the same write (`show`, a `<let>` assignment); a draft only
+ * adds remembering the derivation to resume (`DraftSource`) and counting
+ * the guesses currently holding it open (`DraftHolds`), so that once every
+ * holding transaction settles the draft shows the derivation again, with no
+ * DOM work when the guess was right. A guess outside a transaction holds
+ * only until the next derivation.
  */
 export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueAccessor = MARKO_DEBUG
@@ -199,6 +201,10 @@ export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
     id = +(id as string).slice((id as string).lastIndexOf("/") + 1);
   }
 
+  // A derivation can land on a scope from an older generation than the
+  // render currently in progress (unlike a plain `<let>`'s own writes), so
+  // showing it still needs `<let>`'s exact write, but with a schedule
+  // fallback for that case too.
   const show = (scope: Scope, value: T) => {
     if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
       scope[valueAccessor] = value;
@@ -229,12 +235,7 @@ export function _draft<T>(id: EncodedAccessor, fn?: SignalFn) {
       show(scope, value);
     } else {
       scope[sourceAccessor] = value;
-      if (!scope[holdsAccessor]) {
-        if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
-          scope[valueAccessor] = value;
-          fn?.(scope);
-        }
-      }
+      if (!scope[holdsAccessor]) show(scope, value);
     }
     return value;
   };
