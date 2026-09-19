@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.41
+
+### Patch Changes
+
+- [#4180](https://github.com/marko-js/marko/pull/4180) [`c35436c`](https://github.com/marko-js/marko/commit/c35436c3c9d7a251c2f6c70d5948ac4cf78659a5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compiling an in-memory source whose filename names a directory that does not exist no longer throws `ENOENT`; the sibling style/component lookup treats an unreadable directory as having no files.
+
+- [#4182](https://github.com/marko-js/marko/pull/4182) [`fc21c51`](https://github.com/marko-js/marko/commit/fc21c518a146c2e4de6108e1474a682c6d47bac3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove the `declare module "*.marko"` block from the published types. `index.d.ts` is a module, so the block was a module augmentation that never applied to anything; typing `.marko` imports is `@marko/language-tools`' job, and a wildcard would type away a missing or misspelled template.
+
+- Updated dependencies [[`c35436c`](https://github.com/marko-js/marko/commit/c35436c3c9d7a251c2f6c70d5948ac4cf78659a5), [`82a520d`](https://github.com/marko-js/marko/commit/82a520db376ce52af5fd9e7a386a287fabb05c28), [`fc21c51`](https://github.com/marko-js/marko/commit/fc21c518a146c2e4de6108e1474a682c6d47bac3), [`1597fc1`](https://github.com/marko-js/marko/commit/1597fc18e8d492811bbdee6622115f1e060429d0), [`c58731c`](https://github.com/marko-js/marko/commit/c58731c1d2c6d34245cea8dd10c726a4af3b3449), [`323aafa`](https://github.com/marko-js/marko/commit/323aafa4e42b6ce08d48398137821e80f8faddf0), [`7698310`](https://github.com/marko-js/marko/commit/7698310f946fe4ba7fdcd474ed0e30e9f1ec1c17), [`a8ea554`](https://github.com/marko-js/marko/commit/a8ea554bbba9a0a598330b3e3d1d4a3fddd445fb), [`c9a0556`](https://github.com/marko-js/marko/commit/c9a0556fb24e4654d71079b5597bf133b533169f), [`3ea218a`](https://github.com/marko-js/marko/commit/3ea218a69cfcd9606a5b75dce236e4f6987a4182), [`82a520d`](https://github.com/marko-js/marko/commit/82a520db376ce52af5fd9e7a386a287fabb05c28), [`b1f6f86`](https://github.com/marko-js/marko/commit/b1f6f863915a003a64b0e0732060e6e3e85e2b2d), [`66c2882`](https://github.com/marko-js/marko/commit/66c2882d89ead4041f1ad96bacf5cb0bcdba8e4c), [`6b647f5`](https://github.com/marko-js/marko/commit/6b647f5edc9f6e75bca7a84bacbd2b8992344f7c)]:
+  - @marko/runtime-tags@6.3.52
+
 ## 5.39.40
 
 ### Patch Changes
