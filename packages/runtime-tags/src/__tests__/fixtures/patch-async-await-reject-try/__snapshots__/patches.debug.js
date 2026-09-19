@@ -4,8 +4,7 @@
     "PatchPending:#text/0": 1
   }
 }
-{
-  "PatchChild:BranchScopes:#text/0": {
-    "PatchCatch:#text/0": [new Error("boom"), "\x3Cem>boom\x3C/em>"]
-  }
-}
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1*content;b%;<!><!><!>`, {
+  "PatchCatch:#text/0": [new Error("boom"), "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1*content", "\x3Cem>boom\x3C/em>"]
+}]
+"BAA"

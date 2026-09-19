@@ -131,6 +131,7 @@ export const domRuntimeFeatures = [
   "patch-attrs",
   "patch-boundary",
   "patch-branch",
+  "patch-catch",
   "patch-child",
   "patch-content",
   "patch-control",

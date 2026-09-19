@@ -4,8 +4,7 @@
     pa: 1
   }
 }
-{
-  cAa: {
-    ka: [new Error("boom"), "\x3Cem>boom\x3C/em>"]
-  }
-}
+[`a3;b%;<!><!><!>`, {
+  ka: [new Error("boom"), "a3", "\x3Cem>boom\x3C/em>"]
+}]
+"BAM"

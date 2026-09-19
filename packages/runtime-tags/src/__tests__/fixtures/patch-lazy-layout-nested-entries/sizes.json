@@ -17,15 +17,15 @@
       "brotli": 661
     },
     "layout.mjs": {
-      "min": 3642,
-      "brotli": 1728
+      "min": 3577,
+      "brotli": 1709
     },
     "page-a.mjs": {
       "min": 235,
       "brotli": 136
     },
     "shared": {
-      "min": 14944,
+      "min": 14943,
       "brotli": 6799
     }
   },

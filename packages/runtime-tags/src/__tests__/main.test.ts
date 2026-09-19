@@ -576,49 +576,58 @@ function testFixtures(interop?: true) {
                       renderId: DEFAULT_RENDER_ID,
                     });
                     patchHeaders.push(headers["x-marko-patch"] || "");
-                    for await (const flush of template.patch(input, headers)) {
-                      if (flushes.length && betweenFlushes) {
-                        tracker.logUpdate(input);
-                        tracker.beginUpdate();
-                        await betweenFlushes(browser.window.document);
-                        run();
-                        await browser.runAsyncScripts();
-                        run();
-                        tracker.logUpdate(betweenFlushes);
-                        tracker.beginUpdate();
+                    try {
+                      for await (const flush of template.patch(
+                        input,
+                        headers,
+                      )) {
+                        if (flushes.length && betweenFlushes) {
+                          tracker.logUpdate(input);
+                          tracker.beginUpdate();
+                          await betweenFlushes(browser.window.document);
+                          run();
+                          await browser.runAsyncScripts();
+                          run();
+                          tracker.logUpdate(betweenFlushes);
+                          tracker.beginUpdate();
+                        }
+                        flushes.push(flush);
+                        // The wire delimits flushes by newline (as the run
+                        // client reads them); the response's last chunk adds
+                        // the token line.
+                        const lines = flush.split("\n").filter(Boolean);
+                        if (lines[lines.length - 1][0] === '"') {
+                          applyPatch(lines.pop()!);
+                        }
+                        // A production caller navigates on the first failed
+                        // flush; later flushes must not mutate further.
+                        let result!: ReturnType<typeof applyPatch>;
+                        for (const line of lines) {
+                          result = applyPatch(line);
+                          if (!result) break;
+                        }
+                        // A held load or a still-streaming document settles
+                        // the wait later; the patch must have applied by the end.
+                        if (
+                          typeof result === "object" &&
+                          (holdLoad || config.patch_while_streaming)
+                        ) {
+                          held.push(result);
+                          continue;
+                        }
+                        if (typeof result === "object") {
+                          // A deferred patch is waiting on a lazy module; load
+                          // triggers schedule via setTimeout, so a macrotask
+                          // tick must pass before the chunk can be imported.
+                          await resolveAfter(0, 1);
+                          await browser.runAsyncScripts();
+                        }
+                        if (!(applied = !!(await result))) break;
                       }
-                      flushes.push(flush);
-                      // The wire delimits flushes by newline (as the run
-                      // client reads them); the response's last chunk adds
-                      // the token line.
-                      const lines = flush.split("\n").filter(Boolean);
-                      if (lines[lines.length - 1][0] === '"') {
-                        applyPatch(lines.pop()!);
-                      }
-                      // A production caller navigates on the first failed
-                      // flush; later flushes must not mutate further.
-                      let result!: ReturnType<typeof applyPatch>;
-                      for (const line of lines) {
-                        result = applyPatch(line);
-                        if (!result) break;
-                      }
-                      // A held load or a still-streaming document settles
-                      // the wait later; the patch must have applied by the end.
-                      if (
-                        typeof result === "object" &&
-                        (holdLoad || config.patch_while_streaming)
-                      ) {
-                        held.push(result);
-                        continue;
-                      }
-                      if (typeof result === "object") {
-                        // A deferred patch is waiting on a lazy module; load
-                        // triggers schedule via setTimeout, so a macrotask
-                        // tick must pass before the chunk can be imported.
-                        await resolveAfter(0, 1);
-                        await browser.runAsyncScripts();
-                      }
-                      if (!(applied = !!(await result))) break;
+                    } catch (err) {
+                      // A response that fails to render is a document load.
+                      if (!config.expect_rejection) throw err;
+                      applied = false;
                     }
                     patches.push(flushes.join(""));
                     tracker.logUpdate(input);

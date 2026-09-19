@@ -9,10 +9,11 @@
 "BAI"
 
 // PATCH holding BAI
-{
+[`a2;b%;<!><!><!>`, {
   cAa: {
-    pa: "a1",
-    ka: new Error("x")
+    pa: "a1"
   },
-  va0: "c"
-}
+  va0: "c",
+  ka: [new Error("x"), "a2"]
+}]
+"BAIA"

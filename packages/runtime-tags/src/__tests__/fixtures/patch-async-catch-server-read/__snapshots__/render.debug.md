@@ -31,8 +31,6 @@ REMOVE: main > em + em
 ```
 ## Change
 ```
+REMOVE: main > em
 INSERT: main > em
-REMOVE: #document-fragment > em + em
-INSERT: main > em
-REMOVE: main > em + em
 ```
