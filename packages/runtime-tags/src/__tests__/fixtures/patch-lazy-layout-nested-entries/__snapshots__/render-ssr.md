@@ -34,9 +34,7 @@
 ```
 REMOVE: p
 INSERT: nav, main
-INSERT: main > :is(h1, p, button)
-UPDATE: main > p:nth-of-type(1)::text " " => "a1"
-INSERT: main > p:nth-of-type(1) + p
+INSERT: main > :is(h1, p, p, button)
 UPDATE: main > button::text " " => "0"
 INSERT: nav > :is(a, a)
 ```
@@ -59,13 +57,12 @@ INSERT: nav > :is(a, a)
 ```
 ## Change
 ```
+REMOVE: nav > a + a
 REMOVE: main > h1
 REMOVE: main > p
 REMOVE: main > p
 REMOVE: main > button
 INSERT: main > :is(h1, p)
-REMOVE: nav > a + a
-UPDATE: main > p::text " " => "b1"
 ```
 
 # Update `{"page":1,"wide":false,"note":"a2","list":{"value":["z"]}}`
@@ -89,11 +86,10 @@ UPDATE: main > p::text " " => "b1"
 ```
 ## Change
 ```
+UPDATE: nav > a::text "x" => "z"
 REMOVE: main > h1
 REMOVE: main > p
 INSERT: main > :is(h1, p, button)
-UPDATE: nav > a::text "x" => "z"
-UPDATE: main > p::text " " => "a2"
 UPDATE: main > button::text " " => "0"
 ```
 

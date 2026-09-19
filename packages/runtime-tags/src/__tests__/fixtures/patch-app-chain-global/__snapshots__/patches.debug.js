@@ -3,7 +3,7 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [1, {
           "PatchChild:#childScope/1": {
             "PatchText:#text/1": "a",
             "PatchText:#text/2": "",
@@ -12,13 +12,8 @@
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko0": 0
             }
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
     }
   }
 }]
@@ -29,7 +24,7 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [1, {
           "PatchChild:#childScope/1": {
             "PatchText:#text/1": "b",
             "PatchText:#text/2": "!",
@@ -38,13 +33,8 @@
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko0": 0
             }
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
     }
   }
 }
@@ -54,20 +44,15 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-a.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [{
           "PatchChild:#childScope/1": {
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-a.marko_0",
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-a.marko0": 0
             }
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_2*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_2*shell"
     }
   }
 }]
@@ -78,7 +63,7 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [1, {
           "PatchChild:#childScope/1": {
             "PatchText:#text/1": "c",
             "PatchText:#text/2": "",
@@ -87,13 +72,8 @@
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko0": 0
             }
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
     }
   }
 }

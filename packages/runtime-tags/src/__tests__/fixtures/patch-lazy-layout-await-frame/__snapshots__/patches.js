@@ -1,23 +1,28 @@
 // PATCH
 [`a1;b%b%;<!><!><!><!>`, `e0;b%;<!><!><!>`, `e4;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b/D%lD%l&b;<!><nav><!></nav><article><!></article><!>`, {
   z_a: {
-    ca: {
-      cAa: {
+    z_b: {
+      ca: {
         cAa: {
-          ca: {
-            pa: "a1",
-            fb: "^e0",
-            cAb: {
-              ba: "e4"
+          cAa: {
+            ca: {
+              cAb: {
+                ba: "e4"
+              }
             }
           }
         }
       }
-    }
-  },
-  ca: {
-    cAa: {
-      ba: [1, {}, "e2"]
+    },
+    ca: {
+      cAa: {
+        ba: [1, {
+          ca: {
+            pa: "a1",
+            fb: "^e0"
+          }
+        }, "e2"]
+      }
     }
   }
 }]
@@ -53,15 +58,25 @@
 // PATCH holding EQIAAAQBAQI
 [`e5;b%b/b&b;<!><!><h1>B</h1><!>`, {
   z_a: {
+    z_c: {
+      ca: {
+        cAa: {
+          cAa: {
+            ca: {
+              cAb: {
+                ba: [1, {}, "e5"]
+              }
+            }
+          }
+        }
+      }
+    },
     ca: {
       cAa: {
-        cAa: {
+        ba: [1, {
           ca: {
             pa: "a1",
             fb: "^e0",
-            cAb: {
-              ba: [1, {}, "e5"]
-            },
             cAa: {
               la: [{
                 ta: "z"
@@ -76,13 +91,8 @@
               }, "a2"]
             }
           }
-        }
+        }, "e2"]
       }
-    }
-  },
-  ca: {
-    cAa: {
-      ba: [1, {}, "e2"]
     }
   }
 }]

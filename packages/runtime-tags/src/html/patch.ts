@@ -188,8 +188,8 @@ export function encodeHeld(ids: Set<string>) {
   // A bitmap over the registry orders the held indices without a sort.
   const bits = new Uint8Array((size >> 3) + 1);
   for (const id of ids) {
-    const index = at.get(id)!;
-    bits[index >> 3] |= 1 << (index & 7);
+    const index = at.get(id);
+    if (index !== undefined) bits[index >> 3] |= 1 << (index & 7);
   }
   const bytes: number[] = [];
   pushVarint(bytes, size);
@@ -214,9 +214,17 @@ export function encodeHeld(ids: Set<string>) {
   bytes.length = end;
   return btoa(String.fromCharCode(...bytes)).replace(/=+$/, "");
 }
+// A token that fails to parse, names another registry size, or an index
+// outside the registry holds nothing: the header is the client's, and a bad
+// one costs that client a shell, never the render.
 export function decodeHeld(held: string) {
   const { size, ids } = shellRegistry();
-  const bytes = atob(held);
+  let bytes: string;
+  try {
+    bytes = atob(held);
+  } catch {
+    return;
+  }
   let i = 0;
   const next = () => {
     let n = 0;
@@ -230,6 +238,7 @@ export function decodeHeld(held: string) {
   const held_ = new Set<string>();
   for (let index = -1; i < bytes.length;) {
     index += next() + 1;
+    if (index >= size) return;
     held_.add(ids[index]);
   }
   return held_;
@@ -260,14 +269,14 @@ class PatchState extends State {
   ) {
     if (!this.patchInert && !peekPatchPartial(this, branchId)) {
       const link = AccessorPrefix.BranchScopes + accessor;
-      (this.patchLinks ??= {})[branchId] = [
-        scopeId,
-        link,
-        PatchKey.Child + link,
-        contentId,
-        slotIds,
-        ownerScopeId,
-      ];
+      (this.patchLinks ??= {})[branchId] = {
+        parent: scopeId,
+        link: link,
+        pending: PatchKey.Child + link,
+        content: contentId,
+        slots: slotIds,
+        owner: ownerScopeId,
+      };
     }
   }
 
@@ -353,10 +362,10 @@ class PatchState extends State {
     // page: the patch skips it.
     if (_client_guard(owned, group!)) return 1;
     const branchId = _peek_scope_id();
-    const link: PatchLink = ((this.patchLinks ??= {})[branchId] = [
-      scopeId,
-      AccessorPrefix.BranchScopes + accessor,
-    ]);
+    const link: PatchLink = ((this.patchLinks ??= {})[branchId] = {
+      parent: scopeId,
+      link: AccessorPrefix.BranchScopes + accessor,
+    });
     const opened = openPatchPartial(this, branchId);
     const branchIndex = withBranchId(branchId, cb);
     const shellId =
@@ -364,32 +373,37 @@ class PatchState extends State {
         ? undefined
         : shipShell(this, shellIds?.[branchIndex]);
     // Shape-typed entry, densest form first: a bare number is the
-    // branch index + 1 (`0` hides), and empty/zero members drop.
+    // branch index + 1 (`0` hides), and empty/zero members drop. A branch
+    // holding a lazy template rides its channel (`writeWaitReady`).
     const branchPartial =
       branchIndex === undefined || !hasKeys(opened) ? undefined : opened;
-    writePatch(scopeId, {
-      [PatchKey.Branch + accessor]:
-        branchIndex === undefined
-          ? 0
-          : branchIndex
-            ? branchPartial || shellId
-              ? shellId
-                ? [branchIndex, branchPartial || {}, shellId]
-                : [branchIndex, branchPartial || {}]
-              : branchIndex + 1
-            : branchPartial
-              ? shellId
-                ? [branchPartial, shellId]
-                : [branchPartial]
-              : shellId || 1,
-    });
+    writePatch(
+      scopeId,
+      {
+        [PatchKey.Branch + accessor]:
+          branchIndex === undefined
+            ? 0
+            : branchIndex
+              ? branchPartial || shellId
+                ? shellId
+                  ? [branchIndex, branchPartial || {}, shellId]
+                  : [branchIndex, branchPartial || {}]
+                : branchIndex + 1
+              : branchPartial
+                ? shellId
+                  ? [branchPartial, shellId]
+                  : [branchPartial]
+                : shellId || 1,
+      },
+      link.channel,
+    );
     if (branchIndex === undefined) {
       // Nothing rendered took the peeked id: consume it so no later scope
       // finds this branch's partial or link.
       _scope_id();
     } else {
       // Later settle flushes nest under the live branch as a Child apply.
-      link[2] = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
+      link.pending = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
     return 1 as const;
   }
@@ -431,10 +445,10 @@ class PatchState extends State {
       // Loop items pair by key: the link is a keyed hop the bind walk
       // resolves against the live scopes' loop keys.
       const branchId = _peek_scope_id();
-      (this.patchLinks ??= {})[branchId] = [
-        scopeId,
-        [AccessorPrefix.BranchScopes + accessor, itemKey],
-      ];
+      (this.patchLinks ??= {})[branchId] = {
+        parent: scopeId,
+        link: [AccessorPrefix.BranchScopes + accessor, itemKey],
+      };
       keys.push(itemKey);
       withBranchId(branchId, render);
       partials.push(patchPartial(this, branchId));
@@ -521,17 +535,17 @@ export function _patch_child(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    const link: PatchLink = ((state.patchLinks ??= {})[childScopeId] = [
-      scopeId,
-      accessor,
-    ]);
+    const link: PatchLink = ((state.patchLinks ??= {})[childScopeId] = {
+      parent: scopeId,
+      link: accessor,
+    });
     const partial = peekPatchPartial(state, childScopeId);
     if (partial) {
       writePatch(scopeId, {
         [PatchKey.Child + accessor]: partial,
       });
     } else {
-      link[2] = PatchKey.Child + accessor;
+      link.pending = PatchKey.Child + accessor;
     }
   }
 }
@@ -621,9 +635,9 @@ export function _patch_bind(
       for (let cur: number | undefined = scopeId; cur !== undefined;) {
         siteChain.push(cur);
         const link: PatchLink | undefined = links?.[cur];
-        cur = link && (link[5] ?? link[0]);
+        cur = link && (link.owner ?? link.parent);
       }
-      const down: PatchLink[1][] = [];
+      const down: PatchLink["link"][] = [];
       let cur = bound[K_SCOPE_ID]!;
       let up = siteChain.indexOf(cur);
       while (up < 0) {
@@ -631,8 +645,8 @@ export function _patch_bind(
         if (MARKO_DEBUG && !link) {
           throw new Error("A patch could not link a handler to its scope.");
         }
-        down.push(link![1]);
-        cur = link![0];
+        down.push(link!.link);
+        cur = link!.parent;
         up = siteChain.indexOf(cur);
       }
       writePatch(scopeId, {
@@ -959,7 +973,7 @@ function ownerHops(state: State, scopeId: number, ownerId?: number) {
   for (let cur: number | undefined = scopeId; cur !== ownerId; up++) {
     const link: PatchLink | undefined = state.patchLinks?.[cur!];
     if (!link) return 0;
-    cur = link[5] ?? link[0];
+    cur = link.owner ?? link.parent;
   }
   return up;
 }
