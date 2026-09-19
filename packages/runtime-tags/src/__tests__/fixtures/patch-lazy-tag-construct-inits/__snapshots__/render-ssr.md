@@ -35,10 +35,8 @@
 ```
 ## Change
 ```
-INSERT: main > button
 UPDATE: p::text "a" => "b"
-INSERT: main > button + span
-INSERT: main > span:nth-of-type(1) + span
+INSERT: main > :is(button, span, span)
 UPDATE: main > span:nth-of-type(1)::text@2 "" => "1"
 UPDATE: main > span:nth-of-type(2)::text@2 "" => "2"
 ```

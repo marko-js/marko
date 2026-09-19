@@ -1,20 +1,11 @@
 // PATCH
 [`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
   z_a: {
-    cAa: {
-      ca: {
-        pa: "a1",
-        fb: "^d0",
-        cAb: {
-          ba: [1, {}, "d3"]
-        }
-      }
-    },
     z_c: {
       cAa: {
         ca: {
           cAb: {
-            cAa: {
+            ba: [1, {
               cb: {
                 la: [{
                   ca: {
@@ -40,13 +31,18 @@
                   vc0: 0
                 }
               }
-            }
+            }, "d3"]
           }
         }
       }
-    }
-  },
-  ba: [1, {}, "d1"]
+    },
+    ba: [1, {
+      ca: {
+        pa: "a1",
+        fb: "^d0"
+      }
+    }, "d1"]
+  }
 }]
 [`a2;D ;<a> </a>`, {
   z_a: {
@@ -66,25 +62,11 @@
 // PATCH holding EAIAAwABAAE
 [`b0,<p>wide</p>`, `d2;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, {
   z_a: {
-    cAa: {
-      ca: {
-        pa: "a1",
-        fb: "^d0",
-        cAb: {
-          ba: "d2"
-        },
-        cAa: {
-          la: [{
-            ta: "y"
-          }, "a2"]
-        }
-      }
-    },
     z_b: {
       cAa: {
         ca: {
           cAb: {
-            cAa: {
+            ba: [{
               cb: {
                 ta: "",
                 bb: "b0",
@@ -93,38 +75,34 @@
                   vb0: 0
                 }
               }
-            }
+            }, "d2"]
           }
         }
       }
-    }
-  },
-  ba: [1, {}, "d1"]
+    },
+    ba: [1, {
+      ca: {
+        pa: "a1",
+        fb: "^d0",
+        cAa: {
+          la: [{
+            ta: "y"
+          }, "a2"]
+        }
+      }
+    }, "d1"]
+  }
 }]
 "EAIAAQEAAQAAAA"
 
 // PATCH holding EAIAAQEAAQAAAA
 {
   z_a: {
-    cAa: {
-      ca: {
-        pa: "a1",
-        fb: "^d0",
-        cAb: {
-          ba: [1, {}, "d3"]
-        },
-        cAa: {
-          la: [{
-            ta: "z"
-          }, "a2"]
-        }
-      }
-    },
     z_c: {
       cAa: {
         ca: {
           cAb: {
-            cAa: {
+            ba: [1, {
               cb: {
                 la: [{
                   ca: {
@@ -150,11 +128,21 @@
                   vc0: 0
                 }
               }
-            }
+            }, "d3"]
           }
         }
       }
-    }
-  },
-  ba: [1, {}, "d1"]
+    },
+    ba: [1, {
+      ca: {
+        pa: "a1",
+        fb: "^d0",
+        cAa: {
+          la: [{
+            ta: "z"
+          }, "a2"]
+        }
+      }
+    }, "d1"]
+  }
 }

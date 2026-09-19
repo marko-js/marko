@@ -25,7 +25,6 @@
 ## Change
 ```
 INSERT: .bonus, section
-INSERT: .aside > .tick
 UPDATE: .tick::text " " => "0"
 ```
 

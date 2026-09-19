@@ -70,14 +70,16 @@ export function withLoadAssets(
   renderer: ServerRenderer,
   assetId: string,
   triggers?: Trigger[],
-  reportErrors?: 1,
+  // On a patch page (`1`) the loader scripts report errors, since a flush
+  // may wait on the channel; `2` when the import is fed as well.
+  patch?: 1 | 2,
 ): ServerRenderer {
   return Object.assign((input: unknown) => {
     if (getState().writesPatches) {
-      return writeWaitReady(assetId, renderer, input);
+      return writeWaitReady(assetId, renderer, input, patch === 2 ? 1 : 0);
     }
     const g = $global();
-    addAsset(g, assetId, triggers, reportErrors);
+    addAsset(g, assetId, triggers, patch && 1);
     _html(flush(g, ""));
     return writeWaitReady(assetId, renderer, input);
   }, renderer);

@@ -1,7 +1,7 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/template.marko_1_#text#0/init;b%/&;<!><!><!>`, {
-  "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/child.marko": {
-    "PatchChild:BranchScopes:#main/0": {
+  "PatchBranch:#main/0": [{
+    "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/child.marko": {
       "PatchChild:#childScope/1": {
         "PatchText:#text/1": "b",
         "PatchSetup:": {
@@ -10,8 +10,7 @@
         }
       }
     }
-  },
-  "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/template.marko_1*shell"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-conditional/template.marko_1*shell"]
 }]
 "AwI"
 

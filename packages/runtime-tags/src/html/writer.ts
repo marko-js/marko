@@ -46,6 +46,9 @@ export type PartialScope = Record<Accessor, unknown>;
 export interface SerializeState {
   readyId?: string;
   parent?: SerializeState;
+  /** The scope whose partial holds this channel's guard: a branch the
+   * flush creates, so the guard travels with the branch's entry. */
+  guardScope?: number;
   resumes: string;
   writeScopes: Record<number, PartialScope>;
   passiveScopes?: Record<number, PartialScope>;
@@ -437,12 +440,12 @@ export function patchPartial(
   let partial = partials[scopeId];
   if (!partial) {
     const link = state.patchLinks?.[scopeId];
-    const pending = link?.[2];
+    const pending = link?.pending;
     if (serializeState.readyId && !pending) {
       // A channel's entries nest under their parent's entry in the channel's
-      // own tree (a parent the channel creates must apply first), up to the
+      // own tree (a parent the channel creates must apply first), up to its
       // root, whose guard sits in the enclosing tree under the channel's key.
-      if (scopeId === state.rootScopeId) {
+      if (scopeId === (serializeState.guardScope ?? state.rootScopeId)) {
         return (partials[scopeId] = (patchPartial(
           state,
           scopeId,
@@ -452,12 +455,20 @@ export function patchPartial(
           unknown
         >);
       }
-      if (link && typeof link[1] === "string") {
+      if (link && typeof link.link === "string") {
+        // A branch riding this channel keeps the one partial `writeBranch`
+        // opened: its entry embeds every write, in order, once it is written.
+        if (link.channel === serializeState) {
+          return (partials[scopeId] = patchTree(state, serializeState.parent!)[
+            scopeId
+          ] ??=
+            {});
+        }
         return (partials[scopeId] = patchPartial(
           state,
-          link[0],
+          link.parent,
           serializeState,
-        )[PatchKey.Child + link[1]] ??=
+        )[PatchKey.Child + link.link] ??=
           {}) as Record<string, unknown>;
       }
       // No linkable hop (keyed loop items): the write rides the main tree, so
@@ -468,8 +479,12 @@ export function patchPartial(
     if (pending) {
       // A child links into its parent's entry on its first write; boundary
       // creation ids ride it and a paired branch ignores them.
-      const [parentScopeId, , key, contentId, slotIds] =
-        link as Required<PatchLink>;
+      const {
+        parent: parentScopeId,
+        content: contentId,
+        slots: slotIds,
+      } = link!;
+      const key = pending;
       if (contentId) {
         state.shipShell?.(contentId);
         for (const id of slotIds || []) {
@@ -1273,16 +1288,32 @@ export function writeWaitReady(
   readyId: string,
   renderer: ServerRenderer,
   input: unknown,
+  // Only flushes create the template's sites, so the page registered its
+  // loader: a flush waiting on the channel can start it.
+  fed?: 1 | 0,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
-  const body = new Chunk(boundary, null, chunk.context, {
+  const serializeState: SerializeState = {
     readyId,
     parent: chunk.serializeState,
     resumes: "",
     writeScopes: {},
     flushScopes: false,
-  });
+  };
+  // A branch the flush creates rides the first fed template's channel
+  // (none of it shows before the module); other channels opened in it hang
+  // their guards on the branch, so they travel with its entry.
+  const branchId = chunk.context?.[kBranchId] as number;
+  const link = boundary.state.patchLinks?.[branchId];
+  if (link && !link.pending) {
+    if (fed && !link.channel && typeof link.link === "string") {
+      link.channel = serializeState;
+    } else {
+      serializeState.guardScope = branchId;
+    }
+  }
+  const body = new Chunk(boundary, null, chunk.context, serializeState);
   const bodyEnd = body.render(renderer, input);
 
   if (body === bodyEnd) {
@@ -1702,15 +1733,20 @@ type Mark = Mark.Value;
 
 type RuntimeKey = RuntimeKey.Value;
 
-export type PatchLink = [
-  parentScopeId: number,
-  link: string | [accessor: string, key: unknown],
-  pendingKey?: string,
-  contentId?: string,
-  slotIds?: (string | 0 | undefined)[],
+// How a scope's partial reaches its parent's entry.
+export interface PatchLink {
+  parent: number;
+  // A child accessor, or a keyed loop hop.
+  link: string | [accessor: string, key: unknown];
+  // The entry key a boundary child writes on its first write.
+  pending?: string;
+  content?: string;
+  slots?: (string | 0 | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
-  ownerScopeId?: number,
-];
+  owner?: number;
+  // The channel a branch the flush creates rides (`writeWaitReady`).
+  channel?: SerializeState;
+}
 
 export class State implements SerializeState {
   public tagId = 1;

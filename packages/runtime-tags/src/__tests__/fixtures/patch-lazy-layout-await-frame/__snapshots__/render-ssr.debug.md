@@ -73,12 +73,12 @@ INSERT: main > nav > :is(a, a, svg)
 ```
 ## Change
 ```
-REMOVE: main > article > h1
-INSERT: main > article > h1
 UPDATE: main > nav > a::text "x" => "z"
 REMOVE: main > nav > a + a
 UPDATE: main > nav > svg[viewBox] "x" => "z"
 UPDATE: main > nav > svg > path[d] "x" => "z"
+REMOVE: main > article > h1
+INSERT: main > article > h1
 ```
 
 # Update `{"page":0}`
