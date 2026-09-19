@@ -1126,7 +1126,7 @@ export default {
               "_patch_text_content",
               getScopeIdIdentifier(tagSection),
               getScopeAccessorLiteral(nodeBinding!),
-              bodyToTextLiteral(tag.node.body),
+              bodyToTextLiteral(tag.node.body, tagName === "title"),
               importRuntime(rawTextHelper || "_escape"),
               ...getExprWriteOwnership(textExtra),
             )}`;
