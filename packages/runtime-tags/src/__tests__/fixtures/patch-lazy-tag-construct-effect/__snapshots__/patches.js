@@ -1,7 +1,10 @@
 // PATCH
 [`b0 !b1; b%b/ D%c%l&b;<div>x</div><!><button><!>:<!></button><!>`, {
   z_a: {
-    cAa: {
+    ba: [{
+      ja: {
+        title: "t"
+      },
       cc: {
         tb: "a",
         s: {
@@ -9,12 +12,7 @@
           va0: 0
         }
       }
-    }
-  },
-  ba: [{
-    ja: {
-      title: "t"
-    }
-  }, "b0"]
+    }, "b0"]
+  }
 }]
 "AwI"

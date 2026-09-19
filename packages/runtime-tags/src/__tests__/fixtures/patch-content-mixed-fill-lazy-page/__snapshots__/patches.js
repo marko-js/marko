@@ -1,7 +1,7 @@
 // PATCH
 [`a0 a5;/ D l&;<button class=tick> </button>`, `b0;b%b/0& b/DbD%m&&b;<!><!><button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section><!>`, {
   z_a: {
-    cAa: {
+    ba: [{
       cb: {
         ca: {
           d1: ["c0", 0, "U"],
@@ -26,16 +26,15 @@
         },
         va0: 0
       }
-    }
-  },
-  ba: "b0"
+    }, "b0"]
+  }
 }]
 "BwEB"
 
 // PATCH holding BwEB
 {
   z_a: {
-    cAa: {
+    ba: [{
       cb: {
         ca: {
           d1: ["c0", 0, "U"],
@@ -60,7 +59,6 @@
         },
         va0: 2
       }
-    }
-  },
-  ba: "b0"
+    }, "b0"]
+  }
 }

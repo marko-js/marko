@@ -47,8 +47,8 @@ var page_b_default = _template_patch("__tests__/page-b.marko", (input) => {
 }, 0, 1);
 
 // template.marko
-const $PageA_withLoadAssets = withLoadAssets(page_a_default, "ready:__tests__/page-a.marko", void 0, 1);
-const $PageB_withLoadAssets = withLoadAssets(page_b_default, "ready:__tests__/page-b.marko", void 0, 1);
+const $PageA_withLoadAssets = withLoadAssets(page_a_default, "ready:__tests__/page-a.marko", void 0, 2);
+const $PageB_withLoadAssets = withLoadAssets(page_b_default, "ready:__tests__/page-b.marko", void 0, 2);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$3);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$3);
 _shells({

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 
 import { decodeHeld, encodeHeld } from "../html/patch";
-import { _shells } from "../html/shells";
+import { _shells, rawShells } from "../html/shells";
 
 describe("patch token", () => {
   it("names held shells by registry index", () => {
@@ -16,6 +16,21 @@ describe("patch token", () => {
     const token = encodeHeld(new Set(["d"]));
     _shells({ zz: "zz;;" });
     assert.equal(decodeHeld(token), undefined);
+  });
+
+  it("holds nothing for a token that does not parse", () => {
+    _shells({ d: "d;;" });
+    assert.equal(decodeHeld("!!"), undefined);
+    assert.equal(decodeHeld("not base64 at all"), undefined);
+  });
+
+  it("holds nothing for an index outside the registry", () => {
+    _shells({ d: "d;;" });
+    const size = Object.keys(rawShells).length;
+    assert.equal(
+      decodeHeld(btoa(String.fromCharCode(size, size + 5))),
+      undefined,
+    );
   });
 
   it("stays under budget by forgetting its highest indices", () => {

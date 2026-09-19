@@ -200,6 +200,9 @@ export default {
               t.identifier(local.name),
               loadFile.opts.filename,
               loadImport.render ? undefined : loadImport.triggers,
+              // A fed import: the page registers only its loader, which a
+              // flush can start, so its channel may hold a created branch.
+              loadImport.downstreamCreated,
             );
 
             for (const ref of binding.referencePaths) {
@@ -317,6 +320,7 @@ function getOrCreateHtmlLoadWrapped(
   originalIdentifier: t.Expression,
   filename: string,
   triggers: LoadTrigger[] | undefined,
+  fed: true | undefined,
 ) {
   const markoOpts = getMarkoOpts();
   const loadWrapped = getHtmlLoadWrapped();
@@ -340,9 +344,7 @@ function getOrCreateHtmlLoadWrapped(
               originalIdentifier,
               t.stringLiteral(readyId),
               triggers && t.valueToNode(triggers),
-              // A patch page may hold a deferred patch on this channel,
-              // so its loader scripts report load errors.
-              isPatch() && t.numericLiteral(1),
+              isPatch() && t.numericLiteral(fed ? 2 : 1),
             ),
           ),
         ]),

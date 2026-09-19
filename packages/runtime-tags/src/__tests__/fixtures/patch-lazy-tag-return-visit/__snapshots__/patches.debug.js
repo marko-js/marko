@@ -6,7 +6,7 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell;b%b/ D%c%l&b;<!><!><button><!>:<!></button><!>`, {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko": {
-    "PatchChild:BranchScopes:#main/0": {
+    "PatchBranch:#main/0": [{
       "PatchChild:#childScope/1": {
         "PatchText:#text/1": "b",
         "PatchSetup:": {
@@ -14,16 +14,15 @@
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko0": 0
         }
       }
-    }
-  },
-  "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"]
+  }
 }]
 "AwI"
 
 // PATCH holding AwI
 {
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko": {
-    "PatchChild:BranchScopes:#main/0": {
+    "PatchBranch:#main/0": [{
       "PatchChild:#childScope/1": {
         "PatchText:#text/1": "c",
         "PatchSetup:": {
@@ -31,7 +30,6 @@
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko0": 0
         }
       }
-    }
-  },
-  "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"]
+  }
 }
