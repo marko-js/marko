@@ -1,8 +1,10 @@
 // tags/card/index.marko
+const $template = "<section><!></section>";
 _shells({
 	b0: "b0,<span>done</span>",
 	b1: "b1,<span>done</span>",
-	b2: "b2;b%;<!><!><!>"
+	b2: "b2;b%;<!><!><!>",
+	b: "b;D%;<section><!></section>"
 });
 var card_default = _template_patch("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -35,7 +37,10 @@ var card_default = _template_patch("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_shells({ a0: "a0;D ;<em> </em>" });
+_shells({
+	a0: "a0;D ;<em> </em>",
+	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)("D%l"), ((_w0) => `<main>${_w0}</main>`)($template))
+});
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

@@ -5,9 +5,9 @@
   },
   "PatchCatch:#text/0": [new Error("boom"), "packages/runtime-tags/src/__tests__/fixtures/patch-try-sync-throw-scriptless/template.marko_1*content", "\x3Cb>boom\x3C/b>"]
 }]
-"AQA"
+"AgE"
 
-// PATCH holding AQA
+// PATCH holding AgE
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "back",
