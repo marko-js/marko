@@ -47,6 +47,8 @@ export default {
         );
     }
 
+    // Attribute names go unchecked: everything but the three hooks becomes the
+    // `this` of those hooks, so an unrecognized `on*` is a method, not a typo.
     for (const attr of node.attributes) {
       if (t.isMarkoSpreadAttribute(attr)) {
         throw tag
