@@ -25,6 +25,7 @@ import {
   isCircularRequest,
 } from "../../util/import-reference";
 import {
+  getChildScopeBinding,
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
@@ -41,7 +42,11 @@ import {
   createBinding,
   getScopeAccessorLiteral,
 } from "../../util/references";
-import { callRuntime, importRuntimeFeature } from "../../util/runtime";
+import {
+  callRuntime,
+  type DOMRuntimeHelpers,
+  importRuntimeFeature,
+} from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection, StructureKind } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
@@ -72,6 +77,11 @@ declare module "@marko/compiler/dist/types" {
     [kLoadTagBinding]?: Binding;
   }
 }
+
+type CallHelper = (
+  name: DOMRuntimeHelpers,
+  ...args: (t.Expression | undefined)[]
+) => t.Expression;
 
 export default {
   analyze: {
@@ -138,6 +148,7 @@ export default {
           },
           tagExtra.tagNameLoad,
           tagExtra[kLoadTagBinding],
+          getChildScopeBinding(tagExtra),
         );
         structure.enterShallow(tag);
       } else {
@@ -277,13 +288,17 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           [],
           t.callExpression(t.import(), [
             t.stringLiteral(
-              buildLoadSetupVirtualModule(file, childFileName, childExports),
+              buildLoadSetupVirtualModule(
+                getMarkoOpts(),
+                file,
+                childFileName,
+                childExports,
+              ),
             ),
           ]),
         );
         importRuntimeFeature("catch");
-        let loadSetupCall = callRuntime(
-          "_load_setup",
+        const loadSetupCall = buildLoadSetup(
           getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
           getScopeAccessorLiteral(childBinding, true),
           triggerIdent
@@ -293,17 +308,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 "@__PURE__",
               )
             : setupLoadExpr,
+          isPatch() ? getReadyId(childFile) : undefined,
+          callRuntime,
         );
-        // A created scope's client-side load drives the child's ready channel
-        // (stamped on its branch), so deferred flush data drains after insert.
-        if (isPatch() && getReadyId(childFile) !== undefined) {
-          loadSetupCall = callRuntime(
-            "_load_ready",
-            t.stringLiteral(getReadyId(childFile)!),
-            getScopeAccessorLiteral(childBinding, true),
-            loadSetupCall,
-          );
-        }
         getProgram().node.body.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(
@@ -549,13 +556,34 @@ function getSimilarTagHint(tagName: string) {
   return closestTag ? ` Did you mean \`<${closestTag}>\`?` : "";
 }
 
-function buildLoadSetupVirtualModule(
+// A lazy site's setup load; on a patch page the load drives the child's
+// ready channel (stamped on its branch) so deferred flush data drains.
+export function buildLoadSetup(
+  marker: t.Expression,
+  child: t.Expression,
+  loadExpr: t.Expression,
+  readyId: string | undefined,
+  call: CallHelper,
+) {
+  const loadSetupCall = call("_load_setup", marker, child, loadExpr);
+  return readyId === undefined
+    ? loadSetupCall
+    : call(
+        "_load_ready",
+        t.stringLiteral(readyId),
+        t.cloneNode(child),
+        loadSetupCall,
+      );
+}
+
+export function buildLoadSetupVirtualModule(
+  opts: ReturnType<typeof getMarkoOpts>,
   file: t.BabelFile,
   childFileName: string,
   childExports: { template: string; walks: string; setup: string },
 ) {
   const parts = `${childExports.template}, ${childExports.walks}, ${childExports.setup}`;
-  return getMarkoOpts().resolveVirtualDependency!(file.opts.filename, {
+  return opts.resolveVirtualDependency!(file.opts.filename, {
     virtualPath: `${resolveRelativePath(file, childFileName)}.setup.js`,
     code: `import { ${parts} } from "./${path.basename(childFileName)}"\nexport const _ = [${parts}]`,
   })!;
@@ -573,35 +601,34 @@ function buildLoadSignalVirtualModule(
   });
 }
 
-function loadTriggersToExpression(loadConfig: LoadImportConfig | undefined) {
+export function loadTriggersToExpression(
+  loadConfig: LoadImportConfig | undefined,
+  call: CallHelper = callRuntime,
+) {
   if (!loadConfig || loadConfig.render) return;
 
-  const triggers = loadConfig.triggers.map(toDOMTriggerExpression);
+  const triggers = loadConfig.triggers.map((trigger) =>
+    toDOMTriggerExpression(trigger, call),
+  );
   return triggers.length === 1
     ? triggers[0]
-    : callRuntime("_load_race_trigger", ...triggers);
+    : call("_load_race_trigger", ...triggers);
 }
 
-function toDOMTriggerExpression(trigger: LoadTrigger) {
+function toDOMTriggerExpression(trigger: LoadTrigger, call: CallHelper) {
   switch (trigger.type) {
     case "visible":
-      return callRuntime(
+      return call(
         "_load_visible_trigger",
         t.stringLiteral(trigger.selector),
         optionalValueToNode(trigger.options),
       );
     case "idle":
-      return callRuntime(
-        "_load_idle_trigger",
-        optionalValueToNode(trigger.options),
-      );
+      return call("_load_idle_trigger", optionalValueToNode(trigger.options));
     case "media":
-      return callRuntime(
-        "_load_media_trigger",
-        t.stringLiteral(trigger.selector),
-      );
+      return call("_load_media_trigger", t.stringLiteral(trigger.selector));
     default:
-      return callRuntime(
+      return call(
         "_load_event_trigger",
         t.stringLiteral(trigger.type.slice("on-".length)),
         t.stringLiteral(trigger.selector),

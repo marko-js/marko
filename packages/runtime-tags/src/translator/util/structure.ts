@@ -58,6 +58,7 @@ export function child(
   renderer?: StructureRef,
   load?: LoadImportConfig,
   marker?: Binding,
+  scope?: Binding,
 ) {
   getSection(tag).structure?.push({
     kind: StructureKind.Child,
@@ -66,6 +67,7 @@ export function child(
     renderer,
     load,
     marker,
+    scope,
   });
 }
 

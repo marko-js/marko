@@ -2217,13 +2217,14 @@ export function getScopeAccessorLiteral(
   binding: Binding,
   encoded?: boolean,
   includeId?: boolean,
+  optimize = isOptimize(),
 ) {
   const canonicalBinding = getCanonicalBinding(binding)!;
   if (canonicalBinding.type === BindingType.constant) {
     return t.stringLiteral(
       canonicalBinding.scopeAccessor ?? canonicalBinding.name,
     );
-  } else if (isOptimize()) {
+  } else if (optimize) {
     return encoded
       ? t.numericLiteral(canonicalBinding.id)
       : t.stringLiteral(decodeAccessor(canonicalBinding.id));

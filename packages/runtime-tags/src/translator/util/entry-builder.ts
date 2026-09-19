@@ -5,10 +5,18 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
+import {
+  buildLoadSetup,
+  buildLoadSetupVirtualModule,
+  loadTriggersToExpression,
+} from "../visitors/tag/custom-tag";
 import { getReadyId } from "./marko-config";
+import { getScopeAccessorLiteral } from "./references";
 import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
 import type { DOMRuntimeHelpers } from "./runtime";
 import runtimeInfo from "./runtime-info";
+import { type Section, StructureKind } from "./sections";
+import { buildResumeRegisterKey } from "./signals";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -37,7 +45,10 @@ interface EntryState {
   /** Lazy children of patch template reached eagerly, by channel, with
    * whether the parent template is a root: the entry registers the loaders
    * of the templates it never links, so a flush can still load them. */
-  lazyLoads: Map<string, [request: string, root: boolean]>;
+  lazyLoads: Map<string, [request: string, bundled: boolean]>;
+  /** Patch templates reached, with whether a bundled template's module
+   * would register the load wiring of the lazy sites its shells create. */
+  shelled: [file: t.BabelFile, bundled: boolean][];
 }
 type EntryFile = t.BabelFile & {
   [kState]?: EntryState;
@@ -88,19 +99,83 @@ const builder = {
 
       const linked = state.init || state.load;
       // Only a patch page collects lazy loads (a flush can reveal a lazy
-      // child the client never rendered); a plain page's output is unchanged.
-      const lazyLoads = [...state.lazyLoads].filter(
-        ([, [, root]]) => !root || !linked,
+      // child the client never rendered); a template a linked root imports
+      // registers its own. A plain page's output is unchanged.
+      const lazyLoads = new Map(
+        [...state.lazyLoads].filter(([, [, bundled]]) => !bundled || !linked),
       );
-      if (lazyLoads.length) {
+      const helpers = new Set<DOMRuntimeHelpers>();
+      const call = (
+        name: DOMRuntimeHelpers,
+        ...args: (t.Expression | undefined)[]
+      ) => {
+        helpers.add(name);
+        return t.callExpression(
+          t.identifier(name),
+          args.filter((arg) => arg !== undefined),
+        );
+      };
+      const registrations: t.Statement[] = [];
+      for (const [file, bundled] of state.shelled) {
+        if (bundled && linked) continue;
+        for (const [section, op] of createdLoadSites(file)) {
+          const childFile = loadFileForImport(
+            entryFile,
+            resolveRelativeToEntry(entryFile, file, op.renderer.path),
+          )!;
+          const readyId = getReadyId(childFile)!;
+          // A wired site's `_load_ready` owns the channel: an eager loader
+          // would settle the flush before the site mounts the child.
+          lazyLoads.delete(readyId);
+          const { optimize } = entryFile.markoOpts;
+          const loadExpr = t.arrowFunctionExpression(
+            [],
+            t.callExpression(t.import(), [
+              t.stringLiteral(
+                resolveRelativeToEntry(
+                  entryFile,
+                  file,
+                  buildLoadSetupVirtualModule(
+                    entryFile.markoOpts,
+                    file,
+                    childFile.opts.filename as string,
+                    childFile.ast.program.extra.domExports!,
+                  ),
+                ),
+              ),
+            ]),
+          );
+          const trigger = loadTriggersToExpression(op.load, call);
+          registrations.push(
+            t.expressionStatement(
+              call(
+                "_resume",
+                t.stringLiteral(
+                  getTemplateId(
+                    entryFile.markoOpts,
+                    file.opts.filename as string,
+                    buildResumeRegisterKey(section, op.marker!, "init"),
+                  ),
+                ),
+                buildLoadSetup(
+                  getScopeAccessorLiteral(op.marker!, true, false, optimize),
+                  getScopeAccessorLiteral(op.scope!, true, false, optimize),
+                  trigger ? t.callExpression(trigger, [loadExpr]) : loadExpr,
+                  readyId,
+                  call,
+                ),
+              ),
+            ),
+          );
+        }
+      }
+      if (lazyLoads.size) helpers.add("_load_lazy");
+      if (helpers.size) {
         body.push(
           t.importDeclaration(
-            [
-              t.importSpecifier(
-                t.identifier("_load_lazy"),
-                t.identifier("_load_lazy"),
-              ),
-            ],
+            [...helpers].map((name) =>
+              t.importSpecifier(t.identifier(name), t.identifier(name)),
+            ),
             t.stringLiteral(
               `${runtimeInfo.name}/${
                 entryFile.markoOpts.optimize ? "" : "debug/"
@@ -108,6 +183,7 @@ const builder = {
             ),
           ),
         );
+        body.push(...registrations);
         for (const [readyId, [request]] of lazyLoads) {
           body.push(
             t.expressionStatement(
@@ -228,6 +304,7 @@ const builder = {
         ],
       ]),
       lazyLoads: new Map(),
+      shelled: [],
     });
     const programExtra = file.path.node.extra;
     const { analyzedTags, assetImports } = file.metadata.marko;
@@ -258,14 +335,17 @@ const builder = {
     }
 
     // A flush revealing a lazy child of a template the bundle never links
-    // still needs its module: the entry registers the loader itself.
-    if (entryFile.markoOpts.patches && !state.bundled) {
+    // still needs its module, and a created site its load wiring: the
+    // entry registers them itself.
+    if (entryFile.markoOpts.patches) {
+      const bundled = isRoot || !!state.bundled;
       for (const tag of (loadImports as Set<string> | undefined) || []) {
         const request = resolveRelativeToEntry(entryFile, file, tag);
         const loadFile = loadFileForImport(entryFile, request);
         const readyId = loadFile && getReadyId(loadFile);
-        if (readyId) state.lazyLoads.set(readyId, [request, isRoot]);
+        if (readyId) state.lazyLoads.set(readyId, [request, bundled]);
       }
+      if (programExtra.shells) state.shelled.push([file, bundled]);
     }
 
     if (isRoot) state.bundled++;
@@ -280,5 +360,40 @@ const builder = {
     if (isRoot) state.bundled--;
   },
 };
+
+// The lazy sites a flush creates, as the html shells list their inits: a
+// lazy child (not a fed one) of a branch, root, or created content shell.
+function createdLoadSites(file: t.BabelFile) {
+  const sites: [Section, CreatedLoadSite][] = [];
+  const seen = new Set<Section>();
+  const { shells } = file.path.node.extra;
+  for (const id in shells) {
+    const section = shells[id];
+    if (
+      seen.has(section) ||
+      !(section.isBranch || !section.parent || section.contentShell === true)
+    ) {
+      continue;
+    }
+    seen.add(section);
+    for (const op of section.structure || []) {
+      if (
+        typeof op === "object" &&
+        op.kind === StructureKind.Child &&
+        op.marker &&
+        op.scope &&
+        op.renderer?.kind === StructureKind.ExportRef &&
+        !op.load?.downstreamCreated
+      ) {
+        sites.push([section, op as CreatedLoadSite]);
+      }
+    }
+  }
+  return sites;
+}
+type CreatedLoadSite = Extract<
+  NonNullable<Section["structure"]>[number],
+  { kind: typeof StructureKind.Child }
+> & { renderer: { path: string } };
 
 export default builder;

@@ -110,9 +110,11 @@ export interface StructureChild {
   name: string;
   hasVar: boolean;
   renderer?: StructureRef;
-  // A lazy child: its import's load config and its marker binding.
+  // A lazy child: its import's load config, its marker binding and the
+  // binding of the scope it renders into.
   load?: LoadImportConfig;
   marker?: Binding;
+  scope?: Binding;
 }
 
 export interface Section {

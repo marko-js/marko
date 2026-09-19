@@ -1288,7 +1288,7 @@ export function addValue(
   }
 }
 
-function buildResumeRegisterKey(
+export function buildResumeRegisterKey(
   section: Section,
   referencedBindings: string | ReferencedBindings,
   type?: string,
