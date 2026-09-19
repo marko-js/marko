@@ -14,9 +14,9 @@
 {
   bc: [{
     cAa: [{
-      pa: "a1",
-      ka: new Error("boom")
-    }, "a2", "a4", $]
+      pa: "a1"
+    }, "a2", "a4", $],
+    ka: [new Error("boom"), "a2"]
   }, "a3"],
   va0: "c"
 }

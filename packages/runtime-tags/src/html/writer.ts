@@ -125,9 +125,6 @@ export function _peek_scope_id() {
 }
 
 const kPendingContexts = Symbol("Pending Contexts");
-// The nearest elided `@catch` renderer: a rejection under it captures the
-// server-rendered catch html into its flush.
-const kElidedCatch = Symbol("Elided Catch");
 // Boundary content elided from a scriptless page's slots (no client
 // renderer): marked so `_try` routes rejections through inert captures.
 export const elidedContents = new WeakSet<WeakKey>();
@@ -1440,24 +1437,6 @@ export function _await<T>(
     },
     (err) => {
       chunk.async = false;
-      if (boundary.state.writesPatches) {
-        if (!boundary.signal.aborted) {
-          chunk.render(() => {
-            // An elided catch has no client renderer: its flush carries
-            // the server-rendered catch html alongside the error.
-            const elidedCatch = $chunk.context?.[kElidedCatch] as
-              | ((err: unknown) => void)
-              | undefined;
-            writePatch(scopeId, {
-              [PatchKey.Catch + accessor]: elidedCatch
-                ? [err, renderInert(elidedCatch, err)]
-                : err,
-            });
-          });
-          boundary.endAsync();
-        }
-        return;
-      }
       boundary.abort(err);
     },
   );
@@ -1543,12 +1522,27 @@ export function _try(
     );
   } else if (!writesPatches) {
     withBranchId(branchId, content);
-  } else if (catchContent && elidedContents.has(catchContent as WeakKey)) {
-    // A patch body stays outside the branch id context: the patch writers
-    // read it as "inside a divergent branch" (see isInResumedBranch).
-    withContext(kElidedCatch, catchContent, content);
-  } else {
+  } else if (catchContent === undefined) {
     content();
+  } else {
+    // The entry ships the body's shell so a later flush can rebuild the try,
+    // and the catch's html when the client has no renderer for it.
+    const inert =
+      catchContent && elidedContents.has(catchContent) ? catchContent : 0;
+    tryBoundary(content, catchContent, placeholderContent, branchId, (err) => {
+      // A body that threw before claiming its id keeps it paired.
+      if (_peek_scope_id() === branchId) _scope_id();
+      const bodyId = state.shipShell!(
+        (content as ServerRenderer)[RendererProp.Id] as string,
+      );
+      writePatch(scopeId, {
+        [PatchKey.Catch + accessor]: inert
+          ? [err, bodyId, renderInert(inert, err)]
+          : catchContent
+            ? [err, bodyId]
+            : [err, bodyId, ""],
+      });
+    });
   }
 
   // An async body's start mark has already streamed and must pair with an end;
@@ -1598,11 +1592,13 @@ function tryPlaceholder(
 // Returns whether it writes the renderers itself: a body whose sync part wrote
 // nothing resumable cannot re-run client side while streaming, so they follow
 // at settle, and only if the settled body (or a fired catch) resumes at all.
+// `patchCatch` writes a patch's catch entry in place of rendering the catch.
 function tryBoundary(
   content: () => void,
   catchContent: ServerRenderer | 0 | undefined,
   placeholderContent: ServerRenderer | undefined,
   branchId: number,
+  patchCatch?: (err: unknown) => void,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -1611,12 +1607,18 @@ function tryBoundary(
   // work; the outer-aborted check in onNext keeps that from firing the catch.
   const catchBoundary = new Boundary(state, boundary.signal, boundary);
   const body = chunk.fork(catchBoundary, null);
-  const bodyEnd = withBranchId(branchId, () => body.render(content));
+  // A patch body stays outside the branch id context: the patch writers
+  // read it as "inside a divergent branch" (see isInResumedBranch).
+  const bodyEnd = patchCatch
+    ? body.render(content)
+    : withBranchId(branchId, () => body.render(content));
 
   if (catchBoundary.signal.aborted) {
     // Sync error. The body's already-written scopes stay in the resume payload
     // as dead fills; a `@catch` firing is rare enough not to warrant dropping them.
-    if (catchContent === undefined) {
+    if (patchCatch) {
+      patchCatch(catchBoundary.signal.reason);
+    } else if (catchContent === undefined) {
       boundary.abort(catchBoundary.signal.reason);
     } else if (catchContent) {
       catchContent(catchBoundary.signal.reason);
@@ -1638,7 +1640,8 @@ function tryBoundary(
   boundary.startAsync();
 
   // With a catch, markers let it take the body's place in the stream.
-  const reorderId = catchContent === undefined ? "" : state.nextReorderId();
+  const reorderId =
+    catchContent === undefined || patchCatch ? "" : state.nextReorderId();
   const endMarker = reorderId && state.mark(Mark.PlaceholderEnd, reorderId);
   if (reorderId) {
     chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
@@ -1648,7 +1651,7 @@ function tryBoundary(
   catchBoundary.onNext = () => {
     if (boundary.signal.aborted) return;
     if (catchBoundary.signal.aborted) {
-      if (!reorderId) {
+      if (!reorderId && !patchCatch) {
         boundary.abort(catchBoundary.signal.reason);
         return;
       }
@@ -1679,22 +1682,26 @@ function tryBoundary(
       }
 
       const catchChunk = chunk.fork(boundary, null);
-      const { resumeWrites } = boundary;
-      catchChunk.reorderId = reorderId;
-      // The body is discarded, so only a catch that itself resumes needs them.
-      if (
-        (catchChunk.render(
-          catchContent || NOOP,
-          catchBoundary.signal.reason,
-        ) !== catchChunk ||
-          boundary.resumeWrites !== resumeWrites) &&
-        renderersAtSettle
-      ) {
-        catchChunk.render(() =>
-          writeTryRenderers(branchId, catchContent, placeholderContent),
-        );
+      if (patchCatch) {
+        catchChunk.render(patchCatch, catchBoundary.signal.reason);
+      } else {
+        const { resumeWrites } = boundary;
+        catchChunk.reorderId = reorderId;
+        // The body is discarded, so only a catch that itself resumes needs them.
+        if (
+          (catchChunk.render(
+            catchContent || NOOP,
+            catchBoundary.signal.reason,
+          ) !== catchChunk ||
+            boundary.resumeWrites !== resumeWrites) &&
+          renderersAtSettle
+        ) {
+          catchChunk.render(() =>
+            writeTryRenderers(branchId, catchContent, placeholderContent),
+          );
+        }
+        state.reorder(catchChunk);
       }
-      state.reorder(catchChunk);
       boundary.endAsync();
     } else if (!catchBoundary.count) {
       if (renderersAtSettle && catchBoundary.resumeWrites) {
