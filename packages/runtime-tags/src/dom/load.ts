@@ -34,6 +34,9 @@ export interface LoadTrigger {
   <T>(load: () => Promise<T>): () => Promise<T>;
 }
 
+// A stand-in signal or load: the callers ignore its result.
+const noop = (_?: unknown): any => 0;
+
 export const _load_template = /*@__PURE__*/ withLazy(
   (id: string, load: () => Promise<Renderer>) => {
     let pending: ReturnType<typeof load> | undefined;
@@ -59,8 +62,12 @@ export const _load_template = /*@__PURE__*/ withLazy(
           loadFailed(branch as BranchScope, awaitCounter),
         );
       },
+      // A template reading no input has no params signal; the loaded value
+      // still has to count as applied so the content inserts.
       _load_signal(() =>
-        (pending ||= load()).then((r) => ({ _: r[RendererProp.Params]! })),
+        (pending ||= load()).then((r) => ({
+          _: r[RendererProp.Params] || noop,
+        })),
       ),
     ) as Template & Renderer;
     return lazyTemplate;
@@ -193,7 +200,7 @@ export const _load_signal = /*@__PURE__*/ withLazy(
       } else {
         pending.then(
           (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
-          () => 0,
+          noop,
         );
       }
     };
@@ -257,7 +264,6 @@ export function _load_media_trigger(query: string): LoadTrigger {
 }
 
 export function _load_race_trigger(...triggers: LoadTrigger[]): LoadTrigger {
-  const noop = () => Promise.resolve();
   let pending: Promise<unknown> | undefined;
   return (load) => () =>
     (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);

@@ -1,4 +1,4 @@
-// size: 26846 (min) 10066 (brotli)
+// size: 26832 (min) 10027 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2099,6 +2099,7 @@ let empty = [],
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
   },
+  noop = (_) => 0,
   _load_template = /*@__PURE__*/ withLazy((id, load) => {
     let pending,
       lazyTemplate = _template(
@@ -2118,7 +2119,7 @@ let empty = [],
               loadFailed(branch, awaitCounter),
             ));
         },
-        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
+        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d || noop }))),
       );
     return lazyTemplate;
   }),
@@ -2154,10 +2155,7 @@ let empty = [],
             ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, [value, apply])
             : apply._
               ? apply._(scope, value)
-              : pending.then(
-                  (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
-                  () => 0,
-                ));
+              : pending.then((mod) => queueAsyncRender(scope, (apply._ = mod._), value), noop));
       };
     return apply;
   });
@@ -2307,8 +2305,7 @@ function _load_media_trigger(query) {
     )).then(load);
 }
 function _load_race_trigger(...triggers) {
-  let noop = () => Promise.resolve(),
-    pending;
+  let pending;
   return (load) => () => (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
 }
 function getSelectorOrResolve(selector, resolve) {
