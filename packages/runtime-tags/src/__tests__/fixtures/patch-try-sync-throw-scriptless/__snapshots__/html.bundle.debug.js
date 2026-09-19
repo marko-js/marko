@@ -4,7 +4,10 @@ function boom() {
 }
 const $template = "<main><!></main>";
 const $walks = "D%l";
-_shells({ "__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D%b%;<em><!><!></em>" });
+_shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D%b%;<em><!><!></em>",
+	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
+});
 var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

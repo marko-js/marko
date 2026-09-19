@@ -2,7 +2,10 @@
 function boom() {
 	throw new Error("boom");
 }
-_shells({ a0: "a0;D%b%;<em><!><!></em>" });
+_shells({
+	a0: "a0;D%b%;<em><!><!></em>",
+	a: "a;D%;<main><!></main>"
+});
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

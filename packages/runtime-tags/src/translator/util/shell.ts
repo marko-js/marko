@@ -122,17 +122,15 @@ export function buildShells() {
     ) {
       return;
     }
-    // Structure composes to a finite shell unless a template includes
-    // itself outside any branch, which never renders either.
+    // A template including itself outside any branch has no finite shell:
+    // the branch ships none and a patch creating it fails closed.
     const chain: Section[] = [];
     const bodyShells: Record<string, Section> = {};
     if (
       !isShellExpressible(section) ||
       !buildAwaitBodyShells(section, bodyShells, chain)
     ) {
-      throw new Error(
-        "Invalid compiler state, a branch on the patch path has no expressible shell.",
-      );
+      return;
     }
     keep.add(section);
     for (const body of chain) keep.add(body);
@@ -197,15 +195,15 @@ function isStructureExpressible(section: Section) {
       return false;
     }
   }
-  // Nested branches, boundaries, content shells, and (interactive) boundary
-  // content arrive through the walk or entries; nothing else is expressible.
+  // Nested branches, boundaries, content shells, and boundary content (a
+  // slot, or the flush's html) arrive through the walk or entries.
   const interactive = getProgram().node.extra.isInteractive;
   return !getChildSections(section).some(
     (child) =>
       !child.isBranch &&
       !child.isBoundary &&
       !child.contentShell &&
-      !(child.boundaryContent && interactive) &&
+      !child.boundaryContent &&
       // Content nothing names or creates leaves nothing for a shell to lack.
       contentNeedsShell(child, interactive),
   );

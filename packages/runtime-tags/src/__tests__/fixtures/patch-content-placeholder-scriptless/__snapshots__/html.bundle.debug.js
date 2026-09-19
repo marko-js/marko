@@ -4,7 +4,8 @@ const $walks$1 = "D%l";
 _shells({
 	"__tests__/tags/card/index.marko_3*content": "__tests__/tags/card/index.marko_3*content,<span>done</span>",
 	"__tests__/tags/card/index.marko_2_#text#0/await": "__tests__/tags/card/index.marko_2_#text#0/await,<span>done</span>",
-	"__tests__/tags/card/index.marko_2*content": "__tests__/tags/card/index.marko_2*content;b%;<!><!><!>"
+	"__tests__/tags/card/index.marko_2*content": "__tests__/tags/card/index.marko_2*content;b%;<!><!><!>",
+	"__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D%;<section><!></section>"
 });
 var card_default = _template_patch("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -39,7 +40,10 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D%l");
-_shells({ "__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>" });
+_shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>",
+	"__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko;${_w0};${_w1}`)(((_w0) => `D/${_w0}&l`)("D%l"), ((_w0) => `<main>${_w0}</main>`)($template$1))
+});
 var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

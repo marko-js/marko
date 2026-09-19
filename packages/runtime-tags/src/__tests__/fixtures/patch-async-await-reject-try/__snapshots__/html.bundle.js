@@ -3,7 +3,8 @@ _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1,loading",
 	a2: "a2;D ;<em> </em>",
-	a3: "a3;b%;<!><!><!>"
+	a3: "a3;b%;<!><!><!>",
+	a: "a;D%;<main><!></main>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

@@ -5,9 +5,9 @@
   },
   ka: [new Error("boom"), "a2", "\x3Cem>second\x3C/em>"]
 }]
-"AwI"
+"BAM"
 
-// PATCH holding AwI
+// PATCH holding BAM
 {
   cAa: {
     pa: 1

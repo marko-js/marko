@@ -5,9 +5,9 @@
   },
   ka: [new Error("boom"), "a0", "\x3Cb>boom\x3C/b>"]
 }]
-"AQA"
+"AgE"
 
-// PATCH holding AQA
+// PATCH holding AgE
 {
   cAa: {
     ta: "back",

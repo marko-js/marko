@@ -5,6 +5,7 @@ _shells({
 	a2: "a2,outer",
 	a3: "a3;D ;<span> </span>",
 	a4: "a4;b%;<!><!><!>",
+	a5: "a5;b%;<!><!><!>",
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -12,7 +13,7 @@ var template_default = _template_patch("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
-	_try($scope0_id, "a", _content_resume("a6", () => {
+	_try($scope0_id, "a", _content_resume("a5", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_try($scope1_id, "a", _content_resume("a4", () => {
@@ -27,7 +28,7 @@ var template_default = _template_patch("a", (input) => {
 			$scope0_page && _resume_branch($scope2_id);
 		}, $scope1_id), {
 			placeholder: attrTag({ content: _content_shell("a1", $scope1_id) }),
-			catch: attrTag({ content: _content_elide("a5", (err) => {
+			catch: attrTag({ content: _content_elide("a6", (err) => {
 				const $scope5_reason = _scope_reason(), $sg__err_message = _source_guard($scope5_reason, 0);
 				const $scope5_id = _scope_id();
 				_html(`<em>${_text_resume($scope5_id, "a", err.message, $sg__err_message)}</em>`);
