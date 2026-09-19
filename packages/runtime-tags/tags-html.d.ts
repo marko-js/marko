@@ -225,6 +225,8 @@ declare global {
     }
 
     namespace CSS {
+      // Augment this with a project's CSS custom properties to use them in a
+      // `style` object; a `--${string}` index signature would not catch typos.
       export interface Properties extends csstype.PropertiesHyphen {}
     }
 
