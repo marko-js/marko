@@ -1,5 +1,37 @@
 # @marko/runtime-tags
 
+## 6.3.52
+
+### Patch Changes
+
+- [#4180](https://github.com/marko-js/marko/pull/4180) [`c35436c`](https://github.com/marko-js/marko/commit/c35436c3c9d7a251c2f6c70d5948ac4cf78659a5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compiling an in-memory source whose filename names a directory that does not exist no longer throws `ENOENT`; the sibling style/component lookup treats an unreadable directory as having no files.
+
+- [#4185](https://github.com/marko-js/marko/pull/4185) [`82a520d`](https://github.com/marko-js/marko/commit/82a520db376ce52af5fd9e7a386a287fabb05c28) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a resume crash (`fn is not a function`) in optimized builds when a `<let>` was only assigned from code that is never emitted: an attribute the child tag never reads, or a function held by an unread `<const>`. Such a binding no longer counts as state, so the server stops serializing resume data (including a `<try>` placeholder's pending closure replay) for a signal the client bundle correctly tree-shakes. A controllable `<let>`'s change handler and a rest sibling's `Change` exclusion likewise follow only the assignments that are emitted, and a value with no side effects (no call, `new` or assignment outside a function body) is no longer emitted when nothing reads its variable (a `<let>` included, when nothing assigns it either). A spread on a custom tag whose child reads nothing from it is no longer evaluated by the server render either, matching the client. A `<try>` placeholder's pending closure replay is also skipped when no effect or registered function can assign the state it closes over, since a resumed instance runs nothing else.
+
+- [#4182](https://github.com/marko-js/marko/pull/4182) [`fc21c51`](https://github.com/marko-js/marko/commit/fc21c518a146c2e4de6108e1474a682c6d47bac3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove the `declare module "*.marko"` block from the published types. `index.d.ts` is a module, so the block was a module augmentation that never applied to anything; typing `.marko` imports is `@marko/language-tools`' job, and a wildcard would type away a missing or misspelled template.
+
+- [#4164](https://github.com/marko-js/marko/pull/4164) [`1597fc1`](https://github.com/marko-js/marko/commit/1597fc18e8d492811bbdee6622115f1e060429d0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A dynamic tag's body depends on the tag expression the way a branch body depends on its condition, so its scope only serializes when that expression can change client side.
+
+- [#4179](https://github.com/marko-js/marko/pull/4179) [`c58731c`](https://github.com/marko-js/marko/commit/c58731c1d2c6d34245cea8dd10c726a4af3b3449) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A `<for>` parameter beyond what its iteration form provides (`|item, index|` for `of=`, `|key, value|` for `in=`, one value for `to=`/`until=`) is a compile error instead of silently `undefined`.
+
+- [#4188](https://github.com/marko-js/marko/pull/4188) [`323aafa`](https://github.com/marko-js/marko/commit/323aafa4e42b6ce08d48398137821e80f8faddf0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A value serialized in an earlier flush and read once later is referenced by its path instead of being bound to a register first; the binding is claimed only if it is read again.
+
+- [#4190](https://github.com/marko-js/marko/pull/4190) [`7698310`](https://github.com/marko-js/marko/commit/7698310f946fe4ba7fdcd474ed0e30e9f1ec1c17) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a lazily loaded template that reads no `input` never rendering when passed to a dynamic tag.
+
+- [#4158](https://github.com/marko-js/marko/pull/4158) [`a8ea554`](https://github.com/marko-js/marko/commit/a8ea554bbba9a0a598330b3e3d1d4a3fddd445fb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize reasons keep their sources when forced, the serialize walk answers once per value and property path, and a guard used once is no longer hoisted.
+
+- [#4177](https://github.com/marko-js/marko/pull/4177) [`c9a0556`](https://github.com/marko-js/marko/commit/c9a0556fb24e4654d71079b5597bf133b533169f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A tag variable called with optional chaining (`el?.()`, or a hoisted `focusIt?.()`) is read like a plain call instead of compiling to an undeclared identifier.
+
+- [#4162](https://github.com/marko-js/marko/pull/4162) [`3ea218a`](https://github.com/marko-js/marko/commit/3ea218a69cfcd9606a5b75dce236e4f6987a4182) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A property read through a renamed value (`<const/a=item/>` then `a.id`, or `rest.label` after `<const/{ ...rest }=input/>`) is the root value's property: one read, and a child template asks its caller for that property alone. Dev runtime entries list every dom feature module so the optimizer sees them up front.
+
+- [#4185](https://github.com/marko-js/marko/pull/4185) [`82a520d`](https://github.com/marko-js/marko/commit/82a520db376ce52af5fd9e7a386a287fabb05c28) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a build failure (`"$input_x" is not exported`) for a tag that renders itself and then passes an input only to a child that ignores it. The recursive call judged the input as read before that attribute was dropped, and the stale answer kept it in the tag's exported params while its signal was pruned.
+
+- [#4149](https://github.com/marko-js/marko/pull/4149) [`b1f6f86`](https://github.com/marko-js/marko/commit/b1f6f863915a003a64b0e0732060e6e3e85e2b2d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Encode a call site's serialize reason as two bits per param-reason group, composing dynamic guards arithmetically instead of allocating a keyed object.
+
+- [#4132](https://github.com/marko-js/marko/pull/4132) [`66c2882`](https://github.com/marko-js/marko/commit/66c2882d89ead4041f1ad96bacf5cb0bcdba8e4c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix the client walk for a `<style>` with dynamic rules followed by sibling elements, and move a branch's edges with an unescaped `$!{}` hole that is the branch's whole content.
+
+- [#4178](https://github.com/marko-js/marko/pull/4178) [`6b647f5`](https://github.com/marko-js/marko/commit/6b647f5edc9f6e75bca7a84bacbd2b8992344f7c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An unresolved tag no longer suggests its own name, and a tag that differs from a known tag only by case (`<DIV>`) is told tag names are case-sensitive.
+
 ## 6.3.51
 
 ### Patch Changes
