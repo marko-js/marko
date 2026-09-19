@@ -30,5 +30,6 @@ INSERT: button + ::text("done")
 ```
 INSERT: button + em
 REMOVE: em + ::text("done")
+UPDATE: em::text@0 "" => "boom"
 UPDATE: em::text@5 "" => "c"
 ```

@@ -2126,6 +2126,7 @@ const accessorPrefixDescriptions: Record<string, string> = {
   IdFallback: "the generated id",
   KeyedScopes: "the keyed scopes",
   Lifecycle: "the lifecycle handlers",
+  PatchSettled: "the settled await",
   Promise: "the pending promise",
   TagVariableChange: "the tag variable change handler",
 };

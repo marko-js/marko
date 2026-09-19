@@ -1,4 +1,3 @@
-import { withBranches } from "../common/helpers";
 import {
   type Accessor,
   AccessorPrefix,
@@ -9,21 +8,17 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
-import {
-  createAwaitCounter,
-  dismissPlaceholder,
-  runPendingEffects,
-} from "./control-flow";
+import { createAwaitCounter, dismissPlaceholder } from "./control-flow";
 import {
   applyReadyPatch,
   deferApply,
   flushBinds,
   type ReadyGuard,
 } from "./patch";
+import "./patch-catch.feat";
 import "./patch-child.feat";
 import { getContent } from "./patch-shells";
 import {
-  caughtError,
   pendingEffects,
   placeholderShown,
   queueEffect,
@@ -37,7 +32,6 @@ import {
   type Renderer,
 } from "./renderer";
 import {
-  failPatch,
   patchers,
   patchRender,
   patchRun,
@@ -49,7 +43,6 @@ import {
   collectScopes,
   findBranchWithKey,
   insertBranchBefore,
-  removeAndDestroyBranch,
   syncGen,
   tempDetachBranch,
 } from "./scope";
@@ -60,8 +53,11 @@ declare module "./resume" {
   }
 }
 
-// Await/try bodies resume as branches on pages that never load control-flow.
-withBranches();
+// An await a flush settled, on its scope: a settle from an earlier response
+// must not hide a later flush's pending UI.
+function markSettled(scope: Scope, accessor: string) {
+  scope[(AccessorPrefix.PatchSettled + accessor) as Accessor] = 1 as never;
+}
 
 function beginAwaitPending(scope: Scope, nodeAccessor: string) {
   const awaitBranch = scope[
@@ -152,8 +148,6 @@ function endAwaitPending(scope: Scope, nodeAccessor: string) {
   }
 }
 
-const settled = new WeakMap<Scope, Set<string>>();
-
 patchers[PatchKey.Pending] = (scope, key, value) => {
   const accessor = key.slice(PatchKey.Pending.length);
   const link = (AccessorPrefix.BranchScopes + accessor) as Accessor;
@@ -161,7 +155,7 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   // setting up a newly created parent body so its stale resolution drops.
   scope[(AccessorPrefix.Promise + accessor) as Accessor] = 0 as never;
   // A settle from an earlier response must not hide this flush's pending UI.
-  settled.get(scope)?.delete(accessor);
+  scope[(AccessorPrefix.PatchSettled + accessor) as Accessor] = 0 as never;
   // A created scope has no live await branch: the entry's id names the body
   // content shell its flush shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
@@ -181,21 +175,18 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
   }
   // Same-flush settle (Promise.resolve) also writes Child; skip pending UI.
   // A document still streaming the body shows its own: the flush's pending
-  // takes over when the body lands, unless the flush settled it by then.
+  // takes over when the body lands, unless the flush settled it by then or
+  // a catch destroyed the try.
   (!scope[link] && (scope[AccessorProp.AwaitCounter] as AwaitCounter)?.m
     ? onStreamLanded
     : queueMicrotask)(
     () =>
-      !settled.get(scope)?.has(accessor) && beginAwaitPending(scope, accessor),
+      scope[AccessorProp.Gen] &&
+      !scope[(AccessorPrefix.PatchSettled + accessor) as Accessor] &&
+      beginAwaitPending(scope, accessor),
     scope,
   );
 };
-
-function markSettled(scope: Scope, accessor: string) {
-  (settled.get(scope) ?? settled.set(scope, new Set()).get(scope)!).add(
-    accessor,
-  );
-}
 
 function attachDetachedAwait(
   scope: Scope,
@@ -281,16 +272,6 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     holdForStream(scope, key, link, accessor, value as Scope);
     return;
   }
-  // A try showing its catch render (shown like a placeholder, with no await
-  // pending) takes its body back first: the flush's partial addresses the body.
-  if (
-    (scope[link] as BranchScope | undefined)?.[
-      AccessorProp.PlaceholderBranch
-    ] &&
-    !(scope[link] as BranchScope)[AccessorProp.AwaitCounter]?.i
-  ) {
-    dismissPlaceholder(scope[link] as BranchScope);
-  }
   // A boundary entry `[partial, contentId, catchId?, placeholderId?]`
   // creates a missing branch from its content id, then applies the partial.
   if (Array.isArray(value)) {
@@ -344,64 +325,3 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     endAwaitPending(scope, accessor);
   }
 };
-
-patchers[PatchKey.Catch] = (scope, key, error) => {
-  const accessor = key.slice(PatchKey.Catch.length);
-  // An elided catch slot (`0`) fills from the flush's server-rendered html;
-  // a flush without it (an async catch body) rejects.
-  const tryBranch = findBranchWithKey(scope, AccessorProp.CatchContent);
-  let content = tryBranch?.[AccessorProp.CatchContent] as Renderer | 0;
-  // The slot stays `0`: every rejection flush renders its own catch html.
-  if (content === 0) {
-    const [err, html] = error as [unknown, string | 0];
-    if (typeof html !== "string") {
-      if (MARKO_DEBUG) {
-        console.warn(`A patch rejected: catch "${accessor}" shipped no html.`);
-      }
-      failPatch();
-    }
-    content = _content("", html as string)(tryBranch![AccessorProp.Owner]);
-    error = err;
-  }
-  markSettled(scope, accessor);
-  // The catch render replaces this try's own placeholder in place; the
-  // parked body stays parked.
-  if (!tryBranch?.[AccessorProp.PlaceholderBranch]) {
-    endAwaitPending(scope, accessor);
-  }
-  if (!tryBranch) throw error;
-  showCatch(tryBranch, error, content as Renderer);
-};
-
-// The catch render shows like a placeholder: the parked try body comes
-// back when the next flush patches the try.
-function showCatch(tryBranch: BranchScope, error: unknown, content: Renderer) {
-  const shown = tryBranch[AccessorProp.PlaceholderBranch] as
-    | BranchScope
-    | 0
-    | undefined;
-  const anchor = (shown || tryBranch)[AccessorProp.StartNode];
-  const parentNode = anchor.parentNode!;
-  const catchBranch = createAndSetupBranch(
-    tryBranch[AccessorProp.Global],
-    content,
-    tryBranch[AccessorProp.Owner]!,
-    parentNode,
-  );
-  content[RendererProp.Params]?.(catchBranch, [error]);
-  caughtError.add(pendingEffects);
-  insertBranchBefore(catchBranch, parentNode, anchor);
-  if (shown) {
-    const awaitCounter = tryBranch[AccessorProp.AwaitCounter] as
-      | AwaitCounter
-      | undefined;
-    if (awaitCounter) {
-      awaitCounter.i = 0;
-      queueEffect(tryBranch, runPendingEffects);
-    }
-    removeAndDestroyBranch(shown);
-  } else {
-    tempDetachBranch(tryBranch);
-  }
-  tryBranch[AccessorProp.PlaceholderBranch] = catchBranch;
-}

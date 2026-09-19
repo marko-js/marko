@@ -1,14 +1,14 @@
 // PATCH
-[`a1,<span>ok</span>`, {
+[`a1,<span>ok</span>`, `a2;b%;<!><!><!>`, {
   cAa: {
-    pa: "a1",
-    ka: new Error("x")
+    pa: "a1"
   },
-  va0: "b"
+  va0: "b",
+  ka: [new Error("x"), "a2"]
 }]
-"BAI"
+"BAIA"
 
-// PATCH holding BAI
+// PATCH holding BAIA
 {
   cAa: {
     pa: "a1"
