@@ -2,7 +2,8 @@
 _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
-	a2: "a2;b%;<!><!><!>"
+	a2: "a2;b%;<!><!><!>",
+	a: "a;D%;<main><!></main>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

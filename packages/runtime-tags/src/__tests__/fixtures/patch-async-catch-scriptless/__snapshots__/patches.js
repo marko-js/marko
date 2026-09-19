@@ -5,4 +5,4 @@
   },
   ka: [new Error("boom"), "a2", "\x3Cem>boom\x3C/em>"]
 }]
-"AwI"
+"BAM"
