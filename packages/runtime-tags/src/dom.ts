@@ -140,4 +140,4 @@ export {
   _var,
   _var_change,
 } from "./dom/signals";
-export { _template } from "./dom/template";
+export { _template, _template_patch } from "./dom/template";

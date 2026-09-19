@@ -7,4 +7,4 @@ const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope
 const $for = /*@__PURE__*/ _for_of("#text/0", "<b> </b>", "D ", 0, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);
 const $input = ($scope, input) => $input_items($scope, input.items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", 0, $input);

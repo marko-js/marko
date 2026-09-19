@@ -11,7 +11,7 @@ function $setup($scope) {
 }
 const $input_n = ($scope, input_n) => _text($scope["#text/1"], input_n);
 const $input = ($scope, input) => $input_n($scope, input.n);
-var page_default = /*@__PURE__*/ _template("__tests__/page.marko", $template, $walks, $setup, $input);
+var page_default = /*@__PURE__*/ _template_patch("__tests__/page.marko", $template, $walks, $setup, $input);
 
 // template.marko
 const $template = "<button> </button><ul></ul>";
@@ -29,4 +29,4 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of("#ul/2", "<li><!></li>", "D%/&", 0, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows, (n) => n]);
 const $input = ($scope, input) => $input_rows($scope, input.rows);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -2,7 +2,7 @@
 const $template$1 = "<footer>foot</footer>";
 const $walks$1 = "b";
 const $setup$1 = () => {};
-var site_footer_default = /*@__PURE__*/ _template("__tests__/tags/site-footer.marko", $template$1, "b");
+var site_footer_default = /*@__PURE__*/ _template_patch("__tests__/tags/site-footer.marko", $template$1, "b");
 
 // template.marko
 const $template = "<html><body><!><main> </main><!></body></html>";
@@ -17,4 +17,4 @@ function $setup($scope) {
 	$global_meta_headings($scope, $scope.$global.meta?.headings);
 	$global_meta_hideFooter($scope, $scope.$global.meta?.hideFooter);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

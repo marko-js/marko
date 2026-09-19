@@ -12,4 +12,4 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input", $input__OR__count);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

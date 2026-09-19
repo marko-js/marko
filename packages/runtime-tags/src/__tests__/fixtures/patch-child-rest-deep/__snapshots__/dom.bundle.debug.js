@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $cfg_label = ($scope, $cfg_label) => _text($scope["#text/0"], $cfg_label);
 const $input$1 = ($scope, input) => $cfg2($scope, input.cfg);
 const $cfg2 = ($scope, $cfg) => $cfg_label($scope, $cfg?.label);
-var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo/index.marko", $template$1, "D l", 0, $input$1);
+var echo_default = /*@__PURE__*/ _template_patch("__tests__/tags/echo/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
@@ -13,4 +13,4 @@ const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D l");
 const $setup = () => {};
 const $input_label = ($scope, input_label) => $cfg2($scope["#childScope/0"], { label: input_label });
 const $input = ($scope, input) => $input_label($scope, input.label);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, 0, $input);

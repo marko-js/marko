@@ -45,4 +45,4 @@ const $input = ($scope, input) => {
 };
 const $input_related__closure = /*@__PURE__*/ _closure($try_content__input_related);
 const $input_related = /*@__PURE__*/ _const("input_related", $input_related__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

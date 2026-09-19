@@ -9,7 +9,7 @@ const $input = ($scope, input) => {
 	$input_meta($scope, input.meta);
 };
 const $input_meta = ($scope, input_meta) => $input_meta_n($scope, input_meta?.n);
-var card_default = /*@__PURE__*/ _template("a", $template, $walks, 0, $input);
+var card_default = /*@__PURE__*/ _template_patch("a", $template, $walks, 0, $input);
 
 // template.marko
 const $inputonCardnull_content__input_label = /*@__PURE__*/ _fill_join_closure("b1", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f)), 0);

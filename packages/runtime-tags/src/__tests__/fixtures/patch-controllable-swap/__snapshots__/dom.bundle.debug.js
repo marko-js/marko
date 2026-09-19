@@ -26,4 +26,4 @@ function $loud(next) {
 }
 _resume("__tests__/template.marko_0/plain", $plain);
 _resume("__tests__/template.marko_0/loud", $loud);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

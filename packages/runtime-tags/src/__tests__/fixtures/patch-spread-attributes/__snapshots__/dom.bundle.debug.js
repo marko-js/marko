@@ -36,4 +36,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_img = /*@__PURE__*/ _const("input_img", $if_content__input_img);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

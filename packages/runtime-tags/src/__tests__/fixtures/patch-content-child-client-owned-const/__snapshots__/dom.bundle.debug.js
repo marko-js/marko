@@ -19,7 +19,7 @@ const $input$1 = ($scope, input) => {
 	$input_content($scope, input.content);
 };
 const $input_content = /*@__PURE__*/ _fill_const("__tests__/tags/card/index.marko0", "input_content", $if_content__input_content);
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
@@ -35,4 +35,4 @@ function $setup($scope) {
 const $input = ($scope, input) => $input_note($scope, input.note);
 const $input_note__closure = /*@__PURE__*/ _closure($card_content__input_note);
 const $input_note = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_note", $input_note__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

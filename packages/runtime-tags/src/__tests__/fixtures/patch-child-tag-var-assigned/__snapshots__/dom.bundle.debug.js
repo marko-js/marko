@@ -14,7 +14,7 @@ const $valueChange = ($scope) => function(v) {
 	$count($scope, v);
 };
 _resume("__tests__/tags/counter-box/index.marko_0/valueChange", $valueChange);
-var counter_box_default = /*@__PURE__*/ _template("__tests__/tags/counter-box/index.marko", $template$1, $walks$1, $setup$1, $input);
+var counter_box_default = /*@__PURE__*/ _template_patch("__tests__/tags/counter-box/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = "<main><!><button class=toggle>t</button></main>";
@@ -38,4 +38,4 @@ function $setup($scope) {
 	$show($scope, true);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

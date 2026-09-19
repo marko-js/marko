@@ -10,7 +10,7 @@ const $valueChange = ($scope) => function(next) {
 	$value($scope, next);
 };
 _resume("__tests__/tags/box.marko_0/valueChange", $valueChange);
-var box_default = /*@__PURE__*/ _template("__tests__/tags/box.marko", "", "", $setup$4);
+var box_default = /*@__PURE__*/ _template_patch("__tests__/tags/box.marko", "", "", $setup$4);
 
 // tags/counter.marko
 const $template$3 = "<button class=tick> </button>";
@@ -26,7 +26,7 @@ function $setup$3($scope) {
 }
 const $input_base = /*@__PURE__*/ _fill_const("__tests__/tags/counter.marko0", "input_base", $input_base__OR__tick);
 const $input$3 = ($scope, input) => $input_base($scope, input.base);
-var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $template$3, $walks$3, $setup$3, $input$3);
+var counter_default = /*@__PURE__*/ _template_patch("__tests__/tags/counter.marko", $template$3, $walks$3, $setup$3, $input$3);
 
 // tags/panel.marko
 const $template$2 = "<section><h2>Panel</h2><div class=aside><!></div></section>";
@@ -36,7 +36,7 @@ const $input_aside_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_aside = $dynamicTag;
 const $input$2 = ($scope, input) => $input_aside($scope, input.aside);
-var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$2, $walks$2, 0, $input$2);
+var panel_default = /*@__PURE__*/ _template_patch("__tests__/tags/panel.marko", $template$2, $walks$2, 0, $input$2);
 
 // page.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("");
@@ -74,7 +74,7 @@ const $p_base = /*@__PURE__*/ _fill_const("__tests__/page.marko0", "p_base", $p_
 const $for = /*@__PURE__*/ _for_of("#text/3", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $for_content__setup, $for_content__$params);
 const $input_items$1 = ($scope, input_items) => $for($scope, [input_items]);
 const $input$1 = ($scope, input) => $input_items$1($scope, input.items);
-var page_default = /*@__PURE__*/ _template("__tests__/page.marko", $template$1, $walks$1, $setup$1, $input$1);
+var page_default = /*@__PURE__*/ _template_patch("__tests__/page.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<!><!><!>";
@@ -92,4 +92,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_items = /*@__PURE__*/ _const("input_items", $if_content__input_items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", 0, $input);

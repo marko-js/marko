@@ -14,7 +14,7 @@ const $input_title = /*@__PURE__*/ _const("input_title", $input_title__OR__handl
 const $input = ($scope, input) => $input_title($scope, input.title);
 const $handler = ($scope) => (event) => event.target.dataset.seen = $scope.input_title;
 _resume("__tests__/child.marko_0/handler", $handler);
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, " b", 0, $input);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/child.marko", $template, " b", 0, $input);
 
 // template.marko
 const $template = "<main><!></main>";
@@ -25,7 +25,7 @@ let $load_Child_tag_input_title = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load
 const $setup = $load_Child_setup;
 const $input_title = ($scope, input_title) => $load_Child_tag_input_title($scope["#childScope/1"], input_title);
 const $input = ($scope, input) => $input_title($scope, input.title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // v:child.marko.setup.js
 const _ = [

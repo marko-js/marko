@@ -4,7 +4,7 @@ const $walks$2 = "D l";
 const $setup$2 = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$2 = ($scope, input) => $input_label($scope, input.label);
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$2, "D l", 0, $input$2);
+var badge_default = /*@__PURE__*/ _template_patch("__tests__/tags/badge.marko", $template$2, "D l", 0, $input$2);
 
 // tags/card.marko
 const $template$1 = "<div class=card><h2> </h2><p> </p><button class=t> </button></div>";
@@ -23,7 +23,7 @@ const $input$1 = ($scope, input) => {
 	$input_title($scope, input.title);
 	$input_note($scope, input.note);
 };
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, $setup$1, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><!>${_w0}<button id=o>o</button></main>`)($template$1);
@@ -58,4 +58,4 @@ const $input = ($scope, input) => {
 };
 const $input_badge = ($scope, input_badge) => $input_badge_label($scope, input_badge?.label);
 const $input_badge_label = /*@__PURE__*/ _fill_const("__tests__/template.marko1", "input_badge_label", $if_content__input_badge_label);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

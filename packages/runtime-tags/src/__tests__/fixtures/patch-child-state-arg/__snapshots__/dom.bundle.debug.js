@@ -4,7 +4,7 @@ const $walks$1 = "Db%l";
 const $setup$1 = () => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
-var arg_badge_default = /*@__PURE__*/ _template("__tests__/tags/arg-badge/index.marko", $template$1, $walks$1, 0, $input$1);
+var arg_badge_default = /*@__PURE__*/ _template_patch("__tests__/tags/arg-badge/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1>${_w0}<button>+</button></main>`)($template$1);
@@ -19,4 +19,4 @@ function $setup($scope) {
 }
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $input = ($scope, input) => $input_title($scope, input.title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

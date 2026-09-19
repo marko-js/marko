@@ -6,7 +6,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, "D%l", 0, $input$1);
+var widget_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/index.marko", $template$1, "D%l", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($template$1);
@@ -42,4 +42,4 @@ const $input_kind__closure = /*@__PURE__*/ _closure($widget_content__input_kind,
 const $input_kind = /*@__PURE__*/ _const("input_kind", $input_kind__closure);
 const $input_inner__closure = /*@__PURE__*/ _closure($widget_content2__input_inner, $elseif_content2__input_inner);
 const $input_inner = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_inner", $input_inner__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

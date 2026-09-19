@@ -14,4 +14,4 @@ function $setup($scope) {
 const $input_opts_show = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_opts_show", $input_opts_show__OR__on);
 const $input = ($scope, input) => $input_opts($scope, input.opts);
 const $input_opts = ($scope, input_opts) => $input_opts_show($scope, input_opts?.show);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

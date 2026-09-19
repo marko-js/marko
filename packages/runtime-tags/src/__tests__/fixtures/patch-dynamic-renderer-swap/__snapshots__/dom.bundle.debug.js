@@ -4,7 +4,7 @@ const $walks$2 = "D l";
 const $setup$2 = () => {};
 const $input_label$2 = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$2 = ($scope, input) => $input_label$2($scope, input.label);
-var card_a_default = /*@__PURE__*/ _template("__tests__/card-a.marko", $template$2, "D l", 0, $input$2);
+var card_a_default = /*@__PURE__*/ _template_patch("__tests__/card-a.marko", $template$2, "D l", 0, $input$2);
 
 // card-b.marko
 const $template$1 = "<article class=b><!>!</article>";
@@ -12,7 +12,7 @@ const $walks$1 = "D%l";
 const $setup$1 = () => {};
 const $input_label$1 = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);
-var card_b_default = /*@__PURE__*/ _template("__tests__/card-b.marko", $template$1, "D%l", 0, $input$1);
+var card_b_default = /*@__PURE__*/ _template_patch("__tests__/card-b.marko", $template$1, "D%l", 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button> </button></main>";
@@ -33,4 +33,4 @@ const $input = ($scope, input) => {
 	$input_mode($scope, input.mode);
 	$input_label($scope, input.label);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -9,4 +9,4 @@ function $setup($scope) {
 	$open($scope, false);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

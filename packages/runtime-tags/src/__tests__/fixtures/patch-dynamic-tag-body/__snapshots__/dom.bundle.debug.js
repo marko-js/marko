@@ -6,7 +6,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag$1;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, "D%l", 0, $input$1);
+var wrap_default = /*@__PURE__*/ _template_patch("__tests__/tags/wrap.marko", $template$1, "D%l", 0, $input$1);
 
 // template.marko
 const $template = "<!><!><!><!>";
@@ -30,4 +30,4 @@ const $input = ($scope, input) => {
 };
 const $input_note__closure = /*@__PURE__*/ _closure($inputwrapwrapnull_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, 0, $input);

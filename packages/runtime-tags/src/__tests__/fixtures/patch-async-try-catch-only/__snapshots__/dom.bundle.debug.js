@@ -11,4 +11,4 @@ function $setup($scope) {
 const $input = ($scope, input) => $input_message($scope, input.message);
 const $input_message__closure = /*@__PURE__*/ _closure($try_content__input_message);
 const $input_message = /*@__PURE__*/ _const("input_message", $input_message__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D%l", $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "D%l", $setup, $input);

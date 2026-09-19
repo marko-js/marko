@@ -16,7 +16,7 @@ const $input$1 = ($scope, input) => {
 	$input_label$1($scope, input.label);
 };
 const $input_label$1 = /*@__PURE__*/ _fill_const("__tests__/tags/host/index.marko0", "input_label", $if_content__input_label);
-var host_default = /*@__PURE__*/ _template("__tests__/tags/host/index.marko", $template$1, " b", 0, $input$1);
+var host_default = /*@__PURE__*/ _template_patch("__tests__/tags/host/index.marko", $template$1, " b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
@@ -28,7 +28,7 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 	$input_label($scope, input.label);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, 0, $input);
 
 // tags/host/child.marko
 const $template = "<p class=child> </p>";
@@ -36,7 +36,7 @@ const $walks = "D l";
 const $setup = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/host/child.marko", $template, "D l", 0, $input);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/tags/host/child.marko", $template, "D l", 0, $input);
 
 // tags/host/v:child.marko.setup.js
 const _ = [

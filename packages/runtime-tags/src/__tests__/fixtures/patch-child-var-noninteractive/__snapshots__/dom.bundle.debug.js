@@ -12,7 +12,7 @@ function $setup$1($scope) {
 	$setup__script($scope);
 	$c($scope, 1);
 }
-var kid_default = /*@__PURE__*/ _template("__tests__/tags/kid.marko", $template$1, $walks$1, $setup$1);
+var kid_default = /*@__PURE__*/ _template_patch("__tests__/tags/kid.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1);
@@ -22,4 +22,4 @@ function $setup($scope) {
 	_var($scope, "#childScope/0", $x);
 	$setup$1($scope["#childScope/0"]);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

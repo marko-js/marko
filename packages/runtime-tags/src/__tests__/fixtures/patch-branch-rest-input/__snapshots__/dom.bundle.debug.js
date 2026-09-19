@@ -17,4 +17,4 @@ const $input = ($scope, input) => {
 	$label($scope, input.label);
 	$input_show($scope, input.show);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

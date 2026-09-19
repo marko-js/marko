@@ -11,7 +11,7 @@ function $setup$1($scope) {
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$1 = ($scope, input) => $input_label($scope, input.label);
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$1, $walks$1, $setup$1, $input$1);
+var badge_default = /*@__PURE__*/ _template_patch("__tests__/tags/badge.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><ul></ul><!>${_w0}</main>`)($template$1);
@@ -54,4 +54,4 @@ const $input_detail = /*@__PURE__*/ _const("input_detail", ($scope) => {
 	$if_content__input_detail($scope);
 	$input_detail__closure($scope);
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

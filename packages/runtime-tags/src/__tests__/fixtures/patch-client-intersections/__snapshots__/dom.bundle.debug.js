@@ -12,7 +12,7 @@ function $setup$3($scope) {
 }
 const $input_label$1 = /*@__PURE__*/ _fill_const("__tests__/tags/price-card.marko0", "input_label", $input_label__OR__qty);
 const $input$3 = ($scope, input) => $input_label$1($scope, input.label);
-var price_card_default = /*@__PURE__*/ _template("__tests__/tags/price-card.marko", $template$3, $walks$3, $setup$3, $input$3);
+var price_card_default = /*@__PURE__*/ _template_patch("__tests__/tags/price-card.marko", $template$3, $walks$3, $setup$3, $input$3);
 
 // tags/promo-tag.marko
 const $template$2 = "<aside> </aside><button class=promo>seen</button>";
@@ -28,7 +28,7 @@ function $setup$2($scope) {
 }
 const $input_text = /*@__PURE__*/ _fill_const("__tests__/tags/promo-tag.marko0", "input_text", $input_text__OR__seen);
 const $input$2 = ($scope, input) => $input_text($scope, input.text);
-var promo_tag_default = /*@__PURE__*/ _template("__tests__/tags/promo-tag.marko", $template$2, $walks$2, $setup$2, $input$2);
+var promo_tag_default = /*@__PURE__*/ _template_patch("__tests__/tags/promo-tag.marko", $template$2, $walks$2, $setup$2, $input$2);
 
 // tags/site-footer.marko
 const $template$1 = "<footer> </footer>";
@@ -40,7 +40,7 @@ function $setup$1($scope) {
 }
 const $input_year$1 = /*@__PURE__*/ _const("input_year", $input_year__OR__frozen);
 const $input$1 = ($scope, input) => $input_year$1($scope, input.year);
-var site_footer_default = /*@__PURE__*/ _template("__tests__/tags/site-footer.marko", $template$1, "D l", $setup$1, $input$1);
+var site_footer_default = /*@__PURE__*/ _template_patch("__tests__/tags/site-footer.marko", $template$1, "D l", $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<main><h1> </h1><p> </p>${_w0}${_w1}${_w2}</main>`)($template$3, $template$2, $template$1);
@@ -63,4 +63,4 @@ const $input = ($scope, input) => {
 	$input_year($scope, input.year);
 	$input_title($scope, input.title);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

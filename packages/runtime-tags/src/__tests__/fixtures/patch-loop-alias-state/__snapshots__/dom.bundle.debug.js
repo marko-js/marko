@@ -21,4 +21,4 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", $for_content__setup, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, (item) => item.id]);
 const $input = ($scope, input) => $input_items($scope, input.items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -14,7 +14,7 @@ const $highlight = ($scope) => function(text) {
 	return text.replace($scope.input_cursor.test, (m) => `<b>${$scope.input_cursor.content((s) => s)}</b>`);
 };
 _resume("__tests__/tags/code-block.marko_0/highlight", $highlight);
-var code_block_default = /*@__PURE__*/ _template("__tests__/tags/code-block.marko", $template$1, "D l", 0, $input$1);
+var code_block_default = /*@__PURE__*/ _template_patch("__tests__/tags/code-block.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = $template$1;
@@ -31,4 +31,4 @@ function $cursor(h) {
 	return h("cursor");
 }
 _resume("__tests__/template.marko_0/cursor", $cursor);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

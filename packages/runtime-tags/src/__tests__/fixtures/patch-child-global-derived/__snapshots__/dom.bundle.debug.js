@@ -4,7 +4,7 @@ const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input_text = ($scope, input_text) => _text($scope["#text/0"], input_text);
 const $input = ($scope, input) => $input_text($scope, input.text);
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, "D l", 0, $input);
+var widget_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/index.marko", $template$1, "D l", 0, $input);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
@@ -23,4 +23,4 @@ function $setup($scope) {
 	$setup__script($scope);
 	$global_brand($scope, $scope.$global.brand);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

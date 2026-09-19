@@ -4,7 +4,7 @@ const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input_text = ($scope, input_text) => _text($scope["#text/0"], "n:" + input_text);
 const $input$1 = ($scope, input) => $input_text($scope, input.text);
-var note_default = /*@__PURE__*/ _template("__tests__/tags/note/index.marko", $template$1, "D l", 0, $input$1);
+var note_default = /*@__PURE__*/ _template_patch("__tests__/tags/note/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>+</button></main>";
@@ -36,4 +36,4 @@ const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "inp
 	$if_content__input_title($scope);
 	$input_title__closure($scope);
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

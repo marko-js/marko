@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $label = ($scope, label) => _text($scope["#text/0"], label());
 const $input_title$1 = /*@__PURE__*/ _const("input_title", ($scope) => $label($scope, () => "t:" + $scope.input_title));
 const $input$1 = ($scope, input) => $input_title$1($scope, input.title);
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, "D l", 0, $input$1);
+var widget_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>+</button></main>";
@@ -23,4 +23,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_title($scope, input.title);
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $if_content__input_title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

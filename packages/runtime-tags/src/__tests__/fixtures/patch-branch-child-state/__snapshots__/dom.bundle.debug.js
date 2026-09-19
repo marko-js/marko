@@ -12,7 +12,7 @@ const $input$1 = ($scope, input) => {
 	$input_start$1($scope, input.start);
 	$input_label($scope, input.label);
 };
-var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1, $input$1);
+var counter_default = /*@__PURE__*/ _template_patch("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<main></main>";
@@ -34,4 +34,4 @@ const $input = ($scope, input) => {
 };
 const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_title);
 const $input_start = /*@__PURE__*/ _const("input_start", $if_content__input_start);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

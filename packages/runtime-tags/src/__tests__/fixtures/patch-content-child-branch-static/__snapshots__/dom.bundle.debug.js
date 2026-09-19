@@ -12,7 +12,7 @@ const $input$1 = ($scope, input) => {
 	$input_content($scope, input.content);
 };
 const $input_content = /*@__PURE__*/ _fill_const("__tests__/tags/card/index.marko0", "input_content", $if_content__input_content);
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, " b", 0, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card/index.marko", $template$1, " b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
@@ -23,4 +23,4 @@ function $setup($scope) {
 }
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/0"], input_show);
 const $input = ($scope, input) => $input_show($scope, input.show);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

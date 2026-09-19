@@ -13,4 +13,4 @@ const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {}));
 const $setup = $setup__script;
 const $input = ($scope, input) => $input_items($scope, input.items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

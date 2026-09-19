@@ -8,4 +8,4 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 const $setup = $setup__script;
 const $input = ($scope, input) => $input_title($scope, input.title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -7,7 +7,7 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 function $setup$1($scope) {
 	$global_flag($scope, $scope.$global.flag);
 }
-var g_badge_default = /*@__PURE__*/ _template("__tests__/tags/g-badge/index.marko", $template$1, $walks$1, $setup$1, $input);
+var g_badge_default = /*@__PURE__*/ _template_patch("__tests__/tags/g-badge/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -21,4 +21,4 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

@@ -18,4 +18,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_promise = /*@__PURE__*/ _const("input_promise", $if_content__input_promise);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

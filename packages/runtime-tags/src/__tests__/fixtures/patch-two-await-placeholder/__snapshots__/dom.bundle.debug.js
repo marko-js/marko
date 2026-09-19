@@ -30,4 +30,4 @@ const $input_a__closure = /*@__PURE__*/ _closure($try_content__input_a);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__closure);
 const $input_b__closure = /*@__PURE__*/ _closure($try_content__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_b__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", $setup, $input);

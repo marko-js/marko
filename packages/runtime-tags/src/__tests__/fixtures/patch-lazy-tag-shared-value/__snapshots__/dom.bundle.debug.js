@@ -13,7 +13,7 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_item($scope, input.item);
 const $input_item = /*@__PURE__*/ _const("input_item");
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // template.marko
 const $template = "<button> </button><!><!>";
@@ -34,7 +34,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_label($scope, input.label);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // v:child.marko.setup.js
 const _ = [

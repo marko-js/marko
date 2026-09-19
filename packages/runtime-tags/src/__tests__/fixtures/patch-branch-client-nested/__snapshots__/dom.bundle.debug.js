@@ -15,4 +15,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_show($scope, input.show);
 const $input_show = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_show", $if_content__input_show);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

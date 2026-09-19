@@ -11,4 +11,4 @@ const $input = ($scope, input) => {
 	$input_value($scope, input.value);
 	$input_title($scope, input.title);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D l", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "D l", 0, $input);

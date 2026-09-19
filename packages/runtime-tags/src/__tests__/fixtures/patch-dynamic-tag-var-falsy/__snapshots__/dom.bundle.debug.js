@@ -13,4 +13,4 @@ const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $el);
 const $el = _var_resume("__tests__/template.marko_0_el#8/var", /*@__PURE__*/ _const("el"));
 const $input_tag = $dynamicTag;
 const $input = ($scope, input) => $input_tag($scope, input.tag);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

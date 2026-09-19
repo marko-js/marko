@@ -4,7 +4,7 @@ const $walks$2 = "b";
 const $setup$2 = () => {};
 const $input_a$2 = /*@__PURE__*/ _const("input_a", ($scope) => _return($scope, $scope.input_a + "!"));
 const $input$2 = ($scope, input) => $input_a$2($scope, input.a);
-var one_default = /*@__PURE__*/ _template("__tests__/tags/one.marko", $template$2, "b", 0, $input$2);
+var one_default = /*@__PURE__*/ _template_patch("__tests__/tags/one.marko", $template$2, "b", 0, $input$2);
 
 // tags/two.marko
 const $template$1 = "<b>two</b>";
@@ -12,7 +12,7 @@ const $walks$1 = "b";
 const $setup$1 = () => {};
 const $input_a$1 = /*@__PURE__*/ _const("input_a", ($scope) => _return($scope, $scope.input_a + "?"));
 const $input$1 = ($scope, input) => $input_a$1($scope, input.a);
-var two_default = /*@__PURE__*/ _template("__tests__/tags/two.marko", $template$1, "b", 0, $input$1);
+var two_default = /*@__PURE__*/ _template_patch("__tests__/tags/two.marko", $template$1, "b", 0, $input$1);
 
 // template.marko
 const $template = "<!><!><p> </p>";
@@ -27,4 +27,4 @@ const $input = ($scope, input) => {
 	$input_which($scope, input.which);
 	$input_a($scope, input.a);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, 0, $input);

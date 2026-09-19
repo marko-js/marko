@@ -9,7 +9,7 @@ function $setup($scope) {
 	$setup__script($scope);
 	$count($scope, 0);
 }
-var page_a_default = /*@__PURE__*/ _template("__tests__/page-a.marko", $template, $walks, $setup);
+var page_a_default = /*@__PURE__*/ _template_patch("__tests__/page-a.marko", $template, $walks, $setup);
 
 // page-b.marko
 const $template = "<button class=b>b:<!></button>";
@@ -22,7 +22,7 @@ function $setup($scope) {
 	$setup__script($scope);
 	$count($scope, 0);
 }
-var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template, $walks, $setup);
+var page_b_default = /*@__PURE__*/ _template_patch("__tests__/page-b.marko", $template, $walks, $setup);
 
 // layout.marko
 const $template$1 = "<header><button> </button></header><main><!></main>";
@@ -39,7 +39,7 @@ function $setup$1($scope) {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var layout_default = /*@__PURE__*/ _template("__tests__/layout.marko", $template$1, $walks$1, $setup$1, $input$1);
+var layout_default = /*@__PURE__*/ _template_patch("__tests__/layout.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
@@ -59,4 +59,4 @@ function $setup($scope) {
 const $input = ($scope, input) => $input_page($scope, input.page);
 const $input_page__closure = /*@__PURE__*/ _closure($Layout_content__input_page);
 const $input_page = /*@__PURE__*/ _const("input_page", $input_page__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -12,7 +12,7 @@ const $input$1 = ($scope, input) => {
 	$input_start($scope, input.start);
 	$input_text($scope, input.text);
 };
-var pill_default = /*@__PURE__*/ _template("__tests__/tags/pill.marko", $template$1, $walks$1, $setup$1, $input$1);
+var pill_default = /*@__PURE__*/ _template_patch("__tests__/tags/pill.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<main></main>";
@@ -38,4 +38,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_promise = /*@__PURE__*/ _const("input_promise", $if_content__input_promise);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

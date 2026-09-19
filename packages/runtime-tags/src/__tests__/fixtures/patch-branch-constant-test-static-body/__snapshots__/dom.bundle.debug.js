@@ -12,7 +12,7 @@ const $for = /*@__PURE__*/ _for_of("#text/0", "<span> </span><!><!>", "D l%", 0,
 function $setup$1($scope) {
 	$for($scope, [ITEMS]);
 }
-var page_default = /*@__PURE__*/ _template("__tests__/page.marko", $template$1, "b%c", $setup$1);
+var page_default = /*@__PURE__*/ _template_patch("__tests__/page.marko", $template$1, "b%c", $setup$1);
 
 // template.marko
 const $template = "<!><!><!>";
@@ -24,4 +24,4 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => $input_show($scope, input.show);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", 0, $input);

@@ -28,7 +28,7 @@ const $load = ($scope) => async (refresh) => {
 	if (refresh) $refreshing($scope, false);
 };
 _resume("__tests__/tags/picker.marko_0/load", $load);
-var picker_default = /*@__PURE__*/ _template("__tests__/tags/picker.marko", $template$1, $walks$1, $setup$1, $input);
+var picker_default = /*@__PURE__*/ _template_patch("__tests__/tags/picker.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p><button id=outer>outer</button>`)($template$1);
@@ -50,4 +50,4 @@ const $refreshingChange = ($scope) => function(v) {
 	$busy($scope, v);
 };
 _resume("__tests__/template.marko_0/refreshingChange", $refreshingChange);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

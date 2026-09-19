@@ -13,7 +13,7 @@ const $input_promise__script = _script("__tests__/tags/probe.marko_0_input_promi
 });
 const $input_promise$1 = /*@__PURE__*/ _const("input_promise", $input_promise__script);
 const $input$1 = ($scope, input) => $input_promise$1($scope, input.promise);
-var probe_default = /*@__PURE__*/ _template("__tests__/tags/probe.marko", $template$1, $walks$1, $setup$1, $input$1);
+var probe_default = /*@__PURE__*/ _template_patch("__tests__/tags/probe.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>Count <!></button>${_w0}<!><!>`)($template$1);
@@ -45,4 +45,4 @@ const $input_promise = /*@__PURE__*/ _const("input_promise", ($scope) => {
 	$input_promise__closure($scope);
 });
 const $input = ($scope, input) => $input_promise($scope, input.promise);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

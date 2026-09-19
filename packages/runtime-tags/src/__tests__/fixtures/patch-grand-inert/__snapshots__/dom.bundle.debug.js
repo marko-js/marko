@@ -9,7 +9,7 @@ const $walks$1 = "D l";
 function $setup$1($scope) {
 	_text($scope["#text/0"], stamp());
 }
-var stamp_default = /*@__PURE__*/ _template("__tests__/tags/stamp/index.marko", $template$1, "D l", $setup$1);
+var stamp_default = /*@__PURE__*/ _template_patch("__tests__/tags/stamp/index.marko", $template$1, "D l", $setup$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
@@ -26,4 +26,4 @@ function $setup($scope) {
 	$show($scope, true);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

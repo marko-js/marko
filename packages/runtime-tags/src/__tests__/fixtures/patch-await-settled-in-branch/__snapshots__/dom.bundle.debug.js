@@ -20,4 +20,4 @@ const $input = ($scope, input) => {
 	$input_label($scope, input.label);
 };
 const $input_value = /*@__PURE__*/ _const("input_value", $if_content__input_value);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, 0, $input);

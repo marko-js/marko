@@ -4,7 +4,7 @@ const $walks$1 = "b";
 const $setup$1 = () => {};
 const $input_title$1 = /*@__PURE__*/ _const("input_title", ($scope) => _return($scope, "[" + $scope.input_title + "]"));
 const $input$1 = ($scope, input) => $input_title$1($scope, input.title);
-var labeler_default = /*@__PURE__*/ _template("__tests__/tags/labeler/index.marko", $template$1, "b", 0, $input$1);
+var labeler_default = /*@__PURE__*/ _template_patch("__tests__/tags/labeler/index.marko", $template$1, "b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p><!> <!></p><button>+</button></main>`)($template$1);
@@ -21,4 +21,4 @@ function $setup($scope) {
 const $label = _var_resume("__tests__/template.marko_0_label#9/var", ($scope, label) => _text($scope["#text/2"], label));
 const $input_title = ($scope, input_title) => $input_title$1($scope["#childScope/0"], input_title);
 const $input = ($scope, input) => $input_title($scope, input.title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

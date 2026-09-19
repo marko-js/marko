@@ -4,7 +4,7 @@ const $walks$1 = "";
 const $setup$1 = () => {};
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => _return($scope, $scope.input_label));
 const $input$1 = ($scope, input) => $input_label($scope, input.label);
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", "", "", 0, $input$1);
+var widget_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/index.marko", "", "", 0, $input$1);
 
 // template.marko
 const $template = "<main></main>";
@@ -34,4 +34,4 @@ const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
 	$if_content__input_value($scope);
 	$input_value__closure($scope);
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

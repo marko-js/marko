@@ -13,7 +13,7 @@ const $input$1 = ($scope, input) => {
 	$input_name($scope, input.name);
 	$input_item($scope, input.item);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template$1, " b", 0, $input$1);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/child.marko", $template$1, " b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<!></main>`)($template$1, $template$1);
@@ -52,4 +52,4 @@ const $input = ($scope, input) => {
 };
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promise);
 const $input_promise = /*@__PURE__*/ _const("input_promise", $input_promise__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

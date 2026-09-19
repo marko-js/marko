@@ -3,6 +3,7 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
+import { isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { find, forEach } from "../../util/optional";
 import {
@@ -260,7 +261,7 @@ export default {
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
-            "_template",
+            isPatch() ? "_template_patch" : "_template",
             t.stringLiteral(getFile().metadata.marko.id),
             ...replaceNullishAndEmptyFunctionsWith0([
               templateIdentifier,

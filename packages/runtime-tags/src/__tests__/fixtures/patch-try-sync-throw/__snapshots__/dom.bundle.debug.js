@@ -31,4 +31,4 @@ const $input_message__closure = /*@__PURE__*/ _closure($try_content__input_messa
 const $input_message = /*@__PURE__*/ _const("input_message", $input_message__closure);
 const $input_boom__closure = /*@__PURE__*/ _closure($try_content__input_boom);
 const $input_boom = /*@__PURE__*/ _const("input_boom", $input_boom__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -23,4 +23,4 @@ const $valueChange = ($scope) => (_new_text) => {
 	$text($scope, _new_text);
 };
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

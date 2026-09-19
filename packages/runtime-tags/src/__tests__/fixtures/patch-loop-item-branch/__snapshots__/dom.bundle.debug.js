@@ -21,4 +21,4 @@ const $for_content__item_children = /*@__PURE__*/ _const("item_children", ($scop
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!><!></li>", "D%b%", 0, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);
 const $input = ($scope, input) => $input_items($scope, input.items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

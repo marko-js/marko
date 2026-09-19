@@ -9,7 +9,7 @@ const $setup__script$1 = _script("__tests__/tags/widget/index.marko_0", ($scope)
 }));
 const $setup$1 = $setup__script$1;
 const $input$1 = ($scope, input) => $input_title$1($scope, input.title);
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var widget_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<main><!><button class=outer>+</button></main>";
@@ -30,4 +30,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_title($scope, input.title);
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $if_content__input_title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

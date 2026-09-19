@@ -285,22 +285,45 @@ export default {
                   ),
                 ),
               );
-              importDecl.replaceWith(
-                t.variableDeclaration("const", [
-                  t.variableDeclarator(
-                    local,
-                    // A flush's data for a tag this template creates
-                    // waits for its clone; the wrapper reports the start.
-                    isPatch()
-                      ? callRuntime(
-                          "_load_ready_template",
-                          t.stringLiteral(getReadyId(loadFile)!),
-                          loadTemplate,
-                        )
-                      : loadTemplate,
+              const declaration = t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  local,
+                  // A flush's data for a tag this template creates
+                  // waits for its clone; the wrapper reports the start.
+                  isPatch()
+                    ? callRuntime(
+                        "_load_ready_template",
+                        t.stringLiteral(getReadyId(loadFile)!),
+                        loadTemplate,
+                      )
+                    : loadTemplate,
+                ),
+              ]);
+              // A flush creating the tag waits on its channel and starts
+              // this loader, as it starts a fed import's.
+              importDecl.replaceWith(declaration);
+              if (isPatch()) {
+                importDecl.insertBefore(
+                  t.expressionStatement(
+                    callRuntime(
+                      "_load_lazy",
+                      t.stringLiteral(getReadyId(loadFile)!),
+                      t.arrowFunctionExpression(
+                        [],
+                        t.callExpression(
+                          t.memberExpression(
+                            t.callExpression(t.import(), [
+                              t.stringLiteral(resolvedPath),
+                            ]),
+                            t.identifier("then"),
+                          ),
+                          [t.arrowFunctionExpression([], t.blockStatement([]))],
+                        ),
+                      ),
+                    ),
                   ),
-                ]),
-              );
+                );
+              }
             }
           }
 

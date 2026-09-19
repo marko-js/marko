@@ -26,4 +26,4 @@ const $input = ($scope, input) => {
 };
 const $input_color = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_color", $if_content__input_color);
 const $input_x = /*@__PURE__*/ _fill_const("__tests__/template.marko1", "input_x", $if_content__input_x);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

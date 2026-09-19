@@ -22,4 +22,4 @@ function $setup($scope) {
 const $input = ($scope, input) => $input_x($scope, input.x);
 const $input_x__closure = /*@__PURE__*/ _closure($foo_content__input_x);
 const $input_x = /*@__PURE__*/ _const("input_x", $input_x__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

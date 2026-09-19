@@ -17,4 +17,4 @@ function $setup($scope) {
 	$setup__script($scope);
 	$global_title($scope, $scope.$global.title);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

@@ -23,7 +23,7 @@ function $setup$1($scope) {
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
-var row_default = /*@__PURE__*/ _template("__tests__/tags/row.marko", $template$1, $walks$1, $setup$1, $input);
+var row_default = /*@__PURE__*/ _template_patch("__tests__/tags/row.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = "<!><!><!>";
@@ -48,4 +48,4 @@ const $global_search = /*@__PURE__*/ _global_join("search", "__tests__/template.
 function $setup($scope) {
 	$global_search($scope, $scope.$global.search);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", $setup);

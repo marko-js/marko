@@ -37,4 +37,4 @@ const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "inp
 	$if_content__input_title($scope);
 	$input_title__closure($scope);
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

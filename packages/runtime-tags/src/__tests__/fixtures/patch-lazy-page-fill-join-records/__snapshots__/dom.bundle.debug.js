@@ -26,7 +26,7 @@ const $input = ($scope, input) => {
 	$input_list($scope, input.list);
 	$input_content($scope, input.content);
 };
-var layout_default = /*@__PURE__*/ _template("__tests__/layout.marko", $template, $walks, $setup, $input);
+var layout_default = /*@__PURE__*/ _template_patch("__tests__/layout.marko", $template, $walks, $setup, $input);
 
 // page-a.marko
 const $template = "<h1>A</h1><p> </p><!><button> </button>";
@@ -46,7 +46,7 @@ const $input = ($scope, input) => {
 	$input_note($scope, input.note);
 	$input_wide($scope, input.wide);
 };
-var page_a_default = /*@__PURE__*/ _template("__tests__/page-a.marko", $template, $walks, $setup, $input);
+var page_a_default = /*@__PURE__*/ _template_patch("__tests__/page-a.marko", $template, $walks, $setup, $input);
 
 // tags/card.marko
 const $template$1 = "<section><h2> </h2><!></section>";
@@ -60,7 +60,7 @@ const $input$1 = ($scope, input) => {
 	$input_content($scope, input.content);
 	$input_title($scope, input.title);
 };
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
 
 // page-b.marko
 const $template = "<h1>B</h1><!><button> </button>";
@@ -95,7 +95,7 @@ const $p__closure = /*@__PURE__*/ _closure($card_content__p);
 const $p = /*@__PURE__*/ _const("p", $p__closure);
 const $input_note = $p;
 const $input = ($scope, input) => $input_note($scope, input.note);
-var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template, $walks, $setup, $input);
+var page_b_default = /*@__PURE__*/ _template_patch("__tests__/page-b.marko", $template, $walks, $setup, $input);
 
 // template.marko
 const $template = "<html><body></body></html>";
@@ -139,4 +139,4 @@ const $input_wide__closure = /*@__PURE__*/ _closure($if_content__input_wide);
 const $input_wide = /*@__PURE__*/ _const("input_wide", $input_wide__closure);
 const $input_note__closure = /*@__PURE__*/ _closure($if_content__input_note, $else_content2__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D l", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "D l", 0, $input);

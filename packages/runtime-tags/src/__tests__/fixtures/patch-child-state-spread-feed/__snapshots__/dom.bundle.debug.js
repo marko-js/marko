@@ -11,7 +11,7 @@ const $input_tab = ($scope, input_tab) => {
 };
 const $input = ($scope, input) => $input_tab($scope, input.tab);
 const $input_tab_on = /*@__PURE__*/ _const("input_tab_on", $if_content__input_tab_on);
-var tabs_default = /*@__PURE__*/ _template("__tests__/tags/tabs/index.marko", $template$1, "b%c", 0, $input);
+var tabs_default = /*@__PURE__*/ _template_patch("__tests__/tags/tabs/index.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = "<main><!><button class=flip>f</button><button class=toggle>t</button></main>";
@@ -46,4 +46,4 @@ function $setup($scope) {
 	$on($scope, false);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

@@ -14,4 +14,4 @@ const $global_brand = _global_join_resume("brand", "__tests__/template.marko_0_$
 function $setup($scope) {
 	$global_brand($scope, $scope.$global.brand);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "E m", $setup);

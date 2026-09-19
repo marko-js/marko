@@ -9,7 +9,7 @@ const $input_item = ($scope, input_item) => {
 	$input_item_name($scope, input_item?.name);
 	$input_item_hot($scope, input_item?.hot);
 };
-var row_default = /*@__PURE__*/ _template("__tests__/tags/row.marko", $template$1, $walks$1, 0, $input$1);
+var row_default = /*@__PURE__*/ _template_patch("__tests__/tags/row.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<ul></ul><button> </button>";
@@ -27,4 +27,4 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of("#ul/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), 0, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, (item) => item.id]);
 const $input = ($scope, input) => $input_items($scope, input.items);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

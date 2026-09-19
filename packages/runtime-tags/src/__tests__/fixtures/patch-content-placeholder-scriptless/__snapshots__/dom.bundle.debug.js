@@ -24,7 +24,7 @@ const $input_content__closure = /*@__PURE__*/ _closure($placeholder_content__inp
 const $input_content = /*@__PURE__*/ _const("input_content", $input_content__closure);
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promise);
 const $input_promise$1 = /*@__PURE__*/ _const("input_promise", $input_promise__closure);
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, "D%l", $setup$1, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card/index.marko", $template$1, "D%l", $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
@@ -43,4 +43,4 @@ const $input = ($scope, input) => {
 };
 const $input_note__closure = /*@__PURE__*/ _closure($card_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

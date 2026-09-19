@@ -17,7 +17,7 @@ const $valueChange = ($scope) => function(v) {
 	$n$1($scope, v);
 };
 _resume("__tests__/counter.marko_0/valueChange", $valueChange);
-var counter_default = /*@__PURE__*/ _template("__tests__/counter.marko", $template$1, $walks$1, $setup$1, $input$1);
+var counter_default = /*@__PURE__*/ _template_patch("__tests__/counter.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<main><!><p> </p></main>";
@@ -32,4 +32,4 @@ const $input = ($scope, input) => {
 	$input_on($scope, input.on);
 	$input_start($scope, input.start);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, 0, $input);

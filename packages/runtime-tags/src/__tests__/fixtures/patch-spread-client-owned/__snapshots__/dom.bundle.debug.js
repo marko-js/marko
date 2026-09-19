@@ -18,4 +18,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_attrs($scope, input.attrs);
 const $input_attrs = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_attrs", $if_content__input_attrs);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

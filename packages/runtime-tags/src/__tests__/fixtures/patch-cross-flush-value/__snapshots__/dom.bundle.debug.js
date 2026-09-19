@@ -19,7 +19,7 @@ const $input$1 = ($scope, input) => {
 	$input_tag($scope, input.tag);
 };
 const $input_tag = /*@__PURE__*/ _const("input_tag", ($scope) => $input_tag_name($scope, $scope.input_tag?.name));
-var tagged_default = /*@__PURE__*/ _template("__tests__/tags/tagged/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var tagged_default = /*@__PURE__*/ _template_patch("__tests__/tags/tagged/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<!><!><!><!>";
@@ -50,4 +50,4 @@ const $input = ($scope, input) => {
 	$input_first($scope, input.first);
 	$input_second($scope, input.second);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -13,4 +13,4 @@ function $setup($scope) {
 }
 const $min = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "min", $count__OR__input_min);
 const $input = ($scope, input) => $min($scope, input.min);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

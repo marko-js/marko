@@ -6,7 +6,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content$1 = $dynamicTag;
 const $input$2 = ($scope, input) => $input_content$1($scope, input.content);
-var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $template$2, "D%l", 0, $input$2);
+var frame_default = /*@__PURE__*/ _template_patch("__tests__/tags/frame.marko", $template$2, "D%l", 0, $input$2);
 
 // tags/card.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<section><h2> </h2>${_w0}</section>`)($template$2);
@@ -18,7 +18,7 @@ const $input$1 = ($scope, input) => {
 	$input_content($scope, input.content);
 	$input_title($scope, input.title);
 };
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>+</button></main>";
@@ -59,4 +59,4 @@ const $input = ($scope, input) => {
 	$input_p($scope, input.p);
 	$input_items($scope, input.items);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

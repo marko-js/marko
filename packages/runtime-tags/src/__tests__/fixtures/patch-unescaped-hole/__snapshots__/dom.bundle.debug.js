@@ -17,4 +17,4 @@ const $input_html = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "inpu
 	_html($scope, $scope.input_html, "#text/0");
 }, $if_content__input_html);
 const $input = ($scope, input) => $input_html($scope, input.html);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

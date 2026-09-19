@@ -6,4 +6,4 @@ function $setup($scope) {
 	_attr_content($scope, "#section/1", null);
 	_attr_content($scope, "#span/2", false);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

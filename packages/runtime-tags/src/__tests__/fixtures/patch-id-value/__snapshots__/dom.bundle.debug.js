@@ -13,4 +13,4 @@ const $z = ($scope, z) => {
 };
 const $input_z = ($scope, input_z) => $z($scope, input_z || _id($scope, "IdFallback:z"));
 const $input = ($scope, input) => $input_z($scope, input.z);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

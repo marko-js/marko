@@ -9,7 +9,7 @@ function $setup$2($scope) {
 	$setup__script$1($scope);
 	$n($scope, 1);
 }
-var inner_default = /*@__PURE__*/ _template("__tests__/tags/widget/tags/inner/index.marko", $template$2, " b", $setup$2);
+var inner_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/tags/inner/index.marko", $template$2, " b", $setup$2);
 
 // tags/widget/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `${_w0}<em> </em>`)($template$2);
@@ -19,7 +19,7 @@ function $setup$1($scope) {
 	_var($scope, "#childScope/0", $v);
 	$setup$2($scope["#childScope/0"]);
 }
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, $walks$1, $setup$1);
+var widget_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/index.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
 const $template = "<main><!><button class=toggle>t</button></main>";
@@ -36,4 +36,4 @@ function $setup($scope) {
 	$show($scope, true);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

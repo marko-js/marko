@@ -22,4 +22,4 @@ const $input = ($scope, input) => {
 	$input_title($scope, input.title);
 	$input_color($scope, input.color);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

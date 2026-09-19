@@ -21,4 +21,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_selected($scope, input.selected);
 const $input_selected = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_selected", $for_content__input_selected);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

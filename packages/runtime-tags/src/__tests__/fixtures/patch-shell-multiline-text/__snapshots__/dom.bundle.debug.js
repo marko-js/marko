@@ -11,4 +11,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_note = /*@__PURE__*/ _const("input_note", $if_content__input_note);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

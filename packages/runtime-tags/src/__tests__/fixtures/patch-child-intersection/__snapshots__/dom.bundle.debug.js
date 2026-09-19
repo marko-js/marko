@@ -12,7 +12,7 @@ function $setup$1($scope) {
 }
 const $input_label$1 = /*@__PURE__*/ _fill_const("__tests__/tags/price-card.marko0", "input_label", $input_label__OR__qty);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);
-var price_card_default = /*@__PURE__*/ _template("__tests__/tags/price-card.marko", $template$1, $walks$1, $setup$1, $input$1);
+var price_card_default = /*@__PURE__*/ _template_patch("__tests__/tags/price-card.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1>${_w0}</main>`)($template$1);
@@ -26,4 +26,4 @@ const $input = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_title($scope, input.title);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

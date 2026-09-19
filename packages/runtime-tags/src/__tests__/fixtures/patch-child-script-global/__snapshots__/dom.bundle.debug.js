@@ -14,7 +14,7 @@ const $global_brand = _global_join_resume("brand", "__tests__/tags/badge/index.m
 function $setup$1($scope) {
 	$global_brand($scope, $scope.$global.brand);
 }
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$1, "D l", $setup$1);
+var badge_default = /*@__PURE__*/ _template_patch("__tests__/tags/badge/index.marko", $template$1, "D l", $setup$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
@@ -22,4 +22,4 @@ const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D l");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

@@ -4,11 +4,12 @@ const $walks = "D l";
 const $setup = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", 0, $input);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/child.marko", $template, "D l", 0, $input);
 
 // template.marko
 const $template = "<button class=n> </button><main><!></main>";
 const $walks = " D lD%l";
+_load_lazy("ready:__tests__/child.marko", () => import("./child.mjs").then(() => {}));
 const Child = _load_ready_template("ready:__tests__/child.marko", /*@__PURE__*/ _load_template("__tests__/child.marko", () => import("./child.mjs").then((mod) => mod.default)));
 const $n = /*@__PURE__*/ _let("n/8", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -26,4 +27,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 	$input_label($scope, input.label);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

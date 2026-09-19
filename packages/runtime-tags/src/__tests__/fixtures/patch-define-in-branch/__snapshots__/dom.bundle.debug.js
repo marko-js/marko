@@ -21,4 +21,4 @@ const $input = ($scope, input) => {
 };
 const $input_suffix__closure = /*@__PURE__*/ _closure($row_content__input_suffix);
 const $input_suffix = /*@__PURE__*/ _const("input_suffix", $input_suffix__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

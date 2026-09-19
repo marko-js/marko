@@ -23,4 +23,4 @@ const $checkedValueChange = ($scope) => function(next) {
 };
 _resume("__tests__/template.marko_0/checkedValueChange2", $checkedValueChange2);
 _resume("__tests__/template.marko_0/checkedValueChange", $checkedValueChange);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

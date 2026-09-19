@@ -26,7 +26,7 @@ const $input = ($scope, input) => {
 	$input_list($scope, input.list);
 };
 const $input_list = /*@__PURE__*/ _const("input_list", $else_content__input_list);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D l", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "D l", 0, $input);
 
 // layout.marko
 var layout_exports = /* @__PURE__ */ __exportAll({
@@ -56,16 +56,16 @@ const $input = ($scope, input) => {
 	$input_list($scope, input.list);
 	$input_content($scope, input.content);
 };
-var layout_default = /*@__PURE__*/ _template("__tests__/layout.marko", $template, $walks, $setup, $input);
+var layout_default = /*@__PURE__*/ _template_patch("__tests__/layout.marko", $template, $walks, $setup, $input);
 
 // page-a.marko
 const $template = "<h1>A</h1>";
 const $walks = "b";
 const $setup = () => {};
-var page_a_default = /*@__PURE__*/ _template("__tests__/page-a.marko", $template, "b");
+var page_a_default = /*@__PURE__*/ _template_patch("__tests__/page-a.marko", $template, "b");
 
 // page-b.marko
 const $template = "<h1>B</h1>";
 const $walks = "b";
 const $setup = () => {};
-var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template, "b");
+var page_b_default = /*@__PURE__*/ _template_patch("__tests__/page-b.marko", $template, "b");

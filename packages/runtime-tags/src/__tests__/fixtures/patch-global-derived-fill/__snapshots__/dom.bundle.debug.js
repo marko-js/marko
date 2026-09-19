@@ -27,4 +27,4 @@ function $setup($scope) {
 	$global_prefix($scope, $scope.$global.prefix);
 }
 const $input = ($scope, input) => $input_name($scope, input.name);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

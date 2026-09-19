@@ -12,7 +12,7 @@ const $_return = ($scope) => function(next) {
 	$last($scope, next);
 };
 _resume("__tests__/tags/store.marko_0/_return", $_return);
-var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", "", $setup$1);
+var store_default = /*@__PURE__*/ _template_patch("__tests__/tags/store.marko", "", "", $setup$1);
 
 // template.marko
 const $template = "<!><!><!>";
@@ -58,4 +58,4 @@ function $setup($scope) {
 const $input = ($scope, input) => $input_show($scope, input.show);
 const $input_show__closure = /*@__PURE__*/ _closure($for_content2__input_show);
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", $setup, $input);

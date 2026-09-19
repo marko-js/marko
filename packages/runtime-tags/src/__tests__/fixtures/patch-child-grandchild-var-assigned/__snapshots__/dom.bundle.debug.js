@@ -14,7 +14,7 @@ const $valueChange = ($scope) => function(v) {
 	$n($scope, v);
 };
 _resume("__tests__/tags/widget/tags/inner/index.marko_0/valueChange", $valueChange);
-var inner_default = /*@__PURE__*/ _template("__tests__/tags/widget/tags/inner/index.marko", $template$2, " b", $setup$2);
+var inner_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/tags/inner/index.marko", $template$2, " b", $setup$2);
 
 // tags/widget/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `${_w0}<em> </em><button class=reset>r</button>`)($template$2);
@@ -28,7 +28,7 @@ function $setup$1($scope) {
 	$setup$2($scope["#childScope/0"]);
 	$setup__script$1($scope);
 }
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, $walks$1, $setup$1);
+var widget_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/index.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
 const $template = "<main><!><button class=toggle>t</button></main>";
@@ -45,4 +45,4 @@ function $setup($scope) {
 	$show($scope, true);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

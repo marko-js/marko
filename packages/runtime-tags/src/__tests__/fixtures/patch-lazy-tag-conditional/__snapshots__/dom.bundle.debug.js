@@ -11,7 +11,7 @@ function $setup($scope) {
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // template.marko
 const $template = "<main></main>";
@@ -32,7 +32,7 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_label = /*@__PURE__*/ _const("input_label", $if_content__input_label);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);
 
 // v:child.marko.setup.js
 const _ = [

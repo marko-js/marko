@@ -5,7 +5,7 @@ const $global_brand = /*@__PURE__*/ _global_join("brand", "__tests__/tags/outer/
 function $setup$2($scope) {
 	$global_brand($scope, $scope.$global.brand);
 }
-var inner_default = /*@__PURE__*/ _template("__tests__/tags/outer/tags/inner/index.marko", $template$2, "D l", $setup$2);
+var inner_default = /*@__PURE__*/ _template_patch("__tests__/tags/outer/tags/inner/index.marko", $template$2, "D l", $setup$2);
 
 // tags/outer/index.marko
 const $template$1 = $template$2;
@@ -13,7 +13,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
 function $setup$1($scope) {
 	$setup$2($scope["#childScope/0"]);
 }
-var outer_default = /*@__PURE__*/ _template("__tests__/tags/outer/index.marko", $template$1, $walks$1, $setup$1);
+var outer_default = /*@__PURE__*/ _template_patch("__tests__/tags/outer/index.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
@@ -30,4 +30,4 @@ function $setup($scope) {
 	$show($scope, true);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

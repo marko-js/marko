@@ -6,7 +6,7 @@ const $global_locale = /*@__PURE__*/ _global_join("locale", "__tests__/tags/tagg
 function $setup$1($scope) {
 	$global_locale($scope, $scope.$global.locale);
 }
-var tagger_default = /*@__PURE__*/ _template("__tests__/tags/tagger/index.marko", $template$1, "b", $setup$1);
+var tagger_default = /*@__PURE__*/ _template_patch("__tests__/tags/tagger/index.marko", $template$1, "b", $setup$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p> </p></main>`)($template$1);
@@ -16,4 +16,4 @@ function $setup($scope) {
 	_var($scope, "#childScope/0", $tag);
 	$setup$1($scope["#childScope/0"]);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

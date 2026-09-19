@@ -22,7 +22,7 @@ const $input = ($scope, input) => {
 	(({ button, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);
 	$buttons($scope, input.button);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", 0, $input);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/tags/child.marko", $template$1, " b", 0, $input);
 
 // template.marko
 const $template = $template$1;
@@ -35,4 +35,4 @@ function $setup($scope) {
 	}));
 	$htmlInput($scope["#childScope/0"], {});
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

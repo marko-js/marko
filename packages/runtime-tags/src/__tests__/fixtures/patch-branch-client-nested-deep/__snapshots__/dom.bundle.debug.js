@@ -23,4 +23,4 @@ const $input = ($scope, input) => {
 const $input_a = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_a", $if_content__input_a);
 const $input_b__closure = /*@__PURE__*/ _closure($if_content2__input_b);
 const $input_b = /*@__PURE__*/ _fill_const("__tests__/template.marko1", "input_b", $input_b__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

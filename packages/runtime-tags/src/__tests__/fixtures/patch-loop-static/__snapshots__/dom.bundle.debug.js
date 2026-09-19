@@ -15,4 +15,4 @@ const $input = ($scope, input) => {
 	$input_title($scope, input.title);
 };
 const $input_note = /*@__PURE__*/ _const("input_note", $for_content__input_note);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

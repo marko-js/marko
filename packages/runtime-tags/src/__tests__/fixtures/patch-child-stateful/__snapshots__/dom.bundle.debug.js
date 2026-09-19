@@ -9,7 +9,7 @@ function $setup$1($scope) {
 	$setup__script$1($scope);
 	$n($scope, 0);
 }
-var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$1, $walks$1, $setup$1);
+var counter_default = /*@__PURE__*/ _template_patch("__tests__/tags/counter/index.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
 const $template = "<main><!><button class=t>t</button></main>";
@@ -26,4 +26,4 @@ function $setup($scope) {
 	$show($scope, false);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

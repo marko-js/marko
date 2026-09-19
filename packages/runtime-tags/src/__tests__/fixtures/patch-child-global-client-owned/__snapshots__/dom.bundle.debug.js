@@ -12,7 +12,7 @@ const $input = ($scope, input) => {
 	$input_body($scope, input.body);
 };
 const $input_body = /*@__PURE__*/ _fill_const("__tests__/tags/panel/index.marko0", "input_body", $if_content__input_body);
-var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel/index.marko", $template$1, "b%c", 0, $input);
+var panel_default = /*@__PURE__*/ _template_patch("__tests__/tags/panel/index.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -29,4 +29,4 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

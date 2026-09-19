@@ -32,4 +32,4 @@ const $input_detail__closure = /*@__PURE__*/ _closure($catch_content__input_deta
 const $input_detail = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_detail", $input_detail__closure);
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promise);
 const $input_promise = /*@__PURE__*/ _const("input_promise", $input_promise__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

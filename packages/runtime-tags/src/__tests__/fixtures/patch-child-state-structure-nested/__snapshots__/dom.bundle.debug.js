@@ -17,7 +17,7 @@ const $input$1 = ($scope, input) => {
 const $input_inner$1 = /*@__PURE__*/ _fill_const("__tests__/tags/panel/index.marko0", "input_inner", $if_content__input_inner);
 const $input_title__closure = /*@__PURE__*/ _closure($if_content2__input_title);
 const $input_title$1 = /*@__PURE__*/ _fill_const("__tests__/tags/panel/index.marko1", "input_title", $input_title__closure);
-var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel/index.marko", $template$1, "b%c", 0, $input$1);
+var panel_default = /*@__PURE__*/ _template_patch("__tests__/tags/panel/index.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -36,4 +36,4 @@ const $input = ($scope, input) => {
 	$input_inner($scope, input.inner);
 	$input_title($scope, input.title);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

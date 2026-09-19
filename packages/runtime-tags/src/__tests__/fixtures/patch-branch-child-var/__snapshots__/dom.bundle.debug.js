@@ -7,7 +7,7 @@ function $setup$1($scope) {
 	_return($scope, $root_getter($scope));
 }
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);
-var box_default = /*@__PURE__*/ _template("__tests__/tags/box.marko", $template$1, $walks$1, $setup$1, $input$1);
+var box_default = /*@__PURE__*/ _template_patch("__tests__/tags/box.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<main><!><button id=c> </button></main>";
@@ -38,4 +38,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_label = /*@__PURE__*/ _const("input_label", $if_content__input_label);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

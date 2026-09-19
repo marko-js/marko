@@ -18,7 +18,7 @@ const $input_node_children = /*@__PURE__*/ _const("input_node_children", ($scope
 	$if$1($scope, $scope.input_node_children ? 0 : 1);
 });
 const $input$1 = ($scope, input) => $input_node($scope, input.node);
-var tree_default = /*@__PURE__*/ _template("__tests__/tags/tree.marko", $template$1, $walks$1, 0, $input$1);
+var tree_default = /*@__PURE__*/ _template_patch("__tests__/tags/tree.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<main></main>";
@@ -33,4 +33,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_tree = /*@__PURE__*/ _const("input_tree", $if_content__input_tree);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

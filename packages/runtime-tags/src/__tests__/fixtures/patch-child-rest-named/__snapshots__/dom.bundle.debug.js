@@ -8,7 +8,7 @@ const $input$1 = ($scope, input) => {
 	(({ label, ...rest }) => $rest($scope, rest))(input);
 	$label($scope, input.label);
 };
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, 0, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -23,4 +23,4 @@ function $setup($scope) {
 }
 const $input_title = ($scope, input_title) => $label($scope["#childScope/0"], input_title);
 const $input = ($scope, input) => $input_title($scope, input.title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

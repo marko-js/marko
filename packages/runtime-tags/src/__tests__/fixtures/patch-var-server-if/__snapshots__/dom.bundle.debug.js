@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $double$1 = /*@__PURE__*/ _const("double", ($scope) => _return($scope, $scope.double));
 const $input_value = ($scope, input_value) => $double$1($scope, input_value * 2);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
-var doubler_default = /*@__PURE__*/ _template("__tests__/tags/doubler/index.marko", $template$1, "b", 0, $input$1);
+var doubler_default = /*@__PURE__*/ _template_patch("__tests__/tags/doubler/index.marko", $template$1, "b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($template$1);
@@ -25,4 +25,4 @@ const $if = /*@__PURE__*/ _if("#text/2", "<p>big <!></p>", "Db%", $if_content__s
 const $double = _var_resume("__tests__/template.marko_0_double#8/var", ($scope, double) => $if($scope, double > 4 ? 0 : 1));
 const $input_n = ($scope, input_n) => $input_value($scope["#childScope/0"], input_n);
 const $input = ($scope, input) => $input_n($scope, input.n);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

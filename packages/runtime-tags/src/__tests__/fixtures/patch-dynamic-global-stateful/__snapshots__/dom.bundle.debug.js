@@ -5,7 +5,7 @@ const $global_brand = /*@__PURE__*/ _global_join("brand", "__tests__/card.marko_
 function $setup$1($scope) {
 	$global_brand($scope, $scope.$global.brand);
 }
-var card_default = /*@__PURE__*/ _template("__tests__/card.marko", $template$1, "D l", $setup$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/card.marko", $template$1, "D l", $setup$1);
 
 // template.marko
 const $template = "<main><!><button>+</button></main>";
@@ -19,4 +19,4 @@ function $setup($scope) {
 	$on($scope, true);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

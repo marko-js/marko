@@ -4,7 +4,7 @@ const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$1 = ($scope, input) => $input_label($scope, input.label);
-var tagged_default = /*@__PURE__*/ _template("__tests__/tags/tagged/index.marko", $template$1, "D l", 0, $input$1);
+var tagged_default = /*@__PURE__*/ _template_patch("__tests__/tags/tagged/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = "<!><!><button>+</button>";
@@ -27,4 +27,4 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows]);
 const $input = ($scope, input) => $input_rows($scope, input.rows);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

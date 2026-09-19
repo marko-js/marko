@@ -8,7 +8,7 @@ const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$
 const $setup$1 = $await_content;
 const $input_promise$1 = $await_promise;
 const $input$1 = ($scope, input) => $input_promise$1($scope, input.promise);
-var loader_default = /*@__PURE__*/ _template("__tests__/tags/loader.marko", $template$1, "D%l", $setup$1, $input$1);
+var loader_default = /*@__PURE__*/ _template_patch("__tests__/tags/loader.marko", $template$1, "D%l", $setup$1, $input$1);
 
 // template.marko
 const $template = "<main></main>";
@@ -26,4 +26,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_promise = /*@__PURE__*/ _const("input_promise", $if_content__input_promise);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

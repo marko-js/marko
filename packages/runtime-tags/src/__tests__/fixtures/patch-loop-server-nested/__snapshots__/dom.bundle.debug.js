@@ -21,4 +21,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_list($scope, input.list);
 const $input_list = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_list", $for_content__input_list);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

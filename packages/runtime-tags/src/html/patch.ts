@@ -760,10 +760,28 @@ export function _patch_dynamic_tag(
       ];
       while (entry.length > 1 && !entry[entry.length - 1]) entry.pop();
       if (native && entry.length > 1) entry[0] = ">" + renderer;
-      writePatch(scopeId, {
-        [PatchKey.DynamicTag + accessor]:
-          entry.length > 1 || native ? entry : entry[0],
-      });
+      // A lazy template's entry rides its channel: the shell's inits and
+      // effects resolve against the module, so creation waits for it.
+      const readyId = (renderer as ServerRenderer | undefined)?.[
+        RendererProp.ReadyId
+      ];
+      writePatch(
+        scopeId,
+        {
+          [PatchKey.DynamicTag + accessor]:
+            entry.length > 1 || native ? entry : entry[0],
+        },
+        readyId
+          ? {
+              readyId,
+              parent: getChunk()!.serializeState,
+              guardScope: scopeId,
+              resumes: "",
+              writeScopes: {},
+              flushScopes: false,
+            }
+          : undefined,
+      );
     }
   }
   // How a patch treats the tag (`_dynamic_tag`'s `patchPairing`): `1` pairs it,

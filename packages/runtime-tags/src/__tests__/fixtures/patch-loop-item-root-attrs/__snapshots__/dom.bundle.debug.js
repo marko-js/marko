@@ -4,7 +4,7 @@ const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input_name = ($scope, input_name) => _text_content($scope["#title/0"], input_name);
 const $input$1 = ($scope, input) => $input_name($scope, input.name);
-var icon_default = /*@__PURE__*/ _template("__tests__/tags/icon.marko", $template$1, "D l", 0, $input$1);
+var icon_default = /*@__PURE__*/ _template_patch("__tests__/tags/icon.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = "<nav></nav><main></main>";
@@ -40,4 +40,4 @@ const $input = ($scope, input) => {
 	$input_items($scope, input.items);
 };
 const $input_path = /*@__PURE__*/ _const("input_path", $for_content__input_path);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, 0, $input);

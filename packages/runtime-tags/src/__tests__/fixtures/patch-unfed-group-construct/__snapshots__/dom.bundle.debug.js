@@ -18,7 +18,7 @@ const $input$1 = ($scope, input) => {
 	$input_b($scope, input.b);
 };
 const $input_b = /*@__PURE__*/ _fill_const("__tests__/tags/kid.marko0", "input_b", $if_content__input_b);
-var kid_default = /*@__PURE__*/ _template("__tests__/tags/kid.marko", $template$1, $walks$1, $setup$1, $input$1);
+var kid_default = /*@__PURE__*/ _template_patch("__tests__/tags/kid.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<!><!><!>";
@@ -37,4 +37,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_a = /*@__PURE__*/ _const("input_a", $if_content__input_a);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", 0, $input);

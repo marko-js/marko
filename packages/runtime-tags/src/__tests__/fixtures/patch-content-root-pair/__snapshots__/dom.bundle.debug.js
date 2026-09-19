@@ -13,4 +13,4 @@ function $setup($scope) {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -12,4 +12,4 @@ const $global_brand__OR__$global_locale = _global_join_resume("locale", "__tests
 function $setup($scope) {
 	$global_other($scope, $scope.$global.other);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "E m", $setup);

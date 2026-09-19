@@ -18,4 +18,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_onChange($scope, input.onChange);
 const $input_onChange = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_onChange", $if_content__input_onChange);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

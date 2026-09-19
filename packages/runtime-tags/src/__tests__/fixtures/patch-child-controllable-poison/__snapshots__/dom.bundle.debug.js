@@ -20,7 +20,7 @@ const $input$1 = ($scope, input) => {
 };
 const $input_onCount = /*@__PURE__*/ _fill_const("__tests__/tags/counter/index.marko0", "input_onCount", $if_content__input_onCount);
 const $input_step = /*@__PURE__*/ _const("input_step");
-var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$1, "b%c", 0, $input$1);
+var counter_default = /*@__PURE__*/ _template_patch("__tests__/tags/counter/index.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko
 const $template = "<main><h1> </h1><p>Last <!></p><!></main>";
@@ -51,4 +51,4 @@ const $onCount = ($scope) => (next) => {
 	$last($scope, next);
 };
 _resume("__tests__/template.marko_0/onCount", $onCount);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

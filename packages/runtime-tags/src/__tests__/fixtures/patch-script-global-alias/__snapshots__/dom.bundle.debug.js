@@ -10,4 +10,4 @@ const $global_brand = /*@__PURE__*/ _global_join("brand", "__tests__/template.ma
 function $setup($scope) {
 	$global_brand($scope, $scope.$global.brand);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "E m", $setup);

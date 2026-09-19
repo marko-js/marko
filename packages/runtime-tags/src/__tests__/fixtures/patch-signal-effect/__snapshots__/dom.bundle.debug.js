@@ -24,4 +24,4 @@ function $setup($scope) {
 }
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__OR__count);
 const $input = ($scope, input) => $input_label($scope, input.label);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

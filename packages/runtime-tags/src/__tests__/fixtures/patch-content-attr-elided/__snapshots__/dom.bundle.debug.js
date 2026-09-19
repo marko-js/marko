@@ -20,4 +20,4 @@ const $input = ($scope, input) => {
 	$input_note($scope, input.note);
 	$input_mode($scope, input.mode);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

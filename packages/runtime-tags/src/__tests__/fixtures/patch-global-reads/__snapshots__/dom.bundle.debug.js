@@ -9,4 +9,4 @@ function $setup($scope) {
 	$global_locale($scope, $scope.$global.locale);
 	$global_brand($scope, $scope.$global.brand);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

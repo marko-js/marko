@@ -14,7 +14,7 @@ function $setup$1($scope) {
 }
 const $input$1 = ($scope, input) => $input_node($scope, input.node);
 const $input_node = /*@__PURE__*/ _const("input_node");
-var tagged_default = /*@__PURE__*/ _template("__tests__/tags/tagged/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var tagged_default = /*@__PURE__*/ _template_patch("__tests__/tags/tagged/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = $template$1;
@@ -32,4 +32,4 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 }
 const $input = ($scope, input) => $input_name($scope, input.name);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

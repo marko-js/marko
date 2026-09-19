@@ -6,7 +6,7 @@ function $setup($scope) {
 }
 const $input_color = /*@__PURE__*/ _const("input_color", ($scope) => _style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19interpolation-1btemplate-1amarko_0", $scope.input_color));
 const $input = ($scope, input) => $input_color($scope, input.color);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " c", $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " c", $setup, $input);
 
 // v:template.marko.css
 var v_template_marko_default = "\n  .box {\n    color: var(--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19interpolation-1btemplate-1amarko_0);\n  }\n";

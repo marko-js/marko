@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<em>open</em>");
 const $input_open = ($scope, input_open) => $if$1($scope, input_open ? 0 : 1);
 const $input$1 = ($scope, input) => $input_open($scope, input.open);
-var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko", $template$1, "b%c", 0, $input$1);
+var widget_default = /*@__PURE__*/ _template_patch("__tests__/tags/widget/index.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
@@ -23,4 +23,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_o($scope, input.o);
 const $input_o = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_o", $if_content__input_o);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

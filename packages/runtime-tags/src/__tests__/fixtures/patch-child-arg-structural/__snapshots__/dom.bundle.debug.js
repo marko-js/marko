@@ -8,7 +8,7 @@ const $setup$1 = () => {};
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<div>a</div>", 0, 0, "<span>b</span>");
 const $input_mode = ($scope, input_mode) => $if$1($scope, input_mode ? 0 : 1);
 const $input = ($scope, input) => $input_mode($scope, input.mode);
-var struct_default = /*@__PURE__*/ _template("__tests__/tags/struct/index.marko", $template$1, "b%c", 0, $input);
+var struct_default = /*@__PURE__*/ _template_patch("__tests__/tags/struct/index.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
@@ -23,4 +23,4 @@ function $setup($scope) {
 	$show($scope, true);
 	$setup__script($scope);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

@@ -22,4 +22,4 @@ const $input = ($scope, input) => {
 };
 const $input_value__closure = /*@__PURE__*/ _closure($try_content__input_value, $await_content__input_value);
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

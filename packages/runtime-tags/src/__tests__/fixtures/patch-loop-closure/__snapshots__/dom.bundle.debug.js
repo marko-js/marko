@@ -16,4 +16,4 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> <span> </span></li>", "D bD ", $for_content__setup, $for_content__$params);
 const $input_labels = ($scope, input_labels) => $for($scope, [input_labels]);
 const $input = ($scope, input) => $input_labels($scope, input.labels);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

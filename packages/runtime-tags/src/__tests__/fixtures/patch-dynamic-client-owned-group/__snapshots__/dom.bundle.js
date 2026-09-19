@@ -7,7 +7,7 @@ const $input = ($scope, input) => $input_label$2($scope, input.label);
 function $setup($scope) {
 	$global_brand($scope, $scope.$.brand);
 }
-var card_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
+var card_default = /*@__PURE__*/ _template_patch("b", $template, $walks, $setup, $input);
 
 // tags/picker/index.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);

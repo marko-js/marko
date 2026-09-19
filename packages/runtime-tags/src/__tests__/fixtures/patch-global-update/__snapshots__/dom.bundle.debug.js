@@ -13,4 +13,4 @@ function $setup($scope) {
 	$read($scope, "");
 	$global_brand($scope, $scope.$global.brand);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

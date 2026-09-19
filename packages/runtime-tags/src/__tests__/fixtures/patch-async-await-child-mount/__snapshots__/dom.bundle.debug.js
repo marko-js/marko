@@ -18,7 +18,7 @@ const $input$1 = ($scope, input) => {
 	$input_start($scope, input.start);
 	$input_label($scope, input.label);
 };
-var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1, $input$1);
+var counter_default = /*@__PURE__*/ _template_patch("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<main><!><button id=c> </button></main>";
@@ -51,4 +51,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_promise = /*@__PURE__*/ _const("input_promise", $if_content__input_promise);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

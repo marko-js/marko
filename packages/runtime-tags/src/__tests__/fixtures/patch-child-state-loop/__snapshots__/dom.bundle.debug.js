@@ -13,7 +13,7 @@ const $input$1 = ($scope, input) => {
 	$input_suffix($scope, input.suffix);
 };
 const $input_suffix = /*@__PURE__*/ _fill_const("__tests__/tags/list/index.marko0", "input_suffix", $for_content__input_suffix);
-var list_default = /*@__PURE__*/ _template("__tests__/tags/list/index.marko", $template$1, " b", 0, $input$1);
+var list_default = /*@__PURE__*/ _template_patch("__tests__/tags/list/index.marko", $template$1, " b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -28,4 +28,4 @@ function $setup($scope) {
 }
 const $input_s = _fill_const_resume("__tests__/template.marko0", "input_s", ($scope) => $input_suffix($scope["#childScope/0"], $scope.input_s));
 const $input = ($scope, input) => $input_s($scope, input.s);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

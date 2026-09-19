@@ -12,7 +12,7 @@ const $_return = ($scope) => function(next) {
 	$last($scope, next);
 };
 _resume("__tests__/tags/store.marko_0/_return", $_return);
-var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", "", $setup$2);
+var store_default = /*@__PURE__*/ _template_patch("__tests__/tags/store.marko", "", "", $setup$2);
 
 // tags/child.marko
 const $template$1 = "<!><!><!>";
@@ -34,7 +34,7 @@ const $input$1 = ($scope, input) => {
 	$input_on($scope, input.on);
 };
 const $input_on = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko0", "input_on", $if_content__input_on);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", 0, $input$1);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/tags/child.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}<p> </p>${_w1}<!>`)("", $template$1);
@@ -51,4 +51,4 @@ function $setup($scope) {
 }
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/3"], input_show);
 const $input = ($scope, input) => $input_show($scope, input.show);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

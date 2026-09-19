@@ -10,7 +10,7 @@ const $_return = ($scope) => (next) => {
 	$last($scope, next);
 };
 _resume("__tests__/tags/store.marko_0/_return", $_return);
-var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", $template$2, "D l", $setup$2);
+var store_default = /*@__PURE__*/ _template_patch("__tests__/tags/store.marko", $template$2, "D l", $setup$2);
 
 // tags/frame.marko
 const $template$1 = "<section><!></section>";
@@ -20,7 +20,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $template$1, "D%l", 0, $input$1);
+var frame_default = /*@__PURE__*/ _template_patch("__tests__/tags/frame.marko", $template$1, "D%l", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$1);
@@ -46,4 +46,4 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/1", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => $input_show($scope, input.show);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

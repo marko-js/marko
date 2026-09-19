@@ -27,4 +27,4 @@ const $input = ($scope, input) => {
 	$input_options($scope, input.options);
 	$input_pick($scope, input.pick);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

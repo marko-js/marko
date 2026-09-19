@@ -6,7 +6,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input$2 = ($scope, input) => $input_content($scope, input.content);
-var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap/index.marko", $template$2, "D%l", 0, $input$2);
+var wrap_default = /*@__PURE__*/ _template_patch("__tests__/tags/wrap/index.marko", $template$2, "D%l", 0, $input$2);
 
 // tags/card/index.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}`)($template$2);
@@ -26,7 +26,7 @@ function $setup$1($scope) {
 const $input$1 = ($scope, input) => $input_note$1($scope, input.note);
 const $input_note__closure = /*@__PURE__*/ _closure($wrap_content__input_note);
 const $input_note$1 = /*@__PURE__*/ _const("input_note", $input_note__closure);
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<!><!><!>";
@@ -44,4 +44,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_note = /*@__PURE__*/ _const("input_note", $if_content__input_note);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", 0, $input);

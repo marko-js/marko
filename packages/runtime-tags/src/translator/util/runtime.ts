@@ -54,6 +54,7 @@ const pureDOMFunctions = new Set<string>([
   "_content_closures",
   "_content",
   "_template",
+  "_template_patch",
   "_closure",
   "_closure_get",
   "_or",

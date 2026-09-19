@@ -26,4 +26,4 @@ function $setup($scope) {
 }
 const $input_keyField = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_keyField", $input_keyField__OR__items);
 const $input = ($scope, input) => $input_keyField($scope, input.keyField);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

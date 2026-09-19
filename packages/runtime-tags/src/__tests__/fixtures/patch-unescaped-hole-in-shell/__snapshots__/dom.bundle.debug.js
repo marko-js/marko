@@ -40,4 +40,4 @@ const $input_html = /*@__PURE__*/ _const("input_html", ($scope) => {
 	$if_content__input_html($scope);
 	$input_html__closure($scope);
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

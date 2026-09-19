@@ -5,7 +5,7 @@ const $global_brand = /*@__PURE__*/ _global_join("brand", "a0", ($scope, $global
 function $setup($scope) {
 	$global_brand($scope, $scope.$.brand);
 }
-var card_default = /*@__PURE__*/ _template("a", $template, "D l", $setup);
+var card_default = /*@__PURE__*/ _template_patch("a", $template, "D l", $setup);
 
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);

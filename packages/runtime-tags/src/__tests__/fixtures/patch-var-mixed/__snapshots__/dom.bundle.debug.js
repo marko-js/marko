@@ -12,7 +12,7 @@ function $setup$1($scope) {
 }
 const $input_value = /*@__PURE__*/ _fill_const("__tests__/tags/mixer/index.marko0", "input_value", $input_value__OR__local);
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
-var mixer_default = /*@__PURE__*/ _template("__tests__/tags/mixer/index.marko", $template$1, " b", $setup$1, $input$1);
+var mixer_default = /*@__PURE__*/ _template_patch("__tests__/tags/mixer/index.marko", $template$1, " b", $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p> </p></main>`)($template$1);
@@ -24,4 +24,4 @@ function $setup($scope) {
 }
 const $input_n = ($scope, input_n) => $input_value($scope["#childScope/0"], input_n);
 const $input = ($scope, input) => $input_n($scope, input.n);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

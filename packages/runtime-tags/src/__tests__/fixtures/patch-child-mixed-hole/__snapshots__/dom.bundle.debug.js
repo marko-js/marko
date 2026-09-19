@@ -9,7 +9,7 @@ const $input$1 = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_qty($scope, input.qty);
 };
-var combo_default = /*@__PURE__*/ _template("__tests__/tags/combo/index.marko", $template$1, "D l", 0, $input$1);
+var combo_default = /*@__PURE__*/ _template_patch("__tests__/tags/combo/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -24,4 +24,4 @@ function $setup($scope) {
 }
 const $input_title = _fill_const_resume("__tests__/template.marko0", "input_title", ($scope) => $input_label($scope["#childScope/0"], $scope.input_title));
 const $input = ($scope, input) => $input_title($scope, input.title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

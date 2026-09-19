@@ -7,7 +7,7 @@ const $input$2 = ($scope, input) => $input_label$2($scope, input.label);
 function $setup$2($scope) {
 	$global_brand($scope, $scope.$global.brand);
 }
-var card_default = /*@__PURE__*/ _template("__tests__/tags/picker/card.marko", $template$2, $walks$2, $setup$2, $input$2);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/picker/card.marko", $template$2, $walks$2, $setup$2, $input$2);
 
 // tags/picker/index.marko
 const $template$1 = "<!><!><!>";
@@ -21,7 +21,7 @@ const $input$1 = ($scope, input) => {
 	$input_on($scope, input.on);
 	$input_label$1($scope, input.label);
 };
-var picker_default = /*@__PURE__*/ _template("__tests__/tags/picker/index.marko", $template$1, "b%c", 0, $input$1);
+var picker_default = /*@__PURE__*/ _template_patch("__tests__/tags/picker/index.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -36,4 +36,4 @@ function $setup($scope) {
 }
 const $input_label = _fill_const_resume("__tests__/template.marko0", "input_label", ($scope) => $input_label$1($scope["#childScope/0"], $scope.input_label));
 const $input = ($scope, input) => $input_label($scope, input.label);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

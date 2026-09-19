@@ -22,7 +22,7 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_label($scope, input.label);
 const $input_label = /*@__PURE__*/ _const("input_label", $for_content__input_label);
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // template.marko
 const $template = "<button class=n> </button><main></main><p> </p>";
@@ -48,4 +48,4 @@ const $input = ($scope, input) => {
 	$input_label($scope, input.label);
 	$input_show($scope, input.show);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

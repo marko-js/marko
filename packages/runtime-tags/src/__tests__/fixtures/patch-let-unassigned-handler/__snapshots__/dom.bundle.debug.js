@@ -12,4 +12,4 @@ function $setup($scope) {
 	$count($scope, 0);
 }
 const $input = ($scope, input) => $input_foo($scope, input.foo);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

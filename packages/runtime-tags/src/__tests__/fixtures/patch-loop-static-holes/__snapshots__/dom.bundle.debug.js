@@ -30,4 +30,4 @@ const $input_note = /*@__PURE__*/ _const("input_note", ($scope) => {
 	$for_content__input_note($scope);
 	$input_note__closure($scope);
 });
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -15,4 +15,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_on($scope, input.on);
 const $input_on = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_on", $if_content__input_on);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

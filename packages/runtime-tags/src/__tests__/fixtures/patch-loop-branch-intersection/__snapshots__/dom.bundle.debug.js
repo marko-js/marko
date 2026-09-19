@@ -34,4 +34,4 @@ const $input = ($scope, input) => {
 const $input_flag = /*@__PURE__*/ _const("input_flag", $for_content__input_flag);
 const $input_suffix__closure = /*@__PURE__*/ _closure($if_content__input_suffix);
 const $input_suffix = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_suffix", $input_suffix__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

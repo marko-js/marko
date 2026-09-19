@@ -11,7 +11,7 @@ const $input$1 = ($scope, input) => {
 	$input_title$1($scope, input.title);
 };
 const $input_title$1 = /*@__PURE__*/ _fill_const("__tests__/tags/toggle-panel/index.marko0", "input_title", $if_content__input_title);
-var toggle_panel_default = /*@__PURE__*/ _template("__tests__/tags/toggle-panel/index.marko", $template$1, " b", 0, $input$1);
+var toggle_panel_default = /*@__PURE__*/ _template_patch("__tests__/tags/toggle-panel/index.marko", $template$1, " b", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
@@ -26,4 +26,4 @@ function $setup($scope) {
 }
 const $input_title = _fill_const_resume("__tests__/template.marko0", "input_title", ($scope) => $input_title$1($scope["#childScope/0"], $scope.input_title));
 const $input = ($scope, input) => $input_title($scope, input.title);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

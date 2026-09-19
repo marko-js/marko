@@ -3,7 +3,7 @@ const $template$1 = "<em> </em>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input$1 = ($scope, input) => _text($scope["#text/0"], input);
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$1, "D l", 0, $input$1);
+var badge_default = /*@__PURE__*/ _template_patch("__tests__/tags/badge/index.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
@@ -24,4 +24,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_tag($scope, input.tag);
 const $input_tag = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_tag", $if_content__input_tag);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

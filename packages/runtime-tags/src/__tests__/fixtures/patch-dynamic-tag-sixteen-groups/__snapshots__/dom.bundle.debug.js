@@ -132,7 +132,7 @@ const $input$1 = ($scope, input) => {
 	$p15($scope, input.p14);
 	$p16($scope, input.p15);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input$1);
+var child_default = /*@__PURE__*/ _template_patch("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<!><!><!>";
@@ -158,4 +158,4 @@ const $input_v = ($scope, input_v) => $dynamicTag($scope, input_v !== undefined 
 	p15: input_v && `v15-${input_v}`
 }));
 const $input = ($scope, input) => $input_v($scope, input.v);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", 0, $input);

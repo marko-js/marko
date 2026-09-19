@@ -24,4 +24,4 @@ const $input = ($scope, input) => {
 	$input_no($scope, input.no);
 	$input_yes($scope, input.yes);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

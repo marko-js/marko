@@ -11,7 +11,7 @@ import {
 import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
 import { _content, createBranch, type Renderer } from "./renderer";
-import { _resume } from "./resume";
+import { _resume, getRegisteredWithScope } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 import { _var_change, type Signal } from "./signals";
 
@@ -45,6 +45,15 @@ export const _template = (
   }
 
   return _resume(id, renderer);
+};
+
+// A patch page's template: a shell a flush shipped first keeps the id, since
+// a flush creates from the shell (its walk creates scopes the data seeds).
+export const _template_patch: typeof _template = (id, ...rest) => {
+  const shell = getRegisteredWithScope(id);
+  const template = _template(id, ...rest);
+  if (shell) _resume(id, shell);
+  return template;
 };
 
 function mount(

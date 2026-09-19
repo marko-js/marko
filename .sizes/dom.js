@@ -1,4 +1,4 @@
-// size: 29183 (min) 10788 (brotli)
+// size: 29242 (min) 10853 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2201,6 +2201,11 @@ let loads = {},
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
+  },
+  _template_patch = (id, ...rest) => {
+    let shell = getRegisteredWithScope(id),
+      template = _template(id, ...rest);
+    return (shell && _resume(id, shell), template);
   },
   noop = (_) => 0,
   _load_template = /*@__PURE__*/ withLazy((id, load) => {

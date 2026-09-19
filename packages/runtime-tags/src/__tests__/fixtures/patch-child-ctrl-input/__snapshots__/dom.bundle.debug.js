@@ -13,7 +13,7 @@ const $input = ($scope, input) => {
 	$input_value($scope, input.value);
 	$input_valueChange($scope, input.valueChange);
 };
-var field_default = /*@__PURE__*/ _template("__tests__/tags/field/index.marko", $template$1, $walks$1, $setup$1, $input);
+var field_default = /*@__PURE__*/ _template_patch("__tests__/tags/field/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = "<main><!><p> </p><button>+</button></main>";
@@ -42,4 +42,4 @@ const $valueChange = ($scope) => (_new_text) => {
 	$text($scope._, _new_text);
 };
 _resume("__tests__/template.marko_1/valueChange", $valueChange);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

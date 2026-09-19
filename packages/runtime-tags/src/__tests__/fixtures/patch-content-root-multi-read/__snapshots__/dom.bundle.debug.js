@@ -16,4 +16,4 @@ const $input_content = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "i
 	$input_content__OR__count($scope);
 });
 const $input = ($scope, input) => $input_content($scope, input.content);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

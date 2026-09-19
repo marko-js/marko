@@ -8,7 +8,7 @@ const $input = ($scope, input) => $input_n($scope, input.n);
 function $setup$1($scope) {
 	$global_locale($scope, $scope.$global.locale);
 }
-var greet_default = /*@__PURE__*/ _template("__tests__/tags/greet/index.marko", $template$1, "D l", $setup$1, $input);
+var greet_default = /*@__PURE__*/ _template_patch("__tests__/tags/greet/index.marko", $template$1, "D l", $setup$1, $input);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p> </p><button>+</button></main>`)($template$1);
@@ -24,4 +24,4 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $d = _var_resume("__tests__/template.marko_0_d#5/var", ($scope, d) => _text($scope["#text/2"], d));
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

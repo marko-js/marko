@@ -9,6 +9,8 @@ export const LocalClosureValues = "h";
 export const Embed = "i";
 // A shell's content: its walk creates scopes no setup runs.
 export const Shell = "j";
+// A lazy template's ready channel, on its server load wrapper.
+export const ReadyId = "k";
 
 type Self = typeof import("./renderer-prop");
 export type Value = Self[keyof Self];

@@ -33,4 +33,4 @@ const $input_title = /*@__PURE__*/ _const("input_title", $if_content__input_titl
 const $input_inner = /*@__PURE__*/ _const("input_inner", $if_content__input_inner);
 const $input_suffix__closure = /*@__PURE__*/ _closure($if_content2__input_suffix);
 const $input_suffix = /*@__PURE__*/ _const("input_suffix", $input_suffix__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

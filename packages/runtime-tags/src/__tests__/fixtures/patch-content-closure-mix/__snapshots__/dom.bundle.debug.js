@@ -6,7 +6,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, "D%l", 0, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/tags/card/index.marko", $template$1, "D%l", 0, $input$1);
 
 // template.marko
 const $template = "<main></main>";
@@ -33,4 +33,4 @@ const $input = ($scope, input) => {
 };
 const $input_prefix__closure = /*@__PURE__*/ _closure($card_content__input_prefix);
 const $input_prefix = /*@__PURE__*/ _const("input_prefix", $input_prefix__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, " b", 0, $input);

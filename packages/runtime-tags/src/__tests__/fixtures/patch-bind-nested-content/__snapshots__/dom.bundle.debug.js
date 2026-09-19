@@ -12,7 +12,7 @@ const $_return = ($scope) => function(next) {
 	$last($scope, next);
 };
 _resume("__tests__/tags/store.marko_0/_return", $_return);
-var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", "", $setup$2);
+var store_default = /*@__PURE__*/ _template_patch("__tests__/tags/store.marko", "", "", $setup$2);
 
 // tags/frame.marko
 const $template$1 = "<section><!></section>";
@@ -22,7 +22,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $template$1, "D%l", 0, $input$1);
+var frame_default = /*@__PURE__*/ _template_patch("__tests__/tags/frame.marko", $template$1, "D%l", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}<p> </p>${_w1}`)("", $template$1);
@@ -57,4 +57,4 @@ function $setup($scope) {
 const $input = ($scope, input) => $input_show($scope, input.show);
 const $input_show__closure = /*@__PURE__*/ _closure($frame_content2__input_show);
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

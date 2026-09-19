@@ -9,7 +9,7 @@ const $input$1 = ($scope, input) => {
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
 };
-var kid_default = /*@__PURE__*/ _template("__tests__/tags/kid.marko", $template$1, "D l", 0, $input$1);
+var kid_default = /*@__PURE__*/ _template_patch("__tests__/tags/kid.marko", $template$1, "D l", 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
@@ -24,4 +24,4 @@ function $setup($scope) {
 }
 const $input_x = _fill_const_resume("__tests__/template.marko0", "input_x", ($scope) => $input_b($scope["#childScope/0"], $scope.input_x));
 const $input = ($scope, input) => $input_x($scope, input.x);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

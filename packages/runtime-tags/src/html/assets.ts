@@ -1,5 +1,5 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { $Global, Template } from "../common/types";
+import { type $Global, RendererProp, type Template } from "../common/types";
 import { _escape_script } from "./content";
 import { toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
@@ -74,15 +74,19 @@ export function withLoadAssets(
   // may wait on the channel; `2` when the import is fed as well.
   patch?: 1 | 2,
 ): ServerRenderer {
-  return Object.assign((input: unknown) => {
-    if (getState().writesPatches) {
-      return writeWaitReady(assetId, renderer, input, patch === 2 ? 1 : 0);
-    }
-    const g = $global();
-    addAsset(g, assetId, triggers, patch && 1);
-    _html(flush(g, ""));
-    return writeWaitReady(assetId, renderer, input);
-  }, renderer);
+  return Object.assign(
+    (input: unknown) => {
+      if (getState().writesPatches) {
+        return writeWaitReady(assetId, renderer, input, patch === 2 ? 1 : 0);
+      }
+      const g = $global();
+      addAsset(g, assetId, triggers, patch && 1);
+      _html(flush(g, ""));
+      return writeWaitReady(assetId, renderer, input);
+    },
+    renderer,
+    { [RendererProp.ReadyId]: assetId },
+  );
 }
 
 export function withPageAssets(

@@ -13,7 +13,7 @@ const $input$1 = ($scope, input) => {
 	$input_opts($scope, input.opts);
 	$input_label$1($scope, input.label);
 };
-var probe_default = /*@__PURE__*/ _template("__tests__/tags/probe.marko", $template$1, "D l", $setup$1, $input$1);
+var probe_default = /*@__PURE__*/ _template_patch("__tests__/tags/probe.marko", $template$1, "D l", $setup$1, $input$1);
 
 // template.marko
 const $template = $template$1;
@@ -31,4 +31,4 @@ function $opts(label) {
 	return `${label}!`;
 }
 _resume("__tests__/template.marko_0/opts", $opts);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

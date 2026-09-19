@@ -14,4 +14,4 @@ function $setup($scope) {
 const $limit = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "limit", $count__OR__limit);
 const $input_min = ($scope, input_min) => $limit($scope, input_min + 1);
 const $input = ($scope, input) => $input_min($scope, input.min);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

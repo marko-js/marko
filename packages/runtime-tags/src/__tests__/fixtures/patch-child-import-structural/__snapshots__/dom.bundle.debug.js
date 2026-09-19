@@ -12,7 +12,7 @@ const $input$1 = ($scope, input) => {
 	$input_open($scope, input.open);
 	$input_text($scope, input.text);
 };
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template$1, $walks$1, 0, $input$1);
+var badge_default = /*@__PURE__*/ _template_patch("__tests__/tags/badge/index.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = "<main><!><button>+</button></main>";
@@ -33,4 +33,4 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_a($scope, input.a);
 const $input_a = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_a", $if_content__input_a);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

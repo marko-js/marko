@@ -37,4 +37,4 @@ const $input = ($scope, input) => {
 };
 const $input_title__closure = /*@__PURE__*/ _closure($extra_content__input_title);
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $input_title__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

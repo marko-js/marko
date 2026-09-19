@@ -49,7 +49,7 @@ function $setup$1($scope) {
 	$open($scope, false);
 	$global_data($scope, $scope.$global.data);
 }
-var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, $walks$1, $setup$1);
+var panel_default = /*@__PURE__*/ _template_patch("__tests__/tags/panel.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
@@ -57,4 +57,4 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 }
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup);

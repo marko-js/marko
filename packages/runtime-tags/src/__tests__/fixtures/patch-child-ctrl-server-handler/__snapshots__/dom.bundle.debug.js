@@ -10,7 +10,7 @@ const $input$1 = ($scope, input) => {
 	$input_value($scope, input.value);
 	$input_valueChange($scope, input.valueChange);
 };
-var field_default = /*@__PURE__*/ _template("__tests__/tags/field/index.marko", $template$1, " b", $setup$1, $input$1);
+var field_default = /*@__PURE__*/ _template_patch("__tests__/tags/field/index.marko", $template$1, " b", $setup$1, $input$1);
 
 // template.marko
 const $template = "<main><!><button>+</button><output></output></main>";
@@ -37,4 +37,4 @@ const $handle = ($scope) => (next) => {
 	document.querySelector("output").textContent = $scope.input_prefix + next;
 };
 _resume("__tests__/template.marko_0/handle", $handle);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

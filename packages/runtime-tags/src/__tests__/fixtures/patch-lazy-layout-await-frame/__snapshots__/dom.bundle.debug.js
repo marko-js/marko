@@ -6,7 +6,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var root_default = /*@__PURE__*/ _template("__tests__/root.marko", $template$1, $walks$1, 0, $input$1);
+var root_default = /*@__PURE__*/ _template_patch("__tests__/root.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
@@ -39,7 +39,7 @@ const $input_page__closure = /*@__PURE__*/ _closure($Root_content__input_page, $
 const $input_page = /*@__PURE__*/ _const("input_page", $input_page__closure);
 const $input_list__closure = /*@__PURE__*/ _closure($else_content__input_list);
 const $input_list = /*@__PURE__*/ _const("input_list", $input_list__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // tags/icon.marko
 const $template$1 = "<svg></svg>";
@@ -54,7 +54,7 @@ const $input_name = /*@__PURE__*/ _const("input_name", ($scope) => {
 	$if($scope, $scope.input_name ? 0 : 1);
 });
 const $input$1 = ($scope, input) => $input_name($scope, input.name);
-var icon_default = /*@__PURE__*/ _template("__tests__/tags/icon.marko", $template$1, " b", 0, $input$1);
+var icon_default = /*@__PURE__*/ _template_patch("__tests__/tags/icon.marko", $template$1, " b", 0, $input$1);
 
 // docs.marko
 var docs_exports = /* @__PURE__ */ __exportAll({
@@ -94,16 +94,16 @@ const $input = ($scope, input) => {
 	$input_list($scope, input.list);
 	$input_content($scope, input.content);
 };
-var docs_default = /*@__PURE__*/ _template("__tests__/docs.marko", $template, $walks, $setup, $input);
+var docs_default = /*@__PURE__*/ _template_patch("__tests__/docs.marko", $template, $walks, $setup, $input);
 
 // page-a.marko
 const $template = "<h1>A</h1>";
 const $walks = "b";
 const $setup = () => {};
-var page_a_default = /*@__PURE__*/ _template("__tests__/page-a.marko", $template, "b");
+var page_a_default = /*@__PURE__*/ _template_patch("__tests__/page-a.marko", $template, "b");
 
 // page-b.marko
 const $template = "<h1>B</h1>";
 const $walks = "b";
 const $setup = () => {};
-var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template, "b");
+var page_b_default = /*@__PURE__*/ _template_patch("__tests__/page-b.marko", $template, "b");

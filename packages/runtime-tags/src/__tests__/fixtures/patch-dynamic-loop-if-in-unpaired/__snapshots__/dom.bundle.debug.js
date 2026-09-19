@@ -10,7 +10,7 @@ const $input$1 = ($scope, input) => {
 	$input_content($scope, input.content);
 	$input_meta($scope, input.meta);
 };
-var card_default = /*@__PURE__*/ _template("__tests__/card.marko", $template$1, $walks$1, 0, $input$1);
+var card_default = /*@__PURE__*/ _template_patch("__tests__/card.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($template$1);
@@ -46,4 +46,4 @@ const $input_items__closure = /*@__PURE__*/ _closure($if_content__input_items);
 const $input_items = /*@__PURE__*/ _const("input_items", $input_items__closure);
 const $input_label__closure = /*@__PURE__*/ _closure($for_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -6,7 +6,7 @@ const $input_aside_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_aside = $dynamicTag;
 const $input$2 = ($scope, input) => $input_aside($scope, input.aside);
-var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$2, $walks$2, 0, $input$2);
+var panel_default = /*@__PURE__*/ _template_patch("__tests__/tags/panel.marko", $template$2, $walks$2, 0, $input$2);
 
 // page.marko
 const $template$1 = "<!><!><!>";
@@ -32,7 +32,7 @@ function $setup$1($scope) {
 const $input$1 = ($scope, input) => $input_down$1($scope, input.down);
 const $input_down__closure = /*@__PURE__*/ _closure($if_content__input_down$1);
 const $input_down$1 = /*@__PURE__*/ _const("input_down", $input_down__closure);
-var page_default = /*@__PURE__*/ _template("__tests__/page.marko", $template$1, "b%c", $setup$1, $input$1);
+var page_default = /*@__PURE__*/ _template_patch("__tests__/page.marko", $template$1, "b%c", $setup$1, $input$1);
 
 // template.marko
 const $template = "<!><!><!>";
@@ -50,4 +50,4 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 };
 const $input_down = /*@__PURE__*/ _const("input_down", $if_content__input_down);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
+var template_default = /*@__PURE__*/ _template_patch("__tests__/template.marko", $template, "b%c", 0, $input);
