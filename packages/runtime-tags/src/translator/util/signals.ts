@@ -19,7 +19,6 @@ import {
   type AssignedBindingExtra,
   type Binding,
   BindingType,
-  collapsedIntersectionSource,
   FORCED,
   getCanonicalBinding,
   getClosureAccessorId,
@@ -335,11 +334,10 @@ export function getSignal(
     } else if (!referencedBindings) {
       signal.build = () => getSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
-      const collapseSource =
-        collapsedIntersectionSource.get(referencedBindings);
-      subscribe(collapseSource || referencedBindings, signal);
-      if (collapseSource) {
-        const sourceSignal = getSignal(section, collapseSource);
+      const meta = intersectionMeta.get(referencedBindings)!;
+      subscribe(meta.source || referencedBindings, signal);
+      if (meta.source) {
+        const sourceSignal = getSignal(section, meta.source);
         forEach(referencedBindings, (member) => {
           const memberSignal = getSignal(section, member);
           const inline =
@@ -356,7 +354,7 @@ export function getSignal(
         signal.build = () => getSignalFn(signal);
       } else {
         signal.build = () => {
-          const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
+          const { id, scopeOffset } = meta;
           return callRuntime(
             "_or",
             t.numericLiteral(id),

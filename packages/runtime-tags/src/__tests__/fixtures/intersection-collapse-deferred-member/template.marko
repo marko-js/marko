@@ -1,0 +1,5 @@
+<let/inc={ status: "open" }/>
+<button onClick() { inc = { status: "resolved" } }>resolve</button>
+<const/flag=inc.status + (inc.pending ? "?" : "")/>
+<span class=["flag", flag, inc.status]/>
+<row inc=inc/>

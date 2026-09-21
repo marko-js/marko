@@ -1,0 +1,14 @@
+static function feed(inc: { status: string; pending?: boolean }, sfx: string) {
+  return { status: inc.status, label: inc.status + sfx };
+}
+
+<let/sfx="!"/>
+<const/item=feed(input.inc, sfx)/>
+<const/upper=item.status.toUpperCase()/>
+<div class=["row", item.status, input.inc.pending && "pending"]>
+  <span class="badge">${item.label}</span>
+  <span class=["state", upper, input.inc.pending && "pending"]/>
+  <if=item.status !== "resolved" && !input.inc.pending>
+    <form class="derived"/>
+  </if>
+</div>
