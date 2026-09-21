@@ -90,11 +90,12 @@ function isPatchRefreshableBinding(binding: Binding) {
   );
 }
 
-// A scope a flush writes into: the root, or a paired/created branch
-// on the branch path (a stateful branch is the client's alone).
+// A scope a flush writes into: the root, a paired/created branch on the
+// branch path (a stateful branch is the client's alone), or a boundary body.
 function isPatchWrittenSection(section: Section) {
   return (
     !section.parent ||
+    section.isBoundary ||
     (section.isBranch &&
       isBranchPathSection(section) &&
       !isStatefulBranch(section))

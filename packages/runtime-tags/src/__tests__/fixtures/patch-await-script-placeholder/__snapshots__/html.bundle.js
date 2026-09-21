@@ -16,8 +16,10 @@ var template_default = _template_patch("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope3_id = _scope_id();
+			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "c", value);
 			_html(`<span id=v>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
 			_script($scope3_id, "a4");
+			_patch_effect($scope3_id, "a4", "c");
 			_scope($scope3_id, { c: value });
 		}, 1, "a2", 1);
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));

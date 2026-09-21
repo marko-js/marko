@@ -14,7 +14,7 @@
 # Update `{"promise":{"value":"b"}}`
 ```html
 <main
-  data-seen="a"
+  data-seen="b"
 >
   <span
     id="v"
@@ -26,4 +26,5 @@
 ## Change
 ```
 UPDATE: #v::text "a" => "b"
+UPDATE: main[data-seen] "a" => "b"
 ```

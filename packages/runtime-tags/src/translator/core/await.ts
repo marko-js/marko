@@ -180,10 +180,14 @@ export default {
         const valueSources = getSerializeSourcesForExpr(
           valueAttr.value.extra || {},
         );
-        // Client-owned thenables resolve via `_await_promise`, so a patch must not
-        // Pending them; otherwise Pending carries the body content id.
+        // A thenable of client state alone resolves via `_await_promise`, so a
+        // patch must not Pending it; otherwise (a server value, or a promise
+        // made in the template) Pending carries the body content id.
         const patchContent =
-          isPatch() && !valueSources?.param && !valueSources?.global
+          isPatch() &&
+          valueSources?.state &&
+          !valueSources.param &&
+          !valueSources.global
             ? t.numericLiteral(0)
             : bodySection && isShell(bodySection)
               ? t.stringLiteral(getResumeRegisterId(section, nodeRef, "await"))
