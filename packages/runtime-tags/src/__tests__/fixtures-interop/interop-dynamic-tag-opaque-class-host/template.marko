@@ -1,0 +1,12 @@
+import ClassLayout from "./components/class-layout.marko";
+
+// The static tag loads the compat runtime; the compiler cannot tell the
+// dynamic name also resolves to a Class component, whose rerender needs the
+// body renderer registered whatever the tag's own reason says.
+<class-static/>
+<let/count=0>
+<${input.useClass ? ClassLayout : "section"}>
+  <button id="tags" onClick() { count++ }>
+    ${count}
+  </button>
+</>

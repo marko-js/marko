@@ -8,7 +8,7 @@ function $setup$1($scope) {
 	_return($scope, $_return($scope));
 }
 const $input = ($scope, input) => $input_content($scope, input.content);
-const $_return = ($scope) => () => (html) => _el_read($scope["#div/1"]).innerHTML = html;
+const $_return = ($scope) => (html) => _el_read($scope["#div/1"]).innerHTML = html;
 _resumed["__tests__/tags/child.marko_0/_return"] = $_return;
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input);
 
@@ -18,7 +18,7 @@ const $walks = "b1c";
 const $Child_content__setHtml__script = _script("__tests__/template.marko_1_setHtml#2", ($scope) => _assert_init($scope._, "setHtml")("Hello World"));
 const $Child_content__setHtml = /*@__PURE__*/ _closure_get("setHtml", $Child_content__setHtml__script);
 const $Child_content__setup = $Child_content__setHtml;
-const $Child_content = _content_resume("__tests__/template.marko_1*content", 0, 0, $Child_content__setup);
+const $Child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", 0, 0, $Child_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $Child_content, () => $setHtml);
 const $setHtml__closure = /*@__PURE__*/ _closure($Child_content__setHtml);
 const $setHtml = _var_resume("__tests__/template.marko_0_setHtml#2/var", /*@__PURE__*/ _const("setHtml", $setHtml__closure));

@@ -209,6 +209,9 @@ declare module "@marko/compiler/dist/types" {
 
   export interface NodeExtra {
     section?: Section;
+    /** The dom node binding of a tag rendering a branch or body (a dynamic
+     * tag, `<try>`, `<await>`). */
+    nodeBinding?: Binding;
     referencedBindings?: ReferencedBindings;
     downstream?: SortedOpt<Binding>;
     /** The tag-root `KnownExprs` of the call site that linked this expression

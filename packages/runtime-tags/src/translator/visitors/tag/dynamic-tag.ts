@@ -28,6 +28,7 @@ import {
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
+import { type SortedOpt } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -39,6 +40,7 @@ import {
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
+  bindingUtil,
 } from "../../util/references";
 import {
   callRuntime,
@@ -66,6 +68,7 @@ import {
   addSerializeReason,
   getSerializeReason,
 } from "../../util/serialize-reasons";
+import { setTagDownstream } from "../../util/set-tag-sections-downstream";
 import { addSetupStatement } from "../../util/setup-statements";
 import {
   addStatement,
@@ -92,7 +95,6 @@ import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath, tagNotFoundError } from "./custom-tag";
 import { controllableFeatureFor, enableControllable } from "./native-tag";
 
-const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 const importedDynamicTagResume = new WeakSet<t.Program>();
 const importedDynamicTagVarResume = new WeakSet<t.Program>();
@@ -124,7 +126,6 @@ declare module "@marko/compiler" {
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    [kDOMBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
     defineBodySection?: Section;
   }
@@ -168,7 +169,7 @@ export default {
       if (inputNodes.length) tagExtra.dynamicTagInput = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
-      const nodeBinding = (tagExtra[kDOMBinding] = createBinding(
+      const nodeBinding = (tagExtra.nodeBinding = createBinding(
         "#text",
         BindingType.dom,
         tagSection,
@@ -193,7 +194,21 @@ export default {
 
       const bodySection = startSection(tagBody);
       // The body depends on the whole tag, as a branch body on its condition.
-      if (bodySection) bodySection.upstreamExpression = tagExtra;
+      if (bodySection) {
+        bodySection.upstreamExpression = tagExtra;
+        // Known templates receive the body as `input.content`, as from a known
+        // tag; arguments call them positionally, so the body never reaches them.
+        if (
+          analyzeTagNameType(tag, true) === TagNameType.CustomTag &&
+          !node.arguments
+        ) {
+          // Every attribute merged into the tag's expression, so the tag is
+          // the value any prop those templates read.
+          setTagDownstream(tag, getDynamicTagInputBindings(tagExtra), {
+            value: tagExtra,
+          });
+        }
+      }
       trackParamsReferences(tagBody, BindingType.param);
       if (hasVar) addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
@@ -304,7 +319,7 @@ export default {
       }
 
       const tagExtra = node.extra!;
-      const nodeBinding = tagExtra[kDOMBinding]!;
+      const nodeBinding = tagExtra.nodeBinding!;
       const isClassAPI = tagExtra.featureType === "class";
       const tagsSerializeReason = getSerializeReason(tagSection, nodeBinding);
       const serializeReason = tagsSerializeReason;
@@ -667,4 +682,19 @@ function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
       }
     }
   }
+}
+
+// The input binding of every template the name may resolve to; none when
+// any is a Class API template.
+function getDynamicTagInputBindings(
+  tagExtra: t.MarkoTagExtra,
+): SortedOpt<Binding> {
+  let inputBindings: SortedOpt<Binding>;
+  for (const childExtra of tagExtra.tagNameTemplates || []) {
+    if (childExtra.featureType === "class") return;
+    const inputBinding = childExtra.domExports?.params?.props?.[0]?.binding;
+    if (inputBinding)
+      inputBindings = bindingUtil.add(inputBindings, inputBinding);
+  }
+  return inputBindings;
 }

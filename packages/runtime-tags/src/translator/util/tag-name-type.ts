@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
-import type { MarkoTagExtra } from "@marko/compiler/babel-types";
 import {
   getFile,
   getProgram,
   getTagDef,
   isNativeTag,
+  loadFileForImport,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
@@ -19,15 +19,21 @@ declare module "@marko/compiler/dist/types" {
     /** Set by the Class API translator when Tags content resumes below here. */
     hydratesTags?: boolean;
   }
-  export interface MarkoTagExtra {
+  // Written by `analyzeExpressionTagName`, on the tag whose name it types.
+  export interface NodeExtra {
     tagNameType?: TagNameType;
     // Kept unread for a planned nullable tag name optimization; incomplete when
     // `tagNameType` is `DynamicTag`, since that ends the analysis early.
     tagNameNullable?: boolean;
-    tagNameDynamic?: boolean;
     tagNameImported?: string;
-    tagNameUnresolved?: boolean;
+    /** Every template the name may resolve to, when it can resolve to
+     * nothing else and none is still analyzing. */
+    tagNameTemplates?: t.ProgramExtra[];
     tagNameLoad?: LoadImportConfig;
+  }
+  export interface MarkoTagExtra {
+    tagNameDynamic?: boolean;
+    tagNameUnresolved?: boolean;
     featureType?: ProgramExtra["featureType"];
   }
 }
@@ -111,7 +117,7 @@ export default function analyzeTagNameType(
 
 function analyzeExpressionTagName(
   name: t.NodePath<t.Expression>,
-  extra: MarkoTagExtra,
+  extra: t.NodeExtra,
 ) {
   const pending = [name] as t.NodePath<t.Expression>[];
   const seen = new Set<t.Node>();
@@ -120,6 +126,7 @@ function analyzeExpressionTagName(
   let nullable = false;
   let tagNameImported: string | false | undefined;
   let tagNameLoad: LoadImportConfig | undefined;
+  let tagNameTemplates: t.ProgramExtra[] | undefined = [];
 
   while ((path = pending.pop()) && type !== TagNameType.DynamicTag) {
     // Following a `<const>` value can cycle (`<const/a=b><const/b=a>`); skip
@@ -178,6 +185,17 @@ function analyzeExpressionTagName(
           decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
         ) {
           const resolvedImport = decl.extra?.tagImport || decl.source.value;
+          if (tagNameTemplates) {
+            const childFile = loadFileForImport(getFile(), resolvedImport);
+            const childExtra = childFile?.ast.program.extra;
+            // A template still analyzing (this one, or a cycle) has no
+            // reasons to consult yet, so the name resolves to nothing known.
+            if (!childExtra || isAnalyzing(childFile!)) {
+              tagNameTemplates = undefined;
+            } else if (!tagNameTemplates.includes(childExtra)) {
+              tagNameTemplates.push(childExtra);
+            }
+          }
           if (type === undefined) {
             type = TagNameType.CustomTag;
             tagNameImported = resolvedImport;
@@ -232,8 +250,11 @@ function analyzeExpressionTagName(
   extra.tagNameType = type ?? TagNameType.DynamicTag;
   extra.tagNameNullable = nullable;
 
-  if (type === TagNameType.CustomTag && tagNameImported) {
-    extra.tagNameImported = tagNameImported;
-    extra.tagNameLoad = tagNameLoad;
+  if (type === TagNameType.CustomTag) {
+    extra.tagNameTemplates = tagNameTemplates;
+    if (tagNameImported) {
+      extra.tagNameImported = tagNameImported;
+      extra.tagNameLoad = tagNameLoad;
+    }
   }
 }

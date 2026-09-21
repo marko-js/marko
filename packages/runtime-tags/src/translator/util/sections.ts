@@ -21,6 +21,7 @@ import {
   type OneMany,
   type Opt,
   Sorted,
+  reduce,
 } from "./optional";
 import {
   type Binding,
@@ -34,9 +35,12 @@ import {
   type ReferencedBindings,
   type Sources,
 } from "./references";
+import { isDynamicSerializeGuard } from "./serialize-guard";
 import {
+  getSerializeReason,
   isReasonDynamic,
   mapParamReason,
+  mergeSerializeReasons,
   type SerializeKey,
   type SerializeReason,
   type SerializeReasons,
@@ -141,12 +145,12 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  /** The content's rendering tag (its extra), and the child binding the
+  /** The content's rendering tag (its extra), and each child binding the
    * content feeds when the child can serialize it. */
   downstream:
     | {
         tag: t.MarkoTagExtra;
-        binding: Binding | undefined;
+        binding: Opt<Binding>;
         properties: Opt<string>;
         exprs: KnownExprs | undefined;
       }
@@ -441,23 +445,38 @@ export function getSectionRegisterReasons(section: Section) {
   if (section.isBranch) return false; // Branches handle whether to register their section/renderer.
 
   const { downstream } = section;
-  if (downstream?.binding) {
-    let downstreamReasons = getAllSerializeReasonsForBinding(
-      downstream.binding,
-      downstream.properties,
+  const dynamicTagBinding = getDynamicTagNodeBinding(section);
+  if (dynamicTagBinding) {
+    // SSR names the body renderer only where the tag itself resumes.
+    return (
+      getSerializeReason(dynamicTagBinding.section, dynamicTagBinding) || false
     );
-    if (downstreamReasons) {
-      // A known call site resolves the callee's own params (a same-file
-      // `<define>` included); without one only cross-file params are forced.
-      downstreamReasons = downstream.exprs
-        ? mapParamReason(
-            downstream.binding.section.program,
-            downstreamReasons,
-            downstream.exprs,
-            true,
-          )
-        : mapParamReason(section.program, downstreamReasons, undefined, false);
-    }
+  }
+
+  if (downstream?.binding) {
+    const downstreamReasons = reduce(
+      downstream.binding,
+      (reasons: SerializeReason | undefined, binding) => {
+        const reason = getAllSerializeReasonsForBinding(
+          binding,
+          downstream.properties,
+        );
+        // A known call site resolves the callee's own params (a same-file
+        // `<define>` included); without one only cross-file params are forced.
+        return mergeSerializeReasons(
+          reasons,
+          reason &&
+            (downstream.exprs
+              ? mapParamReason(
+                  binding.section.program,
+                  reason,
+                  downstream.exprs,
+                  true,
+                )
+              : mapParamReason(section.program, reason, undefined, false)),
+        );
+      },
+    );
     if (!downstreamReasons) return false;
     if (
       isReasonDynamic(downstreamReasons) &&
@@ -474,6 +493,35 @@ export function getSectionRegisterReasons(section: Section) {
   }
 
   return true;
+}
+
+// A string-named body registers on a runtime mask: its signal is retained
+// exactly where SSR names it, so the registration may drop with the signal.
+export function isSectionRegisterDynamic(
+  section: Section,
+  registerReason: true | SerializeReason,
+) {
+  const dynamicTagBinding = getDynamicTagNodeBinding(section);
+  return (
+    !!dynamicTagBinding &&
+    registerReason !== true &&
+    isDynamicSerializeGuard(dynamicTagBinding.section, registerReason)
+  );
+}
+
+// Whether the section's renderer is registered whatever the client keeps.
+export function isSectionRegisterEager(section: Section) {
+  const registerReason = getSectionRegisterReasons(section);
+  return !!registerReason && !isSectionRegisterDynamic(section, registerReason);
+}
+
+// The dynamic tag this section is the body of, when its name is always a
+// string: a component the name resolved to could serialize the body itself.
+function getDynamicTagNodeBinding(section: Section) {
+  const { upstreamExpression } = section;
+  return upstreamExpression?.tagNameType === TagNameType.NativeTag
+    ? upstreamExpression.nodeBinding
+    : undefined;
 }
 
 export function isImmediateOwner(section: Section, binding: Binding) {

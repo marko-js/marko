@@ -1,4 +1,6 @@
 # Render `{"show":true}`
 ```html
-<div />
+<div>
+  Hello World
+</div>
 ```

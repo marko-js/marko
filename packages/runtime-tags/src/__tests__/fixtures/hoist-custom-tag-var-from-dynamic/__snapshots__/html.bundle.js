@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		let setHtml = child_default({});
 		_subscribe($thing_content__subscribers, _scope($scope1_id, { c: setHtml }));
 	}, $scope0_id) });
-	_dynamic_tag($scope0_id, "b", input.show ? thing_default : null, {}, _content_resume("a3", () => {
+	_dynamic_tag($scope0_id, "b", input.show ? thing_default : null, {}, _content("a3", () => {
 		const $scope2_id = _scope_id();
 		const $thing_content2__subscribers = /* @__PURE__ */ new Set();
 		_scope_reason();

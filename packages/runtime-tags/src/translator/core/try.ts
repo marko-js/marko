@@ -10,7 +10,6 @@ import {
 import { WalkCode } from "../../common/types";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
-  type Binding,
   BindingType,
   createBinding,
   getAllTagReferenceNodes,
@@ -45,14 +44,6 @@ import {
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
-const kDOMBinding = Symbol("try tag dom binding");
-
-declare module "@marko/compiler/dist/types" {
-  export interface MarkoTagExtra {
-    [kDOMBinding]?: Binding;
-  }
-}
-
 export default {
   analyze(tag) {
     assertNoVar(tag);
@@ -79,7 +70,7 @@ export default {
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
-    tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);
+    tagExtra.nodeBinding = createBinding("#text", BindingType.dom, section);
 
     if (!tag.node.body.body.length) {
       throw tag
@@ -120,7 +111,7 @@ export default {
         const tagExtra = node.extra!;
         const tagBody = tag.get("body");
         const translatedAttrs = translateAttrs(tag);
-        const nodeRef = tagExtra[kDOMBinding]!;
+        const nodeRef = tagExtra.nodeBinding!;
 
         const contentProp = getTranslatedBodyContentProperty(
           translatedAttrs.properties,
@@ -165,7 +156,7 @@ export default {
       exit(tag) {
         const { node } = tag;
         const tagExtra = node.extra!;
-        const nodeRef = tagExtra[kDOMBinding]!;
+        const nodeRef = tagExtra.nodeBinding!;
         const referencedBindings = tagExtra.referencedBindings;
 
         const translatedAttrs = translateAttrs(tag);

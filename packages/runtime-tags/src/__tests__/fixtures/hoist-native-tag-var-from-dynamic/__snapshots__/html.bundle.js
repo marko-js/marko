@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		_html(`<span></span>${_el_resume($scope1_id, "a")}`);
 		_subscribe($child_content__subscribers, _scope($scope1_id, {}));
 	}, $scope0_id) });
-	_dynamic_tag($scope0_id, "b", input.show ? child_default : null, {}, _content_resume("a5", () => {
+	_dynamic_tag($scope0_id, "b", input.show ? child_default : null, {}, _content("a5", () => {
 		const $scope2_id = _scope_id();
 		_hoist($scope2_id, "a1");
 		const $child_content2__subscribers = /* @__PURE__ */ new Set();

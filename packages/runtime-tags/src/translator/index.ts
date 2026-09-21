@@ -75,7 +75,7 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {}
   export interface FunctionExpressionExtra {}
   export interface ArrowFunctionExpressionExtra {}
-  export interface MarkoTagExtra {}
+  export interface MarkoTagExtra extends NodeExtra {}
   export interface MarkoTagBodyExtra {}
   export interface MarkoAttributeExtra {}
   export interface MarkoSpreadAttributeExtra {}

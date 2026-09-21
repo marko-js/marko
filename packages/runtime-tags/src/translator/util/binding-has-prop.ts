@@ -1,4 +1,4 @@
-import { first, type Opt, rest } from "./optional";
+import { type Opt, first, rest, some } from "./optional";
 import type { Binding } from "./references";
 import type { Section } from "./sections";
 
@@ -7,9 +7,8 @@ import type { Section } from "./sections";
 export function isSectionRendererElided(section: Section) {
   return (
     !!section.downstream?.binding &&
-    !bindingHasProperty(
-      section.downstream.binding,
-      section.downstream.properties,
+    !some(section.downstream.binding, (binding) =>
+      bindingHasProperty(binding, section.downstream!.properties),
     )
   );
 }

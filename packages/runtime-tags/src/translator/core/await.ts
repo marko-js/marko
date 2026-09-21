@@ -10,7 +10,6 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import {
-  type Binding,
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
@@ -43,14 +42,6 @@ import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
-const kDOMBinding = Symbol("await tag dom binding");
-
-declare module "@marko/compiler/dist/types" {
-  export interface MarkoTagExtra {
-    [kDOMBinding]?: Binding;
-  }
-}
-
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
     assertNoVar(tag);
@@ -68,7 +59,7 @@ export default {
     const section = getOrCreateSection(tag);
     const [valueAttr] = node.attributes;
     const tagExtra = (tag.node.extra ??= {});
-    tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);
+    tagExtra.nodeBinding = createBinding("#text", BindingType.dom, section);
 
     if (!valueAttr) {
       throw tag
@@ -144,7 +135,7 @@ export default {
         const { node } = tag;
         const [valueAttr] = node.attributes;
         const tagExtra = node.extra!;
-        const nodeRef = tagExtra[kDOMBinding]!;
+        const nodeRef = tagExtra.nodeBinding!;
         const tagBody = tag.get("body");
         const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody);
@@ -185,7 +176,7 @@ export default {
       exit(tag) {
         const { node } = tag;
         const tagExtra = node.extra!;
-        const nodeRef = tagExtra[kDOMBinding]!;
+        const nodeRef = tagExtra.nodeBinding!;
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "await_promise");

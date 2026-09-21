@@ -299,6 +299,27 @@ export function every<T>(
     : true;
 }
 
+export function reduce<T, R>(
+  data: Opt<T>,
+  cb: (acc: R | undefined, item: T, index: number) => R | undefined,
+): R | undefined;
+export function reduce<T, R>(
+  data: Opt<T>,
+  cb: (acc: R, item: T, index: number) => R,
+  initial: R,
+): R;
+export function reduce<T, R>(
+  data: Opt<T>,
+  cb: (acc: R | undefined, item: T, index: number) => R | undefined,
+  initial?: R,
+): R | undefined {
+  return data !== undefined
+    ? Array.isArray(data)
+      ? data.reduce(cb, initial)
+      : cb(initial, data, 0)
+    : initial;
+}
+
 export function toArray<T, R>(
   data: Opt<T>,
   cb: (item: T, index: number) => R,

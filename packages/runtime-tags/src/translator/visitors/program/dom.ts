@@ -16,6 +16,7 @@ import {
   getSectionForBody,
   getSectionParentIsOwner,
   getSectionRegisterReasons,
+  isSectionRegisterDynamic,
   isDynamicClosure,
   setBranchRendererArgs,
 } from "../../util/sections";
@@ -108,10 +109,9 @@ export default {
                 tagParamsIdentifier,
               ]);
             } else {
-              let renderer = callRuntime(
-                getSectionRegisterReasons(childSection)
-                  ? "_content_resume"
-                  : "_content",
+              const registerReason = getSectionRegisterReasons(childSection);
+              let renderer: t.Expression = callRuntime(
+                registerReason ? "_content_resume" : "_content",
                 t.stringLiteral(getResumeRegisterId(childSection, "content")),
                 ...replaceNullishAndEmptyFunctionsWith0([
                   writes,
@@ -123,6 +123,13 @@ export default {
                     : undefined,
                 ]),
               );
+
+              if (
+                registerReason &&
+                isSectionRegisterDynamic(childSection, registerReason)
+              ) {
+                renderer = t.addComment(renderer, "leading", "@__PURE__");
+              }
 
               if (childSection.referencedLocalClosures) {
                 const objProps: t.ObjectExpression["properties"] = [];
