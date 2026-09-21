@@ -291,6 +291,11 @@ class PatchState extends State {
   // The client evaluates and applies each line as one expression.
   override flushChunk(_html: string, scripts: string, pending: number) {
     let out = scripts ? scripts + "\n" : "";
+    if (MARKO_DEBUG && this.pendingShells) {
+      throw new Error(
+        "Invalid patch state, a shell was shipped with nothing to resume in its chunk.",
+      );
+    }
     // A response that added a shell closes with the token the next request
     // sends back: id prefixes (the compiler escapes quotes, separators and
     // control characters out of ids) and base64, so it quotes as is. The
