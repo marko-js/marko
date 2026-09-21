@@ -137,6 +137,8 @@ function findWithMeta(dirname, registeredTaglibs, tagDiscoveryDirs) {
     // Now look for `marko.json` from installed packages
     getAllDependencyNames(rootPkg).forEach((name) => {
       if (!excludedPackages[name]) {
+        // Wont-fix: exports omitting "./marko.json" hide that taglib, and a
+        // missing tag may suggest a native one. Not worth a special path.
         let taglibPath = markoModules.tryResolve(
           name + "/marko.json",
           rootPkg.__dirname,
