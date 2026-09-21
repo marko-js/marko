@@ -480,6 +480,10 @@ export function addUnique<T>(data: Opt<T>, item: T): OneMany<T> {
   return includes(data, item) ? (data as OneMany<T>) : push(data, item);
 }
 
+export function at<T>(data: Opt<T>, index: number): T | undefined {
+  return Array.isArray(data) ? data[index] : index ? undefined : data;
+}
+
 export function first<T>(data: OneMany<T>): T {
   return Array.isArray(data) ? data[0] : data;
 }

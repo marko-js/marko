@@ -37,6 +37,9 @@ import {
   rest,
   some,
   Sorted,
+  at,
+  size,
+  reduce,
 } from "./optional";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
@@ -343,6 +346,24 @@ export function getOrCreatePropertyAlias(binding: Binding, property: string) {
       property,
     )
   );
+}
+
+// The alias a property path reaches from a binding, if every hop exists.
+export function getPropertyAlias(
+  binding: Binding | undefined,
+  properties: Opt<string>,
+) {
+  return reduce(properties, getExistingPropertyAlias, binding);
+}
+
+function getExistingPropertyAlias(
+  binding: Binding | undefined,
+  property: string,
+) {
+  while (binding) {
+    if (!isDirectAlias(binding)) return binding.propertyAliases.get(property);
+    binding = binding.upstreamAlias;
+  }
 }
 
 export function trackDomVarReferences(
@@ -2394,11 +2415,8 @@ export function getReadReplacement(
         }
       }
     } else {
-      const props = read.props
-        ? Array.isArray(read.props)
-          ? read.props.slice()
-          : [read.props]
-        : [];
+      const { props } = read;
+      let remaining = size(props);
       let curNode = node;
       let curBinding: Binding | undefined = readBinding;
       let replaceMember:
@@ -2419,11 +2437,11 @@ export function getReadReplacement(
       }
 
       while (
-        props.length &&
+        remaining &&
         (curNode.type === "MemberExpression" ||
           curNode.type === "OptionalMemberExpression")
       ) {
-        const prop = props.pop()!;
+        const prop = at(props, --remaining);
         const memberProp = getMemberExpressionPropString(curNode);
         if (memberProp !== prop) break;
         replaceMember = curNode;
@@ -2433,7 +2451,8 @@ export function getReadReplacement(
           | t.OptionalMemberExpression;
       }
 
-      for (const prop of props) {
+      for (let i = 0; i < remaining; i++) {
+        const prop = at(props, i)!;
         if (curBinding) {
           curBinding = curBinding.propertyAliases.get(prop);
         }
@@ -2586,41 +2605,25 @@ function resolveReferencedBindingsInFunction(
   let referencedBindings: ReferencedBindings;
   let constantBindings: ReferencedBindings;
 
-  if (reads) {
-    if (Array.isArray(reads)) {
-      for (const read of reads) {
-        const { getter, binding } = read;
-        if (getter) {
-          // hoisted/getter reads resolve through getters, not signals.
-        } else if (binding.type === BindingType.constant) {
-          if (bindingUtil.find(refs, binding)) {
-            constantBindings = bindingUtil.add(constantBindings, binding);
-          }
-        } else if (
-          binding.type !== BindingType.dom &&
-          binding.type !== BindingType.global
-        ) {
-          referencedBindings = bindingUtil.add(
-            referencedBindings,
-            findClosestReference(read.binding, refs)!,
-          );
-        }
+  // Every closest reference is one of `refs`, so filtering keeps the order.
+  const closest = new Set<Binding>();
+  forEach(reads, ({ getter, binding }) => {
+    if (getter) {
+      // hoisted/getter reads resolve through getters, not signals.
+    } else if (binding.type === BindingType.constant) {
+      if (bindingUtil.find(refs, binding)) {
+        constantBindings = bindingUtil.add(constantBindings, binding);
       }
-    } else {
-      const { getter, binding } = reads;
-      if (getter) {
-        // hoisted/getter reads resolve through getters, not signals.
-      } else if (binding.type === BindingType.constant) {
-        if (bindingUtil.find(refs, binding)) {
-          constantBindings = binding;
-        }
-      } else if (
-        binding.type !== BindingType.dom &&
-        binding.type !== BindingType.global
-      ) {
-        referencedBindings = findClosestReference(binding, refs);
-      }
+    } else if (
+      binding.type !== BindingType.dom &&
+      binding.type !== BindingType.global
+    ) {
+      const ref = findClosestReference(binding, refs);
+      if (ref) closest.add(ref);
     }
+  });
+  if (closest.size) {
+    referencedBindings = bindingUtil.filter(refs, (ref) => closest.has(ref));
   }
 
   return { referencedBindings, constantBindings };

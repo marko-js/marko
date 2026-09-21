@@ -10,6 +10,7 @@ import {
   getExpressionReads,
   type ReferencedBindings,
   type ReferencedExtra,
+  getPropertyAlias,
 } from "./references";
 import { isDirectClosure, type Section } from "./sections";
 
@@ -138,10 +139,7 @@ function resolvesTo(
 
 function readsKey(read: t.NodeExtra["read"], keyBinding: Binding): boolean {
   if (!read || read.getter) return false;
-  let binding: Binding | undefined = read.binding;
-  forEach(read.props, (prop) => {
-    binding = binding?.propertyAliases.get(prop);
-  });
+  const binding = getPropertyAlias(read.binding, read.props);
   return (
     !!binding &&
     getCanonicalBinding(binding) === getCanonicalBinding(keyBinding)

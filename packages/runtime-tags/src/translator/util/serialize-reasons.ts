@@ -8,6 +8,7 @@ import {
   type Opt,
   Sorted,
   type SortedOneMany,
+  reduce,
 } from "./optional";
 import {
   type Binding,
@@ -160,31 +161,21 @@ export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
   if (exprs) {
     if (exprs === true) {
       return FORCED;
-    } else if (Array.isArray(exprs)) {
-      let allSources: Sources | undefined;
-      for (const expr of exprs) {
-        allSources = mergeSources(allSources, getSerializeSourcesForExpr(expr));
-      }
-      return allSources;
-    } else {
-      return getSerializeSourcesForExpr(exprs);
     }
+    return reduce(exprs, mergeExprSources);
   }
 }
 
 export function getSerializeSourcesForRef(ref: ReferencedBindings) {
-  if (ref) {
-    let allSources: Sources | undefined;
-    if (Array.isArray(ref)) {
-      for (const { sources } of ref) {
-        allSources = mergeSources(allSources, sources);
-      }
+  return reduce(ref, mergeBindingSources);
+}
 
-      return allSources;
-    } else {
-      return ref.sources;
-    }
-  }
+function mergeExprSources(sources: Sources | undefined, expr: t.NodeExtra) {
+  return mergeSources(sources, getSerializeSourcesForExpr(expr));
+}
+
+function mergeBindingSources(sources: Sources | undefined, binding: Binding) {
+  return mergeSources(sources, binding.sources);
 }
 
 // Dereferences params through the call site's expressions (every one of

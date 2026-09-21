@@ -3,8 +3,13 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { getTagName } from "./get-tag-name";
 import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
-import { concat, every, filter, type Opt } from "./optional";
-import { type Binding, type KnownExprs, propsUtil } from "./references";
+import { concat, filter, type Opt } from "./optional";
+import {
+  type Binding,
+  type KnownExprs,
+  propsUtil,
+  getPropertyAlias,
+} from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
 
@@ -46,16 +51,11 @@ function crawlSectionsAndSetBinding(
     if (contentSection) {
       // Only the bindings that can serialize the content feed it.
       const serialized = filter(binding, (binding) => {
-        let target = binding;
-        return (
-          !every(
-            properties,
-            (property) => !!(target = target.propertyAliases.get(property)!),
-          ) ||
-          !(
-            target.noSerialize ||
-            propsUtil.has(target.noSerializeProperties, "content")
-          )
+        const target = getPropertyAlias(binding, properties);
+        return !(
+          target &&
+          (target.noSerialize ||
+            propsUtil.has(target.noSerializeProperties, "content"))
         );
       });
       contentSection.downstream = {
