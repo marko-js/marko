@@ -37,8 +37,8 @@ const $onToggle$1 = ($scope) => function() {
 function $hrefFor(key) {
 	return `#${key}`;
 }
-_resume("c1", $onToggle$1);
-_resume("c0", $hrefFor);
+_resumed.c1 = $onToggle$1;
+_resumed.c0 = $hrefFor;
 
 // template.marko
 const $count = /*@__PURE__*/ _let(1, ($scope) => {
@@ -48,4 +48,4 @@ const $count = /*@__PURE__*/ _let(1, ($scope) => {
 const $onToggle = ($scope) => function() {
 	$count($scope, +$scope.b + 1);
 };
-_resume("a0", $onToggle);
+_resumed.a0 = $onToggle;

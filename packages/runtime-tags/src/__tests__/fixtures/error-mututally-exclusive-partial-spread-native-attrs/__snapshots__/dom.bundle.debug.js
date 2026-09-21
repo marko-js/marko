@@ -11,5 +11,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 function $checkedChange() {}
-_resume("__tests__/template.marko_0/checkedChange", $checkedChange);
+_resumed["__tests__/template.marko_0/checkedChange"] = $checkedChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

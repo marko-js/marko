@@ -3,4 +3,4 @@ const $onClick3 = /*@__PURE__*/ _const(3, _script("a1", ($scope) => _on($scope.a
 function $updateText(ev) {
 	ev.target.textContent = "after";
 }
-_resume("a0", $updateText);
+_resumed.a0 = $updateText;

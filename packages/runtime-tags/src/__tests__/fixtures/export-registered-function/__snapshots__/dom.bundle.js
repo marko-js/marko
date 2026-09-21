@@ -12,5 +12,5 @@ const $setup__script = _script("a2", ($scope) => {
 		$message($scope, $scope.e($scope.f));
 	});
 });
-_resume("a0", shout);
-_resume("a1", whisper);
+_resumed.a0 = shout;
+_resumed.a1 = whisper;

@@ -10,4 +10,4 @@ const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function
 const $valueChange = ($scope) => function(newValue) {
 	$x($scope, newValue + 1);
 };
-_resume("a0", $valueChange);
+_resumed.a0 = $valueChange;

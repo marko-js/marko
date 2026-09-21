@@ -20,7 +20,7 @@ const $_return = ($scope) => () => ({
 		_el_read($scope["#div/0"]).classList.add(value);
 	}
 });
-_resume("__tests__/tags/source.marko_0/_return", $_return);
+_resumed["__tests__/tags/source.marko_0/_return"] = $_return;
 var source_default = /*@__PURE__*/ _template("__tests__/tags/source.marko", $template$1, " b", $setup$1);
 
 // template.marko
@@ -38,5 +38,5 @@ const $api = /*@__PURE__*/ _const("api", ($scope) => _assert_hoist($scope.api));
 const $action = ($scope) => function() {
 	$api_getter($scope)().addClass("child");
 };
-_resume("__tests__/template.marko_0/action", $action);
+_resumed["__tests__/template.marko_0/action"] = $action;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

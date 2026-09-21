@@ -5,4 +5,4 @@ const $n = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, $scope.f));
 const $attrs = ($scope) => function() {
 	$n($scope, 1);
 };
-_resume("a0", $attrs);
+_resumed.a0 = $attrs;

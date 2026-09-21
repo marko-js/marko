@@ -29,5 +29,5 @@ const $count2Change = ($scope) => (_new_count2) => {
 const $count1Change = ($scope) => (_new_count1) => {
 	$count($scope, _new_count1);
 };
-_resume("a1", $count2Change);
-_resume("a0", $count1Change);
+_resumed.a1 = $count2Change;
+_resumed.a0 = $count1Change;

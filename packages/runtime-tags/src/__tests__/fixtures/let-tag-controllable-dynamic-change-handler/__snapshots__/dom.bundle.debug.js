@@ -24,5 +24,5 @@ function $setup($scope) {
 const $yChange = ($scope) => function(newValue) {
 	$x($scope, newValue + 1);
 };
-_resume("__tests__/template.marko_0/yChange", $yChange);
+_resumed["__tests__/template.marko_0/yChange"] = $yChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

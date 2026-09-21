@@ -16,5 +16,5 @@ const $input = ($scope, input) => $input_value($scope, input.value);
 const $valueChange = ($scope) => (_new_value) => {
 	$value($scope, _new_value);
 };
-_resume("__tests__/template.marko_0/valueChange", $valueChange);
+_resumed["__tests__/template.marko_0/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

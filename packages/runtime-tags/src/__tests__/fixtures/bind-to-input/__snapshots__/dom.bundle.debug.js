@@ -50,5 +50,5 @@ function $setup($scope) {
 const $countChange = ($scope) => (_new_x) => {
 	$x($scope, _new_x);
 };
-_resume("__tests__/template.marko_0/countChange", $countChange);
+_resumed["__tests__/template.marko_0/countChange"] = $countChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

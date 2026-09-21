@@ -28,4 +28,4 @@ const $setup__script = _script("a3", ($scope) => {
 const $valueChange = ($scope) => (_new_v) => {
 	$v($scope, _new_v);
 };
-_resume("a0", $valueChange);
+_resumed.a0 = $valueChange;

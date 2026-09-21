@@ -66,8 +66,8 @@ const $onToggle$1 = ($scope) => function() {
 function $hrefFor(key) {
 	return `#${key}`;
 }
-_resume("__tests__/tags/parent.marko_1/onToggle", $onToggle$1);
-_resume("__tests__/tags/parent.marko_0/hrefFor", $hrefFor);
+_resumed["__tests__/tags/parent.marko_1/onToggle"] = $onToggle$1;
+_resumed["__tests__/tags/parent.marko_0/hrefFor"] = $hrefFor;
 var parent_default = /*@__PURE__*/ _template("__tests__/tags/parent.marko", $template$1, "b%c", $setup$1, $input);
 
 // template.marko
@@ -84,5 +84,5 @@ function $setup($scope) {
 const $onToggle = ($scope) => function() {
 	$count($scope, +$scope.count + 1);
 };
-_resume("__tests__/template.marko_0/onToggle", $onToggle);
+_resumed["__tests__/template.marko_0/onToggle"] = $onToggle;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -1,4 +1,4 @@
-// size: 6348 (min) 2808 (brotli)
+// size: 6316 (min) 2802 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -67,7 +67,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
     walkNextSibling();
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
-  registeredValues = {},
+  _resumed = {},
   cloneCache = {},
   _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
@@ -382,7 +382,7 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
 }
 function _script(id, fn) {
   return (
-    _resume(id, fn),
+    (_resumed[id] = fn),
     (scope) => {
       queueEffect(scope, fn);
     }
@@ -391,9 +391,6 @@ function _script(id, fn) {
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
-}
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
 }
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);
@@ -521,7 +518,7 @@ function bySecondArg(_item, index) {
 //#region packages/runtime-tags/dist/dom.mjs
 let _template = (id, template, walks, setup, inputSignal) => {
   let renderer = _content(id, template, walks, setup, inputSignal)();
-  return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
+  return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
 };
 function mount(input = {}, reference, position) {
   let branch,

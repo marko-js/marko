@@ -43,5 +43,5 @@ function $setup($scope) {
 const $onCount = ($scope) => function(newCount) {
 	$count($scope, newCount);
 };
-_resume("__tests__/template.marko_0/onCount", $onCount);
+_resumed["__tests__/template.marko_0/onCount"] = $onCount;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -10,7 +10,7 @@ const $_return = ($scope) => () => ({
 		$scope.a.classList.add(value);
 	}
 });
-_resume("c0", $_return);
+_resumed.c0 = $_return;
 
 // template.marko
 const $api_getter = /*@__PURE__*/ _hoist(3);
@@ -18,4 +18,4 @@ const $setup__script = _script("a1", ($scope) => $api_getter($scope)().setHtml("
 const $action = ($scope) => function() {
 	$api_getter($scope)().addClass("child");
 };
-_resume("a0", $action);
+_resumed.a0 = $action;

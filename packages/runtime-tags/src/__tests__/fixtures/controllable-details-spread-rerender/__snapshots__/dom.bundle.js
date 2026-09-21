@@ -23,4 +23,4 @@ const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function
 const $attrs = ($scope) => function(next) {
 	$open($scope, next);
 };
-_resume("a0", $attrs);
+_resumed.a0 = $attrs;

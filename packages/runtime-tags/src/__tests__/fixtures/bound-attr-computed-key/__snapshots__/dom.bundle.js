@@ -17,5 +17,5 @@ const $state2 = ($scope) => function(x) {
 const $state = ($scope) => function(x) {
 	$v($scope, x);
 };
-_resume("a1", $state2);
-_resume("a0", $state);
+_resumed.a1 = $state2;
+_resumed.a0 = $state;

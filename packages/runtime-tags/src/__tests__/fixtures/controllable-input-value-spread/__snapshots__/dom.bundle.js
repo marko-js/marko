@@ -17,4 +17,4 @@ const $value = /*@__PURE__*/ _let(2, ($scope) => {
 const $valueChange = ($scope) => (_new_value) => {
 	$value($scope, _new_value);
 };
-_resume("a0", $valueChange);
+_resumed.a0 = $valueChange;

@@ -37,7 +37,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><div id=tags-api> </div>";
 const $walks = "b%bD l";
-_resume("__tests__/components/split-counter/index.marko", _marko_template);
+_resumed["__tests__/components/split-counter/index.marko"] = _marko_template;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
@@ -52,5 +52,5 @@ function $setup($scope) {
 const $onIncrement = ($scope) => function() {
 	$count($scope, +$scope.count + 1);
 };
-_resume("__tests__/template.marko_0/onIncrement", $onIncrement);
+_resumed["__tests__/template.marko_0/onIncrement"] = $onIncrement;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

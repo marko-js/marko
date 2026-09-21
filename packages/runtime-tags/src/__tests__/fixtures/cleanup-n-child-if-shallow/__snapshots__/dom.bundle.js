@@ -21,4 +21,4 @@ const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function
 const $write = ($scope) => function(state) {
 	$scope._.b.innerHTML = state;
 };
-_resume("a0", $write);
+_resumed.a0 = $write;

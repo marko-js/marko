@@ -22,5 +22,5 @@ const $resetCount = ($scope) => function() {
 		$count($scope, 0);
 	}
 };
-_resume("__tests__/template.marko_0/resetCount", $resetCount);
+_resumed["__tests__/template.marko_0/resetCount"] = $resetCount;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

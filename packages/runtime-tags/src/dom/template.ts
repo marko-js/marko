@@ -11,7 +11,7 @@ import {
 import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
 import { _content, createBranch, type Renderer } from "./renderer";
-import { _resume } from "./resume";
+import { _resumed } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
 import { _var_change, type Signal } from "./signals";
 
@@ -39,7 +39,7 @@ export const _template = (
     };
   }
 
-  return _resume(id, renderer);
+  return (_resumed[id] = renderer);
 };
 
 function mount(

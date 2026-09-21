@@ -15,8 +15,8 @@ const $_return2 = ($scope) => function() {
 const $_return = ($scope) => function(v) {
 	$list$1($scope, v);
 };
-_resume("__tests__/tags/store.marko_0/_return2", $_return2);
-_resume("__tests__/tags/store.marko_0/_return", $_return);
+_resumed["__tests__/tags/store.marko_0/_return2"] = $_return2;
+_resumed["__tests__/tags/store.marko_0/_return"] = $_return;
 var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", "", 0, $input);
 
 // template.marko

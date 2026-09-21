@@ -17,4 +17,4 @@ const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function
 const $attrs = ($scope) => function(next) {
 	$value($scope, next);
 };
-_resume("a0", $attrs);
+_resumed.a0 = $attrs;

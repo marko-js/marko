@@ -22,6 +22,6 @@ function $setup($scope) {
 	$message($scope, "Hello");
 	$setup__script($scope);
 }
-_resume("__tests__/template.marko_0/export/shout", shout);
-_resume("__tests__/template.marko_0/export/whisper", whisper);
+_resumed["__tests__/template.marko_0/export/shout"] = shout;
+_resumed["__tests__/template.marko_0/export/whisper"] = whisper;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

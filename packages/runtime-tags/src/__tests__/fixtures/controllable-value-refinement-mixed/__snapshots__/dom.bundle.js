@@ -25,5 +25,5 @@ const $valueChange3 = ($scope) => (_new_value) => {
 const $valueChange4 = ($scope) => (_new_value) => {
 	$value($scope, parseInt(_new_value));
 };
-_resume("a0", $valueChange3);
-_resume("a1", $valueChange4);
+_resumed.a0 = $valueChange3;
+_resumed.a1 = $valueChange4;

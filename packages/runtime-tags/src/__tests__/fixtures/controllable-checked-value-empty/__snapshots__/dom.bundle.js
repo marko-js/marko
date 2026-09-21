@@ -7,4 +7,4 @@ const $setup__script = _script("a1", ($scope) => _attr_input_checkedValue_script
 const $checkedValueChange = ($scope) => (_new_selected) => {
 	$selected($scope, _new_selected);
 };
-_resume("a0", $checkedValueChange);
+_resumed.a0 = $checkedValueChange;

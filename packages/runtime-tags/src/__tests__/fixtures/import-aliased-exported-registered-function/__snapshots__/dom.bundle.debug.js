@@ -11,10 +11,10 @@ const $input = ($scope, input) => $input_message($scope, input.message);
 var greeting_default = /*@__PURE__*/ _template("__tests__/tags/greeting.marko", $template$1, "D l", $setup$1, $input);
 
 // tags/v:greeting.marko.register-shout.js
-_resume("__tests__/tags/greeting.marko_0/export/shout", shout);
+_resumed["__tests__/tags/greeting.marko_0/export/shout"] = shout;
 
 // tags/v:greeting.marko.register-whisper.js
-_resume("__tests__/tags/greeting.marko_0/export/whisper", whisper);
+_resumed["__tests__/tags/greeting.marko_0/export/whisper"] = whisper;
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>shout</button><button>whisper</button>${_w0}`)($template$1);

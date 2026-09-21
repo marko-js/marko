@@ -13,5 +13,5 @@ function $setup($scope) {
 const $increment = ($scope) => function() {
 	$clickCount($scope, +$scope.clickCount + 1);
 };
-_resume("__tests__/template.marko_0/increment", $increment);
+_resumed["__tests__/template.marko_0/increment"] = $increment;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -10,7 +10,7 @@ const $input = ($scope, input) => $input_message($scope, input.message);
 var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", $template$1, "D l", 0, $input);
 
 // tags/v:handlers.marko.register-shout.js
-_resume("__tests__/tags/handlers.marko_0/export/shout", shout);
+_resumed["__tests__/tags/handlers.marko_0/export/shout"] = shout;
 
 // template.marko
 const $template = "<button> </button><!><!>";

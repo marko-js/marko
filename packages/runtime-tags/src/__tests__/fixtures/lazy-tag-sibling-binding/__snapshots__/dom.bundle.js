@@ -9,8 +9,8 @@ const $isInner = ($scope) => function(o) {
 const $isShared = ($scope) => function(o) {
 	return o === $scope.g;
 };
-_resume("c1", $isInner);
-_resume("c0", $isShared);
+_resumed.c1 = $isInner;
+_resumed.c0 = $isShared;
 
 // child-b.marko
 const $verified = /*@__PURE__*/ _let(8, ($scope) => _text($scope.b, $scope.i));

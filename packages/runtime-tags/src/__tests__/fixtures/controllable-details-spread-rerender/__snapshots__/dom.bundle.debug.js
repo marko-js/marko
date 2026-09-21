@@ -30,5 +30,5 @@ function $setup($scope) {
 const $attrs = ($scope) => function(next) {
 	$open($scope, next);
 };
-_resume("__tests__/template.marko_0/attrs", $attrs);
+_resumed["__tests__/template.marko_0/attrs"] = $attrs;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

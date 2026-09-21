@@ -17,6 +17,6 @@ const $run = ($scope) => function() {
 function $text() {
 	return "HI";
 }
-_resume("__tests__/template.marko_1/run", $run);
-_resume("__tests__/template.marko_0/text", $text);
+_resumed["__tests__/template.marko_1/run"] = $run;
+_resumed["__tests__/template.marko_0/text"] = $text;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

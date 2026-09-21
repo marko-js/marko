@@ -14,4 +14,4 @@ const $checked = /*@__PURE__*/ _let(4, $input_rest__OR__checked);
 const $checkedChange = ($scope) => (_new_checked) => {
 	$checked($scope, _new_checked);
 };
-_resume("a0", $checkedChange);
+_resumed.a0 = $checkedChange;

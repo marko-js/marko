@@ -6,5 +6,5 @@ const $run = ($scope) => function() {
 function $text() {
 	return "HI";
 }
-_resume("a1", $run);
-_resume("a0", $text);
+_resumed.a1 = $run;
+_resumed.a0 = $text;

@@ -24,4 +24,4 @@ const $show = /*@__PURE__*/ _let(1, ($scope) => $if($scope, $scope.b ? 0 : 1));
 const $onCount = ($scope) => function(count) {
 	$show($scope, count < 1);
 };
-_resume("a0", $onCount);
+_resumed.a0 = $onCount;

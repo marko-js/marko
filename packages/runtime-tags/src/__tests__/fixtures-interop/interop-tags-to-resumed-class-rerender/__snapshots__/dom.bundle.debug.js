@@ -26,7 +26,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<button id=tags> </button><button id=toggle>toggle</button><!><!>";
 const $walks = " D l b%c";
-_resume("__tests__/components/message.marko", _marko_template);
+_resumed["__tests__/components/message.marko"] = _marko_template;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $if_content__dynamicTag($scope, _marko_template, () => ({ value: $scope._.count })));
 const $if_content__setup = $if_content__count;

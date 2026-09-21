@@ -26,10 +26,10 @@ const $setup$1 = () => {};
 var barrel_default = /*@__PURE__*/ _template("__tests__/tags/barrel.marko", "", "");
 
 // tags/v:handlers.marko.register-beta.js
-_resume("__tests__/tags/handlers.marko_0/export/beta", beta);
+_resumed["__tests__/tags/handlers.marko_0/export/beta"] = beta;
 
 // tags/v:extras.marko.register-gamma.js
-_resume("__tests__/tags/extras.marko_0/export/gamma", gamma);
+_resumed["__tests__/tags/extras.marko_0/export/gamma"] = gamma;
 
 // template.marko
 const $template = "<button>go</button><div> </div>";

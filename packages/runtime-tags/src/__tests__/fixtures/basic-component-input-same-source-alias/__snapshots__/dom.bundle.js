@@ -11,4 +11,4 @@ const $clickCount = /*@__PURE__*/ _let(1, ($scope) => $text($scope.a, $scope.b))
 const $onClick = ($scope) => function() {
 	$clickCount($scope, +$scope.b + 1);
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;

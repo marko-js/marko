@@ -10,5 +10,5 @@ function $onClick() {
 function $onclick() {
 	throw new Error("Should never be called.");
 }
-_resume("a1", $onClick);
-_resume("a0", $onclick);
+_resumed.a1 = $onClick;
+_resumed.a0 = $onclick;

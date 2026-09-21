@@ -20,7 +20,7 @@ const $received = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
 const $onValueChanged = ($scope) => function(value) {
 	$received($scope, value);
 };
-_resume("a0", $onValueChanged);
+_resumed.a0 = $onValueChanged;
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

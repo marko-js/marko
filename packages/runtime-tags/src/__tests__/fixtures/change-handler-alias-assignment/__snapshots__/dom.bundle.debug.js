@@ -15,5 +15,5 @@ function $setup($scope) {
 const $fooBar = ($scope) => function(v) {
 	_el_read($scope["#button/0"]).textContent = v;
 };
-_resume("__tests__/template.marko_0/fooBar", $fooBar);
+_resumed["__tests__/template.marko_0/fooBar"] = $fooBar;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

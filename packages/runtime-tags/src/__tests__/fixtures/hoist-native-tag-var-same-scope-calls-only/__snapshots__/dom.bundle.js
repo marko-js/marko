@@ -9,5 +9,5 @@ const $action2 = ($scope) => function() {
 const $action = ($scope) => function() {
 	$scope.b.classList.add("child1");
 };
-_resume("a1", $action2);
-_resume("a0", $action);
+_resumed.a1 = $action2;
+_resumed.a0 = $action;

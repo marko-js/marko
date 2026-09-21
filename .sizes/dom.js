@@ -1,4 +1,4 @@
-// size: 26832 (min) 10027 (brotli)
+// size: 26785 (min) 10042 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -92,7 +92,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
     walkNextSibling();
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
-  registeredValues = {},
+  _resumed = {},
   curRenders,
   embedRenders,
   readyIds,
@@ -255,7 +255,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
     };
   }),
   bindNativeTagVar,
-  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => _resume("_d", dynamicTagScript)),
+  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => (_resumed._d = dynamicTagScript)),
   loop = /*@__PURE__*/ withBranches((forEach) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
@@ -784,7 +784,7 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   return (
     (closureSignal.a = valueAccessor),
     (closureSignal.b = "C" + valueAccessor),
-    resumeId && _resume(resumeId, closureSignal),
+    resumeId && (_resumed[resumeId] = closureSignal),
     closureSignal
   );
 }
@@ -815,7 +815,7 @@ function _id(scope, accessor) {
 }
 function _script(id, fn) {
   return (
-    _resume(id, fn),
+    (_resumed[id] = fn),
     (scope) => {
       queueEffect(scope, fn);
     }
@@ -854,7 +854,7 @@ function _hoist(...path) {
   );
 }
 function _hoist_resume(id, ...path) {
-  return _resume(id, _hoist(...path));
+  return (_resumed[id] = _hoist(...path));
 }
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
@@ -928,7 +928,7 @@ function init(runtimeId = "M") {
             serializeContext = (data, registryId) =>
               typeof data == "number"
                 ? registryId
-                  ? registeredValues[registryId](getScope(data))
+                  ? _resumed[registryId](getScope(data))
                   : getScope(data)
                 : applyScopes(data),
             createVisitBranches =
@@ -1025,7 +1025,7 @@ function init(runtimeId = "M") {
                 if (typeof serialized == "string")
                   for (lastTokenIndex = 0, visitText = serialized; nextToken();)
                     /\D/.test(lastToken)
-                      ? (lastEffect = registeredValues[lastToken])
+                      ? (lastEffect = _resumed[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
                 else if (Array.isArray(serialized)) {
                   if (
@@ -1055,7 +1055,7 @@ function init(runtimeId = "M") {
             htmlStart,
             embedAnchor;
           return (
-            (serializeContext._ = registeredValues),
+            (serializeContext._ = _resumed),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds && render.b))
                 for (let progress = 1; progress;) {
@@ -1130,17 +1130,13 @@ function runResumeEffects(render) {
   }
 }
 function getRegisteredWithScope(id, scope) {
-  let val = registeredValues[id];
-  return scope ? val(scope) : val;
-}
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
+  return scope ? _resumed[id](scope) : _resumed[id];
 }
 function _var_resume(id, signal) {
-  return (_resume(id, (scope) => (value) => signal(scope, value)), signal);
+  return ((_resumed[id] = (scope) => (value) => signal(scope, value)), signal);
 }
 function _el(id, accessor) {
-  return ((accessor = decodeAccessor(accessor)), _resume(id, (scope) => () => scope[accessor]));
+  return ((accessor = decodeAccessor(accessor)), (_resumed[id] = (scope) => () => scope[accessor]));
 }
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);
@@ -1186,7 +1182,7 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   });
 }
 function _content_resume(id, template, walks, setup, params, dynamicScopesAccessor) {
-  return _resume(id, _content(id, template, walks, setup, params, dynamicScopesAccessor));
+  return (_resumed[id] = _content(id, template, walks, setup, params, dynamicScopesAccessor));
 }
 function _content_closures(renderer, closureFns) {
   let closureSignals = {};
@@ -2006,7 +2002,7 @@ let empty = [],
     patchDynamicTag,
     queueEffect,
     init(warp10Noop) {
-      (_resume("$C_s", (scope) => {
+      ((_resumed.$C_s = (scope) => {
         if (
           ((getRenderScopes(scope.$)[scope.L] = scope),
           scope.m5c && classIdToBranch.set(scope.m5c, scope),
@@ -2017,13 +2013,13 @@ let empty = [],
             resolved !== scope[key] && (scope[key] = resolved);
           }
       }),
-        _resume("$C_b", warp10Noop));
+        (_resumed.$C_b = warp10Noop));
     },
     setClassEventResolver(fn) {
       classEventResolver = fn;
     },
     resumeClassFunction(id, build) {
-      _resume(id, build);
+      _resumed[id] = build;
     },
     getScope($global, scopeId) {
       return getRenderScopes($global)?.[scopeId];
@@ -2097,7 +2093,7 @@ let empty = [],
   },
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
-    return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
+    return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
   },
   noop = (_) => 0,
   _load_template = /*@__PURE__*/ withLazy((id, load) => {

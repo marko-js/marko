@@ -38,7 +38,7 @@ function $setup$1($scope) {
 const $focus$1 = ($scope) => () => {
 	$focused($scope, +$scope.b + 1);
 };
-_resume("c0", $focus$1);
+_resumed.c0 = $focus$1;
 
 // child.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<span> </span>`)($template$1);

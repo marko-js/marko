@@ -51,8 +51,8 @@ const $onClickOnce = ($scope) => function() {
 const $onClickTwice = ($scope) => function() {
 	$clickTwiceCount($scope, +$scope.clickTwiceCount + 1);
 };
-_resume("__tests__/template.marko_2/_return2", $_return2);
-_resume("__tests__/template.marko_1/_return", $_return);
-_resume("__tests__/template.marko_0/onClickOnce", $onClickOnce);
-_resume("__tests__/template.marko_0/onClickTwice", $onClickTwice);
+_resumed["__tests__/template.marko_2/_return2"] = $_return2;
+_resumed["__tests__/template.marko_1/_return"] = $_return;
+_resumed["__tests__/template.marko_0/onClickOnce"] = $onClickOnce;
+_resumed["__tests__/template.marko_0/onClickTwice"] = $onClickTwice;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

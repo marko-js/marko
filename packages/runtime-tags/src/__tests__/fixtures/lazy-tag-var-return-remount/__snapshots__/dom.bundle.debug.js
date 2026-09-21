@@ -12,7 +12,7 @@ function $setup$1($scope) {
 const $focus$1 = ($scope) => () => {
 	$focused($scope, +$scope.focused + 1);
 };
-_resume("__tests__/tags/inner.marko_0/focus", $focus$1);
+_resumed["__tests__/tags/inner.marko_0/focus"] = $focus$1;
 var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner.marko", $template$1, $walks$1, $setup$1);
 
 // child.marko

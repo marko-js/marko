@@ -24,5 +24,5 @@ const $valueChange = ($scope) => function(value) {
 	newStates[$scope.M] = value;
 	$states($scope._, newStates);
 };
-_resume("a1", $checkedChange);
-_resume("a0", $valueChange);
+_resumed.a1 = $checkedChange;
+_resumed.a0 = $valueChange;

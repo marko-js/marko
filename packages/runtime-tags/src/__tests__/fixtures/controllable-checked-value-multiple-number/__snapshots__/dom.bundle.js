@@ -22,6 +22,6 @@ const $checkedValueChange2 = ($scope) => function(v) {
 const $checkedValueChange = ($scope) => function(v) {
 	$checked($scope, v.map((it) => Number(it)));
 };
-_resume("a2", $checkedValueChange3);
-_resume("a1", $checkedValueChange2);
-_resume("a0", $checkedValueChange);
+_resumed.a2 = $checkedValueChange3;
+_resumed.a1 = $checkedValueChange2;
+_resumed.a0 = $checkedValueChange;

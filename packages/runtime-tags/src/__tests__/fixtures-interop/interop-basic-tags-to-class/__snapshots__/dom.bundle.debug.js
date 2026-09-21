@@ -36,7 +36,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<button id=tags> </button><!><!>";
 const $walks = " D l%c";
-_resume("__tests__/components/class-counter.marko", _marko_template);
+_resumed["__tests__/components/class-counter.marko"] = _marko_template;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

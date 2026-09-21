@@ -25,6 +25,6 @@ const $attrs2 = ($scope) => function() {
 const $attrs = ($scope) => function() {
 	$phase($scope, 1);
 };
-_resume("a2", $attrs3);
-_resume("a1", $attrs2);
-_resume("a0", $attrs);
+_resumed.a2 = $attrs3;
+_resumed.a1 = $attrs2;
+_resumed.a0 = $attrs;

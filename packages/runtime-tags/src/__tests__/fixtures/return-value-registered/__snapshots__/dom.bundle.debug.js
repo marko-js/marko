@@ -8,7 +8,7 @@ function $setup$1($scope) {
 function $getter() {
 	return "hello";
 }
-_resume("__tests__/tags/getter.marko_0/getter", $getter);
+_resumed["__tests__/tags/getter.marko_0/getter"] = $getter;
 var getter_default = /*@__PURE__*/ _template("__tests__/tags/getter.marko", "", "", $setup$1);
 
 // template.marko

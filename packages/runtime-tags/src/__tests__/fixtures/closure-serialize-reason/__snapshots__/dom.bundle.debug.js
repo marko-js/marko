@@ -19,5 +19,5 @@ const $getMessage2 = /*@__PURE__*/ _const("getMessage", $if_content__getMessage)
 const $input_message = /*@__PURE__*/ _const("input_message", ($scope) => $getMessage2($scope, $getMessage($scope)));
 const $input = ($scope, input) => $input_message($scope, input.message);
 const $getMessage = ($scope) => () => $scope.input_message;
-_resume("__tests__/template.marko_0/getMessage", $getMessage);
+_resumed["__tests__/template.marko_0/getMessage"] = $getMessage;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

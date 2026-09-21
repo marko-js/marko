@@ -3,7 +3,7 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => _return($scope, $scope.d));
 const $valueChange = ($scope) => (_new_value) => {
 	$value($scope, _new_value);
 };
-_resume("b0", $valueChange);
+_resumed.b0 = $valueChange;
 
 // template.marko
 const $mytag_content__count = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.b, $scope._.d));

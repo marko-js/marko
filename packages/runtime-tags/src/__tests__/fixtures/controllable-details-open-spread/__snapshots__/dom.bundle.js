@@ -16,4 +16,4 @@ const $open = /*@__PURE__*/ _let(2, ($scope) => {
 const $openChange = ($scope) => (_new_open) => {
 	$open($scope, _new_open);
 };
-_resume("a0", $openChange);
+_resumed.a0 = $openChange;

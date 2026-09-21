@@ -16,5 +16,5 @@ function $setup($scope) {
 function $base(message) {
 	return message.toUpperCase() + "!";
 }
-_resume("__tests__/template.marko_0/base", $base);
+_resumed["__tests__/template.marko_0/base"] = $base;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

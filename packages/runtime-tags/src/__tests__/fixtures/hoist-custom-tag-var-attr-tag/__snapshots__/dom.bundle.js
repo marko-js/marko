@@ -1,6 +1,6 @@
 // tags/child.marko
 const $_return = ($scope) => () => (html) => $scope.a.innerHTML = html;
-_resume("b0", $_return);
+_resumed.b0 = $_return;
 
 // template.marko
 const $setHtml_getter = _hoist_resume("a0", 2, "B1");

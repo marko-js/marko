@@ -1,6 +1,6 @@
 // tags/child.marko
 const $_return = ($scope) => () => $scope.c;
-_resume("b0", $_return);
+_resumed.b0 = $_return;
 
 // template.marko
 const $ref_getter = _hoist_resume("a0", 3, "Aa", "Ad");

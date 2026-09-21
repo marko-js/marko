@@ -14,7 +14,7 @@ function $setup($scope) {
 	_return($scope, $_return($scope));
 }
 const $_return = ($scope) => () => (html) => $scope.a.innerHTML = html;
-_resume("b0", $_return);
+_resumed.b0 = $_return;
 
 // template.marko
 const $setHtml3_getter = /*@__PURE__*/ _hoist(2, "B4");

@@ -5,4 +5,4 @@ const $fooChange2 = /*@__PURE__*/ _const(2, _script("a1", ($scope) => _on($scope
 const $fooBar = ($scope) => function(v) {
 	$scope.a.textContent = v;
 };
-_resume("a0", $fooBar);
+_resumed.a0 = $fooBar;

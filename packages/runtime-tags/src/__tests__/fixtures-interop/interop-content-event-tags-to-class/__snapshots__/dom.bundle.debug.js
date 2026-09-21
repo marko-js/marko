@@ -30,7 +30,7 @@ _marko_template$1.Component = (0, import_defineComponent.default)(_marko_compone
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 const $template = "<button id=tags> </button><!><!>";
 const $walks = " D l%c";
-_resume("__tests__/components/class-inner.marko", _marko_template$1);
+_resumed["__tests__/components/class-inner.marko"] = _marko_template$1;
 const $classinner_content = _content_resume("__tests__/components/tags-mid.marko_1*content", "<span>deep body</span>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $classinner_content);
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
@@ -47,7 +47,7 @@ function $setup($scope) {
 const $onChange = ($scope) => function() {
 	$count($scope, +$scope.count + 1);
 };
-_resume("__tests__/components/tags-mid.marko_0/onChange", $onChange);
+_resumed["__tests__/components/tags-mid.marko_0/onChange"] = $onChange;
 var tags_mid_default = /*@__PURE__*/ _template("__tests__/components/tags-mid.marko", $template, $walks, $setup);
 
 // template.marko

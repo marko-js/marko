@@ -41,4 +41,4 @@ const $source = /*@__PURE__*/ _let(2, ($scope) => {
 const $valueChange = ($scope) => (_new_source) => {
 	$source($scope, _new_source);
 };
-_resume("a0", $valueChange);
+_resumed.a0 = $valueChange;

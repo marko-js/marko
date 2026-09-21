@@ -15,7 +15,7 @@ function $setup$1($scope) {
 function $_return() {
 	return 1;
 }
-_resume("__tests__/tags/source.marko_0/_return", $_return);
+_resumed["__tests__/tags/source.marko_0/_return"] = $_return;
 var source_default = /*@__PURE__*/ _template("__tests__/tags/source.marko", "", "", $setup$1);
 
 // template.marko

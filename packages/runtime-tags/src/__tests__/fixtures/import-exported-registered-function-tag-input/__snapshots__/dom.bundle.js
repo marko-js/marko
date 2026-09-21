@@ -10,4 +10,4 @@ const $setup__script = _script("c0", ($scope) => _on($scope.a, "click", function
 }));
 
 // tags/v:handlers.marko.register-shout.js
-_resume("b0", shout);
+_resumed.b0 = shout;

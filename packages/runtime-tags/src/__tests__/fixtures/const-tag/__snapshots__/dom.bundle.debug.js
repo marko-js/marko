@@ -15,5 +15,5 @@ function $setup($scope) {
 function $y() {
 	return 1;
 }
-_resume("__tests__/template.marko_0/y", $y);
+_resumed["__tests__/template.marko_0/y"] = $y;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

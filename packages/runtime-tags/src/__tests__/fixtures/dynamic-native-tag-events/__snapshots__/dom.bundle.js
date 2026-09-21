@@ -8,4 +8,4 @@ const $tagName = /*@__PURE__*/ _let(1, ($scope) => $dynamicTag($scope, $scope.b,
 const $onClick = ($scope) => function() {
 	$tagName($scope, $scope.b === "span" ? "div" : "span");
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;

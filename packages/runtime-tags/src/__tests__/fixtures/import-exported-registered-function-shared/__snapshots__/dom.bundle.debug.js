@@ -10,7 +10,7 @@ const $input = ($scope, input) => $input_message($scope, input.message);
 var greeting_default = /*@__PURE__*/ _template("__tests__/tags/greeting.marko", $template$2, "D l", 0, $input);
 
 // tags/v:greeting.marko.register-shout.js
-_resume("__tests__/tags/greeting.marko_0/export/shout", shout);
+_resumed["__tests__/tags/greeting.marko_0/export/shout"] = shout;
 
 // tags/panel.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<button>panel</button>${_w0}`)($template$2);

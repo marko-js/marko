@@ -25,5 +25,5 @@ const $onClick = ($scope) => function() {
 const $anonymous = ($scope) => () => {
 	$log($scope, `${$scope.j}a(${$scope.i})`);
 };
-_resume("a1", $onClick);
-_resume("a0", $anonymous);
+_resumed.a1 = $onClick;
+_resumed.a0 = $anonymous;

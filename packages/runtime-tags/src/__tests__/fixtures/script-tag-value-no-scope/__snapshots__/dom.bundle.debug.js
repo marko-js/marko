@@ -12,5 +12,5 @@ const $setText = ($scope) => function(arg) {
 	}
 	_el_read($scope["#div/0"]).textContent = typeof arg;
 };
-_resume("__tests__/template.marko_0/setText", $setText);
+_resumed["__tests__/template.marko_0/setText"] = $setText;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

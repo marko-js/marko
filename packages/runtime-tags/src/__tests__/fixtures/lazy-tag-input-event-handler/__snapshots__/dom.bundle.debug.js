@@ -36,7 +36,7 @@ function $setup($scope) {
 const $report = ($scope) => function(o) {
 	return o === $scope.shared;
 };
-_resume("__tests__/template.marko_0/report", $report);
+_resumed["__tests__/template.marko_0/report"] = $report;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // v:child.marko.setup.js

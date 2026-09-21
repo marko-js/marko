@@ -10,4 +10,4 @@ const $setup__script = _script("a3", ($scope) => _on($scope.c, "click", function
 const $valueChange = ($scope) => (_new_internal) => {
 	$Let_content__internal($scope, _new_internal);
 };
-_resume("a0", $valueChange);
+_resumed.a0 = $valueChange;

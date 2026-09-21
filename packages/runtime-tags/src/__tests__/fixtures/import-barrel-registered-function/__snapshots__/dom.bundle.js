@@ -9,10 +9,10 @@ function beta(message) {
 }
 
 // tags/v:handlers.marko.register-beta.js
-_resume("d1", beta);
+_resumed.d1 = beta;
 
 // tags/v:extras.marko.register-gamma.js
-_resume("c0", gamma);
+_resumed.c0 = gamma;
 
 // template.marko
 const $message = /*@__PURE__*/ _let(4, ($scope) => _text($scope.b, $scope.e));

@@ -9,7 +9,7 @@ function $setup$1($scope) {
 }
 const $input = ($scope, input) => $input_content($scope, input.content);
 const $_return = ($scope) => () => (html) => _el_read($scope["#div/1"]).innerHTML = html;
-_resume("__tests__/tags/child.marko_0/_return", $_return);
+_resumed["__tests__/tags/child.marko_0/_return"] = $_return;
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko

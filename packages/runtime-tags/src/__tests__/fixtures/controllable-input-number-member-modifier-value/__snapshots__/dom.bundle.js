@@ -5,7 +5,7 @@ const $setup__script = _script("b1", ($scope) => _attr_input_value_script($scope
 const $valueChange$1 = ($scope) => ($next) => {
 	$scope.e(parseInt($next));
 };
-_resume("b0", $valueChange$1);
+_resumed.b0 = $valueChange$1;
 
 // template.marko
 const $value = /*@__PURE__*/ _let(3, ($scope) => {
@@ -16,4 +16,4 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => {
 const $valueChange = ($scope) => (_new_value) => {
 	$value($scope, _new_value);
 };
-_resume("a0", $valueChange);
+_resumed.a0 = $valueChange;

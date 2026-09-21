@@ -41,7 +41,7 @@ import {
   isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
-import { callRuntime } from "./runtime";
+import { callRuntime, registerRuntimeValue } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   getDynamicClosureIndex,
@@ -1201,9 +1201,8 @@ export function writeRegisteredFns() {
     for (const registeredFn of registeredFns) {
       statements.push(
         t.expressionStatement(
-          callRuntime(
-            "_resume",
-            t.stringLiteral(registeredFn.registerId),
+          registerRuntimeValue(
+            registeredFn.registerId,
             t.identifier(registeredFn.id),
           ),
         ),

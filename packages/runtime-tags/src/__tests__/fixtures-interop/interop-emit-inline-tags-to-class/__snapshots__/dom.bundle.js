@@ -22,7 +22,7 @@ const $msg = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
 const $onClick = ($scope) => function() {
 	$msg($scope, "");
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

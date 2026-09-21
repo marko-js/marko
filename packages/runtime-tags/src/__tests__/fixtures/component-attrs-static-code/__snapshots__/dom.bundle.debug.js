@@ -30,6 +30,6 @@ function $formatNumber(n) {
 function $formatNumber2(n) {
 	return "$" + n.toFixed(2);
 }
-_resume("__tests__/template.marko_0/formatNumber", $formatNumber);
-_resume("__tests__/template.marko_0/formatNumber2", $formatNumber2);
+_resumed["__tests__/template.marko_0/formatNumber"] = $formatNumber;
+_resumed["__tests__/template.marko_0/formatNumber2"] = $formatNumber2;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
