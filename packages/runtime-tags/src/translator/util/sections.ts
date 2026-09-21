@@ -447,12 +447,16 @@ export function getSectionRegisterReasons(section: Section) {
       downstream.properties,
     );
     if (downstreamReasons) {
-      downstreamReasons = mapParamReason(
-        section.program,
-        downstreamReasons,
-        downstream.exprs,
-        false,
-      );
+      // A known call site resolves the callee's own params (a same-file
+      // `<define>` included); without one only cross-file params are forced.
+      downstreamReasons = downstream.exprs
+        ? mapParamReason(
+            downstream.binding.section.program,
+            downstreamReasons,
+            downstream.exprs,
+            true,
+          )
+        : mapParamReason(section.program, downstreamReasons, undefined, false);
     }
     if (!downstreamReasons) return false;
     if (
