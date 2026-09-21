@@ -19,8 +19,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<main><!></main>";
 const $walks = "D%/&l";
-let $load_Child_setup = /*@__PURE__*/ _load_ready("ready:__tests__/child.marko", "#childScope/1", /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs")));
-let $load_Child_tag_input_title = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_title.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_title = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_title.mjs"), "ready:__tests__/child.marko");
 const $setup = $load_Child_setup;
 const $input_title = ($scope, input_title) => $load_Child_tag_input_title($scope["#childScope/1"], input_title);
 const $input = ($scope, input) => $input_title($scope, input.title);

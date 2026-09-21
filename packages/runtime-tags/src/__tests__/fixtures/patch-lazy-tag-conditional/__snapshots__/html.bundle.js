@@ -1,4 +1,6 @@
 // child.marko
+const $template = "<button><!>:<!></button>";
+const $walks = " D%c%l";
 _shells({ a: "a !a0; D%c%;<button><!>:<!></button>" });
 var child_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -17,7 +19,7 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "_a", [{
 }], 1);
 _shells({
 	b: "b; ;<main></main>",
-	b0: "b0 b2;b%/&;<!><!><!>"
+	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks), /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template))
 });
 var template_default = _template_patch("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();

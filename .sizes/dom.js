@@ -1,4 +1,4 @@
-// size: 29183 (min) 10788 (brotli)
+// size: 29185 (min) 10801 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2197,8 +2197,7 @@ function _global_script(id, fn) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let loads = {},
-  _template = (id, template, walks, setup, inputSignal) => {
+let _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
   },
@@ -2226,16 +2225,6 @@ let loads = {},
       );
     return lazyTemplate;
   }),
-  loadStart,
-  _load_ready_template = (readyId, template) => (
-    (template.c = ((setup) => (branch) => {
-      (loadStart(branch, readyId), setup(branch));
-    })(template.c)),
-    template
-  ),
-  _load_ready = (readyId, childScopeAccessor, setup) => (owner) => {
-    (loadStart(owner[decodeAccessor(childScopeAccessor)], readyId), setup(owner));
-  },
   _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
     ((nodeAccessor = decodeAccessor(nodeAccessor)),
       (childScopeAccessor = decodeAccessor(childScopeAccessor)));
@@ -2271,20 +2260,8 @@ let loads = {},
               : pending.then((mod) => queueAsyncRender(scope, (apply._ = mod._), value), noop));
       };
     return apply;
-  });
-/**
- * The loader of a lazy template that only flushes create. Never pure: it
- * registers where no client code renders the tag.
- */
-function _load_lazy(id, load) {
-  let pending;
-  loads[id] = () => {
-    pending ||= load().then(
-      () => ready(id),
-      () => void 0,
-    );
-  };
-}
+  }),
+  loads = {};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,
@@ -2425,6 +2402,25 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+/**
+ * A load a flush creating the lazy template `id` waits for. The page entry
+ * registers the module's (a module registering its own would bundle it).
+ */
+function _load_lazy(id, load) {
+  Array.isArray(loads[id]) ? loads[id].push(load) : loads[id] ? load() : (loads[id] = [load]);
+}
+/**
+ * A lazy child's input signal on a patch page. A scope a flush's shell
+ * creates has its content, so the signal applies now (its module landed
+ * with the template's) rather than buffering for a clone that never comes.
+ */
+function _load_signal_patch(load, id) {
+  let buffered = _load_signal(load),
+    apply = (scope, value) => {
+      (apply._ || buffered)(scope, value);
+    };
+  return (_load_lazy(id, () => load().then((mod) => (apply._ = mod._))), apply);
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs

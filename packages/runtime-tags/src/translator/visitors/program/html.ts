@@ -31,7 +31,6 @@ import {
   getScopeIdIdentifier,
   getSection,
   type Section,
-  StructureKind,
 } from "../../util/sections";
 import { getScopeReasonDeclaration } from "../../util/serialize-guard";
 import {
@@ -248,20 +247,6 @@ export default {
               marker +=
                 (marker && " ") + getResumeRegisterId(section, closure, "init");
             });
-            // Lazy children wire their load (and channel) as creation
-            // inits; a server-only one sits in the shell itself.
-            for (const op of section.structure || []) {
-              if (
-                typeof op === "object" &&
-                op.kind === StructureKind.Child &&
-                op.marker &&
-                !op.load?.downstreamCreated
-              ) {
-                marker +=
-                  (marker && " ") +
-                  getResumeRegisterId(section, op.marker, "init");
-              }
-            }
             // An effect the created scope's own renders queue (an init, seed,
             // or item write cascades into it) is not replayed.
             const effectIds = getSectionEffectRegisterIds(

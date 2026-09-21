@@ -152,8 +152,8 @@ export default {
       }
 
       (node.extra ??= {}).loadImport = loadImport;
-      // A flush revealing the tag needs its channel and the bind feature on
-      // the page, interactive or not.
+      // A flush revealing the tag waits for its module and may carry binds:
+      // the page needs both features, interactive or not.
       if (isPatch()) {
         addRuntimeFeatureAsset("patch-ready");
         addRuntimeFeatureAsset("patch-value-bind");
@@ -200,9 +200,6 @@ export default {
               t.identifier(local.name),
               loadFile.opts.filename,
               loadImport.render ? undefined : loadImport.triggers,
-              // A fed import: the page registers only its loader, which a
-              // flush can start, so its channel may hold a created branch.
-              loadImport.downstreamCreated,
             );
 
             for (const ref of binding.referencePaths) {
@@ -287,18 +284,7 @@ export default {
               );
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
-                  t.variableDeclarator(
-                    local,
-                    // A flush's data for a tag this template creates
-                    // waits for its clone; the wrapper reports the start.
-                    isPatch()
-                      ? callRuntime(
-                          "_load_ready_template",
-                          t.stringLiteral(getReadyId(loadFile)!),
-                          loadTemplate,
-                        )
-                      : loadTemplate,
-                  ),
+                  t.variableDeclarator(local, loadTemplate),
                 ]),
               );
             }
@@ -320,7 +306,6 @@ function getOrCreateHtmlLoadWrapped(
   originalIdentifier: t.Expression,
   filename: string,
   triggers: LoadTrigger[] | undefined,
-  fed: true | undefined,
 ) {
   const markoOpts = getMarkoOpts();
   const loadWrapped = getHtmlLoadWrapped();
@@ -344,7 +329,7 @@ function getOrCreateHtmlLoadWrapped(
               originalIdentifier,
               t.stringLiteral(readyId),
               triggers && t.valueToNode(triggers),
-              isPatch() && t.numericLiteral(fed ? 2 : 1),
+              isPatch() && t.numericLiteral(1),
             ),
           ),
         ]),

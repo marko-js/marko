@@ -15,7 +15,7 @@ const $template = "<button class=n> </button><main></main>";
 const $walks = " D l b";
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l ;<button class=n> </button><main></main>",
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_label#6/init __tests__/template.marko_1_n#7/init __tests__/template.marko_1_#text#0/init;b%/&;<!><!><!>"
+	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*shell __tests__/template.marko_1_input_label#6/init __tests__/template.marko_1_n#7/init;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l"), /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1))
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();

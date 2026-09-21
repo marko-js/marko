@@ -34,10 +34,10 @@ interface EntryState {
   bundledAssets: Set<string>;
   /** Whether each reached file was only ever seen below a bundled template. */
   visited: Map<string, boolean>;
-  /** Lazy children of patch template reached eagerly, by channel, with
-   * whether the parent template is a root: the entry registers the loaders
-   * of the templates it never links, so a flush can still load them. */
-  lazyLoads: Map<string, [request: string, root: boolean]>;
+  /** Lazy children of patch templates reached, by ready id: the entry
+   * registers every loader (a module never registers its own, which would
+   * bundle it), so a flush creating one can load it. */
+  lazyLoads: Map<string, string>;
 }
 type EntryFile = t.BabelFile & {
   [kState]?: EntryState;
@@ -88,11 +88,9 @@ const builder = {
 
       const linked = state.init || state.load;
       // Only a patch page collects lazy loads (a flush can reveal a lazy
-      // child the client never rendered); a plain page's output is unchanged.
-      const lazyLoads = [...state.lazyLoads].filter(
-        ([, [, root]]) => !root || !linked,
-      );
-      if (lazyLoads.length) {
+      // child the client never rendered). A plain page's output is unchanged.
+      const { lazyLoads } = state;
+      if (lazyLoads.size) {
         body.push(
           t.importDeclaration(
             [
@@ -108,7 +106,7 @@ const builder = {
             ),
           ),
         );
-        for (const [readyId, [request]] of lazyLoads) {
+        for (const [readyId, request] of lazyLoads) {
           body.push(
             t.expressionStatement(
               t.callExpression(t.identifier("_load_lazy"), [
@@ -257,14 +255,14 @@ const builder = {
       }
     }
 
-    // A flush revealing a lazy child of a template the bundle never links
-    // still needs its module: the entry registers the loader itself.
-    if (entryFile.markoOpts.patches && !state.bundled) {
+    // A flush revealing a lazy child needs its module: the entry registers
+    // the loader.
+    if (entryFile.markoOpts.patches) {
       for (const tag of (loadImports as Set<string> | undefined) || []) {
         const request = resolveRelativeToEntry(entryFile, file, tag);
         const loadFile = loadFileForImport(entryFile, request);
         const readyId = loadFile && getReadyId(loadFile);
-        if (readyId) state.lazyLoads.set(readyId, [request, isRoot]);
+        if (readyId) state.lazyLoads.set(readyId, request);
       }
     }
 

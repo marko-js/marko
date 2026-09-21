@@ -15,9 +15,9 @@
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko0": 0
         }
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell"]
-  },
-  "PatchText:#text/3": "b"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell"],
+    "PatchText:#text/3": "b"
+  }
 }]
 "BAEB"
 
@@ -38,7 +38,7 @@
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko0": 0
         }
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell"]
-  },
-  "PatchText:#text/3": "c"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell"],
+    "PatchText:#text/3": "c"
+  }
 }

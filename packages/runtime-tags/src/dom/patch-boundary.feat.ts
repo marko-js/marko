@@ -9,12 +9,7 @@ import {
   type Scope,
 } from "../common/types";
 import { createAwaitCounter, dismissPlaceholder } from "./control-flow";
-import {
-  applyReadyPatch,
-  deferApply,
-  flushBinds,
-  type ReadyGuard,
-} from "./patch";
+import { applyDeferred, deferApply, flushBinds } from "./patch";
 import "./patch-catch.feat";
 import "./patch-child.feat";
 import { getContent } from "./patch-shells";
@@ -245,17 +240,19 @@ function holdForStream(
   value: Scope,
 ) {
   markSettled(scope, accessor);
-  const guard: ReadyGuard = [
-    { [key]: value } as Scope,
-    scope,
-    flushBinds,
-    patchRun,
-  ];
+  const binds = flushBinds;
+  const runAt = patchRun;
   const render = patchRender;
   deferApply(
     new Promise((resolve) =>
       onStreamLanded(
-        () => resolve(scope[link] && applyReadyPatch(render, [guard])),
+        () =>
+          resolve(
+            scope[link] &&
+              applyDeferred(render, binds, runAt, () =>
+                patchScope({ [key]: value } as Scope, scope),
+              ),
+          ),
         scope,
       ),
     ),

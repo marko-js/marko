@@ -1,5 +1,5 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { $Global, Template } from "../common/types";
+import { type $Global, RendererProp, type Template } from "../common/types";
 import { _escape_script } from "./content";
 import { toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
@@ -7,6 +7,7 @@ import {
   _html,
   $global,
   getState,
+  patchWait,
   requireMainRuntime,
   writeScript,
   writeWaitReady,
@@ -70,19 +71,27 @@ export function withLoadAssets(
   renderer: ServerRenderer,
   assetId: string,
   triggers?: Trigger[],
-  // On a patch page (`1`) the loader scripts report errors, since a flush
-  // may wait on the channel; `2` when the import is fed as well.
-  patch?: 1 | 2,
+  // On a patch page the loader scripts report errors, since a flush may
+  // wait on the module.
+  patch?: 1,
 ): ServerRenderer {
-  return Object.assign((input: unknown) => {
-    if (getState().writesPatches) {
-      return writeWaitReady(assetId, renderer, input, patch === 2 ? 1 : 0);
-    }
-    const g = $global();
-    addAsset(g, assetId, triggers, patch && 1);
-    _html(flush(g, ""));
-    return writeWaitReady(assetId, renderer, input);
-  }, renderer);
+  return Object.assign(
+    (input: unknown) => {
+      const state = getState();
+      // A flush waits for every lazy module it renders into, then applies
+      // whole: the child composes into its shell like a plain one.
+      if (state.writesPatches) {
+        patchWait(state, assetId);
+        return renderer(input);
+      }
+      const g = $global();
+      addAsset(g, assetId, triggers, patch);
+      _html(flush(g, ""));
+      return writeWaitReady(assetId, renderer, input);
+    },
+    renderer,
+    { [RendererProp.ReadyId]: assetId },
+  );
 }
 
 export function withPageAssets(

@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-// A scriptless page with a lazy dynamic site: the entry still ships the
-// ready channel so the flush revealing the child can apply.
+// A scriptless page with a lazy dynamic site: the entry registers the
+// child's loader so the flush revealing it can load the module and apply.
 export const config: TestConfig = {
   patches: true,
   equivalent: false,

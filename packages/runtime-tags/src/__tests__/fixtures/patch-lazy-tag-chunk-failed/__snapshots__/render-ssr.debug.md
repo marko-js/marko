@@ -16,6 +16,7 @@ setTimeout(() => document.body.click());
 ## Console
 ```
 ERROR "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-chunk-failed/child.marko\" failed to load; its server-rendered content cannot become interactive."
+ERROR "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-chunk-failed/child.marko\" failed to load; its server-rendered content cannot become interactive."
 ```
 
 ## Patch rejected (navigate)

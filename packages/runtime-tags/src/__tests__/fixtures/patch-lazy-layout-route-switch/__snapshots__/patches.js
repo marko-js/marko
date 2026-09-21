@@ -1,25 +1,19 @@
 // PATCH
 [`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `d3;b%b/b&b;<!><!><h1>A</h1><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
-  z_a: {
-    z_b: {
-      cAa: {
-        ca: {
-          cAb: {
-            ba: "d3"
-          }
-        }
-      }
-    },
+  z2_a_b: {
     ba: [1, {
       ca: {
         pa: "a1",
-        fb: "^d0"
+        fb: "^d0",
+        cAb: {
+          ba: "d3"
+        }
       }
     }, "d1"]
   }
 }]
 [`a2;D ;<a> </a>`, {
-  z_a: {
+  z: {
     cAa: {
       ca: {
         cAa: {
@@ -37,20 +31,14 @@
 
 // PATCH holding DAIAAwAB
 [`d4;b%b/b&b;<!><!><h1>B</h1><!>`, {
-  z_a: {
-    z_c: {
-      cAa: {
-        ca: {
-          cAb: {
-            ba: [1, {}, "d4"]
-          }
-        }
-      }
-    },
+  z2_a_c: {
     ba: [1, {
       ca: {
         pa: "a1",
         fb: "^d0",
+        cAb: {
+          ba: [1, {}, "d4"]
+        },
         cAa: {
           la: [{
             ta: "x"

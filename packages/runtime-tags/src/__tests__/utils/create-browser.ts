@@ -4,6 +4,7 @@ import { JSDOM, VirtualConsole } from "jsdom";
 
 import {
   importWithContext,
+  releaseHeldImports,
   waitForPendingModules,
 } from "./import-with-context";
 import type { FlushType } from "./resolve";
@@ -140,7 +141,8 @@ export default function createBrowser(
     flush(flushType: Exclude<FlushType, "stream">) {
       queues[flushType].flush();
     },
-    // Lets every held lazy load script land, then runs what it scheduled.
+    // Lets every held lazy load script and dynamic import land, then runs
+    // what they scheduled.
     async releaseLoads(): Promise<void> {
       if (dir) {
         const imports = heldScripts
@@ -153,6 +155,7 @@ export default function createBrowser(
               rejectLoad,
             ),
           );
+        imports.push(releaseHeldImports(ctx));
         await waitForPendingModules(ctx);
         await Promise.all(imports);
       }
@@ -206,6 +209,7 @@ export default function createBrowser(
               { browser: true },
               ctx,
               rejectLoad,
+              holdLoad,
             ),
           );
           // With an explicit order each script is fully evaluated before

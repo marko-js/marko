@@ -13,7 +13,7 @@ var child_default = _template_patch("__tests__/child.marko", (input) => {
 }, 0, 0);
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/child.marko", void 0, 2);
+const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/child.marko", void 0, 1);
 const $template = "<!><!><!>";
 const $walks = "b%c";
 _shells({

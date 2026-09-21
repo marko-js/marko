@@ -283,7 +283,6 @@ class PatchState extends State {
   constructor($global: State["$global"]) {
     super($global);
     this.hasMainRuntime = true;
-    // The page render already holds a ready bucket the flush writes into.
     this.hasReadyRuntime = true;
     // The live page owns its serialized globals; a flush never re-ships them.
     this.hasGlobals = true;
@@ -305,7 +304,7 @@ class PatchState extends State {
       out += '"' + encodeHeld(this.sentShells) + '"\n';
     }
     this.patchFlushed = undefined;
-    this.patchTrees = undefined;
+    this.patchTree = undefined;
     // The client's bind table lives one flush: a later flush re-ships the
     // sources it references.
     this.binds = undefined;
@@ -373,30 +372,25 @@ class PatchState extends State {
         ? undefined
         : shipShell(this, shellIds?.[branchIndex]);
     // Shape-typed entry, densest form first: a bare number is the
-    // branch index + 1 (`0` hides), and empty/zero members drop. A branch
-    // holding a lazy template rides its channel (`writeWaitReady`).
+    // branch index + 1 (`0` hides), and empty/zero members drop.
     const branchPartial =
       branchIndex === undefined || !hasKeys(opened) ? undefined : opened;
-    writePatch(
-      scopeId,
-      {
-        [PatchKey.Branch + accessor]:
-          branchIndex === undefined
-            ? 0
-            : branchIndex
-              ? branchPartial || shellId
-                ? shellId
-                  ? [branchIndex, branchPartial || {}, shellId]
-                  : [branchIndex, branchPartial || {}]
-                : branchIndex + 1
-              : branchPartial
-                ? shellId
-                  ? [branchPartial, shellId]
-                  : [branchPartial]
-                : shellId || 1,
-      },
-      link.channel,
-    );
+    writePatch(scopeId, {
+      [PatchKey.Branch + accessor]:
+        branchIndex === undefined
+          ? 0
+          : branchIndex
+            ? branchPartial || shellId
+              ? shellId
+                ? [branchIndex, branchPartial || {}, shellId]
+                : [branchIndex, branchPartial || {}]
+              : branchIndex + 1
+            : branchPartial
+              ? shellId
+                ? [branchPartial, shellId]
+                : [branchPartial]
+              : shellId || 1,
+    });
     if (branchIndex === undefined) {
       // Nothing rendered took the peeked id: consume it so no later scope
       // finds this branch's partial or link.

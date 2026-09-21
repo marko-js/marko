@@ -1,9 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-// A created loop row holding a fed lazy page: the row is not a branch a
-// channel can adopt, so its entry rides the loop and the page's data hangs
-// its guard on the row (the row clones before the module lands).
+// A created loop row holding a fed lazy page: the flush names the page's
+// module and applies whole once it lands, row and page together.
 export const config: TestConfig = {
   patches: true,
   steps: [

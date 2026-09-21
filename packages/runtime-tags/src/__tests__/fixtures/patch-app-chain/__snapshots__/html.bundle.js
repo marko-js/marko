@@ -46,8 +46,8 @@ var page_b_default = _template_patch("c", (input) => {
 }, 0, 0);
 
 // template.marko
-const $PageA_withLoadAssets = withLoadAssets(page_a_default, "_b", void 0, 2);
-const $PageB_withLoadAssets = withLoadAssets(page_b_default, "_c", void 0, 2);
+const $PageA_withLoadAssets = withLoadAssets(page_a_default, "_b", void 0, 1);
+const $PageB_withLoadAssets = withLoadAssets(page_b_default, "_c", void 0, 1);
 _shells({
 	d0: "d0;b%;<!><!><!>",
 	d: /*@__PURE__*/ ((_w0, _w1) => `d !d3;${_w0};${_w1}`)(((_w0) => `b/${_w0}&b`)($walks$2), ((_w0) => `<!>${_w0}<!>`)($template$2)),

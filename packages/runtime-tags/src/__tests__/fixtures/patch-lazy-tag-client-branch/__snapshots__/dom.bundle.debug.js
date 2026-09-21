@@ -16,8 +16,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=toggle>toggle</button><main></main>";
 const $walks = " b b";
-let $load_Child_setup = /*@__PURE__*/ _load_ready("ready:__tests__/child.marko", "#childScope/1", /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs")));
-let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_label.mjs"), "ready:__tests__/child.marko");
 const $if_content2__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko1", "input_label", /*@__PURE__*/ _closure_get("input_label", ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._._.input_label), ($scope) => $scope._._), 0);
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_label($scope);

@@ -30,7 +30,6 @@
 ```
 REMOVE: main > p
 INSERT: main > :is(nav, article)
-INSERT: main > article > h1
 ```
 
 # Update `{"page":2}`

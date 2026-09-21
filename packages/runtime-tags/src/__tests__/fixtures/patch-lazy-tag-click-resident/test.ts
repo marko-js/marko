@@ -14,7 +14,8 @@ const clickButton = (document: Document) => {
 };
 
 // A returning click-triggered site whose module is resident (an earlier
-// click loaded it) clones at once and settles its channel with the patch.
+// click loaded it): the flush still runs the loader once, wiring the
+// child's input signals, then composes the child whole.
 export const config: TestConfig = {
   patches: true,
   equivalent: false,

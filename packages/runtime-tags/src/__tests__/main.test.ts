@@ -68,9 +68,10 @@ export type TestConfig = {
    */
   reject_load?: string[];
   /**
-   * Keeps lazy load module scripts whose file name contains one of these
-   * substrings in flight until a `release` step lands them; a patch waiting
-   * on one is not awaited, and must have applied by the end of the steps.
+   * Keeps lazy load module scripts, and dynamic imports, whose file name
+   * contains one of these substrings in flight until a `release` step lands
+   * them; a patch waiting on one is not awaited, and must have applied by
+   * the end of the steps.
    */
   hold_load?: string[];
   /**

@@ -5,7 +5,7 @@
       "PatchWrite:input_item": _.a = {
         label: "b"
       }
-    }
-  },
-  "PatchWrite:item": _.a
+    },
+    "PatchWrite:item": _.a
+  }
 }

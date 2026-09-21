@@ -7,10 +7,10 @@
 
 // PATCH
 [`a;D ;<button> </button>`, {
-  fc: ["a", {
-    label: "b"
-  }],
   z_a: {
+    fc: ["a", {
+      label: "b"
+    }],
     cAc: {
       ta: "b"
     }
@@ -20,10 +20,10 @@
 
 // PATCH holding AgA
 {
-  fc: ["a", {
-    label: "c"
-  }],
   z_a: {
+    fc: ["a", {
+      label: "c"
+    }],
     cAc: {
       ta: "c"
     }

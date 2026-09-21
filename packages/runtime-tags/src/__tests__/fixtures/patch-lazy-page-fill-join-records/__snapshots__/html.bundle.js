@@ -113,9 +113,9 @@ var page_b_default = _template_patch("c", (input) => {
 }, 0, () => [card_default]);
 
 // template.marko
-const $Layout_withLoadAssets = withLoadAssets(layout_default, "_a", void 0, 2);
-const $PageA_withLoadAssets = withLoadAssets(page_a_default, "_b", void 0, 2);
-const $PageB_withLoadAssets = withLoadAssets(page_b_default, "_c", void 0, 2);
+const $Layout_withLoadAssets = withLoadAssets(layout_default, "_a", void 0, 1);
+const $PageA_withLoadAssets = withLoadAssets(page_a_default, "_b", void 0, 1);
+const $PageB_withLoadAssets = withLoadAssets(page_b_default, "_c", void 0, 1);
 _shells({
 	d0: "d0;b%;<!><!><!>",
 	d: "d;D ;<html><body></body></html>",

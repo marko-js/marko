@@ -1,5 +1,4 @@
 // template.marko
-const Child = _load_ready_template("_a", /*@__PURE__*/ _load_template("a", () => import("./child.mjs").then((mod) => mod.default)));
 const $n = /*@__PURE__*/ _let(8, ($scope) => _text($scope.b, $scope.i));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.i + 1);

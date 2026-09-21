@@ -6,7 +6,8 @@ const click = (document: Document) => {
 };
 
 // A patch reveals a load-on-render child whose input reads page state:
-// the site keeps its client render, so the shell's inits resolve.
+// the flush waits for the input signal's module too, so the composed
+// child receives the client-derived value in the creating run.
 export const config: TestConfig = {
   patches: true,
   equivalent: false,

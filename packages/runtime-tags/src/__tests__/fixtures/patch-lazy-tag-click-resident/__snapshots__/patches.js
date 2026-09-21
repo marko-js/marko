@@ -1,7 +1,7 @@
 // PATCH
-[`b0 b2;D%/&;<main><!></main>`, {
-  ba: [{
-    z_a: {
+[`b0;D%b/ b&l;<main><!><button>go</button></main>`, {
+  z_a: {
+    ba: [{
       cb: {
         1: "a0",
         ja: {
@@ -13,8 +13,8 @@
         },
         wd: "b"
       }
-    }
-  }, "b0"]
+    }, "b0"]
+  }
 }]
 "AwI"
 
@@ -25,8 +25,8 @@
 
 // PATCH holding AwI
 {
-  ba: [{
-    z_a: {
+  z_a: {
+    ba: [{
       cb: {
         1: "a0",
         ja: {
@@ -38,6 +38,6 @@
         },
         wd: "c"
       }
-    }
-  }, "b0"]
+    }, "b0"]
+  }
 }

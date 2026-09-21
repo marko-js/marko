@@ -22,7 +22,7 @@ for (let digit = 10; --digit;) {
 }
 // A reference resolves lazily from its flush's table (later flushes replace
 // `flushBinds`): its source walks in after the flush text evaluates, with
-// the flush or with a guard the flush left pending.
+// the flush, or when a held flush applies.
 flushVars[BIND_FLUSH_VAR] = (i: number) => {
   const binds = flushBinds;
   // A bound value that is not callable (owner-bound content) is the value.

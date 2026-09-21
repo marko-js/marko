@@ -9,8 +9,8 @@ import { queueEffect } from "./queue";
 import { _content as content } from "./renderer";
 import {
   _patch_shells,
-  _resume,
   creating,
+  withCreating,
   createPatchers,
   getRegisteredWithScope,
   patchCreated,
@@ -44,8 +44,8 @@ createPatchers[PatchKey.Init] = (scope, _key, ids) =>
 
 type SetupFn = (branch: Scope) => void;
 type SetupIds = [inits: SetupFn[], effects?: SetupFn[]];
-// Each id resolves as it runs: a lazy channel's register with the module
-// that lands after the flush shipping the shell. Closure renders ride as `._`.
+// Each id resolves as it runs (a flush applies once every module it needs
+// is resident). Closure renders ride as `._`.
 export const resolveSetupIds = (ids: string) =>
   ids.split("!").map((part) =>
     part
@@ -70,21 +70,20 @@ type Renderer = ReturnType<ReturnType<typeof _content>> & {
   [RendererProp.Shell]?: Shell;
 };
 
-// A shell registers where the dom module would register the same content,
-// so every consumer resolves one id one way; a later flush's shell wins,
-// and a template's own module (a renderer, once resident) serves as is.
+// Shells keep their own registry, so a flush creates from the shell whether
+// or not the template's module (registered under the same id) is resident,
+// and the module's registration serves the document as is.
 // An id a flush names always resolves: the build id pins the registry, every
 // server module registers its shells at load, and the held-shell token can
 // only under-claim (shells land before the token that names them). A miss
 // is a bug, not a case to fail closed on, so nothing here checks for one.
+const shells: Record<string, ShellFactory> = {};
 export const getContent = (id: string, owner?: Scope) => {
-  const registered = getRegisteredWithScope<
-    ShellFactory | Renderer | undefined
-  >(id);
+  const registered =
+    shells[id] || getRegisteredWithScope<Renderer | undefined>(id);
   return typeof registered === "function" ? registered(owner) : registered;
 };
-export const getShell = (id: string) =>
-  getRegisteredWithScope<ShellFactory | undefined>(id)?.[RendererProp.Shell];
+export const getShell = (id: string) => shells[id]?.[RendererProp.Shell];
 
 // `"id inits…!effects…;walks;template"` (`,` for `;walks;` when walk-less):
 // inits render inside the fresh scope's setup, `!` opens the mount effects.
@@ -99,16 +98,15 @@ export const registerShell = (shell: string) => {
   const parts: Shell = [
     shell.slice(second + 1),
     shell.slice(first + 1, second),
-    resolved ? (branch: Scope) => runSetupIds(resolved, branch) : 0,
+    resolved
+      ? (branch: Scope) => withCreating(() => runSetupIds(resolved, branch))
+      : 0,
   ];
-  const factory = _content(id, parts[0], parts[1], parts[2]);
-  _resume(
-    id,
-    Object.assign(
-      (owner?: Scope) =>
-        Object.assign(factory(owner), { [RendererProp.Shell]: parts }),
-      { [RendererProp.Shell]: parts },
-    ),
+  const factory = _content(id, ...parts);
+  shells[id] = Object.assign(
+    (owner?: Scope) =>
+      Object.assign(factory(owner), { [RendererProp.Shell]: parts }),
+    { [RendererProp.Shell]: parts },
   );
   return id;
 };

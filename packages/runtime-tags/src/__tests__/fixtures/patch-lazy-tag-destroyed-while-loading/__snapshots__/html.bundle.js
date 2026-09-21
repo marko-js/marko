@@ -13,7 +13,7 @@ var child_default = _template_patch("a", (input) => {
 }, 0, 0);
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_a", void 0, 2);
+const $Child_withLoadAssets = withLoadAssets(child_default, "_a", void 0, 1);
 _shells({
 	b: "b;b%;<!><!><!>",
 	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `D%b/${_w0}&l`)($walks), /*@__PURE__*/ ((_w0) => `<main><!>${_w0}</main>`)($template))

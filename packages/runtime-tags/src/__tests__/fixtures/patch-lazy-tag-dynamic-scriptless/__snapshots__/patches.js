@@ -1,9 +1,9 @@
 // PATCH
 [`a;D ;<p class=child> </p>`, {
-  fa: ["a", {
-    label: "b"
-  }],
   z_a: {
+    fa: ["a", {
+      label: "b"
+    }],
     cAa: {
       ta: "b"
     }
@@ -20,10 +20,10 @@
 
 // PATCH holding AgA
 {
-  fa: ["a", {
-    label: "c"
-  }],
   z_a: {
+    fa: ["a", {
+      label: "c"
+    }],
     cAa: {
       ta: "c"
     }

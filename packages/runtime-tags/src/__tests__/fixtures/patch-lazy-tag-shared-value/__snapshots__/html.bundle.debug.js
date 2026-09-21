@@ -31,9 +31,9 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/chi
 	type: "on-click",
 	selector: "body"
 }], 1);
-const $template = "<button> </button><!><!>";
-const $walks = " D l%/&c";
-_shells({ "__tests__/template.marko": "__tests__/template.marko __tests__/template.marko_0_#text#2/init!__tests__/template.marko_0; D l%/&;<button> </button><!><!>" });
+const $template = /*@__PURE__*/ ((_w0) => `<button> </button><!>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` D l%b/${_w0}&b`)($walks$1);
+_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !__tests__/template.marko_0;${_w0};${_w1}`)(((_w0) => ` D l%b/${_w0}&b`)($walks$1), ((_w0) => `<button> </button><!>${_w0}<!>`)($template$1)) });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

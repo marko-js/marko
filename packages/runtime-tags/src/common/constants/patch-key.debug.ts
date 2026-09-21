@@ -14,10 +14,10 @@ export const Loop = "PatchLoop:";
 export const Pending = "PatchPending:";
 export const Setup = "PatchSetup:";
 export const Style = "PatchStyle:";
-export const Ready = "PatchReady:";
 export const Text = "PatchText:";
 export const TextContent = "PatchTextContent:";
 export const Value = "PatchValue:";
+export const Ready = "PatchReady:";
 // Integer: enumerates ahead of the fills that return through it.
 export const Var = "0";
 export const Write = "PatchWrite:";

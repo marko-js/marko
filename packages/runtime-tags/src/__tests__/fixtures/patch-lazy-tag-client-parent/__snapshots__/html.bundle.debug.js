@@ -18,7 +18,7 @@ const $template$1 = "<section></section>";
 const $walks$1 = " b";
 _shells({
 	"__tests__/components/wrapper.marko": "__tests__/components/wrapper.marko !; ;<section></section>",
-	"__tests__/components/wrapper.marko_1*shell": "__tests__/components/wrapper.marko_1*shell __tests__/components/wrapper.marko_1_#text#0/init;b%/&;<!><!><!>"
+	"__tests__/components/wrapper.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/components/wrapper.marko_1*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$2), /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2))
 });
 var wrapper_default = _template_patch("__tests__/components/wrapper.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();

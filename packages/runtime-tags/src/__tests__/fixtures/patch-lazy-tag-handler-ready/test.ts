@@ -1,9 +1,9 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-// Flushes for a not-yet-loaded lazy child carry handler binds on its ready
-// channel: each flush's binds materialize and validate when the batch
-// drains, two flushes pending on the channel included.
+// Flushes for a not-yet-loaded lazy child carry handler binds: each held
+// flush's binds materialize and validate as it applies, two flushes waiting
+// on the module included.
 const load = (document: Document) => {
   setTimeout(() => document.body.click());
 };

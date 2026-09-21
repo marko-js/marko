@@ -9,9 +9,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLElement>("b")!.click();
 };
 
-// An object the flush's tree writes and a lazy child's channel batch reads:
-// the batch must carry it itself, not a path into the tree the client
-// applies and drops.
+// An object the flush's tree writes and a lazy child's entries read: one
+// flush, one tree, so the reference resolves where it is written.
 export const config: TestConfig = {
   patches: true,
   equivalent: false,

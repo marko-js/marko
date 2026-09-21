@@ -17,8 +17,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/components/child.marko", 
 const $template$1 = "<section></section>";
 const $walks$1 = " b";
 const $setup$1 = () => {};
-let $load_Child_setup = _resume("__tests__/components/wrapper.marko_1_#text#0/init", /*@__PURE__*/ _load_ready("ready:__tests__/components/child.marko", "#childScope/1", /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"))));
-let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_label.mjs"), "ready:__tests__/components/child.marko");
 const $if_content__input_label$1 = /*@__PURE__*/ _fill_join("__tests__/components/wrapper.marko0", "input_label", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label)));
 const $if_content__setup$1 = ($scope) => {
 	$if_content__input_label$1._($scope);

@@ -1,24 +1,14 @@
 // PATCH
 [`e0;b%;<!><!><!>`, `e4;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b/bD%l&b;<!><nav>docs</nav><article><!></article><!>`, {
-  z_a: {
-    z_b: {
-      ca: {
-        cAa: {
-          cAa: {
-            ca: {
-              cAa: {
-                ba: "e4"
-              }
-            }
-          }
-        }
-      }
-    },
+  z2_a_b: {
     ca: {
       cAa: {
         ba: [1, {
           ca: {
-            fa: "^e0"
+            fa: "^e0",
+            cAa: {
+              ba: "e4"
+            }
           }
         }, "e2"]
       }
@@ -29,25 +19,15 @@
 
 // PATCH holding CwUBAQ
 [`e5;b%b/b&b;<!><!><h1>B</h1><!>`, {
-  z_a: {
-    z_c: {
-      ca: {
-        cAa: {
-          cAa: {
-            ca: {
-              cAa: {
-                ba: [1, {}, "e5"]
-              }
-            }
-          }
-        }
-      }
-    },
+  z2_a_c: {
     ca: {
       cAa: {
         ba: [1, {
           ca: {
-            fa: "^e0"
+            fa: "^e0",
+            cAa: {
+              ba: [1, {}, "e5"]
+            }
           }
         }, "e2"]
       }

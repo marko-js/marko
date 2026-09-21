@@ -360,8 +360,7 @@ function isRegisteredFnCapture(binding: Binding) {
   return binding.registeredFnCapture;
 }
 
-// Closures whose creation INITs render a fresh scope; a lazy child's
-// server-owned input arrives through its ready channel.
+// Closures whose creation INITs render a fresh scope.
 export function getCreateInitClosures(section: Section) {
   return filter(section.referencedClosures as Opt<Binding>, (closure) =>
     closureInitsCreated(closure, section),

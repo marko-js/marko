@@ -13,7 +13,7 @@ var page_default = _template_patch("a", (input) => {
 }, 0, 0);
 
 // template.marko
-const $Page_withLoadAssets = withLoadAssets(page_default, "_a", void 0, 2);
+const $Page_withLoadAssets = withLoadAssets(page_default, "_a", void 0, 1);
 _shells({
 	b: "b !b1; D l ;<button> </button><ul></ul>",
 	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `D%b/${_w0}&l`)($walks), /*@__PURE__*/ ((_w0) => `<li><!>${_w0}</li>`)($template))

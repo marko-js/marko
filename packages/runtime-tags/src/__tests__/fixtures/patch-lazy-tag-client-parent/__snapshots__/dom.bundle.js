@@ -1,7 +1,7 @@
 // components/wrapper.marko
 const $template = "<section></section>";
-let $load_Child_setup = _resume("c2", /*@__PURE__*/ _load_ready("_b", 1, /*@__PURE__*/ _load_setup(0, 1, () => import("./v:child.marko.setup.mjs"))));
-let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(0, 1, () => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_label.mjs"), "_b");
 const $if_content__input_label$1 = /*@__PURE__*/ _fill_join("c0", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $load_Child_tag_input_label($scope.b, $scope._.e)));
 const $if_content__setup$1 = ($scope) => {
 	$if_content__input_label$1._($scope);

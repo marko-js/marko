@@ -13,7 +13,7 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 }, 0, 0);
 
 // template.marko
-const $Page_withLoadAssets = withLoadAssets(page_default, "ready:__tests__/page.marko", void 0, 2);
+const $Page_withLoadAssets = withLoadAssets(page_default, "ready:__tests__/page.marko", void 0, 1);
 const $template = "<button> </button><ul></ul>";
 const $walks = " D l b";
 _shells({

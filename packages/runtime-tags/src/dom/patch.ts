@@ -8,7 +8,6 @@ import { abortRun, run, runEffects, runId } from "./queue";
 import {
   abortPatch,
   beginPatch,
-  patchScope,
   curRenders,
   patchers,
   patchRender,
@@ -16,9 +15,7 @@ import {
 } from "./resume";
 import type { RenderData, SerializeContext } from "./resume";
 
-// Installed by `patch-ready`: commits a flush's guards, discards a
-// rejected flush's.
-let commitReady: (() => void) | undefined;
+// Installed by `patch-ready`: discards what a rejected flush left held.
 let discardReady: (() => void) | undefined;
 /** Whether a flush applied: truthy when it did. */
 export type Applied = 0 | 1;
@@ -32,9 +29,8 @@ export function deferApply(applied: Promise<unknown>) {
 // Flush-scoped bindings patch features inject.
 export const flushVars: Record<string, unknown> = {};
 
-// The flush's bind table (`patch-value-bind`): a guard the flush left
-// pending applies under it, so a source shipped with the flush serves the
-// guard's reference.
+// The flush's bind table (`patch-value-bind`): a flush held for a module
+// applies under its own, so a source shipped with it serves its references.
 export let flushBinds: Record<string, unknown> = {};
 export let patchResponse: object;
 
@@ -137,31 +133,22 @@ export function applyGlobals(live: Scope, _key: string, value: unknown) {
   }
 }
 
-export function installPatchReady(
-  commit: typeof commitReady,
-  discard: typeof discardReady,
-) {
-  commitReady = commit;
+export function installPatchReady(discard: typeof discardReady) {
   discardReady = discard;
 }
 
-// Commits deferred ready-channel data after its module loads, as an empty
-// flush run so it shares a flush's commit sequence and patch context.
-// A channel's deferred entries with the live scope they apply to, and the
-// bind table and run of the flush that shipped them.
-export type ReadyGuard = [
-  entries: Scope,
-  scope: Scope,
+// Applies flush data left waiting (a module, a streaming body) as its own
+// flush run, under the bind table and run of the flush that shipped it.
+export function applyDeferred(
+  render: RenderData,
   binds: Record<string, unknown>,
-  run: number,
-];
-export function applyReadyPatch(render: RenderData, guards: ReadyGuard[]) {
+  runAt: number,
+  apply: () => void,
+): Applied {
   try {
-    for (const [entries, scope, binds, runAt] of guards) {
-      flushBinds = binds;
-      beginPatch(render, runAt);
-      patchScope(entries, scope);
-    }
+    flushBinds = binds;
+    beginPatch(render, runAt);
+    apply();
     commitFlush();
     return 1;
   } catch (error) {
@@ -169,6 +156,7 @@ export function applyReadyPatch(render: RenderData, guards: ReadyGuard[]) {
     abortRun();
     return 0;
   } finally {
+    render.r!.length = 0;
     abortPatch();
   }
 }
@@ -176,5 +164,4 @@ export function applyReadyPatch(render: RenderData, guards: ReadyGuard[]) {
 function commitFlush() {
   runEffects(patchRender.m!([]), 1);
   run();
-  commitReady?.();
 }

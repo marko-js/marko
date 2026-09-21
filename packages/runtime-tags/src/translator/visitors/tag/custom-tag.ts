@@ -45,12 +45,7 @@ import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection, StructureKind } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
-import {
-  addStatement,
-  getResumeRegisterId,
-  getSignal,
-  patchCreates,
-} from "../../util/signals";
+import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -256,7 +251,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               t.variableDeclarator(
                 signalIdent,
                 callRuntime(
-                  "_load_signal",
+                  isPatch() ? "_load_signal_patch" : "_load_signal",
                   triggerIdent
                     ? t.addComment(
                         t.callExpression(triggerIdent, [loadExpr]),
@@ -264,6 +259,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                         "@__PURE__",
                       )
                     : loadExpr,
+                  isPatch() && t.stringLiteral(getReadyId(childFile)!),
                 ),
               ),
             ]),
@@ -282,47 +278,22 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           ]),
         );
         importRuntimeFeature("catch");
-        let loadSetupCall = callRuntime(
-          "_load_setup",
-          getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
-          getScopeAccessorLiteral(childBinding, true),
-          triggerIdent
-            ? t.addComment(
-                t.callExpression(triggerIdent, [setupLoadExpr]),
-                "leading",
-                "@__PURE__",
-              )
-            : setupLoadExpr,
-        );
-        // A created scope's client-side load drives the child's ready channel
-        // (stamped on its branch), so deferred flush data drains after insert.
-        if (isPatch() && getReadyId(childFile) !== undefined) {
-          loadSetupCall = callRuntime(
-            "_load_ready",
-            t.stringLiteral(getReadyId(childFile)!),
-            getScopeAccessorLiteral(childBinding, true),
-            loadSetupCall,
-          );
-        }
         getProgram().node.body.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(
               setupIdent,
-              // A branch being created runs the tag's load wiring as a shell
-              // init; `_resume` (impure) survives tree-shaking to carry it.
-              isPatch() && patchCreates(section)
-                ? callRuntime(
-                    "_resume",
-                    t.stringLiteral(
-                      getResumeRegisterId(
-                        section,
-                        node.extra![kLoadTagBinding]!,
-                        "init",
-                      ),
-                    ),
-                    loadSetupCall,
-                  )
-                : loadSetupCall,
+              callRuntime(
+                "_load_setup",
+                getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
+                getScopeAccessorLiteral(childBinding, true),
+                triggerIdent
+                  ? t.addComment(
+                      t.callExpression(triggerIdent, [setupLoadExpr]),
+                      "leading",
+                      "@__PURE__",
+                    )
+                  : setupLoadExpr,
+              ),
             ),
           ]),
         );

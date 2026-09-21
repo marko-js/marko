@@ -1,18 +1,13 @@
 # Render `{"show":false,"title":"a"}`
 
 # Update `{"show":true,"title":"b"}`
-```html
-<main />
-```
-## Change
-```
-INSERT: main
-```
 
 # Update
 ```js
 document.body.click();
 ```
+
+# Update
 ```html
 <main>
   <button
@@ -24,8 +19,7 @@ document.body.click();
 ```
 ## Change
 ```
-INSERT: main > button
-UPDATE: main > button[title] null => "b"
+INSERT: main
 ```
 
 # Update Release
@@ -49,8 +43,6 @@ REMOVE: main
 ## Change
 ```
 INSERT: main
-INSERT: main > button
-UPDATE: main > button[title] null => "c"
 ```
 
 # Update

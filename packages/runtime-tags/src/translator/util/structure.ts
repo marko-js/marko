@@ -163,8 +163,9 @@ export function resolveStructure(section: Section) {
           }
           break;
         case StructureKind.Child: {
-          // A lazy child composes into the shell only when a flush creates it.
-          const composed = html && op.load?.downstreamCreated;
+          // A lazy child composes into a shell like a plain one: the flush
+          // that creates it waits for its module.
+          const composed = html && !!op.load;
           const renderer = op.load && !composed ? undefined : op.renderer;
           if (composed) {
             // The walk steps over the marker into the composed child; the

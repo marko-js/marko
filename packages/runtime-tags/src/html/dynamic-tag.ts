@@ -37,6 +37,7 @@ import {
   rendererKey,
   withBranchId,
   withUnpatched,
+  patchWait,
 } from "./writer";
 
 const voidElementsReg =
@@ -65,8 +66,13 @@ export let _dynamic_tag = (
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   // A patch render skips a tag it never pairs (state or a client-owned
-  // group upstream): the resumed page renders it, as with `writeBranch`.
-  if (patchPairing !== 1 && state.writesPatches) return;
+  // group upstream): the resumed page renders it, as with `writeBranch`,
+  // so the flush waits for a lazy renderer's module as that render will.
+  if (patchPairing !== 1 && state.writesPatches) {
+    const readyId = (renderer as ServerRenderer)?.[RendererProp.ReadyId];
+    if (readyId) patchWait(state, readyId);
+    return;
+  }
   const branchId = _peek_scope_id();
   // A null renderer still renders the body: its writes pair too.
   if (patchPairing && (renderer || content)) {

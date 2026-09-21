@@ -5,8 +5,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// Two patches wait on the child's channel before its module lands, each
-// shipping the handler bind under its guard: the click sees the newest one.
+// Two patches wait for the child's module, each shipping its own handler
+// bind: they apply in order, so the click sees the newest one.
 export const config: TestConfig = {
   patches: true,
   equivalent: false,

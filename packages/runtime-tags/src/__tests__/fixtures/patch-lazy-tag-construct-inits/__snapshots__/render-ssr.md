@@ -35,8 +35,8 @@
 ```
 ## Change
 ```
-UPDATE: p::text "a" => "b"
 INSERT: main > :is(button, span, span)
+UPDATE: p::text "a" => "b"
 UPDATE: main > span:nth-of-type(1)::text@2 "" => "1"
 UPDATE: main > span:nth-of-type(2)::text@2 "" => "2"
 ```
@@ -96,7 +96,7 @@ UPDATE: main > span:nth-of-type(2)::text@2 "2" => "3"
 ```
 ## Change
 ```
-UPDATE: p::text "b" => "c"
 UPDATE: main > span:nth-of-type(1)::text@0 "b" => "c"
 UPDATE: main > span:nth-of-type(2)::text@0 "b" => "c"
+UPDATE: p::text "b" => "c"
 ```

@@ -77,14 +77,12 @@ export {
   _global_join as _global_join_resume,
   _global_script,
 } from "./dom/patch-global";
-export { _load_lazy } from "./dom/patch-load";
+export { _load_lazy, _load_signal_patch } from "./dom/patch-load";
 export {
   _load_event_trigger,
   _load_idle_trigger,
   _load_media_trigger,
   _load_race_trigger,
-  _load_ready,
-  _load_ready_template,
   _load_setup,
   _load_signal,
   _load_template,

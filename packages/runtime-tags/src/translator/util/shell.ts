@@ -179,12 +179,10 @@ function isStructureExpressible(section: Section) {
       // Static text is plain markup, expressible like a markup string.
       op.kind !== StructureKind.Text &&
       // A known child (a template's root or a sibling define body) composes
-      // when expressible; a lazy child expresses as its marker (the shell
-      // composes a server-only one).
+      // when expressible.
       !(
         op.kind === StructureKind.Child &&
-        (op.load ||
-          !op.renderer ||
+        (!op.renderer ||
           isShellExpressible(
             op.renderer.kind === StructureKind.ExportRef
               ? op.renderer.program.section!

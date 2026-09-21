@@ -9,8 +9,6 @@
 ```
 
 # Update `{"show":true,"label":"b"}`
-
-# Update
 ```html
 <button
   class="n"
@@ -26,6 +24,7 @@
 ## Change
 ```
 INSERT: main > span
+UPDATE: main > span::text " " => "b0"
 ```
 
 # Update

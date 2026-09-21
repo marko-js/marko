@@ -6,19 +6,19 @@
     },
     "page-a.marko.load.mjs": {
       "min": 99,
-      "brotli": 81
+      "brotli": 82
     },
     "page-b.marko.load.mjs": {
       "min": 99,
-      "brotli": 81
+      "brotli": 82
     },
     "template.marko.page.mjs": {
-      "min": 1409,
-      "brotli": 669
+      "min": 1832,
+      "brotli": 787
     },
     "layout.mjs": {
-      "min": 2770,
-      "brotli": 1349
+      "min": 2776,
+      "brotli": 1369
     },
     "page-a.mjs": {
       "min": 235,
@@ -26,11 +26,11 @@
     },
     "page-b.mjs": {
       "min": 303,
-      "brotli": 185
+      "brotli": 184
     },
     "shared": {
-      "min": 16095,
-      "brotli": 7313
+      "min": 15999,
+      "brotli": 7264
     }
   },
   "html": {
@@ -38,7 +38,7 @@
     "brotli": 280
   },
   "patch": {
-    "min": 991,
-    "brotli": 364
+    "min": 947,
+    "brotli": 355
   }
 }

@@ -19,8 +19,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 const $template = "<button> </button><!><!>";
 const $walks = " D l%/&c";
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
-let $load_Child_setup = /*@__PURE__*/ _load_ready("ready:__tests__/child.marko", "#childScope/3", /*@__PURE__*/ _load_setup("#text/2", "#childScope/3", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs"))));
-let $load_Child_tag_input_item = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_item.mjs")));
+let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/2", "#childScope/3", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
+let $load_Child_tag_input_item = /*@__PURE__*/ _load_signal_patch(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_item.mjs")), "ready:__tests__/child.marko");
 const $item = /*@__PURE__*/ _const("item", ($scope) => $load_Child_tag_input_item($scope["#childScope/3"], $scope.item));
 const $input_label = ($scope, input_label) => $item($scope, { label: input_label });
 const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
