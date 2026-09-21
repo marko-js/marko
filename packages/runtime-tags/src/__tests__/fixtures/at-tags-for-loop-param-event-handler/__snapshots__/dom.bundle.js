@@ -30,4 +30,4 @@ const $onClick = ($locals) => function() {
 	const $scope = $locals._;
 	$clicked($scope, $scope.c + $locals.e);
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;

@@ -51,6 +51,6 @@ const $state2 = ($scope) => function(v) {
 const $state = ($scope) => function(v) {
 	$a($scope, v);
 };
-_resume("__tests__/template.marko_0/state2", $state2);
-_resume("__tests__/template.marko_0/state", $state);
+_resumed["__tests__/template.marko_0/state2"] = $state2;
+_resumed["__tests__/template.marko_0/state"] = $state;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

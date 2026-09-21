@@ -30,7 +30,7 @@ const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a1", "Say Hi"
 function $onClick() {
 	document.getElementById("display").innerHTML = "Hi!";
 }
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

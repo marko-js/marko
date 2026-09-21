@@ -10,8 +10,8 @@ const $_return2 = ($scope) => function() {
 const $_return = ($scope) => function(v) {
 	$list$1($scope, v);
 };
-_resume("b1", $_return2);
-_resume("b0", $_return);
+_resumed.b1 = $_return2;
+_resumed.b0 = $_return;
 
 // template.marko
 const $for_content__item = ($scope, item) => _text($scope.a, item);

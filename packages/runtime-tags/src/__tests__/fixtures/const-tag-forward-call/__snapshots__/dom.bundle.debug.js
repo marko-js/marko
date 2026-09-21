@@ -65,12 +65,12 @@ const $callDefaulted = ($scope) => () => {
 function $defaulted(a, b = "def") {
 	return a + ":" + b;
 }
-_resume("__tests__/template.marko_0/first", $first);
-_resume("__tests__/template.marko_0/second", $second);
-_resume("__tests__/template.marko_0/viaAlias", $viaAlias);
-_resume("__tests__/template.marko_0/third", $third);
-_resume("__tests__/template.marko_0/callNullary", $callNullary);
-_resume("__tests__/template.marko_0/nullary", $nullary);
-_resume("__tests__/template.marko_0/callDefaulted", $callDefaulted);
-_resume("__tests__/template.marko_0/defaulted", $defaulted);
+_resumed["__tests__/template.marko_0/first"] = $first;
+_resumed["__tests__/template.marko_0/second"] = $second;
+_resumed["__tests__/template.marko_0/viaAlias"] = $viaAlias;
+_resumed["__tests__/template.marko_0/third"] = $third;
+_resumed["__tests__/template.marko_0/callNullary"] = $callNullary;
+_resumed["__tests__/template.marko_0/nullary"] = $nullary;
+_resumed["__tests__/template.marko_0/callDefaulted"] = $callDefaulted;
+_resumed["__tests__/template.marko_0/defaulted"] = $defaulted;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

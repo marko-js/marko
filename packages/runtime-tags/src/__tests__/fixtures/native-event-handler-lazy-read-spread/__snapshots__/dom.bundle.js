@@ -10,4 +10,4 @@ const $setup__script = _script("a1", ($scope) => {
 const $onClick = ($scope) => function() {
 	$log($scope, `${$scope.e}[${$scope.d}]`);
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;

@@ -13,4 +13,4 @@ const $setup__script = _script("a3", ($scope) => _on($scope.a, "click", function
 const $resetCount = ($scope) => function() {
 	if ($scope.d > 0) $count($scope, 0);
 };
-_resume("a0", $resetCount);
+_resumed.a0 = $resetCount;

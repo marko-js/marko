@@ -5,7 +5,7 @@ function shout(message) {
 const $input_message = ($scope, input_message) => _text($scope.a, input_message);
 
 // tags/v:greeting.marko.register-shout.js
-_resume("b0", shout);
+_resumed.b0 = shout;
 
 // template.marko
 const $message = /*@__PURE__*/ _let(3, ($scope) => $input_message($scope.b, $scope.d));

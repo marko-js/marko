@@ -25,6 +25,6 @@ const $valueChange = ($scope) => function() {
 const $setter = ($scope) => function() {
 	1;
 };
-_resume("__tests__/template.marko_1/valueChange", $valueChange);
-_resume("__tests__/template.marko_0/setter", $setter);
+_resumed["__tests__/template.marko_1/valueChange"] = $valueChange;
+_resumed["__tests__/template.marko_0/setter"] = $setter;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

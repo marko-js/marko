@@ -1,4 +1,4 @@
-// size: 2614 (min) 1288 (brotli)
+// size: 2584 (min) 1279 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -16,7 +16,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
     (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   isScheduled,
   channel,
-  registeredValues = {},
+  _resumed = {},
   curRenders,
   readyIds;
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
@@ -119,7 +119,7 @@ function _let(id, fn) {
 }
 function _script(id, fn) {
   return (
-    _resume(id, fn),
+    (_resumed[id] = fn),
     (scope) => {
       queueEffect(scope, fn);
     }
@@ -163,7 +163,7 @@ function init(runtimeId = "M") {
             serializeContext = (data, registryId) =>
               typeof data == "number"
                 ? registryId
-                  ? registeredValues[registryId](getScope(data))
+                  ? _resumed[registryId](getScope(data))
                   : getScope(data)
                 : applyScopes(data),
             nextToken = () =>
@@ -179,7 +179,7 @@ function init(runtimeId = "M") {
                 if (typeof serialized == "string")
                   for (lastTokenIndex = 0, visitText = serialized; nextToken();)
                     /\D/.test(lastToken)
-                      ? (lastEffect = registeredValues[lastToken])
+                      ? (lastEffect = _resumed[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
                 else if (Array.isArray(serialized)) break;
                 else {
@@ -198,7 +198,7 @@ function init(runtimeId = "M") {
             lastToken,
             lastTokenIndex;
           return (
-            (serializeContext._ = registeredValues),
+            (serializeContext._ = _resumed),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds));
               let retained = 0;
@@ -235,9 +235,6 @@ function runResumeEffects(render) {
     runEffects(render.m([]), 1);
   } finally {
   }
-}
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
 }
 function _to_text(value) {
   return value || value === 0 ? value + "" : "";

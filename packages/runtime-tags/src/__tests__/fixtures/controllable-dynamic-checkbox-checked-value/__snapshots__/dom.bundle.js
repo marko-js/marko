@@ -29,4 +29,4 @@ const $setup__script = _script("a2", ($scope) => {
 const $checkedValueChange2 = ($scope) => (_new_checkedValue) => {
 	$checkedValue($scope, _new_checkedValue);
 };
-_resume("a0", $checkedValueChange2);
+_resumed.a0 = $checkedValueChange2;

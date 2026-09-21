@@ -2,7 +2,7 @@
 function $getter() {
 	return "hello";
 }
-_resume("b0", $getter);
+_resumed.b0 = $getter;
 
 // template.marko
 const $get = /*@__PURE__*/ _const(3, _script("a0", ($scope) => $scope.c.textContent = $scope.d()));

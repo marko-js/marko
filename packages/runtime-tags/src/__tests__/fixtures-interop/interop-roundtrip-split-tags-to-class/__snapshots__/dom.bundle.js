@@ -25,7 +25,7 @@ import_component_browser.default.renderer = _marko_template._ = (0, import_rende
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-_resume("b", _marko_template);
+_resumed.b = _marko_template;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.b, $scope.c);
@@ -37,7 +37,7 @@ const $count = /*@__PURE__*/ _let(2, ($scope) => {
 const $onIncrement = ($scope) => function() {
 	$count($scope, +$scope.c + 1);
 };
-_resume("a0", $onIncrement);
+_resumed.a0 = $onIncrement;
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

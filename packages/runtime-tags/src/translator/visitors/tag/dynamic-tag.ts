@@ -45,6 +45,7 @@ import {
   getCompatRuntimeFile,
   importRuntime,
   importRuntimeFeature,
+  registerRuntimeValue,
 } from "../../util/runtime";
 import {
   createScopeReadExpression,
@@ -367,9 +368,8 @@ export default {
               registration
                 ? t.markoScriptlet([t.expressionStatement(registration)], true)
                 : t.expressionStatement(
-                    callRuntime(
-                      "_resume",
-                      t.stringLiteral(classId),
+                    registerRuntimeValue(
+                      classId,
                       t.identifier((tagExpression as t.Identifier).name),
                     ),
                   ),

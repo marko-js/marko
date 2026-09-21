@@ -19,5 +19,5 @@ const $input = ($scope, input) => $input_attrs($scope, input.attrs);
 const $checkedChange = ($scope) => function(v) {
 	$checked($scope, v);
 };
-_resume("__tests__/template.marko_0/checkedChange", $checkedChange);
+_resumed["__tests__/template.marko_0/checkedChange"] = $checkedChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);

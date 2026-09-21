@@ -9,10 +9,10 @@ function aFn(message) {
 }
 
 // tags/v:chain-b.marko.register-bFn.js
-_resume("c0", bFn);
+_resumed.c0 = bFn;
 
 // tags/v:chain-a.marko.register-aFn.js
-_resume("b0", aFn);
+_resumed.b0 = aFn;
 
 // template.marko
 const $message = /*@__PURE__*/ _let(4, ($scope) => _text($scope.b, $scope.e));

@@ -13,4 +13,4 @@ const $setup__script = _script("a2", ($scope) => {
 	});
 });
 function $obj() {}
-_resume("a0", $obj);
+_resumed.a0 = $obj;

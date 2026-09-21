@@ -2,7 +2,7 @@
 const $valueChange = ($scope) => function(next) {
 	$scope.$.store = next;
 };
-_resume("b0", $valueChange);
+_resumed.b0 = $valueChange;
 
 // template.marko
 const $v = _var_resume("a0", ($scope, v) => _text($scope.d, v));

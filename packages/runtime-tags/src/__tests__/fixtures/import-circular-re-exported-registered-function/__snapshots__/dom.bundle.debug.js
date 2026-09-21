@@ -17,10 +17,10 @@ function aFn(message) {
 var chain_a_default = /*@__PURE__*/ _template("__tests__/tags/chain-a.marko", $template$1, "b");
 
 // tags/v:chain-b.marko.register-bFn.js
-_resume("__tests__/tags/chain-b.marko_0/export/bFn", bFn);
+_resumed["__tests__/tags/chain-b.marko_0/export/bFn"] = bFn;
 
 // tags/v:chain-a.marko.register-aFn.js
-_resume("__tests__/tags/chain-a.marko_0/export/aFn", aFn);
+_resumed["__tests__/tags/chain-a.marko_0/export/aFn"] = aFn;
 
 // template.marko
 const $template = "<button>go</button><div> </div>";

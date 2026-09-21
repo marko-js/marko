@@ -8,4 +8,4 @@ const $item_content = /*@__PURE__*/ _content_closures(_content_resume("a1", " ",
 const $onClick = ($locals) => function(ev) {
 	ev.target.textContent = $locals.e;
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;

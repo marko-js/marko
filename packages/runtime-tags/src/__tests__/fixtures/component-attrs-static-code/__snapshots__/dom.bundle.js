@@ -12,5 +12,5 @@ function $formatNumber(n) {
 function $formatNumber2(n) {
 	return "$" + n.toFixed(2);
 }
-_resume("a0", $formatNumber);
-_resume("a1", $formatNumber2);
+_resumed.a0 = $formatNumber;
+_resumed.a1 = $formatNumber2;

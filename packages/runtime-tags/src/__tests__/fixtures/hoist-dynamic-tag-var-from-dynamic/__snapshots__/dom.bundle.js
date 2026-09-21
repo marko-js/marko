@@ -5,7 +5,7 @@ function $setup($scope) {
 	_return($scope, $_return($scope));
 }
 const $_return = ($scope) => () => (html) => $scope.a.innerHTML = html;
-_resume("b0", $_return);
+_resumed.b0 = $_return;
 var child_default = /*@__PURE__*/ _template("b", $template$1, " b", $setup);
 
 // tags/thing.marko

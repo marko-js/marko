@@ -30,6 +30,6 @@ function $onClick() {
 function $onclick() {
 	throw new Error("Should never be called.");
 }
-_resume("__tests__/template.marko_0/onClick", $onClick);
-_resume("__tests__/template.marko_0/onclick", $onclick);
+_resumed["__tests__/template.marko_0/onClick"] = $onClick;
+_resumed["__tests__/template.marko_0/onclick"] = $onclick;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

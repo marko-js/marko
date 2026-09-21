@@ -28,7 +28,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-_resume("__tests__/components/my-button.marko", _marko_template);
+_resumed["__tests__/components/my-button.marko"] = _marko_template;
 const $mybutton_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
 const $mybutton_content__setup = $mybutton_content__count;
 const $mybutton_content = _content_resume("__tests__/template.marko_1*content", " ", " ", $mybutton_content__setup);
@@ -44,5 +44,5 @@ function $setup($scope) {
 const $onClick = ($scope) => function() {
 	$count($scope, +$scope.count + 1);
 };
-_resume("__tests__/template.marko_0/onClick", $onClick);
+_resumed["__tests__/template.marko_0/onClick"] = $onClick;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

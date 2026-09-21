@@ -31,5 +31,5 @@ const $valueChange = ($scope) => function(next) {
 const $openChange = ($scope) => function(next) {
 	$open($scope, next);
 };
-_resume("a1", $valueChange);
-_resume("a0", $openChange);
+_resumed.a1 = $valueChange;
+_resumed.a0 = $openChange;

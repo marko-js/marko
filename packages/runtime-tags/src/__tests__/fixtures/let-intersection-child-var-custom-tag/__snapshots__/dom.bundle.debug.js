@@ -23,7 +23,7 @@ const $valueChange = ($scope) => function(next) {
 	$scope.$global[$scope.input_value] = next;
 	subsByKey[$scope.input_value]?.forEach((cb) => cb());
 };
-_resume("__tests__/tags/let-global.marko_0/valueChange", $valueChange);
+_resumed["__tests__/tags/let-global.marko_0/valueChange"] = $valueChange;
 var let_global_default = /*@__PURE__*/ _template("__tests__/tags/let-global.marko", "", "", $setup$1, $input);
 
 // template.marko

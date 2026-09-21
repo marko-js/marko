@@ -19,4 +19,4 @@ const $x = /*@__PURE__*/ _let(1, ($scope) => $Wrap_content__onClick($scope.a, $o
 const $onClick = ($scope) => function() {
 	console.log($x($scope, +$scope.b + 1) - 1);
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;

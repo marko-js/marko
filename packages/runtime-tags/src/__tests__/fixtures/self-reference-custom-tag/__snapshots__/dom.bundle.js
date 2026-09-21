@@ -4,4 +4,4 @@ const $Child_content__input_onClick = /*@__PURE__*/ _const(3, _script("a3", ($sc
 const $onClick = ($scope) => function() {
 	$scope.c().innerHTML = "clicked";
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;

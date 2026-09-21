@@ -13,4 +13,4 @@ const $valueChange = ($scope) => function(nv) {
 	$calls($scope, +$scope.f + 1);
 	$v($scope, nv);
 };
-_resume("a0", $valueChange);
+_resumed.a0 = $valueChange;

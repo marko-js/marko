@@ -4,4 +4,4 @@ const $handlers_load = /*@__PURE__*/ _const(4, _script("a1", ($scope) => _on($sc
 const $handlers = ($scope) => async function() {
 	$loaded($scope, await Promise.resolve("yes"));
 };
-_resume("a0", $handlers);
+_resumed.a0 = $handlers;

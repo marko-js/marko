@@ -9,7 +9,7 @@ import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
 import { _content, createAndSetupBranch, type Renderer } from "./renderer";
-import { _resume, getRegisteredWithScope, init } from "./resume";
+import { _resumed, getRegisteredWithScope, init } from "./resume";
 import { destroyBranch } from "./scope";
 const classIdToBranch = new Map<string, BranchScope>();
 // Injected by the class runtime (runtime-dom.js); revives a serialized
@@ -36,7 +36,7 @@ export const compat = {
   patchDynamicTag,
   queueEffect,
   init(warp10Noop: any) {
-    _resume(SET_SCOPE_REGISTER_ID, (scope: Scope & { m5c?: string }) => {
+    _resumed[SET_SCOPE_REGISTER_ID] = (scope: Scope & { m5c?: string }) => {
       getRenderScopes(scope[AccessorProp.Global]!)![scope[AccessorProp.Id]] =
         scope;
       if (scope.m5c) {
@@ -51,15 +51,15 @@ export const compat = {
           }
         }
       }
-    });
+    };
 
-    _resume(RENDER_BODY_ID, warp10Noop);
+    _resumed[RENDER_BODY_ID] = warp10Noop;
   },
   setClassEventResolver(fn: (value: unknown, scope: Scope) => unknown) {
     classEventResolver = fn;
   },
   resumeClassFunction(id: string, build: (scope: Scope) => unknown) {
-    _resume(id, build);
+    _resumed[id] = build;
   },
   getScope($global: Record<string, unknown>, scopeId: unknown) {
     return getRenderScopes($global)?.[scopeId as string];

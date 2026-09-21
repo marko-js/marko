@@ -6,7 +6,7 @@ const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function
 const $report = ($scope) => function(o) {
 	return o === $scope.e;
 };
-_resume("b0", $report);
+_resumed.b0 = $report;
 
 // child.marko
 const $verified = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));

@@ -73,8 +73,8 @@ const $isInner = ($scope) => function(o) {
 const $isShared = ($scope) => function(o) {
 	return o === $scope.shared;
 };
-_resume("__tests__/template.marko_0/isInner", $isInner);
-_resume("__tests__/template.marko_0/isShared", $isShared);
+_resumed["__tests__/template.marko_0/isInner"] = $isInner;
+_resumed["__tests__/template.marko_0/isShared"] = $isShared;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // v:child-b.marko.setup.js

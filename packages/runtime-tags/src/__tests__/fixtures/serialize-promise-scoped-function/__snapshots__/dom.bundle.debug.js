@@ -18,5 +18,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $getCount = ($scope) => () => $scope.count;
-_resume("__tests__/template.marko_0/getCount", $getCount);
+_resumed["__tests__/template.marko_0/getCount"] = $getCount;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

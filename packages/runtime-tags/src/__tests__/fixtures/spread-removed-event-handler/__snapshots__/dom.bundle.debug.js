@@ -31,7 +31,7 @@ const $attrs2 = ($scope) => function() {
 const $attrs = ($scope) => function() {
 	$phase($scope, 1);
 };
-_resume("__tests__/template.marko_0/attrs3", $attrs3);
-_resume("__tests__/template.marko_0/attrs2", $attrs2);
-_resume("__tests__/template.marko_0/attrs", $attrs);
+_resumed["__tests__/template.marko_0/attrs3"] = $attrs3;
+_resumed["__tests__/template.marko_0/attrs2"] = $attrs2;
+_resumed["__tests__/template.marko_0/attrs"] = $attrs;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

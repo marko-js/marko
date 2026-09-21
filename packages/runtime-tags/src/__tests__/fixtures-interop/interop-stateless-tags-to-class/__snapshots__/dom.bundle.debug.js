@@ -47,5 +47,5 @@ function $setup($scope) {
 function $onClick() {
 	document.getElementById("display").innerHTML = "Hi!";
 }
-_resume("__tests__/template.marko_0/onClick", $onClick);
+_resumed["__tests__/template.marko_0/onClick"] = $onClick;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

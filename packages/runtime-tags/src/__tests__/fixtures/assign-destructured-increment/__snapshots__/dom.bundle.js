@@ -19,4 +19,4 @@ const $fooChange2 = /*@__PURE__*/ _const(6);
 const $foo = ($scope) => function(v) {
 	$bar($scope, v);
 };
-_resume("a0", $foo);
+_resumed.a0 = $foo;

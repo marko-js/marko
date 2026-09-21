@@ -7,5 +7,5 @@ const $if_content2__x__OR__z = /*@__PURE__*/ _or(1, _script("a4", ($scope) => {
 const $hoist1_getter = _hoist_resume("a2", 5);
 const $hoist2 = ($scope) => () => $scope._._.d;
 const $hoist = ($scope) => () => $scope.d;
-_resume("a1", $hoist2);
-_resume("a0", $hoist);
+_resumed.a1 = $hoist2;
+_resumed.a0 = $hoist;

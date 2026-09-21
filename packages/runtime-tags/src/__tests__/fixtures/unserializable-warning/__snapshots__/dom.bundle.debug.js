@@ -11,5 +11,5 @@ function $setup($scope) {
 const $test = ($scope) => function() {
 	return $scope.unserializable;
 };
-_resume("__tests__/template.marko_1/test", $test);
+_resumed["__tests__/template.marko_1/test"] = $test;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

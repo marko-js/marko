@@ -22,7 +22,7 @@ const $input = /*@__PURE__*/ _const("input");
 var press_default = /*@__PURE__*/ _template("__tests__/tags/press.marko", $template$1, $walks$1, $setup$1, $input);
 
 // tags/v:handlers.marko.register-shout.js
-_resume("__tests__/tags/handlers.marko_0/export/shout", shout);
+_resumed["__tests__/tags/handlers.marko_0/export/shout"] = shout;
 
 // template.marko
 const $template = $template$1;

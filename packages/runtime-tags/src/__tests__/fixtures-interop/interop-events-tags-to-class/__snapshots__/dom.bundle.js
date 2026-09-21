@@ -26,7 +26,7 @@ const $count = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
 const $onCount = ($scope) => function(newCount) {
 	$count($scope, newCount);
 };
-_resume("a0", $onCount);
+_resumed.a0 = $onCount;
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

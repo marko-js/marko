@@ -25,5 +25,5 @@ const $fooChange2 = /*@__PURE__*/ _const("$fooChange");
 const $foo = ($scope) => function(v) {
 	$bar($scope, v);
 };
-_resume("__tests__/template.marko_0/foo", $foo);
+_resumed["__tests__/template.marko_0/foo"] = $foo;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

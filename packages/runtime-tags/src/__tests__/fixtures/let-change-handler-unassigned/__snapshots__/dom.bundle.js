@@ -9,4 +9,4 @@ const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function
 	$initial($scope, +$scope.c + 1);
 }));
 function $onValue() {}
-_resume("a0", $onValue);
+_resumed.a0 = $onValue;

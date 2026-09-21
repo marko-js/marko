@@ -6,7 +6,8 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 import type { ResolvedExport } from "../visitors/function";
 import { getMarkoOpts, isOutputHTML } from "./marko-config";
 import { isRegisteredFnExtra } from "./references";
-import { callRuntime, getRuntimePath } from "./runtime";
+import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
+import { isValidPropertyIdentifier } from "./to-property-name";
 
 /**
  * Writes the registrations for module scoped functions: the ones this template
@@ -84,11 +85,7 @@ function buildRegistration(local: string, registerId: string) {
   return t.expressionStatement(
     isOutputHTML()
       ? callRuntime("_resume", t.identifier(local), t.stringLiteral(registerId))
-      : callRuntime(
-          "_resume",
-          t.stringLiteral(registerId),
-          t.identifier(local),
-        ),
+      : registerRuntimeValue(registerId, t.identifier(local)),
   );
 }
 
@@ -103,8 +100,8 @@ function resolveRegisterModule(
     virtualPath: `${relativePath(importer, filename)}.register-${exportName}.js`,
     code:
       `import { ${exportName} } from "./${path.basename(filename)}";\n` +
-      `import { _resume } from "${getRuntimePath("dom")}";\n` +
-      `_resume(${JSON.stringify(registerId)}, ${exportName});\n`,
+      `import { _resumed } from "${getRuntimePath("dom")}";\n` +
+      `_resumed${isValidPropertyIdentifier(registerId) ? `.${registerId}` : `[${JSON.stringify(registerId)}]`} = ${exportName};\n`,
   })!;
 }
 

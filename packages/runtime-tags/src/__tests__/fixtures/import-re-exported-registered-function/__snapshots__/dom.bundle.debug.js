@@ -16,7 +16,7 @@ const $setup$1 = () => {};
 var greetings_default = /*@__PURE__*/ _template("__tests__/tags/greetings.marko", $template$1, "b");
 
 // tags/v:greeting.marko.register-shout.js
-_resume("__tests__/tags/greeting.marko_0/export/shout", shout);
+_resumed["__tests__/tags/greeting.marko_0/export/shout"] = shout;
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>shout</button>${_w0}`)($template$2);

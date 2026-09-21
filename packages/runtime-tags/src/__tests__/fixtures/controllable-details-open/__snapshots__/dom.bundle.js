@@ -7,4 +7,4 @@ const $setup__script = _script("a1", ($scope) => _attr_details_or_dialog_open_sc
 const $openChange = ($scope) => (_new_open) => {
 	$open($scope, _new_open);
 };
-_resume("a0", $openChange);
+_resumed.a0 = $openChange;

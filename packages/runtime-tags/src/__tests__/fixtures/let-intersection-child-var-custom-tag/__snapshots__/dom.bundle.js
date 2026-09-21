@@ -13,7 +13,7 @@ const $valueChange = ($scope) => function(next) {
 	$scope.$[$scope.c] = next;
 	subsByKey[$scope.c]?.forEach((cb) => cb());
 };
-_resume("c0", $valueChange);
+_resumed.c0 = $valueChange;
 
 // template.marko
 const $a__OR__b = /*@__PURE__*/ _or(8, ($scope) => _text($scope.f, `${$scope.g},${$scope.h}`), 1, 1);

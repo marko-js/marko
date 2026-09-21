@@ -13,8 +13,8 @@ const $_return2 = ($scope) => function(value) {
 const $_return = ($scope) => function() {
 	$count$1($scope, +$scope.b + 1);
 };
-_resume("b1", $_return2);
-_resume("b0", $_return);
+_resumed.b1 = $_return2;
+_resumed.b0 = $_return;
 
 // template.marko
 const $pattern2 = _var_resume("a0", ($scope, $pattern) => {

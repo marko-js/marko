@@ -6,4 +6,4 @@ const $item_content = _content_resume("a1", "Click");
 const $onClick = ($locals) => function(ev) {
 	ev.target.textContent = $locals.e;
 };
-_resume("a0", $onClick);
+_resumed.a0 = $onClick;

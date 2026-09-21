@@ -36,5 +36,5 @@ const $valueChange = ($scope) => function(nv) {
 	$calls($scope, +$scope.calls + 1);
 	$v($scope, nv);
 };
-_resume("__tests__/template.marko_0/valueChange", $valueChange);
+_resumed["__tests__/template.marko_0/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

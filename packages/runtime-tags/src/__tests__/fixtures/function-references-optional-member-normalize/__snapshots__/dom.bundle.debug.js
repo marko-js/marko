@@ -28,7 +28,7 @@ function $setup($scope) {
 const $a = ($scope) => () => $scope.foo?.bar;
 const $b = ($scope) => () => $scope.foo?.bar.baz;
 const $c = ($scope) => () => $scope.foo_bar?.baz;
-_resume("__tests__/template.marko_0/a", $a);
-_resume("__tests__/template.marko_0/b", $b);
-_resume("__tests__/template.marko_0/c", $c);
+_resumed["__tests__/template.marko_0/a"] = $a;
+_resumed["__tests__/template.marko_0/b"] = $b;
+_resumed["__tests__/template.marko_0/c"] = $c;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

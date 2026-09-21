@@ -14,5 +14,5 @@ function $setup($scope) {
 function $updateText(ev) {
 	ev.target.textContent = "after";
 }
-_resume("__tests__/template.marko_0/updateText", $updateText);
+_resumed["__tests__/template.marko_0/updateText"] = $updateText;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

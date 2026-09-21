@@ -6,4 +6,4 @@ const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function
 function $base(message) {
 	return message.toUpperCase() + "!";
 }
-_resume("a0", $base);
+_resumed.a0 = $base;

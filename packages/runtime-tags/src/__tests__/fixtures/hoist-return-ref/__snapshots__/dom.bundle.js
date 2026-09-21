@@ -5,7 +5,7 @@ const $input__script = _script("b0", ($scope) => $scope.a.innerHTML = $scope.c.y
 function $_return() {
 	return 1;
 }
-_resume("c0", $_return);
+_resumed.c0 = $_return;
 
 // template.marko
 const $x_getter = _hoist_resume("a0", 3);

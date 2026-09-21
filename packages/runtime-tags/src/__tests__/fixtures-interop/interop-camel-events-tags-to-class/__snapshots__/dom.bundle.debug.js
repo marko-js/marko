@@ -40,5 +40,5 @@ function $setup($scope) {
 const $onValueChanged = ($scope) => function(value) {
 	$received($scope, value);
 };
-_resume("__tests__/template.marko_0/onValueChanged", $onValueChanged);
+_resumed["__tests__/template.marko_0/onValueChanged"] = $onValueChanged;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

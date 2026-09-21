@@ -6,10 +6,10 @@ function shout(message) {
 const $input_message = ($scope, input_message) => _text($scope.a, input_message);
 
 // tags/v:greeting.marko.register-shout.js
-_resume("b1", shout);
+_resumed.b1 = shout;
 
 // tags/v:greeting.marko.register-whisper.js
-_resume("b0", whisper);
+_resumed.b0 = whisper;
 
 // template.marko
 const $message = /*@__PURE__*/ _let(5, ($scope) => $input_message($scope.c, $scope.f));

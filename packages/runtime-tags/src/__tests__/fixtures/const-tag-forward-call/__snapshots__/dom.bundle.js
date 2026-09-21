@@ -43,11 +43,11 @@ const $callDefaulted = ($scope) => () => {
 function $defaulted(a, b = "def") {
 	return a + ":" + b;
 }
-_resume("a0", $first);
-_resume("a1", $second);
-_resume("a2", $viaAlias);
-_resume("a3", $third);
-_resume("a4", $callNullary);
-_resume("a5", $nullary);
-_resume("a6", $callDefaulted);
-_resume("a7", $defaulted);
+_resumed.a0 = $first;
+_resumed.a1 = $second;
+_resumed.a2 = $viaAlias;
+_resumed.a3 = $third;
+_resumed.a4 = $callNullary;
+_resumed.a5 = $nullary;
+_resumed.a6 = $callDefaulted;
+_resumed.a7 = $defaulted;

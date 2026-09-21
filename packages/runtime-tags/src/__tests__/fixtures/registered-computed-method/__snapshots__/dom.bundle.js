@@ -8,4 +8,4 @@ const $n = /*@__PURE__*/ _let(2, ($scope) => {
 const $handlers = ($scope) => function() {
 	$n($scope, +$scope.c + 1);
 };
-_resume("a0", $handlers);
+_resumed.a0 = $handlers;

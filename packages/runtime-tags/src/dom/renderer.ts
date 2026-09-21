@@ -9,7 +9,7 @@ import {
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
-import { _resume } from "./resume";
+import { _resumed } from "./resume";
 import { createScope } from "./scope";
 import { _const, type Signal, type SignalFn } from "./signals";
 import { walk } from "./walker";
@@ -131,10 +131,14 @@ export function _content_resume(
   params?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
-  return _resume(
+  return (_resumed[id] = _content(
     id,
-    _content(id, template, walks, setup, params, dynamicScopesAccessor),
-  );
+    template,
+    walks,
+    setup,
+    params,
+    dynamicScopesAccessor,
+  ));
 }
 
 export function _content_closures(

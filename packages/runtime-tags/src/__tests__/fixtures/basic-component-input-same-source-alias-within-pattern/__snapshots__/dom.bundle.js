@@ -18,5 +18,5 @@ const $onClick2 = ($scope) => function() {
 const $onClick = ($scope) => function() {
 	$clickCount($scope, +$scope.c + 1);
 };
-_resume("a1", $onClick2);
-_resume("a0", $onClick);
+_resumed.a1 = $onClick2;
+_resumed.a0 = $onClick;

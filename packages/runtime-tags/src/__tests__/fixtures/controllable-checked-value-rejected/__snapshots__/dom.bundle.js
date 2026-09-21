@@ -5,5 +5,5 @@ const $setup__script = _script("a2", ($scope) => {
 });
 function $checkedValueChange2() {}
 function $checkedValueChange() {}
-_resume("a1", $checkedValueChange2);
-_resume("a0", $checkedValueChange);
+_resumed.a1 = $checkedValueChange2;
+_resumed.a0 = $checkedValueChange;

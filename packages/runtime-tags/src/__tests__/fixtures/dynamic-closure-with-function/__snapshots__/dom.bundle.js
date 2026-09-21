@@ -2,4 +2,4 @@
 const $bar = ($scope) => function(test) {
 	return $scope.d + test;
 };
-_resume("a0", $bar);
+_resumed.a0 = $bar;

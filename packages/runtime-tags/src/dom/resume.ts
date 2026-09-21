@@ -58,7 +58,7 @@ export interface RenderData {
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-export const registeredValues: Record<string, unknown> = {};
+export const _resumed: Record<string, unknown> = {};
 let curRenders: Renders;
 let embedRenders:
   | undefined
@@ -194,7 +194,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         ) =>
           typeof data === "number"
             ? registryId
-              ? (registeredValues[registryId] as RegisteredFn)(getScope(data))
+              ? (_resumed[registryId] as RegisteredFn)(getScope(data))
               : getScope(data)
             : applyScopes(data)) as SerializeContext;
         const createVisitBranches = (
@@ -351,7 +351,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               visitText = serialized;
               while (nextToken()) {
                 if (/\D/.test(lastToken)) {
-                  lastEffect = registeredValues[lastToken];
+                  lastEffect = _resumed[lastToken];
                 } else {
                   effects.push(lastEffect, getScope(lastToken));
                 }
@@ -395,7 +395,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         let visitBranches: undefined | (() => void);
         let htmlStart: Comment | undefined;
         let embedAnchor: Text | undefined;
-        serializeContext._ = registeredValues;
+        serializeContext._ = _resumed;
 
         if (MARKO_DEBUG) {
           if (render.m) {
@@ -537,27 +537,22 @@ function runResumeEffects(render: RenderData) {
 }
 
 export function getRegisteredWithScope(id: string, scope?: Scope) {
-  const val = registeredValues[id];
-  return scope ? (val as RegisteredFn)(scope) : val;
-}
-
-export function _resume<T>(id: string, obj: T): T {
-  return (registeredValues[id] = obj);
+  return scope ? (_resumed[id] as RegisteredFn)(scope) : _resumed[id];
 }
 
 export function _var_resume<T extends Signal<unknown>>(
   id: string,
   signal: T,
 ): T {
-  _resume(id, (scope: Scope) => (value: unknown) => signal(scope, value));
+  _resumed[id] = (scope: Scope) => (value: unknown) => signal(scope, value);
   return signal;
 }
 
 export function _el(id: string, accessor: EncodedAccessor) {
   if (MARKO_DEBUG) {
-    return _resume(id, (scope: Scope) => () => _el_read(scope[accessor]));
+    return (_resumed[id] = (scope: Scope) => () => _el_read(scope[accessor]));
   } else {
     accessor = decodeAccessor(accessor as number);
-    return _resume(id, (scope: Scope) => () => scope[accessor]);
+    return (_resumed[id] = (scope: Scope) => () => scope[accessor]);
   }
 }

@@ -5,6 +5,6 @@ const $c2 = /*@__PURE__*/ _const(7, _script("a3", ($scope) => $scope.c.textConte
 const $a = ($scope) => () => $scope.d?.bar;
 const $b = ($scope) => () => $scope.d?.bar.baz;
 const $c = ($scope) => () => $scope.e?.baz;
-_resume("a0", $a);
-_resume("a1", $b);
-_resume("a2", $c);
+_resumed.a0 = $a;
+_resumed.a1 = $b;
+_resumed.a2 = $c;

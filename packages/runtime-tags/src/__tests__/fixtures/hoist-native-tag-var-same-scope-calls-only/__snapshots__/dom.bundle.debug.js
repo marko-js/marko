@@ -21,6 +21,6 @@ const $action2 = ($scope) => function() {
 const $action = ($scope) => function() {
 	_el_read($scope["#div/1"]).classList.add("child1");
 };
-_resume("__tests__/template.marko_0/action2", $action2);
-_resume("__tests__/template.marko_0/action", $action);
+_resumed["__tests__/template.marko_0/action2"] = $action2;
+_resumed["__tests__/template.marko_0/action"] = $action;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

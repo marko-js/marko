@@ -18,4 +18,4 @@ const $x = /*@__PURE__*/ _let(2, ($scope) => {
 const $countChange = ($scope) => (_new_x) => {
 	$x($scope, _new_x);
 };
-_resume("a0", $countChange);
+_resumed.a0 = $countChange;

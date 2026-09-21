@@ -42,6 +42,6 @@ const $valueChange = ($scope) => function(next) {
 const $openChange = ($scope) => function(next) {
 	$open($scope, next);
 };
-_resume("__tests__/template.marko_1/valueChange", $valueChange);
-_resume("__tests__/template.marko_0/openChange", $openChange);
+_resumed["__tests__/template.marko_1/valueChange"] = $valueChange;
+_resumed["__tests__/template.marko_0/openChange"] = $openChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

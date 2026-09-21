@@ -13,7 +13,7 @@ const $input = ($scope, input) => {
 const $setter = ($scope) => function() {
 	$scope.input_valueChange(1);
 };
-_resume("__tests__/tags/setter.marko_0/setter", $setter);
+_resumed["__tests__/tags/setter.marko_0/setter"] = $setter;
 var setter_default = /*@__PURE__*/ _template("__tests__/tags/setter.marko", "", "", 0, $input);
 
 // template.marko
@@ -33,5 +33,5 @@ const $setCount = _var_resume("__tests__/template.marko_0_setCount#4/var", /*@__
 const $valueChange = ($scope) => (_new_count) => {
 	$count($scope, _new_count);
 };
-_resume("__tests__/template.marko_0/valueChange", $valueChange);
+_resumed["__tests__/template.marko_0/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

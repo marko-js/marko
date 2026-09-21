@@ -40,5 +40,5 @@ const $onClick = ($locals) => function() {
 	const $scope = $locals._;
 	$clicked($scope, $scope.clicked + $locals["foo/4"]);
 };
-_resume("__tests__/template.marko_0/onClick", $onClick);
+_resumed["__tests__/template.marko_0/onClick"] = $onClick;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

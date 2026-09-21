@@ -13,7 +13,7 @@ import {
 } from "../common/types";
 import { trackCleanup } from "./abort-signal";
 import { queueEffect, queueRender, rendering, runId } from "./queue";
-import { _resume } from "./resume";
+import { _resumed } from "./resume";
 import { schedule } from "./schedule";
 
 export type SignalFn = (scope: Scope) => void;
@@ -331,7 +331,7 @@ export function _closure_get(
   closureSignal[ClosureSignalProp.SignalIndexAccessor] =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
 
-  resumeId && _resume(resumeId, closureSignal);
+  if (resumeId) _resumed[resumeId] = closureSignal;
 
   return closureSignal;
 }
@@ -392,7 +392,7 @@ export function _id(scope: Scope, accessor?: Accessor) {
 }
 
 export function _script(id: string, fn: (scope: Scope) => void) {
-  _resume(id, fn);
+  _resumed[id] = fn;
   // Queued in signal-graph (forward) order; hydration replays in reverse, so
   // mount-effect order is unspecified across the two paths (see translator).
   return (scope: Scope) => {
@@ -461,5 +461,5 @@ export function _hoist<T>(...path: Accessor[]) {
 }
 
 export function _hoist_resume<T>(id: string, ...path: Accessor[]) {
-  return _resume(id, _hoist<T>(...path));
+  return (_resumed[id] = _hoist<T>(...path));
 }

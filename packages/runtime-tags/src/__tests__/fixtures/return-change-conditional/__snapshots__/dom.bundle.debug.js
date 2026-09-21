@@ -10,7 +10,7 @@ const $input = ($scope, input) => $input_canEdit($scope, input.canEdit);
 const $valueChange = ($scope) => (v) => {
 	$x($scope, v);
 };
-_resume("__tests__/tags/editable.marko_0/valueChange", $valueChange);
+_resumed["__tests__/tags/editable.marko_0/valueChange"] = $valueChange;
 var editable_default = /*@__PURE__*/ _template("__tests__/tags/editable.marko", "", "", $setup$1, $input);
 
 // template.marko

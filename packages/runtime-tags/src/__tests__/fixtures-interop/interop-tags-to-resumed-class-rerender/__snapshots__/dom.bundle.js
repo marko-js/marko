@@ -17,7 +17,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-_resume("b", _marko_template);
+_resumed.b = _marko_template;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $if_content__count = /*@__PURE__*/ _if_closure(3, 0, ($scope) => $if_content__dynamicTag($scope, _marko_template, () => ({ value: $scope._.e })));
 const $if_content__setup = $if_content__count;

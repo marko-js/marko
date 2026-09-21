@@ -34,6 +34,6 @@ const $onClick2 = ($scope) => function() {
 const $onClick = ($scope) => function() {
 	$clickCount($scope, +$scope.clickCount + 1);
 };
-_resume("__tests__/template.marko_0/onClick2", $onClick2);
-_resume("__tests__/template.marko_0/onClick", $onClick);
+_resumed["__tests__/template.marko_0/onClick2"] = $onClick2;
+_resumed["__tests__/template.marko_0/onClick"] = $onClick;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

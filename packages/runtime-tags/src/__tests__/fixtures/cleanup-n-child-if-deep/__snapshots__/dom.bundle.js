@@ -59,4 +59,4 @@ const $setup__script = _script("a1", ($scope) => {
 const $write = ($scope) => function(msg) {
 	$scope.d.innerHTML += "\n" + msg;
 };
-_resume("a0", $write);
+_resumed.a0 = $write;

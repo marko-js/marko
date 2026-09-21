@@ -32,5 +32,5 @@ const $attrs = ($scope) => function() {
 const $onClick = ($scope) => function() {
 	$n($scope, $scope.h + 10);
 };
-_resume("a0", $attrs);
-_resume("a1", $onClick);
+_resumed.a0 = $attrs;
+_resumed.a1 = $onClick;

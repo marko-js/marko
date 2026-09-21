@@ -6,5 +6,5 @@ const $valueChange = ($scope) => function() {
 	$scope._.b();
 };
 const $setter = ($scope) => function() {};
-_resume("a1", $valueChange);
-_resume("a0", $setter);
+_resumed.a1 = $valueChange;
+_resumed.a0 = $setter;
