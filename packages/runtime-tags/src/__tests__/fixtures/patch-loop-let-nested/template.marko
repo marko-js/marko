@@ -1,0 +1,12 @@
+<ul>
+  <for|item| of=input.items by="id">
+    <li>
+      ${item.label}
+      <if=item.detailed>
+        <let/notes=0/>
+        <span>${notes}</span>
+        <button onClick() { notes++ }>note</button>
+      </if>
+    </li>
+  </for>
+</ul>
