@@ -14,7 +14,7 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
-import { find, forEach, type Opt, push, some } from "./optional";
+import { forEach, type Opt, push, reduce, some } from "./optional";
 import {
   type AssignedBindingExtra,
   type Binding,
@@ -946,12 +946,8 @@ function buildResumeRegisterKey(
   if (referencedBindings) {
     if (typeof referencedBindings === "string") {
       name += `*${referencedBindings}`;
-    } else if (Array.isArray(referencedBindings)) {
-      for (const ref of referencedBindings) {
-        name += `_${ref.name}#${ref.id}`;
-      }
     } else {
-      name += `_${referencedBindings.name}#${referencedBindings.id}`;
+      name = reduce(referencedBindings, appendBindingKey, name);
     }
   }
   return `${section.id}${name}${type ? "/" + type : ""}`;
@@ -1508,11 +1504,7 @@ export function writeHTMLResumeStatements(
     !section.isBranch &&
     (section.hasAbortSignal ||
       !!section.referencedClosures ||
-      (sectionSerializeReason &&
-        !!find(
-          section.bindings,
-          (binding) => binding.type === BindingType.let,
-        )));
+      (sectionSerializeReason && some(section.bindings, isLetBinding)));
 
   // The walker places a scope whose marker it visits, so a section that always
   // writes one needs no link; a dynamic marker guards it, none writes it plain.
@@ -1894,4 +1886,12 @@ function getRegisteredFnExpression(node: t.Function) {
       return t.identifier(id);
     }
   }
+}
+
+function appendBindingKey(name: string, binding: Binding) {
+  return `${name}_${binding.name}#${binding.id}`;
+}
+
+function isLetBinding(binding: Binding) {
+  return binding.type === BindingType.let;
 }
