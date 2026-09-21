@@ -1,0 +1,11 @@
+// Unrelated state keeps the page interactive; the define is never driven by
+// it, so the content passed to it resolves through the call and drops.
+<let/count=0>
+<button#inc onClick() { count++ }>${count}</button>
+
+<define/Heading|input|>
+  <${input.type}><${input.content}/></>
+</define>
+
+<Heading type="h1">static content: not registered</Heading>
+<Heading type="h2">also static: not registered</Heading>
