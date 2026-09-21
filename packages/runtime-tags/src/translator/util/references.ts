@@ -133,6 +133,8 @@ export interface Binding {
   /** Emitted code the graph stopped tracking still names it. */
   untracked?: true;
   sources: undefined | Sources;
+  /** The intersection whose work computes it, or the nearest one upstream. Set on alias roots only. */
+  upstreamIntersection: Intersection | undefined;
   reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
   hoists: SortedOpt<Section>;
@@ -283,6 +285,7 @@ export function createBinding(
     noSerialize: false,
     noSerializeProperties: undefined,
     sources: undefined,
+    upstreamIntersection: undefined,
     reads: new Set(),
     aliases: new Set(),
     hoists: undefined,
@@ -1444,16 +1447,16 @@ export function finalizeReferences() {
     const { id, bindings } = section;
     const isOwnedBinding = ({ section }: Binding) => section.id === id;
     const ownedBindings = filter(bindings, isOwnedBinding);
+    const intersectionSources = new Map<Intersection, Binding | undefined>();
     const intersections = (intersectionsBySection.get(section) || []).filter(
       (intersection) => {
-        const collapseSource = getCollapsibleIntersectionSource(
+        const source = getIntersectionSource(
           intersection,
           section,
+          intersectionSources,
         );
-        if (collapseSource) {
-          collapsedIntersectionSource.set(intersection, collapseSource);
-        }
-        return !collapseSource;
+        if (source) intersectionMeta.set(intersection, { source });
+        return !source;
       },
     );
     let anchors: Map<Intersection, Binding | undefined> | undefined;
@@ -1486,6 +1489,13 @@ export function finalizeReferences() {
     let intersectionIndex = 0;
     let nextId = 0;
     let intersection: Intersection;
+    const assignIntersectionId = (intersection: Intersection) => {
+      intersectionMeta.set(intersection, {
+        source: undefined,
+        id: nextId++,
+        scopeOffset: getMaxOwnSourceOffset(intersection, section),
+      });
+    };
     forEach(ownedBindings, (binding) => {
       // Dom ids are the walker's dense indexes; unanchored intersections
       // slot in right after them, ahead of every other owned binding.
@@ -1495,10 +1505,7 @@ export function finalizeReferences() {
           !anchors!.get((intersection = intersections[intersectionIndex]))
         ) {
           intersectionIndex++;
-          intersectionMeta.set(intersection, {
-            id: nextId++,
-            scopeOffset: getMaxOwnSourceOffset(intersection, section),
-          });
+          assignIntersectionId(intersection);
         }
       }
       binding.id = nextId++;
@@ -1511,20 +1518,14 @@ export function finalizeReferences() {
           binding
       ) {
         intersectionIndex++;
-        intersectionMeta.set(intersection, {
-          id: nextId++,
-          scopeOffset: getMaxOwnSourceOffset(intersection, section),
-        });
+        assignIntersectionId(intersection);
       }
     });
 
     while (intersectionIndex < intersections.length) {
       intersection = intersections[intersectionIndex];
       intersectionIndex++;
-      intersectionMeta.set(intersection, {
-        id: nextId++,
-        scopeOffset: getMaxOwnSourceOffset(intersection, section),
-      });
+      assignIntersectionId(intersection);
     }
 
     // Closure accessor ids trail the id space; `_closure_get` receives the
@@ -1589,23 +1590,49 @@ function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
   return scopeOffset;
 }
 
-export const intersectionMeta = new WeakMap<
-  Intersection,
-  { id: number; scopeOffset: Binding | undefined }
->();
+/**
+ * Every member computed from one local source in the same pass, or the
+ * intersection's own render id and scope offset.
+ */
+type IntersectionMeta =
+  | { source: Binding; id?: undefined; scopeOffset?: undefined }
+  | { source: undefined; id: number; scopeOffset: Binding | undefined };
+export const intersectionMeta = new WeakMap<Intersection, IntersectionMeta>();
 
 const closureAccessorIds = new WeakMap<Binding, number>();
 
-export const collapsedIntersectionSource = new WeakMap<Intersection, Binding>();
-
-function getCollapsibleIntersectionSource(
+function getIntersectionSource(
   intersection: Intersection,
   section: Section,
+  resolved: Map<Intersection, Binding | undefined>,
+) {
+  if (!resolved.has(intersection)) {
+    resolved.set(intersection, undefined);
+    resolved.set(
+      intersection,
+      resolveIntersectionSource(intersection, section, resolved),
+    );
+  }
+  return resolved.get(intersection);
+}
+
+function resolveIntersectionSource(
+  intersection: Intersection,
+  section: Section,
+  resolved: Map<Intersection, Binding | undefined>,
 ) {
   let sources: Sources | undefined;
   for (const member of intersection) {
     if (!member.sources) return undefined;
     if (member.section !== section || isDirectAlias(member)) return undefined;
+    const upstream = getUpstreamIntersection(member);
+    if (
+      upstream &&
+      upstream !== intersection &&
+      !getIntersectionSource(upstream, section, resolved)
+    ) {
+      return undefined;
+    }
     sources = mergeSources(sources, member.sources);
   }
 
@@ -1714,22 +1741,27 @@ function resolveDerivedSources(binding: Binding) {
   if (exprs === undefined || exprs === true) {
     binding.sources = createSources(binding, undefined);
   } else if (exprs) {
-    const seen = new Set<Binding>();
+    let refs: ReferencedBindings;
     forEach(exprs, (expr) => {
       if (
         isReferencedExtra(expr) &&
         bindingUtil.has(expr.downstream, binding)
       ) {
-        forEach(expr.referencedBindings, (ref) => {
-          if (!seen.has(ref)) {
-            seen.add(ref);
-            resolveBindingSources(ref);
-            binding.sources = mergeSources(binding.sources, ref.sources);
-          }
-        });
+        refs = bindingUtil.union(refs, expr.referencedBindings);
       }
     });
+    forEach(refs, (ref) => {
+      resolveBindingSources(ref);
+      binding.sources = mergeSources(binding.sources, ref.sources);
+    });
+    binding.upstreamIntersection = Array.isArray(refs)
+      ? refs
+      : refs && getUpstreamIntersection(refs);
   }
+}
+
+function getUpstreamIntersection(binding: Binding) {
+  return (getAliasRoot(binding) || binding).upstreamIntersection;
 }
 
 export function createSources(
