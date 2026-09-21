@@ -4,6 +4,7 @@ import { JSDOM, VirtualConsole } from "jsdom";
 
 import {
   importWithContext,
+  releaseHeldImports,
   waitForPendingModules,
 } from "./import-with-context";
 import type { FlushType } from "./resolve";
@@ -21,6 +22,7 @@ export default function createBrowser(
   dir?: string,
   loadOrder?: string[],
   rejectLoad?: (id: string) => boolean,
+  holdLoad?: (id: string) => boolean,
 ) {
   const virtualConsole = new VirtualConsole();
   const dom = new JSDOM("", {
@@ -31,6 +33,8 @@ export default function createBrowser(
   const { window } = dom;
   const ctx = dom.getInternalVMContext();
   const loadedScripts = new Set<string>();
+  // Lazy load scripts a fixture keeps in flight until a `release` step.
+  const heldScripts: string[] = [];
   const qmt = window.queueMicrotask;
   const queues = {
     visible: batchQueue<IOEntry>(({ io, targets, callback }) => {
@@ -137,6 +141,25 @@ export default function createBrowser(
     flush(flushType: Exclude<FlushType, "stream">) {
       queues[flushType].flush();
     },
+    // Lets every held lazy load script and dynamic import land, then runs
+    // what they scheduled.
+    async releaseLoads(): Promise<void> {
+      if (dir) {
+        const imports = heldScripts
+          .splice(0)
+          .map((src) =>
+            importWithContext(
+              path.join(dir, src),
+              { browser: true },
+              ctx,
+              rejectLoad,
+            ),
+          );
+        imports.push(releaseHeldImports(ctx));
+        await waitForPendingModules(ctx);
+        await Promise.all(imports);
+      }
+    },
     async runAsyncScripts(beforeEffects?: () => void): Promise<void> {
       if (dir) {
         // Patch queueMicrotask to prevent scheduled updates (from effects)
@@ -176,12 +199,17 @@ export default function createBrowser(
             }
             continue;
           }
+          if (src.endsWith(".load.mjs") && holdLoad?.(src)) {
+            heldScripts.push(src);
+            continue;
+          }
           imports.push(
             importWithContext(
               path.join(dir, src),
               { browser: true },
               ctx,
               rejectLoad,
+              holdLoad,
             ),
           );
           // With an explicit order each script is fully evaluated before
