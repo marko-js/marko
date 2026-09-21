@@ -1,0 +1,14 @@
+// The name is dynamic but always a string and never changes, so the body
+// resumes through its own scope without its renderer being registered.
+<const/tag="section">
+<let/count=0>
+<let/show=true>
+<${tag}>
+  <button#inc onClick() { count++ }>${count}</button>
+  <if=show>
+    <for|i| of=[1, 2]>
+      <span class="inner">${count * i}</span>
+    </for>
+  </if>
+  <button#toggle onClick() { show = !show }>toggle</button>
+</>

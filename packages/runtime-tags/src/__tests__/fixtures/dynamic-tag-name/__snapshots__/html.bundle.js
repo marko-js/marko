@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "h", showTagA && tag_a_default, {
 		class: ["a", "b"],
 		other
-	}, _content_resume("a0", () => {
+	}, _content("a0", () => {
 		_scope_id();
 		_scope_reason();
 		_html("Body content");

@@ -29,7 +29,7 @@ import {
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import {
   forEachSection,
-  getSectionRegisterReasons,
+  isSectionRegisterEager,
   startSection,
 } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
@@ -108,16 +108,15 @@ export default {
 
       const section = programExtra.section!;
 
-      // Anything serialized, and any registered content renderer, is revived
-      // against this module, so it has to reach the client even with no client
-      // statements of its own.
+      // Anything serialized or unconditionally registered is revived against
+      // this module, so it has to reach the client on its own.
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
           childSection.serializeReason ||
           childSection.serializeReasons.size ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
-            getSectionRegisterReasons(childSection))
+            isSectionRegisterEager(childSection))
         );
       });
 

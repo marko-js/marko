@@ -1,0 +1,11 @@
+import Card from "./tags/card.marko";
+
+// Rendered with no host the body is the branch itself; with one, content the
+// host renders where it is. Neither names the body's renderer, so it stays
+// a plain renderer and its interactive nodes resume through their own scope.
+<let/show=false>
+<let/count=0>
+<button#toggle onClick() { show = !show }>toggle</button>
+<${show ? Card : null}>
+  <button#inc onClick() { count++ }>${count}</button>
+</>

@@ -1,0 +1,8 @@
+import Card from "./tags/card.marko";
+import Plain from "./tags/plain.marko";
+
+// Every template the name resolves to renders the body where it is and
+// never serializes it, so the body registers as content of neither would.
+<let/count=0>
+<button#inc onClick() { count++ }>${count}</button>
+<${input.card ? Card : Plain} title="static">known hosts: not registered</>

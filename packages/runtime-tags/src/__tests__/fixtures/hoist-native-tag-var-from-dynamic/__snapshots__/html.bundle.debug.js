@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<span></span>${_el_resume($scope1_id, "#span/0")}`);
 		_subscribe($child_content__subscribers, _scope($scope1_id, {}, "__tests__/template.marko", "3:2"));
 	}, $scope0_id) });
-	_dynamic_tag($scope0_id, "#text/1", input.show ? child_default : null, {}, _content_resume("__tests__/template.marko_2*content", () => {
+	_dynamic_tag($scope0_id, "#text/1", input.show ? child_default : null, {}, _content("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $inputshowChildnull_content__$el2_getter = _hoist($scope2_id, "__tests__/template.marko_2_#div#0/hoist");
 		const $child_content2__subscribers = new Set();

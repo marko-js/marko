@@ -3,7 +3,7 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { getTagName } from "./get-tag-name";
 import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
-import { concat, forEach, type Opt } from "./optional";
+import { concat, every, filter, type Opt } from "./optional";
 import { type Binding, type KnownExprs, propsUtil } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
@@ -13,13 +13,13 @@ const [getTagDownstreams] = createSectionState(
   () =>
     new Map<
       t.NodePath<t.MarkoTag>,
-      { binding: Binding; exprs: KnownExprs | undefined }
+      { binding: Opt<Binding>; exprs: KnownExprs | undefined }
     >(),
 );
 
 export function setTagDownstream(
   tag: t.NodePath<t.MarkoTag>,
-  binding: undefined | Binding,
+  binding: Opt<Binding>,
   exprs?: KnownExprs,
 ) {
   if (binding) {
@@ -36,7 +36,7 @@ export function finalizeTagDownstreams(section: Section) {
 function crawlSectionsAndSetBinding(
   tag: t.NodePath<t.MarkoTag>,
   downstreamTag: t.MarkoTagExtra,
-  binding: Binding,
+  binding: Opt<Binding>,
   exprs: KnownExprs | undefined,
   properties?: Opt<string>,
   skip?: true,
@@ -44,18 +44,23 @@ function crawlSectionsAndSetBinding(
   if (!skip) {
     const contentSection = getSectionForBody(tag.get("body"));
     if (contentSection) {
-      let target: Binding | undefined = binding;
-      forEach(properties, (property) => {
-        target = target?.propertyAliases.get(property);
+      // Only the bindings that can serialize the content feed it.
+      const serialized = filter(binding, (binding) => {
+        let target = binding;
+        return (
+          !every(
+            properties,
+            (property) => !!(target = target.propertyAliases.get(property)!),
+          ) ||
+          !(
+            target.noSerialize ||
+            propsUtil.has(target.noSerializeProperties, "content")
+          )
+        );
       });
-      const serialized = !(
-        target &&
-        (target.noSerialize ||
-          propsUtil.has(target.noSerializeProperties, "content"))
-      );
       contentSection.downstream = {
         tag: downstreamTag,
-        binding: serialized ? binding : undefined,
+        binding: serialized,
         properties: serialized ? concat(properties, "content") : undefined,
         exprs: serialized ? exprs : undefined,
       };

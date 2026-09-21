@@ -1,0 +1,6 @@
+// A name that is always a string cannot be a Class component, so its body
+// still registers only where the tag can change.
+<let/count=0>
+<button id="tags" onClick() { count++ }>${count}</button>
+<${"section"}>static: not registered</>
+<${count % 2 ? "h2" : "h1"}>state driven: registered</>

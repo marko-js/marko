@@ -114,7 +114,7 @@ export function getSerializeGuard(
   reason: undefined | SerializeReason,
   optional: boolean,
 ) {
-  if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
+  if (!isDynamicSerializeGuard(section, reason)) {
     if (!reason) return t.numericLiteral(0);
 
     return optional
@@ -159,7 +159,7 @@ export function getExprIfSerialized<
   T extends undefined | SerializeReason,
   R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
-  if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
+  if (!isDynamicSerializeGuard(section, reason)) {
     return (reason && expr) as R;
   }
 
@@ -243,6 +243,14 @@ function getOnlySection(params: Opt<{ section: Section }>) {
   if (!Array.isArray(params)) return params.section;
   const { section } = params[0];
   return section === params[params.length - 1].section ? section : undefined;
+}
+
+// Whether the guard for a reason is a runtime mask rather than a constant.
+export function isDynamicSerializeGuard(
+  section: Section,
+  reason: undefined | SerializeReason,
+): reason is DynamicSerializeReason {
+  return isReasonDynamic(reason) && !isCrossSection(section, reason);
 }
 
 function isCrossSection(section: Section, reason: Sources) {

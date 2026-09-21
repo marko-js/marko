@@ -1,0 +1,8 @@
+import Self from "./template.marko";
+import Plain from "./tags/plain.marko";
+
+// A name that may resolve to this template again has no finished analysis
+// to consult, so the body keeps registering unconditionally.
+<let/count=0>
+<button#inc onClick() { count++ }>${count}</button>
+<${input.depth ? Self : Plain} depth=0>self recursive host: registered</>

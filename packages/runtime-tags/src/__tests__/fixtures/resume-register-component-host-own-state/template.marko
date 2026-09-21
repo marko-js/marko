@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+import Plain from "./tags/plain.marko";
+
+// The tag's own reason is param driven, but the component it resolves to
+// serializes the body for its own state, so the body must stay registered.
+<${input.card ? Card : Plain}>component host: registered</>
