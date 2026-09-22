@@ -74,11 +74,12 @@ var template_default = _template("a", (input) => {
 		$item = attrTags($item, { content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "a", item.text)}:${_text_resume($scope1_id, "b", item === items[0], 2)}</span>`);
+			_html(`<span>${_escape(item.text)}:${_escape(item === items[0])}</span>`);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_resume_branch($scope1_id);
 		}, $scope0_id, {
-			8: item,
-			9: item?.text
+			2: item?.text,
+			3: item
 		}) });
 	});
 	list_default({ item: $item });
@@ -88,10 +89,9 @@ var template_default = _template("a", (input) => {
 		forOf([1], (n) => {
 			$cell = attrTags($cell, { content: _content_resume("a1", () => {
 				_scope_reason();
-				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "a", n)}</em>`);
-				_scope($scope2_id, {});
-			}, $scope0_id, { 11: n }) });
+				_scope_id();
+				_html(`<em>${_escape(n)}</em>`);
+			}, $scope0_id, { 1: n }) });
 		});
 		$row = attrTags($row, { cell: $cell });
 	});
@@ -100,21 +100,20 @@ var template_default = _template("a", (input) => {
 	forOf([1], (i) => {
 		$item2 = attrTags($item2, { content: _content_resume("a2", () => {
 			_scope_reason();
-			const $scope3_id = _scope_id();
-			_html(`${_text_resume($scope3_id, "a", i)}<b>${_text_resume($scope3_id, "b", i)}</b>`);
-			_scope($scope3_id, {});
-		}, $scope0_id, { 13: i }) });
+			_scope_id();
+			_html(`${_escape(i)}<b>${_escape(i)}</b>`);
+		}, $scope0_id, { 2: i }) });
 	});
 	last_default({ item: $item2 });
 	_html(`<button id=fail>fail</button>${_el_resume($scope0_id, "d")}<div>`);
 	let $catch;
 	forOf(["static"], (label) => {
 		$catch = attrTags($catch, { content: _content_resume("a3", (err) => {
-			const $scope5_reason = _scope_reason();
+			const $scope5_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope5_reason, 0);
 			const $scope5_id = _scope_id();
-			_html(`caught ${_text_resume($scope5_id, "a", label, 2)}: ${_text_resume($scope5_id, "b", err.message, _serialize_guard($scope5_reason, 0) * 2)}`);
-			_scope($scope5_id, {});
-		}, $scope0_id, { 16: label }) });
+			_html(`caught ${_escape(label)}: ${_text_resume($scope5_id, "b", err.message, $sg__err_message * 2)}`);
+			_serialize_if($scope5_reason, 0) && _scope($scope5_id, {});
+		}, $scope0_id, { 2: label }) });
 	});
 	_try($scope0_id, "e", _content_resume("a4", () => {
 		const $scope4_id = _scope_id();
@@ -128,6 +127,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		g: items?.[0],
-		s: $fail__closures
+		j: $fail__closures
 	});
 }, 1);

@@ -38,6 +38,12 @@ A binding read by another section, allowing its signal to notify live child
 scopes. This names a binding relationship, not a JavaScript function closure.
 _Avoid_: captured variable, hoist
 
+**Local closure**:
+An attribute tag `<for>` param read from content the loop creates. The loop
+passes it when it creates that content, which holds it as a binding of its own
+that nested sections read as a closure.
+_Avoid_: loop local holder
+
 **Hoist**:
 A tag-variable read before its declaring tag within the enclosing body, or from
 outside that body. It lowers through a getter and may cross sections; it is not

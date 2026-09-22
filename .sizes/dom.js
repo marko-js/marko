@@ -1,4 +1,4 @@
-// size: 27030 (min) 10066 (brotli)
+// size: 27008 (min) 10062 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -217,25 +217,20 @@ let unsafeStyleAttrReg = /[\\;]/g,
             controllableRenders[childScope.a.tagName],
           ),
             (childScope.Ia || childScope.Ea) && queueEffect(childScope, dynamicTagScript));
-        else {
-          for (let accessor in normalizedRenderer.g)
-            normalizedRenderer.g[accessor](childScope, normalizedRenderer.h[accessor]);
-          if (normalizedRenderer.d)
-            if (inputIsArgs)
-              normalizedRenderer.d(childScope, normalizedRenderer._ ? args[0] : args);
-            else {
-              let inputWithContent = getContent
-                ? {
-                    ...args,
-                    content: getContent(scope),
-                  }
-                : args || {};
-              normalizedRenderer.d(
-                childScope,
-                normalizedRenderer._ ? inputWithContent : [inputWithContent],
-              );
-            }
-        }
+        else if ((normalizedRenderer.g?.(childScope), normalizedRenderer.d))
+          if (inputIsArgs) normalizedRenderer.d(childScope, normalizedRenderer._ ? args[0] : args);
+          else {
+            let inputWithContent = getContent
+              ? {
+                  ...args,
+                  content: getContent(scope),
+                }
+              : args || {};
+            normalizedRenderer.d(
+              childScope,
+              normalizedRenderer._ ? inputWithContent : [inputWithContent],
+            );
+          }
       }
     };
   }),
@@ -244,14 +239,10 @@ let unsafeStyleAttrReg = /[\\;]/g,
     let childScopeAccessor = "A" + nodeAccessor,
       rendererAccessor = "D" + nodeAccessor;
     return (scope, renderer) => {
-      if (
-        (scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(renderer)) &&
-          (setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch),
-          renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor])),
-        renderer)
-      )
-        for (let accessor in renderer.g)
-          renderer.g[accessor](scope[childScopeAccessor], renderer.h[accessor]);
+      (scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(renderer)) &&
+        (setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch),
+        renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor])),
+        renderer?.g?.(scope[childScopeAccessor]));
     };
   }),
   bindNativeTagVar,
@@ -1179,8 +1170,17 @@ function _content_closures(renderer, closureFns) {
   let closureSignals = {};
   for (let key in closureFns) closureSignals[key] = _const(+key, closureFns[key]);
   return (owner, closureValues) => {
-    let instance = renderer(owner);
-    return ((instance.g = closureSignals), (instance.h = closureValues), instance);
+    let instance = renderer(owner),
+      clone = instance.b,
+      setClosures = (instance.g = (branch) => {
+        for (let key in closureSignals) closureSignals[key](branch, closureValues[key]);
+      });
+    return (
+      (instance.b = (branch, ns) => {
+        (clone(branch, ns), setClosures(branch));
+      }),
+      instance
+    );
   };
 }
 function createCloneableHTML(html, ns) {
@@ -1323,11 +1323,10 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
 }
 function _attr_content(scope, nodeAccessor, value) {
   let content = normalizeClientRender(value);
-  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
+  (scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
-    content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
-  for (let accessor in content?.g)
-    content.g[accessor](scope["A" + nodeAccessor], content.h[accessor]);
+    content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor])),
+    content?.g?.(scope["A" + nodeAccessor]));
 }
 function _attrs_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],

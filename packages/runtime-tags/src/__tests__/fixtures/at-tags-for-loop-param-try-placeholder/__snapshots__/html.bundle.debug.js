@@ -7,8 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$placeholder = attrTags($placeholder, { content: _content_resume("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`loading ${_text_resume($scope2_id, "#text/0", label, 2)}`);
-			_scope($scope2_id, {}, "__tests__/template.marko", "5:6");
+			_html(`loading ${_escape(label)}`);
 		}, $scope0_id, { label }) });
 	});
 	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_1*content", () => {

@@ -13,9 +13,9 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button id=rename>rename</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
-const $item_content__item_text = ($scope, item_text) => $item_content__item_text_n($scope, item_text.n);
-const $item_content__item_text_n = ($scope, item_text_n) => _text($scope["#text/1"], item_text_n);
-const $item_content__setup = ($scope) => $item_content__item_text($scope, { n: 1 });
+const $item_content__$item_text = ($scope, $item_text) => $item_content__$item_text_n($scope, $item_text.n);
+const $item_content__$item_text_n = ($scope, item_text_n) => _text($scope["#text/1"], item_text_n);
+const $item_content__setup = ($scope) => $item_content__$item_text($scope, { n: 1 });
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p><!>|<!></p>", "D%c%", $item_content__setup), { item_text($scope) {
 	_text($scope["#text/0"], $scope.item_text);
 } });

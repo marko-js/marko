@@ -6,19 +6,19 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<p><!>:<!></p>", "D%c%"), {
-	6($scope) {
-		_text($scope.a, $scope.g);
+	2($scope) {
+		_text($scope.a, $scope.c);
 	},
-	7($scope) {
-		_text($scope.b, $scope.h);
+	3($scope) {
+		_text($scope.b, $scope.d);
 	}
 });
 const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	let $item;
 	forOf($scope.d, ({ id, ...rest }) => {
 		$item = attrTags($item, { content: $item_content($scope, {
-			6: id,
-			7: rest.extra
+			2: id,
+			3: rest.extra
 		}) });
 	});
 	$input_item($scope.b, $item);

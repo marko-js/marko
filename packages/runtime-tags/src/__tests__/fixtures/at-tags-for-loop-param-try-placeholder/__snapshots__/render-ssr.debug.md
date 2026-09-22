@@ -9,7 +9,6 @@ done
 ```
 ## Change
 ```
-REMOVE: t::text@0 + ::text("body")
-REMOVE: ::text("loading ")
+REMOVE: ::text("loading body")
 INSERT: ::text("done")
 ```

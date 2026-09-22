@@ -36,32 +36,32 @@ const $setup__script$1 = _script("d0", ($scope) => _on($scope.a, "click", functi
 // template.marko
 const $catch_content__err_message = ($scope, err_message) => _text($scope.b, err_message);
 const $catch_content__$params = ($scope, $params7) => $catch_content__err_message($scope, $params7[0]?.message);
-const $catch_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3", "caught <!>: <!>", "b%c%", 0, $catch_content__$params), { 16($scope) {
-	_text($scope.a, $scope.q);
+const $catch_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3", "caught <!>: <!>", "b%c%", 0, $catch_content__$params), { 2($scope) {
+	_text($scope.a, $scope.c);
 } });
 _resumed.a3 = $catch_content;
-const $try_content__fail = /*@__PURE__*/ _closure_get(18, ($scope) => _text($scope.a, (() => {
-	if ($scope._.o) throw new Error("click");
+const $try_content__fail = /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, (() => {
+	if ($scope._.h) throw new Error("click");
 	return "ok";
 })()));
-const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", " <b> </b>", " bD "), { 13($scope) {
-	_text($scope.a, $scope.n);
-	_text($scope.b, $scope.n);
+const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", " <b> </b>", " bD "), { 2($scope) {
+	_text($scope.a, $scope.c);
+	_text($scope.b, $scope.c);
 } });
 _resumed.a2 = $item_content2;
-const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<em> </em>", "D "), { 11($scope) {
-	_text($scope.a, $scope.l);
+const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<em> </em>", "D "), { 1($scope) {
+	_text($scope.a, $scope.b);
 } });
 _resumed.a1 = $cell_content;
-const $item_content__items_0__OR__item = /*@__PURE__*/ _or(2, ($scope) => _text($scope.b, $scope.i === $scope._.g));
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<span><!>:<!></span>", "D%c%", /* @__PURE__ */ _closure_get(17, $item_content__items_0__OR__item)), {
-	8: $item_content__items_0__OR__item,
-	9($scope) {
-		_text($scope.a, $scope.j);
-	}
+const $item_content__items_0__OR__item = /*@__PURE__*/ _or(4, ($scope) => _text($scope.b, $scope.d === $scope._.g));
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<span><!>:<!></span>", "D%c%", /* @__PURE__ */ _closure_get(8, $item_content__items_0__OR__item)), {
+	2($scope) {
+		_text($scope.a, $scope.c);
+	},
+	3: $item_content__items_0__OR__item
 });
 _resumed.a0 = $item_content;
-const $fail = /*@__PURE__*/ _let(14, /* @__PURE__ */ _closure($try_content__fail));
+const $fail = /*@__PURE__*/ _let(7, /* @__PURE__ */ _closure($try_content__fail));
 const $setup__script = _script("a5", ($scope) => _on($scope.d, "click", function() {
 	$fail($scope, true);
 }));

@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", item * mult));
 			_subscribe($mult__closures, _scope($scope1_id, {
-				f: item,
+				b: item,
 				_: _scope_with_id($scope0_id)
 			}));
 		}, $scope0_id) });
@@ -37,6 +37,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: mult,
-		g: $mult__closures
+		e: $mult__closures
 	});
 }, 1);

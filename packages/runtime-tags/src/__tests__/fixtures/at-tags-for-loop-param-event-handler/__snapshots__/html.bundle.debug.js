@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item = attrTags($item, {
 			onClick: _resume_locals(function() {
 				clicked += foo;
-			}, "__tests__/template.marko_0/onClick", { "foo/4": foo }, $scope0_id),
+			}, "__tests__/template.marko_0/onClick", { "foo/5": foo }, $scope0_id),
 			content: _content("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();

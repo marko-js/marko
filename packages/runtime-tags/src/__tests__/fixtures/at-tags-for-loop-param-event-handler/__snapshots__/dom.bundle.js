@@ -9,8 +9,8 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<button></button>", " ", 0, $for_
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "Click <!>", "b%"), { 4($scope) {
-	_text($scope.a, $scope.e);
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "Click <!>", "b%"), { 1($scope) {
+	_text($scope.a, $scope.b);
 } });
 const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
@@ -18,9 +18,9 @@ const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 		$item = attrTags($item, {
 			onClick: $onClick({
 				_: $scope,
-				e: foo
+				f: foo
 			}),
-			content: $item_content($scope, { 4: foo })
+			content: $item_content($scope, { 1: foo })
 		});
 	});
 	$input_item($scope.a, $item);
@@ -28,6 +28,6 @@ const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 });
 const $onClick = ($locals) => function() {
 	const $scope = $locals._;
-	$clicked($scope, $scope.c + $locals.e);
+	$clicked($scope, $scope.c + $locals.f);
 };
 _resumed.a0 = $onClick;

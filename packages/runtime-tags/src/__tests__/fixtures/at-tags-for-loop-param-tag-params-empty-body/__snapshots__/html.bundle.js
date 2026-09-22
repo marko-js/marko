@@ -25,11 +25,9 @@ var template_default = _template("a", (input) => {
 	forOf(["a", "b"], (item) => {
 		$item = attrTags($item, { content: _content("a0", () => {
 			_scope_reason();
-			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
+			_scope_id();
 			child_default({ x: item });
-			_html(`<p>${_text_resume($scope1_id, "b", item)}</p>`);
-			_scope($scope1_id, { a: _existing_scope($childScope) });
+			_html(`<p>${_escape(item)}</p>`);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

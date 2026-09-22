@@ -25,7 +25,7 @@ const $clicked = /*@__PURE__*/ _let("clicked/2", ($scope) => {
 		$item = attrTags($item, {
 			onClick: $onClick({
 				_: $scope,
-				"foo/4": foo
+				"foo/5": foo
 			}),
 			content: $item_content($scope, { foo })
 		});
@@ -38,7 +38,7 @@ function $setup($scope) {
 }
 const $onClick = ($locals) => function() {
 	const $scope = $locals._;
-	$clicked($scope, $scope.clicked + $locals["foo/4"]);
+	$clicked($scope, $scope.clicked + $locals["foo/5"]);
 };
 _resumed["__tests__/template.marko_0/onClick"] = $onClick;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -268,10 +268,7 @@ export function getSignal(
       return getSignal(section, undefined);
     }
 
-    if (
-      referencedBindings.type !== BindingType.local &&
-      referencedBindings.section !== section
-    ) {
+    if (referencedBindings.section !== section) {
       const canonicalReference = getCanonicalBinding(referencedBindings);
       if (canonicalReference !== referencedBindings) {
         return getSignal(section, canonicalReference);
@@ -319,7 +316,8 @@ export function getSignal(
             referencedBindings.type === BindingType.let ||
             referencedBindings.section !== section ||
             referencedBindings.closureSections ||
-            referencedBindings.hoists)
+            referencedBindings.hoists ||
+            referencedBindings.upstreamLocal)
         ),
         forcePersist: false,
         inline: undefined,
@@ -1413,15 +1411,10 @@ export function writeHTMLResumeStatements(
   };
 
   forEach(section.bindings, (binding) => {
-    if (
-      binding.type !== BindingType.dom &&
-      binding.type !== BindingType.local
-    ) {
+    if (binding.type !== BindingType.dom) {
       writeSerializedBinding(binding);
     }
   });
-
-  forEach(section.referencedLocalClosures, writeSerializedBinding);
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;

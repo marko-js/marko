@@ -122,7 +122,9 @@ export interface Section {
   program: Section;
   sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
   params: undefined | ParamBinding | InputBinding;
-  referencedLocalClosures: ReferencedBindings;
+  /** The attribute tag `<for>` params this content reads, held as its own
+   * bindings that the loop binds as it creates it. */
+  localClosures: ReferencedBindings;
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
@@ -220,7 +222,7 @@ export function startSection(
       program: undefined as unknown as Section,
       sectionAccessor: undefined,
       params: undefined,
-      referencedLocalClosures: undefined,
+      localClosures: undefined,
       referencedClosures: undefined,
       referencedHoists: undefined,
       bindings: undefined,

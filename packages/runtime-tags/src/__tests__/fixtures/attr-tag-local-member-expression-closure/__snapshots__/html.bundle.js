@@ -17,9 +17,8 @@ var template_default = _template("a", (input) => {
 		forOf(texts, (item) => {
 			$item = attrTags($item, { content: _content("a1", () => {
 				_scope_reason();
-				const $scope4_id = _scope_id();
-				_html(_text_resume($scope4_id, "a", item.text));
-				_scope($scope4_id, {});
+				_scope_id();
+				_html(_escape(item.text));
 			}, $scope2_id) });
 		});
 		Child.content({ item: $item });

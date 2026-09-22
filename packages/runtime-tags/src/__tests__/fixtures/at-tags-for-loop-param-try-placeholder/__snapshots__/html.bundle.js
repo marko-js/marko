@@ -6,10 +6,9 @@ var template_default = _template("a", (input) => {
 	forOf(["body"], (label) => {
 		$placeholder = attrTags($placeholder, { content: _content_resume("a0", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
-			_html(`loading ${_text_resume($scope2_id, "a", label, 2)}`);
-			_scope($scope2_id, {});
-		}, $scope0_id, { 2: label }) });
+			_scope_id();
+			_html(`loading ${_escape(label)}`);
+		}, $scope0_id, { 1: label }) });
 	});
 	_try($scope0_id, "a", _content_resume("a1", () => {
 		const $scope1_id = _scope_id();

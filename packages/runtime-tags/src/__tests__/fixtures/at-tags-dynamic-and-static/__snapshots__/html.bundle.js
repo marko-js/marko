@@ -22,9 +22,8 @@ var template_default = _template("a", (input) => {
 	}, (a, v) => {
 		$item = attrTags($item, { content: _content("a0", () => {
 			_scope_reason();
-			const $scope1_id = _scope_id();
-			_html(`${_text_resume($scope1_id, "a", a)}:${_text_resume($scope1_id, "b", v, 2)}`);
-			_scope($scope1_id, {});
+			_scope_id();
+			_html(`${_escape(a)}:${_escape(v)}`);
 		}, $scope0_id) });
 	});
 	hello_default({

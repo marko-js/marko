@@ -7,6 +7,10 @@ export function getDeclaredBindingExpression(
   binding: Binding,
 ): t.Identifier | t.MemberExpression | t.OptionalMemberExpression {
   const canonicalBinding = getCanonicalBinding(binding)!;
+  // Content the loop creates is written within it, where the local is in scope.
+  if (canonicalBinding.upstreamLocal) {
+    return getDeclaredBindingExpression(canonicalBinding.upstreamLocal);
+  }
   const { upstreamAlias, property, declaredAlias } = canonicalBinding;
   if (
     canonicalBinding.declared ||

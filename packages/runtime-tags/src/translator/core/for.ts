@@ -21,6 +21,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { fromIter } from "../util/optional";
 import {
   type Binding,
   BindingType,
@@ -138,7 +139,19 @@ export default {
       );
     }
 
-    if (isAttrTag) return;
+    if (isAttrTag) {
+      // The loop runs as its attribute tags are built, so its params change
+      // only with its attributes, as a sectioned loop's params do.
+      if (paramsBinding) {
+        setBindingDownstream(
+          paramsBinding,
+          fromIter(
+            tag.node.attributes.map((attr) => (attr.value.extra ??= {})),
+          ),
+        );
+      }
+      return;
+    }
 
     const byAttr = getKnownAttrValues(tag.node).by;
 

@@ -170,6 +170,11 @@ export interface Binding {
   /** A name declared for this value, or all of it but its `excludeProperties`
    * (a rest element), even once pruned. */
   declaredAlias: Binding | undefined;
+  /** The attribute tag `<for>` param a local closure holds in its section. */
+  upstreamLocal: Binding | undefined;
+  /** An attribute tag `<for>` param's local closure in each content the loop
+   * creates that reads it. */
+  localClosures: Map<Section, Binding> | undefined;
   declared: boolean;
   nullable: boolean;
   pruned: boolean | undefined;
@@ -322,6 +327,8 @@ export function createBinding(
     upstreamAlias,
     iterates: undefined,
     declaredAlias: undefined,
+    upstreamLocal: undefined,
+    localClosures: undefined,
     restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
@@ -371,6 +378,27 @@ export function getOrCreatePropertyAlias(binding: Binding, property: string) {
       property,
     )
   );
+}
+
+// An attribute tag `<for>` param reaches only the content the loop creates, so
+// that content holds it as its own binding, which nested sections close over.
+function getOrCreateLocalClosure(local: Binding, section: Section) {
+  while (section.parent !== local.section) section = section.parent!;
+  let closure = local.localClosures?.get(section);
+  if (!closure) {
+    closure = createBinding(
+      local.name,
+      BindingType.derived,
+      section,
+      undefined,
+      undefined,
+      undefined,
+      local.loc,
+    );
+    closure.upstreamLocal = local;
+    (local.localClosures ??= new Map()).set(section, closure);
+  }
+  return closure;
 }
 
 // The alias a property path reaches from a binding, if every hop exists.
@@ -791,6 +819,18 @@ function createBindingsAndTrackReferences(
   restOffset?: number,
 ) {
   switch (lVal.type) {
+    case "AssignmentPattern":
+      createBindingsAndTrackReferences(
+        lVal.left,
+        type,
+        scope,
+        section,
+        upstreamAlias,
+        property,
+        excludeProperties,
+        restOffset,
+      );
+      break;
     case "Identifier": {
       const binding = ((lVal.extra ??= {}).binding = createBinding(
         lVal.name,
@@ -972,6 +1012,10 @@ function trackReference(
   // The chain is read as a whole, and its root names the binding it renames.
   if (root !== referencePath) {
     (referencePath.node.extra ??= {}).binding = binding;
+  }
+
+  if (reference.type === BindingType.local) {
+    reference = getOrCreateLocalClosure(reference, getOrCreateSection(root));
   }
 
   addReadToExpression(root, reference, undefined);
@@ -1323,16 +1367,14 @@ export function finalizeReferences() {
     const canonicalBinding = getCanonicalBinding(binding);
     section.bindings = bindingUtil.add(section.bindings, canonicalBinding);
     bindingNamesBySection.get(section)?.add(canonicalBinding.name);
+    if (binding.upstreamLocal) {
+      section.localClosures = bindingUtil.add(section.localClosures, binding);
+    }
 
     for (const exprExtra of binding.reads) {
       const { isEffect, section } = exprExtra;
       if (section.depth > binding.section.depth) {
-        if (binding.type === BindingType.local) {
-          section.referencedLocalClosures = bindingUtil.add(
-            section.referencedLocalClosures,
-            binding,
-          );
-        } else if (binding.type !== BindingType.dom) {
+        if (binding.type !== BindingType.dom) {
           const closure =
             getConstantRoot(binding) ?? getCanonicalBinding(binding);
           // Lazy-only reads need the owner scope chain but no closure signal.
@@ -1615,8 +1657,10 @@ function getValueInputs(binding: Binding): ReferencedBindings {
 function getValueReferences(exprs: Opt<t.NodeExtra>) {
   let refs: ReferencedBindings;
   forEach(exprs, (expr) => {
-    if (isReferencedExtra(expr) && !expr.initialValue) {
-      refs = bindingUtil.union(refs, expr.referencedBindings);
+    // An attribute tag's expression is read through the group it merged into.
+    const canonical = getCanonicalExtra(expr);
+    if (isReferencedExtra(canonical) && !expr.initialValue) {
+      refs = bindingUtil.union(refs, canonical.referencedBindings);
     }
   });
   return refs;
@@ -1648,15 +1692,6 @@ function getSectionUpstreamReason(section: Section) {
 // Serializes each closure a section reads for every branch or content between
 // the read and the closure's own section.
 function addClosureSerializeReasons(section: Section) {
-  forEach(section.referencedLocalClosures, (closure) => {
-    // Local closures inherit serialize reasons from the owner section.
-    addSerializeReason(
-      section,
-      getSerializeReason(closure.section, closure),
-      closure,
-    );
-  });
-
   forEach(section.referencedClosures, (closure) => {
     // mark bindings that need to be serialized due to being closed over by stateful sections
     const sourceSection = closure.section;
@@ -1857,6 +1892,12 @@ function resolveBindingSources(binding: Binding) {
     case BindingType.global:
       binding.sources = globalSources;
       return;
+  }
+
+  if (binding.upstreamLocal) {
+    resolveBindingSources(binding.upstreamLocal);
+    binding.sources = binding.upstreamLocal.sources;
+    return;
   }
 
   const aliasRoot = getAliasRoot(binding);
@@ -2832,8 +2873,7 @@ function isLazyRead(
     // upstream with no own slot, so reading them live would go stale on resume.
     (!binding.upstreamAlias || isParamBinding(binding)) &&
     binding.type !== BindingType.dom &&
-    binding.type !== BindingType.constant &&
-    (binding.type !== BindingType.local || binding.section === expr.section)
+    binding.type !== BindingType.constant
   );
 }
 

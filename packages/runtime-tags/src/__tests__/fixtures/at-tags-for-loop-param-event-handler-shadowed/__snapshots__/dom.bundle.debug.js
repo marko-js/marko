@@ -16,23 +16,23 @@ var my_menu_default = /*@__PURE__*/ _template("__tests__/tags/my-menu/index.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<div> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&D l`)("b%c");
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " "), { $foo($scope) {
-	_text($scope["#text/0"], $scope.$foo);
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " "), { foo($scope) {
+	_text($scope["#text/0"], $scope.foo);
 } });
-const $foo2 = /*@__PURE__*/ _let("foo/2", ($scope) => _text($scope["#text/1"], $scope.foo));
+const $foo = /*@__PURE__*/ _let("foo/2", ($scope) => _text($scope["#text/1"], $scope.foo));
 function $setup($scope) {
 	let $item;
-	forOf(["a", "b"], ($foo) => {
+	forOf(["a", "b"], (foo) => {
 		$item = attrTags($item, {
-			onClick: $onClick({ "$foo/4": $foo }),
-			content: $item_content($scope, { $foo })
+			onClick: $onClick({ "foo/5": foo }),
+			content: $item_content($scope, { foo })
 		});
 	});
 	$input_item($scope["#childScope/0"], $item);
-	$foo2($scope, "outer");
+	$foo($scope, "outer");
 }
 const $onClick = ($locals) => function(ev) {
-	ev.target.textContent = $locals["$foo/4"];
+	ev.target.textContent = $locals["foo/5"];
 };
 _resumed["__tests__/template.marko_0/onClick"] = $onClick;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

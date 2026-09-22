@@ -30,9 +30,7 @@ export function createScopeReadExpression(
 ) {
   const propName = toPropertyName(getScopeAccessor(reference));
   const expr = t.memberExpression(
-    reference.type === BindingType.local
-      ? scopeIdentifier
-      : getScopeExpression(section, reference.section),
+    getScopeExpression(section, reference.section),
     propName,
     propName.type !== "Identifier",
   );

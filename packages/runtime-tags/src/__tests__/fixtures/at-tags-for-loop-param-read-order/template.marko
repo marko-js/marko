@@ -1,0 +1,9 @@
+<let/items=[{ text: "a" }, { text: "b" }]>
+<button#rename onClick() { items = items.map((it) => ({ text: it.text + "!" })) }>rename</button>
+
+// Reads a property of the param before the whole param.
+<list>
+  <for|item| of=items>
+    <@item><p>${item.text}|${JSON.stringify(item)}</p></@item>
+  </for>
+</list>

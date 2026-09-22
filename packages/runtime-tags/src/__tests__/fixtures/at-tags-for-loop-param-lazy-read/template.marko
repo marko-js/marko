@@ -1,0 +1,15 @@
+<let/out="">
+<let/show=true>
+<let/items=["a", "b"]>
+<button#rename onClick() { items = items.map((it) => it + "!") }>rename</button>
+<div#out>${out}</div>
+
+// Read only when a handler runs, directly and from a nested section.
+<list>
+  <for|item| of=items>
+    <@item>
+      <button.direct onClick() { out = item }>direct</button>
+      <if=show><button.nested onClick() { out = `nested ${item}` }>nested</button></if>
+    </@item>
+  </for>
+</list>

@@ -38,8 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
-				_html(`static ${_text_resume($scope1_id, "#text/0", i, 2)}`);
-				_scope($scope1_id, {}, "__tests__/template.marko", "8:22");
+				_html(`static ${_escape(i)}`);
 			}, $scope0_id) });
 		});
 	}
@@ -47,11 +46,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(2);
 	let $item2;
 	if (mode === 0) {
-		forUntil(count, 0, 1, ($i) => {
+		forUntil(count, 0, 1, (i) => {
 			$item2 = attrTags($item2, { content: _content("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`if ${_text_resume($scope2_id, "#text/0", $i, 2)}`);
+				_html(`if ${_text_resume($scope2_id, "#text/0", i, 2)}`);
 				_scope($scope2_id, {}, "__tests__/template.marko", "14:26");
 			}, $scope0_id) });
 		});
@@ -61,11 +60,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(2);
 	let $item3;
 	if (mode === 0) {} else if (mode === 1) {
-		forUntil(count, 0, 1, ($i2) => {
+		forUntil(count, 0, 1, (i) => {
 			$item3 = attrTags($item3, { content: _content("__tests__/template.marko_3*content", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`else-if ${_text_resume($scope3_id, "#text/0", $i2, 2)}`);
+				_html(`else-if ${_text_resume($scope3_id, "#text/0", i, 2)}`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "21:26");
 			}, $scope0_id) });
 		});
@@ -76,11 +75,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item4;
 	if (mode !== 2) {} else {
 		if (count) {
-			forUntil(count, 0, 1, ($i3) => {
+			forUntil(count, 0, 1, (i) => {
 				$item4 = attrTags($item4, { content: _content("__tests__/template.marko_4*content", () => {
 					_scope_reason();
 					const $scope4_id = _scope_id();
-					_html(`else ${_text_resume($scope4_id, "#text/0", $i3, 2)}`);
+					_html(`else ${_text_resume($scope4_id, "#text/0", i, 2)}`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "29:28");
 				}, $scope0_id) });
 			});
@@ -108,11 +107,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if (mode === 0) {
 		$label = attrTag({ text: "zero" });
 	} else {
-		forUntil(count, 0, 1, ($i4) => {
+		forUntil(count, 0, 1, (i) => {
 			$item6 = attrTags($item6, { content: _content("__tests__/template.marko_6*content", () => {
 				_scope_reason();
 				const $scope6_id = _scope_id();
-				_html(`labeled ${_text_resume($scope6_id, "#text/0", $i4, 2)}`);
+				_html(`labeled ${_text_resume($scope6_id, "#text/0", i, 2)}`);
 				_scope($scope6_id, {}, "__tests__/template.marko", "43:26");
 			}, $scope0_id) });
 		});
