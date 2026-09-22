@@ -30,7 +30,7 @@ pnpm run change                                           # add a changeset (req
 
 `pnpm run compile` is the fastest way to inspect what the translator generates. (Pass `-t class` for the Marko 5 translator; `-t` also accepts a full translator module id.)
 
-`pnpm run change` prompts, so write `.changeset/<name>.md` directly. Name a workspace package — `@marko/compiler`, `@marko/runtime-tags` or `marko` (`packages/runtime-class`) — then check it with `pnpm exec changeset status`; a wrong name passes review and breaks the release on `main`.
+`pnpm run change` prompts, so write `.changeset/<name>.md` directly, naming the package that owns the changed code: `packages/compiler` is `@marko/compiler`, `packages/runtime-tags` is `@marko/runtime-tags`, `packages/runtime-class` is `marko`. `pnpm exec changeset status` fails on a name that is no workspace package (which would break the release on `main`), but not on the wrong one: `marko` for a runtime-tags fix passes and publishes the wrong package.
 
 ## Repo invariants
 

@@ -67,7 +67,7 @@ Pre-ship:
 - `pnpm test`.
 - Runtime changes: `pnpm run build && pnpm run build:sizes`. Bundle size is a feature; report any non-zero delta before committing. Then `git checkout -- .sizes*`; the pre-commit hook regenerates them.
 - Pre-commit is slow by design (lint-staged, full build, tsc, sizes). On hook failure grep its output for `error TS`.
-- Changeset only for user-facing changes: write `.changeset/<name>.md` directly, verify with `pnpm exec changeset status`.
+- Changeset only for user-facing changes: write `.changeset/<name>.md` directly, naming the package that owns the change (`AGENTS.md` › Commands). `pnpm exec changeset status` catches a name that is no workspace package, not the wrong package.
 
 Gotchas:
 
