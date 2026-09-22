@@ -145,6 +145,8 @@ export const analyze = {
       }
     }
 
+    // Class and Tags templates only interoperate when imported by their `.marko` path: one reached
+    // through a JS module (barrel, glob) is not seen here, so no compat runtime is linked for it.
     if (relativePath) {
       tag.node.extra = tag.node.extra || {};
       tag.node.extra.relativePath = relativePath;
