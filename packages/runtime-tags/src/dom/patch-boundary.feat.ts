@@ -268,14 +268,11 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     holdForStream(scope, key, link, accessor, value as Scope);
     return;
   }
-  // A boundary entry with its creation payload and no live branch creates
-  // (`patch-try`); nothing is pending for it to settle.
+  // A boundary entry is a try's (`patch-try` creates or pairs it); nothing is
+  // pending for it to settle, and its counter belongs to the awaits inside.
   if (Array.isArray(value)) {
-    if (!scope[link]) {
-      applyChild(scope, key, value);
-      return;
-    }
-    value = value[0];
+    applyChild(scope, key, value);
+    return;
   }
   const apply = () => {
     applyChild(scope, key, value);
