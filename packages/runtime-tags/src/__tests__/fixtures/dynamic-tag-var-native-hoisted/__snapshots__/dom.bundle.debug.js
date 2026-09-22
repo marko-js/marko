@@ -17,7 +17,7 @@ const $if_content__setup = $if_content__input_type;
 const $if_content__$el = _var_resume("__tests__/template.marko_1_$el#2/var", /*@__PURE__*/ _const("$el", ($scope) => _assert_hoist($scope.$el)));
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b1", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
-const $for = /*@__PURE__*/ _for_until("#text/1", "<!><!><!>", "b1", $for_content__setup);
+const $for = /*@__PURE__*/ _for_until_unkeyed("#text/1", "<!><!><!>", "b1", $for_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	$el_getter($scope)()?.setAttribute("data-mounted", "");
 	for (const item of $item_getter($scope)) item.setAttribute("data-mounted", "");

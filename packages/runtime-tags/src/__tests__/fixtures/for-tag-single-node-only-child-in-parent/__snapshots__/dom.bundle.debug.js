@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $for = /*@__PURE__*/ _for_of("#div/0", "<div></div>");
+const $for = /*@__PURE__*/ _for_of_unkeyed("#div/0", "<div></div>");
 const $children__script = _script("__tests__/template.marko_0_children#1", ($scope) => {
 	if ($scope.children?.length === 1) {
 		$children($scope, [...$scope.children, 2]);

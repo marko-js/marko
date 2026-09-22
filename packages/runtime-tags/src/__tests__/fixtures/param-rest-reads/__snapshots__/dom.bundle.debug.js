@@ -46,8 +46,8 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item($scope, $params2[0]);
 };
 const $for_content__meta = ($scope, meta) => $for_content__meta_length($scope, meta.length);
-const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!>:<!>:<!></div>", "D%c%c%", $for_content__setup, $for_content__$params);
-const $for2 = /*@__PURE__*/ _for_of("#text/1", "<div><!>@<!></div>", "D%c%", $for_content2__setup, $for_content2__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div><!>:<!>:<!></div>", "D%c%c%", $for_content__setup, $for_content__$params);
+const $for2 = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<div><!>@<!></div>", "D%c%", $for_content2__setup, $for_content2__$params);
 const $list = /*@__PURE__*/ _let("list/4", ($scope) => {
 	$for($scope, [$scope.list]);
 	$for2($scope, [$scope.list]);

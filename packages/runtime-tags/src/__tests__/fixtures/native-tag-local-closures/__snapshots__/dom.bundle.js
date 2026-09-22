@@ -8,7 +8,7 @@ const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
 	$for_content__item__script($scope);
 });
 const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);
-const $Child_content__for = /*@__PURE__*/ _for_of(0, "<div></div>", " ", 0, $for_content__$params);
+const $Child_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<div></div>", " ", 0, $for_content__$params);
 const $Child_content__input_item = ($scope, input_item) => $Child_content__for($scope, [input_item]);
 const $size = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;

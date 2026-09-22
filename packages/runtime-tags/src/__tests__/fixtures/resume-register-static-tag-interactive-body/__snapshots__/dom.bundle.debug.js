@@ -6,7 +6,7 @@ const $for_content__count = /*@__PURE__*/ _closure_get("count", $for_content__co
 const $for_content__setup = $for_content__count;
 const $for_content__i = /*@__PURE__*/ _const("i", $for_content__count__OR__i);
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
-const $if_content__for = /*@__PURE__*/ _for_of("#text/0", "<span class=inner> </span>", "D ", $for_content__setup, $for_content__$params);
+const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<span class=inner> </span>", "D ", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => $if_content__for($scope, [[1, 2]]);
 const $tag_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count));
 const $tag_content__setup__script = _script("__tests__/template.marko_1", ($scope) => {

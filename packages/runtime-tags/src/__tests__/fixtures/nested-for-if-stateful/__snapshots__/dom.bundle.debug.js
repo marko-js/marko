@@ -30,7 +30,7 @@ const $for_content__count = /*@__PURE__*/ _const("count", ($scope) => {
 	$if_content__count($scope);
 	$else_content__count($scope);
 });
-const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $counts = /*@__PURE__*/ _let("counts/1", ($scope) => $for($scope, [$scope.counts]));
 function $setup($scope) {
 	$counts($scope, [

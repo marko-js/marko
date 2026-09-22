@@ -11,7 +11,7 @@ const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
 	$if_content__item($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of(2, "<div></div>", " ", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed(2, "<div></div>", " ", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let(3, ($scope) => $for($scope, [$scope.d]));
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$items($scope, []);

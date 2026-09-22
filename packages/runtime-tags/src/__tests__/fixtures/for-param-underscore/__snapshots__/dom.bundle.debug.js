@@ -16,7 +16,7 @@ const $for_content___ = ($scope, _) => {
 const $for_content__$params = ($scope, $params2) => $for_content___($scope, $params2[0]);
 const $for_content____length = /*@__PURE__*/ _const("__length");
 const $n = /*@__PURE__*/ _let("n/1", $for_content__n);
-const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!>:<!></div>", " D%c%", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div><!>:<!></div>", " D%c%", $for_content__setup, $for_content__$params);
 function $setup($scope) {
 	$n($scope, 0);
 	$for($scope, [["ab", "cde"]]);

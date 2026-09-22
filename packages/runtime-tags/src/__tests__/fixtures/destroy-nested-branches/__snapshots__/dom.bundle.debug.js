@@ -3,7 +3,7 @@ const $template = "<div></div>";
 const $walks = " b";
 const $for_content__item = ($scope, item) => $name($scope["#childScope/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $if_content__for = /*@__PURE__*/ _for_of("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), 0, $for_content__$params);
+const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), 0, $for_content__$params);
 const $if_content__items = /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => $if_content__for($scope, [$scope._.items]));
 const $if_content__setup = ($scope) => {
 	$if_content__items._($scope);

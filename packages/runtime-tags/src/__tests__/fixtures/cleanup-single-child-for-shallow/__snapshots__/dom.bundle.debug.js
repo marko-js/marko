@@ -30,7 +30,7 @@ const $for_content__write = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $w
 const $for_content__setup = $for_content__write;
 const $for_content__item = ($scope, item) => $name($scope["#childScope/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => $for($scope, [$scope.items]));
 const $write2 = /*@__PURE__*/ _const("write");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
