@@ -7,4 +7,4 @@ const $for_content__setup = _script("a1", ($scope) => _on($scope.a, "click", fun
 const $act = ($scope) => /*@__PURE__*/ _act(function* () {
 	yield resolveAfter($scope.f);
 }, 1, $scope, $for_content__act);
-_resume("a0", $act);
+_resumed.a0 = $act;

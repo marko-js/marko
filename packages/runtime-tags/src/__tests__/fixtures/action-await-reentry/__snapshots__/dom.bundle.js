@@ -23,5 +23,5 @@ const $native = ($scope) => /*@__PURE__*/ _act(async function() {
 	await resolveAfter(0);
 	$shown($scope, 9, 1);
 }, 0, $scope, $native2);
-_resume("a0", $late);
-_resume("a1", $native);
+_resumed.a0 = $late;
+_resumed.a1 = $native;

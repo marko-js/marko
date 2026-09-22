@@ -49,7 +49,7 @@ function $setup($scope) {
 const $go = ($scope) => /*@__PURE__*/ _act((next) => {
 	$page($scope, next, 1);
 }, 0, $scope, $go2);
-_resume("__tests__/page.marko_0/go", $go);
+_resumed["__tests__/page.marko_0/go"] = $go;
 var page_default = /*@__PURE__*/ _template("__tests__/page.marko", $template, "b%c", $setup);
 
 // template.marko

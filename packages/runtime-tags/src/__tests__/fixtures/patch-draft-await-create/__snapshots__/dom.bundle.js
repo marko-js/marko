@@ -24,4 +24,4 @@ const $go2 = /*@__PURE__*/ _fill_action("a2", 5);
 const $go = ($scope) => /*@__PURE__*/ _act((next) => {
 	$page($scope, next, 1);
 }, 0, $scope, $go2);
-_resume("a0", $go);
+_resumed.a0 = $go;

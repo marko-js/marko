@@ -1,4 +1,4 @@
-// size: 30430 (min) 11230 (brotli)
+// size: 30370 (min) 11231 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -187,7 +187,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
     };
   }),
   bindNativeTagVar,
-  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => _resume("_d", dynamicTagScript)),
+  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => (_resumed._d = dynamicTagScript)),
   loop = /*@__PURE__*/ withBranches((forEach) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
@@ -358,7 +358,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   cloneCache = {},
-  registeredValues = {},
+  _resumed = {},
   patchers = {},
   onPatchShell,
   patchScope = (partial, live) => {
@@ -1475,7 +1475,7 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   });
 }
 function _content_resume(id, template, walks, setup, params, dynamicScopesAccessor) {
-  return _resume(id, _content(id, template, walks, setup, params, dynamicScopesAccessor));
+  return (_resumed[id] = _content(id, template, walks, setup, params, dynamicScopesAccessor));
 }
 function _content_closures(renderer, closureFns) {
   let closureSignals = {};
@@ -1582,7 +1582,7 @@ function init(runtimeId = "M") {
             serializeContext = (data, registryId) =>
               typeof data == "number"
                 ? registryId
-                  ? registeredValues[registryId](getScope(data))
+                  ? _resumed[registryId](getScope(data))
                   : getScope(data)
                 : applyScopes(data),
             createVisitBranches =
@@ -1679,7 +1679,7 @@ function init(runtimeId = "M") {
                 if (typeof serialized == "string")
                   for (lastTokenIndex = 0, visitText = serialized; nextToken();)
                     /\D/.test(lastToken)
-                      ? (lastEffect = registeredValues[lastToken])
+                      ? (lastEffect = _resumed[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
                 else if (Array.isArray(serialized)) {
                   if (
@@ -1711,7 +1711,7 @@ function init(runtimeId = "M") {
             htmlStart,
             embedAnchor;
           return (
-            (serializeContext._ = registeredValues),
+            (serializeContext._ = _resumed),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds && render.b))
                 for (let progress = 1; progress;) {
@@ -1786,16 +1786,12 @@ function runResumeEffects(render) {
   }
 }
 function getRegisteredWithScope(id, scope) {
-  let val = registeredValues[id];
-  return scope ? val(scope) : val;
-}
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
+  return scope ? _resumed[id](scope) : _resumed[id];
 }
 function _init_join(id, join) {
-  let prev = registeredValues[id];
+  let prev = _resumed[id];
   return (
-    (registeredValues[id] = prev
+    (_resumed[id] = prev
       ? (scope) => {
           (prev(scope), join(scope));
         }
@@ -1804,10 +1800,10 @@ function _init_join(id, join) {
   );
 }
 function _var_resume(id, signal) {
-  return (_resume(id, (scope) => (value) => signal(scope, value)), signal);
+  return ((_resumed[id] = (scope) => (value) => signal(scope, value)), signal);
 }
 function _el(id, accessor) {
-  return ((accessor = decodeAccessor(accessor)), _resume(id, (scope) => () => scope[accessor]));
+  return ((accessor = decodeAccessor(accessor)), (_resumed[id] = (scope) => () => scope[accessor]));
 }
 function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
@@ -2038,18 +2034,18 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   return (
     (closureSignal.a = valueAccessor),
     (closureSignal.b = "C" + valueAccessor),
-    resumeId && _resume(resumeId, closureSignal),
+    resumeId && (_resumed[resumeId] = closureSignal),
     closureSignal
   );
 }
 function _init_closure_get(initId, valueAccessor, fn, getOwnerScope, resumeId) {
-  return _resume(initId, _closure_get(valueAccessor, fn, getOwnerScope, resumeId));
+  return (_resumed[initId] = _closure_get(valueAccessor, fn, getOwnerScope, resumeId));
 }
 function _init_if_closure(initId, ownerConditionalNodeAccessor, branch, fn) {
-  return _resume(initId, _if_closure(ownerConditionalNodeAccessor, branch, fn));
+  return (_resumed[initId] = _if_closure(ownerConditionalNodeAccessor, branch, fn));
 }
 function _init_for_closure(initId, ownerLoopNodeAccessor, fn) {
-  return _resume(initId, _for_closure(ownerLoopNodeAccessor, fn));
+  return (_resumed[initId] = _for_closure(ownerLoopNodeAccessor, fn));
 }
 function _init_for_selector(
   initId,
@@ -2058,10 +2054,12 @@ function _init_for_selector(
   keyValueAccessor,
   fn,
 ) {
-  return _resume(
-    initId,
-    _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, fn),
-  );
+  return (_resumed[initId] = _for_selector(
+    ownerLoopNodeAccessor,
+    ownerValueAccessor,
+    keyValueAccessor,
+    fn,
+  ));
 }
 function _child_setup(setup) {
   return (
@@ -2090,7 +2088,7 @@ function _id(scope, accessor) {
 }
 function _script(id, fn) {
   return (
-    _resume(id, fn),
+    (_resumed[id] = fn),
     (scope) => {
       queueEffect(scope, fn);
     }
@@ -2129,7 +2127,7 @@ function _hoist(...path) {
   );
 }
 function _hoist_resume(id, ...path) {
-  return _resume(id, _hoist(...path));
+  return (_resumed[id] = _hoist(...path));
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
@@ -2144,7 +2142,7 @@ function patch($global) {
   let pageCtx,
     trees = [],
     responseCtx = (data) => (typeof data == "number" ? trees[data] : pageCtx(data));
-  responseCtx._ = registeredValues;
+  responseCtx._ = _resumed;
   let names = Object.keys(flushVars),
     vars = Object.values(flushVars),
     held = curRenders?.[$global.renderId]?.k;
@@ -2196,7 +2194,7 @@ function _global_join(key, id, join) {
   });
 }
 function _global_script(id, fn) {
-  let effect = _resume(id, (scope) => {
+  let effect = (_resumed[id] = (scope) => {
     let ran = (scope.AA ??= {});
     ran[id] !== runId && ((ran[id] = runId), fn(scope));
   });
@@ -2204,11 +2202,11 @@ function _global_script(id, fn) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let loads = {},
-  _template = (id, template, walks, setup, inputSignal) => {
+let _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
-    return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
+    return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
   },
+  noop = (_) => 0,
   _load_template = /*@__PURE__*/ withLazy((id, load) => {
     let pending,
       lazyTemplate = _template(
@@ -2228,20 +2226,10 @@ let loads = {},
               loadFailed(branch, awaitCounter),
             ));
         },
-        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
+        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d || noop }))),
       );
     return lazyTemplate;
   }),
-  loadStart,
-  _load_ready_template = (readyId, template) => (
-    (template.c = ((setup) => (branch) => {
-      (loadStart(branch, readyId), setup(branch));
-    })(template.c)),
-    template
-  ),
-  _load_ready = (readyId, childScopeAccessor, setup) => (owner) => {
-    (loadStart(owner[decodeAccessor(childScopeAccessor)], readyId), setup(owner));
-  },
   _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
     ((nodeAccessor = decodeAccessor(nodeAccessor)),
       (childScopeAccessor = decodeAccessor(childScopeAccessor)));
@@ -2274,26 +2262,11 @@ let loads = {},
             ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, [value, apply])
             : apply._
               ? apply._(scope, value)
-              : pending.then(
-                  (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
-                  () => 0,
-                ));
+              : pending.then((mod) => queueAsyncRender(scope, (apply._ = mod._), value), noop));
       };
     return apply;
-  });
-/**
- * The loader of a lazy template that only flushes create. Never pure: it
- * registers where no client code renders the tag.
- */
-function _load_lazy(id, load) {
-  let pending;
-  loads[id] = () => {
-    pending ||= load().then(
-      () => ready(id),
-      () => void 0,
-    );
-  };
-}
+  }),
+  loads = {};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,
@@ -2429,12 +2402,30 @@ function _load_media_trigger(query) {
     )).then(load);
 }
 function _load_race_trigger(...triggers) {
-  let noop = () => Promise.resolve(),
-    pending;
+  let pending;
   return (load) => () => (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+/**
+ * A load a flush creating the lazy template `id` waits for. The page entry
+ * registers the module's (a module registering its own would bundle it).
+ */
+function _load_lazy(id, load) {
+  Array.isArray(loads[id]) ? loads[id].push(load) : loads[id] ? load() : (loads[id] = [load]);
+}
+/**
+ * A lazy child's input signal on a patch page. A scope a flush's shell
+ * creates has its content, so the signal applies now (its module landed
+ * with the template's) rather than buffering for a clone that never comes.
+ */
+function _load_signal_patch(load, id) {
+  let buffered = _load_signal(load),
+    apply = (scope, value) => {
+      (apply._ || buffered)(scope, value);
+    };
+  return (_load_lazy(id, () => load().then((mod) => (apply._ = mod._))), apply);
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
@@ -2455,7 +2446,7 @@ let empty = [],
     patchDynamicTag,
     queueEffect,
     init(warp10Noop) {
-      (_resume("$C_s", (scope) => {
+      ((_resumed.$C_s = (scope) => {
         if (
           ((getRenderScopes(scope.$)[scope.L] = scope),
           scope.m5c && classIdToBranch.set(scope.m5c, scope),
@@ -2466,13 +2457,13 @@ let empty = [],
             resolved !== scope[key] && (scope[key] = resolved);
           }
       }),
-        _resume("$C_b", warp10Noop));
+        (_resumed.$C_b = warp10Noop));
     },
     setClassEventResolver(fn) {
       classEventResolver = fn;
     },
     resumeClassFunction(id, build) {
-      _resume(id, build);
+      _resumed[id] = build;
     },
     getScope($global, scopeId) {
       return getRenderScopes($global)?.[scopeId];

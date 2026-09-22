@@ -66,7 +66,8 @@ UPDATE: main > section > em::text "one" => "two"
 ## Change
 ```
 INSERT: main > .error
-UPDATE: main > section > em::text "two" => "three"
+REMOVE: main > section > em
+INSERT: main > section > em
 ```
 
 # Update `{"error":"","promise":{"value":"four"}}`
@@ -85,5 +86,6 @@ UPDATE: main > section > em::text "two" => "three"
 ## Change
 ```
 REMOVE: main > p
-UPDATE: main > section > em::text "three" => "four"
+REMOVE: main > section > em
+INSERT: main > section > em
 ```

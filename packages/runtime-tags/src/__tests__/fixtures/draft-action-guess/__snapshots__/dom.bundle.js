@@ -21,4 +21,4 @@ const $bump = ($scope) => /*@__PURE__*/ _act(function* () {
 	yield resolveAfter(0);
 	$count($scope, $scope.d + 1);
 }, 1, $scope, $bump2);
-_resume("a0", $bump);
+_resumed.a0 = $bump;

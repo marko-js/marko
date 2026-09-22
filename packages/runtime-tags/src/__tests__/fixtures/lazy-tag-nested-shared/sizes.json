@@ -13,20 +13,20 @@
       "brotli": 63
     },
     "child.mjs": {
-      "min": 753,
-      "brotli": 463
+      "min": 756,
+      "brotli": 468
     },
     "grand-child.mjs": {
       "min": 213,
       "brotli": 162
     },
     "shared": {
-      "min": 5381,
-      "brotli": 2550
+      "min": 5349,
+      "brotli": 2544
     }
   },
   "html": {
-    "min": 666,
-    "brotli": 352
+    "min": 662,
+    "brotli": 350
   }
 }

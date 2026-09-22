@@ -41,5 +41,5 @@ const $bump_pending = /*@__PURE__*/ _const("bump_pending", ($scope) => _text($sc
 const $bump = ($scope) => /*@__PURE__*/ _act(() => {
 	$shown($scope, $scope.shown + 1, 1);
 }, 0, $scope, $bump2);
-_resume("__tests__/template.marko_0/bump", $bump);
+_resumed["__tests__/template.marko_0/bump"] = $bump;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

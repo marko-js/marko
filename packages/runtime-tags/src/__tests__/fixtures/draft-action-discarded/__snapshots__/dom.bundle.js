@@ -12,4 +12,4 @@ const $bump = ($scope) => /*@__PURE__*/ _act(function* () {
 	$shown($scope, $scope.e + 1, 1);
 	yield rejectAfter(/* @__PURE__ */ new Error("refused"));
 }, 1, $scope, $bump2);
-_resume("a0", $bump);
+_resumed.a0 = $bump;

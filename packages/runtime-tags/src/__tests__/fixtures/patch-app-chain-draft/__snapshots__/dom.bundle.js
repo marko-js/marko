@@ -39,4 +39,4 @@ const $go_pending = /*@__PURE__*/ _const(8, /* @__PURE__ */ _closure($try_conten
 const $go = ($scope) => /*@__PURE__*/ _act(function* (next) {
 	$page($scope, next, 1);
 }, 1, $scope, $go2);
-_resume("c0", $go);
+_resumed.c0 = $go;

@@ -3,7 +3,7 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [1, {
           "PatchChild:#childScope/1": {
             1: "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_0/go",
             "PatchChild:BranchScopes:#text/0": [{
@@ -17,20 +17,15 @@
               "PatchSetup:": {
                 "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1"
               }
-            }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_3*content", $],
+            }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_3*content"],
             "PatchSetup:": {
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko1": 1,
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko2": bind(1)
             },
             "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko0": 1
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_3*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_3*shell"]
     }
   }
 }]
@@ -41,7 +36,7 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [1, {
           "PatchChild:#childScope/1": {
             1: "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_0/go",
             "PatchChild:BranchScopes:#text/0": [{
@@ -57,20 +52,15 @@
               "PatchSetup:": {
                 "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1"
               }
-            }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_3*content", $],
+            }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_3*content"],
             "PatchSetup:": {
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko1": 2,
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko2": bind(1)
             },
             "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko0": 2
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_3*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_3*shell"]
     }
   }
 }]
@@ -81,7 +71,7 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [1, {
           "PatchChild:#childScope/1": {
             1: "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_0/go",
             "PatchChild:BranchScopes:#text/0": [{
@@ -97,20 +87,15 @@
               "PatchSetup:": {
                 "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1"
               }
-            }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_3*content", $],
+            }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_3*content"],
             "PatchSetup:": {
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko1": 5,
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko2": bind(1)
             },
             "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko0": 5
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_3*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_3*shell"]
     }
   }
 }
@@ -120,20 +105,15 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/home.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [{
           "PatchChild:#childScope/1": {
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/home.marko_0",
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/home.marko0": 0
             }
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_2*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_2*shell"
     }
   }
 }]
@@ -144,7 +124,7 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/2": {
-        "PatchChild:BranchScopes:#text/0": {
+        "PatchBranch:#text/0": [1, {
           "PatchChild:#childScope/1": {
             1: "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_0/go",
             "PatchChild:BranchScopes:#text/0": [{
@@ -160,20 +140,15 @@
               "PatchSetup:": {
                 "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1"
               }
-            }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_3*content", $],
+            }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko_3*content"],
             "PatchSetup:": {
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko1": 3,
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko2": bind(1)
             },
             "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/page.marko0": 3
           }
-        }
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_3*shell"]
       }
-    }
-  },
-  "PatchChild:#childScope/0": {
-    "PatchChild:BranchScopes:#text/2": {
-      "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-draft/template.marko_3*shell"]
     }
   }
 }

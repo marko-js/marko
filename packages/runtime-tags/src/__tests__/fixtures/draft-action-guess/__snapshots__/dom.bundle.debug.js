@@ -27,5 +27,5 @@ const $bump = ($scope) => /*@__PURE__*/ _act(function* () {
 	yield resolveAfter(0);
 	$count($scope, $scope.count + 1);
 }, 1, $scope, $bump2);
-_resume("__tests__/template.marko_0/bump", $bump);
+_resumed["__tests__/template.marko_0/bump"] = $bump;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

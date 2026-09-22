@@ -22,5 +22,5 @@ const $bump = ($scope) => /*@__PURE__*/ _act(function* () {
 	$shown($scope, $scope.shown + 1, 1);
 	yield rejectAfter(new Error("refused"));
 }, 1, $scope, $bump2);
-_resume("__tests__/template.marko_0/bump", $bump);
+_resumed["__tests__/template.marko_0/bump"] = $bump;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

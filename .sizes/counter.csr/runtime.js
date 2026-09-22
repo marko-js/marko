@@ -1,4 +1,4 @@
-// size: 3905 (min) 1759 (brotli)
+// size: 3875 (min) 1755 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -67,7 +67,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   },
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   cloneCache = {},
-  registeredValues = {},
+  _resumed = {},
   _var_change = (scope, value) => scope.U?.(value);
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
@@ -285,9 +285,6 @@ function createCloneableHTML(html, ns) {
         }
   );
 }
-function _resume(id, obj) {
-  return (registeredValues[id] = obj);
-}
 function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
@@ -301,7 +298,7 @@ function _let(id, fn) {
 }
 function _script(id, fn) {
   return (
-    _resume(id, fn),
+    (_resumed[id] = fn),
     (scope) => {
       queueEffect(scope, fn);
     }
@@ -311,7 +308,7 @@ function _script(id, fn) {
 //#region packages/runtime-tags/dist/dom.mjs
 let _template = (id, template, walks, setup, inputSignal) => {
   let renderer = _content(id, template, walks, setup, inputSignal)();
-  return ((renderer.mount = mount), (renderer._ = renderer), _resume(id, renderer));
+  return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
 };
 function mount(input = {}, reference, position) {
   let branch,

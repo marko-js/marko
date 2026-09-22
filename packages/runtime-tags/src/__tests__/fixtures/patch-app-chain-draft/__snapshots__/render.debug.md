@@ -256,8 +256,7 @@ UPDATE: .home::text@5 "" => "0"
 ## Change
 ```
 REMOVE: main > button
-INSERT: main > :is(.next, .of)
-INSERT: .next + .prev
+INSERT: main > :is(.next, .prev, .of)
 UPDATE: .of::text "" => "3"
 INSERT: .of + .limit
 ```

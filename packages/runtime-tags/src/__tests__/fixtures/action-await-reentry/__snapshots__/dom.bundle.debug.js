@@ -35,6 +35,6 @@ const $native = ($scope) => /*@__PURE__*/ _act(async function() {
 	await resolveAfter(0);
 	$shown($scope, 9, 1);
 }, 0, $scope, $native2);
-_resume("__tests__/template.marko_0/late", $late);
-_resume("__tests__/template.marko_0/native", $native);
+_resumed["__tests__/template.marko_0/late"] = $late;
+_resumed["__tests__/template.marko_0/native"] = $native;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

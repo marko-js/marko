@@ -19,5 +19,5 @@ const $input = ($scope, input) => $input_items($scope, input.items);
 const $act = ($scope) => /*@__PURE__*/ _act(function* () {
 	yield resolveAfter($scope.item_id);
 }, 1, $scope, $for_content__act);
-_resume("__tests__/template.marko_1/act", $act);
+_resumed["__tests__/template.marko_1/act"] = $act;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

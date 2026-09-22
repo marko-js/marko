@@ -33,4 +33,4 @@ const $bump_pending = /*@__PURE__*/ _const(8, ($scope) => _text($scope.d, $scope
 const $bump = ($scope) => /*@__PURE__*/ _act(() => {
 	$shown($scope, $scope.f + 1, 1);
 }, 0, $scope, $bump2);
-_resume("a0", $bump);
+_resumed.a0 = $bump;
