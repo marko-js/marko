@@ -4,7 +4,11 @@ import { getFile, getProgram } from "@marko/compiler/babel-utils";
 import { createCyclicMemo } from "./cyclic-memo";
 import normalizeStringExpression from "./normalize-string-expression";
 import { contentIsPatched, contentMayCreate } from "./patch/refresh";
-import { isBranchPathSection, isStatefulBranch } from "./patch/structure";
+import {
+  inStatefulBranch,
+  isBranchPathSection,
+  isStatefulBranch,
+} from "./patch/structure";
 import { addRuntimeFeatureAsset } from "./runtime";
 import {
   forEachSection,
@@ -67,12 +71,13 @@ export function buildShells() {
     if (section.isBranch || isStatefulBranch(section)) {
       return;
     }
-    // A boundary creates from its content shell; an inexpressible one
-    // stays shell-less, so a creation reaching it rejects.
+    // A boundary creates from its content shell (never inside a stateful
+    // branch); an inexpressible one stays shell-less and a creation rejects.
     if (section.isBoundary) {
       const chain: Section[] = [];
       const bodyShells: Record<string, Section> = {};
       if (
+        !inStatefulBranch(section.parent) &&
         isShellExpressible(section) &&
         buildAwaitBodyShells(section, bodyShells, chain)
       ) {
@@ -243,7 +248,7 @@ function isStaticShell(section: Section) {
   ) {
     return false;
   }
-  const { writes, walks } = resolveStructure(section);
+  const { writes, walks } = resolveStructure(section, true);
   const writesLiteral = normalizeStringExpression(writes, true);
   return (
     t.isStringLiteral(writesLiteral) &&

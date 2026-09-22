@@ -158,6 +158,7 @@ export const domRuntimeFeatures = [
   "patch-style",
   "patch-text",
   "patch-text-content",
+  "patch-try",
   "patch-value",
   "patch-value-bind",
   "patch-var",

@@ -1,10 +1,10 @@
 // PATCH
-{
-  "PatchChild:BranchScopes:#text/0": {
-    "PatchPending:#text/0": 1
-  }
-}
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1*content;b%;<!><!><!>`, {
-  "PatchCatch:#text/0": [new Error("boom"), "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1*content", "\x3Cem>boom\x3C/em>"]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1_#text#0/await;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_2*content,loading`, {
+  "PatchChild:BranchScopes:#text/0": [{
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1_#text#0/await"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1*content", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_2*content"]
 }]
-"BQE"
+{
+  "PatchCatch:#text/0": [new Error("boom"), _(0)["PatchChild:BranchScopes:#text/0"][1], "\x3Cem>boom\x3C/em>"]
+}
+"BQEAAA"

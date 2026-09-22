@@ -172,6 +172,13 @@ export function isInResumedBranch() {
   return $chunk?.context?.[kBranchId] !== undefined;
 }
 
+// Set while a patch renders a body a `@catch` can replace: nothing under it
+// is provably live on the client, so boundaries there ship their payload.
+const kCaught = Symbol("Caught");
+function inCaughtTry() {
+  return !!$chunk?.context?.[kCaught];
+}
+
 export function withBranchId<T>(branchId: number, cb: () => T): T;
 export function withBranchId<T, U>(
   branchId: number,
@@ -1298,7 +1305,7 @@ export function writeWaitReady(
 }
 
 // Renders content into a detached chunk with patch writes suppressed so the
-// html ships as flush data; async content yields `0` (reject).
+// html ships as flush data (a `@catch` renders synchronously).
 function renderInert(renderer: (arg: unknown) => void, arg: unknown) {
   const chunk = $chunk;
   const { state } = chunk.boundary;
@@ -1310,7 +1317,8 @@ function renderInert(renderer: (arg: unknown) => void, arg: unknown) {
   } as Chunk["serializeState"]);
   state.patchInert = 1;
   try {
-    return body.render(renderer, arg) === body ? body.html : 0;
+    body.render(renderer, arg);
+    return body.html;
   } finally {
     state.patchInert = undefined;
     $chunk = chunk;
@@ -1332,11 +1340,11 @@ export function _await<T>(
   if (writesPatches && patchContent === 0) return;
   const resumeMarker = serializeMarker !== 0 || writesPatches;
   // A created scope resolves the body from this shipped shell (a settled value
-  // included); an always-pairing body outside divergent contexts never
-  // is created.
+  // included); an always-pairing body outside divergent contexts is created
+  // only by a rebuild, from its own shell's sites.
   const { boundary } = $chunk;
   const writePending = () => {
-    const elide = alwaysPairs && !isInResumedBranch();
+    const elide = alwaysPairs && !isInResumedBranch() && !inCaughtTry();
     if (!elide) $chunk.boundary.state.shipShell!(patchContent);
     writePatch(scopeId, {
       [PatchKey.Pending + accessor]: (!elide && patchContent) || 1,
@@ -1442,8 +1450,13 @@ export function _try(
   // the document reorder/`<t hidden>` path must not ride the flush stream.
   const { writesPatches } = state;
   // Creation payload (content id + slot ids, `0` = elided catch) rides the
-  // pairing entry, except for always-pairing branches outside divergence.
-  const elide = alwaysPairs && !isInResumedBranch();
+  // pairing entry, except for always-pairing branches outside divergence
+  // (a caught body included: its catch replaces it).
+  const elide =
+    alwaysPairs &&
+    catchContent === undefined &&
+    !isInResumedBranch() &&
+    !inCaughtTry();
   let trySlotIds: (string | 0 | undefined)[] | undefined;
   if (
     writesPatches &&
@@ -1456,10 +1469,12 @@ export function _try(
         : catchContent === 0 || elidedContents.has(catchContent)
           ? 0
           : ((catchContent[RendererProp.Id] as string | undefined) ?? ""),
-      placeholderContent === undefined || elidedContents.has(placeholderContent)
-        ? undefined
-        : ((placeholderContent[RendererProp.Id] as string | undefined) ?? ""),
     ];
+    if (placeholderContent && !elidedContents.has(placeholderContent)) {
+      trySlotIds.push(
+        (placeholderContent[RendererProp.Id] as string | undefined) ?? "",
+      );
+    }
   }
   state.pairBranch?.(
     scopeId,
@@ -1501,20 +1516,26 @@ export function _try(
     // and the catch's html when the client has no renderer for it.
     const inert =
       catchContent && elidedContents.has(catchContent) ? catchContent : 0;
-    tryBoundary(content, catchContent, placeholderContent, branchId, (err) => {
-      // A body that threw before claiming its id keeps it paired.
-      if (_peek_scope_id() === branchId) _scope_id();
-      const bodyId = state.shipShell!(
-        (content as ServerRenderer)[RendererProp.Id] as string,
-      );
-      writePatch(scopeId, {
-        [PatchKey.Catch + accessor]: inert
-          ? [err, bodyId, renderInert(inert, err)]
-          : catchContent
-            ? [err, bodyId]
-            : [err, bodyId, ""],
-      });
-    });
+    tryBoundary(
+      () => withContext(kCaught, 1, content),
+      catchContent,
+      placeholderContent,
+      branchId,
+      (err) => {
+        // A body that threw before claiming its id keeps it paired.
+        if (_peek_scope_id() === branchId) _scope_id();
+        const bodyId = state.shipShell!(
+          (content as ServerRenderer)[RendererProp.Id] as string,
+        );
+        writePatch(scopeId, {
+          [PatchKey.Catch + accessor]: inert
+            ? [err, bodyId, renderInert(inert, err)]
+            : catchContent
+              ? [err, bodyId]
+              : [err, bodyId, ""],
+        });
+      },
+    );
   }
 
   // An async body's start mark has already streamed and must pair with an end;

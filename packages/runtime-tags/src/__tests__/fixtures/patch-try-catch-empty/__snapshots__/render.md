@@ -22,3 +22,19 @@
 ```
 REMOVE: main > em
 ```
+
+# Update `{"promise":{}}`
+```html
+<main>
+  <em>
+    back
+  </em>
+  <button>
+    0
+  </button>
+</main>
+```
+## Change
+```
+INSERT: main > em
+```

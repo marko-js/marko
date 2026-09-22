@@ -1,12 +1,12 @@
 // PATCH
-[`a2;b%;<!><!><!>`, {
+[`a1;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
   $: {
     brand: "bmce"
   },
-  cAa: {
-    pa: 1
-  },
+  cAa: [{
+    pa: "a1"
+  }, "a2", "a4"],
   va0: "bmce!",
   ka: [new Error("boom"), "a2"]
 }]
-"BAM"
+"BAIA"

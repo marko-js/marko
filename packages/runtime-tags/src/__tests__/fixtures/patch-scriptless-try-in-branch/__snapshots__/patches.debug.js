@@ -6,7 +6,7 @@
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "hi"
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_2*content", 0, $]
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_2*content", 0]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_1*shell"]
 }]
 "BQEAAA"
@@ -16,7 +16,7 @@
   "PatchBranch:#main/0": [{
     "PatchChild:BranchScopes:#text/0": [{
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_2_#text#0/await"
-    }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_2*content", 0, $],
+    }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_2*content", 0],
     "PatchCatch:#text/0": [new Error("boom"), _.a, "\x3Cp>boom\x3C/p>"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_1*shell"]
 }

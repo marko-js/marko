@@ -197,7 +197,7 @@ export function getValueIfSerialized(
   reason: SerializeReason,
   expr: t.Expression,
 ) {
-  if (!isReasonDynamic(reason) || isCrossSection(section, reason)) return expr;
+  if (!isDynamicSerializeGuard(section, reason)) return expr;
   const guard = getDynamicGuard(section, reason, false);
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }

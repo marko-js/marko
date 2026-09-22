@@ -85,6 +85,10 @@ export default function createMutationTracker(
     getLogs() {
       return logs.length ? logs.join("\n\n") + "\n" : "";
     },
+    /** The latest step's entry: its console output names a rejection's reason. */
+    getLastLog() {
+      return logs[logs.length - 1] || "";
+    },
     cleanup() {
       window.removeEventListener("error", handleError);
       window.removeEventListener("unhandledrejection", handleRejection);

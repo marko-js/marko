@@ -12,7 +12,7 @@ import { renderCatch, setConditionalRenderer } from "./control-flow";
 import "./patch-child.feat";
 import { getContent } from "./patch-shells";
 import { _content, createAndSetupBranch, type Renderer } from "./renderer";
-import { failPatch, patchers } from "./resume";
+import { patchers } from "./resume";
 import { findBranchWithKey } from "./scope";
 
 declare module "./resume" {
@@ -34,20 +34,11 @@ patchers[PatchKey.Catch] = recovering(
     const link = (AccessorPrefix.BranchScopes + accessor) as Accessor;
     const tryBranch = scope[link] as BranchScope;
     const catchContent = tryBranch[AccessorProp.CatchContent];
-    // An elided catch slot (`0`) renders the flush's server-rendered html;
-    // a flush without it (an async catch body) rejects.
+    // An elided catch slot (`0`) renders the flush's server-rendered html.
     if (!catchContent) {
-      if (typeof html !== "string") {
-        if (MARKO_DEBUG) {
-          console.warn(
-            `A patch rejected: catch "${accessor}" shipped no html.`,
-          );
-        }
-        failPatch();
-      }
       tryBranch[AccessorProp.CatchContent] = _content(
         "",
-        html as string,
+        html,
       )(tryBranch[AccessorProp.Owner]) as never;
     }
     // An ancestor's pending UI settles first so the catch lands where the

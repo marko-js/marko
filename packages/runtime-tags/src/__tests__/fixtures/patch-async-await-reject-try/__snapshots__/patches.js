@@ -1,10 +1,10 @@
 // PATCH
-{
-  cAa: {
-    pa: 1
-  }
-}
-[`a3;b%;<!><!><!>`, {
-  ka: [new Error("boom"), "a3", "\x3Cem>boom\x3C/em>"]
+[`a2;D ;<em> </em>`, `a3;b%;<!><!><!>`, `a1,loading`, {
+  cAa: [{
+    pa: "a2"
+  }, "a3", 0, "a1"]
 }]
-"BQQ"
+{
+  ka: [new Error("boom"), "a3", "\x3Cem>boom\x3C/em>"]
+}
+"BQIAAA"

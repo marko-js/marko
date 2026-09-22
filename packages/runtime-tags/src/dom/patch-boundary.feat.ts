@@ -11,7 +11,7 @@ import {
 import { createAwaitCounter, dismissPlaceholder } from "./control-flow";
 import { applyDeferred, deferApply, flushBinds } from "./patch";
 import "./patch-catch.feat";
-import "./patch-child.feat";
+import "./patch-try.feat";
 import { getContent } from "./patch-shells";
 import {
   pendingEffects,
@@ -214,12 +214,6 @@ function attachDetachedAwait(
   return true;
 }
 
-// A boundary slot: `0` stays the elided sentinel; an id resolves its
-// content (shipped shell or dom registration) against the try's owner.
-function resolveBoundaryContent(id: string | 0, owner: Scope) {
-  return id === 0 ? 0 : getContent(id, owner);
-}
-
 // A try the document is still streaming into: `fn` runs in the run after
 // the reorder's script, once its walk has linked the body and replayed
 // its closures. Queued on the owner, since the try's own effects park.
@@ -259,9 +253,14 @@ function holdForStream(
   );
 }
 
-const applyChild = patchers[PatchKey.Child];
+const applyChild = patchers[PatchKey.Child]!;
 patchers[PatchKey.Child] = (scope, key, value) => {
   const link = key.slice(PatchKey.Child.length) as Accessor;
+  // A custom tag's child (no branch link) has nothing pending to settle.
+  if (!link.startsWith(AccessorPrefix.BranchScopes)) {
+    applyChild(scope, key, value);
+    return;
+  }
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
   // Only a resumed counter carries the render's marker hook: the document
   // owns the pending UI, and its reorder completes the counter.
@@ -269,50 +268,17 @@ patchers[PatchKey.Child] = (scope, key, value) => {
     holdForStream(scope, key, link, accessor, value as Scope);
     return;
   }
-  // A boundary entry `[partial, contentId, catchId?, placeholderId?]`
-  // creates a missing branch from its content id, then applies the partial.
+  // A boundary entry with its creation payload and no live branch creates
+  // (`patch-try`); nothing is pending for it to settle.
   if (Array.isArray(value)) {
-    const [partial, contentId, catchId, placeholderId] = value;
-    value = partial;
     if (!scope[link]) {
-      const renderer = getContent(contentId)!;
-      const marker = scope[accessor as Accessor] as ChildNode;
-      const inside = marker.nodeType === 1;
-      const parentNode = inside
-        ? (marker as unknown as Element)
-        : marker.parentNode!;
-      const branch = createAndSetupBranch(
-        scope[AccessorProp.Global],
-        renderer,
-        scope,
-        parentNode,
-      );
-      insertBranchBefore(branch, parentNode, inside ? null : marker);
-      scope[link] = branch as never;
-      branch[AccessorProp.BranchAccessor] = accessor as Accessor;
-      if (catchId !== undefined) {
-        branch[AccessorProp.CatchContent] = resolveBoundaryContent(
-          catchId,
-          scope,
-        ) as never;
-      }
-      if (placeholderId !== undefined) {
-        branch[AccessorProp.PlaceholderContent] = resolveBoundaryContent(
-          placeholderId,
-          scope,
-        ) as never;
-      }
-      if (renderer[RendererProp.Shell]) {
-        withCreating(() => patchScope(value as Scope, branch));
-      } else {
-        patchScope(value as Scope, branch);
-      }
+      applyChild(scope, key, value);
       return;
     }
+    value = value[0];
   }
   const apply = () => {
-    if (applyChild) applyChild(scope, key, value);
-    else patchScope(value as Scope, scope[link] as Scope);
+    applyChild(scope, key, value);
     markSettled(scope, accessor);
   };
   // A newly created await body may itself initialize nested boundaries.

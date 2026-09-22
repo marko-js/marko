@@ -1,16 +1,16 @@
 // PATCH
-[`a2;b%;<!><!><!>`, {
-  cAa: {
-    pa: 1
-  },
+[`a1;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
+  cAa: [{
+    pa: "a1"
+  }, "a2", 0],
   ka: [new Error("boom"), "a2", "\x3Cem>second\x3C/em>"]
 }]
-"BAM"
+"BAIA"
 
-// PATCH holding BAM
+// PATCH holding BAIA
 {
-  cAa: {
-    pa: 1
-  },
+  cAa: [{
+    pa: "a1"
+  }, "a2", 0],
   ka: [new Error("bang"), "a2", "\x3Cem>third\x3C/em>"]
 }

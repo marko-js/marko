@@ -17,8 +17,8 @@
       "brotli": 786
     },
     "layout.mjs": {
-      "min": 3584,
-      "brotli": 1684
+      "min": 3617,
+      "brotli": 1666
     },
     "page-a.mjs": {
       "min": 235,

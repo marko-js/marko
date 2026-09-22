@@ -639,8 +639,11 @@ function testFixtures(interop?: true) {
                     }
                     if (!applied) {
                       if (!config.expect_rejection) {
+                        // The step's client console (a debug run warns the
+                        // reason) is the diagnostic; the log has it already.
                         throw new Error(
-                          "A patch unexpectedly rejected (set `expect_rejection` if intended).",
+                          "A patch unexpectedly rejected (set `expect_rejection` if intended).\n" +
+                            tracker.getLastLog(),
                         );
                       }
                       rejected = true;

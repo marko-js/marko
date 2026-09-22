@@ -1,4 +1,4 @@
-// size: 29137 (min) 10811 (brotli)
+// size: 29143 (min) 10817 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1280,6 +1280,7 @@ function createBranch($global, renderer, parentScope, parentNode) {
   return (
     (branch._ = renderer.e || parentScope),
     setParentBranch(branch, parentScope?.F),
+    (branch.R = renderer),
     renderer.b?.(branch, parentNode.namespaceURI),
     branch
   );

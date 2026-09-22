@@ -1,20 +1,15 @@
 import { types as t } from "@marko/compiler";
 import {
-  isAttributeTag,
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
   assertNoVar,
-  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
 import { isPatch } from "../util/marko-config";
-import {
-  analyzeAttributeTags,
-  getAttrTagPaths,
-} from "../util/nested-attribute-tags";
+import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import { boundaryAlwaysPairs } from "../util/patch/structure";
 import {
   BindingType,
@@ -99,29 +94,14 @@ export default {
         bodySection.upstreamExpression = tagExtra;
         if (isPatch()) {
           // Page entry must ship the try's patchers even when this template's
-          // dom module never loads (a scriptless `<try>`).
+          // dom module never loads (a scriptless `<try>`); a body entry
+          // carrying its creation payload applies through `patch-try`.
           addRuntimeFeatureAsset("patch-catch");
           addRuntimeFeatureAsset("catch");
+          addRuntimeFeatureAsset("patch-try");
         }
         structure.visit(tag, WalkCode.Replace);
         structure.enterShallow(tag);
-      }
-    },
-    exit(tag) {
-      // Content without a section (its body never analyzed) cannot be
-      // classified as boundary content: fall back to loading the dom module.
-      if (!isPatch()) return;
-      for (const attrTag of getAttrTagPaths(tag)) {
-        if (
-          !(
-            attrTag.isMarkoTag() &&
-            isAttributeTag(attrTag) &&
-            attrTag.node.body.extra?.section
-          )
-        ) {
-          getProgram().node.extra.isInteractive = true;
-          break;
-        }
       }
     },
   },
@@ -140,9 +120,9 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        // A patch pairs the body scope through a `PatchChild` entry, so the
-        // page must ship its patcher (the import rides both outputs).
-        if (isPatch()) importRuntimeFeature("patch-child");
+        // A patch pairs or creates the body scope through a `PatchChild`
+        // entry, so the page must ship its patcher (both outputs).
+        if (isPatch()) importRuntimeFeature("patch-try");
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -198,7 +178,7 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        if (isPatch()) importRuntimeFeature("patch-child");
+        if (isPatch()) importRuntimeFeature("patch-try");
       },
       exit(tag) {
         const { node } = tag;

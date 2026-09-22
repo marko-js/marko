@@ -122,7 +122,9 @@ interface ResolvedStructure {
 
 // Resolves a section's structure stream into its inert template markup and the
 // walk string claiming each visited node, including dynamic content edges.
-export function resolveStructure(section: Section) {
+// A shell composes a lazy child (the flush creating it waits for its
+// module); the dom template leaves one to its own load.
+export function resolveStructure(section: Section, shell: boolean) {
   const startDynamic = section.content?.startType === ContentType.Dynamic;
   const resolved: ResolvedStructure = {
     writes: [startDynamic ? "<!>" : ""],
@@ -131,9 +133,6 @@ export function resolveStructure(section: Section) {
     steps: startDynamic ? [Step.Enter, Step.Exit] : [],
   };
   let textEdge: undefined | "own" | "child";
-  // Shells are html output: a server-only lazy child composes into the
-  // shell like a known child (the page has no client render of it).
-  const html = isOutputHTML();
   let skipSteps = 0;
 
   for (const op of section.structure!) {
@@ -163,9 +162,7 @@ export function resolveStructure(section: Section) {
           }
           break;
         case StructureKind.Child: {
-          // A lazy child composes into a shell like a plain one: the flush
-          // that creates it waits for its module.
-          const composed = html && !!op.load;
+          const composed = shell && !!op.load;
           const renderer = op.load && !composed ? undefined : op.renderer;
           if (composed) {
             // The walk steps over the marker into the composed child; the
@@ -255,7 +252,10 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
     if (!section.structure) {
       return { walks: undefined, writes: undefined, decls: undefined };
     }
-    const { writes, walks, walkComment } = resolveStructure(section);
+    const { writes, walks, walkComment } = resolveStructure(
+      section,
+      isOutputHTML(),
+    );
     const walkLiteral = normalizeStringExpression(walks, true);
     if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
       withLeadingComment(walkLiteral, walkComment.join(", "));

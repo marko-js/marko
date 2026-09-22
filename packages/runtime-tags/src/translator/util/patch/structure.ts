@@ -20,7 +20,8 @@ import { onFinalizePatch } from "./lifecycle";
 import { isPatchFillBinding } from "./refresh";
 
 // A boundary branch live on every patch page (serialized on every page
-// render, nothing on the chain diverges), so it pairs without creating.
+// render, nothing on the chain diverges), so it pairs without creating; the
+// server drops the elision at render time where a catch or branch encloses.
 export function boundaryAlwaysPairs(bodySection: Section) {
   if (!bodySection.serializeReason) return false;
   for (let s: Section | undefined = bodySection; s; s = s.parent) {

@@ -1,8 +1,8 @@
 // PATCH
 [`a1,<span>ok</span>`, `a2;b%;<!><!><!>`, {
-  cAa: {
+  cAa: [{
     pa: "a1"
-  },
+  }, "a2", "a3"],
   va0: "b",
   ka: [new Error("x"), "a2"]
 }]
@@ -10,13 +10,13 @@
 
 // PATCH holding BAIA
 {
-  cAa: {
+  cAa: [{
     pa: "a1"
-  },
+  }, "a2", "a3"],
   va0: "c"
 }
 {
-  cAa: {
+  cAa: [{
     cAa: {}
-  }
+  }, "a2", "a3"]
 }
