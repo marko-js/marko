@@ -211,9 +211,8 @@ class TaglibLoader {
     }
   }
   scriptLang(lang) {
-    // The "script-lang" property is used to specify the language of embedded scripts (either "js" or "ts").
-    // The language tools will prefer the language specified by the "script-lang" if specified.
-    // If unspecified the language tools will check for a tsconfig, if one is found then "ts", otherwise we use "js".
+    // Overrides the language tools' default ("ts" under a local tsconfig, "js" in node_modules, where libraries ship
+    // `.d.marko` types). Mostly for mixed JS/TS code, such as an incremental migration to TypeScript.
     this.taglib.scriptLang = lang;
   }
   tagsDir(dir) {
