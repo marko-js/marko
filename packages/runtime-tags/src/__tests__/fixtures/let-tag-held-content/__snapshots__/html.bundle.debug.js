@@ -1,0 +1,51 @@
+// tags/my-tag.marko
+var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	const { as: inputAs, class: inputClass, content: inputContent, ...htmlInput } = input;
+	const startContent = { content: _content_resume("__tests__/tags/my-tag.marko_1*content", () => {
+		const $scope1_id = _scope_id();
+		_scope_reason();
+		_html("default");
+	}, $scope0_id) };
+	let content = startContent;
+	_dynamic_tag($scope0_id, "#text/0", inputAs || "div", {
+		...htmlInput,
+		class: ["foo", inputClass],
+		content
+	});
+	_script($scope0_id, "__tests__/tags/my-tag.marko_0_inputContent#5");
+	_scope($scope0_id, {
+		inputAs,
+		inputClass,
+		inputContent,
+		htmlInput,
+		content: _serialize_if($scope0_reason, 0) && content
+	}, "__tests__/tags/my-tag.marko", 0, {
+		inputAs: "1:13",
+		inputClass: "1:29",
+		inputContent: "1:50",
+		htmlInput: "1:67",
+		content: "6:5"
+	});
+});
+
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let as = "div";
+	_set_serialize_reason(2);
+	const $childScope = _peek_scope_id();
+	my_tag_default({
+		as,
+		content: _content_resume("__tests__/template.marko_1*content", () => {
+			_scope_reason();
+			const $scope1_id = _scope_id();
+			_html("Div");
+		}, $scope0_id)
+	});
+	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+}, 1);

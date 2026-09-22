@@ -166,7 +166,7 @@ export default {
       ]);
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
-      if (inputNodes.length) tagExtra.dynamicTagInput = true;
+      if (inputNodes.length) tagExtra.forceRegister = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const usesVar = hasVar && isTagVarUsed(tag);

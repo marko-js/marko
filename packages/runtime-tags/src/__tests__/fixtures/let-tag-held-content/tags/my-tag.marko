@@ -1,0 +1,11 @@
+const/{ as: inputAs, class: inputClass, content: inputContent, ...htmlInput }=input
+
+define/startContent
+  -- default
+
+let/content=startContent
+
+${inputAs || "div"} ...htmlInput class=["foo", inputClass] content=content
+
+script --
+  content = inputContent;

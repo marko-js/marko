@@ -1,0 +1,5 @@
+<const/fn=(() => "a")/>
+<let/x=fn/>
+<div id="out"/>
+<button onClick() { x = () => "b" }/>
+<script>{ document.getElementById("out")!.textContent = x() }</script>

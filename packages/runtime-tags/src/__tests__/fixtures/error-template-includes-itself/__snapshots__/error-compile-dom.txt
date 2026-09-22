@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-template-includes-itself/template.marko:3:7
+      1 | import Self from "./template.marko"
+      2 |
+    > 3 | <div><Self/></div>
+        |       ^^^^ A template that renders itself outside a branch never terminates. Render `<Self>` inside a branch that eventually stops, such as `<if>`.
+      4 |

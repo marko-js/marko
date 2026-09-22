@@ -16,7 +16,6 @@ import {
   mergeReferences,
   onFinalizeReferences,
   setBindingDownstream,
-  setBindingValueExprs,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -122,10 +121,12 @@ export default {
       valueChangeAttr?.value,
     ]);
 
+    setBindingDownstream(binding, tagExtra);
+
     if (valueChangeAttr) {
       // Reserves the TagVariableChange accessor at `id + 1`.
       binding.reserveSize = 1;
-      setBindingDownstream(binding, tagExtra);
+      tagExtra.forceRegister = true;
       // The serialized change handler is only invoked by an assignment to the
       // tag variable, so it does not resume when nothing assigns.
       onFinalizeReferences(() => {
@@ -139,10 +140,10 @@ export default {
         }
       });
     } else {
-      // A `<let>` returns state it controls rather than that value, so the
-      // binding has no downstream; an unread let drops it.
+      // An uncontrolled `<let>` is not reactive to its initial value; an
+      // unread let drops it.
+      tagExtra.initialValue = true;
       tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
-      setBindingValueExprs(binding, tagExtra);
     }
   },
   translate: {

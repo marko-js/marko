@@ -87,6 +87,17 @@ export default {
       const childExtra = childProgram.extra;
       const childSection = childExtra.section!;
 
+      if (
+        childSection === programSection &&
+        getOrCreateSection(tag) === programSection
+      ) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            `A template that renders itself outside a branch never terminates. Render \`<${getStaticTagName(tag.node)}>\` inside a branch that eventually stops, such as \`<if>\`.`,
+          );
+      }
+
       if (childExtra.page) {
         programExtra.page ??= true;
       }

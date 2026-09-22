@@ -14,7 +14,15 @@ export function reportAnalyzeError(
   path: t.NodePath<t.Node>,
   error: unknown,
 ): void {
-  if (!(error instanceof Error)) throw error;
+  const { filename } = error as { filename?: string };
+  // A tag's template that fails to compile throws errors already framed
+  // against that file; recording them here would frame them against this one.
+  if (
+    !(error instanceof Error) ||
+    (filename !== undefined && filename !== path.hub.file.opts.filename)
+  ) {
+    throw error;
+  }
   const { label = error.message, loc } = error as Error & {
     label?: string;
     loc?: t.SourceLocation;
