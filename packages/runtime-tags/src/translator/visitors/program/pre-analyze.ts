@@ -12,6 +12,7 @@ import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarko } from "../../util/get-root";
+import { isNonHTMLText } from "../../util/is-non-html-text";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { getHTMLRuntime } from "../../util/runtime";
 import withPreviousLocation from "../../util/with-previous-location";
@@ -65,10 +66,21 @@ function hoistStaticPlaceholderText(
 ) {
   const { node } = placeholder;
   const normalized = normalizeStringExpression([node.value]);
-  if (!normalized || !t.isTemplateLiteral(normalized)) return;
-  node.value = normalized;
+  if (!normalized) return;
 
   const { _escape } = getHTMLRuntime();
+
+  if (t.isStringLiteral(normalized)) {
+    const escaped = node.escape && _escape(normalized.value);
+    if (escaped && !isNonHTMLText(placeholder)) {
+      insertStaticText(placeholder, escaped, true);
+      placeholder.remove();
+    }
+    return;
+  }
+
+  if (!t.isTemplateLiteral(normalized)) return;
+  node.value = normalized;
   const { quasis } = normalized;
   const lastIndex = quasis.length - 1;
   const leading = quasis[0].value.cooked ?? "";
