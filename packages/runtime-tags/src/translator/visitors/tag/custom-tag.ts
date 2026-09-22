@@ -2,8 +2,8 @@ import path from "path";
 
 import { types as t } from "@marko/compiler";
 import {
-  assertAttributesOrSingleArg,
   getFile,
+  assertAttributesOrSingleArg,
   getProgram,
   getTagDef,
   getTaglibLookup,
@@ -29,7 +29,12 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPatch,
+} from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -92,10 +97,11 @@ export default {
       }
 
       if (tagExtra.tagNameLoad) {
+        const section = getOrCreateSection(tag);
         tagExtra[kLoadTagBinding] = createBinding(
           "#text",
           BindingType.dom,
-          getOrCreateSection(tag),
+          section,
         );
       }
 
@@ -116,7 +122,18 @@ export default {
       const tagName = getStaticTagName(tag.node);
       if (tagExtra.tagNameLoad) {
         structure.visit(tag, WalkCode.Replace);
-        structure.child(tag, tagName);
+        structure.child(
+          tag,
+          tagName,
+          {
+            kind: StructureKind.ExportRef,
+            program: childExtra,
+            path: getTagRelativePath(tag),
+            hint: tagName,
+          },
+          tagExtra.tagNameLoad,
+          tagExtra[kLoadTagBinding],
+        );
         structure.enterShallow(tag);
       } else {
         structure.child(tag, tagName, {
@@ -180,6 +197,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const isLoad = !!loadConfig;
   const tagName = getStaticTagName(node);
 
+  // A child only created scopes meet has no client render: a flush's shell
+  // builds it and its setup entries seed it.
+  if (loadConfig?.downstreamCreated) {
+    importRuntimeFeature("patch-child");
+    tag.remove();
+    return;
+  }
+
   if (isLoad) {
     const childFileName = childFile.opts.filename;
     const { triggers, signals } = getLoadIdentifiers();
@@ -226,7 +251,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               t.variableDeclarator(
                 signalIdent,
                 callRuntime(
-                  "_load_signal",
+                  isPatch() ? "_load_signal_patch" : "_load_signal",
                   triggerIdent
                     ? t.addComment(
                         t.callExpression(triggerIdent, [loadExpr]),
@@ -234,6 +259,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                         "@__PURE__",
                       )
                     : loadExpr,
+                  isPatch() && t.stringLiteral(getReadyId(childFile)!),
                 ),
               ),
             ]),

@@ -7,6 +7,8 @@ export const Accessor = "accessor";
 export const LocalClosures = "localClosures";
 export const LocalClosureValues = "localClosureValues";
 export const Embed = "embed";
+export const Shell = "shell";
+export const ReadyId = "readyId";
 
 type Self = typeof import("./renderer-prop.debug");
 export type Value = Self[keyof Self];

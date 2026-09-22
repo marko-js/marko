@@ -8,7 +8,9 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { boundaryAlwaysPairs } from "../util/patch/structure";
 import {
   BindingType,
   createBinding,
@@ -16,7 +18,11 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -45,48 +51,59 @@ import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
 export default {
-  analyze(tag) {
-    assertNoVar(tag);
-    assertNoArgs(tag);
-    assertNoParams(tag);
-    assertNoAttributes(tag);
-    const attrTags = analyzeAttributeTags(tag);
-    // The runtime reads only `placeholder` and `catch`, so any other attribute
-    // tag (usually a typo) would silently drop its pending/error UI.
-    if (attrTags) {
-      for (const name in attrTags) {
-        if (name !== "@placeholder" && name !== "@catch") {
-          const suggestion =
-            name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
-          throw tag.buildCodeFrameError(
-            `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
-          );
+  analyze: {
+    enter(tag) {
+      assertNoVar(tag);
+      assertNoArgs(tag);
+      assertNoParams(tag);
+      assertNoAttributes(tag);
+      const attrTags = analyzeAttributeTags(tag);
+      // The runtime reads only `placeholder` and `catch`, so any other attribute
+      // tag (usually a typo) would silently drop its pending/error UI.
+      if (attrTags) {
+        for (const name in attrTags) {
+          if (name !== "@placeholder" && name !== "@catch") {
+            const suggestion =
+              name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
+            throw tag.buildCodeFrameError(
+              `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
+            );
+          }
         }
       }
-    }
-    const section = getOrCreateSection(tag);
-    const tagExtra = mergeReferences(
-      section,
-      tag.node,
-      getAllTagReferenceNodes(tag.node),
-    );
-    tagExtra.nodeBinding = createBinding("#text", BindingType.dom, section);
+      const section = getOrCreateSection(tag);
+      const tagExtra = mergeReferences(
+        section,
+        tag.node,
+        getAllTagReferenceNodes(tag.node),
+      );
+      tagExtra.nodeBinding = createBinding("#text", BindingType.dom, section);
 
-    if (!tag.node.body.body.length) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
-        );
-    }
+      if (!tag.node.body.body.length) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
+          );
+      }
 
-    const bodySection = startSection(tag.get("body"));
+      const bodySection = startSection(tag.get("body"));
 
-    if (bodySection) {
-      bodySection.upstreamExpression = tagExtra;
-      structure.visit(tag, WalkCode.Replace);
-      structure.enterShallow(tag);
-    }
+      if (bodySection) {
+        bodySection.isBoundary = true;
+        bodySection.upstreamExpression = tagExtra;
+        if (isPatch()) {
+          // Page entry must ship the try's patchers even when this template's
+          // dom module never loads (a scriptless `<try>`); a body entry
+          // carrying its creation payload applies through `patch-try`.
+          addRuntimeFeatureAsset("patch-catch");
+          addRuntimeFeatureAsset("catch");
+          addRuntimeFeatureAsset("patch-try");
+        }
+        structure.visit(tag, WalkCode.Replace);
+        structure.enterShallow(tag);
+      }
+    },
   },
   translate: translateByTarget({
     html: {
@@ -103,6 +120,9 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        // A patch pairs or creates the body scope through a `PatchChild`
+        // entry, so the page must ship its patcher (both outputs).
+        if (isPatch()) importRuntimeFeature("patch-try");
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -136,6 +156,12 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                // An always-pairing branch drops its pairing entry's
+                // creation payload outside divergent contexts.
+                ...(isPatch() &&
+                boundaryAlwaysPairs(getSectionForBody(tagBody)!)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]
@@ -152,6 +178,7 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        if (isPatch()) importRuntimeFeature("patch-try");
       },
       exit(tag) {
         const { node } = tag;
@@ -176,9 +203,13 @@ export default {
 
         const hasPlaceholder =
           !!tag.node.extra?.attributeTags?.["@placeholder"];
+        // A patch delivers a body's throw as the catch's entry.
+        const patchesCatch =
+          isPatch() && !!tag.node.extra?.attributeTags?.["@catch"];
         signal.build = () => {
           importRuntimeFeature("catch");
           if (hasPlaceholder) importRuntimeFeature("placeholder");
+          if (patchesCatch) importRuntimeFeature("patch-catch");
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeRef, true),
