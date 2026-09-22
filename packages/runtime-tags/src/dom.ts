@@ -70,6 +70,13 @@ export {
   _to_text,
 } from "./dom/dom";
 export { _on } from "./dom/event";
+export { patch } from "./dom/patch";
+export {
+  _global_join,
+  _global_join as _global_join_resume,
+  _global_script,
+} from "./dom/patch-global";
+export { _load_lazy, _load_signal_patch } from "./dom/patch-load";
 export {
   _load_event_trigger,
   _load_idle_trigger,
@@ -85,6 +92,7 @@ export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
   _resume_dynamic_tag_var,
+  _init_join,
   _resumed,
   _var_resume,
   init,
@@ -99,6 +107,17 @@ export {
   _closure_get,
   _const,
   _el_read,
+  _fill_const,
+  _fill_const as _fill_const_resume,
+  _fill_let,
+  _fill_let as _fill_let_resume,
+  _fill_let_change,
+  _fill_let_change as _fill_let_change_resume,
+  _fill_join,
+  _fill_join_for,
+  _fill_join_if,
+  _fill_join_closure,
+  _fill_join_subscribers,
   _global_read,
   _for_closure,
   _for_selector,
@@ -106,6 +125,10 @@ export {
   _hoist_resume,
   _id,
   _if_closure,
+  _init_closure_get,
+  _init_for_closure,
+  _init_for_selector,
+  _init_if_closure,
   _let,
   _let_change,
   _or,

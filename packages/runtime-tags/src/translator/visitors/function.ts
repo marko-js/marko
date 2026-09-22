@@ -95,6 +95,7 @@ export default {
     }
 
     const exprRoot = getExprRoot(fn);
+    (exprRoot.node.extra ??= {}).functionValued = true;
     const markoRoot = getMarkoRoot(exprRoot);
     if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) return;
 

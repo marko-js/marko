@@ -1,0 +1,11 @@
+static function boom(): never {
+  throw new Error("boom");
+}
+<main>
+  <if=input.show>
+    <try>
+      <em>${input.message}${input.boom ? boom() : ""}</em>
+      <@catch|err|><b>${err.message}</b></@catch>
+    </try>
+  </if>
+</main>

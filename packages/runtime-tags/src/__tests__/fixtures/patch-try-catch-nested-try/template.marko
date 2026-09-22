@@ -1,0 +1,13 @@
+<main>
+  <try>
+    <const/checked=input.check()/>
+    <em>${checked}</em>
+    <try>
+      <await|value|=input.promise>
+        <strong>${value}</strong>
+      </await>
+      <@catch><span>inner</span></@catch>
+    </try>
+    <@catch|err|><span>${err.message}</span></@catch>
+  </try>
+</main>

@@ -1,0 +1,8 @@
+import { thing } from "./helper";
+<let/show=true/>
+<main>
+  <if=show>
+    <struct({ mode: thing })/>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>

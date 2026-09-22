@@ -14,7 +14,8 @@ The separator is only load-bearing in debug: `encodeTemplateId`
 covers `a-z`, `A-Z` and `$` but never a digit, so in optimized output `ownerScopeId + id` is
 already unambiguous and saves a byte per qualified slot. Debug ids are relative paths and can
 start with a digit, so they would keep the separator — meaning a build-mode-dependent key
-format, which is why this was left alone. Measure first: qualified keys are only ~0.23% of
+format, which is why this was left alone. `dom/patch-dynamic-tag.feat.ts` also parses the key
+(`current?.split(" ")[0] === id`), so a separator-free format must change that comparison too. Measure first: qualified keys are only ~0.23% of
 resume payload (see below), so the win is ~0.1%.
 
 Two owner-elision routes were measured and rejected; do not re-attempt without new evidence.

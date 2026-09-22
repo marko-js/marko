@@ -9,6 +9,8 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
+import { isPatch } from "../util/marko-config";
+import { boundaryAlwaysPairs, inStatefulBranch } from "../util/patch/structure";
 import {
   BindingType,
   createBinding,
@@ -16,7 +18,11 @@ import {
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  addRuntimeFeatureAsset,
+  callRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -28,10 +34,13 @@ import {
   startSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
+import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
+import { isShell } from "../util/shell";
 import {
   addStatement,
   addValue,
+  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
@@ -101,6 +110,18 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
+    bodySection.isBoundary = true;
+    // Page entry must ship the child patcher and branch-resume latch even
+    // when this template module does not load (a scriptless patch await).
+    if (isPatch()) {
+      addRuntimeFeatureAsset("patch-boundary");
+      // A scriptless created scope paints the settled body via text fills.
+      addRuntimeFeatureAsset("patch-text");
+      (section.awaits ??= []).push({
+        binding: tagExtra.nodeBinding!,
+        body: bodySection,
+      });
+    }
     const valueExtra = evaluate(valueAttr.value);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -129,6 +150,11 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        // A patch pairs the body scope through a `PatchChild` entry, so the
+        // page must ship its patcher (the import rides both outputs).
+        if (isPatch()) {
+          importRuntimeFeature("patch-boundary");
+        }
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -142,6 +168,22 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
+        const valueSources = getSerializeSourcesForExpr(
+          valueAttr.value.extra || {},
+        );
+        // A thenable of client state alone resolves via `_await_promise`, so a
+        // patch must not Pending it; otherwise (a server value, or a promise
+        // made in the template) Pending carries the body content id.
+        const patchContent =
+          isPatch() &&
+          valueSources?.state &&
+          !valueSources.param &&
+          !valueSources.global
+            ? t.numericLiteral(0)
+            : bodySection && isShell(bodySection)
+              ? t.stringLiteral(getResumeRegisterId(section, nodeRef, "await"))
+              : undefined;
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -154,7 +196,21 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(section, bodySection?.serializeReason, true),
+                // A patch page always marks a patchable boundary: the
+                // flush pairs its body through the resumed branch link.
+                isPatch() && !inStatefulBranch(section)
+                  ? t.numericLiteral(1)
+                  : getSerializeGuard(
+                      section,
+                      bodySection?.serializeReason,
+                      true,
+                    ),
+                patchContent,
+                // An always-pairing body's Pending entry drops its
+                // creation id outside divergent contexts.
+                ...(isPatch() && bodySection && boundaryAlwaysPairs(bodySection)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]
@@ -172,6 +228,9 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+        if (isPatch()) {
+          importRuntimeFeature("patch-boundary");
+        }
       },
       exit(tag) {
         const { node } = tag;
@@ -185,15 +244,18 @@ export default {
         signal.build = () => {
           const branchRenderArgs = getBranchRendererArgs(bodySection);
           const branchParams = branchRenderArgs.pop();
+          const awaitContent = callRuntime(
+            "_await_content",
+            getScopeAccessorLiteral(nodeRef, true),
+            ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
+          );
           (signal.prependStatements ||= []).push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 t.identifier(bodySection.name),
-                callRuntime(
-                  "_await_content",
-                  getScopeAccessorLiteral(nodeRef, true),
-                  ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
-                ),
+                // Created scopes resolve body content from the flush's shipped
+                // shell; registering here would bundle html resume elides.
+                awaitContent,
               ),
             ]),
           );
