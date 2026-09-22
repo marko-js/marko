@@ -258,6 +258,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
   },
 
   error: function (e) {
+    this.___state.___error = e;
     try {
       this.emit("error", e);
     } finally {
@@ -427,7 +428,9 @@ var proto = (AsyncVDOMBuilder.prototype = {
     var out = this;
     var promise = new Promise(function (resolve, reject) {
       out.on("error", reject).on(EVENT_FINISH, function (result) {
-        resolve(result);
+        var error = out.___state.___error;
+        if (error) reject(error);
+        else resolve(result);
       });
     });
 

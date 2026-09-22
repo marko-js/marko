@@ -23,6 +23,18 @@ function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
   return finalOut;
 }
 
+function listen(out, callback, getResult) {
+  var failed = false;
+  out
+    .on("finish", function () {
+      if (!failed) callback(null, getResult(), out);
+    })
+    .once("error", function (err) {
+      failed = true;
+      callback(err);
+    });
+}
+
 module.exports = function (target, renderer) {
   var renderFunc =
     renderer && (renderer.renderer || renderer.render || renderer);
@@ -45,11 +57,9 @@ module.exports = function (target, renderer) {
       }
 
       if (callback) {
-        out
-          .on("finish", function () {
-            callback(null, out.toString(), out);
-          })
-          .once("error", callback);
+        listen(out, callback, function () {
+          return out.toString();
+        });
 
         return safeRender(render, localData, out, true);
       } else {
@@ -177,11 +187,9 @@ module.exports = function (target, renderer) {
       }
 
       if (callback) {
-        finalOut
-          .on("finish", function () {
-            callback(null, finalOut.___getResult(), finalOut);
-          })
-          .once("error", callback);
+        listen(finalOut, callback, function () {
+          return finalOut.___getResult();
+        });
       }
 
       globalData = finalOut.global;
