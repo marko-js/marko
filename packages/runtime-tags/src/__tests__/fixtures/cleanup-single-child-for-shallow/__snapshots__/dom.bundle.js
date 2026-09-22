@@ -20,7 +20,7 @@ const $write$1 = /*@__PURE__*/ _const(4, $input_name__OR__input_write);
 const $for_content__setup = /* @__PURE__ */ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e));
 const $for_content__item = ($scope, item) => $name($scope.a, item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of(2, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed(2, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let(3, ($scope) => $for($scope, [$scope.d]));
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$items($scope, $scope.d?.length ? $scope.d.slice(0, -1) : [

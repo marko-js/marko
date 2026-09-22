@@ -32,7 +32,7 @@ const $for_content2__outerItem__OR__middleItem = /*@__PURE__*/ _or(3, ($scope) =
 const $for_content2__outerItem = /*@__PURE__*/ _for_closure("#text/1", $for_content2__outerItem__OR__middleItem);
 const $for_content2__middleItem = /*@__PURE__*/ _const("middleItem", $for_content2__outerItem__OR__middleItem);
 const $for_content2__$params = ($scope, $params3) => $for_content2__middleItem($scope, $params3[0]);
-const $for_content__for = /*@__PURE__*/ _for_of("#text/1", /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D l"), $for_content2__setup, $for_content2__$params);
+const $for_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D l"), $for_content2__setup, $for_content2__$params);
 const $for_content__items = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content__for($scope, [$scope._.items]));
 const $for_content__setup = ($scope) => {
 	$for_content__items._($scope);
@@ -44,7 +44,7 @@ const $for_content__outerItem = /*@__PURE__*/ _const("outerItem", ($scope) => {
 	$for_content2__outerItem($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__outerItem($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of("#text/2", /*@__PURE__*/ ((_w0) => `<div>${_w0}<!></div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)("D l"), $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", /*@__PURE__*/ ((_w0) => `<div>${_w0}<!></div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)("D l"), $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	$for($scope, [$scope.items]);
 	$for_content__items($scope);

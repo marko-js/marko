@@ -1,0 +1,11 @@
+<let/count=2/>
+<button.more onClick() { count++ }>more</button>
+<button.none onClick() { count = 0 }>none</button>
+<ul>
+  <for|i| until=count>
+    <li>${i}</li>
+  </for>
+</ul>
+<for|i| from=1 until=count>
+  <span>${i}</span>
+</for>

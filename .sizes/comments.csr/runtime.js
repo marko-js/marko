@@ -1,4 +1,4 @@
-// size: 6316 (min) 2802 (brotli)
+// size: 5890 (min) 2589 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -86,8 +86,8 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
         );
     };
   }),
-  _for_of = /*@__PURE__*/ /* @__PURE__ */ withBranches(
-    (forEach) => (nodeAccessor, template, walks, setup, params) => {
+  _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
+    (forEach, reorder) => (nodeAccessor, template, walks, setup, params) => {
       nodeAccessor = decodeAccessor(nodeAccessor);
       let scopesAccessor = "A" + nodeAccessor,
         keyedScopesAccessor = "O" + nodeAccessor,
@@ -155,40 +155,10 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
             insertBranchBefore(newScopes[i], parentNode, afterReference);
           return;
         }
-        let diffLen = newEnd - start + 1,
-          sources = Array(diffLen),
-          pred = Array(diffLen),
-          tails = [],
-          tail = -1,
-          lo,
-          hi,
-          mid;
-        for (let i = diffLen; i--;) sources[i] = newScopes[start + i].I ?? -1;
-        for (let i = 0; i < diffLen; i++)
-          if (~sources[i])
-            if (tail < 0 || sources[tails[tail]] < sources[i])
-              (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
-            else {
-              for (lo = 0, hi = tail; lo < hi;)
-                ((mid = ((lo + hi) / 2) | 0),
-                  sources[tails[mid]] < sources[i] ? (lo = mid + 1) : (hi = mid));
-              sources[i] < sources[tails[lo]] &&
-                (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
-            }
-        for (hi = tails[tail], lo = tail + 1; lo-- > 0;) ((tails[lo] = hi), (hi = pred[hi]));
-        for (let i = diffLen; i--;)
-          (~tail && i === tails[tail]
-            ? tail--
-            : insertBranchBefore(newScopes[start + i], parentNode, afterReference),
-            (afterReference = newScopes[start + i].S));
+        reorder(newScopes, start, newEnd, parentNode, afterReference);
       };
     },
-  )(([all, by], cb) => {
-    ((by ||= bySecondArg),
-      typeof by == "string"
-        ? forOf(all, (item, i) => cb(item[by], [item, i]))
-        : forOf(all, (item, i) => cb(by(item, i), [item, i])));
-  });
+  )(([all], cb) => forOf(all, (item, i) => cb(i, [item, i])));
 function isNotVoid(value) {
   return value != null && value !== !1;
 }
@@ -510,9 +480,6 @@ function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) 
         removeAndDestroyBranch(prevBranch))
       : newBranch &&
         (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
-}
-function bySecondArg(_item, index) {
-  return index;
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs

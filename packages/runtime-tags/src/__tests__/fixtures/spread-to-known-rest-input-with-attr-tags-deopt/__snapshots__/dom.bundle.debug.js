@@ -14,7 +14,7 @@ const $for_content__$temp = ($scope, $temp) => {
 	(({ desc, ...item }) => $for_content__item($scope, item))($temp);
 	$for_content__desc($scope, $temp.desc);
 };
-const $for = /*@__PURE__*/ _for_of("#text/0", "<span><!></span>", " D%", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<span><!></span>", " D%", 0, $for_content__$params);
 const $foo = ($scope, foo) => $for($scope, [foo]);
 const $input$2 = ($scope, input) => $foo($scope, input.foo);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, "b%c", 0, $input$2);

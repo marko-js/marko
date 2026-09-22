@@ -11,7 +11,7 @@ const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	$for_content__item__script($scope);
 });
 const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);
-const $Child_content__for = /*@__PURE__*/ _for_of("#text/0", "<div></div>", " ", 0, $for_content__$params);
+const $Child_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div></div>", " ", 0, $for_content__$params);
 const $Child_content__input_item = ($scope, input_item) => $Child_content__for($scope, [input_item]);
 const $Child_content__$params = ($scope, $params2) => $Child_content__input($scope, $params2[0]);
 const $Child_content__input = ($scope, input) => $Child_content__input_item($scope, input.item);

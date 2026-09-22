@@ -768,6 +768,7 @@ export function setConditionalRenderer<T>(
 const loop = /*@__PURE__*/ withBranches(
   <T extends unknown[] = unknown[]>(
     forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
+    reorder?: typeof reorderKeyed,
   ) =>
     (
       nodeAccessor: EncodedAccessor,
@@ -903,62 +904,8 @@ const loop = /*@__PURE__*/ withBranches(
           return;
         }
 
-        // Handle mixed new/moves
-        const diffLen = newEnd - start + 1;
-        const sources = new Array<number>(diffLen);
-        const pred = new Array<number>(diffLen);
-        const tails: number[] = [];
-        let tail: number = -1;
-        let lo: number;
-        let hi: number;
-        let mid: number;
-
-        for (let i = diffLen; i--;) {
-          sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
-        }
-
-        for (let i = 0; i < diffLen; i++) {
-          if (~sources[i]) {
-            if (tail < 0 || sources[tails[tail]] < sources[i]) {
-              if (~tail) pred[i] = tails[tail];
-              tails[++tail] = i;
-            } else {
-              lo = 0;
-              hi = tail;
-              while (lo < hi) {
-                mid = ((lo + hi) / 2) | 0;
-                if (sources[tails[mid]] < sources[i]) lo = mid + 1;
-                else hi = mid;
-              }
-              if (sources[i] < sources[tails[lo]]) {
-                if (lo > 0) pred[i] = tails[lo - 1];
-                tails[lo] = i;
-              }
-            }
-          }
-        }
-
-        // Backtrack to build LIS indices (reuse tails array)
-        hi = tails[tail];
-        lo = tail + 1;
-        while (lo-- > 0) {
-          tails[lo] = hi;
-          hi = pred[hi];
-        }
-
-        for (let i = diffLen; i--;) {
-          if (~tail && i === tails[tail]) {
-            tail--;
-          } else {
-            insertBranchBefore(
-              newScopes[start + i],
-              parentNode,
-              afterReference,
-            );
-          }
-
-          afterReference = newScopes[start + i][AccessorProp.StartNode];
-        }
+        // Unreachable for an unkeyed loop: its kept branches never move.
+        reorder!(newScopes, start, newEnd, parentNode, afterReference);
       };
     },
 );
@@ -974,28 +921,103 @@ export const _for_of = /*@__PURE__*/ loop<
   } else {
     forOf(all, (item, i) => cb(by(item, i), [item, i]));
   }
-});
+}, reorderKeyed);
 
 export const _for_in = /*@__PURE__*/ loop<
   [obj: {}, by?: (key: string, v: unknown) => unknown]
 >(([obj, by], cb) => {
   by ||= byFirstArg;
   forIn(obj, (key, value) => cb(by(key, value), [key, value]));
-});
+}, reorderKeyed);
 
 export const _for_to = /*@__PURE__*/ loop<
   [to: number, from: number, step: number, by?: (v: number) => unknown]
 >(([to, from, step, by], cb) => {
   by ||= byFirstArg;
   forTo(to, from, step, (v) => cb(by(v), [v]));
-});
+}, reorderKeyed);
 
 export const _for_until = /*@__PURE__*/ loop<
   [until: number, from: number, step: number, by?: (v: number) => unknown]
 >(([until, from, step, by], cb) => {
   by ||= byFirstArg;
   forUntil(until, from, step, (v) => cb(by(v), [v]));
-});
+}, reorderKeyed);
+
+// Unkeyed loops (no `by=`, counting from 0 by 1) are keyed by index, so their
+// branches never move and they ship without `reorderKeyed`.
+export const _for_of_unkeyed = /*@__PURE__*/ loop<[all: unknown[]]>(
+  ([all], cb) => forOf(all, (item, i) => cb(i, [item, i])),
+);
+
+export const _for_to_unkeyed = /*@__PURE__*/ loop<
+  [to: number, from: number, step: number]
+>(([to, from, step], cb) => forTo(to, from, step, (v) => cb(v, [v])));
+
+export const _for_until_unkeyed = /*@__PURE__*/ loop<
+  [until: number, from: number, step: number]
+>(([until, from, step], cb) => forUntil(until, from, step, (v) => cb(v, [v])));
+
+function reorderKeyed(
+  newScopes: BranchScope[],
+  start: number,
+  newEnd: number,
+  parentNode: Element,
+  afterReference: Node | null,
+) {
+  // Handle mixed new/moves
+  const diffLen = newEnd - start + 1;
+  const sources = new Array<number>(diffLen);
+  const pred = new Array<number>(diffLen);
+  const tails: number[] = [];
+  let tail: number = -1;
+  let lo: number;
+  let hi: number;
+  let mid: number;
+
+  for (let i = diffLen; i--;) {
+    sources[i] = newScopes[start + i][AccessorProp.LoopIndex] ?? -1;
+  }
+
+  for (let i = 0; i < diffLen; i++) {
+    if (~sources[i]) {
+      if (tail < 0 || sources[tails[tail]] < sources[i]) {
+        if (~tail) pred[i] = tails[tail];
+        tails[++tail] = i;
+      } else {
+        lo = 0;
+        hi = tail;
+        while (lo < hi) {
+          mid = ((lo + hi) / 2) | 0;
+          if (sources[tails[mid]] < sources[i]) lo = mid + 1;
+          else hi = mid;
+        }
+        if (sources[i] < sources[tails[lo]]) {
+          if (lo > 0) pred[i] = tails[lo - 1];
+          tails[lo] = i;
+        }
+      }
+    }
+  }
+
+  // Backtrack to build LIS indices (reuse tails array)
+  hi = tails[tail];
+  lo = tail + 1;
+  while (lo-- > 0) {
+    tails[lo] = hi;
+    hi = pred[hi];
+  }
+
+  for (let i = diffLen; i--;) {
+    if (~tail && i === tails[tail]) {
+      tail--;
+    } else {
+      insertBranchBefore(newScopes[start + i], parentNode, afterReference);
+    }
+
+    afterReference = newScopes[start + i][AccessorProp.StartNode];
+  }
+}
 
 function createBranchWithTagNameOrRenderer(
   $global: Scope[typeof AccessorProp.Global],

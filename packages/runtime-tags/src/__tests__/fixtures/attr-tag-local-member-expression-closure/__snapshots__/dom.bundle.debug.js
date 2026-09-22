@@ -16,11 +16,11 @@ const $for_content__texts = /*@__PURE__*/ _const("texts", ($scope) => {
 	$Child_content__items($scope["#childScope/0"], $item);
 });
 const $for_content__$params = ($scope, $params4) => $for_content__texts($scope, $params4[0]);
-const $Child_content__for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", 0, $for_content2__$params);
+const $Child_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content2__$params);
 const $Child_content__items = ($scope, items) => $Child_content__for($scope, [items]);
 const $Child_content__$params = ($scope, $params2) => $Child_content__$temp($scope, $params2?.[0]);
 const $Child_content__$temp = ($scope, $temp) => $Child_content__items($scope, $temp.item);
-const $for = /*@__PURE__*/ _for_of("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks), 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks), 0, $for_content__$params);
 function $setup($scope) {
 	$for($scope, [[[{ text: "hello" }, { text: "world" }]]]);
 }

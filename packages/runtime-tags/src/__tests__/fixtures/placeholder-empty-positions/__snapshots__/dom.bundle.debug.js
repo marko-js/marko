@@ -13,7 +13,7 @@ const $a = /*@__PURE__*/ _let("a/6", ($scope) => {
 	$for_content__a($scope);
 });
 const $if = /*@__PURE__*/ _if("#text/1", " ", " ", $if_content__setup);
-const $for = /*@__PURE__*/ _for_of("#text/2", "<!> tail", "%", $for_content__setup);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<!> tail", "%", $for_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_attr_input_value_script($scope, "#input/3");
 	_on($scope["#button/5"], "click", function() {

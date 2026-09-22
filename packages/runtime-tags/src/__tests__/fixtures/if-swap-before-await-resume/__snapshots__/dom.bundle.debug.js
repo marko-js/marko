@@ -31,7 +31,7 @@ const $for_content__collection = ($scope, collection) => {
 	_text($scope["#text/1"], collection);
 };
 const $for_content__$params = ($scope, $params3) => $for_content__collection($scope, $params3[0]);
-const $await_content__for = /*@__PURE__*/ _for_of("#text/0", "<a> </a>", " D ", 0, $for_content__$params);
+const $await_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<a> </a>", " D ", 0, $for_content__$params);
 const $await_content__collections = ($scope, collections) => $await_content__for($scope, [collections]);
 const $await_content__$params = ($scope, $params2) => $await_content__collections($scope, $params2[0]);
 const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#4/var", ($scope, $pattern) => $cart($scope, $pattern.cart));

@@ -10,7 +10,7 @@ const $for_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scop
 const $for_content__setup = $for_content__clickCount;
 const $try_content__clickCount__script = _script("__tests__/template.marko_1_clickCount#2", ($scope) => _el_read($scope._["#div/0"]).textContent = $scope._.clickCount);
 const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", $try_content__clickCount__script);
-const $try_content__for = /*@__PURE__*/ _for_of("#text/1", "-- <!>", "b%", $for_content__setup);
+const $try_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "-- <!>", "b%", $for_content__setup);
 const $try_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clickCount($scope._, +$scope._.clickCount + 1);
 }));

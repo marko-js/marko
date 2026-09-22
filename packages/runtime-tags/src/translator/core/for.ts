@@ -371,10 +371,13 @@ export default {
         });
 
         const forType = getForType(node)!;
+        const forAttrs = getKnownAttrValues(node);
         const signal = getSignal(tagSection, nodeRef, "for");
         signal.build = () => {
           return callRuntime(
-            forTypeToBranchRuntime(forType),
+            isKeyedByIndex(forType, forAttrs)
+              ? forTypeToUnkeyedBranchRuntime(forType)
+              : forTypeToBranchRuntime(forType),
             getScopeAccessorLiteral(nodeRef, true),
             ...replaceNullishAndEmptyFunctionsWith0(
               getBranchRendererArgs(bodySection),
@@ -382,7 +385,6 @@ export default {
           );
         };
 
-        const forAttrs = getKnownAttrValues(node);
         const loopArgs = getBaseArgsInForTag(forType, forAttrs);
         if (forAttrs.by) {
           loopArgs.push(forAttrs.by);
@@ -623,6 +625,38 @@ function forTypeToBranchRuntime(type: ForType) {
       return "_for_to";
     case "until":
       return "_for_until";
+  }
+}
+
+// Without `by=`, `of=` keys by index and `to=`/`until=` by value, which is the
+// index only from 0 in steps of 1; such a loop never moves a branch.
+function isKeyedByIndex(type: ForType, attrs: Record<string, t.Expression>) {
+  if (attrs.by) return false;
+  switch (type) {
+    case "of":
+      return true;
+    case "to":
+    case "until":
+      return (
+        isNumberOrOmitted(attrs.from, 0) && isNumberOrOmitted(attrs.step, 1)
+      );
+    default:
+      return false;
+  }
+}
+
+function isNumberOrOmitted(node: t.Expression | undefined, value: number) {
+  return !node || (node.type === "NumericLiteral" && node.value === value);
+}
+
+function forTypeToUnkeyedBranchRuntime(type: ForType) {
+  switch (type) {
+    case "to":
+      return "_for_to_unkeyed";
+    case "until":
+      return "_for_until_unkeyed";
+    default:
+      return "_for_of_unkeyed";
   }
 }
 

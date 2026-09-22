@@ -4,7 +4,7 @@ const $for_content__count = /*@__PURE__*/ _closure_get(4, $for_content__count__O
 const $for_content__setup = $for_content__count;
 const $for_content__i = /*@__PURE__*/ _const(2, $for_content__count__OR__i);
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
-const $if_content__for = /*@__PURE__*/ _for_of(0, "<span class=inner> </span>", "D ", $for_content__setup, $for_content__$params);
+const $if_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<span class=inner> </span>", "D ", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => $if_content__for($scope, [[1, 2]]);
 const $tag_content__count = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.b, $scope._.c));
 const $tag_content__setup__script = _script("a1", ($scope) => {

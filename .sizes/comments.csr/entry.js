@@ -47,7 +47,7 @@ const $for_content__$params = ($scope, $params2) => {
   $for_content__comment_text($scope, $params2[0]?.text);
   $for_content__comment_comments($scope, $params2[0]?.comments);
 };
-const $for = /*@__PURE__*/ _for_of(
+const $for = /*@__PURE__*/ _for_of_unkeyed(
   0,
   "<li><span> </span><button> </button><!></li>",
   " E l D l%",
