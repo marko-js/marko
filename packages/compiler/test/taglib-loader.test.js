@@ -43,7 +43,11 @@ const message = (fn) => {
 
 describe("compiler/taglib-loader", () => {
   beforeEach(() => {
-    dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-taglib-loader-"));
+    // Real path: a resolved import comes back through `realpath`, and on macOS
+    // the temp dir is a symlink (`/var` -> `/private/var`).
+    dir = fs.realpathSync(
+      fs.mkdtempSync(path.join(os.tmpdir(), "marko-taglib-loader-")),
+    );
   });
   afterEach(() => {
     clearCache();
