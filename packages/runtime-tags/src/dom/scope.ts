@@ -64,6 +64,8 @@ export function skipScope() {
   return nextScopeId++;
 }
 
+// `ParentBranch` links each branch to its enclosing one, via `createBranch` or, on resume, the
+// serialized closest branch id and branch markers, so a `<for>` item reaches its `<try>`/`<await>`.
 export function findBranchWithKey(
   scope: Scope,
   key: string,
