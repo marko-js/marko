@@ -71,8 +71,6 @@ export default function translateVar(
       let curPath = tag.parentPath as t.NodePath | null;
       while (curPath) {
         if (curPath.node.extra?.section === binding.section) {
-          // when the match is the section root itself, insert before the
-          // child statement we descended from instead.
           const insertTarget =
             curPath.type === "Program" || curPath.type === "MarkoTagBody"
               ? childPath
