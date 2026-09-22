@@ -170,6 +170,8 @@ _marko.json_
 
 This example file tells Marko to expose all components directly under the `dist/components/` directory to the application using your package.
 
+If your components are written in TypeScript, publish the output of [`mtc`](https://github.com/marko-js/language-server/tree/main/packages/type-check). Editors and type checkers read components under `node_modules` as JavaScript, so consumers get their types from the `.d.marko` files it emits. See [TypeScript in Marko](./typescript.md).
+
 We recommend adding the `marko` and `components` keywords to your `package.json` so others can find your components. Then `npm publish`!
 
 # Macros

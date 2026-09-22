@@ -18,13 +18,9 @@ There are two (non-exclusive) ways to add TypeScript to a Marko project:
   📦 package.json
   <mark><img src="./icons/ts.svg" width=16> tsconfig.json</mark>
   </pre>
-- **If you’re [publishing packages of Marko tags](https://markojs.com/docs/custom-tags/#publishing-tags-to-npm)**, add the following to [your `marko.json`](./marko-json.md):
-  ```json
-  "script-lang": "ts"
-  ```
-  This will automatically expose type-checking and autocomplete for the published tags.
+- **If you’re [publishing packages of Marko tags](./custom-tags.md#publishing-tags-to-npm)**, publish the output of [`mtc`](#ci-type-checking). Each component gets a `.d.marko` file with its types, which editors and type checkers read in place of the `.marko` file. This exposes type-checking and autocomplete for the published tags.
 
-> **ProTip**: You can also use the `script-lang` method for sites and apps.
+> **ProTip**: For mixed JavaScript and TypeScript code, such as an incremental migration, set `"script-lang": "ts"` or `"js"` in [a `marko.json`](./marko-json.md) to override these defaults. The nearest `marko.json` up the directory tree applies, so folders can opt in or out.
 
 ## Typing a tag's `input`
 

@@ -134,6 +134,7 @@ Similar to [`marko-tag.json`](#single-component-definition), this file is discov
   "exports": "./dist", // Where to export the compiled components.
   "tags-dir": "./ui-modules", // What directory to crawl to autodiscover components. Default:`./components/`
   "taglib-imports": ["./some-folder/marko.json", "./other-folder/marko.json"], // Creates a _combined_ tag library by referencing others.
+  "script-lang": "ts", // Overrides the default script language, "js" or "ts", for mixed code such as an incremental TypeScript migration.
 
   "tags": { // Definitions for individual tags.
     "my-tag": {
