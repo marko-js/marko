@@ -1,4 +1,5 @@
 // template.marko
+_resume_dynamic_tag_var(0);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, () => $el);
 const $tag = /*@__PURE__*/ _let(5, ($scope) => $dynamicTag($scope, $scope.f));
 const $text = /*@__PURE__*/ _let(6, ($scope) => _text($scope.e, $scope.g));
