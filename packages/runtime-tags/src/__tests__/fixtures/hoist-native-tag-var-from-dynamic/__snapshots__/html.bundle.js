@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 			B3: $child_content2__subscribers
 		}));
 	}, $scope0_id), 0, $sg__input_show);
-	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content_resume("a7", () => {
+	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content("a7", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		_html(`<p></p>${_el_resume($scope4_id, "a")}`);

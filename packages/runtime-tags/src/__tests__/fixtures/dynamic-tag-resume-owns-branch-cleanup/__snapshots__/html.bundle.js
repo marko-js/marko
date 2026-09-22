@@ -3,7 +3,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { show } = input;
-	_dynamic_tag($scope0_id, "a", show ? "div" : null, {}, _content_resume("b0", () => {
+	_dynamic_tag($scope0_id, "a", show ? "div" : null, {}, _content("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_script($scope1_id, "b1", 0);

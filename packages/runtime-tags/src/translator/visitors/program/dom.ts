@@ -16,7 +16,6 @@ import {
   getSectionForBody,
   getSectionParentIsOwner,
   getSectionRegisterReasons,
-  isSectionRegisterDynamic,
   isDynamicClosure,
   setBranchRendererArgs,
 } from "../../util/sections";
@@ -123,13 +122,6 @@ export default {
                     : undefined,
                 ]),
               );
-
-              if (
-                registerReason &&
-                isSectionRegisterDynamic(childSection, registerReason)
-              ) {
-                renderer = t.addComment(renderer, "leading", "@__PURE__");
-              }
 
               if (childSection.referencedLocalClosures) {
                 const objProps: t.ObjectExpression["properties"] = [];

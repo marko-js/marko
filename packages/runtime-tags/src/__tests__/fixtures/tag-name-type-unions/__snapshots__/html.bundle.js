@@ -21,12 +21,12 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let x = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
-	_dynamic_tag($scope0_id, "b", "div", { id: "d1" }, _content_resume("a0", () => {
+	_dynamic_tag($scope0_id, "b", "div", { id: "d1" }, _content("a0", () => {
 		_scope_id();
 		_scope_reason();
 		_html("u");
 	}, $scope0_id));
-	_dynamic_tag($scope0_id, "c", "div", {}, _content_resume("a1", () => {
+	_dynamic_tag($scope0_id, "c", "div", {}, _content("a1", () => {
 		_scope_id();
 		_scope_reason();
 		_html("n");

@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		openChange: _resume(function(next) {
 			open = next;
 		}, "a0", $scope0_id)
-	}, _content_resume("a2", () => {
+	}, _content("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("<summary>toggle</summary>");

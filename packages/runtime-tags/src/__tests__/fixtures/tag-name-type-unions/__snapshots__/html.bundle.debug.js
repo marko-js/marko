@@ -21,12 +21,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let x = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	_dynamic_tag($scope0_id, "#text/1", x ? "div" : undefined, { id: "d1" }, _content_resume("__tests__/template.marko_1*content", () => {
+	_dynamic_tag($scope0_id, "#text/1", x ? "div" : undefined, { id: "d1" }, _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("u");
 	}, $scope0_id));
-	_dynamic_tag($scope0_id, "#text/2", x ? "div" : "span", {}, _content_resume("__tests__/template.marko_2*content", () => {
+	_dynamic_tag($scope0_id, "#text/2", x ? "div" : "span", {}, _content("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html("n");

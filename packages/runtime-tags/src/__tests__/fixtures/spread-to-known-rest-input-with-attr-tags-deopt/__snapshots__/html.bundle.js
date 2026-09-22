@@ -24,7 +24,7 @@ var wrap_default = _template("c", (input) => {
 	_dynamic_tag($scope0_id, "a", _class ? "span" : "div", {
 		...rest,
 		class: _class
-	}, _content_resume("c0", () => {
+	}, _content("c0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_set_serialize_reason($sg__input_foo << 1);

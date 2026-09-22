@@ -1,5 +1,5 @@
 // template.marko
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, _content_resume("a0", "state driven: registered"));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, /* @__PURE__ */ _content("a0", "state driven string: not registered"));
 const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$dynamicTag($scope, $scope.d % 2 ? "h2" : "h1");

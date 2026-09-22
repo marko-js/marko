@@ -35,9 +35,7 @@ import {
   type ReferencedBindings,
   type Sources,
 } from "./references";
-import { isDynamicSerializeGuard } from "./serialize-guard";
 import {
-  getSerializeReason,
   isReasonDynamic,
   mapParamReason,
   mergeSerializeReasons,
@@ -444,14 +442,13 @@ export function getNodeContentType(
 export function getSectionRegisterReasons(section: Section) {
   if (section.isBranch) return false; // Branches handle whether to register their section/renderer.
 
-  const { downstream } = section;
-  const dynamicTagBinding = getDynamicTagNodeBinding(section);
-  if (dynamicTagBinding) {
-    // SSR names the body renderer only where the tag itself resumes.
-    return (
-      getSerializeReason(dynamicTagBinding.section, dynamicTagBinding) || false
-    );
+  // Only a component receives a dynamic tag's body as a value; SSR otherwise
+  // writes just its id, to compare against the client's renderer.
+  if (section.upstreamExpression?.tagNameType === TagNameType.NativeTag) {
+    return false;
   }
+
+  const { downstream } = section;
 
   if (downstream?.binding) {
     const downstreamReasons = reduce(
@@ -493,35 +490,6 @@ export function getSectionRegisterReasons(section: Section) {
   }
 
   return true;
-}
-
-// A string-named body registers on a runtime mask: its signal is retained
-// exactly where SSR names it, so the registration may drop with the signal.
-export function isSectionRegisterDynamic(
-  section: Section,
-  registerReason: true | SerializeReason,
-) {
-  const dynamicTagBinding = getDynamicTagNodeBinding(section);
-  return (
-    !!dynamicTagBinding &&
-    registerReason !== true &&
-    isDynamicSerializeGuard(dynamicTagBinding.section, registerReason)
-  );
-}
-
-// Whether the section's renderer is registered whatever the client keeps.
-export function isSectionRegisterEager(section: Section) {
-  const registerReason = getSectionRegisterReasons(section);
-  return !!registerReason && !isSectionRegisterDynamic(section, registerReason);
-}
-
-// The dynamic tag this section is the body of, when its name is always a
-// string: a component the name resolved to could serialize the body itself.
-function getDynamicTagNodeBinding(section: Section) {
-  const { upstreamExpression } = section;
-  return upstreamExpression?.tagNameType === TagNameType.NativeTag
-    ? upstreamExpression.nodeBinding
-    : undefined;
 }
 
 export function isImmediateOwner(section: Section, binding: Binding) {
