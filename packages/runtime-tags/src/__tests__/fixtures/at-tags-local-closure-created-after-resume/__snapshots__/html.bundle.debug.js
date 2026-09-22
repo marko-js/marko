@@ -101,11 +101,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "#text/0", item.text)}:${_text_resume($scope1_id, "#text/1", item === items[0], 2)}</span>`);
+			_html(`<span>${_escape(item.text)}:${_escape(item === items[0])}</span>`);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:6");
+			_resume_branch($scope1_id);
 		}, $scope0_id, {
-			item,
-			item_text: item?.text
+			item_text: item?.text,
+			item
 		}) });
 	});
 	list_default({ item: $item });
@@ -116,8 +117,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$cell = attrTags($cell, { content: _content_resume("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", n)}</em>`);
-				_scope($scope2_id, {}, "__tests__/template.marko", "13:10");
+				_html(`<em>${_escape(n)}</em>`);
 			}, $scope0_id, { n }) });
 		});
 		$row = attrTags($row, { cell: $cell });
@@ -128,8 +128,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item2 = attrTags($item2, { content: _content_resume("__tests__/template.marko_3*content", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`${_text_resume($scope3_id, "#text/0", i)}<b>${_text_resume($scope3_id, "#text/1", i)}</b>`);
-			_scope($scope3_id, {}, "__tests__/template.marko", "21:6");
+			_html(`${_escape(i)}<b>${_escape(i)}</b>`);
 		}, $scope0_id, { i }) });
 	});
 	last_default({ item: $item2 });
@@ -138,10 +137,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $catch;
 	forOf(["static"], (label) => {
 		$catch = attrTags($catch, { content: _content_resume("__tests__/template.marko_5*content", (err) => {
-			const $scope5_reason = _scope_reason();
+			const $scope5_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope5_reason, 0);
 			const $scope5_id = _scope_id();
-			_html(`caught ${_text_resume($scope5_id, "#text/0", label, 2)}: ${_text_resume($scope5_id, "#text/1", err.message, _serialize_guard($scope5_reason, 0) * 2)}`);
-			_scope($scope5_id, {}, "__tests__/template.marko", "30:8");
+			_html(`caught ${_escape(label)}: ${_text_resume($scope5_id, "#text/1", err.message, $sg__err_message * 2)}`);
+			_serialize_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "30:8");
 		}, $scope0_id, { label }) });
 	});
 	_try($scope0_id, "#text/4", _content_resume("__tests__/template.marko_4*content", () => {

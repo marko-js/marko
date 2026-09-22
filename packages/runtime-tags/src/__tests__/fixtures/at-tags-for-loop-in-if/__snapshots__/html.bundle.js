@@ -36,19 +36,18 @@ var template_default = _template("a", (input) => {
 	forUntil(3, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("a0", () => {
 			_scope_reason();
-			const $scope1_id = _scope_id();
-			_html(`static ${_text_resume($scope1_id, "a", i, 2)}`);
-			_scope($scope1_id, {});
+			_scope_id();
+			_html(`static ${_escape(i)}`);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });
 	_set_serialize_reason(2);
 	let $item2;
-	forUntil(count, 0, 1, ($i) => {
+	forUntil(count, 0, 1, (i) => {
 		$item2 = attrTags($item2, { content: _content("a1", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`if ${_text_resume($scope2_id, "a", $i, 2)}`);
+			_html(`if ${_text_resume($scope2_id, "a", i, 2)}`);
 			_scope($scope2_id, {});
 		}, $scope0_id) });
 	});

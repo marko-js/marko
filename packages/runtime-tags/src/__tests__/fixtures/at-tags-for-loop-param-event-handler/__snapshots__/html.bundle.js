@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		$item = attrTags($item, {
 			onClick: _resume_locals(function() {
 				clicked += foo;
-			}, "a0", { e: foo }, $scope0_id),
+			}, "a0", { f: foo }, $scope0_id),
 			content: _content("a1", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();

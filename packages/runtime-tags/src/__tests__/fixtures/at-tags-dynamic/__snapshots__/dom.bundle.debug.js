@@ -1,54 +1,3 @@
-// tags/hello/index.marko
-const $template$1 = "<!><!><!><!>";
-const $walks$1 = "b%b%c";
-const $setup$1 = () => {};
-const $for_content3__attrs__script = _script("__tests__/tags/hello/index.marko_3_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
-const $for_content3__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
-	_attrs_partial($scope, "#div/0", $scope.attrs, { class: 1 });
-	$for_content3__attrs__script($scope);
-});
-const $for_content3__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $for_content3__content = $for_content3__dynamicTag;
-const $for_content3__$params = ($scope, $params4) => $for_content3__$temp($scope, $params4?.[0]);
-const $for_content3__$temp = ($scope, $temp3) => {
-	(({ content, ...attrs }) => $for_content3__attrs($scope, attrs))($temp3);
-	$for_content3__content($scope, $temp3.content);
-};
-const $for_content2__attrs__script = _script("__tests__/tags/hello/index.marko_2_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
-const $for_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
-	_attrs_partial_content($scope, "#div/0", $scope.attrs, { class: 1 });
-	$for_content2__attrs__script($scope);
-});
-const $for_content2__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<div class=row><!></div>", " D%", 0, $for_content3__$params);
-const $for_content2__row = ($scope, row) => $for_content2__for($scope, [row]);
-const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3?.[0]);
-const $for_content2__$temp = ($scope, $temp2) => {
-	(({ content, row, ...attrs }) => $for_content2__attrs($scope, attrs))($temp2);
-	$for_content2__row($scope, $temp2.row);
-};
-const $for_content__attrs__script = _script("__tests__/tags/hello/index.marko_1_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
-const $for_content__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
-	_attrs_partial($scope, "#div/0", $scope.attrs, { class: 1 });
-	$for_content__attrs__script($scope);
-});
-const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $for_content__content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
-const $for_content__$temp = ($scope, $temp) => {
-	(({ content, ...attrs }) => $for_content__attrs($scope, attrs))($temp);
-	$for_content__content($scope, $temp.content);
-};
-const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div class=item><!></div>", " D%", 0, $for_content__$params);
-const $input_list_item = ($scope, input_list_item) => $for($scope, [input_list_item]);
-const $for2 = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<div class=col></div><!><!>", " b%", 0, $for_content2__$params);
-const $input_col = ($scope, input_col) => $for2($scope, [input_col]);
-const $input = ($scope, input) => {
-	$input_list($scope, input.list);
-	$input_col($scope, input.col);
-};
-const $input_list = ($scope, input_list) => $input_list_item($scope, input_list?.item);
-var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, $walks$1, 0, $input);
-
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
@@ -102,3 +51,54 @@ function $setup($scope) {
 	$input_col($scope["#childScope/0"], $col);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
+// tags/hello/index.marko
+const $template = "<!><!><!><!>";
+const $walks = "b%b%c";
+const $setup = () => {};
+const $for_content3__attrs__script = _script("__tests__/tags/hello/index.marko_3_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
+const $for_content3__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
+	_attrs_partial($scope, "#div/0", $scope.attrs, { class: 1 });
+	$for_content3__attrs__script($scope);
+});
+const $for_content3__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
+const $for_content3__content = $for_content3__dynamicTag;
+const $for_content3__$params = ($scope, $params4) => $for_content3__$temp($scope, $params4?.[0]);
+const $for_content3__$temp = ($scope, $temp3) => {
+	(({ content, ...attrs }) => $for_content3__attrs($scope, attrs))($temp3);
+	$for_content3__content($scope, $temp3.content);
+};
+const $for_content2__attrs__script = _script("__tests__/tags/hello/index.marko_2_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
+const $for_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
+	_attrs_partial_content($scope, "#div/0", $scope.attrs, { class: 1 });
+	$for_content2__attrs__script($scope);
+});
+const $for_content2__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<div class=row><!></div>", " D%", 0, $for_content3__$params);
+const $for_content2__row = ($scope, row) => $for_content2__for($scope, [row]);
+const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3?.[0]);
+const $for_content2__$temp = ($scope, $temp2) => {
+	(({ content, row, ...attrs }) => $for_content2__attrs($scope, attrs))($temp2);
+	$for_content2__row($scope, $temp2.row);
+};
+const $for_content__attrs__script = _script("__tests__/tags/hello/index.marko_1_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
+const $for_content__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
+	_attrs_partial($scope, "#div/0", $scope.attrs, { class: 1 });
+	$for_content__attrs__script($scope);
+});
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
+const $for_content__content = $for_content__dynamicTag;
+const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
+const $for_content__$temp = ($scope, $temp) => {
+	(({ content, ...attrs }) => $for_content__attrs($scope, attrs))($temp);
+	$for_content__content($scope, $temp.content);
+};
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div class=item><!></div>", " D%", 0, $for_content__$params);
+const $input_list_item = ($scope, input_list_item) => $for($scope, [input_list_item]);
+const $for2 = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<div class=col></div><!><!>", " b%", 0, $for_content2__$params);
+const $input_col = ($scope, input_col) => $for2($scope, [input_col]);
+const $input = ($scope, input) => {
+	$input_list($scope, input.list);
+	$input_col($scope, input.col);
+};
+const $input_list = ($scope, input_list) => $input_list_item($scope, input_list?.item);
+var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template, $walks, 0, $input);

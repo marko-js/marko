@@ -87,6 +87,10 @@ export default {
         if (childSection !== section) {
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
+          forEach(childSection.localClosures, (closure) => {
+            // Inlined into `_content_closures` below, not written on its own.
+            initValue(closure).build = undefined;
+          });
           const tagParamsIdentifier =
             tagParamsSignal && signalHasStatements(tagParamsSignal)
               ? tagParamsSignal.identifier
@@ -111,11 +115,20 @@ export default {
               const registerReason = getSectionRegisterReasons(childSection);
               const registerId = getResumeRegisterId(childSection, "content");
               const objProps: t.ObjectExpression["properties"] = [];
-              forEach(childSection.referencedLocalClosures, (closure) => {
+              forEach(childSection.localClosures, (closure) => {
                 const closureSignal = getSignal(childSection, closure);
                 const key = toPropertyName(getScopeAccessor(closure, true));
-                if (signalHasStatements(closureSignal)) {
+                // A lazily read value is only kept if it is stored here.
+                if (
+                  signalHasStatements(closureSignal) ||
+                  closureSignal.forcePersist
+                ) {
                   const expr = getSignalFn(closureSignal);
+                  // The signal is inlined here, after its section's signals
+                  // were written, so what it declares is written with it.
+                  if (closureSignal.prependStatements) {
+                    program.node.body.push(...closureSignal.prependStatements);
+                  }
                   if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
                     objProps.push(
                       t.objectMethod("method", key, expr.params, expr.body),

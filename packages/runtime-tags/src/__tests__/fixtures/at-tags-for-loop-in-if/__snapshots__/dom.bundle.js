@@ -13,46 +13,46 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input_label = ($scope, input_label) => $input_label_text($scope, input_label?.text);
 
 // template.marko
-const $item_content6 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a5", "labeled <!>", "b%"), { 22($scope) {
-	_text($scope.a, $scope.w);
+const $item_content6 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a5", "labeled <!>", "b%"), { 1($scope) {
+	_text($scope.a, $scope.b);
 } });
-const $item_content5 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a4", "for-if <!>", "b%"), { 20($scope) {
-	_text($scope.a, $scope.u);
+const $item_content5 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a4", "for-if <!>", "b%"), { 1($scope) {
+	_text($scope.a, $scope.b);
 } });
-const $item_content4 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3", "else <!>", "b%"), { 18($scope) {
-	_text($scope.a, $scope.s);
+const $item_content4 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3", "else <!>", "b%"), { 1($scope) {
+	_text($scope.a, $scope.b);
 } });
-const $item_content3 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", "else-if <!>", "b%"), { 16($scope) {
-	_text($scope.a, $scope.q);
+const $item_content3 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", "else-if <!>", "b%"), { 1($scope) {
+	_text($scope.a, $scope.b);
 } });
-const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "if <!>", "b%"), { 14($scope) {
-	_text($scope.a, $scope.o);
+const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "if <!>", "b%"), { 1($scope) {
+	_text($scope.a, $scope.b);
 } });
 const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	let $item2;
-	if ($scope.j === 0) forUntil($scope.i, 0, 1, ($i) => {
-		$item2 = attrTags($item2, { content: $item_content2($scope, { 14: $i }) });
+	if ($scope.j === 0) forUntil($scope.i, 0, 1, (i) => {
+		$item2 = attrTags($item2, { content: $item_content2($scope, { 1: i }) });
 	});
 	$input_item$1($scope.d, $item2);
 	let $item3;
-	if ($scope.j === 0) {} else if ($scope.j === 1) forUntil($scope.i, 0, 1, ($i2) => {
-		$item3 = attrTags($item3, { content: $item_content3($scope, { 16: $i2 }) });
+	if ($scope.j === 0) {} else if ($scope.j === 1) forUntil($scope.i, 0, 1, (i) => {
+		$item3 = attrTags($item3, { content: $item_content3($scope, { 1: i }) });
 	});
 	$input_item$1($scope.e, $item3);
 	let $item4;
-	if ($scope.j !== 2) {} else if ($scope.i) forUntil($scope.i, 0, 1, ($i3) => {
-		$item4 = attrTags($item4, { content: $item_content4($scope, { 18: $i3 }) });
+	if ($scope.j !== 2) {} else if ($scope.i) forUntil($scope.i, 0, 1, (i) => {
+		$item4 = attrTags($item4, { content: $item_content4($scope, { 1: i }) });
 	});
 	$input_item$1($scope.f, $item4);
 	let $item5;
 	forUntil($scope.i, 0, 1, (j) => {
-		if (j % 2 === $scope.j % 2) $item5 = attrTags($item5, { content: $item_content5($scope, { 20: j }) });
+		if (j % 2 === $scope.j % 2) $item5 = attrTags($item5, { content: $item_content5($scope, { 1: j }) });
 	});
 	$input_item$1($scope.g, $item5);
 	let $label, $item6;
 	if ($scope.j === 0) $label = attrTag({ text: "zero" });
-	else forUntil($scope.i, 0, 1, ($i4) => {
-		$item6 = attrTags($item6, { content: $item_content6($scope, { 22: $i4 }) });
+	else forUntil($scope.i, 0, 1, (i) => {
+		$item6 = attrTags($item6, { content: $item_content6($scope, { 1: i }) });
 	});
 	$input_label($scope.h, $label);
 	$input_item($scope.h, $item6);

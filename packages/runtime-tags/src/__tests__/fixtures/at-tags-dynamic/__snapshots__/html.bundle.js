@@ -64,9 +64,8 @@ var template_default = _template("a", (input) => {
 				row,
 				content: _content("a2", () => {
 					_scope_reason();
-					const $scope3_id = _scope_id();
-					_html(_text_resume($scope3_id, "a", row));
-					_scope($scope3_id, {});
+					_scope_id();
+					_html(_escape(row));
 				}, $scope0_id)
 			});
 		});

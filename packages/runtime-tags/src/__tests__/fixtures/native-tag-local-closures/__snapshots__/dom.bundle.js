@@ -1,6 +1,6 @@
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", " ", " "), { 4($scope) {
-	_text($scope.a, $scope.e);
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", " ", " "), { 1($scope) {
+	_text($scope.a, $scope.b);
 } });
 const $for_content__item__script = _script("a0", ($scope) => _attrs_script($scope, "a"));
 const $for_content__item = /*@__PURE__*/ _const(2, ($scope) => {
@@ -13,7 +13,7 @@ const $Child_content__input_item = ($scope, input_item) => $Child_content__for($
 const $size = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
 	forUntil($scope.c, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { 4: i }) });
+		$item = attrTags($item, { content: $item_content($scope, { 1: i }) });
 	});
 	$Child_content__input_item($scope.a, $item);
 });

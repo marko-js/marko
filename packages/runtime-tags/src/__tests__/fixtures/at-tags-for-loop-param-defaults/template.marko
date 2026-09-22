@@ -1,0 +1,18 @@
+<let/show=true>
+<let/items=[{ a: "x" }, {}]>
+<button#rename onClick() { items = items.map((it) => ({ a: (it.a || "y") + "!" })) }>rename</button>
+
+<list>
+  <for|{ a: aa = "default" }, index| of=items>
+    <@item>
+      <p>${index}:${aa}</p>
+      <if=show><span>${aa}</span></if>
+    </@item>
+  </for>
+</list>
+
+<list>
+  <for|[x, y = "dy"]| of=[["a"], ["b", "c"]]>
+    <@item><i>${x}${y}</i></@item>
+  </for>
+</list>

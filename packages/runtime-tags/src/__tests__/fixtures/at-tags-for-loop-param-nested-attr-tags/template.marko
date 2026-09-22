@@ -1,0 +1,13 @@
+<let/rows=[{ id: 1, items: [10, 20] }]>
+<outer>
+  <for|a| of=rows>
+    <@row>
+      <inner>
+        <for|b| of=a.items>
+          <@cell>${a.id}-${b};</@cell>
+        </for>
+      </inner>
+    </@row>
+  </for>
+</outer>
+<button onClick() { rows = [...rows, { id: 2, items: [30] }] }>Add</button>

@@ -1,6 +1,6 @@
 <button id=open>open</button><!--M_$2 #button/0--><!--M_]2 #text/1--><button
-  id=toggle-0>toggle</button><!--M_$5 #button/0--><!--M_[--><em>1<!--M_$8 #text/0--></em><!--M_]5 #text/1 6--><button
-  id=toggle-1>toggle</button><!--M_$10 #button/0--><!--M_[--><em>1<!--M_$13 #text/0--></em><!--M_]10 #text/1 11--><button
+  id=toggle-0>toggle</button><!--M_$5 #button/0--><!--M_[--><em>1</em><!--M_]5 #text/1 6--><button
+  id=toggle-1>toggle</button><!--M_$10 #button/0--><!--M_[--><em>1</em><!--M_]10 #text/1 11--><button
   id=save-last>save</button><!--M_$14 #button/0--><!--M_]14 #text/1--><button
   id=fail>fail</button><!--M_$1 #button/3-->
 <div><!--M_[-->ok<!--M_$15 #text/0--><!--M_]1 #text/4 15--></div>
@@ -16,17 +16,17 @@
         content: _._[
           "packages/runtime-tags/src/__tests__/fixtures/at-tags-local-closure-created-after-resume/template.marko_1*content"
           ](_(1), {
-          item: _.a,
-          item_text: "a"
+          item_text: "a",
+          item: _.a
         }),
         *[(_.b = [{
           content: _._[
             "packages/runtime-tags/src/__tests__/fixtures/at-tags-local-closure-created-after-resume/template.marko_1*content"
             ](_(1), {
+            item_text: "b",
             item: {
               text: "b"
-            },
-            item_text: "b"
+            }
           })
         }], Symbol.iterator)]() {
           yield this;

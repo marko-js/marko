@@ -39,8 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item2 = attrTags($item2, { content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<b>${_text_resume($scope2_id, "#text/0", first)}${_text_resume($scope2_id, "#text/1", others[0], 2)}</b>`);
-			_scope($scope2_id, {}, "__tests__/template.marko", "12:6");
+			_html(`<b>${_escape(first)}${_escape(others[0])}</b>`);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item2 });

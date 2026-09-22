@@ -131,7 +131,8 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
     }
   }
 
-  if (node.body.params.length) {
+  // An attribute tag loop's params are the loop callback's own, defaults kept.
+  if (node.body.params.length && !node.body.attributeTags) {
     const insertions = getElementInsertions(node.body.params);
     // Nothing reads the params of a tag with no body, so defaults are dropped.
     if (insertions && node.body.body.length) {

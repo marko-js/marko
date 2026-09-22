@@ -1,0 +1,16 @@
+<let/show=true>
+<let/items=[{ text: "a", title: "ta" }, { text: "b", title: "tb" }]>
+<button#rename onClick() { items = items.map((it) => ({ text: it.text + "!", title: it.title + "!" })) }>rename</button>
+
+<define/Row|{ text }|><em>${text}</em></define>
+
+// Spreading the loop param into custom and defined tags, directly and nested.
+<list>
+  <for|item| of=items>
+    <@item>
+      <child ...item/>
+      <Row ...item/>
+      <if=show><child ...item title="over"/></if>
+    </@item>
+  </for>
+</list>

@@ -19,16 +19,15 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let foo = "outer";
 	let $item;
-	forOf(["a", "b"], ($foo) => {
+	forOf(["a", "b"], (foo) => {
 		$item = attrTags($item, {
 			onClick: _resume_locals(function(ev) {
-				ev.target.textContent = $foo;
-			}, "a0", { e: $foo }),
+				ev.target.textContent = foo;
+			}, "a0", { f: foo }),
 			content: _content("a1", () => {
 				_scope_reason();
-				const $scope1_id = _scope_id();
-				_html(_text_resume($scope1_id, "a", $foo));
-				_scope($scope1_id, {});
+				_scope_id();
+				_html(_escape(foo));
 			}, $scope0_id)
 		});
 	});

@@ -463,14 +463,14 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   }
 }
 
-// The attribute tag `<for>` params content reads, keyed by their accessors.
+// The attribute tag `<for>` params content reads, keyed by its local closures.
 function getLocalClosureValues(bodySection: Section) {
-  if (bodySection.referencedLocalClosures) {
+  if (bodySection.localClosures) {
     return t.objectExpression(
-      toArray(bodySection.referencedLocalClosures, (ref) =>
+      toArray(bodySection.localClosures, (closure) =>
         toObjectProperty(
-          getScopeAccessor(ref, true),
-          getDeclaredBindingExpression(ref),
+          getScopeAccessor(closure, true),
+          getDeclaredBindingExpression(closure),
         ),
       ),
     );

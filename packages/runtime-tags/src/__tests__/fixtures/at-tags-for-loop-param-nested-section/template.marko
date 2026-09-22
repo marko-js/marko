@@ -1,0 +1,23 @@
+<let/count=2>
+<let/show=true>
+<let/items=[{ text: "a" }, { text: "b" }]>
+<button#add onClick() { count++ }>add</button>
+<button#toggle onClick() { show = !show }>toggle</button>
+<button#rename onClick() { items = items.map((item) => ({ text: item.text + "!" })) }>rename</button>
+
+// Sections nested in the content the loop creates read its params too.
+<list>
+  <for|i| until=count>
+    <@item>
+      <if=show><em>if ${i}</em></if>
+      <${show ? "b" : "i"}>tag ${i}</>
+      <for|j| until=2><span>${i}.${j}</span></for>
+    </@item>
+  </for>
+</list>
+
+<list>
+  <for|item| of=items>
+    <@item><if=show><strong>${item.text}</strong></if></@item>
+  </for>
+</list>
