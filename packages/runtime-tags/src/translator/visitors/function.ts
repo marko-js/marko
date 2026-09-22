@@ -18,7 +18,6 @@ import {
 import { isCoreTagName } from "../util/is-core-tag";
 import isInvokedFunction from "../util/is-invoked-function";
 import {
-  FORCED,
   getRegisterReasonForExtra,
   getCanonicalExtra,
   type RegisteredFnExtra,
@@ -124,13 +123,9 @@ export default {
 
     if (isStaticRoot(markoRoot)) {
       const refs = getStaticDeclRefs(fn);
-      if (refs === true) {
-        registerFunction(fnExtra, FORCED);
-      } else if (refs.size) {
+      if (refs.size) {
         getReferencesByFn().set(fnExtra, refs);
       }
-    } else if (shouldAlwaysRegister(markoRoot)) {
-      registerFunction(fnExtra, FORCED);
     } else {
       getReferencesByFn().set(fnExtra, new Set([fnExtra.exprRoot]));
     }
@@ -167,9 +162,8 @@ export function trackImportedFn(
 
   const importedFn: ImportedFn = { ...resolved, node: importDecl.node, local };
   const refs = new Set<t.NodeExtra>();
-  if (addBindingRefs(binding, refs, new Set()) === true) {
-    registerImportedFn(importedFn);
-  } else if (refs.size) {
+  addBindingRefs(binding, refs, new Set());
+  if (refs.size) {
     getReferencesByImportedFn().set(importedFn, refs);
   }
 }
@@ -370,7 +364,7 @@ function getStaticDeclRefs(
   path: t.NodePath<t.Node>,
   refs = new Set<t.NodeExtra>(),
   seen = new Set<t.Node>(),
-): Set<t.NodeExtra> | true {
+): Set<t.NodeExtra> {
   const decl = getDeclarationRoot(path);
   // A self- or mutually-referential static/export declaration resolves back to
   // a declaration already being walked; skip it so the recursion terminates.
@@ -380,10 +374,7 @@ function getStaticDeclRefs(
     if (ids) {
       for (const name in ids) {
         const binding = decl.scope.getBinding(name);
-        if (!binding) continue;
-        if (addBindingRefs(binding, refs, seen) === true) {
-          return true;
-        }
+        if (binding) addBindingRefs(binding, refs, seen);
       }
     }
   }
@@ -402,27 +393,11 @@ function addBindingRefs(
     const markoRoot = getMarkoRoot(exprRoot);
     if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
     if (isStaticRoot(markoRoot)) {
-      if (getStaticDeclRefs(ref, refs, seen) === true) {
-        return true;
-      }
-    } else if (shouldAlwaysRegister(markoRoot)) {
-      return true;
+      getStaticDeclRefs(ref, refs, seen);
     } else {
       refs.add((exprRoot.node.extra ??= {}));
     }
   }
-}
-
-function shouldAlwaysRegister(markoRoot: MarkoExprRootPath) {
-  const tag = getTagFromMarkoRoot(markoRoot);
-  if (!tag) return false;
-  if (isCoreTagName(tag, "let")) return true;
-  if (isCoreTagName(tag, "return")) return true;
-
-  // Native-tag event handlers are already skipped in `canIgnoreRegister`, so
-  // anything else must serialize. A dynamic tag's input resolves through its
-  // expression's `dynamicTagInput` in `finalizeFunctionRegistry`.
-  return analyzeTagNameType(tag) === TagNameType.NativeTag;
 }
 
 function hasSpreadAttributeAfter(attr: t.NodePath<t.MarkoAttribute>) {
@@ -432,16 +407,6 @@ function hasSpreadAttributeAfter(attr: t.NodePath<t.MarkoAttribute>) {
   }
 
   return false;
-}
-
-function getTagFromMarkoRoot(
-  markoRoot: MarkoExprRootPath,
-): t.NodePath<t.MarkoTag> | undefined {
-  let cur = markoRoot;
-  do {
-    if (cur.isMarkoTag()) return cur;
-    cur = cur.parentPath as MarkoExprRootPath;
-  } while (cur);
 }
 
 function registerFunction(fnExtra: RegisteredFnExtra, reason: SerializeReason) {

@@ -217,6 +217,9 @@ declare module "@marko/compiler/dist/types" {
     nodeBinding?: Binding;
     referencedBindings?: ReferencedBindings;
     downstream?: SortedOpt<Binding>;
+    /** The initial value of the binding it feeds, which keeps it rather than
+     * following it, so the binding derives no sources from it. */
+    initialValue?: true;
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a downstream template's binding, for dereferencing its reasons. */
     downstreamExprs?: KnownExprs;
@@ -228,8 +231,9 @@ declare module "@marko/compiler/dist/types" {
     /** The expression this node sits in: dropped or merged as one. */
     exprRoot?: NodeExtra;
     isEffect?: true;
-    /** The expression is a dynamic tag's input (attrs, args, attr tags). */
-    dynamicTagInput?: true;
+    /** A value here may reach the client as written (a change handler, a
+     * native spread, a dynamic tag's input), so a function in it registers. */
+    forceRegister?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
     /** `$global` bindings this expression reads: the root means an opaque
@@ -982,7 +986,7 @@ export function mergeReferences<T extends t.Node>(
   const fnReadsByExpression = getFunctionReadsByExpression();
   let reads = readsByExpression.get(targetExtra);
   let exprFnReads = fnReadsByExpression.get(targetExtra);
-  let { isEffect, dynamicTagInput } = targetExtra;
+  let { isEffect, forceRegister } = targetExtra;
 
   for (const node of nodes) {
     if (!node) continue;
@@ -991,11 +995,12 @@ export function mergeReferences<T extends t.Node>(
     // create a `merged` cycle and double its reads.
     if (extra === targetExtra) continue;
     extra.merged = targetExtra;
+    // A literal has no reads but still lands in the position.
+    forceRegister ||= extra.forceRegister;
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
-      dynamicTagInput ||= extra.dynamicTagInput;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           read.binding.reads.delete(extra);
@@ -1026,7 +1031,7 @@ export function mergeReferences<T extends t.Node>(
 
   readsByExpression.set(targetExtra, reads);
   targetExtra.isEffect = isEffect;
-  targetExtra.dynamicTagInput = dynamicTagInput;
+  targetExtra.forceRegister = forceRegister;
   targetExtra.section = section;
 
   return targetExtra as NonNullable<T["extra"]> & ReferencedExtra;
@@ -1702,28 +1707,20 @@ function resolveIntersectionSource(
     : undefined;
 }
 
+// The expressions a binding's value is made of: pruning drops a pure one
+// nothing reads, and the binding derives its sources from them.
 export function setBindingDownstream(
   binding: Binding,
   expr: boolean | Opt<t.NodeExtra>,
   exprs?: KnownExprs,
 ) {
-  setBindingValueExprs(binding, expr);
+  getBindingValueExprs().set(binding, expr || false);
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
       expr.downstream = bindingUtil.add(expr.downstream, binding);
       if (exprs) expr.downstreamExprs = exprs;
     });
   }
-}
-
-// The expressions a binding's value is made of: pruning drops a pure one
-// nothing reads, and the binding derives its sources from those it is
-// downstream of (a let holds its initializer without deriving from it).
-export function setBindingValueExprs(
-  binding: Binding,
-  expr: boolean | Opt<t.NodeExtra>,
-) {
-  getBindingValueExprs().set(binding, expr || false);
 }
 
 const [getResolvedSources] = createProgramState(() => new Set<Binding>());
@@ -1796,10 +1793,7 @@ function resolveDerivedSources(binding: Binding) {
   } else if (exprs) {
     let refs: ReferencedBindings;
     forEach(exprs, (expr) => {
-      if (
-        isReferencedExtra(expr) &&
-        bindingUtil.has(expr.downstream, binding)
-      ) {
+      if (isReferencedExtra(expr) && !expr.initialValue) {
         refs = bindingUtil.union(refs, expr.referencedBindings);
       }
     });
@@ -3036,17 +3030,18 @@ export function getAllSerializeReasonsForBinding(
   return serializationForBinding(binding, properties).reason;
 }
 
-// Registration: does the value reach the client at all. A native element
-// writes its attributes into html, and a dynamic tag's input may be one.
+// Registration: does the value reach the client at all, by its reasons or
+// by landing where it is written as is.
 export function getRegisterReasonForExtra(
   extra: t.NodeExtra,
 ): undefined | SerializeReason {
+  if (extra.forceRegister) return FORCED;
   const { reason, reads } = serializationForExtra(extra);
-  return some(reads, isDynamicTagInput) ? FORCED : reason;
+  return some(reads, isForceRegisterRead) ? FORCED : reason;
 }
 
-function isDynamicTagInput(read: ReferencedExtra) {
-  return !!read.dynamicTagInput;
+function isForceRegisterRead(read: ReferencedExtra) {
+  return !!read.forceRegister;
 }
 
 function serializationForExtra(extra: t.NodeExtra): Serialization {

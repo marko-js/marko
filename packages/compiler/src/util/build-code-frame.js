@@ -26,6 +26,13 @@ class CompileError extends Error {
     this.name = "CompileError";
     Error.stackTraceLimit = stackTraceLimit;
     Object.defineProperties(this, {
+      // The file the error is about, so a parent compile can tell its own.
+      filename: {
+        value: filename,
+        enumerable: false,
+        writable: true,
+        configurable: true,
+      },
       loc: {
         value: loc,
         enumerable: false,

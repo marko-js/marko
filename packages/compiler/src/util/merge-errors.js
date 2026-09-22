@@ -29,6 +29,13 @@ class CompileErrors extends Error {
     super(message);
     this.name = "CompileErrors";
     this.errors = errors;
+    // One compile reports these, so they share its file.
+    Object.defineProperty(this, "filename", {
+      value: errors[0].filename,
+      enumerable: false,
+      writable: true,
+      configurable: true,
+    });
     Error.stackTraceLimit = stackTraceLimit;
   }
 

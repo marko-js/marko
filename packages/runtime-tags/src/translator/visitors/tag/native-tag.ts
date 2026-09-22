@@ -200,12 +200,16 @@ export default {
             hasEventHandlers = true;
           } else {
             assertValidNativeEventHandlerAttr(tag, attr);
+            if (isEventOrChangeHandler(attr.name)) {
+              valueExtra.forceRegister = true;
+            }
             if (!evaluate(attr.value).confident) {
               hasDynamicAttributes = true;
             }
           }
         } else if (t.isMarkoSpreadAttribute(attr)) {
           valueExtra.isEffect = true;
+          valueExtra.forceRegister = true;
           hasEventHandlers = true;
           hasDynamicAttributes = true;
         }

@@ -1,0 +1,5 @@
+<let/out="-"/>
+<const/onChange=(next: number) => { out = String(next) }/>
+<let/x=1 valueChange=onChange/>
+<button onClick() { x = 5 }>${x}</button>
+<p id="out">${out}</p>
