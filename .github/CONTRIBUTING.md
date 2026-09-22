@@ -65,39 +65,34 @@ pnpm run test:serial -- --grep=lifecycle
 
 ### Adding tests
 
-Marko makes use of directory based test suites. Take a look at the `render` test suite:
+Marko makes use of directory based test suites. Most work happens in Marko 6 ([`packages/runtime-tags`](../packages/runtime-tags)), where each directory under [`src/__tests__/fixtures/`](../packages/runtime-tags/src/__tests__/fixtures/) is one test:
 
-<pre>
-<a href="../test/">test/</a>
- ⤷ <a href="../test/render/">render/</a>
-    ⤷ <a href="../test/render/fixtures/">fixtures/</a>
-      ⤷ attrs/
-      ⤷ <a href="../test/render/fixtures/for-tag/">for-tag/</a>
-        ⤷ <a href="../test/render/fixtures/for-tag/expected.html">expected.html</a>
-        ⤷ <a href="../test/render/fixtures/for-tag/template.marko">template.marko</a>
-        ⤷ <a href="../test/render/fixtures/for-tag/test.js">test.js</a>
-      ⤷ nested-tags/
-      ⤷ while-tag/
-    ⤷ <a href="../test/render/html.test.js">html.test.js</a>
-</pre>
+```
+packages/runtime-tags/src/__tests__/fixtures/
+  <name>/
+    template.marko    # entry (required); custom tags go under tags/
+    test.ts           # optional: export const config: TestConfig = { steps: [...] }
+    sizes.json        # generated
+    __snapshots__/    # generated
+```
 
-The `html.test.js` file will run and read all the directories under `render/fixtures` and for each directory (`attrs`, `for-tag`, etc.) it will run `test.js`, render `template.marko` and assert that it is equivalent to the content of `expected.html`.
+[`main.test.ts`](../packages/runtime-tags/src/__tests__/main.test.ts) compiles and renders every fixture, server and browser, and compares the results with its `__snapshots__/`. The `TestConfig` options (`steps` for input updates and interactions, `error_*` for expected errors, `skip_*`) and each snapshot file are described in [Fixture anatomy](../packages/runtime-tags/AGENTS.md#fixture-anatomy).
 
-To add a new test, you'll find the appropriate test suite, copy a fixture, and modify it to add the new test.
+To add a new test, create a fixture directory, generate its snapshots, and review them as part of your change. The trailing space in the grep keeps it from matching other fixtures that share the prefix:
+
+```
+pnpm run test:update -- --grep "runtime-tags/translator <name> "
+```
+
+Marko 5 ([`packages/runtime-class`](../packages/runtime-class)) keeps its suites under [`test/`](../packages/runtime-class/test/), where a fixture is a `template.marko`, a `test.js` and an `expected.html`, as in [`render/fixtures/for-tag/`](../packages/runtime-class/test/render/fixtures/for-tag/).
 
 #### Skipping a test
 
-A few of the tests suites use the same fixtures for multiple test scenarios. For example, the `component-browser` tests run once rendering the component in a browser environment and a second time rendering in a server environment, then hydrating in the browser.
-
-For some tests, it might be necessary to skip the test in one of these scenarios. This is done by exporting a [`skip_hydrate`](https://github.com/marko-js/marko/blob/e3df4936c83a5ef419e8186df14ffc6012fcbdcc/test/components-browser/fixtures/implicit-component/test.js#L10) (or similiarly named) property from the fixture. The value of the property should be a string explaining why the test is skipped.
+Fixtures run in several scenarios (server and browser rendering, debug and optimized builds), and some tests only apply to a few of them. In Marko 6, set `skip_html`, `skip_dom`, `skip_ssr`, `skip_csr` or `skip_optimize` in the fixture's `test.ts` config. In Marko 5, export a `skip_<scenario>` property from its `test.js`, such as [`skip_hydrate`](../packages/runtime-class/test/components-browser/fixtures/implicit-component/test.js), with a string explaining why the test is skipped.
 
 #### Adding a failing test case
 
-If you've discovered an issue and are able to reproduce it, but don't have a fix, consider submitting a PR with a failing test case. You can mark a fixture as expected to fail by appending exporting a [`fails`](https://github.com/marko-js/marko/blob/0833ada47eeb5c833a11ef01fcd53ae39b0b7491/test/render/fixtures/spread-attribute-function-object/test.js#L1) property from the fixture. The value of the `fails` property should be a string with the issue number. Upon merging a failing test case, a maintainer will update the corresponding issue to add the [`has failing test`](https://github.com/marko-js/marko/labels/has%20failing%20test) label.
-
-In the case that a fixture is used in multiple test scenarios, you can mark the test as failing in a specific scenario by exporting a [`fails_hydrate`](https://github.com/marko-js/marko/blob/e3df4936c83a5ef419e8186df14ffc6012fcbdcc/test/components-browser/fixtures-deprecated/widget-conditional/test.js#L19) (or similarly named) property from the fixture.
-
-Expected failures won't cause [Travis CI](https://travis-ci.org/marko-js/marko) to report a error, but document that there is an issue and give others a starting point for fixing the problem.
+If you've discovered an issue and are able to reproduce it, but don't have a fix, consider submitting a PR with a failing test case. There is no expected-failure mode, so a failing fixture fails CI: suffix its directory with `.skip` (for example `fixtures/my-bug.skip/`), which the suite ignores, and reference the issue in your PR. In Marko 5, export a `skip` property from its `test.js` naming the issue instead. Upon merging a failing test case, a maintainer will update the corresponding issue to add the [`has failing test`](https://github.com/marko-js/marko/labels/has%20failing%20test) label, and the fix re-enables the fixture.
 
 ### Debugging tests
 
@@ -116,9 +111,9 @@ $ debugger;
 
 ### Updating snapshots
 
-A number of the test suites make use snapshot comparisons. For example, the `render` tests compare the rendered html against a stored snapshot. Similarly, the `compiler` tests compare the generated JavaScript module againt a stored snapshot. Any changes compared to the snapshot should be looked at closely, but there are some cases where it is fine that the output has changed and the snapshot needs to be updated.
+The test suites use snapshot comparisons. Marko 6 fixtures compare their compiled output, rendered html and DOM mutations against the files in `__snapshots__/`, and Marko 5 fixtures compare against their `expected.*` files. Any changes compared to the snapshot should be looked at closely, but there are some cases where it is fine that the output has changed and the snapshot needs to be updated.
 
-To update a snapshot, you can copy the contents from the `actual` file to the `expected` file in the fixture directory. You can also run `pnpm run test:update`, which sets the `UPDATE_EXPECTATIONS` env variable so the test runner writes the `expected` file for every currently failing test:
+To update snapshots, run `pnpm run test:update`, which sets the `UPDATE_EXPECTATIONS` env variable so the test runner rewrites the snapshots of every currently failing test. Don't edit `__snapshots__/` or `sizes.json` by hand. In Marko 5 you can also copy a fixture's `actual` file over its `expected` file:
 
 ```
 pnpm run test:update                      # whole suite, across CPU cores
@@ -142,7 +137,7 @@ A great way to contribute to the project is to send a detailed report when you e
 
 Check that [our issue database](https://github.com/marko-js/marko/issues) doesn't already include that problem or suggestion before submitting an issue. If you find a match, you can use the "subscribe" button to get notified on updates. Rather than leaving a "+1" or "I have this too" comment, you can add a [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) to let us know that this is also affecting you without cluttering the conversation. However, if you have ways to reproduce the issue or have additional information that may help resolving the issue, please leave a comment.
 
-We have an [ISSUE_TEMPLATE](ISSUE_TEMPLATE.md) that will populate your textarea when you go to open an issue. Use the relevant section and remove the rest.
+We have [issue templates](ISSUE_TEMPLATE/) that will populate your textarea when you go to open an issue. Pick the one that fits and fill in its sections.
 
 Please provide as much detail as possible.
 
@@ -188,10 +183,10 @@ Every issue should be assigned one of these.
 What part of the Marko stack does this issue apply to? In most cases there should only be one of these.
 
 - **parser**: Relates to [`htmljs-parser`](https://github.com/marko-js/htmljs-parser)
-- **compiler**: Relates to the [compiler](../src/compiler) (server only)
-- **runtime**: Relates to the [runtime](../src/runtime) (isomorphic/universal)
-- **core-taglib**: Relates to [custom tags](../src/taglib) that ship with Marko
-- **components**: Relates to [components](../src/components)
+- **compiler**: Relates to the [compiler](../packages/compiler) (server only)
+- **runtime**: Relates to the runtime of [Marko 6](../packages/runtime-tags/src) or [Marko 5](../packages/runtime-class/src/runtime) (isomorphic/universal)
+- **core-taglib**: Relates to the core tags that ship with [Marko 6](../packages/runtime-tags/src/translator/core) or [Marko 5](../packages/runtime-class/src/core-tags)
+- **components**: Relates to Marko 5 [components](../packages/runtime-class/src/runtime/components)
 - **tools**: Relates to editor plugins, commandline tools, etc.
 
 ### Status
