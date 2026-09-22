@@ -1,0 +1,8 @@
+<const/opts=input.label ? { label: input.label } : null/>
+<pre/out/>
+<script>{
+  if (opts) {
+    opts.seen = true;
+    out().textContent = JSON.stringify(opts);
+  }
+}</script>

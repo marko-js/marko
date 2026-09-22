@@ -910,7 +910,11 @@ function trackReference(
 
   while (true) {
     const { parent } = root;
-    if (!t.isMemberExpression(parent) && !t.isOptionalMemberExpression(parent))
+    if (
+      (!t.isMemberExpression(parent) &&
+        !t.isOptionalMemberExpression(parent)) ||
+      isWrittenMember(root.parentPath!)
+    )
       break;
 
     let prop = getMemberExpressionPropString(parent);
@@ -941,6 +945,31 @@ function trackReference(
   }
 
   addReadToExpression(root, reference, undefined);
+}
+
+// Writing a member (`obj.x = 1`, `obj.x++`, `delete obj.x`, a destructuring
+// target) mutates its object, so the read must stop at that object.
+function isWrittenMember(member: t.NodePath) {
+  const { node, parent } = member;
+  switch (parent.type) {
+    case "AssignmentExpression":
+    case "AssignmentPattern":
+    case "ForInStatement":
+    case "ForOfStatement":
+      return parent.left === node;
+    case "UnaryExpression":
+      return parent.operator === "delete";
+    case "UpdateExpression":
+    case "ArrayPattern":
+    case "RestElement":
+      return true;
+    case "ObjectProperty":
+      return (
+        parent.value === node && t.isObjectPattern(member.parentPath!.parent)
+      );
+    default:
+      return false;
+  }
 }
 
 export function mergeReferences<T extends t.Node>(
