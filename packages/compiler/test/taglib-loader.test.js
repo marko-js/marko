@@ -43,7 +43,9 @@ const message = (fn) => {
 
 describe("compiler/taglib-loader", () => {
   beforeEach(() => {
-    dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-taglib-loader-"));
+    dir = fs.realpathSync(
+      fs.mkdtempSync(path.join(os.tmpdir(), "marko-taglib-loader-")),
+    );
   });
   afterEach(() => {
     clearCache();
