@@ -1,5 +1,0 @@
----
-"@marko/runtime-tags": patch
----
-
-Fix a resume crash (`fn is not a function`) in optimized builds when a `<let>` was only assigned from code that is never emitted: an attribute the child tag never reads, or a function held by an unread `<const>`. Such a binding no longer counts as state, so the server stops serializing resume data (including a `<try>` placeholder's pending closure replay) for a signal the client bundle correctly tree-shakes. A controllable `<let>`'s change handler and a rest sibling's `Change` exclusion likewise follow only the assignments that are emitted, and a value with no side effects (no call, `new` or assignment outside a function body) is no longer emitted when nothing reads its variable (a `<let>` included, when nothing assigns it either). A spread on a custom tag whose child reads nothing from it is no longer evaluated by the server render either, matching the client. A `<try>` placeholder's pending closure replay is also skipped when no effect or registered function can assign the state it closes over, since a resumed instance runs nothing else.
