@@ -1,0 +1,41 @@
+<let/settings={
+  theme: "dark",
+  count: 1,
+  step: 2,
+  removed: "kept",
+  tags: ["x", "y", "z"],
+  size: { w: 3, h: 4 },
+  key: "h",
+}/>
+<ul>
+  <li>${settings.theme}</li>
+  <li>${settings.count}</li>
+  <li>${settings.removed ?? "deleted"}</li>
+  <li>${settings.kind}</li>
+  <li>${settings.first}</li>
+  <li>${settings.width}</li>
+  <li>${settings.picked}</li>
+  <li>${settings.rest}</li>
+  <li>${settings.fallback}</li>
+  <li>${settings.lastKey}</li>
+  <li>${settings.lastTag}</li>
+  <li>${settings.copy?.w}</li>
+</ul>
+<button.mutate onClick() {
+  settings.theme = "light";
+  settings.count += settings.step;
+  settings.count++;
+  delete settings.removed;
+  settings.kind = typeof settings.step;
+  [settings.first] = settings.tags;
+  ({ w: settings.width } = settings.size);
+  ({ [settings.key]: settings.picked } = settings.size);
+  [, ...settings.rest] = settings.tags;
+  [settings.fallback = settings.step] = [];
+  for (settings.lastKey in settings.size) {}
+  for (settings.lastTag of settings.tags) {}
+  settings.copy = { w: settings.size.w };
+}>mutate</button>
+<button.apply onClick() {
+  settings = { ...settings };
+}>apply</button>
