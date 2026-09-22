@@ -1,8 +1,6 @@
 import { type Accessor, PatchKey } from "../common/types";
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_partial, _attrs_script } from "./dom";
-// The set may carry bound handlers.
-import "./patch-value-bind.feat";
 import { queueEffect } from "./queue";
 import { patchers } from "./resume";
 

@@ -1,5 +1,7 @@
+import { type Opt, toArray } from "../common/opt";
 import {
   type Accessor,
+  AccessorPrefix,
   AccessorProp,
   PatchKey,
   type Scope,
@@ -26,13 +28,40 @@ export function deferApply(applied: Promise<unknown>) {
   deferred = deferred ? deferred.then((ok) => ok && applied) : applied;
 }
 
-// Flush-scoped bindings patch features inject.
-export const flushVars: Record<string, unknown> = {};
+// A scope's link from its parent: a child accessor, or a loop item's index
+// with its key when that differs.
+export type PatchHop = string | [accessor: string, at: LoopItemAt];
+export type LoopItemAt = number | [index: number, key: unknown];
 
-// The flush's bind table (`patch-value-bind`): a flush held for a module
-// applies under its own, so a source shipped with it serves its references.
-export let flushBinds: Record<string, unknown> = {};
-export let patchResponse: object;
+// `_(path, id, content?)` in a frame: a registration bound to the scope `path`
+// reaches from the page root, resolved by `patch-bind`.
+let bindRef:
+  | ((root: Scope, path: PatchHop[], id: string, content?: 1) => unknown)
+  | undefined;
+export function installBindRef(resolve: NonNullable<typeof bindRef>) {
+  bindRef = resolve;
+}
+
+// A loop's live item: the one where it rendered while its key still matches
+// there (the reconciler's own check), else found by key.
+export function getLoopItem(
+  scope: Scope,
+  accessor: string,
+  at: LoopItemAt,
+): Scope | undefined {
+  const items = toArray(
+    scope[(AccessorPrefix.BranchScopes + accessor) as Accessor] as Opt<Scope>,
+  );
+  let index = at as number;
+  let key: unknown = at;
+  if (typeof at === "object") [index, key] = at;
+  const item = items[index];
+  return item && (item[AccessorProp.LoopKey] ?? index) === key
+    ? item
+    : (items.find(
+        (item, i) => ((item as Scope)[AccessorProp.LoopKey] ?? i) === key,
+      ) as Scope | undefined);
+}
 
 /** The live page's `$global`: names its render. */
 export type PatchGlobal = { renderId: string };
@@ -45,16 +74,15 @@ export type PatchGlobal = { renderId: string };
 export function patch($global: PatchGlobal) {
   // The response's own serialize context keeps every tree the response
   // applied, keyed as the server keys them (the k-th tree), so a later
-  // flush references into an earlier one; anything else is the page's.
-  let pageCtx: SerializeContext;
+  // flush references into an earlier one; `_(path, id)` is a bound
+  // registration, reached from the page root.
   const trees: unknown[] = [];
-  const responseCtx = ((data: number | (Scope | number)[]) =>
-    typeof data === "number" ? trees[data] : pageCtx(data)) as SerializeContext;
+  let root: Scope;
+  const responseCtx = ((data: number | PatchHop[], id?: string, content?: 1) =>
+    id
+      ? bindRef!(root, data as PatchHop[], id, content)
+      : trees[data as number]) as SerializeContext;
   responseCtx._ = _resumed;
-  // Every patch feature is evaluated by now: the flush text references each
-  // binding as a free variable (`b(1)`), skipping registry indirection.
-  const names = Object.keys(flushVars);
-  const vars = Object.values(flushVars);
   // The render's token, once a response has issued one.
   const held = curRenders?.[$global.renderId]?.k;
   return [
@@ -65,8 +93,7 @@ export function patch($global: PatchGlobal) {
       patchers[PatchKey.Globals] ||= applyGlobals;
       // The response's context is its token: its flushes share it, and a
       // later response supersedes what an earlier one left waiting.
-      patchResponse = responseCtx;
-      flushBinds = {};
+      curRenders[$global.renderId].q = responseCtx;
       deferred = 0;
       beginPatch(curRenders[$global.renderId]);
       try {
@@ -74,11 +101,11 @@ export function patch($global: PatchGlobal) {
         // that produced the document; `$` (the serializer's spelling of
         // `undefined`) is the unpassed last parameter.
         // eslint-disable-next-line no-new-func
-        const fn = new Function("_", ...names, "$", "return " + flush);
+        const fn = new Function("_", "$", "return " + flush);
         patchRender.r = [
           (ctx: SerializeContext) => {
-            pageCtx = ctx;
-            const value = fn(responseCtx, ...vars);
+            root = ctx(1) as Scope;
+            const value = fn(responseCtx);
             // A response ends with the token naming what the page now holds.
             if (typeof value === "string") {
               patchRender.k = value;
@@ -138,16 +165,10 @@ export function installPatchReady(discard: typeof discardReady) {
 }
 
 // Applies flush data left waiting (a module, a streaming body) as its own
-// flush run, under the bind table and run of the flush that shipped it.
-export function applyDeferred(
-  render: RenderData,
-  binds: Record<string, unknown>,
-  runAt: number,
-  apply: () => void,
-): Applied {
+// flush run.
+export function applyDeferred(render: RenderData, apply: () => void): Applied {
   try {
-    flushBinds = binds;
-    beginPatch(render, runAt);
+    beginPatch(render);
     apply();
     commitFlush();
     return 1;

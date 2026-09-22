@@ -32,7 +32,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_source_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "6:10");
 			}, $scope3_id) }) }, 1);
 			$scope0_page && _scope($scope3_id, { "ClosureScopes:value": $await_content__value__closures }, "__tests__/template.marko", "4:6");
-		}, 1, "__tests__/template.marko_1_#text#0/await", 1);
+		}, 1, "__tests__/template.marko_3*content", 1);
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		$scope0_page && _resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_shell("__tests__/template.marko_2*content", $scope0_id) }) }, 1);

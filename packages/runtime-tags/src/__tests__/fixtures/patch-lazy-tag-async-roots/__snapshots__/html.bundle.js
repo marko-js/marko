@@ -32,7 +32,7 @@ var template_default = _template_patch("b", (input) => {
 		_patch_child($scope1_id, "b", $childScope);
 		$Child_withLoadAssets({ label: first });
 		_scope($scope1_id, { b: _existing_scope($childScope) });
-	}, 1, "b2", 1);
+	}, 1, "b1", 1);
 	_await($scope0_id, "b", input.second, (second) => {
 		const $scope2_id = _scope_id();
 		_set_serialize_reason(_mask_group($scope0_reason, 1) << 1);
@@ -40,6 +40,6 @@ var template_default = _template_patch("b", (input) => {
 		_patch_child($scope2_id, "b", $childScope2);
 		$Child_withLoadAssets({ label: second });
 		_scope($scope2_id, { b: _existing_scope($childScope2) });
-	}, 1, "b3", 1);
+	}, 1, "b0", 1);
 	_html("</main>");
 }, 1, () => [$Child_withLoadAssets]);

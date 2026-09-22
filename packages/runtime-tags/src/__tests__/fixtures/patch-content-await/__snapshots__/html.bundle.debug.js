@@ -43,7 +43,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 						_: _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_value": 1
 					}, "__tests__/template.marko", "4:8"));
-				}, 1, "__tests__/template.marko_2_#text#0/await");
+				}, 1, "__tests__/template.marko_3*content");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 				$scope0_page && _resume_branch($scope2_id);
 			}, $scope1_id) });

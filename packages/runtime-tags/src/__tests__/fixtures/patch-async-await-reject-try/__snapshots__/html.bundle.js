@@ -18,7 +18,7 @@ var template_default = _template_patch("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_patch_text($scope4_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope4_id, {});
-		}, 1, "a2", 1);
+		}, 1, "a0", 1);
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$scope0_page && _resume_branch($scope1_id);
 	}, $scope0_id), {

@@ -6,12 +6,9 @@ import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { find, forEach } from "../../util/optional";
 import {
-  getFillConditions,
-  getPatchFillBindings,
   getRootGlobalReads,
   hasPatchEffectRead,
   isPatchWriteBinding,
-  isPatchFillBinding,
 } from "../../util/patch/refresh";
 import {
   type Binding,
@@ -19,7 +16,6 @@ import {
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
   someAlias,
-  someUpstream,
 } from "../../util/references";
 import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import {
@@ -51,6 +47,11 @@ import type { TemplateVisitor } from "../../util/visitors";
 export default {
   translate: {
     enter(program) {
+      // A page that loads this module takes the features analyze linked
+      // from it rather than from its entry.
+      for (const feature of program.node.extra.runtimeFeatures || []) {
+        importRuntimeFeature(feature);
+      }
       const section = getSectionForBody(program)!;
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
@@ -179,34 +180,11 @@ export default {
         }
       });
 
-      // Patches write server contributions to registered fill signals, so
-      // a template with fills in any section ships the patcher.
-      let boundFills = false;
       forEachSection((fillSection) => {
-        // A fill only structure with a client upstream needs ships its
-        // patcher from the call site that hands over that structure.
-        if (
-          find(
-            getPatchFillBindings(fillSection),
-            (binding) => !getFillConditions(binding)?.upstreams,
-          )
-        ) {
-          importRuntimeFeature("patch-value");
-          boundFills ||= !!find(
-            fillSection.bindings,
-            (binding) =>
-              isPatchFillBinding(binding) && upstreamFunctionValued(binding),
-          );
-        }
         if (find(fillSection.bindings, needsPatchEffectRuntime)) {
           importRuntimeFeature("patch-effect");
         }
       });
-      // Only function-carrying fills need the bind patchers; an unshipped patcher
-      // rejects the flush into navigation, never a broken bind.
-      if (boundFills) {
-        importRuntimeFeature("patch-value-bind");
-      }
 
       forEach(getRootGlobalReads(section), initGlobalRead);
       const written = writeSignals(section);
@@ -281,12 +259,4 @@ function needsPatchEffectRuntime(binding: Binding) {
     isPatchWriteBinding(binding) &&
     someAlias(binding, hasPatchEffectRead, undefined, true)
   );
-}
-
-function upstreamFunctionValued(binding: Binding) {
-  return someUpstream(binding, isFunctionValued, undefined);
-}
-
-function isFunctionValued(binding: Binding) {
-  return binding.functionValued;
 }

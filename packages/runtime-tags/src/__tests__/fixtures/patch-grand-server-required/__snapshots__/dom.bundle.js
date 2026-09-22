@@ -10,8 +10,7 @@ const $input_o = ($scope, input_o) => $input_open($scope.a, input_o);
 
 // template.marko
 const $if_content__input_o = /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_o($scope.a, $scope._.e)));
-const $if_content__setup = $if_content__input_o;
-const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks), $if_content__setup);
+const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks), $if_content__input_o);
 const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.f);

@@ -25,9 +25,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				const $scope4_id = _scope_id();
 				_html(`<strong>${_patch_text($scope4_id, "#text/0", b, void 0, $scope0_reason, 2)}</strong>`);
 				_scope($scope4_id, {}, "__tests__/template.marko", "5:8");
-			}, 1, "__tests__/template.marko_2_#text#1/await", 1);
+			}, 1, "__tests__/template.marko_4*content", 1);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
-		}, 1, "__tests__/template.marko_1_#text#0/await", 1);
+		}, 1, "__tests__/template.marko_2*content", 1);
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		$scope0_page && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_elide("__tests__/template.marko_3*content", (err) => {

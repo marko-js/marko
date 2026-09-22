@@ -1,7 +1,6 @@
 // PATCH
 {
-  1: "a1",
-  fa: b(1),
+  fa: "^a1",
   ja: {},
   cAa: {
     ta: "t2"
@@ -11,8 +10,7 @@
 
 // PATCH
 {
-  1: "a0",
-  fa: b(1),
+  fa: "^a0",
   ja: {},
   cAa: {
     ta: "t3"

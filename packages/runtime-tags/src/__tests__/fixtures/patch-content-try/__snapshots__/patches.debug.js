@@ -1,11 +1,11 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_3_#text#0/await;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_3*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_5*content,loading`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_1*shell;/D%l&;<section><!></section>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_4*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_3*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_5*content,loading`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_1*shell;/D%l&;<section><!></section>`, {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
-      "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_2*content",
+      "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchChild:BranchScopes:#text/0": [{
-          "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_3_#text#0/await",
+          "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_4*content",
           "PatchChild:BranchScopes:#text/0": {
             "PatchText:#text/0": "x"
           }
@@ -14,4 +14,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-try/template.marko_1*shell"]
 }]
-"CAIAAAAB"
+"CAIAAAEA"

@@ -1,17 +1,17 @@
 // PATCH
-[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
+[`a0;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
   z2_a_c: {
     ba: [1, {
       ca: {
-        pa: "a1",
-        fb: "^d0",
+        pa: "a0",
+        fb: "^^d0",
         cAb: {
           ba: [1, {
             cb: {
               la: [{
                 ca: {
                   ta: "1",
-                  fb: "^c0",
+                  fb: "^^c0",
                   cAb: {
                     ta: "b1",
                     tc: "1"
@@ -20,7 +20,7 @@
               }, {
                 ca: {
                   ta: "2",
-                  fb: "^c0",
+                  fb: "^^c0",
                   cAb: {
                     ta: "b1",
                     tc: "2"
@@ -51,15 +51,15 @@
     }
   }
 }]
-"EAIAAwABAAE"
+"EAEBAwABAAE"
 
-// PATCH holding EAIAAwABAAE
+// PATCH holding EAEBAwABAAE
 [`b0,<p>wide</p>`, `d2;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, {
   z2_a_b: {
     ba: [1, {
       ca: {
-        pa: "a1",
-        fb: "^d0",
+        pa: "a0",
+        fb: "^^d0",
         cAb: {
           ba: [{
             cb: {
@@ -81,22 +81,22 @@
     }, "d1"]
   }
 }]
-"EAIAAQEAAQAAAA"
+"EAEBAQEAAQAAAA"
 
-// PATCH holding EAIAAQEAAQAAAA
+// PATCH holding EAEBAQEAAQAAAA
 {
   z2_a_c: {
     ba: [1, {
       ca: {
-        pa: "a1",
-        fb: "^d0",
+        pa: "a0",
+        fb: "^^d0",
         cAb: {
           ba: [1, {
             cb: {
               la: [{
                 ca: {
                   ta: "1",
-                  fb: "^c0",
+                  fb: "^^c0",
                   cAb: {
                     ta: "b2",
                     tc: "1"
@@ -105,7 +105,7 @@
               }, {
                 ca: {
                   ta: "2",
-                  fb: "^c0",
+                  fb: "^^c0",
                   cAb: {
                     ta: "b2",
                     tc: "2"

@@ -4,7 +4,7 @@ const click = (document: Document) => {
   document.querySelector<HTMLAnchorElement>("a")!.click();
 };
 
-// A spread carrying a bound handler: the entry's set rides the bind table,
+// A spread carrying a bound handler: the entry's set names it by reference,
 // so the handler survives a patch and a construct.
 export const config: TestConfig = {
   patches: true,

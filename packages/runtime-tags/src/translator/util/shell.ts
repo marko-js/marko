@@ -9,7 +9,7 @@ import {
   isBranchPathSection,
   isStatefulBranch,
 } from "./patch/structure";
-import { addRuntimeFeatureAsset } from "./runtime";
+import { linkRuntimeFeature } from "./runtime";
 import {
   forEachSection,
   getChildSections,
@@ -39,9 +39,14 @@ export function getShells() {
 
 // Whether a section ships as a shell (under any id).
 export function isShell(section: Section) {
+  return !!findShellId(section);
+}
+
+// The id a section ships its shell under (an await body may be kept as
+// boundary content or through its enclosing shell's chain).
+export function findShellId(section: Section) {
   const shells = getShells();
-  for (const id in shells) if (shells[id] === section) return true;
-  return false;
+  for (const id in shells) if (shells[id] === section) return id;
 }
 
 // Decides every branch shell (expressibility, blockers) so the html output
@@ -89,10 +94,11 @@ export function buildShells() {
       return;
     }
     if (section.boundaryContent) {
-      if (isStaticShell(section)) {
+      // A boundary inside stateful structure never patches, nor do its slots.
+      if (!inStatefulBranch(section.parent) && isStaticShell(section)) {
         section.contentShell = "static";
         shells[getResumeRegisterId(section, "content")] = section;
-        addRuntimeFeatureAsset("patch-content");
+        linkRuntimeFeature("patch-content");
       }
     } else if (
       !isAwaitBody(section) &&
@@ -108,7 +114,7 @@ export function buildShells() {
             ? "static"
             : true;
         if (section.contentShell === "static") {
-          addRuntimeFeatureAsset("patch-content");
+          linkRuntimeFeature("patch-content");
         }
         keep.add(section);
         for (const body of chain) keep.add(body);

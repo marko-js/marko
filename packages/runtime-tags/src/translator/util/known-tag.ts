@@ -34,9 +34,9 @@ import {
 import { getChildPatchPlan } from "./patch/decisions";
 import { addPatchChildRenderer } from "./patch/intrinsics";
 import { onFinalizePatch } from "./patch/lifecycle";
-import { contentResumesForPatch } from "./patch/refresh";
 import {
   inStatefulBranch,
+  isPatchRendered,
   isReadAsValue,
   recordStructuralParams,
 } from "./patch/structure";
@@ -68,7 +68,7 @@ import {
   propsUtil,
 } from "./references";
 import {
-  addRuntimeFeatureAsset,
+  linkRuntimeFeature,
   callRuntime,
   importRuntime,
   importRuntimeFeature,
@@ -172,16 +172,8 @@ export function knownTagAnalyze(
     // parent entry, even for a scriptless child.
     addSerializeReason(section, FORCED, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
-    const hasVar = !!tag.node.var;
     onFinalizePatch(() => {
-      if (!inStatefulBranch(section)) {
-        addRuntimeFeatureAsset("patch-child");
-        // A created scope seeds the tag var through the bind channel; the
-        // child may hand resumed content to a patched tag.
-        if (hasVar || contentResumesForPatch(getSectionForBody(tagBody))) {
-          addRuntimeFeatureAsset("patch-value-bind");
-        }
-      }
+      if (isPatchRendered(section)) linkRuntimeFeature("patch-child");
     });
   }
   startSection(tagBody);
@@ -309,7 +301,7 @@ export function knownTagTranslateHTML(
       callRuntime("_existing_scope", peekScopeId),
     );
 
-    if (isPatch() && !inStatefulBranch(section)) {
+    if (isPatchRendered(section)) {
       const patchChildStatement = t.expressionStatement(
         callRuntime(
           "_patch_child",
@@ -492,26 +484,6 @@ export function knownTagTranslateDOM(
   const extra = node.extra!;
   const childScopeBinding = extra[kChildScopeBinding]!;
 
-  // An interactive page receives assets transitively through its dom
-  // program, so the feature import rides both outputs.
-  if (isPatch() && !inStatefulBranch(getSection(tag))) {
-    importRuntimeFeature("patch-child");
-    if (
-      tag.node.var ||
-      contentResumesForPatch(getSectionForBody(tag.get("body")))
-    ) {
-      importRuntimeFeature("patch-value-bind");
-    }
-    for (const group of getParamGroupSources(extra) || []) {
-      if (
-        group.sources?.state &&
-        some(group.params, (binding) => binding.upstreamOfStructure)
-      ) {
-        importRuntimeFeature("patch-value");
-      }
-    }
-  }
-
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
     const source = initValue(varBinding);
@@ -602,7 +574,9 @@ export function finalizeKnownTags(section: Section) {
             recordStructuralParams(sources);
             // Client state upstream of the child's structure hands it the
             // structure at run time: its fills need the value patcher.
-            if (sources?.state) addRuntimeFeatureAsset("patch-value");
+            if (sources?.state && isPatchRendered(section)) {
+              linkRuntimeFeature("patch-value");
+            }
           }
         }
       }

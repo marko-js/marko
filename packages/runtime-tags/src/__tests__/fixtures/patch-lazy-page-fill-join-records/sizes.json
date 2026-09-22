@@ -13,24 +13,24 @@
       "brotli": 81
     },
     "template.marko.page.mjs": {
-      "min": 1832,
-      "brotli": 783
+      "min": 2112,
+      "brotli": 892
     },
     "layout.mjs": {
-      "min": 2802,
-      "brotli": 1339
+      "min": 2845,
+      "brotli": 1348
     },
     "page-a.mjs": {
-      "min": 235,
+      "min": 225,
       "brotli": 136
     },
     "page-b.mjs": {
-      "min": 303,
-      "brotli": 184
+      "min": 286,
+      "brotli": 178
     },
     "shared": {
-      "min": 15962,
-      "brotli": 7265
+      "min": 16145,
+      "brotli": 7301
     }
   },
   "html": {
@@ -38,7 +38,7 @@
     "brotli": 280
   },
   "patch": {
-    "min": 947,
-    "brotli": 355
+    "min": 954,
+    "brotli": 360
   }
 }

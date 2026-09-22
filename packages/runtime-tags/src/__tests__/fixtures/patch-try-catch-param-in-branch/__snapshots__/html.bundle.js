@@ -22,7 +22,7 @@ var template_default = _template_patch("a", (input) => {
 				_await($scope3_id, "a", input.promise, () => {
 					_scope_id();
 					_html("done");
-				}, 1, "a1");
+				}, 1, "a0");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }));
 				$scope0_page && _resume_branch($scope3_id);
 			}, $scope1_id), { catch: attrTag({ content: _content_resume("a4", (err) => {

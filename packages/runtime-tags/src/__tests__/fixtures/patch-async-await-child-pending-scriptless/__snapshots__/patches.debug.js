@@ -1,7 +1,7 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/template.marko_1_#text#0/await;/D%c%l b&;<b class=pill><!>:<!></b><button class=inc>+</button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/template.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/template.marko_3*content;/D%c%l b&;<b class=pill><!>:<!></b><button class=inc>+</button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchBranch:#main/0": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/template.marko_1_#text#0/await"
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/template.marko_3*content"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/template.marko_1*shell"]
 }]
 {
@@ -17,4 +17,4 @@
     }
   }
 }
-"BgIA"
+"BgIC"

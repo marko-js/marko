@@ -1,7 +1,7 @@
 // PATCH
-[`a1;/D l&;<b class=pill> </b>`, `a2;b%;<!><!><!>`, {
+[`a0;/D l&;<b class=pill> </b>`, `a2;b%;<!><!><!>`, {
   ba: [{
-    pa: "a1",
+    pa: "a0",
     cAa: {
       ca: {
         ta: "one"
@@ -9,12 +9,12 @@
     }
   }, "a2"]
 }]
-"BgIA"
+"BgEB"
 
-// PATCH holding BgIA
+// PATCH holding BgEB
 {
   ba: [{
-    pa: "a1",
+    pa: "a0",
     cAa: {
       ca: {
         ta: "two"

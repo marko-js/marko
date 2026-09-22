@@ -12,7 +12,7 @@
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "x",
-      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content",
+      "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchText:#text/0": "Zed"
       }
@@ -35,7 +35,7 @@
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "x",
-      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content",
+      "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchText:#text/0": "Zed"
       }
@@ -57,7 +57,7 @@
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "x",
-      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content",
+      "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_3*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchText:#text/0": "Qux"
       }

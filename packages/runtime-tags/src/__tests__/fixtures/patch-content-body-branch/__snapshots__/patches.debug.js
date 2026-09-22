@@ -3,7 +3,7 @@
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "t",
-      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
+      "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [1, {
           "PatchText:#text/0": "x"
@@ -19,7 +19,7 @@
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "u",
-      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
+      "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [1, {
           "PatchText:#text/0": "y"
@@ -34,7 +34,7 @@
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "u",
-      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
+      "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [{
           "PatchText:#text/0": "y"
@@ -50,7 +50,7 @@
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "v",
-      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
+      "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [{
           "PatchText:#text/0": "z"
@@ -70,7 +70,7 @@
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "w",
-      "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
+      "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-body-branch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [1, {
           "PatchText:#text/0": "w"

@@ -1,13 +1,11 @@
 // PATCH
 {
-  1: "packages/runtime-tags/src/__tests__/fixtures/patch-grand-server-fn/template.marko_0/fmt",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-grand-server-fn/template.marko0": bind(1),
+  "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-grand-server-fn/template.marko0": "packages/runtime-tags/src/__tests__/fixtures/patch-grand-server-fn/template.marko_0/fmt",
   "PatchWrite:input_title": "b"
 }
 
 // PATCH
 {
-  1: "packages/runtime-tags/src/__tests__/fixtures/patch-grand-server-fn/template.marko_0/fmt",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-grand-server-fn/template.marko0": bind(1),
+  "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-grand-server-fn/template.marko0": "packages/runtime-tags/src/__tests__/fixtures/patch-grand-server-fn/template.marko_0/fmt",
   "PatchWrite:input_title": "c"
 }

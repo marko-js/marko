@@ -5,8 +5,7 @@ const $inputonsectionarticle_content__setup = ($scope) => {
 	$inputonsectionarticle_content__count($scope);
 };
 const $inputonsectionarticle_content__count = /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.b, $scope._.g));
-const $inputonsectionarticle_content = /*@__PURE__*/ _content("a0", "<!> <!>", "%c%", $inputonsectionarticle_content__setup);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $inputonsectionarticle_content);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, /* @__PURE__ */ _content("a0", "<!> <!>", "%c%", $inputonsectionarticle_content__setup));
 const $input_on__OR__input_label__OR__count = /*@__PURE__*/ _fill_join("a1", 5, /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.e ? "section" : "article", () => ({
 	class: $scope.f,
 	"data-count": $scope.g

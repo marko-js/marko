@@ -1,6 +1,6 @@
 // PATCH
 [`a0;D ;<em> </em>`, {
-  fa: "a0",
+  fa: "^a0",
   cAa: {
     ta: "two"
   },
@@ -16,7 +16,7 @@
 
 // PATCH holding AgE
 {
-  fa: "a0",
+  fa: "^a0",
   cAa: {
     ta: "four"
   },

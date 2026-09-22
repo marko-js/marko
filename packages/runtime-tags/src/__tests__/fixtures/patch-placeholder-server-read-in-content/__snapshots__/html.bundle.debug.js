@@ -41,7 +41,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_await($scope3_id, "#text/0", input.promise, () => {
 				const $scope4_id = _scope_id();
 				_html("<div id=done>done</div>");
-			}, 1, "__tests__/template.marko_3_#text#0/await");
+			}, 1, "__tests__/template.marko_4*content");
 			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
 			$scope0_page && _resume_branch($scope3_id);
 		}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {

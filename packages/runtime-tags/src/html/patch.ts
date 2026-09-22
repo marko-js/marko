@@ -40,7 +40,6 @@ import {
   patchFills,
   getFilteredGlobals,
   patchPartial,
-  writeEmbeddedBinds,
   openPatchPartial,
   peekPatchPartial,
   type ScopeInternals,
@@ -272,7 +271,6 @@ class PatchState extends State {
       (this.patchLinks ??= {})[branchId] = {
         parent: scopeId,
         link: link,
-        pending: PatchKey.Child + link,
         content: contentId,
         slots: slotIds,
         owner: ownerScopeId,
@@ -310,10 +308,6 @@ class PatchState extends State {
     }
     this.patchFlushed = undefined;
     this.patchTree = undefined;
-    // The client's bind table lives one flush: a later flush re-ships the
-    // sources it references.
-    this.binds = undefined;
-    this.patchBinds = 0;
     return out;
   }
 
@@ -366,10 +360,10 @@ class PatchState extends State {
     // page: the patch skips it.
     if (_client_guard(owned, group!)) return 1;
     const branchId = _peek_scope_id();
-    const link: PatchLink = ((this.patchLinks ??= {})[branchId] = {
+    (this.patchLinks ??= {})[branchId] = {
       parent: scopeId,
       link: AccessorPrefix.BranchScopes + accessor,
-    });
+    };
     const opened = openPatchPartial(this, branchId);
     const branchIndex = withBranchId(branchId, cb);
     const shellId =
@@ -400,9 +394,6 @@ class PatchState extends State {
       // Nothing rendered took the peeked id: consume it so no later scope
       // finds this branch's partial or link.
       _scope_id();
-    } else {
-      // Later settle flushes nest under the live branch as a Child apply.
-      link.pending = PatchKey.Child + AccessorPrefix.BranchScopes + accessor;
     }
     return 1 as const;
   }
@@ -441,16 +432,17 @@ class PatchState extends State {
         assertValidLoopKey(itemKey, seenKeys);
       }
       indexKeys &&= sameAsIndex;
-      // Loop items pair by key: the link is a keyed hop the bind walk
-      // resolves against the live scopes' loop keys.
+      // An item is found where it rendered, checked by key as the loop's
+      // reconciler does (a client-owned list may since have moved it).
       const branchId = _peek_scope_id();
       (this.patchLinks ??= {})[branchId] = {
         parent: scopeId,
-        link: [AccessorPrefix.BranchScopes + accessor, itemKey],
+        link: [accessor, sameAsIndex ? keys.length : [keys.length, itemKey]],
       };
       keys.push(itemKey);
+      // Opened here so an item settling after this flush re-links by its hop.
+      partials.push(openPatchPartial(this, branchId));
       withBranchId(branchId, render);
-      partials.push(patchPartial(this, branchId));
     });
     if (rowsKept && !partials.some(hasKeys)) return 1;
     const sentShellId = partials.length ? shipShell(this, shellId) : undefined;
@@ -526,7 +518,8 @@ export function _patch_attr_style(
 }
 
 // Links a child scope into its parent's entry: immediately when already
-// written (tag-variable children render first), else on its first write.
+// written (tag-variable children render first), else on its first write
+// (`patchPartial` derives the entry from the link).
 export function _patch_child(
   scopeId: number,
   accessor: Accessor,
@@ -534,17 +527,15 @@ export function _patch_child(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    const link: PatchLink = ((state.patchLinks ??= {})[childScopeId] = {
+    (state.patchLinks ??= {})[childScopeId] = {
       parent: scopeId,
       link: accessor,
-    });
+    };
     const partial = peekPatchPartial(state, childScopeId);
     if (partial) {
       writePatch(scopeId, {
         [PatchKey.Child + accessor]: partial,
       });
-    } else {
-      link.pending = PatchKey.Child + accessor;
     }
   }
 }
@@ -569,9 +560,11 @@ export function _patch_value(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    // Bound registrations cannot ride the wire as data: each stores a
-    // bind at its bound scope and the serialized value references it.
-    writeEmbeddedBinds(state, value);
+    // A seed for a branch no flush creates is dropped before any scan.
+    if (setup && !isInResumedBranch()) return "";
+    const bind = bindEntry(state, scopeId, value);
+    const entryKey = (bind ? PatchKey.BindValue : PatchKey.Value) + key;
+    if (bind) value = bind;
     if (setup) {
       if (state.patchFlushed) {
         throw new Error(
@@ -580,15 +573,11 @@ export function _patch_value(
       }
       // Setup entries nest under `s`: the client applies them only to
       // freshly created scopes; only a scope below a branch is created.
-      if (!isInResumedBranch()) return "";
       const partial = patchPartial(state, scopeId);
-      ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
-        PatchKey.Value + key
-      ] = value;
+      ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[entryKey] =
+        value;
     } else {
-      writePatch(scopeId, {
-        [PatchKey.Value + key]: value,
-      });
+      writePatch(scopeId, { [entryKey]: value });
     }
   }
   return "";
@@ -605,7 +594,6 @@ export function _patch_control(
   group?: number,
 ) {
   if (patchFills(owned, group!)) {
-    writeEmbeddedBinds(getState(), value);
     writePatch(scopeId, { [PatchKey.Control + type + accessor]: value });
   }
   return "";
@@ -622,44 +610,12 @@ export function _patch_bind(
 ) {
   const state = getState();
   if (state.writesPatches && _filled_guard(owned, group!)) {
-    const registered = !!value && getRegistered(value as WeakKey);
-    const bound =
-      registered && (registered.scope as ScopeInternals | undefined);
-    if (bound) {
-      // A scope-bound registration is reached from the tag's scope: owner hops up
-      // (a content body's owner is where it was defined) to the nearest
-      // shared scope, then render links down to the bound scope.
-      const links = state.patchLinks;
-      const siteChain: number[] = [];
-      for (let cur: number | undefined = scopeId; cur !== undefined;) {
-        siteChain.push(cur);
-        const link: PatchLink | undefined = links?.[cur];
-        cur = link && (link.owner ?? link.parent);
-      }
-      const down: PatchLink["link"][] = [];
-      let cur = bound[K_SCOPE_ID]!;
-      let up = siteChain.indexOf(cur);
-      while (up < 0) {
-        const link = links?.[cur];
-        if (MARKO_DEBUG && !link) {
-          throw new Error("A patch could not link a handler to its scope.");
-        }
-        down.push(link!.link);
-        cur = link!.parent;
-        up = siteChain.indexOf(cur);
-      }
-      writePatch(scopeId, {
-        [PatchKey.Bind + (state.patchBinds = (state.patchBinds || 0) + 1)]: [
-          registered.id,
-          up,
-          ...down.reverse(),
-          accessor,
-        ],
-      });
+    const bind = bindEntry(state, scopeId, value);
+    if (bind) {
+      writePatch(scopeId, { [PatchKey.Bind + accessor]: bind });
     } else {
       // Both forms: the plain write clears paired scopes' slots, while the setup
       // entry lands after a created scope's seeds (which reset the change slot).
-      writeEmbeddedBinds(state, value);
       const partial = patchPartial(state, scopeId);
       partial[PatchKey.Write + accessor] = value;
       if (isInResumedBranch()) {
@@ -670,6 +626,18 @@ export function _patch_bind(
     }
   }
   return "";
+}
+
+// A value that is itself a registration bound to the site's scope or an owner
+// up its chain resolves there by hops: its bare id, else `[id, up]`. The
+// serializer writes any other bound registration as a reference.
+function bindEntry(state: State, scopeId: number, value: unknown) {
+  if (value && (typeof value === "object" || typeof value === "function")) {
+    const registered = getRegistered(value);
+    const bound = registered?.scope as ScopeInternals | undefined;
+    const up = bound && findOwnerDepth(state, scopeId, bound[K_SCOPE_ID]);
+    if (up !== undefined) return up ? [registered!.id, up] : registered!.id;
+  }
 }
 
 // A patched scope write: setup entries nest under `s` AFTER the seeds, so
@@ -683,16 +651,16 @@ export function _patch_write(
   const state = getState();
   if (state.writesPatches) {
     if (setup && !isInResumedBranch()) return "";
-    writeEmbeddedBinds(state, value);
+    // A write of a bound registration resolves by path like a handler slot.
+    const bind = bindEntry(state, scopeId, value);
+    const entryKey = (bind ? PatchKey.Bind : PatchKey.Write) + accessor;
+    if (bind) value = bind;
     if (setup) {
       const partial = patchPartial(state, scopeId);
-      ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
-        PatchKey.Write + accessor
-      ] = value;
+      ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[entryKey] =
+        value;
     } else {
-      writePatch(scopeId, {
-        [PatchKey.Write + accessor]: value,
-      });
+      writePatch(scopeId, { [entryKey]: value });
     }
   }
   return "";
@@ -732,27 +700,30 @@ export function _patch_dynamic_tag(
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
       // A renderer ships its comparable id (or itself bare); native names are
-      // `["div"]`/`>div`, args ride as array input, owner-bound content binds.
-      const bound = !!id && !!getRegistered(renderer as WeakKey)?.scope;
-      if (id && !bound) shipShell(state as PatchState, id);
+      // `["div"]`/`>div`, and args ride as array input.
+      const boundScope = id
+        ? (getRegistered(renderer as WeakKey)?.scope as
+            | ScopeInternals
+            | undefined)
+        : undefined;
+      // Owner-bound content (shipped content's owner, bound content's scope)
+      // is a `^` binding the tag's scope and one more per hop up; content
+      // bound off that chain rides as itself (a reference).
+      const ownerId = boundScope
+        ? boundScope[K_SCOPE_ID]
+        : id
+          ? (renderer as ServerRenderer)[RendererProp.Owner]
+          : undefined;
+      const up =
+        ownerId !== undefined && findOwnerDepth(state, scopeId, ownerId);
+      const byRef = !!boundScope && up === undefined;
+      if (id && !boundScope) shipShell(state as PatchState, id);
       if (contentId) shipShell(state as PatchState, contentId);
-      writeEmbeddedBinds(state, args);
-      if (bound) writeEmbeddedBinds(state, renderer);
       const native = typeof renderer === "string";
-      // Shipped content closes over its owner: a `^` per hop up from the
-      // tag (a body forwarded through tags) restores that link on creation.
       const entry: unknown[] = [
-        bound
-          ? renderer
-          : id
-            ? "^".repeat(
-                ownerHops(
-                  state,
-                  scopeId,
-                  (renderer as ServerRenderer)[RendererProp.Owner],
-                ),
-              ) + id
-            : renderer || 0,
+        id && !byRef
+          ? (ownerId === undefined ? "" : "^".repeat((up || 0) + 1)) + id
+          : renderer || 0,
         args || 0,
         contentId,
         varId,
@@ -890,7 +861,6 @@ export function _patch_attrs(
   group?: number,
 ) {
   if (patchFills(owned, group!)) {
-    writeEmbeddedBinds(getState(), data);
     // `controllable` marks a spread owning the element's controllable; the
     // array form carries `skip`/`controllable` without key bytes.
     writePatch(scopeId, {
@@ -914,7 +884,6 @@ export function _patch_attrs_partial(
   group?: number,
 ) {
   if (patchFills(owned, group!)) {
-    writeEmbeddedBinds(getState(), data);
     writePatch(scopeId, {
       [PatchKey.Attrs + accessor]: controllable
         ? [data ?? 0, skip, 1]
@@ -964,21 +933,19 @@ export function _content_withheld(id: string) {
   return !!state.definedContents?.has(id) && !state.renderedContents?.has(id);
 }
 
-// Only a shell the server can ship rides an entry: a missing one makes a
-// divergence unapplyable and the client rejects the patch.
-// The owner chain from a tag's scope: each hop is the scope's client `_`.
-function ownerHops(state: State, scopeId: number, ownerId?: number) {
+// How many owners up from a tag's scope `ownerId` is, each the scope's client
+// `_` (a content body's owner is where it was defined); none if off the chain.
+function findOwnerDepth(state: State, scopeId: number, ownerId?: number) {
   let up = 0;
-  for (let cur: number | undefined = scopeId; cur !== ownerId; up++) {
-    const link: PatchLink | undefined = state.patchLinks?.[cur!];
-    if (!link) return 0;
-    cur = link.owner ?? link.parent;
+  for (let cur: number | undefined = scopeId; cur !== undefined; up++) {
+    if (cur === ownerId) return up;
+    const link: PatchLink | undefined = state.patchLinks?.[cur];
+    cur = link && (link.owner ?? link.parent);
   }
-  return up;
 }
 
-// A named shell moves to the end of the set: the token forgets the least
-// recently used templates first when it runs past its budget.
+// Only a shell the server has rides an entry (a missing one rejects the patch);
+// a named one moves last, so a token over budget forgets the stalest first.
 function shipShell(state: PatchState, shellId: string | 0 | undefined) {
   if (shellId && rawShells[shellId]) {
     if (!(state.sentShells ??= new Set()).delete(shellId)) {

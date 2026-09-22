@@ -39,7 +39,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					start: 1
 				});
 				_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "4:6");
-			}, 1, "__tests__/template.marko_1_#text#0/await");
+			}, 1, "__tests__/template.marko_2*content");
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}

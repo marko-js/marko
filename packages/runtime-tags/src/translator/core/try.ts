@@ -19,9 +19,9 @@ import {
   mergeReferences,
 } from "../util/references";
 import {
-  addRuntimeFeatureAsset,
   callRuntime,
   importRuntimeFeature,
+  linkRuntimeFeature,
 } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
@@ -93,12 +93,11 @@ export default {
         bodySection.isBoundary = true;
         bodySection.upstreamExpression = tagExtra;
         if (isPatch()) {
-          // Page entry must ship the try's patchers even when this template's
-          // dom module never loads (a scriptless `<try>`); a body entry
-          // carrying its creation payload applies through `patch-try`.
-          addRuntimeFeatureAsset("patch-catch");
-          addRuntimeFeatureAsset("catch");
-          addRuntimeFeatureAsset("patch-try");
+          // Any `<try>` a patch may reach (scriptless, or in content one consumer
+          // renders stateful) applies its body entry through `patch-try`.
+          linkRuntimeFeature("catch");
+          linkRuntimeFeature("patch-try");
+          if (attrTags?.["@catch"]) linkRuntimeFeature("patch-catch");
         }
         structure.visit(tag, WalkCode.Replace);
         structure.enterShallow(tag);
@@ -120,9 +119,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        // A patch pairs or creates the body scope through a `PatchChild`
-        // entry, so the page must ship its patcher (both outputs).
-        if (isPatch()) importRuntimeFeature("patch-try");
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -178,7 +174,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        if (isPatch()) importRuntimeFeature("patch-try");
       },
       exit(tag) {
         const { node } = tag;
@@ -203,13 +198,9 @@ export default {
 
         const hasPlaceholder =
           !!tag.node.extra?.attributeTags?.["@placeholder"];
-        // A patch delivers a body's throw as the catch's entry.
-        const patchesCatch =
-          isPatch() && !!tag.node.extra?.attributeTags?.["@catch"];
         signal.build = () => {
           importRuntimeFeature("catch");
           if (hasPlaceholder) importRuntimeFeature("placeholder");
-          if (patchesCatch) importRuntimeFeature("patch-catch");
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeRef, true),

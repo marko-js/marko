@@ -25,6 +25,7 @@
 ```
 INSERT: main > p
 REMOVE: p + em
+UPDATE: p::text " " => "second"
 INSERT: main > em
 REMOVE: main > em + p
 ```

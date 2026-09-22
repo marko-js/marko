@@ -35,10 +35,9 @@ import {
   mergeReferences,
 } from "../util/references";
 import {
-  addRuntimeFeatureAsset,
+  linkRuntimeFeature,
   callRuntime,
   getHTMLRuntime,
-  importRuntimeFeature,
 } from "../util/runtime";
 import {
   ContentType,
@@ -131,7 +130,7 @@ export const IfTag = {
             ) &&
             isBranchPathSection(ifTagSection)
           ) {
-            addRuntimeFeatureAsset("patch-branch");
+            linkRuntimeFeature("patch-branch");
             recordStructuralParams(getSerializeSourcesForExpr(ifTagExtra));
           }
         });
@@ -366,17 +365,6 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
-          if (
-            isPatch() &&
-            isBranchPathSection(ifTagSection) &&
-            !branches.some(
-              ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
-            )
-          ) {
-            // An interactive page receives assets transitively through its
-            // dom program, so the feature import rides both outputs.
-            importRuntimeFeature("patch-branch");
-          }
           const ifTagExtra = branches[0][0].node.extra!;
           const nodeRef = getOptimizedOnlyChildNodeBinding(
             ifTag,

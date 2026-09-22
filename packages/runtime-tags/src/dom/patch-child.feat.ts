@@ -4,13 +4,8 @@ import {
   PatchKey,
   type Scope,
 } from "../common/types";
-import {
-  failPatch,
-  patchers,
-  patchRun,
-  patchScope,
-  withCreating,
-} from "./resume";
+import { runId } from "./queue";
+import { failPatch, patchers, patchScope, withCreating } from "./resume";
 
 declare module "./resume" {
   interface PatchValues {
@@ -37,7 +32,7 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   child[AccessorProp.Owner] ??= scope;
   // A scope this flush's shell walk created is bare (no render set it up):
   // its entries create, like the branch's own; a live one pairs.
-  if (child[AccessorProp.Gen] >= patchRun) {
+  if (child[AccessorProp.Gen] === runId) {
     withCreating(() => patchScope(value as Scope, child));
   } else {
     patchScope(value as Scope, child);

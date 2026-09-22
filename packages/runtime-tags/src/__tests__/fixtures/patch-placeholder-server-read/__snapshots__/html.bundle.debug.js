@@ -20,7 +20,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		_await($scope2_id, "#text/0", input.promise, () => {
 			const $scope3_id = _scope_id();
 			_html("<div id=done>done</div>");
-		}, 1, "__tests__/template.marko_2_#text#0/await");
+		}, 1, "__tests__/template.marko_3*content");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
 		$scope0_page && _resume_branch($scope2_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {

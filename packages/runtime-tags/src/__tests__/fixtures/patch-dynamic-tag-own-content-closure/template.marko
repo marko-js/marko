@@ -1,0 +1,7 @@
+<let/n=0/>
+<define/Content|{ label }: { label: string }|>
+  <let/count=0/>
+  <em onClick() { count++ }>${label} ${count} ${n}</em>
+</define>
+<${input.show ? Content : "span"} label=input.label/>
+<button onClick() { n++ }>${n}</button>

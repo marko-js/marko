@@ -10,7 +10,7 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isPatch } from "../util/marko-config";
-import { boundaryAlwaysPairs, inStatefulBranch } from "../util/patch/structure";
+import { boundaryAlwaysPairs, isPatchRendered } from "../util/patch/structure";
 import {
   BindingType,
   createBinding,
@@ -19,9 +19,9 @@ import {
   trackParamsReferences,
 } from "../util/references";
 import {
-  addRuntimeFeatureAsset,
   callRuntime,
   importRuntimeFeature,
+  linkRuntimeFeature,
 } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
@@ -36,11 +36,10 @@ import {
 import { getSerializeGuard } from "../util/serialize-guard";
 import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
-import { isShell } from "../util/shell";
+import { findShellId } from "../util/shell";
 import {
   addStatement,
   addValue,
-  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
@@ -111,12 +110,10 @@ export default {
 
     const bodySection = startSection(tagBody)!;
     bodySection.isBoundary = true;
-    // Page entry must ship the child patcher and branch-resume latch even
-    // when this template module does not load (a scriptless patch await).
+    // Any await a patch may reach (scriptless, or in content one consumer
+    // renders stateful) pairs its body scope through a `PatchChild` entry.
     if (isPatch()) {
-      addRuntimeFeatureAsset("patch-boundary");
-      // A scriptless created scope paints the settled body via text fills.
-      addRuntimeFeatureAsset("patch-text");
+      linkRuntimeFeature("patch-boundary");
       (section.awaits ??= []).push({
         binding: tagExtra.nodeBinding!,
         body: bodySection,
@@ -150,11 +147,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        // A patch pairs the body scope through a `PatchChild` entry, so the
-        // page must ship its patcher (the import rides both outputs).
-        if (isPatch()) {
-          importRuntimeFeature("patch-boundary");
-        }
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -173,15 +165,16 @@ export default {
         );
         // A thenable of client state alone resolves via `_await_promise`, so a
         // patch must not Pending it; otherwise (a server value, or a promise
-        // made in the template) Pending carries the body content id.
+        // made in the template) Pending carries the body's shell id.
+        const shellId = bodySection && findShellId(bodySection);
         const patchContent =
           isPatch() &&
           valueSources?.state &&
           !valueSources.param &&
           !valueSources.global
             ? t.numericLiteral(0)
-            : bodySection && isShell(bodySection)
-              ? t.stringLiteral(getResumeRegisterId(section, nodeRef, "await"))
+            : shellId
+              ? t.stringLiteral(shellId)
               : undefined;
 
         tag
@@ -198,7 +191,7 @@ export default {
                 ),
                 // A patch page always marks a patchable boundary: the
                 // flush pairs its body through the resumed branch link.
-                isPatch() && !inStatefulBranch(section)
+                isPatchRendered(section)
                   ? t.numericLiteral(1)
                   : getSerializeGuard(
                       section,
@@ -228,9 +221,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        if (isPatch()) {
-          importRuntimeFeature("patch-boundary");
-        }
       },
       exit(tag) {
         const { node } = tag;

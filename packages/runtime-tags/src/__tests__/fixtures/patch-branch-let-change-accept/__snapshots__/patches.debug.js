@@ -11,7 +11,7 @@
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko0": 0
     },
-    "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1/valueChange", 0, "TagVariableChange:count"]
+    "PatchBind:TagVariableChange:count": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1/valueChange"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1*shell"]
 }]
 "AgE"

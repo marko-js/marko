@@ -21,7 +21,7 @@ import {
 import { hasStateSource } from "../util/patch/decisions";
 import { getAllTagReferenceNodes } from "../util/references";
 import {
-  addRuntimeFeatureAsset,
+  linkRuntimeFeature,
   callRuntime,
   importRuntimeFeature,
 } from "../util/runtime";
@@ -152,11 +152,11 @@ export default {
       }
 
       (node.extra ??= {}).loadImport = loadImport;
-      // A flush revealing the tag waits for its module and may carry binds:
-      // the page needs both features, interactive or not.
+      // A flush revealing the tag waits for its module and may reference
+      // binds: the page needs both features, interactive or not.
       if (isPatch()) {
-        addRuntimeFeatureAsset("patch-ready");
-        addRuntimeFeatureAsset("patch-value-bind");
+        linkRuntimeFeature("patch-ready");
+        linkRuntimeFeature("patch-bind");
       }
       const file = getFile();
 
@@ -212,14 +212,6 @@ export default {
             node.attributes = undefined;
             return;
           } else {
-            // A patch page's flushes may carry data for this module before
-            // it loads; the feature defers them until its `ready()` call.
-            if (isPatch()) {
-              // A flush's ready batch may bind handlers before the child's
-              // own feature loads, so the page carries the bind feature.
-              importRuntimeFeature("patch-ready");
-              importRuntimeFeature("patch-value-bind");
-            }
             const file = getFile();
             const loadFile = loadFileForImport(file, node.source.value)!;
             const resolvedPath = resolveRelativePath(

@@ -35,6 +35,12 @@ export function boundaryAlwaysPairs(bodySection: Section) {
 
 // Whether the section renders inside stateful structure (inclusive), whose
 // bodies patch renders skip.
+// A patch render reaches the section: the page patches, and no stateful
+// structure (which resumed code re-renders) encloses it.
+export function isPatchRendered(section: Section) {
+  return isPatch() && !inStatefulBranch(section);
+}
+
 export function inStatefulBranch(section: Section | undefined) {
   while (section) {
     if (isStatefulBranch(section)) return true;

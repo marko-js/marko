@@ -14,7 +14,12 @@ import {
 } from "../../html";
 import { addAssetImport } from "./asset-imports";
 import { isTranslate } from "./get-compile-stage";
-import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
+import {
+  getMarkoOpts,
+  isOutputDOM,
+  isOutputHTML,
+  isPatch,
+} from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
@@ -118,11 +123,26 @@ export function callRuntime(
     importRuntime(name),
     filterArguments(args),
   );
-  if (isOutputDOM() && pureDOMFunctions.has(name)) {
-    return t.addComment(callExpression, "leading", "@__PURE__");
+  if (isOutputDOM()) {
+    if (isPatch() && scopeBoundRegistrations.has(name)) {
+      importRuntimeFeature("patch-bind");
+    }
+    if (pureDOMFunctions.has(name)) {
+      return t.addComment(callExpression, "leading", "@__PURE__");
+    }
   }
   return callExpression;
 }
+
+// Client registrations of values the server can bind to a scope. Any patched
+// value downstream may carry one (an entry, or a reference in data), so the
+// module registering it links their resolution.
+const scopeBoundRegistrations = new Set<string>([
+  "_content_resume",
+  "_el",
+  "_hoist_resume",
+  "_var_resume",
+]);
 
 // A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
 // import: it enables optional runtime behavior that referenced imports alone
@@ -161,15 +181,24 @@ export const domRuntimeFeatures = [
   "patch-text-content",
   "patch-try",
   "patch-value",
-  "patch-value-bind",
+  "patch-bind",
   "patch-var",
   "placeholder",
 ] as const;
 export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
-// The analyze-phase half of `importRuntimeFeature`: the page entry links
-// client assets from analyze metadata.
-export function addRuntimeFeatureAsset(feature: DOMRuntimeFeature) {
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    /** Client runtime features the template links from analyze. */
+    runtimeFeatures?: Set<DOMRuntimeFeature>;
+  }
+}
+
+// Links a client runtime feature from analyze: the page entry imports it
+// when the template's module never loads, and that module imports it too.
+export function linkRuntimeFeature(feature: DOMRuntimeFeature) {
   addAssetImport(`${getRuntimePath("dom")}/${feature}.feat`);
+  (getProgram().node.extra.runtimeFeatures ??= new Set()).add(feature);
 }
 
 const importedFeatures = new WeakMap<t.Program, Set<string>>();
@@ -184,7 +213,9 @@ export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!features) importedFeatures.set(program, (features = new Set()));
   if (!features.has(feature)) {
     features.add(feature);
-    program.body.push(
+    // Hoisted with the module's other imports: one landing among statements
+    // splits the bundler's view of the module body.
+    program.body.unshift(
       t.importDeclaration(
         [],
         t.stringLiteral(`${getRuntimePath("dom")}/${feature}.feat`),

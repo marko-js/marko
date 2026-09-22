@@ -1,10 +1,10 @@
 // PATCH
-[`a2;b%;<!><!><!>`, `a1;D ;<em> </em>`, `a3;/D%l&;<section><!></section>`, {
+[`a2;b%;<!><!><!>`, `a0;D ;<em> </em>`, `a3;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: "^a2",
+      fa: "^^a2",
       cAa: {
-        pa: "a1",
+        pa: "a0",
         cAa: {
           ta: "x"
         }
@@ -12,15 +12,15 @@
     }
   }, "a3"]
 }]
-"BgIAAA"
+"BgEBAA"
 
-// PATCH holding BgIAAA
+// PATCH holding BgEBAA
 {
   ba: [{
     ca: {
-      fa: "^a2",
+      fa: "^^a2",
       cAa: {
-        pa: "a1",
+        pa: "a0",
         cAa: {
           ta: "y"
         }
@@ -29,18 +29,18 @@
   }, "a3"]
 }
 
-// PATCH holding BgIAAA
+// PATCH holding BgEBAA
 {
   ba: 0
 }
 
-// PATCH holding BgIAAA
+// PATCH holding BgEBAA
 {
   ba: [{
     ca: {
-      fa: "^a2",
+      fa: "^^a2",
       cAa: {
-        pa: "a1",
+        pa: "a0",
         cAa: {
           ta: "z"
         }

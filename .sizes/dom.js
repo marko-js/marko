@@ -1,4 +1,4 @@
-// size: 29212 (min) 10794 (brotli)
+// size: 29192 (min) 10790 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -971,7 +971,7 @@ function _hoist_resume(id, ...path) {
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
-function beginPatch(render, runAt = runId) {
+function beginPatch(render) {
   ((patchRender = render), render.w(), (patching = 1));
 }
 function abortPatch() {
@@ -1984,6 +1984,7 @@ function _await_content(nodeAccessor, template, walks, setup) {
     promiseAccessor = "L" + nodeAccessor,
     renderer = _content("", template, walks, setup)();
   return (scope) => {
+    if (scope[branchAccessor]) return;
     let pendingScopes = collectScopes(
       () =>
         ((scope[branchAccessor] = createBranch(
@@ -2130,32 +2131,32 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let deferred,
-  flushVars = {};
+let deferred, bindRef;
 /**
  * The live page's side of `template.patch`: `[headers, apply]`, the headers
  * a patch request sends (what the page holds, for the server to elide) and
  * the apply for each flush.
  */
 function patch($global) {
-  let pageCtx,
-    trees = [],
-    responseCtx = (data) => (typeof data == "number" ? trees[data] : pageCtx(data));
+  let trees = [],
+    root,
+    responseCtx = (data, id, content) => (id ? bindRef(root, data, id, content) : trees[data]);
   responseCtx._ = _resumed;
-  let names = Object.keys(flushVars),
-    vars = Object.values(flushVars),
-    held = curRenders?.[$global.renderId]?.k;
+  let held = curRenders?.[$global.renderId]?.k;
   return [
     held ? { "x-marko-patch": held } : {},
     (flush) => {
-      ((patchers.$ ||= applyGlobals), (deferred = 0), beginPatch(curRenders[$global.renderId]));
+      ((patchers.$ ||= applyGlobals),
+        (curRenders[$global.renderId].q = responseCtx),
+        (deferred = 0),
+        beginPatch(curRenders[$global.renderId]));
       try {
-        let fn = Function("_", ...names, "$", "return " + flush);
+        let fn = Function("_", "$", "return " + flush);
         return (
           (patchRender.r = [
             (ctx) => {
-              pageCtx = ctx;
-              let value = fn(responseCtx, ...vars);
+              root = ctx(1);
+              let value = fn(responseCtx);
               if (typeof value == "string") patchRender.k = value;
               else {
                 let tree = Array.isArray(value) ? value[value.length - 1] : value;

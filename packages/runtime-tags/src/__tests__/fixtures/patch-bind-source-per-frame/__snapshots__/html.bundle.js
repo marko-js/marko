@@ -23,7 +23,7 @@ var template_default = _template_patch("a", (input) => {
 		}, "a", $scope1_id, "button", void 0, $scope0_reason, 0)}>one</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a5");
 		_subscribe($si__input_title && $handler2__closures, _subscribe($si__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
-	}, 1, "a3", 1);
+	}, 1, "a2", 1);
 	_await($scope0_id, "b", input.two, () => {
 		const $scope2_id = _scope_id();
 		_html(`<button${_patch_attrs({
@@ -37,7 +37,7 @@ var template_default = _template_patch("a", (input) => {
 			Ck: 1,
 			Cl: 1
 		})));
-	}, 1, "a4", 1);
+	}, 1, "a1", 1);
 	_html(`<em>${_patch_text($scope0_id, "c", count)}</em></main>`);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.title,

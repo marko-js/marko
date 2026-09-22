@@ -2,7 +2,7 @@ import type { TestConfig } from "../../main.test";
 import { resolveAfter, wait } from "../../utils/resolve";
 
 // A handler bound in one flush is bound again in the next: each streamed
-// flush re-ships the sources its bind references.
+// flush's reference reaches the handler's scope from the page root.
 export const config: TestConfig = {
   patches: true,
   steps: () => [

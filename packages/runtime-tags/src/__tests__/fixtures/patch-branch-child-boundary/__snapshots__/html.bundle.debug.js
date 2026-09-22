@@ -14,7 +14,7 @@ var loader_default = _template_patch("__tests__/tags/loader.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(_patch_text($scope1_id, "#text/0", v, void 0, $scope0_reason, 0));
 		_scope($scope1_id, {}, "__tests__/tags/loader.marko", "1:18");
-	}, 1, "__tests__/tags/loader.marko_0_#text#0/await", 1);
+	}, 1, "__tests__/tags/loader.marko_1*content", 1);
 	_html("</div>");
 }, 0, 0);
 

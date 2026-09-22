@@ -22,7 +22,7 @@ var template_default = _template_patch("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_patch_text($scope3_id, "a", related, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
-		}, 1, "a3", 1);
+		}, 1, "a1", 1);
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 6) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		$scope0_page && _resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_shell("a2", $scope0_id) }) }, 1);
@@ -31,7 +31,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<span>${_patch_text($scope4_id, "a", note, void 0, $scope0_reason, 2)}</span>`);
 		_scope($scope4_id, {});
-	}, 1, "a5", 1);
+	}, 1, "a0", 1);
 	_html(`</footer><button>Count ${_text_resume($scope0_id, "e", count, 2)}</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a6");
 	$scope0_page && _scope($scope0_id, {

@@ -5,8 +5,7 @@ const $input_content = $dynamicTag;
 
 // tags/card/index.marko
 const $if_content__input_content = /*@__PURE__*/ _fill_join("b0", 6, /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_content($scope.a, $scope._.g)));
-const $if_content__setup = $if_content__input_content;
-const $if = /*@__PURE__*/ _if(1, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
+const $if = /*@__PURE__*/ _if(1, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__input_content);
 const $open = /*@__PURE__*/ _fill_let("b1", 7, ($scope) => $if($scope, $scope.h ? 0 : 1));
 const $setup__script = _script("b0", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.h);

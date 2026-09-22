@@ -1,13 +1,11 @@
 // PATCH
 {
-  1: "packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-select/template.marko_0/up",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-select/template.marko0": bind(1),
+  "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-select/template.marko0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-select/template.marko_0/up",
   "PatchWrite:input_title": "b"
 }
 
 // PATCH
 {
-  1: "packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-select/template.marko_0/low",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-select/template.marko0": bind(1),
+  "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-select/template.marko0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-select/template.marko_0/low",
   "PatchWrite:input_title": "c"
 }

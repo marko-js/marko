@@ -27,11 +27,7 @@ import {
   finalizeReferences,
   trackParamsReferences,
 } from "../../util/references";
-import {
-  getCompatRuntimeFile,
-  getRuntimePath,
-  importRuntimeFeature,
-} from "../../util/runtime";
+import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import {
   forEachSection,
   getSectionRegisterReasons,
@@ -273,16 +269,6 @@ export default {
           program.skip();
           return;
         }
-      }
-
-      if (isPatch()) {
-        // A static shell slot is created client-side; the import rides both
-        // outputs (an interactive page gets assets through its dom program).
-        forEachSection((section) => {
-          if (section.contentShell === "static") {
-            importRuntimeFeature("patch-content");
-          }
-        });
       }
 
       if (isOutputHTML()) {

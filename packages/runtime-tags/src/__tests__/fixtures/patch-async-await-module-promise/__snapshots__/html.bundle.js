@@ -20,7 +20,7 @@ var template_default = _template_patch("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "a", value, void 0, 0, 0)}</em>`);
 				_scope($scope2_id, {});
-			}, 1, "a1");
+			}, 1, "a0");
 			$scope0_page && _scope($scope1_id, {});
 			return 0;
 		}

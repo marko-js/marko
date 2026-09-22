@@ -1,18 +1,18 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_1_#text#0/await;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_1*content;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_2*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_1*content;b%;<!><!><!>`, {
   "PatchChild:BranchScopes:#text/0": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_1_#text#0/await"
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_2*content"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_1*content", 0]
 }]
 {
   "PatchCatch:#text/0": [new Error("boom"), _(0)["PatchChild:BranchScopes:#text/0"][1], ""]
 }
-"BAEA"
+"BAEB"
 
-// PATCH holding BAEA
+// PATCH holding BAEB
 {
   "PatchChild:BranchScopes:#text/0": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_1_#text#0/await",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_2*content",
     "PatchChild:BranchScopes:#text/0": {
       "PatchText:#text/0": "back"
     }

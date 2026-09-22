@@ -13,11 +13,16 @@
     }, "x", {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko0": 0,
+          "PatchWrite:TagVariableChange:count": _([
+            ["#text/0", [0, "x"]], "#childScope/0"
+          ], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/tags/store.marko_0/_return")
         },
-        "PatchBind:1": [_.b = "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/tags/store.marko_0/_return", 2, _.c = "#childScope/0", _.d = "TagVariableChange:count"]
-      }, _.e = "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_3*shell"]
-    }, _.f = "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_2*shell"]
+        "PatchWrite:TagVariableChange:count": _([
+          ["#text/0", [0, "x"]], "#childScope/0"
+        ], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/tags/store.marko_0/_return")
+      }, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_3*shell"]
+    }, _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_2*shell"]
   }, "y", {
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
@@ -29,13 +34,18 @@
     "PatchLoop:#text/4": ["y", {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko0": 0,
+          "PatchWrite:TagVariableChange:count": _([
+            ["#text/0", [1, "y"]], "#childScope/0"
+          ], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/tags/store.marko_0/_return")
         },
-        "PatchBind:2": [_.b, 2, _.c, _.d]
-      }, _.e]
+        "PatchWrite:TagVariableChange:count": _([
+          ["#text/0", [1, "y"]], "#childScope/0"
+        ], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/tags/store.marko_0/_return")
+      }, _.b]
     }, "x", {
       "PatchBranch:#text/0": 0
-    }, _.f]
+    }, _.c]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_1*shell"]
 }]
 "BQIAAA"

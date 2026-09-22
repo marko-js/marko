@@ -42,6 +42,7 @@ import {
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push, some } from "../../util/optional";
 import { hasStateSource } from "../../util/patch/decisions";
+import { onFinalizePatch } from "../../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   inStatefulBranch,
@@ -65,7 +66,7 @@ import {
   type DOMRuntimeFeature,
   getHTMLRuntime,
   importRuntime,
-  addRuntimeFeatureAsset,
+  linkRuntimeFeature,
   importRuntimeFeature,
 } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
@@ -303,17 +304,11 @@ export default {
       if (relatedControllable && relatedControllable.attrs[1]) {
         hasEventHandlers = true;
       }
-      // A patched control links the control patcher and its kind's helper as
-      // assets, so the template module stays unloaded when nothing needs it.
       if (
         relatedControllable &&
         isPatch() &&
         isBranchPathSection(getOrCreateSection(tag))
       ) {
-        // Handler writes/binds ride the value feat's patchers.
-        addRuntimeFeatureAsset("patch-value");
-        addRuntimeFeatureAsset("patch-control");
-        addRuntimeFeatureAsset(getPatchControlFeature(relatedControllable));
         const controlValue = relatedControllable.attrs[0]?.value;
         if (controlValue) {
           ensurePatchWriteGroups(() => controlValue.extra || {});
@@ -352,7 +347,11 @@ export default {
           contentExtra.contentAttr = true;
           if (isPatch() && isBranchPathSection(tagSection)) {
             ensurePatchWriteGroups(() => contentExtra);
-            addRuntimeFeatureAsset("patch-dynamic-tag");
+            onFinalizePatch(() => {
+              if (writesPatchContent(tagSection, contentExtra)) {
+                linkRuntimeFeature("patch-dynamic-tag");
+              }
+            });
           }
         }
         if (spreadReferenceNodes && isAttrSetSpread(tagName)) {
@@ -365,7 +364,6 @@ export default {
           isBranchPathSection(tagSection)
         ) {
           addSerializeReason(tagSection, FORCED, nodeBinding);
-          addRuntimeFeatureAsset("patch-attr");
           for (const attr of node.attributes) {
             if (t.isMarkoAttribute(attr) && !isEventHandler(attr.name)) {
               const { value } = attr;
@@ -373,18 +371,25 @@ export default {
             }
           }
           if (spreadReferenceNodes && isAttrSetSpread(tagName)) {
-            addRuntimeFeatureAsset("patch-attrs");
-            if (controllableClaimFor(tagName)) {
-              addRuntimeFeatureAsset("controllable");
-            }
-            if (
+            const canHaveAttrContent =
               !node.body.body.length &&
               !isTextOnlyNativeTag(tag) &&
               !getTagDef(tag)?.parseOptions?.openTagOnly &&
-              !seen.content
-            ) {
-              addRuntimeFeatureAsset("patch-dynamic-tag");
-            }
+              !seen.content;
+            onFinalizePatch(() => {
+              if (writesPatchAttr(tagSection, node.extra)) {
+                linkRuntimeFeature("patch-attrs");
+                if (canHaveAttrContent) linkRuntimeFeature("patch-dynamic-tag");
+                // A spread owning the element's controllable (no static one
+                // survives the merge) re-claims it at run time.
+                if (
+                  !getUsedAttrs(tagName, node, true).staticControllable &&
+                  controllableClaimFor(tagName)
+                ) {
+                  linkRuntimeFeature("controllable");
+                }
+              }
+            });
             ensurePatchWriteGroups(() => node.extra || {});
           }
         }
@@ -451,6 +456,24 @@ export default {
             relatedControllable.attrs.find(Boolean)!.value,
             relatedControllable.attrs.map((it) => it?.value),
           );
+          // A patched control's entries apply through these features, for the
+          // controllable left static (a spread merges in a partial one).
+          if (isPatch()) {
+            onFinalizePatch(() => {
+              const controllable = getUsedAttrs(
+                tagName,
+                node,
+                true,
+              ).staticControllable;
+              if (
+                controllable &&
+                writesPatchControl(tagSection, controllable)
+              ) {
+                linkRuntimeFeature("patch-control");
+                linkRuntimeFeature(getPatchControlFeature(controllable));
+              }
+            });
+          }
         }
 
         if (textPlaceholders) {
@@ -467,8 +490,12 @@ export default {
           tagExtra[kTextContentExtra] = textExtra;
           if (isPatch() && isBranchPathSection(tagSection)) {
             addSerializeReason(tagSection, FORCED, nodeBinding);
-            addRuntimeFeatureAsset("patch-text-content");
             ensurePatchWriteGroups(() => textExtra);
+            onFinalizePatch(() => {
+              if (writesPatchAttr(tagSection, textExtra)) {
+                linkRuntimeFeature("patch-text-content");
+              }
+            });
           }
         }
 
@@ -509,7 +536,22 @@ export default {
 
       write`<${tagName}`;
 
-      for (const attr of getUsedAttrs(tagName, tag.node, true).staticAttrs) {
+      const { staticAttrs } = getUsedAttrs(tagName, tag.node, true);
+      if (isPatch()) {
+        onFinalizePatch(() => {
+          if (
+            staticAttrs.some(
+              ({ name, value }) =>
+                !value.extra?.confident &&
+                !isEventHandler(name) &&
+                writesPatchAttr(getSection(tag), value.extra),
+            )
+          ) {
+            linkRuntimeFeature("patch-attr");
+          }
+        });
+      }
+      for (const attr of staticAttrs) {
         const { name, value } = attr;
         const { confident, computed } = value.extra || {};
 
@@ -665,75 +707,56 @@ export default {
             addHTMLEffectCall(tagSection, undefined);
           }
 
-          // A patched control wires like a fill: the handler installs first
-          // (binds queue ahead), then the value entry applies authoritatively.
-          if (isPatch() && isBranchPathSection(tagSection)) {
-            const [valueAttr, changeAttr, groupValueAttr] =
-              staticControllable.attrs;
-            // A state-fed control (value or handler) is the client's: no
-            // entry re-binds or re-writes it.
-            if (
-              changeAttr &&
-              writesPatchHandler(tagSection, changeAttr.value)
-            ) {
-              write`${callRuntime(
-                "_patch_bind",
-                getScopeIdIdentifier(tagSection),
-                t.stringLiteral(
-                  getPrefixedScopeAccessor(
-                    nodeBinding!,
-                    getAccessorPrefix().ControlledHandler,
-                  ),
+          // A patched control wires like a fill: its handler slot applies
+          // first, then the value entry applies authoritatively.
+          const [valueAttr, changeAttr, groupValueAttr] =
+            staticControllable.attrs;
+          if (writesPatchChange(tagSection, staticControllable)) {
+            write`${callRuntime(
+              "_patch_bind",
+              getScopeIdIdentifier(tagSection),
+              t.stringLiteral(
+                getPrefixedScopeAccessor(
+                  nodeBinding!,
+                  getAccessorPrefix().ControlledHandler,
                 ),
-                t.cloneNode(changeAttr.value, true),
-                ...getExprWriteOwnership(changeAttr.value.extra),
-              )}`;
-            }
-            // A param-fed control value writes only under server ownership; a group
-            // entry also carries `value` so each node compares client-side.
-            const groupEntry =
-              staticControllable.helper === "_attr_input_checkedValue";
-            const controlExtras = groupEntry
-              ? [valueAttr?.value.extra, groupValueAttr?.value.extra]
-              : [valueAttr?.value.extra];
-            let clientControl = false;
-            for (const extra of controlExtras) {
-              clientControl ||= !!getSerializeSourcesForExpr(extra || {})
-                ?.state;
-            }
-            if (!clientControl)
-              write`${callRuntime(
-                "_patch_control",
-                getScopeIdIdentifier(tagSection),
-                t.cloneNode(visitAccessor!, true),
-                t.numericLiteral(getControlledType(staticControllable)),
-                groupEntry
-                  ? t.arrayExpression([
-                      valueAttr
-                        ? t.cloneNode(valueAttr.value, true)
-                        : buildUndefined(),
-                      groupValueAttr
-                        ? t.cloneNode(groupValueAttr.value, true)
-                        : buildUndefined(),
-                    ])
-                  : valueAttr && t.cloneNode(valueAttr.value, true),
-                ...getPatchWriteOwnership(
-                  groupEntry
-                    ? mergeSources(
-                        valueAttr &&
-                          getSerializeSourcesForExpr(
-                            valueAttr.value.extra || {},
-                          ),
-                        groupValueAttr &&
-                          getSerializeSourcesForExpr(
-                            groupValueAttr.value.extra || {},
-                          ),
-                      )
-                    : valueAttr &&
-                        getSerializeSourcesForExpr(valueAttr.value.extra || {}),
-                ),
-              )}`;
+              ),
+              t.cloneNode(changeAttr!.value, true),
+              ...getExprWriteOwnership(changeAttr!.value.extra),
+            )}`;
           }
+          // A param-fed control value writes only under server ownership.
+          const groupEntry = isPatchControlGroup(staticControllable);
+          if (writesPatchControl(tagSection, staticControllable))
+            write`${callRuntime(
+              "_patch_control",
+              getScopeIdIdentifier(tagSection),
+              t.cloneNode(visitAccessor!, true),
+              t.numericLiteral(getControlledType(staticControllable)),
+              groupEntry
+                ? t.arrayExpression([
+                    valueAttr
+                      ? t.cloneNode(valueAttr.value, true)
+                      : buildUndefined(),
+                    groupValueAttr
+                      ? t.cloneNode(groupValueAttr.value, true)
+                      : buildUndefined(),
+                  ])
+                : valueAttr && t.cloneNode(valueAttr.value, true),
+              ...getPatchWriteOwnership(
+                groupEntry
+                  ? mergeSources(
+                      valueAttr &&
+                        getSerializeSourcesForExpr(valueAttr.value.extra || {}),
+                      groupValueAttr &&
+                        getSerializeSourcesForExpr(
+                          groupValueAttr.value.extra || {},
+                        ),
+                    )
+                  : valueAttr &&
+                      getSerializeSourcesForExpr(valueAttr.value.extra || {}),
+              ),
+            )}`;
         }
 
         let writeAtStartOfBody: t.Expression | undefined;
@@ -975,11 +998,10 @@ export default {
           const contentStatements: t.Statement[] = [];
           // A server-owned `content=` re-renders from a dynamic tag entry,
           // like a dynamic tag (the client signal shape is the same).
-          const patched =
-            isPatch() &&
-            isBranchPathSection(tagSection) &&
-            !inStatefulBranch(tagSection) &&
-            !hasStateSource(staticContentAttr.value.extra);
+          const patched = writesPatchContent(
+            tagSection,
+            staticContentAttr.value.extra,
+          );
           let content: t.Expression = staticContentAttr.value;
           if (patched) {
             if (!t.isIdentifier(content)) {
@@ -1260,14 +1282,6 @@ export default {
               ),
             );
           }
-
-          // An interactive page receives features through its dom module,
-          // so the imports ride here beside the analyze-phase assets.
-          if (isPatch() && isBranchPathSection(tagSection)) {
-            importRuntimeFeature("patch-value");
-            importRuntimeFeature("patch-control");
-            importRuntimeFeature(getPatchControlFeature(staticControllable));
-          }
         }
 
         for (const attr of staticAttrs) {
@@ -1283,7 +1297,6 @@ export default {
                 // The dom compile shares the capture gating (errors must
                 // match html) and imports the feature the patch write applies.
                 const patched = writesPatchAttr(tagSection, value.extra);
-                if (patched) importRuntimeFeature("patch-attr");
                 const nodeExpr = createScopeReadExpression(nodeBinding!);
                 const meta: DelimitedAttrMeta = {
                   staticItems: undefined,
@@ -1364,7 +1377,6 @@ export default {
                 );
               } else {
                 const patched = writesPatchAttr(tagSection, value.extra);
-                if (patched) importRuntimeFeature("patch-attr");
                 addStatement(
                   patched ? "patched" : "render",
                   tagSection,
@@ -1398,19 +1410,6 @@ export default {
             : undefined;
           const controllable =
             !staticControllable && controllableClaimFor(staticName);
-          if (
-            isPatch() &&
-            isBranchPathSection(tagSection) &&
-            isAttrSetSpread(staticName)
-          ) {
-            importRuntimeFeature("patch-attrs");
-            if (canHaveAttrContent) importRuntimeFeature("patch-dynamic-tag");
-            // A spread that owns the element's controllable (no static attr
-            // does) re-claims it through the run-time claim table.
-            if (!staticControllable && controllableClaimFor(staticName)) {
-              importRuntimeFeature("controllable");
-            }
-          }
           if (skipExpression) {
             addStatement(
               "render",
@@ -1489,7 +1488,6 @@ export default {
             const textExtra = tagExtra[kTextContentExtra];
             const patched =
               !!textExtra && writesPatchAttr(getSection(tag), textExtra);
-            if (patched) importRuntimeFeature("patch-text-content");
             if (!t.isStringLiteral(textLiteral)) {
               addStatement(
                 patched ? "patched" : "render",
@@ -1545,6 +1543,55 @@ export function writesPatchAttr(
     return false;
   }
   return !getSerializeSourcesForExpr(extra || {})?.state;
+}
+
+// A server-owned `content=` re-renders from a dynamic tag entry.
+export function writesPatchContent(
+  tagSection: Section,
+  extra: t.NodeExtra | undefined,
+) {
+  return (
+    isPatch() &&
+    isBranchPathSection(tagSection) &&
+    !inStatefulBranch(tagSection) &&
+    !hasStateSource(extra)
+  );
+}
+
+// A server-owned change handler binds its slot (`_patch_bind`).
+function writesPatchChange(
+  tagSection: Section,
+  controllable: NonNullable<RelatedControllable>,
+) {
+  const changeAttr = controllable.attrs[1];
+  return !!changeAttr && writesPatchHandler(tagSection, changeAttr.value);
+}
+
+// A state-fed control value is the client's: no entry re-writes it.
+function writesPatchControl(
+  tagSection: Section,
+  controllable: NonNullable<RelatedControllable>,
+) {
+  return (
+    isPatch() &&
+    isBranchPathSection(tagSection) &&
+    !inStatefulBranch(tagSection) &&
+    !getPatchControlExtras(controllable).some(
+      (extra) => getSerializeSourcesForExpr(extra || {})?.state,
+    )
+  );
+}
+
+// A group entry also carries `value` so each node compares client-side.
+function getPatchControlExtras(controllable: NonNullable<RelatedControllable>) {
+  const [valueAttr, , groupValueAttr] = controllable.attrs;
+  return isPatchControlGroup(controllable)
+    ? [valueAttr?.value.extra, groupValueAttr?.value.extra]
+    : [valueAttr?.value.extra];
+}
+
+function isPatchControlGroup(controllable: NonNullable<RelatedControllable>) {
+  return controllable.helper === "_attr_input_checkedValue";
 }
 
 // A handler written inline merged its references with its control's, so

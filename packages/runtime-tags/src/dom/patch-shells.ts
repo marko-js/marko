@@ -5,7 +5,7 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
-import { queueEffect } from "./queue";
+import { queueEffect, runId } from "./queue";
 import { _content as content } from "./renderer";
 import {
   _patch_shells,
@@ -15,7 +15,6 @@ import {
   getRegisteredWithScope,
   patchCreated,
   patchers,
-  patchRun,
 } from "./resume";
 
 declare module "./resume" {
@@ -33,7 +32,7 @@ const _content = /*@__PURE__*/ withBranches(content);
 // creating) has no render coming, so its setup applies now; a fresh
 // branch's queued shell setup runs after, over the applied values.
 patchers[PatchKey.Setup] = (scope, _key, value) => {
-  if (creating && scope[AccessorProp.Gen] >= patchRun) {
+  if (creating && scope[AccessorProp.Gen] === runId) {
     patchCreated(value, scope);
   }
 };

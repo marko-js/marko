@@ -10,7 +10,7 @@ const click = (document: Document) => {
 };
 
 // Two await bodies settling in one chunk ship as two lines, the second
-// carrying a handler bind: the bind table must serve the later line.
+// carrying a handler reference that must resolve for the later line.
 export const config: TestConfig = {
   patches: true,
   steps: () => [

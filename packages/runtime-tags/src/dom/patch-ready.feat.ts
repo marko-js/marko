@@ -3,16 +3,13 @@ import {
   type Applied,
   applyDeferred,
   deferApply,
-  flushBinds,
   installPatchReady,
-  patchResponse,
 } from "./patch";
 import { isLoaded, startLoad } from "./patch-load";
 import {
   installReady,
   patchers,
   patchRender,
-  patchRun,
   patchScope,
   type RenderData,
 } from "./resume";
@@ -23,14 +20,12 @@ declare module "./resume" {
   }
 }
 
-// A flush held for its lazy modules: the wrapped root partial, and the
-// bind table and run of the flush, with every `applyPatch` promise awaiting.
+// A flush held for its lazy modules: the wrapped root partial and the
+// flush's response, with every `applyPatch` promise awaiting.
 type Held = [
   deps: string[],
   partial: Scope,
   scope: Scope,
-  binds: Record<string, unknown>,
-  run: number,
   resolvers: ((applied: Applied) => void)[],
   response: object,
 ];
@@ -72,7 +67,7 @@ patchers[PatchKey.Ready] = (scope, key, partial) => {
   let queue = held.get(patchRender);
   // A response re-ships full state: what an earlier one left waiting is
   // superseded, and its appliers settle as applied.
-  if (queue && queue[0][6] !== patchResponse) {
+  if (queue && queue[0][4] !== patchRender.q) {
     settle(patchRender, queue, 1);
     queue = undefined;
   }
@@ -80,15 +75,13 @@ patchers[PatchKey.Ready] = (scope, key, partial) => {
     patchScope(partial, scope);
     return;
   }
-  const resolvers: Held[5] = [];
+  const resolvers: Held[3] = [];
   (queue || held.set(patchRender, (queue = [])).get(patchRender))!.push([
     deps,
     partial,
     scope,
-    flushBinds,
-    patchRun,
     resolvers,
-    patchResponse,
+    patchRender.q!,
   ]);
   deferApply(new Promise((resolve) => resolvers.push(resolve)));
   for (const dep of deps) startLoad(dep);
@@ -98,11 +91,14 @@ patchers[PatchKey.Ready] = (scope, key, partial) => {
 function markReady(readyId: string) {
   for (const [render, queue] of held) {
     if (!queue.some(([deps]) => deps.includes(readyId))) continue;
+    // A later response (one naming no module) superseded the queue.
+    if (queue[0][4] !== render.q) {
+      settle(render, queue, 1);
+      continue;
+    }
     while (queue.length && queue[0][0].every(isLoaded)) {
-      const [, partial, scope, binds, run, resolvers] = queue.shift()!;
-      const applied = applyDeferred(render, binds, run, () =>
-        patchScope(partial, scope),
-      );
+      const [, partial, scope, resolvers] = queue.shift()!;
+      const applied = applyDeferred(render, () => patchScope(partial, scope));
       for (const resolve of resolvers) resolve(applied);
       if (!applied) {
         settle(render, queue, 0);
@@ -135,7 +131,7 @@ function discardHeld() {
 
 function settle(render: RenderData, queue: Held[], applied: Applied) {
   held.delete(render);
-  for (const [, , , , , resolvers] of queue) {
+  for (const [, , , resolvers] of queue) {
     for (const resolve of resolvers) resolve(applied);
   }
 }

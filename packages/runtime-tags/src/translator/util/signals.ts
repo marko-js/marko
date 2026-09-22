@@ -1723,6 +1723,9 @@ export function writeRegisteredFns() {
         registeredFn.referencesScope ||
         registeredFn.referencedLocals
       ) {
+        // A scope-bound registration can reach any patched value downstream
+        // (an entry, or a reference in data); the module registering it links it.
+        if (isPatch()) importRuntimeFeature("patch-bind");
         let params: (t.Identifier | t.Pattern)[];
         let prologue: t.Statement[] | undefined;
         if (registeredFn.referencedLocals) {

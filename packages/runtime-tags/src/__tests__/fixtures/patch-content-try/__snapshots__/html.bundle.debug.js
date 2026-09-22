@@ -48,7 +48,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 							_: _scope_with_id($scope3_id),
 							"ClosureSignalIndex:input_value": 1
 						}, "__tests__/template.marko", "5:10");
-					}, 1, "__tests__/template.marko_3_#text#0/await");
+					}, 1, "__tests__/template.marko_4*content");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
 					$scope0_page && _resume_branch($scope3_id);
 				}, $scope2_id), { placeholder: attrTag({ content: _content_shell("__tests__/template.marko_5*content", $scope2_id) }) });

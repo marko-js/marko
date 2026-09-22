@@ -4,7 +4,7 @@
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "a",
       "PatchChild:#childScope/1": {
-        "PatchDynamicTag:#text/0": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_2*content",
+        "PatchDynamicTag:#text/0": _.a = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_2*content",
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "n",
           "PatchText:#text/2": "1"
@@ -32,7 +32,7 @@
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "b",
       "PatchChild:#childScope/1": {
-        "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_2*content",
+        "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_2*content",
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "m",
           "PatchText:#text/2": "2"

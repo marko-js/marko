@@ -19,7 +19,7 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 		_await($scope2_id, "#text/0", input.promise, () => {
 			const $scope3_id = _scope_id();
 			_html("<span>done</span>");
-		}, 1, "__tests__/tags/card/index.marko_2_#text#0/await");
+		}, 1, "__tests__/tags/card/index.marko_3*content");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4"));
 		$scope0_page && _resume_branch($scope2_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_elide("__tests__/tags/card/index.marko_1*content", () => {

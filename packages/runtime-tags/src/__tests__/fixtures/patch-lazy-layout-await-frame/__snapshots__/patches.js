@@ -1,12 +1,12 @@
 // PATCH
-[`a1;b%b%;<!><!><!><!>`, `e0;b%;<!><!><!>`, `e4;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b/D%lD%l&b;<!><nav><!></nav><article><!></article><!>`, {
+[`a0;b%b%;<!><!><!><!>`, `e0;b%;<!><!><!>`, `e4;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b/D%lD%l&b;<!><nav><!></nav><article><!></article><!>`, {
   z2_a_b: {
     ca: {
       cAa: {
         ba: [1, {
           ca: {
-            pa: "a1",
-            fb: "^e0",
+            pa: "a0",
+            fb: "^^e0",
             cAb: {
               ba: "e4"
             }
@@ -43,17 +43,17 @@
     }
   }
 }]
-"EQIAAAQBAQI"
+"EQEBAAQBAQI"
 
-// PATCH holding EQIAAAQBAQI
+// PATCH holding EQEBAAQBAQI
 [`e5;b%b/b&b;<!><!><h1>B</h1><!>`, {
   z2_a_c: {
     ca: {
       cAa: {
         ba: [1, {
           ca: {
-            pa: "a1",
-            fb: "^e0",
+            pa: "a0",
+            fb: "^^e0",
             cAb: {
               ba: [1, {}, "e5"]
             },
@@ -76,9 +76,9 @@
     }
   }
 }]
-"EQIAAAQBAQAB"
+"EQEBAAQBAQAB"
 
-// PATCH holding EQIAAAQBAQAB
+// PATCH holding EQEBAAQBAQAB
 [`e3,<p>home</p>`, {
   ca: {
     cAa: {
@@ -86,4 +86,4 @@
     }
   }
 }]
-"EQIAAAQBAAAAAQ"
+"EQEBAAQBAAAAAQ"

@@ -7,6 +7,7 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPatch } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
+import { onFinalizePatch } from "../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   inStatefulBranch,
@@ -22,8 +23,7 @@ import {
 import {
   callRuntime,
   getHTMLRuntime,
-  addRuntimeFeatureAsset,
-  importRuntimeFeature,
+  linkRuntimeFeature,
 } from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
@@ -92,8 +92,17 @@ export default {
         addSerializeExpr(section, valueExtra, nodeBinding);
         if (isPatch() && isBranchPathSection(section)) {
           addSerializeReason(section, FORCED, nodeBinding);
-          addRuntimeFeatureAsset(node.escape ? "patch-text" : "patch-html");
           ensurePatchWriteGroups(() => valueExtra);
+          // A state-sourced hole recomputes through the signal graph, and
+          // inside stateful structure owner fills refresh it.
+          onFinalizePatch(() => {
+            if (
+              !inStatefulBranch(section) &&
+              !getSerializeSourcesForExpr(valueExtra)?.state
+            ) {
+              linkRuntimeFeature(node.escape ? "patch-text" : "patch-html");
+            }
+          });
         }
       }
     },
@@ -195,11 +204,6 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       !!nodeBinding &&
       !holeSources?.state;
     const isPatchText = isHTML && patchWrites;
-    // An interactive page receives assets transitively through its dom
-    // program, so the feature import rides both outputs.
-    if (patchWrites && !isHTML) {
-      importRuntimeFeature(node.escape ? "patch-text" : "patch-html");
-    }
 
     if (isHTML) {
       // `2` also asks the runtime to write a `<!>` before mergeable text; `0`

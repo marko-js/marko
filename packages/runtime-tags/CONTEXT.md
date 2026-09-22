@@ -260,10 +260,15 @@ whether it covers a structural-or-global param. Translate composes
 ownership masks and admission from it.
 _Avoid_: group feeds, group ownership, provenance, feed/feeder for a source
 
-**Bind `0`**:
-The serializer's last resort for a handler no recorded link reaches: the
-flush commit check rejects it and the client navigates. Analyze records why
-a faithful patch is impossible, never the mechanism.
+**Owner-bound entry / bind reference**:
+How a flush ships a registration bound to a scope. A value that is one,
+bound to the site's scope or an owner up its chain, rides an _owner-bound
+entry_ (its id and hops up) that resolves to the registered value as it
+applies. Any other is a _bind reference_ `_(path, id)`: the scope's links
+down from the page root (loop items by index, checked by key), walked on
+use; content resolves to its renderer. Both ride `patch-bind`, which the
+module registering a scope-bound value imports.
+_Avoid_: bind table, bind source, bind 0
 
 ## Compilation modes
 

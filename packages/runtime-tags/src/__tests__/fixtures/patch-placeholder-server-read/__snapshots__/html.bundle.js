@@ -18,7 +18,7 @@ var template_default = _template_patch("a", (input) => {
 		_await($scope2_id, "a", input.promise, () => {
 			_scope_id();
 			_html("<div id=done>done</div>");
-		}, 1, "a1");
+		}, 1, "a0");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		$scope0_page && _resume_branch($scope2_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a3", () => {

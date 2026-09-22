@@ -3,7 +3,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
-        "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_0/valueChange", 0, "#TagVariableChange"],
+        "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_0/valueChange",
         "PatchSetup:": {
           0: "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_0_bonus#7/var",
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko0": null
@@ -12,7 +12,7 @@
       "PatchLoop:#text/3": [{
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko1": 0,
         "PatchChild:#childScope/0": {
-          "PatchDynamicTag:#text/0": _.a = "^packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content",
+          "PatchDynamicTag:#text/0": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
             "PatchChild:#childScope/0": {
               "PatchSetup:": {
@@ -50,7 +50,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
-        "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_0/valueChange", 0, "#TagVariableChange"],
+        "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_0/valueChange",
         "PatchSetup:": {
           0: "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_0_bonus#7/var",
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko0": null
@@ -59,7 +59,7 @@
       "PatchLoop:#text/3": [{
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko1": 1,
         "PatchChild:#childScope/0": {
-          "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content",
+          "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
             "PatchChild:#childScope/0": {
               "PatchSetup:": {

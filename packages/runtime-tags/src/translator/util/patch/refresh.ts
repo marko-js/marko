@@ -27,12 +27,7 @@ import {
   type ReferencedExtra,
   type Sources,
 } from "../references";
-import {
-  getChildSectionOf,
-  getSectionRegisterReasons,
-  type Section,
-  someSection,
-} from "../sections";
+import { getChildSectionOf, type Section, someSection } from "../sections";
 import { isStableExpr } from "../serialize-guard";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
@@ -553,15 +548,4 @@ function enclosingMayCreate(section: Section): boolean {
   // consumer's root reduces to this template's tag, which the walk from
   // that tag settles.
   return !isPage();
-}
-
-// Resumed content (registered, no shell stands in) that a patched tag
-// names: the flush hands it over as a bind to the owner's registration.
-export function contentResumesForPatch(bodySection: Section | undefined) {
-  return (
-    !!bodySection &&
-    !bodySection.contentShell &&
-    !!getSectionRegisterReasons(bodySection) &&
-    contentIsPatched(bodySection)
-  );
 }

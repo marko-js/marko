@@ -1,7 +1,7 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1_#text#0/await;/D l&;<b class=pill> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_3*content;/D l&;<b class=pill> </b>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchBranch:#main/0": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1_#text#0/await",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_3*content",
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "one"
@@ -9,12 +9,12 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1*shell"]
 }]
-"BgIA"
+"BgIC"
 
-// PATCH holding BgIA
+// PATCH holding BgIC
 {
   "PatchBranch:#main/0": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_1_#text#0/await",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-scriptless/template.marko_3*content",
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "two"

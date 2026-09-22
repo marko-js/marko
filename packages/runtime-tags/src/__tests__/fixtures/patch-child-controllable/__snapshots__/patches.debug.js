@@ -14,7 +14,7 @@
       "PatchSetup:": {
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable/tags/counter/index.marko1": 0
       },
-      "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable/template.marko_0/onCount", 2, "TagVariableChange:count"]
+      "PatchBind:TagVariableChange:count": ["packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable/template.marko_0/onCount", 2]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable/tags/counter/index.marko_1*shell"]
   }
 }]

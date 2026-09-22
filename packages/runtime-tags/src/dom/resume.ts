@@ -19,7 +19,7 @@ import {
   ResumeSymbol,
   type Scope,
 } from "../common/types";
-import { runEffects, runId } from "./queue";
+import { runEffects } from "./queue";
 import { setParentBranch } from "./renderer";
 import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
@@ -68,10 +68,12 @@ export interface RenderData {
   // The server's account of what this render holds: the opaque token its
   // last patch response ended with, sent with the next request.
   k?: string;
+  // Its latest patch response, which supersedes what earlier ones left held.
+  q?: object;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 // What a patch of each kind carries, declared beside the patcher that
-// reads it; a bind source's index key is its own kind.
+// reads it; an integer key (`PatchKey.Var`) is its own kind.
 export interface PatchValues {}
 type PatchKind = PatchKey.Value | number;
 type Patcher<K extends PatchKind = PatchKind> = (
@@ -150,13 +152,10 @@ let lazyEnabled: undefined | 1;
 // while `patching`.
 export let patchRender!: RenderData;
 let patching: 0 | 1 = 0;
-// The run the flush began on: a scope created since is the flush's own
-// creation (its entries create); a deferred apply restores its flush's.
-export let patchRun = 0;
-
-export function beginPatch(render: RenderData, runAt = runId) {
+// A flush's creations all happen in its own run (a held partial applies in
+// a fresh one), so a scope with the current run's `Gen` is the flush's own.
+export function beginPatch(render: RenderData) {
   patchRender = render;
-  patchRun = runAt;
   // A page with no effects never wrote a walk call; pairing into resumed
   // branches needs the walked links, so finish the resume before patching.
   render.w();

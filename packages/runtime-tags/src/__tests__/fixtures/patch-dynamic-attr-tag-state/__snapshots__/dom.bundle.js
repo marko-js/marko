@@ -13,8 +13,7 @@ var card_default = /*@__PURE__*/ _template("a", $template, $walks, 0, $input);
 
 // template.marko
 const $inputonCardnull_content__input_label = /*@__PURE__*/ _fill_join_closure("b1", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f)), 0);
-const $inputonCardnull_content = /*@__PURE__*/ _content$1("b0", " ", " ", $inputonCardnull_content__input_label);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $inputonCardnull_content);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, /* @__PURE__ */ _content$1("b0", " ", " ", $inputonCardnull_content__input_label));
 const $input_on__OR__count = /*@__PURE__*/ _fill_join("b0", 4, /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.e ? card_default : null, () => ({ meta: attrTag({ n: $scope.g }) }))));
 const $count = /*@__PURE__*/ _let(6, $input_on__OR__count);
 const $setup__script = _script("b1", ($scope) => _on($scope.b, "click", function() {

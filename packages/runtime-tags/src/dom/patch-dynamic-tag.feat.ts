@@ -15,7 +15,7 @@ import { createPatchers, getRegisteredWithScope, patchers } from "./resume";
 
 // `[renderer, input, contentId, varId]`, a lone renderer bare; a native tag
 // name is `["div"]` alone or `>div` in a longer entry, array input is args,
-// and shipped content `^id` binds to the owner one `^` up per hop.
+// and owner-bound content `^id` binds to the tag's scope, one more `^` per hop up.
 patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
   scope,
   key,
@@ -29,8 +29,6 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
     string | 0 | undefined,
     string | 0 | undefined,
   ];
-  // A bind reference resolves owner-bound content.
-  if (typeof renderer === "function") renderer = renderer();
   if (typeof renderer === "string" && (bare || input !== undefined)) {
     if (renderer[0] === ">") {
       renderer = renderer.slice(1);
@@ -39,13 +37,13 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
         (AccessorPrefix.ConditionalRenderer + accessor) as Accessor
       ] as string | undefined;
       let id = renderer;
-      let owner = scope;
+      let owner: Scope | undefined;
       while (id[0] === "^") {
-        owner = owner[AccessorProp.Owner]!;
+        owner = owner ? owner[AccessorProp.Owner]! : scope;
         id = id.slice(1);
       }
       if (!input && current?.split(" ")[0] === id) return;
-      renderer = resolveContent(id, owner, owner !== scope);
+      renderer = getContent(id, owner);
       // Every template of the build has a record; the transport refuses
       // another build's patch, so an unresolved id is a bug.
       if (MARKO_DEBUG && !renderer) {
@@ -58,9 +56,7 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
   (
     _dynamic_tag(
       (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
-      contentId
-        ? (owner: Scope) => resolveContent(contentId as string, owner)!
-        : 0,
+      contentId ? () => getContent(contentId as string)! : 0,
       varId
         ? () => (owner: Scope, value: unknown) =>
             getRegisteredWithScope<(v: unknown) => void>(
@@ -72,9 +68,3 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
     ) as (scope: Scope, renderer: unknown, getInput?: () => unknown) => void
   )(scope, renderer || undefined, input ? () => input : undefined);
 };
-
-// Shipped content binds to a forwarded body's owner; the tag's own scope
-// owns body content, so that binding is implicit.
-function resolveContent(id: string, owner: Scope, bind?: boolean) {
-  return getContent(id, bind ? owner : undefined);
-}

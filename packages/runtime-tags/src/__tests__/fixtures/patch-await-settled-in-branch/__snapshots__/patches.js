@@ -1,25 +1,25 @@
 // PATCH
-[`a1;D ;<b> </b>`, `a2;D%;<section><!></section>`, {
+[`a0;D ;<b> </b>`, `a2;D%;<section><!></section>`, {
   ba: [{
-    pa: "a1",
+    pa: "a0",
     cAa: {
       ta: "x"
     }
   }, "a2"],
   tb: "b"
 }]
-"BAIA"
+"BAEB"
 
-// PATCH holding BAIA
+// PATCH holding BAEB
 {
   ba: 0,
   tb: "c"
 }
 
-// PATCH holding BAIA
+// PATCH holding BAEB
 {
   ba: [{
-    pa: "a1",
+    pa: "a0",
     cAa: {
       ta: "y"
     }

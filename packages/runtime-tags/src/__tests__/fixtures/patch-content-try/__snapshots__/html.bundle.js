@@ -45,7 +45,7 @@ var template_default = _template_patch("a", (input) => {
 							_: _scope_with_id($scope3_id),
 							Cf: 1
 						});
-					}, 1, "a2");
+					}, 1, "a1");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 					$scope0_page && _resume_branch($scope3_id);
 				}, $scope2_id), { placeholder: attrTag({ content: _content_shell("a0", $scope2_id) }) });

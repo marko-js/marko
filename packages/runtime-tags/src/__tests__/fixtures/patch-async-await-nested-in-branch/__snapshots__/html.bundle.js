@@ -22,14 +22,14 @@ var template_default = _template_patch("a", (input) => {
 					const $scope3_id = _scope_id();
 					_html(`<em>${_patch_text($scope3_id, "a", outer, void 0, $scope0_reason, 4)}:${_patch_text($scope3_id, "b", inner, 2, $scope0_reason, 5)}</em>`);
 					_subscribe(_unfilled_if($scope0_reason, 4) && $await_content__outer__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
-				}, 1, "a1");
+				}, 1, "a0");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 5) && $input_inner__closures, _scope($scope2_id, {
 					c: _source_if($scope0_reason, 5) && outer,
 					_: _scope_with_id($scope1_id),
 					d: $await_content__outer__closures
 				}));
 				$scope0_page && _resume_branch($scope2_id);
-			}, 1, "a3");
+			}, 1, "a2");
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

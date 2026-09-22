@@ -11,7 +11,7 @@
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-cross/template.marko0": 0
     },
-    "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-cross/template.marko_0/handler", 1, "TagVariableChange:count"]
+    "PatchBind:TagVariableChange:count": ["packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-cross/template.marko_0/handler", 1]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-cross/template.marko_1*shell"]
 }]
 "AgE"

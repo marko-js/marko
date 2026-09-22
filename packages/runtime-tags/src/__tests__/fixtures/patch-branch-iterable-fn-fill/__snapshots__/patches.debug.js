@@ -1,13 +1,12 @@
 // PATCH
 {
-  1: "packages/runtime-tags/src/__tests__/fixtures/patch-branch-iterable-fn-fill/template.marko_0/getTitle",
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-iterable-fn-fill/template.marko0": {
     label: "b",
-    *[(_.a = [bind(1)], Symbol.iterator)]() {
+    *[(_.a = [_([], "packages/runtime-tags/src/__tests__/fixtures/patch-branch-iterable-fn-fill/template.marko_0/getTitle")], Symbol.iterator)]() {
       yield* _.a
     }
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-iterable-fn-fill/template.marko1": "b",
   "PatchWrite:input_title": "b",
-  "PatchWrite:getTitle": bind(1)
+  "PatchBind:getTitle": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-iterable-fn-fill/template.marko_0/getTitle"
 }

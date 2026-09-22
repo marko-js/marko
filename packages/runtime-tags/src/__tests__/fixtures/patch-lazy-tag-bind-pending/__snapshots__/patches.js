@@ -2,10 +2,9 @@
 {
   z_a: {
     cb: {
-      1: "a0",
       ja: {
         title: "b",
-        onClick: b(1)
+        onClick: _(["b"], "a0")
       },
       wd: "b"
     }
@@ -16,10 +15,9 @@
 {
   z_a: {
     cb: {
-      1: "a0",
       ja: {
         title: "c",
-        onClick: b(1)
+        onClick: _(["b"], "a0")
       },
       wd: "c"
     }

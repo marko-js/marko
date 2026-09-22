@@ -12,6 +12,7 @@ import {
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
 import { isOutputHTML, isPatch } from "../util/marko-config";
+import { onFinalizePatch } from "../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   isBranchPathSection,
@@ -27,10 +28,9 @@ import {
   isReferencedExtra,
 } from "../util/references";
 import {
-  addRuntimeFeatureAsset,
+  linkRuntimeFeature,
   callRuntime,
   importRuntime,
-  importRuntimeFeature,
 } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -116,8 +116,12 @@ export default {
         isBranchPathSection(tagSection)
       ) {
         addSerializeReason(tagSection, FORCED, nodeBinding);
-        addRuntimeFeatureAsset("patch-text-content");
         ensurePatchWriteGroups(() => tagExtra);
+        onFinalizePatch(() => {
+          if (writesPatchAttr(tagSection, tagExtra)) {
+            linkRuntimeFeature("patch-text-content");
+          }
+        });
       }
     }
 
@@ -198,7 +202,6 @@ export default {
           !!nodeBinding &&
           isReferencedExtra(tagExtra) &&
           writesPatchAttr(tagSection, tagExtra);
-        if (patched) importRuntimeFeature("patch-text-content");
 
         if (!t.isStringLiteral(textLiteral)) {
           addStatement(

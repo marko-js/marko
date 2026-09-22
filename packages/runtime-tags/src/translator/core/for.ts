@@ -42,11 +42,7 @@ import {
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
-import {
-  addRuntimeFeatureAsset,
-  callRuntime,
-  importRuntimeFeature,
-} from "../util/runtime";
+import { linkRuntimeFeature, callRuntime } from "../util/runtime";
 import {
   ContentType,
   getChildSections,
@@ -237,7 +233,7 @@ export default {
       onClassifyStructure(tagSection, () => {
         // Patches render a loop that is not stateful.
         if (!isStatefulBranch(bodySection) && isBranchPathSection(tagSection)) {
-          addRuntimeFeatureAsset("patch-loop");
+          linkRuntimeFeature("patch-loop");
           recordStructuralParams(getSerializeSourcesForExpr(tagExtra));
         }
       });
@@ -436,16 +432,6 @@ export default {
         if (!bodySection) {
           tag.remove();
           return;
-        }
-
-        if (
-          isPatch() &&
-          isBranchPathSection(getSection(tag)) &&
-          !isStatefulBranch(bodySection)
-        ) {
-          // An interactive page receives assets transitively through its
-          // dom program, so the feature import rides both outputs.
-          importRuntimeFeature("patch-loop");
         }
 
         setSectionParentIsOwner(bodySection, true);

@@ -19,7 +19,7 @@ var template_default = _template_patch("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {});
-		}, 1, "a1", 1);
+		}, 1, "a0", 1);
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		$scope0_page && _resume_branch($scope2_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a3", (err) => {

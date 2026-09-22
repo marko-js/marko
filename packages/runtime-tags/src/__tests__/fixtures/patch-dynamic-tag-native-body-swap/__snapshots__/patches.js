@@ -23,7 +23,7 @@
 [`a;D%;<section><!></section>`, {
   fa: ["a", 0, "b0"],
   cAa: {
-    fa: "^b0",
+    fa: "^^b0",
     cAa: {
       ta: "d"
     }

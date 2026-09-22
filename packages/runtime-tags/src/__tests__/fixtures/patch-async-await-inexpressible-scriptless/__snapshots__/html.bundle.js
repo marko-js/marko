@@ -31,7 +31,7 @@ var template_default = _template_patch("a", (input) => {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
 				}));
-			}, 1, "a1");
+			}, 1, "a0");
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

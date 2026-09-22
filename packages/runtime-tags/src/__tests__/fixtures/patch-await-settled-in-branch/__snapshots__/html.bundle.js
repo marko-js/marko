@@ -16,7 +16,7 @@ var template_default = _template_patch("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<b>${_patch_text($scope2_id, "a", v, void 0, $scope0_reason, 2)}</b>`);
 				_scope($scope2_id, {});
-			}, 1, "a1");
+			}, 1, "a0");
 			_html("</section>");
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

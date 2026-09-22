@@ -14,6 +14,6 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", value, void 0, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
-	}, 1, "__tests__/template.marko_0_#text#0/await", 1);
+	}, 1, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 }, 1, 0);

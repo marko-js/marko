@@ -29,7 +29,6 @@ import {
   WALKER_RUNTIME_CODE,
 } from "./inlined-runtimes.debug";
 import {
-  getRegistered,
   K_SCOPE_ID,
   quote,
   register as serializerRegister,
@@ -378,49 +377,6 @@ export function peekPatchPartial(state: State, scopeId: number) {
   return state.patchTree?.[scopeId];
 }
 
-// Binds each scope-bound registration in a patch value while the
-// partial tree still accepts writes; the serialized slot references it.
-export function writeEmbeddedBinds(
-  state: State,
-  value: unknown,
-  seen?: Set<unknown>,
-) {
-  if (
-    !value ||
-    (typeof value !== "object" && typeof value !== "function") ||
-    seen?.has(value)
-  ) {
-    return;
-  }
-  const registered = getRegistered(value as WeakKey);
-  const bound = registered && (registered.scope as ScopeInternals | undefined);
-  if (bound) {
-    const binds = (state.binds ??= new Map());
-    if (!binds.has(value as WeakKey)) {
-      const n = (state.patchBinds = (state.patchBinds || 0) + 1);
-      // The bind index is the entry's key (`patch-value-bind.feat`).
-      writePatch(bound[K_SCOPE_ID]!, { [n]: registered.id });
-      binds.set(value as WeakKey, n);
-    }
-    return;
-  }
-  (seen ??= new Set()).add(value);
-  if (Array.isArray(value)) {
-    for (const item of value) writeEmbeddedBinds(state, item, seen);
-  } else if (value instanceof Map) {
-    for (const [key, item] of value) {
-      writeEmbeddedBinds(state, key, seen);
-      writeEmbeddedBinds(state, item, seen);
-    }
-  } else if (value instanceof Set) {
-    for (const item of value) writeEmbeddedBinds(state, item, seen);
-  } else if (typeof value === "object") {
-    for (const key in value) {
-      writeEmbeddedBinds(state, (value as Record<string, unknown>)[key], seen);
-    }
-  }
-}
-
 // A branch's partial opens detached before its render: the `Branch` entry
 // embeds it, so no write inside links it to the parent first.
 export function openPatchPartial(state: State, scopeId: number) {
@@ -436,29 +392,31 @@ export function patchPartial(
   let partial = partials[scopeId];
   if (!partial) {
     const link = state.patchLinks?.[scopeId];
-    const pending = link?.pending;
     partial = partials[scopeId] = {};
-    if (pending) {
-      // A child links into its parent's entry on its first write; boundary
-      // creation ids ride it and a paired branch ignores them.
-      const {
-        parent: parentScopeId,
-        content: contentId,
-        slots: slotIds,
-      } = link!;
-      const key = pending;
-      if (contentId) {
-        state.shipShell?.(contentId);
-        for (const id of slotIds || []) {
-          if (typeof id === "string") state.shipShell?.(id);
+    if (link) {
+      // A scope writing after its parent's structural entry re-links
+      // through it: a child entry by accessor (boundary creation ids ride
+      // it; a paired branch ignores them), or a loop item by its hop.
+      const { parent, link: hop, content: contentId, slots: slotIds } = link;
+      if (typeof hop === "string") {
+        if (contentId) {
+          state.shipShell?.(contentId);
+          for (const id of slotIds || []) {
+            if (typeof id === "string") state.shipShell?.(id);
+          }
         }
-        writePatch(parentScopeId, {
-          [key]: slotIds
-            ? [partial, contentId, ...slotIds]
-            : [partial, contentId],
+        writePatch(parent, {
+          [PatchKey.Child + hop]: contentId
+            ? slotIds
+              ? [partial, contentId, ...slotIds]
+              : [partial, contentId]
+            : partial,
         });
       } else {
-        writePatch(parentScopeId, { [key]: partial });
+        (
+          (patchPartial(state, parent)[PatchKey.LoopItem + hop[0]] ??=
+            []) as unknown[]
+        ).push(hop[1], partial);
       }
     } else if (scopeId === state.rootScopeId) {
       // Every other partial nests inside an ancestor's structural entry rooted
@@ -1736,10 +1694,8 @@ type RuntimeKey = RuntimeKey.Value;
 // How a scope's partial reaches its parent's entry.
 export interface PatchLink {
   parent: number;
-  // A child accessor, or a keyed loop hop.
-  link: string | [accessor: string, key: unknown];
-  // The entry key a boundary child writes on its first write.
-  pending?: string;
+  // A child accessor, or a loop item: its index, with its key when not that.
+  link: string | [accessor: string, at: number | [index: number, key: unknown]];
   content?: string;
   slots?: (string | 0 | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
@@ -1806,10 +1762,8 @@ export class State implements SerializeState {
   // root is the first to name: a flush applies once all are resident, in order.
   declare patchReadyIds?: Set<string>;
   declare patchFlushReadyIds?: Set<string>;
-  declare patchBinds?: number;
-  declare binds?: Map<WeakKey, number>;
-  // How a scope hangs off its parent: the link a bind walk follows and, until
-  // its first write, the entry key its partial nests under.
+  // How a scope hangs off its parent: a reference's path from the root walks
+  // these, and a scope writing after its parent's entry re-links through one.
   declare patchLinks?: Record<number, PatchLink>;
   declare patchFlushed?: 1;
   declare patchInert?: 1;

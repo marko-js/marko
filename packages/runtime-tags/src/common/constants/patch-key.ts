@@ -4,6 +4,7 @@ export const Attr = "a";
 // A spread's whole attribute set: the client re-applies it as a render.
 export const Attrs = "j";
 export const Bind = "d";
+export const BindValue = "u";
 export const Branch = "b";
 export const Catch = "k";
 export const Child = "c";
@@ -31,6 +32,7 @@ export const Value = "v";
 // ids, each but the last behind its length) are resident, behind the
 // response's held flushes.
 export const Ready = "z";
+export const LoopItem = "r";
 // Setup-only: a child's tag-variable wiring, registered at its owner. An
 // integer key enumerates ahead of the fills that return through it.
 export const Var = "0";

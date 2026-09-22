@@ -35,7 +35,6 @@ import {
 } from "../../util/patch/decisions";
 import { addPatchChildRenderer } from "../../util/patch/intrinsics";
 import { onFinalizePatch } from "../../util/patch/lifecycle";
-import { contentResumesForPatch } from "../../util/patch/refresh";
 import {
   ensurePatchWriteGroups,
   inResumedStructure,
@@ -55,7 +54,7 @@ import {
   bindingUtil,
 } from "../../util/references";
 import {
-  addRuntimeFeatureAsset,
+  linkRuntimeFeature,
   callRuntime,
   getCompatRuntimeFile,
   importRuntime,
@@ -202,10 +201,7 @@ export default {
           if (isContentRenderTag(tag) || isServerOwnedDynamicTag(tag)) {
             ensurePatchWriteGroups(() => tagExtra);
             if (writesPatchDynamicTag(tag, tagSection)) {
-              addRuntimeFeatureAsset("patch-dynamic-tag");
-              if (hasVar || contentResumesForPatch(bodySection)) {
-                addRuntimeFeatureAsset("patch-value-bind");
-              }
+              linkRuntimeFeature("patch-dynamic-tag");
             }
           }
         });
@@ -288,16 +284,6 @@ export default {
 
       if (isOutputHTML()) {
         writer.flushBefore(tag);
-      }
-      // The import rides both outputs (interactive pages load it transitively).
-      if (writesPatchDynamicTag(tag, getSection(tag))) {
-        importRuntimeFeature("patch-dynamic-tag");
-        if (
-          tag.node.var ||
-          contentResumesForPatch(getSectionForBody(tag.get("body")))
-        ) {
-          importRuntimeFeature("patch-value-bind");
-        }
       }
       // An unknown renderer defeats transitive `$global` knowledge; `input`
       // content is the parent's own, already counted where it was compiled.

@@ -1,6 +1,5 @@
 // PATCH
 {
-  1: "a0",
   pa: 1,
   pb: 1,
   tc: "0",
@@ -9,17 +8,16 @@
     ja: {
       id: "one",
       title: "b",
-      onClick: b(1)
+      onClick: _([], "a0")
     }
   }
 }
 {
-  1: "a0",
   cAb: {
     ja: {
       id: "two",
       title: "b",
-      onClick: b(1)
+      onClick: _([], "a0")
     }
   }
 }

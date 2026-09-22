@@ -1,10 +1,10 @@
 // PATCH
-[`a1;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `d3;b%b/b&b;<!><!><h1>A</h1><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
+[`a0;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `d3;b%b/b&b;<!><!><h1>A</h1><!>`, `d1;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
   z2_a_b: {
     ba: [1, {
       ca: {
-        pa: "a1",
-        fb: "^d0",
+        pa: "a0",
+        fb: "^^d0",
         cAb: {
           ba: "d3"
         }
@@ -27,15 +27,15 @@
     }
   }
 }]
-"DAIAAwAB"
+"DAEBAwAB"
 
-// PATCH holding DAIAAwAB
+// PATCH holding DAEBAwAB
 [`d4;b%b/b&b;<!><!><h1>B</h1><!>`, {
   z2_a_c: {
     ba: [1, {
       ca: {
-        pa: "a1",
-        fb: "^d0",
+        pa: "a0",
+        fb: "^^d0",
         cAb: {
           ba: [1, {}, "d4"]
         },
@@ -48,10 +48,10 @@
     }, "d1"]
   }
 }]
-"DAIAAwABAA"
+"DAEBAwABAA"
 
-// PATCH holding DAIAAwABAA
+// PATCH holding DAEBAwABAA
 [`d2,<p>home</p>`, {
   ba: "d2"
 }]
-"DAIAAwAAAAA"
+"DAEBAwAAAAA"

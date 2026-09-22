@@ -1,13 +1,11 @@
 // PATCH
 {
-  1: "packages/runtime-tags/src/__tests__/fixtures/patch-child-ctrl-server-handler/template.marko_0/handle",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-ctrl-server-handler/template.marko0": bind(1),
+  "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-ctrl-server-handler/template.marko0": "packages/runtime-tags/src/__tests__/fixtures/patch-child-ctrl-server-handler/template.marko_0/handle",
   "PatchWrite:input_prefix": "B"
 }
 
 // PATCH
 {
-  1: "packages/runtime-tags/src/__tests__/fixtures/patch-child-ctrl-server-handler/template.marko_0/handle",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-ctrl-server-handler/template.marko0": bind(1),
+  "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-ctrl-server-handler/template.marko0": "packages/runtime-tags/src/__tests__/fixtures/patch-child-ctrl-server-handler/template.marko_0/handle",
   "PatchWrite:input_prefix": "C"
 }

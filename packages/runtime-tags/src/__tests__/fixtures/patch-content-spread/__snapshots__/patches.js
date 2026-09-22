@@ -1,6 +1,5 @@
 // PATCH
 {
-  1: "a0",
   ja: {
     class: "c2",
     "data-x": 1
@@ -8,7 +7,7 @@
   cAa: {
     ta: "b"
   },
-  fb: b(1),
+  fb: "^a0",
   jb: {
     class: "c2",
     "data-x": 1
@@ -20,14 +19,13 @@
 
 // PATCH
 {
-  1: "a0",
   ja: {
     class: "c3"
   },
   cAa: {
     ta: "c"
   },
-  fb: b(1),
+  fb: "^a0",
   jb: {
     class: "c3"
   },

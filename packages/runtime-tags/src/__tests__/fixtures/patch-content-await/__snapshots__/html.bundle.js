@@ -40,7 +40,7 @@ var template_default = _template_patch("a", (input) => {
 						_: _scope_with_id($scope2_id),
 						Cf: 1
 					}));
-				}, 1, "a1");
+				}, 1, "a0");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				$scope0_page && _resume_branch($scope2_id);
 			}, $scope1_id) });

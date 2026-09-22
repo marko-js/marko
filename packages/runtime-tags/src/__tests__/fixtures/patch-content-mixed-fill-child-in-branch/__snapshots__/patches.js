@@ -3,14 +3,14 @@
   ba: [{
     ca: {
       ca: {
-        d1: ["c0", 0, "U"],
+        dU: "c0",
         s: {
           0: "a1",
           vc0: null
         }
       },
       cd: {
-        fa: "^a0",
+        fa: "^^a0",
         cAa: {
           ca: {
             s: {
@@ -34,14 +34,14 @@
   ba: [{
     ca: {
       ca: {
-        d1: ["c0", 0, "U"],
+        dU: "c0",
         s: {
           0: "a1",
           vc0: null
         }
       },
       cd: {
-        fa: "^a0",
+        fa: "^^a0",
         cAa: {
           ca: {
             s: {

@@ -12,8 +12,7 @@ const $input_note = ($scope, input_note) => _text($scope.b, input_note);
 
 // template.marko
 const $if_content__input_badge_label = /*@__PURE__*/ _fill_join("a1", 9, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_label($scope.a, $scope._.j)));
-const $if_content__setup = $if_content__input_badge_label;
-const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__setup);
+const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__input_badge_label);
 const $input_props__OR__on = /*@__PURE__*/ _fill_join("a0", 6, /*@__PURE__*/ _or(8, ($scope) => {
 	const $card_input_spread = {
 		...$scope.g,

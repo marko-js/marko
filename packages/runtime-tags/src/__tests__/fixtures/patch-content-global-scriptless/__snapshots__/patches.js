@@ -12,7 +12,7 @@
   bb: [{
     ca: {
       ta: "x",
-      fb: "^a0",
+      fb: "^^a0",
       cAb: {
         ta: "Zed"
       }
@@ -35,7 +35,7 @@
   bb: [{
     ca: {
       ta: "x",
-      fb: "^a0",
+      fb: "^^a0",
       cAb: {
         ta: "Zed"
       }
@@ -57,7 +57,7 @@
   bb: [{
     ca: {
       ta: "x",
-      fb: "^a0",
+      fb: "^^a0",
       cAb: {
         ta: "Qux"
       }

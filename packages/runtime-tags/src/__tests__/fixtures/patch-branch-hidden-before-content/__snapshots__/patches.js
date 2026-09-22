@@ -1,25 +1,25 @@
 // PATCH
-[`a1;D ;<em> </em>`, {
+[`a0;D ;<em> </em>`, {
   ba: 0,
   cb: {
     cAa: {
-      pa: "a1",
+      pa: "a0",
       cAa: {
         ta: "two"
       }
     }
   }
 }]
-"BgI"
+"BgE"
 
-// PATCH holding BgI
+// PATCH holding BgE
 [`a3;D ;<p class=error> </p>`, {
   ba: [{
     ta: "bad"
   }, "a3"],
   cb: {
     cAa: {
-      pa: "a1"
+      pa: "a0"
     }
   }
 }]
@@ -32,14 +32,14 @@
     }
   }
 }
-"BgIB"
+"BgEC"
 
-// PATCH holding BgIB
+// PATCH holding BgEC
 {
   ba: 0,
   cb: {
     cAa: {
-      pa: "a1"
+      pa: "a0"
     }
   }
 }

@@ -4,7 +4,7 @@
     cAb: {
       ca: {
         ta: "two",
-        fb: "^c0",
+        fb: "^^c0",
         cAb: {
           ta: "two"
         }
@@ -20,7 +20,7 @@
     cAb: {
       ca: {
         ta: "three",
-        fb: "^c0",
+        fb: "^^c0",
         cAb: {
           ta: "three"
         }
@@ -35,7 +35,7 @@
     cAb: {
       ca: {
         ta: "four",
-        fb: "^c0",
+        fb: "^^c0",
         cAb: {
           ta: "four"
         }

@@ -1,7 +1,7 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1_#text#0/await;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_2*content;/E%c%l l&;<div class=counter><span><!>: <!></span><button class=inc>+</button></div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchBranch:#text/0": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1_#text#0/await"
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_2*content"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/template.marko_1*shell"]
 }]
 {
@@ -17,4 +17,4 @@
     }
   }
 }
-"BQIA"
+"BQIB"

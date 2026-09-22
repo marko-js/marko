@@ -1,4 +1,4 @@
-import { BIND_FLUSH_VAR } from "../common/meta";
+import { RendererProp } from "../common/types";
 import * as Char from "./constants/char";
 import type { Boundary } from "./writer";
 
@@ -790,6 +790,12 @@ function newScopeReference(state: State, val: WeakKey, scopeId: number) {
   return ref;
 }
 
+// An optimized register id is a hashed template id and key in the
+// identifier alphabet; only a debug id (a file path) can need escaping.
+function quoteRegisterId(id: string) {
+  return MARKO_DEBUG ? quote(id, 0) : '"' + id + '"';
+}
+
 function writeRegistered(
   state: State,
   val: WeakKey,
@@ -798,20 +804,21 @@ function writeRegistered(
   registered: Registered,
 ) {
   const { scope } = registered;
-  // Patch-render scope ids have no client-side map, so a bound
-  // registration references the bind recorded at render time instead.
   if (scope && state.boundary?.state?.writesPatches) {
-    const n = (
-      state.boundary.state as { binds?: Map<WeakKey, number> }
-    ).binds?.get(val);
-    // The render-time scan walks what the serializer walks, so every
-    // scoped registration it reaches was bound.
-    if (MARKO_DEBUG && !n) {
-      throw new Error(
-        `A patch cannot deliver the scoped registration "${registered.id}".`,
-      );
-    }
-    state.buf.push(BIND_FLUSH_VAR + "(" + n + ")");
+    state.buf.push("_([");
+    writePatchScopePath(
+      state,
+      (scope as ScopeInternals)[K_SCOPE_ID]!,
+      registered.id,
+    );
+    // Content resolves to its renderer, so the client can render it.
+    state.buf.push(
+      "]," +
+        quoteRegisterId(registered.id) +
+        ((val as { [RendererProp.Id]?: string })[RendererProp.Id]
+          ? ",1)"
+          : ")"),
+    );
   } else if (scope) {
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(
@@ -829,11 +836,49 @@ function writeRegistered(
     // The serialize context resolves both registry id and render-local scope.
     const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
     trackScope(state, scope, scopeId);
-    state.buf.push("_(" + scopeId + "," + quote(registered.id, 0) + ")");
+    state.buf.push("_(" + scopeId + "," + quoteRegisterId(registered.id) + ")");
   } else {
     state.buf.push(registered.access);
   }
   return true;
+}
+
+// Patch scope ids have no client-side map, so a bound registration names its
+// scope by the links down from the page root (written root first).
+function writePatchScopePath(state: State, scopeId: number, id: string) {
+  const { patchLinks, rootScopeId } = state.boundary!.state;
+  if (scopeId === rootScopeId) return;
+  const link = patchLinks?.[scopeId];
+  if (!link) {
+    if (MARKO_DEBUG) {
+      throw new Error(
+        `A patch cannot deliver the scoped registration "${id}".`,
+      );
+    }
+    return;
+  }
+  writePatchScopePath(state, link.parent, id);
+  if (link.parent !== rootScopeId) state.buf.push(",");
+  // Accessors are compiler-made (nothing to escape); a loop key is data.
+  const hop = link.link;
+  if (typeof hop === "string") {
+    state.buf.push('"' + hop + '"');
+  } else {
+    const [accessor, at] = hop;
+    state.buf.push(
+      '["' +
+        accessor +
+        '",' +
+        (typeof at === "number"
+          ? at
+          : "[" +
+            at[0] +
+            "," +
+            (typeof at[1] === "number" ? at[1] : quote(at[1] + "", 0)) +
+            "]") +
+        "]",
+    );
+  }
 }
 
 // Long strings gain a binding only when repeated.

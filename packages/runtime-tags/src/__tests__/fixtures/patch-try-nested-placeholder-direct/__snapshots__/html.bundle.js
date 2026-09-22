@@ -23,7 +23,7 @@ var template_default = _template_patch("a", (input) => {
 				const $scope6_id = _scope_id();
 				_html(`<span>${_patch_text($scope6_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
 				_scope($scope6_id, {});
-			}, 1, "a3", 1);
+			}, 1, "a0", 1);
 			$scope0_page && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			$scope0_page && _resume_branch($scope2_id);
 		}, $scope1_id), {

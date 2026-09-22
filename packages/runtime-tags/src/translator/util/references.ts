@@ -43,11 +43,12 @@ import {
 } from "./optional";
 import { finalizePatch } from "./patch/lifecycle";
 import {
+  getFillConditions,
   getRootGlobalReads,
   isPatchFillBinding,
   isPatchWriteBinding,
 } from "./patch/refresh";
-import { addRuntimeFeatureAsset, callRuntime } from "./runtime";
+import { linkRuntimeFeature, callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   ensureReasonGroups,
@@ -181,9 +182,6 @@ export interface Binding {
    * binding that fills (`upstreamSourcesFill`), and the value expressions
    * drop after resolution. */
   upstreams: SortedOpt<Binding>;
-  /** Can hold a function a fill must carry bind-aware: a literal fn,
-   * an invoked or handler-attr read, or a derivation over one. */
-  functionValued: boolean;
   /** Binding-side counterpart of `Section.serializePropKeys`, keyed by
    * accessor prefix (`undefined` is the plain binding key). */
   serializePropKeys:
@@ -242,8 +240,6 @@ declare module "@marko/compiler/dist/types" {
      * tag, `<try>`, `<await>`). */
     nodeBinding?: Binding;
     referencedBindings?: ReferencedBindings;
-    /** The expression contains a function (recorded by the function visitor). */
-    functionValued?: true;
     downstream?: SortedOpt<Binding>;
     /** The initial value of the binding it feeds, which keeps it rather than
      * following it, so the binding derives no sources from it. */
@@ -348,7 +344,6 @@ export function createBinding(
     upstreamOfStructure: false,
     registeredFnCapture: false,
     upstreams: undefined,
-    functionValued: false,
     serializePropKeys: undefined,
     reserveSize: 0,
   };
@@ -1575,9 +1570,11 @@ export function finalizeReferences() {
     if (isPatch()) {
       forEach(section.bindings, (binding) => {
         const fills = isPatchFillBinding(binding);
-        // A fill entry needs its patcher on every page this template
-        // renders into, interactive or not.
-        if (fills) addRuntimeFeatureAsset("patch-value");
+        // A fill entry needs its patcher on every page this template renders
+        // into; one only a client upstream needs rides the call site's link.
+        if (fills && !getFillConditions(binding)?.upstreams) {
+          linkRuntimeFeature("patch-value");
+        }
         if (fills || isPatchWriteBinding(binding)) {
           ensureReasonGroups(getSerializeSourcesForRef(binding));
         }
@@ -1888,18 +1885,12 @@ function resolveDerivedSources(binding: Binding) {
       exprs,
       (expr) => isReferencedExtra(expr) && !expr.initialValue,
     ) as Opt<ReferencedExtra>;
-    forEach(exprs, (expr) => {
-      // A value holding a function literal (or one selected among
-      // function-valued bindings) can carry one.
-      if (expr.functionValued) binding.functionValued = true;
-    });
     forEach(valueExprs, (expr) => {
       refs = bindingUtil.union(refs, expr.referencedBindings);
     });
     forEach(refs, (ref) => {
       resolveBindingSources(ref);
       binding.upstreams = bindingUtil.add(binding.upstreams, ref);
-      if (ref.functionValued) binding.functionValued = true;
       stable &&= !!ref.stable;
     });
     // An expression's serialize sources read its references' resolved ones.
@@ -2172,13 +2163,7 @@ function addReadToExpression(
 
   if (!fnRoot && isSerializedChangeHandlerRead(exprRoot)) {
     read.serializedValue = true;
-    // The captured handler can be a scope-bound registration, so its
-    // fill must carry it bind-aware.
-    binding.functionValued = true;
   }
-
-  // An invoked read likewise: whatever fills this slot is called.
-  if (isInvokedFunction(root)) binding.functionValued = true;
 
   const { parent } = root;
   if (

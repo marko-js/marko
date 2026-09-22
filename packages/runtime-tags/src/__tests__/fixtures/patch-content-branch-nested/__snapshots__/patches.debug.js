@@ -12,7 +12,7 @@
     "PatchBranch:#div/0": [{
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "l",
-        "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content",
+        "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchText:#text/0": "x"
         }
@@ -28,7 +28,7 @@
     "PatchBranch:#div/0": [{
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "m",
-        "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content",
+        "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchText:#text/0": "y"
         }
@@ -48,7 +48,7 @@
     "PatchBranch:#div/0": [{
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "n",
-        "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content",
+        "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-branch-nested/template.marko_3*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchText:#text/0": "z"
         }

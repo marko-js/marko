@@ -1,20 +1,20 @@
 // PATCH
-[`a1;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
+[`a0;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
   ta: "Store",
   bb: [{
-    pa: "a1",
+    pa: "a0",
     cAa: {
       ta: "hi"
     }
   }, "a2"]
 }]
-"BQIA"
+"BQEB"
 
-// PATCH holding BQIA
+// PATCH holding BQEB
 {
   ta: "Store!",
   bb: [{
-    pa: "a1"
+    pa: "a0"
   }, "a2"]
 }
 {
@@ -25,18 +25,18 @@
   }
 }
 
-// PATCH holding BQIA
+// PATCH holding BQEB
 [`a3,<em>closed</em>`, {
   ta: "Store!",
   bb: [1, {}, "a3"]
 }]
-"BQIAAA"
+"BQEBAA"
 
-// PATCH holding BQIAAA
+// PATCH holding BQEBAA
 {
   ta: "Open",
   bb: [{
-    pa: "a1"
+    pa: "a0"
   }, "a2"]
 }
 {

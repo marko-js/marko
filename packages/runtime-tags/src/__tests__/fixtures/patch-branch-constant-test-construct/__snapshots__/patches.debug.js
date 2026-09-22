@@ -4,7 +4,7 @@
     "PatchChild:#childScope/0": {
       "PatchLoop:#text/0": [{
         "PatchChild:#childScope/0": {
-          "PatchDynamicTag:#text/0": _.a = "^packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content",
+          "PatchDynamicTag:#text/0": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
             "PatchText:#text/0": "a",
             "PatchBranch:#text/1": 0
@@ -32,7 +32,7 @@
     "PatchChild:#childScope/0": {
       "PatchLoop:#text/0": [{
         "PatchChild:#childScope/0": {
-          "PatchDynamicTag:#text/0": _.a = "^packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content",
+          "PatchDynamicTag:#text/0": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
             "PatchText:#text/0": "a",
             "PatchBranch:#text/1": 0

@@ -1,12 +1,12 @@
 // PATCH
-[`b1; ; `, `a0;/D%l&;<div class=ld><!></div>`, {
+[`b0; ; `, `a0;/D%l&;<div class=ld><!></div>`, {
   ba: [{
     ca: {
-      pa: "b1",
+      pa: "b0",
       cAa: {
         ta: "one"
       }
     }
   }, "a0"]
 }]
-"BgED"
+"BgEC"

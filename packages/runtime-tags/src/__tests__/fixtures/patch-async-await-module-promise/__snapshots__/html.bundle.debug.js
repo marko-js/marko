@@ -22,7 +22,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "#text/0", value, void 0, 0, 0)}</em>`);
 				_scope($scope2_id, {}, "__tests__/template.marko", "7:6");
-			}, 1, "__tests__/template.marko_1_#text#0/await");
+			}, 1, "__tests__/template.marko_2*content");
 			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "6:4");
 			return 0;
 		}

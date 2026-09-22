@@ -1,10 +1,10 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell,<p>wide</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell,<p>wide</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell;b/D%lD%l&b;<!><nav><!></nav><main><!></main><!>`, {
   "PatchReady:96ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.markoready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko": {
     "PatchBranch:#body/0": [1, {
       "PatchChild:#childScope/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await",
-        "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content",
+        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_1*content",
+        "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchBranch:#text/0": [{
             "PatchChild:#childScope/1": {
@@ -36,15 +36,15 @@
     }
   }
 }]
-"DgEBAQMAAA"
+"DgIAAQMAAA"
 
-// PATCH holding DgEBAQMAAA
+// PATCH holding DgIAAQMAAA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_4*shell;b%b/bD l%c&b;<!><!><h1>B</h1><p> </p><!><!><!>`, {
   "PatchReady:96ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.markoready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-b.marko": {
     "PatchBranch:#body/0": [1, {
       "PatchChild:#childScope/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await",
-        "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content",
+        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_1*content",
+        "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchBranch:#text/0": [1, {
             "PatchChild:#childScope/1": {
@@ -62,15 +62,15 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell"]
   }
 }]
-"DgEBAQMAAAA"
+"DgIAAQMAAAA"
 
-// PATCH holding DgEBAQMAAAA
+// PATCH holding DgIAAQMAAAA
 {
   "PatchReady:96ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.markoready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko": {
     "PatchBranch:#body/0": [1, {
       "PatchChild:#childScope/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_0_#text#0/await",
-        "PatchDynamicTag:#text/1": "^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content",
+        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko_1*content",
+        "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchBranch:#text/0": [{
             "PatchChild:#childScope/1": {
@@ -93,8 +93,8 @@
   }
 }
 
-// PATCH holding DgEBAQMAAAA
+// PATCH holding DgIAAQMAAAA
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_5*shell,<p>home</p>`, {
   "PatchBranch:#body/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_5*shell"
 }]
-"DgEBAQMAAAAA"
+"DgIAAQMAAAAA"

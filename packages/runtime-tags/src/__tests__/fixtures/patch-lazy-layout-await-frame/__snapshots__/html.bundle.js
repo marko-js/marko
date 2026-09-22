@@ -70,7 +70,7 @@ var docs_default = _template_patch("a", (input) => {
 			}
 		}, $scope1_id, "b", 1, $sg__input_list, $sg__input_list, void 0, void 0, ["a2"], $scope0_reason, 0);
 		$scope0_page && _scope($scope1_id, { e: _source_if($scope0_reason, 0) && list?.[0] });
-	}, 1, "a1", 1);
+	}, 1, "a0", 1);
 	_html("</nav><article>");
 	const $tag = input.content;
 	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_reason, 1));

@@ -19,7 +19,7 @@ var layout_default = _template_patch("__tests__/layout.marko", (input) => {
 			_scope($scope2_id, {}, "__tests__/layout.marko", "3:6");
 		}, 0, $scope1_id, "#text/0", 1, $sg__input_list, $sg__input_list, void 0, void 0, "__tests__/layout.marko_2*shell", $scope0_reason, 0);
 		$scope0_page && _scope($scope1_id, {}, "__tests__/layout.marko", "2:4");
-	}, 1, "__tests__/layout.marko_0_#text#0/await", 1);
+	}, 1, "__tests__/layout.marko_1*content", 1);
 	_html("</nav><main>");
 	const $tag = input.content;
 	_dynamic_tag($scope0_id, "#text/1", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/1", $tag, 0, 0, 0, $scope0_reason, 1));

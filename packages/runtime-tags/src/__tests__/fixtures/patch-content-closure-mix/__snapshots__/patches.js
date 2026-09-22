@@ -5,7 +5,7 @@
   },
   la: [{
     ca: {
-      fa: "^a0",
+      fa: "^^a0",
       cAa: {
         ta: "Acme",
         tb: "q",
@@ -14,7 +14,7 @@
     }
   }, {
     ca: {
-      fa: "^a0",
+      fa: "^^a0",
       cAa: {
         ta: "Acme",
         tb: "q",
@@ -32,7 +32,7 @@
   },
   la: [{
     ca: {
-      fa: "^a0",
+      fa: "^^a0",
       cAa: {
         ta: "Zed",
         tb: "q",
@@ -41,7 +41,7 @@
     }
   }, {
     ca: {
-      fa: "^a0",
+      fa: "^^a0",
       cAa: {
         ta: "Zed",
         tb: "q",
@@ -50,7 +50,7 @@
     }
   }, {
     ca: {
-      fa: "^a0",
+      fa: "^^a0",
       cAa: {
         ta: "Zed",
         tb: "q",

@@ -1,0 +1,13 @@
+<main>
+  <for|group| of=input.groups by="id">
+    <section>
+      <for|item| of=group.items>
+        <try>
+          <await|v|=item.promise><em>${group.id}.${v}</em></await>
+          <@catch|err|><b>${err.message}</b></@catch>
+        </try>
+      </for>
+    </section>
+  </for>
+  <button onClick() {}>interactive</button>
+</main>

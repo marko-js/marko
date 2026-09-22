@@ -14,7 +14,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "a", first, void 0, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {});
-	}, 1, "a3", 1);
+	}, 1, "a2", 1);
 	_await($scope0_id, "b", input.second, (second) => {
 		const $scope2_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "d", second);
@@ -28,6 +28,6 @@ var template_default = _template_patch("a", (input) => {
 			d: second,
 			e: handler
 		});
-	}, 1, "a4", 1);
+	}, 1, "a1", 1);
 	_html("</main>");
 }, 1, 0);

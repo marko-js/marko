@@ -36,11 +36,7 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
-import {
-  addRuntimeFeatureAsset,
-  callRuntime,
-  importRuntimeFeature,
-} from "../util/runtime";
+import { linkRuntimeFeature, callRuntime } from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   getNodeContentType,
@@ -152,8 +148,12 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   onFinalizePatch(() => {
     if (patchesStyle(section)) {
       addSerializeReason(section, FORCED, binding);
-      addRuntimeFeatureAsset("patch-style");
       for (const extra of valueExtras) ensurePatchWriteGroups(() => extra);
+      if (
+        valueExtras.some((extra) => !getSerializeSourcesForExpr(extra)?.state)
+      ) {
+        linkRuntimeFeature("patch-style");
+      }
     }
   });
 }
@@ -311,7 +311,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     dynamicStyleValues(node).forEach((value, i) => {
       const valueRef = value.extra?.referencedBindings;
       const patched = patchesStyleValue(section, value);
-      if (patched) importRuntimeFeature("patch-style");
       addStatement(
         patched ? "patched" : "render",
         section,

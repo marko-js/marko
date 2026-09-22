@@ -1,23 +1,23 @@
 // PATCH
-[`a1;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
+[`a0;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
   bc: [{
-    pa: "a1",
+    pa: "a0",
     cAa: {
       ta: "thing"
     }
   }, "a2"]
 }]
-"BAIA"
+"BAEB"
 
-// PATCH holding BAIA
+// PATCH holding BAEB
 {
   bc: 0
 }
 
-// PATCH holding BAIA
+// PATCH holding BAEB
 {
   bc: [{
-    pa: "a1",
+    pa: "a0",
     cAa: {
       ta: "thing"
     }

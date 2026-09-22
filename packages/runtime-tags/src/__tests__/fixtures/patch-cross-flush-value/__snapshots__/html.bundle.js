@@ -36,7 +36,7 @@ var template_default = _template_patch("a", (input) => {
 			tag: a.tag
 		});
 		_scope($scope1_id, { a: _existing_scope($childScope) });
-	}, 1, "a2", 1);
+	}, 1, "a1", 1);
 	_await($scope0_id, "b", input.second, (b) => {
 		const $scope2_id = _scope_id();
 		_set_serialize_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 1) << 5);
@@ -47,5 +47,5 @@ var template_default = _template_patch("a", (input) => {
 			tag: b.tag
 		});
 		_scope($scope2_id, { a: _existing_scope($childScope2) });
-	}, 1, "a3", 1);
+	}, 1, "a0", 1);
 }, 1, () => [tagged_default]);

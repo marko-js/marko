@@ -19,7 +19,7 @@ var layout_default = _template_patch("a", (input) => {
 			_scope($scope2_id, {});
 		}, 0, $scope1_id, "a", 1, $sg__input_list, $sg__input_list, void 0, void 0, "a2", $scope0_reason, 0);
 		$scope0_page && _scope($scope1_id, {});
-	}, 1, "a1", 1);
+	}, 1, "a0", 1);
 	_html("</nav><main>");
 	const $tag = input.content;
 	_dynamic_tag($scope0_id, "b", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "b", $tag, 0, 0, 0, $scope0_reason, 1));

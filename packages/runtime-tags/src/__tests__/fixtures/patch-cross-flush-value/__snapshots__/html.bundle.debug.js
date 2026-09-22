@@ -41,7 +41,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			tag: a.tag
 		});
 		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");
-	}, 1, "__tests__/template.marko_0_#text#0/await", 1);
+	}, 1, "__tests__/template.marko_1*content", 1);
 	_await($scope0_id, "#text/1", input.second, (b) => {
 		const $scope2_id = _scope_id();
 		_set_serialize_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 1) << 5);
@@ -52,5 +52,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			tag: b.tag
 		});
 		_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "2:2");
-	}, 1, "__tests__/template.marko_0_#text#1/await", 1);
+	}, 1, "__tests__/template.marko_2*content", 1);
 }, 1, () => [tagged_default]);

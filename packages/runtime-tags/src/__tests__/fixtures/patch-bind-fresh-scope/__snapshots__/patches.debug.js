@@ -8,9 +8,10 @@
       }
     },
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko0": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko0": 0,
+      "PatchWrite:TagVariableChange:count": _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_0/_return")
     },
-    "PatchBind:1": ["packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_0/_return", 0, "#childScope/0", "TagVariableChange:count"]
+    "PatchWrite:TagVariableChange:count": _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_0/_return")
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1*shell"]
 }]
 "AwI"
