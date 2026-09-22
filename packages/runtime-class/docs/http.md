@@ -20,7 +20,10 @@ server.on("request", (req, res) => {
       colors: ["red", "green", "blue"],
     },
     res,
-  );
+  ).on("error", (err) => {
+    // Without a listener, a render error crashes the process.
+    console.error(err);
+  });
 });
 
 server.listen(port, () => {
