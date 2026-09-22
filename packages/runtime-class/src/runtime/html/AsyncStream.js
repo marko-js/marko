@@ -634,6 +634,7 @@ var proto = (AsyncStream.prototype = {
         (name ? " " + name : "") +
         (stack ? ":\n" + stack : "");
     }
+    this._state.___error = e;
     try {
       this.emit("error", e);
     } finally {
@@ -781,7 +782,9 @@ var proto = (AsyncStream.prototype = {
     return new Promise(function (resolve, reject) {
       out.on("error", reject);
       out.on("finish", function (result) {
-        resolve(result);
+        var error = out._state.___error;
+        if (error) reject(error);
+        else resolve(result);
       });
     }).then(fn, fnErr);
   },

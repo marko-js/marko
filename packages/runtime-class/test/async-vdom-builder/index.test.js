@@ -90,6 +90,20 @@ describe("AsyncVDOMBuilder", function () {
     });
   });
 
+  it("rejects a promise attached after an error", function () {
+    var out = new AsyncVDOMBuilder();
+    out.on("error", function () {});
+    out.error(new Error("nope"));
+    return out.then(
+      function () {
+        throw new Error("resolved after an error");
+      },
+      function (err) {
+        expect(err.message).to.equal("nope");
+      },
+    );
+  });
+
   it("sync", function () {
     var out = new AsyncVDOMBuilder();
     out.element("div", {}, 0);
