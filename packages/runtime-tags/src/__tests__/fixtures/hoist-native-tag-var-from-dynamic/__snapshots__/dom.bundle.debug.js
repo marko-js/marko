@@ -15,7 +15,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b%c`)($walks$1);
 const $el3_getter = /*@__PURE__*/ _hoist("#p/0", "ClosureScopes:4");
-const $inputshowsectionnull_content = /*@__PURE__*/ _content_resume("__tests__/template.marko_4*content", "<p></p>", " ", 0, 0, "ClosureScopes:4");
+const $inputshowsectionnull_content = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "<p></p>", " ", 0, 0, "ClosureScopes:4");
 const $inputshowChildnull_content__$el2_getter = _hoist_resume("__tests__/template.marko_2_#div#0/hoist", "#div/0", "ClosureScopes:3");
 const $el2_getter = _hoist_resume("__tests__/template.marko_0_#div#0/hoist", "#div/0", "ClosureScopes:3", "ClosureScopes:2");
 const $child_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<div></div>", " ", 0, 0, "ClosureScopes:3");

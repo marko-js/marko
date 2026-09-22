@@ -29,7 +29,7 @@ import {
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import {
   forEachSection,
-  isSectionRegisterEager,
+  getSectionRegisterReasons,
   startSection,
 } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
@@ -116,7 +116,7 @@ export default {
           childSection.serializeReasons.size ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
-            isSectionRegisterEager(childSection))
+            getSectionRegisterReasons(childSection))
         );
       });
 

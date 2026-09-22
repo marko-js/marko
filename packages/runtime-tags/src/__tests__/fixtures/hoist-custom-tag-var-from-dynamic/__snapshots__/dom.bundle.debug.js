@@ -30,7 +30,7 @@ const $inputshowsectionnull_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $inputshowsectionnull_content__setHtml);
 	$setup$1($scope["#childScope/0"]);
 };
-const $inputshowsectionnull_content = /*@__PURE__*/ _content_resume("__tests__/template.marko_4*content", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $inputshowsectionnull_content__setup, 0, "ClosureScopes:4");
+const $inputshowsectionnull_content = /*@__PURE__*/ _content("__tests__/template.marko_4*content", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $inputshowsectionnull_content__setup, 0, "ClosureScopes:4");
 const $setHtml2_getter = /*@__PURE__*/ _hoist("setHtml2", "ClosureScopes:3", "ClosureScopes:2");
 const $thing_content2__setHtml = /*@__PURE__*/ _const("setHtml2", ($scope) => _assert_hoist($scope.setHtml2));
 const $thing_content2__setup = ($scope) => {

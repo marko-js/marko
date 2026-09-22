@@ -24,7 +24,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", _class ? "span" : "div", {
 		...rest,
 		class: _class
-	}, _content_resume("__tests__/tags/wrap.marko_1*content", () => {
+	}, _content("__tests__/tags/wrap.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_set_serialize_reason($sg__input_foo << 1);

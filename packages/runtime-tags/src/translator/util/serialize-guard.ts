@@ -246,7 +246,7 @@ function getOnlySection(params: Opt<{ section: Section }>) {
 }
 
 // Whether the guard for a reason is a runtime mask rather than a constant.
-export function isDynamicSerializeGuard(
+function isDynamicSerializeGuard(
   section: Section,
   reason: undefined | SerializeReason,
 ): reason is DynamicSerializeReason {

@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope2_id) });
 		_subscribe($inputshowThingnull_content__subscribers, _scope($scope2_id, { "ClosureScopes:3": $thing_content2__subscribers }, "__tests__/template.marko", "16:4"));
 	}, $scope0_id), 0, $sg__input_show);
-	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content_resume("__tests__/template.marko_4*content", () => {
+	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		const $Child_scope3 = _peek_scope_id();

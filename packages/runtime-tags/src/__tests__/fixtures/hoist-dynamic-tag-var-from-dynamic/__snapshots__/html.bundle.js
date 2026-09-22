@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id) });
 		_subscribe($inputshowThingnull_content__subscribers, _scope($scope2_id, { B3: $thing_content2__subscribers }));
 	}, $scope0_id), 0, $sg__input_show);
-	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content_resume("a7", () => {
+	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content("a7", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		const $Child_scope3 = _peek_scope_id();

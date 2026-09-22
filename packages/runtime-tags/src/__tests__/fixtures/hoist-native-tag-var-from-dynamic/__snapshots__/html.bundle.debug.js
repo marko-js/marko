@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:3": $child_content2__subscribers
 		}, "__tests__/template.marko", "15:4"));
 	}, $scope0_id), 0, $sg__input_show);
-	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content_resume("__tests__/template.marko_4*content", () => {
+	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		_html(`<p></p>${_el_resume($scope4_id, "#p/0")}`);

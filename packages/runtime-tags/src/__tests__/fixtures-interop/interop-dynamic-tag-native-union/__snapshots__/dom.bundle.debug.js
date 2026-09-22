@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button id=tags> </button><section>static: not registered</section><!><!>";
 const $walks = " D lb%c";
-const $count2h2h1_content = _content_resume("__tests__/template.marko_1*content", "state driven: registered");
+const $count2h2h1_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "state driven string: not registered");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $count2h2h1_content);
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
