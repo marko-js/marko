@@ -100,7 +100,7 @@ View.render({}, (err, result) => {
 | `stream`     | `WritableStream`                 | a writeable stream                     |
 | return value | `AsyncStream`/`AsyncVDOMBuilder` | the async `out` render target          |
 
-The HTML output is written to the passed `stream`.
+The HTML output is written to the passed `stream`. Render errors are emitted as `"error"` events on the stream, and like any unhandled stream `"error"` event, one without a listener crashes the process, so always attach one:
 
 ```js
 import http from "http";
@@ -108,7 +108,9 @@ import View from "./view.marko";
 
 http.createServer((req, res) => {
   res.setHeader("content-type", "text/html");
-  View.render({}, res);
+  View.render({}, res).on("error", (err) => {
+    console.error(err);
+  });
 });
 ```
 

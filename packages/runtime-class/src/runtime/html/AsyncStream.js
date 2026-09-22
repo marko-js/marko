@@ -61,6 +61,8 @@ function AsyncStream(global, writer, parentOut) {
     state = parentOut._state;
     originalStream = state.stream;
   } else {
+    // Render errors are emitted on the destination stream itself; as with any Node stream an
+    // unhandled "error" throws, so callers of `render(input, stream)` must listen for it.
     var events = (finalGlobal.events /* deprecated */ =
       writer && writer.on ? writer : new EventEmitter());
 
