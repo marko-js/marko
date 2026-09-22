@@ -8,17 +8,11 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 1), $sg__input_dynamic = _serialize_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let data1 = child_default({});
-	const $inputshowchild_scope = _peek_scope_id();
-	let data2 = _dynamic_tag($scope0_id, "#text/2", input.show && child_default, {});
-	_var($scope0_id, "#scopeOffset/3", $inputshowchild_scope, "__tests__/template.marko_0_data2#8/var");
-	const $inputdynamic_scope = _peek_scope_id();
-	let data3 = _dynamic_tag($scope0_id, "#text/4", input.dynamic, {});
-	_var($scope0_id, "#scopeOffset/5", $inputdynamic_scope, "__tests__/template.marko_0_data3#11/var");
-	const $inputshowdiv_scope = _peek_scope_id();
-	let el1 = _dynamic_tag($scope0_id, "#text/6", input.show && "div", {});
-	_var($scope0_id, "#scopeOffset/7", $inputshowdiv_scope, "__tests__/template.marko_0_el1#14/var");
-	_scope($scope0_id, {}, "__tests__/template.marko", 0);
+	let data2 = _dynamic_tag($scope0_id, "#text/2", input.show && child_default, {}, 0, 0, $sg__input_show);
+	let data3 = _dynamic_tag($scope0_id, "#text/4", input.dynamic, {}, 0, 0, $sg__input_dynamic);
+	let el1 = _dynamic_tag($scope0_id, "#text/6", input.show && "div", {}, 0, 0, $sg__input_show);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

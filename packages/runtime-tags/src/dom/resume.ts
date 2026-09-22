@@ -3,7 +3,10 @@ import {
   decodeAccessor,
   dynamicHtmlEnabled,
 } from "../common/helpers";
-import { DEFAULT_RUNTIME_ID } from "../common/meta";
+import {
+  DEFAULT_RUNTIME_ID,
+  DYNAMIC_TAG_VAR_REGISTER_ID,
+} from "../common/meta";
 import { forEach, type Opt, push } from "../common/opt";
 import {
   AccessorPrefix,
@@ -11,6 +14,7 @@ import {
   type AwaitCounter,
   type BranchScope,
   type EncodedAccessor,
+  NodeType,
   ResumeSymbol,
   type Scope,
 } from "../common/types";
@@ -555,4 +559,15 @@ export function _el(id: string, accessor: EncodedAccessor) {
     accessor = decodeAccessor(accessor as number);
     return (_resumed[id] = (scope: Scope) => () => scope[accessor]);
   }
+}
+
+// A native dynamic tag's variable resumes off its parent's node visit, which
+// holds the element, or the branch marker after it when branches resume.
+export function _resume_dynamic_tag_var(accessor: EncodedAccessor) {
+  if (!MARKO_DEBUG) accessor = decodeAccessor(accessor as number);
+  _resumed[DYNAMIC_TAG_VAR_REGISTER_ID + accessor] = (scope: Scope) => () => {
+    const node = scope[accessor] as ChildNode;
+    const el = node.nodeType === NodeType.Comment ? node.previousSibling : node;
+    return MARKO_DEBUG ? _el_read(el) : el;
+  };
 }

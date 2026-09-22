@@ -96,8 +96,8 @@ import { getTagRelativePath, tagNotFoundError } from "./custom-tag";
 import { controllableFeatureFor, enableControllable } from "./native-tag";
 
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
-const importedDynamicTagResume = new WeakSet<t.Program>();
-const importedDynamicTagVarResume = new WeakSet<t.Program>();
+// Runtime helpers and features a program adds once, by what each enables.
+const [getAddedRuntime] = createProgramState(() => new Set<string>());
 
 // Class-API interop registrations are idempotent and keyed by the shared
 // renderer, so one per program suffices no matter how many tags reference it.
@@ -169,6 +169,7 @@ export default {
       if (inputNodes.length) tagExtra.dynamicTagInput = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
+      const usesVar = hasVar && isTagVarUsed(tag);
       const nodeBinding = (tagExtra.nodeBinding = createBinding(
         "#text",
         BindingType.dom,
@@ -176,7 +177,7 @@ export default {
       ));
 
       if (
-        hasVar ||
+        usesVar ||
         tag.node.attributes.some(
           (attr) =>
             t.isMarkoSpreadAttribute(attr) || isEventOrChangeHandler(attr.name),
@@ -210,7 +211,7 @@ export default {
         }
       }
       trackParamsReferences(tagBody, BindingType.param);
-      if (hasVar) addSerializeReason(tagSection, FORCED, nodeBinding);
+      if (usesVar) addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
 
       if (
@@ -488,14 +489,11 @@ export default {
               serializeArg,
             );
 
-        if (node.var) {
+        if (node.var && isTagVarResumed(tag)) {
           const dynamicScopeIdentifier = generateUidIdentifier(
             tag.get("name").toString() + "_scope",
           );
-          const mutatesTagVar = !!(
-            tag.node.var!.type === "Identifier" &&
-            tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
-          );
+          const mutatesTagVar = isTagVarAssigned(tag);
           statements.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
@@ -529,6 +527,12 @@ export default {
               ),
             ),
           );
+        } else if (node.var) {
+          statements.push(
+            t.variableDeclaration("let", [
+              t.variableDeclarator(node.var, dynamicTagExpr),
+            ]),
+          );
         } else {
           statements.push(t.expressionStatement(dynamicTagExpr));
         }
@@ -544,7 +548,8 @@ export default {
         if (tag.node.var) {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
-          tagVarSignal.register = tagVarSignal.referenced = true;
+          tagVarSignal.register = isTagVarResumed(tag);
+          tagVarSignal.referenced = true;
           tagVarSignal.buildAssignment = (valueSection, value) => {
             const changeArgs = [
               t.memberExpression(
@@ -622,7 +627,7 @@ export default {
 
         if (!isClassAPI) {
           enableDynamicTagResume(tag);
-          enableDynamicTagVarResume(tag);
+          enableDynamicTagVar(tag);
           enableDynamicTagControllables(tag);
         }
         addValue(section, tagExtra.referencedBindings, signal, tagExpression);
@@ -649,39 +654,55 @@ function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// A native branch serializes its tag variable as a getter over the branch, so
-// the registration has to survive into a resume-only bundle.
-function enableDynamicTagVarResume(tag: t.NodePath<t.MarkoTag>) {
-  const program = getProgram().node;
+// A native branch's tag variable binds the element as the branch renders, and
+// resumes as a getter over the tag's node visit wherever its value serializes.
+function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
   if (
-    tag.node.var &&
-    !importedDynamicTagVarResume.has(program) &&
-    analyzeTagNameType(tag, true) !== TagNameType.CustomTag
+    !tag.node.var ||
+    !isTagVarResumed(tag) ||
+    analyzeTagNameType(tag, true) === TagNameType.CustomTag
   ) {
-    importedDynamicTagVarResume.add(program);
+    return;
+  }
+
+  if (addRuntimeOnce("dynamic-tag-var")) {
     importRuntimeFeature("dynamic-tag-var");
+  }
+
+  // A returned or passed on value serializes in another template's scope.
+  if (!tag.node.var.extra!.binding!.pruned) {
+    const accessor = getScopeAccessorLiteral(
+      tag.node.extra!.nodeBinding!,
+      true,
+    );
+    if (addRuntimeOnce(`_resume_dynamic_tag_var ${accessor.value}`)) {
+      getProgram().node.body.push(
+        t.expressionStatement(callRuntime("_resume_dynamic_tag_var", accessor)),
+      );
+    }
   }
 }
 
 function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
-  const program = getProgram().node;
-  if (
-    !importedDynamicTagResume.has(program) &&
-    analyzeTagNameType(tag, true) !== TagNameType.CustomTag
-  ) {
-    for (const attr of tag.node.attributes) {
-      if (
-        attr.type === "MarkoSpreadAttribute" ||
-        (attr.type === "MarkoAttribute" && isEventOrChangeHandler(attr.name))
-      ) {
-        importedDynamicTagResume.add(program);
-        program.body.push(
+  if (analyzeTagNameType(tag, true) === TagNameType.CustomTag) return;
+  for (const attr of tag.node.attributes) {
+    if (
+      attr.type === "MarkoSpreadAttribute" ||
+      (attr.type === "MarkoAttribute" && isEventOrChangeHandler(attr.name))
+    ) {
+      if (addRuntimeOnce("_resume_dynamic_tag")) {
+        getProgram().node.body.push(
           t.expressionStatement(callRuntime("_resume_dynamic_tag")),
         );
-        return;
       }
+      return;
     }
   }
+}
+
+function addRuntimeOnce(key: string) {
+  const added = getAddedRuntime();
+  return !added.has(key) && !!added.add(key);
 }
 
 // The input binding of every template the name may resolve to; none when
@@ -697,4 +718,28 @@ function getDynamicTagInputBindings(
       inputBindings = bindingUtil.add(inputBindings, inputBinding);
   }
   return inputBindings;
+}
+
+// Nothing reads or assigns the variable, so the tag need not resume for it.
+function isTagVarUsed(tag: t.NodePath<t.MarkoTag>) {
+  for (const name in t.getBindingIdentifiers(tag.node.var!)) {
+    const binding = tag.scope.getBinding(name);
+    if (binding?.referencePaths.length || binding?.constantViolations.length) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Whether the child's variable is wired back to this tag on resume: only once
+// something reads the value, or writes it back through the tag.
+function isTagVarResumed(tag: t.NodePath<t.MarkoTag>) {
+  return !tag.node.var!.extra!.binding!.pruned || isTagVarAssigned(tag);
+}
+
+function isTagVarAssigned(tag: t.NodePath<t.MarkoTag>) {
+  return !!(
+    tag.node.var!.type === "Identifier" &&
+    tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
+  );
 }

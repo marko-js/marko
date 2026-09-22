@@ -1,0 +1,13 @@
+// Constant names keep each tag's signal out of the bundle, so the hoisted
+// variables resume only through their getters.
+<if=input.show>
+  <${input.type}/$el>body</>
+</if>
+<script>$el()?.setAttribute("data-mounted", "")</script>
+
+<for|i| until=2>
+  <${input.itemType}/$item>item ${i}</>
+</for>
+<script>
+  for (const item of $item) item.setAttribute("data-mounted", "");
+</script>

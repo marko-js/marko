@@ -1,4 +1,4 @@
-// size: 26785 (min) 10042 (brotli)
+// size: 26878 (min) 10062 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1137,6 +1137,13 @@ function _var_resume(id, signal) {
 }
 function _el(id, accessor) {
   return ((accessor = decodeAccessor(accessor)), (_resumed[id] = (scope) => () => scope[accessor]));
+}
+function _resume_dynamic_tag_var(accessor) {
+  ((accessor = decodeAccessor(accessor)),
+    (_resumed["-" + accessor] = (scope) => () => {
+      let node = scope[accessor];
+      return node.nodeType === 8 ? node.previousSibling : node;
+    }));
 }
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);

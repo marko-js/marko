@@ -175,8 +175,8 @@ export let _dynamic_tag = (
     renderNative();
 
     // Registered, not written: the getter only reaches the wire when a tag
-    // variable holds it, so a native dynamic tag without one pays nothing.
-    result = _el(branchId, DYNAMIC_TAG_VAR_REGISTER_ID);
+    // variable holds it. It reads this scope's node visit, not the branch.
+    result = _el(scopeId, DYNAMIC_TAG_VAR_REGISTER_ID + accessor);
   } else {
     const chunk = getChunk()!;
     const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;
