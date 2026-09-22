@@ -1,0 +1,17 @@
+<draft/page=$global.page/>
+<action/go=(next: number) => { page = next }/>
+<try>
+  <span>Page ${page}</span>
+  <try>
+    <await|total|=$global.total>
+      <p class="summary">Page ${page} of ${total}</p>
+      <if=page < total>
+        <a href=`?page=${page + 1}` onClick() { go(page + 1) }>Next</a>
+      </if>
+      <else>
+        <span>Last page</span>
+      </else>
+    </await>
+    <@placeholder>Loading</@placeholder>
+  </try>
+</try>

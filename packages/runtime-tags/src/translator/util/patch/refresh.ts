@@ -105,12 +105,13 @@ function isPatchWrittenSection(section: Section) {
 // A potential fill: a server-sourced value whose reads intersect client
 // state; the server writes all, tree-shaking decides which apply.
 export function isPatchFillBinding(binding: Binding) {
-  // State of a scope a patch may create (a branch body, a non-page
-  // root) seeds through its fill signal — assigned state only (retention).
+  // State in a patch-created branch, boundary, or non-page root seeds
+  // through its fill signal — assigned state only (retention).
   if (
     isPatch() &&
     ((!binding.section.parent && !isPage()) ||
-      (binding.section.isBranch && isBranchPathSection(binding.section))) &&
+      ((binding.section.isBranch || binding.section.isBoundary) &&
+        isBranchPathSection(binding.section))) &&
     // Flushes never create stateful branches, so their
     // state needs no seed fill.
     !isStatefulBranch(binding.section) &&

@@ -2362,11 +2362,13 @@ export function writeHTMLResumeStatements(
     }
   }
 
-  // A creatable branch (or a non-page root a parent may create)
+  // A creatable branch, boundary, or non-page root
   // seeds its state onto fresh scopes as SETUP fills.
   if (
     patches &&
-    (!section.parent || (section.isBranch && isBranchPathSection(section)))
+    (!section.parent ||
+      ((section.isBranch || section.isBoundary) &&
+        isBranchPathSection(section)))
   ) {
     forEach(getPatchFillBindings(section), (binding) => {
       if (!binding.sources?.state) {

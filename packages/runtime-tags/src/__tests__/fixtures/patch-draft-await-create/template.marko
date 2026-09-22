@@ -1,0 +1,8 @@
+import Page from "./page.marko" with { load: "render" }
+
+<if=input.details>
+  <p>Book details</p>
+</if>
+<else>
+  <Page/>
+</else>
