@@ -5,12 +5,14 @@ import {
   AccessorProp,
   type EncodedAccessor,
   PatchKey,
+  RendererProp,
   type Scope,
 } from "../common/types";
 import { _dynamic_tag } from "./control-flow";
 // The tag's branch pairs through a `PatchChild` entry.
 import "./patch-child.feat";
 import { getContent } from "./patch-shells";
+import type { Renderer } from "./renderer";
 import { createPatchers, getRegisteredWithScope, patchers } from "./resume";
 
 // `[renderer, input, contentId, varId]`, a lone renderer bare; a native tag
@@ -53,10 +55,25 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
       }
     }
   }
+  // A branch made here from a client renderer (not a shell) sets up before the
+  // flush's entries reach it; a component renders the content itself.
+  let content = contentId ? getContent(contentId) : undefined;
+  const component = renderer && typeof renderer !== "string";
+  const maker = (component ? renderer : content) as Renderer | undefined;
+  const setup =
+    !(maker as { [RendererProp.Shell]?: unknown })?.[RendererProp.Shell] &&
+    maker?.[RendererProp.Setup];
+  if (setup) {
+    const early = Object.create(maker, { [RendererProp.Setup]: {} });
+    if (component) renderer = early;
+    else content = early;
+  }
+  const branchKey = (AccessorPrefix.BranchScopes + accessor) as Accessor;
+  const prevBranch = scope[branchKey];
   (
     _dynamic_tag(
       (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
-      contentId ? () => getContent(contentId as string)! : 0,
+      content ? () => content! : 0,
       varId
         ? () => (owner: Scope, value: unknown) =>
             getRegisteredWithScope<(v: unknown) => void>(
@@ -67,4 +84,15 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
       Array.isArray(input) as unknown as 1,
     ) as (scope: Scope, renderer: unknown, getInput?: () => unknown) => void
   )(scope, renderer || undefined, input ? () => input : undefined);
+  const branch = scope[branchKey] as Scope;
+  if (setup && branch !== prevBranch) {
+    setup(
+      typeof renderer === "string"
+        ? (branch[
+            (AccessorPrefix.BranchScopes +
+              (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")) as Accessor
+          ] as Scope)
+        : branch,
+    );
+  }
 };

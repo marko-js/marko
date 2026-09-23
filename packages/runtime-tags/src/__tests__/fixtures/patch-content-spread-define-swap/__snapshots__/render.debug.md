@@ -20,6 +20,7 @@
 REMOVE: div > em
 INSERT: div > strong
 UPDATE: div > strong::text@4 "" => "t2"
+UPDATE: div > strong::text@4 "t1" => "t2"
 ```
 
 # Update `{"which":true,"title":"t3"}`
@@ -35,4 +36,5 @@ UPDATE: div > strong::text@4 "" => "t2"
 REMOVE: div > strong
 INSERT: div > em
 UPDATE: div > em::text@4 "" => "t3"
+UPDATE: div > em::text@4 "t2" => "t3"
 ```

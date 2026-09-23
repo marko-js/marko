@@ -1,4 +1,4 @@
-// size: 29192 (min) 10790 (brotli)
+// size: 29177 (min) 10806 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1984,7 +1984,6 @@ function _await_content(nodeAccessor, template, walks, setup) {
     promiseAccessor = "L" + nodeAccessor,
     renderer = _content("", template, walks, setup)();
   return (scope) => {
-    if (scope[branchAccessor]) return;
     let pendingScopes = collectScopes(
       () =>
         ((scope[branchAccessor] = createBranch(

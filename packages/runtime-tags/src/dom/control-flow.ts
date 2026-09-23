@@ -228,8 +228,6 @@ export function _await_content(
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const renderer = _content("", template, walks, setup)();
   return (scope: Scope) => {
-    // A patch creating the enclosing body may have built it from its shell.
-    if (scope[branchAccessor]) return;
     const pendingScopes = collectScopes(
       () =>
         ((scope[branchAccessor] = createBranch(
