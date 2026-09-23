@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
+import { getPropertyPathAlias } from "./binding-has-prop";
 import { getAccessorProp } from "./get-accessor-enums";
 import {
   concat,
@@ -18,6 +19,7 @@ import {
   createSources,
   FORCED,
   getCanonicalBinding,
+  type InputBinding,
   isReferencedExtra,
   type KnownExprs,
   mapParamBindingToExpr,
@@ -175,6 +177,28 @@ export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
 
 export function getSerializeSourcesForRef(ref: ReferencedBindings) {
   return reduce(ref, mergeBindingSources);
+}
+
+// What reruns the call site expressions passing content to the bindings it
+// feeds, down the property path it lands at.
+export function getSerializeSourcesForDownstream({
+  binding,
+  exprs,
+  properties,
+}: NonNullable<Section["downstream"]>) {
+  if (exprs) {
+    return reduce(binding, (sources: Sources | undefined, binding) =>
+      mergeSources(
+        sources,
+        getSerializeSourcesForExprs(
+          mapParamBindingToExpr(
+            exprs,
+            getPropertyPathAlias(binding, properties) as InputBinding,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 function mergeExprSources(sources: Sources | undefined, expr: t.NodeExtra) {

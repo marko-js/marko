@@ -38,3 +38,21 @@ export function bindingHasProperty(binding: Binding, properties: Opt<string>) {
 
   return false;
 }
+
+// The alias a property path leads to, or the deepest one along it that is read.
+export function getPropertyPathAlias(
+  binding: Binding,
+  properties: Opt<string>,
+): Binding {
+  let alias = binding;
+  if (Array.isArray(properties)) {
+    for (const property of properties) {
+      const next = alias.propertyAliases.get(property);
+      if (!next) break;
+      alias = next;
+    }
+  } else if (properties !== undefined) {
+    alias = alias.propertyAliases.get(properties) ?? alias;
+  }
+  return alias;
+}

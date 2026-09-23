@@ -77,6 +77,7 @@ import {
   finalizeSerializeReason,
   getSerializeReasonsVersion,
   getSerializeReason,
+  getSerializeSourcesForDownstream,
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
   isForceSerialized,
@@ -1608,6 +1609,20 @@ function sharesSources(a: Binding, b: Binding) {
   );
 }
 
+// What creates a section anew on the client: a branch's expression, or for
+// content given to a tag, what registers it and the expression passing it.
+function getSectionUpstreamReason(section: Section) {
+  const { downstream, upstreamExpression } = section;
+  if (downstream?.binding) {
+    const registerReason = getSectionRegisterReasons(section) || undefined;
+    return (
+      registerReason === true ||
+      mergeSources(registerReason, getSerializeSourcesForDownstream(downstream))
+    );
+  }
+  return !upstreamExpression || getSerializeSourcesForExpr(upstreamExpression);
+}
+
 // Serializes each closure a section reads for every branch or content between
 // the read and the closure's own section.
 function addClosureSerializeReasons(section: Section) {
@@ -1628,10 +1643,7 @@ function addClosureSerializeReasons(section: Section) {
     let branchesSources: undefined | Sources;
 
     while (currentSection !== sourceSection) {
-      const upstreamReason = currentSection.downstream?.binding
-        ? getSectionRegisterReasons(currentSection) || undefined
-        : !currentSection.upstreamExpression ||
-          getSerializeSourcesForExpr(currentSection.upstreamExpression);
+      const upstreamReason = getSectionUpstreamReason(currentSection);
       if (upstreamReason === true) {
         branchesForced = true;
       } else if (upstreamReason) {
