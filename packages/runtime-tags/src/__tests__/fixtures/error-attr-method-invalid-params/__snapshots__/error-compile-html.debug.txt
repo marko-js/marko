@@ -1,0 +1,39 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-method-invalid-params/template.marko:1:8
+    > 1 | <a onA(1){}/>
+        |        ^ Binding invalid left-hand side in function parameter list.
+      2 | <a onB(#){}/>
+      3 | <a onC(a, #){}/>
+      4 | <a onD(...#){}/>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-method-invalid-params/template.marko:2:8
+      1 | <a onA(1){}/>
+    > 2 | <a onB(#){}/>
+        |        ^ Unexpected token
+      3 | <a onC(a, #){}/>
+      4 | <a onD(...#){}/>
+      5 | <a onE(a = #){}/>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-method-invalid-params/template.marko:3:11
+      1 | <a onA(1){}/>
+      2 | <a onB(#){}/>
+    > 3 | <a onC(a, #){}/>
+        |           ^ Unexpected token
+      4 | <a onD(...#){}/>
+      5 | <a onE(a = #){}/>
+      6 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-method-invalid-params/template.marko:4:11
+      2 | <a onB(#){}/>
+      3 | <a onC(a, #){}/>
+    > 4 | <a onD(...#){}/>
+        |           ^ Unexpected token
+      5 | <a onE(a = #){}/>
+      6 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-method-invalid-params/template.marko:5:12
+      3 | <a onC(a, #){}/>
+      4 | <a onD(...#){}/>
+    > 5 | <a onE(a = #){}/>
+        |            ^ Unexpected token
+      6 |

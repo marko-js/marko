@@ -460,14 +460,15 @@ export function parseMarko(file) {
     },
 
     onAttrMethod(part) {
+      const params = parseParams(
+        file,
+        parser.read(part.params.value),
+        part.params.value.start,
+        part.params.value.end,
+      );
       const method = t.functionExpression(
         undefined,
-        parseParams(
-          file,
-          parser.read(part.params.value),
-          part.params.value.start,
-          part.params.value.end,
-        ),
+        [],
         t.blockStatement(
           parseStatements(
             file,
@@ -479,6 +480,9 @@ export function parseMarko(file) {
         false,
         part.async,
       );
+      // Assigned past the builder: a params parse error is a placeholder node
+      // its validation would throw on before the error could be reported.
+      method.params = params;
 
       if (part.typeParams) {
         method.typeParameters = parseTypeParams(
