@@ -3447,28 +3447,10 @@ export function mapParamBindingToExpr(
   // rests (which carry no excludeProperties), rest grains, and aliases.
   const isWholeAlias =
     binding.property === undefined && binding.upstreamAlias !== undefined;
-  const props: string[] = [];
-  let curBinding: Binding | undefined = isWholeAlias
-    ? binding.upstreamAlias
-    : binding;
-  // Property-less links (rest grains, direct aliases) sit between real
-  // property hops: pass through them rather than stopping the walk.
-  while (
-    curBinding &&
-    (curBinding.property !== undefined || curBinding.upstreamAlias)
-  ) {
-    if (curBinding.property !== undefined) props.push(curBinding.property);
-    curBinding = curBinding.upstreamAlias;
-  }
-
-  let curExpr = exprs;
-  for (let i = props.length; i--;) {
-    const nestedExpr = curExpr.known?.[props[i]];
-    if (!nestedExpr) {
-      return curExpr.value;
-    }
-    curExpr = nestedExpr;
-  }
+  const curExpr = getKnownExprsAt(
+    exprs,
+    isWholeAlias ? binding.upstreamAlias! : binding,
+  );
 
   if (isWholeAlias) {
     let result: Opt<t.NodeExtra> = curExpr.value;
@@ -3483,4 +3465,15 @@ export function mapParamBindingToExpr(
   }
 
   return curExpr.value;
+}
+
+// The call site's known expressions at `binding`, passing through property-less
+// links; past the props it lists, only the value expression holding it.
+function getKnownExprsAt(exprs: KnownExprs, binding: Binding): KnownExprs {
+  const upstream = binding.upstreamAlias;
+  if (!upstream) return exprs;
+  const known = getKnownExprsAt(exprs, upstream);
+  return binding.property === undefined || !known.known
+    ? known
+    : (known.known[binding.property] ?? { value: known.value });
 }

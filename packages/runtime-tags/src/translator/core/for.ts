@@ -590,20 +590,19 @@ function getStaticMemberChain(
   node: t.Node,
   rootName: string,
 ): string[] | undefined {
-  const chain: string[] = [];
-  let cur = node;
-  while (
-    cur.type === "MemberExpression" ||
-    cur.type === "OptionalMemberExpression"
-  ) {
-    const property = getMemberExpressionPropString(cur);
-    if (property === undefined) return;
-    chain.push(property);
-    cur = cur.object;
+  if (node.type === "Identifier") {
+    return node.name === rootName ? [] : undefined;
   }
-
-  if (cur.type === "Identifier" && cur.name === rootName) {
-    return chain.reverse();
+  if (
+    node.type === "MemberExpression" ||
+    node.type === "OptionalMemberExpression"
+  ) {
+    const property = getMemberExpressionPropString(node);
+    if (property !== undefined) {
+      const chain = getStaticMemberChain(node.object, rootName);
+      chain?.push(property);
+      return chain;
+    }
   }
 }
 
