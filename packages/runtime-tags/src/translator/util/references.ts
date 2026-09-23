@@ -2244,9 +2244,11 @@ export function isDirectAlias(binding: Binding) {
   );
 }
 
+// `getAttrTagNodes` picks where an attribute tag within control flow collects.
 export function getAllTagReferenceNodes(
   tag: t.MarkoTag,
   referenceNodes: t.Node[] = [],
+  getAttrTagNodes?: (attrTag: t.MarkoTag) => t.Node[],
 ) {
   if (tag.arguments) {
     for (const arg of tag.arguments) {
@@ -2263,7 +2265,15 @@ export function getAllTagReferenceNodes(
     : tag.attributeTags) {
     switch (child.type) {
       case "MarkoTag":
-        getAllTagReferenceNodes(child, referenceNodes);
+        if (
+          getAttrTagNodes &&
+          t.isStringLiteral(child.name) &&
+          child.name.value[0] === "@"
+        ) {
+          getAllTagReferenceNodes(child, getAttrTagNodes(child));
+        } else {
+          getAllTagReferenceNodes(child, referenceNodes, getAttrTagNodes);
+        }
         break;
       case "MarkoScriptlet":
         for (const statement of child.body) {

@@ -21,8 +21,7 @@ export type Renderer = {
   [RendererProp.Params]: Signal<unknown> | undefined;
   [RendererProp.Owner]: Scope | undefined;
   [RendererProp.Accessor]: Accessor | undefined;
-  [RendererProp.LocalClosures]?: Record<Accessor, Signal<unknown>>;
-  [RendererProp.LocalClosureValues]?: Record<Accessor, unknown>;
+  [RendererProp.LocalClosures]?: SetupFn;
 };
 
 export type SetupFn = (scope: Scope) => void;
@@ -145,16 +144,24 @@ export function _content_closures(
   renderer: ReturnType<typeof _content>,
   closureFns: Record<Accessor, SignalFn>,
 ) {
-  const closureSignals: NonNullable<
-    Renderer[typeof RendererProp.LocalClosures]
-  > = {};
+  const closureSignals: Record<Accessor, Signal<unknown>> = {};
   for (const key in closureFns) {
     closureSignals[key] = _const(MARKO_DEBUG ? key : +key, closureFns[key]);
   }
   return (owner: Scope, closureValues: Record<Accessor, unknown>): Renderer => {
     const instance = renderer(owner);
-    instance[RendererProp.LocalClosures] = closureSignals;
-    instance[RendererProp.LocalClosureValues] = closureValues;
+    const clone = instance[RendererProp.Clone];
+    const setClosures = (instance[RendererProp.LocalClosures] = (branch) => {
+      for (const key in closureSignals) {
+        closureSignals[key](branch, closureValues[key]);
+      }
+    });
+    // Applied on clone so a branch any runtime path creates from this content
+    // (dynamic tag, `<try>` catch or placeholder) starts with the loop's values.
+    instance[RendererProp.Clone] = (branch, ns) => {
+      clone(branch, ns);
+      setClosures(branch);
+    };
     return instance;
   };
 }

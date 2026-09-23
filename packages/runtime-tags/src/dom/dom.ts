@@ -320,12 +320,9 @@ export function _attr_content(
     }
   }
 
-  for (const accessor in content?.[RendererProp.LocalClosures]) {
-    content![RendererProp.LocalClosures]![accessor](
-      scope[AccessorPrefix.BranchScopes + nodeAccessor],
-      content![RendererProp.LocalClosureValues]![accessor],
-    );
-  }
+  content?.[RendererProp.LocalClosures]?.(
+    scope[AccessorPrefix.BranchScopes + nodeAccessor],
+  );
 }
 
 export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {

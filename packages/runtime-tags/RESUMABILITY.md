@@ -125,8 +125,9 @@ numeric gaps compact monotonically allocated scope ids.
 
 `html/serializer.ts` emits JavaScript expressions, not JSON. It preserves shared
 identity/cycles across stream flushes, scopes (`_(id)`), registered factories
-(`_(scopeId, registryId)`), collections, typed/async values, and deferred
-mutations. A `Reference` records the first buffer position and parent/accessor
+(`_(scopeId, registryId)`, or `_._[registryId](_(scopeId), locals)` for content
+carrying attribute tag `<for>` params), collections, typed/async values, and
+deferred mutations. A `Reference` records the first buffer position and parent/accessor
 path; only reused values claim short ids. Fill-only payloads return their array;
 payloads with trailing assignments apply the fill through the context and end in
 `0`, preventing an arbitrary final value from being mistaken for a fill.

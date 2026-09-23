@@ -5,7 +5,6 @@ export const Params = "params";
 export const Owner = "owner";
 export const Accessor = "accessor";
 export const LocalClosures = "localClosures";
-export const LocalClosureValues = "localClosureValues";
 export const Embed = "embed";
 
 type Self = typeof import("./renderer-prop.debug");

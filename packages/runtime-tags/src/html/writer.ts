@@ -209,11 +209,13 @@ export function _resume<T extends WeakKey>(
   val: T,
   id: string,
   scopeId?: number,
+  locals?: Record<string, unknown>,
 ): T {
   return serializerRegister(
     id,
     val,
     scopeId === undefined ? undefined : _scope_with_id(scopeId),
+    locals,
   );
 }
 

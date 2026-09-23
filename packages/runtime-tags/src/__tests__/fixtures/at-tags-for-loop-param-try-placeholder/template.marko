@@ -1,0 +1,8 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <for|label| of=["body"]>
+    <@placeholder>loading ${label}</@placeholder>
+  </for>
+  <await|value|=resolveAfter("done", 1)>${value}</await>
+</try>

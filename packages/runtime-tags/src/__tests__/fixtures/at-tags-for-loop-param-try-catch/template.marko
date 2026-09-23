@@ -1,0 +1,20 @@
+<let/clicks=0>
+<button onClick() { clicks++ }>inc</button>
+
+<div>
+  <try>
+    <for|label| of=["render"]>
+      <@catch|err|>caught ${label}: ${err.message}</@catch>
+    </for>
+    ${(() => { throw new Error("sync") })()}
+  </try>
+</div>
+
+<div>
+  <try>
+    <for|label| of=[`update ${clicks}`]>
+      <@catch|err|>caught ${label}: ${err.message}</@catch>
+    </for>
+    clicks ${(() => { if (clicks) throw new Error("click"); return clicks })()}
+  </try>
+</div>

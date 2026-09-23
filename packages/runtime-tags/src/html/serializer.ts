@@ -17,6 +17,7 @@ interface Registered {
   id: string;
   access: string;
   scope: unknown;
+  locals: object | undefined;
 }
 
 interface ScopeInternals {
@@ -433,10 +434,12 @@ export function register<T extends WeakKey>(
   id: string,
   val: T,
   scope?: unknown,
+  locals?: object,
 ) {
   REGISTRY.set(val, {
     id,
     scope,
+    locals,
     access: "_._" + toAccess(toObjectKey(id)),
   });
   return val;
@@ -781,7 +784,18 @@ function writeRegistered(
     // The serialize context resolves both registry id and render-local scope.
     const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
     trackScope(state, scope, scopeId);
-    state.buf.push("_(" + scopeId + "," + quote(registered.id, 0) + ")");
+    if (registered.locals) {
+      // Calls the registered factory itself to also pass render-only locals.
+      state.buf.push(registered.access + "(_(" + scopeId + "),");
+      writePlainObject(
+        state,
+        registered.locals,
+        new Reference(ref, null, state.flushId, state.buf.length),
+      );
+    } else {
+      state.buf.push("_(" + scopeId + "," + quote(registered.id, 0));
+    }
+    state.buf.push(")");
   } else {
     state.buf.push(registered.access);
   }

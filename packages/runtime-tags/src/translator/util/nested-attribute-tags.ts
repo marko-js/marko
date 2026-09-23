@@ -64,6 +64,7 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
     string
   >();
 
+  let chainGroup: AttrTagNames | undefined;
   for (const child of attrTags) {
     if (child.isMarkoTag()) {
       if (isAttributeTag(child)) {
@@ -72,9 +73,12 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
         (attrTagNodesByName[name] ||= []).push(child);
         analyzeAttributeTags(child);
       } else {
-        const isRepeated = isLoopTag(child);
-        let curGroup: (typeof lookup)[string]["group"] | undefined;
-        for (const name of crawlAttrTags(child, attrTagNodesByName)) {
+        // An `<if>` chain is translated as one statement, so it is one group.
+        let curGroup = isElseTag(child) ? chainGroup : undefined;
+        for (const [name, isRepeated] of crawlAttrTags(
+          child,
+          attrTagNodesByName,
+        )) {
           const oldMeta = lookup[name];
           if (oldMeta) {
             if (!curGroup) {
@@ -103,6 +107,7 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
 
           sampleAttrTagsForControlFlow.set(child, name);
         }
+        chainGroup = curGroup;
       }
     }
   }
@@ -138,21 +143,28 @@ function createAttrTagMeta(
   };
 }
 
+// Maps each attribute tag name within control flow to whether a loop repeats it.
 function crawlAttrTags(
   tag: t.NodePath<t.MarkoTag>,
   attrTagNodesByName: Record<string, t.NodePath<t.MarkoTag>[]>,
-  attrTagNames = new Set<string>(),
+  attrTagNames = new Map<string, boolean>(),
+  inLoop = isLoopTag(tag),
 ) {
   const attrTags = getAttrTagPaths(tag);
   for (const child of attrTags) {
     if (child.isMarkoTag()) {
       if (isAttributeTag(child)) {
         const tagName = getTagName(child);
-        attrTagNames.add(tagName);
+        attrTagNames.set(tagName, inLoop || !!attrTagNames.get(tagName));
         (attrTagNodesByName[tagName] ||= []).push(child);
         analyzeAttributeTags(child);
       } else {
-        crawlAttrTags(child, attrTagNodesByName, attrTagNames);
+        crawlAttrTags(
+          child,
+          attrTagNodesByName,
+          attrTagNames,
+          inLoop || isLoopTag(child),
+        );
       }
     }
   }
@@ -183,6 +195,11 @@ function hasRepeatedDynamicAttrTags(attrTags: t.NodePath<t.MarkoTag>[]) {
   }
 
   return false;
+}
+
+function isElseTag(tag: t.NodePath<t.MarkoTag>) {
+  const tagName = getTagName(tag);
+  return tagName === "else" || tagName === "else-if";
 }
 
 function getConditionRoot(tag: t.NodePath<t.MarkoTag>) {

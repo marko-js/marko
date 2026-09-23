@@ -10,7 +10,7 @@ import {
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
 } from "../../util/references";
-import { callRuntime } from "../../util/runtime";
+import { callRuntime, registerRuntimeValue } from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSectionForBody,
@@ -109,9 +109,30 @@ export default {
               ]);
             } else {
               const registerReason = getSectionRegisterReasons(childSection);
+              const registerId = getResumeRegisterId(childSection, "content");
+              const objProps: t.ObjectExpression["properties"] = [];
+              forEach(childSection.referencedLocalClosures, (closure) => {
+                const closureSignal = getSignal(childSection, closure);
+                const key = toPropertyName(getScopeAccessor(closure, true));
+                if (signalHasStatements(closureSignal)) {
+                  const expr = getSignalFn(closureSignal);
+                  if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
+                    objProps.push(
+                      t.objectMethod("method", key, expr.params, expr.body),
+                    );
+                  } else {
+                    objProps.push(t.objectProperty(key, expr));
+                  }
+                }
+              });
+
+              // Resume calls the registered wrapper with the loop's values.
+              const registerWrapper = !!(registerReason && objProps.length);
               let renderer: t.Expression = callRuntime(
-                registerReason ? "_content_resume" : "_content",
-                t.stringLiteral(getResumeRegisterId(childSection, "content")),
+                registerReason && !registerWrapper
+                  ? "_content_resume"
+                  : "_content",
+                t.stringLiteral(registerId),
                 ...replaceNullishAndEmptyFunctionsWith0([
                   writes,
                   walks,
@@ -123,30 +144,12 @@ export default {
                 ]),
               );
 
-              if (childSection.referencedLocalClosures) {
-                const objProps: t.ObjectExpression["properties"] = [];
-                forEach(childSection.referencedLocalClosures, (closure) => {
-                  const closureSignal = getSignal(childSection, closure);
-                  const key = toPropertyName(getScopeAccessor(closure, true));
-                  if (signalHasStatements(closureSignal)) {
-                    const expr = getSignalFn(closureSignal);
-                    if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
-                      objProps.push(
-                        t.objectMethod("method", key, expr.params, expr.body),
-                      );
-                    } else {
-                      objProps.push(t.objectProperty(key, expr));
-                    }
-                  }
-                });
-
-                if (objProps.length) {
-                  renderer = callRuntime(
-                    "_content_closures",
-                    renderer,
-                    t.objectExpression(objProps),
-                  );
-                }
+              if (objProps.length) {
+                renderer = callRuntime(
+                  "_content_closures",
+                  renderer,
+                  t.objectExpression(objProps),
+                );
               }
 
               program.node.body.push(
@@ -157,6 +160,17 @@ export default {
                   ),
                 ]),
               );
+
+              if (registerWrapper) {
+                program.node.body.push(
+                  t.expressionStatement(
+                    registerRuntimeValue(
+                      registerId,
+                      t.identifier(childSection.name),
+                    ),
+                  ),
+                );
+              }
             }
           }
 

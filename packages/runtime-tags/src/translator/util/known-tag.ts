@@ -497,7 +497,22 @@ function analyzeAttrs(
       group: AttrTagGroup,
       child: t.NodePath<t.MarkoTag>,
     ) => {
-      const referenceNodes = getAllTagReferenceNodes(child.node);
+      // Within control flow, an attribute tag the child never reads passes
+      // nothing, so its values are dropped while the flow around it stays.
+      const referenceNodes: t.Node[] = [];
+      getAllTagReferenceNodes(
+        child.node,
+        referenceNodes,
+        isAttributeTag(child)
+          ? undefined
+          : (attrTag) =>
+              getKnownFromPropTree(
+                propTree,
+                attrTagLookup[(attrTag.name as t.StringLiteral).value].name,
+              )
+                ? referenceNodes
+                : dropReferenceNodes,
+      );
       const groupReferences = nodeReferencesByGroup.get(group);
       if (groupReferences) {
         groupReferences.referenceNodes =
@@ -547,15 +562,7 @@ function analyzeAttrs(
           }
         } else {
           const group = child.node.extra!.attributeTagGroup!;
-          let childUsesGroupProp = false;
-          for (const name of group) {
-            if (getKnownFromPropTree(propTree, attrTagLookup[name].name)) {
-              childUsesGroupProp = true;
-              break;
-            }
-          }
-
-          if (childUsesGroupProp) {
+          if (hasGroupReads(group, attrTagLookup, propTree)) {
             analyzeDynamicAttrTagChildGroup(group, child);
           } else {
             getAllTagReferenceNodes(child.node, dropReferenceNodes);
@@ -574,14 +581,12 @@ function analyzeAttrs(
       let bindings: SortedOpt<Binding>;
       let hasRest = false;
 
-      for (const tagName of group) {
-        const attrName = tagName.slice(1);
-        const templateExportAttr = getKnownFromPropTree(propTree, attrName)!;
-        if (templateExportAttr === true) {
+      const reads = getGroupReads(group, attrTagLookup, propTree);
+      for (const [, read] of reads) {
+        if (read === true) {
           hasRest = true;
-          break;
         } else {
-          bindings = bindingUtil.add(bindings, templateExportAttr.binding);
+          bindings = bindingUtil.add(bindings, read.binding);
         }
       }
 
@@ -592,6 +597,15 @@ function analyzeAttrs(
         restReferenceNodes ||= [];
         for (const node of referenceNodes) {
           restReferenceNodes.push(node);
+        }
+
+        // A chain can mix rest members with known ones, which read the same
+        // statement as the rest.
+        forEach(bindings, (binding) => {
+          setBindingDownstream(binding, rootTagExtra, rootExprs);
+        });
+        for (const [attrTagMeta, read] of reads) {
+          if (read !== true) remaining.delete(attrTagMeta.name);
         }
 
         for (const name of group) {
@@ -1087,15 +1101,7 @@ function writeAttrsToSignals(
           }
         } else {
           const group = child.node.extra!.attributeTagGroup!;
-          let childUsesGroupProp = false;
-          for (const name of group) {
-            if (getKnownFromPropTree(propTree, attrTagLookup[name].name)) {
-              childUsesGroupProp = true;
-              break;
-            }
-          }
-
-          if (childUsesGroupProp) {
+          if (hasGroupReads(group, attrTagLookup, propTree)) {
             i = translateDynamicAttrTagChildInGroup(group, i);
           } else if (getTagName(child) === "if") {
             while (++i < attrTags.length) {
@@ -1118,55 +1124,42 @@ function writeAttrsToSignals(
       group,
       { referencedBindings, statements },
     ] of statementsByGroup) {
-      const decls: t.VariableDeclaration["declarations"] = [];
-
-      let hasRest = false;
-      for (const name of group) {
-        const attrTagMeta = attrTagLookup[name];
-        const childAttrExports = getKnownFromPropTree(
-          propTree,
-          attrTagMeta.name,
-        )!;
-        decls.push(t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)));
-        if (childAttrExports === true) {
-          hasRest = true;
-        }
-      }
+      const reads = getGroupReads(group, attrTagLookup, propTree);
+      const hasRest = reads.some(([, read]) => read === true);
 
       addStatement(
         "render",
         info.tagSection,
         hasRest ? tagReferencedBindings : referencedBindings,
-        [t.variableDeclaration("let", decls), ...statements],
+        [
+          t.variableDeclaration(
+            "let",
+            reads.map(([attrTagMeta]) =>
+              t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)),
+            ),
+          ),
+          ...statements,
+        ],
       );
 
-      if (hasRest) {
-        for (const name of group) {
-          const attrTagMeta = attrTagLookup[name];
+      for (const [attrTagMeta, read] of reads) {
+        if (read === true) {
           (restProps ||= []).push(
             toObjectProperty(
               attrTagMeta.name,
               getAttrTagIdentifier(attrTagMeta),
             ),
           );
-        }
-      } else {
-        for (const name of group) {
-          const attrTagMeta = attrTagLookup[name];
-          const childAttrExports = getKnownFromPropTree(
-            propTree,
-            attrTagMeta.name,
-          ) as BindingPropTree;
-
+        } else {
           remaining.delete(attrTagMeta.name);
           addStatement(
             "render",
             info.tagSection,
-            referencedBindings,
+            hasRest ? tagReferencedBindings : referencedBindings,
             t.expressionStatement(
               t.callExpression(
                 info.getBindingIdentifier(
-                  childAttrExports.binding,
+                  read.binding,
                   `${importAlias}_${attrTagMeta.name}`,
                 ),
                 [
@@ -1465,4 +1458,29 @@ function isSimpleReference(expr: t.Expression): boolean {
 function getRootSection(section: Section) {
   while (section.parent) section = section.parent;
   return section;
+}
+
+function hasGroupReads(
+  group: AttrTagGroup,
+  attrTagLookup: AttrTagLookup,
+  propTree: BindingPropTree,
+) {
+  return group.some(
+    (name) => !!getKnownFromPropTree(propTree, attrTagLookup[name].name),
+  );
+}
+
+// The attribute tags of a group the child reads, with what it reads of each.
+function getGroupReads(
+  group: AttrTagGroup,
+  attrTagLookup: AttrTagLookup,
+  propTree: BindingPropTree,
+) {
+  const reads: [AttrTagMeta, BindingPropTree | true][] = [];
+  for (const name of group) {
+    const attrTagMeta = attrTagLookup[name];
+    const read = getKnownFromPropTree(propTree, attrTagMeta.name);
+    if (read) reads.push([attrTagMeta, read]);
+  }
+  return reads;
 }
