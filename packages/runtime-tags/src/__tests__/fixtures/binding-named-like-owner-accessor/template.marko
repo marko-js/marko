@@ -1,0 +1,11 @@
+<let/count=1/>
+<for|_| of=[count]>
+  <button.inc onClick() { count++ }>${_}</button>
+  <if=_>
+    <span>${_ + count}</span>
+  </if>
+</for>
+<if=count>
+  <let/_=count/>
+  <button.mul onClick() { _ *= 10 }>${_}</button>
+</if>
