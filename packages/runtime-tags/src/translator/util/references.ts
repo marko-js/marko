@@ -948,6 +948,11 @@ function trackReference(
     reference = getOrCreatePropertyAlias(reference, prop);
   }
 
+  // The chain is read as a whole, and its root names the binding it renames.
+  if (root !== referencePath) {
+    (referencePath.node.extra ??= {}).binding = binding;
+  }
+
   addReadToExpression(root, reference, undefined);
 }
 

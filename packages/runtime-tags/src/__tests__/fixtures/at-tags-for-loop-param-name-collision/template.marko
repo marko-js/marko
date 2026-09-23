@@ -1,0 +1,9 @@
+<let/items=[{ text: "a" }, { text: "b" }]>
+<button#rename onClick() { items = items.map((it) => ({ text: it.text + "!" })) }>rename</button>
+
+// A content binding named like the param's property path.
+<list>
+  <for|item| of=items>
+    <@item><const/item_text={ n: 1 }><p>${item.text}|${item_text.n}</p></@item>
+  </for>
+</list>
