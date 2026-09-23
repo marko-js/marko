@@ -81,27 +81,37 @@ export function _await_promise(
     params?.(awaitBranch, [value]);
     return awaitBranch;
   };
-  const awaitPromise = (scope: Scope, promise: Promise<unknown>) => {
-    if (!isPromise(promise) && scope[promiseAccessor]) {
-      promise = Promise.resolve(promise);
-    }
-
+  const awaitPromise = (scope: Scope, promise: unknown): unknown => {
+    // A newer value supersedes a replay still waiting for the branch.
+    if (!isPromise(scope[promiseAccessor])) scope[promiseAccessor] = 0;
     let awaitBranch = scope[branchAccessor] as BranchScope;
-    const tryPlaceholder = findBranchWithKey(
-      scope,
-      AccessorProp.PlaceholderContent,
-    );
+    // A pending value holds a placeholder, so it needs no branch to start, and
+    // a value after one settles through the count that one holds.
+    const tryPlaceholder =
+      (isPromise(promise) || scope[promiseAccessor]) &&
+      findBranchWithKey(scope, AccessorProp.PlaceholderContent);
     const tryBranch = tryPlaceholder || awaitBranch;
-    if (!(isPromise(promise) ? tryBranch : awaitBranch)) {
-      // `_await_content` creates the branch and can run after this signal, so
-      // hand the promise back to it to replay once the branch exists.
-      scope[promiseAccessor] = () => awaitPromise(scope, promise);
+    if (!tryBranch) {
+      // `_await_content` creates the branch, or resume adopts a streamed one
+      // as its `@placeholder` completes; either replays the latest value.
+      const replay = (scope[promiseAccessor] = () =>
+        replay === scope[promiseAccessor] && awaitPromise(scope, promise));
+      const awaitCounter = findBranchWithKey(
+        scope,
+        AccessorProp.PlaceholderContent,
+      )?.[AccessorProp.AwaitCounter];
+      if (awaitCounter?.i) {
+        const complete = awaitCounter.c;
+        awaitCounter.c = () => complete() || queueAsyncRender(scope, replay);
+      }
       return;
     }
 
     if (!isPromise(promise)) {
-      resolveAwait(scope, scope[nodeAccessor] as ChildNode, promise);
-      return;
+      // After a pending value, it settles through that value's placeholder.
+      return scope[promiseAccessor]
+        ? awaitPromise(scope, Promise.resolve(promise))
+        : resolveAwait(scope, scope[nodeAccessor] as ChildNode, promise);
     }
 
     let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
@@ -155,10 +165,13 @@ export function _await_promise(
           const referenceNode = scope[nodeAccessor] as ChildNode;
           scope[promiseAccessor] = 0;
 
-          if (scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] === 0) {
-            // The branch holding this await is gone, so the render below is
-            // dropped; complete here or an ancestor `@placeholder` never
-            // dismisses.
+          if (
+            !scope[branchAccessor] ||
+            scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] === 0
+          ) {
+            // Render nothing when the await is gone or its branch is still
+            // streaming in (the value waits); complete so `@placeholder` ends.
+            if (!scope[branchAccessor]) awaitPromise(scope, data);
             awaitCounter!.c();
             run();
             return;
@@ -240,10 +253,8 @@ export function _await_content(
     (scope[branchAccessor] as BranchScope)[AccessorProp.PendingScopes] =
       pendingScopes;
 
-    const resolveSync = scope[promiseAccessor];
-    if (typeof resolveSync === "function") {
-      scope[promiseAccessor] = 0;
-      resolveSync();
+    if (typeof scope[promiseAccessor] === "function") {
+      (scope[promiseAccessor] as () => void)();
     }
   };
 }
