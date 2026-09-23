@@ -1,0 +1,9 @@
+<let/list=[1, 2]/>
+<let/open=true/>
+<const/show=(list.length > 1)/>
+<p>${show ? list.join() : "none"}</p>
+<if=open>
+  <span>${list.length}</span>
+</if>
+<button.same-length onClick() { list = [...list] }/>
+<button.toggle onClick() { open = !open }/>

@@ -1368,6 +1368,7 @@ export function finalizeReferences() {
 
   forEachSection(applySerializeExprs);
 
+  const recomputedMembers: [Section, Binding, Binding][] = [];
   forEachSection((section) => {
     const intersections = intersectionsBySection.get(section);
     if (intersections) {
@@ -1380,38 +1381,27 @@ export function finalizeReferences() {
           for (let j = i + 1; j < numReferences; j++) {
             const binding1 = intersection[i];
             const binding2 = intersection[j];
-            if (
-              !isForceSerialized(section, binding1) &&
-              !isSupersetSources(binding1, binding2)
-            ) {
-              if (!isSameOrChildSection(section, binding1.section)) {
-                addOwnerSerializeReason(
-                  section,
-                  binding1.section,
-                  mergeSources(binding1.sources, binding2.sources),
-                );
+            if (!isForceSerialized(section, binding1)) {
+              if (isSupersetSources(binding1, binding2)) {
+                recomputedMembers.push([section, binding1, binding2]);
+              } else {
+                serializeIntersectionMember(section, binding1, binding2);
               }
-
-              addSerializeReason(binding1.section, binding2.sources, binding1);
             }
-            if (
-              !isForceSerialized(section, binding2) &&
-              !isSupersetSources(binding2, binding1)
-            ) {
-              if (!isSameOrChildSection(section, binding2.section)) {
-                addOwnerSerializeReason(
-                  section,
-                  binding2.section,
-                  mergeSources(binding1.sources, binding2.sources),
-                );
+            if (!isForceSerialized(section, binding2)) {
+              if (isSupersetSources(binding2, binding1)) {
+                recomputedMembers.push([section, binding2, binding1]);
+              } else {
+                serializeIntersectionMember(section, binding2, binding1);
               }
-              addSerializeReason(binding2.section, binding1.sources, binding2);
             }
           }
         }
       }
     }
   });
+
+  serializeStaleRecomputedMembers(recomputedMembers);
 
   forEachSection((section) => {
     forEach(section.referencedLocalClosures, (closure) => {
@@ -1474,6 +1464,10 @@ export function finalizeReferences() {
       }
     });
   });
+
+  // The closure pass serializes more bindings, any of which can sit between
+  // a member and its partner.
+  serializeStaleRecomputedMembers(recomputedMembers);
 
   finalizeFunctionRegistry();
   for (const exprFnReads of fnReadsByExpression.values()) {
@@ -2926,6 +2920,90 @@ function resolveExpressionReference(
   }
 
   return createRead(upstreamRoot, props);
+}
+
+// A member left out because its partner's changes recompute it goes stale
+// after resume if a serialized binding on that path can stop the recompute.
+function serializeStaleRecomputedMembers(
+  recomputedMembers: [Section, Binding, Binding][],
+) {
+  for (let changed = true; changed;) {
+    changed = false;
+    for (const [section, member, partner] of recomputedMembers) {
+      if (
+        !getSerializeReason(member.section, member) &&
+        hasSerializedIntermediate(member, partner, new Set())
+      ) {
+        serializeIntersectionMember(section, member, partner);
+        changed = true;
+      }
+    }
+  }
+}
+
+function serializeIntersectionMember(
+  section: Section,
+  member: Binding,
+  partner: Binding,
+) {
+  if (!isSameOrChildSection(section, member.section)) {
+    addOwnerSerializeReason(
+      section,
+      member.section,
+      mergeSources(member.sources, partner.sources),
+    );
+  }
+  addSerializeReason(member.section, partner.sources, member);
+}
+
+// Whether `member` reads `partner`'s sources through a binding that is itself
+// serialized: its dirty check then holds the resumed value and can skip `member`.
+function hasSerializedIntermediate(
+  member: Binding,
+  partner: Binding,
+  seen: Set<Binding>,
+): boolean {
+  return some(getValueInputs(member), (input) => {
+    if (seen.has(input) || !sharesSources(input, partner)) return false;
+    seen.add(input);
+    if (
+      bindingUtil.has(partner.sources!.state, input) ||
+      bindingUtil.has(partner.sources!.param, input as ParamBinding)
+    ) {
+      return false;
+    }
+    return (
+      !!getSerializeReason(input.section, input) ||
+      hasSerializedIntermediate(input, partner, seen)
+    );
+  });
+}
+
+// The bindings a binding's value is computed from.
+function getValueInputs(binding: Binding): Opt<Binding> {
+  if (binding.upstreamAlias) return binding.upstreamAlias;
+  const exprs = getBindingValueExprs().get(binding);
+  return exprs && exprs !== true
+    ? reduce(
+        exprs,
+        (inputs: Opt<Binding>, expr) =>
+          concat(inputs, (expr as ReferencedExtra).referencedBindings),
+        undefined,
+      )
+    : undefined;
+}
+
+function sharesSources(a: Binding, b: Binding) {
+  return (
+    !!a.sources &&
+    !!b.sources &&
+    (some(b.sources.state, (source) =>
+      bindingUtil.has(a.sources!.state, source),
+    ) ||
+      some(b.sources.param, (source) =>
+        bindingUtil.has(a.sources!.param, source),
+      ))
+  );
 }
 
 function isSupersetSources(a: Binding, b: Binding) {
