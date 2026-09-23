@@ -35,7 +35,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<div id=content-missing>${_
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `D/${_w0}&lD/${_w1}&lD/${_w2}&lD%l`)($walks$1, $walks$1, $walks$1);
 const Wrap = wrap_default;
 const $Wrap_content = _content_resume("__tests__/template.marko_2*content", "Hello World");
-const $wrap_content = _content_resume("__tests__/template.marko_1*content", "Hello World");
+const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Hello World");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/3", $Wrap_content);
 function $setup($scope) {
 	$_class($scope["#childScope/0"], "foo");

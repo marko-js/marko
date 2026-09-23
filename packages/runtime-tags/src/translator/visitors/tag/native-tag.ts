@@ -37,7 +37,7 @@ import {
   isOutputHTML,
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
-import { type Opt, push } from "../../util/optional";
+import { forEach, type Opt, push } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -350,20 +350,17 @@ export default {
               carveProperties = ["content"];
             }
           }
-          for (const node of spreadReferenceNodes) {
-            const spreadBinding = node.extra?.spreadFrom;
-            if (spreadBinding) {
-              spreadBinding.noSerialize = true;
-              if (carveProperties) {
-                for (const property of carveProperties) {
-                  spreadBinding.noSerializeProperties = propsUtil.add(
-                    spreadBinding.noSerializeProperties,
-                    property,
-                  );
-                }
+          forEach(spreadExtra.spreadFrom, (spreadBinding) => {
+            spreadBinding.noSerialize = true;
+            if (carveProperties) {
+              for (const property of carveProperties) {
+                spreadBinding.noSerializeProperties = propsUtil.add(
+                  spreadBinding.noSerializeProperties,
+                  property,
+                );
               }
             }
-          }
+          });
         }
 
         if (relatedControllable) {

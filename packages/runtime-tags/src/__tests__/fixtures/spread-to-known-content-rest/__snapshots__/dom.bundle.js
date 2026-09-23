@@ -3,4 +3,3 @@ const $input_class__OR__rest__script = _script("b0", ($scope) => _attrs_script($
 
 // template.marko
 const $Wrap_content = _content_resume("a1", "Hello World");
-const $wrap_content = _content_resume("a0", "Hello World");

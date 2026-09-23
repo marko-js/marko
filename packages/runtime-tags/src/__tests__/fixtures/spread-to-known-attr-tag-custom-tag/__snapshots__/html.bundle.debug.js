@@ -36,21 +36,21 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		class: "foo",
 		option: attrTags(attrTags(attrTag({
 			value: 1,
-			content: _content_resume("__tests__/template.marko_1*content", () => {
+			content: _content("__tests__/template.marko_1*content", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html("One");
 			}, $scope0_id)
 		}), {
 			value: 2,
-			content: _content_resume("__tests__/template.marko_2*content", () => {
+			content: _content("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("Two");
 			}, $scope0_id)
 		}), {
 			value: 3,
-			content: _content_resume("__tests__/template.marko_3*content", () => {
+			content: _content("__tests__/template.marko_3*content", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html("Three");

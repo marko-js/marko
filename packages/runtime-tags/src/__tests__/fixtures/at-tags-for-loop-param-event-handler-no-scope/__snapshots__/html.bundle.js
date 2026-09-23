@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			onClick: _resume_locals(function(ev) {
 				ev.target.textContent = foo;
 			}, "a0", { e: foo }),
-			content: _content_resume("a1", () => {
+			content: _content("a1", () => {
 				_scope_reason();
 				_scope_id();
 				_html("Click");

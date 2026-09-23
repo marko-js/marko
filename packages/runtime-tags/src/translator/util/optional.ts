@@ -115,6 +115,31 @@ export class Sorted<T> {
     }
     return false;
   }
+  // Items of `a` not in `b`, walking each once; `a` itself when none drop.
+  difference<U extends NonNullable<T>>(
+    a: SortedOpt<U>,
+    b: SortedOpt<U>,
+  ): SortedOpt<U> {
+    if (a === undefined || b === undefined) return a;
+    if (!Array.isArray(a)) return this.findIndex(b, a) === -1 ? a : undefined;
+    if (!Array.isArray(b)) {
+      const index = findIndexSorted(this.compare, a, b);
+      if (index === -1) return a;
+      if (a.length === 2) return a[1 - index];
+      const len = a.length - 1;
+      const result = new Array(len) as SortedMany<U>;
+      for (let i = 0; i < index; i++) result[i] = a[i];
+      for (let i = index; i < len; i++) result[i] = a[i + 1];
+      return result;
+    }
+    let result: Opt<U>;
+    for (let i = 0, j = 0; i < a.length; i++) {
+      let delta = -1;
+      while (j < b.length && (delta = this.compare(b[j], a[i])) < 0) j++;
+      if (delta) result = push(result, a[i]);
+    }
+    return (size(result) === a.length ? a : result) as SortedOpt<U>;
+  }
   isSuperset<U extends NonNullable<T>>(
     superset: SortedOpt<U>,
     subset: SortedOpt<U>,

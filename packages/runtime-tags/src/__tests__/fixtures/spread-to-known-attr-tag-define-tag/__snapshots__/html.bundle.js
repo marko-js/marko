@@ -30,21 +30,21 @@ var template_default = _template("a", (input) => {
 		class: "foo",
 		option: attrTags(attrTags(attrTag({
 			value: 1,
-			content: _content_resume("a3", () => {
+			content: _content("a3", () => {
 				_scope_reason();
 				_scope_id();
 				_html("One");
 			}, $scope0_id)
 		}), {
 			value: 2,
-			content: _content_resume("a4", () => {
+			content: _content("a4", () => {
 				_scope_reason();
 				_scope_id();
 				_html("Two");
 			}, $scope0_id)
 		}), {
 			value: 3,
-			content: _content_resume("a5", () => {
+			content: _content("a5", () => {
 				_scope_reason();
 				_scope_id();
 				_html("Three");

@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	_html("</div><div id=content-set>");
 	wrap_default({
 		class: "foo",
-		content: _content_resume("a0", () => {
+		content: _content("a0", () => {
 			_scope_reason();
 			_scope_id();
 			_html("Hello World");

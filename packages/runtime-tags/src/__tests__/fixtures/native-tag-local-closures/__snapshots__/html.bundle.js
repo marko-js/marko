@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(2);
 	let $item;
 	forUntil(size, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content_resume("a2", () => {
+		$item = attrTags($item, { content: _content("a2", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(_text_resume($scope3_id, "a", i));

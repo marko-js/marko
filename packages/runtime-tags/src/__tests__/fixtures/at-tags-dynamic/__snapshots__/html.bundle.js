@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	], (color) => {
 		if (color === "red") $item = attrTags($item, {
 			style: { color },
-			content: _content_resume("a0", () => {
+			content: _content("a0", () => {
 				_scope_reason();
 				_scope_id();
 				_html("foo");
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 		});
 		else $item = attrTags($item, {
 			style: { color },
-			content: _content_resume("a1", () => {
+			content: _content("a1", () => {
 				_scope_reason();
 				_scope_id();
 				_html("bar");
@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 		forOf(col, (row) => {
 			$row = attrTags($row, {
 				row,
-				content: _content_resume("a2", () => {
+				content: _content("a2", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_html(_text_resume($scope3_id, "a", row));
@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 		outside: true,
 		row: attrTag({
 			row: -1,
-			content: _content_resume("a3", () => {
+			content: _content("a3", () => {
 				_scope_reason();
 				_scope_id();
 				_html("Outside");

@@ -19,18 +19,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			const { text } = value;
 			_html(`<span${_attr_class(value.class)}>${_escape(text)}</span>`);
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
 		}
-		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
-		_resume_branch($scope1_id);
 	}, $scope0_id) });
-	_scope($scope0_id, {
-		value,
-		value_class: value?.class,
-		text: value?.text
-	}, "__tests__/template.marko", 0, {
-		value: "1:8",
-		value_class: ["value.class", "1:8"],
-		text: "8:16"
-	});
 }, 1);

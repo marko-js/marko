@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</div><div id=content-set>");
 	wrap_default({
 		class: "foo",
-		content: _content_resume("__tests__/template.marko_1*content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("Hello World");

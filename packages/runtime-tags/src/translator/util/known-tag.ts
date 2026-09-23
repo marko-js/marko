@@ -757,10 +757,13 @@ function getSingleKnownSpread(
   let extra: t.NodeExtra | undefined;
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
-    if (
-      attr.type === "MarkoSpreadAttribute"
-        ? binding || !(binding = (extra = attr.value.extra)?.spreadFrom)
-        : binding && !propsUtil.has(binding.excludeProperties, attr.name)
+    if (attr.type === "MarkoSpreadAttribute") {
+      const spreadFrom = (extra = attr.value.extra)?.spreadFrom;
+      if (binding || !spreadFrom || Array.isArray(spreadFrom)) return;
+      binding = spreadFrom;
+    } else if (
+      binding &&
+      !propsUtil.has(binding.excludeProperties, attr.name)
     ) {
       return;
     }

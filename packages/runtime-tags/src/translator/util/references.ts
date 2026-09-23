@@ -160,6 +160,8 @@ export interface Binding {
   noSerialize: boolean;
   noSerializeProperties: SortedOpt<string>;
   upstreamAlias: Binding | undefined;
+  /** The value these `<for>` params iterate, by `of` or `in`. */
+  iterates: { expr: t.NodeExtra; type: "of" | "in" } | undefined;
   restOffset: number | undefined;
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
@@ -254,7 +256,8 @@ declare module "@marko/compiler/dist/types" {
     /** `$global` bindings this expression reads: the root means an opaque
      * (dynamic/aliased) read, a property alias names the key. */
     globalBindings?: ReferencedBindings;
-    spreadFrom?: Binding;
+    /** The bindings this expression reads only by spreading them as is. */
+    spreadFrom?: SortedOpt<Binding>;
     nativeTagSpread?: true;
     nativeTagSpreadMerged?: true;
     merged?: NodeExtra;
@@ -317,6 +320,7 @@ export function createBinding(
     getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
+    iterates: undefined,
     declaredAlias: undefined,
     restOffset: undefined,
     scopeOffset: undefined,
@@ -945,7 +949,7 @@ function trackReference(
       if (reference.restOffset) {
         // A shifted array rest only mirrors the source at offset indices;
         // anything else (length, methods) belongs to the rest array itself.
-        if (/^\d+$/.test(prop)) {
+        if (isIndexProperty(prop)) {
           prop = `${+prop + reference.restOffset}`;
           reference = reference.upstreamAlias;
         }
@@ -1054,9 +1058,28 @@ export function mergeReferences<T extends t.Node>(
   readsByExpression.set(targetExtra, reads);
   targetExtra.isEffect = isEffect;
   targetExtra.forceRegister = forceRegister;
+  targetExtra.spreadFrom = getSpreadOnlyBindings(reads);
   targetExtra.section = section;
 
   return targetExtra as NonNullable<T["extra"]> & ReferencedExtra;
+}
+
+function getSpreadOnlyBindings(reads: Opt<Read>) {
+  if (!some(reads, isSpreadRead)) return;
+  let spread: SortedOpt<Binding>;
+  let other: SortedOpt<Binding>;
+  forEach(reads, (read) => {
+    if (isSpreadRead(read)) {
+      spread = bindingUtil.add(spread, read.binding);
+    } else {
+      other = bindingUtil.add(other, read.binding);
+    }
+  });
+  return bindingUtil.difference(spread, other);
+}
+
+function isSpreadRead(read: Read) {
+  return read.extra.spreadFrom === read.binding;
 }
 
 export function compareReferences(
@@ -1613,7 +1636,7 @@ function sharesSources(a: Binding, b: Binding) {
 // content given to a tag, what registers it and the expression passing it.
 function getSectionUpstreamReason(section: Section) {
   const { downstream, upstreamExpression } = section;
-  if (downstream?.binding) {
+  if (downstream) {
     const registerReason = getSectionRegisterReasons(section) || undefined;
     return (
       registerReason === true ||
@@ -2169,7 +2192,7 @@ function addReadToExpression(
   }
 
   if (root.parent.type === "MarkoSpreadAttribute") {
-    exprExtra.spreadFrom = binding;
+    extra.spreadFrom = binding;
   }
 
   if (fnRoot) {
@@ -3167,6 +3190,7 @@ function computeExtraSerialization(extra: t.NodeExtra): Serialization {
 function readSerialization(
   extra: t.NodeExtra,
   part: Binding | undefined,
+  properties?: Opt<string> | true,
 ): Serialization {
   if (extra === getProgram().node.extra?.section!.returnValueExpr) {
     return FORCED_SERIALIZATION;
@@ -3176,7 +3200,7 @@ function readSerialization(
     if (!isPartOf(binding, part)) {
       serialization = mergeSerialization(
         serialization,
-        downstreamSerialization(extra, binding),
+        downstreamSerialization(extra, binding, part, properties),
       );
     }
   });
@@ -3187,8 +3211,13 @@ function readSerialization(
 function downstreamSerialization(
   extra: t.NodeExtra,
   binding: Binding,
+  part: Binding | undefined,
+  properties: Opt<string> | true | undefined,
 ): Serialization {
-  const linked = serializationForBinding(binding, true);
+  const linked = serializationForBinding(
+    binding,
+    getDownstreamPath(extra, binding, part, properties),
+  );
   const exprs = extra.downstreamExprs;
   return linked.reason && exprs
     ? {
@@ -3203,6 +3232,45 @@ function downstreamSerialization(
     : linked;
 }
 
+// Where a path into `part` lands in a downstream `binding`: the same path when
+// it is `part` or spreads it as is, an item's path when iterating it, or whole.
+function getDownstreamPath(
+  extra: t.NodeExtra,
+  binding: Binding,
+  part: Binding | undefined,
+  properties: Opt<string> | true | undefined,
+): Opt<string> | true {
+  if (properties === undefined || properties === true || !part) return true;
+  if (isReferenceTo(extra, part) || bindingUtil.has(extra.spreadFrom, part)) {
+    return properties;
+  }
+  const iterates = binding.iterates;
+  if (iterates && isReferenceTo(iterates.expr, part)) {
+    if (iterates.type === "in") return concat("1", rest(properties));
+    // An `of` item is an array's index or an attribute tag itself (its first
+    // item); paths only start at attribute tag bodies, so no other iterable.
+    return concat(
+      "0",
+      isIndexProperty(first(properties)) ? rest(properties) : properties,
+    );
+  }
+  return true;
+}
+
+// The expression is `binding` itself, not something computed from it.
+function isReferenceTo(extra: t.NodeExtra, binding: Binding) {
+  const { read } = extra;
+  return (
+    !!read &&
+    read.props === undefined &&
+    getCanonicalBinding(read.binding) === getCanonicalBinding(binding)
+  );
+}
+
+function isIndexProperty(property: string) {
+  return /^\d+$/.test(property);
+}
+
 // A destructured property or rest of the value (a direct alias is not).
 function isPartOf(binding: Binding, value: Binding | undefined) {
   return !!value && binding.upstreamAlias === value && !isDirectAlias(binding);
@@ -3212,7 +3280,16 @@ function computeBindingSerialization(
   binding: Binding,
   properties: Opt<string> | true | undefined,
 ): Serialization {
-  let reason = getSerializeReason(binding.section, binding);
+  const head =
+    properties === true || properties === undefined
+      ? undefined
+      : first(properties);
+  // Writing the binding leaves out what a native tag spread handles itself.
+  let reason =
+    binding.noSerialize ||
+    (head !== undefined && propsUtil.has(binding.noSerializeProperties, head))
+      ? undefined
+      : getSerializeReason(binding.section, binding);
   let serialization: Serialization = reason
     ? { reason, reads: undefined }
     : UNSERIALIZED;
@@ -3237,7 +3314,17 @@ function computeBindingSerialization(
   }
   for (const expr of binding.reads) {
     if (expr.isEffect) {
-      serialization = mergeSerialization(serialization, FORCED_SERIALIZATION);
+      // A native tag renders the `content` of a value it only spreads as is,
+      // sending just its key (on `<meta>` it is a plain attribute).
+      if (
+        !(
+          head === "content" &&
+          expr.nativeTagSpread &&
+          bindingUtil.has(expr.spreadFrom, binding)
+        )
+      ) {
+        serialization = mergeSerialization(serialization, FORCED_SERIALIZATION);
+      }
       continue;
     }
     const reads = addUnique(serialization.reads, expr);
@@ -3246,7 +3333,7 @@ function computeBindingSerialization(
     }
     serialization = mergeSerialization(
       serialization,
-      readSerialization(expr, binding),
+      readSerialization(expr, binding, properties),
     );
   }
   for (const alias of binding.aliases) {
@@ -3307,7 +3394,13 @@ function isPureSpreadResolved(binding: Binding): boolean {
 
 function hasReadBeyondSpreading(binding: Binding) {
   for (const read of binding.reads) {
-    if (!read.nativeTagSpread || read.nativeTagSpreadMerged) return true;
+    if (
+      !read.nativeTagSpread ||
+      read.nativeTagSpreadMerged ||
+      !bindingUtil.has(read.spreadFrom, binding)
+    ) {
+      return true;
+    }
   }
   return false;
 }
