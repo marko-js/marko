@@ -182,7 +182,9 @@ export function parseMarko(file) {
         return;
       }
 
-      if (/^(?:[\n\r]\s*)?(?:[\n\r]\s*)?$/.test(rawValue)) return;
+      // Only HTML's ASCII whitespace collapses; `\s` would also eat NBSP, U+2028/9 and U+FEFF.
+      if (/^(?:[\n\r][ \t\n\r\f]*)?(?:[\n\r][ \t\n\r\f]*)?$/.test(rawValue))
+        return;
 
       const { body } = currentBody.node;
       let prev;
@@ -203,17 +205,17 @@ export function parseMarko(file) {
         case "MarkoPlaceholder":
           break;
         case "MarkoText":
-          if (/\s$/.test(prev.value)) {
-            value = value.replace(/^\s+/, "");
+          if (/[ \t\n\r\f]$/.test(prev.value)) {
+            value = value.replace(/^[ \t\n\r\f]+/, "");
           }
           break;
         case "MarkoTag":
           if (isStatementTag(prev) || isAttrTag(prev)) {
-            value = value.replace(/^[\n\r]\s*/, "");
+            value = value.replace(/^[\n\r][ \t\n\r\f]*/, "");
           }
           break;
         default:
-          value = value.replace(/^[\n\r]\s*/, "");
+          value = value.replace(/^[\n\r][ \t\n\r\f]*/, "");
           break;
       }
 
@@ -229,22 +231,22 @@ export function parseMarko(file) {
           case "MarkoPlaceholder":
             break;
           case "MarkoText":
-            if (/^\s/.test(next.value)) {
-              value = value.replace(/\s+$/, "");
+            if (/^[ \t\n\r\f]/.test(next.value)) {
+              value = value.replace(/[ \t\n\r\f]+$/, "");
             }
             break;
           case "MarkoTag":
             if (isStatementTag(next) || isAttrTag(next)) {
-              value = value.replace(/[\n\r]\s*$/, "");
+              value = value.replace(/[\n\r][ \t\n\r\f]*$/, "");
             }
 
             break;
           default:
-            value = value.replace(/[\n\r]\s*$/, "");
+            value = value.replace(/[\n\r][ \t\n\r\f]*$/, "");
             break;
         }
 
-        node.value = value.replace(/\s+/g, " ");
+        node.value = value.replace(/[ \t\n\r\f]+/g, " ");
 
         if (node.value) {
           const trimmedStart = part.start + rawValue.indexOf(value);
