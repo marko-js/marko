@@ -458,29 +458,37 @@ export function parseMarko(file) {
     },
 
     onAttrMethod(part) {
-      currentAttr.end = part.end;
-      currentAttr.value = withLoc(
-        t.functionExpression(
-          undefined,
-          parseParams(
-            file,
-            parser.read(part.params.value),
-            part.params.value.start,
-            part.params.value.end,
-          ),
-          t.blockStatement(
-            parseStatements(
-              file,
-              parser.read(part.body.value),
-              part.body.value.start,
-              part.body.value.end,
-            ),
-          ),
-          false,
-          part.async,
+      const method = t.functionExpression(
+        undefined,
+        parseParams(
+          file,
+          parser.read(part.params.value),
+          part.params.value.start,
+          part.params.value.end,
         ),
-        part,
+        t.blockStatement(
+          parseStatements(
+            file,
+            parser.read(part.body.value),
+            part.body.value.start,
+            part.body.value.end,
+          ),
+        ),
+        false,
+        part.async,
       );
+
+      if (part.typeParams) {
+        method.typeParameters = parseTypeParams(
+          file,
+          parser.read(part.typeParams.value),
+          part.typeParams.value.start,
+          part.typeParams.value.end,
+        );
+      }
+
+      currentAttr.end = part.end;
+      currentAttr.value = withLoc(method, part);
     },
 
     onAttrSpread(part) {

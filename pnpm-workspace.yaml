@@ -7,6 +7,12 @@ linkWorkspacePackages: true
 minimumReleaseAgeExclude:
   - "@zcov/*"
   - htmljs-parser
+# The patched generator requires htmljs-parser for `escapeText`; declared so it
+# does not resolve only through pnpm's hidden hoisting of every package.
+packageExtensions:
+  "@babel/generator@7.29.7":
+    dependencies:
+      htmljs-parser: ^5.16.0
 patchedDependencies:
   "@babel/generator@7.29.7": patches/@babel__generator@7.29.7.patch
   "@babel/helper-compilation-targets@7.29.7": patches/@babel__helper-compilation-targets@7.29.7.patch
