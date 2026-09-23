@@ -23,7 +23,6 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template$1 = " <!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
-_resume_dynamic_tag();
 const $_classspandiv_content__input_foo = /*@__PURE__*/ _closure_get("input_foo", ($scope) => $foo($scope["#childScope/0"], $scope._.input_foo));
 const $_classspandiv_content__setup = $_classspandiv_content__input_foo;
 const $_classspandiv_content = /*@__PURE__*/ _content("__tests__/tags/wrap.marko_1*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__setup);

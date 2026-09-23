@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<svg width=20 height=20><!></svg><div> </div>";
 const $walks = "D%lD l";
-_resume_dynamic_tag();
 const $inputtag_content = _content_resume("__tests__/template.marko_1*content", "<stop offset=0%></stop>");
 const $n = /*@__PURE__*/ _let("n/5", ($scope) => _text($scope["#text/1"], $scope.n));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtag_content);

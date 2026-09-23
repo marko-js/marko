@@ -120,6 +120,7 @@ export const domRuntimeFeatures = [
   "controllable-open",
   "controllable-select",
   "controllable-textarea",
+  "dynamic-tag-script",
   "dynamic-tag-var",
   "placeholder",
 ] as const;

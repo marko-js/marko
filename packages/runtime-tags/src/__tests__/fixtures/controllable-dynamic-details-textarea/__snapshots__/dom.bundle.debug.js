@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><output><!>/<!></output>";
 const $walks = "b%bD%c%l";
-_resume_dynamic_tag();
 const $detailsTag_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $detailsTag_content__text__OR__textareaTag = /*@__PURE__*/ _or(1, ($scope) => $detailsTag_content__dynamicTag($scope, $scope._.textareaTag, () => ({
 	value: $scope._.text,

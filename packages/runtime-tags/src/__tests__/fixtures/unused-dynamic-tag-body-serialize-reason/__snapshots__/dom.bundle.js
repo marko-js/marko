@@ -1,6 +1,5 @@
 // template.marko
 const $Wrap_content__walks = "b%c", $Wrap_content__template = "<!><!><!>", $Message_content__walks = " b", $Message_content__template = " ";
-_resume_dynamic_tag();
 const $Wrap_content2__setup = ($scope) => {
 	$Message_content__input_before($scope.a, "hello");
 	$Message_content__input_after($scope.a, "world");

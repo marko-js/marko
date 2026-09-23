@@ -23,7 +23,6 @@ const $template = /*@__PURE__*/ ((_w0) => `<div id=known>${_w0}</div><div id=dyn
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&lD%l`)("b b");
 const $setup = () => {};
 const Child = child_default;
-_resume_dynamic_tag();
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	$_class($scope["#childScope/0"], $scope.input.class);

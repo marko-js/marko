@@ -1,7 +1,6 @@
 // tags/my-tag.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-_resume_dynamic_tag();
 const $startContent_content = _content_resume("__tests__/tags/my-tag.marko_1*content", "default");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_as__OR__input_class__OR__htmlInput__OR__content = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", () => ({

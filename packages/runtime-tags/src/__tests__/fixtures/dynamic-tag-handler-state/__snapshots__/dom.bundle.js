@@ -1,5 +1,4 @@
 // template.marko
-_resume_dynamic_tag();
 const $inputtag_content3 = _content_resume("a4", "aliased");
 const $inputtag_content2 = _content_resume("a3", "inline");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a2", "spread"));

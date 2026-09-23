@@ -1,5 +1,4 @@
 // template.marko
-_resume_dynamic_tag();
 const $state3 = ($scope, state) => {
 	$state_a($scope, state.a);
 	$state_aChange($scope, state.aChange);

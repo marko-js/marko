@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><!><div><!>|<!></div>";
 const $walks = "b%b%bD%c%l";
-_resume_dynamic_tag();
 const $state3 = ($scope, state) => {
 	$state_a($scope, state.a);
 	$state_aChange($scope, state.aChange);

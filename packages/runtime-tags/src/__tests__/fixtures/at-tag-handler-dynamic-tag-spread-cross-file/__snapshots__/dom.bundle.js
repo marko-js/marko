@@ -1,5 +1,4 @@
 // tags/child.marko
-_resume_dynamic_tag();
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $input_tag__OR__input_button = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d, () => $scope.e));
 const $input_button = /*@__PURE__*/ _const(4, $input_tag__OR__input_button);
