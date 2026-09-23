@@ -13,6 +13,8 @@ class CompileError extends Error {
   constructor(filename, code, loc, label) {
     const prettyMessage = buildMessage(code, loc, label);
     const prettyFileName = buildFileName(filename, loc);
+    // `message` carries the position and frame since it is all Node output keeps;
+    // bundler plugins rebuild their own error shape from `label`, `loc` and `frame`.
     const message = loc
       ? `\n${indent}at ${prettyFileName}\n${prettyMessage.replace(
           /^/gm,

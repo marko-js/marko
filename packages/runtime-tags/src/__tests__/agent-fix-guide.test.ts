@@ -60,6 +60,21 @@ describe("runtime-tags/agent-fix-guide", () => {
     assert.doesNotMatch(compileError().message, /Fix guide/);
   });
 
+  it("appends the guide to the label bundler plugins print", () => {
+    process.env.MARKO_AGENT_FIX_GUIDE = "1";
+    const { label, frame } = compileError() as Error & {
+      label: string;
+      frame: string;
+    };
+    assert.match(label, /Fix guide: READ /);
+    assert.doesNotMatch(frame, /Fix guide/);
+    process.env.MARKO_AGENT_FIX_GUIDE = "0";
+    assert.doesNotMatch(
+      (compileError() as Error & { label: string }).label,
+      /Fix guide/,
+    );
+  });
+
   it("still sniffs agent markers without the override", () => {
     process.env.CLAUDECODE = "1";
     assert.match(compileError().message, /Fix guide: READ /);

@@ -19,6 +19,8 @@ export default function appendAgentFixGuide(error, translator) {
         writable: true,
         configurable: true,
       });
+      // Bundler plugins print `label` in place of the framed `message`.
+      if (typeof error.label === "string") error.label += guide;
     }
   }
 
