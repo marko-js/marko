@@ -1750,28 +1750,32 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
   }
 }
 
+// A pruned change binding (an ancestor is already tracked) reads through the
+// nearest kept ancestor's property chain.
+function getChangeHandlerRead(
+  binding: Binding,
+  section: Section,
+): t.Expression {
+  return binding.pruned &&
+    binding.property !== undefined &&
+    binding.upstreamAlias
+    ? toMemberExpression(
+        getChangeHandlerRead(binding.upstreamAlias, section),
+        binding.property,
+        false,
+      )
+    : createScopeReadExpression(binding, section);
+}
+
 function getBuildAssignment(extra: AssignedBindingExtra) {
   const { assignmentTo, assignment } = extra;
   if (assignmentTo) {
     return (section: Section, value: t.Expression) => {
-      let scopeRead: t.Expression;
-      if (assignmentTo.pruned) {
-        // The change binding was pruned (an ancestor is already tracked), so read
-        // the change handler via property chain from the nearest non-pruned ancestor.
-        let cur = assignmentTo;
-        const props: string[] = [];
-        while (cur.pruned && cur.property !== undefined && cur.upstreamAlias) {
-          props.push(cur.property);
-          cur = cur.upstreamAlias;
-        }
-        scopeRead = createScopeReadExpression(cur, section);
-        for (let i = props.length; i--;) {
-          scopeRead = toMemberExpression(scopeRead, props[i], false);
-        }
-      } else {
-        scopeRead = createScopeReadExpression(assignmentTo, section);
-      }
-      const replacement = callRuntime("_call", scopeRead, value);
+      const replacement = callRuntime(
+        "_call",
+        getChangeHandlerRead(assignmentTo, section),
+        value,
+      );
       updateExpressions.add(replacement);
       return replacement;
     };
