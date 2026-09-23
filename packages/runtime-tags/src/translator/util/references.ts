@@ -1732,7 +1732,8 @@ function addClosureSerializeReasons(section: Section) {
     if (isDynamicClosure(section, closure)) {
       addOwnerSerializeReason(section, sourceSection, branchesReason);
 
-      if (closure.sources) {
+      // A constant never changes, so no signal subscribes to it.
+      if (closure.sources && closure.type !== BindingType.constant) {
         addSerializeReason(
           sourceSection,
           closure.sources,

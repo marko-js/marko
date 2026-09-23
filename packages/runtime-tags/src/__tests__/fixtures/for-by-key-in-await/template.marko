@@ -1,0 +1,5 @@
+<let/items=[{ id: "a" }, { id: "b" }]/>
+<button onClick() { items = [...items, { id: "c" }] }>add</button>
+<for|item| of=items by="id">
+  <div><await|v|=input.value><em>${item.id}:${v}</em></await></div>
+</for>

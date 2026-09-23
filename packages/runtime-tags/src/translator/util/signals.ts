@@ -1248,7 +1248,8 @@ export function writeHTMLResumeStatements(
     ? FORCED
     : section.serializeReason;
   forEach(section.referencedClosures, (closure) => {
-    if (closure.sources) {
+    // A constant never changes, so nothing subscribes to it.
+    if (closure.sources && closure.type !== BindingType.constant) {
       if (isDynamicClosure(section, closure)) {
         const closureSignal = getSignal(closure.section, closure);
         let identifier =
