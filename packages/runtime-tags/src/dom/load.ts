@@ -118,6 +118,8 @@ export const _load_setup = /*@__PURE__*/ withLazy(
   },
 );
 
+// Inserts once each chunk's import resolves, relying on the bundler's import to
+// also wait for that chunk's stylesheets.
 function insertLoaded(
   renderer: Renderer,
   branch: BranchScope,
