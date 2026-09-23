@@ -1,0 +1,8 @@
+<let/rows=[{ id: "ab" }]>
+<for|row| of=rows by="id">
+  <const/key=row.id/>
+  <button onClick() { rows = [...rows, { id: "cde" }] }>
+    ${key}:${row.id.length}
+    <if=row.id><span>${row.id.length}</span></if>
+  </button>
+</for>

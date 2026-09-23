@@ -1,15 +1,15 @@
 // template.marko
 const $if_content__last = /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.d));
 const $if_content__setup = $if_content__last;
-const $for_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $for_content__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$messages($scope._, $scope._.c.toSpliced($scope.e, 1));
 	$last($scope._, $scope.e);
 }));
-const $for_content__message = ($scope, message) => _html($scope, message, "b");
-const $for_content__$params = ($scope, $params2) => {
-	$for_content__message($scope, $params2[0]);
-	$for_content__index($scope, $params2[1]);
+const $for_content__setup = ($scope) => {
+	_html($scope, $scope.M, "b");
+	$for_content__setup__script($scope);
 };
+const $for_content__$params = ($scope, $params2) => $for_content__index($scope, $params2[1]);
 const $for_content__index = /*@__PURE__*/ _const(4);
 const $for = /*@__PURE__*/ _for_of(0, "<button> </button>", " D ", $for_content__setup, $for_content__$params);
 const $messages = /*@__PURE__*/ _let(2, ($scope) => $for($scope, [$scope.c, (f) => f]));

@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_html(`<li${selected === row.id ? " class=danger" : ""}><button class=toggle>${_escape(row.label)}</button>${_el_resume($scope1_id, "b")}</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_scope($scope1_id, {
-			f: row?.id,
+			M: row?.id,
 			_: _scope_with_id($scope0_id)
 		});
 	}, "id", $scope0_id, "a", 1, 0, 0, 0, 1);

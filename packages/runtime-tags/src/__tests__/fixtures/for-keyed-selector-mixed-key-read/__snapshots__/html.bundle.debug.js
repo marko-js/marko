@@ -16,10 +16,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<li${selected === row.id ? " class=danger" : ""}><span>${_text_resume($scope1_id, "#text/1", selected === row.id && row.label)}</span><button class=select>x</button>${_el_resume($scope1_id, "#button/2")}</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
-			row_id: row?.id,
+			"#LoopKey": row?.id,
 			row_label: row?.label
 		}, "__tests__/template.marko", "4:4", {
-			row_id: ["row.id", "4:8"],
+			"#LoopKey": ["row.id", "4:8"],
 			row_label: ["row.label", "4:8"]
 		});
 	}, "id", $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);

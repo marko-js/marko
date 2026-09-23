@@ -22,17 +22,17 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (item.code) {
 				const $scope2_id = _scope_id();
-				_html(`<pre>code ${_text_resume($scope2_id, "a", item.id, 2)}</pre>`);
+				_html(`<pre>code ${_escape(item.id)}</pre>`);
 				_scope($scope2_id, {});
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(`<p>text ${_text_resume($scope3_id, "a", item.id, 2)}</p>`);
+				_html(`<p>text ${_escape(item.id)}</p>`);
 				_scope($scope3_id, {});
 				return 1;
 			}
 		}, $scope1_id, "a", 1, 1, 1, 0, 1);
-		_scope($scope1_id, { e: item?.id });
+		_scope($scope1_id, { M: item?.id });
 	}, "id", $scope0_id, "a", 1, 1, 1, "</div>");
 	_html(`<button class=rotate>Rotate</button>${_el_resume($scope0_id, "b")}<button class=toggle>Toggle</button>${_el_resume($scope0_id, "c")}<button class=drop>Drop</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a0");

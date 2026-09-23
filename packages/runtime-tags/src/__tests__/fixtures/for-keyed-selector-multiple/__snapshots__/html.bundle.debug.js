@@ -23,9 +23,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li${_attr_class([selected === row.id && "sel", hovered === row.id && "hov"])}>${_escape(row.label)}</li>${_el_resume($scope1_id, "#li/0")}`);
 		_scope($scope1_id, {
-			row_id: row?.id,
+			"#LoopKey": row?.id,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "7:4", { row_id: ["row.id", "7:8"] });
+		}, "__tests__/template.marko", "7:4", { "#LoopKey": ["row.id", "7:8"] });
 	}, "id", $scope0_id, "#ul/2", 1, 0, 0, 0, 1);
 	_html("</ul>");
 	_script($scope0_id, "__tests__/template.marko_0");

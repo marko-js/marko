@@ -1333,26 +1333,25 @@ export function finalizeReferences() {
             binding,
           );
         } else if (binding.type !== BindingType.dom) {
-          const canonicalUpstreamAlias = getCanonicalBinding(binding);
+          const closure =
+            getConstantRoot(binding) ?? getCanonicalBinding(binding);
           // Lazy-only reads need the owner scope chain but no closure signal.
           if (!bindingUtil.has(exprExtra.lazyBindings, binding)) {
-            canonicalUpstreamAlias.closureSections = sectionUtil.add(
-              canonicalUpstreamAlias.closureSections,
+            closure.closureSections = sectionUtil.add(
+              closure.closureSections,
               section,
             );
             section.referencedClosures = bindingUtil.add(
               section.referencedClosures,
-              canonicalUpstreamAlias,
+              closure,
             );
           }
 
-          setReadsOwner(section, canonicalUpstreamAlias.section);
+          setReadsOwner(section, closure.section);
           addOwnerSerializeReason(
             section,
-            canonicalUpstreamAlias.section,
-            isEffect
-              ? mergeSources(FORCED, canonicalUpstreamAlias.sources)
-              : canonicalUpstreamAlias.sources,
+            closure.section,
+            isEffect ? mergeSources(FORCED, closure.sources) : closure.sources,
           );
         }
       }
@@ -1723,18 +1722,6 @@ function addRegisteredFnSerializeReasons(
       }
     }
   }
-}
-
-// Narrow an expression's already-resolved referenced bindings, but only when a
-// lone binding survives — a smaller intersection would orphan its intersectionMeta.
-export function dropReferencedBindings(
-  expr: ReferencedExtra,
-  drop: ReferencedBindings,
-): boolean {
-  const kept = bindingUtil.difference(expr.referencedBindings, drop);
-  if (Array.isArray(kept)) return false;
-  expr.referencedBindings = kept;
-  return true;
 }
 
 function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
@@ -2883,10 +2870,9 @@ function resolveReferencedBindings(
           }
         } else if (binding.type !== BindingType.global) {
           extra.section = expr.section;
-          ({ binding } = extra.read ??= resolveExpressionReference(
-            rootBindings,
-            binding,
-          ));
+          ({ binding } = extra.read ??=
+            resolveConstantReference(binding) ??
+            resolveExpressionReference(rootBindings, binding));
         }
         if (binding.type === BindingType.global) {
           // `$global` reads stay verbatim member chains: no read slot,
@@ -2903,7 +2889,8 @@ function resolveReferencedBindings(
       allBindings = bindingUtil.add(allBindings, binding);
     }
   } else if (reads) {
-    const { binding, extra, getter, ownVar } = reads;
+    const { extra, getter, ownVar } = reads;
+    let { binding } = reads;
 
     if (getter) {
       extra.read = createGetterRead(binding, undefined, getter);
@@ -2917,7 +2904,10 @@ function resolveReferencedBindings(
       // no signal, no register-id participation.
       globalBindings = binding;
     } else {
-      extra.read = createRead(binding, undefined, ownVar);
+      extra.read =
+        resolveConstantReference(binding) ??
+        createRead(binding, undefined, ownVar);
+      binding = extra.read.binding;
       if (isLazyRead(expr, reads, binding, extra.assignmentTo === binding)) {
         lazyBindings = binding;
       } else if (binding.type === BindingType.constant) {
@@ -2984,6 +2974,21 @@ function resolveReferencedBindings(
   };
 }
 
+function resolveConstantReference(binding: Binding): ExtraRead | undefined {
+  const root = getConstantRoot(binding);
+  return root && createRead(root, getPropertyPath(binding, root));
+}
+
+// A property of a constant is constant, so it reads through the constant.
+function getConstantRoot(binding: Binding): Binding | undefined {
+  for (let cur = binding; cur.upstreamAlias; cur = cur.upstreamAlias) {
+    if (cur.property === undefined && !isDirectAlias(cur)) return;
+    if (cur.upstreamAlias.type === BindingType.constant) {
+      return cur.upstreamAlias;
+    }
+  }
+}
+
 function resolveExpressionReference(
   rootBindings: SortedOneMany<Binding>,
   readBinding: Binding,
@@ -2991,25 +2996,16 @@ function resolveExpressionReference(
   const upstreamRoot =
     readBinding.upstreamAlias &&
     findClosestReference(readBinding.upstreamAlias, rootBindings);
-  if (!upstreamRoot) {
-    return createRead(readBinding, undefined);
-  }
+  return upstreamRoot
+    ? createRead(upstreamRoot, getPropertyPath(readBinding, upstreamRoot))
+    : createRead(readBinding, undefined);
+}
 
-  let curBinding = readBinding;
-  let props: Opt<string>;
-  while (curBinding !== upstreamRoot) {
-    if (curBinding.property !== undefined) {
-      props = push(props, curBinding.property);
-    }
-
-    curBinding = curBinding.upstreamAlias!;
-  }
-
-  if (Array.isArray(props)) {
-    props.reverse();
-  }
-
-  return createRead(upstreamRoot, props);
+// The properties from `ancestor` down to `binding`, one of its aliases.
+function getPropertyPath(binding: Binding, ancestor: Binding): Opt<string> {
+  if (binding === ancestor) return;
+  const path = getPropertyPath(binding.upstreamAlias!, ancestor);
+  return binding.property === undefined ? path : push(path, binding.property);
 }
 
 function isSupersetSources(a: Binding, b: Binding) {

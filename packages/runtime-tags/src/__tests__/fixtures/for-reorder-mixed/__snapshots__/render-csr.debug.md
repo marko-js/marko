@@ -61,6 +61,7 @@ REMOVE: #3 + #4
 INSERT: div > #6
 REMOVE: #3 + #5
 INSERT: div > #5
+UPDATE: #6[id] null => "6"
 ```
 
 # Update `{"children":[{"id":7,"text":"p"},{"id":5,"text":"e"},{"id":8,"text":"q"},{"id":3,"text":"c"},{"id":9,"text":"r"},{"id":1,"text":"a"}]}`
@@ -106,4 +107,7 @@ REMOVE: #1 + #3
 INSERT: #5 + #3
 INSERT: #5 + #8
 INSERT: div > #7
+UPDATE: #7[id] null => "7"
+UPDATE: #8[id] null => "8"
+UPDATE: #9[id] null => "9"
 ```
