@@ -1,0 +1,37 @@
+<button>add</button><!--M_$1 a-->
+<div>
+  <script>
+    WALKER_RUNTIME("M")("_");
+    M._.r = [_ => [1, {
+      e: (p => p = new Promise((f, r) => _.a = {
+        f,
+        r(e) {
+          p.catch(_ => 0);
+          r(e)
+        }
+      }))(),
+      f: [{
+        id: "a"
+      }, {
+        id: "b"
+      }]
+    }, {
+      M: "a"
+    }, {
+      M: "b"
+    }]]
+  </script>
+
+  <!-- FLUSH -->
+
+  <!--M_[--><em>a:x</em><!--M_]2 a 4-->
+</div>
+<div><!--M_[--><em>b:x</em><!--M_]3 a 5--></div><!--M_|1 b 3 2-->
+<script>
+  M._.r.push(_ => [4, {
+    _: _(2)
+  }], _ => [5, {
+    _: _(3)
+  }], _ => (_.a.f("x"), 0), "a0 1");
+  M._.w()
+</script>
