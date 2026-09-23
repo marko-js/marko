@@ -1,0 +1,40 @@
+import { t as _t } from "marko/src/runtime/vdom/index.js";
+const _marko_componentType = "__tests__/template.marko",
+  _marko_template = _t(_marko_componentType);
+export default _marko_template;
+import _of_fallback from "marko/src/runtime/helpers/of-fallback.js";
+import _marko_renderer from "marko/src/runtime/components/renderer.js";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry.js";
+_marko_registerComponent(_marko_componentType, () => _marko_template);
+const _marko_component = {};
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
+  out.e("div", {
+    "class": "card"
+  }, "0", _component, 0, 1);
+  out.e("input", {
+    "name": "email",
+    "type": "email"
+  }, "1", _component, 0, 0);
+  out.e("input", {
+    "hidden": "",
+    "type": "text"
+  }, "2", _component, 0, 0);
+  out.be("section", null, "3", _component, null, 0);
+  out.t("Content", _component);
+  out.ee();
+  for (const item of _of_fallback(input.items)) {
+    out.t(item, _component);
+  }
+  out.be("form", {
+    "action": "/search",
+    "method": "get"
+  }, "4", _component, null, 0);
+  out.t("Search", _component);
+  out.ee();
+}, {
+  t: _marko_componentType,
+  i: true,
+  d: true
+}, _marko_component);
+import _marko_defineComponent from "marko/src/runtime/components/defineComponent.js";
+_marko_template.Component = _marko_defineComponent(_marko_component, _marko_template._);
