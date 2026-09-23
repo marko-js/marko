@@ -250,6 +250,48 @@ describe("compiler/compile", () => {
     });
   });
 
+  // Node's `--enable-source-maps` joins `sourceRoot` and a source by plain
+  // concatenation, so a mapped frame only names a real file with a separator.
+  describe("source maps", () => {
+    let dir;
+    beforeEach(() => {
+      dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-maps-"));
+      fs.mkdirSync(path.join(dir, "tags"));
+      fs.writeFileSync(path.join(dir, "template.marko"), `<my-child/>\n`);
+      fs.writeFileSync(
+        path.join(dir, "tags", "my-child.marko"),
+        `<p>child</p>\n`,
+      );
+    });
+    afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+    const mappedSource = (file, cache) => {
+      const { map } = compileFileSync(file, {
+        translator,
+        cache,
+        output: "dom",
+        sourceMaps: true,
+      });
+      return map.sourceRoot + map.sources[0];
+    };
+
+    it("maps a template to its own path", () => {
+      const file = path.join(dir, "template.marko");
+      assert.equal(mappedSource(file, new Map()), file);
+    });
+
+    it("maps a template first analyzed as another's child to its own path", () => {
+      const cache = new Map();
+      compileFileSync(path.join(dir, "template.marko"), {
+        translator,
+        cache,
+        output: "dom",
+      });
+      const child = path.join(dir, "tags", "my-child.marko");
+      assert.equal(mappedSource(child, cache), child);
+    });
+  });
+
   it("keeps the compile error when compiling asynchronously", () =>
     assert.rejects(
       () => compile("<div", template),
