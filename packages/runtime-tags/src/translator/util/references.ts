@@ -1,7 +1,10 @@
 import { types as t } from "@marko/compiler";
 import { getProgram, isNativeTag } from "@marko/compiler/babel-utils";
 
-import type { AccessorPrefix } from "../../common/accessor.debug";
+import {
+  type AccessorPrefix,
+  AccessorProp as DebugAccessorProp,
+} from "../../common/accessor.debug";
 import { decodeAccessor, isEventHandler } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
@@ -2200,20 +2203,11 @@ export function getScopeAccessorLiteral(
   includeId?: boolean,
 ) {
   const canonicalBinding = getCanonicalBinding(binding)!;
-  if (canonicalBinding.type === BindingType.constant) {
-    return t.stringLiteral(
-      canonicalBinding.scopeAccessor ?? canonicalBinding.name,
-    );
-  } else if (isOptimize()) {
-    return encoded
-      ? t.numericLiteral(canonicalBinding.id)
-      : t.stringLiteral(decodeAccessor(canonicalBinding.id));
-  } else if (includeId || canonicalBinding.type === BindingType.dom) {
-    return t.stringLiteral(`${canonicalBinding.name}/${canonicalBinding.id}`);
-  }
-  return t.stringLiteral(
-    canonicalBinding.scopeAccessor ?? canonicalBinding.name,
-  );
+  return encoded &&
+    isOptimize() &&
+    canonicalBinding.type !== BindingType.constant
+    ? t.numericLiteral(canonicalBinding.id)
+    : t.stringLiteral(getScopeAccessor(binding, encoded, includeId));
 }
 
 export function getScopeAccessor(
@@ -2228,11 +2222,20 @@ export function getScopeAccessor(
     return encoded
       ? canonicalBinding.id + ""
       : decodeAccessor(canonicalBinding.id);
-  } else if (includeId || canonicalBinding.type === BindingType.dom) {
-    return `${canonicalBinding.name}/${canonicalBinding.id}`;
   }
-  return canonicalBinding.scopeAccessor ?? canonicalBinding.name;
+  // Debug accessors are binding names, so one naming a runtime prop gets its id.
+  const name = reservedDebugAccessors.has(canonicalBinding.name)
+    ? `${canonicalBinding.name}/${canonicalBinding.id}`
+    : canonicalBinding.name;
+  if (includeId || canonicalBinding.type === BindingType.dom) {
+    return `${name}/${canonicalBinding.id}`;
+  }
+  return canonicalBinding.scopeAccessor ?? name;
 }
+
+const reservedDebugAccessors = new Set<string>(
+  Object.values(DebugAccessorProp),
+);
 
 // Always includes the id so a debug accessor cannot collide with the owner key.
 export function getLocalsScopeAccessor(binding: Binding) {
