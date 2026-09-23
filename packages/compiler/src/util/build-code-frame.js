@@ -33,8 +33,15 @@ class CompileError extends Error {
         writable: true,
         configurable: true,
       },
+      // Babel's `start`/`end` plus the flat `file`/`line`/`column` (0-based)
+      // that bundlers print; copied since the caller's loc may be cached.
       loc: {
-        value: loc,
+        value: loc && {
+          ...loc,
+          file: filename,
+          line: loc.start.line,
+          column: loc.start.column,
+        },
         enumerable: false,
         writable: true,
         configurable: true,

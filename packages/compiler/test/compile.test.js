@@ -20,6 +20,15 @@ const template = path.join(
   "template.marko",
 );
 
+const failing = (src, config) => {
+  try {
+    compileSync(src, "test.marko", { translator, code: false, ...config });
+  } catch (err) {
+    return err;
+  }
+  assert.fail("expected a compile error");
+};
+
 // Enough of an fs to read one template, standing in for the virtual one a
 // bundler hands over.
 const fromMemory = (src) => ({
@@ -147,15 +156,6 @@ describe("compiler/compile", () => {
   // one compile can report several; the fixture harness only ever reads
   // `.message`, so nothing else exercises how the aggregate serializes.
   describe("aggregate errors", () => {
-    const failing = (src) => {
-      try {
-        compileSync(src, "test.marko", { translator, code: false });
-      } catch (err) {
-        return err;
-      }
-      assert.fail("expected a compile error");
-    };
-
     it("throws the error itself when there is only one", () => {
       const err = failing("<if>a</if>");
       assert.equal(err.name, "CompileError");
@@ -180,6 +180,57 @@ describe("compiler/compile", () => {
       const err = failing("<if>a</if>\n<if>b</if>");
       assert.equal(err.toJSON(), String(err));
       assert.equal(JSON.parse(JSON.stringify({ err })).err, String(err));
+    });
+  });
+
+  // Rollup, Vite and Rolldown print `loc.line`/`loc.column` beside the id,
+  // while editors and `@marko/vite` warnings read Babel's `loc.start`.
+  describe("error location", () => {
+    const file = path.resolve("test.marko");
+    const flat = (loc) => ({
+      file: path.resolve(loc.file),
+      line: loc.line,
+      column: loc.column,
+    });
+
+    it("locates a parse error for bundlers and babel", () => {
+      const { loc } = failing("<section><span>Hello</section>");
+      assert.deepEqual(flat(loc), { file, line: 1, column: 20 });
+      assert.deepEqual(loc.start, { line: 1, column: 20 });
+      assert.deepEqual(loc.end, { line: 1, column: 30 });
+    });
+
+    it("locates an analyze error", () => {
+      const { loc } = failing("<div>\n  <if>a</if>\n</div>");
+      assert.deepEqual(flat(loc), { file, line: 2, column: 3 });
+      assert.deepEqual(loc.start, { line: 2, column: 3 });
+    });
+
+    it("locates each error in an aggregate", () => {
+      const { errors } = failing("<if>a</if>\n<if>b</if>");
+      assert.deepEqual(
+        errors.map(({ loc }) => [loc.line, loc.column]),
+        [
+          [1, 1],
+          [2, 1],
+        ],
+      );
+    });
+
+    it("locates an error rethrown from cached diagnostics without changing them", () => {
+      const src = "<div>\n  <if>a</if>\n</div>";
+      const cache = new Map();
+      const [diag] = compileSync(src, "test.marko", {
+        translator,
+        code: false,
+        cache,
+        errorRecovery: true,
+      }).meta.diagnostics;
+      const before = structuredClone(diag.loc);
+      const { loc } = failing(src, { cache });
+      assert.deepEqual(flat(loc), { file, line: 2, column: 3 });
+      assert.notEqual(loc, diag.loc);
+      assert.deepEqual(diag.loc, before);
     });
   });
 
