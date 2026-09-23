@@ -1,0 +1,14 @@
+<let/items=[{ id: 1, extra: "x" }, { id: 2, extra: "y" }]>
+<button#rename onClick() { items = items.map((it) => ({ ...it, extra: it.extra + "!" })) }>rename</button>
+
+<list>
+  <for|{ id, ...rest }| of=items>
+    <@item><p>${id}:${rest.extra}</p></@item>
+  </for>
+</list>
+
+<list>
+  <for|[first, ...others]| of=[["a", "b"], ["c", "d"]]>
+    <@item><b>${first}${others[0]}</b></@item>
+  </for>
+</list>
