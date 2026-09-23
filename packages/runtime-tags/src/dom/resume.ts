@@ -86,8 +86,8 @@ export const _resumed: Record<string, unknown> = {};
 export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
 // Flush shells ahead of the scope tree (`id;walks;template`
 // strings), registered by the patch feature that understands them.
-export let onPatchShell: ((entry: string) => void) | undefined;
-export const _patch_shells = (handler: NonNullable<typeof onPatchShell>) =>
+let onPatchShell: ((entry: string) => void) | undefined;
+export const installPatchShells = (handler: NonNullable<typeof onPatchShell>) =>
   (onPatchShell = handler);
 // Rejects the applying patch so the caller falls back to a full navigation;
 // only conditions reachable in a matched build guard explicitly.

@@ -8,13 +8,13 @@ import {
 import { queueEffect, runId } from "./queue";
 import { _content as content } from "./renderer";
 import {
-  _patch_shells,
   creating,
-  withCreating,
   createPatchers,
   getRegisteredWithScope,
+  installPatchShells,
   patchCreated,
   patchers,
+  withCreating,
 } from "./resume";
 
 declare module "./resume" {
@@ -109,4 +109,4 @@ export const registerShell = (shell: string) => {
   );
   return id;
 };
-_patch_shells(registerShell);
+installPatchShells(registerShell);
