@@ -125,6 +125,31 @@ describe("runtime-tags/translator/util/optional", () => {
         );
       }
     });
+
+    it("matches naive set intersects", () => {
+      assert.equal(sorted.intersects(fromValues([1, 2, 3]), undefined), false);
+      assert.equal(sorted.intersects(undefined, 2), false);
+      assert.equal(sorted.intersects(fromValues([1, 2, 3]), 2), true);
+      assert.equal(sorted.intersects(4, fromValues([1, 2, 3])), false);
+      assert.equal(
+        sorted.intersects(fromValues([1, 3, 5]), fromValues([2, 4, 5])),
+        true,
+      );
+      assert.equal(
+        sorted.intersects(fromValues([1, 3, 5]), fromValues([2, 4, 6])),
+        false,
+      );
+      const random = createRandom(7);
+      for (let run = 0; run < 100; run++) {
+        const a = randomSortedValues(random, (random() * 8) | 0);
+        const b = randomSortedValues(random, (random() * 8) | 0);
+        assert.equal(
+          sorted.intersects(fromValues(a), fromValues(b)),
+          a.some((item) => b.includes(item)),
+          `intersects([${a}], [${b}])`,
+        );
+      }
+    });
   });
 
   describe("sorted array helpers", () => {

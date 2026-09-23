@@ -1509,52 +1509,103 @@ export function finalizeReferences() {
 }
 
 // Serializes an intersection member for its partners' sources, unless those
-// changes already recompute it.
+// changes always recompute it.
 function addIntersectionSerializeReasons(
   section: Section,
   intersections: Intersection[] | undefined,
 ) {
   if (intersections) {
-    // mark bindings that need to be serialized due to being in an intersection with state
     for (const intersection of intersections) {
-      const numReferences = intersection.length;
       // TODO: in some cases we should be able to short circuit this
       // if we know that the references are already serialized
-      for (let i = 0; i < numReferences - 1; i++) {
-        for (let j = i + 1; j < numReferences; j++) {
-          const binding1 = intersection[i];
-          const binding2 = intersection[j];
-          if (
-            !isForceSerialized(section, binding1) &&
-            !isSupersetSources(binding1, binding2)
-          ) {
-            if (!isSameOrChildSection(section, binding1.section)) {
-              addOwnerSerializeReason(
-                section,
-                binding1.section,
-                mergeSources(binding1.sources, binding2.sources),
-              );
-            }
-
-            addSerializeReason(binding1.section, binding2.sources, binding1);
-          }
-          if (
-            !isForceSerialized(section, binding2) &&
-            !isSupersetSources(binding2, binding1)
-          ) {
-            if (!isSameOrChildSection(section, binding2.section)) {
-              addOwnerSerializeReason(
-                section,
-                binding2.section,
-                mergeSources(binding1.sources, binding2.sources),
-              );
-            }
-            addSerializeReason(binding2.section, binding1.sources, binding2);
-          }
+      for (let i = 0; i < intersection.length - 1; i++) {
+        for (let j = i + 1; j < intersection.length; j++) {
+          addIntersectionMemberReason(
+            section,
+            intersection[i],
+            intersection[j],
+          );
+          addIntersectionMemberReason(
+            section,
+            intersection[j],
+            intersection[i],
+          );
         }
       }
     }
   }
+}
+
+function addIntersectionMemberReason(
+  section: Section,
+  member: Binding,
+  partner: Binding,
+) {
+  if (
+    !isForceSerialized(section, member) &&
+    (!isSupersetSources(member, partner) ||
+      hasSerializedIntermediate(member, partner, new Set()))
+  ) {
+    if (!isSameOrChildSection(section, member.section)) {
+      addOwnerSerializeReason(
+        section,
+        member.section,
+        mergeSources(member.sources, partner.sources),
+      );
+    }
+    addSerializeReason(member.section, partner.sources, member);
+  }
+}
+
+// Whether `member` reads `partner`'s sources through a serialized binding,
+// whose dirty check then holds the resumed value and can skip `member`.
+function hasSerializedIntermediate(
+  member: Binding,
+  partner: Binding,
+  seen: Set<Binding>,
+): boolean {
+  return some(getValueInputs(member), (input) => {
+    if (seen.has(input) || !sharesSources(input, partner)) return false;
+    seen.add(input);
+    if (
+      bindingUtil.has(partner.sources!.state, input) ||
+      bindingUtil.has(partner.sources!.param, input as ParamBinding)
+    ) {
+      return false;
+    }
+    return (
+      !!getSerializeReason(input.section, input) ||
+      hasSerializedIntermediate(input, partner, seen)
+    );
+  });
+}
+
+// The bindings a binding's value is computed from.
+function getValueInputs(binding: Binding): ReferencedBindings {
+  if (binding.upstreamAlias) return binding.upstreamAlias;
+  const exprs = getBindingValueExprs().get(binding);
+  return typeof exprs === "boolean" ? undefined : getValueReferences(exprs);
+}
+
+// The bindings value expressions read, apart from an initial value (which a
+// change never recomputes).
+function getValueReferences(exprs: Opt<t.NodeExtra>) {
+  let refs: ReferencedBindings;
+  forEach(exprs, (expr) => {
+    if (isReferencedExtra(expr) && !expr.initialValue) {
+      refs = bindingUtil.union(refs, expr.referencedBindings);
+    }
+  });
+  return refs;
+}
+
+function sharesSources(a: Binding, b: Binding) {
+  return (
+    !!a.sources &&
+    !!b.sources &&
+    (bindingUtil.intersects(a.sources.state, b.sources.state) ||
+      bindingUtil.intersects(a.sources.param, b.sources.param))
+  );
 }
 
 // Serializes each closure a section reads for every branch or content between
@@ -1820,12 +1871,7 @@ function resolveDerivedSources(binding: Binding) {
   if (exprs === undefined || exprs === true) {
     binding.sources = createSources(binding, undefined);
   } else if (exprs) {
-    let refs: ReferencedBindings;
-    forEach(exprs, (expr) => {
-      if (isReferencedExtra(expr) && !expr.initialValue) {
-        refs = bindingUtil.union(refs, expr.referencedBindings);
-      }
-    });
+    const refs = getValueReferences(exprs);
     forEach(refs, (ref) => {
       resolveBindingSources(ref);
       binding.sources = mergeSources(binding.sources, ref.sources);

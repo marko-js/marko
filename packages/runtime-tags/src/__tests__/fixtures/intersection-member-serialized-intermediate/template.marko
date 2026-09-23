@@ -1,0 +1,6 @@
+<let/list=[1, 2]/>
+<let/flag=false/>
+<const/show=(list.length > 1 || flag)/>
+<p>${show ? list.join() : "none"}</p>
+<button.same-length onClick() { list = [...list] }/>
+<button.toggle onClick() { flag = !flag }/>

@@ -102,6 +102,19 @@ export class Sorted<T> {
     }
     return group;
   }
+  // Whether any item is in both, walking each once.
+  intersects<U extends NonNullable<T>>(a: SortedOpt<U>, b: SortedOpt<U>) {
+    if (a === undefined || b === undefined) return false;
+    if (!Array.isArray(a)) return this.findIndex(b, a) !== -1;
+    if (!Array.isArray(b)) return this.findIndex(a, b) !== -1;
+    for (let i = 0, j = 0; i < a.length && j < b.length;) {
+      const delta = this.compare(a[i], b[j]);
+      if (!delta) return true;
+      if (delta < 0) i++;
+      else j++;
+    }
+    return false;
+  }
   isSuperset<U extends NonNullable<T>>(
     superset: SortedOpt<U>,
     subset: SortedOpt<U>,

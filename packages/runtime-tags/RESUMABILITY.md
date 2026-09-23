@@ -85,7 +85,10 @@ client-observable roots—state, effects, handlers/registered functions, closure
 hoists, control-flow identity, DOM getters, tag variables, and stateful
 downstreams—and propagate backward through aliases/reads and upward through
 owners. Intersections cross-propagate because all members must exist when their
-combined work becomes relevant.
+combined work becomes relevant. Reasons that follow other reasons (intersections,
+closures through registered content, registered functions, known-tag param
+groups) are solved together, repeating until none moves; every write merges, so
+reasons only grow and cycles settle.
 
 Across known tags, `finalizeParamSerializeReasonGroups()` groups child parameter
 dependencies. The parent calls `_set_serialize_reason(...)`; the child consumes
