@@ -132,12 +132,9 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (node.body.params.length) {
-    let insertions: t.MarkoTag[] | undefined;
-    for (const param of node.body.params) {
-      insertions = getAssignmentInsertions(param, insertions);
-    }
-
-    if (insertions) {
+    const insertions = getElementInsertions(node.body.params);
+    // Nothing reads the params of a tag with no body, so defaults are dropped.
+    if (insertions && node.body.body.length) {
       node.body.body = [...insertions, ...node.body.body];
     }
   }
@@ -501,23 +498,33 @@ function getAssignmentInsertions(
       }
       break;
     case "ArrayPattern":
-      for (let i = 0, len = node.elements.length; i < len; i++) {
-        const el = node.elements[i];
-        if (el != null) {
-          if (el.type === "AssignmentPattern") {
-            const { left, right } = el;
-            const sourceName = generateUid(getLiteralName(left) || "pattern");
-            node.elements[i] = t.identifier(sourceName);
-            (insertions ||= []).push(
-              toConstTag(left as any, toFallbackExpr(sourceName, right)),
-            );
-            getAssignmentInsertions(left, insertions);
-          } else {
-            insertions = getAssignmentInsertions(el, insertions);
-          }
-        }
-      }
+      insertions = getElementInsertions(node.elements, insertions);
       break;
+  }
+
+  return insertions;
+}
+
+// Tag params are positional like an array pattern's elements.
+function getElementInsertions(
+  elements: (t.Node | null)[],
+  insertions?: t.MarkoTag[] | undefined,
+) {
+  for (let i = 0, len = elements.length; i < len; i++) {
+    const el = elements[i];
+    if (el != null) {
+      if (el.type === "AssignmentPattern") {
+        const { left, right } = el;
+        const sourceName = generateUid(getLiteralName(left) || "pattern");
+        elements[i] = withPreviousLocation(t.identifier(sourceName), el);
+        (insertions ||= []).push(
+          toConstTag(left as any, toFallbackExpr(sourceName, right)),
+        );
+        getAssignmentInsertions(left, insertions);
+      } else {
+        insertions = getAssignmentInsertions(el, insertions);
+      }
+    }
   }
 
   return insertions;
