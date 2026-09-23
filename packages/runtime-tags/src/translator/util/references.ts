@@ -1731,12 +1731,7 @@ export function dropReferencedBindings(
   expr: ReferencedExtra,
   drop: ReferencedBindings,
 ): boolean {
-  let kept: ReferencedBindings;
-  forEach(expr.referencedBindings, (binding) => {
-    if (!bindingUtil.has(drop, binding)) {
-      kept = bindingUtil.add(kept, binding);
-    }
-  });
+  const kept = bindingUtil.difference(expr.referencedBindings, drop);
   if (Array.isArray(kept)) return false;
   expr.referencedBindings = kept;
   return true;
@@ -2936,16 +2931,8 @@ function resolveReferencedBindings(
     allBindings = binding;
   }
 
-  if (lazyBindings) {
-    // A binding also read live by this expression stays subscribed.
-    let onlyLazy: ReferencedBindings;
-    forEach(lazyBindings, (binding) => {
-      if (!bindingUtil.has(referencedBindings, binding)) {
-        onlyLazy = bindingUtil.add(onlyLazy, binding);
-      }
-    });
-    lazyBindings = onlyLazy;
-  }
+  // A binding also read live by this expression stays subscribed.
+  lazyBindings = bindingUtil.difference(lazyBindings, referencedBindings);
 
   if (Array.isArray(referencedBindings)) {
     // Resolve canonical intersection based on the expressions section.
