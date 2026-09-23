@@ -67,6 +67,8 @@ class Taglib {
     this.tagsDir = undefined;
   }
 
+  // Root-level attributes are definitions a tag attribute references by `#name`;
+  // attributes for every tag belong on `<*>`, whose patterns the lookup matches.
   addAttribute(attribute) {
     ok(attribute.key, '"key" is required for global attributes');
 
