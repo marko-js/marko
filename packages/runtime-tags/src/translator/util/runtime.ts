@@ -12,8 +12,14 @@ import {
   _escape_style,
   _unescaped,
 } from "../../html";
+import { addAssetImport } from "./asset-imports";
 import { isTranslate } from "./get-compile-stage";
-import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
+import {
+  getMarkoOpts,
+  isOutputDOM,
+  isOutputHTML,
+  isPatch,
+} from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
@@ -29,6 +35,20 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 //
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
+  "_fill_join",
+  "_global_join",
+  "_fill_join_closure",
+  "_fill_join_for",
+  "_fill_join_if",
+  "_fill_join_subscribers",
+  "_init_closure_get",
+  "_init_for_closure",
+  "_init_for_selector",
+  "_init_if_closure",
+  "_init_join",
+  "_fill_const",
+  "_fill_let",
+  "_fill_let_change",
   "_await_content",
   "_child_setup",
   "_if",
@@ -57,6 +77,7 @@ const pureDOMFunctions = new Set<string>([
   "_let_change",
   "_const",
   "_load_signal",
+  "_load_signal_patch",
   "_load_setup",
   "_load_template",
   "_load_visible_trigger",
@@ -105,11 +126,26 @@ export function callRuntime(
     importRuntime(name),
     filterArguments(args),
   );
-  if (isOutputDOM() && pureDOMFunctions.has(name)) {
-    return t.addComment(callExpression, "leading", "@__PURE__");
+  if (isOutputDOM()) {
+    if (isPatch() && scopeBoundRegistrations.has(name)) {
+      importRuntimeFeature("patch-bind");
+    }
+    if (pureDOMFunctions.has(name)) {
+      return t.addComment(callExpression, "leading", "@__PURE__");
+    }
   }
   return callExpression;
 }
+
+// Client registrations of values the server can bind to a scope. Any patched
+// value downstream may carry one (an entry, or a reference in data), so the
+// module registering it links their resolution.
+const scopeBoundRegistrations = new Set<string>([
+  "_content_resume",
+  "_el",
+  "_hoist_resume",
+  "_var_resume",
+]);
 
 // A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
 // import: it enables optional runtime behavior that referenced imports alone
@@ -125,9 +161,50 @@ export const domRuntimeFeatures = [
   "controllable-textarea",
   "dynamic-tag-script",
   "dynamic-tag-var",
+  "patch-attr",
+  "patch-attrs",
+  "patch-boundary",
+  "patch-branch",
+  "patch-catch",
+  "patch-child",
+  "patch-content",
+  "patch-control",
+  "patch-control-checked-value",
+  "patch-control-input",
+  "patch-control-open",
+  "patch-control-select",
+  "patch-dynamic-tag",
+  "patch-effect",
+  "patch-global",
+  "patch-html",
+  "patch-loop",
+  "patch-loop-keyed",
+  "patch-ready",
+  "patch-style",
+  "patch-text",
+  "patch-text-content",
+  "patch-try",
+  "patch-value",
+  "patch-bind",
+  "patch-var",
   "placeholder",
 ] as const;
 export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    /** Client runtime features the template links from analyze. */
+    runtimeFeatures?: Set<DOMRuntimeFeature>;
+  }
+}
+
+// Links a client runtime feature from analyze: the page entry imports it
+// when the template's module never loads, and that module imports it too.
+export function linkRuntimeFeature(feature: DOMRuntimeFeature) {
+  addAssetImport(`${getRuntimePath("dom")}/${feature}.feat`);
+  (getProgram().node.extra.runtimeFeatures ??= new Set()).add(feature);
+}
+
 const importedFeatures = new WeakMap<t.Program, Set<string>>();
 export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!isTranslate()) {
@@ -140,7 +217,9 @@ export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!features) importedFeatures.set(program, (features = new Set()));
   if (!features.has(feature)) {
     features.add(feature);
-    program.body.push(
+    // Hoisted with the module's other imports: one landing among statements
+    // splits the bundler's view of the module body.
+    program.body.unshift(
       t.importDeclaration(
         [],
         t.stringLiteral(`${getRuntimePath("dom")}/${feature}.feat`),

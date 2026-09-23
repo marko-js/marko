@@ -15,8 +15,7 @@ const $try_content__clicks = /*@__PURE__*/ _closure_get(4, ($scope) => _text($sc
 	if ($scope._.d) throw new Error("click");
 	return $scope._.d;
 })()));
-const $try_content__setup = $try_content__clicks;
-const $try2 = /*@__PURE__*/ _try(2, "clicks <!>", "b%", $try_content__setup);
+const $try2 = /*@__PURE__*/ _try(2, "clicks <!>", "b%", $try_content__clicks);
 const $clicks__closure = /*@__PURE__*/ _closure($try_content__clicks);
 const $clicks = /*@__PURE__*/ _let(3, ($scope) => {
 	let $catch2;

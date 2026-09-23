@@ -8,7 +8,9 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { boundaryAlwaysPairs } from "../util/patch/structure";
 import {
   BindingType,
   createBinding,
@@ -16,7 +18,11 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -83,7 +89,15 @@ export default {
     const bodySection = startSection(tag.get("body"));
 
     if (bodySection) {
+      bodySection.isBoundary = true;
       bodySection.upstreamExpression = tagExtra;
+      if (isPatch()) {
+        // Any `<try>` a patch may reach (scriptless, or in content one consumer
+        // renders stateful) applies its body entry through `patch-try`.
+        linkRuntimeFeature("catch");
+        linkRuntimeFeature("patch-try");
+        if (attrTags?.["@catch"]) linkRuntimeFeature("patch-catch");
+      }
       structure.visit(tag, WalkCode.Replace);
       structure.enterShallow(tag);
     }
@@ -136,6 +150,12 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                // An always-pairing branch drops its pairing entry's
+                // creation payload outside divergent contexts.
+                ...(isPatch() &&
+                boundaryAlwaysPairs(getSectionForBody(tagBody)!)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]

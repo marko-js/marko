@@ -1,0 +1,8 @@
+<let/show=true/>
+<main>
+  <if=show>
+    <badge("x")/>
+    <badge(input.tag)/>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>

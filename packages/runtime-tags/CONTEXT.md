@@ -71,8 +71,11 @@ _Avoid_: lifecycle hook, arbitrary JavaScript side effect
 **Serialize reason**:
 Why a section, scope property, marker, or registration must reach the browser.
 `true` and state-backed `Sources` are unconditional; parameter-only sources
-produce per-call guards; absence means omit.
-_Avoid_: serialization flag, serialized value
+produce per-call guards; absence means omit. At a call site it is one runtime
+value for plain and patch templates: two bits per param-reason group,
+client contributes and server contributes; a patch template reads the
+pair as the group's ownership.
+_Avoid_: serialization flag, serialized value, ownership mask as a second value
 
 ## DOM runtime
 
@@ -144,9 +147,16 @@ The render coordinator that tracks async work, flushes chunks, and carries the
 abort signal. Not an error boundary.
 
 **Resume**:
-Filling scopes, adopting server-rendered nodes, rebuilding branches, and running
+Filling scopes, adopting server-rendered nodes, creating branches, and running
 effects without an initial client rerender.
 _Avoid_: hydrate, hydration
+
+**Created scope**:
+A scope a patch creates from a shell where the live page has none, seeded by
+its fills and set up by registered ids (`inits…!effects…`) in place of a
+renderer's setup; a live scope the patch writes into is _paired_. The same
+word as a client render's `createBranch`; the patch is just who creates.
+_Avoid_: construct, rebuild
 
 **Resume payload**:
 Server-emitted JavaScript data and fill operations for required scope slots,
@@ -172,6 +182,99 @@ _Avoid_: serialization
 A `readyId`-keyed serialization channel that withholds lazy resume data until
 its module registers and earlier data drains.
 _Avoid_: async HTML stream
+
+## Patch protocol
+
+Analyze names observations in template terms; translate names conclusions
+(ownership, wire channels, masks) and keeps them out of shared metadata.
+
+**Patch**:
+A server rerender of a patch page applied to the live client DOM by
+refreshing values and navigating structure, without a full page render.
+_Avoid_: rerender, hydration update
+
+**Flush**:
+One payload of a patch render (a sync flush, a settle, a lazy module's
+ready data), applied as a unit: the flush commit check accepts or rejects
+it whole. The same word as a normal render's flush; the rerender itself is
+the patch.
+_Avoid_: frame
+
+**Upstream**:
+What an expression or binding derives from: the expressions it reads and
+the bindings those read (`upstreamAlias`, `upstreamExpression`). Summarized
+by kind as its _sources_ (`Sources`: state, param, `$global`). Structure
+has an upstream too — an `<if>` condition, a `<for>` collection, a dynamic
+tag's renderer (a branch section's `upstreamExpression`) — and a root param read only there is
+_upstream of structure_. A tag or read is _downstream_ of what it reads; the
+expressions at a tag are its call site's expressions.
+_Avoid_: selector, selection, selects (keyed `for` row select aside), site
+for a tag or read on its own
+
+**Stateful structure**:
+A branch body whose upstream expression has a state reason (main's `kStatefulReason`
+vocabulary) — state sources, no `$global`, param sources a patch fills —
+derived from its upstream expression (`isStatefulBranch`), never stored.
+Resumed code re-renders it, so patch renders skip it and flushes omit its
+entry. Translate code may call the derived policy _client-owned_.
+_Avoid_: state-selected, client-owned as a shared field name
+
+**Hole / filled / unfilled**:
+A read a patch keeps current by writing its value at the site is a _hole_ the
+patch _fills_; the html gates say which side acts on a param group:
+`_filled_guard` (a patch fills it: server-owned, or unfed where a construct
+needs the seed), `_unfilled_if` (no patch fills it: the client is upstream, or
+the read sits in unpatched structure). Analyze records reads no patch can
+fill (`hasUnfillablePatchReads`), never the gate.
+_Avoid_: server-side/client-side value, owned read
+
+**Unpatched structure**:
+Structure patch renders skip and so never fill: stateful structure, a
+branch or loop with a client-owned group upstream, a dynamic tag
+site a patch never pairs. The html writer tracks it at render as context
+(`withUnpatched`, `inUnpatched`) because a child template cannot see how
+its parent reached it; analyze names the static cases `inResumedStructure`.
+_Avoid_: client-owned structure, client-selected
+
+**Structural-or-global param**:
+A root param whose reads sit upstream of structure or mix with `$global` — the value
+never leaves through an expression channel, so whoever renders must supply
+it. Translate derives which groups a patch must fill from this fact.
+_Avoid_: server-required param
+
+**Branch path**:
+The root section and every section below it not crossing boundary content
+or a content body its consumer renders stateful; their text and attr
+holes emit direct patch writes.
+_Avoid_: capture path, patch section
+
+**Patch fill**:
+A server-sourced binding whose reads intersect client state, refreshed by
+patches through a registered fill signal. Distinct from a resume-payload
+_fill_ batch.
+_Avoid_: fill outside a patch-refresh discussion, deliver/delivery
+
+**Effect write / capture write**:
+Wire channels for refreshable values no fill consumes: an accessor write
+plus effect re-run, or a bare accessor write for registered-function
+captures.
+
+**Param group sources**:
+Per reason group at a templated call site (`getParamGroupSources`): the
+call site's sources for the group, function-body reads included, and
+whether it covers a structural-or-global param. Translate composes
+ownership masks and admission from it.
+_Avoid_: group feeds, group ownership, provenance, feed/feeder for a source
+
+**Owner-bound entry / bind reference**:
+How a flush ships a registration bound to a scope. A value that is one,
+bound to the site's scope or an owner up its chain, rides an _owner-bound
+entry_ (its id and hops up) that resolves to the registered value as it
+applies. Any other is a _bind reference_ `_(path, id)`: the scope's links
+down from the page root (loop items by index, checked by key), walked on
+use; content resolves to its renderer. Both ride `patch-bind`, which the
+module registering a scope-bound value imports.
+_Avoid_: bind table, bind source, bind 0
 
 ## Compilation modes
 

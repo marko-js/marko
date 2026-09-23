@@ -44,6 +44,50 @@ builds page/load entries, records module `renderedLength`, and measures minified
 and Brotli size. Inspect optimized `dom.bundle.js`, chunk placement, and
 `sizes.json`; raw compiler output does not show transitive retention.
 
+## Patch protocol
+
+With the `patches` compiler option a template also answers a navigation as
+a patch: a server rerender applied to the live document instead of a new
+page. `CONTEXT.md` defines the terms (patch, flush, upstream, fill, shell).
+
+- **Ownership.** Every write carries the ownership mask the caller set
+  (`_set_serialize_reason`, read by `_scope_reason`): two bits per param
+  group, client and server. A page render serializes what any contribution
+  can change; a patch render writes server-owned holes as bare values and
+  leaves client-owned structure to the resumed page, which the server feeds
+  through fills (`_fill_*` in `dom/signals.ts`, keyed by
+  `getPatchFillKey`). `translator/util/patch/` decides per binding what a
+  patch fills, writes or leaves alone (`refresh.ts`, `structure.ts`,
+  `decisions.ts`).
+- **Frames.** `html/patch.ts` (`PatchState`) collects a flush's entries into
+  one nested partial tree anchored at the page root; scope ids never ride
+  the wire, a partial nests under its parent's structural entry. Each flush
+  is one line and one expression, which `flushChunk` asserts in debug;
+  `dom/patch.ts` evaluates it as a return.
+- **Applying.** `dom/patch.ts` walks the partial beside the live scopes and
+  dispatches each entry by its key prefix (`PatchKey`, debug spelled
+  `PatchKind:`) into `patchers`, one `dom/patch-*.feat.ts` module per kind,
+  imported only where a template emits that kind. A scope a flush creates
+  applies through `createPatchers` (`dom/resume.ts` `patchCreated`), where
+  every entry is required.
+- **Shells.** Structure the server selects (a branch, a loop body, a
+  dynamic tag's content) is created client-side from a shell: the section's
+  template and walk plus the register ids a fresh scope runs, built at
+  translate time in `translator/util/shell.ts` and registered by the HTML
+  module (`_shells`). A frame ships a shell once per response.
+- **Pairing and rejection.** Branches, loops, boundaries and children pair
+  on their resume markers; anything a matched build cannot pair throws
+  `failPatch` and the caller falls back to a full navigation. Lazy data
+  rides ready channels (`dom/patch-ready.feat.ts`) and applies when its
+  module registers; a channel that fails settles pending patches as not
+  applied.
+- **Transport.** `template.patch(input)` renders the frames; `@marko/run`
+  negotiates with `accept: text/marko-patch` and the build id, streams
+  frames to `patch($global)`'s apply, and navigates on any failure.
+
+Frames run through `new Function`, so a page needs `unsafe-eval` in its
+content security policy.
+
 ## Compiler model
 
 Terms live in [CONTEXT.md](./CONTEXT.md); start here:
@@ -92,10 +136,14 @@ reasons only grow and cycles settle.
 
 Across known tags, `finalizeParamSerializeReasonGroups()` groups child parameter
 dependencies. The parent calls `_set_serialize_reason(...)`; the child consumes
-and clears it with `_scope_reason()`. HTML runtime encoding is two bits per
-group at `1 + 2 * group` (the low bit says the group serializes; a dynamic
-guard shifts into its place), a keyed object of group values past fifteen
-groups, or none. `serialize-guard.ts` emits/hoists `_serialize_if` and
+and clears it with `_scope_reason()`. HTML runtime encoding is one value for
+plain and patch templates: two bits per group at `1 + 2 * group` (client
+contributes, server contributes; a dynamic guard shifts into its place), a
+keyed object of group values past fifteen groups, or none. A plain template reads any contribution
+as "serialize"; a patch template reads the two bits as the group's ownership
+(`_source_if`, `_filled_guard`, `_client_guard`), and a render kind gate
+(`_page_render`) tells a page render, which serializes, from a patch, which
+carries fills alone. `serialize-guard.ts` emits/hoists `_serialize_if` and
 `_serialize_guard` calls.
 
 ### Signal lowering

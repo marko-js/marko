@@ -1,0 +1,9 @@
+<let/v=""/>
+<let/suffix="!"/>
+<main>
+  <if=input.show>
+    <input value=v valueChange(x) { v = x + suffix }>
+  </if>
+  <em>${v}</em>
+  <button onClick() { suffix += "!" }>s</button>
+</main>
