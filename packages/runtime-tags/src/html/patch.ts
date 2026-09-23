@@ -632,12 +632,10 @@ export function _patch_bind(
 // up its chain resolves there by hops: its bare id, else `[id, up]`. The
 // serializer writes any other bound registration as a reference.
 function bindEntry(state: State, scopeId: number, value: unknown) {
-  if (value && (typeof value === "object" || typeof value === "function")) {
-    const registered = getRegistered(value);
-    const bound = registered?.scope as ScopeInternals | undefined;
-    const up = bound && findOwnerDepth(state, scopeId, bound[K_SCOPE_ID]);
-    if (up !== undefined) return up ? [registered!.id, up] : registered!.id;
-  }
+  const registered = getRegistered(value);
+  const bound = registered?.scope as ScopeInternals | undefined;
+  const up = bound && findOwnerDepth(state, scopeId, bound[K_SCOPE_ID]);
+  if (up !== undefined) return up ? [registered!.id, up] : registered!.id;
 }
 
 // A patched scope write: setup entries nest under `s` AFTER the seeds, so
@@ -702,9 +700,7 @@ export function _patch_dynamic_tag(
       // A renderer ships its comparable id (or itself bare); native names are
       // `["div"]`/`>div`, and args ride as array input.
       const boundScope = id
-        ? (getRegistered(renderer as WeakKey)?.scope as
-            | ScopeInternals
-            | undefined)
+        ? (getRegistered(renderer)?.scope as ScopeInternals | undefined)
         : undefined;
       // Owner-bound content (shipped content's owner, bound content's scope)
       // is a `^` binding the tag's scope and one more per hop up; content

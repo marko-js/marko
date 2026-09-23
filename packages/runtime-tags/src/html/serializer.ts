@@ -454,8 +454,9 @@ export function registerAccess<T extends WeakKey>(val: T, access: string) {
   return val;
 }
 
-export function getRegistered(val: WeakKey) {
-  const registered = REGISTRY.get(val);
+// Any value: a primitive is never registered (the lookup misses).
+export function getRegistered(val: unknown) {
+  const registered = REGISTRY.get(val as WeakKey);
   if (registered) {
     return { id: registered.id, scope: registered.scope };
   }
@@ -811,7 +812,8 @@ function writeRegistered(
       (scope as ScopeInternals)[K_SCOPE_ID]!,
       registered.id,
     );
-    // Content resolves to its renderer, so the client can render it.
+    // Only content is marked: it resolves to a renderer as the flush parses,
+    // while a function stays a call made on use (its module may load later).
     state.buf.push(
       "]," +
         quoteRegisterId(registered.id) +
