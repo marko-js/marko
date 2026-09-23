@@ -343,6 +343,7 @@ export function getSignal(
           const inline =
             member.type === BindingType.derived &&
             !member.upstreamAlias &&
+            !member.propertyAliases.size &&
             member.reads.size === 1 &&
             sourceSignal.values.find((v) => v.signal === memberSignal);
           if (inline) {
