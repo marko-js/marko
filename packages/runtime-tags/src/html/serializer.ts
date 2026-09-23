@@ -759,6 +759,12 @@ function newScopeReference(state: State, val: WeakKey, scopeId: number) {
   return ref;
 }
 
+// An optimized register id is a hashed template id and key in the
+// identifier alphabet; only a debug id (a file path) can need escaping.
+function quoteRegisterId(id: string) {
+  return MARKO_DEBUG ? quote(id, 0) : '"' + id + '"';
+}
+
 function writeRegistered(
   state: State,
   val: WeakKey,
@@ -793,7 +799,7 @@ function writeRegistered(
         new Reference(ref, null, state.flushId, state.buf.length),
       );
     } else {
-      state.buf.push("_(" + scopeId + "," + quote(registered.id, 0));
+      state.buf.push("_(" + scopeId + "," + quoteRegisterId(registered.id));
     }
     state.buf.push(")");
   } else {

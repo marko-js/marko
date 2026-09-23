@@ -1690,7 +1690,7 @@ export class Chunk {
       let carried: Chunk[] | null = null;
 
       for (const reorderedChunk of state.writeReorders) {
-        // A chunk requeued when its reorder marker streamed delivers once
+        // A chunk requeued when its reorder marker streamed emits once
         // settled, or as an empty reorder once an aborted boundary strands it.
         if (reorderedChunk.async && reorderedChunk.consumed) {
           let aborted: Boundary | undefined = reorderedChunk.boundary;
