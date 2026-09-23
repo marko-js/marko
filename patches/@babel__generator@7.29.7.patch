@@ -1,9 +1,9 @@
 diff --git a/lib/generators/marko.js b/lib/generators/marko.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..ce3901856985a26fa933855208916d240d2b1a54
+index 0000000000000000000000000000000000000000..31156180cf65ffa7709c719a1c05c9093e638147
 --- /dev/null
 +++ b/lib/generators/marko.js
-@@ -0,0 +1,405 @@
+@@ -0,0 +1,409 @@
 +"use strict";
 +
 +const svgElements = new Set([
@@ -106,6 +106,13 @@ index 0000000000000000000000000000000000000000..ce3901856985a26fa933855208916d24
 +}
 +exports.MarkoAttribute = function MarkoAttribute(node) {
 +  const value = node.value;
++  const isMethod =
++    value.type === "FunctionExpression" && !(value.id || value.generator);
++
++  if (isMethod && value.async) {
++    // A default attribute is printed flush against the tag name.
++    this.token(node.default ? " async" : "async ");
++  }
 +
 +  if (!node.default) {
 +    this.token(node.name);
@@ -126,10 +133,7 @@ index 0000000000000000000000000000000000000000..ce3901856985a26fa933855208916d24
 +    node.default ||
 +    !(node.value.type === "BooleanLiteral" && node.value.value)
 +  ) {
-+    if (
-+      value.type === "FunctionExpression" &&
-+      !(value.id || value.async || value.generator)
-+    ) {
++    if (isMethod) {
 +      this.token("(");
 +      this.printList(value.params);
 +      this.token(")");

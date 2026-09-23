@@ -1,6 +1,6 @@
-<custom-tag someMethod=(async function () {
+<custom-tag async someMethod() {
   await Promise.resolve("hello");
-})/>
-<custom-tag=(async function () {
+}/>
+<custom-tag async() {
   await Promise.resolve("again");
-})/>
+}/>
