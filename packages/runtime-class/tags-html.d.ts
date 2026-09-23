@@ -208,6 +208,13 @@ declare global {
       onVolumechange?: this["onVolumeChange"];
     }
 
+    // Marko 6 types SVG tags from a base shared with HTML tags, so they need their
+    // own `renderBody`; the deprecated lowercase event aliases stay HTML-only.
+    interface SVGAttributes<T extends Element = Element> {
+      /** Marko 5 class-API components render their body via `renderBody`. */
+      renderBody?: Marko.Body<[], void>;
+    }
+
     interface Directives {
       /**
        * Used to uniquely identify a tag within a template in order
