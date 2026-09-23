@@ -1,0 +1,13 @@
+<define/Inner|input|>
+  <let/open=false>
+  <button onClick() { open = !open }>toggle</button>
+  <if=open>
+    <${input.content}/>
+  </if>
+</define>
+
+<define/Outer|outer|>
+  <Inner>outer ${outer.label}: <${outer.content}/></Inner>
+</define>
+
+<Outer label=input.label>label: ${input.label}</Outer>

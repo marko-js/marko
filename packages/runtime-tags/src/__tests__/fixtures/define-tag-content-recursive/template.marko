@@ -1,0 +1,12 @@
+<define/Tree|input|>
+  <let/open=false>
+  <button onClick() { open = !open }>${input.depth}</button>
+  <if=open>
+    <${input.content}/>
+    <if=input.depth>
+      <Tree depth=input.depth - 1>${input.depth}: <${input.content}/></Tree>
+    </if>
+  </if>
+</define>
+
+<Tree depth=2>leaf ${input.label}</Tree>

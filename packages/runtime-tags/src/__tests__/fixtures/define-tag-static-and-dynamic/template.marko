@@ -1,0 +1,10 @@
+<let/useBox=false>
+<button#toggle onClick() { useBox = !useBox }>toggle</button>
+
+<define/Box|input|>
+  <let/count=0>
+  <button.box onClick() { count++ }>${count} <${input.content}/></button>
+</define>
+
+<Box>static</Box>
+<${useBox ? Box : "div"}>dynamic</>

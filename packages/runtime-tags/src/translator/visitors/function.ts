@@ -132,11 +132,24 @@ export default {
   },
 } satisfies TemplateVisitor<t.Function>;
 
-export function finalizeFunctionRegistry() {
+// What each function serializes for; reasons may still grow, so this only
+// widens them and registration waits until they settle.
+export function resolveFunctionRegisterReasons() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
     const reason = resolveSerializeReason(exprExtras);
     if (reason) {
-      registerFunction(fnExtra, reason);
+      fnExtra.registerReason = mergeSerializeReasons(
+        fnExtra.registerReason,
+        reason,
+      );
+    }
+  }
+}
+
+export function finalizeFunctionRegistry() {
+  for (const fnExtra of getReferencesByFn().keys()) {
+    if (fnExtra.registerReason) {
+      registerFunction(fnExtra);
     }
   }
 
@@ -409,14 +422,13 @@ function hasSpreadAttributeAfter(attr: t.NodePath<t.MarkoAttribute>) {
   return false;
 }
 
-function registerFunction(fnExtra: RegisteredFnExtra, reason: SerializeReason) {
+function registerFunction(fnExtra: RegisteredFnExtra) {
   const {
     markoOpts,
     path: program,
     opts: { filename },
   } = getFile();
   program.node.extra.isInteractive = true;
-  fnExtra.registerReason = reason;
   fnExtra.name = generateUid(fnExtra.name);
   fnExtra.registerId =
     fnExtra.exportRegisterId ??

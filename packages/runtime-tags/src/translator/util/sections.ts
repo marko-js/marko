@@ -36,6 +36,7 @@ import {
   type Sources,
 } from "./references";
 import {
+  hasSerializeReasons,
   isReasonDynamic,
   mapParamReason,
   mergeSerializeReasons,
@@ -475,12 +476,11 @@ export function getSectionRegisterReasons(section: Section) {
       },
     );
     if (!downstreamReasons) return false;
+    // Params can only change content whose scope, or its caller's, resumes.
     if (
       isReasonDynamic(downstreamReasons) &&
-      !section.serializeReason &&
-      !section.serializeReasons.size &&
-      !section.parent?.serializeReason &&
-      !section.parent?.serializeReasons.size
+      !hasSerializeReasons(section) &&
+      !hasSerializeReasons(section.parent)
     ) {
       return false;
     }
