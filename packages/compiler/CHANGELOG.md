@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.42.6
+
+### Patch Changes
+
+- [#4223](https://github.com/marko-js/marko/pull/4223) [`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An analyze error in a template loaded for a tag is now reported against that template's file. Previously the parent re-recorded it, printing the parent's filename and code frame at the child's line and column.
+
+- [#4226](https://github.com/marko-js/marko/pull/4226) [`d1210d2`](https://github.com/marko-js/marko/commit/d1210d28b325d5f0499f3cfcd79cc13911a4c168) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Print async shorthand methods back as shorthand (`async onClick() {}`) in `output: "source"` and `"migrate"`, instead of expanding them to `onClick=(async function () {})`.
+
 ## 5.42.5
 
 ### Patch Changes

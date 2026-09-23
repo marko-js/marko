@@ -1,5 +1,30 @@
 # @marko/runtime-tags
 
+## 6.3.53
+
+### Patch Changes
+
+- [#4223](https://github.com/marko-js/marko/pull/4223) [`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An analyze error in a template loaded for a tag is now reported against that template's file. Previously the parent re-recorded it, printing the parent's filename and code frame at the child's line and column.
+
+- [#4225](https://github.com/marko-js/marko/pull/4225) [`c715020`](https://github.com/marko-js/marko/commit/c715020ea863bb8c153e6f9a21655a20a61ead68) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A dynamic tag's native branch registration now ships as a runtime feature module imported by the templates that need it, instead of a `_resume_dynamic_tag()` call emitted in each of them.
+
+- [#4223](https://github.com/marko-js/marko/pull/4223) [`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A function that reaches a change handler through a variable, such as a `<const>` or a parent's input (`<let/x:=input.value/>`, `<input value:=input.value/>`), is now registered for resume. Previously the handler was serialized without its function being registered, so SSR threw `Unable to serialize` in development and dropped the handler in production.
+
+- [#4223](https://github.com/marko-js/marko/pull/4223) [`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A function or content a `<let>` starts with now registers exactly when the let serializes, including one that reaches it through a variable. Previously a function written in a `<let>` always registered, even when nothing serialized the let, and one arriving through a `<const>` (or content the let held) never did, so SSR threw `Unable to serialize` once the let serialized.
+
+- [#4216](https://github.com/marko-js/marko/pull/4216) [`9eeb85b`](https://github.com/marko-js/marko/commit/9eeb85b392e5dc87c2e36d26201069de811d6795) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Assigning, updating or deleting a member of a tag variable (`settings.theme = "light"`, `count.n++`) now mutates the object instead of writing to a copy of that property, and no longer compiles to invalid JavaScript (`$scope.ctx?.fillStyle = "red"`) when the variable may be nullish.
+
+- [#4222](https://github.com/marko-js/marko/pull/4222) [`64302c8`](https://github.com/marko-js/marko/commit/64302c83ac6e7531e640714d3cd4558ed6aa64ca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - The body of a dynamic tag whose name is always a string (`<${big ? "h1" : "h2"}>`) is no longer registered for resume: only a component receives the body as a value, so the server writes just its id and the client never looks it up.
+
+- [#4220](https://github.com/marko-js/marko/pull/4220) [`e8221a5`](https://github.com/marko-js/marko/commit/e8221a59488c9b02589b93d7876584c5d4e8ee7c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A native dynamic tag's variable resumes when the tag's own signal is left out of the bundle (a constant tag name), instead of reading `undefined`. A variable the client never reads no longer registers its getter.
+
+- [#4223](https://github.com/marko-js/marko/pull/4223) [`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A template that renders itself outside a branch, which never terminates, is now a compile error instead of a dom module that throws a `ReferenceError` when it loads.
+
+- [#4220](https://github.com/marko-js/marko/pull/4220) [`e8221a5`](https://github.com/marko-js/marko/commit/e8221a59488c9b02589b93d7876584c5d4e8ee7c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A dynamic tag's variable that nothing reads or assigns no longer makes the tag resume, so it adds no resume data, markers or client code, and no longer makes an otherwise static page interactive.
+
+- Updated dependencies [[`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054), [`d1210d2`](https://github.com/marko-js/marko/commit/d1210d28b325d5f0499f3cfcd79cc13911a4c168)]:
+  - @marko/compiler@5.42.6
+
 ## 6.3.52
 
 ### Patch Changes

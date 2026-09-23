@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.42
+
+### Patch Changes
+
+- [#4210](https://github.com/marko-js/marko/pull/4210) [`657a872`](https://github.com/marko-js/marko/commit/657a87226870ab63fe2097c0fc1fdc4b936b061c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `await template.render(input)` rejects when the render errors before the promise is attached, instead of resolving with the partial output. `render(input, callback)` and `renderToString(input, callback)` call the callback once with the error, no longer a second time with the partial result.
+
+- Updated dependencies [[`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054), [`c715020`](https://github.com/marko-js/marko/commit/c715020ea863bb8c153e6f9a21655a20a61ead68), [`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054), [`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054), [`9eeb85b`](https://github.com/marko-js/marko/commit/9eeb85b392e5dc87c2e36d26201069de811d6795), [`64302c8`](https://github.com/marko-js/marko/commit/64302c83ac6e7531e640714d3cd4558ed6aa64ca), [`d1210d2`](https://github.com/marko-js/marko/commit/d1210d28b325d5f0499f3cfcd79cc13911a4c168), [`e8221a5`](https://github.com/marko-js/marko/commit/e8221a59488c9b02589b93d7876584c5d4e8ee7c), [`73c0cfc`](https://github.com/marko-js/marko/commit/73c0cfcb2724281674f25b379f34d25381a81054), [`e8221a5`](https://github.com/marko-js/marko/commit/e8221a59488c9b02589b93d7876584c5d4e8ee7c)]:
+  - @marko/compiler@5.42.6
+  - @marko/runtime-tags@6.3.53
+
 ## 5.39.41
 
 ### Patch Changes
