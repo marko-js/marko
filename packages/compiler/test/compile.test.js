@@ -69,6 +69,28 @@ describe("compiler/compile", () => {
       ));
   });
 
+  describe("tag var ending in a line comment", () => {
+    const src = '<div/el // the box\n  class="box"/>\n<p>${el}</p>';
+
+    it("compiles", () =>
+      assert.match(
+        compileSync(src, template, { translator, output: "html" }).code,
+        /box/,
+      ));
+
+    it("keeps the rest of the tag out of the comment in source output", () => {
+      const code = compileSync(src, template, {
+        translator,
+        output: "source",
+      }).code;
+      assert.equal(
+        code,
+        '<div/el // the box\n class="box"/>\n<p>\n  ${el}\n</p>',
+      );
+      compileSync(code, template, { translator, output: "html" });
+    });
+  });
+
   describe("synthetic filenames", () => {
     const missingDir = path.join(os.tmpdir(), "marko-missing-dir", "x.marko");
 

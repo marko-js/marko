@@ -53,9 +53,11 @@ export function parseArgs(file, str, sourceStart, sourceEnd) {
 }
 
 export function parseVar(file, str, sourceStart, sourceEnd) {
+  // htmljs-parser folds a trailing line comment into the var, so the wrapper
+  // closes on the next line rather than inside that comment.
   const parsed = parseExpression(
     file,
-    `(${str})=>{}`,
+    `(${str}\n)=>{}`,
     sourceStart,
     sourceEnd,
     1,

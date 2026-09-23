@@ -1,9 +1,9 @@
 diff --git a/lib/generators/marko.js b/lib/generators/marko.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..c0b14709837bb3d9c087c5e3f756da9d538b532e
+index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a67d7717ee
 --- /dev/null
 +++ b/lib/generators/marko.js
-@@ -0,0 +1,430 @@
+@@ -0,0 +1,432 @@
 +"use strict";
 +
 +const { escapeText } = require("htmljs-parser");
@@ -228,10 +228,12 @@ index 0000000000000000000000000000000000000000..c0b14709837bb3d9c087c5e3f756da9d
 +
 +    if (node.var) {
 +      this.token("/");
-+      this.print(node.var, true, true);
++      // Without `noLineTerminatorAfter`, so a trailing line comment ends its
++      // line instead of commenting out the rest of the open tag.
++      this.print(node.var, false, true);
 +
 +      if (node.var.typeAnnotation) {
-+        this.print(node.var.typeAnnotation, true, true);
++        this.print(node.var.typeAnnotation, false, true);
 +      }
 +    }
 +
