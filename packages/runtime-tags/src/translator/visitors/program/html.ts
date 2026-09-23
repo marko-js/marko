@@ -230,8 +230,7 @@ function replaceBindingReadNode(node: t.Node) {
           (extra.binding && !extra.binding.declared)
         )
       ) {
-        // Only rename declared bindings
-        // TODO this is probably wrong and should walk up to the closest declared binding.
+        // An undeclared alias stays the member chain its root identifier names.
         return getReadReplacement(node);
       }
       break;
