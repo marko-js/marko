@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/query="a"/>
+<button onClick() { query = query === "a" ? "b" : "" }>${query}</button>
+<try>
+  <@placeholder>loading</@placeholder>
+  <await|result|=query ? resolveAfter(`found ${query}`, 1) : "no query">
+    <div>${result}</div>
+  </await>
+</try>
