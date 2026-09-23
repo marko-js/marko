@@ -153,6 +153,9 @@ export interface Binding {
   scopeAccessor: string | undefined;
   export: string | undefined;
   directContentExport: string | undefined;
+  /** A name declared for this value, or all of it but its `excludeProperties`
+   * (a rest element), even once pruned. */
+  declaredAlias: Binding | undefined;
   declared: boolean;
   nullable: boolean;
   pruned: boolean | undefined;
@@ -302,6 +305,7 @@ export function createBinding(
     getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
+    declaredAlias: undefined,
     restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
@@ -329,6 +333,7 @@ export function createBinding(
     }
   } else if (upstreamAlias) {
     upstreamAlias.aliases.add(binding);
+    if (declared) upstreamAlias.declaredAlias ??= binding;
   }
 
   setNextBindingId(id + 1);

@@ -1,0 +1,8 @@
+<let/show=true>
+<button#toggle onClick() { show = !show }>toggle</button>
+<for|{ id, ...rest }| of=input.items>
+  <if=show><span>${id}:${rest.extra}</span></if>
+</for>
+<for|[first, ...others]| of=input.lists>
+  <if=show><b>${first}${others[0]}</b></if>
+</for>

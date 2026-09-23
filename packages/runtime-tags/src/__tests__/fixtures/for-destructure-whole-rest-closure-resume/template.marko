@@ -1,0 +1,8 @@
+<let/show=true>
+<button#toggle onClick() { show = !show }>toggle</button>
+<for|{ ...all }| of=input.items>
+  <if=show><i>${JSON.stringify(all)}</i></if>
+</for>
+<for|[...list]| of=input.lists>
+  <if=show><u>${list.join("+")}</u></if>
+</for>
