@@ -7,10 +7,17 @@ import {
 } from "../../common/accessor.debug";
 import { decodeAccessor, isEventHandler } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
-import { finalizeFunctionRegistry } from "../visitors/function";
+import {
+  finalizeFunctionRegistry,
+  resolveFunctionRegisterReasons,
+} from "../visitors/function";
 import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import * as BindingType from "./constants/binding-type";
-import { createCyclicMemo, createCyclicPathMemo } from "./cyclic-memo";
+import {
+  createCyclicMemo,
+  createCyclicPathMemo,
+  type MemoPath,
+} from "./cyclic-memo";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-enums";
@@ -68,6 +75,7 @@ import {
   addSerializeReason,
   applySerializeExprs,
   finalizeSerializeReason,
+  getSerializeReasonsVersion,
   getSerializeReason,
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
@@ -1368,151 +1376,28 @@ export function finalizeReferences() {
 
   forEachSection(applySerializeExprs);
 
-  forEachSection((section) => {
-    const intersections = intersectionsBySection.get(section);
-    if (intersections) {
-      // mark bindings that need to be serialized due to being in an intersection with state
-      for (const intersection of intersections) {
-        const numReferences = intersection.length;
-        // TODO: in some cases we should be able to short circuit this
-        // if we know that the references are already serialized
-        for (let i = 0; i < numReferences - 1; i++) {
-          for (let j = i + 1; j < numReferences; j++) {
-            const binding1 = intersection[i];
-            const binding2 = intersection[j];
-            if (
-              !isForceSerialized(section, binding1) &&
-              !isSupersetSources(binding1, binding2)
-            ) {
-              if (!isSameOrChildSection(section, binding1.section)) {
-                addOwnerSerializeReason(
-                  section,
-                  binding1.section,
-                  mergeSources(binding1.sources, binding2.sources),
-                );
-              }
-
-              addSerializeReason(binding1.section, binding2.sources, binding1);
-            }
-            if (
-              !isForceSerialized(section, binding2) &&
-              !isSupersetSources(binding2, binding1)
-            ) {
-              if (!isSameOrChildSection(section, binding2.section)) {
-                addOwnerSerializeReason(
-                  section,
-                  binding2.section,
-                  mergeSources(binding1.sources, binding2.sources),
-                );
-              }
-              addSerializeReason(binding2.section, binding1.sources, binding2);
-            }
-          }
-        }
-      }
-    }
-  });
-
-  forEachSection((section) => {
-    forEach(section.referencedLocalClosures, (closure) => {
-      // Local closures inherit serialize reasons from the owner section.
-      addSerializeReason(
+  // Rules that follow other reasons repeat until none moves; every write merges,
+  // so reasons only grow and this settles, even through cycles.
+  let reasonsVersion: number;
+  do {
+    reasonsVersion = getSerializeReasonsVersion();
+    resetSerializations();
+    forEachSection((section) =>
+      addIntersectionSerializeReasons(
         section,
-        getSerializeReason(closure.section, closure),
-        closure,
-      );
+        intersectionsBySection.get(section),
+      ),
+    );
+    forEachSection(addClosureSerializeReasons);
+    addRegisteredFnSerializeReasons(fnReadsByExpression);
+    forEachSectionReverse((section) => {
+      finalizeKnownTags(section);
+      finalizeSerializeReason(section);
+      finalizeParamSerializeReasonGroups(section);
     });
-
-    forEach(section.referencedClosures, (closure) => {
-      // mark bindings that need to be serialized due to being closed over by stateful sections
-      const sourceSection = closure.section;
-      let currentSection = section;
-      let branchesForced = false;
-      let branchesSources: undefined | Sources;
-
-      while (currentSection !== sourceSection) {
-        const upstreamReason = currentSection.downstream?.binding
-          ? getSectionRegisterReasons(currentSection) || undefined
-          : !currentSection.upstreamExpression ||
-            getSerializeSourcesForExpr(currentSection.upstreamExpression);
-        if (upstreamReason === true) {
-          branchesForced = true;
-        } else if (upstreamReason) {
-          branchesSources = mergeSources(branchesSources, upstreamReason);
-        }
-        currentSection = currentSection.parent!;
-      }
-
-      const branchesReason = branchesForced
-        ? mergeSources(FORCED, branchesSources)
-        : branchesSources;
-      addSerializeReason(sourceSection, branchesReason, closure);
-      addSerializeReason(
-        sourceSection,
-        getSerializeReason(sourceSection, closure),
-      );
-
-      if (isDynamicClosure(section, closure)) {
-        addOwnerSerializeReason(section, sourceSection, branchesReason);
-
-        if (closure.sources) {
-          addSerializeReason(
-            sourceSection,
-            closure.sources,
-            closure,
-            getAccessorPrefix().ClosureScopes,
-          );
-          if (getDynamicClosureIndex(closure, section)) {
-            addSerializeReason(
-              section,
-              closure.sources,
-              closure,
-              getAccessorPrefix().ClosureSignalIndex,
-            );
-          }
-        }
-      }
-    });
-  });
+  } while (reasonsVersion !== getSerializeReasonsVersion());
 
   finalizeFunctionRegistry();
-  for (const exprFnReads of fnReadsByExpression.values()) {
-    {
-      for (const fn of exprFnReads.keys()) {
-        if (fn.registerReason) {
-          forEach(fn.referencedBindingsInFunction, (binding) => {
-            addSerializeReason(binding.section, fn.registerReason, binding);
-            if (binding.section !== fn.section) {
-              addOwnerSerializeReason(
-                fn.section,
-                binding.section,
-                fn.registerReason,
-              );
-            }
-          });
-
-          forEach(fn.constantBindingsInFunction, (binding) => {
-            addSerializeReason(binding.section, fn.registerReason, binding);
-            if (binding.section !== fn.section) {
-              addOwnerSerializeReason(
-                fn.section,
-                binding.section,
-                fn.registerReason,
-              );
-            }
-          });
-        }
-      }
-    }
-  }
-
-  forEachSection(finalizeParamSerializeReasonGroups);
-  forEachSectionReverse((section) => {
-    finalizeKnownTags(section);
-    finalizeSerializeReason(section);
-    // TODO: this duplication is needed when a known tag is circular. We should find a better way.
-    finalizeParamSerializeReasonGroups(section);
-  });
 
   forEachSection((section) => {
     const { id, bindings } = section;
@@ -1621,6 +1506,137 @@ export function finalizeReferences() {
 
   readsByExpression.clear();
   fnReadsByExpression.clear();
+}
+
+// Serializes an intersection member for its partners' sources, unless those
+// changes already recompute it.
+function addIntersectionSerializeReasons(
+  section: Section,
+  intersections: Intersection[] | undefined,
+) {
+  if (intersections) {
+    // mark bindings that need to be serialized due to being in an intersection with state
+    for (const intersection of intersections) {
+      const numReferences = intersection.length;
+      // TODO: in some cases we should be able to short circuit this
+      // if we know that the references are already serialized
+      for (let i = 0; i < numReferences - 1; i++) {
+        for (let j = i + 1; j < numReferences; j++) {
+          const binding1 = intersection[i];
+          const binding2 = intersection[j];
+          if (
+            !isForceSerialized(section, binding1) &&
+            !isSupersetSources(binding1, binding2)
+          ) {
+            if (!isSameOrChildSection(section, binding1.section)) {
+              addOwnerSerializeReason(
+                section,
+                binding1.section,
+                mergeSources(binding1.sources, binding2.sources),
+              );
+            }
+
+            addSerializeReason(binding1.section, binding2.sources, binding1);
+          }
+          if (
+            !isForceSerialized(section, binding2) &&
+            !isSupersetSources(binding2, binding1)
+          ) {
+            if (!isSameOrChildSection(section, binding2.section)) {
+              addOwnerSerializeReason(
+                section,
+                binding2.section,
+                mergeSources(binding1.sources, binding2.sources),
+              );
+            }
+            addSerializeReason(binding2.section, binding1.sources, binding2);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Serializes each closure a section reads for every branch or content between
+// the read and the closure's own section.
+function addClosureSerializeReasons(section: Section) {
+  forEach(section.referencedLocalClosures, (closure) => {
+    // Local closures inherit serialize reasons from the owner section.
+    addSerializeReason(
+      section,
+      getSerializeReason(closure.section, closure),
+      closure,
+    );
+  });
+
+  forEach(section.referencedClosures, (closure) => {
+    // mark bindings that need to be serialized due to being closed over by stateful sections
+    const sourceSection = closure.section;
+    let currentSection = section;
+    let branchesForced = false;
+    let branchesSources: undefined | Sources;
+
+    while (currentSection !== sourceSection) {
+      const upstreamReason = currentSection.downstream?.binding
+        ? getSectionRegisterReasons(currentSection) || undefined
+        : !currentSection.upstreamExpression ||
+          getSerializeSourcesForExpr(currentSection.upstreamExpression);
+      if (upstreamReason === true) {
+        branchesForced = true;
+      } else if (upstreamReason) {
+        branchesSources = mergeSources(branchesSources, upstreamReason);
+      }
+      currentSection = currentSection.parent!;
+    }
+
+    const branchesReason = branchesForced
+      ? mergeSources(FORCED, branchesSources)
+      : branchesSources;
+    addSerializeReason(sourceSection, branchesReason, closure);
+
+    if (isDynamicClosure(section, closure)) {
+      addOwnerSerializeReason(section, sourceSection, branchesReason);
+
+      if (closure.sources) {
+        addSerializeReason(
+          sourceSection,
+          closure.sources,
+          closure,
+          getAccessorPrefix().ClosureScopes,
+        );
+        if (getDynamicClosureIndex(closure, section)) {
+          addSerializeReason(
+            section,
+            closure.sources,
+            closure,
+            getAccessorPrefix().ClosureSignalIndex,
+          );
+        }
+      }
+    }
+  });
+}
+
+// A registered function serializes what it reads, owners included.
+function addRegisteredFnSerializeReasons(
+  fnReadsByExpression: ReturnType<typeof getFunctionReadsByExpression>,
+) {
+  resolveFunctionRegisterReasons();
+  for (const exprFnReads of fnReadsByExpression.values()) {
+    for (const fn of exprFnReads.keys()) {
+      const reason = fn.registerReason;
+      if (reason) {
+        const addRead = (binding: Binding) => {
+          addSerializeReason(binding.section, reason, binding);
+          if (binding.section !== fn.section) {
+            addOwnerSerializeReason(fn.section, binding.section, reason);
+          }
+        };
+        forEach(fn.referencedBindingsInFunction, addRead);
+        forEach(fn.constantBindingsInFunction, addRead);
+      }
+    }
+  }
 }
 
 // Narrow an expression's already-resolved referenced bindings, but only when a
@@ -3018,16 +3034,24 @@ const FORCED_SERIALIZATION: Serialization = {
   reason: FORCED,
   reads: undefined,
 };
-const extraSerialization = createCyclicMemo(
-  computeExtraSerialization,
-  UNSERIALIZED,
-);
-// A binding's answer is per asked path: the value itself, one of its
-// properties (a destructured part), or the whole with every property.
-const bindingSerialization = createCyclicPathMemo(
-  computeBindingSerialization,
-  UNSERIALIZED,
-);
+let extraSerialization: (extra: t.NodeExtra) => Serialization;
+let bindingSerialization: (binding: Binding, path: MemoPath) => Serialization;
+resetSerializations();
+
+// Answers read the reasons of the moment, so each pass that grows them
+// asks afresh.
+function resetSerializations() {
+  extraSerialization = createCyclicMemo(
+    computeExtraSerialization,
+    UNSERIALIZED,
+  );
+  // A binding's answer is per asked path: the value itself, one of its
+  // properties (a destructured part), or the whole with every property.
+  bindingSerialization = createCyclicPathMemo(
+    computeBindingSerialization,
+    UNSERIALIZED,
+  );
+}
 
 // Resume: do the value's scope values serialize, and why.
 export function getAllSerializeReasonsForExtra(

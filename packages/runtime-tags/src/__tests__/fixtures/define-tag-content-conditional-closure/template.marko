@@ -1,0 +1,9 @@
+<define/Box|input|>
+  <let/open=false>
+  <button onClick() { open = !open }>toggle</button>
+  <if=open>
+    <${input.content}/>
+  </if>
+</define>
+
+<Box>label: ${input.label}</Box>

@@ -138,6 +138,13 @@ export function isStateSerializeReason(
   return !!reason && !reason.forced && !!reason.state;
 }
 
+// Whether anything in the section's scope serializes.
+export function hasSerializeReasons(section: Section | undefined) {
+  return (
+    !!section && (!!section.serializeReason || !!section.serializeReasons.size)
+  );
+}
+
 export function getSerializeReason(
   section: Section,
   prop?: Binding | AccessorProp | symbol,
@@ -353,8 +360,16 @@ function isStrOrSym(v: unknown): v is string | symbol {
   }
 }
 
+// Moves each time a section reason gains a source. The setters below only take
+// merges, so reasons only grow and a pass repeating until this holds settles.
+let reasonsVersion = 0;
+export function getSerializeReasonsVersion() {
+  return reasonsVersion;
+}
+
 // Exists as the single point of assigning section reasons to aid in debugging.
 function setSerializeReason(section: Section, reason: SerializeReason) {
+  if (!isSameSources(section.serializeReason, reason)) reasonsVersion++;
   section.serializeReason = reason;
 }
 
@@ -364,5 +379,13 @@ function setPropSerializeReason(
   key: SerializeKey,
   reason: SerializeReason,
 ) {
+  if (!isSameSources(section.serializeReasons.get(key), reason)) {
+    reasonsVersion++;
+  }
   section.serializeReasons.set(key, reason);
+}
+
+// Merges rebuild equal sources, so only a change in them counts.
+function isSameSources(a: SerializeReason | undefined, b: SerializeReason) {
+  return !!a && compareSources(a, b) === 0;
 }
