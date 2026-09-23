@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (color === "red") {
 			$item = attrTags($item, {
 				style: { color },
-				content: _content_resume("__tests__/template.marko_1*content", () => {
+				content: _content("__tests__/template.marko_1*content", () => {
 					_scope_reason();
 					const $scope1_id = _scope_id();
 					_html("foo");
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			$item = attrTags($item, {
 				style: { color },
-				content: _content_resume("__tests__/template.marko_2*content", () => {
+				content: _content("__tests__/template.marko_2*content", () => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
 					_html("bar");
@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		forOf(col, (row) => {
 			$row = attrTags($row, {
 				row,
-				content: _content_resume("__tests__/template.marko_3*content", () => {
+				content: _content("__tests__/template.marko_3*content", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_html(_text_resume($scope3_id, "#text/0", row));
@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		outside: true,
 		row: attrTag({
 			row: -1,
-			content: _content_resume("__tests__/template.marko_4*content", () => {
+			content: _content("__tests__/template.marko_4*content", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html("Outside");

@@ -6,7 +6,7 @@ import type { Section } from "./sections";
 // its renderer elided; references to the renderer must be elided in sync.
 export function isSectionRendererElided(section: Section) {
   return (
-    !!section.downstream?.binding &&
+    !!section.downstream &&
     !some(section.downstream.binding, (binding) =>
       bindingHasProperty(binding, section.downstream!.properties),
     )

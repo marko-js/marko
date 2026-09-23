@@ -3,13 +3,8 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { getTagName } from "./get-tag-name";
 import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
-import { concat, filter, type Opt } from "./optional";
-import {
-  type Binding,
-  type KnownExprs,
-  propsUtil,
-  getPropertyAlias,
-} from "./references";
+import { concat, type OneMany, type Opt } from "./optional";
+import type { Binding, KnownExprs } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
 
@@ -18,7 +13,7 @@ const [getTagDownstreams] = createSectionState(
   () =>
     new Map<
       t.NodePath<t.MarkoTag>,
-      { binding: Opt<Binding>; exprs: KnownExprs | undefined }
+      { binding: OneMany<Binding>; exprs: KnownExprs | undefined }
     >(),
 );
 
@@ -41,7 +36,7 @@ export function finalizeTagDownstreams(section: Section) {
 function crawlSectionsAndSetBinding(
   tag: t.NodePath<t.MarkoTag>,
   downstreamTag: t.MarkoTagExtra,
-  binding: Opt<Binding>,
+  binding: OneMany<Binding>,
   exprs: KnownExprs | undefined,
   properties?: Opt<string>,
   skip?: true,
@@ -49,20 +44,11 @@ function crawlSectionsAndSetBinding(
   if (!skip) {
     const contentSection = getSectionForBody(tag.get("body"));
     if (contentSection) {
-      // Only the bindings that can serialize the content feed it.
-      const serialized = filter(binding, (binding) => {
-        const target = getPropertyAlias(binding, properties);
-        return !(
-          target &&
-          (target.noSerialize ||
-            propsUtil.has(target.noSerializeProperties, "content"))
-        );
-      });
       contentSection.downstream = {
         tag: downstreamTag,
-        binding: serialized,
-        properties: serialized ? concat(properties, "content") : undefined,
-        exprs: serialized ? exprs : undefined,
+        binding,
+        properties: concat(properties, "content"),
+        exprs,
       };
     }
   }

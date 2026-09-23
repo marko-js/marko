@@ -1,0 +1,7 @@
+static function withCount(attrs, count) {
+  return { ...attrs, "data-count": count };
+}
+<let/count=0>
+<div ...input.attrs/>
+<div ...withCount(input.attrs, count)/>
+<button onClick() { count++ }>+</button>

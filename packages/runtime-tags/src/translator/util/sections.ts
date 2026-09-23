@@ -145,11 +145,11 @@ export interface Section {
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
   /** The content's rendering tag (its extra), and each child binding the
-   * content feeds when the child can serialize it. */
+   * content feeds, at `properties`. */
   downstream:
     | {
         tag: t.MarkoTagExtra;
-        binding: Opt<Binding>;
+        binding: OneMany<Binding>;
         properties: Opt<string>;
         exprs: KnownExprs | undefined;
       }
@@ -451,7 +451,7 @@ export function getSectionRegisterReasons(section: Section) {
 
   const { downstream } = section;
 
-  if (downstream?.binding) {
+  if (downstream) {
     const downstreamReasons = reduce(
       downstream.binding,
       (reasons: SerializeReason | undefined, binding) => {
@@ -485,8 +485,6 @@ export function getSectionRegisterReasons(section: Section) {
       return false;
     }
     return downstreamReasons;
-  } else if (downstream) {
-    return false;
   }
 
   return true;

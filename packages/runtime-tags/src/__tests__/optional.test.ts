@@ -150,6 +150,29 @@ describe("runtime-tags/translator/util/optional", () => {
         );
       }
     });
+
+    it("returns the first argument when a difference drops nothing", () => {
+      const a = fromValues([1, 2, 3]);
+      assert.equal(sorted.difference(a, undefined), a);
+      assert.equal(sorted.difference(a, 4), a);
+      assert.equal(sorted.difference(a, fromValues([0, 4])), a);
+      assert.equal(sorted.difference(2, 3), 2);
+      assert.equal(sorted.difference(2, a), undefined);
+      assert.equal(sorted.difference(undefined, a), undefined);
+    });
+
+    it("matches naive set difference", () => {
+      const random = createRandom(8);
+      for (let run = 0; run < 100; run++) {
+        const a = randomSortedValues(random, (random() * 8) | 0);
+        const b = randomSortedValues(random, (random() * 8) | 0);
+        assert.deepEqual(
+          sorted.difference(fromValues(a), fromValues(b)),
+          fromValues(a.filter((item) => !b.includes(item))),
+          `difference([${a}], [${b}])`,
+        );
+      }
+    });
   });
 
   describe("sorted array helpers", () => {

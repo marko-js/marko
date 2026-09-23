@@ -21,16 +21,13 @@ var template_default = _template("a", (input) => {
 		valueChange: _resume((_new_value) => {
 			value = _new_value;
 		}, "a0", $scope0_id),
-		content: _content_resume("a1", () => {
+		content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", value));
 			_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		}, $scope0_id)
 	});
-	_scope($scope0_id, {
-		b: value,
-		c: $value__closures
-	});
+	_scope($scope0_id, { c: $value__closures });
 	_resume_branch($scope0_id);
 }, 1);
