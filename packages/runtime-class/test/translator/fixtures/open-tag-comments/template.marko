@@ -1,0 +1,24 @@
+<div /* layout wrapper */ class="card"/>
+
+<input
+  // Browsers autofill this field
+  name="email"
+  type="email">
+
+<input hidden // Revealed by the toggle below
+  type="text">
+
+<section // Rendered on the server
+>
+  Content
+</section>
+
+<for|item| /* in display order */ of=input.items>
+  ${item}
+</for>
+
+form
+  ,action="/search"
+  // Submitted by the enhanced input
+  ,method="get"
+  -- Search

@@ -55,6 +55,7 @@ export function parseMarko(file) {
   let currentAttr = undefined;
   let currentShorthandId = undefined;
   let currentShorthandClassNames = undefined;
+  let currentOpenTagComments = undefined;
   let { preserveWhitespace } = htmlParseOptions;
   let preservingWhitespaceUntil = preserveWhitespace;
   let onNext = noop;
@@ -110,6 +111,26 @@ export function parseMarko(file) {
       currentAttr.loc = locationAt(currentAttr);
       currentAttr = undefined;
     }
+  };
+  // An open tag comment leads the attribute after it, else trails the one
+  // before it, else is inner to the tag.
+  const addOpenTagComments = (next) => {
+    if (!currentOpenTagComments) return;
+    const { node } = currentTag;
+    if (next) {
+      next.leadingComments = currentOpenTagComments;
+    } else if (node.attributes.length) {
+      node.attributes[node.attributes.length - 1].trailingComments =
+        currentOpenTagComments;
+    } else {
+      node.innerComments = currentOpenTagComments;
+    }
+    currentOpenTagComments = undefined;
+  };
+  const pushAttr = (attr) => {
+    addOpenTagComments(attr);
+    currentTag.node.attributes.push(attr);
+    return attr;
   };
   const parseTemplateString = ({ quasis, expressions }) => {
     switch (expressions.length) {
@@ -273,6 +294,20 @@ export function parseMarko(file) {
     onComment(part) {
       pushContent(withLoc(t.markoComment(parser.read(part.value)), part));
     },
+    onOpenTagComment(part) {
+      (currentOpenTagComments ||= []).push(
+        withLoc(
+          {
+            type:
+              code.charCodeAt(part.start + 1) === 42 /* * */
+                ? "CommentBlock"
+                : "CommentLine",
+            value: parser.read(part.value),
+          },
+          part,
+        ),
+      );
+    },
     onTagTypeArgs(part) {
       currentTag.node.typeArguments = parseTypeArgs(
         file,
@@ -422,14 +457,14 @@ export function parseMarko(file) {
       }
 
       endAttr();
-      currentTag.node.attributes.push(
-        (currentAttr = t.markoAttribute(
+      currentAttr = pushAttr(
+        t.markoAttribute(
           name || "value",
           t.booleanLiteral(true),
           modifier,
           undefined,
           !name,
-        )),
+        ),
       );
 
       currentAttr.start = part.start;
@@ -499,7 +534,7 @@ export function parseMarko(file) {
 
     onAttrSpread(part) {
       endAttr();
-      currentTag.node.attributes.push(
+      pushAttr(
         withLoc(
           t.markoSpreadAttribute(
             parseExpression(
@@ -594,6 +629,8 @@ export function parseMarko(file) {
         attributes.push(t.markoAttribute("id", currentShorthandId));
         currentShorthandId = undefined;
       }
+
+      addOpenTagComments();
 
       if (parseOptions) {
         if (parseOptions.rawOpenTag) {

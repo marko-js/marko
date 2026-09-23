@@ -85,7 +85,7 @@ describe("compiler/compile", () => {
       }).code;
       assert.equal(
         code,
-        '<div/el // the box\n class="box"/>\n<p>\n  ${el}\n</p>',
+        '<div/el // the box\n  class="box"/>\n<p>\n  ${el}\n</p>',
       );
       compileSync(code, template, { translator, output: "html" });
     });

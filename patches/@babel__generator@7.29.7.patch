@@ -1,9 +1,9 @@
 diff --git a/lib/generators/marko.js b/lib/generators/marko.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a67d7717ee
+index 0000000000000000000000000000000000000000..062dd4270071c38c552b3a8ac47d919989f45f5e
 --- /dev/null
 +++ b/lib/generators/marko.js
-@@ -0,0 +1,432 @@
+@@ -0,0 +1,504 @@
 +"use strict";
 +
 +const { escapeText } = require("htmljs-parser");
@@ -109,10 +109,7 @@ index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a6
 +}
 +exports.MarkoAttribute = function MarkoAttribute(node) {
 +  const value = node.value;
-+  // A shorthand method has no place for a return type.
-+  const isMethod =
-+    value.type === "FunctionExpression" &&
-+    !(value.id || value.generator || value.returnType);
++  const isMethod = isShorthandMethod(value);
 +
 +  if (isMethod && value.async) {
 +    // A default attribute is printed flush against the tag name.
@@ -134,10 +131,7 @@ index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a6
 +    }
 +  }
 +
-+  if (
-+    node.default ||
-+    !(node.value.type === "BooleanLiteral" && node.value.value)
-+  ) {
++  if (node.default || !isTrueLiteral(value)) {
 +    if (isMethod) {
 +      _params.call(this, value);
 +      this.printBlock(value.body);
@@ -197,7 +191,31 @@ index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a6
 +  const isDynamicTag = node.name.type !== "StringLiteral";
 +  const tagName = !isDynamicTag && node.name.value;
 +  const rawValue = node.rawValue;
++  // Printed after the tag's head, rather than at its first token.
++  const headComments = takeComments.call(this, node.innerComments);
 +  let bodyOverride;
++  let indented = false;
++  // The rest of the open tag continues on the lines after a line comment.
++  const indentOnce = () => {
++    if (!indented) {
++      indented = true;
++      this.indent();
++    }
++  };
++  const printComments = (comments, prev) => {
++    let line = prev.loc?.end.line;
++    for (const comment of comments) {
++      if (comment.type === "CommentLine") {
++        indentOnce();
++        // One on its own line reads as describing what follows it.
++        if (line && comment.loc && comment.loc.start.line > line) {
++          this.newline(1);
++        }
++      }
++      this._printComment(comment, 1);
++      line = comment.loc?.end.line;
++    }
++  };
 +
 +  if (
 +    tagName === "style" &&
@@ -235,6 +253,8 @@ index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a6
 +      if (node.var.typeAnnotation) {
 +        this.print(node.var.typeAnnotation, false, true);
 +      }
++
++      if (this.endsWith(10 /* \n */)) indentOnce();
 +    }
 +
 +    if (node.arguments && node.arguments.length) {
@@ -255,6 +275,10 @@ index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a6
 +      this.token("|");
 +      _parameters.call(this, node.body.params, 124 /* | */);
 +    }
++
++    const headEndsWithValue = node.var && !node.body.params.length;
++    if (headComments.length && headEndsWithValue) this.token(",");
++    printComments(headComments, node.name);
 +
 +    let { attributes } = node;
 +    if (attributes.length) {
@@ -278,12 +302,31 @@ index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a6
 +        }
 +      }
 +
-+      if (!(attributes && attributes[0] && attributes[0].default)) {
-+        this.token(" ");
++      for (let i = 0; i < attributes.length; i++) {
++        const attr = attributes[i];
++        const leading = takeComments.call(this, attr.leadingComments);
++        if (
++          leading.length &&
++          (i ? endsWithValue(attributes[i - 1]) : headEndsWithValue)
++        ) {
++          this.token(",");
++        }
++        const trailing = takeComments.call(this, attr.trailingComments);
++        // Whitespace, including a newline, may separate attributes.
++        this._noLineTerminator = false;
++        printComments(leading, attributes[i - 1] || node.name);
++        // A default attribute is printed flush against the tag's head.
++        if (!attr.default || leading.length || headComments.length) {
++          this.space();
++        }
++        this.print(attr);
++        if (trailing.length && endsWithValue(attr)) this.token(",");
++        this._noLineTerminator = false;
++        printComments(trailing, attr);
 +      }
-+
-+      this.printJoin(attributes, undefined, undefined, spaceSeparator);
 +    }
++
++    if (indented) this.dedent();
 +  }
 +
 +  if (voidElements.has(tagName)) {
@@ -322,8 +365,37 @@ index 0000000000000000000000000000000000000000..37bf624080a1f35ac7b8c6f5cbf1a8a6
 +  }
 +}
 +
-+function spaceSeparator() {
-+  this.token(" ");
++// A comment after a value would be read as part of it, which a comma prevents.
++function endsWithValue(attr) {
++  if (!attr) return false;
++  if (attr.type === "MarkoSpreadAttribute") return true;
++  return (
++    !isShorthandMethod(attr.value) &&
++    (attr.default || !isTrueLiteral(attr.value))
++  );
++}
++
++// A shorthand method has no place for a return type.
++function isShorthandMethod(value) {
++  return (
++    value.type === "FunctionExpression" &&
++    !(value.id || value.generator || value.returnType)
++  );
++}
++
++function isTrueLiteral(value) {
++  return value.type === "BooleanLiteral" && value.value;
++}
++
++// Marks the comments printed, so printing the node they are attached to leaves
++// them to the open tag.
++function takeComments(comments) {
++  if (!comments) return [];
++  return comments.filter((comment) => {
++    if (this._printedComments.has(comment)) return false;
++    this._printedComments.add(comment);
++    return this.format.shouldPrintComment(comment.value);
++  });
 +}
 +
 +function printWithParansIfNeeded(value) {
