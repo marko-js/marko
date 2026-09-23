@@ -32,10 +32,22 @@ export interface MarkoMeta {
   api: undefined | string;
 }
 
-export interface CompileResult {
-  ast: types.File;
-  code: string;
-  map: SourceMap;
+// Each field follows the flag that produces it; an omitted flag may be set by
+// `configure`, so only `code` (on unless disabled) is assumed.
+export interface CompileResult<C extends Config = Config> {
+  ast: C extends { ast: true }
+    ? types.File
+    : C extends { ast: false }
+      ? null
+      : types.File | null;
+  code: C extends { code: false } ? null : string;
+  map: C extends { code: false }
+    ? null
+    : C extends { sourceMaps: true | "both" }
+      ? SourceMap
+      : C extends { sourceMaps: false | "inline" }
+        ? null
+        : SourceMap | null;
   meta: MarkoMeta;
 }
 
@@ -45,27 +57,27 @@ export const globalConfig: Config;
 
 export function configure(config: Config): void;
 
-export function compile(
+export function compile<C extends Config = Config>(
   src: string,
   filename: string,
-  config?: Config,
-): Promise<CompileResult>;
+  config?: C,
+): Promise<CompileResult<C>>;
 
-export function compileSync(
+export function compileSync<C extends Config = Config>(
   src: string,
   filename: string,
-  config?: Config,
-): CompileResult;
+  config?: C,
+): CompileResult<C>;
 
-export function compileFile(
+export function compileFile<C extends Config = Config>(
   filename: string,
-  config?: Config,
-): Promise<CompileResult>;
+  config?: C,
+): Promise<CompileResult<C>>;
 
-export function compileFileSync(
+export function compileFileSync<C extends Config = Config>(
   filename: string,
-  config?: Config,
-): CompileResult;
+  config?: C,
+): CompileResult<C>;
 
 export function getRuntimeEntryFiles(
   output: string,

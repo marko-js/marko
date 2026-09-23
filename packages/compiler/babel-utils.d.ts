@@ -2,17 +2,18 @@ import type { Config, types as t } from "@marko/compiler";
 
 export interface AttributeDefinition {
   allowExpressions: boolean;
-  filePath: string;
+  filePath?: string;
   name: string;
   type?: string;
   html?: boolean;
   enum?: string[];
   pattern?: RegExp;
   required: boolean;
-  defaultValue: unknown;
+  setFlag?: string;
+  defaultValue?: unknown;
   description?: string;
-  deprecated: boolean;
-  autocomplete: Array<{
+  deprecated?: boolean;
+  autocomplete?: Array<{
     displayText: string;
     snippet: string;
     description: string;
@@ -48,7 +49,7 @@ export interface TagDefinition {
     descriptionMoreURL?: string;
   }>;
   htmlType?: "html" | "svg" | "math";
-  html: boolean;
+  html?: boolean;
   name: string;
   isNestedTag?: boolean;
   isRepeated?: boolean;
@@ -61,8 +62,8 @@ export interface TagDefinition {
   types?: string;
   template?: string;
   renderer?: string;
-  deprecated: boolean;
-  openTagOnly: boolean;
+  deprecated?: boolean;
+  openTagOnly?: boolean;
   analyzer?: PluginDefinition<t.MarkoTag>;
   translator?: PluginDefinition<t.MarkoTag>;
   parser?: ParsePluginDefinition<t.MarkoTag>;
@@ -295,6 +296,20 @@ export function parseArgs(
   sourceStart?: null | number,
   sourceEnd?: null | number,
 ): t.CallExpression["arguments"];
+
+export function parseTypeArgs(
+  file: t.BabelFile,
+  str: string,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
+): t.TSTypeParameterInstantiation | [t.MarkoParseError];
+
+export function parseTypeParams(
+  file: t.BabelFile,
+  str: string,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
+): t.TSTypeParameterDeclaration | [t.MarkoParseError];
 
 export function parseVar(
   file: t.BabelFile,
