@@ -4406,6 +4406,8 @@ declare global {
 
       /**
        * Provide body content for the tag as a Marko.Body.
+       * Native tags render it without params; a component whose body receives values
+       * should `Omit<Marko.HTML.Div, "content">` and declare its own `content`.
        * @see Marko.Body
        */
       content?:
@@ -4457,6 +4459,8 @@ declare global {
 
       /**
        * Provide body content for the tag as a Marko.Body.
+       * Native tags render it without params; a component whose body receives values
+       * should `Omit<Marko.SVG.Path, "content">` and declare its own `content`.
        * @see Marko.Body
        */
       content?:
