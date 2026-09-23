@@ -1469,7 +1469,7 @@ export function finalizeReferences() {
       }
 
       // Renders run in id order, so a closure-only intersection must come
-      // before the owned derived binding it may feed.
+      // before the owned derived binding it may be upstream of.
       intersections.sort((a, b) => {
         const aAnchor = sectionAnchors.get(a);
         const bAnchor = sectionAnchors.get(b);
@@ -3449,7 +3449,7 @@ function markReadsOwner(section: Section) {
   section.readsOwner = true;
 }
 
-// The call site expressions feeding a child template's input, keyed the way
+// The call site expressions upstream of a child template's input, keyed the way
 // the child destructures it; `value` is the whole-value expression.
 export interface KnownExprs {
   known?: Record<string, KnownExprs>;

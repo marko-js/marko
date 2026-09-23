@@ -487,7 +487,7 @@ export default {
               );
             }
           } else if (spreadExpression) {
-            // A lone spread is unambiguous provenance; with several, a merged
+            // A lone spread is an unambiguous source; with several, a merged
             // property could come from any, so the serializer's generic
             // phrasing (plus the runtime-read property name) stays honest.
             const spreads = tag.node.attributes.filter((attr) =>

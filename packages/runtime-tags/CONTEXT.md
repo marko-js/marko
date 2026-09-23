@@ -31,7 +31,15 @@ _Avoid_: refs, dependencies
 The transitive roots that can make a binding browser-relevant, split into
 non-parameter `state` and input/body-parameter `param` roots. `state` does not
 mean only `<let>` values.
-_Avoid_: dependencies, referenced bindings
+_Avoid_: dependencies, referenced bindings, provenance
+
+**Upstream**:
+What an expression or binding derives from: the expressions it reads and the
+bindings those read (`upstreamAlias`, `upstreamExpression`), summarized by kind
+as its _sources_. Structure has one too: an `<if>` condition, a `<for>`
+collection, or a dynamic tag's renderer is a branch section's
+`upstreamExpression`. A tag or read is _downstream_ of what it reads.
+_Avoid_: feed, feeder, selection (a keyed `<for>` row selector aside)
 
 **Closure**:
 A binding read by another section, allowing its signal to notify live child
@@ -144,7 +152,7 @@ The render coordinator that tracks async work, flushes chunks, and carries the
 abort signal. Not an error boundary.
 
 **Resume**:
-Filling scopes, adopting server-rendered nodes, rebuilding branches, and running
+Filling scopes, adopting server-rendered nodes, creating branches, and running
 effects without an initial client rerender.
 _Avoid_: hydrate, hydration
 
