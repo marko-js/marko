@@ -1778,6 +1778,103 @@ describe("serializer", () => {
       assert.equal((scopes.get(2)!.fn as () => number)(), 1);
     });
 
+    describe("scoped reference with locals", () => {
+      const builder =
+        (s: { value: number }, locals: Record<string, any>) => () => [
+          s.value,
+          locals,
+        ];
+
+      it("passes locals to the factory", () => {
+        const scope = { [K_SCOPE_ID]: 1, value: 1 };
+        const fn = builder(scope, { a: 1 });
+        register("fn", fn, scope, { a: 1 });
+        const scopes = assertStringifyScopes(
+          [
+            [1, scope, { value: 1 }],
+            [2, {}, { fn }],
+          ],
+          `_=>[1,{value:1},{fn:_._.fn(_(1),{a:1})}]`,
+          { _: { fn: builder } },
+        );
+        assert.deepEqual((scopes.get(2)!.fn as () => unknown)(), [1, { a: 1 }]);
+      });
+
+      it("shares a local written again later", () => {
+        const scope = { [K_SCOPE_ID]: 1, value: 1 };
+        const item = { text: "x" };
+        const fn = builder(scope, { item });
+        register("fn", fn, scope, { item });
+        const scopes = assertStringifyScopes(
+          [
+            [1, scope, { value: 1 }],
+            [2, {}, { fn, item }],
+          ],
+          `_=>[1,{value:1},{fn:_._.fn(_(1),{item:_.a={text:"x"}}),item:_.a}]`,
+          { _: { fn: builder } },
+        );
+        const [, locals] = (scopes.get(2)!.fn as () => any)();
+        assert.equal(locals.item, scopes.get(2)!.item);
+      });
+
+      it("shares a long string local written again later", () => {
+        const scope = { [K_SCOPE_ID]: 1, value: 1 };
+        const label = "a long repeated label";
+        const fn = builder(scope, { label });
+        register("fn", fn, scope, { label });
+        const scopes = assertStringifyScopes(
+          [
+            [1, scope, { value: 1 }],
+            [2, {}, { fn, label }],
+          ],
+          `_=>[1,{value:1},{fn:_._.fn(_(1),{label:_.a="a long repeated label"}),label:_.a}]`,
+          { _: { fn: builder } },
+        );
+        const [, locals] = (scopes.get(2)!.fn as () => any)();
+        assert.equal(locals.label, scopes.get(2)!.label);
+      });
+
+      // A cycle through locals is assigned after the call, so the factory
+      // (like `_content_closures`) must read its locals only when invoked.
+      it("serializes a local holding the registered value", () => {
+        const scope = { [K_SCOPE_ID]: 1, value: 1 };
+        const item: any = { text: "x" };
+        const fn = builder(scope, { item });
+        item.fn = fn;
+        register("fn", fn, scope, { item });
+        const scopes = assertStringifyScopes(
+          [
+            [1, scope, { value: 1 }],
+            [2, {}, { fn }],
+          ],
+          `_=>(_([1,{value:1},{fn:_.a=_._.fn(_(1),{item:_.b={text:"x"}})}]),_.b.fn=_.a,0)`,
+          { _: { fn: builder } },
+        );
+        const resumed = scopes.get(2)!.fn as () => any;
+        const [, locals] = resumed();
+        assert.equal(locals.item.fn, resumed);
+      });
+
+      it("serializes a local pointing back at the object being written", () => {
+        const scope = { [K_SCOPE_ID]: 1, value: 1 };
+        const owner: any = {};
+        const fn = builder(scope, { owner });
+        owner.fn = fn;
+        register("fn", fn, scope, { owner });
+        const scopes = assertStringifyScopes(
+          [
+            [1, scope, { value: 1 }],
+            [2, {}, { owner }],
+          ],
+          `_=>(_([1,{value:1},{owner:_.a={fn:_._.fn(_(1),_.b={})}}]),_.b.owner=_.a,0)`,
+          { _: { fn: builder } },
+        );
+        const resumedOwner = scopes.get(2)!.owner as any;
+        const [, locals] = resumedOwner.fn();
+        assert.equal(locals.owner, resumedOwner);
+      });
+    });
+
     it("scoped reference repeated", () => {
       const scope = { [K_SCOPE_ID]: 1, value: 1 };
       const builder = (s: typeof scope) => () => s.value;

@@ -236,12 +236,14 @@ export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
   return fn;
 }
 
+// Content an attribute tag `<for>` creates also carries the loop's values.
 export function _content_resume(
   id: string,
   fn: ServerRenderer,
   scopeId?: number,
+  localClosures?: Record<string, unknown>,
 ) {
-  return _resume(_content(id, fn, scopeId), id, scopeId);
+  return _resume(_content(id, fn, scopeId), id, scopeId, localClosures);
 }
 
 export const patchDynamicTag = /* @__PURE__ */ (

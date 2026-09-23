@@ -25,6 +25,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionRegisterReasons,
+  type Section,
 } from "./sections";
 import { getScopeReasonDeclaration } from "./serialize-guard";
 import { isReasonDynamic } from "./serialize-reasons";
@@ -444,28 +445,34 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
             getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
           )!,
         ),
+        serialized && getLocalClosureValues(bodySection),
       );
     } else {
       // The section renderer declaration is elided when nothing reads the
       // content, so the property must be too.
       if (isSectionRendererElided(bodySection)) return;
 
+      const localClosureValues = getLocalClosureValues(bodySection);
       return t.callExpression(
         t.identifier(bodySection.name),
-        bodySection.referencedLocalClosures
-          ? [
-              scopeIdentifier,
-              t.objectExpression(
-                toArray(bodySection.referencedLocalClosures, (ref) => {
-                  return toObjectProperty(
-                    getScopeAccessor(ref, true),
-                    getDeclaredBindingExpression(ref),
-                  );
-                }),
-              ),
-            ]
+        localClosureValues
+          ? [scopeIdentifier, localClosureValues]
           : [scopeIdentifier],
       );
     }
+  }
+}
+
+// The attribute tag `<for>` params content reads, keyed by their accessors.
+function getLocalClosureValues(bodySection: Section) {
+  if (bodySection.referencedLocalClosures) {
+    return t.objectExpression(
+      toArray(bodySection.referencedLocalClosures, (ref) =>
+        toObjectProperty(
+          getScopeAccessor(ref, true),
+          getDeclaredBindingExpression(ref),
+        ),
+      ),
+    );
   }
 }

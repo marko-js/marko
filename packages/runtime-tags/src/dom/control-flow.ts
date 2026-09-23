@@ -624,14 +624,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
             queueEffect(childScope, dynamicTagScript);
           }
         } else {
-          for (const accessor in normalizedRenderer[
-            RendererProp.LocalClosures
-          ]) {
-            normalizedRenderer[RendererProp.LocalClosures]![accessor](
-              childScope,
-              normalizedRenderer[RendererProp.LocalClosureValues]![accessor],
-            );
-          }
+          normalizedRenderer[RendererProp.LocalClosures]?.(childScope);
 
           if (normalizedRenderer[RendererProp.Params]) {
             if (inputIsArgs) {
@@ -685,14 +678,7 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
         }
       }
 
-      if (renderer) {
-        for (const accessor in renderer[RendererProp.LocalClosures]) {
-          renderer[RendererProp.LocalClosures]![accessor](
-            scope[childScopeAccessor] as Scope,
-            renderer[RendererProp.LocalClosureValues]![accessor],
-          );
-        }
-      }
+      renderer?.[RendererProp.LocalClosures]?.(scope[childScopeAccessor]);
     };
   },
 );

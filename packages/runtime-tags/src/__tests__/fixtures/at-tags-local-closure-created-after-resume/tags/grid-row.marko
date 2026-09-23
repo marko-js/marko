@@ -1,0 +1,7 @@
+<let/open=true>
+<button id=`toggle-${input.index}` onClick() { open = !open }>toggle</button>
+<if=open>
+  <for|cell| of=input.row.cell>
+    <${cell.content}/>
+  </for>
+</if>

@@ -1,0 +1,302 @@
+# Render
+```html
+<button
+  id="open"
+>
+  open
+</button>
+<button
+  id="toggle-0"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="toggle-1"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="save-last"
+>
+  save
+</button>
+<button
+  id="fail"
+>
+  fail
+</button>
+<div>
+  ok
+</div>
+```
+
+# Update
+```js
+document.querySelector(`#${id}`).click();
+```
+```html
+<button
+  id="open"
+>
+  open
+</button>
+<span>
+  a:true
+</span>
+<span>
+  b:
+</span>
+<button
+  id="toggle-0"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="toggle-1"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="save-last"
+>
+  save
+</button>
+<button
+  id="fail"
+>
+  fail
+</button>
+<div>
+  ok
+</div>
+```
+## Change
+```
+INSERT: #open + span
+INSERT: span:nth-of-type(1) + span
+UPDATE: span:nth-of-type(1)::text@2 "" => "true"
+```
+
+# Update
+```js
+document.querySelector(`#${id}`).click();
+```
+```html
+<button
+  id="open"
+>
+  open
+</button>
+<span>
+  a:true
+</span>
+<span>
+  b:
+</span>
+<button
+  id="toggle-0"
+>
+  toggle
+</button>
+<button
+  id="toggle-1"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="save-last"
+>
+  save
+</button>
+<button
+  id="fail"
+>
+  fail
+</button>
+<div>
+  ok
+</div>
+```
+## Change
+```
+REMOVE: #toggle-0 + em
+```
+
+# Update
+```js
+document.querySelector(`#${id}`).click();
+```
+```html
+<button
+  id="open"
+>
+  open
+</button>
+<span>
+  a:true
+</span>
+<span>
+  b:
+</span>
+<button
+  id="toggle-0"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="toggle-1"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="save-last"
+>
+  save
+</button>
+<button
+  id="fail"
+>
+  fail
+</button>
+<div>
+  ok
+</div>
+```
+## Change
+```
+INSERT: #toggle-0 + em
+```
+
+# Update
+```js
+document.querySelector(`#${id}`).click();
+```
+```html
+<button
+  id="open"
+>
+  open
+</button>
+<span>
+  a:true
+</span>
+<span>
+  b:
+</span>
+<button
+  id="toggle-0"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="toggle-1"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="save-last"
+>
+  save
+</button>
+L1
+<b>
+  1
+</b>
+<button
+  id="fail"
+>
+  fail
+</button>
+<div>
+  ok
+</div>
+```
+## Change
+```
+INSERT: #save-last + ::text("L")
+INSERT: ::text@0 + :is(::text("1"), b)
+```
+
+# Update
+```js
+document.querySelector(`#${id}`).click();
+```
+```html
+<button
+  id="open"
+>
+  open
+</button>
+<span>
+  a:true
+</span>
+<span>
+  b:
+</span>
+<button
+  id="toggle-0"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="toggle-1"
+>
+  toggle
+</button>
+<em>
+  1
+</em>
+<button
+  id="save-last"
+>
+  save
+</button>
+L1
+<b>
+  1
+</b>
+<button
+  id="fail"
+>
+  fail
+</button>
+<div>
+  caught static: click
+</div>
+```
+## Change
+```
+INSERT: div > :is(::text("caught "), ::text("static"), ::text(": "), ::text("click"))
+REMOVE: div::text@15 + ::text("ok")
+UPDATE: div::text@15 "" => "click"
+```

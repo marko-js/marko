@@ -1,0 +1,45 @@
+<let/count=2>
+<let/mode=0>
+<button#add onClick() { count++ }>add</button>
+<button#mode onClick() { mode = (mode + 1) % 3 }>mode</button>
+
+<list>
+  <if=true>
+    <for|i| until=3><@item>static ${i}</@item></for>
+  </if>
+</list>
+
+<list>
+  <if=mode === 0>
+    <for|i| until=count><@item>if ${i}</@item></for>
+  </if>
+</list>
+
+<list>
+  <if=mode === 0><@other/></if>
+  <else-if=mode === 1>
+    <for|i| until=count><@item>else-if ${i}</@item></for>
+  </else-if>
+</list>
+
+<list>
+  <if=mode !== 2><@other/></if>
+  <else>
+    <if=count>
+      <for|i| until=count><@item>else ${i}</@item></for>
+    </if>
+  </else>
+</list>
+
+<list>
+  <for|j| until=count>
+    <if=j % 2 === mode % 2><@item>for-if ${j}</@item></if>
+  </for>
+</list>
+
+<labeled-list>
+  <if=mode === 0><@label text="zero"/></if>
+  <else>
+    <for|i| until=count><@item>labeled ${i}</@item></for>
+  </else>
+</labeled-list>

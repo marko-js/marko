@@ -1,0 +1,34 @@
+// Content first created on the client after resume still gets its loop values.
+<let/items=[{ text: "a" }, { text: "b" }]>
+<list>
+  <for|item| of=items>
+    <@item><span>${item.text}:${item === items[0]}</span></@item>
+  </for>
+</list>
+
+<grid>
+  <for|row| of=["a", "b"]>
+    <@row>
+      <for|n| of=[1]>
+        <@cell><em>${n}</em></@cell>
+      </for>
+    </@row>
+  </for>
+</grid>
+
+<last>
+  <for|i| of=[1]>
+    <@item>${i}<b>${i}</b></@item>
+  </for>
+</last>
+
+<let/fail=false>
+<button#fail onClick() { fail = true }>fail</button>
+<div>
+  <try>
+    <for|label| of=["static"]>
+      <@catch|err|>caught ${label}: ${err.message}</@catch>
+    </for>
+    ${(() => { if (fail) throw new Error("click"); return "ok" })()}
+  </try>
+</div>

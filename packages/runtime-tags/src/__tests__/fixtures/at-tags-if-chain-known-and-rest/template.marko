@@ -1,0 +1,6 @@
+<let/mode=0>
+<button#toggle onClick() { mode = 1 - mode }>toggle</button>
+<child>
+  <if=mode === 0><@item>A</@item></if>
+  <else><@other x=1/></else>
+</child>
