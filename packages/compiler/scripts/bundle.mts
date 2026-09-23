@@ -205,7 +205,8 @@ await Promise.all([
       ],
       input: "internal/babel/index.ts",
       cwd,
-      external: ["browserslist", "path", "assert", "fs"],
+      // htmljs-parser is a dependency of the compiler, whose own code loads it.
+      external: ["browserslist", "path", "assert", "fs", "htmljs-parser"],
       output: {
         sourcemap: false,
         minify: "dce-only",

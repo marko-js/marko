@@ -1,10 +1,13 @@
 diff --git a/lib/generators/marko.js b/lib/generators/marko.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..31156180cf65ffa7709c719a1c05c9093e638147
+index 0000000000000000000000000000000000000000..c0b14709837bb3d9c087c5e3f756da9d538b532e
 --- /dev/null
 +++ b/lib/generators/marko.js
-@@ -0,0 +1,409 @@
+@@ -0,0 +1,430 @@
 +"use strict";
++
++const { escapeText } = require("htmljs-parser");
++const { _params, _parameters } = require("./methods.js");
 +
 +const svgElements = new Set([
 +  'circle',
@@ -106,8 +109,10 @@ index 0000000000000000000000000000000000000000..31156180cf65ffa7709c719a1c05c909
 +}
 +exports.MarkoAttribute = function MarkoAttribute(node) {
 +  const value = node.value;
++  // A shorthand method has no place for a return type.
 +  const isMethod =
-+    value.type === "FunctionExpression" && !(value.id || value.generator);
++    value.type === "FunctionExpression" &&
++    !(value.id || value.generator || value.returnType);
 +
 +  if (isMethod && value.async) {
 +    // A default attribute is printed flush against the tag name.
@@ -134,9 +139,7 @@ index 0000000000000000000000000000000000000000..31156180cf65ffa7709c719a1c05c909
 +    !(node.value.type === "BooleanLiteral" && node.value.value)
 +  ) {
 +    if (isMethod) {
-+      this.token("(");
-+      this.printList(value.params);
-+      this.token(")");
++      _params.call(this, value);
 +      this.printBlock(value.body);
 +    } else {
 +      this.token(node.bound ? ":=" : "=");
@@ -149,10 +152,15 @@ index 0000000000000000000000000000000000000000..31156180cf65ffa7709c719a1c05c909
 +  printWithParansIfNeeded.call(this, node.value);
 +}
 +exports.MarkoText = function MarkoText(node, parent) {
-+  const { value } = node;
++  const isRootLevel = parent.type === "Program";
++  // Root level content gets a `--` line each, while in a body the text is
++  // printed right against the content after it.
++  const value = escapeText(
++    node.value,
++    isRootLevel ? "" : getContentAfter(node, parent),
++  );
 +
 +  const isMultiLine = /[\r\n]/g.test(value);
-+  const isRootLevel = parent.type === "Program";
 +
 +  if (isRootLevel) {
 +    if (isMultiLine) {
@@ -162,10 +170,24 @@ index 0000000000000000000000000000000000000000..31156180cf65ffa7709c719a1c05c909
 +    }
 +  }
 +
-+  this.word(value);
++  // A word would put a space after text that ends with one.
++  this.token(value);
 +
 +  if (isMultiLine && isRootLevel) {
 +    this.token("\n---");
++  }
++}
++function getContentAfter(node, parent) {
++  // A tag prints its body's children itself, so it can be the parent here.
++  const siblings = parent.type === "MarkoTag" ? parent.body.body : parent.body;
++  const next = siblings[siblings.indexOf(node) + 1];
++  switch (next?.type) {
++    case "MarkoPlaceholder":
++      return next.escape ? "${" : "$!{";
++    case "MarkoText":
++      return next.value;
++    default:
++      return "";
 +  }
 +}
 +exports.MarkoTagBody = function MarkoTagBody(node) {
@@ -229,8 +251,7 @@ index 0000000000000000000000000000000000000000..31156180cf65ffa7709c719a1c05c909
 +        this.token(">");
 +      }
 +      this.token("|");
-+      this.printList(node.body.params);
-+      this.token("|");
++      _parameters.call(this, node.body.params, 124 /* | */);
 +    }
 +
 +    let { attributes } = node;

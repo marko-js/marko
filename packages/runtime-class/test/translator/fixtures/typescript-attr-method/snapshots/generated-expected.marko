@@ -1,0 +1,12 @@
+<button onClick<T extends Event>(event: T) {
+  handle(event);
+}/>
+<button onClick(event: MouseEvent, count?: number) {
+  handle(event, count);
+}/>
+<button async onClick<T>(event: T) {
+  await handle(event);
+}/>
+<button onClick=(function (event: MouseEvent): void {
+  handle(event);
+})/>
