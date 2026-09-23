@@ -1,4 +1,4 @@
-// size: 26878 (min) 10062 (brotli)
+// size: 26860 (min) 10036 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -255,7 +255,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
     };
   }),
   bindNativeTagVar,
-  _resume_dynamic_tag = /*@__PURE__*/ withBranches(() => (_resumed._d = dynamicTagScript)),
   loop = /*@__PURE__*/ withBranches((forEach) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,

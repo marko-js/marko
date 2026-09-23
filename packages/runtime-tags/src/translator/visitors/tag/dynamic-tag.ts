@@ -665,9 +665,7 @@ function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
     return;
   }
 
-  if (addRuntimeOnce("dynamic-tag-var")) {
-    importRuntimeFeature("dynamic-tag-var");
-  }
+  importRuntimeFeature("dynamic-tag-var");
 
   // A returned or passed on value serializes in another template's scope.
   if (!tag.node.var.extra!.binding!.pruned) {
@@ -690,11 +688,7 @@ function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
       attr.type === "MarkoSpreadAttribute" ||
       (attr.type === "MarkoAttribute" && isEventOrChangeHandler(attr.name))
     ) {
-      if (addRuntimeOnce("_resume_dynamic_tag")) {
-        getProgram().node.body.push(
-          t.expressionStatement(callRuntime("_resume_dynamic_tag")),
-        );
-      }
+      importRuntimeFeature("dynamic-tag-script");
       return;
     }
   }

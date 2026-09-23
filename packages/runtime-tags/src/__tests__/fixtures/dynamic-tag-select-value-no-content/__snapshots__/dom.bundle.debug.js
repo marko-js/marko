@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><output> </output>";
 const $walks = "b%bD l";
-_resume_dynamic_tag();
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $tag__OR__v = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.tag, () => ({
 	value: $scope.v,

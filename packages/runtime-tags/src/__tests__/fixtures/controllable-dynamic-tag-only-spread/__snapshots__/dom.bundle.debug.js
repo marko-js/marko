@@ -1,7 +1,6 @@
 // template.marko
 const $template = "<!><!><output> </output>";
 const $walks = "b%bD l";
-_resume_dynamic_tag();
 const $tag_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tag_content);
 const $value__OR__tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.tag, () => ({

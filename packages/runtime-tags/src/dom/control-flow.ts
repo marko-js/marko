@@ -6,7 +6,6 @@ import {
   isPromise,
   normalizeDynamicRenderer,
 } from "../common/helpers";
-import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import { toArray } from "../common/opt";
 import {
   type Accessor,
@@ -42,7 +41,6 @@ import {
   setupBranch,
   type SetupFn,
 } from "./renderer";
-import { _resumed } from "./resume";
 import {
   collectScopes,
   destroyBranch,
@@ -706,13 +704,7 @@ export function installDynamicTagVar(bind: typeof bindNativeTagVar) {
   bindNativeTagVar = bind;
 }
 
-// `dynamicTagScript` runs on a branch scope, so resume-only bundles (where
-// `_dynamic_tag` itself is tree-shaken) still need branch visits processed.
-export const _resume_dynamic_tag = /*@__PURE__*/ withBranches(
-  () => (_resumed[DYNAMIC_TAG_SCRIPT_REGISTER_ID] = dynamicTagScript),
-);
-
-function dynamicTagScript(branch: Scope) {
+export function dynamicTagScript(branch: Scope) {
   _attrs_script(
     branch,
     MARKO_DEBUG
