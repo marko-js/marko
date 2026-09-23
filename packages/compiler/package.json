@@ -10,7 +10,7 @@
     "parser",
     "plugin"
   ],
-  "homepage": "https://github.com/marko-js/marko/blob/main/packages/runtime-class/docs/compiler.md",
+  "homepage": "https://markojs.com/docs/reference/compiler",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "license": "MIT",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
