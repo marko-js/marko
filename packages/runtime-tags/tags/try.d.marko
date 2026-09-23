@@ -3,5 +3,7 @@
 export interface Input {
   content: Marko.Body,
   placeholder?: Marko.AttrTag<{ content?: Marko.Body }>,
+  // `any` keeps the documented `${err.message}` working; annotating the
+  // parameter as `|err: unknown|` opts a catch into narrowing.
   catch?: Marko.AttrTag<{ content?: Marko.Body<[any]> }>,
 }
