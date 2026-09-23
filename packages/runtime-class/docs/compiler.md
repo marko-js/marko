@@ -1,5 +1,8 @@
 # Compiler
 
+> **Note**:
+> This page documents the compiler for Marko 5. The [Compiler API reference](https://markojs.com/docs/reference/compiler) covers the current compiler, including the options Marko 6 adds.
+
 > **Warning**:
 > The compiler API and hooks are not terribly stable. They’re intended for advanced integrations or userland experimentation with new language features.
 >
@@ -165,7 +168,7 @@ Default: `false`
 Whether unrecognized tags should be silently ignored or throw a compile error. Ignored tags will be output as native elements.
 
 > **ProTip**:
-> Some test setups use this alongside `@marko/compiler/taglib`'s `excludeDir` and `excludePackage` to simulate "shallow" rendering.
+> Some test setups use this alongside `taglib.excludeDir` and `taglib.excludePackage` from `@marko/compiler` to simulate "shallow" rendering.
 
 #### `sourceMaps`
 
@@ -265,14 +268,14 @@ export default function markoLoader(source) {
     // If the resource has a ?virtual query param, we should
     // find it in the lookup and then return the virtual code
     // rather than performing the normal compilation
-    { code, map } = virtualSources.get(this.resource);
+    ({ code, map } = virtualSources.get(this.resource));
     virtualSources.delete(this.resource);
   } else {
     // The default behavior is to compile the template in dom output mode
-    { code, map } = markoCompiler.compileSync(source, this.resourcePath, {
+    ({ code, map } = markoCompiler.compileSync(source, this.resourcePath, {
       output: "dom",
-      resolveVirtualDependency
-    });
+      resolveVirtualDependency,
+    }));
   }
 
   return this.callback(null, code, map);
