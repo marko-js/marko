@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.43
+
+### Patch Changes
+
+- [#4227](https://github.com/marko-js/marko/pull/4227) [`8017db1`](https://github.com/marko-js/marko/commit/8017db13986ca9ae2ae50fc2ebb28f4b730d6d87) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Type `renderBody` on SVG tags again, as on HTML tags, so a class-API template with an SVG body type checks.
+
 ## 5.39.42
 
 ### Patch Changes
