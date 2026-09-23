@@ -193,6 +193,8 @@ document.querySelector(".add").click();
 ## Change
 ```
 INSERT: form > select > option
+UPDATE: form > select > option[value] null => "3"
+UPDATE: form > select > option::text " " => "3"
 UPDATE: div::text "" => "3"
 ```
 
@@ -238,6 +240,8 @@ document.querySelector(".add").click();
 ## Change
 ```
 INSERT: form > select > option
+UPDATE: form > select > option:nth-of-type(1)[value] null => "2"
+UPDATE: form > select > option:nth-of-type(1)::text " " => "2"
 ```
 
 # Update
@@ -287,4 +291,6 @@ document.querySelector(".add").click();
 ## Change
 ```
 INSERT: form > select > option
+UPDATE: form > select > option:nth-of-type(1)[value] null => "1"
+UPDATE: form > select > option:nth-of-type(1)::text " " => "1"
 ```

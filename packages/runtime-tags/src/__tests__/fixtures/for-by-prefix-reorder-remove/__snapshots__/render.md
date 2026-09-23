@@ -148,4 +148,5 @@ INSERT: ul > li
 ## Change
 ```
 INSERT: ul > li:nth-of-type(2) + li
+UPDATE: ul > li:nth-of-type(3)::text " " => "9"
 ```

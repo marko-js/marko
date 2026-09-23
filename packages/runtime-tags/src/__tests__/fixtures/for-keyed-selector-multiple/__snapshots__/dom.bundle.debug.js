@@ -1,19 +1,15 @@
 // template.marko
 const $template = "<button class=select>select</button><button class=hover>hover</button><ul></ul>";
 const $walks = " b b b";
-const $for_content__selected__OR__hovered__OR__row_id = /*@__PURE__*/ _or(5, ($scope) => _attr_class($scope["#li/0"], [$scope._.selected === $scope.row_id && "sel", $scope._.hovered === $scope.row_id && "hov"]), 2);
-const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/2", "selected", "row_id", $for_content__selected__OR__hovered__OR__row_id);
+const $for_content__selected__OR__hovered = /*@__PURE__*/ _or(2, ($scope) => _attr_class($scope["#li/0"], [$scope._.selected === $scope["#LoopKey"] && "sel", $scope._.hovered === $scope["#LoopKey"] && "hov"]));
+const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/2", "selected", "#LoopKey", $for_content__selected__OR__hovered);
 const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__hovered._($scope);
 };
-const $for_content__hovered = /*@__PURE__*/ _for_selector("#ul/2", "hovered", "row_id", $for_content__selected__OR__hovered__OR__row_id);
-const $for_content__row_id = /*@__PURE__*/ _const("row_id", $for_content__selected__OR__hovered__OR__row_id);
+const $for_content__hovered = /*@__PURE__*/ _for_selector("#ul/2", "hovered", "#LoopKey", $for_content__selected__OR__hovered);
 const $for_content__row_label = ($scope, row_label) => _text($scope["#text/1"], row_label);
-const $for_content__$params = ($scope, $params2) => {
-	$for_content__row_id($scope, $params2[0]?.id);
-	$for_content__row_label($scope, $params2[0]?.label);
-};
+const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
 const $selected = /*@__PURE__*/ _let("selected/3", $for_content__selected);
 const $hovered = /*@__PURE__*/ _let("hovered/4", $for_content__hovered);
 const $for = /*@__PURE__*/ _for_of("#ul/2", "<li> </li>", " D ", $for_content__setup, $for_content__$params);

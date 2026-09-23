@@ -1,23 +1,19 @@
 // template.marko
 const $template = "<table><tbody></tbody></table><button class=toggle>toggle</button>";
 const $walks = "D l b";
-const $for_content__selected__OR__enabled__OR__row_id = /*@__PURE__*/ _or(6, ($scope) => _attr_class($scope["#tr/0"], $scope._.enabled && $scope._.selected === $scope.row_id && "danger"), 2);
-const $for_content__selected = /*@__PURE__*/ _for_selector("#tbody/0", "selected", "row_id", $for_content__selected__OR__enabled__OR__row_id);
+const $for_content__selected__OR__enabled = /*@__PURE__*/ _or(3, ($scope) => _attr_class($scope["#tr/0"], $scope._.enabled && $scope._.selected === $scope["#LoopKey"] && "danger"));
+const $for_content__selected = /*@__PURE__*/ _for_selector("#tbody/0", "selected", "#LoopKey", $for_content__selected__OR__enabled);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
-	$selected($scope._, $scope.row_id);
+	$selected($scope._, $scope["#LoopKey"]);
 }));
 const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__enabled._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__enabled = /*@__PURE__*/ _for_closure("#tbody/0", $for_content__selected__OR__enabled__OR__row_id);
-const $for_content__row_id = /*@__PURE__*/ _const("row_id", $for_content__selected__OR__enabled__OR__row_id);
+const $for_content__enabled = /*@__PURE__*/ _for_closure("#tbody/0", $for_content__selected__OR__enabled);
 const $for_content__row_label = ($scope, row_label) => _text($scope["#text/2"], row_label);
-const $for_content__$params = ($scope, $params2) => {
-	$for_content__row_id($scope, $params2[0]?.id);
-	$for_content__row_label($scope, $params2[0]?.label);
-};
+const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
 const $selected = /*@__PURE__*/ _let("selected/2", $for_content__selected);
 const $enabled = /*@__PURE__*/ _let("enabled/3", $for_content__enabled);
 const $for = /*@__PURE__*/ _for_of("#tbody/0", "<tr><td><button class=select> </button></td></tr>", " E D ", $for_content__setup, $for_content__$params);

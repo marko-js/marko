@@ -53,6 +53,8 @@
 ```
 INSERT: #2 + #5
 INSERT: #1 + #4
+UPDATE: #4[id] null => "4"
+UPDATE: #5[id] null => "5"
 ```
 
 # Update `{"children":[{"id":6,"text":"!"},{"id":1,"text":"a"},{"id":4,"text":"x"},{"id":2,"text":"b"},{"id":5,"text":"y"},{"id":3,"text":"c"},{"id":7,"text":"?"}]}`
@@ -99,4 +101,6 @@ INSERT: #1 + #4
 ```
 INSERT: #3 + #7
 INSERT: div > #6
+UPDATE: #6[id] null => "6"
+UPDATE: #7[id] null => "7"
 ```

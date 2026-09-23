@@ -70,4 +70,6 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: select > option:nth-of-type(3) + option
+UPDATE: select > option:nth-of-type(4)[value] null => "d"
+UPDATE: select > option:nth-of-type(4)::text " " => "d"
 ```

@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_html(`<li${selected === row.id ? " class=danger" : ""}><span>${_text_resume($scope1_id, "b", selected === row.id && row.label)}</span><button class=select>x</button>${_el_resume($scope1_id, "c")}</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_scope($scope1_id, {
-			f: row?.id,
+			M: row?.id,
 			h: row?.label
 		});
 	}, "id", $scope0_id, "a", 1, 1, 1, "</ul>", 1);

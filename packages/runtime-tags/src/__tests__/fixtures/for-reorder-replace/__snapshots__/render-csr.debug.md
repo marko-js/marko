@@ -45,6 +45,9 @@ REMOVE: div > :is(#1, #2, #3)
 INSERT: div > #10
 INSERT: #10 + #11
 INSERT: #11 + #12
+UPDATE: #10[id] null => "10"
+UPDATE: #11[id] null => "11"
+UPDATE: #12[id] null => "12"
 ```
 
 # Update `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
@@ -73,6 +76,9 @@ REMOVE: div > :is(#10, #11, #12)
 INSERT: div > #1
 INSERT: #1 + #2
 INSERT: #2 + #3
+UPDATE: #1[id] null => "1"
+UPDATE: #2[id] null => "2"
+UPDATE: #3[id] null => "3"
 ```
 
 # Update `{"children":[{"id":20,"text":"only"}]}`
@@ -89,6 +95,7 @@ INSERT: #2 + #3
 ```
 REMOVE: div > :is(#1, #2, #3)
 INSERT: div > #20
+UPDATE: #20[id] null => "20"
 ```
 
 # Update `{"children":[{"id":30,"text":"p"},{"id":31,"text":"q"},{"id":32,"text":"r"},{"id":33,"text":"s"},{"id":34,"text":"t"}]}`
@@ -129,4 +136,9 @@ INSERT: #30 + #31
 INSERT: #31 + #32
 INSERT: #32 + #33
 INSERT: #33 + #34
+UPDATE: #30[id] null => "30"
+UPDATE: #31[id] null => "31"
+UPDATE: #32[id] null => "32"
+UPDATE: #33[id] null => "33"
+UPDATE: #34[id] null => "34"
 ```

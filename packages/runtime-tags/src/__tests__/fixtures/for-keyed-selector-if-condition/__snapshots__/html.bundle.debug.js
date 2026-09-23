@@ -32,9 +32,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button class=select>${_escape(row.label)}</button>${_el_resume($scope1_id, "#button/1")}</li>`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
-			row_id: row?.id,
+			"#LoopKey": row?.id,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "4:4", { row_id: ["row.id", "4:8"] });
+		}, "__tests__/template.marko", "4:4", { "#LoopKey": ["row.id", "4:8"] });
 	}, "id", $scope0_id, "#ul/0", 1, 0, 0, 0, 1);
 	_html("</ul>");
 }, 1);

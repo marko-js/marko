@@ -1,12 +1,11 @@
 // template.marko
 const $template = "<select multiple></select><span>sel:<!></span><button>Add</button>";
 const $walks = " bDb%l b";
-const $for_content__opt = ($scope, opt) => {
-	_attr($scope["#option/0"], "value", opt);
-	_text($scope["#text/1"], opt);
+const $for_content__setup = ($scope) => {
+	_attr($scope["#option/0"], "value", $scope["#LoopKey"]);
+	_text($scope["#text/1"], $scope["#LoopKey"]);
 };
-const $for_content__$params = ($scope, $params2) => $for_content__opt($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of("#select/0", "<option> </option>", " D ", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#select/0", "<option> </option>", " D ", $for_content__setup);
 const $options = /*@__PURE__*/ _let("options/3", ($scope) => $for($scope, [$scope.options, (v) => v]));
 const $selected = /*@__PURE__*/ _let("selected/4", ($scope) => {
 	_attr_select_value($scope, "#select/0", $scope.selected, $valueChange($scope));

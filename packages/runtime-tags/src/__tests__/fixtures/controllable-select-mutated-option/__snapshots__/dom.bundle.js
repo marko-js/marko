@@ -1,10 +1,9 @@
 // template.marko
-const $for_content__opt = ($scope, opt) => {
-	_attr($scope.a, "value", opt);
-	_text($scope.b, opt);
+const $for_content__setup = ($scope) => {
+	_attr($scope.a, "value", $scope.M);
+	_text($scope.b, $scope.M);
 };
-const $for_content__$params = ($scope, $params2) => $for_content__opt($scope, $params2[0]);
-const $for = /*@__PURE__*/ _for_of(0, "<option> </option>", " D ", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of(0, "<option> </option>", " D ", $for_content__setup);
 const $options = /*@__PURE__*/ _let(4, ($scope) => {
 	$options_($scope, $scope.e?.[0]);
 	$for($scope, [$scope.e, (v) => v]);

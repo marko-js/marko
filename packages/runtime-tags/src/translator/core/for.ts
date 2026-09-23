@@ -202,10 +202,9 @@ export default {
 
       const keyBinding = getLoopKeyBinding(byAttr, paramsBinding, forType!);
       if (keyBinding) {
-        if (!byAttr) {
-          keyBinding.type = BindingType.constant;
-          keyBinding.scopeAccessor = getAccessorProp().LoopKey;
-        }
+        // A branch is keyed by its key, so the key never changes within it.
+        keyBinding.type = BindingType.constant;
+        keyBinding.scopeAccessor = getAccessorProp().LoopKey;
         onFinalizeReferences(() => detectForSelector(bodySection, keyBinding));
       }
     }

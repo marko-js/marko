@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<select>");
 		_for_of(options, (opt) => {
 			const $scope1_id = _scope_id();
-			_html(`<option${_attr_option_value(opt)}>${_text_resume($scope1_id, "#text/1", opt)}</option>${_el_resume($scope1_id, "#option/0")}`);
+			_html(`<option${_attr_option_value(opt)}>${_escape(opt)}</option>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:6");
 		}, (v) => v, $scope0_id, "#select/0", 1, 1, 1, "</select>", 1);
 	});
