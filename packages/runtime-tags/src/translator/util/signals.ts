@@ -35,6 +35,7 @@ import {
   type Getter,
   hasNonConstantPropertyAlias,
   hasResumableWriter,
+  type Intersection,
   intersectionMeta,
   isAssignedBindingExtra,
   isDirectAlias,
@@ -347,21 +348,9 @@ export function getSignal(
             memberSignal.hasSideEffect = memberSignal.forcePersist = true;
           }
         });
-        signal.build = () => getSignalFn(signal);
-      } else {
-        signal.build = () => {
-          const { id, scopeOffset } = meta;
-          return callRuntime(
-            "_or",
-            t.numericLiteral(id),
-            getSignalFn(signal),
-            scopeOffset || referencedBindings.length > 2
-              ? t.numericLiteral(referencedBindings.length - 1)
-              : undefined,
-            scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
-          );
-        };
       }
+      signal.build = () =>
+        buildIntersection(referencedBindings, getSignalFn(signal));
     } else if (
       referencedBindings.section !== section &&
       sectionUtil.has(referencedBindings.closureSections, section)
@@ -547,6 +536,21 @@ function pushMemberForwards(
   }
 }
 
+// A source intersection runs in its source's pass, so it needs no `_or`.
+function buildIntersection(intersection: Intersection, fn: t.Expression) {
+  const { source, id, scopeOffset } = intersectionMeta.get(intersection)!;
+  if (source) return fn;
+  return callRuntime(
+    "_or",
+    t.numericLiteral(id),
+    fn,
+    scopeOffset || intersection.length > 2
+      ? t.numericLiteral(intersection.length - 1)
+      : undefined,
+    scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
+  );
+}
+
 export function getSignalFn(signal: Signal): t.Expression {
   const section = signal.section;
   const binding = signal.referencedBindings;
@@ -657,25 +661,20 @@ export function getSignalFn(signal: Signal): t.Expression {
     if (value.signal.inline) {
       continue;
     }
-    if (signalHasStatements(value.signal)) {
-      const invocation = t.expressionStatement(
-        t.callExpression(value.signal.identifier, [
-          scopeIdentifier,
-          value.value,
-          ...getTranslatedExtraArgs(value.signal),
-        ]),
-      );
-      signal.render.push(invocation);
-    } else {
-      signal.render.push(
-        t.expressionStatement(
-          withLeadingComment(
-            value.value,
-            getDebugNames(value.signal.referencedBindings),
-          ),
-        ),
-      );
-    }
+    signal.render.push(
+      t.expressionStatement(
+        signalHasStatements(value.signal)
+          ? t.callExpression(value.signal.identifier, [
+              scopeIdentifier,
+              value.value,
+              ...getTranslatedExtraArgs(value.signal),
+            ])
+          : withLeadingComment(
+              value.value,
+              getDebugNames(value.signal.referencedBindings),
+            ),
+      ),
+    );
   }
 
   forEach(signal.intersection, (intersection) => {
@@ -774,6 +773,11 @@ export function getSignalFn(signal: Signal): t.Expression {
     );
   }
 
+  return toScopeFn(render);
+}
+
+// `(scope) => fn(scope)` is `fn`.
+function toScopeFn(render: t.Statement[]): t.Expression {
   if (render.length === 1) {
     const first = render[0];
     if (first.type === "ExpressionStatement") {
