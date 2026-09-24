@@ -28,6 +28,7 @@ Read these on demand; do not guess at mappings from memory:
 - [`api-mapping.md`](./api-mapping.md) — exhaustive Marko 5 → 6 translation tables: template syntax, core tags, the full `Marko.Component` API, legacy widget API, server/template rendering APIs, taglib metadata, TypeScript types. **Read before converting your first file.**
 - [`patterns.md`](./patterns.md) — worked before/after conversions of the common component shapes (stateful, controllable, refs, third-party DOM libraries, attribute tags, `<await>`, split components, legacy widgets).
 - [`interop.md`](./interop.md) — exact file-classification rules, boundary semantics, limitations, and troubleshooting for running both APIs in one app. **Read before any incremental work**, and when debugging "Cannot mix Tags API and Class API features" or hydration issues in a mixed app.
+- The Marko 6 cheat sheet (`cheatsheet.md`, shipped with Marko 6) — compact rules for idiomatic Tags API code, including traps the files above don't cover: a top-level `>` in an attribute value silently ends the tag, and native inputs stay uncontrolled until their `*Change` handler is added. **Read before writing Tags API code.** While the app is still on `marko@5` it ships only in its `@marko/runtime-tags` dependency: `node -p "require.resolve('@marko/runtime-tags/cheatsheet.md', { paths: [require.resolve('marko/package.json')] })"`. Once on `marko@6` it is `node -p "require.resolve('marko/cheatsheet.md')"`, the file compile errors point to.
 
 ## Step 1 — Assess
 
