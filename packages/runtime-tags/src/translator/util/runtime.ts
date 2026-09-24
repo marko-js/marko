@@ -111,6 +111,17 @@ export function callRuntime(
   return callExpression;
 }
 
+export function dynamicImport(
+  request: string,
+  ...handlers: Array<t.Expression | Falsy>
+) {
+  const load = t.callExpression(t.import(), [t.stringLiteral(request)]);
+  const args = filterArguments(handlers);
+  return args.length
+    ? t.callExpression(t.memberExpression(load, t.identifier("then")), args)
+    : load;
+}
+
 // A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
 // import: it enables optional runtime behavior that referenced imports alone
 // cannot keep alive under tree shaking (eg catch enablement).

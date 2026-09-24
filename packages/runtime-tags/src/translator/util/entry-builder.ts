@@ -6,8 +6,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
-import type { DOMRuntimeHelpers } from "./runtime";
-import runtimeInfo from "./runtime-info";
+import { type DOMRuntimeHelpers, getRuntimePath } from "./runtime";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -68,11 +67,7 @@ const builder = {
                 t.identifier(initHelper),
               ),
             ],
-            t.stringLiteral(
-              `${runtimeInfo.name}/${
-                entryFile.markoOpts.optimize ? "" : "debug/"
-              }dom`,
-            ),
+            t.stringLiteral(getRuntimePath("dom")),
           ),
         );
       }
