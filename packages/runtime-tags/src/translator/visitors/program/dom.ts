@@ -31,7 +31,11 @@ import {
   writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
-import { getSectionMeta, trimTrailingExits } from "../../util/structure";
+import {
+  getSectionMeta,
+  trimTrailingExits,
+  writeStructureExports,
+} from "../../util/structure";
 import { toPropertyName } from "../../util/to-property-name";
 import type { TemplateVisitor } from "../../util/visitors";
 
@@ -67,7 +71,6 @@ export default {
       forEachSectionReverse(getSectionMeta);
 
       const section = getSectionForBody(program)!;
-      const { walks, writes, decls } = getSectionMeta(section);
       const domExports = program.node.extra.domExports!;
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
@@ -77,7 +80,6 @@ export default {
         inputBinding && !inputBinding.pruned
           ? initValue(inputBinding)
           : undefined;
-      let extraDecls = decls;
       const styleFile = program.node.extra.styleFile;
       if (styleFile) {
         importDefault(getFile(), styleFile);
@@ -95,7 +97,7 @@ export default {
             tagParamsSignal && signalHasStatements(tagParamsSignal)
               ? tagParamsSignal.identifier
               : undefined;
-          const { writes, decls } = getSectionMeta(childSection);
+          const { writes } = getSectionMeta(childSection);
           // Reaches the runtime through `_content`, which strips these.
           const walks = trimTrailingExits(getSectionMeta(childSection).walks);
           const setup = getSetup(childSection);
@@ -186,10 +188,6 @@ export default {
               }
             }
           }
-
-          if (decls) {
-            extraDecls = extraDecls ? [...decls, ...extraDecls] : decls;
-          }
         }
       });
 
@@ -218,26 +216,7 @@ export default {
         );
       }
 
-      program.node.body.unshift(
-        t.exportNamedDeclaration(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              templateIdentifier,
-              writes || t.stringLiteral(""),
-            ),
-          ]),
-        ),
-        t.exportNamedDeclaration(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(walksIdentifier, walks || t.stringLiteral("")),
-          ]),
-        ),
-      );
-
-      if (extraDecls) {
-        program.node.body.unshift(t.variableDeclaration("const", extraDecls));
-      }
-
+      writeStructureExports(program);
       writeModuleRegistrations(program);
 
       program.node.body.push(

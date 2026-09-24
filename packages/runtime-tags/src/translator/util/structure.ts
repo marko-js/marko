@@ -11,13 +11,14 @@ import normalizeStringExpression, {
 import {
   ContentType,
   getSection,
+  getSectionForBody,
   type Section,
   StructureKind,
   type StructureOp,
   type StructureRef,
   type StructureVisit,
 } from "./sections";
-import { createSectionState } from "./state";
+import { createProgramState, createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
 const walkCodeToName = {
@@ -224,14 +225,13 @@ function resolveRef(ref: StructureRef, part: "template" | "walks") {
 interface SectionMeta {
   walks: t.Expression | undefined;
   writes: t.Expression | undefined;
-  decls: t.VariableDeclarator[] | undefined;
 }
 
 export const [getSectionMeta] = createSectionState<SectionMeta>(
   "SectionMeta",
   (section) => {
     if (!section.structure) {
-      return { walks: undefined, writes: undefined, decls: undefined };
+      return { walks: undefined, writes: undefined };
     }
     const { writes, walks, walkComment } = resolveStructure(section);
     const walkLiteral = normalizeStringExpression(walks, true);
@@ -241,18 +241,50 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
     return {
       walks: walkLiteral,
       writes: normalizeStringExpression(writes, true),
-      decls: undefined,
     };
   },
 );
 
+// Writes the program's template and walks exports, preceded by the constants
+// hoisted for referenced sections. Every needed section meta must exist first.
+export function writeStructureExports(program: t.NodePath<t.Program>) {
+  const { walks, writes } = getSectionMeta(getSectionForBody(program)!);
+  const domExports = program.node.extra.domExports!;
+  const decls = getMetaDecls();
+  program.node.body.unshift(
+    t.exportNamedDeclaration(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          t.identifier(domExports.template),
+          writes || t.stringLiteral(""),
+        ),
+      ]),
+    ),
+    t.exportNamedDeclaration(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          t.identifier(domExports.walks),
+          walks || t.stringLiteral(""),
+        ),
+      ]),
+    ),
+  );
+
+  if (decls.length) {
+    program.node.body.unshift(t.variableDeclaration("const", decls));
+  }
+}
+
+// Naming a section's parts first resolves its meta, which names the sections
+// it references, so this list is always in dependency order.
+const [getMetaDecls] = createProgramState<t.VariableDeclarator[]>(() => []);
 const sectionMetaIsIds = new WeakSet<SectionMeta>();
 export function getSectionMetaIdentifiers(section: Section) {
   const meta = getSectionMeta(section);
   if (!sectionMetaIsIds.has(meta)) {
     sectionMetaIsIds.add(meta);
     const { walks, writes } = meta;
-    const decls: t.VariableDeclarator[] = [];
+    const decls = getMetaDecls();
 
     if (walks) {
       meta.walks = generateUidIdentifier(`${section.name}__walks`);
@@ -261,10 +293,6 @@ export function getSectionMetaIdentifiers(section: Section) {
     if (writes) {
       meta.writes = generateUidIdentifier(`${section.name}__template`);
       decls.push(t.variableDeclarator(meta.writes, writes));
-    }
-
-    if (decls.length) {
-      meta.decls = decls;
     }
   }
 
