@@ -25,8 +25,10 @@ import {
 } from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getAccessorProp } from "../../util/get-accessor-enums";
-import { getAccessorPrefix } from "../../util/get-accessor-enums";
+import {
+  getAccessorPrefix,
+  getAccessorProp,
+} from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isControlFlowTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
@@ -693,12 +695,13 @@ export default {
 
         const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
         const isTextOnly = isTextOnlyNativeTag(tag);
-        const hasChildren = !!tag.node.body.body.length;
+        const spreadContent =
+          !!spreadExpression && spreadRendersContent(tag, staticContentAttr);
 
         if (spreadExpression) {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
-          if (isTextOnly || isOpenOnly || hasChildren || staticContentAttr) {
+          if (!spreadContent) {
             if (skipExpression) {
               write`${callRuntime(
                 "_attrs_partial",
@@ -740,7 +743,7 @@ export default {
               ),
             ),
           ];
-        } else if (spreadExpression && !hasChildren) {
+        } else if (spreadContent) {
           const serializeReason = getSerializeGuard(
             tagSection,
             nodeBinding && getSerializeReason(tagSection, nodeBinding),
@@ -873,7 +876,6 @@ export default {
         const tagName = getCanonicalTagName(tag);
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra[kNativeTagBinding];
-        const tagDef = getTagDef(tag);
         const tagSection = getSection(tag);
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
@@ -886,9 +888,6 @@ export default {
           spreadExpression,
           injectNonce,
         } = getUsedAttrs(tagName, tag.node);
-        const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
-        const isTextOnly = isTextOnlyNativeTag(tag);
-        const hasChildren = !!tag.node.body.body.length;
 
         if (injectNonce) {
           addStatement(
@@ -1064,12 +1063,7 @@ export default {
         }
 
         if (spreadExpression) {
-          const canHaveAttrContent = !(
-            isTextOnly ||
-            isOpenOnly ||
-            hasChildren ||
-            staticContentAttr
-          );
+          const spreadContent = spreadRendersContent(tag, staticContentAttr);
           const name = tag.get("name");
           const staticName = name.isStringLiteral()
             ? name.node.value
@@ -1083,9 +1077,7 @@ export default {
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  canHaveAttrContent
-                    ? "_attrs_partial_content"
-                    : "_attrs_partial",
+                  spreadContent ? "_attrs_partial_content" : "_attrs_partial",
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
@@ -1101,7 +1093,7 @@ export default {
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  canHaveAttrContent ? "_attrs_content" : "_attrs",
+                  spreadContent ? "_attrs_content" : "_attrs",
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
@@ -1292,6 +1284,19 @@ function getDOMControllableDefaultHelper(
   return controllable.helper === "_attr_input_value" && controllable.valueMode
     ? (`_attr_input_value_${controllable.valueMode}_default` as const)
     : (`${controllable.helper}_default` as const);
+}
+
+// With nothing else filling the element, the spread's `content` renders it.
+function spreadRendersContent(
+  tag: t.NodePath<t.MarkoTag>,
+  staticContentAttr: t.MarkoAttribute | undefined,
+) {
+  return !(
+    staticContentAttr ||
+    tag.node.body.body.length ||
+    isTextOnlyNativeTag(tag) ||
+    getTagDef(tag)?.parseOptions?.openTagOnly
+  );
 }
 
 // `staticOnly` skips building the spread expression (analyze records only the
