@@ -9,7 +9,7 @@
   }, 1, {
     _: _(1),
     "#PlaceholderContent": _(1,
-      "packages/runtime-tags/src/__tests__/fixtures/await-in-order-after-resume-walk/template.marko_3*content"
+      "packages/runtime-tags/src/__tests__/fixtures/await-in-order-holds-reordered-effects/template.marko_3*content"
       )
   }]];
   M._.w()
@@ -32,8 +32,10 @@
 <!--M_[-->
 <div>0<!--M_$6 #text/0--></div><!--M_]1 #text/1 6-->
 <script>
-  M._.r.push(
-    "packages/runtime-tags/src/__tests__/fixtures/await-in-order-after-resume-walk/template.marko_2 5 packages/runtime-tags/src/__tests__/fixtures/await-in-order-after-resume-walk/template.marko_2_value#2/subscribe 5"
+  M._.r.push(_ => [6, {
+      v: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/await-in-order-holds-reordered-effects/template.marko_2 5 packages/runtime-tags/src/__tests__/fixtures/await-in-order-holds-reordered-effects/template.marko_2_value#2/subscribe 5 packages/runtime-tags/src/__tests__/fixtures/await-in-order-holds-reordered-effects/template.marko_4_v#2 6"
     );
   M._.w()
 </script>

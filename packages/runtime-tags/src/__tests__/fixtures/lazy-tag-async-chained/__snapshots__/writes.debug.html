@@ -6,8 +6,7 @@
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-chained/child.marko": [
       _ => [2, {
         count: 1
-      }],
-      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-chained/child.marko_0 2"
+      }]
     ]
   };
   M._.w()
@@ -17,6 +16,11 @@
 
 <button id=async>2<!--M_$4 #text/1--></button><!--M_$4 #button/0-->
 <script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-chained/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-chained/child.marko_0 2"
+    );
   M._.b[
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-chained/child.marko"
     ].push(_ => [4, {

@@ -1,0 +1,7 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+<let/value=0/>
+<Child value:=value/>
+<await|v|=value ? value : resolveAfter(value, 3)>
+  <div>${v}</div>
+</await>

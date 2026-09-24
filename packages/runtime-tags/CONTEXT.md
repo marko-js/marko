@@ -176,6 +176,18 @@ Associating executable code with a stable `_resume` id so SSR need not serialize
 its source. It retains client code only when SSR emits the id.
 _Avoid_: serialization
 
+**In-order content**:
+Content the main stream writes where it renders, holding back everything after
+it until it resolves (an `<await>` with no `@placeholder` of its own). Every
+effect waits until none is pending, so the client changes nothing while it
+streams.
+_Avoid_: blocking content
+
+**Reorder**:
+Content rendered behind a `@placeholder` and swapped in by the client when it
+resolves. Arriving once effects have run, it may find its owners changed.
+_Avoid_: out-of-band content
+
 **Ready stream**:
 A `readyId`-keyed serialization channel that withholds lazy resume data until
 its module registers and earlier data drains.
