@@ -144,6 +144,18 @@ proofs reuse existing nodes/parents; `<!>` separates otherwise ambiguous dynamic
 text/ranges. Resume applies available fills, resolves registered values, visits
 comments, reconstructs branches, and runs effects with `isResuming = 1`.
 
+## In-order content and effects
+
+In-order content holds every effect written before it, including those of
+reorders that swap in meanwhile and of lazy content's ready batches, and
+releases them with the chunk that completes it (`Chunk.flushScript` in
+`html/writer.ts`). Nothing runs on the client, so nothing can change, while
+in-order content streams: it resumes exactly as the server rendered it and needs
+no reconciliation. Only content that can arrive after effects ran, a reorder
+once the main stream completed or ready-stream data, may find its owners
+changed; the await counter's replay (`_await_promise`) and a late closure
+subscriber's resume effect (`_subscribe`) cover it.
+
 ## Lazy entries and ready streams
 
 A normal interactive page entry imports its template graph and initializes the

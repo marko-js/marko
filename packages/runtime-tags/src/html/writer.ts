@@ -962,8 +962,6 @@ export function _await<T>(
                   scopeId + " " + accessor + " " + branchId,
                 ),
               );
-              // The client adopts the branch to update it, even with no data.
-              $chunk.needsWalk = true;
             } else {
               withIsAsync(content, value);
             }
@@ -1582,24 +1580,30 @@ export class Chunk {
     }
   }
 
-  flushReadyScripts(reservations?: string[]) {
+  flushReadyScripts(reservations?: string[], holdEffects?: boolean) {
     const { boundary, serializeState } = this;
     const { readyId } = serializeState;
     let scripts = "";
     forEach(this.takeDeferredReady(), (chunk) => {
-      scripts = concatScripts(scripts, chunk.flushReadyScripts(reservations));
+      scripts = concatScripts(
+        scripts,
+        chunk.flushReadyScripts(reservations, holdEffects),
+      );
+      // Effects held for in-order content flush with a later pass.
+      if (chunk.effects || chunk.deferredReady) {
+        this.deferredReady = push(this.deferredReady, chunk);
+      }
     });
 
     if (readyId && !this.async) {
       const { state } = boundary;
       flushSerializer(boundary, serializeState);
       const deps = state.serializer.takeChannelDeps();
-      const { effects } = this;
+      const effects = holdEffects ? "" : this.effects;
       const { resumes } = serializeState;
       const chunkScripts = this.scripts;
-      serializeState.resumes = "";
-      this.effects = this.scripts = "";
-      this.lastEffect = "";
+      serializeState.resumes = this.scripts = "";
+      if (effects) this.effects = this.lastEffect = "";
       if (resumes || effects) {
         state.needsMainRuntime = true;
         const batch = concatSequence(
@@ -1637,7 +1641,8 @@ export class Chunk {
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) state.walkOnNextFlush = false;
 
-    let readyResumeScripts = this.flushReadyScripts();
+    // Lazy content's effects wait on in-order content like the rest.
+    let readyResumeScripts = this.flushReadyScripts(undefined, this.async);
     for (let channel; (channel = state.serializer.pendingReadyChannel());) {
       const resumes = state.serializer.stringifyScopes([], boundary, channel);
       const deps = state.serializer.takeChannelDeps();
@@ -1655,8 +1660,8 @@ export class Chunk {
       needsWalk = true;
     }
 
-    // A chunk blocked on in-order async content holds its effects until it
-    // completes: running them now could update scopes whose nodes aren't live.
+    // In-order content holds every effect until it completes: its nodes aren't
+    // live yet, so nothing on the client may change while it streams.
     const effects = this.async ? "" : this.effects;
     let { html, scripts } = this;
 
@@ -1729,7 +1734,14 @@ export class Chunk {
           cur.deferOwnReady();
           const { next } = cur;
           // Reorder-ready batches fill slots reserved by the main stream.
-          const readyResumeScripts = cur.flushReadyScripts(readyReservations);
+          const readyResumeScripts = cur.flushReadyScripts(
+            readyReservations,
+            this.async,
+          );
+          this.deferredReady = concat(
+            this.deferredReady,
+            cur.takeDeferredReady(),
+          );
           cur.consumed = true;
           reorderHTML += cur.html;
           reorderEffects = concatEffects(reorderEffects, cur.effects);
@@ -1756,11 +1768,18 @@ export class Chunk {
         }
 
         if (reorderEffects) {
-          needsResumeArray = true;
-          reorderScripts = concatScripts(
-            reorderScripts,
-            '_.push("' + reorderEffects + '")',
-          );
+          if (this.async) {
+            // Content reordered in while in-order content still streams waits
+            // with the effects that content holds.
+            this.effects = concatEffects(this.effects, reorderEffects);
+            this.lastEffect = "";
+          } else {
+            needsResumeArray = true;
+            reorderScripts = concatScripts(
+              reorderScripts,
+              '_.push("' + reorderEffects + '")',
+            );
+          }
         }
 
         for (const reservation of readyReservations) {

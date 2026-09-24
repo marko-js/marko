@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/value=0/>
+<try>
+  <@placeholder>loading button</@placeholder>
+  <await|x|=resolveAfter(1, 1)>
+    <button onClick() { value++ }>${value}</button>
+    <script>console.log("button effect")</script>
+  </await>
+</try>
+<await|v|=value ? value : resolveAfter(value, 3)>
+  <div>${v}</div>
+  <script>console.log("effect " + v)</script>
+</await>

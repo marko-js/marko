@@ -26,15 +26,13 @@
   };
   M._.j.b = _ => {
     (b => b.splice(b.indexOf(1), 1, _ => [6, {
-        input_label: "reordered",
-        shared: {
-          reordered: 1,
-          streamed: 2
-        },
-        count: 0
-      }],
-      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko_0 6"
-      ))(M._.b[
+      input_label: "reordered",
+      shared: {
+        reordered: 1,
+        streamed: 2
+      },
+      count: 0
+    }]))(M._.b[
       "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko"
       ])
   };
@@ -46,6 +44,11 @@
 <button class=streamed>streamed:<!>
     0<!--M_$8 #text/2--></button><!--M_$8 #button/0-->
 <script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko_0 6"
+    );
   M._.b[
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko"
     ].push(_ => [8, {
