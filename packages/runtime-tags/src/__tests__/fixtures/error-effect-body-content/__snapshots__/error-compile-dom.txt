@@ -1,5 +1,5 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-effect-body-content/template.marko:1:2
     > 1 | <effect=(() => {})>Hello</effect>
-        |  ^^^^^^ The [`<effect>`](https://markojs.com/docs/reference/core-tag) tag does not support body content.
+        |  ^^^^^^ The `<effect>` tag has been replaced by [`<script>`](https://markojs.com/docs/reference/core-tag#script), which runs its body as code. Rename it to `<script>`.
       2 |
