@@ -88,6 +88,9 @@ export default {
         // downstream minification can discard proven-pure values.
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);
+        if (t.isFunction(valueAttr.value)) {
+          binding.functionValue = valueExtra;
+        }
       }
     }
   },

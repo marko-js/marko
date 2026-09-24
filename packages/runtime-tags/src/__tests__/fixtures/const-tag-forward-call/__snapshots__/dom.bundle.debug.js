@@ -16,16 +16,16 @@ const $callDefaulted2 = /*@__PURE__*/ _const("callDefaulted");
 const $defaulted2 = /*@__PURE__*/ _const("defaulted", ($scope) => _assert_hoist($scope.defaulted));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$scope.first();
+		($scope.first ||= $first($scope))();
 	});
 	_on($scope["#button/1"], "click", function() {
-		$scope.viaAlias();
+		($scope.viaAlias ||= $viaAlias($scope))();
 	});
 	_on($scope["#button/2"], "click", function() {
-		$scope.callNullary();
+		($scope.callNullary ||= $callNullary($scope))();
 	});
 	_on($scope["#button/3"], "click", function() {
-		$scope.callDefaulted();
+		($scope.callDefaulted ||= $callDefaulted($scope))();
 	});
 });
 function $setup($scope) {
@@ -65,12 +65,8 @@ const $callDefaulted = ($scope) => () => {
 function $defaulted(a, b = "def") {
 	return a + ":" + b;
 }
-_resumed["__tests__/template.marko_0/first"] = $first;
 _resumed["__tests__/template.marko_0/second"] = $second;
-_resumed["__tests__/template.marko_0/viaAlias"] = $viaAlias;
 _resumed["__tests__/template.marko_0/third"] = $third;
-_resumed["__tests__/template.marko_0/callNullary"] = $callNullary;
 _resumed["__tests__/template.marko_0/nullary"] = $nullary;
-_resumed["__tests__/template.marko_0/callDefaulted"] = $callDefaulted;
 _resumed["__tests__/template.marko_0/defaulted"] = $defaulted;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

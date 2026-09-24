@@ -8,10 +8,11 @@ const $Child_content__input_onClick = /*@__PURE__*/ _const("input_onClick", $Chi
 const $Child_content__setup = /*@__PURE__*/ _child_setup(($scope) => _return($scope, $Child_content__$el_getter($scope)));
 const $Child_content__$params = ($scope, $params2) => $Child_content__input($scope, $params2[0]);
 const $Child_content__input = ($scope, input) => $Child_content__input_onClick($scope, input.onClick);
-const $foo = /*@__PURE__*/ _const("foo", ($scope) => $Child_content__input_onClick($scope["#childScope/0"], $onClick($scope)));
+const $foo = /*@__PURE__*/ _const("foo");
 function $setup($scope) {
 	_var($scope, "#childScope/0", $foo);
 	$Child_content__setup._($scope["#childScope/0"], $scope);
+	$Child_content__input_onClick($scope["#childScope/0"], $onClick($scope));
 }
 const $onClick = ($scope) => function() {
 	$scope.foo().innerHTML = "clicked";

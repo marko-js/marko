@@ -157,6 +157,11 @@ export interface Binding {
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
   excludeProperties: SortedOpt<string>;
+  /** Some read uses its value as its expression evaluates, rather than only
+   * inside a function there or as that expression's whole value. */
+  readEagerly: boolean;
+  /** The function literal a `<const>` declares it with. */
+  functionValue: (t.NodeExtra & t.FunctionExtra) | undefined;
   upstreamAlias: Binding | undefined;
   /** The value these `<for>` params iterate, by `of` or `in`. */
   iterates: { expr: t.NodeExtra; type: "of" | "in" } | undefined;
@@ -253,6 +258,8 @@ declare module "@marko/compiler/dist/types" {
     /** The expression this node sits in: dropped or merged as one. */
     exprRoot?: NodeExtra;
     isEffect?: true;
+    /** The value of one input of a known custom tag. */
+    knownTagInput?: true;
     /** A value here may reach the client as written (a change handler, a
      * native spread, a dynamic tag's input), so a function in it registers. */
     forceRegister?: true;
@@ -278,6 +285,8 @@ declare module "@marko/compiler/dist/types" {
     // Reserved for a function reachable through an export: importing templates
     // resolve it to register the function without this template registering it.
     exportRegisterId?: string;
+    /** Built from its scope on the client's first read instead of resumed. */
+    builtOnRead?: true;
   }
 
   export interface ArrowFunctionExpressionExtra extends FunctionExtra {}
@@ -314,6 +323,8 @@ export function createBinding(
     closureSections: undefined,
     assignments: undefined,
     excludeProperties,
+    readEagerly: false,
+    functionValue: undefined,
     sources: undefined,
     upstreamIntersection: undefined,
     reads: new Set(),
@@ -1213,6 +1224,12 @@ export function finalizeReferences() {
   }
 
   for (const [expr, reads] of readsByExpression) {
+    forEach(reads, (read) => recordReadShape(expr, read));
+  }
+  markInvokeOnlyValues(bindings, readsByExpression);
+  markBuiltOnReadFunctions(bindings, readsByExpression);
+
+  for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {
       const exprBindings = resolveReferencedBindings(
         expr,
@@ -1551,6 +1568,93 @@ export function finalizeReferences() {
   fnReadsByExpression.clear();
 }
 
+// Not rebuilding a function value only ever invoked is unobservable: each call
+// reads current values. Repeats since one can qualify through another.
+function markInvokeOnlyValues(
+  bindings: Set<Binding>,
+  readsByExpression: Map<ReferencedExtra, Opt<Read>>,
+) {
+  const values: t.NodeExtra[] = [];
+  for (const binding of bindings) {
+    if (binding.functionValue) values.push(binding.functionValue);
+  }
+  for (const expr of readsByExpression.keys()) {
+    if (expr.knownTagInput) values.push(expr);
+  }
+  for (let changed = true; changed;) {
+    changed = false;
+    for (const value of values) {
+      const expr = getCanonicalExtra(value);
+      if (
+        !expr.invokeOnly &&
+        // `$signal` aborts as what the value reads changes, so it is rebuilt.
+        value.abortId === undefined &&
+        value.downstream !== undefined &&
+        every(value.downstream, isInvokeOnlyBinding)
+      ) {
+        expr.invokeOnly = changed = true;
+      }
+    }
+  }
+}
+
+// A function value only invoked is built by the client from its scope on the
+// first read instead of resumed, when nothing but its own scope holds it.
+function markBuiltOnReadFunctions(
+  bindings: Set<Binding>,
+  readsByExpression: Map<ReferencedExtra, Opt<Read>>,
+) {
+  for (const binding of bindings) {
+    const fn = binding.functionValue;
+    if (
+      fn &&
+      getCanonicalExtra(fn).invokeOnly &&
+      !fn.referencedLocalBindingsInFunction &&
+      !binding.aliases.size &&
+      isOnlyCalledOrAttached(binding, readsByExpression)
+    ) {
+      fn.builtOnRead = true;
+    }
+  }
+}
+
+// Every read calls it later from inside a function, or attaches it whole as a
+// native event handler, so no other scope ever holds this value.
+function isOnlyCalledOrAttached(
+  binding: Binding,
+  readsByExpression: Map<ReferencedExtra, Opt<Read>>,
+) {
+  for (const expr of binding.reads) {
+    const isHandler = !!expr.isEffect && !!expr.invokeOnly;
+    if (
+      some(
+        readsByExpression.get(expr),
+        (read) =>
+          read.binding === binding &&
+          !read.deferred &&
+          !(isHandler && read.extra === expr),
+      )
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// What a read shows about its binding (a getter, a hoist, an eager use) is known
+// before any expression resolves, so it can decide which values are only invoked.
+function recordReadShape(expr: ReferencedExtra, read: Read) {
+  const { binding, getter } = read;
+  if (getter) {
+    addBindingGetter(binding, getter);
+    if (getter.hoisted) {
+      binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
+    }
+  } else if (!read.deferred && read.extra !== expr) {
+    binding.readEagerly = true;
+  }
+}
+
 // Serializes an intersection member for its partners' sources, unless those
 // changes always recompute it.
 function addIntersectionSerializeReasons(
@@ -1723,13 +1827,15 @@ function addClosureSerializeReasons(section: Section) {
     // mark bindings that need to be serialized due to being closed over by stateful sections
     const sourceSection = closure.section;
     const branchesReason = getUpstreamReasonUntil(section, sourceSection);
-    addSerializeReason(
-      sourceSection,
-      branchesReason?.forced
-        ? branchesReason
-        : withoutOwnSources(closure, branchesReason),
-      closure,
-    );
+    if (!isBuiltOnRead(closure)) {
+      addSerializeReason(
+        sourceSection,
+        branchesReason?.forced
+          ? branchesReason
+          : withoutOwnSources(closure, branchesReason),
+        closure,
+      );
+    }
 
     if (isDynamicClosure(section, closure)) {
       addOwnerSerializeReason(section, sourceSection, branchesReason);
@@ -1762,10 +1868,13 @@ function addRegisteredFnSerializeReasons(
   resolveFunctionRegisterReasons();
   for (const exprFnReads of fnReadsByExpression.values()) {
     for (const fn of exprFnReads.keys()) {
-      const reason = fn.registerReason;
+      // One built on read runs on the client as its readers do.
+      const reason = fn.registerReason || (fn.builtOnRead && FORCED);
       if (reason) {
         const addRead = (binding: Binding) => {
-          addSerializeReason(binding.section, reason, binding);
+          if (!isBuiltOnRead(binding)) {
+            addSerializeReason(binding.section, reason, binding);
+          }
           if (binding.section !== fn.section) {
             addOwnerSerializeReason(fn.section, binding.section, reason);
           }
@@ -2581,6 +2690,8 @@ export function getReadReplacement(
               : scopeIdentifier,
             getScopeAccessorLiteral(readBinding),
           );
+        } else if (readBinding.functionValue?.builtOnRead) {
+          replacement = buildOnRead(readBinding, extra.section!);
         } else {
           replacement = createScopeReadExpression(readBinding, extra.section);
         }
@@ -2680,11 +2791,15 @@ export function getReadReplacement(
 // A binding the receiving template can never observe: every read is in an
 // `invokeOnly` expression and nothing else (assignment, hoist, getter, access) sees it.
 export function isInvokeOnlyBinding(binding: Binding): boolean {
-  return !someAlias(binding, isReadBeyondInvoking, undefined);
+  return (
+    !someAlias(binding, isReadBeyondInvoking, undefined) &&
+    !someUpstream(binding.upstreamAlias, isReadWhole, undefined)
+  );
 }
 
 function isReadBeyondInvoking(binding: Binding) {
   if (
+    binding.readEagerly ||
     binding.assignments ||
     binding.hoists ||
     binding.getters.size ||
@@ -2697,6 +2812,11 @@ function isReadBeyondInvoking(binding: Binding) {
     if (!expr.invokeOnly) return true;
   }
   return false;
+}
+
+// The object holding a property escapes as a whole, so its readers reach it.
+function isReadWhole(binding: Binding) {
+  return !!(binding.reads.size || binding.aliases.size || binding.assignments);
 }
 
 export function hasNonConstantPropertyAlias(ref: Binding) {
@@ -2925,9 +3045,7 @@ function resolveReferencedBindings(
       if (getter) {
         extra.section = expr.section;
         extra.read = createGetterRead(binding, undefined, getter);
-        addBindingGetter(binding, getter);
         if (getter.hoisted) {
-          binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
           hoistedBindings = bindingUtil.add(hoistedBindings, binding);
         }
       } else {
@@ -2965,9 +3083,7 @@ function resolveReferencedBindings(
 
     if (getter) {
       extra.read = createGetterRead(binding, undefined, getter);
-      addBindingGetter(binding, getter);
       if (getter.hoisted) {
-        binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
         hoistedBindings = bindingUtil.add(hoistedBindings, binding);
       }
     } else if (binding.type === BindingType.global) {
@@ -3127,7 +3243,11 @@ export function hasResumableWriter(binding: Binding) {
 }
 
 function isResumableWriter({ exprRoot, fnRoot }: AssignedBindingExtra) {
-  return !!getCanonicalExtra(exprRoot).isEffect || isRegisteredFnExtra(fnRoot);
+  return (
+    !!getCanonicalExtra(exprRoot).isEffect ||
+    isRegisteredFnExtra(fnRoot) ||
+    !!fnRoot?.builtOnRead
+  );
 }
 export function isAssignedBindingExtra(
   extra: t.NodeExtra | undefined,
@@ -3146,6 +3266,16 @@ export function isRegisteredFnExtra(
   return (
     isReferencedExtra(extra) &&
     (extra as RegisteredFnExtra).registerId !== undefined
+  );
+}
+
+// Hoisted to a module factory: registered to resume, or built on first read.
+export function isHoistedFnExtra(
+  extra: t.NodeExtra | undefined,
+): extra is ReferencedExtra & t.FunctionExtra & { name: string } {
+  return (
+    isRegisteredFnExtra(extra) ||
+    (isReferencedExtra(extra) && !!(extra as t.FunctionExtra).builtOnRead)
   );
 }
 
@@ -3336,13 +3466,21 @@ function readsValuesOnResume(expr: t.NodeExtra) {
 }
 
 function forceSerialize(binding: Binding) {
-  addSerializeReason(binding.section, FORCED, binding);
+  if (!isBuiltOnRead(binding)) {
+    addSerializeReason(binding.section, FORCED, binding);
+  }
+}
+
+// The client builds this value on first read, so the server never sends it.
+export function isBuiltOnRead(binding: Binding) {
+  return !!binding.functionValue?.builtOnRead;
 }
 
 function computeBindingSerialization(
   binding: Binding,
   properties: Opt<string> | true | undefined,
 ): Serialization {
+  if (isBuiltOnRead(binding)) return UNSERIALIZED;
   const head =
     properties === true || properties === undefined
       ? undefined
@@ -3532,4 +3670,27 @@ function getKnownExprsAt(exprs: KnownExprs, binding: Binding): KnownExprs {
   return binding.property === undefined || !known.known
     ? known
     : (known.known[binding.property] ?? { value: known.value });
+}
+
+// The first read after resume builds the function its scope never received.
+function buildOnRead(binding: Binding, section: Section) {
+  return t.assignmentExpression(
+    "||=",
+    createScopeReadExpression(binding, section),
+    getFunctionValueExpression(
+      binding.functionValue!,
+      getScopeExpression(section, binding.section),
+    ),
+  );
+}
+
+// A hoisted function's value: its factory called with the scope it reads, or
+// the function itself when it reads none.
+export function getFunctionValueExpression(
+  fn: t.FunctionExtra,
+  scope: t.Expression,
+) {
+  return fn.referencesScope || fn.referencedBindingsInFunction
+    ? t.callExpression(t.identifier(fn.name!), [scope])
+    : t.identifier(fn.name!);
 }
