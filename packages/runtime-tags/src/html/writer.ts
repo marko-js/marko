@@ -956,6 +956,8 @@ export function _await<T>(
                   scopeId + " " + accessor + " " + branchId,
                 ),
               );
+              // The client adopts the branch to update it, even with no data.
+              $chunk.needsWalk = true;
             } else {
               withIsAsync(content, value);
             }
