@@ -92,8 +92,8 @@ export function _await_promise(
       findBranchWithKey(scope, AccessorProp.PlaceholderContent);
     const tryBranch = tryPlaceholder || awaitBranch;
     if (!tryBranch) {
-      // `_await_content` creates the branch, or resume adopts a streamed one
-      // as its `@placeholder` completes; either replays the latest value.
+      // `_await_content` creates the branch, or resume adopts a streamed one when
+      // its `@placeholder` completes; a `@catch` streamed instead drops the value.
       const replay = (scope[promiseAccessor] = () =>
         replay === scope[promiseAccessor] && awaitPromise(scope, promise));
       const awaitCounter = findBranchWithKey(

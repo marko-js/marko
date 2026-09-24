@@ -1,0 +1,10 @@
+import { rejectAfter } from "../../utils/resolve";
+<let/value=0/>
+<button onClick() { value++ }>${value}</button>
+<try>
+  <@placeholder>loading</@placeholder>
+  <@catch|err|>caught ${err.message}</@catch>
+  <await|v|=value ? value : rejectAfter(new Error("server"), 1)>
+    <div>${v}</div>
+  </await>
+</try>

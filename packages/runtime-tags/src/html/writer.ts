@@ -1151,6 +1151,8 @@ function tryBoundary(
         } while (cur !== bodyNext);
       }
 
+      // A catch streams even if the client moved its `<await>` to a newer value
+      // first (client rendering keeps that); only a `<try>` rebuild clears it.
       const catchChunk = chunk.fork(boundary, null);
       const { resumeWrites } = boundary;
       catchChunk.reorderId = reorderId;

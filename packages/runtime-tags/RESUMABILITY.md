@@ -154,7 +154,10 @@ in-order content streams: it resumes exactly as the server rendered it and needs
 no reconciliation. Only content that can arrive after effects ran, a reorder
 once the main stream completed or ready-stream data, may find its owners
 changed; the await counter's replay (`_await_promise`) and a late closure
-subscriber's resume effect (`_subscribe`) cover it.
+subscriber's resume effect (`_subscribe`) cover it. A streamed `@catch` is the
+exception: it stands even when the client moved the `<await>` off the server's
+promise before it rejected, a rejection client rendering ignores as superseded,
+since only rebuilding the `<try>` clears a catch.
 
 ## Lazy entries and ready streams
 
