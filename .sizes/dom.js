@@ -1,4 +1,4 @@
-// size: 27008 (min) 10062 (brotli)
+// size: 27028 (min) 10072 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -178,21 +178,17 @@ let unsafeStyleAttrReg = /[\\;]/g,
       if (
         scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(normalizedRenderer)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
-      )
+      ) {
+        let renderer = normalizedRenderer || (getContent ? getContent(scope) : void 0);
         if (
-          (setConditionalRenderer(
-            scope,
-            nodeAccessor,
-            normalizedRenderer || (getContent ? getContent(scope) : void 0),
-            createBranchWithTagNameOrRenderer,
-          ),
+          (setConditionalRenderer(scope, nodeAccessor, renderer, createBranchWithTagNameOrRenderer),
           getTagVar &&
             (scope[childScopeAccessor]
               ? ((scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
                 typeof normalizedRenderer == "string" &&
                   bindNativeTagVar?.(scope[childScopeAccessor]))
               : getTagVar()(scope, void 0)),
-          typeof normalizedRenderer == "string")
+          typeof renderer == "string")
         ) {
           if (getContent) {
             let content = getContent(scope);
@@ -200,12 +196,8 @@ let unsafeStyleAttrReg = /[\\;]/g,
               content.f && subscribeToScopeSet(content.e, content.f, scope[childScopeAccessor].Aa));
           }
         } else
-          normalizedRenderer?.f &&
-            subscribeToScopeSet(
-              normalizedRenderer.e,
-              normalizedRenderer.f,
-              scope[childScopeAccessor],
-            );
+          renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor]);
+      }
       if (normalizedRenderer) {
         let childScope = scope[childScopeAccessor],
           args = getInput?.();
@@ -811,7 +803,8 @@ function _el_read(value) {
 function* traverse(scope, path, args, i = path.length - 1) {
   if (scope)
     if (Symbol.iterator in scope)
-      for (let childScope of scope.values()) yield* traverse(childScope, path, args, i);
+      for (let childScope of scope.values())
+        childScope.H !== 0 && (yield* traverse(childScope, path, args, i));
     else {
       let item = scope[path[i]];
       i

@@ -550,10 +550,13 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
           (scope[rendererAccessor] = rendererKey(normalizedRenderer)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
       ) {
+        // A falsy name renders the body in its place.
+        const renderer =
+          normalizedRenderer || (getContent ? getContent(scope) : undefined);
         setConditionalRenderer(
           scope,
           nodeAccessor as string,
-          normalizedRenderer || (getContent ? getContent(scope) : undefined),
+          renderer,
           createBranchWithTagNameOrRenderer,
         );
 
@@ -572,12 +575,12 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
           }
         }
 
-        if (typeof normalizedRenderer === "string") {
+        if (typeof renderer === "string") {
           if (getContent) {
             const content = getContent(scope);
             setConditionalRenderer(
               scope[childScopeAccessor],
-              MARKO_DEBUG ? `#${normalizedRenderer.toLowerCase()}/0` : "a",
+              MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
               content,
               createAndSetupBranch,
             );
@@ -587,17 +590,15 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
                 content[RendererProp.Accessor],
                 scope[childScopeAccessor][
                   AccessorPrefix.BranchScopes +
-                    (MARKO_DEBUG
-                      ? `#${normalizedRenderer.toLowerCase()}/0`
-                      : "a")
+                    (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
                 ],
               );
             }
           }
-        } else if (normalizedRenderer?.[RendererProp.Accessor]) {
+        } else if (renderer?.[RendererProp.Accessor]) {
           subscribeToScopeSet(
-            normalizedRenderer[RendererProp.Owner]!,
-            normalizedRenderer[RendererProp.Accessor],
+            renderer[RendererProp.Owner]!,
+            renderer[RendererProp.Accessor],
             scope[childScopeAccessor],
           );
         }
