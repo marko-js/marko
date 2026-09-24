@@ -1,0 +1,1 @@
+{ "name": "config-marko5", "dependencies": { "marko": "^5", "@marko/runtime-tags": "^6" } }

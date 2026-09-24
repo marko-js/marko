@@ -1,6 +1,9 @@
 import fs from "fs";
 
-import { pkg } from "@marko/compiler/modules";
+import { pkg, tryResolve } from "@marko/compiler/modules";
+
+// The two runtimes that kept `translator` from being detected, if any.
+export let translatorConflict;
 
 const config = {
   // The default output mode for compiled templates
@@ -82,34 +85,27 @@ const config = {
         return translatorInterop;
       }
 
-      for (const name in pkg.dependencies) {
-        if (translatorReg.test(name)) {
-          if (translator && translator !== name) {
-            return;
-          }
+      for (const deps of [
+        pkg.dependencies,
+        pkg.peerDependencies,
+        pkg.devDependencies,
+      ]) {
+        for (const name in deps) {
+          if (translatorReg.test(name)) {
+            if (translator && translator !== name) {
+              translatorConflict = [translator, name];
+              return;
+            }
 
-          translator = name;
+            translator = name;
+          }
         }
       }
 
-      for (const name in pkg.peerDependencies) {
-        if (translatorReg.test(name)) {
-          if (translator && translator !== name) {
-            return;
-          }
-
-          translator = name;
-        }
-      }
-
-      for (const name in pkg.devDependencies) {
-        if (translatorReg.test(name)) {
-          if (translator && translator !== name) {
-            return;
-          }
-
-          translator = name;
-        }
+      // marko@5's translator compiles both APIs; the runtime-tags one rejects
+      // the Class API, so a project migrating from marko@5 keeps marko's.
+      if (translator === "@marko/runtime-tags" && dependsOnMarko5(pkg)) {
+        return "marko/translator";
       }
     }
 
@@ -203,3 +199,18 @@ export default config;
 
 import taglibConfig from "./taglib/config";
 taglibConfig.fs = config.fileSystem;
+
+function dependsOnMarko5(pkg) {
+  if (
+    !pkg.dependencies?.marko &&
+    !pkg.peerDependencies?.marko &&
+    !pkg.devDependencies?.marko
+  ) {
+    return false;
+  }
+
+  const file = tryResolve("marko/package.json");
+  return (
+    !!file && JSON.parse(fs.readFileSync(file, "utf8")).version.startsWith("5.")
+  );
+}
