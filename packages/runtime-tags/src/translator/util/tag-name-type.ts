@@ -252,7 +252,8 @@ function analyzeExpressionTagName(
 
   if (type === TagNameType.CustomTag) {
     extra.tagNameTemplates = tagNameTemplates;
-    if (tagNameImported) {
+    // A name that may be nullish renders the body in its place, so it stays dynamic.
+    if (tagNameImported && !nullable) {
       extra.tagNameImported = tagNameImported;
       extra.tagNameLoad = tagNameLoad;
     }

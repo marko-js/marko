@@ -1,0 +1,23 @@
+// tags/custom-tag.marko
+var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_html(`<div class=custom>custom ${_text_resume($scope0_id, "#text/0", input.content ? "with" : "without", $sg__input_content * 2)} body</div>`);
+	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
+});
+
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let show = false;
+	const x = show ? custom_tag_default : null;
+	_dynamic_tag($scope0_id, "#text/0", x, {}, _content("__tests__/template.marko_1*content", () => {
+		const $scope1_id = _scope_id();
+		_scope_reason();
+		_html("Fallback Body");
+	}, $scope0_id));
+	_html(`<button id=toggle></button>${_el_resume($scope0_id, "#button/1")}`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "3:6" });
+}, 1);
