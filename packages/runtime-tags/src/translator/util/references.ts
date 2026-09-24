@@ -226,7 +226,8 @@ interface ExtraRead {
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    /** This template reads `$global`, so HTML output declares a const for it. */
+    /** The template emits a `$global` read, so HTML output declares a const
+     * for it. */
     hasGlobalRead?: true;
   }
 
@@ -799,7 +800,6 @@ const [getGlobalBinding] = createProgramState(() =>
 // `$global` reads route through the reference graph, so property
 // aliases record the keys read.
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
-  getProgram().node.extra.hasGlobalRead = true;
   trackReference(path, getGlobalBinding());
 }
 
@@ -1285,6 +1285,7 @@ export function finalizeReferences() {
     // would burn a UID and shift later generated names), no section
     // membership, no closures — reads compile verbatim.
     if (binding.type === BindingType.global) {
+      getProgram().node.extra.hasGlobalRead = true;
       resolveBindingSources(binding);
       continue;
     }
