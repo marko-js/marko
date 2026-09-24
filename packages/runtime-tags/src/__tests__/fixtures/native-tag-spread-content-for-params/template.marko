@@ -1,0 +1,7 @@
+<let/list=[1, 2]>
+<button onClick() { list = [...list, list.length + 1] }>add</button>
+<child>
+  <for|i| of=list>
+    <@row|x|>${i}:${typeof x}:${i + (x ? 10 : 0)}</@row>
+  </for>
+</child>
