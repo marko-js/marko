@@ -1,0 +1,9 @@
+<let/open=false/>
+<let/count=0/>
+<main>
+  <if=open>
+    <box><p>${count + ":" + input.a}</p></box>
+  </if>
+  <button.toggle onClick() { open = !open }>+</button>
+  <button.bump onClick() { count++ }>${count}</button>
+</main>

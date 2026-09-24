@@ -50,6 +50,7 @@ export interface AwaitCounter {
 export {
   AccessorPrefix,
   AccessorProp,
+  PatchKey,
   ClosureSignalProp,
   KeyedScopesProp,
   PendingRenderProp,
@@ -94,6 +95,12 @@ export interface Template {
     position?: InsertPosition,
   ): MountedTemplate;
   render(input?: Input): RenderedTemplate;
+  patch(
+    input?: Input,
+    headers?:
+      | Record<string, string | undefined>
+      | { get(name: string): string | null },
+  ): RenderedTemplate;
 }
 
 export interface MountedTemplate {

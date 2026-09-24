@@ -1,0 +1,10 @@
+<nav>
+  <for|item| of=input.items>
+    <const/active=(item.href === input.path)/>
+    <a class=["link", { active }] href=item.href>
+      <icon name=item.icon/>
+      <span>${item.label}</span>
+    </a>
+  </for>
+</nav>
+<main><if=input.page><p>${input.page}</p></if></main>

@@ -1,0 +1,33 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<button>0<!--M_$2 #text/1--></button><!--M_$2 #button/0-->
+<p>a<!--M_$1 #text/2--></p>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-await-in-order-holds-lazy-effects/child.marko": [
+      _ => [2, {
+        input_valueChange: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/patch-await-in-order-holds-lazy-effects/template.marko_0/valueChange"
+          ),
+        input_value: 0
+      }]
+    ]
+  };
+  M._.r = [_ => [1, {
+    "#childScope/1": _(2)
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[-->
+<div>a<!--M_$3 #text/0--></div><!--M_]1 #text/3 3-->
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-await-in-order-holds-lazy-effects/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/patch-await-in-order-holds-lazy-effects/child.marko_0 2"
+    );
+  M._.w()
+</script>
