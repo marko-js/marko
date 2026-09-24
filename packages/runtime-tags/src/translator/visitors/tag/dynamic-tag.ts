@@ -89,6 +89,7 @@ import {
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
+import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
@@ -502,10 +503,8 @@ export default {
               ),
             ]),
           );
+          translateVar(tag, dynamicTagExpr, "let", statements);
           statements.push(
-            t.variableDeclaration("let", [
-              t.variableDeclarator(node.var, dynamicTagExpr),
-            ]),
             t.expressionStatement(
               callRuntime(
                 "_var",
@@ -528,11 +527,7 @@ export default {
             ),
           );
         } else if (node.var) {
-          statements.push(
-            t.variableDeclaration("let", [
-              t.variableDeclarator(node.var, dynamicTagExpr),
-            ]),
-          );
+          translateVar(tag, dynamicTagExpr, "let", statements);
         } else {
           statements.push(t.expressionStatement(dynamicTagExpr));
         }
