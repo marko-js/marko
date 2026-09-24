@@ -45,7 +45,7 @@ const [getSectionReasonState] = createSectionState<SectionReasonState>(
     guard: createTypeState(),
     declarators: [
       t.variableDeclarator(
-        t.identifier(getSharedUid(`scope${section.id}_reason`, section)),
+        scopeReasonIdentifier(section),
         callRuntime("_scope_reason"),
       ),
     ],
@@ -100,13 +100,12 @@ export function buildGroupMask(
     : literal || dynamic || t.numericLiteral(0);
 }
 
-export function getScopeReasonDeclaration(
-  section: Section,
-): t.VariableDeclaration {
-  return t.variableDeclaration(
-    "const",
-    getSectionReasonState(section).declarators,
-  );
+// Every section body consumes (and clears) its caller's reason; it binds it,
+// with its hoisted guards, only when a guard is dynamic.
+export function getScopeReasonStatement(section: Section): t.Statement {
+  return hasDynamicSerializeReason(section)
+    ? t.variableDeclaration("const", getSectionReasonState(section).declarators)
+    : t.expressionStatement(callRuntime("_scope_reason"));
 }
 
 export function getSerializeGuard(
@@ -221,9 +220,7 @@ function buildGuardExpr(
   params: NonNullable<Sources["param"]>,
   isGuard: boolean,
 ) {
-  const serializeIdentifier = t.identifier(
-    getSharedUid(`scope${paramsSection.id}_reason`, paramsSection),
-  );
+  const serializeIdentifier = scopeReasonIdentifier(paramsSection);
   return paramsSection.paramReasonGroups
     ? callRuntime(
         (isGuard
@@ -267,4 +264,18 @@ function createTypeState(): TypeState {
     seenReasons: undefined,
     hoistedReasons: undefined,
   };
+}
+
+function hasDynamicSerializeReason(section: Section) {
+  if (section.paramReasonGroups || isReasonDynamic(section.serializeReason)) {
+    return true;
+  }
+  for (const reason of section.serializeReasons.values()) {
+    if (isReasonDynamic(reason)) return true;
+  }
+  return false;
+}
+
+function scopeReasonIdentifier(section: Section) {
+  return t.identifier(getSharedUid(`scope${section.id}_reason`, section));
 }
