@@ -9,6 +9,7 @@ import {
 import { diagnosticError, DiagnosticType } from "../babel-utils/diagnostics";
 import { getFileInternal, setFileInternal } from "../babel-utils/get-file";
 import { getTemplateId } from "../babel-utils/tags";
+import { translatorConflict } from "../config";
 import { buildLookup } from "../taglib";
 import taglibConfig from "../taglib/config";
 import { buildCodeFrameError } from "../util/build-code-frame";
@@ -34,6 +35,13 @@ export default (api, markoOpts) => {
   if (markoOpts.optimize === undefined) {
     api.cache.using(shouldOptimize);
     markoOpts.optimize = shouldOptimize();
+  }
+
+  if (!translator && translatorConflict) {
+    const [first, second] = translatorConflict;
+    throw new Error(
+      `@marko/compiler: no translator was detected since package.json depends on both "${first}" and "${second}"; set the "translator" option (eg "${first}/translator").`,
+    );
   }
 
   if (!translator || !translator.translate) {

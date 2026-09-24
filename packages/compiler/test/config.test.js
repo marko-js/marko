@@ -3,13 +3,12 @@ import { execFileSync } from "node:child_process";
 import path from "node:path";
 
 const fixtures = path.join(import.meta.dirname, "fixtures", "config");
-const script = path.join(fixtures, "print.mjs");
 
 // The translator is chosen once, while the module loads, from the package.json
 // nearest the working directory -- so each case needs its own process.
-const read = (dir, env) =>
+const read = (dir, env, script = "print.mjs") =>
   JSON.parse(
-    execFileSync(process.execPath, ["-r", "~ts", script], {
+    execFileSync(process.execPath, ["-r", "~ts", path.join(fixtures, script)], {
       cwd: path.join(fixtures, dir),
       encoding: "utf8",
       env: { ...process.env, ...env },
@@ -46,6 +45,15 @@ describe("compiler/config", () => {
       it(`chooses none when two runtimes disagree in ${where}`, () =>
         assert.equal(read(dir).translator, undefined));
     }
+
+    it("names both runtimes when compiling without a translator", () =>
+      assert.match(
+        read("conflict", {}, "compile.mjs").error,
+        /depends on both "marko-runtime-one" and "marko-runtime-two"; set the "translator" option/,
+      ));
+
+    it("keeps marko@5's translator alongside @marko/runtime-tags", () =>
+      assert.equal(read("marko5").translator, "marko/translator"));
   });
 
   it("applies MARKO_CONFIG over the defaults", () =>
