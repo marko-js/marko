@@ -2,7 +2,7 @@
 const $template = "<!><!><!><!>";
 const $walks = "b%/&b%c";
 const $load_Child_trigger = /*@__PURE__*/ _load_visible_trigger("#footer");
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.value.mjs")));
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading...");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<footer id=footer>late</footer>");
@@ -13,7 +13,7 @@ const $try_content__setup = ($scope) => {
 };
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup);
 function $setup($scope) {
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 }
 const $input_value = ($scope, input_value) => $load_Child_tag_value($scope["#childScope/1"], input_value);

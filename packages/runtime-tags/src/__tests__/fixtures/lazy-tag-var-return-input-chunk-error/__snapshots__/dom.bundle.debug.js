@@ -30,7 +30,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=mount>mount</button><!><!>";
 const $walks = " b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
@@ -42,7 +42,7 @@ const $try_content__setup__script = _script("__tests__/template.marko_2", ($scop
 }));
 const $try_content__setup = ($scope) => {
 	_var($scope, "#childScope/1", $try_content__focusChild);
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_label($scope["#childScope/1"], "x");
 	$try_content__setup__script($scope);
 };

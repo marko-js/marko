@@ -11,9 +11,11 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 const $template = "<!><!><!>";
 const $walks = "b%/&c";
 const $load_Child_trigger = /*@__PURE__*/ _load_visible_trigger(".nonexistent");
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_value.mjs")));
-const $setup = $load_Child_setup;
+function $setup($scope) {
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
+}
 const $input_value = ($scope, input_value) => $load_Child_tag_input_value($scope["#childScope/1"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -1,5 +1,5 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(0, 1, () => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
@@ -11,7 +11,7 @@ const $try_content__setup__script = _script("b4", ($scope) => _on($scope.d, "cli
 }));
 const $try_content__setup = ($scope) => {
 	_var($scope, 1, $try_content__focusChild);
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope.b, $scope.a);
 	$load_Child_tag_input_label($scope.b, "x");
 	$try_content__setup__script($scope);
 };

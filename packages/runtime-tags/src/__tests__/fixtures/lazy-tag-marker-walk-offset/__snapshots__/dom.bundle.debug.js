@@ -9,14 +9,14 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<!><!><button>Inc</button>";
 const $walks = "b%/&b b";
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => $load_Child_tag_input_value($scope["#childScope/1"], $scope.value));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$value($scope, +$scope.value + 1);
 }));
 function $setup($scope) {
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$value($scope, 0);
 	$setup__script($scope);
 }

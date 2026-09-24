@@ -31,11 +31,7 @@ import {
 } from "../../util/known-tag";
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import type { Binding } from "../../util/references";
-import {
-  BindingType,
-  createBinding,
-  getScopeAccessorLiteral,
-} from "../../util/references";
+import { BindingType, createBinding } from "../../util/references";
 import { callRuntime, importRuntimeFeature } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection, StructureKind } from "../../util/sections";
@@ -55,6 +51,7 @@ const kLoadTagBinding = Symbol("load tag binding");
 const [getLoadIdentifiers] = createProgramState(() => ({
   triggers: new Map<LoadImportConfig, t.Identifier>(),
   signals: new Map<string, t.Identifier>(),
+  setups: new Map<string, t.Identifier>(),
 }));
 
 declare module "@marko/compiler/dist/types" {
@@ -193,7 +190,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
   if (isLoad) {
     const childFileName = childFile.opts.filename;
-    const { triggers, signals } = getLoadIdentifiers();
+    const { triggers, signals, setups } = getLoadIdentifiers();
     let triggerIdent = triggers.get(loadConfig);
     if (!triggerIdent) {
       const triggerExpr = loadTriggersToExpression(loadConfig);
@@ -253,41 +250,48 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         return signalIdent;
       },
       (section, childBinding) => {
-        const setupIdent = generateUidIdentifier(`load_${tagName}_setup`);
-        const setupLoadExpr = t.arrowFunctionExpression(
-          [],
-          t.callExpression(t.import(), [
-            t.stringLiteral(
-              buildLoadSetupVirtualModule(file, childFileName, childExports),
-            ),
-          ]),
-        );
-        importRuntimeFeature("catch");
-        getProgram().node.body.push(
-          t.variableDeclaration("let", [
-            t.variableDeclarator(
-              setupIdent,
-              callRuntime(
-                "_load_setup",
-                getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
-                getScopeAccessorLiteral(childBinding, true),
-                triggerIdent
-                  ? t.addComment(
-                      t.callExpression(triggerIdent, [setupLoadExpr]),
-                      "leading",
-                      "@__PURE__",
-                    )
-                  : setupLoadExpr,
+        const setupKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}`;
+        let setupIdent = setups.get(setupKey);
+        if (!setupIdent) {
+          setupIdent = generateUidIdentifier(`load_${tagName}_setup`);
+          setups.set(setupKey, setupIdent);
+          const setupLoadExpr = t.arrowFunctionExpression(
+            [],
+            t.callExpression(t.import(), [
+              t.stringLiteral(
+                buildLoadSetupVirtualModule(file, childFileName, childExports),
               ),
-            ),
-          ]),
-        );
+            ]),
+          );
+          importRuntimeFeature("catch");
+          getProgram().node.body.push(
+            t.variableDeclaration("let", [
+              t.variableDeclarator(
+                setupIdent,
+                callRuntime(
+                  "_load_setup",
+                  triggerIdent
+                    ? t.addComment(
+                        t.callExpression(triggerIdent, [setupLoadExpr]),
+                        "leading",
+                        "@__PURE__",
+                      )
+                    : setupLoadExpr,
+                ),
+              ),
+            ]),
+          );
+        }
         addStatement(
           "render",
           section,
           undefined,
           t.expressionStatement(
-            t.callExpression(setupIdent, [scopeIdentifier]),
+            t.callExpression(setupIdent, [
+              scopeIdentifier,
+              createScopeReadExpression(childBinding, section),
+              createScopeReadExpression(node.extra![kLoadTagBinding]!, section),
+            ]),
           ),
         );
       },

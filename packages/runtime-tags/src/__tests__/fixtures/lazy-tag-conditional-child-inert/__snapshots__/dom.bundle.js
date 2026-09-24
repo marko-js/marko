@@ -1,11 +1,11 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(0, 1, () => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $if_content__count = /*@__PURE__*/ _if_closure(1, 0, ($scope) => $load_Child_tag_input_value($scope.b, $scope._.c));
 const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope.b, $scope.a);
 	$load_Child_tag_input_label($scope.b, "x");
 };
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%/&", $if_content__setup);

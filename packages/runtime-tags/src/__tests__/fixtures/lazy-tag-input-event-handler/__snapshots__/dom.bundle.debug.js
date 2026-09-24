@@ -17,7 +17,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=main>main:<!></button><!><!>";
 const $walks = " Db%l%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/2", "#childScope/3", () => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input.mjs"));
 const $shared = /*@__PURE__*/ _let("shared/4", ($scope) => $load_Child_tag_input($scope["#childScope/3"], {
 	data: $scope.shared,
@@ -28,7 +28,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, $scope.count + Object.keys($scope.shared).length);
 }));
 function $setup($scope) {
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope["#childScope/3"], $scope["#text/2"]);
 	$shared($scope, { value: 1 });
 	$count($scope, 0);
 	$setup__script($scope);
