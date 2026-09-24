@@ -432,7 +432,10 @@ function* traverse<T>(
   if (scope) {
     if (Symbol.iterator in scope) {
       for (const childScope of scope.values() as Iterable<Scope>) {
-        yield* traverse(childScope, path, args, i);
+        // Resumed members stay in the set after they are destroyed.
+        if (childScope[AccessorProp.Gen] !== 0) {
+          yield* traverse(childScope, path, args, i);
+        }
       }
     } else {
       const item = scope[path[i]];

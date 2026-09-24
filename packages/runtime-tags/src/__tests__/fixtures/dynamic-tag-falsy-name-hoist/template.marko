@@ -1,0 +1,6 @@
+<let/tag=input.tag>
+<let/result="">
+<${tag}><input/el/></>
+<button.check onClick() { result = `${el() === document.querySelector("input")}/${[...el].length}`; }/>
+<button.toggle onClick() { tag = tag ? null : "div"; }/>
+<output>${result}</output>
