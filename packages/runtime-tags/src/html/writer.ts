@@ -573,20 +573,19 @@ function forBranches(
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
 ) {
-  if (MARKO_DEBUG) {
-    // eslint-disable-next-line no-var
-    var seenKeys = new Set<unknown>();
+  if (MARKO_DEBUG && by) {
+    const run = iterate;
+    const seenKeys = new Set<unknown>();
+    iterate = (each) =>
+      run((itemKey, sameAsIndex, render) => {
+        assertValidLoopKey(itemKey, seenKeys);
+        if (each) each(itemKey, sameAsIndex, render);
+        else render();
+      });
   }
 
   if (serializeBranch === 0) {
-    if (MARKO_DEBUG && by) {
-      iterate((itemKey, _sameAsIndex, render) => {
-        assertValidLoopKey(itemKey, seenKeys);
-        render();
-      });
-    } else {
-      iterate(0);
-    }
+    iterate(0);
     writeBranchEnd(
       scopeId,
       accessor,
@@ -607,9 +606,6 @@ function forBranches(
 
   iterate((itemKey, sameAsIndex, render) => {
     const branchId = _peek_scope_id();
-    if (MARKO_DEBUG && by) {
-      assertValidLoopKey(itemKey, seenKeys);
-    }
     if (resumeMarker) {
       if (singleNode) {
         flushBranchIds = " " + branchId + flushBranchIds;
