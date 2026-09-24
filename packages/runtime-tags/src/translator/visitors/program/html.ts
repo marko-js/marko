@@ -25,8 +25,7 @@ import {
   getSection,
   type Section,
 } from "../../util/sections";
-import { getScopeReasonDeclaration } from "../../util/serialize-guard";
-import { isReasonDynamic } from "../../util/serialize-reasons";
+import { getScopeReasonStatement } from "../../util/serialize-guard";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -148,23 +147,7 @@ export default {
       traverseReplace(program.node, "body", replaceNode);
       const renderContent: t.Statement[] = [];
       const section = getSection(program);
-      let dynamicSerializeReason =
-        !!section.paramReasonGroups || isReasonDynamic(section.serializeReason);
-
-      if (!dynamicSerializeReason) {
-        for (const reason of section.serializeReasons.values()) {
-          if (isReasonDynamic(reason)) {
-            dynamicSerializeReason = true;
-            break;
-          }
-        }
-      }
-
-      if (dynamicSerializeReason) {
-        renderContent.push(getScopeReasonDeclaration(section));
-      } else {
-        renderContent.push(t.expressionStatement(callRuntime("_scope_reason")));
-      }
+      renderContent.push(getScopeReasonStatement(section));
 
       for (const child of program.get("body")) {
         if (!isStatic(child)) {
