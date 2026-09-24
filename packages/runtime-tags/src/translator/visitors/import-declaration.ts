@@ -41,6 +41,7 @@ const triggerRegExp = /\s*([\w-]+)\s*([^?|]+?)?\s*(?:\?([^|]*?))?\s*(?:\||$)/g;
 const [getHtmlLoadWrapped] = createProgramState(
   () => new Map<string, string>(),
 );
+const derivedImports = new WeakSet<t.ImportDeclaration>();
 
 export default {
   analyze(importDecl) {
@@ -57,9 +58,8 @@ export default {
       addAssetImport(value);
     }
 
-    const tagImport = resolveTagImport(importDecl, value);
+    const { tagImport } = getImportFacts(importDecl);
     if (tagImport) {
-      (node.extra ??= {}).tagImport = tagImport;
       const tags = getFile().metadata.marko.tags!;
       if (!tags.includes(tagImport)) {
         tags.push(tagImport);
@@ -68,17 +68,8 @@ export default {
       trackImportedRegisteredFns(importDecl);
     }
 
-    const loadAttrPath = node.attributes?.length
-      ? (importDecl.get("attributes") as t.NodePath<t.ImportAttribute>[]).find(
-          (p) =>
-            (p.node.key.type === "Identifier"
-              ? p.node.key.name
-              : p.node.key.value) === "load",
-        )
-      : undefined;
+    const loadAttrPath = getLoadAttr(importDecl);
     if (loadAttrPath) {
-      const loadImport = getLoadImportConfig(loadAttrPath.get("value"));
-
       if ((node.importKind || "value") !== "value") {
         throw importDecl.buildCodeFrameError("Invalid load import.");
       }
@@ -104,7 +95,22 @@ export default {
         return;
       }
 
-      (node.extra ??= {}).loadImport = loadImport;
+      // A lazy template's uses are wrapped as its import translates, which is
+      // too late for content above it.
+      const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
+      const useAbove = importDecl.scope
+        .getBinding(local.name)!
+        .referencePaths.find(
+          (ref) =>
+            (ref.find((p) => !!p.parentPath?.isProgram())!.key as number) <
+            (importDecl.key as number),
+        );
+      if (useAbove) {
+        throw useAbove.buildCodeFrameError(
+          `\`${local.name}\` is used above its \`load\` import. Move the import above its first use.`,
+        );
+      }
+
       const file = getFile();
 
       const loadFile = tagImport && loadFileForImport(file, value);
@@ -217,6 +223,25 @@ export default {
   },
 } satisfies TemplateVisitor<t.ImportDeclaration>;
 
+// A tag can be typed before its import is analyzed (a section lookup or
+// pre-analyze asks first), so both read the import's facts through here.
+export function getImportFacts(importDecl: t.NodePath<t.ImportDeclaration>) {
+  const { node } = importDecl;
+  const extra = (node.extra ??= {});
+  if (!derivedImports.has(node)) {
+    derivedImports.add(node);
+    const tagImport = resolveTagImport(importDecl, node.source.value);
+    if (tagImport) extra.tagImport = tagImport;
+    const loadAttrPath = getLoadAttr(importDecl);
+    const loadImport =
+      loadAttrPath && getLoadImportConfig(loadAttrPath.get("value"));
+    // Without `linkAssets` nothing drives lazy loading (eg `linked: false`),
+    // so the tag imports eagerly.
+    if (loadImport && getMarkoOpts().linkAssets) extra.loadImport = loadImport;
+  }
+  return extra;
+}
+
 // Same-file lazy imports of one template share the first wrapper's triggers;
 // diverging triggers only meaningfully conflict across files, out of scope here.
 function getOrCreateHtmlLoadWrapped(
@@ -280,6 +305,17 @@ function trackImportedRegisteredFns(
       trackImportedFn(importDecl, specifier.node.local.name, resolved);
     }
   }
+}
+
+function getLoadAttr(importDecl: t.NodePath<t.ImportDeclaration>) {
+  return importDecl.node.attributes?.length
+    ? (importDecl.get("attributes") as t.NodePath<t.ImportAttribute>[]).find(
+        (p) =>
+          (p.node.key.type === "Identifier"
+            ? p.node.key.name
+            : p.node.key.value) === "load",
+      )
+    : undefined;
 }
 
 function getLoadImportConfig(
