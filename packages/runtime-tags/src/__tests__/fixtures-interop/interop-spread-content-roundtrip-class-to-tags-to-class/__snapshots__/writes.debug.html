@@ -1,0 +1,33 @@
+<!--M#s0--><button id=class>0</button><!--F#1--><!--Ms[--><!--M#s1-->
+<p id=roundtrip><!--F#1-->Hello 0<button class=thing>thing 0</button><!--F/-->
+</p><!--M/--><!--Ms]1 #text/0 2--><!--F/--><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+    m5c: "s0-1",
+    "ConditionalRenderer:#text/0": _._[
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-spread-content-roundtrip-class-to-tags-to-class/components/class-child.marko"
+      ]
+  }, {
+    m5c: "s1",
+    m5i: {
+      id: "roundtrip",
+      renderBody: _._.$compat_renderBody
+    }
+  }], "$compat_setScope 1 2"];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }],
+      ["s1", 1, 2, {
+        "f": 3
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-spread-content-roundtrip-class-to-tags-to-class/template.marko",
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-spread-content-roundtrip-class-to-tags-to-class/components/class-child.marko"
+    ]
+  })
+</script>

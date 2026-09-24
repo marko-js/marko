@@ -27,6 +27,7 @@ import MarkoDocumentType from "./document-type";
 import MarkoPlaceholder from "./placeholder";
 import MarkoScriptlet from "./scriptlet";
 import MarkoTag from "./tag";
+import { getTagsCompatFile } from "./tag/util";
 import MarkoText from "./text";
 import addDependencies from "./util/add-dependencies";
 import getComponentFiles from "./util/get-component-files";
@@ -436,11 +437,7 @@ export const translate = {
           path.node.extra?.needsCompat &&
             t.importDeclaration(
               [],
-              t.stringLiteral(
-                `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
-                  markoOpts.output === "html" ? "html" : "dom"
-                }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`,
-              ),
+              t.stringLiteral(getTagsCompatFile(markoOpts)),
             ),
           t.importDeclaration(
             [t.importSpecifier(runtimeTemplateIdentifier, t.identifier("t"))],

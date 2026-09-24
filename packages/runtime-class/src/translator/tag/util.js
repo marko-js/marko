@@ -80,13 +80,27 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   }
 
   if (childLen && !hasAttributeTags) {
+    const renderBody = t.arrowFunctionExpression(
+      [t.identifier("out"), ...params],
+      t.blockStatement(body),
+    );
     properties.push(
       t.objectProperty(
         t.stringLiteral(renderBodyKey),
-        t.arrowFunctionExpression(
-          [t.identifier("out"), ...params],
-          t.blockStatement(body),
-        ),
+        // Converted where it is built, so the Tags compat layer never walks input for it.
+        isTagsAPI && isAttrTag
+          ? t.callExpression(
+              importNamed(
+                path.hub.file,
+                `marko/src/runtime/helpers/tags-compat/runtime-${
+                  path.hub.file.markoOpts.output === "html" ? "html" : "dom"
+                }.js`,
+                "c",
+                "marko_tags_content",
+              ),
+              [renderBody],
+            )
+          : renderBody,
       ),
     );
   }
@@ -154,6 +168,12 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   }
 
   return attrsObject;
+}
+
+export function getTagsCompatFile({ optimize, modules, output }) {
+  return `marko/${optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
+    output === "html" ? "html" : "dom"
+  }${optimize ? "" : "-debug"}.${modules === "esm" ? "mjs" : "js"}`;
 }
 
 export function buildEventHandlerArray(path) {

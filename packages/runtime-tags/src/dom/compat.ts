@@ -128,14 +128,6 @@ export const compat = {
       classIdToBranch.delete(component.id);
     }
 
-    if (args[0] && typeof args[0] === "object" && "renderBody" in args[0]) {
-      const input = args[0];
-      const normalizedInput = (args[0] = {} as any);
-      for (const key in input) {
-        normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-      }
-    }
-
     component.effects = prepareEffects(() => {
       if (!branch) {
         created = 1;

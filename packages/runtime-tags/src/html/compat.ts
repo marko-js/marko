@@ -60,6 +60,9 @@ export const compat = {
   isTagsAPI(fn: any) {
     return !!fn[RendererProp.Id];
   },
+  setRendererId(renderer: any, id: unknown) {
+    renderer[RendererProp.Id] = id;
+  },
   onFlush(fn: (chunk: Chunk) => void) {
     const { flushHTML } = Chunk.prototype;
     Chunk.prototype.flushHTML = function () {
@@ -132,14 +135,6 @@ export const compat = {
       getChunk()?.context ?? null,
       state,
     );
-    let normalizedInput = input;
-    if ("renderBody" in input) {
-      normalizedInput = {};
-      for (const key in input) {
-        normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-      }
-    }
-
     head.render(() => {
       // Handlers bind to a scope of their own: sharing the boundary scope would
       // pull whatever input the child was given through the serializer with them.
@@ -160,7 +155,7 @@ export const compat = {
 
       _set_serialize_reason(willRerender ? CLIENT_ALL : 0);
       try {
-        renderer(normalizedInput);
+        renderer(input);
       } finally {
         _set_serialize_reason(undefined);
       }

@@ -29,11 +29,11 @@ const _marko_component = {
 };
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	(0, import_dynamic_tag.default)(out, tags_layout_default, () => (0, import_attr_tag.i)(() => {
-		(0, import_attr_tag.a)("stuff", { "content": (out) => {
+		(0, import_attr_tag.a)("stuff", { "content": (0, import_runtime_html.c)((out) => {
 			out.w("<button id=class>");
 			out.w((0, import_escape_xml.x)(state.count));
 			out.w("</button>");
-		} });
+		}) });
 	}), null, null, null, _componentDef, "0");
 	(0, import_render_tag.default)(import_init_components_tag.default, {}, out, _componentDef, "2");
 }, {

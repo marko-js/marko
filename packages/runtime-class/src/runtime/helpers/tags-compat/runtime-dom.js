@@ -15,6 +15,7 @@ const noopRenderer = require("../serialize-noop").___noop;
 
 // Bound in `p` so entry files (dom / dom-debug, cjs / esm) just re-export `f`.
 let resumeClassFunction;
+let toTagsContent;
 
 // Rebuilds a hoisted class handler against whichever component the resumed
 // scope names, so it fires without the parent having to rerender.
@@ -33,6 +34,10 @@ exports.f = (id, factory) => {
       },
   );
 };
+
+// A Class body the translator hands to a Tags parent, as that parent's content. Imported from
+// here, not an entry: every template with a Tags child imports the entry that binds it.
+exports.c = (body) => toTagsContent(body);
 
 exports.p = function (domCompat) {
   resumeClassFunction = domCompat.resumeClassFunction;
@@ -102,7 +107,7 @@ exports.p = function (domCompat) {
   const TagsCompatId = "tags-compat";
   const TagsCompat = createRenderer(
     function (_, out, componentDef, component) {
-      const input = Array.isArray(_.i) ? _.i : [_.i];
+      const input = Array.isArray(_.i) ? _.i : [toTagsInput(_.i)];
       const tagsRenderer = domCompat.resolveRegistered(_.r, out.global);
       const newNode = domCompat.render(out, component, tagsRenderer, input);
 
@@ -137,6 +142,7 @@ exports.p = function (domCompat) {
   }));
 
   const rendererCache = new WeakMap();
+  const classBodyByContent = new WeakMap();
 
   domCompat.patchDynamicTag((dynamicTag) => (...args) => {
     const signal = dynamicTag(...args);
@@ -144,6 +150,24 @@ exports.p = function (domCompat) {
       return signal(scope, create5to6Renderer(renderer), getInput);
     };
   });
+
+  // Class bodies become Tags renderers as they enter a Tags template, so any
+  // consumer of `content` renders them, not only a dynamic tag.
+  function toTagsInput(input) {
+    const tagsInput = {};
+    for (const key in input) {
+      if (key === "renderBody") tagsInput.content = toTagsContent(input[key]);
+      else tagsInput[key] = input[key];
+    }
+    return tagsInput;
+  }
+
+  toTagsContent = (body) =>
+    typeof body === "function" ? create5to6Renderer(body) : body;
+
+  function toClassContent(content) {
+    return classBodyByContent.get(content) || content;
+  }
 
   function create5to6Renderer(renderer) {
     let newRenderer = renderer;
@@ -168,6 +192,7 @@ exports.p = function (domCompat) {
           );
           domCompat.setRendererId(newRenderer, renderer);
           rendererCache.set(renderer, newRenderer);
+          classBodyByContent.set(newRenderer, renderer);
         }
       }
     }
@@ -220,7 +245,8 @@ exports.p = function (domCompat) {
             value,
           ];
         } else {
-          normalizedInput[key === "content" ? "renderBody" : key] = value;
+          normalizedInput[key === "content" ? "renderBody" : key] =
+            toClassContent(value);
         }
       }
 

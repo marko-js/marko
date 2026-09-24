@@ -35,11 +35,11 @@ const _marko_component = {
 };
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	(0, import_dynamic_tag.default)(out, tags_layout_default, () => (0, import_attr_tag.i)(() => {
-		(0, import_attr_tag.a)("stuff", { "content": (out) => {
+		(0, import_attr_tag.a)("stuff", { "content": (0, import_runtime_dom.c)((out) => {
 			out.be("button", { "id": "class" }, "1", _component, null, 1, { "onclick": _componentDef.d("click", "increment", false) });
 			out.t(state.count, _component);
 			out.ee();
-		} });
+		}) });
 	}), null, null, null, _componentDef, "0");
 }, {
 	t: _marko_componentType,

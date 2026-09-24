@@ -1,4 +1,4 @@
-// size: 27255 (min) 10178 (brotli)
+// size: 27129 (min) 10127 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2095,14 +2095,7 @@ let empty = [],
         (!branch &&
           (branch = classIdToBranch.get(component.id)) &&
           ((component.scope = branch), classIdToBranch.delete(component.id)),
-        args[0] && typeof args[0] == "object" && "renderBody" in args[0])
-      ) {
-        let input = args[0],
-          normalizedInput = (args[0] = {});
-        for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-      }
-      if (
-        ((component.effects = prepareEffects(() => {
+        (component.effects = prepareEffects(() => {
           ((branch ||=
             ((created = 1),
             (component.scope = createAndSetupBranch(

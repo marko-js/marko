@@ -14,7 +14,7 @@ import { translateLoadTag } from "../util/load-import";
 import withPreviousLocation from "../util/with-previous-location";
 import dynamicTag from "./dynamic-tag";
 import nativeTag from "./native-tag";
-import { buildEventHandlerArray, getAttrs } from "./util";
+import { buildEventHandlerArray, getAttrs, getTagsCompatFile } from "./util";
 
 export default function (path, isNullable) {
   const {
@@ -247,12 +247,9 @@ function nextClassFnId() {
 
 function compatHelper() {
   const file = getFile();
-  const { optimize, modules, output } = file.markoOpts;
   return importNamed(
     file,
-    `marko/${optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
-      output === "html" ? "html" : "dom"
-    }${optimize ? "" : "-debug"}.${modules === "esm" ? "mjs" : "js"}`,
+    getTagsCompatFile(file.markoOpts),
     "f",
     "marko_class_fn",
   );
