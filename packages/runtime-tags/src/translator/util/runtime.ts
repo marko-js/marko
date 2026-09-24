@@ -135,17 +135,22 @@ export function importRuntimeFeature(feature: DOMRuntimeFeature) {
       `\`importRuntimeFeature(${JSON.stringify(feature)})\` may only be called during the translate stage.`,
     );
   }
-  const program = getProgram().node;
-  let features = importedFeatures.get(program);
-  if (!features) importedFeatures.set(program, (features = new Set()));
+  const program = getProgram();
+  let features = importedFeatures.get(program.node);
+  if (!features) importedFeatures.set(program.node, (features = new Set()));
   if (!features.has(feature)) {
     features.add(feature);
-    program.body.push(
-      t.importDeclaration(
-        [],
-        t.stringLiteral(`${getRuntimePath("dom")}/${feature}.feat`),
-      ),
+    const decl = t.importDeclaration(
+      [],
+      t.stringLiteral(`${getRuntimePath("dom")}/${feature}.feat`),
     );
+    // Kept with the imports, since one among statements splits the bundler's
+    // view of the body; a path insert keeps queued sibling keys in sync.
+    const lastImport = program
+      .get("body")
+      .findLast((stmt) => stmt.isImportDeclaration());
+    if (lastImport) lastImport.insertAfter(decl);
+    else program.unshiftContainer("body", decl);
   }
 }
 
