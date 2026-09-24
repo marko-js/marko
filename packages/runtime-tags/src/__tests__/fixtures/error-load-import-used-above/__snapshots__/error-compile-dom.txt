@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-import-used-above/template.marko:1:2
+    > 1 | <Child/>
+        |  ^^^^^ `Child` is used above its `load` import. Move the import above its first use.
+      2 |
+      3 | import Child from "./child.marko" with { load: "render" }
+      4 |

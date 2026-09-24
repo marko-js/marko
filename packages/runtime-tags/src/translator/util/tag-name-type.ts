@@ -8,7 +8,10 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
-import type { LoadImportConfig } from "../visitors/import-declaration";
+import {
+  getImportFacts,
+  type LoadImportConfig,
+} from "../visitors/import-declaration";
 import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
 import { isCoreTag } from "./is-core-tag";
@@ -179,12 +182,15 @@ function analyzeExpressionTagName(
       }
 
       if (binding.kind === "module") {
-        const decl = binding.path.parent as t.ImportDeclaration;
+        const declPath = binding.path
+          .parentPath as t.NodePath<t.ImportDeclaration>;
+        const decl = declPath.node;
         if (
           MARKO_FILE_REG.test(decl.source.value) &&
           decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
         ) {
-          const resolvedImport = decl.extra?.tagImport || decl.source.value;
+          const { tagImport, loadImport } = getImportFacts(declPath);
+          const resolvedImport = tagImport!;
           if (tagNameTemplates) {
             const childFile = loadFileForImport(getFile(), resolvedImport);
             const childExtra = childFile?.ast.program.extra;
@@ -199,7 +205,7 @@ function analyzeExpressionTagName(
           if (type === undefined) {
             type = TagNameType.CustomTag;
             tagNameImported = resolvedImport;
-            tagNameLoad = decl.extra?.loadImport;
+            tagNameLoad = loadImport;
           } else if (type === TagNameType.NativeTag) {
             type = TagNameType.DynamicTag;
             tagNameImported = undefined;
