@@ -15,6 +15,7 @@ import { getMarkoRoot, isMarko } from "../../util/get-root";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { getHTMLRuntime } from "../../util/runtime";
 import withPreviousLocation from "../../util/with-previous-location";
+import { isUnresolvedKnownWrongTag, tagNotFoundError } from "../tag/custom-tag";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTag {
@@ -173,6 +174,7 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
       }
 
       if (attrNameReg.test(attr.name)) {
+        if (isUnresolvedKnownWrongTag(tag)) throw tagNotFoundError(tag);
         throw tag.hub.buildError(
           attr.loc?.end &&
             ({

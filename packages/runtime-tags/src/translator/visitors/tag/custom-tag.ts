@@ -406,6 +406,15 @@ const knownWrongTags = new Map([
   ["type", staticHint],
 ]);
 
+/**
+ * A known wrong tag that resolves to nothing, eg `interface P { id: number }`,
+ * whose body lands in attribute position before tag resolution would run.
+ */
+export function isUnresolvedKnownWrongTag(tag: t.NodePath<t.MarkoTag>) {
+  const tagName = getTagName(tag);
+  return !!tagName && knownWrongTags.has(tagName) && !getTagDef(tag);
+}
+
 export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getTagName(tag);
   if (tagName && tag.scope.hasBinding(tagName)) {
