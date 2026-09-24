@@ -3,7 +3,7 @@ const $Box_content__walks = " D%c%l", $Box_content__template = "<button class=bo
 const $template = /*@__PURE__*/ ((_w0) => `<button id=toggle>toggle</button>${_w0}<!><!>`)($Box_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&%c`)($Box_content__walks);
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
-const $useBoxBoxdiv_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "dynamic");
+const $useBoxBoxdiv_content = _content_resume("__tests__/template.marko_3*content", "dynamic");
 const $Box_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "static");
 const $Box_content__count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $Box_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {

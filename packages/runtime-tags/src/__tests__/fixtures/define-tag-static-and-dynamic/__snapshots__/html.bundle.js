@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_html("static");
 	}, $scope0_id) });
-	_dynamic_tag($scope0_id, "c", "div", {}, _content("a3", () => {
+	_dynamic_tag($scope0_id, "c", "div", {}, _content_resume("a3", () => {
 		_scope_id();
 		_scope_reason();
 		_html("dynamic");

@@ -1,0 +1,8 @@
+<let/show=true/>
+<define/Foo|input|>
+  <let/open=false/>
+  <button#open onClick() { open = true }>open</button>
+  <if=open><${input.content}/></if>
+</define>
+// The name may be the define, which may render the body after resume.
+<${show ? Foo : "div"}>body</>
