@@ -1,0 +1,9 @@
+// A feature requested inside a top-level `<if>` must not split it from its
+// `<else>`.
+<if=input.show>
+  <${input.type}/$el>body</>
+</if>
+<else>
+  <span>else</span>
+</else>
+<script>$el()?.setAttribute("data-mounted", "")</script>
