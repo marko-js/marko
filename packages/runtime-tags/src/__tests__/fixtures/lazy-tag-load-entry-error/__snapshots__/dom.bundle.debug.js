@@ -17,13 +17,13 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 const $template = "<main><!></main>";
 const $walks = "D%l";
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_label.mjs")));
 const $catch_content = _content_resume("__tests__/template.marko_2*content", "<div id=error>failed</div>");
 const $try_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label));
 const $try_content__setup = ($scope) => {
 	$try_content__input_label($scope);
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content__setup);
 function $setup($scope) {

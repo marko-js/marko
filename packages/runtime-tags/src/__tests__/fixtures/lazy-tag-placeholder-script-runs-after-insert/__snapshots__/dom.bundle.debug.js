@@ -10,11 +10,11 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading...");
 const $try_content__setup = ($scope) => {
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_value($scope["#childScope/1"], "hi");
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content__setup);

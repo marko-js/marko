@@ -1,8 +1,6 @@
-import { decodeAccessor } from "../common/helpers";
 import {
   AccessorProp,
   type BranchScope,
-  type EncodedAccessor,
   RendererProp,
   type Scope,
   type Template,
@@ -75,40 +73,25 @@ export const _load_template = /*@__PURE__*/ withLazy(
 );
 
 export const _load_setup = /*@__PURE__*/ withLazy(
-  (
-    nodeAccessor: EncodedAccessor,
-    childScopeAccessor: EncodedAccessor,
-    load: () => Promise<LoadModule>,
-  ) => {
-    if (!MARKO_DEBUG) {
-      nodeAccessor = decodeAccessor(nodeAccessor as number);
-      childScopeAccessor = decodeAccessor(childScopeAccessor as number);
-    }
-
+  (load: () => Promise<LoadModule>) => {
     let pending: ReturnType<typeof load> | undefined;
     let renderer: Renderer | undefined;
     const insertCached = (child: BranchScope, marker: ChildNode) =>
       insertLoaded(renderer!, child, marker);
 
-    return (owner: Scope) => {
-      const child = owner[childScopeAccessor] as BranchScope;
+    return (owner: Scope, child: BranchScope, marker: ChildNode) => {
       if (renderer) {
         // Later in this run, once the rest of the owner's setup has
         // buffered every input chunk for the batch below.
-        queueRender(child, insertCached, -1, owner[nodeAccessor] as ChildNode);
+        queueRender(child, insertCached, -1, marker);
       } else {
         const awaitCounter = addAwaitCounter(owner);
         child[AccessorProp.Load] ||= new Map() as LoadValues;
         (pending ||= load()).then(
           (mod) => {
-            renderer = _content("", ...mod._)();
+            renderer ||= _content("", ...mod._)();
             queueAsyncRender(child, (child) =>
-              insertLoaded(
-                renderer!,
-                child,
-                owner[nodeAccessor] as ChildNode,
-                awaitCounter,
-              ),
+              insertLoaded(renderer!, child, marker, awaitCounter),
             );
           },
           loadFailed(child, awaitCounter),

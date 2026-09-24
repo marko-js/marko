@@ -1,4 +1,4 @@
-// size: 27119 (min) 10119 (brotli)
+// size: 27089 (min) 10095 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2135,23 +2135,20 @@ let empty = [],
       );
     return lazyTemplate;
   }),
-  _load_setup = /*@__PURE__*/ withLazy((nodeAccessor, childScopeAccessor, load) => {
-    ((nodeAccessor = decodeAccessor(nodeAccessor)),
-      (childScopeAccessor = decodeAccessor(childScopeAccessor)));
+  _load_setup = /*@__PURE__*/ withLazy((load) => {
     let pending,
       renderer,
       insertCached = (child, marker) => insertLoaded(renderer, child, marker);
-    return (owner) => {
-      let child = owner[childScopeAccessor];
-      if (renderer) queueRender(child, insertCached, -1, owner[nodeAccessor]);
+    return (owner, child, marker) => {
+      if (renderer) queueRender(child, insertCached, -1, marker);
       else {
         let awaitCounter = addAwaitCounter(owner);
         ((child.X ||= /* @__PURE__ */ new Map()),
           (pending ||= load()).then(
             (mod) => {
-              ((renderer = _content("", ...mod._)()),
+              ((renderer ||= _content("", ...mod._)()),
                 queueAsyncRender(child, (child) =>
-                  insertLoaded(renderer, child, owner[nodeAccessor], awaitCounter),
+                  insertLoaded(renderer, child, marker, awaitCounter),
                 ));
             },
             loadFailed(child, awaitCounter),

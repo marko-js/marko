@@ -11,12 +11,12 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 const $template = "<button id=toggle>Toggle</button><!><button id=inc>Inc</button>";
 const $walks = " b%b b";
 const $load_Child_trigger = /*@__PURE__*/ _load_idle_trigger({ timeout: 100 });
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_value.mjs")));
 const $if_content__value = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $load_Child_tag_input_value($scope["#childScope/1"], $scope._.value));
 const $if_content__setup = ($scope) => {
 	$if_content__value._($scope);
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%/&", $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));

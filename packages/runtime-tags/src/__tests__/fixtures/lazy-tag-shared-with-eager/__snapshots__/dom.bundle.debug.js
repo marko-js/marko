@@ -2,8 +2,10 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%/&c";
 const $load_LazyPart_trigger = /*@__PURE__*/ _load_visible_trigger("body");
-let $load_LazyPart_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", /*@__PURE__*/ $load_LazyPart_trigger(() => import("./v:lazy-part.marko.setup.mjs")));
-const $setup$2 = $load_LazyPart_setup;
+let $load_LazyPart_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_LazyPart_trigger(() => import("./v:lazy-part.marko.setup.mjs")));
+function $setup$2($scope) {
+	$load_LazyPart_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
+}
 var inert_a_default = /*@__PURE__*/ _template("__tests__/inert-a.marko", $template$2, $walks$2, $setup$2);
 
 // inert-b.marko

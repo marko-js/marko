@@ -30,7 +30,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=toggle>toggle</button><!><!>";
 const $walks = " b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup("#text/0", "#childScope/1", () => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 const $if_content__focusChild = _var_resume("__tests__/template.marko_1_focusChild#4/var", /*@__PURE__*/ _const("focusChild"));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/3"], "click", function() {
@@ -38,7 +38,7 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 }));
 const $if_content__setup = ($scope) => {
 	_var($scope, "#childScope/1", $if_content__focusChild);
-	$load_Child_setup($scope);
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_label($scope["#childScope/1"], "x");
 	$if_content__setup__script($scope);
 };
