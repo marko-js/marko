@@ -1,12 +1,12 @@
 import type { types as t } from "@marko/compiler";
 
 // Tags whose docs heading is not their bare name; "" links the page root
-// for tags with no heading of their own.
+// for tags with no heading of their own, and a replaced tag links its successor.
 const docsAnchors: Record<string, string | undefined> = {
   if: "if--else",
   "else-if": "if--else",
   else: "if--else",
-  effect: "",
+  effect: "script",
   attrs: "",
 };
 
