@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				text = next;
 			}, "__tests__/template.marko_1/valueChange", $scope1_id)
 		});
-		_subscribe($text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
+		_subscribe($text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_1_text#4/subscribe");
 	}, $scope0_id));
 	_html(`<output>${_text_resume($scope0_id, "#text/1", open ? "open" : "closed")}/${_text_resume($scope0_id, "#text/2", text, 2)}</output>`);
 	_scope($scope0_id, {

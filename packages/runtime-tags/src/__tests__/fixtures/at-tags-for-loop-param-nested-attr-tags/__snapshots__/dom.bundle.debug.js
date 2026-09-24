@@ -25,7 +25,7 @@ var outer_default = /*@__PURE__*/ _template("__tests__/tags/outer.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>Add</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
-const $cell_content__a_id = /*@__PURE__*/ _closure_get("a_id", ($scope) => _text($scope["#text/0"], $scope._.a_id));
+const $cell_content__a_id = /*@__PURE__*/ _closure_get("a_id", ($scope) => _text($scope["#text/0"], $scope._.a_id), 0, "__tests__/template.marko_2_a_id#2/subscribe");
 const $cell_content__setup = $cell_content__a_id;
 const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!>-<!>;", "%c%", $cell_content__setup), { b($scope) {
 	_text($scope["#text/1"], $scope.b);

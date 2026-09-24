@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 				if (input.b) {
 					const $scope2_id = _scope_id();
 					_html(`<div>${_text_resume($scope2_id, "a", bar(foo), $sg__input_c)}</div>`);
-					$si__input_c__OR__input_a__OR__input_b && _subscribe($si__input_c && $bar2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					$si__input_c__OR__input_a__OR__input_b && _subscribe($si__input_c && $bar2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $sg__input_c);
 					return 0;
 				}
 			}, $scope1_id, "a", $sg__input_b, $sg__input_b, $sg__input_b, 0, 1);

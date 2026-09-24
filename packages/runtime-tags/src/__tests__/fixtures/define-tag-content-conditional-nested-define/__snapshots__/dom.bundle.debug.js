@@ -2,13 +2,13 @@
 const $Inner_content__walks = " b%c", $Inner_content__template = "<button>toggle</button><!><!>", $Outer_content2__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Inner_content__walks), $Outer_content2__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Inner_content__template);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Outer_content2__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Outer_content2__walks);
-const $Inner_content2__outer_label = /*@__PURE__*/ _closure_get("outer_label", ($scope) => _text($scope["#text/0"], $scope._.outer_label));
+const $Inner_content2__outer_label = /*@__PURE__*/ _closure_get("outer_label", ($scope) => _text($scope["#text/0"], $scope._.outer_label), 0, "__tests__/template.marko_5_outer_label#3/subscribe");
 const $Inner_content2__setup = ($scope) => {
 	$Inner_content2__outer_label($scope);
 	$Inner_content2__outer_content($scope);
 };
 const $Inner_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $Inner_content2__outer_content = /*@__PURE__*/ _closure_get("outer_content", ($scope) => $Inner_content2__dynamicTag($scope, $scope._.outer_content));
+const $Inner_content2__outer_content = /*@__PURE__*/ _closure_get("outer_content", ($scope) => $Inner_content2__dynamicTag($scope, $scope._.outer_content), 0, "__tests__/template.marko_5_outer_content#4/subscribe");
 const $Inner_content2 = _content_resume("__tests__/template.marko_5*content", "outer <!>: <!><!>", "b%c%", $Inner_content2__setup);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content));
@@ -38,7 +38,7 @@ const $Inner_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
 const $Inner_content__tag_input_content = /*@__PURE__*/ _const("input_content", $if_content__input_content);
 const $Inner_content__$params = ($scope, $params2) => $Inner_content__input($scope, $params2[0]);
 const $Inner_content__input = ($scope, input) => $Inner_content__tag_input_content($scope, input.content);
-const $Outer_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => _text($scope["#text/0"], $scope._.input_label));
+const $Outer_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#3/subscribe");
 const $Outer_content__setup = $Outer_content__input_label;
 const $Outer_content = _content_resume("__tests__/template.marko_1*content", "label: <!>", "b%", $Outer_content__setup);
 function $setup($scope) {

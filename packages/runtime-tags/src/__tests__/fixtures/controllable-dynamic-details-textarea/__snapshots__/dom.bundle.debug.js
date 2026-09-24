@@ -6,7 +6,7 @@ const $detailsTag_content__text__OR__textareaTag = /*@__PURE__*/ _or(1, ($scope)
 	value: $scope._.text,
 	valueChange: $valueChange($scope)
 })));
-const $detailsTag_content__text = /*@__PURE__*/ _closure_get("text", $detailsTag_content__text__OR__textareaTag);
+const $detailsTag_content__text = /*@__PURE__*/ _closure_get("text", $detailsTag_content__text__OR__textareaTag, 0, "__tests__/template.marko_1_text#4/subscribe");
 const $detailsTag_content__setup = ($scope) => {
 	$detailsTag_content__text($scope);
 	$detailsTag_content__textareaTag($scope);

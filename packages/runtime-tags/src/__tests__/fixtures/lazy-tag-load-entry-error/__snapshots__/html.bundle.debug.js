@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$si__input_label && _subscribe($input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
-		}, "__tests__/template.marko", "4:4"));
+		}, "__tests__/template.marko", "4:4"), "__tests__/template.marko_1_input_label#3/subscribe", $sg__input_label);
 		$sg__input_label || $si__input_label && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();

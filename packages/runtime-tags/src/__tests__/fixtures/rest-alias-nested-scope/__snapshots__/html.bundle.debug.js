@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const { value } = input;
 	const { foo: $foo, ...rest } = value || {};
@@ -8,13 +8,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (value) {
 			const $scope1_id = _scope_id();
 			const { foo } = value;
-			_html(` -- ${_text_resume($scope1_id, "#text/0", foo, _serialize_guard($scope0_reason, 1) * 2)}<span`);
+			_html(` -- ${_text_resume($scope1_id, "#text/0", foo, _serialize_guard($scope0_reason, 2) * 2)}<span`);
 			_attrs_content(rest, "#span/1", $scope1_id, "span");
 			_html(`</span>${_el_resume($scope1_id, "#span/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1_rest#5");
-			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2", { "EventAttributes:#span/1": ["...rest", "6:12"] });
+			_scope($scope1_id, { _: _serialize_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2", { "EventAttributes:#span/1": ["...rest", "6:12"] });
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_value, $sg__input_value, $sg__input_value);
-	_scope($scope0_id, { foo: _serialize_if($scope0_reason, 0) && value?.foo }, "__tests__/template.marko", 0, { foo: "4:12" });
+	_serialize_if($scope0_reason, 1) && _scope($scope0_id, {
+		foo: value?.foo,
+		rest
+	}, "__tests__/template.marko", 0, {
+		foo: "4:12",
+		rest: "4:20"
+	});
 }, 1);

@@ -1,17 +1,29 @@
+// template.marko
+const $template = $template$1;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
+const $head_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Hello");
+function $setup($scope) {
+	$input_head($scope["#childScope/0"], attrTag({
+		class: "h",
+		content: $head_content($scope)
+	}));
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
 // tags/echo.marko
-const $template$2 = "<div class=echo><!></div>";
-const $walks$2 = "D%l";
-const $setup$2 = () => {};
+const $template$1 = "<div class=echo><!></div>";
+const $walks$1 = "D%l";
+const $setup$1 = () => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo.marko", $template$2, "D%l", 0, $input$1);
+var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo.marko", $template$1, "D%l", 0, $input$1);
 
 // tags/my-box.marko
-const $template$1 = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)($template$2);
-const $walks$1 = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l");
-const $setup$1 = () => {};
+const $template = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l");
+const $setup = () => {};
 const $input_head__script = _script("__tests__/tags/my-box.marko_0_input_head#4", ($scope) => _attrs_script($scope, "#div/0"));
 const $input_head = /*@__PURE__*/ _const("input_head", ($scope) => {
 	_attrs_content($scope, "#div/0", $scope.input_head);
@@ -20,16 +32,4 @@ const $input_head = /*@__PURE__*/ _const("input_head", ($scope) => {
 });
 const $input_head_content = ($scope, input_head_content) => $input_content($scope["#childScope/1"], input_head_content);
 const $input = ($scope, input) => $input_head($scope, input.head);
-var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $template$1, $walks$1, 0, $input);
-
-// template.marko
-const $template = $template$1;
-const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $head_content = _content_resume("__tests__/template.marko_1*content", "Hello");
-function $setup($scope) {
-	$input_head($scope["#childScope/0"], attrTag({
-		class: "h",
-		content: $head_content($scope)
-	}));
-}
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $template, $walks, 0, $input);

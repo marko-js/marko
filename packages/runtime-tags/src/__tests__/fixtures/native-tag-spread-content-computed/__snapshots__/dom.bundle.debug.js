@@ -22,7 +22,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $item_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $item_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#1/subscribe");
 const $item_content__setup = $item_content__count;
 const $item_content = _content_resume("__tests__/template.marko_1*content", "One <!>", "b%", $item_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($item_content__count);

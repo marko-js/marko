@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($count__closures, _scope($scope1_id, {
 			foo,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:1", { foo: "2:21" }));
+		}, "__tests__/template.marko", "2:1", { foo: "2:21" }), "__tests__/template.marko_1_count#7/subscribe");
 	}, $scope0_id) };
 	ChildA.content({
 		foo: { bar: 0 },
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			foo,
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:count": 1
-		}, "__tests__/template.marko", "9:1", { foo: "10:11" }));
+		}, "__tests__/template.marko", "9:1", { foo: "10:11" }), "__tests__/template.marko_2_count#7/subscribe");
 	}, $scope0_id) };
 	ChildB.content({
 		foo: { bar: 0 },

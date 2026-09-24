@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<option${_attr_option_value("a")}>A${_text_resume($scope1_id, "#text/0", n, 2)}</option>`);
-		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_1_n#7/subscribe");
 	}, $scope0_id));
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

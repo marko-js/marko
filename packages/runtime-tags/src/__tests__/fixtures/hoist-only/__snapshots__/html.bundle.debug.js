@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					}, "__tests__/template.marko", "8:4", {
 						z: "9:12",
 						hoist3: "10:12"
-					}));
+					}), "__tests__/template.marko_2_input_value#3/subscribe", 0);
 					_assert_hoist(hoist3);
 					return 0;
 				}

@@ -48,16 +48,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
 					_html(`${_text_resume($scope2_id, "#text/0", a.id)}-${_text_resume($scope2_id, "#text/1", b, 2)};`);
-					_subscribe($row_content__a_id__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"));
+					_subscribe($row_content__a_id__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"), "__tests__/template.marko_2_a_id#2/subscribe");
 				}, $scope1_id) });
 			});
 			const $childScope = _peek_scope_id();
 			inner_default({ cell: $cell });
 			_scope($scope1_id, {
-				a_id: a?.id,
 				"ClosureScopes:a_id": $row_content__a_id__closures,
 				"#childScope/0": _existing_scope($childScope)
-			}, "__tests__/template.marko", "4:6", { a_id: 0 });
+			}, "__tests__/template.marko", "4:6");
 		}, $scope0_id) });
 	});
 	const $childScope2 = _peek_scope_id();

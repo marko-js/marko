@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/count=1/>
+<button onClick() { count++ }>inc</button>
+<boundary>
+  <span>${count}</span>
+  <await=resolveAfter(0, 1)>
+    <b>${count}</b>
+  </await>
+</boundary>

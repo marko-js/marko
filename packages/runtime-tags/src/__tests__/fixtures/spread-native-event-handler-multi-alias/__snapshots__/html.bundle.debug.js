@@ -11,14 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`</button>${_el_resume($scope1_id, "#button/0")} `);
 		_script($scope1_id, "__tests__/template.marko_1_input#2");
 		_script($scope1_id, "__tests__/template.marko_1");
-		_scope($scope1_id, {
-			input: {
-				...input,
-				content: undefined
-			},
-			input_onClick: input.onClick
-		}, "__tests__/template.marko", "2:2", {
-			input: "2:18",
+		_scope($scope1_id, { input_onClick: input.onClick }, "__tests__/template.marko", "2:2", {
 			input_onClick: ["input.onClick", "2:18"],
 			"EventAttributes:#button/0": ["...input", "3:14"]
 		});

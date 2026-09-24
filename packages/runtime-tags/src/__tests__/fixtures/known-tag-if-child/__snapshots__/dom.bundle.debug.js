@@ -12,7 +12,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/components/wrapper.mark
 const $template = /*@__PURE__*/ ((_w0) => `<button>toggle</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("D%l");
 const $Wrapper_content__if = /*@__PURE__*/ _if("#text/0", "<b>on</b>", 0, 0, "<i>off</i>");
-const $Wrapper_content__on = /*@__PURE__*/ _closure_get("on", ($scope) => $Wrapper_content__if($scope, $scope._.on ? 0 : 1));
+const $Wrapper_content__on = /*@__PURE__*/ _closure_get("on", ($scope) => $Wrapper_content__if($scope, $scope._.on ? 0 : 1), 0, "__tests__/template.marko_1_on#2/subscribe");
 const $Wrapper_content__setup = $Wrapper_content__on;
 const $Wrapper_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Wrapper_content__setup);
 const $on__closure = /*@__PURE__*/ _closure($Wrapper_content__on);

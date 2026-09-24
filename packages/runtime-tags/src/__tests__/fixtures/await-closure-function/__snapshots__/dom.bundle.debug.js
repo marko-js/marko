@@ -6,7 +6,7 @@ const $await_content__value__script = _script("__tests__/template.marko_2_value#
 const $await_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => {
 	_text($scope["#text/0"], $scope._._.value);
 	$await_content__value__script($scope);
-}, ($scope) => $scope._._, "__tests__/template.marko_2_value#1/pending");
+}, ($scope) => $scope._._, "__tests__/template.marko_2_value#1/subscribe");
 const $await_content__setup = $await_content__value;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");

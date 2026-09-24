@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let checked = false;
 	_html(`<input${_attrs({
@@ -15,6 +15,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: input.rest,
-		e: checked
+		e: _serialize_if($scope0_reason, 0) && checked
 	});
 }, 1);

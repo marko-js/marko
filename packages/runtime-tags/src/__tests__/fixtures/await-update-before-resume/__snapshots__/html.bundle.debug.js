@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope3_id, "__tests__/template.marko_3");
 			_scope($scope3_id, { value }, "__tests__/template.marko", "7:3", { value: "7:9" });
 		});
-		_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:1"));
+		_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:1"), "__tests__/template.marko_1_value#2/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();

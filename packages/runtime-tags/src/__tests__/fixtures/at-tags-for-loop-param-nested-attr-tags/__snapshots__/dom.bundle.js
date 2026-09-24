@@ -12,11 +12,11 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<div><!></div>", "D%", 0, $for_co
 const $input_row = ($scope, input_row) => $for($scope, [input_row]);
 
 // template.marko
-const $cell_content__a_id = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c));
-const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<!>-<!>;", "%c%", $cell_content__a_id), { 2($scope) {
+const $cell_content__a_id = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c), 0, "a0", 2);
+const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<!>-<!>;", "%c%", $cell_content__a_id), { 2($scope) {
 	_text($scope.b, $scope.c);
 } });
-const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")), {
+const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")), {
 	1($scope) {
 		let $cell;
 		forOf($scope.b, (b) => {
@@ -36,7 +36,7 @@ const $rows = /*@__PURE__*/ _let(2, ($scope) => {
 	});
 	$input_row($scope.a, $row);
 });
-const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
 	$rows($scope, [...$scope.c, {
 		id: 2,
 		items: [30]

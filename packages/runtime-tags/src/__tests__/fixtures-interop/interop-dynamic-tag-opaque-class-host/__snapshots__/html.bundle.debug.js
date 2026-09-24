@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html(`<button id=tags>${_text_resume($scope1_id, "#text/1", count)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4"));
+		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4"), "__tests__/template.marko_1_count#5/subscribe");
 	}, $scope0_id), 0, $sg__input_useClass);
 	_scope($scope0_id, {
 		count,

@@ -17,11 +17,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($clickCount__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:clickCount": 1
-			}, "__tests__/template.marko", "11:4"));
+			}, "__tests__/template.marko", "11:4"), "__tests__/template.marko_2_clickCount#2/subscribe");
 		});
 		_script($scope1_id, "__tests__/template.marko_1_clickCount#2");
 		_script($scope1_id, "__tests__/template.marko_1");
-		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
+		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_clickCount#2/subscribe");
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", (err) => {
 		const $scope3_reason = _scope_reason(), $sg__err = _serialize_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();

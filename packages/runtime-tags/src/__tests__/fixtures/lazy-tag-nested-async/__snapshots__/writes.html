@@ -18,10 +18,10 @@
 <script async type=module src="grand-child.marko.load.mjs"></script><button
   id=grand>grand:<!>1<!--M_$4 b-->:<!>1<!--M_$4 c--></button><!--M_$4 a-->
 <script>
-  M._.b._a.push(_ => (_([3, {
+  M._.b._a.push(_ => [3, {
     _: _(2),
     c: _(4)
-  }]), (_.a = _(2).h).add(_(3)), 0));
+  }]);
   M._.b._b = [_ => [4, {
     h: 1
   }]];
@@ -34,6 +34,7 @@
 <div id=after>after</div>
 <script>
   M._.b._b.push("b0 4");
-  M._.b._a.push("a0 2");
+  M._.b._a.push("a0 3");
+  M._.b._a.push("a1 2");
   M._.w()
 </script>

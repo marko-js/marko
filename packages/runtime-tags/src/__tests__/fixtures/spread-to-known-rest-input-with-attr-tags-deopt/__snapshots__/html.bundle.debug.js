@@ -33,7 +33,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		$si__input_foo__OR__input_class__OR__rest && _subscribe($si__input_foo && $input_foo__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": $si__input_foo && _existing_scope($childScope)
-		}, "__tests__/tags/wrap.marko", "2:4"));
+		}, "__tests__/tags/wrap.marko", "2:4"), "__tests__/tags/wrap.marko_1_input_foo#3/subscribe", $sg__input_foo);
 		$sg__input_foo || $si__input_foo__OR__input_class__OR__rest && _resume_branch($scope1_id);
 	}, $scope0_id), 0, $sg__input_class__OR__rest);
 	$si__input_foo__OR__input_class__OR__rest && _scope($scope0_id, {

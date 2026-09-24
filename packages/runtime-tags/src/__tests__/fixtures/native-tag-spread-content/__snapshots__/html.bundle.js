@@ -1,6 +1,6 @@
 // tags/my-div.marko
 var my_div_default = _template("b", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div");
 	_attrs_content(input, "a", $scope0_id, "div");
@@ -29,7 +29,7 @@ var my_div_default = _template("b", (input) => {
 	_html("</em>");
 	_script($scope0_id, "b1");
 	_script($scope0_id, "b2");
-	_scope($scope0_id, { k: CustomContent?.content });
+	_scope($scope0_id, { k: _serialize_if($scope0_reason, 0) && CustomContent?.content });
 });
 
 // template.marko

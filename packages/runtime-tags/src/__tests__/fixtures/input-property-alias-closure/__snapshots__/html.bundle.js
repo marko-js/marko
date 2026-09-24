@@ -15,11 +15,11 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	Child.content({
 		text: input.text,
-		content: _content("a1", () => {
+		content: _content("a2", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(_text_resume($scope2_id, "a", text, $sg__input_text2));
-			$si__input_text && _subscribe($input_text__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
+			$si__input_text && _subscribe($input_text__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a1", $sg__input_text2);
 			$sg__input_text2 || $si__input_text && _resume_branch($scope2_id);
 		}, $scope0_id)
 	});

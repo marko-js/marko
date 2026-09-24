@@ -97,7 +97,7 @@ _resumed["__tests__/template.marko_5*content"] = $catch_content;
 const $try_content__fail = /*@__PURE__*/ _closure_get("fail", ($scope) => _text($scope["#text/0"], (() => {
 	if ($scope._.fail) throw new Error("click");
 	return "ok";
-})()));
+})()), 0, "__tests__/template.marko_4_fail#7/subscribe");
 const $try_content__setup = $try_content__fail;
 const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_3*content", " <b> </b>", " bD "), { i($scope) {
 	_text($scope["#text/0"], $scope.i);

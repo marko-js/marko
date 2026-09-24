@@ -13,10 +13,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				_await($scope2_id, "#text/0", resolveAfter(0, 1), () => {
 					const $scope3_id = _scope_id();
-					_script($scope3_id, "__tests__/template.marko_3_show#2/pending");
 					_html(_text_resume($scope3_id, "#text/0", show));
 					_script($scope3_id, "__tests__/template.marko_3");
-					_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:5");
+					_subscribe($show__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:5"), "__tests__/template.marko_3_show#2/subscribe");
 				});
 				_await($scope2_id, "#text/1", resolveAfter(0, 1), () => {
 					const $scope5_id = _scope_id();
@@ -34,8 +33,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
-	_scope($scope0_id, {
-		show,
-		"ClosureScopes:show": $show__closures
-	}, "__tests__/template.marko", 0, { show: "2:5" });
+	_scope($scope0_id, { "ClosureScopes:show": $show__closures }, "__tests__/template.marko", 0);
 }, 1);

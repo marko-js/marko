@@ -9,9 +9,9 @@ var provider_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<div>value ${_text_resume($scope1_id, "a", count, 2)}</div>`);
-		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
 	}, $scope0_id) };
-	_script($scope0_id, "b1");
+	_script($scope0_id, "b2");
 	_scope($scope0_id, {
 		e: count,
 		g: $count__closures

@@ -26,7 +26,7 @@ const $if_content3__setup = ($scope) => {
 	$name($scope.a, "Inner");
 };
 const $if_content2__if = /*@__PURE__*/ _if(1, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $if_content3__setup);
-const $if_content2__showInner = /*@__PURE__*/ _closure_get(10, ($scope) => $if_content2__if($scope, $scope._._.h ? 0 : 1), ($scope) => $scope._._);
+const $if_content2__showInner = /*@__PURE__*/ _closure_get(10, ($scope) => $if_content2__if($scope, $scope._._.h ? 0 : 1), ($scope) => $scope._._, "a1", 7);
 const $if_content2__setup = ($scope) => {
 	$if_content2__showInner($scope);
 	$if_content2__write($scope);
@@ -45,7 +45,7 @@ const $if = /*@__PURE__*/ _if(4, /*@__PURE__*/ ((_w0) => `<div>${_w0}<!></div>`)
 const $showOuter = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $showMiddle = /*@__PURE__*/ _let(6, $if_content__showMiddle);
 const $showInner = /*@__PURE__*/ _let(7, /* @__PURE__ */ _closure($if_content2__showInner));
-const $setup__script = _script("a1", ($scope) => {
+const $setup__script = _script("a2", ($scope) => {
 	_on($scope.a, "click", function() {
 		$showOuter($scope, !$scope.f);
 	});

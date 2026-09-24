@@ -29,7 +29,7 @@ const $classlayout_content__multiplier__OR__baseCount = /*@__PURE__*/ _or(7, ($s
 const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get(2, ($scope) => {
 	_text($scope.c, $scope._.b);
 	$classlayout_content__multiplier__OR__baseCount($scope);
-});
+}, 0, "a2", 1);
 const $classlayout_content__setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$multiplier($scope._, +$scope._.b + 1);
 }));

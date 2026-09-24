@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<div>${_text_resume($scope3_id, "#text/0", result)}</div>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "6:4");
 		});
-		_subscribe($query__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
+		_subscribe($query__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_query#3/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();

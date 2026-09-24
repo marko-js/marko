@@ -9,7 +9,7 @@ const $ChildB_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $Chil
 const $ChildB_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => {
 	$ChildB_content__count__OR__$foo($scope);
 	$ChildB_content__count__OR__$bar($scope);
-});
+}, 0, "__tests__/template.marko_2_count#7/subscribe");
 const $ChildB_content__setup = /*@__PURE__*/ _child_setup($ChildB_content__count);
 const $ChildB_content__$bar = /*@__PURE__*/ _const("$bar2", $ChildB_content__count__OR__$bar);
 const $ChildB_content__foo = /*@__PURE__*/ _const("foo", ($scope) => {
@@ -29,7 +29,7 @@ const $ChildA_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $Chil
 const $ChildA_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => {
 	$ChildA_content__count__OR__$foo($scope);
 	$ChildA_content__count__OR__$bar($scope);
-});
+}, 0, "__tests__/template.marko_1_count#7/subscribe");
 const $ChildA_content__setup = /*@__PURE__*/ _child_setup($ChildA_content__count);
 const $ChildA_content__$bar = /*@__PURE__*/ _const("$bar", $ChildA_content__count__OR__$bar);
 const $ChildA_content__foo = /*@__PURE__*/ _const("foo", ($scope) => {

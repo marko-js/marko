@@ -307,18 +307,24 @@ export function _closure_get(
   fn: SignalFn,
   getOwnerScope?: (scope: Scope) => Scope,
   resumeId?: string,
+  ownerValueAccessor?: EncodedAccessor,
 ) {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
-  const closureSignal = ((scope) => {
+  const closureSignal = ((scope: Scope, resumed?: 1) => {
+    const ownerScope = getOwnerScope
+      ? getOwnerScope(scope)
+      : scope[AccessorProp.Owner]!;
     scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
       closureSignal[ClosureSignalProp.Index];
-    fn(scope);
+    // A resumed scope shows the owner's server value, which an owner the
+    // server never sent it to has not changed.
+    if (!resumed || (ownerValueAccessor as string) in ownerScope) fn(scope);
     subscribeToScopeSet(
-      getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!,
+      ownerScope,
       closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
       scope,
     );
-  }) as SignalFn & {
+  }) as ((scope: Scope, resumed?: 1) => void) & {
     [ClosureSignalProp.ScopeInstancesAccessor]: string;
     [ClosureSignalProp.SignalIndexAccessor]: string;
     [ClosureSignalProp.Index]: number;
@@ -331,14 +337,23 @@ export function _closure_get(
   closureSignal[ClosureSignalProp.SignalIndexAccessor] =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
 
-  if (resumeId) _resumed[resumeId] = closureSignal;
+  // A subscriber that resumes after its owner applies what the client changed
+  // since the server render, then subscribes.
+  if (resumeId) {
+    ownerValueAccessor = MARKO_DEBUG
+      ? valueAccessor
+      : decodeAccessor(ownerValueAccessor as number);
+    _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
+  }
 
   return closureSignal;
 }
 
 export function _child_setup(setup: Signal<never> & { _: Signal<Scope> }) {
+  // A direct call passes the owner; rendered as a value, the body's branch
+  // already has its renderer's.
   setup._ = (scope, owner) => {
-    scope[AccessorProp.Owner] = owner;
+    scope[AccessorProp.Owner] ||= owner;
     queueRender(scope, setup, -1);
   };
   return setup;

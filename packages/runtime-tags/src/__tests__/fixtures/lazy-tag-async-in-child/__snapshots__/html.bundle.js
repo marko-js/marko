@@ -8,7 +8,7 @@ var child_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>${_text_resume($scope1_id, "b", count)}:${_escape(value)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
-		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 	});
 	_scope($scope0_id, {
 		e: count,

@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(_html_resume($scope1_id, "#text/0", input.value, $sg__input_value));
-		_subscribe($si__input_value && $input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:3"));
+		_subscribe($si__input_value && $input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:3"), "__tests__/template.marko_1_input_value#10/subscribe", $sg__input_value);
 		$sg__input_value || _resume_branch($scope1_id);
 	}, $scope0_id));
 	_html(`<button class=toggle-parent>Toggle Parent</button>${_el_resume($scope0_id, "#button/6")}<button class=toggle-child>Toggle Child</button>${_el_resume($scope0_id, "#button/7")}</div>${_el_resume($scope0_id, "#div/0")}`);

@@ -11,7 +11,7 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__setup__script($scope);
 };
 const $if_content__count__OR___ = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._["_/4"] + $scope._._.count));
-const $if_content__count = /*@__PURE__*/ _closure_get("count", $if_content__count__OR___, ($scope) => $scope._._);
+const $if_content__count = /*@__PURE__*/ _closure_get("count", $if_content__count__OR___, ($scope) => $scope._._, "__tests__/template.marko_2_count#2/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__count($scope);
 	$if_content___._($scope);

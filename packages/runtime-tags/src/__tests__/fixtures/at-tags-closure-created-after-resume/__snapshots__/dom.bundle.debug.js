@@ -15,7 +15,7 @@ const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup$1 = () => {};
 const $item_content__if = /*@__PURE__*/ _if("#text/0", "<span>shown</span>");
-const $item_content__input_show = /*@__PURE__*/ _closure_get("input_show", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1));
+const $item_content__input_show = /*@__PURE__*/ _closure_get("input_show", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/tags/child.marko_1_input_show#4/subscribe");
 const $item_content__setup = $item_content__input_show;
 const $item_content = /*@__PURE__*/ _content("__tests__/tags/child.marko_1*content", "<!><!><!>", "b%", $item_content__setup);
 const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {

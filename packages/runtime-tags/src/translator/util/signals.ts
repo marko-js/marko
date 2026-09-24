@@ -44,6 +44,7 @@ import {
 import { callRuntime, registerRuntimeValue } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
+  forEachAncestorSection,
   getDynamicClosureIndex,
   getScopeIdIdentifier,
   getSectionForBody,
@@ -124,10 +125,6 @@ export function setClosureSignalBuilder(
 ) {
   _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, builder);
 }
-
-export const [getTryHasPlaceholder, setTryHasPlaceholder] = createSectionState<
-  true | undefined
->("tryWithPlaceholder");
 
 // A branch section whose scope ids ride a resume marker carrying the parent scope
 // id when its scopes serialize, so the client links the owner and `_` is not serialized.
@@ -378,6 +375,7 @@ export function getSignal(
           return closureSignalBuilder(closure, render);
         }
 
+        const changeable = isChangeableDynamicClosure(section, closure);
         return callRuntime(
           "_closure_get",
           // Optimized builds pass the reserved closure accessor id.
@@ -393,9 +391,16 @@ export function getSignal(
               ),
           // Match the HTML registration, which is gated on this subscriber
           // section (writeHTMLResumeStatements); keying on any sibling closure
-          // section would ship a pending id that nothing looks up.
-          underTryPlaceholder(section) && closureResumes(closure)
-            ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
+          // section would ship a subscribe id that nothing looks up.
+          changeable
+            ? t.stringLiteral(
+                getResumeRegisterId(section, closure, "subscribe"),
+              )
+            : undefined,
+          // The owner's value accessor a resumed subscriber tests; debug builds
+          // reuse the first.
+          changeable && isOptimize()
+            ? getScopeAccessorLiteral(closure, true)
             : undefined,
         );
       };
@@ -404,23 +409,15 @@ export function getSignal(
   return signal;
 }
 
-// A closure over state no resumed instance can write never replays: the
-// pending registration would name an id the client bundle has no reason
-// to keep.
-function closureResumes(closure: Binding) {
-  const state = closure.sources?.state;
-  return !state || some(state, hasResumableWriter);
-}
-
-function underTryPlaceholder(section: Section) {
-  let curSection = section.parent;
-  while (curSection) {
-    if (getTryHasPlaceholder(curSection)) {
-      return true;
-    }
-    curSection = curSection.parent;
-  }
-  return false;
+// A dynamic closure the client can change before a subscriber that resumes
+// after its owner; state no resumed instance can write never changes.
+function isChangeableDynamicClosure(section: Section, closure: Binding) {
+  const { sources } = closure;
+  return (
+    !!sources &&
+    isDynamicClosure(section, closure) &&
+    (!sources.state || some(sources.state, hasResumableWriter))
+  );
 }
 
 export function initValue(binding: Binding, isLet = false) {
@@ -1090,14 +1087,12 @@ function writeGetters(section: Section) {
       ];
 
       if (hoistSection) {
-        let currentSection: Section | undefined = binding.section;
-        while (currentSection && currentSection !== hoistSection) {
-          const parentSection: Section | undefined = currentSection.parent;
-          if (parentSection) {
-            accessors.push(getSectionInstancesAccessorLiteral(currentSection));
-          }
-          currentSection = parentSection;
-        }
+        forEachAncestorSection(
+          binding.section,
+          hoistSection,
+          pushInstancesAccessor,
+          accessors,
+        );
       }
 
       getProgram().node.body.push(
@@ -1124,6 +1119,10 @@ function writeGetters(section: Section) {
       );
     }
   });
+}
+
+function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
+  accessors.push(getSectionInstancesAccessorLiteral(section));
 }
 
 export function writeRegisteredFns() {
@@ -1293,50 +1292,29 @@ export function writeHTMLResumeStatements(
           closure,
           getAccessorPrefix().ClosureScopes,
         );
-        if (underTryPlaceholder(section) && closureResumes(closure)) {
-          const reason = getSerializeReason(section);
-          if (reason) {
-            // The pending effect replays the closure on resume, so it must be
-            // gated the same way the closure's value is serialized.
-            const script = getExprIfSerialized(
-              section,
-              reason,
-              callRuntime(
-                "_script",
-                getScopeIdIdentifier(section),
-                t.stringLiteral(
-                  getResumeRegisterId(section, closure, "pending"),
-                ),
-                markerSerializeArg,
-              ),
-            );
-            getHTMLSectionStatements(section).push(
-              t.expressionStatement(
-                isReasonDynamic(closureScopesReason) &&
-                  !isSameReason(closureScopesReason, reason)
-                  ? getExprIfSerialized(
-                      closure.section,
-                      closureScopesReason,
-                      script,
-                    )
-                  : script,
-              ),
-            );
-          }
-        } else {
-          const subscribeArg =
-            isReasonDynamic(closureScopesReason) &&
-            !isSameReason(closureScopesReason, sectionSerializeReason)
-              ? getExprIfSerialized(
-                  closure.section,
-                  closureScopesReason,
-                  identifier,
+        const subscribeArg =
+          isReasonDynamic(closureScopesReason) &&
+          !isSameReason(closureScopesReason, sectionSerializeReason)
+            ? getExprIfSerialized(
+                closure.section,
+                closureScopesReason,
+                identifier,
+              )
+            : identifier;
+        const changeable = isChangeableDynamicClosure(section, closure);
+        addWriteScopeBuilder(section, (expr) =>
+          callRuntime(
+            "_subscribe",
+            subscribeArg,
+            expr,
+            changeable
+              ? t.stringLiteral(
+                  getResumeRegisterId(section, closure, "subscribe"),
                 )
-              : identifier;
-          addWriteScopeBuilder(section, (expr) =>
-            callRuntime("_subscribe", subscribeArg, expr),
-          );
-        }
+              : undefined,
+            changeable ? markerSerializeArg : undefined,
+          ),
+        );
       }
     }
   });
@@ -1372,22 +1350,13 @@ export function writeHTMLResumeStatements(
   const writeSerializedBinding = (binding: Binding) => {
     const reason = getSerializeReason(section, binding);
     if (!reason) return;
-    if (binding.noSerialize) {
-      serializedLookup.delete(getScopeAccessor(binding));
-      return;
-    }
     const accessor = getScopeAccessor(binding);
     serializedLookup.delete(accessor);
-    let expr: t.Expression = getDeclaredBindingExpression(binding);
-    if (binding.noSerializeProperties) {
-      const props: t.ObjectExpression["properties"] = [t.spreadElement(expr)];
-      forEach(binding.noSerializeProperties, (prop) => {
-        props.push(toObjectProperty(prop, t.identifier("undefined")));
-      });
-      expr = t.objectExpression(props);
-    }
     serializedProperties.push(
-      toObjectProperty(accessor, ifSerialized(reason, expr)),
+      toObjectProperty(
+        accessor,
+        ifSerialized(reason, getDeclaredBindingExpression(binding)),
+      ),
     );
 
     if (debug) {

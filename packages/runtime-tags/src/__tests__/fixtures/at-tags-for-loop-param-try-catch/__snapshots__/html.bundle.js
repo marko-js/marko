@@ -37,10 +37,10 @@ var template_default = _template("a", (input) => {
 		_html(`clicks ${_text_resume($scope1_id, "a", (() => {
 			return clicks;
 		})(), 2)}`);
-		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4");
 	}, $scope0_id), { catch: $catch2 });
 	_html("</div>");
-	_script($scope0_id, "a4");
+	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		d: clicks,
 		e: $clicks__closures

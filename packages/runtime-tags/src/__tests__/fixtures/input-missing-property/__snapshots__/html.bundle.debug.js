@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (true) {
 					const $scope3_id = _scope_id();
 					_html(`<div>${_text_resume($scope3_id, "#text/0", input.name || "Fallback", $sg__input_name)}</div>`);
-					$si__input_count__OR__input_name && _subscribe($si__input_name && $Child_content__input_name__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "8:6"));
+					$si__input_count__OR__input_name && _subscribe($si__input_name && $Child_content__input_name__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "8:6"), "__tests__/template.marko_3_input_name#4/subscribe", $sg__input_name);
 				}
 				$si__input_count__OR__input_name && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
 				return 0;

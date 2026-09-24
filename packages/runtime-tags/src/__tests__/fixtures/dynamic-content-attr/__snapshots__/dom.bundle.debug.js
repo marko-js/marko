@@ -2,7 +2,7 @@
 const $template = "<button></button>";
 const $walks = " b";
 let sideEffect = 3;
-const $MyThing_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $MyThing_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#1/subscribe");
 const $MyThing_content__setup = ($scope) => {
 	$MyThing_content__count($scope);
 	_text($scope["#text/1"], sideEffect++);

@@ -11,13 +11,13 @@ var outer_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $si__input_content = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
-	inner_default({ content: _content("c1", () => {
+	inner_default({ content: _content("c2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<button>click</button>${_el_resume($scope1_id, "a")}`);
 		_dynamic_tag($scope1_id, "b", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 		_script($scope1_id, "c0");
-		_subscribe($si__input_content && $input_content__closures, _scope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }));
+		_subscribe($si__input_content && $input_content__closures, _scope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }), "c1");
 	}, $scope0_id) });
 	$si__input_content && _scope($scope0_id, { e: $input_content__closures });
 });

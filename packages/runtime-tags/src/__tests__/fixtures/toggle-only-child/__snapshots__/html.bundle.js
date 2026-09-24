@@ -16,5 +16,5 @@ var template_default = _template("a", (input) => {
 		value = _new_value;
 	}, "a0", $scope0_id))}>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
-	_scope($scope0_id, { f: value });
+	_scope($scope0_id, {});
 }, 1);

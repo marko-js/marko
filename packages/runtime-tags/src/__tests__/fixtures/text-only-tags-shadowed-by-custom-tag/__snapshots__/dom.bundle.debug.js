@@ -21,10 +21,10 @@ var textarea_default = /*@__PURE__*/ _template("__tests__/tags/textarea.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button>inc</button>${_w0}${_w1}`)($template$2, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b/${_w0}&/${_w1}&`)("D%l", "D%l");
-const $textarea_content__n = /*@__PURE__*/ _closure_get("n", ($scope) => _text($scope["#text/0"], $scope._.n));
+const $textarea_content__n = /*@__PURE__*/ _closure_get("n", ($scope) => _text($scope["#text/0"], $scope._.n), 0, "__tests__/template.marko_2_n#3/subscribe");
 const $textarea_content__setup = $textarea_content__n;
 const $textarea_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "textarea <!>", "b%", $textarea_content__setup);
-const $title_content__n = /*@__PURE__*/ _closure_get("n", ($scope) => _text($scope["#text/0"], $scope._.n));
+const $title_content__n = /*@__PURE__*/ _closure_get("n", ($scope) => _text($scope["#text/0"], $scope._.n), 0, "__tests__/template.marko_1_n#3/subscribe");
 const $title_content__setup = $title_content__n;
 const $title_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "title <!>", "b%", $title_content__setup);
 const $n__closure = /*@__PURE__*/ _closure($title_content__n, $textarea_content__n);

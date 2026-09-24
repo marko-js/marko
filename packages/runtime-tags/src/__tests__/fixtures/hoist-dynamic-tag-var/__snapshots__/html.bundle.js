@@ -65,5 +65,5 @@ var template_default = _template("a", (input) => {
 		_scope($scope5_id, { _: _scope_with_id($scope0_id) });
 	}
 	_script($scope0_id, "a5", $sg__input_show);
-	$si__input_show && _scope($scope0_id, { h: input.show });
+	$si__input_show && _scope($scope0_id, {});
 }, 1);

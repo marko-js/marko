@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($multiplier__closures, _scope($scope1_id, {
 			baseCount,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { baseCount: "2:15" }));
+		}, "__tests__/template.marko", "2:2", { baseCount: "2:15" }), "__tests__/template.marko_1_multiplier#1/subscribe");
 	}, $scope0_id), 0, 0);
 	_scope($scope0_id, {
 		multiplier,

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 				_subscribe($selected__closures, _scope($scope2_id, {
 					M: row?.id,
 					_: _scope_with_id($scope1_id)
-				}));
+				}), "a1");
 			});
 			_html("</ul>");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });

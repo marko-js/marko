@@ -17,11 +17,11 @@ var template_default = _template("a", (input) => {
 	const b = 2;
 	let c = 3;
 	_html(`<button></button>${_el_resume($scope0_id, "a")}`);
-	custom_tag_default({ content: _content("a0", () => {
+	custom_tag_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`${_escape(a)} ${_escape(b)} ${_text_resume($scope1_id, "c", c, 2)}`);
-		_subscribe($c__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($c__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 	}, $scope0_id) });
 	_html("<div>");
 	if (Math.random()) {
@@ -32,11 +32,11 @@ var template_default = _template("a", (input) => {
 			_subscribe($c__closures, _scope($scope3_id, {
 				_: _scope_with_id($scope2_id),
 				Cg: 1
-			}));
+			}), "a2");
 		}
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}
 	_html("</div>");
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a3");
 	_scope($scope0_id, { g: $c__closures });
 }, 1);

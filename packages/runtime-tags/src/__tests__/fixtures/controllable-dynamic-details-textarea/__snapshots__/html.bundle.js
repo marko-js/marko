@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 				text = next;
 			}, "a1", $scope1_id)
 		});
-		_subscribe($text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3");
 	}, $scope0_id));
 	_html(`<output>${_text_resume($scope0_id, "b", open ? "open" : "closed")}/${_text_resume($scope0_id, "c", text, 2)}</output>`);
 	_scope($scope0_id, {

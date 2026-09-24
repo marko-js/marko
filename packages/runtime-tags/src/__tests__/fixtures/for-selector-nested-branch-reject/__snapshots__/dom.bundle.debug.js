@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $for_content__selected = /*@__PURE__*/ _closure_get("selected", ($scope) => _attr_class($scope["#li/0"], $scope._._.selected === $scope["#LoopKey"] && "danger"), ($scope) => $scope._._);
+const $for_content__selected = /*@__PURE__*/ _closure_get("selected", ($scope) => _attr_class($scope["#li/0"], $scope._._.selected === $scope["#LoopKey"] && "danger"), ($scope) => $scope._._, "__tests__/template.marko_2_selected#4/subscribe");
 const $for_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/1"], "click", function() {
 	$selected($scope._._, $scope["#LoopKey"]);
 }));

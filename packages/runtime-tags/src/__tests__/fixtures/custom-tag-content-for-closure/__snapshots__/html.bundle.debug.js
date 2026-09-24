@@ -12,7 +12,7 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 				if (input.content) {
 					const $scope2_id = _scope_id();
 					_dynamic_tag($scope2_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
-					_subscribe($si__input_content && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/menu.marko", "6:4"));
+					_subscribe($si__input_content && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/menu.marko", "6:4"), "__tests__/tags/menu.marko_2_input_content#5/subscribe", $sg__input_content);
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_content, $sg__input_content, $sg__input_content);

@@ -12,14 +12,14 @@ var template_default = _template("a", (input) => {
 			_html(`<p>A:${_text_resume($scope4_id, "a", (console.log("body-ran:a", v), v), $sg__input_a * 2)}</p>`);
 			$si__input_a && _scope($scope4_id, {});
 		}, $sg__input_a);
-		$si__input_a && _subscribe($input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$si__input_a && _subscribe($input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2", 0);
 		$si__input_a && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-a");
 	}, $scope0_id) }) });
-	_try($scope0_id, "b", _content_resume("a3", () => {
+	_try($scope0_id, "b", _content_resume("a4", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_await($scope2_id, "a", input.b, (v) => {
@@ -27,9 +27,9 @@ var template_default = _template("a", (input) => {
 			_html(`<p>B:${_text_resume($scope6_id, "a", (console.log("body-ran:b", v), v), $sg__input_b * 2)}</p>`);
 			$si__input_b && _scope($scope6_id, {});
 		}, $sg__input_b);
-		$si__input_b && _subscribe($input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
+		$si__input_b && _subscribe($input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a5", 0);
 		$si__input_b && _resume_branch($scope2_id);
-	}, $scope0_id), { catch: attrTag({ content: _content_resume("a2", () => {
+	}, $scope0_id), { catch: attrTag({ content: _content_resume("a3", () => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-b");

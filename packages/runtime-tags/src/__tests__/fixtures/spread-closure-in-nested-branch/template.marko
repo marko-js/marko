@@ -1,0 +1,11 @@
+<let/show=true/>
+<button onClick() { show = !show }>toggle</button>
+<for|item| of=[{ id: "a", class: "x" }, { id: "b", title: "y" }]>
+  <if=show>
+    <div ...item/>
+  </if>
+</for>
+<const/attrs={ class: "z" }/>
+<if=show>
+  <span ...attrs/>
+</if>

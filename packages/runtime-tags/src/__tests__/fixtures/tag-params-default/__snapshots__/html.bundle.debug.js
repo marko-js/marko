@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($fallback__closures, _scope($scope1_id, {
 			$y,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "3:2", { $y: "3:8" }));
+		}, "__tests__/template.marko", "3:2", { $y: "3:8" }), "__tests__/template.marko_1_fallback#3/subscribe");
 	}, $scope0_id) });
 	child_default({});
 	_script($scope0_id, "__tests__/template.marko_0");

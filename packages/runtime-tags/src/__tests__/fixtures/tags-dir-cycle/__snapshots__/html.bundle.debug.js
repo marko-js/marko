@@ -25,7 +25,7 @@ var cyc_a_default = _template("__tests__/tags/cyc-a/index.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1", $sg__input_depth, $sg__input_depth, $sg__input_depth);
-	$si__input_depth && _scope($scope0_id, { input_depth: input.depth }, "__tests__/tags/cyc-a/index.marko", 0, { input_depth: ["input.depth"] });
+	$si__input_depth && _scope($scope0_id, {}, "__tests__/tags/cyc-a/index.marko", 0);
 });
 
 // template.marko

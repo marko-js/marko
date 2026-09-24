@@ -18,7 +18,7 @@ var child_default = _template("b", (input) => {
 	_set_serialize_reason($sg__input_items << 1);
 	let $item;
 	forOf(input.items, (item) => {
-		$item = attrTags($item, { content: _content("b0", () => {
+		$item = attrTags($item, { content: _content("b1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_if(() => {
@@ -29,7 +29,7 @@ var child_default = _template("b", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "a", $sg__input_show, $sg__input_show, $sg__input_show, 0, 1);
-			$si__input_items__OR__input_show && _subscribe($si__input_show && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			$si__input_items__OR__input_show && _subscribe($si__input_show && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $sg__input_show);
 			$sg__input_show || $si__input_items__OR__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});

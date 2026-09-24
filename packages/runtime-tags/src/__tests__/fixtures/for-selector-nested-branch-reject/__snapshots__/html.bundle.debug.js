@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_subscribe($selected__closures, _scope($scope2_id, {
 					"#LoopKey": row?.id,
 					_: _scope_with_id($scope1_id)
-				}, "__tests__/template.marko", "5:6", { "#LoopKey": ["row.id", "5:10"] }));
+				}, "__tests__/template.marko", "5:6", { "#LoopKey": ["row.id", "5:10"] }), "__tests__/template.marko_2_selected#4/subscribe");
 			});
 			_html("</ul>");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");

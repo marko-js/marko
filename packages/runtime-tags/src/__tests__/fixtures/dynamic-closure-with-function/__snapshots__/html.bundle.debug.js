@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (input.b) {
 					const $scope2_id = _scope_id();
 					_html(`<div>${_text_resume($scope2_id, "#text/0", bar(foo), $sg__input_c)}</div>`);
-					$si__input_c__OR__input_a__OR__input_b && _subscribe($si__input_c && $bar2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3"));
+					$si__input_c__OR__input_a__OR__input_b && _subscribe($si__input_c && $bar2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3"), "__tests__/template.marko_2_bar#6/subscribe", $sg__input_c);
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_b, $sg__input_b, $sg__input_b, 0, 1);

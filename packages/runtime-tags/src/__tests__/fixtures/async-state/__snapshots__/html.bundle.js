@@ -13,14 +13,14 @@ var template_default = _template("a", (input) => {
 			_html(_text_resume($scope3_id, "a", value));
 			_scope($scope3_id, {});
 		});
-		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("LOADING...");
 	}, $scope0_id) }) });
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		c: clickCount,
 		d: $clickCount__closures

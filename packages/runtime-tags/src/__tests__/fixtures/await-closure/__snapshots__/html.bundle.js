@@ -10,9 +10,8 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter(0, 4), () => {
 			const $scope2_id = _scope_id();
-			_script($scope2_id, "a0");
 			_html(`<span>${_text_resume($scope2_id, "a", value)}</span>`);
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_subscribe($value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a1", () => {

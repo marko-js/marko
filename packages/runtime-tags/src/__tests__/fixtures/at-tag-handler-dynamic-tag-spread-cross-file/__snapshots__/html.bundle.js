@@ -23,11 +23,11 @@ var template_default = _template("a", (input) => {
 			onClick: _resume(function() {
 				count++;
 			}, "a0", $scope0_id),
-			content: _content("a1", () => {
+			content: _content("a2", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html(_text_resume($scope1_id, "a", count));
-				_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+				_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 			}, $scope0_id)
 		})
 	});

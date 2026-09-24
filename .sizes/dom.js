@@ -1,4 +1,4 @@
-// size: 27089 (min) 10095 (brotli)
+// size: 27134 (min) 10123 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -741,24 +741,27 @@ function _closure(...closureSignals) {
           queueRender(childScope, closureSignals[childScope[signalIndex] || 0], -1);
   };
 }
-function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
+function _closure_get(valueAccessor, fn, getOwnerScope, resumeId, ownerValueAccessor) {
   valueAccessor = decodeAccessor(valueAccessor);
-  let closureSignal = (scope) => {
+  let closureSignal = (scope, resumed) => {
+    let ownerScope = getOwnerScope ? getOwnerScope(scope) : scope._;
     ((scope[closureSignal.b] = closureSignal.c),
-      fn(scope),
-      subscribeToScopeSet(getOwnerScope ? getOwnerScope(scope) : scope._, closureSignal.a, scope));
+      (!resumed || ownerValueAccessor in ownerScope) && fn(scope),
+      subscribeToScopeSet(ownerScope, closureSignal.a, scope));
   };
   return (
     (closureSignal.a = valueAccessor),
     (closureSignal.b = "C" + valueAccessor),
-    resumeId && (_resumed[resumeId] = closureSignal),
+    resumeId &&
+      ((ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
+      (_resumed[resumeId] = (scope) => closureSignal(scope, 1))),
     closureSignal
   );
 }
 function _child_setup(setup) {
   return (
     (setup._ = (scope, owner) => {
-      ((scope._ = owner), queueRender(scope, setup, -1));
+      ((scope._ ||= owner), queueRender(scope, setup, -1));
     }),
     setup
   );

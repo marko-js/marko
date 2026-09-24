@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<button id=count>${_text_resume($scope2_id, "#text/1", count)}</button>${_el_resume($scope2_id, "#button/0")}`);
 					_script($scope2_id, "__tests__/template.marko_2");
-					_subscribe($count__closures, _scope($scope2_id, {}, "__tests__/template.marko", "8:6"));
+					_subscribe($count__closures, _scope($scope2_id, {}, "__tests__/template.marko", "8:6"), "__tests__/template.marko_2_count#4/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);

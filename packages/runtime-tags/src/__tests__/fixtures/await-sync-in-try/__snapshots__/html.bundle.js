@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 			_html(`Got: ${_text_resume($scope4_id, "a", value, $sg__input_value * 2)}`);
 			$si__input_value && _scope($scope4_id, {});
 		}, $sg__input_value);
-		$si__input_value && _subscribe($input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$si__input_value && _subscribe($input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3", 0);
 		$si__input_value && _resume_branch($scope1_id);
 	}, $scope0_id), {
 		catch: attrTag({ content: _content_resume("a0", (err) => {

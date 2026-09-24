@@ -23,13 +23,13 @@ var template_default = _template("b", (input) => {
 			label: "x",
 			value
 		});
-		_subscribe($value__closures, _subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
+		_subscribe($value__closures, _subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b2"), "b3");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
 	}, $scope0_id) }) });
-	_script($scope0_id, "b2");
+	_script($scope0_id, "b4");
 	_scope($scope0_id, {
 		d: show,
 		e: value,

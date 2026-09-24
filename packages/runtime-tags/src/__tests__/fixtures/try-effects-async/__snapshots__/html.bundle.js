@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope4_id, {});
 		});
 		_script($scope1_id, "a3", 0);
-		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_resume("a0", () => {
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
 		}, $scope0_id) })
 	});
-	_script($scope0_id, "a4");
+	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		d: clickCount,
 		e: $clickCount__closures

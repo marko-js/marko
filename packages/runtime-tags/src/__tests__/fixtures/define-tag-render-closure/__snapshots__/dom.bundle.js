@@ -3,7 +3,7 @@ const $MyTag_content__walks = "D l", $MyTag_content__template = "<div> </div>";
 const $if_content__setup = ($scope) => {
 	$MyTag_content__setup._($scope.a, $scope._);
 };
-const $MyTag_content__x = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e));
+const $MyTag_content__x = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "a1", 4);
 const $MyTag_content__setup = /*@__PURE__*/ _child_setup($MyTag_content__x);
 const $if = /*@__PURE__*/ _if(1, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($MyTag_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($MyTag_content__walks), $if_content__setup);
 const $x__closure = /*@__PURE__*/ _closure($MyTag_content__x);
@@ -12,6 +12,6 @@ const $x = /*@__PURE__*/ _let(4, ($scope) => {
 	$if($scope, ($scope.e, 0));
 	$x__closure($scope);
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
+const $setup__script = _script("a2", ($scope) => _on($scope.c, "click", function() {
 	$x($scope, +$scope.e + 1);
 }));

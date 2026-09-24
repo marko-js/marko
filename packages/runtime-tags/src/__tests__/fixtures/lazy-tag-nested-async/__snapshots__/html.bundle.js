@@ -29,9 +29,9 @@ var child_default = _template("a", (input) => {
 		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			c: _existing_scope($childScope)
-		}));
+		}), "a0");
 	});
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		g: count,
 		h: $count__closures

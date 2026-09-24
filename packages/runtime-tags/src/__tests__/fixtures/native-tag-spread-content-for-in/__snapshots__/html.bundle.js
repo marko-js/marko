@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $si__input = _serialize_if($scope0_reason, 0), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_in(input, (name, tag) => {
 		const $scope1_id = _scope_id();
@@ -14,13 +14,13 @@ var child_default = _template("b", (input) => {
 				}, "a", $scope2_id, "div");
 				_html(`</div>${_el_resume($scope2_id, "a")}`);
 				_script($scope2_id, "b0");
-				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
+				_scope($scope2_id, { _: $si__input && _scope_with_id($scope1_id) });
 				return 0;
 			}
 		}, $scope1_id, "a", $sg__input, 0, 0, 0, 1);
-		_scope($scope1_id, { M: name });
+		$si__input && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input, $sg__input, $sg__input);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	$si__input && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -36,14 +36,14 @@ var template_default = _template("a", (input) => {
 			onClick: _resume(function() {
 				count++;
 			}, "a0", $scope0_id),
-			content: _content("a1", () => {
+			content: _content("a2", () => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html(`A ${_text_resume($scope1_id, "a", count, 2)}`);
-				_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+				_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 			}, $scope0_id)
 		}),
-		b: attrTag({ content: _content("a2", () => {
+		b: attrTag({ content: _content("a3", () => {
 			_scope_reason();
 			_scope_id();
 			_html("B");

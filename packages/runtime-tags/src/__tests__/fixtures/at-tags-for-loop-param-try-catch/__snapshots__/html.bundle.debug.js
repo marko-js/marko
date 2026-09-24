@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (clicks) throw new Error("click");
 			return clicks;
 		})(), 2)}`);
-		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "14:4"));
+		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "14:4"), "__tests__/template.marko_1_clicks#3/subscribe");
 	}, $scope0_id), { catch: $catch2 });
 	_html("</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
