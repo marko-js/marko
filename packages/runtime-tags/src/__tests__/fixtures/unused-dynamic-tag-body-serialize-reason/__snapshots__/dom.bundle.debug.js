@@ -1,5 +1,5 @@
 // template.marko
-const $Wrap_content__walks = "b%c", $Wrap_content__template = "<!><!><!>", $Message_content__walks = " b", $Message_content__template = " ";
+const $Message_content__walks = " b", $Message_content__template = " ", $Wrap_content__walks = "b%c", $Wrap_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks);
 const $Wrap_content2__setup = ($scope) => {
