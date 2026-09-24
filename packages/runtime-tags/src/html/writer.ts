@@ -848,7 +848,8 @@ export type SerializeReasonValue =
   | Partial<Record<string, number>>;
 
 // Every group serializes: for a child whose groups the caller cannot see.
-export const CLIENT_ALL = 0x2aaaaaaa;
+// Bit 0 is never a group's, so no encoded mask equals it.
+export const CLIENT_ALL = 0x2aaaaaab;
 
 // A group's 2-bit value. A number packs groups 0-14 (a later group makes the
 // reason keyed), except the all sentinel, which covers every group.
