@@ -1,0 +1,6 @@
+import Tag from "./tags/custom-tag.marko";
+
+<let/show=false/>
+<const/x=show ? Tag : null/>
+<${x}>Fallback Body</>
+<button#toggle onClick() { show = !show }/>
