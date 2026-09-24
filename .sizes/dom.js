@@ -1,4 +1,4 @@
-// size: 27134 (min) 10123 (brotli)
+// size: 27124 (min) 10114 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1772,7 +1772,7 @@ function _await_promise(nodeAccessor, params) {
                   ? anchor.remove()
                   : anchor.replaceWith(detachedParent);
               }
-            } else dismissPlaceholder(tryBranch);
+            }
           })),
         scope[promiseAccessor] ||
           (awaitBranch && (awaitBranch.W ||= []),
