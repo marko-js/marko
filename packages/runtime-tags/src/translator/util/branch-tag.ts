@@ -1,16 +1,22 @@
+import { types as t } from "@marko/compiler";
+
+import { kSkipEndTag } from "../visitors/tag/native-tag";
 import { getAccessorPrefix } from "./get-accessor-enums";
+import { getParentTag } from "./get-parent-tag";
 import { type Binding, kBranchSerializeReason } from "./references";
-import type { Section } from "./sections";
+import { ContentType, type Section } from "./sections";
+import { getSerializeGuard, getSerializeGuardForAny } from "./serialize-guard";
 import {
   getSerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
+  type SerializeReason,
+  type SerializeReasons,
 } from "./serialize-reasons";
 import { setSectionOwnerResumedByMarker } from "./signals";
 
-// Shared wiring for branch-owning tags (`<if>`/`<for>`): every branch body
-// hangs off its owner through the same accessor and reason rules, so the
-// two tags cannot drift apart one copy at a time.
+// Shared wiring for `<if>`/`<for>` branches (and `<show>`'s end args), so
+// the tags cannot drift apart one copy at a time.
 export function getBranchSectionAccessor(
   nodeBinding: Binding,
 ): NonNullable<Section["sectionAccessor"]> {
@@ -48,4 +54,71 @@ export function resumeOwnerByMarkerWhenStatic(
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
+}
+
+export function getBranchResumeArgs(
+  tag: t.NodePath<t.MarkoTag>,
+  tagSection: Section,
+  nodeBinding: Binding,
+  branchReasons: SerializeReasons,
+  statefulReasonKey: symbol,
+  onlyChildParentTagName: string | false | undefined,
+  singleNode: boolean,
+) {
+  const endArgs = getBranchEndArgs(
+    tag,
+    tagSection,
+    nodeBinding,
+    getSerializeReason(tagSection, statefulReasonKey),
+    onlyChildParentTagName,
+    singleNode,
+  );
+  const [serializeMarker] = endArgs;
+  return [
+    getSerializeGuardForAny(tagSection, branchReasons, !serializeMarker),
+    ...endArgs,
+  ];
+}
+
+export function getBranchEndArgs(
+  tag: t.NodePath<t.MarkoTag>,
+  tagSection: Section,
+  nodeBinding: Binding,
+  statefulReason: SerializeReason | undefined,
+  onlyChildParentTagName: string | false | undefined,
+  singleNode: boolean | undefined,
+) {
+  const markerSerializeReason = getSerializeReason(tagSection, nodeBinding);
+  const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
+  if (skipParentEnd) {
+    getParentTag(tag)!.node.extra![kSkipEndTag] = true;
+  }
+
+  const serializeStateful = getSerializeGuard(
+    tagSection,
+    statefulReason,
+    !(skipParentEnd || singleNode),
+  );
+  const serializeMarker = getSerializeGuard(
+    tagSection,
+    markerSerializeReason,
+    !serializeStateful,
+  );
+  return [
+    serializeMarker,
+    serializeStateful,
+    skipParentEnd
+      ? t.stringLiteral(`</${onlyChildParentTagName}>`)
+      : singleNode
+        ? t.numericLiteral(0)
+        : undefined,
+    singleNode ? t.numericLiteral(1) : undefined,
+  ];
+}
+
+export function isSingleNodeBranch(bodySection: Section | undefined) {
+  return !!(
+    bodySection?.content?.singleChild &&
+    bodySection.content.startType !== ContentType.Text
+  );
 }

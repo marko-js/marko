@@ -10,11 +10,12 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
 import {
+  getBranchResumeArgs,
   getBranchSectionAccessor,
   initBranchSection,
+  isSingleNodeBranch,
   resumeOwnerByMarkerWhenStatic,
 } from "../util/branch-tag";
-import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import {
@@ -28,7 +29,6 @@ import {
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import {
-  ContentType,
   getBranchRendererArgs,
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -38,10 +38,6 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
-import {
-  getSerializeGuard,
-  getSerializeGuardForAny,
-} from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
@@ -60,7 +56,6 @@ import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
-import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 const kStatefulReason = Symbol("<if> stateful reason");
 const BRANCHES_LOOKUP = new WeakMap<
@@ -158,26 +153,9 @@ export const IfTag = {
             ifTag,
             branches.length,
           );
-          const markerSerializeReason = getSerializeReason(
-            ifTagSection,
-            nodeBinding,
-          );
           const nextTag = tag.getNextSibling();
           let branchSerializeReasons: SerializeReasons | undefined;
           let statement: t.Statement | undefined;
-          let singleChild = true;
-
-          for (const [, branchBodySection] of branches) {
-            if (
-              !(
-                branchBodySection?.content?.singleChild &&
-                branchBodySection.content.startType !== ContentType.Text
-              )
-            ) {
-              singleChild = false;
-              break;
-            }
-          }
 
           for (let i = branches.length; i--;) {
             const [branchTag, branchBodySection] = branches[i];
@@ -215,22 +193,6 @@ export const IfTag = {
           }
 
           if (branchSerializeReasons) {
-            const skipParentEnd =
-              onlyChildParentTagName && markerSerializeReason;
-            if (skipParentEnd) {
-              getParentTag(ifTag)!.node.extra![kSkipEndTag] = true;
-            }
-
-            const statefulSerializeArg = getSerializeGuard(
-              ifTagSection,
-              getSerializeReason(ifTagSection, kStatefulReason),
-              !(skipParentEnd || singleChild),
-            );
-            const markerSerializeArg = getSerializeGuard(
-              ifTagSection,
-              markerSerializeReason,
-              !statefulSerializeArg,
-            );
             const cbNode = t.arrowFunctionExpression(
               [],
               t.blockStatement([statement!]),
@@ -242,19 +204,17 @@ export const IfTag = {
                 cbNode,
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
-                getSerializeGuardForAny(
+                ...getBranchResumeArgs(
+                  ifTag,
                   ifTagSection,
+                  nodeBinding,
                   branchSerializeReasons,
-                  !markerSerializeArg,
+                  kStatefulReason,
+                  onlyChildParentTagName,
+                  branches.every(([, branchBody]) =>
+                    isSingleNodeBranch(branchBody),
+                  ),
                 ),
-                markerSerializeArg,
-                statefulSerializeArg,
-                skipParentEnd
-                  ? t.stringLiteral(`</${onlyChildParentTagName}>`)
-                  : singleChild
-                    ? t.numericLiteral(0)
-                    : undefined,
-                singleChild ? t.numericLiteral(1) : undefined,
               ),
             );
           }
