@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const $on__closures = /* @__PURE__ */ new Set();
 	let on = false;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
-	wrapper_default({ content: _content("a0", () => {
+	wrapper_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_if(() => {
@@ -26,9 +26,9 @@ var template_default = _template("a", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "a", 1, 1, 1, 0, 1);
-		_subscribe($on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 	}, $scope0_id) });
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		c: on,
 		d: $on__closures

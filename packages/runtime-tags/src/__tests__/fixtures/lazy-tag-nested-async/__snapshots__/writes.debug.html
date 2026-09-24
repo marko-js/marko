@@ -23,10 +23,10 @@
 <script>
   M._.b[
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko"
-    ].push(_ => (_([3, {
+    ].push(_ => [3, {
     _: _(2),
     "#childScope/2": _(4)
-  }]), (_.a = _(2)["ClosureScopes:count"]).add(_(3)), 0));
+  }]);
   M._.b[
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/grand-child.marko"
     ] = [_ => [4, {
@@ -44,6 +44,11 @@
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/grand-child.marko"
     ].push(
     "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/grand-child.marko_0 4"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko_1_count#6/subscribe 3"
     );
   M._.b[
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko"

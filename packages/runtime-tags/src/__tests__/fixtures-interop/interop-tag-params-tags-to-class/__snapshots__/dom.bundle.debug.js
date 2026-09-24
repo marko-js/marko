@@ -41,7 +41,7 @@ const $classlayout_content__multiplier__OR__baseCount = /*@__PURE__*/ _or(7, ($s
 const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get("multiplier", ($scope) => {
 	_text($scope["#text/2"], $scope._.multiplier);
 	$classlayout_content__multiplier__OR__baseCount($scope);
-});
+}, 0, "__tests__/template.marko_1_multiplier#1/subscribe");
 const $classlayout_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$multiplier($scope._, +$scope._.multiplier + 1);
 }));

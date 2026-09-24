@@ -9,13 +9,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope2_id, "#text/0", resolveAfter("done", 1), () => {
 			const $scope3_id = _scope_id();
-			_script($scope3_id, "__tests__/template.marko_3_clicks#1/pending");
 			_html(`<button>loaded ${_text_resume($scope3_id, "#text/1", clicks, 2)}</button>${_el_resume($scope3_id, "#button/0")}`);
 			_script($scope3_id, "__tests__/template.marko_3");
-			_scope($scope3_id, {
+			_subscribe($clicks__closures, _scope($scope3_id, {
 				_: _scope_with_id($scope2_id),
 				"ClosureSignalIndex:clicks": 1
-			}, "__tests__/template.marko", "12:4");
+			}, "__tests__/template.marko", "12:4"), "__tests__/template.marko_3_clicks#1/subscribe");
 		});
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -23,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>loading ${_text_resume($scope1_id, "#text/1", clicks, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
+		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_1_clicks#1/subscribe");
 	}, $scope0_id) }) });
 	_scope($scope0_id, {
 		clicks,

@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
-		}, "__tests__/template.marko", "4:2"));
+		}, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_count#5/subscribe");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

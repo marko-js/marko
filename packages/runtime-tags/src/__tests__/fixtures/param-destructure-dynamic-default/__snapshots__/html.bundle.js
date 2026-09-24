@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		_subscribe($count__closures, _scope($scope1_id, {
 			g: foo,
 			_: _scope_with_id($scope0_id)
-		}));
+		}), "a1");
 	}, $scope0_id) };
 	ChildA.content({
 		foo: { bar: 0 },
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		id: "b"
 	});
 	ChildA.content({ id: "c" });
-	const ChildB = { content: _content("a1", (input) => {
+	const ChildB = { content: _content("a2", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		const { foo, foo: $foo2 } = input;
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			g: foo,
 			_: _scope_with_id($scope0_id),
 			Ci: 1
-		}));
+		}), "a3");
 	}, $scope0_id) };
 	ChildB.content({
 		foo: { bar: 0 },
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	});
 	ChildB.content({ id: "f" });
 	_html(`<button>Increment default</button>${_el_resume($scope0_id, "g")}`);
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a4");
 	_scope($scope0_id, {
 		h: count,
 		i: $count__closures

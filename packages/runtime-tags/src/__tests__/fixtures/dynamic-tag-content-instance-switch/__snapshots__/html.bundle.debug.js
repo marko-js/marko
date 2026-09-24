@@ -9,7 +9,7 @@ var provider_default = _template("__tests__/tags/provider.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<div>value ${_text_resume($scope1_id, "#text/0", count, 2)}</div>`);
-		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/provider.marko", "3:2"));
+		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/provider.marko", "3:2"), "__tests__/tags/provider.marko_1_count#4/subscribe");
 	}, $scope0_id) };
 	const $return = body;
 	_script($scope0_id, "__tests__/tags/provider.marko_0");

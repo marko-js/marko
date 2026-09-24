@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 						}
 					}, $scope2_id, "b", 1, 1, 1, 0, 1);
 					_html("</div>");
-					_subscribe($showInner__closures, _scope($scope2_id, {}));
+					_subscribe($showInner__closures, _scope($scope2_id, {}), "a1");
 					return 0;
 				}
 			}, $scope1_id, "b", 1, 1, 1, 0, 1);
@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "e", 1, 1, 1, 0, 1);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		f: showOuter,
 		g: showMiddle,

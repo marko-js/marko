@@ -28,7 +28,7 @@ import {
   type Sources,
   getCanonicalExtra,
 } from "./references";
-import { ancestorSections, type Section } from "./sections";
+import { forEachAncestorSection, type Section } from "./sections";
 
 // Reasons any one of which serializes (a chain's branches, a section's
 // dom nodes); the guard builder answers for the set.
@@ -111,11 +111,11 @@ export function addOwnerSerializeReason(
   to: Section,
   reason: undefined | false | SerializeReason,
 ) {
-  if (reason) {
-    for (const section of ancestorSections(from, to)) {
-      addSerializeReason(section, reason, getAccessorProp().Owner);
-    }
-  }
+  if (reason) forEachAncestorSection(from, to, addOwnerReason, reason);
+}
+
+function addOwnerReason(section: Section, reason: SerializeReason) {
+  addSerializeReason(section, reason, getAccessorProp().Owner);
 }
 
 export function isReasonDynamic(

@@ -16,17 +16,17 @@ var template_default = _template("a", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<button id=count>${_text_resume($scope2_id, "b", count)}</button>${_el_resume($scope2_id, "a")}`);
 					_script($scope2_id, "a0");
-					_subscribe($count__closures, _scope($scope2_id, {}));
+					_subscribe($count__closures, _scope($scope2_id, {}), "a1");
 					return 0;
 				}
 			}, $scope1_id, "b", 1, 1, 1, 0, 1);
-			_script($scope1_id, "a1");
+			_script($scope1_id, "a2");
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
 	_html("</div>");
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		c: outer,
 		d: inner,

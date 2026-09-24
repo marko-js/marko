@@ -1,0 +1,7 @@
+<let/show=true/>
+<button.toggle onClick() { show = !show }>toggle</button>
+<for|item| of=input.item>
+  <if=show>
+    <div ...item/>
+  </if>
+</for>

@@ -20,23 +20,21 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter("outer", 2), (outer) => {
 			const $scope2_id = _scope_id();
-			_script($scope2_id, "a3");
 			_html(`<p>${_escape(outer)} ${_text_resume($scope2_id, "b", clicks, 2)}</p>`);
 			_try($scope2_id, "c", _content_resume("a2", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();
 				_await($scope3_id, "a", resolveAfter("inner", 4), (inner) => {
 					const $scope4_id = _scope_id();
-					_script($scope4_id, "a0");
 					_set_serialize_reason(2);
 					const $childScope = _peek_scope_id();
 					note_default({ label: `${inner} ${clicks}` });
-					_scope($scope4_id, {
+					_subscribe($clicks__closures, _scope($scope4_id, {
 						c: inner,
 						_: _scope_with_id($scope3_id),
 						a: _existing_scope($childScope),
 						Ce: 1
-					});
+					}), "a0");
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a1", () => {
@@ -44,7 +42,7 @@ var template_default = _template("a", (input) => {
 				_scope_id();
 				note_default({ label: "inner placeholder" });
 			}, $scope2_id) }) });
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_subscribe($clicks__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a3");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a4", () => {

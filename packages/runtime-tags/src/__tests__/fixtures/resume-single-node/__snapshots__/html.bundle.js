@@ -21,7 +21,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		c: itemId,
-		d: items,
-		e: items?.length
+		d: items
 	});
 }, 1);

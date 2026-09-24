@@ -20,13 +20,13 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a");
 		_html("<div>settled</div>");
-		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("LOADING...");
 	}, $scope0_id) }) });
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		c: show,
 		d: $show__closures

@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>A:${_text_resume($scope4_id, "#text/0", (console.log("body-ran:a", v), v), $sg__input_a * 2)}</p>`);
 			$si__input_a && _scope($scope4_id, {}, "__tests__/template.marko", "2:4");
 		}, $sg__input_a);
-		$si__input_a && _subscribe($input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
+		$si__input_a && _subscribe($input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_a#4/subscribe", 0);
 		$si__input_a && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
 		_scope_reason();
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>B:${_text_resume($scope6_id, "#text/0", (console.log("body-ran:b", v), v), $sg__input_b * 2)}</p>`);
 			$si__input_b && _scope($scope6_id, {}, "__tests__/template.marko", "8:4");
 		}, $sg__input_b);
-		$si__input_b && _subscribe($input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"));
+		$si__input_b && _subscribe($input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"), "__tests__/template.marko_2_input_b#5/subscribe", 0);
 		$si__input_b && _resume_branch($scope2_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
 		_scope_reason();

@@ -14,10 +14,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				_await($scope3_id, "#text/0", resolveAfter("inner", 2), () => {
 					const $scope4_id = _scope_id();
-					_script($scope4_id, "__tests__/template.marko_4_changes#1/pending");
 					_html(`<div>changes: ${_text_resume($scope4_id, "#text/1", changes, 2)}</div>${_el_resume($scope4_id, "#div/0")}`);
 					_script($scope4_id, "__tests__/template.marko_4");
-					_scope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "9:8");
+					_subscribe($changes__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "9:8"), "__tests__/template.marko_4_changes#1/subscribe");
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "7:6");
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_6*content", () => {

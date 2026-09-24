@@ -8,10 +8,7 @@ var my_box_default = _template("b", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "a")}<button type=button class=cap>check</button>${_el_resume($scope0_id, "b")}<div class=out>${_text_resume($scope0_id, "c", captured)}</div>`);
 	_script($scope0_id, "b0");
 	_script($scope0_id, "b1");
-	_scope($scope0_id, {
-		e: input,
-		f: input.content
-	});
+	_scope($scope0_id, { f: input.content });
 });
 
 // template.marko

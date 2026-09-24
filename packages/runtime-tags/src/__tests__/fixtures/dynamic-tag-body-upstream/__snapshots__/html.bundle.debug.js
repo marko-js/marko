@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$si__input_tag__OR__input_foo && _subscribe($si__input_foo && $input_foo__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": $si__input_foo && _existing_scope($childScope)
-		}, "__tests__/template.marko", "2:4"));
+		}, "__tests__/template.marko", "2:4"), "__tests__/template.marko_1_input_foo#6/subscribe", $sg__input_foo);
 		$sg__input_foo || $si__input_tag__OR__input_foo && _resume_branch($scope1_id);
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 1));
 	_dynamic_tag($scope0_id, "#text/1", tag, {}, _content_resume("__tests__/template.marko_2*content", () => {
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": $si__input_foo && _existing_scope($childScope2),
 			"ClosureSignalIndex:input_foo": $si__input_foo && 1
-		}, "__tests__/template.marko", "3:4"));
+		}, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_input_foo#6/subscribe", $sg__input_foo);
 		$sg__input_foo || _resume_branch($scope2_id);
 	}, $scope0_id));
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/2")}`);

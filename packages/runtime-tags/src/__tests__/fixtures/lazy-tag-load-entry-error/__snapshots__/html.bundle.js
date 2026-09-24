@@ -27,7 +27,7 @@ var template_default = _template("b", (input) => {
 		$si__input_label && _subscribe($input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
-		}));
+		}), "b2", $sg__input_label);
 		$sg__input_label || $si__input_label && _resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("b0", () => {
 		_scope_reason();

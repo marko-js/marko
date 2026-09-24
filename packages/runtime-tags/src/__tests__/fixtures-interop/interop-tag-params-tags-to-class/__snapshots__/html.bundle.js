@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_subscribe($multiplier__closures, _scope($scope1_id, {
 			g: baseCount,
 			_: _scope_with_id($scope0_id)
-		}));
+		}), "a2");
 	}, $scope0_id), 0, 0);
 	_scope($scope0_id, {
 		b: multiplier,

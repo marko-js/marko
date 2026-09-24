@@ -20,12 +20,12 @@ const $try_content__show__OR__value = /*@__PURE__*/ _or(1, ($scope) => $try_cont
 	label: "x",
 	value: $scope._.value
 })));
-const $try_content__show = /*@__PURE__*/ _closure_get("show", $try_content__show__OR__value);
+const $try_content__show = /*@__PURE__*/ _closure_get("show", $try_content__show__OR__value, 0, "__tests__/template.marko_1_show#3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__show($scope);
 	$try_content__value($scope);
 };
-const $try_content__value = /*@__PURE__*/ _closure_get("value", $try_content__show__OR__value);
+const $try_content__value = /*@__PURE__*/ _closure_get("value", $try_content__show__OR__value, 0, "__tests__/template.marko_1_value#4/subscribe");
 const $show__closure = /*@__PURE__*/ _closure($try_content__show);
 const $show = /*@__PURE__*/ _let("show/3", $show__closure);
 const $value__closure = /*@__PURE__*/ _closure($try_content__value);

@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope4_id = _scope_id();
 				_scope_reason();
 				_html(`tag ${_text_resume($scope4_id, "#text/0", i, 2)}`);
-				_subscribe($item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "13:10"));
+				_subscribe($item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "13:10"), "__tests__/template.marko_4_i#3/subscribe");
 			}, $scope1_id));
 			_for_until(2, 0, 1, (j) => {
 				const $scope5_id = _scope_id();
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				i,
 				_: _scope_with_id($scope0_id),
 				"ClosureScopes:i": $item_content__i__closures
-			}, "__tests__/template.marko", "11:6", { i: "10:8" }));
+			}, "__tests__/template.marko", "11:6", { i: "10:8" }), "__tests__/template.marko_1_show#6/subscribe");
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				item_text: item?.text,
 				_: _scope_with_id($scope0_id),
 				"ClosureSignalIndex:show": 1
-			}, "__tests__/template.marko", "21:6", { item_text: 0 }));
+			}, "__tests__/template.marko", "21:6", { item_text: 0 }), "__tests__/template.marko_2_show#6/subscribe");
 		}, $scope0_id) });
 	});
 	const $childScope2 = _peek_scope_id();

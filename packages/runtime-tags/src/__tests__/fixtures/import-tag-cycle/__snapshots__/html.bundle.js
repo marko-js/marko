@@ -25,7 +25,7 @@ var cyc_a_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", $sg__input_depth, $sg__input_depth, $sg__input_depth);
-	$si__input_depth && _scope($scope0_id, { e: input.depth });
+	$si__input_depth && _scope($scope0_id, {});
 });
 
 // template.marko

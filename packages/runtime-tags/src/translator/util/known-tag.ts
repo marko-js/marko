@@ -57,6 +57,7 @@ import {
   getSection,
   getSectionForBody,
   type Section,
+  sectionUtil,
   startSection,
 } from "./sections";
 import { buildGroupMask, getSerializeGuard } from "./serialize-guard";
@@ -130,6 +131,12 @@ export function knownTagAnalyze(
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
   tagExtra[kContentSection] = contentSection;
+  if (tagExtra.defineBodySection) {
+    contentSection.callSections = sectionUtil.add(
+      contentSection.callSections,
+      section,
+    );
+  }
 
   const varBinding = trackVarReferences(tag, BindingType.derived);
 
@@ -678,7 +685,7 @@ function analyzeAttrs(
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
         if (
-          getRootSection(templateExportAttr.binding.section) !==
+          templateExportAttr.binding.section.program !==
             getProgram().node.extra.section &&
           isInvokeOnlyBinding(templateExportAttr.binding)
         ) {
@@ -1453,11 +1460,6 @@ function isSimpleReference(expr: t.Expression): boolean {
     default:
       return false;
   }
-}
-
-function getRootSection(section: Section) {
-  while (section.parent) section = section.parent;
-  return section;
 }
 
 function hasGroupReads(

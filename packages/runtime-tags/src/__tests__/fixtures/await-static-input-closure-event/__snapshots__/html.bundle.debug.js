@@ -11,11 +11,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope1_id, "#text/0", data, (d) => {
 			const $scope2_id = _scope_id();
-			$si__input_foo && _script($scope2_id, "__tests__/template.marko_2_input_foo#3/pending");
-			_script($scope2_id, "__tests__/template.marko_2_count#4/pending");
 			_html(`<p>${_text_resume($scope2_id, "#text/0", input.foo, _serialize_guard($scope0_reason, 0))}</p><button>${_text_resume($scope2_id, "#text/2", count)}</button>${_el_resume($scope2_id, "#button/1")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
+			_subscribe($count__closures, _subscribe($si__input_foo && $input_foo__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_input_foo#3/subscribe"), "__tests__/template.marko_2_count#4/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {

@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	let $item;
 	forOf(["a", "b"], (item) => {
-		$item = attrTags($item, { content: _content("a0", () => {
+		$item = attrTags($item, { content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_if(() => {
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			$si__input_show && _subscribe($input_show__closures, _scope($scope1_id, {
 				b: item,
 				_: _scope_with_id($scope0_id)
-			}));
+			}), "a0", $sg__input_show);
 			$sg__input_show || $si__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});

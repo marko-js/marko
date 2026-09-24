@@ -21,6 +21,7 @@ import {
   type OneMany,
   type Opt,
   Sorted,
+  type SortedOpt,
   reduce,
 } from "./optional";
 import {
@@ -146,6 +147,8 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
+  /** For a `<define>` body, the sections whose direct calls render it. */
+  callSections: SortedOpt<Section>;
   /** The content's rendering tag (its extra), and each child binding the
    * content feeds, at `properties`. */
   downstream:
@@ -240,6 +243,7 @@ export function startSection(
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
+      callSections: undefined,
       downstream: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
@@ -327,9 +331,14 @@ export function getChildSections(section: Section) {
   return children;
 }
 
-// `from` and its parents below `to`.
-export function* ancestorSections(from: Section, to: Section) {
-  for (let cur = from; cur !== to && cur.parent; cur = cur.parent) yield cur;
+// Calls `fn` with `from` and each of its parents below `to`.
+export function forEachAncestorSection<A>(
+  from: Section,
+  to: Section,
+  fn: (section: Section, arg: A) => void,
+  arg: A,
+) {
+  for (let cur = from; cur !== to && cur.parent; cur = cur.parent) fn(cur, arg);
 }
 
 export function forEachSectionReverse(fn: (section: Section) => void) {

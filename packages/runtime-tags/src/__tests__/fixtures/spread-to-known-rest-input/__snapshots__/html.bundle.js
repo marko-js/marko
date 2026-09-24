@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { class: _class, ...rest } = input;
 	_html(" <span");
@@ -10,7 +10,10 @@ var child_default = _template("b", (input) => {
 	}, "a", $scope0_id, "span");
 	_html(`</span>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_scope($scope0_id, { d: _class });
+	_scope($scope0_id, {
+		d: _serialize_if($scope0_reason, 1) && _class,
+		e: _serialize_if($scope0_reason, 0) && rest
+	});
 });
 
 // template.marko
@@ -19,6 +22,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div id=known>");
+	_set_serialize_reason($sg__input << 1 | $sg__input << 3);
 	const $childScope = _peek_scope_id();
 	child_default(input);
 	_html("</div><div id=dynamic>");

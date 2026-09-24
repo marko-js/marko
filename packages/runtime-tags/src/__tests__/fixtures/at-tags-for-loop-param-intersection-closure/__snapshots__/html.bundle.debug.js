@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($mult__closures, _scope($scope1_id, {
 				item,
 				_: _scope_with_id($scope0_id)
-			}, "__tests__/template.marko", "4:5", { item: "3:7" }));
+			}, "__tests__/template.marko", "4:5", { item: "3:7" }), "__tests__/template.marko_1_mult#3/subscribe");
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

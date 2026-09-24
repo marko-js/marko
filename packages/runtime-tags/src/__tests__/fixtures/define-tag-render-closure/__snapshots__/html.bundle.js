@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<div>${_text_resume($scope1_id, "a", x)}</div>`);
-		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 	}, $scope0_id) };
 	MyTag.content({});
 	_if(() => {
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b");
 	_html(`<button>${_text_resume($scope0_id, "d", x)}</button>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		e: x,
 		f: $x__closures

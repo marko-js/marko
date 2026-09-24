@@ -6,11 +6,11 @@ const $try_content__show__OR__value = /*@__PURE__*/ _or(1, ($scope) => $try_cont
 	label: "x",
 	value: $scope._.e
 })));
-const $try_content__show = /*@__PURE__*/ _closure_get(5, $try_content__show__OR__value);
-const $try_content__value = /*@__PURE__*/ _closure_get(6, $try_content__show__OR__value);
+const $try_content__show = /*@__PURE__*/ _closure_get(5, $try_content__show__OR__value, 0, "b2", 3);
+const $try_content__value = /*@__PURE__*/ _closure_get(6, $try_content__show__OR__value, 0, "b3", 4);
 const $show = /*@__PURE__*/ _let(3, /* @__PURE__ */ _closure($try_content__show));
 const $value = /*@__PURE__*/ _let(4, /* @__PURE__ */ _closure($try_content__value));
-const $setup__script = _script("b2", ($scope) => {
+const $setup__script = _script("b4", ($scope) => {
 	_on($scope.a, "click", function() {
 		$show($scope, !$scope.d);
 	});

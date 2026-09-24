@@ -1,0 +1,10 @@
+<let/show=true/>
+<const/attrs={ class: "a" }/>
+<define/Box>
+  <div class=attrs.class/>
+</define>
+<button onClick() { show = !show }>toggle</button>
+<if=show>
+  <Box/>
+</if>
+<${show ? Box : null}/>

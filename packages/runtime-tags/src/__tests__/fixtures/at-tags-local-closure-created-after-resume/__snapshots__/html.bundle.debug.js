@@ -81,13 +81,7 @@ var last_default = _template("__tests__/tags/last.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/last.marko_0");
-	_scope($scope0_id, {
-		input_item: input.item,
-		saved_content: saved?.content
-	}, "__tests__/tags/last.marko", 0, {
-		input_item: ["input.item"],
-		saved_content: ["saved.content", "1:6"]
-	});
+	_scope($scope0_id, { input_item: input.item }, "__tests__/tags/last.marko", 0, { input_item: ["input.item"] });
 });
 
 // template.marko
@@ -150,7 +144,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (fail) throw new Error("click");
 			return "ok";
 		})()));
-		_subscribe($fail__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "28:4"));
+		_subscribe($fail__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "28:4"), "__tests__/template.marko_4_fail#7/subscribe");
 	}, $scope0_id), { catch: $catch });
 	_html("</div>");
 	_script($scope0_id, "__tests__/template.marko_0");

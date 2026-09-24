@@ -36,21 +36,21 @@ const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 // template.marko
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $await_content__clicks__OR__tag__OR__body = /*@__PURE__*/ _or(3, ($scope) => $await_content__dynamicTag($scope, $scope._._.f, () => ({ label: `${$scope.c} ${$scope._._.e}` })), 2);
-const $await_content__clicks = /*@__PURE__*/ _closure_get(6, $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "a0");
-const $await_content__tag = /*@__PURE__*/ _closure_get(7, $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "a1");
-const $placeholder_content__clicks = /*@__PURE__*/ _closure_get(6, ($scope) => $input_label($scope.a, `placeholder ${$scope._.e}`));
+const $await_content__clicks = /*@__PURE__*/ _closure_get(6, $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "a1", 4);
+const $await_content__tag = /*@__PURE__*/ _closure_get(7, $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "a2", 5);
+const $placeholder_content__clicks = /*@__PURE__*/ _closure_get(6, ($scope) => $input_label($scope.a, `placeholder ${$scope._.e}`), 0, "a0", 4);
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);
 	$setup($scope.a);
 };
-const $placeholder_content = _content_resume("a2", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $placeholder_content__setup);
+const $placeholder_content = _content_resume("a3", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $placeholder_content__setup);
 const $clicks__closure = /*@__PURE__*/ _closure($placeholder_content__clicks, $await_content__clicks);
 const $clicks = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);
 	$clicks__closure($scope);
 });
 const $tag = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($await_content__tag));
-const $setup__script = _script("a4", ($scope) => {
+const $setup__script = _script("a5", ($scope) => {
 	_on($scope.a, "click", function() {
 		$clicks($scope, +$scope.e + 1);
 	});

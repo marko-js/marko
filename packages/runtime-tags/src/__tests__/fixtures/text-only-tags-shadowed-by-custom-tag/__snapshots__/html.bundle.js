@@ -25,22 +25,22 @@ var template_default = _template("a", (input) => {
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 1;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
-	title_default({ content: _content("a0", () => {
+	title_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`title ${_text_resume($scope1_id, "a", n, 2)}`);
-		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 	}, $scope0_id) });
-	textarea_default({ content: _content("a1", () => {
+	textarea_default({ content: _content("a3", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`textarea ${_text_resume($scope2_id, "a", n, 2)}`);
 		_subscribe($n__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Ce: 1
-		}));
+		}), "a2");
 	}, $scope0_id) });
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a4");
 	_scope($scope0_id, {
 		d: n,
 		e: $n__closures

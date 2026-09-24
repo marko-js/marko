@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						}
 					}, $scope2_id, "#text/1");
 					_html("</div>");
-					_subscribe($showInner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "14:6"));
+					_subscribe($showInner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "14:6"), "__tests__/template.marko_2_showInner#7/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);

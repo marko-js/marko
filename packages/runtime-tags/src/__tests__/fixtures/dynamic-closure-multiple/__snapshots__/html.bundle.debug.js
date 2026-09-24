@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (true) {
 			const $scope2_id = _scope_id();
 			_html(`<div>${_text_resume($scope2_id, "#text/0", a)}</div><div>${_text_resume($scope2_id, "#text/1", b)}</div>`);
-			_subscribe($b__closures, _subscribe($a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "8:4")));
+			_subscribe($b__closures, _subscribe($a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "8:4"), "__tests__/template.marko_2_a#2/subscribe"), "__tests__/template.marko_2_b#3/subscribe");
 		}
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2");
 	}, $scope0_id), {});

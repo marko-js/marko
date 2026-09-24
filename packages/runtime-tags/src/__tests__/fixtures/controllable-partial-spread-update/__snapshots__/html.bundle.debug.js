@@ -12,8 +12,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "#input/1", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/1")}<div>${_text_resume($scope0_id, "#text/2", v)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_rest#4");
 	_script($scope0_id, "__tests__/template.marko_0");
-	_scope($scope0_id, { rest }, "__tests__/template.marko", 0, {
-		rest: "2:6",
-		"ControlledHandler:#input/1": ["valueChange"]
-	});
+	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/1": ["valueChange"] });
 }, 1);

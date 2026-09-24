@@ -16,7 +16,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `<button id=change>change</button
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b/${_w0}&/${_w1}&b`)($walks$1, $walks$1);
 const $child_content__y = ($scope, y) => _text($scope["#text/0"], y);
 const $child_content__fallback__OR__$y = /*@__PURE__*/ _or(3, ($scope) => $child_content__y($scope, void 0 !== $scope.$y ? $scope.$y : $scope._.fallback));
-const $child_content__fallback = /*@__PURE__*/ _closure_get("fallback", $child_content__fallback__OR__$y);
+const $child_content__fallback = /*@__PURE__*/ _closure_get("fallback", $child_content__fallback__OR__$y, 0, "__tests__/template.marko_1_fallback#3/subscribe");
 const $child_content__setup = $child_content__fallback;
 const $child_content__$y = /*@__PURE__*/ _const("$y", $child_content__fallback__OR__$y);
 const $child_content__$params = ($scope, $params2) => $child_content__$y($scope, $params2[0]);

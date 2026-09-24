@@ -30,11 +30,11 @@ var template_default = _template("a", (input) => {
 			x = _new_x;
 		}, "a0", $scope0_id),
 		id: "controlled",
-		content: _content("a1", () => {
+		content: _content("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", x));
-			_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 		}, $scope0_id)
 	});
 	_set_serialize_reason(32);
@@ -42,14 +42,14 @@ var template_default = _template("a", (input) => {
 	counter_default({
 		count: x,
 		id: "uncontrolled",
-		content: _content("a2", () => {
+		content: _content("a4", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(_text_resume($scope2_id, "a", x));
 			_subscribe($x__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope0_id),
 				Cd: 1
-			}));
+			}), "a3");
 		}, $scope0_id)
 	});
 	_scope($scope0_id, {

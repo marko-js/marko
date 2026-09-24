@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/count=1/>
+<button onClick() { count = 2 }>set</button>
+<try>
+  <@placeholder>loading...</@placeholder>
+  <await=resolveAfter(0, 1)>
+    <span>${count}</span>
+    <script>$signal.onabort = () => {}</script>
+  </await>
+</try>

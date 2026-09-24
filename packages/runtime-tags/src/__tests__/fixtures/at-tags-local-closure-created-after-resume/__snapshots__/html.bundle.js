@@ -57,10 +57,7 @@ var last_default = _template("d", (input) => {
 	_html(`<button id=save-last>save</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "d0");
-	_scope($scope0_id, {
-		e: input.item,
-		g: void 0
-	});
+	_scope($scope0_id, { e: input.item });
 });
 
 // template.marko
@@ -121,10 +118,10 @@ var template_default = _template("a", (input) => {
 		_html(_text_resume($scope4_id, "a", (() => {
 			return "ok";
 		})()));
-		_subscribe($fail__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($fail__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), "a5");
 	}, $scope0_id), { catch: $catch });
 	_html("</div>");
-	_script($scope0_id, "a5");
+	_script($scope0_id, "a6");
 	_scope($scope0_id, {
 		g: items?.[0],
 		j: $fail__closures

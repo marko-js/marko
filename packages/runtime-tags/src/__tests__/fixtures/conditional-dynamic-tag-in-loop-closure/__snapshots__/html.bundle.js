@@ -12,7 +12,7 @@ var sections_default = _template("b", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
-		$si__input_section && _scope($scope1_id, { d: content });
+		$si__input_section && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
 	$si__input_section && _scope($scope0_id, {});
 });
@@ -26,10 +26,10 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
 	sections_default({ section: attrTag({
-		onClick: _resume(function() {
+		onClick: function() {
 			count++;
-		}, "a0", $scope0_id),
-		content: _content_resume("a1", () => {
+		},
+		content: _content("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", count));
@@ -37,7 +37,6 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id)
 	}) });
 	_scope($scope0_id, {
-		b: count,
 		c: $count__closures,
 		a: _existing_scope($childScope)
 	});

@@ -4,8 +4,8 @@ const $input_tag__OR__input_button = /*@__PURE__*/ _or(5, ($scope) => $dynamicTa
 const $input_button = /*@__PURE__*/ _const(4, $input_tag__OR__input_button);
 
 // template.marko
-const $button_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b));
-const $button_content = /*@__PURE__*/ _content("a1", " ", " ", $button_content__count);
+const $button_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b), 0, "a1", 1);
+const $button_content = /*@__PURE__*/ _content("a2", " ", " ", $button_content__count);
 const $count__closure = /*@__PURE__*/ _closure($button_content__count);
 const $count = /*@__PURE__*/ _let(1, ($scope) => {
 	$input_button($scope.a, attrTag({

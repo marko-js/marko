@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let a = 0;
 	_html("<div");
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "#div/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_value#5_a#6");
 	_script($scope0_id, "__tests__/template.marko_0_input_value#5");
-	_scope($scope0_id, { a }, "__tests__/template.marko", 0, {
+	_scope($scope0_id, { a: _serialize_if($scope0_reason, 0) && a }, "__tests__/template.marko", 0, {
 		a: "1:6",
 		"EventAttributes:#div/0": ["...input.value", "2:9"],
 		"EventAttributes:#div/1": ["...input.value", "3:13"],

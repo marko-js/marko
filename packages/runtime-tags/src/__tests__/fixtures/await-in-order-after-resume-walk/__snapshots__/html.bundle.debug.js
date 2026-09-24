@@ -9,10 +9,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope1_id, "#text/0", resolveAfter(1, 1), (x) => {
 			const $scope2_id = _scope_id();
-			_script($scope2_id, "__tests__/template.marko_2_value#2/pending");
 			_html(`<button>${_text_resume($scope2_id, "#text/1", value)}</button>${_el_resume($scope2_id, "#button/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:4");
+			_subscribe($value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_2_value#2/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {

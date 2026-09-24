@@ -19,7 +19,7 @@ const $try_content2__setup = ($scope) => _text($scope["#text/0"], (() => {
 const $try_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => _text($scope["#text/0"], (() => {
 	if ($scope._.clicks) throw new Error("click");
 	return $scope._.clicks;
-})()));
+})()), 0, "__tests__/template.marko_1_clicks#3/subscribe");
 const $try_content__setup = $try_content__clicks;
 const $try2 = /*@__PURE__*/ _try("#text/2", "clicks <!>", "b%", $try_content__setup);
 const $clicks__closure = /*@__PURE__*/ _closure($try_content__clicks);

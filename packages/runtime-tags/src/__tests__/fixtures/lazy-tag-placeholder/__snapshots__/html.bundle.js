@@ -22,14 +22,14 @@ var template_default = _template("b", (input) => {
 		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
-		}));
+		}), "b2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
 	}, $scope0_id) }) });
 	_html(`<button>click</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "b2");
+	_script($scope0_id, "b3");
 	_scope($scope0_id, {
 		f: count,
 		g: $count__closures

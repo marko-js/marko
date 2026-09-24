@@ -1,0 +1,10 @@
+<let/depth=1/>
+<const/label="node"/>
+<define/Tree|{ level }|>
+  <span>${label}${level}</span>
+  <if=(level < depth)>
+    <Tree level=(level + 1)/>
+  </if>
+</define>
+<button onClick() { depth++ }>deeper</button>
+<Tree level=1/>

@@ -15,7 +15,7 @@ const $try_content__clickCount__script = _script("__tests__/template.marko_1_cli
 const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => {
 	$try_content__await_promise($scope, resolveAfter($scope._.clickCount));
 	$try_content__clickCount__script($scope);
-});
+}, 0, "__tests__/template.marko_1_clickCount#3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__clickCount($scope);
 	$await_content($scope);

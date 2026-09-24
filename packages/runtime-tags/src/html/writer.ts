@@ -820,12 +820,18 @@ function scopeWithId(state: State, scopeId: number) {
 export function _subscribe(
   subscribers: Set<ScopeInternals> | undefined,
   scope: ScopeInternals,
+  resumeId?: string,
+  serializeMarker?: number,
 ) {
   if (subscribers) {
     const { serializer } = $chunk.boundary.state;
     if (!$chunk.serializeState.readyId && !serializer.written(subscribers)) {
       // An unflushed set carries its subscriber in the same payload.
       subscribers.add(scope);
+    } else if (resumeId) {
+      // Its owner resumes first and the client may change the closure before
+      // this arrives, so the subscriber applies that and subscribes on resume.
+      _script(scope[K_SCOPE_ID]!, resumeId, serializeMarker);
     } else {
       // Flushed or lazy sets add subscribers through their gated channel.
       serializer.writeCall(scope, subscribers, "add", $chunk.serializeState);

@@ -19,10 +19,7 @@ var my_box_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id();
 	echo_default(input.head);
 	_script($scope0_id, "c0");
-	_scope($scope0_id, {
-		e: input.head,
-		b: _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
-	});
+	_scope($scope0_id, { b: _serialize_if($scope0_reason, 0) && _existing_scope($childScope) });
 });
 
 // template.marko
@@ -30,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	my_box_default({ head: attrTag({
 		class: "h",
-		content: _content_resume("a0", () => {
+		content: _content("a0", () => {
 			_scope_reason();
 			_scope_id();
 			_html("Hello");

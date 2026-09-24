@@ -17,7 +17,7 @@ var template_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_if(() => {}, $scope1_id, "a");
-		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b3");
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_resume("b0", () => {
 			_scope_reason();
@@ -31,6 +31,6 @@ var template_default = _template("b", (input) => {
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
 		}, $scope0_id) })
 	});
-	_script($scope0_id, "b3");
+	_script($scope0_id, "b4");
 	_scope($scope0_id, { d: $show__closures });
 }, 1);

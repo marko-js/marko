@@ -41,12 +41,12 @@ const $template = "<button>clicks <!></button><button class=swap>swap</button><!
 const $walks = " Db%l b%c";
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content__clicks__OR__tag__OR__body = /*@__PURE__*/ _or(3, ($scope) => $await_content__dynamicTag($scope, $scope._._.tag, () => ({ label: `${$scope.body} ${$scope._._.clicks}` })), 2);
-const $await_content__clicks = /*@__PURE__*/ _closure_get("clicks", $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "__tests__/template.marko_3_clicks#4/pending");
+const $await_content__clicks = /*@__PURE__*/ _closure_get("clicks", $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "__tests__/template.marko_3_clicks#4/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__clicks($scope);
 	$await_content__tag($scope);
 };
-const $await_content__tag = /*@__PURE__*/ _closure_get("tag", $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "__tests__/template.marko_3_tag#5/pending");
+const $await_content__tag = /*@__PURE__*/ _closure_get("tag", $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "__tests__/template.marko_3_tag#5/subscribe");
 const $await_content__body = /*@__PURE__*/ _const("body", $await_content__clicks__OR__tag__OR__body);
 const $await_content__$params = ($scope, $params2) => $await_content__body($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
@@ -55,7 +55,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("body", 2));
 };
-const $placeholder_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => $input_label($scope["#childScope/0"], `placeholder ${$scope._.clicks}`));
+const $placeholder_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => $input_label($scope["#childScope/0"], `placeholder ${$scope._.clicks}`), 0, "__tests__/template.marko_1_clicks#4/subscribe");
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);
 	$setup$1($scope["#childScope/0"]);

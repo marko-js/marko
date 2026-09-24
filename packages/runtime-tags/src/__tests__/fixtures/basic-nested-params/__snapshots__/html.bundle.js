@@ -23,17 +23,17 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: x,
-		content: _content_resume("a1", (outer) => {
+		content: _content_resume("a2", (outer) => {
 			const $scope1_reason = _scope_reason(), $sg__outer = _serialize_guard($scope1_reason, 0), $si__outer = _serialize_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $child_content__outer__closures = /* @__PURE__ */ new Set();
 			child_default({
 				value: y,
-				content: _content("a0", (inner) => {
+				content: _content("a1", (inner) => {
 					const $scope2_reason = _scope_reason(), $sg__inner = _serialize_guard($scope2_reason, 0);
 					const $scope2_id = _scope_id();
 					_html(`<div>${_text_resume($scope2_id, "a", outer, $sg__outer)}.${_text_resume($scope2_id, "b", inner, $sg__inner * 2)}</div>`);
-					(_serialize_if($scope1_reason, 0) || _serialize_if($scope2_reason, 0)) && _subscribe($si__outer && $child_content__outer__closures, _scope($scope2_id, { _: $si__outer && _scope_with_id($scope1_id) }));
+					(_serialize_if($scope1_reason, 0) || _serialize_if($scope2_reason, 0)) && _subscribe($si__outer && $child_content__outer__closures, _scope($scope2_id, { _: $si__outer && _scope_with_id($scope1_id) }), "a0", $sg__outer || $sg__inner);
 					$sg__outer || $sg__inner || (_serialize_if($scope1_reason, 0) || _serialize_if($scope2_reason, 0)) && _resume_branch($scope2_id);
 				}, $scope1_id)
 			});
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		c: x,
 		d: y,

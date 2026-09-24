@@ -34,7 +34,7 @@ const $if_content3__setup = ($scope) => {
 	$name($scope["#childScope/0"], "Inner");
 };
 const $if_content2__if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content3__setup);
-const $if_content2__showInner = /*@__PURE__*/ _closure_get("showInner", ($scope) => $if_content2__if($scope, $scope._._.showInner ? 0 : 1), ($scope) => $scope._._);
+const $if_content2__showInner = /*@__PURE__*/ _closure_get("showInner", ($scope) => $if_content2__if($scope, $scope._._.showInner ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_showInner#7/subscribe");
 const $if_content2__setup = ($scope) => {
 	$if_content2__showInner($scope);
 	$if_content2__write($scope);

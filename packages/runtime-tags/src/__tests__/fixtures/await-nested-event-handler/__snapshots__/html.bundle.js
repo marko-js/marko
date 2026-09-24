@@ -14,10 +14,9 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_await($scope3_id, "a", resolveAfter("inner", 2), () => {
 					const $scope4_id = _scope_id();
-					_script($scope4_id, "a0");
 					_html(`<div>changes: ${_text_resume($scope4_id, "b", changes, 2)}</div>${_el_resume($scope4_id, "a")}`);
-					_script($scope4_id, "a1");
-					_scope($scope4_id, { _: _scope_with_id($scope3_id) });
+					_script($scope4_id, "a0");
+					_subscribe($changes__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }), "a1");
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a2", () => {

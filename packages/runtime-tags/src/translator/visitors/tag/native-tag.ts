@@ -37,7 +37,7 @@ import {
   isOutputHTML,
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
-import { forEach, type Opt, push } from "../../util/optional";
+import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -48,7 +48,6 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
   trackDomVarReferences,
-  propsUtil,
 } from "../../util/references";
 import {
   callRuntime,
@@ -311,7 +310,6 @@ export default {
         }
 
         if (spreadReferenceNodes) {
-          const isMergedSpread = !!relatedControllable;
           if (
             relatedControllable &&
             !relatedControllable.attrs.every(Boolean)
@@ -333,34 +331,6 @@ export default {
           // Functions in native tag attrs are only ever invoked (handlers)
           // or stringified from static source, so reads inside can be lazy.
           spreadExtra.invokeOnly = true;
-          if (isMergedSpread) {
-            spreadExtra.nativeTagSpreadMerged = true;
-          }
-
-          let carveProperties = getSpreadControllableValueProps(tagName);
-          if (
-            !tag.node.body.body.length &&
-            !isTextOnly &&
-            !getTagDef(tag)?.parseOptions?.openTagOnly &&
-            !seen.content
-          ) {
-            if (carveProperties) {
-              carveProperties.push("content");
-            } else {
-              carveProperties = ["content"];
-            }
-          }
-          forEach(spreadExtra.spreadFrom, (spreadBinding) => {
-            spreadBinding.noSerialize = true;
-            if (carveProperties) {
-              for (const property of carveProperties) {
-                spreadBinding.noSerializeProperties = propsUtil.add(
-                  spreadBinding.noSerializeProperties,
-                  property,
-                );
-              }
-            }
-          });
         }
 
         if (relatedControllable) {

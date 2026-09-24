@@ -32,7 +32,6 @@ import {
   addValue,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
-  setTryHasPlaceholder,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
@@ -98,10 +97,6 @@ export default {
           return;
         }
 
-        if (tag.node.extra?.attributeTags?.["@placeholder"]) {
-          setTryHasPlaceholder(bodySection, true);
-        }
-
         setSectionParentIsOwner(bodySection, true);
         writer.flushBefore(tag);
       },
@@ -146,10 +141,6 @@ export default {
       enter(tag) {
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody)!;
-
-        if (tag.node.extra?.attributeTags?.["@placeholder"]) {
-          setTryHasPlaceholder(bodySection, true);
-        }
 
         setSectionParentIsOwner(bodySection, true);
       },

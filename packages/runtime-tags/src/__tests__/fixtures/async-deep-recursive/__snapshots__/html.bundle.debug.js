@@ -12,14 +12,13 @@ const $content = (input) => {
 				const $scope2_reason = _scope_reason();
 				_await($scope2_id, "#text/0", resolveAfter(0), () => {
 					const $scope3_id = _scope_id();
-					$si__input_level && _script($scope3_id, "__tests__/tags/recurse.marko_3_input_level#3/pending", $sg__input_level);
 					_set_serialize_reason($sg__input_level << 1);
 					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
-					$si__input_level && _scope($scope3_id, {
+					$si__input_level && _subscribe($input_level__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						"#childScope/0": _existing_scope($childScope)
-					}, "__tests__/tags/recurse.marko", "7:7");
+					}, "__tests__/tags/recurse.marko", "7:7"), "__tests__/tags/recurse.marko_3_input_level#3/subscribe", $sg__input_level);
 					$sg__input_level || $si__input_level && _resume_branch($scope3_id);
 				}, $sg__input_level);
 				$si__input_level && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/recurse.marko", "5:5");
@@ -33,10 +32,7 @@ const $content = (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_level, $sg__input_level, $sg__input_level, 0, 1);
-	$si__input_level && _scope($scope0_id, {
-		input_level: input.level,
-		"ClosureScopes:input_level": $input_level__closures
-	}, "__tests__/tags/recurse.marko", 0, { input_level: ["input.level"] });
+	$si__input_level && _scope($scope0_id, { "ClosureScopes:input_level": $input_level__closures }, "__tests__/tags/recurse.marko", 0);
 };
 var recurse_default = _template("__tests__/tags/recurse.marko", $content);
 

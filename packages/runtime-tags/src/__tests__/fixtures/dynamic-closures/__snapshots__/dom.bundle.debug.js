@@ -18,7 +18,7 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__c($scope);
 	_text($scope["#text/0"], a);
 };
-const $if_content2__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope["#text/2"], $scope._._.c), ($scope) => $scope._._);
+const $if_content2__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope["#text/2"], $scope._._.c), ($scope) => $scope._._, "__tests__/template.marko_3_c#4/subscribe");
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!> <!> <!>", "%c%c%", $if_content2__setup);
 const $if_content__setup = ($scope) => $if_content__if($scope, Math.random() ? 0 : 1);
 const $customtag_content__b = /*@__PURE__*/ _closure_get("b", ($scope) => _text($scope["#text/1"], $scope._.b));
@@ -27,7 +27,7 @@ const $customtag_content__setup = ($scope) => {
 	$customtag_content__c($scope);
 	_text($scope["#text/0"], a);
 };
-const $customtag_content__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope["#text/2"], $scope._.c));
+const $customtag_content__c = /*@__PURE__*/ _closure_get("c", ($scope) => _text($scope["#text/2"], $scope._.c), 0, "__tests__/template.marko_1_c#4/subscribe");
 const $customtag_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!> <!> <!>", "%c%c%", $customtag_content__setup);
 const $b = /*@__PURE__*/ _const("b");
 const $c__closure = /*@__PURE__*/ _closure($customtag_content__c, $if_content2__c);

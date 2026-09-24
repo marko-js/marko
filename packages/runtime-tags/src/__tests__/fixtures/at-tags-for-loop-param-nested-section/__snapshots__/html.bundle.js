@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(2);
 	let $item;
 	forUntil(count, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content("a1", () => {
+		$item = attrTags($item, { content: _content("a3", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			const $item_content__i__closures = /* @__PURE__ */ new Set();
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 				const $scope4_id = _scope_id();
 				_scope_reason();
 				_html(`tag ${_text_resume($scope4_id, "a", i, 2)}`);
-				_subscribe($item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }));
+				_subscribe($item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }), "a1");
 			}, $scope1_id));
 			_for_until(2, 0, 1, (j) => {
 				const $scope5_id = _scope_id();
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 				d: i,
 				_: _scope_with_id($scope0_id),
 				e: $item_content__i__closures
-			}));
+			}), "a2");
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(2);
 	let $item2;
 	forOf(items, (item) => {
-		$item2 = attrTags($item2, { content: _content("a2", () => {
+		$item2 = attrTags($item2, { content: _content("a5", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_if(() => {
@@ -72,12 +72,12 @@ var template_default = _template("a", (input) => {
 				b: item?.text,
 				_: _scope_with_id($scope0_id),
 				Ci: 1
-			}));
+			}), "a4");
 		}, $scope0_id) });
 	});
 	const $childScope2 = _peek_scope_id();
 	list_default({ item: $item2 });
-	_script($scope0_id, "a3");
+	_script($scope0_id, "a6");
 	_scope($scope0_id, {
 		f: count,
 		g: show,

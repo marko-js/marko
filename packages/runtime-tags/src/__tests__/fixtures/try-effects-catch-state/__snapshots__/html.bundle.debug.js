@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		})(), 2)}`);
 		_script($scope1_id, "__tests__/template.marko_1_clickCount#2");
 		_script($scope1_id, "__tests__/template.marko_1");
-		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
+		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_clickCount#2/subscribe");
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", (err) => {
 		const $scope2_reason = _scope_reason(), $sg__err = _serialize_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();

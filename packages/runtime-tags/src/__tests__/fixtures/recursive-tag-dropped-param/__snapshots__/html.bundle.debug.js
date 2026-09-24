@@ -24,7 +24,7 @@ const $content = (input) => {
 		}
 	}, $scope0_id, "#text/1", $sg__input_depth, $sg__input_depth, $sg__input_depth);
 	leaf_default({});
-	$si__input_depth && _scope($scope0_id, { input_depth: input.depth }, "__tests__/tags/tree.marko", 0, { input_depth: ["input.depth"] });
+	$si__input_depth && _scope($scope0_id, {}, "__tests__/tags/tree.marko", 0);
 };
 var tree_default = _template("__tests__/tags/tree.marko", $content);
 

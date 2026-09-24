@@ -11,13 +11,7 @@ var template_default = _template("a", (input) => {
 		_html(`</button>${_el_resume($scope1_id, "a")} `);
 		_script($scope1_id, "a3");
 		_script($scope1_id, "a4");
-		_scope($scope1_id, {
-			c: {
-				...input,
-				content: void 0
-			},
-			d: input.onClick
-		});
+		_scope($scope1_id, { d: input.onClick });
 	}, $scope0_id) }).content({
 		"on-click": _resume(function() {
 			throw new Error("Should never be called.");

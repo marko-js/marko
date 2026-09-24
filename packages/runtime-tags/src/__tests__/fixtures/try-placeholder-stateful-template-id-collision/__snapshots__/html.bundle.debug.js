@@ -40,14 +40,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope2_id, "#text/0", resolveAfter("body", 2), (body) => {
 			const $scope3_id = _scope_id();
-			_script($scope3_id, "__tests__/template.marko_3_clicks#4/pending");
-			_script($scope3_id, "__tests__/template.marko_3_tag#5/pending");
 			_dynamic_tag($scope3_id, "#text/0", tag, { label: `${body} ${clicks}` });
-			_scope($scope3_id, {
+			_subscribe($tag__closures, _subscribe($clicks__closures, _scope($scope3_id, {
 				body,
 				_: _scope_with_id($scope2_id),
 				"ClosureSignalIndex:clicks": 1
-			}, "__tests__/template.marko", "11:4", { body: "11:10" });
+			}, "__tests__/template.marko", "11:4", { body: "11:10" }), "__tests__/template.marko_3_clicks#4/subscribe"), "__tests__/template.marko_3_tag#5/subscribe");
 		});
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2");
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -59,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($clicks__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "10:4"));
+		}, "__tests__/template.marko", "10:4"), "__tests__/template.marko_1_clicks#4/subscribe");
 	}, $scope0_id) }) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

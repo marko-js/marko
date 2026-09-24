@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`Got: ${_text_resume($scope4_id, "#text/0", value, $sg__input_value * 2)}`);
 			$si__input_value && _scope($scope4_id, {}, "__tests__/template.marko", "2:4");
 		}, $sg__input_value);
-		$si__input_value && _subscribe($input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
+		$si__input_value && _subscribe($input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_value#3/subscribe", 0);
 		$si__input_value && _resume_branch($scope1_id);
 	}, $scope0_id), {
 		catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", (err) => {

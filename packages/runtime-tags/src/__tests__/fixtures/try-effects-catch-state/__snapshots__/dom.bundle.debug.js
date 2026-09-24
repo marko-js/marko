@@ -10,7 +10,7 @@ const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scop
 		if ($scope._.clickCount > 1) throw new Error("ERROR!");
 	})());
 	$try_content__clickCount__script($scope);
-});
+}, 0, "__tests__/template.marko_1_clickCount#2/subscribe");
 const $try_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clickCount($scope._, +$scope._.clickCount + 1);
 }));

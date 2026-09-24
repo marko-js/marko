@@ -14,7 +14,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}, "#button/0", $scope1_id, "button");
 		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item#2");
-		_scope($scope1_id, { item }, "__tests__/tags/child.marko", "4:2", { item: "4:6" });
+		_scope($scope1_id, {}, "__tests__/tags/child.marko", "4:2");
 	}, 0, $scope0_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`One ${_text_resume($scope1_id, "#text/0", count, 2)}`);
-			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_count#1/subscribe");
 		}, $scope0_id)
 	}) });
 	_scope($scope0_id, {

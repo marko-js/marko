@@ -19,13 +19,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	echo_default(input.head);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input_head#4");
-	_scope($scope0_id, {
-		input_head: input.head,
-		"#childScope/1": _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
-	}, "__tests__/tags/my-box.marko", 0, {
-		input_head: ["input.head"],
-		"EventAttributes:#div/0": ["...input.head", "1:9"]
-	});
+	_scope($scope0_id, { "#childScope/1": _serialize_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/tags/my-box.marko", 0, { "EventAttributes:#div/0": ["...input.head", "1:9"] });
 });
 
 // template.marko
@@ -34,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	my_box_default({ head: attrTag({
 		class: "h",
-		content: _content_resume("__tests__/template.marko_1*content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("Hello");
