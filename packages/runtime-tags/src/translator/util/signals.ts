@@ -391,10 +391,7 @@ export function getSignal(
                 [scopeIdentifier],
                 getScopeExpression(section, closure.section),
               ),
-          // Match the HTML registration, which is gated on this subscriber
-          // section (writeHTMLResumeStatements); keying on any sibling closure
-          // section would ship a pending id that nothing looks up.
-          underTryPlaceholder(section) && closureResumes(closure)
+          replaysPending(section, closure) && getSerializeReason(section)
             ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
             : undefined,
         );
@@ -402,6 +399,17 @@ export function getSignal(
     }
   }
   return signal;
+}
+
+// Both outputs gate the pending replay registration on this: the DOM emits the
+// id, the HTML writes it, and a section that replays here never subscribes.
+function replaysPending(section: Section, closure: Binding) {
+  return !!(
+    closure.sources &&
+    isDynamicClosure(section, closure) &&
+    underTryPlaceholder(section) &&
+    closureResumes(closure)
+  );
 }
 
 // A closure over state no resumed instance can write never replays: the
@@ -1293,7 +1301,7 @@ export function writeHTMLResumeStatements(
           closure,
           getAccessorPrefix().ClosureScopes,
         );
-        if (underTryPlaceholder(section) && closureResumes(closure)) {
+        if (replaysPending(section, closure)) {
           const reason = getSerializeReason(section);
           if (reason) {
             // The pending effect replays the closure on resume, so it must be
