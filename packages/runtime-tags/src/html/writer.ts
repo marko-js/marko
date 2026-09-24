@@ -4,7 +4,11 @@ import {
   assertValidLoopKey,
 } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
-import { isPromise, normalizeDynamicRenderer } from "../common/helpers";
+import {
+  hasKeys,
+  isPromise,
+  normalizeDynamicRenderer,
+} from "../common/helpers";
 import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { concat, forEach, type Opt, push } from "../common/opt";
@@ -1882,7 +1886,7 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
       const props = writeScopes[scopeId];
       // Only props written by this state are transmitted; scopes that were
       // merely referenced are resolved by id wherever they are used.
-      if (Object.getOwnPropertyNames(props).length) {
+      if (hasKeys(props)) {
         flushes.push([scopeId, state.scopes.get(scopeId)!, props]);
       }
     }
