@@ -236,10 +236,9 @@ function analyzeExpressionTagName(
           continue;
           // TODO: Optimize for when we are certain that this is either always a string or always a custom tag
         }
-
-        continue;
       }
 
+      // Any other tag variable (a `<define>`'s, a child's) may name a component.
       type = TagNameType.DynamicTag;
     } else {
       type = TagNameType.DynamicTag;

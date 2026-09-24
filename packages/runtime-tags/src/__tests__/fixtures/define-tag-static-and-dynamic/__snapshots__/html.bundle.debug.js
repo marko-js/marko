@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html("static");
 	}, $scope0_id) });
-	_dynamic_tag($scope0_id, "#text/2", useBox ? Box : "div", {}, _content("__tests__/template.marko_3*content", () => {
+	_dynamic_tag($scope0_id, "#text/2", useBox ? Box : "div", {}, _content_resume("__tests__/template.marko_3*content", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
 		_html("dynamic");
