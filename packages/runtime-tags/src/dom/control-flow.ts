@@ -134,8 +134,6 @@ export function _await_promise(
               anchor.replaceWith(detachedParent);
             }
           }
-        } else {
-          dismissPlaceholder(tryBranch);
         }
       });
     }
