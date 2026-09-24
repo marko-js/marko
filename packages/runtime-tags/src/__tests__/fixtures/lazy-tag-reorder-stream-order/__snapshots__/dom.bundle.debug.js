@@ -36,7 +36,7 @@ const $await_content2__setup = ($scope) => {
 };
 const $await_content2__label = ($scope, label) => $load_Child_tag_input_label($scope["#childScope/1"], label);
 const $await_content2__$params = ($scope, $params3) => $await_content2__label($scope, $params3[0]);
-const $await_content__shared = /*@__PURE__*/ _closure_get("shared", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._._.shared), ($scope) => $scope._._, "__tests__/template.marko_2_shared#2/pending");
+const $await_content__shared = /*@__PURE__*/ _closure_get("shared", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._._.shared), ($scope) => $scope._._);
 const $await_content__setup = ($scope) => {
 	$await_content__shared($scope);
 	$load_Child_setup($scope);
