@@ -840,7 +840,6 @@ export function _subscribe(
   return scope;
 }
 
-// A reason is 1, empty, an offset group bitmask, or a keyed dynamic guard.
 // A reason: two bits per param-reason group at `1 + 2 * group` (the low
 // bit says the group serializes), a keyed object of group values, or none.
 export type SerializeReasonValue =
@@ -851,13 +850,15 @@ export type SerializeReasonValue =
 // Every group serializes: for a child whose groups the caller cannot see.
 export const CLIENT_ALL = 0x2aaaaaaa;
 
-// A group's 2-bit value; no mask at all means nothing serializes. The all
-// mask is a sentinel: its bits cover the groups a keyed object takes over.
+// A group's 2-bit value. A number packs groups 0-14 (a later group makes the
+// reason keyed), except the all sentinel, which covers every group.
 export function maskGroup(mask: SerializeReasonValue, group: number) {
   return mask === CLIENT_ALL
     ? 1
     : typeof mask === "number"
-      ? (mask >>> (1 + 2 * group)) & 3
+      ? group < 15
+        ? (mask >>> (1 + 2 * group)) & 3
+        : 0
       : ((mask as Partial<Record<number, number>>)[group] ?? 0);
 }
 
