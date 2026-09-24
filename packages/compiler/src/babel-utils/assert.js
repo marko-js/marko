@@ -1,3 +1,5 @@
+// Messages open with a bare "Tag" on purpose: the code frame they are thrown
+// with already marks the tag, so naming it again is redundant.
 export function assertAllowedAttributes(path, allowed) {
   let i = 0;
   for (const attr of path.node.attributes) {
