@@ -56,6 +56,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type ParamSerializeReasonGroups,
   type Section,
   sectionUtil,
   startSection,
@@ -266,20 +267,10 @@ export function knownTagTranslateHTML(
   }
 
   if (contentSection.paramReasonGroups) {
-    // Each group's serialize guard is its bit.
-    const childSerializeReasonExpr = buildGroupMask(
-      contentSection.paramReasonGroups.map((group) => {
-        const reason = getSerializeReason(section, childScopeBinding, group.id);
-        const guard = reason && getSerializeGuard(section, reason, false)!;
-        return {
-          value: !guard
-            ? undefined
-            : guard.type === "NumericLiteral"
-              ? guard.value
-              : guard,
-          names: getDebugNames(group.reason),
-        };
-      }),
+    const childSerializeReasonExpr = buildChildSerializeReason(
+      section,
+      childScopeBinding,
+      contentSection.paramReasonGroups,
     );
 
     if (childSerializeReasonExpr) {
@@ -398,6 +389,28 @@ export function finalizeKnownTags(section: Section) {
       }
     }
   }
+}
+
+// Each group's serialize guard is its bit.
+function buildChildSerializeReason(
+  section: Section,
+  childScopeBinding: Binding,
+  reasonGroups: ParamSerializeReasonGroups,
+) {
+  return buildGroupMask(
+    reasonGroups.map((group) => {
+      const reason = getSerializeReason(section, childScopeBinding, group.id);
+      const guard = reason && getSerializeGuard(section, reason, false)!;
+      return {
+        value: !guard
+          ? undefined
+          : guard.type === "NumericLiteral"
+            ? guard.value
+            : guard,
+        names: getDebugNames(group.reason),
+      };
+    }),
+  );
 }
 
 function analyzeParams(
