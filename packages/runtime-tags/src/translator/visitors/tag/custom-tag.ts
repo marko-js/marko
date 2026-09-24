@@ -32,7 +32,11 @@ import {
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import { BindingType, createBinding } from "../../util/references";
-import { callRuntime, importRuntimeFeature } from "../../util/runtime";
+import {
+  callRuntime,
+  dynamicImport,
+  importRuntimeFeature,
+} from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection, StructureKind } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
@@ -218,16 +222,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           signals.set(signalKey, signalIdent);
           const loadExpr = t.arrowFunctionExpression(
             [],
-            t.callExpression(t.import(), [
-              t.stringLiteral(
-                buildLoadSignalVirtualModule(
-                  file,
-                  childFileName,
-                  binding.export!,
-                  binding.name,
-                )!,
-              ),
-            ]),
+            dynamicImport(
+              buildLoadSignalVirtualModule(
+                file,
+                childFileName,
+                binding.export!,
+                binding.name,
+              )!,
+            ),
           );
           getProgram().node.body.push(
             t.variableDeclaration("let", [
@@ -257,11 +259,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           setups.set(setupKey, setupIdent);
           const setupLoadExpr = t.arrowFunctionExpression(
             [],
-            t.callExpression(t.import(), [
-              t.stringLiteral(
-                buildLoadSetupVirtualModule(file, childFileName, childExports),
-              ),
-            ]),
+            dynamicImport(
+              buildLoadSetupVirtualModule(file, childFileName, childExports),
+            ),
           );
           importRuntimeFeature("catch");
           getProgram().node.body.push(

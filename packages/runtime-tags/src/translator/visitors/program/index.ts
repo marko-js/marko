@@ -26,7 +26,11 @@ import {
   finalizeReferences,
   trackParamsReferences,
 } from "../../util/references";
-import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
+import {
+  dynamicImport,
+  getCompatRuntimeFile,
+  getRuntimePath,
+} from "../../util/runtime";
 import {
   forEachSection,
   getSectionRegisterReasons,
@@ -184,31 +188,21 @@ export default {
             // Dynamic so the template stays mergeable with its virtual signal
             // chunks; a static import splits it out, adding a chunk and bytes.
             t.expressionStatement(
-              t.callExpression(
-                t.memberExpression(
-                  t.callExpression(t.import(), [
-                    t.stringLiteral(resolveRelativePath(entryFile, filename)),
+              dynamicImport(
+                resolveRelativePath(entryFile, filename),
+                t.arrowFunctionExpression(
+                  [],
+                  t.callExpression(t.identifier("ready"), [
+                    t.stringLiteral(readyId),
                   ]),
-                  t.identifier("then"),
                 ),
-                [
+                report &&
                   t.arrowFunctionExpression(
                     [],
-                    t.callExpression(t.identifier("ready"), [
+                    t.callExpression(t.identifier("readyFailed"), [
                       t.stringLiteral(readyId),
                     ]),
                   ),
-                  ...(report
-                    ? [
-                        t.arrowFunctionExpression(
-                          [],
-                          t.callExpression(t.identifier("readyFailed"), [
-                            t.stringLiteral(readyId),
-                          ]),
-                        ),
-                      ]
-                    : []),
-                ],
               ),
             ),
           ];
