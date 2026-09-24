@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { getBranchEndArgs } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
@@ -42,7 +43,6 @@ import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
-import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 const kStatefulReason = Symbol("<show> stateful reason");
 const kStartBinding = Symbol("<show> range start binding");
@@ -200,21 +200,13 @@ export default {
           tagSection,
           nodeBinding,
         );
-        const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
-
-        if (skipParentEnd) {
-          getParentTag(tag)!.node.extra![kSkipEndTag] = true;
-        }
-
-        const statefulSerializeArg = getSerializeGuard(
+        const endArgs = getBranchEndArgs(
+          tag,
           tagSection,
+          nodeBinding,
           statefulReason,
-          !(skipParentEnd || singleNode),
-        );
-        const markerSerializeArg = getSerializeGuard(
-          tagSection,
-          markerSerializeReason,
-          !statefulSerializeArg,
+          onlyChildParentTagName,
+          singleNode,
         );
 
         let startMark: t.Expression | undefined;
@@ -224,7 +216,7 @@ export default {
             markerSerializeReason,
             false,
           );
-          if (skipParentEnd) {
+          if (onlyChildParentTagName && markerSerializeReason) {
             startMark = t.logicalExpression(
               "&&",
               startMark!,
@@ -246,14 +238,7 @@ export default {
               getScopeIdIdentifier(tagSection),
               getScopeAccessorLiteral(nodeBinding),
               display,
-              markerSerializeArg,
-              statefulSerializeArg,
-              skipParentEnd
-                ? t.stringLiteral(`</${onlyChildParentTagName}>`)
-                : singleNode
-                  ? t.numericLiteral(0)
-                  : undefined,
-              singleNode ? t.numericLiteral(1) : undefined,
+              ...endArgs,
             ),
           ),
         ])) {

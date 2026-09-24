@@ -9,14 +9,15 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import {
+  getBranchResumeArgs,
   getBranchSectionAccessor,
   initBranchSection,
+  isSingleNodeBranch,
   resumeOwnerByMarkerWhenStatic,
 } from "../util/branch-tag";
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
-import { getParentTag } from "../util/get-parent-tag";
 import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
@@ -36,7 +37,6 @@ import {
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
-  ContentType,
   getBranchRendererArgs,
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -45,7 +45,6 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
@@ -61,7 +60,6 @@ import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
-import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to" | "until";
 const kStatefulReason = Symbol("<for> stateful reason");
@@ -263,17 +261,9 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        const singleChild =
-          bodySection.content?.singleChild &&
-          bodySection.content.startType !== ContentType.Text;
-
         const branchSerializeReason = getSerializeReason(
           bodySection,
           kBranchSerializeReason,
-        );
-        const markerSerializeReason = getSerializeReason(
-          tagSection,
-          nodeBinding,
         );
 
         resumeOwnerByMarkerWhenStatic(
@@ -298,43 +288,20 @@ export default {
         );
 
         if (branchSerializeReason) {
-          const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
-          const statefulSerializeArg = getSerializeGuard(
-            tagSection,
-            getSerializeReason(tagSection, kStatefulReason),
-            !(skipParentEnd || singleChild),
-          );
-          const markerSerializeArg = getSerializeGuard(
-            tagSection,
-            markerSerializeReason,
-            !statefulSerializeArg,
-          );
-
           forTagArgs.push(
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
-            getSerializeGuard(
+            ...getBranchResumeArgs(
+              tag,
               tagSection,
+              nodeBinding,
               branchSerializeReason,
-              !markerSerializeArg,
+              kStatefulReason,
+              onlyChildParentTagName,
+              isSingleNodeBranch(bodySection),
             ),
-            markerSerializeArg,
-            statefulSerializeArg,
           );
-
-          if (skipParentEnd) {
-            getParentTag(tag)!.node.extra![kSkipEndTag] = true;
-            forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
-          }
-
-          if (singleChild) {
-            if (!skipParentEnd) {
-              forTagArgs.push(t.numericLiteral(0));
-            }
-
-            forTagArgs.push(t.numericLiteral(1));
-          }
         }
 
         statements.push(
