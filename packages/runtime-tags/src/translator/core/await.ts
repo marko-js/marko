@@ -106,6 +106,8 @@ export default {
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
 
     if (paramsBinding) {
+      // The content waits on the promise even when nothing reads its result.
+      valueExtra.pure = false;
       setBindingDownstream(paramsBinding, valueExtra);
     }
 

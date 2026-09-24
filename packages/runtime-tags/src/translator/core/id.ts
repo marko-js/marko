@@ -74,10 +74,17 @@ export default {
   translate: {
     exit(tag) {
       const { node } = tag;
+      const [valueAttr] = node.attributes;
+
+      // An unread pure value was dropped, so there is no id to mint.
+      if (valueAttr?.value.extra?.pruned) {
+        tag.remove();
+        return;
+      }
+
       const id = isOutputHTML()
         ? callRuntime("_id")
         : callRuntime("_id", scopeIdentifier);
-      const [valueAttr] = tag.node.attributes;
 
       if (isOutputHTML()) {
         tag.replaceWith(
