@@ -51,6 +51,8 @@ export function compileSync(src, filename, config) {
     const babelResult = transformSync(src, babelConfig);
     return buildResult(src, filename, markoConfig, babelResult);
   } catch (err) {
+    // Errors pass through as thrown, so nesting deep enough to overflow Babel's
+    // traversal surfaces as a bare `RangeError`; such templates are pathological.
     throw appendAgentFixGuide(err, markoConfig.translator);
   }
 }
