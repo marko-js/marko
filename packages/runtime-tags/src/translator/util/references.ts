@@ -2501,6 +2501,8 @@ function getDebugNameAsIdentifier(binding: Binding) {
 }
 
 export function getSectionInstancesAccessor(section: Section) {
+  // Only hoists reach the prefix + section id fallback; a reserved numeric id
+  // would be a byte shorter, but hoists are too rare for that to pay.
   return section.sectionAccessor
     ? section.sectionAccessor.prefix +
         getScopeAccessor(section.sectionAccessor.binding)

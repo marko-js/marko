@@ -530,6 +530,8 @@ export function rendererKey(renderer: Renderer | string | undefined) {
   // owner, so its non-string id keeps comparing as it always has.
   return (renderer as Renderer | undefined)?.[RendererProp.Owner]
     ? (renderer as Renderer)[RendererProp.Id] +
+        // Debug ids can start with a digit, so they need the space; optimized
+        // builds keep it too so the key has one format.
         " " +
         (renderer as Renderer)[RendererProp.Owner]![AccessorProp.Id]
     : (renderer as Renderer | undefined)?.[RendererProp.Id] || renderer;

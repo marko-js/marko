@@ -15,6 +15,8 @@ The compiler/translator entry is `src/translator/index.js`, but the package's ex
 
 Note: published as both `marko@5` and `@marko/runtime-class`.
 
+`src` mixes ESM and CommonJS `.js` with no `"type"`, so Node warns `MODULE_TYPELESS_PACKAGE_JSON` under `-t class`. Accepted: Marko 5 is in maintenance and `src` ships in `files`, so a `{"type":"module"}` marker would force converting every CJS file.
+
 ## Naming Conventions
 
 ### Triple-underscore prefix (`___name`)

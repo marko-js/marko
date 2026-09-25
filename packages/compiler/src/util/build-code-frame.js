@@ -8,6 +8,14 @@ import { cyan, yellow } from "kleur/colors";
 
 import { stripAnsi } from "./strip-ansi";
 const indent = "    ";
+// Wider framed lines (inlined data, generated markup) are windowed around the
+// error so the message stays bounded no matter how long the source line is.
+const maxFrameColumns = 160;
+const linesAbove = 2;
+const linesBelow = 3;
+const ellipsis = "…";
+// The line breaks Babel's code frame splits on, so line numbers still agree.
+const newline = /\r\n|[\n\r\u2028\u2029]/;
 
 class CompileError extends Error {
   constructor(filename, code, loc, label) {
@@ -92,25 +100,50 @@ export function buildCodeFrameError(filename, code, loc, label) {
 }
 
 function buildMessage(code, loc, message) {
-  return loc
-    ? codeFrameColumns(
-        code,
-        {
-          start: {
-            line: loc.start.line,
-            column: loc.start.column + 1,
-          },
-          end:
-            loc.end && loc.start.line === loc.end.line
-              ? {
-                  line: loc.end.line,
-                  column: loc.end.column + 1,
-                }
-              : undefined,
-        },
-        { highlightCode: true, message },
-      )
-    : message;
+  if (!loc) return message;
+
+  const { line } = loc.start;
+  const lines = code.split(newline);
+  const first = Math.max(line - linesAbove - 1, 0);
+  let framed = lines.slice(first, line + linesBelow);
+  let start = loc.start.column;
+  let end = loc.end && loc.end.line === line ? loc.end.column : start;
+
+  if (framed.some((text) => text.length > maxFrameColumns)) {
+    const lead = Math.max(
+      (maxFrameColumns - (end - start)) >> 1,
+      maxFrameColumns >> 3,
+    );
+    const from = Math.max(
+      0,
+      Math.min(start - lead, (lines[line - 1] || "").length - maxFrameColumns),
+    );
+    const to = from + maxFrameColumns;
+    const shift = from ? ellipsis.length : 0;
+    framed = framed.map(
+      (text) =>
+        (from && text ? ellipsis : "") +
+        text.slice(from, to) +
+        (text.length > to ? ellipsis : ""),
+    );
+    end = Math.max(Math.min(end, to), start) + shift - from;
+    start += shift - from;
+  }
+
+  return codeFrameColumns(
+    framed.join("\n"),
+    {
+      start: { line, column: start + 1 },
+      end: { line, column: end + 1 },
+    },
+    {
+      highlightCode: true,
+      message,
+      linesAbove,
+      linesBelow,
+      startLine: first + 1,
+    },
+  );
 }
 
 function buildFileName(filename, loc) {

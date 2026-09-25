@@ -1,0 +1,12 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-value-only-comment/template.marko:1:19
+    > 1 | <const/x=/* pre */>
+        |                   ^ Expected an expression, but found only whitespace or comments.
+      2 | <div class=/* todo */></div>
+      3 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-value-only-comment/template.marko:2:22
+      1 | <const/x=/* pre */>
+    > 2 | <div class=/* todo */></div>
+        |                      ^ Expected an expression, but found only whitespace or comments.
+      3 |

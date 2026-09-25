@@ -173,7 +173,7 @@ function tryParse(
         file,
         sourceStart,
         sourceEnd,
-        err.message,
+        getParseErrorLabel(err, code, startIndex),
         err.loc,
       );
 
@@ -191,6 +191,20 @@ function tryParse(
     return isExpression
       ? t.cloneDeepWithoutLoc(babelParseExpression(code, parserOpts))
       : t.cloneDeepWithoutLoc(babelParse(code, parserOpts).program);
+  }
+}
+
+// Babel words these two in terms of its own `parseExpression()` API.
+function getParseErrorLabel(err, code, startIndex) {
+  switch (err.reasonCode) {
+    case "ParseExpressionEmptyInput":
+      return "Expected an expression, but found only whitespace or comments.";
+    case "ParseExpressionExpectsEOF":
+      return `Expected a single expression, but found \`${String.fromCodePoint(
+        code.codePointAt(err.pos - startIndex),
+      )}\` after it.`;
+    default:
+      return err.message;
   }
 }
 

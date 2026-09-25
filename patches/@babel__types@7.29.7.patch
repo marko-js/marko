@@ -117,10 +117,10 @@ index 0a13bcd..b2afd60 100644
    validate(defs.body, node, "body", body, 1);
 diff --git a/lib/builders/generated/marko.js b/lib/builders/generated/marko.js
 new file mode 100644
-index 0000000..945bf28
+index 0000000..de98f69
 --- /dev/null
 +++ b/lib/builders/generated/marko.js
-@@ -0,0 +1,131 @@
+@@ -0,0 +1,132 @@
 +exports.markoParseError = exports.MarkoParseError = markoParseError;
 +function markoParseError(source, label, errorLoc) {
 +  return {
@@ -156,10 +156,11 @@ index 0000000..945bf28
 +}
 +
 +exports.markoComment = exports.MarkoComment = markoComment;
-+function markoComment(value) {
++function markoComment(value, kind) {
 +  return {
 +    type: "MarkoComment",
 +    value,
++    kind,
 +  };
 +}
 +
@@ -294,10 +295,10 @@ index 3dff037..0f8f53b 100644
  var _deprecatedAliases = require("./deprecated-aliases.js");
 diff --git a/lib/definitions/marko.js b/lib/definitions/marko.js
 new file mode 100644
-index 0000000..ad1f6c5
+index 0000000..ec37b4e
 --- /dev/null
 +++ b/lib/definitions/marko.js
-@@ -0,0 +1,247 @@
+@@ -0,0 +1,251 @@
 +"use strict";
 +
 +const {
@@ -359,10 +360,14 @@ index 0000000..ad1f6c5
 +
 +defineType("MarkoComment", {
 +  aliases: ["Marko", "Statement"],
-+  builder: ["value"],
++  builder: ["value", "kind"],
 +  fields: {
 +    value: {
 +      validate: assertValueType("string"),
++    },
++    kind: {
++      validate: assertOneOf("html", "line", "block"),
++      optional: true,
 +    },
 +  },
 +});
@@ -546,7 +551,7 @@ index 0000000..ad1f6c5
 +  },
 +});
 diff --git a/lib/index.d.ts b/lib/index.d.ts
-index efa49cb..d22ec43 100644
+index efa49cb..134bf78 100644
 --- a/lib/index.d.ts
 +++ b/lib/index.d.ts
 @@ -364,6 +364,8 @@ interface SourceLocation {
@@ -630,7 +635,7 @@ index efa49cb..d22ec43 100644
  }
  type DeprecatedAliases = NumberLiteral$1 | RegexLiteral$1 | RestProperty$1 | SpreadProperty$1;
  interface ParentMaps {
-@@ -3614,4 +3626,138 @@ declare const react: {
+@@ -3614,4 +3626,139 @@ declare const react: {
      buildChildren: typeof buildChildren;
  };
  
@@ -660,6 +665,7 @@ index efa49cb..d22ec43 100644
 +interface MarkoComment extends BaseNode {
 +  type: "MarkoComment";
 +  value: string;
++  kind: "html" | "line" | "block" | null;
 +}
 +
 +interface MarkoText extends BaseNode {
@@ -727,7 +733,7 @@ index efa49cb..d22ec43 100644
 +declare function markoDocumentType(value: string): MarkoDocumentType;
 +declare function markoDeclaration(value: string): MarkoDeclaration;
 +declare function markoCDATA(value: string): MarkoCDATA;
-+declare function markoComment(value: string): MarkoComment;
++declare function markoComment(value: string, kind?: "html" | "line" | "block" | null): MarkoComment;
 +declare function markoText(value: string): MarkoText;
 +declare function markoPlaceholder(value: Expression, escape?: boolean): MarkoPlaceholder;
 +declare function markoScriptlet(body: Array<Statement>, _static?: boolean, target?: "server" | "client" | null): MarkoScriptlet;
