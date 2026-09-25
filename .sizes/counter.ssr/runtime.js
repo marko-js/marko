@@ -11,7 +11,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   runRender = (render) => {
     render.c(render.b, render.d);
   },
-  catchEnabled,
+  pendingEnabled,
   delegate = (type, handler) =>
     (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
   isScheduled,
@@ -22,7 +22,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
-    if (((render.d = value), render.e === runId || catchEnabled)) return;
+    if (((render.d = value), render.e === runId || pendingEnabled)) return;
     render.e = runId;
   } else
     ((render = {

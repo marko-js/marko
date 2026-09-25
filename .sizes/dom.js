@@ -1,4 +1,4 @@
-// size: 27226 (min) 10161 (brotli)
+// size: 27604 (min) 10317 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -32,7 +32,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   runRender = (render) => {
     (!branchesEnabled || render.b.F?.H !== 0) && render.c(render.b, render.d);
   },
-  catchEnabled,
+  pendingEnabled,
   abortsEnabled,
   subscriptionsEnabled,
   delegate = (type, handler) =>
@@ -117,6 +117,32 @@ let unsafeStyleAttrReg = /[\\;]/g,
   inputType = "",
   controllableScripts = {},
   controllableRenders = {},
+  addAwaitCounter = /*@__PURE__*/ withPending(function (
+    scope,
+    tryBranch = findBranchWithKey(scope, "Q"),
+  ) {
+    if (!tryBranch) return;
+    let awaitCounter = tryBranch.O;
+    return (
+      awaitCounter?.i ||
+        (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
+      placeholderShown.add(pendingEffects),
+      scheduleAwaitFrame(awaitCounter, tryBranch, () => {
+        (insertBranchBefore(
+          (tryBranch.P = createAndSetupBranch(
+            tryBranch.$,
+            tryBranch.Q,
+            tryBranch._,
+            tryBranch.S.parentNode,
+          )),
+          tryBranch.S.parentNode,
+          tryBranch.S,
+        ),
+          tempDetachBranch(tryBranch));
+      }),
+      awaitCounter
+    );
+  }),
   _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let branchAccessor = "D" + nodeAccessor,
@@ -409,7 +435,7 @@ function forUntil(until, from, step, cb) {
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
-    if (((render.d = value), render.e === runId || catchEnabled)) return;
+    if (((render.d = value), render.e === runId || (pendingEnabled && render.f))) return;
     render.e = runId;
   } else
     ((render = {
@@ -458,6 +484,43 @@ function prepareEffects(fn) {
     (runId++, (rendering = 0), (pendingRenders = prevRenders), (pendingEffects = prevEffects));
   }
   return preparedEffects;
+}
+function withPending(runtime) {
+  return (
+    (pendingEnabled = 1),
+    installCatch((runRender) => (render) => {
+      let branch = render.b.F;
+      for (; branch;) {
+        if (branch.W) return ((render.f = 1), branch.W.push(render));
+        branch = branch.N;
+      }
+      ((render.f = 0), runRender(render));
+    }),
+    runtime
+  );
+}
+function installCatch(wrapRender) {
+  let base = runEffects;
+  (withBranches(),
+    (runEffects = (effects, checkPending = pendingEnabled && placeholderShown.has(effects)) => {
+      if (checkPending || caughtError.has(effects)) {
+        let branch;
+        for (let i = 0; i < effects.length;) {
+          let fn = effects[i++],
+            scope = effects[i++];
+          (branch = scope.F)?.H !== 0 &&
+            !(pendingEnabled && checkPending && deferPendingEffect(fn, scope, branch)) &&
+            fn(scope);
+        }
+      } else base(effects);
+    }),
+    (runRender = wrapRender(runRender)));
+}
+function deferPendingEffect(fn, scope, branch) {
+  for (; branch;) {
+    if (branch.O?.i) return (branch.J ||= []).push(fn, scope);
+    branch = branch.N;
+  }
 }
 function runRenders() {
   for (; pendingRenders.length;) {
@@ -1853,29 +1916,6 @@ function _await_content(nodeAccessor, template, walks, setup) {
     ((scope[branchAccessor].Y = pendingScopes),
       typeof scope[promiseAccessor] == "function" && scope[promiseAccessor]());
   };
-}
-function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
-  if (!tryBranch) return;
-  let awaitCounter = tryBranch.O;
-  return (
-    awaitCounter?.i ||
-      (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
-    placeholderShown.add(pendingEffects),
-    scheduleAwaitFrame(awaitCounter, tryBranch, () => {
-      (insertBranchBefore(
-        (tryBranch.P = createAndSetupBranch(
-          tryBranch.$,
-          tryBranch.Q,
-          tryBranch._,
-          tryBranch.S.parentNode,
-        )),
-        tryBranch.S.parentNode,
-        tryBranch.S,
-      ),
-        tempDetachBranch(tryBranch));
-    }),
-    awaitCounter
-  );
 }
 function scheduleAwaitFrame(awaitCounter, scope, render) {
   awaitCounter.i++ ||

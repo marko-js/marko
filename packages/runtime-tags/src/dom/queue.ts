@@ -1,5 +1,10 @@
 import { branchesEnabled, withBranches } from "../common/helpers";
-import { AccessorProp, PendingRenderProp, type Scope } from "../common/types";
+import {
+  AccessorProp,
+  type BranchScope,
+  PendingRenderProp,
+  type Scope,
+} from "../common/types";
 import type { Signal } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -36,7 +41,7 @@ export function queueRender<T, U extends Scope = Scope>(
     render[PendingRenderProp.Value] = value;
     if (
       render[PendingRenderProp.Gen] === runId ||
-      (catchEnabled && render[PendingRenderProp.Pending])
+      (pendingEnabled && render[PendingRenderProp.Pending])
     ) {
       return;
     }
@@ -139,17 +144,80 @@ let runRender = (render: PendingRender) => {
   }
 };
 
-let catchEnabled: undefined | 1;
-// The catch machinery lives in `catch.feat`; it installs by wrapping the
-// plain dispatchers, which imported bindings cannot reassign directly.
-export function installCatch(
-  wrapEffects: (base: typeof runEffects) => typeof runEffects,
-  wrapRender: (base: typeof runRender) => typeof runRender,
-) {
-  catchEnabled = 1;
+type RenderWrapper = (base: typeof runRender) => typeof runRender;
+
+// Pending work latch (as `branchesEnabled`): only `withPending` writes it, so
+// bundles without client `<await>` or lazy loading drop what it guards.
+let pendingEnabled: undefined | 1;
+
+// Definition-site wrapper for what starts client pending work: renders under
+// a pending `<await>` hold, and effects under a shown placeholder defer.
+export function withPending<T>(runtime: T) {
+  pendingEnabled = 1;
+  installCatch((runRender) => (render) => {
+    let branch = render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
+    while (branch) {
+      if (branch[AccessorProp.PendingRenders]) {
+        render[PendingRenderProp.Pending] = 1;
+        return branch[AccessorProp.PendingRenders].push(render);
+      }
+      branch = branch[AccessorProp.ParentBranch];
+    }
+    render[PendingRenderProp.Pending] = 0;
+    runRender(render);
+  });
+  return runtime;
+}
+
+// The `@catch` (`catch.feat`) and pending machinery install by wrapping the
+// plain dispatchers, which imported bindings cannot reassign directly; with
+// both, the outer effects guard handles what the inner one would.
+export function installCatch(wrapRender: RenderWrapper) {
+  const base = runEffects;
   withBranches();
-  runEffects = wrapEffects(runEffects);
+  // Deliberately no per-effect try/catch: an error thrown from a `<script>` or
+  // `<lifecycle>` body escapes the flush instead of reaching `@catch`.
+  runEffects = (
+    effects,
+    checkPending = pendingEnabled && placeholderShown.has(effects),
+  ) => {
+    if (checkPending || caughtError.has(effects)) {
+      let branch: BranchScope | undefined;
+      for (let i = 0; i < effects.length;) {
+        const fn = effects[i++] as ExecFn;
+        const scope = effects[i++] as Scope;
+        if (
+          (branch = scope[AccessorProp.ClosestBranch])?.[AccessorProp.Gen] !==
+            0 &&
+          !(
+            pendingEnabled &&
+            checkPending &&
+            deferPendingEffect(fn, scope, branch)
+          )
+        ) {
+          fn(scope);
+        }
+      }
+    } else {
+      base(effects);
+    }
+  };
   runRender = wrapRender(runRender);
+}
+
+// Defers the fn onto the nearest ancestor try branch still awaiting; a truthy
+// return means it was deferred.
+function deferPendingEffect(
+  fn: ExecFn,
+  scope: Scope,
+  branch: BranchScope | undefined,
+) {
+  while (branch) {
+    if (branch[AccessorProp.AwaitCounter]?.i) {
+      return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
+    }
+    branch = branch[AccessorProp.ParentBranch];
+  }
 }
 
 function runRenders() {

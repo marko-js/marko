@@ -32,6 +32,7 @@ import {
   queuePendingRender,
   queueRender,
   run,
+  withPending,
 } from "./queue";
 import {
   _content,
@@ -257,7 +258,9 @@ export function _await_content(
   };
 }
 
-export function addAwaitCounter(
+// Every client `<await>` and lazy load counts through this, so the pending
+// machinery installs only with it.
+export const addAwaitCounter = /*@__PURE__*/ withPending(function (
   scope: Scope,
   tryBranch = findBranchWithKey(scope, AccessorProp.PlaceholderContent),
 ): AwaitCounter | undefined {
@@ -283,7 +286,7 @@ export function addAwaitCounter(
     tempDetachBranch(tryBranch);
   });
   return awaitCounter;
-}
+});
 
 function scheduleAwaitFrame(
   awaitCounter: AwaitCounter,

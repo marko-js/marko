@@ -165,10 +165,11 @@ export default {
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "try");
 
-        const hasPlaceholder =
-          !!tag.node.extra?.attributeTags?.["@placeholder"];
+        const attrTags = tag.node.extra?.attributeTags;
+        const hasCatch = !!attrTags?.["@catch"];
+        const hasPlaceholder = !!attrTags?.["@placeholder"];
         signal.build = () => {
-          importRuntimeFeature("catch");
+          if (hasCatch) importRuntimeFeature("catch");
           if (hasPlaceholder) importRuntimeFeature("placeholder");
           return callRuntime(
             "_try",

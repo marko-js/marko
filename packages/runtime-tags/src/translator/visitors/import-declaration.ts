@@ -12,11 +12,7 @@ import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
 import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
-import {
-  callRuntime,
-  dynamicImport,
-  importRuntimeFeature,
-} from "../util/runtime";
+import { callRuntime, dynamicImport } from "../util/runtime";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
 import type { TemplateVisitor } from "../util/visitors";
@@ -177,7 +173,6 @@ export default {
             if (allKnownTagReferences) {
               importDecl.remove();
             } else {
-              importRuntimeFeature("catch");
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(

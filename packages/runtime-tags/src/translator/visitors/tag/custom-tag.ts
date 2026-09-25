@@ -32,11 +32,7 @@ import {
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import { BindingType, createBinding } from "../../util/references";
-import {
-  callRuntime,
-  dynamicImport,
-  importRuntimeFeature,
-} from "../../util/runtime";
+import { callRuntime, dynamicImport } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection, StructureKind } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
@@ -263,7 +259,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               buildLoadSetupVirtualModule(file, childFileName, childExports),
             ),
           );
-          importRuntimeFeature("catch");
           getProgram().node.body.push(
             t.variableDeclaration("let", [
               t.variableDeclarator(
