@@ -21,11 +21,9 @@ import {
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
-  caughtError,
   runEffects,
   pendingEffects,
   type PendingRender,
-  placeholderShown,
   prepareEffects,
   queueAsyncRender,
   queueEffect,
@@ -117,7 +115,7 @@ export function _await_promise(
 
     let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
 
-    placeholderShown.add(pendingEffects);
+    pendingEffects.p = 1;
 
     if (!tryPlaceholder && !awaitCounter?.i) {
       awaitCounter = createAwaitCounter(tryBranch, () => {
@@ -185,7 +183,7 @@ export function _await_promise(
             awaitBranch[AccessorProp.PendingRenders] = 0;
             pendingRenders?.forEach(queuePendingRender);
 
-            placeholderShown.add(pendingEffects); // TODO: check if still needed
+            pendingEffects.p = 1; // TODO: check if still needed
 
             awaitCounter!.c();
             if (awaitCounter!.m) {
@@ -271,7 +269,7 @@ export const addAwaitCounter = /*@__PURE__*/ withPending(function (
       dismissPlaceholder(tryBranch),
     );
   }
-  placeholderShown.add(pendingEffects);
+  pendingEffects.p = 1;
   scheduleAwaitFrame(awaitCounter, tryBranch, () => {
     insertBranchBefore(
       (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
@@ -387,7 +385,7 @@ export function renderCatch(scope: Scope, error: unknown) {
       ] = placeholderBranch;
       destroyBranch(tryWithCatch);
     }
-    caughtError.add(pendingEffects);
+    pendingEffects.c = 1;
     setConditionalRenderer(
       owner,
       tryWithCatch[AccessorProp.BranchAccessor],

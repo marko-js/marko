@@ -19,9 +19,13 @@ export type PendingRender = {
 
 export let rendering: undefined | 0 | 1;
 export let runId = 2; // resumed scopes get `1`
-export const caughtError = new WeakSet<unknown[]>();
-export const placeholderShown = new WeakSet<unknown[]>();
-export let pendingEffects: unknown[] = [];
+/** Effects queued in one run, flagged when that run showed a placeholder
+ * (`p`) or caught an error (`c`), so running them checks their branches. */
+export interface Effects extends Array<unknown> {
+  p?: 1;
+  c?: 1;
+}
+export let pendingEffects: Effects = [];
 let pendingRenders: PendingRender[] = [];
 
 // Orders pending renders across scopes; signal keys are per-section
@@ -126,7 +130,7 @@ export let runEffects = ((effects) => {
   for (let i = 0; i < effects.length;) {
     (effects[i++] as (scope: Scope) => void)(effects[i++] as Scope);
   }
-}) as (effects: unknown[], checkPending?: boolean | 1) => void;
+}) as (effects: Effects, checkPending?: boolean | 1) => void;
 
 let runRender = (render: PendingRender) => {
   // Skip renders whose branch was destroyed; short-circuits to a single flag
@@ -177,15 +181,15 @@ export function installCatch(wrapRender: RenderWrapper) {
   withBranches();
   // Deliberately no per-effect try/catch: an error thrown from a `<script>` or
   // `<lifecycle>` body escapes the flush instead of reaching `@catch`.
-  runEffects = (
-    effects,
-    checkPending = pendingEnabled && placeholderShown.has(effects),
-  ) => {
-    if (checkPending || caughtError.has(effects)) {
+  runEffects = (effects: Effects, checkPending = effects.p) => {
+    if (checkPending || effects.c) {
+      let i = 0;
+      let fn: ExecFn;
+      let scope: Scope;
       let branch: BranchScope | undefined;
-      for (let i = 0; i < effects.length;) {
-        const fn = effects[i++] as ExecFn;
-        const scope = effects[i++] as Scope;
+      for (; i < effects.length;) {
+        fn = effects[i++] as ExecFn;
+        scope = effects[i++] as Scope;
         if (
           (branch = scope[AccessorProp.ClosestBranch])?.[AccessorProp.Gen] !==
             0 &&

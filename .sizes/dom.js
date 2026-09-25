@@ -1,4 +1,4 @@
-// size: 27604 (min) 10317 (brotli)
+// size: 27542 (min) 10299 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -22,8 +22,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   dynamicHtmlEnabled,
   rendering,
   runId = 2,
-  caughtError = /* @__PURE__ */ new WeakSet(),
-  placeholderShown = /* @__PURE__ */ new WeakSet(),
   pendingEffects = [],
   pendingRenders = [],
   runEffects = (effects) => {
@@ -126,7 +124,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
     return (
       awaitCounter?.i ||
         (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
-      placeholderShown.add(pendingEffects),
+      (pendingEffects.p = 1),
       scheduleAwaitFrame(awaitCounter, tryBranch, () => {
         (insertBranchBefore(
           (tryBranch.P = createAndSetupBranch(
@@ -502,16 +500,18 @@ function withPending(runtime) {
 function installCatch(wrapRender) {
   let base = runEffects;
   (withBranches(),
-    (runEffects = (effects, checkPending = pendingEnabled && placeholderShown.has(effects)) => {
-      if (checkPending || caughtError.has(effects)) {
-        let branch;
-        for (let i = 0; i < effects.length;) {
-          let fn = effects[i++],
-            scope = effects[i++];
-          (branch = scope.F)?.H !== 0 &&
-            !(pendingEnabled && checkPending && deferPendingEffect(fn, scope, branch)) &&
-            fn(scope);
-        }
+    (runEffects = (effects, checkPending = effects.p) => {
+      if (checkPending || effects.c) {
+        let i = 0,
+          fn,
+          scope,
+          branch;
+        for (; i < effects.length;)
+          ((fn = effects[i++]),
+            (scope = effects[i++]),
+            (branch = scope.F)?.H !== 0 &&
+              !(pendingEnabled && checkPending && deferPendingEffect(fn, scope, branch)) &&
+              fn(scope));
       } else base(effects);
     }),
     (runRender = wrapRender(runRender)));
@@ -1830,7 +1830,7 @@ function _await_promise(nodeAccessor, params) {
           ? awaitPromise(scope, Promise.resolve(promise))
           : resolveAwait(scope, scope[nodeAccessor], promise);
       let awaitCounter = tryBranch.O;
-      (placeholderShown.add(pendingEffects),
+      ((pendingEffects.p = 1),
         !tryPlaceholder &&
           !awaitCounter?.i &&
           (awaitCounter = createAwaitCounter(tryBranch, () => {
@@ -1867,7 +1867,7 @@ function _await_promise(nodeAccessor, params) {
               if (
                 ((awaitBranch.W = 0),
                 pendingRenders?.forEach(queuePendingRender),
-                placeholderShown.add(pendingEffects),
+                (pendingEffects.p = 1),
                 awaitCounter.c(),
                 awaitCounter.m)
               ) {
@@ -1967,7 +1967,7 @@ function renderCatch(scope, error) {
       (tryWithCatch.O && (tryWithCatch.O.i = 0),
       (owner["A" + tryWithCatch.C] = placeholderBranch),
       destroyBranch(tryWithCatch)),
-      caughtError.add(pendingEffects),
+      (pendingEffects.c = 1),
       setConditionalRenderer(owner, tryWithCatch.C, tryWithCatch.E, createAndSetupBranch),
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
