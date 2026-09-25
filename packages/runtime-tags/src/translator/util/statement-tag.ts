@@ -1,9 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
-  getFile,
-  parseStatements,
-  type Tag,
-} from "@marko/compiler/babel-utils";
+import { getFile, parseBlock, type Tag } from "@marko/compiler/babel-utils";
 
 // `<static>` runs everywhere, so it gets no target and no "on the ..." suffix.
 export function createStatementTag(keyword: "client" | "server" | "static") {
@@ -17,12 +13,14 @@ export function createStatementTag(keyword: "client" | "server" | "static") {
       const rawValue = node.rawValue!;
       const code = rawValue.replace(keywordReg, "");
       const start = node.start! + (rawValue.length - code.length);
-      let body = parseStatements(file, code, start, start + code.length);
-      if (body.length === 1 && t.isBlockStatement(body[0])) {
-        body = body[0].body;
+      let block = parseBlock(file, code, start, start + code.length);
+      if (block.body.length === 1 && t.isBlockStatement(block.body[0])) {
+        block = block.body[0];
       }
 
-      tag.replaceWith(t.markoScriptlet(body, true, target));
+      const scriptlet = t.markoScriptlet(block.body, true, target);
+      scriptlet.innerComments = block.innerComments;
+      tag.replaceWith(scriptlet);
     },
     parseOptions: {
       statement: true,

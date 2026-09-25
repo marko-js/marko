@@ -91,6 +91,25 @@ describe("compiler/compile", () => {
     });
   });
 
+  describe("comment-only bodies", () => {
+    it("keeps their comments in source output", () => {
+      const src =
+        "static {\n  // setup\n}\n<script>\n  // todo\n</script>\n<button onClick() {\n  // todo\n}/>";
+      assert.equal(
+        compileSync(src, template, { translator, output: "source" }).code,
+        src,
+      );
+    });
+
+    it("keeps a method's directives in source output", () => {
+      const src = '<button onClick() {\n  "use strict";\n\n  save();\n}/>';
+      assert.equal(
+        compileSync(src, template, { translator, output: "source" }).code,
+        src,
+      );
+    });
+  });
+
   describe("synthetic filenames", () => {
     const missingDir = path.join(os.tmpdir(), "marko-missing-dir", "x.marko");
 

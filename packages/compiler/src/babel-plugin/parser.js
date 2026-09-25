@@ -1,9 +1,9 @@
 import {
   getTagDefForTagName,
   parseArgs,
+  parseBlock,
   parseExpression,
   parseParams,
-  parseStatements,
   parseTemplateLiteral,
   parseTypeArgs,
   parseTypeParams,
@@ -341,19 +341,15 @@ export function parseMarko(file) {
       );
     },
     onScriptlet(part) {
-      pushContent(
-        withLoc(
-          t.markoScriptlet(
-            parseStatements(
-              file,
-              parser.read(part.value),
-              part.value.start,
-              part.value.end,
-            ),
-          ),
-          part,
-        ),
+      const block = parseBlock(
+        file,
+        parser.read(part.value),
+        part.value.start,
+        part.value.end,
       );
+      const scriptlet = t.markoScriptlet(block.body);
+      scriptlet.innerComments = block.innerComments;
+      pushContent(withLoc(scriptlet, part));
     },
     onOpenTagName(part) {
       const tagName = parseTemplateString(part);
@@ -504,13 +500,11 @@ export function parseMarko(file) {
       const method = t.functionExpression(
         undefined,
         [],
-        t.blockStatement(
-          parseStatements(
-            file,
-            parser.read(part.body.value),
-            part.body.value.start,
-            part.body.value.end,
-          ),
+        parseBlock(
+          file,
+          parser.read(part.body.value),
+          part.body.value.start,
+          part.body.value.end,
         ),
         false,
         part.async,

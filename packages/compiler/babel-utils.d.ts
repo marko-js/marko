@@ -275,6 +275,13 @@ export function parseStatements<T extends t.Statement[]>(
   sourceOffset?: null | number,
 ): T;
 
+export function parseBlock(
+  file: t.BabelFile,
+  str: string,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
+): t.BlockStatement;
+
 export function parseExpression<T extends t.Expression>(
   file: t.BabelFile,
   str: string,

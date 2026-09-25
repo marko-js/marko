@@ -6,7 +6,7 @@ import {
   diagnosticWarn,
   getFile,
   getProgram,
-  parseStatements,
+  parseBlock,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -43,12 +43,12 @@ export default {
 
       const start = body[0]?.start;
       const end = body[body.length - 1]?.end;
-      const bodyStatements = parseStatements(getFile(), code, start, end);
-      if (bodyStatements.length) {
+      const block = parseBlock(getFile(), code, start, end);
+      if (block.body.length || block.innerComments) {
         const valueFn = t.arrowFunctionExpression(
           [],
-          t.blockStatement(bodyStatements),
-          !!traverseFindAwait(bodyStatements),
+          block,
+          !!traverseFindAwait(block),
         );
 
         node.attributes.push(t.markoAttribute("value", valueFn));
@@ -80,9 +80,12 @@ export default {
           throw tag.hub.buildError(attr, "Invalid duplicate value attribute.");
         }
         seenValueAttr = true;
-        (attr.value.extra ??= {}).isEffect = true;
-        addSetupExpr(getOrCreateSection(tag), attr.value);
-        getProgram().node.extra.isInteractive = true;
+        // A function without statements, such as a body of only comments, runs nothing.
+        if (!isEmptyFunction(attr.value)) {
+          (attr.value.extra ??= {}).isEffect = true;
+          addSetupExpr(getOrCreateSection(tag), attr.value);
+          getProgram().node.extra.isInteractive = true;
+        }
       } else {
         throw tag.hub.buildError(
           attr,
@@ -100,7 +103,7 @@ export default {
     exit(tag) {
       const { node } = tag;
       const [valueAttr] = node.attributes;
-      if (!valueAttr) {
+      if (!valueAttr?.value.extra?.isEffect) {
         tag.remove();
         return;
       }
@@ -172,6 +175,14 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/script.d.marko",
 } as Tag;
+
+function isEmptyFunction(node: t.Node) {
+  return (
+    (t.isFunctionExpression(node) || t.isArrowFunctionExpression(node)) &&
+    t.isBlockStatement(node.body) &&
+    !node.body.body.length
+  );
+}
 
 function isReturnedFunction(node: t.Node) {
   switch (node.type) {
