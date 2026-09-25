@@ -29,7 +29,7 @@ var ui_select_default = _template("__tests__/tags/ui-select.marko", (input) => {
 				_html(`</span>${_el_resume($scope2_id, "#span/0")}`);
 				_script($scope2_id, "__tests__/tags/ui-select.marko_2_c#2");
 				_scope($scope2_id, { _: _serialize_if($scope1_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/tags/ui-select.marko", "2:4", { "EventAttributes:#span/0": ["...c", "3:14"] });
-			}, 0, $scope1_id, "#text/0", _serialize_guard($scope0_reason, 0) || _serialize_guard($scope1_reason, 0), $sg__input_option, $sg__input_option, 0, 1);
+			}, 0, $scope1_id, "#text/0", $sg__input_option || _serialize_guard($scope1_reason, 0), $sg__input_option, $sg__input_option, 0, 1);
 			$si__input_option && _subscribe($input_option__closures, _scope($scope1_id, {
 				c,
 				_: _scope_with_id($scope0_id)
