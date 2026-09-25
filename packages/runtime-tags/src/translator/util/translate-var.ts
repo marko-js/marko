@@ -68,6 +68,7 @@ export default function translateVar(
       }
 
       let curPath = tag.parentPath as t.NodePath | null;
+      let prevPath: t.NodePath = tag;
       while (curPath) {
         if (curPath.node.extra?.section === binding.section) {
           const canonicalUpstreamAlias = getCanonicalBinding(
@@ -83,7 +84,7 @@ export default function translateVar(
           );
 
           props.push(restPath.node);
-          curPath.insertBefore(
+          (curPath.parentPath ? curPath : prevPath).insertBefore(
             t.variableDeclaration(kind, [
               t.variableDeclarator(
                 t.objectPattern(props),
@@ -100,6 +101,7 @@ export default function translateVar(
           break;
         }
 
+        prevPath = curPath;
         curPath = curPath.parentPath;
       }
 
