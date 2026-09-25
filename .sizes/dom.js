@@ -1,4 +1,4 @@
-// size: 27129 (min) 10127 (brotli)
+// size: 27154 (min) 10137 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2056,6 +2056,9 @@ let empty = [],
     },
     isRenderer(renderer) {
       return renderer.b;
+    },
+    getGlobal(scope) {
+      return scope.$;
     },
     getStartNode(branch) {
       return branch.S;

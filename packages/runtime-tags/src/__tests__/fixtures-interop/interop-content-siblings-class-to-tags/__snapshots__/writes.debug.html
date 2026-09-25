@@ -1,0 +1,34 @@
+<!--M#s0--><button id=class>0</button><!--F#1-->
+<div id=spread>Spread 0</div><!--Ms$1 #div/0--><!--F/--><!--F#1-->
+<div id=passthrough><!--Ms[-->Passthrough 0<!--Ms]3 #text/1 4--></div>
+<!--Ms$3 #div/0--><!--F/--><!--F#1-->
+<div id=thing><button class=thing>thing 0</button></div>
+<!--Ms$5 #div/0--><!--F/--><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+      m5c: "s0-1",
+      "BranchScopes:#div/0": _(2),
+      "ConditionalRenderer:#div/0": _._.$compat_renderBody
+    }, 1, {
+      m5c: "s0-2",
+      "ConditionalRenderer:#text/1": _._.$compat_renderBody
+    }, 1, {
+      m5c: "s0-3",
+      "BranchScopes:#div/0": _(6),
+      "ConditionalRenderer:#div/0": _._.$compat_renderBody
+    }],
+    "$compat_setScope 1 packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-siblings-class-to-tags/components/tags-spread.marko_0_input#2 1 $compat_setScope 3 packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-siblings-class-to-tags/components/tags-passthrough.marko_0_input#3 3 $compat_setScope 5 packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-siblings-class-to-tags/components/tags-spread.marko_0_input#2 5"
+  ];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-content-siblings-class-to-tags/template.marko"
+    ]
+  })
+</script>

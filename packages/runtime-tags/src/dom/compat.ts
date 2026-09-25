@@ -70,6 +70,9 @@ export const compat = {
   isRenderer(renderer: any) {
     return renderer[RendererProp.Clone];
   },
+  getGlobal(scope: any) {
+    return scope[AccessorProp.Global];
+  },
   getStartNode(branch: any) {
     return branch[AccessorProp.StartNode];
   },

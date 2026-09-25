@@ -202,7 +202,8 @@ exports.p = function (domCompat) {
   domCompat.init(noopRenderer);
 
   function renderAndMorph(scope, renderer, renderBody, input) {
-    const out = defaultCreateOut(scope.$global);
+    const $global = domCompat.getGlobal(scope);
+    const out = defaultCreateOut($global);
     let host = domCompat.getStartNode(scope);
     let rootNode = host.fragment;
     if (!rootNode) {
@@ -228,32 +229,40 @@ exports.p = function (domCompat) {
       domCompat.setScopeNodes(scope, rootNode.startNode, rootNode.endNode);
     }
     const existingComponent = scope.___marko5Component;
-    const componentsContext = ___getComponentsContext(out);
-    const globalComponentsContext = componentsContext.___globalContext;
+    const enclosingComponents = $global.___components;
     let customEvents;
     let normalizedInput;
+    // Cleared so `___getComponentsContext` builds a context of its own: reusing the
+    // enclosing Class render's resets its rerender state for the siblings after this one.
+    $global.___components = undefined;
+    const componentsContext = ___getComponentsContext(out);
+    const globalComponentsContext = componentsContext.___globalContext;
     globalComponentsContext.___rerenderComponent = existingComponent;
     out.sync();
-    if (renderer) {
-      const [rawInput] = input;
-      normalizedInput = {};
+    try {
+      if (renderer) {
+        const [rawInput] = input;
+        normalizedInput = {};
 
-      for (const key in rawInput) {
-        const value = rawInput[key];
-        if (/^on[-A-Z]/.test(key) && typeof value === "function") {
-          (customEvents || (customEvents = {}))[toCustomEventName(key)] = [
-            value,
-          ];
-        } else {
-          normalizedInput[key === "content" ? "renderBody" : key] =
-            toClassContent(value);
+        for (const key in rawInput) {
+          const value = rawInput[key];
+          if (/^on[-A-Z]/.test(key) && typeof value === "function") {
+            (customEvents || (customEvents = {}))[toCustomEventName(key)] = [
+              value,
+            ];
+          } else {
+            normalizedInput[key === "content" ? "renderBody" : key] =
+              toClassContent(value);
+          }
         }
-      }
 
-      renderer(normalizedInput, out);
-    } else {
-      normalizedInput = input[0];
-      RenderBodyComponent({ renderBody, args: input }, out);
+        renderer(normalizedInput, out);
+      } else {
+        normalizedInput = input[0];
+        RenderBodyComponent({ renderBody, args: input }, out);
+      }
+    } finally {
+      $global.___components = enclosingComponents;
     }
 
     domCompat.queueEffect(scope, () => {
