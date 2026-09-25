@@ -31,6 +31,7 @@ import {
   getAllSerializeReasonsForBinding,
   getDebugNames,
   type InputBinding,
+  isBuiltOnRead,
   type KnownExprs,
   type ParamBinding,
   type ReferencedBindings,
@@ -345,7 +346,7 @@ function getClosuresFromAbove(
 ): ReferencedBindings {
   let closures = bindingUtil.filter(
     section.referencedClosures,
-    (closure) => closure.section.depth < depth,
+    (closure) => closure.section.depth < depth && !isBuiltOnRead(closure),
   );
   for (const child of getChildSections(section)) {
     closures = bindingUtil.union(closures, getClosuresFromAbove(child, depth));

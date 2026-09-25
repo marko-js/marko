@@ -1,0 +1,10 @@
+<let/id=1>
+<let/status="idle">
+<const/start() {
+  const myId = id;
+  $signal.onabort = () => { status = "aborted " + myId };
+  status = "started " + myId;
+}>
+<button id="start" onClick() { start() }>start</button>
+<button id="next" onClick() { id++ }>next</button>
+<p>${status}</p>

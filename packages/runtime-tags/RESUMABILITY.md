@@ -70,6 +70,11 @@ property paths, computes transitive `Sources`, propagates owner/closure/branch/
 effect/registry requirements, collapses eligible intersections, and finalizes
 known-tag contracts. Safe invoke-only reads avoid subscriptions but set
 `forcePersist`: the current scope slot must still survive for later invocation.
+A function `<const>` or known-tag input that is only ever invoked (never used
+while an expression evaluates, and without `$signal`) is built once, since each
+call reads current values. One read only inside functions or attached whole as
+a native handler is left out of the payload: the client builds it from its
+scope on first read (`builtOnRead`).
 
 ### Serialize reasons
 

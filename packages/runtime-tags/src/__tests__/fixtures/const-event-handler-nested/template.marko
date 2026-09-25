@@ -1,0 +1,12 @@
+<let/count=0>
+<let/show=true>
+<const/inc() { count++ }>
+<const/add(n) { count += n }>
+<for|n| of=[1, 2]>
+  <button class="add" onClick() { add(n) }>+${n}</button>
+</for>
+<if=show>
+  <button class="inc" onClick=inc>inc</button>
+</if>
+<button class="toggle" onClick() { show = !show }>toggle</button>
+<p>${count}</p>

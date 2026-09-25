@@ -1,0 +1,5 @@
+<let/n=0>
+<const/inc() { n++ }>
+<const/twice() { inc(); inc() }>
+<child onPick=twice/>
+<p>${n}</p>

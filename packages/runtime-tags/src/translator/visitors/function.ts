@@ -150,6 +150,9 @@ export function finalizeFunctionRegistry() {
   for (const fnExtra of getReferencesByFn().keys()) {
     if (fnExtra.registerReason) {
       registerFunction(fnExtra);
+    } else if (fnExtra.builtOnRead) {
+      // Hoisted to a factory its reads call, but never resumed by id.
+      fnExtra.name = generateUid(fnExtra.name);
     }
   }
 

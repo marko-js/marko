@@ -1,0 +1,8 @@
+<let/n=0>
+<define/Picker|input|>
+  <button class=input.name onClick() { input.onPick() }>${input.name}</button>
+</define>
+<const/inc() { n++ }>
+<Picker name="inline" onPick() { n += 10 }/>
+<Picker name="const" onPick=inc/>
+<p>${n}</p>

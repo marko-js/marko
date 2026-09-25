@@ -1,0 +1,10 @@
+<let/count=0>
+<let/max=1>
+<const/pick() { count++ }>
+<const/canPick() { return count < max }>
+<const/inc() { count += 10 }>
+<const/getHandler() { return inc }>
+<child name="gated" onPick=(canPick() ? pick : undefined)/>
+<child name="returned" onPick=getHandler()/>
+<button id="raise" onClick() { max += 100 }>raise</button>
+<p>${count}</p>

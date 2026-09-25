@@ -1,0 +1,7 @@
+<let/n=0>
+<const/stop(e) { e.preventDefault() }>
+<const/mark() { document.querySelector("#t")!.textContent = "marked" }>
+<a href="#x" onClick=stop>link</a>
+<button id="mark" onClick=mark>mark</button>
+<button id="inc" onClick() { n++ }>${n}</button>
+<p id="t">unmarked</p>

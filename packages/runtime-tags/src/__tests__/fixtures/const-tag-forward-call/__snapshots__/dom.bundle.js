@@ -1,21 +1,21 @@
 // template.marko
 const $second_getter = /*@__PURE__*/ _hoist(7);
-const $third_getter = _hoist_resume("a8", 9);
+const $third_getter = _hoist_resume("a4", 9);
 const $nullary_getter = /*@__PURE__*/ _hoist(11);
 const $defaulted_getter = /*@__PURE__*/ _hoist(13);
 const $result = /*@__PURE__*/ _let(5, ($scope) => _text($scope.e, $scope.f));
-const $setup__script = _script("a9", ($scope) => {
+const $setup__script = _script("a5", ($scope) => {
 	_on($scope.a, "click", function() {
-		$scope.g();
+		($scope.g ||= $first($scope))();
 	});
 	_on($scope.b, "click", function() {
-		$scope.i();
+		($scope.i ||= $viaAlias($scope))();
 	});
 	_on($scope.c, "click", function() {
-		$scope.k();
+		($scope.k ||= $callNullary($scope))();
 	});
 	_on($scope.d, "click", function() {
-		$scope.m();
+		($scope.m ||= $callDefaulted($scope))();
 	});
 });
 const $first = ($scope) => () => {
@@ -43,11 +43,7 @@ const $callDefaulted = ($scope) => () => {
 function $defaulted(a, b = "def") {
 	return a + ":" + b;
 }
-_resumed.a0 = $first;
-_resumed.a1 = $second;
-_resumed.a2 = $viaAlias;
-_resumed.a3 = $third;
-_resumed.a4 = $callNullary;
-_resumed.a5 = $nullary;
-_resumed.a6 = $callDefaulted;
-_resumed.a7 = $defaulted;
+_resumed.a0 = $second;
+_resumed.a1 = $third;
+_resumed.a2 = $nullary;
+_resumed.a3 = $defaulted;

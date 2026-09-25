@@ -1,0 +1,9 @@
+<let/mode="a">
+<let/out="">
+<define/LocalBtn|{ getHandler, name }|>
+  <button class=name onClick=getHandler()>${name}</button>
+</define>
+<btn name="child" getHandler() { return mode === "a" ? () => { out = "A" } : () => { out = "B" } }/>
+<LocalBtn name="local" getHandler() { return mode === "a" ? () => { out = "a" } : () => { out = "b" } }/>
+<button id="mode" onClick() { mode = "b" }>mode</button>
+<p>${out}</p>

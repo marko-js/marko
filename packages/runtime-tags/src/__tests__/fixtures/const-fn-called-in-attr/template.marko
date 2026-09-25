@@ -1,0 +1,13 @@
+<let/mode="a">
+<let/out="">
+<let/active=false>
+<const/pick() {
+  return mode === "a" ? () => { out = "A" } : () => { out = "B" };
+}>
+<const/getAttrs() { return { class: active ? "on" : "off" } }>
+<const/cls() { return active ? "on" : "off" }>
+<button id="pick" onClick=pick()>${out}</button>
+<div id="spread" ...getAttrs()/>
+<div id="before-spread" class=cls() ...input.rest/>
+<button id="mode" onClick() { mode = "b" }>mode</button>
+<button id="toggle" onClick() { active = !active }>toggle</button>

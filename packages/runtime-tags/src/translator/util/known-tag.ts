@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
+import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from "../visitors/program";
 import {
@@ -33,7 +33,6 @@ import {
   getOrCreatePropertyAlias,
   getScopeAccessorLiteral,
   type InputBinding,
-  isInvokeOnlyBinding,
   type KnownExprs,
   mapParamReasonToExpr,
   mergeReferences,
@@ -690,15 +689,8 @@ function analyzeAttrs(
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
         setBindingDownstream(templateExportAttr.binding, attrExtra, rootExprs);
-        // A cross template child that only ever invokes this input makes the attribute
-        // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
-        if (
-          templateExportAttr.binding.section.program !==
-            getProgram().node.extra.section &&
-          isInvokeOnlyBinding(templateExportAttr.binding)
-        ) {
-          attrExtra.invokeOnly = true;
-        }
+        // `invokeOnly` once reads settle, if the child only ever invokes it.
+        attrExtra.knownTagInput = true;
         if (
           knownSpread &&
           !propsUtil.has(knownSpread.binding.excludeProperties, attr.name)

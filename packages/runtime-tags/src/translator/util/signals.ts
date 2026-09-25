@@ -39,7 +39,8 @@ import {
   intersectionMeta,
   isAssignedBindingExtra,
   isDirectAlias,
-  isRegisteredFnExtra,
+  getFunctionValueExpression,
+  isHoistedFnExtra,
   type ReferencedBindings,
 } from "./references";
 import { callRuntime, registerRuntimeValue } from "./runtime";
@@ -1242,6 +1243,7 @@ export function writeRegisteredFns() {
     }
 
     for (const registeredFn of registeredFns) {
+      if (!registeredFn.registerId) continue;
       statements.push(
         t.expressionStatement(
           registerRuntimeValue(
@@ -1800,7 +1802,7 @@ const registeredFnsForProgram = new WeakMap<
   t.Program,
   {
     id: string;
-    registerId: string;
+    registerId: string | undefined;
     node: t.Function;
     section: Section;
     referencesScope: undefined | boolean;
@@ -1855,7 +1857,7 @@ export function replaceRegisteredFunctionNode(node: t.Node) {
 
 function getRegisteredFnExpression(node: t.Function) {
   const { extra } = node;
-  if (isRegisteredFnExtra(extra)) {
+  if (isHoistedFnExtra(extra)) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
     const referencedBindings = extra.referencedBindingsInFunction;
@@ -1897,11 +1899,8 @@ function getRegisteredFnExpression(node: t.Function) {
       return t.callExpression(t.identifier(id), [
         t.objectExpression(properties),
       ]);
-    } else if (referencesScope || referencedBindings) {
-      return t.callExpression(t.identifier(id), [scopeIdentifier]);
-    } else {
-      return t.identifier(id);
     }
+    return getFunctionValueExpression(extra, scopeIdentifier);
   }
 }
 
