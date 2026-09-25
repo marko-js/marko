@@ -36,6 +36,7 @@ import {
   getSectionRegisterReasons,
   startSection,
 } from "../../util/sections";
+import { hasOwnResumeReason } from "../../util/serialize-reasons";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -112,12 +113,11 @@ export default {
 
       const section = programExtra.section!;
 
-      // Anything serialized or unconditionally registered is revived against
-      // this module, so it has to reach the client on its own.
+      // Anything revived or unconditionally registered against this module
+      // has to reach the client on its own.
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
-          childSection.serializeReason ||
-          childSection.serializeReasons.size ||
+          hasOwnResumeReason(childSection) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
             getSectionRegisterReasons(childSection))

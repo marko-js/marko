@@ -50,6 +50,7 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
   trackDomVarReferences,
+  isTagVarRead,
 } from "../../util/references";
 import {
   callRuntime,
@@ -378,7 +379,7 @@ export default {
           }
         }
 
-        if (node.var || hasEventHandlers) {
+        if (hasEventHandlers || isTagVarRead(tag)) {
           addSerializeReason(tagSection, FORCED, nodeBinding);
         }
 

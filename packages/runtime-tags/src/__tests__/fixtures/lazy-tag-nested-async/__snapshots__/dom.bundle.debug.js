@@ -1,3 +1,15 @@
+// template.marko
+const $template = "<div id=before>before</div><!><div id=after>after</div>";
+const $walks = "b%/&c";
+let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+function $setup($scope) {
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
+}
+const $input_value = ($scope, input_value) => $load_Child_tag_input_value($scope["#childScope/1"], input_value);
+const $input = ($scope, input) => $input_value($scope, input.value);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+
 // child.marko
 const $template = "<button id=child>child:<!></button><!><!>";
 const $walks = " Db%l%c";
@@ -51,18 +63,6 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_value($scope, input.value);
 var grand_child_default = /*@__PURE__*/ _template("__tests__/grand-child.marko", $template, $walks, $setup, $input);
-
-// template.marko
-const $template = "<div id=before>before</div><!><div id=after>after</div>";
-const $walks = "b%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
-function $setup($scope) {
-	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-}
-const $input_value = ($scope, input_value) => $load_Child_tag_input_value($scope["#childScope/1"], input_value);
-const $input = ($scope, input) => $input_value($scope, input.value);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // v:child.marko.setup.js
 const _ = [

@@ -1,13 +1,25 @@
+// template.marko
+const $template = $template$1;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
+const $setup = () => {};
+const $input_comments = ($scope, input_comments) => $input_comments$1($scope["#childScope/0"], input_comments);
+const $input_path = ($scope, input_path) => $input_path$1($scope["#childScope/0"], input_path);
+const $input = ($scope, input) => {
+	$input_comments($scope, input.comments);
+	$input_path($scope, input.path);
+};
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+
 // tags/comments.marko
-const $template$1 = "<ul></ul>";
-const $walks$1 = " b";
-const $setup$1 = () => {};
-const $if_content__comment_comments = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $input_comments$1($scope["#childScope/0"], $scope._.comment_comments));
+const $template = "<ul></ul>";
+const $walks = " b";
+const $setup = () => {};
+const $if_content__comment_comments = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $input_comments($scope["#childScope/0"], $scope._.comment_comments));
 const $if_content__setup = ($scope) => {
 	$if_content__comment_comments._($scope);
 	$if_content__id._($scope);
 };
-const $if_content__id = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $input_path$1($scope["#childScope/0"], $scope._.id));
+const $if_content__id = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $input_path($scope["#childScope/0"], $scope._.id));
 const $for_content__id = /*@__PURE__*/ _const("id", ($scope) => {
 	_attr($scope["#li/0"], "id", $scope.id);
 	$if_content__id($scope);
@@ -26,7 +38,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__comment_text = ($scope, comment_text) => _text($scope["#text/1"], comment_text);
-const $for_content__if = /*@__PURE__*/ _if("#text/4", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
+const $for_content__if = /*@__PURE__*/ _if("#text/4", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
 const $for_content__comment_comments = /*@__PURE__*/ _const("comment_comments", ($scope) => {
 	$for_content__if($scope, $scope.comment_comments ? 0 : 1);
 	$if_content__comment_comments($scope);
@@ -36,22 +48,10 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__comment_comments($scope, $params2[0]?.comments);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li><span> </span><button> </button><!></li>", " E l D l%", $for_content__setup, $for_content__$params);
-const $input_comments$1 = ($scope, input_comments) => $for($scope, [input_comments]);
-const $input_path$1 = /*@__PURE__*/ _const("input_path", $for_content__input_path);
-const $input$1 = ($scope, input) => {
-	$input_comments$1($scope, input.comments);
-	$input_path$1($scope, input.path);
-};
-var comments_default = /*@__PURE__*/ _template("__tests__/tags/comments.marko", $template$1, " b", 0, $input$1);
-
-// template.marko
-const $template = $template$1;
-const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $setup = () => {};
-const $input_comments = ($scope, input_comments) => $input_comments$1($scope["#childScope/0"], input_comments);
-const $input_path = ($scope, input_path) => $input_path$1($scope["#childScope/0"], input_path);
+const $input_comments = ($scope, input_comments) => $for($scope, [input_comments]);
+const $input_path = /*@__PURE__*/ _const("input_path", $for_content__input_path);
 const $input = ($scope, input) => {
 	$input_comments($scope, input.comments);
 	$input_path($scope, input.path);
 };
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
+var comments_default = /*@__PURE__*/ _template("__tests__/tags/comments.marko", $template, " b", 0, $input);

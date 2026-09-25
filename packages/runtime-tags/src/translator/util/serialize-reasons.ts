@@ -277,6 +277,21 @@ export function mergeSerializeReasons(
   return mergeSources(a, b);
 }
 
+// Whether a reason revives the scope from its own template (state, or forced):
+// a param-only one revives through a parent whose client work bundles it.
+export function isOwnResumeReason(reason: SerializeReason | undefined) {
+  return !!reason && !!(reason.state || reason.forced);
+}
+
+// A prop reason a reference finalizer adds never merges into the scope reason.
+export function hasOwnResumeReason(section: Section) {
+  if (isOwnResumeReason(section.serializeReason)) return true;
+  for (const reason of section.serializeReasons.values()) {
+    if (isOwnResumeReason(reason)) return true;
+  }
+  return false;
+}
+
 export function applySerializeExprs(section: Section) {
   const propExprs = section.propSerializeExprs;
   if (propExprs) {

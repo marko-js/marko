@@ -19,6 +19,7 @@ import {
   FORCED,
   mergeReferences,
   trackDomVarReferences,
+  isTagVarRead,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -91,7 +92,8 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      if (tagVar) addSerializeReason(tagSection, FORCED, nodeBinding);
+      if (isTagVarRead(tag))
+        addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
     }
 
