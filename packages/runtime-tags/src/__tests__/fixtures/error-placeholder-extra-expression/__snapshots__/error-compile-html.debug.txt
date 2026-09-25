@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-placeholder-extra-expression/template.marko:2:10
+      1 | <const/x=1>
+    > 2 | <div>${x x}</div>
+        |          ^ Expected a single expression, but found `x` after it.
+      3 |

@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-value-missing-whitespace/template.marko:1:15
+    > 1 | <div class="a"id="b"/>
+        |               ^ Expected a single expression, but found `i` after it.
+      2 |
