@@ -25,6 +25,7 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   const foundProperties = {};
   const hasAttributeTags = !!attributeTags.length;
   const isTagsAPI = findRootTag(path)?.node.extra?.featureType === "tags";
+  const isTagsAttrTag = isTagsAPI && isAttrTag;
   const renderBodyKey = isTagsAPI ? "content" : "renderBody";
 
   for (let i = 0; i < attrsLen; i++) {
@@ -79,14 +80,30 @@ export function getAttrs(path, preserveNames, isAttrTag) {
     }
   }
 
-  if (childLen && !hasAttributeTags) {
+  // `attr-tag.js` › `i` stores a returned body as `renderBody`, so a Tags
+  // attribute tag keeps its body keyed even beside nested attribute tags.
+  if (childLen && (!hasAttributeTags || isTagsAttrTag)) {
+    const renderBody = t.arrowFunctionExpression(
+      [t.identifier("out"), ...params],
+      t.blockStatement(body),
+    );
     properties.push(
       t.objectProperty(
         t.stringLiteral(renderBodyKey),
-        t.arrowFunctionExpression(
-          [t.identifier("out"), ...params],
-          t.blockStatement(body),
-        ),
+        // Converted where it is built, so the Tags compat layer never walks input for it.
+        isTagsAttrTag
+          ? t.callExpression(
+              importNamed(
+                path.hub.file,
+                `marko/src/runtime/helpers/tags-compat/runtime-${
+                  path.hub.file.markoOpts.output === "html" ? "html" : "dom"
+                }.js`,
+                "c",
+                "marko_tags_content",
+              ),
+              [renderBody],
+            )
+          : renderBody,
       ),
     );
   }
@@ -126,7 +143,7 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   if (hasAttributeTags) {
     let attrTagBody = attributeTags;
 
-    if (body.length) {
+    if (body.length && !isTagsAttrTag) {
       attrTagBody = attrTagBody.concat(
         t.returnStatement(
           t.arrowFunctionExpression(
@@ -154,6 +171,12 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   }
 
   return attrsObject;
+}
+
+export function getTagsCompatFile({ optimize, modules, output }) {
+  return `marko/${optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
+    output === "html" ? "html" : "dom"
+  }${optimize ? "" : "-debug"}.${modules === "esm" ? "mjs" : "js"}`;
 }
 
 export function buildEventHandlerArray(path) {

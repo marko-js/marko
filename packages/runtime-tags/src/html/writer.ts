@@ -328,9 +328,9 @@ export function _attr_content(
   const branchId = _peek_scope_id();
   if (render) {
     if (shouldResume) {
-      withBranchId(branchId, render);
+      withBranchId(branchId, render, {});
     } else {
-      render();
+      render({});
     }
   }
 

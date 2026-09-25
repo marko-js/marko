@@ -15,6 +15,7 @@ const noopRenderer = require("../serialize-noop").___noop;
 
 // Bound in `p` so entry files (dom / dom-debug, cjs / esm) just re-export `f`.
 let resumeClassFunction;
+let toTagsContent;
 
 // Rebuilds a hoisted class handler against whichever component the resumed
 // scope names, so it fires without the parent having to rerender.
@@ -33,6 +34,10 @@ exports.f = (id, factory) => {
       },
   );
 };
+
+// A Class body the translator hands to a Tags parent, as that parent's content. Imported from
+// here, not an entry: every template with a Tags child imports the entry that binds it.
+exports.c = (body) => toTagsContent(body);
 
 exports.p = function (domCompat) {
   resumeClassFunction = domCompat.resumeClassFunction;
@@ -102,7 +107,7 @@ exports.p = function (domCompat) {
   const TagsCompatId = "tags-compat";
   const TagsCompat = createRenderer(
     function (_, out, componentDef, component) {
-      const input = Array.isArray(_.i) ? _.i : [_.i];
+      const input = Array.isArray(_.i) ? _.i : [toTagsInput(_.i)];
       const tagsRenderer = domCompat.resolveRegistered(_.r, out.global);
       const newNode = domCompat.render(out, component, tagsRenderer, input);
 
@@ -137,6 +142,7 @@ exports.p = function (domCompat) {
   }));
 
   const rendererCache = new WeakMap();
+  const classBodyByContent = new WeakMap();
 
   domCompat.patchDynamicTag((dynamicTag) => (...args) => {
     const signal = dynamicTag(...args);
@@ -144,6 +150,24 @@ exports.p = function (domCompat) {
       return signal(scope, create5to6Renderer(renderer), getInput);
     };
   });
+
+  // Class bodies become Tags renderers as they enter a Tags template, so any
+  // consumer of `content` renders them, not only a dynamic tag.
+  function toTagsInput(input) {
+    const tagsInput = {};
+    for (const key in input) {
+      if (key === "renderBody") tagsInput.content = toTagsContent(input[key]);
+      else tagsInput[key] = input[key];
+    }
+    return tagsInput;
+  }
+
+  toTagsContent = (body) =>
+    typeof body === "function" ? create5to6Renderer(body) : body;
+
+  function toClassContent(content) {
+    return classBodyByContent.get(content) || content;
+  }
 
   function create5to6Renderer(renderer) {
     let newRenderer = renderer;
@@ -168,6 +192,7 @@ exports.p = function (domCompat) {
           );
           domCompat.setRendererId(newRenderer, renderer);
           rendererCache.set(renderer, newRenderer);
+          classBodyByContent.set(newRenderer, renderer);
         }
       }
     }
@@ -177,7 +202,8 @@ exports.p = function (domCompat) {
   domCompat.init(noopRenderer);
 
   function renderAndMorph(scope, renderer, renderBody, input) {
-    const out = defaultCreateOut(scope.$global);
+    const $global = domCompat.getGlobal(scope);
+    const out = defaultCreateOut($global);
     let host = domCompat.getStartNode(scope);
     let rootNode = host.fragment;
     if (!rootNode) {
@@ -203,31 +229,40 @@ exports.p = function (domCompat) {
       domCompat.setScopeNodes(scope, rootNode.startNode, rootNode.endNode);
     }
     const existingComponent = scope.___marko5Component;
-    const componentsContext = ___getComponentsContext(out);
-    const globalComponentsContext = componentsContext.___globalContext;
+    const enclosingComponents = $global.___components;
     let customEvents;
     let normalizedInput;
+    // Cleared so `___getComponentsContext` builds a context of its own: reusing the
+    // enclosing Class render's resets its rerender state for the siblings after this one.
+    $global.___components = undefined;
+    const componentsContext = ___getComponentsContext(out);
+    const globalComponentsContext = componentsContext.___globalContext;
     globalComponentsContext.___rerenderComponent = existingComponent;
     out.sync();
-    if (renderer) {
-      const [rawInput] = input;
-      normalizedInput = {};
+    try {
+      if (renderer) {
+        const [rawInput] = input;
+        normalizedInput = {};
 
-      for (const key in rawInput) {
-        const value = rawInput[key];
-        if (/^on[-A-Z]/.test(key) && typeof value === "function") {
-          (customEvents || (customEvents = {}))[toCustomEventName(key)] = [
-            value,
-          ];
-        } else {
-          normalizedInput[key === "content" ? "renderBody" : key] = value;
+        for (const key in rawInput) {
+          const value = rawInput[key];
+          if (/^on[-A-Z]/.test(key) && typeof value === "function") {
+            (customEvents || (customEvents = {}))[toCustomEventName(key)] = [
+              value,
+            ];
+          } else {
+            normalizedInput[key === "content" ? "renderBody" : key] =
+              toClassContent(value);
+          }
         }
-      }
 
-      renderer(normalizedInput, out);
-    } else {
-      normalizedInput = input[0];
-      RenderBodyComponent({ renderBody, args: input }, out);
+        renderer(normalizedInput, out);
+      } else {
+        normalizedInput = input[0];
+        RenderBodyComponent({ renderBody, args: input }, out);
+      }
+    } finally {
+      $global.___components = enclosingComponents;
     }
 
     domCompat.queueEffect(scope, () => {

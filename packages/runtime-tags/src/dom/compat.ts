@@ -70,6 +70,9 @@ export const compat = {
   isRenderer(renderer: any) {
     return renderer[RendererProp.Clone];
   },
+  getGlobal(scope: any) {
+    return scope[AccessorProp.Global];
+  },
   getStartNode(branch: any) {
     return branch[AccessorProp.StartNode];
   },
@@ -126,14 +129,6 @@ export const compat = {
     if (!branch && (branch = classIdToBranch.get(component.id)!)) {
       component.scope = branch;
       classIdToBranch.delete(component.id);
-    }
-
-    if (args[0] && typeof args[0] === "object" && "renderBody" in args[0]) {
-      const input = args[0];
-      const normalizedInput = (args[0] = {} as any);
-      for (const key in input) {
-        normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-      }
     }
 
     component.effects = prepareEffects(() => {

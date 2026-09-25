@@ -1,0 +1,10 @@
+class {
+  onCreate() { this.state = { n: 0 }; }
+  inc() { this.state.n++; }
+}
+<button id="class" onClick("inc")>${state.n}</button>
+<tags-to-class id="roundtrip">
+  Hello ${state.n}
+  <class-thing/>
+</tags-to-class>
+<init-components/>

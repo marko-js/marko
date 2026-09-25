@@ -1,0 +1,10 @@
+import Other from "./tags/other.marko";
+<let/n=0>
+<button onClick() { n++ }>${n}</button>
+<spread|x| data-n=n>params:${typeof x}</spread>
+<spread content=Other data-n=n/>
+<spread content=(n ? Other : undefined)/>
+<passthrough|x| data-n=n>params:${typeof x}</passthrough>
+<passthrough content=Other data-n=n/>
+<passthrough content=(n ? Other : undefined)/>
+<${input.tag} content=Other data-n=n/>

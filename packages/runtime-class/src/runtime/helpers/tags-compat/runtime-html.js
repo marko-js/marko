@@ -11,14 +11,20 @@ const dynamicTag5 = require("../dynamic-tag");
 
 // Bound in `p` so entry files (html / html-debug, cjs / esm) just re-export `f`.
 let registerClassFunction;
+let toTagsContent;
 
 exports.f = (id, fn, component, out) =>
   registerClassFunction(out.global, id, fn, component.id);
+
+// A Class body the translator hands to a Tags parent, as that parent's content. Imported from
+// here, not an entry: every template with a Tags child imports the entry that binds it.
+exports.c = (body) => toTagsContent(body);
 
 exports.p = function (htmlCompat) {
   registerClassFunction = htmlCompat.registerClassFunction;
   const writersByGlobal = new WeakMap();
   const boundaryModeByRenderer = new WeakMap();
+  const classBodyByContent = new WeakMap();
   const isMarko6 = (fn) => typeof fn !== "function" || htmlCompat.isTagsAPI(fn);
   const isMarko5 = (fn) =>
     typeof fn !== "function" || !htmlCompat.isTagsAPI(fn);
@@ -137,7 +143,7 @@ exports.p = function (htmlCompat) {
         });
       }
 
-      const input = _.i;
+      const input = toTagsInput(_.i);
       const tagsRenderer = _.r;
       const willRerender = componentDef._wrr || htmlCompat.isInResumedBranch();
       out.bf("1", component, willRerender);
@@ -171,7 +177,36 @@ exports.p = function (htmlCompat) {
     {},
   );
 
-  htmlCompat.patchDynamicTag(function getRenderer(tag, scopeId, accessor) {
+  htmlCompat.patchDynamicTag((tag, scopeId, accessor) =>
+    toTagsRenderer(classBodyByContent.get(tag) || tag, scopeId, accessor),
+  );
+
+  // Class bodies become Tags renderers as they enter a Tags template, so any
+  // consumer of `content` renders them, not only a dynamic tag.
+  function toTagsInput(input) {
+    if (Array.isArray(input)) return input;
+    const tagsInput = {};
+    for (const key in input) {
+      if (key === "renderBody") tagsInput.content = toTagsContent(input[key]);
+      else tagsInput[key] = input[key];
+    }
+    return tagsInput;
+  }
+
+  toTagsContent = (body) => {
+    if (typeof body !== "function" || isMarko6(body)) return body;
+    const content = toTagsRenderer(body);
+    htmlCompat.setRendererId(content, body);
+    htmlCompat.registerRenderBody(content);
+    classBodyByContent.set(content, body);
+    return content;
+  };
+
+  function toClassContent(content) {
+    return classBodyByContent.get(content) || content;
+  }
+
+  function toTagsRenderer(tag, scopeId, accessor) {
     if (!tag || isMarko6(tag._ || tag.content || tag)) {
       return tag;
     }
@@ -210,7 +245,8 @@ exports.p = function (htmlCompat) {
             forceBoundary = true;
             value.toJSON = htmlCompat.toJSON();
           } else {
-            input[key === "content" ? "renderBody" : key] = value;
+            input[key === "content" ? "renderBody" : key] =
+              toClassContent(value);
           }
         }
 
@@ -245,10 +281,17 @@ exports.p = function (htmlCompat) {
 
       if (async !== false) {
         async = true;
-        htmlCompat.fork(scopeId, accessor, out, writeClassAPIResultToTagsAPI);
+        // A converted body has no dynamic tag to mark, and native tag content needs no marks.
+        htmlCompat.fork(
+          scopeId,
+          accessor,
+          out,
+          writeClassAPIResultToTagsAPI,
+          accessor === undefined ? 0 : undefined,
+        );
       }
     };
-  });
+  }
 
   return function register(id, renderer, boundaryMode) {
     // A renderer registered without "preserve" by any module keeps that mode:

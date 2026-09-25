@@ -1,4 +1,4 @@
-// size: 27226 (min) 10161 (brotli)
+// size: 27154 (min) 10137 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1328,7 +1328,8 @@ function _attr_content(scope, nodeAccessor, value) {
   let content = normalizeClientRender(value);
   (scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
-    content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor])),
+    content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]),
+    content?.d?.(scope["A" + nodeAccessor], content._ ? {} : [{}])),
     content?.g?.(scope["A" + nodeAccessor]));
 }
 function _attrs_script(scope, nodeAccessor) {
@@ -2056,6 +2057,9 @@ let empty = [],
     isRenderer(renderer) {
       return renderer.b;
     },
+    getGlobal(scope) {
+      return scope.$;
+    },
     getStartNode(branch) {
       return branch.S;
     },
@@ -2094,14 +2098,7 @@ let empty = [],
         (!branch &&
           (branch = classIdToBranch.get(component.id)) &&
           ((component.scope = branch), classIdToBranch.delete(component.id)),
-        args[0] && typeof args[0] == "object" && "renderBody" in args[0])
-      ) {
-        let input = args[0],
-          normalizedInput = (args[0] = {});
-        for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-      }
-      if (
-        ((component.effects = prepareEffects(() => {
+        (component.effects = prepareEffects(() => {
           ((branch ||=
             ((created = 1),
             (component.scope = createAndSetupBranch(

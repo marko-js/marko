@@ -76,6 +76,8 @@ export let _dynamic_tag = (
       if (!voidElementsReg.test(renderer)) {
         const renderContent =
           content || normalizeDynamicRenderer<ServerRenderer>(input.content);
+        // A `content` attribute renders with an empty input, as `_attr_content` does.
+        const contentInput = content ? undefined : {};
         if (renderer === "textarea") {
           if (MARKO_DEBUG && renderContent) {
             throw new Error(
@@ -115,7 +117,7 @@ export let _dynamic_tag = (
                       branchId,
                       MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
                       renderContent,
-                      undefined,
+                      contentInput,
                       0,
                       undefined,
                       serializeReason,
@@ -128,7 +130,7 @@ export let _dynamic_tag = (
               branchId,
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
               renderContent,
-              undefined,
+              contentInput,
               0,
               undefined,
               serializeReason,

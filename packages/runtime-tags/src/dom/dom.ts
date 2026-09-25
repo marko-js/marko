@@ -318,6 +318,12 @@ export function _attr_content(
         scope[AccessorPrefix.BranchScopes + nodeAccessor],
       );
     }
+    // Matches `<${content}/>`, once since the empty input never changes: a template
+    // (tagged `_` by `_template`) takes it as `input`, a body as its first param.
+    content?.[RendererProp.Params]?.(
+      scope[AccessorPrefix.BranchScopes + nodeAccessor],
+      (content as any)._ ? {} : [{}],
+    );
   }
 
   content?.[RendererProp.LocalClosures]?.(
