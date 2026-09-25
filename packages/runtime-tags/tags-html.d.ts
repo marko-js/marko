@@ -1662,7 +1662,8 @@ declare global {
          */
         type?: AttrMissing | "context" | "toolbar";
       }
-      interface Meta extends HTMLAttributes<HTMLMetaElement> {
+      // The one tag whose `content` is its HTML attribute instead of its body.
+      interface Meta extends Omit<HTMLAttributes<HTMLMetaElement>, "content"> {
         /**
          * Specifies the character encoding for the HTML document.
          * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-charset
@@ -4413,7 +4414,7 @@ declare global {
        * @see Marko.Body
        */
       content?:
-        | AttrString
+        | AttrMissing
         | Marko.Body<[], void>
         | Marko.Template<Record<any, never>, void>;
 
@@ -4466,7 +4467,7 @@ declare global {
        * @see Marko.Body
        */
       content?:
-        | AttrString
+        | AttrMissing
         | Marko.Body<[], void>
         | Marko.Template<Record<any, never>, void>;
 
