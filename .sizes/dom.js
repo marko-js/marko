@@ -1,4 +1,4 @@
-// size: 27238 (min) 10174 (brotli)
+// size: 27240 (min) 10181 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -2018,7 +2018,6 @@ function byFirstArg(name) {
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
-  classIdToBranch = /* @__PURE__ */ new Map(),
   classEventResolver,
   scopesByRender = /* @__PURE__ */ new WeakMap(),
   getRenderScopes = ($global) => {
@@ -2033,9 +2032,10 @@ let empty = [],
     init(warp10Noop) {
       (withBranches(),
         (_resumed.$C_s = (scope) => {
+          let scopes = getRenderScopes(scope.$);
           if (
-            ((getRenderScopes(scope.$)[scope.L] = scope),
-            scope.m5c && classIdToBranch.set(scope.m5c, scope),
+            ((scopes[scope.L] = scope),
+            scope.m5c && (scopes["m5c" + scope.m5c] = scope),
             classEventResolver)
           )
             for (let key in scope) {
@@ -2091,15 +2091,14 @@ let empty = [],
       );
     },
     render(out, component, renderer, args) {
-      init(out.global.runtimeId);
       let branch = component.scope,
         created = 0;
-      if (
-        (!branch &&
-          (branch = classIdToBranch.get(component.id)) &&
-          ((component.scope = branch), classIdToBranch.delete(component.id)),
-        args[0] && typeof args[0] == "object" && "renderBody" in args[0])
-      ) {
+      if (!branch) {
+        let scopes = getRenderScopes(out.global),
+          key = "m5c" + component.id;
+        (branch = scopes?.[key]) && ((component.scope = branch), delete scopes[key]);
+      }
+      if (args[0] && typeof args[0] == "object" && "renderBody" in args[0]) {
         let input = args[0],
           normalizedInput = (args[0] = {});
         for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];

@@ -12,13 +12,13 @@ import { prepareEffects, queueEffect, runEffects } from "./queue";
 import { _content, createAndSetupBranch, type Renderer } from "./renderer";
 import { _resumed, getRegisteredWithScope, init } from "./resume";
 import { destroyBranch } from "./scope";
-const classIdToBranch = new Map<string, BranchScope>();
 // Injected by the class runtime (runtime-dom.js); revives a serialized
 // class-method event reference, which only the class side can resolve.
 let classEventResolver: ((value: unknown, scope: Scope) => unknown) | undefined;
 // Keyed by the render handle, the one object reachable from both sides of the
 // interop boundary, and released with the render when an embedded render is destroyed.
 const scopesByRender = new WeakMap<object, Record<string, Scope>>();
+const CLASS_ID_PREFIX = "m5c";
 const getRenderScopes = ($global: Record<string, unknown>) => {
   // The class runtime can hydrate before this runtime has resumed (init order
   // is bundler-controlled); force the resume so its scopes are registered.
@@ -41,10 +41,12 @@ export const compat = {
     // and destroys, so branch handling stays on even without Tags control flow.
     withBranches();
     _resumed[SET_SCOPE_REGISTER_ID] = (scope: Scope & { m5c?: string }) => {
-      getRenderScopes(scope[AccessorProp.Global]!)![scope[AccessorProp.Id]] =
-        scope;
+      const scopes = getRenderScopes(scope[AccessorProp.Global]!)!;
+      scopes[scope[AccessorProp.Id]] = scope;
       if (scope.m5c) {
-        classIdToBranch.set(scope.m5c, scope as BranchScope);
+        // Found by Class component id when that component rerenders; the
+        // prefix keeps it apart from the numeric scope ids.
+        scopes[CLASS_ID_PREFIX + scope.m5c] = scope;
       }
       // Revive any bridged class-method event references in this resumed scope.
       if (classEventResolver) {
@@ -121,15 +123,16 @@ export const compat = {
     return renderer;
   },
   render(out: any, component: any, renderer: Renderer, args: any) {
-    // A rerendering class parent may hydrate before this runtime has resumed;
-    // resume first so the branch this render should adopt is registered.
-    init(out.global.runtimeId);
     let branch: BranchScope | undefined = component.scope;
     let created: 0 | 1 = 0;
 
-    if (!branch && (branch = classIdToBranch.get(component.id)!)) {
-      component.scope = branch;
-      classIdToBranch.delete(component.id);
+    if (!branch) {
+      const scopes = getRenderScopes(out.global);
+      const key = CLASS_ID_PREFIX + component.id;
+      if ((branch = scopes?.[key] as BranchScope)) {
+        component.scope = branch;
+        delete scopes![key];
+      }
     }
 
     if (args[0] && typeof args[0] === "object" && "renderBody" in args[0]) {
