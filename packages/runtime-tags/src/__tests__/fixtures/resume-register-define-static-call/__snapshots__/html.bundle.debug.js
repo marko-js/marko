@@ -8,13 +8,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $Heading_content__input_content__closures = new Set();
 		const $scope1_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope1_reason, 2), $si__input_type__OR__input_content = _serialize_if($scope1_reason, 0), $sg__input_type = _serialize_guard($scope1_reason, 1), $si__input_content = _serialize_if($scope1_reason, 2);
-		_dynamic_tag($scope1_id, "#text/0", input.type, {}, _content_resume("__tests__/template.marko_2*content", () => {
+		_dynamic_tag($scope1_id, "#text/0", input.type, {}, _content("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			_dynamic_tag($scope2_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
 			$si__input_type__OR__input_content && _subscribe($si__input_content && $Heading_content__input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_2_input_content#4/subscribe", $sg__input_content);
 			$sg__input_content || $si__input_type__OR__input_content && _resume_branch($scope2_id);
-		}, $scope1_id, ($scope) => [{ input_content: input.content }]), 0, $sg__input_type);
+		}, $scope1_id), 0, $sg__input_type);
 		$si__input_type__OR__input_content && _scope($scope1_id, {
 			input_content: _serialize_if($scope1_reason, 1) && input.content,
 			"ClosureScopes:input_content": $si__input_content && $Heading_content__input_content__closures

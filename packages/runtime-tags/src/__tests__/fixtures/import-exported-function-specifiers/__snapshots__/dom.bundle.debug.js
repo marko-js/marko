@@ -13,12 +13,11 @@ var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", 
 _resumed["__tests__/tags/handlers.marko_0/export/shout"] = shout;
 
 // template.marko
-const $template = "<button> </button><!><!>";
-const $walks = " D l%c";
+const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)("D l");
 const $loud = /*@__PURE__*/ _let("loud/3");
 const $quiet = /*@__PURE__*/ _let("quiet/4");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
-const $message = /*@__PURE__*/ _let("message/5", ($scope) => $dynamicTag($scope, handlers_default, () => ({ message: $scope.message })));
+const $message = /*@__PURE__*/ _let("message/5", ($scope) => $input_message($scope["#childScope/2"], $scope.message));
 const $label = ($scope, label) => _text($scope["#text/1"], label);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$message($scope, $scope.loud($scope.quiet($scope.message)));

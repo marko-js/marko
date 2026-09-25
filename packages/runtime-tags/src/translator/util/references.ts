@@ -18,6 +18,7 @@ import {
   createCyclicPathMemo,
   type MemoPath,
 } from "./cyclic-memo";
+import type { PossibleValues } from "./evaluate";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-enums";
@@ -32,6 +33,7 @@ import {
   concat,
   every,
   filter,
+  find,
   first,
   findSorted,
   forEach,
@@ -173,6 +175,9 @@ export interface Binding {
   /** An attribute tag `<for>` param's local closure in each content the loop
    * creates that reads it. */
   localClosures: Map<Section, Binding> | undefined;
+  /** Every value this param is passed, when all of its calls are known (a
+   * `<define>` only ever used as a tag). */
+  passedValues: PossibleValues | undefined;
   declared: boolean;
   nullable: boolean;
   pruned: boolean | undefined;
@@ -325,6 +330,7 @@ export function createBinding(
     declaredAlias: undefined,
     upstreamLocal: undefined,
     localClosures: undefined,
+    passedValues: undefined,
     restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
@@ -1928,6 +1934,19 @@ function resolveBindingSources(binding: Binding) {
   } else {
     resolveDerivedSources(binding);
   }
+}
+
+// The binding a node reads whole, as `input.a.b` does its `b` property.
+export function getReadBinding(extra: t.NodeExtra | undefined) {
+  const exprRoot = extra?.exprRoot;
+  const read = (exprRoot &&
+    find(
+      getReadsByExpression().get(
+        getCanonicalExtra(exprRoot) as ReferencedExtra,
+      ),
+      (read) => read.extra === extra,
+    )) as Read | undefined;
+  return read?.binding;
 }
 
 function getAliasRoot(binding: Binding) {

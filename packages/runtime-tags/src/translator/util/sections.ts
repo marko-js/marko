@@ -46,7 +46,10 @@ import {
   type SerializeReasons,
 } from "./serialize-reasons";
 import { createSectionState } from "./state";
-import analyzeTagNameType, { TagNameType } from "./tag-name-type";
+import analyzeTagNameType, {
+  mayNameComponent,
+  TagNameType,
+} from "./tag-name-type";
 
 export interface ParamSerializeReasonGroup {
   id: symbol;
@@ -478,9 +481,8 @@ export function getSectionRegisterReasons(section: Section) {
 
   // Only a component receives a dynamic tag's body as a value; SSR otherwise
   // writes just its id, to compare against the client's renderer.
-  if (section.upstreamExpression?.tagNameType === TagNameType.NativeTag) {
-    return false;
-  }
+  const nameValues = section.upstreamExpression?.tagNameValues;
+  if (nameValues && !mayNameComponent(nameValues)) return false;
 
   const { downstream } = section;
 

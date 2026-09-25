@@ -19,12 +19,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let message = "Hello";
 	const label = "static";
 	_html(`<button>${_escape(label)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_dynamic_tag($scope0_id, "#text/2", handlers_default, { message });
+	_set_serialize_reason(2);
+	const $childScope = _peek_scope_id();
+	handlers_default({ message });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		loud,
 		quiet,
-		message
+		message,
+		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		loud: "6:6",
 		quiet: "7:6",

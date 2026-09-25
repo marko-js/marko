@@ -15,6 +15,7 @@ import {
 import entryBuilder from "../../util/entry-builder";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import getStyleFile from "../../util/get-style-file";
+import { finalizeKnownTagParams } from "../../util/known-tag";
 import {
   getMarkoOpts,
   getReadyId,
@@ -111,6 +112,7 @@ export default {
       }
 
       const section = programExtra.section!;
+      forEachSection(finalizeKnownTagParams);
 
       // Anything serialized or unconditionally registered is revived against
       // this module, so it has to reach the client on its own.

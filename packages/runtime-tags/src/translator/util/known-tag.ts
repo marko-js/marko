@@ -8,6 +8,14 @@ import {
   getKnownFromPropTree,
   hasAllKnownProps,
 } from "./binding-prop-tree";
+import * as ValueKind from "./constants/value-kind";
+import {
+  ANY_VALUE,
+  getBindingValues,
+  getPossibleValues,
+  mergePossibleValues,
+  type PossibleValues,
+} from "./evaluate";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
 import { isOptimize } from "./marko-config";
@@ -102,6 +110,14 @@ const kContentSection = Symbol("known tag content section");
 const kChildScopeBinding = Symbol("known tag scope binding");
 const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
 const kKnownExprs = Symbol("known tag exprs");
+// The body passed as `content`, a renderer.
+const BODY_CONTENT: KnownExprs = { value: undefined };
+const ABSENT: KnownExprs = {};
+const OBJECT_VALUE: PossibleValues = { kinds: ValueKind.Object, refKinds: 0 };
+const UNDEFINED_VALUE: PossibleValues = {
+  kinds: ValueKind.Undefined,
+  refKinds: 0,
+};
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -452,6 +468,12 @@ function analyzeParams(
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
+        if (isOwnTemplate(rootTagExtra)) {
+          // Cached on the extra, which `finalizeKnownTagParams` maps params to.
+          getPossibleValues(
+            (tag.get("arguments") as t.NodePath<t.Expression>[])[i],
+          );
+        }
       } else {
         dropNodes(arg);
       }
@@ -661,7 +683,7 @@ function analyzeAttrs(
         known.content = { value: rootTagExtra as ReferencedExtra };
       } else {
         remaining.delete("content");
-        known.content = { value: undefined }; // TODO: update when supporting default params
+        known.content = BODY_CONTENT; // TODO: update when supporting default params
         // The content signal call is applied unconditionally in setup.
         addSetupStatement(section);
       }
@@ -695,6 +717,13 @@ function analyzeAttrs(
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
         setBindingDownstream(templateExportAttr.binding, attrExtra, rootExprs);
+        if (isOwnTemplate(rootTagExtra)) {
+          getPossibleValues(
+            (tag.get("attributes")[i] as t.NodePath<t.MarkoAttribute>).get(
+              "value",
+            ),
+          );
+        }
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
         if (
@@ -733,7 +762,10 @@ function analyzeAttrs(
   if (knownSpread) {
     for (const prop of remaining) {
       const propBinding = getOrCreatePropertyAlias(knownSpread.binding, prop);
-      const propExtra: ReferencedExtra = { section };
+      const propExtra: ReferencedExtra = {
+        section,
+        possibleValues: getBindingValues(propBinding),
+      };
       const templateExportAttr = getKnownFromPropTree(propTree, prop)!;
 
       known[prop] = { value: propExtra };
@@ -1498,4 +1530,67 @@ function getGroupReads(
     if (read) reads.push([attrTagMeta, read]);
   }
   return reads;
+}
+
+// Records what each call of a `<define>` that is only ever called passes its
+// params, so what they may be is known.
+export function finalizeKnownTagParams(section: Section) {
+  for (const tagExtra of getKnownTags(section)) {
+    const exprs = tagExtra[kKnownExprs];
+    const contentSection = tagExtra[kContentSection]!;
+    if (exprs && contentSection.params && isDefineOnlyCalled(contentSection)) {
+      addPassedValues(exprs, contentSection.params);
+    }
+  }
+}
+
+function addPassedValues(exprs: KnownExprs, binding: Binding) {
+  binding.passedValues = mergePossibleValues(
+    binding.passedValues,
+    getPassedValues(getExactKnownExprs(exprs, binding)),
+  );
+  for (const alias of binding.propertyAliases.values()) {
+    addPassedValues(exprs, alias);
+  }
+  for (const alias of binding.aliases) addPassedValues(exprs, alias);
+}
+
+// The body content is a renderer, and props gathered into one are an object.
+function getPassedValues(known: KnownExprs | undefined): PossibleValues {
+  return !known
+    ? ANY_VALUE
+    : known === BODY_CONTENT || known.known
+      ? OBJECT_VALUE
+      : known.value
+        ? known.value.possibleValues || ANY_VALUE
+        : UNDEFINED_VALUE;
+}
+
+// The call's expressions for exactly `binding`, or `undefined` where only a
+// value holding it is known (a spread, or a value it is a property of).
+function getExactKnownExprs(
+  exprs: KnownExprs,
+  binding: Binding,
+): KnownExprs | undefined {
+  const upstream = binding.upstreamAlias;
+  if (!upstream) return exprs;
+  const known =
+    binding.property !== undefined && getExactKnownExprs(exprs, upstream);
+  return known && known.known
+    ? known.known[binding.property!] || (known.value ? undefined : ABSENT)
+    : undefined;
+}
+
+// A define whose tag variable is only ever a tag name has only known calls.
+function isDefineOnlyCalled(bodySection: Section) {
+  const binding = bodySection.downstream?.binding;
+  return (
+    !Array.isArray(binding) &&
+    binding?.type === BindingType.derived &&
+    !binding.reads.size
+  );
+}
+
+function isOwnTemplate(tagExtra: t.MarkoTagExtra) {
+  return tagExtra[kContentSection]!.program === getProgram().node.extra.section;
 }

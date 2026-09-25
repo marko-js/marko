@@ -3,10 +3,4 @@ const $falseChild_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _te
 const $falseChild_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._, +$scope._.b + 1);
 }));
-const $falseChild_content__setup = ($scope) => {
-	$falseChild_content__count($scope);
-	$falseChild_content__setup__script($scope);
-};
-const $falseChild_content = _content("a0", "<button> </button>", " D ", $falseChild_content__setup);
-_content_resume($falseChild_content);
 const $count = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($falseChild_content__count));

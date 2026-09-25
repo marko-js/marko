@@ -6,7 +6,8 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
-import evaluate from "../util/evaluate";
+import * as ValueKind from "../util/constants/value-kind";
+import evaluate, { getPossibleValues, getValueKinds } from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
@@ -82,7 +83,11 @@ export default {
 
     if (binding) {
       assertNoTagVarMutation(tag);
-      if (!valueExtra.nullable) binding.nullable = false;
+      const values = getPossibleValues(
+        (tag.get("attributes")[0] as t.NodePath<t.MarkoAttribute>).get("value"),
+      );
+      if (!(getValueKinds(values) & ValueKind.Nullish))
+        binding.nullable = false;
       if (!upstreamAlias) {
         // Keep unread initializers because their expressions may have side effects;
         // downstream minification can discard proven-pure values.

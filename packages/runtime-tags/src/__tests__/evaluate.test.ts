@@ -1,23 +1,40 @@
 import assert from "assert/strict";
 
-import { parseExpression } from "@marko/compiler/internal/babel";
+import {
+  parse,
+  parseExpression,
+  traverse,
+} from "@marko/compiler/internal/babel";
 
-import evaluate from "../translator/util/evaluate";
+import * as ValueKind from "../translator/util/constants/value-kind";
+import evaluate, {
+  getPossibleValues,
+  getValueKinds,
+} from "../translator/util/evaluate";
 
-// `evaluate` folds what it can and, for the rest, answers whether the value
-// could be null or undefined. Every case here uses an identifier somewhere so
-// the fold declines and the nullability walk is what answers.
 const read = (src: string) =>
   evaluate(parseExpression(src, { allowAwaitOutsideFunction: true }) as any);
-const nullable = (src: string) => read(src).nullable;
+
+// Every case here uses an identifier somewhere so the fold declines and the
+// kinds of each part are what answer.
+const kinds = (src: string) => {
+  let result = 0;
+  traverse(parse(`(${src});`, { allowAwaitOutsideFunction: true }), {
+    ExpressionStatement(path: any) {
+      result = getValueKinds(getPossibleValues(path.get("expression")));
+      path.stop();
+    },
+  });
+  return result;
+};
+const nullable = (src: string) => !!(kinds(src) & ValueKind.Nullish);
 
 describe("runtime-tags/translator evaluate", () => {
   describe("folding", () => {
     it("is confident about a constant", () => {
-      const { confident, computed, nullable } = read("1 + 1");
+      const { confident, computed } = read("1 + 1");
       assert.equal(confident, true);
       assert.equal(computed, 2);
-      assert.equal(nullable, false);
     });
 
     it("is not confident about an identifier", () => {
@@ -26,14 +43,20 @@ describe("runtime-tags/translator evaluate", () => {
       assert.equal(computed, undefined);
     });
 
-    it("treats a constant null as nullable", () =>
-      assert.equal(read("null").nullable, true));
-
     it("reuses the answer it already recorded", () => {
       const node = parseExpression("1 + 1") as any;
       assert.equal(evaluate(node).computed, 2);
       node.extra.computed = "kept";
       assert.equal(evaluate(node).computed, "kept");
+    });
+  });
+
+  describe("kinds of a constant", () => {
+    it("is the constant's own kind", () => {
+      assert.equal(kinds("1 + 1"), ValueKind.NonZero);
+      assert.equal(kinds('""'), ValueKind.EmptyString);
+      assert.equal(kinds("null"), ValueKind.Null);
+      assert.equal(kinds("void 0"), ValueKind.Undefined);
     });
   });
 
@@ -61,19 +84,23 @@ describe("runtime-tags/translator evaluate", () => {
   });
 
   describe("logical operators", () => {
-    // Only the right operand can be the result when the left is truthy or
-    // non-nullish, so the left says nothing about `||` and `??`.
-    it("|| follows the right operand", () => {
+    // `||` and `??` only result in a truthy or non-nullish left, and `&&` only
+    // in a falsy one.
+    it("|| narrows the left to truthy", () => {
       assert.equal(nullable("foo || 1"), false);
       assert.equal(nullable("foo || bar"), true);
     });
-    it("?? follows the right operand", () => {
+    it("?? narrows the left to non-nullish", () => {
       assert.equal(nullable("foo ?? 1"), false);
       assert.equal(nullable("foo ?? bar"), true);
     });
-    it("&& follows either operand", () => {
+    it("&& narrows the left to falsy", () => {
       assert.equal(nullable("1 && 2"), false);
       assert.equal(nullable("foo && 1"), true);
+      assert.equal(
+        kinds('foo && "x"'),
+        ValueKind.Falsy | ValueKind.NonEmptyString,
+      );
     });
   });
 
@@ -84,7 +111,7 @@ describe("runtime-tags/translator evaluate", () => {
     });
     it("an arithmetic assignment is never nullish", () =>
       assert.equal(nullable("foo += bar"), false));
-    it("||= and ??= follow the right operand", () => {
+    it("||= and ??= narrow the left", () => {
       assert.equal(nullable("foo ||= 1"), false);
       assert.equal(nullable("foo ??= bar"), true);
     });

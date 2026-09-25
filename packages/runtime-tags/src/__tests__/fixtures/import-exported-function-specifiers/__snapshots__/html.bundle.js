@@ -18,11 +18,14 @@ var template_default = _template("a", (input) => {
 	let quiet = shout;
 	let message = "Hello";
 	_html(`<button>${_escape("static")}</button>${_el_resume($scope0_id, "a")}`);
-	_dynamic_tag($scope0_id, "c", handlers_default, { message });
+	_set_serialize_reason(2);
+	const $childScope = _peek_scope_id();
+	handlers_default({ message });
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d: loud,
 		e: quiet,
-		f: message
+		f: message,
+		c: _existing_scope($childScope)
 	});
 }, 1);

@@ -7,8 +7,7 @@ const $Heading_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*con
 const $inputtype_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $inputtype_content__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $inputtype_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/template.marko_2_input_content#4/subscribe");
 const $inputtype_content__setup = $inputtype_content__input_content;
-const $inputtype_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $inputtype_content__setup);
-_content_resume($inputtype_content);
+const $inputtype_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $inputtype_content__setup);
 const $Heading_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content);
 const $Heading_content__input_type = $Heading_content__dynamicTag;
 const $Heading_content__tag_input_content__closure = /*@__PURE__*/ _closure($inputtype_content__input_content);
