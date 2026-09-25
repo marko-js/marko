@@ -17,7 +17,9 @@ export let runId = 2; // resumed scopes get `1`
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
+// Sorted by key; renders before `renderIndex` already ran this batch.
 let pendingRenders: PendingRender[] = [];
+let renderIndex = 0;
 
 // Orders pending renders across scopes; signal keys are per-section
 // binding ids, so they always fit well below the offset.
@@ -55,16 +57,19 @@ export function queueRender<T, U extends Scope = Scope>(
 }
 
 export function queuePendingRender(render: PendingRender) {
-  let i = pendingRenders.push(render) - 1;
-  while (i) {
-    const parentIndex = (i - 1) >> 1;
-    const parent = pendingRenders[parentIndex];
-    if (render[PendingRenderProp.Key] - parent[PendingRenderProp.Key] >= 0)
-      break;
-    pendingRenders[i] = parent;
-    i = parentIndex;
+  let lo = renderIndex;
+  let hi = pendingRenders.length;
+  // Insert after equal keys so they run in the order they were queued.
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (
+      pendingRenders[mid][PendingRenderProp.Key] > render[PendingRenderProp.Key]
+    )
+      hi = mid;
+    else lo = mid + 1;
   }
-  pendingRenders[i] = render;
+  if (lo < pendingRenders.length) pendingRenders.splice(lo, 0, render);
+  else pendingRenders.push(render);
 }
 
 export function queueEffect<S extends Scope, T extends ExecFn<S>>(
@@ -83,6 +88,7 @@ export function run() {
     runId++;
     rendering = 0;
     pendingRenders = [];
+    renderIndex = 0;
     pendingEffects = [];
   }
   runEffects(effects);
@@ -100,9 +106,11 @@ export function queueAsyncRender<T, U extends Scope = Scope>(
 
 export function prepareEffects(fn: () => void): unknown[] {
   const prevRenders = pendingRenders;
+  const prevRenderIndex = renderIndex;
   const prevEffects = pendingEffects;
   const preparedEffects = (pendingEffects = []);
   pendingRenders = [];
+  renderIndex = 0;
 
   try {
     rendering = 1;
@@ -112,6 +120,7 @@ export function prepareEffects(fn: () => void): unknown[] {
     runId++;
     rendering = 0;
     pendingRenders = prevRenders;
+    renderIndex = prevRenderIndex;
     pendingEffects = prevEffects;
   }
   return preparedEffects;
@@ -153,39 +162,7 @@ export function installCatch(
 }
 
 function runRenders() {
-  while (pendingRenders.length) {
-    const render = pendingRenders[0];
-    const item = pendingRenders.pop()!;
-
-    if (render !== item) {
-      let i = 0;
-      const mid = pendingRenders.length >> 1;
-      const key = (pendingRenders[0] = item)[PendingRenderProp.Key];
-
-      while (i < mid) {
-        let bestChild = (i << 1) + 1;
-        const right = bestChild + 1;
-
-        if (
-          right < pendingRenders.length &&
-          pendingRenders[right][PendingRenderProp.Key] -
-            pendingRenders[bestChild][PendingRenderProp.Key] <
-            0
-        ) {
-          bestChild = right;
-        }
-
-        if (pendingRenders[bestChild][PendingRenderProp.Key] - key >= 0) {
-          break;
-        } else {
-          pendingRenders[i] = pendingRenders[bestChild];
-          i = bestChild;
-        }
-      }
-
-      pendingRenders[i] = item;
-    }
-
-    runRender(render);
+  while (renderIndex < pendingRenders.length) {
+    runRender(pendingRenders[renderIndex++]);
   }
 }

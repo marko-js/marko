@@ -1,10 +1,11 @@
-// size: 2789 (min) 1360 (brotli)
+// size: 2643 (min) 1288 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
+  renderIndex = 0,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
@@ -39,14 +40,13 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   queuePendingRender(render);
 }
 function queuePendingRender(render) {
-  let i = pendingRenders.push(render) - 1;
-  for (; i;) {
-    let parentIndex = (i - 1) >> 1,
-      parent = pendingRenders[parentIndex];
-    if (render.a - parent.a >= 0) break;
-    ((pendingRenders[i] = parent), (i = parentIndex));
+  let lo = renderIndex,
+    hi = pendingRenders.length;
+  for (; lo < hi;) {
+    let mid = (lo + hi) >> 1;
+    pendingRenders[mid].a > render.a ? (hi = mid) : (lo = mid + 1);
   }
-  pendingRenders[i] = render;
+  lo < pendingRenders.length ? pendingRenders.splice(lo, 0, render) : pendingRenders.push(render);
 }
 function queueEffect(scope, fn) {
   pendingEffects.push(fn, scope);
@@ -56,34 +56,12 @@ function run() {
   try {
     ((rendering = 1), runRenders());
   } finally {
-    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
+    (runId++, (rendering = 0), (pendingRenders = []), (renderIndex = 0), (pendingEffects = []));
   }
   runEffects(effects);
 }
 function runRenders() {
-  for (; pendingRenders.length;) {
-    let render = pendingRenders[0],
-      item = pendingRenders.pop();
-    if (render !== item) {
-      let i = 0,
-        mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).a;
-      for (; i < mid;) {
-        let bestChild = (i << 1) + 1,
-          right = bestChild + 1;
-        if (
-          (right < pendingRenders.length &&
-            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
-            (bestChild = right),
-          pendingRenders[bestChild].a - key >= 0)
-        )
-          break;
-        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
-      }
-      pendingRenders[i] = item;
-    }
-    runRender(render);
-  }
+  for (; renderIndex < pendingRenders.length;) runRender(pendingRenders[renderIndex++]);
 }
 function _on(element, type, handler) {
   (element[1 + type] === void 0 && delegate(type, handleDelegated),
