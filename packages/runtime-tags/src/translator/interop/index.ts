@@ -391,46 +391,12 @@ function normalizeVisitor(visitor: any): t.Visitor | undefined {
 
 function normalizeVisit(visitor: any): t.VisitNode<any, t.Node> | undefined {
   if (Array.isArray(visitor)) {
-    // `migrate`/`transform` take a list of hooks, but the merge yields one
-    // hook per key, so the list has to run behind a single visit.
-    let merged: t.VisitNode<any, t.Node> | undefined;
-    for (const entry of visitor) {
-      merged = sequenceVisit(merged, normalizeVisit(entry));
-    }
-    return merged;
+    throw new Error(
+      "A core tag's hook must be a single visitor for the interop merge, not a list.",
+    );
   }
 
   return typeof visitor === "function" ? visitor : normalizeVisitor(visitor);
-}
-
-function sequenceVisit(
-  first: undefined | t.VisitNode<unknown, any>,
-  second: undefined | t.VisitNode<unknown, any>,
-): undefined | t.VisitNode<unknown, t.Node> {
-  if (!first || !second) return first || second;
-
-  const enterFirst = getVisitorEnter(first);
-  const enterSecond = getVisitorEnter(second);
-  const enter: undefined | t.VisitNode<unknown, t.Node> =
-    (enterFirst || enterSecond) &&
-    function enter(path, state) {
-      const { node } = path;
-      enterFirst?.call(this, path, state);
-      // Matches the hook loops these replace, which stop once one swaps the node.
-      if (path.node === node) enterSecond?.call(this, path, state);
-    };
-
-  const exitFirst = getVisitorExit(first);
-  const exitSecond = getVisitorExit(second);
-  const exit: undefined | t.VisitNode<unknown, t.Node> =
-    (exitFirst || exitSecond) &&
-    function exit(path, state) {
-      const { node } = path;
-      exitFirst?.call(this, path, state);
-      if (path.node === node) exitSecond?.call(this, path, state);
-    };
-
-  return exit ? (enter ? { enter, exit } : { exit }) : enter;
 }
 
 function getVisitorEnter<A, B extends t.Node>(

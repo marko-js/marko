@@ -3,6 +3,8 @@ import path from "path";
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
+// Handed to compiler plugins and exposed by `marko/compiler`'s legacy
+// `taglibLoader`/`taglibFinder`, so methods stay even when nothing here calls them.
 class Tag {
   constructor(filePath) {
     this.filePath = filePath;

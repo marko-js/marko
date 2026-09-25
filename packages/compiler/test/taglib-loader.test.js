@@ -194,6 +194,14 @@ describe("compiler/taglib-loader", () => {
         "imports",
       ]));
 
+    it("keeps the file path as the id when taglib-id is blank", () => {
+      write("package.json", { name: "pkg" });
+      assert.equal(
+        fromProps({ "taglib-id": "" }).id,
+        path.join(dir, "marko.json"),
+      );
+    });
+
     it("keys a global attribute by its shorthand name", () => {
       const loaded = fromProps({ "@plain": "string" });
       assert.equal(loaded.attributes.plain.type, "string");

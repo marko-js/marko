@@ -48,6 +48,8 @@ function isWithin(dir, filename) {
   );
 }
 
+// Handed to compiler plugins and exposed by `marko/compiler`'s legacy
+// `taglibLoader`/`taglibFinder`, so methods stay even when nothing here calls them.
 class Taglib {
   constructor(filePath, isFromPackageJson, packageName) {
     ok(filePath, '"filePath" expected');
