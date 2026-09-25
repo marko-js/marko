@@ -78,7 +78,7 @@ _Avoid_: lifecycle hook, arbitrary JavaScript side effect
 
 **Serialize reason**:
 Why a section, scope property, marker, or registration must reach the browser.
-`true` and state-backed `Sources` are unconditional; parameter-only sources
+Forced and state-backed `Sources` are unconditional; parameter-only sources
 produce per-call guards; absence means omit.
 _Avoid_: serialization flag, serialized value
 

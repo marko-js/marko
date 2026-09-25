@@ -13,7 +13,9 @@ The package is organized into four layers:
 
 The compiler/translator entry is `src/translator/index.js`, but the package's exported translator (`src/translator.js`) wraps it with `createInteropTranslator` from `@marko/runtime-tags/translator`, so Marko 5 projects can mix in Marko 6 (Tags API) components. Interop behavior changes are usually made in `packages/runtime-tags/src/translator/interop/`, not here.
 
-Note: published as both `marko@5` and `@marko/runtime-class`.
+Note: the package is private (named `marko`); `scripts/publish-alias.mts` publishes it as `marko` under the `m5` dist-tag.
+
+Compiled templates import runtime helpers by string path (`marko/src/runtime/helpers/...`, see `translator/util/load-import.js`), so a source search for importers misses those uses.
 
 `src` mixes ESM and CommonJS `.js` with no `"type"`, so Node warns `MODULE_TYPELESS_PACKAGE_JSON` under `-t class`. Accepted: Marko 5 is in maintenance and `src` ships in `files`, so a `{"type":"module"}` marker would force converting every CJS file.
 
