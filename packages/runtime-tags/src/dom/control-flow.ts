@@ -82,7 +82,7 @@ export function _await_promise(
     return awaitBranch;
   };
   const awaitPromise = (scope: Scope, promise: unknown): unknown => {
-    // A newer value supersedes a replay still waiting for the branch.
+    // A newer value supersedes one deferred until the branch exists.
     if (!isPromise(scope[promiseAccessor])) scope[promiseAccessor] = 0;
     let awaitBranch = scope[branchAccessor] as BranchScope;
     // A pending value holds a placeholder, so it needs no branch to start, and
@@ -93,16 +93,16 @@ export function _await_promise(
     const tryBranch = tryPlaceholder || awaitBranch;
     if (!tryBranch) {
       // `_await_content` creates the branch, or resume adopts a streamed one
-      // as its `@placeholder` completes; either replays the latest value.
-      const replay = (scope[promiseAccessor] = () =>
-        replay === scope[promiseAccessor] && awaitPromise(scope, promise));
+      // as its `@placeholder` completes; either runs the deferred latest value.
+      const deferred = (scope[promiseAccessor] = () =>
+        deferred === scope[promiseAccessor] && awaitPromise(scope, promise));
       const awaitCounter = findBranchWithKey(
         scope,
         AccessorProp.PlaceholderContent,
       )?.[AccessorProp.AwaitCounter];
       if (awaitCounter?.i) {
         const complete = awaitCounter.c;
-        awaitCounter.c = () => complete() || queueAsyncRender(scope, replay);
+        awaitCounter.c = () => complete() || queueAsyncRender(scope, deferred);
       }
       return;
     }

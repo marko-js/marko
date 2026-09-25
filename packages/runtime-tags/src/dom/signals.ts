@@ -408,7 +408,7 @@ export function _id(scope: Scope, accessor?: Accessor) {
 
 export function _script(id: string, fn: (scope: Scope) => void) {
   _resumed[id] = fn;
-  // Queued in signal-graph (forward) order; hydration replays in reverse, so
+  // Queued in signal-graph (forward) order; resume runs them in reverse, so
   // mount-effect order is unspecified across the two paths (see translator).
   return (scope: Scope) => {
     queueEffect(scope, fn);

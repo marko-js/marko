@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b1c";
 const $setup$1 = () => {};
-_resume_dynamic_tag_var("#text/0");
+_dynamic_tag_var_resume("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $r);
 const $r = _var_resume("__tests__/tags/child.marko_0_r#5/var", /*@__PURE__*/ _const("r", ($scope) => _return($scope, $scope.r)));
 const $input_content = $dynamicTag;

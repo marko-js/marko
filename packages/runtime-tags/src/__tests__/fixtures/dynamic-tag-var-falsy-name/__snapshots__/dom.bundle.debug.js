@@ -26,7 +26,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper/index.mark
 // tags/child/index.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-_resume_dynamic_tag_var("#text/0");
+_dynamic_tag_var_resume("#text/0");
 const $inputa11yTextbutton_content = /*@__PURE__*/ _content("__tests__/tags/child/index.marko_2*content", "content");
 const $btn_getter = _hoist_resume("__tests__/tags/child/index.marko_0_$btn#2/hoist", "$btn", "ClosureScopes:1");
 const $wrapper_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputa11yTextbutton_content, () => $wrapper_content__$btn);

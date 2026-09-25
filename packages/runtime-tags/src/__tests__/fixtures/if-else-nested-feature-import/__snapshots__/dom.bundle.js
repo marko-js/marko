@@ -1,5 +1,5 @@
 // template.marko
-_resume_dynamic_tag_var(0);
+_dynamic_tag_var_resume(0);
 const $inputtype_content = _content("a0", "body");
 const $el_getter = /*@__PURE__*/ _hoist(2, "Aa");
 const $if_content__$el = _var_resume("a1", /*@__PURE__*/ _const(2));

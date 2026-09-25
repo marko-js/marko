@@ -566,7 +566,7 @@ export function _el(id: string, accessor: EncodedAccessor) {
 
 // A native dynamic tag's variable resumes off its parent's node visit, which
 // holds the element, or the branch marker after it when branches resume.
-export function _resume_dynamic_tag_var(accessor: EncodedAccessor) {
+export function _dynamic_tag_var_resume(accessor: EncodedAccessor) {
   if (!MARKO_DEBUG) accessor = decodeAccessor(accessor as number);
   _resumed[DYNAMIC_TAG_VAR_REGISTER_ID + accessor] = (scope: Scope) => () => {
     const node = scope[accessor] as ChildNode;

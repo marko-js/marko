@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-_resume_dynamic_tag_var("#text/0");
+_dynamic_tag_var_resume("#text/0");
 const $inputitemType_content__setup = ($scope) => _text($scope["#text/0"], $scope._["#LoopKey"]);
 const $inputitemType_content = _content("__tests__/template.marko_4*content", "item <!>", "b%", $inputitemType_content__setup);
 _content_resume($inputitemType_content);

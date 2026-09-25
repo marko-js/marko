@@ -127,7 +127,7 @@ function insertLoaded(
   let remaining: number;
   if ((remaining = values?.size as number)) {
     const fail = loadFailed(branch, awaitCounter);
-    // Each entry's signal is cached as its chunk lands, so the replay
+    // Each entry's signal is cached as its chunk lands, so the render
     // applies every entry synchronously.
     values!.forEach(([, apply], promise) =>
       promise.then(
