@@ -385,7 +385,8 @@ export function finalizeKnownTags(section: Section) {
   }
 }
 
-// Each group's serialize guard is its bit.
+// Each group's serialize guard is its bit; groups sharing a guard still shift it
+// once each, since folding them into one term would only save server bytes.
 function buildChildSerializeReason(
   section: Section,
   childScopeBinding: Binding,

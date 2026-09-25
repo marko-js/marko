@@ -1559,8 +1559,8 @@ function addIntersectionSerializeReasons(
 ) {
   if (intersections) {
     for (const intersection of intersections) {
-      // TODO: in some cases we should be able to short circuit this
-      // if we know that the references are already serialized
+      // Every pair merges even when a member is already serialized: that leaves
+      // its covering reason unchanged, and its owners may still need the pair.
       for (let i = 0; i < intersection.length - 1; i++) {
         for (let j = i + 1; j < intersection.length; j++) {
           addIntersectionMemberReason(
