@@ -1,0 +1,14 @@
+<let/count=0/>
+<button onClick() { count++ }>inc</button>
+<try>
+  <child value=count/>
+  <@placeholder>loading changing</@placeholder>
+</try>
+<try>
+  <child value="static"/>
+  <@placeholder>loading static</@placeholder>
+</try>
+<try>
+  <boundary value=count/>
+  <@placeholder>loading outer</@placeholder>
+</try>

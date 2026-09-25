@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $placeholder_content = _content("__tests__/template.marko_3*content", "loading...");
+const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "loading...");
 const $await_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => _text($scope["#text/0"], $scope._._.value), ($scope) => $scope._._);
 const $await_content__setup = $await_content__value;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span> </span>", "D ", $await_content__setup);

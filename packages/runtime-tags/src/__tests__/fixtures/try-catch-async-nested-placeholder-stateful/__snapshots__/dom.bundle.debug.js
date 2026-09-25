@@ -11,7 +11,7 @@ const $await_content2__setup = ($scope) => {
 };
 const $await_content2__value = ($scope, value) => _text($scope["#text/1"], value);
 const $await_content2__$params = ($scope, $params3) => $await_content2__value($scope, $params3[0]);
-const $placeholder_content = _content("__tests__/template.marko_5*content", "loading");
+const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_5*content", "loading");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<button><!> <!></button>", " D%c%", $await_content2__setup);
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content2__setup = ($scope) => {

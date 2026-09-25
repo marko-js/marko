@@ -9,6 +9,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { trackPlaceholderTry } from "../util/placeholder-reason";
 import {
   BindingType,
   createBinding,
@@ -83,6 +84,7 @@ export default {
 
     if (bodySection) {
       bodySection.upstreamExpression = tagExtra;
+      trackPlaceholderTry(tag);
       structure.visit(tag, WalkCode.Replace);
       structure.enterShallow(tag);
     }
@@ -131,6 +133,10 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                // The client reads the placeholder only for what goes pending.
+                tagExtra.attributeTags?.["@placeholder"] &&
+                  !getSectionForBody(tagBody)!.pending?.reason &&
+                  t.numericLiteral(0),
               ),
             ),
           )[0]

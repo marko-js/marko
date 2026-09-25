@@ -23,11 +23,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_resume_branch($scope5_id);
 				}, 0);
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:3");
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_4*content", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_4*content", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html("loading...");
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "6:1");
 			return 0;
 		}

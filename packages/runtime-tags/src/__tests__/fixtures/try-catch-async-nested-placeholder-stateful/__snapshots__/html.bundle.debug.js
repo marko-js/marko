@@ -17,11 +17,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_script($scope6_id, "__tests__/template.marko_6");
 					_scope($scope6_id, { n }, "__tests__/template.marko", "7:8", { n: "8:14" });
 				});
-			}, $scope3_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
+			}, $scope3_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_5*content", () => {
 				_scope_reason();
 				const $scope5_id = _scope_id();
 				_html("loading");
-			}, $scope3_id) }) });
+			}, $scope3_id) }) }, 0);
 		}, 0);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", (err) => {
 		const $scope2_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope2_reason, 0);

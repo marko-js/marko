@@ -13,13 +13,13 @@ var template_default = _template("a", (input) => {
 					_scope_id();
 					_html("done");
 				}, 0);
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a1", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content("a1", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html(" loading");
 				_script($scope3_id, "a0", 0);
 				_resume_branch($scope3_id);
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_scope($scope1_id, {});
 			return 0;
 		}

@@ -14,13 +14,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_id = _scope_id();
 					_html("done");
 				}, 0);
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_3*content", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html(" loading");
 				_script($scope3_id, "__tests__/template.marko_3", 0);
 				_resume_branch($scope3_id);
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}

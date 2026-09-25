@@ -16,9 +16,9 @@ var template_default = _template("b", (input) => {
 		_scope_id();
 		_scope_reason();
 		$Child_withLoadAssets({ value: "hi" });
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content("b0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 }, 1);

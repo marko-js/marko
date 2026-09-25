@@ -1,0 +1,12 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <@placeholder>
+    <lifecycle
+      onMount() { console.log("placeholder mounted") }
+      onDestroy() { console.log("placeholder destroyed") }
+    />
+    loading
+  </@placeholder>
+  <await=resolveAfter("done", 1)>done</await>
+</try>

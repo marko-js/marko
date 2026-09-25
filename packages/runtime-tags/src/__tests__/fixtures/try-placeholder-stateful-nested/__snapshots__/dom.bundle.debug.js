@@ -21,9 +21,9 @@ var note_default = /*@__PURE__*/ _template("__tests__/tags/note.marko", $templat
 const $template = "<button>clicks <!></button><!><!>";
 const $walks = " Db%l%c";
 const $placeholder_content2__setup = ($scope) => $input_label($scope["#childScope/0"], "inner placeholder");
-const $placeholder_content2 = _content("__tests__/template.marko_6*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $placeholder_content2__setup);
+const $placeholder_content2 = /*@__PURE__*/ _content("__tests__/template.marko_6*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $placeholder_content2__setup);
 const $placeholder_content__setup = ($scope) => $input_label($scope["#childScope/0"], "outer placeholder");
-const $placeholder_content = _content("__tests__/template.marko_5*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $placeholder_content__setup);
+const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_5*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $placeholder_content__setup);
 const $await_content2__clicks__OR__inner = /*@__PURE__*/ _or(3, ($scope) => $input_label($scope["#childScope/0"], `${$scope.inner} ${$scope._._._._.clicks}`));
 const $await_content2__clicks = /*@__PURE__*/ _closure_get("clicks", $await_content2__clicks__OR__inner, ($scope) => $scope._._._._, "__tests__/template.marko_4_clicks#3/subscribe");
 const $await_content2__setup = $await_content2__clicks;

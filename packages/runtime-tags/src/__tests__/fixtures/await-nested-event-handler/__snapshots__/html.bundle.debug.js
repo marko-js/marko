@@ -19,19 +19,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_subscribe($changes__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "9:8"), "__tests__/template.marko_4_changes#1/subscribe");
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "7:6");
-			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_6*content", () => {
+			}, $scope2_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_6*content", () => {
 				_scope_reason();
 				const $scope6_id = _scope_id();
 				_html("loading inner...");
-			}, $scope2_id) }) });
+			}, $scope2_id) }) }, 0);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_5*content", () => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html("loading outer...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		changes,
 		"ClosureScopes:changes": $changes__closures

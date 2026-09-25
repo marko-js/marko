@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<button onClick() { count++ }>inc</button>
+<try>
+  <@placeholder>A loading</@placeholder>
+  <try>
+    <@placeholder>B loading <await|x|=resolveAfter("b", 8)>${x}</await></@placeholder>
+    <try>
+      <@placeholder>C loading <await|x|=resolveAfter("c", 4)>${x}</await></@placeholder>
+      <if=count><await|y|=resolveAfter(count)>${y}</await></if>
+    </try>
+  </try>
+</try>

@@ -32,11 +32,11 @@ var template_default = _template("b", (input) => {
 				shared
 			});
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content("b0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_await($scope0_id, "b", resolveAfter("streamed", 2), (label) => {
 		_scope_id();
 		$Child_withLoadAssets({

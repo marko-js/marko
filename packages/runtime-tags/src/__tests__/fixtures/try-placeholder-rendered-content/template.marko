@@ -1,0 +1,20 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/show=false/>
+<button onClick() { show = true }>show</button>
+<define/Content>
+  <await|v|=resolveAfter("defined")>${v}</await>
+</define>
+<try>
+  <@placeholder>define loading</@placeholder>
+  <if=show><div content=Content/></if>
+</try>
+<wrapper show=show>
+  <await|v|=resolveAfter("wrapped")>${v}</await>
+</wrapper>
+<try>
+  <layout>
+    <await|v|=resolveAfter("laid out")>${v}</await>
+  </layout>
+  <@placeholder>layout loading</@placeholder>
+</try>

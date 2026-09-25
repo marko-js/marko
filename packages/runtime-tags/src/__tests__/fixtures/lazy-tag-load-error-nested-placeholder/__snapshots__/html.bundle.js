@@ -23,9 +23,9 @@ var template_default = _template("b", (input) => {
 			_html(`caught: ${_text_resume($scope4_id, "a", err.message, $sg__err_message * 2)}`);
 			_serialize_if($scope4_reason, 0) && _scope($scope4_id, {});
 		}, $scope1_id) }) });
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b2", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content("b2", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading outer...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 }, 1);

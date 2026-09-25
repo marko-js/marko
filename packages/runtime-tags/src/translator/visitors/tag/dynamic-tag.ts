@@ -29,6 +29,7 @@ import {
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { type SortedOpt } from "../../util/optional";
+import { trackPendingRenderer } from "../../util/placeholder-reason";
 import {
   type Binding,
   BindingType,
@@ -158,6 +159,7 @@ export default {
       }
 
       analyzeAttributeTags(tag);
+      trackPendingRenderer(tag, node.name);
 
       const tagSection = getOrCreateSection(tag);
       const inputNodes = getAllTagReferenceNodes(node);

@@ -51,6 +51,12 @@ import {
   size,
   reduce,
 } from "./optional";
+import {
+  finalizePlaceholderReasons,
+  finalizeTemplatePending,
+  getPlaceholderReason,
+  initPlaceholderTries,
+} from "./placeholder-reason";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
@@ -1417,6 +1423,7 @@ export function finalizeReferences() {
   });
 
   forEachSection(applySerializeExprs);
+  initPlaceholderTries();
 
   // Rules that follow other reasons repeat until none moves; every write merges,
   // so reasons only grow and this settles, even through cycles.
@@ -1424,6 +1431,7 @@ export function finalizeReferences() {
   do {
     reasonsVersion = getSerializeReasonsVersion();
     resetSerializations();
+    finalizePlaceholderReasons();
     forEachSection((section) =>
       addIntersectionSerializeReasons(
         section,
@@ -1440,6 +1448,7 @@ export function finalizeReferences() {
   } while (reasonsVersion !== getSerializeReasonsVersion());
 
   finalizeFunctionRegistry();
+  finalizeTemplatePending();
 
   forEachSection((section) => {
     const { id, bindings } = section;
@@ -1677,6 +1686,7 @@ function sharesSources(a: Binding, b: Binding) {
 // content given to a tag, what registers it and the expression passing it.
 function getSectionUpstreamReason(section: Section) {
   const { downstream, upstreamExpression } = section;
+  if (section.placeholderFor) return getPlaceholderReason(section);
   if (downstream) {
     const registerReason = getSectionRegisterReasons(section) || undefined;
     if (registerReason === true) return true;
@@ -1704,7 +1714,7 @@ function getSectionUpstreamReason(section: Section) {
 
 // What creates `section`, or a section between it and `ancestor`, anew on the
 // client (forced, still with its sources, when anything can).
-function getUpstreamReasonUntil(section: Section, ancestor: Section) {
+export function getUpstreamReasonUntil(section: Section, ancestor: Section) {
   let reason: Sources | undefined;
   for (let cur = section; cur !== ancestor; cur = cur.parent!) {
     const upstream = getSectionUpstreamReason(cur);

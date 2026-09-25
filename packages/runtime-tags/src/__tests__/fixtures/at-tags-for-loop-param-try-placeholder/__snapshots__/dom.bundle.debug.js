@@ -6,7 +6,6 @@ const $await_content__$params = ($scope, $params3) => $await_content__value($sco
 const $placeholder_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "loading <!>", "b%"), { label($scope) {
 	_text($scope["#text/0"], $scope.label);
 } });
-_resumed["__tests__/template.marko_2*content"] = $placeholder_content;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {

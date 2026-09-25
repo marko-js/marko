@@ -16,11 +16,11 @@ var template_default = _template("a", (input) => {
 			_subscribe($count__closures, _subscribe($si__input_foo && $input_foo__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1"), "a2");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content("a3", () => {
 		_scope_reason();
 		_scope_id();
 		_html("Loading");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		e: count,
 		f: $si__input_foo && $input_foo__closures,

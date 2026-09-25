@@ -40,6 +40,7 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
+import { trackPendingRenderer } from "../../util/placeholder-reason";
 import {
   type Binding,
   BindingType,
@@ -245,6 +246,22 @@ export default {
             `The \`<${tagName}>\` tag takes its content from its body as text, so it does not support the \`content\` attribute.`,
           );
         }
+      }
+
+      if (
+        (seen.content || spreadReferenceNodes) &&
+        spreadRendersContent(tag, undefined)
+      ) {
+        // Whichever `content` attribute or spread comes last renders it, so
+        // only a lone one is known.
+        const renderers = attributes.filter(
+          (attr) => !t.isMarkoAttribute(attr) || attr.name === "content",
+        );
+        trackPendingRenderer(
+          tag,
+          renderers.length === 1 ? renderers[0].value : undefined,
+          !t.isMarkoAttribute(renderers[0]),
+        );
       }
 
       let textPlaceholders: undefined | t.Node[];

@@ -1,6 +1,4 @@
 // template.marko
-const $placeholder_content2 = _content("a2", "loading inner...");
-const $placeholder_content = _content("a4", "loading outer...");
 const $await_content2__changes = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.b, $scope._._._._.b), ($scope) => $scope._._._._, "a1", 1);
 const $await_content2__setup__script = _script("a0", ($scope) => _on($scope.a, "change", function() {
 	$changes($scope._._._._, +$scope._._._._.b + 1);

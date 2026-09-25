@@ -9,4 +9,3 @@ const $await_content__value = /*@__PURE__*/ _let(3, ($scope) => {
 const $await_content__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$await_content__value($scope, +$scope.d + 1);
 }));
-const $placeholder_content = _content("a1", "loading...");

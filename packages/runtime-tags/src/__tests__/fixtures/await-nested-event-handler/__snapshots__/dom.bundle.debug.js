@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $placeholder_content2 = _content("__tests__/template.marko_6*content", "loading inner...");
-const $placeholder_content = _content("__tests__/template.marko_5*content", "loading outer...");
+const $placeholder_content2 = /*@__PURE__*/ _content("__tests__/template.marko_6*content", "loading inner...");
+const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_5*content", "loading outer...");
 const $await_content2__changes = /*@__PURE__*/ _closure_get("changes", ($scope) => _text($scope["#text/1"], $scope._._._._.changes), ($scope) => $scope._._._._, "__tests__/template.marko_4_changes#1/subscribe");
 const $await_content2__setup__script = _script("__tests__/template.marko_4", ($scope) => _on($scope["#div/0"], "change", function() {
 	$changes($scope._._._._, +$scope._._._._.changes + 1);

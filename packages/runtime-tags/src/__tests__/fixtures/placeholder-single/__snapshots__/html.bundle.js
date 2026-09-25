@@ -12,11 +12,11 @@ var template_default = _template("a", (input) => {
 			_html(_escape(data));
 		}, 0);
 		_html("d");
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("_A_");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_html("e");
 	_await($scope0_id, "b", resolveAfter("f", 1), (data) => {
 		_scope_id();

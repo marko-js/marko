@@ -1,6 +1,5 @@
 // template.marko
 const data = Promise.resolve({ items: ["a", "b"] });
-const $placeholder_content = _content("a3", "Loading");
 const $await_content__setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$count($scope._._, +$scope._._.e + 1);
 }));

@@ -27,11 +27,11 @@ var template_default = _template("a", (input) => {
 			_subscribe($changes__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a3");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content("a4", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading outer...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		b: changes,
 		c: $changes__closures
