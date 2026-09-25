@@ -8,6 +8,10 @@ const {
 const createRenderer = require("../../components/renderer");
 const defaultCreateOut = require("../../createOut");
 const dynamicTag5 = require("../dynamic-tag");
+// Heads a serialized class-method event reference on a Tags child's input;
+// runtime-dom.js revives it into a live handler on resume.
+// eslint-disable-next-line no-constant-condition
+const CLASS_EVENT_MARKER = "MARKO_DEBUG" ? "$compat_classEvent" : "$C_e";
 
 // Bound in `p` so entry files (html / html-debug, cjs / esm) just re-export `f`.
 let registerClassFunction;
@@ -100,6 +104,9 @@ exports.p = function (htmlCompat) {
     tagsRenderer,
     renderBody,
     args,
+    _global,
+    componentDef,
+    customEvents,
   ) {
     if (tagsRenderer ? isMarko5(tagsRenderer) : isMarko5(renderBody)) {
       return tagsRenderer;
@@ -113,7 +120,10 @@ exports.p = function (htmlCompat) {
       TagsCompat(
         args
           ? { i: args, r: (args) => (tagsRenderer || renderBody)(...args) }
-          : { i: input, r: tagsRenderer || renderBody },
+          : {
+              i: addTagsEvents(input, componentDef, customEvents),
+              r: tagsRenderer || renderBody,
+            },
         out,
       );
     };
@@ -261,6 +271,30 @@ exports.p = function (htmlCompat) {
   };
 };
 
+// Fold a Class parent's `on-x("method")` bindings into `onX` props on its Tags
+// child as references the browser revives; function handlers cannot resume.
+function addTagsEvents(input, componentDef, customEvents) {
+  if (customEvents) {
+    for (let i = customEvents.length; i--;) {
+      const [eventName, handler, , extraArgs] = customEvents[i];
+      input[toTagsEventProp(eventName)] =
+        typeof handler === "string"
+          ? extraArgs
+            ? [CLASS_EVENT_MARKER, componentDef.id, handler, extraArgs]
+            : [CLASS_EVENT_MARKER, componentDef.id, handler]
+          : undefined;
+    }
+  }
+
+  return input;
+}
+
+// A Class parent addresses a Tags child by the child's own camelCase prop
+// (`onSetFilter`); a dashed name does not type-check against its `Input`.
+function toTagsEventProp(eventName) {
+  return "on" + eventName.charAt(0).toUpperCase() + eventName.slice(1);
+}
+
 function toCustomEventName(key) {
   return key[2] === "-"
     ? key.slice(3)
@@ -273,10 +307,7 @@ function hasBridgedClassEvent(input) {
   if (input && typeof input === "object" && !Array.isArray(input)) {
     for (const key in input) {
       const value = input[key];
-      if (
-        Array.isArray(value) &&
-        value[0] === dynamicTag5.___CLASS_EVENT_MARKER
-      ) {
+      if (Array.isArray(value) && value[0] === CLASS_EVENT_MARKER) {
         return true;
       }
     }

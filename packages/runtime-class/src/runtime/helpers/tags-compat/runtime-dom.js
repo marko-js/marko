@@ -12,6 +12,10 @@ const { ___createFragmentNode } = require("../../vdom/morphdom/fragment");
 const dynamicTag = require("../dynamic-tag");
 const Component = require("../../components/Component");
 const noopRenderer = require("../serialize-noop").___noop;
+// Heads a class-method event reference runtime-html.js serialized into a Tags
+// child's input.
+// eslint-disable-next-line no-constant-condition
+const CLASS_EVENT_MARKER = "MARKO_DEBUG" ? "$compat_classEvent" : "$C_e";
 
 // Bound in `p` so entry files (dom / dom-debug, cjs / esm) just re-export `f`.
 let resumeClassFunction;
@@ -41,6 +45,8 @@ exports.p = function (domCompat) {
     renderBody,
     args,
     global,
+    componentDef,
+    customEvents,
   ) {
     const tagsRenderer = domCompat.resolveRegistered(
       renderer || renderBody,
@@ -49,7 +55,13 @@ exports.p = function (domCompat) {
 
     if (tagsRenderer && domCompat.isRenderer(tagsRenderer)) {
       return (input, out) => {
-        return TagsCompat({ i: args ? args : input, r: tagsRenderer }, out);
+        return TagsCompat(
+          {
+            i: args ? args : addTagsEvents(input, componentDef, customEvents),
+            r: tagsRenderer,
+          },
+          out,
+        );
       };
     }
 
@@ -59,7 +71,7 @@ exports.p = function (domCompat) {
   // Revive a serialized class-method event reference into a live handler, looked
   // up lazily since a split parent may not be hydrated yet when the child resumes.
   domCompat.setClassEventResolver(function (value, scope) {
-    if (Array.isArray(value) && value[0] === dynamicTag.___CLASS_EVENT_MARKER) {
+    if (Array.isArray(value) && value[0] === CLASS_EVENT_MARKER) {
       const componentId = value[1];
       const method = value[2];
       const extraArgs = value[3];
@@ -278,6 +290,31 @@ exports.p = function (domCompat) {
     Component: defineComponent({}, RenderBodyComponent),
   }));
 };
+
+// Fold a Class parent's `on-x(...)` bindings into `onX` props on its Tags child.
+function addTagsEvents(input, componentDef, customEvents) {
+  if (customEvents) {
+    const component = componentDef.___component;
+    for (let i = customEvents.length; i--;) {
+      const [eventName, handler, , extraArgs] = customEvents[i];
+      input[toTagsEventProp(eventName)] = function () {
+        const fn = typeof handler === "function" ? handler : component[handler];
+        return fn.apply(
+          component,
+          extraArgs ? [...extraArgs, ...arguments] : arguments,
+        );
+      };
+    }
+  }
+
+  return input;
+}
+
+// A Class parent addresses a Tags child by the child's own camelCase prop
+// (`onSetFilter`); a dashed name does not type-check against its `Input`.
+function toTagsEventProp(eventName) {
+  return "on" + eventName.charAt(0).toUpperCase() + eventName.slice(1);
+}
 
 function toCustomEventName(key) {
   return key[2] === "-"
