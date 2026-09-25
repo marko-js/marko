@@ -2206,6 +2206,9 @@ function addReadToExpression(
   // must land on the merge target, else its references split and the read is lost.
   const rootExtra = (exprRoot.node.extra ??= { section }) as ReferencedExtra;
   const exprExtra = getCanonicalExtra(rootExtra);
+  // A read tracked after its expression was dropped (`$global`, a hoisted
+  // reference) must not keep the binding alive.
+  if (exprExtra.pruned) return;
   const extra = (node.extra ??= {});
   extra.exprRoot = rootExtra;
   const read = addRead(exprExtra, extra, binding, section, getter);
