@@ -3,7 +3,11 @@ import { types as t } from "@marko/compiler";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
 import { isOptimize, isOutputHTML } from "../util/marko-config";
-import { setReferencesScope, trackGlobalReference } from "../util/references";
+import {
+  getCanonicalExtra,
+  setReferencesScope,
+  trackGlobalReference,
+} from "../util/references";
 import { callRuntime, importRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
@@ -89,13 +93,14 @@ export default {
             callRuntime("_global_read", globalRead, t.stringLiteral(key)),
           );
         } else {
-          identifier.replaceWith(globalRead);
+          replaceWithExtra(identifier, globalRead);
         }
         break;
       }
       case "$signal":
         if (isOutputHTML()) {
-          identifier.replaceWith(
+          replaceWithExtra(
+            identifier,
             t.callExpression(
               t.arrowFunctionExpression(
                 [],
@@ -111,8 +116,11 @@ export default {
             ),
           );
         } else {
-          const section = getSection(identifier);
           const exprRoot = identifier.node.extra!.exprRoot!;
+          // A dropped expression is never emitted, so it needs no signal or reset.
+          if (getCanonicalExtra(exprRoot).pruned) break;
+
+          const section = getSection(identifier);
           const exprId = exprRoot.abortId!;
           const resetEmitted = getAbortResetEmitted(section);
 
@@ -141,6 +149,13 @@ export default {
     }
   },
 } satisfies TemplateVisitor<t.Identifier>;
+
+// A bare `$global`/`$signal` can be a tag's whole value, which the tag checks
+// for `pruned` after its children translate, so the replacement must keep it.
+function replaceWithExtra(path: t.NodePath, replacement: t.Expression) {
+  replacement.extra = path.node.extra;
+  path.replaceWith(replacement);
+}
 
 // A `$global.x` read with referenced bindings becomes a signal, so it re-runs
 // against the resumed globals, where an unserialized key is missing entirely.
