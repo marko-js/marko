@@ -1,0 +1,6 @@
+// The awaited value is the attribute tag, first rendered on the client.
+<let/show=false>
+<button#show onClick() { show = true }>show</button>
+<await|item|=input.item>
+  <if=show><${item.content}/></if>
+</await>

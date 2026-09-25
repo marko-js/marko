@@ -158,8 +158,9 @@ export interface Binding {
   propertyAliases: Map<string, Binding>;
   excludeProperties: SortedOpt<string>;
   upstreamAlias: Binding | undefined;
-  /** The value these `<for>` params iterate, by `of` or `in`. */
-  iterates: { expr: t.NodeExtra; type: "of" | "in" } | undefined;
+  /** For params: the expression they hold, and how: its value at param "0", or
+   * one of its property values at a time, at "1" after its key. */
+  paramsHold: { expr: t.NodeExtra; as: "value" | "property" } | undefined;
   restOffset: number | undefined;
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
@@ -322,7 +323,7 @@ export function createBinding(
     getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
-    iterates: undefined,
+    paramsHold: undefined,
     declaredAlias: undefined,
     upstreamLocal: undefined,
     localClosures: undefined,
@@ -3313,8 +3314,8 @@ function downstreamSerialization(
     : linked;
 }
 
-// Where a path into `part` lands in a downstream `binding`: an item's path when
-// iterating it, the same path when it is `part` or spreads it as is, or whole.
+// Where a path into `part` lands in a downstream `binding`: where its params
+// hold it, the same path when it is `part` or spreads it as is, or whole.
 function getDownstreamPath(
   extra: t.NodeExtra,
   binding: Binding,
@@ -3322,11 +3323,10 @@ function getDownstreamPath(
   properties: Opt<string> | true | undefined,
 ): Opt<string> | true {
   if (properties === undefined || properties === true || !part) return true;
-  const iterates = binding.iterates;
-  if (iterates && isReferenceTo(iterates.expr, part)) {
-    if (iterates.type === "in") return concat("1", rest(properties));
-    // An `of` item is an array's index or an attribute tag itself (its first
-    // item); paths only start at attribute tag bodies, so no other iterable.
+  const hold = binding.paramsHold;
+  if (hold && isReferenceTo(hold.expr, part)) {
+    if (hold.as === "property") return concat("1", rest(properties));
+    // An index picks a later attribute tag, which lands like the first.
     return concat(
       "0",
       isIndexProperty(first(properties)) ? rest(properties) : properties,

@@ -138,9 +138,9 @@ export default {
     }
 
     if (paramsBinding && (forType === "of" || forType === "in")) {
-      paramsBinding.iterates = {
+      paramsBinding.paramsHold = {
         expr: (getKnownAttrValues(tag.node)[forType]!.extra ??= {}),
-        type: forType,
+        as: forType === "of" ? "value" : "property",
       };
     }
 

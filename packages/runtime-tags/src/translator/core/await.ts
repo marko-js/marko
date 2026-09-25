@@ -109,6 +109,7 @@ export default {
       // The content waits on the promise even when nothing reads its result.
       valueExtra.pure = false;
       setBindingDownstream(paramsBinding, valueExtra);
+      paramsBinding.paramsHold = { expr: valueExtra, as: "value" };
     }
 
     bodySection.upstreamExpression = valueAttr.value.extra;
