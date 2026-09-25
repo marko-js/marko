@@ -5,10 +5,12 @@ import {
   findParentTag,
 } from "@marko/compiler/babel-utils";
 
+import { getAttributeTagParent } from "../../util/get-parent-tag";
 import { isOutputHTML } from "../../util/marko-config";
 import { BindingType, trackParamsReferences } from "../../util/references";
 import { startSection } from "../../util/sections";
 import { writeHTMLResumeStatements } from "../../util/signals";
+import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 
@@ -18,7 +20,7 @@ export default {
       assertNoVar(tag);
       assertNoArgs(tag);
       const body = tag.get("body");
-      startSection(body);
+      const bodySection = startSection(body);
       trackParamsReferences(body, BindingType.param);
       if (!findParentTag(tag)) {
         throw tag
@@ -26,6 +28,16 @@ export default {
           .buildCodeFrameError(
             "[Attribute tags](https://markojs.com/docs/reference/language#attribute-tags) must be nested within another tag.",
           );
+      }
+
+      // Content given to a dynamic tag depends on the whole tag, as its body does.
+      const parentTag = getAttributeTagParent(tag);
+      if (
+        bodySection &&
+        analyzeTagNameType(parentTag) === TagNameType.DynamicTag &&
+        !parentTag.node.extra!.defineBodySection
+      ) {
+        bodySection.upstreamExpression = parentTag.node.extra;
       }
     },
   },

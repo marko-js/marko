@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $tagName_content = _content_resume("__tests__/template.marko_1*content", "body content");
+const $tagName_content = _content("__tests__/template.marko_1*content", "body content");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tagName_content);
 const $tagName = /*@__PURE__*/ _let("tagName/1", ($scope) => $dynamicTag($scope, $scope.tagName, () => ({
 	class: "A",

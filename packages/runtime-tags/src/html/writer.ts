@@ -33,6 +33,7 @@ import {
 } from "./inlined-runtimes.debug";
 import {
   K_SCOPE_ID,
+  type Locals,
   quote,
   register as serializerRegister,
   type ScopeFlush,
@@ -213,7 +214,7 @@ export function _resume<T extends WeakKey>(
   val: T,
   id: string,
   scopeId?: number,
-  locals?: Record<string, unknown>,
+  locals?: Locals,
 ): T {
   return serializerRegister(
     id,
@@ -1226,6 +1227,8 @@ export class State implements SerializeState {
   public serializer = new Serializer();
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
+  // A scope by id, for the locals of registered content once it is sent.
+  public scope = (scopeId: number) => scopeWithId(this, scopeId);
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;

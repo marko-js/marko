@@ -7,8 +7,8 @@ const $if_content__setup = ($scope) => {
 };
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content_resume("b1", "<div id=error> </div>", "D ", 0, $catch_content__$params);
-const $placeholder_content = _content_resume("b0", "<div id=loading>loading</div>");
+const $catch_content = _content("b1", "<div id=error> </div>", "D ", 0, $catch_content__$params);
+const $placeholder_content = _content("b0", "<div id=loading>loading</div>");
 const $try_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%/&", $if_content__setup);
 const $try_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__if($scope, $scope._.c ? 0 : 1), 0, "b3", 2);
 const $show = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($try_content__show));

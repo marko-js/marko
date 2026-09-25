@@ -1,7 +1,7 @@
 // tags/boundary.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $placeholder_content = _content_resume("__tests__/tags/boundary.marko_2*content", "loading...");
+const $placeholder_content = _content("__tests__/tags/boundary.marko_2*content", "loading...");
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $try_content__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $try_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/boundary.marko_1_input_content#3/subscribe");
 const $try_content__setup = $try_content__input_content;

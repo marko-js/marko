@@ -1,7 +1,7 @@
 // template.marko
-const $inputtag_content3 = _content_resume("a4", "aliased");
-const $inputtag_content2 = _content_resume("a3", "inline");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a2", "spread"));
+const $inputtag_content3 = _content("a4", "aliased");
+const $inputtag_content2 = _content("a3", "inline");
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content("a2", "spread"));
 const $input_tag__OR__attrs = /*@__PURE__*/ _or(10, ($scope) => $dynamicTag($scope, $scope.g, () => ({
 	...$scope.j,
 	id: "spread"

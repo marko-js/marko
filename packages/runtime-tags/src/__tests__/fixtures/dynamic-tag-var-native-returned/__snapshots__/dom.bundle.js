@@ -1,6 +1,6 @@
 // tags/child.marko
 _resume_dynamic_tag_var(0);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("b0", "child body"), () => $el);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content("b0", "child body"), () => $el);
 const $el = _var_resume("b1", /*@__PURE__*/ _const(5, ($scope) => _return($scope, $scope.f)));
 
 // template.marko

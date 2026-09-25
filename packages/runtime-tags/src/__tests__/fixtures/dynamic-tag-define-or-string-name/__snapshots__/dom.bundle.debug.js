@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $showFoodiv_content = _content_resume("__tests__/template.marko_3*content", "body");
+const $showFoodiv_content = _content("__tests__/template.marko_3*content", "body");
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content));
 const $if_content__setup = $if_content__input_content;

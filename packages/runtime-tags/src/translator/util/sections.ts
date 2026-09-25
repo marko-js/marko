@@ -331,6 +331,28 @@ export function getChildSections(section: Section) {
   return children;
 }
 
+// For content a tag the analysis cannot resolve receives, which code it cannot
+// see may render later, the closures read in it from outside it.
+export function getContentClosures(section: Section) {
+  if (section.upstreamExpression?.tagNameType === TagNameType.DynamicTag) {
+    return getClosuresFromAbove(section, section.depth);
+  }
+}
+
+function getClosuresFromAbove(
+  section: Section,
+  depth: number,
+): ReferencedBindings {
+  let closures = bindingUtil.filter(
+    section.referencedClosures,
+    (closure) => closure.section.depth < depth,
+  );
+  for (const child of getChildSections(section)) {
+    closures = bindingUtil.union(closures, getClosuresFromAbove(child, depth));
+  }
+  return closures;
+}
+
 // Calls `fn` with `from` and each of its parents below `to`.
 export function forEachAncestorSection<A>(
   from: Section,

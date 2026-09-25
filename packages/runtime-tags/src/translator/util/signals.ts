@@ -46,6 +46,7 @@ import { callRuntime, registerRuntimeValue } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   forEachAncestorSection,
+  getContentClosures,
   getDynamicClosureIndex,
   getScopeIdIdentifier,
   getSectionForBody,
@@ -62,6 +63,7 @@ import {
   getSerializeReason,
   isReasonDynamic,
   isSameReason,
+  isStaticSerializeReason,
   type SerializeReason,
 } from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
@@ -134,6 +136,49 @@ const [getOwnerResumedByMarker, setOwnerResumedByMarker] = createSectionState<
 >("ownerResumedByMarker");
 export function setSectionOwnerResumedByMarker(section: Section) {
   setOwnerResumedByMarker(section, true);
+}
+
+// Registered content's closures, one values object per owner down to the
+// content's own (`0` for none), each read through `scope`; they sort by section.
+export function getContentClosureValues(bodySection: Section) {
+  const contentClosures = getContentClosures(bodySection);
+  if (!contentClosures) return;
+  const scope = generateUidIdentifier("scope");
+  const closures = Array.isArray(contentClosures)
+    ? contentClosures
+    : [contentClosures];
+  const ownerAccessor = getAccessorProp().Owner;
+  const levels: t.Expression[] = [];
+  let length = 0;
+  for (let i = closures.length, section = bodySection.parent!; i;) {
+    const props: t.ObjectProperty[] = [];
+    while (i && closures[i - 1].section === section) {
+      const closure = closures[--i];
+      if (!isStaticSerializeReason(getSerializeReason(section, closure))) {
+        props.push(
+          toObjectProperty(
+            getScopeAccessor(closure),
+            getDeclaredBindingExpression(closure),
+          ),
+        );
+      }
+    }
+    if (
+      i &&
+      !isStaticSerializeReason(getSerializeReason(section, ownerAccessor))
+    ) {
+      props.push(
+        toObjectProperty(
+          ownerAccessor,
+          t.callExpression(scope, [getScopeIdIdentifier(section.parent!)]),
+        ),
+      );
+    }
+    levels.push(props.length ? t.objectExpression(props) : t.numericLiteral(0));
+    if (props.length) length = levels.length;
+    section = section.parent!;
+  }
+  if (length) return { scope, levels: levels.slice(0, length).reverse() };
 }
 
 const [getSerializedAccessors] = createSectionState<

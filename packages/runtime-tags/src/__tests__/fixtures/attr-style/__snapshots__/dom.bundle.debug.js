@@ -28,7 +28,7 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.mark
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<div></div><div style=width:100px></div><div style="color: green"></div><div></div>${_w0}${_w1}${_w2}<!><!>`)($template$1, $template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => ` d b/${_w0}&/${_w1}&/${_w2}&%c`)($walks$1, $walks$1, $walks$1);
 const TestTag = custom_tag_default;
-const $test_content = _content_resume("__tests__/template.marko_1*content", "Hello");
+const $test_content = _content("__tests__/template.marko_1*content", "Hello");
 const $input_color = ($scope, input_color) => {
 	_attr_style_item($scope["#div/0"], "color", input_color);
 	_attr_style($scope["#div/1"], input_color && "color:red");

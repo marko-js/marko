@@ -9,4 +9,4 @@ const $catch_content__setup = ($scope) => {
 };
 const $catch_content__err_message = ($scope, err_message) => _text($scope.b, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content_resume("a1", "<button><!> <!></button>", " D%c%", $catch_content__setup, $catch_content__$params);
+const $catch_content = _content("a1", "<button><!> <!></button>", " D%c%", $catch_content__setup, $catch_content__$params);

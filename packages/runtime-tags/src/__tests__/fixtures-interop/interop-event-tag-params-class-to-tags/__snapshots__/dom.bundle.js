@@ -34,7 +34,7 @@ const $classlayout_content__$params = ($scope, $params2) => {
 	$classlayout_content__onBump($scope, $params2[1]);
 };
 const $classlayout_content__onBump = /*@__PURE__*/ _const(4);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a0", "<button id=tags> </button>", " D ", $classlayout_content__setup, $classlayout_content__$params));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content("a0", "<button id=tags> </button>", " D ", $classlayout_content__setup, $classlayout_content__$params));
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

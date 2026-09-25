@@ -17,7 +17,7 @@ const $walks = "b%c";
 function run$1(fn) {
 	return typeof fn;
 }
-const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading...");
+const $placeholder_content = _content("__tests__/template.marko_3*content", "loading...");
 const $await_content__on = /*@__PURE__*/ _closure_get("on", ($scope) => $input_on($scope["#childScope/0"], $scope._._.on), ($scope) => $scope._._);
 const $await_content__setup = ($scope) => {
 	$await_content__on($scope);

@@ -34,8 +34,8 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content_resume("__tests__/template.marko_4*content", "<span class=err> </span>", "D ", 0, $catch_content__$params);
-const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "loading");
+const $catch_content = _content("__tests__/template.marko_4*content", "<span class=err> </span>", "D ", 0, $catch_content__$params);
+const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
 const $try_content__focusChild = _var_resume("__tests__/template.marko_2_focusChild#4/var", /*@__PURE__*/ _const("focusChild"));
 const $try_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/3"], "click", function() {
 	$scope.focusChild();

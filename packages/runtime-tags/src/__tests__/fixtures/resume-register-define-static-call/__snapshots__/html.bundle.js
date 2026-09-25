@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			_dynamic_tag($scope2_id, "a", input.content, {}, 0, 0, $sg__input_content);
 			$si__input_type__OR__input_content && _subscribe($si__input_content && $Heading_content__input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $sg__input_content);
 			$sg__input_content || $si__input_type__OR__input_content && _resume_branch($scope2_id);
-		}, $scope1_id), 0, $sg__input_type);
+		}, $scope1_id, ($scope) => [{ e: input.content }]), 0, $sg__input_type);
 		$si__input_type__OR__input_content && _scope($scope1_id, {
 			e: _serialize_if($scope1_reason, 1) && input.content,
 			f: $si__input_content && $Heading_content__input_content__closures

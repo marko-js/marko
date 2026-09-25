@@ -9,7 +9,7 @@ const $Inner_content2__setup = ($scope) => {
 };
 const $Inner_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $Inner_content2__outer_content = /*@__PURE__*/ _closure_get("outer_content", ($scope) => $Inner_content2__dynamicTag($scope, $scope._.outer_content), 0, "__tests__/template.marko_5_outer_content#4/subscribe");
-const $Inner_content2 = _content_resume("__tests__/template.marko_5*content", "outer <!>: <!><!>", "b%c%", $Inner_content2__setup);
+const $Inner_content2 = _content("__tests__/template.marko_5*content", "outer <!>: <!><!>", "b%c%", $Inner_content2__setup);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content));
 const $if_content__setup = $if_content__input_content;
@@ -40,7 +40,7 @@ const $Inner_content__$params = ($scope, $params2) => $Inner_content__input($sco
 const $Inner_content__input = ($scope, input) => $Inner_content__tag_input_content($scope, input.content);
 const $Outer_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#3/subscribe");
 const $Outer_content__setup = $Outer_content__input_label;
-const $Outer_content = _content_resume("__tests__/template.marko_1*content", "label: <!>", "b%", $Outer_content__setup);
+const $Outer_content = _content("__tests__/template.marko_1*content", "label: <!>", "b%", $Outer_content__setup);
 function $setup($scope) {
 	$Outer_content2__setup._($scope["#childScope/0"], $scope);
 	$Outer_content2__tag_input_content($scope["#childScope/0"], $Outer_content($scope));

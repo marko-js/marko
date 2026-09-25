@@ -1,5 +1,5 @@
 import * as Char from "./constants/char";
-import type { Boundary } from "./writer";
+import type { Boundary, PartialScope } from "./writer";
 
 export const K_SCOPE_ID = Symbol("Scope ID");
 const kTouchedIterator = /* @__PURE__ */ Symbol.for("marko.touchedIterator");
@@ -17,8 +17,15 @@ interface Registered {
   id: string;
   access: string;
   scope: unknown;
-  locals: object | undefined;
+  locals: Locals | undefined;
 }
+
+// What registered content reads that its scopes may lack, computed only once
+// it is sent, as arguments to its registered factory: an attribute tag loop's
+// values, then the closures it reads per owner down to its own (`0` for none).
+export type Locals = (
+  scope: (scopeId: number) => PartialScope,
+) => (PartialScope | 0)[];
 
 interface ScopeInternals {
   [K_SCOPE_ID]?: number;
@@ -434,7 +441,7 @@ export function register<T extends WeakKey>(
   id: string,
   val: T,
   scope?: unknown,
-  locals?: object,
+  locals?: Locals,
 ) {
   REGISTRY.set(val, {
     id,
@@ -790,14 +797,22 @@ function writeRegistered(
     // The serialize context resolves both registry id and render-local scope.
     const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
     trackScope(state, scope, scopeId);
-    if (registered.locals) {
+    const locals = registered.locals?.(state.boundary!.state.scope);
+    if (locals) {
       // Calls the registered factory itself to also pass render-only locals.
-      state.buf.push(registered.access + "(_(" + scopeId + "),");
-      writePlainObject(
-        state,
-        registered.locals,
-        new Reference(ref, null, state.flushId, state.buf.length),
-      );
+      state.buf.push(registered.access + "(_(" + scopeId + ")");
+      for (const local of locals) {
+        state.buf.push(",");
+        if (local) {
+          writePlainObject(
+            state,
+            local,
+            new Reference(ref, null, state.flushId, state.buf.length),
+          );
+        } else {
+          state.buf.push("0");
+        }
+      }
     } else {
       state.buf.push("_(" + scopeId + "," + quoteRegisterId(registered.id));
     }

@@ -8,4 +8,4 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a0", "component host: registered"));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content("a0", "component host: registered"));

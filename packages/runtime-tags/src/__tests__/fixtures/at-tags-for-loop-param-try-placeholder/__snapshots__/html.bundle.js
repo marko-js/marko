@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html(`loading ${_escape(label)}`);
-		}, $scope0_id, { 1: label }) });
+		}, $scope0_id, () => [{ 1: label }]) });
 	});
 	_try($scope0_id, "a", _content_resume("a1", () => {
 		const $scope1_id = _scope_id();

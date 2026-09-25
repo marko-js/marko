@@ -28,7 +28,7 @@ import {
   type Section,
 } from "./sections";
 import { getScopeReasonStatement } from "./serialize-guard";
-import { getResumeRegisterId } from "./signals";
+import { getContentClosureValues, getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
 
 const contentProps = new WeakSet<t.Node>();
@@ -426,7 +426,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
             getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
           )!,
         ),
-        serialized && getLocalClosureValues(bodySection),
+        serialized && getRegisteredLocals(bodySection),
       );
     } else {
       // The section renderer declaration is elided when nothing reads the
@@ -441,6 +441,22 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
           : [scopeIdentifier],
       );
     }
+  }
+}
+
+// What registered content reads that its scopes may lack, as a thunk the
+// serializer calls only once the content is sent: its registered factory's args.
+function getRegisteredLocals(bodySection: Section) {
+  const contentClosureValues = getContentClosureValues(bodySection);
+  const localClosureValues = getLocalClosureValues(bodySection);
+  if (contentClosureValues || localClosureValues) {
+    return t.arrowFunctionExpression(
+      contentClosureValues ? [contentClosureValues.scope] : [],
+      t.arrayExpression([
+        ...(localClosureValues ? [localClosureValues] : []),
+        ...(contentClosureValues?.levels || []),
+      ]),
+    );
   }
 }
 

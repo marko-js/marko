@@ -24,7 +24,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Box_content2__walks);
 const $child_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $child_content__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $child_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/template.marko_3_input_content#3/subscribe");
 const $child_content__setup = $child_content__input_content;
-const $child_content = _content_resume("__tests__/template.marko_3*content", "<!><!><!>", "b%", $child_content__setup);
+const $child_content = _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $child_content__setup);
 const $Box_content2__setup = /*@__PURE__*/ _child_setup(($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $child_content($scope));
@@ -35,7 +35,7 @@ const $Box_content2__$params = ($scope, $params2) => $Box_content2__input($scope
 const $Box_content2__input = ($scope, input) => $Box_content2__tag_input_content($scope, input.content);
 const $Box_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#3/subscribe");
 const $Box_content__setup = $Box_content__input_label;
-const $Box_content = _content_resume("__tests__/template.marko_1*content", "label: <!>", "b%", $Box_content__setup);
+const $Box_content = _content("__tests__/template.marko_1*content", "label: <!>", "b%", $Box_content__setup);
 function $setup($scope) {
 	$Box_content2__setup._($scope["#childScope/0"], $scope);
 	$Box_content2__tag_input_content($scope["#childScope/0"], $Box_content($scope));

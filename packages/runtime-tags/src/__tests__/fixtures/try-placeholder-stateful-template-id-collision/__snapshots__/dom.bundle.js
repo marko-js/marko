@@ -43,7 +43,7 @@ const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);
 	$setup($scope.a);
 };
-const $placeholder_content = _content_resume("a3", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $placeholder_content__setup);
+const $placeholder_content = _content("a3", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $placeholder_content__setup);
 const $clicks__closure = /*@__PURE__*/ _closure($placeholder_content__clicks, $await_content__clicks);
 const $clicks = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);

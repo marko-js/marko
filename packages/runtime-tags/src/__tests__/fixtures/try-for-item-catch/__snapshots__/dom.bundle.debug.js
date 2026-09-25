@@ -3,7 +3,7 @@ const $template = "<div></div><!><!>";
 const $walks = " b%c";
 const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
-const $catch_content = _content_resume("__tests__/template.marko_3*content", " ", " ", 0, $catch_content__$params);
+const $catch_content = _content("__tests__/template.marko_3*content", " ", " ", 0, $catch_content__$params);
 const $for_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => _text($scope["#text/0"], (() => {
 	if ($scope._._.clickCount > 1) throw new Error("ERROR!");
 })()), ($scope) => $scope._._, "__tests__/template.marko_2_clickCount#2/subscribe");

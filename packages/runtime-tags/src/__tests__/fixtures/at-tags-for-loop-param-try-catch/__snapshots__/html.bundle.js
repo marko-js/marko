@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`caught ${_escape(label)}: ${_text_resume($scope3_id, "b", err.message, $sg__err_message * 2)}`);
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
-		}, $scope0_id, { 2: label }) });
+		}, $scope0_id, () => [{ 2: label }]) });
 	});
 	_try($scope0_id, "b", _content_resume("a1", () => {
 		_scope_id();
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`caught ${_text_resume($scope4_id, "a", label, 2)}: ${_text_resume($scope4_id, "b", err.message, _serialize_guard($scope4_reason, 0) * 2)}`);
 			_scope($scope4_id, {});
-		}, $scope0_id, { 2: label }) });
+		}, $scope0_id, () => [{ 2: label }]) });
 	});
 	_try($scope0_id, "c", _content_resume("a3", () => {
 		const $scope1_id = _scope_id();
