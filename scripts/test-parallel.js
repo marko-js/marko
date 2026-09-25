@@ -7,13 +7,14 @@
 // only runs its own slice of their fixtures.
 //
 // This is what `pnpm test` runs, and what CI runs; a scoped `--grep` works here
-// too. `pnpm run test:serial` keeps the single-process mocha run for when bail,
-// live output or a debugger matters more than throughput.
+// too, and spec files (or dirs/globs) given on the command line replace the
+// full spec set. `pnpm run test:serial` keeps the single-process mocha run for
+// when bail, live output or a debugger matters more than throughput.
 //
 // Plain CommonJS because it needs no types and is spawned directly by `node`;
 // the mocha workers it spawns get `~ts` via `.mocharc.parallel.cjs`.
 //
-// Usage: pnpm test [-- extra mocha args...]
+// Usage: pnpm test [-- extra mocha args... spec files...]
 //        MARKO_TEST_WORKERS=8 node scripts/test-parallel.js
 const { spawn } = require("node:child_process");
 const fs = require("node:fs");
@@ -21,6 +22,7 @@ const os = require("node:os");
 const path = require("node:path");
 const { setTimeout: sleep } = require("node:timers/promises");
 
+const { aliases, types } = require("mocha/lib/cli/run-option-metadata");
 const glob = require("tiny-glob");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -32,6 +34,14 @@ const NODE_ARGS = require(CONFIG)["node-option"].map((flag) => `--${flag}`);
 // Exit code a worker uses when it handed its remaining suites off.
 const RECYCLE_EXIT_CODE = 75;
 const SPEC_GLOB = "packages/*/@(src|test)/**/*.test.@(js|ts)";
+// Mocha flags whose value may be the next argument; any other bare argument is
+// a spec, as mocha itself reads it.
+const VALUE_FLAGS = new Set(
+  [...types.array, ...types.number, ...types.string].flatMap((flag) => [
+    flag,
+    ...(aliases[flag] ?? []),
+  ]),
+);
 
 // Suites big enough to be worth splitting across workers, with rough
 // wall-time hints (ms) used only to balance the packing — a wrong guess makes
@@ -75,10 +85,9 @@ main(process.argv.slice(2)).catch((err) => {
   process.exit(1);
 });
 
-async function main(mochaArgs) {
-  const files = (
-    await glob(SPEC_GLOB, { cwd: ROOT, absolute: true, filesOnly: true })
-  ).filter((f) => !f.includes("node_modules"));
+async function main(args) {
+  const { specs, mochaArgs } = splitArgs(args);
+  const files = await findSpecFiles(specs);
   const slicedFiles = [];
   let slicedTotalMs = 0;
   for (const [file, costMs] of SLICED_FILES) {
@@ -123,6 +132,49 @@ async function main(mochaArgs) {
       (crashed ? `, ${crashed} worker(s) crashed` : "") +
       ` across ${bins.length} workers in ${secs}s`,
   );
+}
+
+// Specs are packed onto workers like any other file, so they must not also
+// reach every worker's mocha args.
+function splitArgs(args) {
+  const specs = [];
+  const mochaArgs = [];
+  for (let i = 0; i < args.length; i++) {
+    const flag = /^--?([^=]+)(=?)/.exec(args[i]);
+    if (!flag) {
+      specs.push(args[i]);
+    } else if (flag[1] === "spec") {
+      specs.push(flag[2] ? args[i].slice(flag[0].length) : args[++i]);
+    } else {
+      mochaArgs.push(args[i]);
+      if (!flag[2] && VALUE_FLAGS.has(flag[1]) && i + 1 < args.length) {
+        mochaArgs.push(args[++i]);
+      }
+    }
+  }
+  return { specs, mochaArgs };
+}
+
+async function findSpecFiles(specs) {
+  const all = (
+    await glob(SPEC_GLOB, { cwd: ROOT, absolute: true, filesOnly: true })
+  ).filter((f) => !f.includes("node_modules"));
+  if (!specs.length) return all;
+
+  const files = new Set();
+  for (const spec of specs) {
+    const matched = [];
+    for (const match of await glob(spec, { cwd: ROOT, absolute: true })) {
+      if (fs.statSync(match).isDirectory()) {
+        matched.push(...all.filter((f) => f.startsWith(match + path.sep)));
+      } else {
+        matched.push(match);
+      }
+    }
+    if (!matched.length) throw new Error(`No test files found: ${spec}`);
+    for (const file of matched) files.add(file);
+  }
+  return [...files];
 }
 
 // Longest-processing-time bin packing: sort the tasks (sliced-suite slots +

@@ -18,7 +18,7 @@ All from repo root. Tests and tooling run directly from TS source (native Node t
 pnpm test                                                 # whole suite fanned across CPU cores (~3x faster than serial)
 pnpm test -- --grep "runtime-tags/translator <fixture> "  # scoped test run
 pnpm run test:serial -- --grep "..."                      # same run in one process: bail at first failure, live output, --inspect-brk
-pnpm exec mocha <file.test.ts>                            # one file; a file passed to `pnpm test` instead runs in every worker
+pnpm test -- <file.test.ts>                               # only the given spec files (dirs and globs work too)
 pnpm run test:update -- --grep "..."                      # regenerate snapshots (review the diff!)
 pnpm run compile -- -o dom -d foo.marko                   # compiled output -> foo.marko.js (-o html for SSR; omit -d for optimized)
 pnpm run build                                            # all packages -> dist/ + .d.ts
