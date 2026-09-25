@@ -35,6 +35,11 @@ jobs:
           wait $build; build_status=$?
           wait $lint; lint_status=$?
           exit $(( build_status | lint_status ))
+      - name: Check size snapshots
+        # Only the pre-commit hook writes these, and a rebase or merge skips it.
+        run: |
+          pnpm run build:sizes
+          git diff --exit-code .sizes .sizes.json
   test:
     runs-on: ubuntu-latest
     name: "test: node@${{ matrix.node }}"

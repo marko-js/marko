@@ -1,9 +1,9 @@
 diff --git a/lib/generators/marko.js b/lib/generators/marko.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..06464c62e2595ab8fcb1c157a6262505a782bc02
+index 0000000000000000000000000000000000000000..18379932c6d56ca3bd46c9e883827a7f5f131f28
 --- /dev/null
 +++ b/lib/generators/marko.js
-@@ -0,0 +1,523 @@
+@@ -0,0 +1,538 @@
 +"use strict";
 +
 +const { escapeText } = require("htmljs-parser");
@@ -73,9 +73,24 @@ index 0000000000000000000000000000000000000000..06464c62e2595ab8fcb1c157a6262505
 +  this.token("]]>");
 +}
 +exports.MarkoComment = function MarkoComment(node) {
-+  this.token("<!--");
-+  this.token(node.value);
-+  this.token("-->");
++  switch (node.kind) {
++    case "line":
++      // Ended by the newline printed after a non-inline child, or in a
++      // whitespace preserving body by the one from the source.
++      this.token("//");
++      this.token(node.value);
++      break;
++    case "block":
++      this.token("/*");
++      this.token(node.value);
++      this.token("*/");
++      break;
++    default:
++      this.token("<!--");
++      this.token(node.value);
++      this.token("-->");
++      break;
++  }
 +}
 +exports.MarkoPlaceholder = function MarkoPlaceholder(node, parent) {
 +  const isRootLevel = parent.type === "Program";

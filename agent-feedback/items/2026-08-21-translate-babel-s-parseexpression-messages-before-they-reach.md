@@ -1,12 +1,12 @@
 ---
 type: dx
 impact: med
-effort: med
-site: packages/compiler/src/babel-utils/parse.js › tryParse
+effort: low
+site: packages/compiler/package.json › htmljs-parser
 ---
 
-# Translate Babel's `parseExpression()` messages before they reach a Marko diagnostic
+# Name the attribute mistake behind a comment-only or glued attribute value
 
-`tryParse` hands `err.message` from `babelParseExpression` straight to `createParseError`, so Babel's internal API name and its framing become the entire Marko diagnostic for two ordinary mistakes. `<const/x=/* pre */ 1 /* post */>` reports `Unexpected parseExpression() input: The input is empty or contains only comments.` with the caret beside the `1` — describing the opposite of what is on the line, because the attribute value ends at the first `*/` and `1` is then scanned as the next attribute name, which is the fact worth saying. `<div class="a"id="b"/>` reports `Unexpected parseExpression() input: The input should contain exactly one expression, but the first expression is followed by the unexpected character \`i\`.` when the fix is a space between two attributes. Both are reachable from valid-looking source and neither message mentions attributes at all. Classify the two Babel messages at this relay — the surrounding tag diagnostics already write in Marko's own vocabulary and link the docs.
+Three ordinary attribute mistakes reach Babel as one whole value and come back as generic expression errors that never mention attributes. `<div class=/* todo */></div>` reports `Expected an expression, but found only whitespace or comments.` without naming `class`; `<const/x=/* pre */ 1>` reports the same, because the value ends at the whitespace after the comment and `1` becomes the next attribute name; and `<div class="a"id="b"/>` reports ``Expected a single expression, but found `i` after it.`` when the fix is a space before `id`. htmljs-parser now handles these where the attribute value ends (it continues a value past its leading comments and reports the rest), so bump it in `@marko/compiler` and regenerate the `error-attr-value-only-comment` and `error-attr-value-missing-whitespace` fixtures, which pin the generic wording until then.
 
-Check: `pnpm run compile -- -o html -d` on `<const/x=/* pre */ 1 /* post */>` and on `<div class="a"id="b"/>` prints the two `Unexpected parseExpression() input:` messages above; expect one naming the comment that terminated the attribute value and one naming the missing whitespace between attributes, with no Babel API name in either.
+Check: `pnpm run compile -- -o html -d` on each of the three templates above prints the generic message quoted for it; expect `<const/x=/* pre */ 1>` to compile, and the other two to name the comment-only `class` value and the missing whitespace before `id`.

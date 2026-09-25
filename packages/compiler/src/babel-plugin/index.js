@@ -60,14 +60,17 @@ export default (api, markoOpts) => {
   }
 
   if (markoOpts.stripTypes) {
-    stripTypesVisitor ||= pluginTransformTypeScript(api, {
-      isTSX: false,
-      allowNamespaces: true,
-      allowDeclareFields: true,
-      optimizeConstEnums: true,
-      onlyRemoveTypeImports: true,
-      disallowAmbiguousJSXLike: false,
-    }).visitor;
+    stripTypesVisitor ||= [
+      pluginTransformTypeScript(api, {
+        isTSX: false,
+        allowNamespaces: true,
+        allowDeclareFields: true,
+        optimizeConstEnums: true,
+        onlyRemoveTypeImports: true,
+        disallowAmbiguousJSXLike: false,
+      }).visitor,
+      stripTagTypesVisitor,
+    ];
   }
 
   let curOpts;
@@ -510,6 +513,16 @@ function addPlugin(meta, arr, plugin) {
   }
 }
 
+// The TypeScript plugin does not know the type syntax of a tag's head.
+const stripTagTypesVisitor = {
+  MarkoTag(tag) {
+    tag.node.typeArguments = undefined;
+  },
+  MarkoTagBody(body) {
+    body.node.typeParameters = undefined;
+  },
+};
+
 function stripTypes(file) {
   const importScriptlets = new Map();
   for (const path of file.path.get("body")) {
@@ -566,6 +579,8 @@ function stripTypes(file) {
   }
 }
 
+// These outputs reprint the AST, so blank lines between tags are not kept;
+// keeping them would mean patching Babel's printer beyond our node types.
 function isMarkoOutput(output) {
   return output === "source" || output === "migrate";
 }

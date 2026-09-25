@@ -14,6 +14,7 @@ export {
   transformSync,
 } from "@babel/core";
 export { parse, parseExpression } from "@babel/parser";
+export { NodePath } from "@babel/traverse";
 
 import generatorModule from "@babel/generator";
 import pluginSyntaxTypeScriptModule from "@babel/plugin-syntax-typescript";
