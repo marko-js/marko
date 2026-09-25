@@ -132,6 +132,12 @@ describe("compiler/compile", () => {
         }),
         "<foo|x|>\n  ${x}\n</foo>\n<type-arg/>",
       ));
+
+    it("keeps each comment's syntax", () => {
+      const src =
+        "// line\n/* block */\n<!-- html -->\n<div>\n  // line\n  /* block */\n  <!-- html -->\n</div>\n<pre>a // line\n</pre>";
+      assert.equal(print(src), src);
+    });
   });
 
   describe("synthetic filenames", () => {
