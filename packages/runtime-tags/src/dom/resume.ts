@@ -119,6 +119,9 @@ export function initEmbedded(readyId: string, runtimeId?: string) {
   ready(readyId);
   init(runtimeId);
 }
+
+// Server-rendered content stays inert until this consumes its resume data; the
+// page entry a bundler integration builds calls it, and a custom one must too.
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (curRenders) {
     if (MARKO_DEBUG) {

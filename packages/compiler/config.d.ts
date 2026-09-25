@@ -2,6 +2,7 @@ type EntryKind = "page" | "load";
 declare const Config: {
   /** `"hydrate"` is deprecated; Marko 6 resumes rather than hydrates. Prefer `output: "dom", entry: "page"` for new page entries, noting that unlike `"hydrate"` it also enables taglib translators. */
   output?: "html" | "dom" | "migrate" | "source" | "hydrate";
+  /** Compiles a page or lazy-load entry instead of a module; requires `linkAssets`. */
   entry?: EntryKind;
   linkAssets?: {
     runtime: string;

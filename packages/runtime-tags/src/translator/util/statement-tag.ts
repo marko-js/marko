@@ -18,6 +18,8 @@ export function createStatementTag(keyword: "client" | "server" | "static") {
         block = block.body[0];
       }
 
+      // The other platform declares these bindings with no value, so reading one
+      // there gives `undefined` by design.
       const scriptlet = t.markoScriptlet(block.body, true, target);
       scriptlet.innerComments = block.innerComments;
       tag.replaceWith(scriptlet);
