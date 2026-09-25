@@ -1,0 +1,8 @@
+<const/{ button }=input>
+<if=input.show>
+  <div/>
+</if>
+<else>
+  <const/{ a11yText, ...rest }=button/>
+  <div ...rest aria-label=a11yText/>
+</else>
