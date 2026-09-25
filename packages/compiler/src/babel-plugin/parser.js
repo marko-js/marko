@@ -9,7 +9,7 @@ import {
   parseTypeParams,
   parseVar,
 } from "@marko/compiler/babel-utils";
-import { types as t } from "@marko/compiler/internal/babel";
+import { NodePath, types as t } from "@marko/compiler/internal/babel";
 import { createParser, TagType } from "htmljs-parser";
 
 import { buildCodeFrameError } from "../util/build-code-frame";
@@ -91,13 +91,13 @@ export function parseMarko(file) {
         if (!t.isMarkoComment(previousSibling.node)) {
           break;
         }
-        currentTag.pushContainer("attributeTags", previousSibling.node);
+        appendPath(currentTag, "attributeTags", previousSibling.node);
         previousSibling.remove();
       }
 
-      currentTag = currentTag.pushContainer("attributeTags", node)[0];
+      currentTag = appendPath(currentTag, "attributeTags", node);
     } else {
-      currentTag = currentBody.pushContainer("body", node)[0];
+      currentTag = appendPath(currentBody, "body", node);
     }
     currentBody = currentTag.get("body");
     onNext(node);
@@ -730,7 +730,7 @@ export function parseMarko(file) {
           }
 
           currentTag.remove();
-          parentTag.pushContainer("attributeTags", node);
+          appendPath(parentTag, "attributeTags", node);
         }
       }
 
@@ -764,6 +764,20 @@ export function parseMarko(file) {
 
 function sortByStart(a, b) {
   return a.start - b.start;
+}
+
+// `pushContainer` re-keys every cached sibling (O(n²) over a body of n tags);
+// no traversal runs while parsing, so appending needs none of its bookkeeping.
+function appendPath(parentPath, listKey, node) {
+  const container = parentPath.node[listKey];
+  container.push(node);
+  return NodePath.get({
+    parentPath,
+    parent: parentPath.node,
+    container,
+    listKey,
+    key: container.length - 1,
+  }).setContext(parentPath.context);
 }
 
 function templateElement(value, tail) {
