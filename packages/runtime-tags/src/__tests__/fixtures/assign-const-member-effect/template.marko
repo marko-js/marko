@@ -1,0 +1,8 @@
+<const/live={ open: false }>
+<let/count=0>
+<script>console.log("effect", count, live.open)</script>
+<span>${live.open ? "open" : "closed"}</span>
+<button onClick() {
+  live.open = true;
+  count++;
+}>open</button>

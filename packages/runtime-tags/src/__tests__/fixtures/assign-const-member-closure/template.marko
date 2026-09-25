@@ -1,0 +1,9 @@
+<const/live={ open: false }>
+<lifecycle onMount() {
+  document.addEventListener("keydown", () => console.log("key", live.open));
+}>
+<button.open onClick() {
+  live.open = true;
+  console.log("click", live.open);
+}>open</button>
+<button.read onClick() { console.log("read", live.open); }>read</button>

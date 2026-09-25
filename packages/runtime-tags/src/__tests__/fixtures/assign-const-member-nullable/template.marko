@@ -1,0 +1,5 @@
+<const/live=input.show ? { open: false } : null>
+<button.open onClick() {
+  if (live) live.open = true;
+}>open</button>
+<button.read onClick() { console.log("read", live?.open); }>read</button>

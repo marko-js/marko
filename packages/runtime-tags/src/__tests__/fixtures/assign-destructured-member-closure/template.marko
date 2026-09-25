@@ -1,0 +1,4 @@
+<const/state={ box: { open: false } }>
+<const/{ box }=state>
+<button.open onClick() { box.open = true; }>open</button>
+<button.read onClick() { console.log("read", state.box.open, box.open); }>read</button>

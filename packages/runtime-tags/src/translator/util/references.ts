@@ -1005,6 +1005,10 @@ function trackReference(
     reference = getOrCreatePropertyAlias(reference, prop);
   }
 
+  if (hasWrittenMember(root)) {
+    getWrittenValues().add(getCanonicalBinding(reference));
+  }
+
   // The chain is read as a whole, and its root names the binding it renames.
   if (root !== referencePath) {
     (referencePath.node.extra ??= {}).binding = binding;
@@ -1015,6 +1019,21 @@ function trackReference(
   }
 
   addReadToExpression(root, reference, undefined);
+}
+
+// Whether a member reached from `object` is written, which mutates its value.
+function hasWrittenMember(object: t.NodePath) {
+  let member = object.parentPath!;
+  while (
+    (t.isMemberExpression(member.node) ||
+      t.isOptionalMemberExpression(member.node)) &&
+    member.node.object === object.node
+  ) {
+    if (isWrittenMember(member)) return true;
+    object = member;
+    member = member.parentPath!;
+  }
+  return false;
 }
 
 // Writing a member (`obj.x = 1`, `obj.x++`, `delete obj.x`, a destructuring
@@ -1169,6 +1188,9 @@ export function finalizeReferences() {
   const readsByExpression = getReadsByExpression();
   const fnReadsByExpression = getFunctionReadsByExpression();
   const intersectionsBySection = new Map<Section, Intersection[]>();
+
+  // Before pruning, so an alias left with no reads drops.
+  bindings.forEach(readMembersThroughWrittenValue);
 
   // Assignments settle now so pruning can ask each binding directly; an
   // assignment inside a value pruning drops leaves again below.
@@ -1549,6 +1571,31 @@ export function finalizeReferences() {
 
   readsByExpression.clear();
   fnReadsByExpression.clear();
+}
+
+// A property alias holds a member as it was when its value was assigned, so a
+// member of a written value, by name or chain, reads through the outermost one.
+function readMembersThroughWrittenValue(alias: Binding) {
+  // `$global` member reads compile verbatim, with no alias to go stale.
+  if (alias.type === BindingType.global) return;
+  let written: Binding | undefined;
+  for (let cur = getCanonicalBinding(alias); cur.property !== undefined;) {
+    cur = cur.upstreamAlias!;
+    if (getWrittenValues().has(cur)) written = cur;
+  }
+  if (written) {
+    const props = getPropertyPath(alias, written);
+    for (const expr of alias.reads) {
+      forEach(getReadsByExpression().get(expr), (read) => {
+        if (read.binding === alias) {
+          read.binding = written;
+          read.extra.read = createRead(written, props);
+        }
+      });
+      written.reads.add(expr);
+    }
+    alias.reads.clear();
+  }
 }
 
 // Serializes an intersection member for its partners' sources, unless those
@@ -2062,6 +2109,9 @@ export const propsUtil = new Sorted(function compareProps(
 });
 
 const [getAssignments] = createProgramState<AssignedBindingExtra[]>(() => []);
+// Values the template writes into (`x.y = 1`, `x[k].y++`); like assignments,
+// only `finalizeReferences` reads them, once every write is tracked.
+const [getWrittenValues] = createProgramState(() => new Set<Binding>());
 const [getReadsByExpression] = createProgramState(
   () => new Map<ReferencedExtra, Opt<Read>>(),
 );
@@ -2975,7 +3025,7 @@ function resolveReferencedBindings(
       // no signal, no register-id participation.
       globalBindings = binding;
     } else {
-      extra.read =
+      extra.read ??=
         resolveConstantReference(binding) ??
         createRead(binding, undefined, ownVar);
       binding = extra.read.binding;

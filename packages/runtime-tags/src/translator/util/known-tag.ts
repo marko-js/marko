@@ -96,6 +96,7 @@ const kContentSection = Symbol("known tag content section");
 const kChildScopeBinding = Symbol("known tag scope binding");
 const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
 const kKnownExprs = Symbol("known tag exprs");
+const kKnownSpreadExprs = Symbol("known spread exprs");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -103,6 +104,11 @@ declare module "@marko/compiler/dist/types" {
     [kChildScopeBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
     [kKnownExprs]?: KnownExprs;
+  }
+
+  export interface NodeExtra {
+    /** On a known spread's value: the read of each member it passes. */
+    [kKnownSpreadExprs]?: Record<string, ReferencedExtra>;
   }
 }
 
@@ -725,9 +731,11 @@ function analyzeAttrs(
   }
 
   if (knownSpread) {
+    const spreadExprs: Record<string, ReferencedExtra> = {};
+    knownSpread.extra![kKnownSpreadExprs] = spreadExprs;
     for (const prop of remaining) {
       const propBinding = getOrCreatePropertyAlias(knownSpread.binding, prop);
-      const propExtra: ReferencedExtra = { section };
+      const propExtra: ReferencedExtra = (spreadExprs[prop] = { section });
       const templateExportAttr = getKnownFromPropTree(propTree, prop)!;
 
       known[prop] = { value: propExtra };
@@ -776,6 +784,17 @@ function analyzeAttrs(
   dropNodes(dropReferenceNodes);
 
   return inputExpr;
+}
+
+// A member a known spread passes, as its read resolved: from the member's alias,
+// or through the value it is read through.
+function toReadExpression({ read, section }: ReferencedExtra) {
+  let node: t.Expression = t.identifier(read!.binding.name);
+  forEach(read!.props, (prop) => {
+    node = toMemberExpression(node, prop);
+  });
+  node.extra = { read, section };
+  return node;
 }
 
 function getSingleKnownSpread(
@@ -1292,6 +1311,7 @@ function writeAttrsToSignals(
   }
 
   if (knownSpread) {
+    const spreadExprs = knownSpread.extra![kKnownSpreadExprs]!;
     for (const prop of remaining) {
       const childAttrExports = getKnownFromPropTree(
         propTree,
@@ -1301,15 +1321,15 @@ function writeAttrsToSignals(
         childAttrExports.binding,
         `${importAlias}_${prop}`,
       );
-      const propBinding = knownSpread.binding.propertyAliases.get(prop)!;
+      const propExtra = spreadExprs[prop];
       addStatement(
         "render",
         info.tagSection,
-        propBinding,
+        propExtra.referencedBindings,
         t.expressionStatement(
           t.callExpression(attrExportIdentifier, [
             createScopeReadExpression(info.childScopeBinding, info.tagSection),
-            createScopeReadExpression(propBinding, info.tagSection),
+            toReadExpression(propExtra),
           ]),
         ),
         true,

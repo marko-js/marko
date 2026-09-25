@@ -1,0 +1,17 @@
+<const/box={ reveal(_n) {} }>
+<let/out="none">
+<const/show=(n) => {
+  box.reveal(n);
+}>
+<const/call=(n) => {
+  const reveal = box.reveal;
+  reveal(n);
+}>
+<lifecycle onMount() {
+  box.reveal = (n) => {
+    out = `revealed ${n}`;
+  };
+}>
+<button.show onClick() { show(1); }>show</button>
+<button.call onClick() { call(2); }>call</button>
+<span>${out}</span>

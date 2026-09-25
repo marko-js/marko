@@ -1,0 +1,4 @@
+<const/live={ inner: { open: false }, label: "live" }>
+<span>${live.label}</span>
+<button.open onClick() { live.inner.open = true; }>open</button>
+<button.read onClick() { console.log("read", live.inner.open); }>read</button>

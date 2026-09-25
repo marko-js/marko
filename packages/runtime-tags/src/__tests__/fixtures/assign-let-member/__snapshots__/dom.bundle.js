@@ -1,31 +1,18 @@
 // template.marko
 const $settings = /*@__PURE__*/ _let(14, ($scope) => {
-	$settings_theme($scope, $scope.o?.theme);
-	$settings_count($scope, $scope.o?.count);
-	$settings_removed($scope, $scope.o?.removed);
-	$settings_kind($scope, $scope.o?.kind);
-	$settings_first($scope, $scope.o?.first);
-	$settings_width($scope, $scope.o?.width);
-	$settings_picked($scope, $scope.o?.picked);
-	$settings_rest($scope, $scope.o?.rest);
-	$settings_fallback($scope, $scope.o?.fallback);
-	$settings_lastKey($scope, $scope.o?.lastKey);
-	$settings_lastTag($scope, $scope.o?.lastTag);
-	$settings_copy($scope, $scope.o?.copy);
+	_text($scope.a, $scope.o?.theme);
+	_text($scope.b, $scope.o?.count);
+	_text($scope.c, $scope.o?.removed ?? "deleted");
+	_text($scope.d, $scope.o?.kind);
+	_text($scope.e, $scope.o?.first);
+	_text($scope.f, $scope.o?.width);
+	_text($scope.g, $scope.o?.picked);
+	_text($scope.h, $scope.o?.rest);
+	_text($scope.i, $scope.o?.fallback);
+	_text($scope.j, $scope.o?.lastKey);
+	_text($scope.k, $scope.o?.lastTag);
+	_text($scope.l, $scope.o?.copy?.w);
 });
-const $settings_theme = /*@__PURE__*/ _const(15, ($scope) => _text($scope.a, $scope.p));
-const $settings_count = /*@__PURE__*/ _const(16, ($scope) => _text($scope.b, $scope.q));
-const $settings_removed = /*@__PURE__*/ _const(17, ($scope) => _text($scope.c, $scope.r ?? "deleted"));
-const $settings_kind = /*@__PURE__*/ _const(18, ($scope) => _text($scope.d, $scope.s));
-const $settings_first = /*@__PURE__*/ _const(19, ($scope) => _text($scope.e, $scope.t));
-const $settings_width = /*@__PURE__*/ _const(20, ($scope) => _text($scope.f, $scope.u));
-const $settings_picked = /*@__PURE__*/ _const(21, ($scope) => _text($scope.g, $scope.v));
-const $settings_rest = /*@__PURE__*/ _const(22, ($scope) => _text($scope.h, $scope.w));
-const $settings_fallback = /*@__PURE__*/ _const(23, ($scope) => _text($scope.i, $scope.x));
-const $settings_lastKey = /*@__PURE__*/ _const(24, ($scope) => _text($scope.j, $scope.y));
-const $settings_lastTag = /*@__PURE__*/ _const(25, ($scope) => _text($scope.k, $scope.z));
-const $settings_copy = /*@__PURE__*/ _const(26, ($scope) => $settings_copy_w($scope, $scope.a0?.w));
-const $settings_copy_w = /*@__PURE__*/ _const(27, ($scope) => _text($scope.l, $scope.a1));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.m, "click", function() {
 		$scope.o.theme = "light";

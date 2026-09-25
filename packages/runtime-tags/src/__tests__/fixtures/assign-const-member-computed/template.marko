@@ -1,0 +1,9 @@
+<const/key="open">
+<const/live={ open: false, items: [{ done: false }] }>
+<button.write onClick() {
+  live[key] = true;
+  live.items[live.items.length - 1].done = true;
+}>write</button>
+<button.read onClick() {
+  console.log("read", live.open, live.items[0].done);
+}>read</button>

@@ -1,0 +1,7 @@
+<let/live={ open: false }>
+<span>${live.open ? "open" : "closed"}</span>
+<lifecycle onMount() {
+  document.addEventListener("keydown", () => console.log("key", live.open));
+}>
+<button.open onClick() { live.open = true; }>open</button>
+<button.apply onClick() { live = { ...live }; }>apply</button>

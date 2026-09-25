@@ -1,0 +1,5 @@
+<const/live={ open: false }>
+<const/{ open }=live>
+<span>${open ? "open" : "closed"}</span>
+<button.open onClick() { live.open = true; }>open</button>
+<button.read onClick() { console.log("read", open); }>read</button>

@@ -1,0 +1,5 @@
+<let/live={ open: false, label: "live" }>
+<kid ...live/>
+<button.open onClick() { live.open = true; }>open</button>
+<button.read onClick() { console.log("read", live.open); }>read</button>
+<button.apply onClick() { live = { ...live }; }>apply</button>
