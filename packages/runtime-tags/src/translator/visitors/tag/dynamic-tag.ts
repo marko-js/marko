@@ -668,9 +668,9 @@ function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
       tag.node.extra!.nodeBinding!,
       true,
     );
-    if (addRuntimeOnce(`_resume_dynamic_tag_var ${accessor.value}`)) {
+    if (addRuntimeOnce(`_dynamic_tag_var_resume ${accessor.value}`)) {
       getProgram().node.body.push(
-        t.expressionStatement(callRuntime("_resume_dynamic_tag_var", accessor)),
+        t.expressionStatement(callRuntime("_dynamic_tag_var_resume", accessor)),
       );
     }
   }

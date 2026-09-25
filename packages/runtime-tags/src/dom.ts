@@ -86,8 +86,8 @@ export {
 export { run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
+  _dynamic_tag_var_resume,
   _el,
-  _resume_dynamic_tag_var,
   _resumed,
   _var_resume,
   init,

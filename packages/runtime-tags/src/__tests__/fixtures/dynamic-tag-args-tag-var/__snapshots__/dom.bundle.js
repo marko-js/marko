@@ -9,7 +9,7 @@ var custom_tag_default = /*@__PURE__*/ _template("b", $template, $walks, 0, $inp
 
 // template.marko
 const tags = [custom_tag_default];
-_resume_dynamic_tag_var(2);
+_dynamic_tag_var_resume(2);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, 0, () => $y, 1);
 const $x = /*@__PURE__*/ _let(5, ($scope) => {
 	_text($scope.b, $scope.f);

@@ -12,7 +12,7 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.mark
 const $template = "<button>Count: <!></button><!><div>Parent: <!></div>";
 const $walks = " Db%l1bDb%l";
 const tags = [custom_tag_default];
-_resume_dynamic_tag_var("#text/2");
+_dynamic_tag_var_resume("#text/2");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, () => $y, 1);
 const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 	_text($scope["#text/1"], $scope.x);

@@ -1109,7 +1109,7 @@ function _var_resume(id, signal) {
 function _el(id, accessor) {
   return ((accessor = decodeAccessor(accessor)), (_resumed[id] = (scope) => () => scope[accessor]));
 }
-function _resume_dynamic_tag_var(accessor) {
+function _dynamic_tag_var_resume(accessor) {
   ((accessor = decodeAccessor(accessor)),
     (_resumed["-" + accessor] = (scope) => () => {
       let node = scope[accessor];
@@ -1753,12 +1753,12 @@ function _await_promise(nodeAccessor, params) {
           (isPromise(promise) || scope[promiseAccessor]) && findBranchWithKey(scope, "Q"),
         tryBranch = tryPlaceholder || awaitBranch;
       if (!tryBranch) {
-        let replay = (scope[promiseAccessor] = () =>
-            replay === scope[promiseAccessor] && awaitPromise(scope, promise)),
+        let deferred = (scope[promiseAccessor] = () =>
+            deferred === scope[promiseAccessor] && awaitPromise(scope, promise)),
           awaitCounter = findBranchWithKey(scope, "Q")?.O;
         if (awaitCounter?.i) {
           let complete = awaitCounter.c;
-          awaitCounter.c = () => complete() || queueAsyncRender(scope, replay);
+          awaitCounter.c = () => complete() || queueAsyncRender(scope, deferred);
         }
         return;
       }

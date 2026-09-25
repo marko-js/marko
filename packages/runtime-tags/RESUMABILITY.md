@@ -155,8 +155,9 @@ releases them with the chunk that completes it (`Chunk.flushScript` in
 in-order content streams: it resumes exactly as the server rendered it and needs
 no reconciliation. Only content that can arrive after effects ran, a reorder
 once the main stream completed or ready-stream data, may find its owners
-changed; the await counter's replay (`_await_promise`) and a late closure
-subscriber's resume effect (`_subscribe`) cover it.
+changed; an `<await>` value deferred until its branch exists
+(`_await_promise`) and a late closure subscriber's resume effect (`_subscribe`)
+cover it.
 
 ## Lazy entries and ready streams
 

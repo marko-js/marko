@@ -1369,7 +1369,7 @@ export function writeHTMLResumeStatements(
     }
   });
 
-  // Mount-effect order is unspecified: hydration replays these in reverse
+  // Mount-effect order is unspecified: resume runs these in reverse
   // signal order, CSR runs the signal graph forward — the two paths differ.
   for (let i = allSignals.length; i--;) {
     if (allSignals[i].hasHTMLEffect) {

@@ -154,7 +154,7 @@ abort signal. Not an error boundary.
 **Resume**:
 Filling scopes, adopting server-rendered nodes, creating branches, and running
 effects without an initial client rerender.
-_Avoid_: hydrate, hydration
+_Avoid_: hydrate, hydration, replay
 
 **Resume payload**:
 Server-emitted JavaScript data and fill operations for required scope slots,
