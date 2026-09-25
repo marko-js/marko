@@ -1,2 +1,5 @@
 // tags/wrapper.marko
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content("b0", "hi"));
+const $inputAsdiv_content = /*@__PURE__*/ _content("b0", "hi");
+
+// tags/v:wrapper.marko.register-$inputAsdiv_content.js
+_resumed.b0 = $inputAsdiv_content;

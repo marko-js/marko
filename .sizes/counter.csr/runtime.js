@@ -1,4 +1,4 @@
-// size: 3851 (min) 1725 (brotli)
+// size: 3853 (min) 1731 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -299,7 +299,7 @@ function toInsertNode(startNode, endNode) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let _template = (id, template, walks, setup, inputSignal) => {
+let _template = (id, template, walks, setup, inputSignal, _registers) => {
   let renderer = _content(id, template, walks, setup, inputSignal)();
   return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
 };

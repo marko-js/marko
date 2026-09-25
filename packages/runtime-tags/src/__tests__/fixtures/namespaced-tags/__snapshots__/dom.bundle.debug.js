@@ -6,7 +6,7 @@ const $Child_content = _content("__tests__/template.marko_2*content", "Hi");
 const $Parent_content__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => _html($scope, $scope._.input_value, "#text/0"), 0, "__tests__/template.marko_1_input_value#10/subscribe");
 const $Parent_content__setup = $Parent_content__input_value;
 const $Parent_content = _content("__tests__/template.marko_1*content", " ", " ", $Parent_content__setup);
-_content_resume($Parent_content);
+const $Parent_content2 = _content_resume($Parent_content);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/5", $Parent_content);
 const $Parent__OR__Child__script = _script("__tests__/template.marko_0_Parent#11_Child#12", ($scope) => {
 	$scope.Parent;

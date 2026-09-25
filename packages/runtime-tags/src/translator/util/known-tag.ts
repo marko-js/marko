@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
+import type { ResolvedExport } from "../visitors/function";
 import { scopeIdentifier } from "../visitors/program";
 import {
   type BindingPropTree,
@@ -8,6 +9,7 @@ import {
   getKnownFromPropTree,
   hasAllKnownProps,
 } from "./binding-prop-tree";
+import { getPossibleValues } from "./evaluate";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
 import { isOptimize } from "./marko-config";
@@ -36,19 +38,24 @@ import {
   FORCED,
   getAllTagReferenceNodes,
   getDebugNames,
+  getKnownExprsAt,
   getOrCreatePropertyAlias,
+  getParamProperty,
   getScopeAccessorLiteral,
   type InputBinding,
   isInvokeOnlyBinding,
   type KnownExprs,
+  mapParamBindingToExpr,
   mapParamReasonToExpr,
   mergeReferences,
+  type ParamBinding,
   type ReferencedExtra,
   setBindingDownstream,
   trackParamsReferences,
   trackVarReferences,
   propsUtil,
 } from "./references";
+import { exportUtil, getCallerContent } from "./rendered-content";
 import { callRuntime, importRuntime } from "./runtime";
 import { createScopeReadExpression } from "./scope-read";
 import {
@@ -102,6 +109,9 @@ const kContentSection = Symbol("known tag content section");
 const kChildScopeBinding = Symbol("known tag scope binding");
 const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
 const kKnownExprs = Symbol("known tag exprs");
+// The body passed as `content`: a renderer, which names a tag as anything.
+const BODY_CONTENT: KnownExprs = { value: undefined };
+const kChildTemplate = Symbol("known tag child template");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -109,6 +119,7 @@ declare module "@marko/compiler/dist/types" {
     [kChildScopeBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
     [kKnownExprs]?: KnownExprs;
+    [kChildTemplate]?: t.ProgramExtra;
   }
 }
 
@@ -116,6 +127,7 @@ export function knownTagAnalyze(
   tag: t.NodePath<t.MarkoTag>,
   contentSection: Section,
   propTree: BindingPropTree | undefined,
+  childTemplate?: t.ProgramExtra,
 ) {
   analyzeAttributeTags(tag);
 
@@ -132,6 +144,9 @@ export function knownTagAnalyze(
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
   tagExtra[kContentSection] = contentSection;
+  if (childTemplate !== getProgram().node.extra) {
+    tagExtra[kChildTemplate] = childTemplate;
+  }
   if (tagExtra.defineBodySection) {
     contentSection.callSections = sectionUtil.add(
       contentSection.callSections,
@@ -452,6 +467,12 @@ function analyzeParams(
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
+        if (needsPossibleValues(rootTagExtra, argExport.binding)) {
+          // Cached on the extra, which `finalizeKnownTagRenders` maps params to.
+          getPossibleValues(
+            (tag.get("arguments") as t.NodePath<t.Expression>[])[i],
+          );
+        }
       } else {
         dropNodes(arg);
       }
@@ -661,7 +682,7 @@ function analyzeAttrs(
         known.content = { value: rootTagExtra as ReferencedExtra };
       } else {
         remaining.delete("content");
-        known.content = { value: undefined }; // TODO: update when supporting default params
+        known.content = BODY_CONTENT; // TODO: update when supporting default params
         // The content signal call is applied unconditionally in setup.
         addSetupStatement(section);
       }
@@ -695,6 +716,13 @@ function analyzeAttrs(
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
         setBindingDownstream(templateExportAttr.binding, attrExtra, rootExprs);
+        if (needsPossibleValues(rootTagExtra, templateExportAttr.binding)) {
+          getPossibleValues(
+            (tag.get("attributes")[i] as t.NodePath<t.MarkoAttribute>).get(
+              "value",
+            ),
+          );
+        }
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
         if (
@@ -733,7 +761,11 @@ function analyzeAttrs(
   if (knownSpread) {
     for (const prop of remaining) {
       const propBinding = getOrCreatePropertyAlias(knownSpread.binding, prop);
-      const propExtra: ReferencedExtra = { section };
+      const param = getParamProperty(propBinding);
+      const propExtra: ReferencedExtra = {
+        section,
+        possibleValues: param ? { params: param } : { other: true },
+      };
       const templateExportAttr = getKnownFromPropTree(propTree, prop)!;
 
       known[prop] = { value: propExtra };
@@ -1498,4 +1530,83 @@ function getGroupReads(
     if (read) reads.push([attrTagMeta, read]);
   }
   return reads;
+}
+
+// Maps what each call gives a param that may name a tag into this template's
+// terms: the params it forwards, or the content it registers for a component.
+export function finalizeKnownTagRenders(section: Section) {
+  for (const tagExtra of getKnownTags(section)) {
+    const exprs = tagExtra[kKnownExprs];
+    const params = tagExtra[kContentSection]!.params;
+    // A lazy child registers all content its input names in its load entry.
+    if (exprs && params && !tagExtra.tagNameLoad) {
+      addParamRenders(tagExtra[kChildTemplate], exprs, params);
+    }
+  }
+}
+
+function addParamRenders(
+  childTemplate: t.ProgramExtra | undefined,
+  exprs: KnownExprs,
+  param: Binding,
+) {
+  for (const alias of param.propertyAliases.values()) {
+    addParamRenders(childTemplate, exprs, alias);
+  }
+  for (const alias of param.aliases) {
+    addParamRenders(childTemplate, exprs, alias);
+  }
+  // Another template's content crosses as the exports its callers import.
+  const exports = childTemplate
+    ? (param.renders || param.rendersExports || param.passedTo) &&
+      getCallerContent(childTemplate, param)
+    : true;
+  if (!exports) return;
+  if (getKnownExprsAt(exprs, param) === BODY_CONTENT) {
+    addUnresolvedTagArg(param, exports);
+  } else {
+    forEach(mapParamBindingToExpr(exprs, param as ParamBinding), (expr) => {
+      const values = expr.possibleValues;
+      if (!values || values.other || values.templates !== undefined) {
+        addUnresolvedTagArg(param, exports);
+      } else {
+        forEach(values.params, (own) => {
+          if (exports === true) {
+            own.passedTo = bindingUtil.add(own.passedTo, param);
+          } else {
+            own.rendersExports = exportUtil.union(own.rendersExports, exports);
+          }
+        });
+      }
+    });
+  }
+}
+
+// This template registers what the param names, as its own content or exports.
+function addUnresolvedTagArg(
+  param: Binding,
+  exports: true | NonNullable<SortedOpt<ResolvedExport>>,
+) {
+  const template = getProgram().node.extra;
+  if (exports === true) {
+    template.unresolvedTagArgs = bindingUtil.add(
+      template.unresolvedTagArgs,
+      param,
+    );
+  } else {
+    template.unresolvedTagExports = exportUtil.union(
+      template.unresolvedTagExports,
+      exports,
+    );
+  }
+}
+
+// A value passed to another template is needed only if the child names a tag
+// with it; this template's own params are still analyzing.
+function needsPossibleValues(tagExtra: t.MarkoTagExtra, binding: Binding) {
+  const childTemplate = tagExtra[kChildTemplate];
+  return (
+    !tagExtra.tagNameLoad &&
+    (!childTemplate || !!getCallerContent(childTemplate, binding))
+  );
 }

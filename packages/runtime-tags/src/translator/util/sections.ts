@@ -36,6 +36,7 @@ import {
   type ReferencedBindings,
   type Sources,
 } from "./references";
+import { isContentLeftToCallers } from "./rendered-content";
 import {
   hasSerializeReasons,
   isReasonDynamic,
@@ -521,6 +522,13 @@ export function getSectionRegisterReasons(section: Section) {
   }
 
   return true;
+}
+
+// Whether the section's renderer is registered whatever the client keeps.
+export function isSectionAlwaysRegistered(section: Section) {
+  return (
+    !!getSectionRegisterReasons(section) && !isContentLeftToCallers(section)
+  );
 }
 
 export function isImmediateOwner(section: Section, binding: Binding) {

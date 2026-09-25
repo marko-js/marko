@@ -1,0 +1,6 @@
+import Heading from "./heading.marko" with { load: "render" }
+
+<let/count=0>
+<button#inc onClick() { count++ }>${count}</button>
+
+<Heading type=count % 2 ? "h2" : "h1">lazy child: registered</Heading>

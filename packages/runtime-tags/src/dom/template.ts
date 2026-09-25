@@ -20,7 +20,10 @@ export const _template = (
   template: string | 0,
   walks?: string | 0,
   setup?: ((scope: Scope) => void) | 0,
-  inputSignal?: Signal<unknown>,
+  inputSignal?: Signal<unknown> | 0,
+  // Used as a value the template's caller is unknown, so the renderers a
+  // caller could register ride along: referenced here, each registers itself.
+  _registers?: unknown,
 ): Template => {
   const renderer = _content(
     id,

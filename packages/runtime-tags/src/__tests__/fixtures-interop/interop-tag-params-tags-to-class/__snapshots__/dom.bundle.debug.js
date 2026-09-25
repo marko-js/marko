@@ -59,7 +59,7 @@ const $classlayout_content__$params = ($scope, $params2) => {
 	$classlayout_content__message($scope, $params2[1]);
 };
 const $classlayout_content = _content("__tests__/template.marko_1*content", "<h1> </h1><button id=tags><!> * <!> = <!></button>", "D l D%c%c%", $classlayout_content__setup, $classlayout_content__$params);
-_content_resume($classlayout_content);
+const $classlayout_content2 = _content_resume($classlayout_content);
 const $multiplier__closure = /*@__PURE__*/ _closure($classlayout_content__multiplier);
 const $multiplier = /*@__PURE__*/ _let("multiplier/1", $multiplier__closure);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $classlayout_content);

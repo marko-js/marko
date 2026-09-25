@@ -1,20 +1,8 @@
-// template.marko
-const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0}</div><div>${_w1}</div>`)($template$1, $template$1);
-const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&lD/${_w1}&l`)("b%c", "b%c");
-function $setup($scope) {
-	$input($scope["#childScope/0"], { id: "foo" });
-	$foo($scope["#childScope/1"], "bar");
-	const $wrapper_input_spread = { id: "foo" };
-	$inputAs($scope["#childScope/1"], $wrapper_input_spread.as);
-	$htmlInput($scope["#childScope/1"], (({ as, foo, ...htmlInput }) => htmlInput)($wrapper_input_spread));
-}
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
-
 // tags/wrapper.marko
-const $template = "<!><!><!>";
-const $walks = "b%c";
-const $setup = () => {};
-const $inputAsdiv_content = _content("__tests__/tags/wrapper.marko_1*content", "hi");
+const $template$1 = "<!><!><!>";
+const $walks$1 = "b%c";
+const $setup$1 = () => {};
+const $inputAsdiv_content = /*@__PURE__*/ _content("__tests__/tags/wrapper.marko_1*content", "hi");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputAsdiv_content);
 const $input_as__OR__input_foo__OR__htmlInput = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", () => ({
 	...$scope.htmlInput,
@@ -28,4 +16,20 @@ const $input = ($scope, input) => {
 	$inputAs($scope, input.as);
 	$foo($scope, input.foo);
 };
-var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template, "b%c", 0, $input);
+const $renders = [$inputAsdiv_content];
+var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", 0, $input, $renders);
+
+// tags/v:wrapper.marko.register-$inputAsdiv_content.js
+_resumed["__tests__/tags/wrapper.marko_1*content"] = $inputAsdiv_content;
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0}</div><div>${_w1}</div>`)($template$1, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&lD/${_w1}&l`)("b%c", "b%c");
+function $setup($scope) {
+	$input($scope["#childScope/0"], { id: "foo" });
+	$foo($scope["#childScope/1"], "bar");
+	const $wrapper_input_spread = { id: "foo" };
+	$inputAs($scope["#childScope/1"], $wrapper_input_spread.as);
+	$htmlInput($scope["#childScope/1"], (({ as, foo, ...htmlInput }) => htmlInput)($wrapper_input_spread));
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

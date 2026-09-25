@@ -1,15 +1,25 @@
 import { types as t } from "@marko/compiler";
-import { getFile, importDefault } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  getProgram,
+  importDefault,
+  importNamed,
+} from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
-import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
+import { generateUidIdentifier } from "../../util/generate-uid";
+import {
+  relativePath,
+  writeModuleRegistrations,
+} from "../../util/module-registrations";
+import { forEach, toArray } from "../../util/optional";
 import {
   BindingType,
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
 } from "../../util/references";
+import { getInputContent } from "../../util/rendered-content";
 import { callRuntime, registerRuntimeValue } from "../../util/runtime";
 import {
   forEachSectionReverse,
@@ -18,6 +28,7 @@ import {
   getSectionParentIsOwner,
   getSectionRegisterReasons,
   isDynamicClosure,
+  isSectionAlwaysRegistered,
   setBranchRendererArgs,
 } from "../../util/sections";
 import {
@@ -86,6 +97,7 @@ export default {
         importDefault(getFile(), styleFile);
       }
 
+      const bodyExports = new Map<string, t.Identifier>();
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
           const tagParamsSignal =
@@ -160,7 +172,7 @@ export default {
 
               // `_content` registers any renderer the bundle keeps; one that must
               // be registered whatever else the client keeps is left impure.
-              if (!registerReason || registerWrapper) {
+              if (registerWrapper || !isSectionAlwaysRegistered(childSection)) {
                 renderer = t.addComment(renderer, "leading", "@__PURE__");
               }
 
@@ -182,16 +194,26 @@ export default {
               );
 
               if (registerReason && getContentClosures(childSection)) {
-                // Registered with the closures its registration carries, after
-                // any loop values it passes on to the wrapper above.
+                // Registered with its closures, after any loop values it passes
+                // on to the wrapper above; pure where only callers register it.
+                let contentResume: t.Expression = callRuntime(
+                  "_content_resume",
+                  t.identifier(childSection.name),
+                  registerWrapper && t.numericLiteral(1),
+                );
+                if (!isSectionAlwaysRegistered(childSection)) {
+                  contentResume = t.addComment(
+                    contentResume,
+                    "leading",
+                    "@__PURE__",
+                  );
+                }
+                const exported = generateUidIdentifier(childSection.name);
+                bodyExports.set(childSection.name, exported);
                 program.node.body.push(
-                  t.expressionStatement(
-                    callRuntime(
-                      "_content_resume",
-                      t.identifier(childSection.name),
-                      registerWrapper && t.numericLiteral(1),
-                    ),
-                  ),
+                  t.variableDeclaration("const", [
+                    t.variableDeclarator(exported, contentResume),
+                  ]),
                 );
               } else if (registerWrapper) {
                 program.node.body.push(
@@ -234,6 +256,7 @@ export default {
       }
 
       writeStructureExports(program);
+      const rendersIdentifier = writeRendersExport(bodyExports);
       writeModuleRegistrations(program);
 
       program.node.body.push(
@@ -246,6 +269,7 @@ export default {
               walksIdentifier,
               domExports.setupEmpty ? undefined : setupIdentifier,
               programInputSignal?.identifier,
+              rendersIdentifier,
             ]),
           ),
         ),
@@ -253,3 +277,37 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+// Exports each renderer of content the input may name, which a caller may
+// register, and all of them for the default export and load entries.
+function writeRendersExport(bodyExports: Map<string, t.Identifier>) {
+  const content = getInputContent();
+  if (!content) return;
+  const file = getFile();
+  const program = getProgram();
+  const renderers = toArray(content, ({ filename, exportName }) => {
+    if (filename !== file.opts.filename) {
+      return importNamed(
+        file,
+        relativePath(file.opts.filename as string, filename),
+        exportName,
+      );
+    }
+    const local = bodyExports.get(exportName) || t.identifier(exportName);
+    program.node.body.push(
+      t.exportNamedDeclaration(null, [
+        t.exportSpecifier(local, t.identifier(exportName)),
+      ]),
+    );
+    return local;
+  });
+  const identifier = t.identifier(program.node.extra.domExports!.renders!);
+  program.node.body.push(
+    t.exportNamedDeclaration(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(identifier, t.arrayExpression(renderers)),
+      ]),
+    ),
+  );
+  return identifier;
+}

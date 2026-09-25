@@ -1,0 +1,7 @@
+// Content passed along this template's own input registers, since the
+// template does not know its callers. The child's body joins this template's
+// register export for `type`, which nothing retains for a page.
+<let/count=0>
+<button#inc onClick() { count++ }>${count}</button>
+
+<heading type=input.type>input driven: content registered, body dropped</heading>

@@ -10,6 +10,7 @@ import { toAccess } from "../../html/serializer";
 import {
   finalizeFunctionRegistry,
   resolveFunctionRegisterReasons,
+  type ResolvedExport,
 } from "../visitors/function";
 import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import * as BindingType from "./constants/binding-type";
@@ -33,6 +34,7 @@ import {
   every,
   filter,
   first,
+  find,
   findSorted,
   forEach,
   fromIter,
@@ -173,6 +175,15 @@ export interface Binding {
   /** An attribute tag `<for>` param's local closure in each content the loop
    * creates that reads it. */
   localClosures: Map<Section, Binding> | undefined;
+  /** The body of each dynamic tag whose name may be this param property's
+   * value, the rest of the name being strings. */
+  renders: SortedOpt<Section>;
+  /** The content of rendered templates that a tag named by this value renders,
+   * as the exports its template imports. */
+  rendersExports: SortedOpt<ResolvedExport>;
+  /** This template's params (a `<define>`'s, or its own) that the value is
+   * passed to, where they may name a tag. */
+  passedTo: SortedOpt<Binding>;
   declared: boolean;
   nullable: boolean;
   pruned: boolean | undefined;
@@ -325,6 +336,9 @@ export function createBinding(
     declaredAlias: undefined,
     upstreamLocal: undefined,
     localClosures: undefined,
+    renders: undefined,
+    rendersExports: undefined,
+    passedTo: undefined,
     restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
@@ -1930,7 +1944,33 @@ function resolveBindingSources(binding: Binding) {
   }
 }
 
-function getAliasRoot(binding: Binding) {
+// The param property a node reads whole, as `input.a.b` or an alias of it.
+export function getParamPropertyRead(extra: t.NodeExtra | undefined) {
+  const exprRoot = extra?.exprRoot;
+  const read = (exprRoot &&
+    find(
+      getReadsByExpression().get(
+        getCanonicalExtra(exprRoot) as ReferencedExtra,
+      ),
+      (read) => read.extra === extra,
+    )) as Read | undefined;
+  return read && getParamProperty(read.binding);
+}
+
+export function getParamProperty(binding: Binding) {
+  while (binding.property === undefined && binding.upstreamAlias) {
+    binding = binding.upstreamAlias;
+  }
+
+  const params = getAliasRoot(binding);
+  return params &&
+    params === params.section.params &&
+    binding.upstreamAlias !== params
+    ? binding
+    : undefined;
+}
+
+export function getAliasRoot(binding: Binding) {
   let alias = binding.upstreamAlias;
   while (alias) {
     if (!alias.upstreamAlias) return alias;
@@ -3504,7 +3544,10 @@ export function mapParamBindingToExpr(
 
 // The call site's known expressions at `binding`, passing through property-less
 // links; past the props it lists, only the value expression holding it.
-function getKnownExprsAt(exprs: KnownExprs, binding: Binding): KnownExprs {
+export function getKnownExprsAt(
+  exprs: KnownExprs,
+  binding: Binding,
+): KnownExprs {
   const upstream = binding.upstreamAlias;
   if (!upstream) return exprs;
   const known = getKnownExprsAt(exprs, upstream);

@@ -15,6 +15,7 @@ import {
 import entryBuilder from "../../util/entry-builder";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import getStyleFile from "../../util/get-style-file";
+import { finalizeKnownTagRenders } from "../../util/known-tag";
 import {
   getMarkoOpts,
   getReadyId,
@@ -27,13 +28,18 @@ import {
   trackParamsReferences,
 } from "../../util/references";
 import {
+  addUnresolvedTagParams,
+  getInputContent,
+  hasRegisteredContent,
+} from "../../util/rendered-content";
+import {
   dynamicImport,
   getCompatRuntimeFile,
   getRuntimePath,
 } from "../../util/runtime";
 import {
   forEachSection,
-  getSectionRegisterReasons,
+  isSectionAlwaysRegistered,
   startSection,
 } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
@@ -54,6 +60,9 @@ declare module "@marko/compiler/dist/types" {
       setup: string;
       setupEmpty?: true;
       params: BindingPropTree | undefined;
+      /** The content tags named by the input render, for the default export
+       * and load entries, which stand in for callers the compiler cannot see. */
+      renders?: string;
     };
     styleFile?: string;
   }
@@ -77,6 +86,7 @@ export default {
       trackParamsReferences(program, BindingType.input);
 
       const programExtra = (program.node.extra ??= {});
+      programExtra.filename = getFile().opts.filename as string;
       const inputBinding = program.node.params![0].extra?.binding;
       if (inputBinding) {
         inputBinding.nullable = false;
@@ -112,15 +122,22 @@ export default {
 
       const section = programExtra.section!;
 
-      // Anything serialized or unconditionally registered is revived against
-      // this module, so it has to reach the client on its own.
+      forEachSection(finalizeKnownTagRenders);
+      addUnresolvedTagParams();
+      if (getInputContent()) {
+        programExtra.domExports!.renders = generateUid("renders");
+      }
+
+      // Anything serialized or unconditionally registered, here or for a template
+      // this one renders, is revived against this module: it must reach the client.
+      programExtra.hasResumes = hasRegisteredContent();
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
           childSection.serializeReason ||
           childSection.serializeReasons.size ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
-            getSectionRegisterReasons(childSection))
+            isSectionAlwaysRegistered(childSection))
         );
       });
 
@@ -170,6 +187,13 @@ export default {
           // production keeps the arm's bytes out (the failure still surfaces
           // as a network error in devtools).
           const report = !markoOpts.optimize;
+          // The entry stands in for every caller, so it keeps every body the
+          // template's input may name before the chunk reports ready.
+          const rendersExport = entryFile.path.node.extra.domExports?.renders;
+          const moduleIdentifier = t.identifier("m");
+          const readyCall = t.callExpression(t.identifier("ready"), [
+            t.stringLiteral(readyId),
+          ]);
           program.node.body = [
             t.importDeclaration(
               [
@@ -191,10 +215,18 @@ export default {
               dynamicImport(
                 resolveRelativePath(entryFile, filename),
                 t.arrowFunctionExpression(
-                  [],
-                  t.callExpression(t.identifier("ready"), [
-                    t.stringLiteral(readyId),
-                  ]),
+                  rendersExport ? [moduleIdentifier] : [],
+                  rendersExport
+                    ? t.sequenceExpression([
+                        // Referenced so the renderers stay in the chunk and
+                        // register themselves.
+                        t.memberExpression(
+                          moduleIdentifier,
+                          t.identifier(rendersExport),
+                        ),
+                        readyCall,
+                      ])
+                    : readyCall,
                 ),
                 report &&
                   t.arrowFunctionExpression(

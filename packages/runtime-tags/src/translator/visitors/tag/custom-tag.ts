@@ -123,6 +123,7 @@ export default {
         programSection === childSection
           ? programSection.params && getBindingPropTree(programSection.params)
           : childExtra.domExports?.params,
+        childExtra,
       );
 
       const tagName = getStaticTagName(tag.node);

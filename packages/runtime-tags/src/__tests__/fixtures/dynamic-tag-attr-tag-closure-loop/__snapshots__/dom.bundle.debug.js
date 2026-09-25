@@ -39,7 +39,7 @@ const $item_content__setup = $item_content__input_text;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/tags/heading.marko_1*content", "item <!> <!>", "b%c%", $item_content__setup), { i($scope) {
 	_text($scope["#text/0"], $scope.i);
 } });
-_content_resume($item_content, 1);
+const $item_content2 = _content_resume($item_content, 1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_type = ($scope, input_type) => $dynamicTag($scope, input_type, () => {
 	let $item;

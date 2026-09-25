@@ -32,7 +32,7 @@ _resumed["__tests__/components/my-button.marko"] = _marko_template;
 const $mybutton_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#1/subscribe");
 const $mybutton_content__setup = $mybutton_content__count;
 const $mybutton_content = _content("__tests__/template.marko_1*content", " ", " ", $mybutton_content__setup);
-_content_resume($mybutton_content);
+const $mybutton_content2 = _content_resume($mybutton_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $mybutton_content);
 const $count__closure = /*@__PURE__*/ _closure($mybutton_content__count);
 const $count = /*@__PURE__*/ _let("count/1", ($scope) => {

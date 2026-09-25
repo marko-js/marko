@@ -1,6 +1,17 @@
-import type { types as t } from "@marko/compiler";
-import { computeNode } from "@marko/compiler/babel-utils";
+import { types as t } from "@marko/compiler";
+import {
+  computeNode,
+  getFile,
+  loadFileForImport,
+} from "@marko/compiler/babel-utils";
 
+import {
+  getImportFacts,
+  type LoadImportConfig,
+} from "../visitors/import-declaration";
+import { isAnalyzing } from "./get-compile-stage";
+import type { SortedOneMany } from "./optional";
+import { type Binding, bindingUtil, getParamPropertyRead } from "./references";
 import { skip, traverseContains } from "./traverse";
 
 declare module "@marko/compiler/dist/types" {
@@ -10,6 +21,46 @@ declare module "@marko/compiler/dist/types" {
     nullable?: boolean;
     /** Evaluating it has no side effects, so an unread value can go. */
     pure?: boolean;
+    possibleValues?: PossibleValues;
+  }
+}
+
+/** What an expression's value may be, as the kinds of value it may take. */
+export interface PossibleValues {
+  /** A string or number. */
+  text?: true;
+  /** `false`, `null` or `undefined`, or the falsy left of `&&`. */
+  falsy?: true;
+  /** The `.marko` templates it may be, or `false` while one is still analyzing. */
+  templates?: t.ProgramExtra[] | false;
+  /** The one import every template it may be comes from, `false` if several. */
+  imported?: string | false;
+  load?: LoadImportConfig;
+  /** The params whose values it may be. */
+  params?: SortedOneMany<Binding>;
+  /** Anything else. */
+  other?: true;
+}
+
+const MARKO_FILE_REG = /^<.*>$|\.marko$/;
+const OTHER: PossibleValues = { other: true };
+const TEXT: PossibleValues = { text: true };
+const FALSY: PossibleValues = { falsy: true };
+const computingValues = new Set<t.Node>();
+
+// Follows branches and `<const>` values to what an expression may evaluate to;
+// a `<const>` that cycles back to itself may be anything.
+export function getPossibleValues(
+  path: t.NodePath<t.Expression>,
+): PossibleValues {
+  const extra = (path.node.extra ??= {});
+  if (extra.possibleValues) return extra.possibleValues;
+  if (computingValues.has(path.node)) return OTHER;
+  computingValues.add(path.node);
+  try {
+    return (extra.possibleValues = computePossibleValues(path));
+  } finally {
+    computingValues.delete(path.node);
   }
 }
 
@@ -155,4 +206,128 @@ function isNullableExpr(expr: t.Expression): boolean {
     default:
       return true;
   }
+}
+
+function computePossibleValues(path: t.NodePath<t.Expression>): PossibleValues {
+  if (path.isConditionalExpression()) {
+    return mergePossibleValues(
+      getPossibleValues(path.get("consequent")),
+      getPossibleValues(path.get("alternate")),
+    );
+  }
+
+  if (path.isLogicalExpression()) {
+    const right = getPossibleValues(path.get("right"));
+    const left =
+      path.node.operator === "&&" ? FALSY : getPossibleValues(path.get("left"));
+    // `||` only results in a truthy left.
+    return mergePossibleValues(
+      path.node.operator === "||" && left.falsy
+        ? { ...left, falsy: undefined }
+        : left,
+      right,
+    );
+  }
+
+  if (path.isAssignmentExpression()) {
+    return path.node.operator === "="
+      ? getPossibleValues(path.get("right"))
+      : OTHER;
+  }
+
+  const param = getParamPropertyRead(path.node.extra);
+  if (param) return { params: param };
+
+  const binding = path.isIdentifier() && path.scope.getBinding(path.node.name);
+  if (binding) return getBindingPossibleValues(binding);
+
+  const { confident, computed } = evaluate(path.node);
+  if (confident) {
+    return typeof computed === "string" || typeof computed === "number"
+      ? TEXT
+      : computed == null || computed === false
+        ? FALSY
+        : OTHER;
+  }
+
+  return path.isBinaryExpression() || path.isTemplateLiteral() ? TEXT : OTHER;
+}
+
+function getBindingPossibleValues(
+  binding: NonNullable<ReturnType<t.Scope["getBinding"]>>,
+): PossibleValues {
+  if (binding.kind === "module") {
+    const declPath = binding.path.parentPath as t.NodePath<t.ImportDeclaration>;
+    const decl = declPath.node;
+    if (
+      !MARKO_FILE_REG.test(decl.source.value) ||
+      !decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
+    ) {
+      return OTHER;
+    }
+
+    const { tagImport, loadImport } = getImportFacts(declPath);
+    const childFile = loadFileForImport(getFile(), tagImport!);
+    const childExtra = childFile?.ast.program.extra;
+    return {
+      // A template still analyzing (this one, or a cycle) has no reasons to
+      // consult yet, so the value resolves to no known template.
+      templates: childExtra && !isAnalyzing(childFile!) ? [childExtra] : false,
+      imported: tagImport!,
+      load: loadImport,
+    };
+  }
+
+  const bindingTag = binding.path as t.NodePath<t.MarkoTag>;
+  if (
+    bindingTag.isMarkoTag() &&
+    (binding.kind as typeof binding.kind & "local") === "local" &&
+    (bindingTag.get("name").node as t.StringLiteral).value === "const"
+  ) {
+    return getPossibleValues(
+      (bindingTag.get("attributes")[0] as t.NodePath<t.MarkoAttribute>).get(
+        "value",
+      ),
+    );
+  }
+
+  // A `<let>` may be assigned anything, and any other tag variable (a
+  // `<define>`'s, a child's) may name a component.
+  return OTHER;
+}
+
+function mergePossibleValues(
+  a: PossibleValues,
+  b: PossibleValues,
+): PossibleValues {
+  if (a.other || b.other) return OTHER;
+  const merged = { ...a };
+  if (b.text) merged.text = true;
+  if (b.falsy) merged.falsy = true;
+  if (b.params) merged.params = bindingUtil.union(a.params, b.params);
+  if (b.templates !== undefined) {
+    merged.templates =
+      a.templates === undefined
+        ? b.templates
+        : a.templates &&
+          b.templates &&
+          mergeTemplates(a.templates, b.templates);
+    merged.imported =
+      a.imported === undefined || a.imported === b.imported
+        ? b.imported
+        : false;
+    merged.load ??= b.load;
+  }
+  return merged;
+}
+
+function mergeTemplates(a: t.ProgramExtra[], b: t.ProgramExtra[]) {
+  let merged = a;
+  for (const template of b) {
+    if (!merged.includes(template)) {
+      if (merged === a) merged = [...a];
+      merged.push(template);
+    }
+  }
+  return merged;
 }

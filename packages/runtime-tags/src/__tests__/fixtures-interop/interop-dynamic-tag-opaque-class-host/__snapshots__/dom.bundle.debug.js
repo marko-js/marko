@@ -60,7 +60,7 @@ const $inputuseClassClassLayoutsection_content__setup = ($scope) => {
 	$inputuseClassClassLayoutsection_content__setup__script($scope);
 };
 const $inputuseClassClassLayoutsection_content = _content("__tests__/template.marko_1*content", "<button id=tags> </button>", " D ", $inputuseClassClassLayoutsection_content__setup);
-_content_resume($inputuseClassClassLayoutsection_content);
+const $inputuseClassClassLayoutsection_content2 = _content_resume($inputuseClassClassLayoutsection_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $count__closure = /*@__PURE__*/ _closure($inputuseClassClassLayoutsection_content__count);
 const $count = /*@__PURE__*/ _let("count/5", $count__closure);

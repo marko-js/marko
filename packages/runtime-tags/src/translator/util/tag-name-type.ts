@@ -4,15 +4,12 @@ import {
   getProgram,
   getTagDef,
   isNativeTag,
-  loadFileForImport,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
-import {
-  getImportFacts,
-  type LoadImportConfig,
-} from "../visitors/import-declaration";
+import type { LoadImportConfig } from "../visitors/import-declaration";
 import * as TagNameType from "./constants/tag-name-type";
+import { getPossibleValues } from "./evaluate";
 import { isAnalyzing } from "./get-compile-stage";
 import { isCoreTag } from "./is-core-tag";
 
@@ -22,11 +19,10 @@ declare module "@marko/compiler/dist/types" {
     /** Set by the Class API translator when Tags content resumes below here. */
     hydratesTags?: boolean;
   }
-  // Written by `analyzeExpressionTagName`, on the tag whose name it types.
   export interface NodeExtra {
     tagNameType?: TagNameType;
     // Kept unread for a planned nullable tag name optimization; incomplete when
-    // `tagNameType` is `DynamicTag`, since that ends the analysis early.
+    // the name may be any value.
     tagNameNullable?: boolean;
     tagNameImported?: string;
     /** Every template the name may resolve to, when it can resolve to
@@ -44,7 +40,6 @@ declare module "@marko/compiler/dist/types" {
 type TagNameType = TagNameType.Value;
 export { TagNameType };
 
-const MARKO_FILE_REG = /^<.*>$|\.marko$/;
 // Matches `pre-analyze`, which rewrites a bound PascalCase tag to `<${Name}>`.
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 
@@ -122,145 +117,22 @@ function analyzeExpressionTagName(
   name: t.NodePath<t.Expression>,
   extra: t.NodeExtra,
 ) {
-  const pending = [name] as t.NodePath<t.Expression>[];
-  const seen = new Set<t.Node>();
-  let path: (typeof pending)[0] | undefined;
-  let type: TagNameType | undefined;
-  let nullable = false;
-  let tagNameImported: string | false | undefined;
-  let tagNameLoad: LoadImportConfig | undefined;
-  let tagNameTemplates: t.ProgramExtra[] | undefined = [];
-
-  while ((path = pending.pop()) && type !== TagNameType.DynamicTag) {
-    // Following a `<const>` value can cycle (`<const/a=b><const/b=a>`); skip
-    // nodes already visited so the traversal terminates instead of looping.
-    if (seen.has(path.node)) continue;
-    seen.add(path.node);
-
-    if (path.isConditionalExpression()) {
-      pending.push(path.get("consequent"));
-
-      if (path.node.alternate) {
-        pending.push(path.get("alternate"));
-      }
-    } else if (path.isLogicalExpression()) {
-      if (path.node.operator === "&&") {
-        nullable = true;
-      } else {
-        // `a || b` and `a ?? b` can both resolve to the left operand.
-        pending.push(path.get("left"));
-      }
-
-      pending.push(path.get("right"));
-    } else if (path.isAssignmentExpression()) {
-      pending.push(path.get("right"));
-    } else if (path.isBinaryExpression()) {
-      type =
-        path.node.operator !== "+" ||
-        type === undefined ||
-        type === TagNameType.NativeTag
-          ? TagNameType.NativeTag
-          : TagNameType.DynamicTag;
-    } else if (path.isStringLiteral() || path.isTemplateLiteral()) {
-      type =
-        type === undefined || type === TagNameType.NativeTag
-          ? TagNameType.NativeTag
-          : TagNameType.DynamicTag;
-    } else if (path.isNullLiteral()) {
-      nullable = true;
-    } else if (path.isIdentifier()) {
-      if (path.node.name === "undefined") {
-        nullable = true;
-        continue;
-      }
-
-      const binding = path.scope.getBinding(path.node.name);
-
-      if (!binding) {
-        type = TagNameType.DynamicTag;
-        continue;
-      }
-
-      if (binding.kind === "module") {
-        const declPath = binding.path
-          .parentPath as t.NodePath<t.ImportDeclaration>;
-        const decl = declPath.node;
-        if (
-          MARKO_FILE_REG.test(decl.source.value) &&
-          decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
-        ) {
-          const { tagImport, loadImport } = getImportFacts(declPath);
-          const resolvedImport = tagImport!;
-          if (tagNameTemplates) {
-            const childFile = loadFileForImport(getFile(), resolvedImport);
-            const childExtra = childFile?.ast.program.extra;
-            // A template still analyzing (this one, or a cycle) has no
-            // reasons to consult yet, so the name resolves to nothing known.
-            if (!childExtra || isAnalyzing(childFile!)) {
-              tagNameTemplates = undefined;
-            } else if (!tagNameTemplates.includes(childExtra)) {
-              tagNameTemplates.push(childExtra);
-            }
-          }
-          if (type === undefined) {
-            type = TagNameType.CustomTag;
-            tagNameImported = resolvedImport;
-            tagNameLoad = loadImport;
-          } else if (type === TagNameType.NativeTag) {
-            type = TagNameType.DynamicTag;
-            tagNameImported = undefined;
-          } else if (tagNameImported !== resolvedImport) {
-            tagNameImported = undefined;
-          }
-        } else {
-          type = TagNameType.DynamicTag;
-        }
-
-        continue;
-      }
-
-      const bindingTag = binding.path as t.NodePath<t.MarkoTag>;
-
-      if (
-        bindingTag.isMarkoTag() &&
-        (binding.kind as typeof binding.kind & "local") === "local"
-      ) {
-        const bindingTagName = (bindingTag.get("name").node as t.StringLiteral)
-          .value;
-
-        if (bindingTagName === "const") {
-          pending.push(
-            (
-              bindingTag.get("attributes")[0] as t.NodePath<t.MarkoAttribute>
-            ).get("value"),
-          );
-          continue;
-        }
-
-        if (bindingTagName === "let") {
-          type = TagNameType.DynamicTag;
-          continue;
-          // TODO: Optimize for when we are certain that this is either always a string or always a custom tag
-        }
-      }
-
-      // Any other tag variable (a `<define>`'s, a child's) may name a component.
-      type = TagNameType.DynamicTag;
-    } else {
-      type = TagNameType.DynamicTag;
-    }
-  }
+  const { text, falsy, templates, imported, load, params, other } =
+    getPossibleValues(name);
+  extra.tagNameNullable = !!falsy;
 
   // DOM implementation requires non strings actually be a dynamic tag call.
-  extra.tagNameType = type ?? TagNameType.DynamicTag;
-  extra.tagNameNullable = nullable;
-
-  if (type === TagNameType.CustomTag) {
-    extra.tagNameTemplates = tagNameTemplates;
+  if (other || params || (text && templates !== undefined)) {
+    extra.tagNameType = TagNameType.DynamicTag;
+  } else if (templates !== undefined) {
+    extra.tagNameType = TagNameType.CustomTag;
+    extra.tagNameTemplates = templates || undefined;
     // A name that may be nullish renders the body in its place, so it stays dynamic.
-    if (tagNameImported && !nullable) {
-      extra.tagNameImported = tagNameImported;
-      extra.tagNameLoad = tagNameLoad;
+    if (imported && !falsy) {
+      extra.tagNameImported = imported;
+      extra.tagNameLoad = load;
     }
+  } else {
+    extra.tagNameType = text ? TagNameType.NativeTag : TagNameType.DynamicTag;
   }
 }

@@ -5,14 +5,17 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import type { ResolvedExport } from "../visitors/function";
 import { getMarkoOpts, isOutputHTML } from "./marko-config";
+import { forEach } from "./optional";
 import { isRegisteredFnExtra } from "./references";
+import { getRegisteredExports } from "./rendered-content";
 import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
 import { isValidPropertyIdentifier } from "./to-property-name";
 
 /**
  * Writes the registrations for module scoped functions: the ones this template
  * exports and registers itself, and the ones it imports from a template that
- * reserved a register id without registering it.
+ * reserved a register id without registering it. The dom output also registers
+ * the content of rendered templates that it may name with an unresolved value.
  */
 export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
   const file = getFile();
@@ -40,6 +43,15 @@ export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
     } else if (child.type === "ExportNamedDeclaration") {
       addExportRegistrations(child, seen, statements);
     }
+  }
+
+  if (!isOutputHTML()) {
+    forEach(getRegisteredExports(), (contentExport) => {
+      if (!seen.has(contentExport.registerId)) {
+        seen.add(contentExport.registerId);
+        importDefault(file, resolveRegisterModule(file, contentExport));
+      }
+    });
   }
 
   program.node.body.push(...statements);
@@ -108,7 +120,7 @@ function resolveRegisterModule(
 // The module is placed beside the template it registers, so that it can import
 // it as a sibling. `resolveRelativePath` would name a template in another
 // package by that package, which resolves somewhere else entirely.
-function relativePath(from: string, to: string) {
+export function relativePath(from: string, to: string) {
   const relative = path
     .relative(path.dirname(from), to)
     .split(path.sep)

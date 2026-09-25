@@ -1002,13 +1002,10 @@ export function getResumeRegisterId(
   section: Section,
   referencedBindings: string | ReferencedBindings,
   type?: string,
+  filename = getFile().opts.filename as string,
 ) {
-  const {
-    markoOpts,
-    opts: { filename },
-  } = getFile();
   const key = buildResumeRegisterKey(section, referencedBindings, type);
-  return getTemplateId(markoOpts, filename as string, key);
+  return getTemplateId(getFile().markoOpts, filename, key);
 }
 
 export function writeSignals(section: Section) {

@@ -1,0 +1,6 @@
+import Card from "./card.marko";
+static const components = { card: Card };
+
+// A value computed from its own input may still be a component, so this
+// template registers the body rather than handing it on.
+<heading type=components[input.kind]/>

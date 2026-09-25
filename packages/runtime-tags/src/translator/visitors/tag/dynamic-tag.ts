@@ -14,6 +14,7 @@ import {
   getBindingPropTree,
   kDirectContent,
 } from "../../util/binding-prop-tree";
+import { getPossibleValues } from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
   getAccessorPrefix,
@@ -28,7 +29,7 @@ import {
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
-import { type SortedOpt } from "../../util/optional";
+import { forEach, type SortedOpt } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -59,6 +60,7 @@ import {
   getSection,
   getSectionForBody,
   type Section,
+  sectionUtil,
   startSection,
   StructureKind,
 } from "../../util/sections";
@@ -198,6 +200,13 @@ export default {
       // The body depends on the whole tag, as a branch body on its condition.
       if (bodySection) {
         bodySection.upstreamExpression = tagExtra;
+        const { params, other, templates } = getPossibleValues(tag.get("name"));
+        // A name that may be a component registers its body regardless.
+        if (!other && templates === undefined) {
+          forEach(params, (param) => {
+            param.renders = sectionUtil.add(param.renders, bodySection);
+          });
+        }
         // Known templates receive the body as `input.content`, as from a known
         // tag; arguments call them positionally, so the body never reaches them.
         if (

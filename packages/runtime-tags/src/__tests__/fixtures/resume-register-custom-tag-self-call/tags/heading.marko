@@ -1,0 +1,7 @@
+import Card from "./card.marko";
+
+<${input.type}>self body</>
+<if=input.nested>
+  // Rendering itself with a component registers its own body eagerly.
+  <heading type=Card/>
+</if>

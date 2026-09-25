@@ -1,0 +1,9 @@
+<let/count=0>
+<button#inc onClick() { count++ }>${count}</button>
+
+<define/Heading|input|>
+  <${input.type}>define body: not registered</>
+</define>
+
+<Heading type="h1"/>
+<Heading type=count % 2 ? "h2" : "h3"/>

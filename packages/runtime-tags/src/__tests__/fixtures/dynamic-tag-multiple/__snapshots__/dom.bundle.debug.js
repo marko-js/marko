@@ -17,7 +17,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = () => {};
-const $inputAsdiv_content = _content("__tests__/tags/wrapper.marko_1*content", "hi");
+const $inputAsdiv_content = /*@__PURE__*/ _content("__tests__/tags/wrapper.marko_1*content", "hi");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputAsdiv_content);
 const $input_as__OR__htmlInput = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", () => $scope.htmlInput));
 const $inputAs = /*@__PURE__*/ _const("inputAs", $input_as__OR__htmlInput);
@@ -26,4 +26,5 @@ const $input = ($scope, input) => {
 	(({ as, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);
 	$inputAs($scope, input.as);
 };
-var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template, "b%c", 0, $input);
+const $renders = [$inputAsdiv_content];
+var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template, "b%c", 0, $input, $renders);

@@ -1,0 +1,31 @@
+<button id=inc>0<!--M_$1 #text/1--></button><!--M_$1 #button/0-->
+<h1>chained string: not registered</h1>
+<h1><!--M_[-->chained state string: not registered<!--M_]10 #h1/0 11--></h1>
+<!--M_(9 #text/0 10-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      "#childScope/3": _(8)
+    }, 6, {
+      input_content: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/resume-register-custom-tag-chained-attr/template.marko_2*content"
+        ),
+      "#childScope/0": _(9)
+    }, {
+      "ConditionalRenderer:#text/0": "h1",
+      input_content: _(8,
+        "packages/runtime-tags/src/__tests__/fixtures/resume-register-custom-tag-chained-attr/tags/wrapper.marko_1*content"
+        )
+    }, {
+      "ConditionalRenderer:#h1/0": "packages/runtime-tags/src/__tests__/fixtures/resume-register-custom-tag-chained-attr/tags/heading.marko_1*content 9"
+    }, {
+      _: _(9)
+    }, {
+      _: _(8),
+      "#ClosestBranchId": 11
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/resume-register-custom-tag-chained-attr/template.marko_0 1"
+  ];
+  M._.w()
+</script>

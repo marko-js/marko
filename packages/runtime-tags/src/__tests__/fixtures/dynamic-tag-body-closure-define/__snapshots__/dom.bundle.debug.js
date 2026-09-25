@@ -4,7 +4,7 @@ const $walks = "b%c";
 const $showFoodiv_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
 const $showFoodiv_content__setup = $showFoodiv_content__count;
 const $showFoodiv_content = _content("__tests__/template.marko_3*content", "count <!>", "b%", $showFoodiv_content__setup);
-_content_resume($showFoodiv_content);
+const $showFoodiv_content2 = _content_resume($showFoodiv_content);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content));
 const $if_content__setup = $if_content__input_content;

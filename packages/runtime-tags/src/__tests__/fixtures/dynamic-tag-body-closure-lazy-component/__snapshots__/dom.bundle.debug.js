@@ -23,8 +23,8 @@ const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $inputtype_content__input_depth = /*@__PURE__*/ _closure_get("input_depth", ($scope) => _text($scope["#text/0"], $scope._.input_depth), 0, "__tests__/tags/heading.marko_1_input_depth#4/subscribe");
 const $inputtype_content__setup = $inputtype_content__input_depth;
-const $inputtype_content = _content("__tests__/tags/heading.marko_1*content", "depth <!>", "b%", $inputtype_content__setup);
-_content_resume($inputtype_content);
+const $inputtype_content = /*@__PURE__*/ _content("__tests__/tags/heading.marko_1*content", "depth <!>", "b%", $inputtype_content__setup);
+const $inputtype_content2 = /*@__PURE__*/ _content_resume($inputtype_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content);
 const $input_type = $dynamicTag;
 const $input = ($scope, input) => {
@@ -33,7 +33,11 @@ const $input = ($scope, input) => {
 };
 const $input_depth__closure = /*@__PURE__*/ _closure($inputtype_content__input_depth);
 const $input_depth = /*@__PURE__*/ _const("input_depth", $input_depth__closure);
-var heading_default = /*@__PURE__*/ _template("__tests__/tags/heading.marko", $template$1, "b%c", 0, $input);
+const $renders = [$inputtype_content2];
+var heading_default = /*@__PURE__*/ _template("__tests__/tags/heading.marko", $template$1, "b%c", 0, $input, $renders);
+
+// tags/v:heading.marko.register-$inputtype_content.js
+_resumed["__tests__/tags/heading.marko_1*content"] = $inputtype_content2;
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button id=inc>inc</button>${_w0}<!>`)($template$1);
