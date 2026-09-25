@@ -292,7 +292,12 @@ export function parseMarko(file) {
       pushContent(withLoc(t.markoDeclaration(parser.read(part.value)), part));
     },
     onComment(part) {
-      pushContent(withLoc(t.markoComment(parser.read(part.value)), part));
+      pushContent(
+        withLoc(
+          t.markoComment(parser.read(part.value), getCommentKind(code, part)),
+          part,
+        ),
+      );
     },
     onOpenTagComment(part) {
       (currentOpenTagComments ||= []).push(
@@ -760,6 +765,17 @@ export function parseMarko(file) {
     start: { line: 1, column: 0 },
     end: positionAt(ast.end),
   };
+}
+
+function getCommentKind(code, part) {
+  switch (code.charCodeAt(part.start + 1)) {
+    case 47 /* / */:
+      return "line";
+    case 42 /* * */:
+      return "block";
+    default:
+      return "html";
+  }
 }
 
 function sortByStart(a, b) {
