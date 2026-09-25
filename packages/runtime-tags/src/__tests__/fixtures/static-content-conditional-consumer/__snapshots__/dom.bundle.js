@@ -8,4 +8,4 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $consumer_content = _content_resume("a0", "<div>static content</div>");
+const $consumer_content = _content("a0", "<div>static content</div>");

@@ -12,6 +12,7 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
+import type { Locals } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   _el,
@@ -236,14 +237,15 @@ export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
   return fn;
 }
 
-// Content an attribute tag `<for>` creates also carries the loop's values.
+// Registered content carries what its scopes may lack: the values of an
+// attribute tag `<for>` that creates it, and closures unseen code may need.
 export function _content_resume(
   id: string,
   fn: ServerRenderer,
   scopeId?: number,
-  localClosures?: Record<string, unknown>,
+  locals?: Locals,
 ) {
-  return _resume(_content(id, fn, scopeId), id, scopeId, localClosures);
+  return _resume(_content(id, fn, scopeId), id, scopeId, locals);
 }
 
 export const patchDynamicTag = /* @__PURE__ */ (

@@ -13,6 +13,7 @@ import {
 import { callRuntime, registerRuntimeValue } from "../../util/runtime";
 import {
   forEachSectionReverse,
+  getContentClosures,
   getSectionForBody,
   getSectionParentIsOwner,
   getSectionRegisterReasons,
@@ -144,9 +145,7 @@ export default {
               // Resume calls the registered wrapper with the loop's values.
               const registerWrapper = !!(registerReason && objProps.length);
               let renderer: t.Expression = callRuntime(
-                registerReason && !registerWrapper
-                  ? "_content_resume"
-                  : "_content",
+                "_content",
                 t.stringLiteral(registerId),
                 ...replaceNullishAndEmptyFunctionsWith0([
                   writes,
@@ -158,6 +157,12 @@ export default {
                     : undefined,
                 ]),
               );
+
+              // `_content` registers any renderer the bundle keeps; one that must
+              // be registered whatever else the client keeps is left impure.
+              if (!registerReason || registerWrapper) {
+                renderer = t.addComment(renderer, "leading", "@__PURE__");
+              }
 
               if (objProps.length) {
                 renderer = callRuntime(
@@ -176,7 +181,19 @@ export default {
                 ]),
               );
 
-              if (registerWrapper) {
+              if (registerReason && getContentClosures(childSection)) {
+                // Registered with the closures its registration carries, after
+                // any loop values it passes on to the wrapper above.
+                program.node.body.push(
+                  t.expressionStatement(
+                    callRuntime(
+                      "_content_resume",
+                      t.identifier(childSection.name),
+                      registerWrapper && t.numericLiteral(1),
+                    ),
+                  ),
+                );
+              } else if (registerWrapper) {
                 program.node.body.push(
                   t.expressionStatement(
                     registerRuntimeValue(

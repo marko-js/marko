@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`item ${_escape(i)}`);
 			$si__input_itemType && _scope($scope4_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:6");
 			$si__input_itemType && _resume_branch($scope4_id);
-		}, $scope2_id));
+		}, $scope2_id, ($scope) => [{ "#LoopKey": i }]));
 		_var($scope2_id, "#scopeOffset/1", $inputitemType_scope, "__tests__/template.marko_2_$item#3/var");
 		_scope($scope2_id, {
 			"#LoopKey": $si__input_itemType && i,

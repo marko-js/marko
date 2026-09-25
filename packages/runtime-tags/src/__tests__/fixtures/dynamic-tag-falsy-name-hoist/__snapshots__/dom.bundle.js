@@ -1,6 +1,6 @@
 // template.marko
 const $el_getter = _hoist_resume("a0", 0, "B1");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a1", "<input>", " ", 0, 0, "B1"));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content("a1", "<input>", " ", 0, 0, "B1"));
 const $tag = /*@__PURE__*/ _let(7, ($scope) => $dynamicTag($scope, $scope.h));
 const $result = /*@__PURE__*/ _let(8, ($scope) => _text($scope.d, $scope.i));
 const $setup__script = _script("a2", ($scope) => {

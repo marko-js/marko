@@ -60,7 +60,7 @@ const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $placeholder_content = _content_resume("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $placeholder_content__setup);
+const $placeholder_content = _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $placeholder_content__setup);
 const $clicks__closure = /*@__PURE__*/ _closure($placeholder_content__clicks, $await_content__clicks);
 const $clicks = /*@__PURE__*/ _let("clicks/4", ($scope) => {
 	_text($scope["#text/1"], $scope.clicks);

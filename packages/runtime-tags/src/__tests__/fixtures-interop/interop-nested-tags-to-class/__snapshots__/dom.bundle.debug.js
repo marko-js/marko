@@ -45,7 +45,8 @@ const $classlayout_content__setup = ($scope) => {
 	$classlayout_content__count($scope);
 	$classlayout_content__setup__script($scope);
 };
-const $classlayout_content = _content_resume("__tests__/template.marko_1*content", "<button id=tags> </button>", " D ", $classlayout_content__setup);
+const $classlayout_content = _content("__tests__/template.marko_1*content", "<button id=tags> </button>", " D ", $classlayout_content__setup);
+_content_resume($classlayout_content);
 const $count__closure = /*@__PURE__*/ _closure($classlayout_content__count);
 const $count = /*@__PURE__*/ _let("count/1", $count__closure);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $classlayout_content);

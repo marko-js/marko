@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`loading ${_escape(label)}`);
-		}, $scope0_id, { label }) });
+		}, $scope0_id, () => [{ label }]) });
 	});
 	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();

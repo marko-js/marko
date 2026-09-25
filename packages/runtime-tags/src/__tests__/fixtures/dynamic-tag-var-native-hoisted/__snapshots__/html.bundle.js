@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			_html(`item ${_escape(i)}`);
 			$si__input_itemType && _scope($scope4_id, { _: _scope_with_id($scope2_id) });
 			$si__input_itemType && _resume_branch($scope4_id);
-		}, $scope2_id));
+		}, $scope2_id, ($scope) => [{ M: i }]));
 		_var($scope2_id, "b", $inputitemType_scope, "a4");
 		_scope($scope2_id, {
 			M: $si__input_itemType && i,

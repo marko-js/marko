@@ -4,7 +4,7 @@ const $walks = "b%/&b%c";
 const $load_Child_trigger = /*@__PURE__*/ _load_visible_trigger("#footer");
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.value.mjs")));
-const $placeholder_content = _content_resume("__tests__/template.marko_2*content", "loading...");
+const $placeholder_content = _content("__tests__/template.marko_2*content", "loading...");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<footer id=footer>late</footer>");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {

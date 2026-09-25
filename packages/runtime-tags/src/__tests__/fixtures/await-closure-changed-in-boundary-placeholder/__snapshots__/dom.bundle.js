@@ -1,5 +1,5 @@
 // tags/boundary.marko
-const $placeholder_content = _content_resume("b0", "loading...");
+const $placeholder_content = _content("b0", "loading...");
 
 // template.marko
 const $await_content__count = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._._.c), ($scope) => $scope._._, "a0", 2);

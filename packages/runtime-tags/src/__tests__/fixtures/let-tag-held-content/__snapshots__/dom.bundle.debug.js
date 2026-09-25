@@ -1,7 +1,7 @@
 // tags/my-tag.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $startContent_content = _content_resume("__tests__/tags/my-tag.marko_1*content", "default");
+const $startContent_content = _content("__tests__/tags/my-tag.marko_1*content", "default");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_as__OR__input_class__OR__htmlInput__OR__content = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", () => ({
 	...$scope.htmlInput,
@@ -29,7 +29,7 @@ var my_tag_default = /*@__PURE__*/ _template("__tests__/tags/my-tag.marko", $tem
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button></button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
-const $mytag_content = _content_resume("__tests__/template.marko_1*content", "Div");
+const $mytag_content = _content("__tests__/template.marko_1*content", "Div");
 const $as = /*@__PURE__*/ _let("as/2", ($scope) => $inputAs($scope["#childScope/0"], $scope.as));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$as($scope, "span");

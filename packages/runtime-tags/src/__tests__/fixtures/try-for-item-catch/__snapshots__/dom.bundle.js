@@ -1,7 +1,7 @@
 // template.marko
 const $catch_content__err = ($scope, err) => _text($scope.a, err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
-const $catch_content = _content_resume("a1", " ", " ", 0, $catch_content__$params);
+const $catch_content = _content("a1", " ", " ", 0, $catch_content__$params);
 const $for_content__clickCount = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, (() => {
 	if ($scope._._.c > 1) throw new Error("ERROR!");
 })()), ($scope) => $scope._._, "a0", 2);

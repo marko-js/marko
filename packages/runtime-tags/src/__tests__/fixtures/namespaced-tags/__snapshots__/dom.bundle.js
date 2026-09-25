@@ -1,8 +1,10 @@
 // template.marko
-const $Child_content2 = _content_resume("a1", "Hi");
-const $Child_content = _content_resume("a0", "Hi");
+const $Child_content2 = _content("a1", "Hi");
+const $Child_content = _content("a0", "Hi");
 const $Parent_content__input_value = /*@__PURE__*/ _closure_get(14, ($scope) => _html($scope, $scope._.k, "a"), 0, "a3", 10);
-const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag(5, _content_resume("a2", " ", " ", $Parent_content__input_value));
+const $Parent_content = _content("a2", " ", " ", $Parent_content__input_value);
+_content_resume($Parent_content);
+const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag(5, $Parent_content);
 const $Parent__OR__Child = /*@__PURE__*/ _or(13, _script("a4", ($scope) => {
 	$scope.l;
 	$scope.m;

@@ -1,0 +1,5 @@
+import Card from "./tags/card.marko" with { load: "idle" };
+
+<let/depth=0/>
+<button#inc onClick() { depth++ }>inc</button>
+<heading type=Card depth=depth/>

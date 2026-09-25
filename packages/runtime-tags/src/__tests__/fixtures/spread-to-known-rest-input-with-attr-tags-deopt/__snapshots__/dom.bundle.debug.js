@@ -45,8 +45,8 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)("b%c");
-const $desc_content2 = _content_resume("__tests__/template.marko_2*content", "Two");
-const $desc_content = _content_resume("__tests__/template.marko_1*content", "One");
+const $desc_content2 = _content("__tests__/template.marko_2*content", "Two");
+const $desc_content = _content("__tests__/template.marko_1*content", "One");
 function $setup($scope) {
 	$input_foo($scope["#childScope/0"], attrTags(attrTag({
 		value: 1,

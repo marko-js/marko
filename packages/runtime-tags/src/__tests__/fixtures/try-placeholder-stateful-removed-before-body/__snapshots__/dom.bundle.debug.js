@@ -10,7 +10,7 @@ const $placeholder_content__setup__script = _script("__tests__/template.marko_3"
 	}
 }));
 const $placeholder_content__setup = $placeholder_content__setup__script;
-const $placeholder_content = _content_resume("__tests__/template.marko_3*content", " loading", 0, $placeholder_content__setup);
+const $placeholder_content = _content("__tests__/template.marko_3*content", " loading", 0, $placeholder_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "done");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {

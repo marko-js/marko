@@ -21,5 +21,5 @@ const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);
 	$placeholder_content__setup__script($scope);
 };
-const $placeholder_content = _content_resume("a4", "<button>loading <!></button>", " Db%", $placeholder_content__setup);
+const $placeholder_content = _content("a4", "<button>loading <!></button>", " Db%", $placeholder_content__setup);
 const $clicks = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($placeholder_content__clicks, $await_content__clicks));

@@ -1,5 +1,5 @@
 // template.marko
-const $placeholder_content = _content_resume("a1", " loading", 0, _script("a0", ($scope) => _lifecycle($scope, {
+const $placeholder_content = _content("a1", " loading", 0, _script("a0", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		console.log("placeholder mounted");
 	},

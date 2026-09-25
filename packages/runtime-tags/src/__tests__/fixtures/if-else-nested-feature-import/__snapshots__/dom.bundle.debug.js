@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 _resume_dynamic_tag_var("#text/0");
-const $inputtype_content = _content_resume("__tests__/template.marko_3*content", "body");
+const $inputtype_content = _content("__tests__/template.marko_3*content", "body");
 const $el_getter = /*@__PURE__*/ _hoist("$el", "BranchScopes:#text/0");
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content, () => $if_content__$el);
 const $if_content__input_type = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_type));

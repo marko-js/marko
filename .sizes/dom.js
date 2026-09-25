@@ -1,4 +1,4 @@
-// size: 27124 (min) 10114 (brotli)
+// size: 27226 (min) 10161 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1150,17 +1150,24 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     : (branch) => {
         walk((branch.S = branch.K = new Text()), walks, branch);
       };
-  return (owner) => ({
+  return (_resumed[id] = (owner) => ({
     a: id,
     b: clone,
     e: owner,
     c: setup,
     d: params,
     f: dynamicScopesAccessor,
-  });
+  }));
 }
-function _content_resume(id, template, walks, setup, params, dynamicScopesAccessor) {
-  return (_resumed[id] = _content(id, template, walks, setup, params, dynamicScopesAccessor));
+function _content_resume(renderer, hasLocalValues = 0) {
+  return (_resumed[renderer().a] = (owner, ...values) => {
+    for (let i = values.length, scope = owner; i > hasLocalValues;) {
+      let closures = values[--i];
+      for (let key in closures) key in scope || (scope[key] = closures[key]);
+      scope = scope._;
+    }
+    return renderer(owner, values[hasLocalValues - 1]);
+  });
 }
 function _content_closures(renderer, closureFns) {
   let closureSignals = {};

@@ -98,10 +98,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<span>${_escape(item.text)}:${_escape(item === items[0])}</span>`);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:6");
 			_resume_branch($scope1_id);
-		}, $scope0_id, {
+		}, $scope0_id, () => [{
 			item_text: item?.text,
 			item
-		}) });
+		}]) });
 	});
 	list_default({ item: $item });
 	let $row;
@@ -112,7 +112,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_escape(n)}</em>`);
-			}, $scope0_id, { n }) });
+			}, $scope0_id, () => [{ n }]) });
 		});
 		$row = attrTags($row, { cell: $cell });
 	});
@@ -123,7 +123,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`${_escape(i)}<b>${_escape(i)}</b>`);
-		}, $scope0_id, { i }) });
+		}, $scope0_id, () => [{ i }]) });
 	});
 	last_default({ item: $item2 });
 	let fail = false;
@@ -135,7 +135,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_id = _scope_id();
 			_html(`caught ${_escape(label)}: ${_text_resume($scope5_id, "#text/1", err.message, $sg__err_message * 2)}`);
 			_serialize_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "30:8");
-		}, $scope0_id, { label }) });
+		}, $scope0_id, () => [{ label }]) });
 	});
 	_try($scope0_id, "#text/4", _content_resume("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();

@@ -3,7 +3,7 @@ const $template$1 = "<button class=bump>bump</button>";
 const $walks$1 = " b";
 const $body_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/tags/provider.marko_1_count#4/subscribe");
 const $body_content__setup = $body_content__count;
-const $body_content = _content_resume("__tests__/tags/provider.marko_1*content", "<div>value <!></div>", "Db%", $body_content__setup);
+const $body_content = _content("__tests__/tags/provider.marko_1*content", "<div>value <!></div>", "Db%", $body_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($body_content__count);
 const $count = /*@__PURE__*/ _let("count/4", $count__closure);
 const $input_n = $count;

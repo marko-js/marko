@@ -7,7 +7,7 @@ const $Tree_content3__setup = ($scope) => {
 };
 const $Tree_content3__dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $Tree_content3__input_content = /*@__PURE__*/ _closure_get(9, ($scope) => $Tree_content3__dynamicTag($scope, $scope._._._.g), ($scope) => $scope._._._, "a1", 6);
-const $Tree_content3 = _content_resume("a2", "<!>: <!><!>", "%c%", $Tree_content3__setup);
+const $Tree_content3 = _content("a2", "<!>: <!><!>", "%c%", $Tree_content3__setup);
 const $if_content2__input_depth = /*@__PURE__*/ _closure_get(8, ($scope) => $Tree_content2__input_depth($scope.a, $scope._._.f - 1), ($scope) => $scope._._, "a3", 5);
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_depth($scope);
@@ -43,4 +43,4 @@ const $Tree_content2__tag_input_content = /*@__PURE__*/ _const(6, ($scope) => {
 	$Tree_content2__tag_input_content__closure($scope);
 });
 const $Tree_content__input_label = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a6", 3);
-const $Tree_content = _content_resume("a7", "leaf <!>", "b%", $Tree_content__input_label);
+const $Tree_content = _content("a7", "leaf <!>", "b%", $Tree_content__input_label);

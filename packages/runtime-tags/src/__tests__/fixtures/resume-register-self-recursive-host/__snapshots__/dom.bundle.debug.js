@@ -11,7 +11,7 @@ var plain_default = /*@__PURE__*/ _template("__tests__/tags/plain.marko", $templ
 // template.marko
 const $template = "<button id=inc> </button><!><!>";
 const $walks = " D l%c";
-const $inputdepthSelfPlain_content = _content_resume("__tests__/template.marko_1*content", "self recursive host: registered");
+const $inputdepthSelfPlain_content = _content("__tests__/template.marko_1*content", "self recursive host: registered");
 const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

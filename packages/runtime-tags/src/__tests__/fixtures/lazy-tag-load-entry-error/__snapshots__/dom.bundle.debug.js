@@ -19,7 +19,7 @@ const $walks = "D%l";
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_label.mjs")));
-const $catch_content = _content_resume("__tests__/template.marko_2*content", "<div id=error>failed</div>");
+const $catch_content = _content("__tests__/template.marko_2*content", "<div id=error>failed</div>");
 const $try_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_label($scope);

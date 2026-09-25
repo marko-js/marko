@@ -1,4 +1,4 @@
-// size: 3846 (min) 1729 (brotli)
+// size: 3851 (min) 1725 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -240,14 +240,14 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     : (branch) => {
         walk((branch.S = branch.K = new Text()), walks, branch);
       };
-  return (owner) => ({
+  return (_resumed[id] = (owner) => ({
     a: id,
     b: clone,
     e: owner,
     c: setup,
     d: params,
     f: dynamicScopesAccessor,
-  });
+  }));
 }
 function createCloneableHTML(html, ns) {
   let { firstChild, lastChild } = parseHTML(html, ns),

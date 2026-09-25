@@ -110,7 +110,9 @@ export function _content(
         );
       };
 
-  return (owner?: Scope): Renderer => {
+  // Registered here so any reference that keeps a renderer in the bundle
+  // also resumes it; one that must always register is emitted impure.
+  return (_resumed[id] = (owner?: Scope): Renderer => {
     return {
       [RendererProp.Id]: id,
       [RendererProp.Clone]: clone,
@@ -119,25 +121,31 @@ export function _content(
       [RendererProp.Params]: params,
       [RendererProp.Accessor]: dynamicScopesAccessor,
     };
-  };
+  });
 }
 
+// Registers content that code the analysis cannot see may render later. Its
+// registration carries the loop's values if it has some, then the closures it
+// reads per owner down to its own (`0` for one with none), set where missing.
 export function _content_resume(
-  id: string,
-  template: string | 0,
-  walks?: string | 0,
-  setup?: SetupFn | 0,
-  params?: Signal<unknown> | 0,
-  dynamicScopesAccessor?: Accessor,
+  renderer: (
+    owner?: Scope,
+    localValues?: Record<Accessor, unknown>,
+  ) => Renderer,
+  hasLocalValues = 0,
 ) {
-  return (_resumed[id] = _content(
-    id,
-    template,
-    walks,
-    setup,
-    params,
-    dynamicScopesAccessor,
-  ));
+  return (_resumed[renderer()[RendererProp.Id]] = (
+    owner: Scope,
+    ...values: Scope[]
+  ) => {
+    for (let i = values.length, scope = owner; i > hasLocalValues;) {
+      const closures = values[--i];
+      for (const key in closures)
+        if (!(key in scope)) scope[key] = closures[key];
+      scope = scope[AccessorProp.Owner]!;
+    }
+    return renderer(owner, values[hasLocalValues - 1]);
+  });
 }
 
 export function _content_closures(

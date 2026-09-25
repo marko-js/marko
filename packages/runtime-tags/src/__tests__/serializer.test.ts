@@ -1788,7 +1788,7 @@ describe("serializer", () => {
       it("passes locals to the factory", () => {
         const scope = { [K_SCOPE_ID]: 1, value: 1 };
         const fn = builder(scope, { a: 1 });
-        register("fn", fn, scope, { a: 1 });
+        register("fn", fn, scope, () => [{ a: 1 }]);
         const scopes = assertStringifyScopes(
           [
             [1, scope, { value: 1 }],
@@ -1804,7 +1804,7 @@ describe("serializer", () => {
         const scope = { [K_SCOPE_ID]: 1, value: 1 };
         const item = { text: "x" };
         const fn = builder(scope, { item });
-        register("fn", fn, scope, { item });
+        register("fn", fn, scope, () => [{ item }]);
         const scopes = assertStringifyScopes(
           [
             [1, scope, { value: 1 }],
@@ -1821,7 +1821,7 @@ describe("serializer", () => {
         const scope = { [K_SCOPE_ID]: 1, value: 1 };
         const label = "a long repeated label";
         const fn = builder(scope, { label });
-        register("fn", fn, scope, { label });
+        register("fn", fn, scope, () => [{ label }]);
         const scopes = assertStringifyScopes(
           [
             [1, scope, { value: 1 }],
@@ -1841,7 +1841,7 @@ describe("serializer", () => {
         const item: any = { text: "x" };
         const fn = builder(scope, { item });
         item.fn = fn;
-        register("fn", fn, scope, { item });
+        register("fn", fn, scope, () => [{ item }]);
         const scopes = assertStringifyScopes(
           [
             [1, scope, { value: 1 }],
@@ -1860,7 +1860,7 @@ describe("serializer", () => {
         const owner: any = {};
         const fn = builder(scope, { owner });
         owner.fn = fn;
-        register("fn", fn, scope, { owner });
+        register("fn", fn, scope, () => [{ owner }]);
         const scopes = assertStringifyScopes(
           [
             [1, scope, { value: 1 }],
@@ -2825,7 +2825,10 @@ function assertStringifyScopes(
 ) {
   const { scopes, apply } = createSerializeContext(ctx);
   const serializer = new Serializer();
-  const boundary = { signal: { aborted: false } } as any as Boundary;
+  const boundary = {
+    signal: { aborted: false },
+    state: {},
+  } as any as Boundary;
   const actual = serializer.stringifyScopes(flushes, boundary);
   assert.equal(actual, serialized);
   apply(actual);

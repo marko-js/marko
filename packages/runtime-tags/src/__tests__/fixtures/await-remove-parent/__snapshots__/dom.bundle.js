@@ -1,6 +1,6 @@
 // template.marko
 const $await_content__setup = _script("a0", ($scope) => document.querySelector("#outside").textContent = "Fail");
-const $placeholder_content = _content_resume("a1", "loading...");
+const $placeholder_content = _content("a1", "loading...");
 const $await_content = /*@__PURE__*/ _await_content(0, 0, 0, $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0);
 const $try_content__setup = ($scope) => {
