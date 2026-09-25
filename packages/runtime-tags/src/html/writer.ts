@@ -1029,8 +1029,8 @@ export function _try(
     withBranchId(branchId, content);
   }
 
-  // An async body's start mark has already streamed and must pair with an end;
-  // a sync body that wrote nothing resumable keeps the boundary off the wire.
+  // Custom and dynamic tags hide from analysis whether the body resumes, so its
+  // render decides: an async or resumable body keeps its marks, others drop them.
   const rendered = chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
   applyBranchStart(chunk, beforeBranch, rendered);
   if (!rendered) return;
