@@ -282,24 +282,6 @@ export function fromIter<T>(data: Iterable<T>) {
   return many || one;
 }
 
-export function* toIter<T>(data: Opt<T>): Iterable<T> {
-  if (data !== undefined) {
-    if (Array.isArray(data)) {
-      yield* data;
-    } else {
-      yield data;
-    }
-  }
-}
-
-export function includes<T>(data: Opt<T>, item: T): boolean {
-  return data !== undefined
-    ? Array.isArray(data)
-      ? data.includes(item)
-      : data === item
-    : false;
-}
-
 export function find<T>(
   data: Opt<T>,
   cb: (item: T, index: number) => boolean,
@@ -367,6 +349,14 @@ export function toArray<T, R>(
       ? data.map(cb)
       : [cb(data, 0)]
     : [];
+}
+
+export function toSet<T>(data: Opt<T>): Set<T> {
+  return data !== undefined
+    ? Array.isArray(data)
+      ? new Set(data)
+      : new Set<T>().add(data)
+    : new Set();
 }
 
 export function mapToString<T>(
@@ -514,10 +504,6 @@ function joinRepeatable<T>(compare: Compare<T>, a: T, b: T): OneMany<T> {
 
 // Adds to an unordered set: the same value when already present, so a
 // caller can tell by identity that nothing was added.
-export function addUnique<T>(data: Opt<T>, item: T): OneMany<T> {
-  return includes(data, item) ? (data as OneMany<T>) : push(data, item);
-}
-
 export function at<T>(data: Opt<T>, index: number): T | undefined {
   return Array.isArray(data) ? data[index] : index ? undefined : data;
 }

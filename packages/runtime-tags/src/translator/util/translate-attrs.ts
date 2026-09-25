@@ -18,8 +18,8 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { toArray } from "./optional";
-import { getScopeAccessor } from "./references";
+import { type SortedOpt, toArray, toSet } from "./optional";
+import { getScopeAccessor, propsUtil } from "./references";
 import { callRuntime } from "./runtime";
 import {
   getScopeIdIdentifier,
@@ -37,13 +37,13 @@ type ContentKey = "renderBody" | "content";
 export function translateAttrs(
   tag: t.NodePath<t.MarkoTag>,
   propTree: BindingPropTree | true = true,
-  skip?: Set<string>,
+  skip?: SortedOpt<string>,
   statements: t.Statement[] = [],
   contentKey: ContentKey = "content",
 ) {
   const contentProperties: t.ObjectExpression["properties"] = [];
   const attrTagLookup = tag.node.extra?.attributeTags;
-  const seen = new Set(skip);
+  const seen = toSet(skip);
   if (attrTagLookup) {
     for (const name in attrTagLookup) {
       const attrTagMeta = attrTagLookup[name];
@@ -75,7 +75,7 @@ export function translateAttrs(
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
 
-          if (skip?.has(attrTagMeta.name)) continue;
+          if (propsUtil.has(skip, attrTagMeta.name)) continue;
 
           if (attrTagMeta.dynamic) {
             i = addDynamicAttrTagStatements(
