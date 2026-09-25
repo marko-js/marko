@@ -18,7 +18,7 @@
     "format": "oxlint --fix; oxfmt --with-node-modules .",
     "lint": "oxlint && oxfmt --check --with-node-modules .",
     "prepare": "husky && pnpm --filter @marko/compiler run build-babel-types",
-    "report": "zcov report -r html && open ./coverage/index.html",
+    "report": "zcov report -r html && node -p \"require('node:url').pathToFileURL('coverage/index.html').href\"",
     "test": "node scripts/test-parallel.js",
     "test:serial": "mocha --config .mocharc.all.cjs",
     "test:update": "cross-env UPDATE_EXPECTATIONS=1 node scripts/test-parallel.js",
