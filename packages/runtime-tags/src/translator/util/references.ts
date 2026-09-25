@@ -150,6 +150,7 @@ export interface Binding {
   sources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one upstream. Set on alias roots only. */
   upstreamIntersection: Intersection | undefined;
+  /** Complete only once `finalizeReferences` runs at program analyze exit. */
   reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
   hoists: SortedOpt<Section>;
@@ -175,6 +176,7 @@ export interface Binding {
   localClosures: Map<Section, Binding> | undefined;
   declared: boolean;
   nullable: boolean;
+  /** Settled only once `finalizeReferences` runs at program analyze exit. */
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;

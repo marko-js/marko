@@ -73,9 +73,10 @@ known-tag contracts. Safe invoke-only reads avoid subscriptions but set
 
 ### Serialize reasons
 
-`SerializeReason = true | Sources`; absence means omit.
+`SerializeReason = Sources`; absence means omit. Reasons stay lossless: a
+forced reason keeps the sources it reads, and consumers decide what to drop.
 
-- `true`: unconditional.
+- `forced` (`FORCED` alone for a value serialized for its own sake): unconditional.
 - Contains state: unconditional for SSR; client-changeable state requires its
   resume path for every instance.
 - Parameter-only: guarded per call site by the reason passed from the parent.

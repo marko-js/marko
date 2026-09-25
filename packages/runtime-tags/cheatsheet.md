@@ -216,6 +216,7 @@ Each left-hand habit is an error or silently wrong.
 | `input.renderBody` (renders nothing, no error)              | `input.content`                                                                      |
 | `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                                                      |
 | `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                                             |
+| filling `input.api` from a child's `<script>` for a parent  | `<return=api>` in the child; parent `<Child/api>` then `api.x()`                     |
 | `input.tab[0]` / `input.tab.length`                         | `[...input.tab ?? []]` first (attr tags are iterables, not arrays)                   |
 | bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `--` and a space              |
 | `onInput(e) { q = e.target.value }` to sync an input        | `value:=q`; the change handler owns the value                                        |

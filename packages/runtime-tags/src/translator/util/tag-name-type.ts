@@ -238,9 +238,9 @@ function analyzeExpressionTagName(
         }
 
         if (bindingTagName === "let") {
+          // Deliberately dynamic: narrowing by every value assigned to a `<let>` is not worth it.
           type = TagNameType.DynamicTag;
           continue;
-          // TODO: Optimize for when we are certain that this is either always a string or always a custom tag
         }
       }
 

@@ -38,6 +38,7 @@ declare const Config: {
   optimizeKnownTemplates?: string[];
   /** Overrides the default template id (the root-relative, percent-encoded path). */
   getTemplateId?(request: string): string;
+  /** Share one only across compiles whose config differs in nothing but `output`. */
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
