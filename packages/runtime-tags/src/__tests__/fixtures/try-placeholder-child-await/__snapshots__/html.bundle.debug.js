@@ -58,11 +58,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		child_default({ value: "static" });
-	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_5*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html("loading static");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_try($scope0_id, "#text/3", _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -74,11 +74,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/0": _existing_scope($childScope2),
 			"ClosureSignalIndex:count": 1
 		}, "__tests__/template.marko", "11:2"), "__tests__/template.marko_2_count#4/subscribe");
-	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_6*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_6*content", () => {
 		_scope_reason();
 		const $scope6_id = _scope_id();
 		_html("loading outer");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

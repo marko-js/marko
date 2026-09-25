@@ -14,11 +14,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3"), "__tests__/template.marko_2_value#3/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:1");
-	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_3*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("loading...");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		value,

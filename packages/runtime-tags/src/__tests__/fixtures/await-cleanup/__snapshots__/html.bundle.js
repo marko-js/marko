@@ -23,11 +23,11 @@ var template_default = _template("a", (input) => {
 					_resume_branch($scope5_id);
 				}, 0);
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
-			}, $scope1_id), { placeholder: attrTag({ content: _content("a3", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading...");
-			}, $scope1_id) }) }, 0);
+			}, $scope1_id) }) });
 			_scope($scope1_id, {});
 			return 0;
 		}

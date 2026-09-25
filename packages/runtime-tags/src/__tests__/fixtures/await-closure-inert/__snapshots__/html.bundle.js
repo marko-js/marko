@@ -10,9 +10,9 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html(`<span>${_escape(value)}</span>`);
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content("a0", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 }, 1);

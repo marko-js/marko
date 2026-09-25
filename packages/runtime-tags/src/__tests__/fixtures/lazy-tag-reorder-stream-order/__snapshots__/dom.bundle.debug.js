@@ -27,7 +27,7 @@ const $walks = "b%b%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_shared.mjs"));
-const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "loading");
+const $placeholder_content = _content("__tests__/template.marko_4*content", "loading");
 const $await_content2__shared = /*@__PURE__*/ _closure_get("shared", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope._.shared));
 const $await_content2__setup = ($scope) => {
 	$await_content2__shared($scope);

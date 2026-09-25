@@ -35,8 +35,8 @@ var boundary_default = /*@__PURE__*/ _template("__tests__/tags/boundary.marko", 
 // template.marko
 const $template = "<button>inc</button><!><!><!><!>";
 const $walks = " b%b%b%c";
-const $placeholder_content3 = /*@__PURE__*/ _content("__tests__/template.marko_6*content", "loading outer");
-const $placeholder_content2 = /*@__PURE__*/ _content("__tests__/template.marko_5*content", "loading static");
+const $placeholder_content3 = _content("__tests__/template.marko_6*content", "loading outer");
+const $placeholder_content2 = _content("__tests__/template.marko_5*content", "loading static");
 const $try_content3__setup = ($scope) => {
 	$setup$2($scope["#childScope/0"]);
 	$input_value$1($scope["#childScope/0"], "static");

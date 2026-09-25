@@ -1,7 +1,12 @@
-// size: 2789 (min) 1360 (brotli)
+// size: 2795 (min) 1357 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
-let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  rendering,
+let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
+function isNotVoid(value) {
+  return value != null && value !== !1;
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let rendering,
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
@@ -19,9 +24,6 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   _resumed = {},
   curRenders,
   readyIds;
-function isNotVoid(value) {
-  return value != null && value !== !1;
-}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
@@ -166,7 +168,7 @@ function init(runtimeId = "M") {
             serializeContext = (data, registryId) =>
               typeof data == "number"
                 ? registryId
-                  ? _resumed[registryId](getScope(data))
+                  ? _resumed[registryId]?.(getScope(data))
                   : getScope(data)
                 : applyScopes(data),
             nextToken = () =>

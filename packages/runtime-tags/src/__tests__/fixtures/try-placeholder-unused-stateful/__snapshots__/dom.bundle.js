@@ -7,3 +7,4 @@ const $placeholder_content = /*@__PURE__*/ _content("a1", " loading", 0, _script
 		console.log("placeholder destroyed");
 	}
 })));
+pendingEnabled && (_resumed.a1 = $placeholder_content);

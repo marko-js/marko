@@ -3,6 +3,7 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
+import { isOptimize } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import {
@@ -10,7 +11,11 @@ import {
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
 } from "../../util/references";
-import { callRuntime, registerRuntimeValue } from "../../util/runtime";
+import {
+  callRuntime,
+  importRuntime,
+  registerRuntimeValue,
+} from "../../util/runtime";
 import {
   forEachSectionReverse,
   getContentClosures,
@@ -158,9 +163,17 @@ export default {
                 ]),
               );
 
+              // A placeholder only renders for client `<await>` or lazy tag work, so
+              // it registers only in bundles with some (debug resume stays strict).
+              const registerIfPending =
+                childSection.isPlaceholder &&
+                !!registerReason &&
+                !registerWrapper &&
+                isOptimize();
+
               // `_content` registers any renderer the bundle keeps; one that must
               // be registered whatever else the client keeps is left impure.
-              if (!registerReason || registerWrapper) {
+              if (!registerReason || registerWrapper || registerIfPending) {
                 renderer = t.addComment(renderer, "leading", "@__PURE__");
               }
 
@@ -199,6 +212,19 @@ export default {
                     registerRuntimeValue(
                       registerId,
                       t.identifier(childSection.name),
+                    ),
+                  ),
+                );
+              } else if (registerIfPending) {
+                program.node.body.push(
+                  t.expressionStatement(
+                    t.logicalExpression(
+                      "&&",
+                      importRuntime("_pending"),
+                      registerRuntimeValue(
+                        registerId,
+                        t.identifier(childSection.name),
+                      ),
                     ),
                   ),
                 );

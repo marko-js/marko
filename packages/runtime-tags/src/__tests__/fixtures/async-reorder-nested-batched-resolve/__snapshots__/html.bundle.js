@@ -29,30 +29,30 @@ var template_default = _template("a", (input) => {
 									_scope_id();
 									_html(`<div${_attr_class(value)} level=4></div>`);
 								}, 0);
-							}, $scope8_id), { placeholder: attrTag({ content: _content("a0", () => {
+							}, $scope8_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 								_scope_reason();
 								_scope_id();
 								_html("LOADING B2");
-							}, $scope8_id) }) }, 0);
+							}, $scope8_id) }) });
 							_html("</div>");
 						}, 0);
-					}, $scope6_id), { placeholder: attrTag({ content: _content("a2", () => {
+					}, $scope6_id), { placeholder: attrTag({ content: _content_resume("a2", () => {
 						_scope_reason();
 						_scope_id();
 						_html("LOADING B1");
-					}, $scope6_id) }) }, 0);
+					}, $scope6_id) }) });
 					_html("</div>");
 				}, 0);
-			}, $scope2_id), { placeholder: attrTag({ content: _content("a4", () => {
+			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 				_scope_reason();
 				_scope_id();
 				_html("LOADING A2");
-			}, $scope2_id) }) }, 0);
+			}, $scope2_id) }) });
 			_html("</div>");
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content("a6", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a6", () => {
 		_scope_reason();
 		_scope_id();
 		_html("LOADING A1");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 }, 1);

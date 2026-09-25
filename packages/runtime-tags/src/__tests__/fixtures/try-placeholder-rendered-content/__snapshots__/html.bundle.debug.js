@@ -112,11 +112,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(_escape(v));
 			}, 0);
 		}, $scope10_id) });
-	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_11*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_11*content", () => {
 		_scope_reason();
 		const $scope11_id = _scope_id();
 		_html("layout loading");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_try($scope0_id, "#text/4", _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -148,11 +148,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(_escape(v));
 			}, $scope17_id) });
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_16*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_16*content", () => {
 		_scope_reason();
 		const $scope16_id = _scope_id();
 		_html("button loading");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		Content,

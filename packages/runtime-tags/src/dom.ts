@@ -1,7 +1,7 @@
 export { attrTag, attrTags } from "./common/attr-tag";
 export { _assert_hoist, _hoist_read_error } from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
-export { _call } from "./common/helpers";
+export { _call, pendingEnabled as _pending } from "./common/helpers";
 export { $signal, $signalReset } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
 export {

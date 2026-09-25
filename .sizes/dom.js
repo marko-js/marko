@@ -1,4 +1,4 @@
-// size: 27226 (min) 10161 (brotli)
+// size: 27280 (min) 10202 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -19,8 +19,66 @@ let unsafeStyleAttrReg = /[\\;]/g,
   },
   decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
-  dynamicHtmlEnabled,
-  rendering,
+  pendingEnabled,
+  dynamicHtmlEnabled;
+function _call(fn, v) {
+  return (fn(v), v);
+}
+function stringifyClassObject(name, value) {
+  return value ? name : "";
+}
+function stringifyStyleObject(name, value) {
+  return value || value === 0 ? escapeStyleAttr(name) + ":" + escapeStyleAttr(value + "") : "";
+}
+function escapeStyleAttr(str) {
+  return unsafeStyleAttrReg.test(str)
+    ? str.replace(unsafeStyleAttrReg, replaceUnsafeStyleAttr)
+    : str;
+}
+function escapeStyleValue(str) {
+  let closers = "",
+    result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
+      c === "<" ? "\\3C " : c === ";" ? "\\3B " : c === "{" ? "\\7B " : "\\" + c,
+    );
+  for (let c of result)
+    c === "("
+      ? (closers = ")" + closers)
+      : c === "["
+        ? (closers = "]" + closers)
+        : c === closers[0] && (closers = closers.slice(1));
+  return result + closers;
+}
+function isEventHandler(name) {
+  return /^on[A-Z-]/.test(name);
+}
+function getEventHandlerName(name) {
+  return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
+}
+function isNotVoid(value) {
+  return value != null && value !== !1;
+}
+function isPromise(value) {
+  return value != null && typeof value.then == "function";
+}
+function normalizeDynamicRenderer(value) {
+  if (value) {
+    if (typeof value == "string") return value;
+    let normalized = value.content || value.default || value;
+    if ("a" in normalized) return normalized;
+  }
+}
+function withBranches(runtime) {
+  return ((branchesEnabled = 1), runtime);
+}
+function withPending(runtime) {
+  return ((pendingEnabled = 1), runtime);
+}
+function withDynamicHtml(runtime) {
+  return ((dynamicHtmlEnabled = 1), runtime);
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let rendering,
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
@@ -117,6 +175,112 @@ let unsafeStyleAttrReg = /[\\;]/g,
   inputType = "",
   controllableScripts = {},
   controllableRenders = {},
+  _await_promise = /*@__PURE__*/ withPending(function (nodeAccessor, params) {
+    nodeAccessor = decodeAccessor(nodeAccessor);
+    let promiseAccessor = "L" + nodeAccessor,
+      branchAccessor = "A" + nodeAccessor,
+      resolveAwait = (scope, referenceNode, value) => {
+        let awaitBranch = scope[branchAccessor];
+        return (
+          awaitBranch.V &&
+            ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
+            setupBranch(awaitBranch.V, awaitBranch),
+            (awaitBranch.V = 0),
+            insertBranchBefore(awaitBranch, scope[nodeAccessor].parentNode, scope[nodeAccessor]),
+            referenceNode.remove()),
+          params?.(awaitBranch, [value]),
+          awaitBranch
+        );
+      },
+      awaitPromise = (scope, promise) => {
+        isPromise(scope[promiseAccessor]) || (scope[promiseAccessor] = 0);
+        let awaitBranch = scope[branchAccessor],
+          tryPlaceholder =
+            (isPromise(promise) || scope[promiseAccessor]) && findBranchWithKey(scope, "Q"),
+          tryBranch = tryPlaceholder || awaitBranch;
+        if (!tryBranch) {
+          let replay = (scope[promiseAccessor] = () =>
+              replay === scope[promiseAccessor] && awaitPromise(scope, promise)),
+            awaitCounter = findBranchWithKey(scope, "Q")?.O;
+          if (awaitCounter?.i) {
+            let complete = awaitCounter.c;
+            awaitCounter.c = () => complete() || queueAsyncRender(scope, replay);
+          }
+          return;
+        }
+        if (!isPromise(promise))
+          return scope[promiseAccessor]
+            ? awaitPromise(scope, Promise.resolve(promise))
+            : resolveAwait(scope, scope[nodeAccessor], promise);
+        let awaitCounter = tryBranch.O;
+        (placeholderShown.add(pendingEffects),
+          !tryPlaceholder &&
+            !awaitCounter?.i &&
+            (awaitCounter = createAwaitCounter(tryBranch, () => {
+              if (tryBranch === scope[branchAccessor]) {
+                let anchor = scope[nodeAccessor];
+                if (anchor.parentNode) {
+                  let detachedParent = scope[branchAccessor].S.parentNode;
+                  detachedParent === anchor.parentNode
+                    ? anchor.remove()
+                    : anchor.replaceWith(detachedParent);
+                }
+              }
+            })),
+          scope[promiseAccessor] ||
+            (awaitBranch && (awaitBranch.W ||= []),
+            tryPlaceholder
+              ? (awaitCounter = addAwaitCounter(scope, tryPlaceholder))
+              : scheduleAwaitFrame(awaitCounter, scope, () => {
+                  awaitBranch.V ||
+                    (awaitBranch.S.parentNode.insertBefore(scope[nodeAccessor], awaitBranch.S),
+                    tempDetachBranch(tryBranch));
+                })));
+        let thisPromise = (scope[promiseAccessor] = promise.then(
+          (data) => {
+            if (thisPromise === scope[promiseAccessor]) {
+              let referenceNode = scope[nodeAccessor];
+              if (((scope[promiseAccessor] = 0), !scope[branchAccessor] || scope.F?.H === 0)) {
+                (scope[branchAccessor] || awaitPromise(scope, data), awaitCounter.c(), run());
+                return;
+              }
+              queueAsyncRender(scope, () => {
+                awaitBranch = resolveAwait(scope, referenceNode, data);
+                let pendingRenders = awaitBranch.W;
+                if (
+                  ((awaitBranch.W = 0),
+                  pendingRenders?.forEach(queuePendingRender),
+                  placeholderShown.add(pendingEffects),
+                  awaitCounter.c(),
+                  awaitCounter.m)
+                ) {
+                  let fnScopes = /* @__PURE__ */ new Map(),
+                    effects = awaitCounter.m([]);
+                  for (let i = 0; i < pendingEffects.length;) {
+                    let fn = pendingEffects[i++],
+                      scopes = fnScopes.get(fn);
+                    (scopes || fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
+                      scopes.add(pendingEffects[i++]));
+                  }
+                  for (let i = 0; i < effects.length;) {
+                    let fn = effects[i++],
+                      scope = effects[i++];
+                    fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
+                  }
+                }
+              });
+            }
+          },
+          (error) => {
+            thisPromise === scope[promiseAccessor] &&
+              ((scope[promiseAccessor] = 0),
+              tryPlaceholder && !awaitCounter.m ? awaitCounter.c() : (awaitCounter.i = 0),
+              queueAsyncRender(scope, renderCatch, error));
+          },
+        ));
+      };
+    return awaitPromise;
+  }),
   _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let branchAccessor = "D" + nodeAccessor,
@@ -333,58 +497,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   _for_until_unkeyed = /*@__PURE__*/ loop(([until, from, step], cb) =>
     forUntil(until, from, step, (v) => cb(v, [v])),
   );
-function _call(fn, v) {
-  return (fn(v), v);
-}
-function stringifyClassObject(name, value) {
-  return value ? name : "";
-}
-function stringifyStyleObject(name, value) {
-  return value || value === 0 ? escapeStyleAttr(name) + ":" + escapeStyleAttr(value + "") : "";
-}
-function escapeStyleAttr(str) {
-  return unsafeStyleAttrReg.test(str)
-    ? str.replace(unsafeStyleAttrReg, replaceUnsafeStyleAttr)
-    : str;
-}
-function escapeStyleValue(str) {
-  let closers = "",
-    result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
-      c === "<" ? "\\3C " : c === ";" ? "\\3B " : c === "{" ? "\\7B " : "\\" + c,
-    );
-  for (let c of result)
-    c === "("
-      ? (closers = ")" + closers)
-      : c === "["
-        ? (closers = "]" + closers)
-        : c === closers[0] && (closers = closers.slice(1));
-  return result + closers;
-}
-function isEventHandler(name) {
-  return /^on[A-Z-]/.test(name);
-}
-function getEventHandlerName(name) {
-  return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
-}
-function isNotVoid(value) {
-  return value != null && value !== !1;
-}
-function isPromise(value) {
-  return value != null && typeof value.then == "function";
-}
-function normalizeDynamicRenderer(value) {
-  if (value) {
-    if (typeof value == "string") return value;
-    let normalized = value.content || value.default || value;
-    if ("a" in normalized) return normalized;
-  }
-}
-function withBranches(runtime) {
-  return ((branchesEnabled = 1), runtime);
-}
-function withDynamicHtml(runtime) {
-  return ((dynamicHtmlEnabled = 1), runtime);
-}
 function _hoist_read_error() {}
 function _assert_hoist(value) {}
 function forIn(obj, cb) {
@@ -899,7 +1011,7 @@ function init(runtimeId = "M") {
             serializeContext = (data, registryId) =>
               typeof data == "number"
                 ? registryId
-                  ? _resumed[registryId](getScope(data))
+                  ? _resumed[registryId]?.(getScope(data))
                   : getScope(data)
                 : applyScopes(data),
             createVisitBranches =
@@ -1729,112 +1841,6 @@ function _controllable_open(scope, nodeAccessor, nextAttrs) {
       /^open(?:Change)?$/
     );
 }
-function _await_promise(nodeAccessor, params) {
-  nodeAccessor = decodeAccessor(nodeAccessor);
-  let promiseAccessor = "L" + nodeAccessor,
-    branchAccessor = "A" + nodeAccessor,
-    resolveAwait = (scope, referenceNode, value) => {
-      let awaitBranch = scope[branchAccessor];
-      return (
-        awaitBranch.V &&
-          ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
-          setupBranch(awaitBranch.V, awaitBranch),
-          (awaitBranch.V = 0),
-          insertBranchBefore(awaitBranch, scope[nodeAccessor].parentNode, scope[nodeAccessor]),
-          referenceNode.remove()),
-        params?.(awaitBranch, [value]),
-        awaitBranch
-      );
-    },
-    awaitPromise = (scope, promise) => {
-      isPromise(scope[promiseAccessor]) || (scope[promiseAccessor] = 0);
-      let awaitBranch = scope[branchAccessor],
-        tryPlaceholder =
-          (isPromise(promise) || scope[promiseAccessor]) && findBranchWithKey(scope, "Q"),
-        tryBranch = tryPlaceholder || awaitBranch;
-      if (!tryBranch) {
-        let replay = (scope[promiseAccessor] = () =>
-            replay === scope[promiseAccessor] && awaitPromise(scope, promise)),
-          awaitCounter = findBranchWithKey(scope, "Q")?.O;
-        if (awaitCounter?.i) {
-          let complete = awaitCounter.c;
-          awaitCounter.c = () => complete() || queueAsyncRender(scope, replay);
-        }
-        return;
-      }
-      if (!isPromise(promise))
-        return scope[promiseAccessor]
-          ? awaitPromise(scope, Promise.resolve(promise))
-          : resolveAwait(scope, scope[nodeAccessor], promise);
-      let awaitCounter = tryBranch.O;
-      (placeholderShown.add(pendingEffects),
-        !tryPlaceholder &&
-          !awaitCounter?.i &&
-          (awaitCounter = createAwaitCounter(tryBranch, () => {
-            if (tryBranch === scope[branchAccessor]) {
-              let anchor = scope[nodeAccessor];
-              if (anchor.parentNode) {
-                let detachedParent = scope[branchAccessor].S.parentNode;
-                detachedParent === anchor.parentNode
-                  ? anchor.remove()
-                  : anchor.replaceWith(detachedParent);
-              }
-            }
-          })),
-        scope[promiseAccessor] ||
-          (awaitBranch && (awaitBranch.W ||= []),
-          tryPlaceholder
-            ? (awaitCounter = addAwaitCounter(scope, tryPlaceholder))
-            : scheduleAwaitFrame(awaitCounter, scope, () => {
-                awaitBranch.V ||
-                  (awaitBranch.S.parentNode.insertBefore(scope[nodeAccessor], awaitBranch.S),
-                  tempDetachBranch(tryBranch));
-              })));
-      let thisPromise = (scope[promiseAccessor] = promise.then(
-        (data) => {
-          if (thisPromise === scope[promiseAccessor]) {
-            let referenceNode = scope[nodeAccessor];
-            if (((scope[promiseAccessor] = 0), !scope[branchAccessor] || scope.F?.H === 0)) {
-              (scope[branchAccessor] || awaitPromise(scope, data), awaitCounter.c(), run());
-              return;
-            }
-            queueAsyncRender(scope, () => {
-              awaitBranch = resolveAwait(scope, referenceNode, data);
-              let pendingRenders = awaitBranch.W;
-              if (
-                ((awaitBranch.W = 0),
-                pendingRenders?.forEach(queuePendingRender),
-                placeholderShown.add(pendingEffects),
-                awaitCounter.c(),
-                awaitCounter.m)
-              ) {
-                let fnScopes = /* @__PURE__ */ new Map(),
-                  effects = awaitCounter.m([]);
-                for (let i = 0; i < pendingEffects.length;) {
-                  let fn = pendingEffects[i++],
-                    scopes = fnScopes.get(fn);
-                  (scopes || fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
-                    scopes.add(pendingEffects[i++]));
-                }
-                for (let i = 0; i < effects.length;) {
-                  let fn = effects[i++],
-                    scope = effects[i++];
-                  fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
-                }
-              }
-            });
-          }
-        },
-        (error) => {
-          thisPromise === scope[promiseAccessor] &&
-            ((scope[promiseAccessor] = 0),
-            tryPlaceholder && !awaitCounter.m ? awaitCounter.c() : (awaitCounter.i = 0),
-            queueAsyncRender(scope, renderCatch, error));
-        },
-      ));
-    };
-  return awaitPromise;
-}
 function _await_content(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "A" + nodeAccessor,
@@ -2122,50 +2128,54 @@ let empty = [],
     return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
   },
   noop = (_) => 0,
-  _load_template = /*@__PURE__*/ withLazy((id, load) => {
-    let pending,
-      lazyTemplate = _template(
-        id,
-        0,
-        0,
-        (branch) => {
-          let awaitCounter = addAwaitCounter(branch);
-          ((branch.X ||= /* @__PURE__ */ new Map()),
+  _load_template = /*@__PURE__*/ withLazy(
+    /*@__PURE__*/ withPending((id, load) => {
+      let pending,
+        lazyTemplate = _template(
+          id,
+          0,
+          0,
+          (branch) => {
+            let awaitCounter = addAwaitCounter(branch);
+            ((branch.X ||= /* @__PURE__ */ new Map()),
+              (pending ||= load()).then(
+                (renderer) => {
+                  (Object.assign(lazyTemplate, renderer),
+                    queueAsyncRender(branch, (branch) =>
+                      insertLoaded(renderer, branch, branch.S, awaitCounter),
+                    ));
+                },
+                loadFailed(branch, awaitCounter),
+              ));
+          },
+          _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d || noop }))),
+        );
+      return lazyTemplate;
+    }),
+  ),
+  _load_setup = /*@__PURE__*/ withLazy(
+    /*@__PURE__*/ withPending((load) => {
+      let pending,
+        renderer,
+        insertCached = (child, marker) => insertLoaded(renderer, child, marker);
+      return (owner, child, marker) => {
+        if (renderer) queueRender(child, insertCached, -1, marker);
+        else {
+          let awaitCounter = addAwaitCounter(owner);
+          ((child.X ||= /* @__PURE__ */ new Map()),
             (pending ||= load()).then(
-              (renderer) => {
-                (Object.assign(lazyTemplate, renderer),
-                  queueAsyncRender(branch, (branch) =>
-                    insertLoaded(renderer, branch, branch.S, awaitCounter),
+              (mod) => {
+                ((renderer ||= _content("", ...mod._)()),
+                  queueAsyncRender(child, (child) =>
+                    insertLoaded(renderer, child, marker, awaitCounter),
                   ));
               },
-              loadFailed(branch, awaitCounter),
+              loadFailed(child, awaitCounter),
             ));
-        },
-        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d || noop }))),
-      );
-    return lazyTemplate;
-  }),
-  _load_setup = /*@__PURE__*/ withLazy((load) => {
-    let pending,
-      renderer,
-      insertCached = (child, marker) => insertLoaded(renderer, child, marker);
-    return (owner, child, marker) => {
-      if (renderer) queueRender(child, insertCached, -1, marker);
-      else {
-        let awaitCounter = addAwaitCounter(owner);
-        ((child.X ||= /* @__PURE__ */ new Map()),
-          (pending ||= load()).then(
-            (mod) => {
-              ((renderer ||= _content("", ...mod._)()),
-                queueAsyncRender(child, (child) =>
-                  insertLoaded(renderer, child, marker, awaitCounter),
-                ));
-            },
-            loadFailed(child, awaitCounter),
-          ));
-      }
-    };
-  }),
+        }
+      };
+    }),
+  ),
   _load_signal = /*@__PURE__*/ withLazy((load) => {
     let pending,
       apply = (scope, value) => {

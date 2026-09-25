@@ -24,5 +24,6 @@ const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__attempt($scope);
 	$placeholder_content__setup__script($scope);
 };
-const $placeholder_content = _content("a2", "<button>retry <!></button>", " Db%", $placeholder_content__setup);
+const $placeholder_content = /*@__PURE__*/ _content("a2", "<button>retry <!></button>", " Db%", $placeholder_content__setup);
+pendingEnabled && (_resumed.a2 = $placeholder_content);
 const $attempt = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($placeholder_content__attempt, $try_content__attempt));

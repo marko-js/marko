@@ -9,11 +9,11 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html(_escape(value));
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content("a0", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_await(_scope_id(), "a", resolveAfter("placeholder", 2), (value) => {
 			_scope_id();
 			_html(_escape(value));
 		}, 0);
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 }, 1);

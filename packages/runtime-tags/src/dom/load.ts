@@ -1,3 +1,4 @@
+import { withPending } from "../common/helpers";
 import {
   AccessorProp,
   type BranchScope,
@@ -36,7 +37,7 @@ export interface LoadTrigger {
 const noop = (_?: unknown): any => 0;
 
 export const _load_template = /*@__PURE__*/ withLazy(
-  (id: string, load: () => Promise<Renderer>) => {
+  /*@__PURE__*/ withPending((id: string, load: () => Promise<Renderer>) => {
     let pending: ReturnType<typeof load> | undefined;
     const lazyTemplate = _template(
       id,
@@ -69,11 +70,11 @@ export const _load_template = /*@__PURE__*/ withLazy(
       ),
     ) as Template & Renderer;
     return lazyTemplate;
-  },
+  }),
 );
 
 export const _load_setup = /*@__PURE__*/ withLazy(
-  (load: () => Promise<LoadModule>) => {
+  /*@__PURE__*/ withPending((load: () => Promise<LoadModule>) => {
     let pending: ReturnType<typeof load> | undefined;
     let renderer: Renderer | undefined;
     const insertCached = (child: BranchScope, marker: ChildNode) =>
@@ -98,7 +99,7 @@ export const _load_setup = /*@__PURE__*/ withLazy(
         );
       }
     };
-  },
+  }),
 );
 
 // Inserts once each chunk's import resolves, relying on the bundler's import to

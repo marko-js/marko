@@ -9,11 +9,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html("done");
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_2*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(" loading");
 		_script($scope2_id, "__tests__/template.marko_2", 0);
 		_resume_branch($scope2_id);
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 }, 1);

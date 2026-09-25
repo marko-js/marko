@@ -988,7 +988,6 @@ export function _try(
     placeholder?: { content?(): void };
     catch?: { content?(err: unknown): void };
   },
-  serializePlaceholder?: number,
 ) {
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
@@ -996,9 +995,6 @@ export function _try(
   const placeholderContent = normalizeDynamicRenderer(input.placeholder) as
     | ServerRenderer
     | undefined;
-  // Only content that can go pending client side reads the placeholder there.
-  const resumePlaceholder =
-    serializePlaceholder === 0 ? undefined : placeholderContent;
   // The placeholder's branch id precedes the body's so the walker parents it
   // to the try's enclosing branch (a sibling of the try), as CSR does.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
@@ -1025,7 +1021,7 @@ export function _try(
             )
         : content,
       catchContent,
-      resumePlaceholder,
+      placeholderContent,
       branchId,
     );
   } else {
@@ -1039,7 +1035,7 @@ export function _try(
   if (!rendered) return;
 
   if (!renderersAtSettle) {
-    writeTryRenderers(branchId, catchContent, resumePlaceholder);
+    writeTryRenderers(branchId, catchContent, placeholderContent);
   }
   $chunk.writeHTML(
     state.mark(

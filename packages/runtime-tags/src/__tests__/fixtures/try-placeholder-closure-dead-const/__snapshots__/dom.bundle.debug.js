@@ -14,7 +14,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "loading...");
+const $placeholder_content = _content("__tests__/template.marko_3*content", "loading...");
 const $await_content__on = /*@__PURE__*/ _closure_get("on", ($scope) => $input_on($scope["#childScope/0"], $scope._._.on), ($scope) => $scope._._);
 const $await_content__setup = ($scope) => {
 	$await_content__on($scope);

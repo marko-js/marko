@@ -1,6 +1,7 @@
 // template.marko
 const Child = /*@__PURE__*/ _load_template("a", () => import("./child.mjs").then((mod) => mod.default));
-const $placeholder_content = _content("b0", "loading...");
+const $placeholder_content = /*@__PURE__*/ _content("b0", "loading...");
+pendingEnabled && (_resumed.b0 = $placeholder_content);
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $try_content__show__OR__value = /*@__PURE__*/ _or(1, ($scope) => $try_content__dynamicTag($scope, $scope._.d ? Child : null, () => ({
 	label: "x",

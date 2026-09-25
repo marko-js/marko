@@ -135,6 +135,7 @@ export const domRuntimeFeatures = [
   "controllable-textarea",
   "dynamic-tag-script",
   "dynamic-tag-var",
+  "pending",
   "placeholder",
 ] as const;
 export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];

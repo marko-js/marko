@@ -1,0 +1,5 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/n=0/>
+<button class="child" onClick() { n++ }>inc</button>
+<await|v|=n ? resolveAfter(n) : n>${v}</await>

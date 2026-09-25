@@ -30,7 +30,6 @@ import {
   knownTagTranslateHTML,
 } from "../../util/known-tag";
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
-import { trackPendingTag } from "../../util/placeholder-reason";
 import type { Binding } from "../../util/references";
 import { BindingType, createBinding } from "../../util/references";
 import {
@@ -110,8 +109,6 @@ export default {
           BindingType.dom,
           getOrCreateSection(tag),
         );
-        // Loading its module holds a placeholder when the client renders it.
-        trackPendingTag(tag);
       }
 
       if (tagExtra.tagNameLoad || !childExtra.domExports?.setupEmpty) {

@@ -9,7 +9,8 @@ const $placeholder_content3__setup = ($scope) => {
 	$await_content2($scope);
 	$placeholder_content3__await_promise($scope, resolveAfter("c", 4));
 };
-const $placeholder_content3 = _content("a1", "C loading <!><!>", "b%", $placeholder_content3__setup);
+const $placeholder_content3 = /*@__PURE__*/ _content("a1", "C loading <!><!>", "b%", $placeholder_content3__setup);
+pendingEnabled && (_resumed.a1 = $placeholder_content3);
 const $await_content__x = ($scope, x) => _text($scope.a, x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content(0, " ", " ");
@@ -18,8 +19,10 @@ const $placeholder_content2__setup = ($scope) => {
 	$await_content($scope);
 	$placeholder_content2__await_promise($scope, resolveAfter("b", 8));
 };
-const $placeholder_content2 = _content("a4", "B loading <!><!>", "b%", $placeholder_content2__setup);
-const $placeholder_content = _content("a6", "A loading");
+const $placeholder_content2 = /*@__PURE__*/ _content("a4", "B loading <!><!>", "b%", $placeholder_content2__setup);
+pendingEnabled && (_resumed.a4 = $placeholder_content2);
+const $placeholder_content = /*@__PURE__*/ _content("a6", "A loading");
+pendingEnabled && (_resumed.a6 = $placeholder_content);
 const $await_content3 = /*@__PURE__*/ _await_content(0, " ", " ");
 const $if_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content3__$params);
 const $if_content__count = /*@__PURE__*/ _closure_get(3, ($scope) => $if_content__await_promise($scope, resolveAfter($scope._._._._.c)), ($scope) => $scope._._._._, "a0", 2);

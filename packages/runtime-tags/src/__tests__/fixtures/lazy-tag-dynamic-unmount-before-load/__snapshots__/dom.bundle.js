@@ -1,6 +1,7 @@
 // template.marko
 const Child = /*@__PURE__*/ _load_template("a", () => import("./child.mjs").then((mod) => mod.default));
-const $placeholder_content = _content("b1", "Loading...");
+const $placeholder_content = /*@__PURE__*/ _content("b1", "Loading...");
+pendingEnabled && (_resumed.b1 = $placeholder_content);
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $await_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => $await_content__dynamicTag($scope, $scope._._.c ? Child : null, () => ({ value: 1 })), ($scope) => $scope._._, "b0", 2);
 const $show = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($await_content__show));

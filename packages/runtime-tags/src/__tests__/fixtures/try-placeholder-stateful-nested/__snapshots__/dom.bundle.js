@@ -1,4 +1,5 @@
 // tags/note.marko
+const $template = "<span> </span>";
 const $input_label__script = _script("b0", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		console.log("mounted", $scope.d);
@@ -13,6 +14,12 @@ const $input_label = /*@__PURE__*/ _const(3, ($scope) => {
 });
 
 // template.marko
+const $placeholder_content2__setup = ($scope) => $input_label($scope.a, "inner placeholder");
+const $placeholder_content2 = /*@__PURE__*/ _content("a1", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $placeholder_content2__setup);
+pendingEnabled && (_resumed.a1 = $placeholder_content2);
+const $placeholder_content__setup = ($scope) => $input_label($scope.a, "outer placeholder");
+const $placeholder_content = /*@__PURE__*/ _content("a4", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $placeholder_content__setup);
+pendingEnabled && (_resumed.a4 = $placeholder_content);
 const $await_content2__clicks__OR__inner = /*@__PURE__*/ _or(3, ($scope) => $input_label($scope.a, `${$scope.c} ${$scope._._._._.d}`));
 const $await_content2__clicks = /*@__PURE__*/ _closure_get(4, $await_content2__clicks__OR__inner, ($scope) => $scope._._._._, "a0", 3);
 const $await_content__clicks = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.b, $scope._._.d), ($scope) => $scope._._, "a3", 3);

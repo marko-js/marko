@@ -15,7 +15,7 @@ const $catch_content = _content("__tests__/template.marko_4*content", "caught: <
 const $try_content2__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "loading outer...");
+const $placeholder_content = _content("__tests__/template.marko_2*content", "loading outer...");
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content2__setup);
 const $try_content__setup = ($scope) => $try_content__try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);

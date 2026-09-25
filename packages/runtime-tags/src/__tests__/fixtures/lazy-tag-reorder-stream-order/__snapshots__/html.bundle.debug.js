@@ -36,11 +36,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				shared
 			});
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_4*content", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_4*content", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_html("loading");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_await($scope0_id, "#text/1", resolveAfter("streamed", 2), (label) => {
 		const $scope3_id = _scope_id();
 		$Child_withLoadAssets({

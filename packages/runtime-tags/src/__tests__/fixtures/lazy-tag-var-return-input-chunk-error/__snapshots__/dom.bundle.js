@@ -5,6 +5,7 @@ const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("b2", "<span class=err> </span>", "D ", 0, $catch_content__$params);
 const $placeholder_content = /*@__PURE__*/ _content("b1", "loading");
+pendingEnabled && (_resumed.b1 = $placeholder_content);
 const $try_content__focusChild = _var_resume("b0", /*@__PURE__*/ _const(4));
 const $try_content__setup__script = _script("b4", ($scope) => _on($scope.d, "click", function() {
 	$scope.e();

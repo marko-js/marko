@@ -9,7 +9,6 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
-import { trackPendingTag } from "../util/placeholder-reason";
 import {
   BindingType,
   createBinding,
@@ -113,7 +112,6 @@ export default {
     }
 
     bodySection.upstreamExpression = valueAttr.value.extra;
-    trackPendingTag(tag, valueExtra);
 
     // The content renderer is initialized unconditionally in setup.
     addSetupStatement(section);

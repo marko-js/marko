@@ -25,7 +25,6 @@ import {
   type SortedOpt,
   toIter,
 } from "./optional";
-import { trackPendingTemplate } from "./placeholder-reason";
 import {
   addRead,
   type Binding,
@@ -150,7 +149,6 @@ export function knownTagAnalyze(
     attrExprs,
   ));
   setTagDownstream(tag, propTree?.props?.[0]?.binding, exprs);
-  trackPendingTemplate(tag, contentSection, exprs);
 
   if (varBinding) {
     // Tag variables emit a `_var` statement in the parent's setup.

@@ -33,7 +33,7 @@ const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__clicks($scope);
 	$placeholder_content__setup__script($scope);
 };
-const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button>loading <!></button>", " Db%", $placeholder_content__setup);
+const $placeholder_content = _content("__tests__/template.marko_1*content", "<button>loading <!></button>", " Db%", $placeholder_content__setup);
 const $clicks__closure = /*@__PURE__*/ _closure($placeholder_content__clicks, $await_content__clicks);
 const $clicks = /*@__PURE__*/ _let("clicks/1", $clicks__closure);
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);

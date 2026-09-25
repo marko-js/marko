@@ -1,4 +1,6 @@
 // template.marko
+const $placeholder_content = /*@__PURE__*/ _content("a1", "loading...");
+pendingEnabled && (_resumed.a1 = $placeholder_content);
 const $await_content__value = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._._.d), ($scope) => $scope._._, "a0", 3);
 const $value__closure = /*@__PURE__*/ _closure($await_content__value);
 const $value = /*@__PURE__*/ _let(3, ($scope) => {

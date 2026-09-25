@@ -25,10 +25,6 @@ import {
   reduce,
 } from "./optional";
 import {
-  getPlaceholderReason,
-  type SectionPending,
-} from "./placeholder-reason";
-import {
   type Binding,
   bindingUtil,
   compareReferences,
@@ -163,11 +159,8 @@ export interface Section {
         exprs: KnownExprs | undefined;
       }
     | undefined;
-  /** For a `<try>`'s `@placeholder` content, the try's body. */
-  placeholderFor: Section | undefined;
-  /** For a template or a `<try>` body with a `@placeholder`, what in it can
-   * start async work on the client. */
-  pending: SectionPending | undefined;
+  /** A `<try>`'s `@placeholder` content. */
+  isPlaceholder: boolean;
   hasAbortSignal: boolean;
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's `abortId` from this so translates read, never re-derive. */
@@ -254,8 +247,7 @@ export function startSection(
       upstreamExpression: undefined,
       callSections: undefined,
       downstream: undefined,
-      placeholderFor: undefined,
-      pending: undefined,
+      isPlaceholder: false,
       hasAbortSignal: false,
       abortSignalExprs: 0,
       readsOwner: false,
@@ -486,7 +478,6 @@ export function getNodeContentType(
 
 export function getSectionRegisterReasons(section: Section) {
   if (section.isBranch) return false; // Branches handle whether to register their section/renderer.
-  if (section.placeholderFor) return getPlaceholderReason(section) || false;
 
   // Only a component receives a dynamic tag's body as a value; SSR otherwise
   // writes just its id, to compare against the client's renderer.

@@ -7,7 +7,7 @@ const $await_content2__v = /*@__PURE__*/ _const("v", ($scope) => {
 	$await_content2__v__script($scope);
 });
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
-const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "loading button");
+const $placeholder_content = _content("__tests__/template.marko_3*content", "loading button");
 const $await_content__value = /*@__PURE__*/ _closure_get("value", ($scope) => _text($scope["#text/1"], $scope._._.value), ($scope) => $scope._._, "__tests__/template.marko_2_value#2/subscribe");
 const $await_content__setup__script = _script("__tests__/template.marko_2", ($scope) => {
 	_on($scope["#button/0"], "click", function() {

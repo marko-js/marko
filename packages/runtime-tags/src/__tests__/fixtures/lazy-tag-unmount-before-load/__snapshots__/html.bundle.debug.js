@@ -24,11 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_id = _scope_id();
 					$Child_withLoadAssets({ value: 1 });
 				}, 0);
-			}, $scope1_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_3*content", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html("loading");
-			}, $scope1_id) }) }, 0);
+			}, $scope1_id) }) });
 			_scope($scope1_id, {}, "__tests__/template.marko", "6:2");
 			return 0;
 		}

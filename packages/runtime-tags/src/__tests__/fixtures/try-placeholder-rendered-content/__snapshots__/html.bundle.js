@@ -101,11 +101,11 @@ var template_default = _template("a", (input) => {
 				_html(_escape(v));
 			}, 0);
 		}, $scope10_id) });
-	}, $scope0_id), { placeholder: attrTag({ content: _content("a6", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a6", () => {
 		_scope_reason();
 		_scope_id();
 		_html("layout loading");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_try($scope0_id, "e", _content_resume("a9", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -129,11 +129,11 @@ var template_default = _template("a", (input) => {
 				_html(_escape(v));
 			}, _scope_id()) });
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content("a12", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a12", () => {
 		_scope_reason();
 		_scope_id();
 		_html("button loading");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_script($scope0_id, "a14");
 	_scope($scope0_id, {
 		h: Content,

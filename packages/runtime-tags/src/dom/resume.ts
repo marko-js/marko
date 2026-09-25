@@ -198,7 +198,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         ) =>
           typeof data === "number"
             ? registryId
-              ? (_resumed[registryId] as RegisteredFn)(getScope(data))
+              ? MARKO_DEBUG
+                ? (_resumed[registryId] as RegisteredFn)(getScope(data))
+                : // A `@placeholder` the bundle can never show is left unregistered.
+                  (_resumed[registryId] as RegisteredFn | undefined)?.(
+                    getScope(data),
+                  )
               : getScope(data)
             : applyScopes(data)) as SerializeContext;
         const createVisitBranches = (

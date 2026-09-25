@@ -55,7 +55,7 @@ const $basebutton_content = /*@__PURE__*/ _content("__tests__/template.marko_18*
 const $await_content4__setup = ($scope) => $input($scope["#childScope/0"], { content: $basebutton_content($scope) });
 const $await_content4__$params = ($scope, $params5) => $await_content4__v($scope, $params5[0]);
 const $await_content4__v = /*@__PURE__*/ _const("v");
-const $placeholder_content4 = /*@__PURE__*/ _content("__tests__/template.marko_16*content", "button loading");
+const $placeholder_content4 = _content("__tests__/template.marko_16*content", "button loading");
 const $await_content4 = /*@__PURE__*/ _await_content("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $await_content4__setup);
 const $try_content4__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content4__$params);
 const $try_content4__setup = ($scope) => {
@@ -72,7 +72,7 @@ const $layout_content__setup = ($scope) => {
 	$layout_content__await_promise($scope, resolveAfter("laid out"));
 };
 const $layout_content = /*@__PURE__*/ _content("__tests__/template.marko_12*content", "<!><!><!>", "b%", $layout_content__setup);
-const $placeholder_content2 = /*@__PURE__*/ _content("__tests__/template.marko_11*content", "layout loading");
+const $placeholder_content2 = _content("__tests__/template.marko_11*content", "layout loading");
 const $try_content3__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $layout_content($scope));
 const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);

@@ -57,11 +57,11 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_scope_reason();
 		child_default({ value: "static" });
-	}, $scope0_id), { placeholder: attrTag({ content: _content("a3", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading static");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_try($scope0_id, "d", _content_resume("a6", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -73,11 +73,11 @@ var template_default = _template("a", (input) => {
 			a: _existing_scope($childScope2),
 			Cf: 1
 		}), "a7");
-	}, $scope0_id), { placeholder: attrTag({ content: _content("a5", () => {
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a5", () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading outer");
-	}, $scope0_id) }) }, 0);
+	}, $scope0_id) }) });
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {
 		e: count,

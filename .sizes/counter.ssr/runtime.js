@@ -1,4 +1,4 @@
-// size: 2584 (min) 1279 (brotli)
+// size: 2586 (min) 1280 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   rendering,
@@ -163,7 +163,7 @@ function init(runtimeId = "M") {
             serializeContext = (data, registryId) =>
               typeof data == "number"
                 ? registryId
-                  ? _resumed[registryId](getScope(data))
+                  ? _resumed[registryId]?.(getScope(data))
                   : getScope(data)
                 : applyScopes(data),
             nextToken = () =>

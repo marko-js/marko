@@ -1,5 +1,6 @@
 // tags/wrapper.marko
-const $placeholder_content$1 = _content("d2", "wrapper loading");
+const $placeholder_content$1 = /*@__PURE__*/ _content("d2", "wrapper loading");
+pendingEnabled && (_resumed.d2 = $placeholder_content$1);
 const $if_content__rest__script = _script("d0", ($scope) => _attrs_script($scope, "a"));
 const $if_content__rest = /*@__PURE__*/ _closure_get(6, ($scope) => {
 	_attrs_content($scope, "a", $scope._._.e);
@@ -19,7 +20,12 @@ const $input_content = $dynamicTag;
 const $input__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 
 // template.marko
-const $placeholder_content3 = _content("a8", "layout attr loading");
+const $placeholder_content4 = /*@__PURE__*/ _content("a12", "button loading");
+pendingEnabled && (_resumed.a12 = $placeholder_content4);
+const $placeholder_content3 = /*@__PURE__*/ _content("a8", "layout attr loading");
+pendingEnabled && (_resumed.a8 = $placeholder_content3);
+const $placeholder_content2 = /*@__PURE__*/ _content("a6", "layout loading");
+pendingEnabled && (_resumed.a6 = $placeholder_content2);
 const $await_content2__v = ($scope, v) => _text($scope.a, v);
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $await_content2 = /*@__PURE__*/ _await_content(0, " ", " ");
@@ -29,7 +35,8 @@ const $wrapper_content__setup = ($scope) => {
 	$wrapper_content__await_promise($scope, resolveAfter("wrapped"));
 };
 const $wrapper_content = _content("a4", "<!><!><!>", "b%", $wrapper_content__setup);
-const $placeholder_content = _content("a1", "define loading");
+const $placeholder_content = /*@__PURE__*/ _content("a1", "define loading");
+pendingEnabled && (_resumed.a1 = $placeholder_content);
 const $await_content__v = ($scope, v) => _text($scope.a, v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $if_content2__setup = /* @__PURE__ */ _closure_get(9, ($scope) => $input_content($scope.a, $scope._._.h), ($scope) => $scope._._);

@@ -24,11 +24,11 @@ var template_default = _template("b", (input) => {
 					_scope_id();
 					$Child_withLoadAssets({ value: 1 });
 				}, 0);
-			}, $scope1_id), { placeholder: attrTag({ content: _content("b0", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
-			}, $scope1_id) }) }, 0);
+			}, $scope1_id) }) });
 			_scope($scope1_id, {});
 			return 0;
 		}

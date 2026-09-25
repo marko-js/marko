@@ -233,6 +233,15 @@ export function withBranches<T>(runtime?: T) {
   return runtime as T;
 }
 
+// Pending work latch, same idea: only the `<await>` and lazy tag renderers that
+// can show a `@placeholder` write it, so bundles without them fold placeholders away.
+export let pendingEnabled: undefined | 1;
+
+export function withPending<T>(runtime?: T) {
+  pendingEnabled = 1;
+  return runtime as T;
+}
+
 // Dynamic html support latch, same idea: only `_html` writes it, so resume's
 // html range handling folds out of bundles without unescaped placeholders.
 export let dynamicHtmlEnabled: undefined | 1;

@@ -6,6 +6,8 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { getAttributeTagParent } from "../../util/get-parent-tag";
+import { getTagName } from "../../util/get-tag-name";
+import { isCoreTagName } from "../../util/is-core-tag";
 import { isOutputHTML } from "../../util/marko-config";
 import { BindingType, trackParamsReferences } from "../../util/references";
 import { startSection } from "../../util/sections";
@@ -38,6 +40,14 @@ export default {
         !parentTag.node.extra!.defineBodySection
       ) {
         bodySection.upstreamExpression = parentTag.node.extra;
+      }
+
+      if (
+        bodySection &&
+        getTagName(tag) === "@placeholder" &&
+        isCoreTagName(parentTag, "try")
+      ) {
+        bodySection.isPlaceholder = true;
       }
     },
   },

@@ -26,11 +26,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_script($scope5_id, "__tests__/template.marko_5");
 				_scope($scope5_id, { n }, "__tests__/template.marko", "6:6", { n: "7:12" });
 			});
-		}, $scope1_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_4*content", () => {
+		}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_4*content", () => {
 			_scope_reason();
 			const $scope4_id = _scope_id();
 			_html("loading");
-		}, $scope1_id) }) }, 0);
+		}, $scope1_id) }) });
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", (err) => {
 		const $scope2_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();

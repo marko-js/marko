@@ -17,11 +17,11 @@ var template_default = _template("a", (input) => {
 					_script($scope6_id, "a0");
 					_scope($scope6_id, { f: n });
 				});
-			}, $scope3_id), { placeholder: attrTag({ content: _content("a1", () => {
+			}, $scope3_id), { placeholder: attrTag({ content: _content_resume("a1", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
-			}, $scope3_id) }) }, 0);
+			}, $scope3_id) }) });
 		}, 0);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a3", (err) => {
 		const $scope2_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope2_reason, 0);

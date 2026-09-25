@@ -7,6 +7,7 @@ const $placeholder_content = /*@__PURE__*/ _content("a1", " loading", 0, _script
 		console.log("placeholder destroyed");
 	}
 })));
+pendingEnabled && (_resumed.a1 = $placeholder_content);
 const $await_content = /*@__PURE__*/ _await_content(0, "done");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0);
 const $try_content__setup = ($scope) => {

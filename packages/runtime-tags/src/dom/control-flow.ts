@@ -3,6 +3,7 @@ import { forIn, forOf, forTo, forUntil } from "../common/for";
 import {
   decodeAccessor,
   withBranches,
+  withPending,
   isPromise,
   normalizeDynamicRenderer,
 } from "../common/helpers";
@@ -52,7 +53,7 @@ import {
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
 
-export function _await_promise(
+export const _await_promise = /*@__PURE__*/ withPending(function (
   nodeAccessor: EncodedAccessor,
   params?: Signal<unknown>,
 ) {
@@ -226,7 +227,7 @@ export function _await_promise(
   };
 
   return awaitPromise;
-}
+});
 
 export function _await_content(
   nodeAccessor: EncodedAccessor,

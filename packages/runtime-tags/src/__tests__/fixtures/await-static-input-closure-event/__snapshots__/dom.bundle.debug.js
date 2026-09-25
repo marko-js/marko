@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const data = Promise.resolve({ items: ["a", "b"] });
-const $placeholder_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "Loading");
+const $placeholder_content = _content("__tests__/template.marko_3*content", "Loading");
 const $await_content__input_foo = /*@__PURE__*/ _closure_get("input_foo", ($scope) => _text($scope["#text/0"], $scope._._.input_foo), ($scope) => $scope._._, "__tests__/template.marko_2_input_foo#3/subscribe");
 const $await_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope._._, +$scope._._.count + 1);
