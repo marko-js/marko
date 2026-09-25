@@ -120,6 +120,20 @@ describe("compiler/compile", () => {
     });
   });
 
+  describe("source output", () => {
+    const print = (src, config) =>
+      compileSync(src, template, { translator, output: "source", ...config })
+        .code;
+
+    it("strips a tag's type arguments and parameters with stripTypes", () =>
+      assert.equal(
+        print("<foo<string> <T>|x: T|>${x}</foo>\n<type-arg<string>/>", {
+          stripTypes: true,
+        }),
+        "<foo|x|>\n  ${x}\n</foo>\n<type-arg/>",
+      ));
+  });
+
   describe("synthetic filenames", () => {
     const missingDir = path.join(os.tmpdir(), "marko-missing-dir", "x.marko");
 
