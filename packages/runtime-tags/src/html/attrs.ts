@@ -503,6 +503,8 @@ function nonVoidAttr(name: string, value: unknown) {
 // `\r` must escape: the parser normalizes a raw CR/CRLF in a value to LF.
 const singleQuoteAttrReplacements = /['\r]|&(?=[#a-zA-Z])/g;
 const doubleQuoteAttrReplacements = /["\r]|&(?=[#a-zA-Z])/g;
+// Quotes only what browsers need to read the value back; `=`, `<` and backticks
+// parse fine unquoted, so validator conformance is traded for size.
 const needsQuotedAttr = /["'>\s]|&[#a-zA-Z]|\/$/g;
 export function attrAssignment(value: string) {
   return value
