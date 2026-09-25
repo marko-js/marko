@@ -137,6 +137,13 @@ export default {
       );
     }
 
+    if (paramsBinding && (forType === "of" || forType === "in")) {
+      paramsBinding.iterates = {
+        expr: (getKnownAttrValues(tag.node)[forType]!.extra ??= {}),
+        type: forType,
+      };
+    }
+
     if (isAttrTag) {
       // The loop runs as its attribute tags are built, so its params change
       // only with its attributes, as a sectioned loop's params do.
@@ -204,12 +211,6 @@ export default {
 
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, tagExtra);
-      if (forType === "of" || forType === "in") {
-        paramsBinding.iterates = {
-          expr: (getKnownAttrValues(tag.node)[forType]!.extra ??= {}),
-          type: forType,
-        };
-      }
 
       const keyBinding = getLoopKeyBinding(byAttr, paramsBinding, forType!);
       if (keyBinding) {

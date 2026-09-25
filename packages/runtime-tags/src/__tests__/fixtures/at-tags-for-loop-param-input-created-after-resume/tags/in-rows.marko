@@ -1,0 +1,7 @@
+<let/show=false>
+<button#show-in onClick() { show = true }>show</button>
+<rows>
+  <for|key, value| in=input>
+    <@row><if=show><${value.content}/></if></@row>
+  </for>
+</rows>

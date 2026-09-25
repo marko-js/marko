@@ -1061,6 +1061,14 @@ export function mergeReferences<T extends t.Node>(
     // create a `merged` cycle and double its reads.
     if (extra === targetExtra) continue;
     extra.merged = targetExtra;
+    // Its links move with its reads, since serialization walks the target.
+    if (extra.downstream) {
+      targetExtra.downstream = bindingUtil.union(
+        targetExtra.downstream,
+        extra.downstream,
+      );
+      extra.downstream = undefined;
+    }
     // A literal has no reads but still lands in the position.
     forceRegister ||= extra.forceRegister;
     if (isReferencedExtra(extra)) {
@@ -1867,8 +1875,10 @@ export function setBindingDownstream(
   getBindingValueExprs().set(binding, expr || false);
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
-      expr.downstream = bindingUtil.add(expr.downstream, binding);
-      if (exprs) expr.downstreamExprs = exprs;
+      // A merged expression's links live on the expression it merged into.
+      const target = getCanonicalExtra(expr);
+      target.downstream = bindingUtil.add(target.downstream, binding);
+      if (exprs) target.downstreamExprs = exprs;
     });
   }
 }
@@ -2745,7 +2755,7 @@ export function pruneBinding(binding: Binding, settled?: true) {
 
   for (const alias of binding.aliases) {
     if (pruneBinding(alias, settled)) {
-      binding.aliases.delete(alias);
+      if (!feedsLocalClosures(alias, settled)) binding.aliases.delete(alias);
     } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
     }
@@ -2753,7 +2763,8 @@ export function pruneBinding(binding: Binding, settled?: true) {
 
   for (const [key, alias] of binding.propertyAliases) {
     if (pruneBinding(alias, settled)) {
-      binding.propertyAliases.delete(key);
+      if (!feedsLocalClosures(alias, settled))
+        binding.propertyAliases.delete(key);
     } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
     }
@@ -2774,6 +2785,23 @@ export function pruneBinding(binding: Binding, settled?: true) {
   }
 
   return shouldPrune;
+}
+
+// Whether a binding, or a part of it, feeds read local closures (as an attribute
+// tag `<for>` param does): pruning keeps it linked so serialization reaches them.
+function feedsLocalClosures(binding: Binding, settled?: true): boolean {
+  if (binding.localClosures) {
+    for (const closure of binding.localClosures.values()) {
+      if (!pruneBinding(closure, settled)) return true;
+    }
+  }
+  for (const alias of binding.aliases) {
+    if (feedsLocalClosures(alias, settled)) return true;
+  }
+  for (const alias of binding.propertyAliases.values()) {
+    if (feedsLocalClosures(alias, settled)) return true;
+  }
+  return false;
 }
 
 function pruneSettledBinding(binding: Binding) {
@@ -3285,8 +3313,8 @@ function downstreamSerialization(
     : linked;
 }
 
-// Where a path into `part` lands in a downstream `binding`: the same path when
-// it is `part` or spreads it as is, an item's path when iterating it, or whole.
+// Where a path into `part` lands in a downstream `binding`: an item's path when
+// iterating it, the same path when it is `part` or spreads it as is, or whole.
 function getDownstreamPath(
   extra: t.NodeExtra,
   binding: Binding,
@@ -3294,9 +3322,6 @@ function getDownstreamPath(
   properties: Opt<string> | true | undefined,
 ): Opt<string> | true {
   if (properties === undefined || properties === true || !part) return true;
-  if (isReferenceTo(extra, part) || bindingUtil.has(extra.spreadFrom, part)) {
-    return properties;
-  }
   const iterates = binding.iterates;
   if (iterates && isReferenceTo(iterates.expr, part)) {
     if (iterates.type === "in") return concat("1", rest(properties));
@@ -3306,6 +3331,9 @@ function getDownstreamPath(
       "0",
       isIndexProperty(first(properties)) ? rest(properties) : properties,
     );
+  }
+  if (isReferenceTo(extra, part) || bindingUtil.has(extra.spreadFrom, part)) {
+    return properties;
   }
   return true;
 }
@@ -3393,6 +3421,14 @@ function computeBindingSerialization(
       serialization,
       serializationForBinding(alias, properties),
     );
+  }
+  if (binding.localClosures) {
+    for (const closure of binding.localClosures.values()) {
+      serialization = mergeSerialization(
+        serialization,
+        serializationForBinding(closure, properties),
+      );
+    }
   }
   if (properties === undefined) return serialization;
   if (properties === true) {

@@ -1,0 +1,5 @@
+<let/count=0>
+<button#inc onClick() { count++ }>inc</button>
+<of-rows><@item>Of ${count}</@item></of-rows>
+<in-rows><@item>In ${count}</@item></in-rows>
+<nested-rows><@row><@cell>Cell ${count}</@cell></@row></nested-rows>

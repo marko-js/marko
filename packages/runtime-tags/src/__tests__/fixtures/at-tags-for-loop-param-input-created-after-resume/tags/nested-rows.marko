@@ -1,0 +1,11 @@
+<let/show=false>
+<button#show-nested onClick() { show = true }>show</button>
+<grid>
+  <for|row| of=input.row>
+    <@row>
+      <for|cell| of=row.cell>
+        <@cell><if=show><${cell.content}/></if></@cell>
+      </for>
+    </@row>
+  </for>
+</grid>
