@@ -72,5 +72,5 @@ Pre-ship:
 Gotchas:
 
 - Translator/compiler-only fixes cost no runtime bytes; prefer them when directions are equal.
-- `MARKO_AGENT_FIX_GUIDE`/`CLAUDECODE` env can leak "Fix guide: READ ..." lines into error snapshots. The terminal env is the cause, not the fix.
+- Any coding-agent env marker (`packages/compiler/src/util/agent-fix-guide.js` › `isCodingAgent` sniffs several, not just `CLAUDECODE`) can leak "Fix guide: READ ..." lines into error snapshots. `MARKO_AGENT_FIX_GUIDE=0` is the single reliable override: it wins over every marker, and the suite passes with it set. The terminal env is the cause, not the fix.
 - Never `git stash` without explicit paths; other workspaces share this checkout's stash list.

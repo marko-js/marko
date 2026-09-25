@@ -105,12 +105,14 @@ function inShard(index: number) {
 
 function noop() {}
 
+// Sets the override rather than an agent marker, which a terminal's
+// `MARKO_AGENT_FIX_GUIDE=0` would beat.
 function forceCodingAgent() {
-  const prev = process.env.CLAUDECODE;
-  process.env.CLAUDECODE = "1";
+  const prev = process.env.MARKO_AGENT_FIX_GUIDE;
+  process.env.MARKO_AGENT_FIX_GUIDE = "1";
   return () => {
-    if (prev === undefined) delete process.env.CLAUDECODE;
-    else process.env.CLAUDECODE = prev;
+    if (prev === undefined) delete process.env.MARKO_AGENT_FIX_GUIDE;
+    else process.env.MARKO_AGENT_FIX_GUIDE = prev;
   };
 }
 
