@@ -1,4 +1,4 @@
-// size: 29447 (min) 10870 (brotli)
+// size: 29355 (min) 10829 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -96,7 +96,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
   _resumed = {},
   patchers = {},
-  onPatchShell,
   patchScope = (partial, live) => {
     for (let key in partial) patchers[key[0]](live, key, partial[key]);
   },
@@ -105,7 +104,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   readyIds,
   lazyEnabled,
   patchRender,
-  patching = 0,
   isResuming,
   cloneCache = {},
   _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
@@ -950,10 +948,7 @@ function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
 }
 function beginPatch(render) {
-  ((patchRender = render), render.w(), (patching = 1));
-}
-function abortPatch() {
-  patching = 0;
+  ((patchRender = render), render.w());
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
@@ -1004,12 +999,6 @@ function init(runtimeId = "M") {
               scope
             ),
             applyScopes = (partials) => {
-              if (patching && patchRender === render) {
-                let i = 0;
-                for (; typeof partials[i] == "string";) onPatchShell(partials[i++]);
-                partials[i] && patchScope(partials[i], getScope(1));
-                return;
-              }
               let scopeId = partials[0];
               for (let i = 1; i < partials.length; i++) {
                 let partial = partials[i];
@@ -1139,9 +1128,7 @@ function init(runtimeId = "M") {
                 } else if (readyIds && typeof serialized == "number") break;
                 else {
                   let scopes = serialized(serializeContext);
-                  Array.isArray(scopes)
-                    ? applyScopes(scopes)
-                    : patching && patchRender === render && scopes && applyScopes([scopes]);
+                  Array.isArray(scopes) && applyScopes(scopes);
                 }
               }
               return (resumes.splice(0, i), i);
@@ -2149,7 +2136,7 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let deferred, bindRef;
+let onPatchShell, deferred, bindRef;
 /**
  * The live page's side of `template.patch`: `[headers, apply]`, the headers
  * a patch request sends (what the page holds, for the server to elide) and
@@ -2175,11 +2162,15 @@ function patch($global) {
             (ctx) => {
               root = ctx(1);
               let value = fn(responseCtx);
-              if (typeof value == "string") patchRender.k = value;
-              else {
-                let tree = Array.isArray(value) ? value[value.length - 1] : value;
-                return (typeof tree == "object" && trees.push(tree), value);
+              if (typeof value == "string") {
+                patchRender.k = value;
+                return;
               }
+              let flush = Array.isArray(value) ? value : [value],
+                i = 0;
+              for (; typeof flush[i] == "string";) onPatchShell(flush[i++]);
+              let tree = flush[i];
+              tree && typeof tree == "object" && (trees.push(tree), patchScope(tree, root));
             },
           ]),
           commitFlush(),
@@ -2188,7 +2179,7 @@ function patch($global) {
       } catch {
         return (abortRun(), 0);
       } finally {
-        ((patchRender.r.length = 0), abortPatch());
+        patchRender.r.length = 0;
       }
     },
   ];

@@ -1,0 +1,49 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<button>top<!--M_$2 #text/1-->:<!>
+    0<!--M_$2 #text/2--></button><!--M_$2 #button/0--><!--M_[--><!--M_!^4--><i>loading</i><!--M_!4--><!--M_]1 #text/2 4-->
+<t hidden M_=4>
+  <!--M_[--><b>a1<!--M_$6 #text/0--></b><!--M_]4 #text/0 6--><button>in-try<!--M_$5 #text/1-->:
+    <!>0<!--M_$5 #text/2--></button><!--M_$5 #button/0--><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/child.marko": [
+      _ => [2, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/child.marko_0 2"
+    ]
+  };
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [1, {
+    "#childScope/1": _(2),
+    "ClosureScopes:input_a": new Set,
+    "ClosureScopes:input_b": new Set
+  }, 2, {
+    _: _(1),
+    "#childScope/2": _(5),
+    "#PlaceholderContent": _._._content(
+      `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/template.marko_2*content,<i>loading</i>`,
+      _(1))
+  }]];
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/child.marko"
+    ].push(1);
+  M._.j[4] = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [5, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/child.marko_0 5"
+      ))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/child.marko"
+      ])
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[--><em>b1<!--M_$8 #text/0--></em><!--M_]4 #text/3 8--></t>
+<script>
+  M._.w()
+</script>

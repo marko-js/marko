@@ -5,13 +5,13 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
+import { installPatchShells } from "./patch";
 import { queueEffect, runId } from "./queue";
 import { _content as content } from "./renderer";
 import {
   creating,
   createPatchers,
   getRegisteredWithScope,
-  installPatchShells,
   patchCreated,
   patchers,
   withCreating,

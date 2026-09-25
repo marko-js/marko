@@ -84,11 +84,6 @@ export type Patcher<K extends PatchKind = PatchKind> = (
 
 export const _resumed: Record<string, unknown> = {};
 export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
-// Flush shells ahead of the scope tree (`id;walks;template`
-// strings), registered by the patch feature that understands them.
-let onPatchShell: ((entry: string) => void) | undefined;
-export const installPatchShells = (handler: NonNullable<typeof onPatchShell>) =>
-  (onPatchShell = handler);
 // Rejects the applying patch so the caller falls back to a full navigation;
 // only conditions reachable in a matched build guard explicitly.
 export const failPatch = () => {
@@ -149,10 +144,8 @@ let patchReadyFailed: undefined | ((readyId: string) => void);
 // Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
-// The render a flush is applying against (set by `beginPatch`); read only
-// while `patching`.
+// The render a flush is applying against (set by `beginPatch`).
 export let patchRender!: RenderData;
-let patching: 0 | 1 = 0;
 // A flush's creations all happen in its own run (a held partial applies in
 // a fresh one), so a scope with the current run's `Gen` is the flush's own.
 export function beginPatch(render: RenderData) {
@@ -160,11 +153,6 @@ export function beginPatch(render: RenderData) {
   // A page with no effects never wrote a walk call; pairing into resumed
   // branches needs the walked links, so finish the resume before patching.
   render.w();
-  patching = 1;
-}
-
-export function abortPatch() {
-  patching = 0;
 }
 // Set while a partial applies to a tree a shell's walk just created: fresh
 // scopes met then have no renderer to set them up (see `PatchKey.Setup`).
@@ -284,19 +272,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           return scope;
         };
         const applyScopes = (partials: (Scope | number)[]) => {
-          if (patching && patchRender === render) {
-            // `[...shells, tree]`, anchored at the page root (scope 1); a
-            // deferred run applies via `_()`, leaving only a trailing 0.
-            let i = 0;
-            while (typeof partials[i] === "string") {
-              onPatchShell!(partials[i++] as unknown as string);
-            }
-            if (partials[i]) {
-              patchScope(partials[i] as Scope, getScope(1));
-            }
-            return;
-          }
-
           let scopeId = partials[0] as number;
           for (let i = 1; i < partials.length; i++) {
             const partial = partials[i];
@@ -510,12 +485,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               // Gates can't reach here (only in ready streams, readyIds set);
               // a payload returns its fill or applies it and ends in `,0`.
               const scopes = (serialized as ResumeFn)(serializeContext);
-              if (Array.isArray(scopes)) {
-                applyScopes(scopes);
-              } else if (patching && patchRender === render && scopes) {
-                // A shell-less flush is its bare tree object.
-                applyScopes([scopes as Scope]);
-              }
+              if (Array.isArray(scopes)) applyScopes(scopes);
             }
           }
           resumes.splice(0, i);

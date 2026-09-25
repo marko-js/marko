@@ -8,17 +8,22 @@ import {
 } from "../common/types";
 import { abortRun, run, runEffects, runId } from "./queue";
 import {
-  abortPatch,
   beginPatch,
   curRenders,
   patchers,
   patchRender,
+  patchScope,
   _resumed,
 } from "./resume";
 import type { RenderData, SerializeContext } from "./resume";
 
 // Installed by `patch-ready`: discards what a rejected flush left held.
 let discardReady: (() => void) | undefined;
+// Flush shells ahead of the scope tree (`id;walks;template` strings),
+// registered by the patch feature that understands them.
+let onPatchShell: ((entry: string) => void) | undefined;
+export const installPatchShells = (handler: NonNullable<typeof onPatchShell>) =>
+  (onPatchShell = handler);
 /** Whether a flush applied: truthy when it did. */
 export type Applied = 0 | 1;
 // What the flush being applied left waiting (a module, a streaming body):
@@ -109,14 +114,17 @@ export function patch($global: PatchGlobal) {
             // A response ends with the token naming what the page now holds.
             if (typeof value === "string") {
               patchRender.k = value;
-            } else {
-              // The tree is the flush's last value; a flush of only shells (or
-              // nothing) ends in a shell string, which the server keys no tree for.
-              const tree = Array.isArray(value)
-                ? value[value.length - 1]
-                : value;
-              if (typeof tree === "object") trees.push(tree);
-              return value;
+              return;
+            }
+            // `[...shells, tree]` or the bare tree, anchored at the page
+            // root; a flush of only shells keys no tree.
+            const flush = Array.isArray(value) ? value : [value];
+            let i = 0;
+            while (typeof flush[i] === "string") onPatchShell!(flush[i++]);
+            const tree = flush[i];
+            if (tree && typeof tree === "object") {
+              trees.push(tree);
+              patchScope(tree, root);
             }
           },
         ] as typeof patchRender.r;
@@ -133,7 +141,6 @@ export function patch($global: PatchGlobal) {
         // A rejected flush must not read as page data on a later walk; the
         // array stays, a still-streaming page pushes into it.
         patchRender.r!.length = 0;
-        abortPatch();
       }
     },
   ] as const;
@@ -178,7 +185,6 @@ export function applyDeferred(render: RenderData, apply: () => void): Applied {
     return 0;
   } finally {
     render.r!.length = 0;
-    abortPatch();
   }
 }
 
