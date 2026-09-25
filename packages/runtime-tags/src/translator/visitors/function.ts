@@ -238,6 +238,8 @@ export function resolveRegisteredExport(
   }
 }
 
+// A function registers when the whole expression holding it serializes, not
+// only its own path; narrowing to the path needs its own input tracking.
 function resolveSerializeReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | SerializeReason;
   for (const exprExtra of exprExtras) {
