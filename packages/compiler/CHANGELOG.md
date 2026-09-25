@@ -1,5 +1,33 @@
 # Change Log
 
+## 5.42.7
+
+### Patch Changes
+
+- [#3313](https://github.com/marko-js/marko/pull/3313) [`8e03f4a`](https://github.com/marko-js/marko/commit/8e03f4a272dfb30800486595bc58acd84668f544) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add the native `<search>` tag.
+
+- [#4248](https://github.com/marko-js/marko/pull/4248) [`d36b447`](https://github.com/marko-js/marko/commit/d36b4477217efb78711d7e375c74f9cf3607ecbf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Append the coding-agent fix guide to a thrown `CompileError`'s `label` as well as its `message`, so bundler plugins that print `label` in place of the framed message keep the pointer.
+
+- [#4245](https://github.com/marko-js/marko/pull/4245) [`8af26eb`](https://github.com/marko-js/marko/commit/8af26eb6663760af69ec3ad86c9207d3e6d0b2cb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - An invalid parameter in an attribute method (`<a onClick(1){}>`) is now reported as a compile error with a code frame at the parameter, instead of crashing with Babel's `TypeError: Property params[0] of FunctionExpression …`.
+
+- [#4241](https://github.com/marko-js/marko/pull/4241) [`6485a1f`](https://github.com/marko-js/marko/commit/6485a1ff7c2ee962beed8a30347de9fbe314b281) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `CompileResult` now follows the options passed to `compile*`: `ast` and `map` are `null` unless `ast: true` / `sourceMaps` are set, and `code` is `null` with `code: false`. Code that reads `ast` or `map` may need a null check. `TagDefinition` and `AttributeDefinition` mark fields that real definitions can omit as optional, declare `setFlag`, and `parseTypeArgs` / `parseTypeParams` are now declared.
+
+- [#4253](https://github.com/marko-js/marko/pull/4253) [`0bde97c`](https://github.com/marko-js/marko/commit/0bde97c4cb198039aedb7f3fe13b9680c237e060) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ship a README and point the package homepage at the Compiler API reference on markojs.com.
+
+- [#4268](https://github.com/marko-js/marko/pull/4268) [`413c8f3`](https://github.com/marko-js/marko/commit/413c8f351792c6c3f3826590fe33a19150e1760c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep the `marko/translator` interop translator when an app on `marko@5` also depends on `@marko/runtime-tags`, instead of switching to the translator that rejects the Class API. When two Marko runtimes are depended on, the compile error now names both and points at the `translator` option.
+
+- [#4247](https://github.com/marko-js/marko/pull/4247) [`348266e`](https://github.com/marko-js/marko/commit/348266e2ddcb07434ffa08c7eaef42132dfc3749) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep the comments inside an open tag in source output, which were deleted before. Each is printed before the attribute after it, or after the last one, and a comma follows a value that a comment comes after, so the comment is not read as part of it.
+
+- [#4238](https://github.com/marko-js/marko/pull/4238) [`1c73664`](https://github.com/marko-js/marko/commit/1c73664f966a0ad26ea1ad71e9aa1d693ea30ae5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep TypeScript on attribute methods and tag params in `output: "source"` and `"migrate"`: a shorthand method keeps its type parameters and parameter types (`onClick<T>(event: T) {}`), a function value with a return type is no longer rewritten as a shorthand that drops it, and tag params keep their types (`|x: T|`).
+
+- [#4255](https://github.com/marko-js/marko/pull/4255) [`0848d17`](https://github.com/marko-js/marko/commit/0848d173030cf990e3fc23fc097cc70111e2b007) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - End a compiled template's source map `sourceRoot` with a path separator, so Node's `--enable-source-maps` and URL-based consumers such as browser devtools resolve the original `.marko` file instead of a path with the directory and file name run together.
+
+- [#4238](https://github.com/marko-js/marko/pull/4238) [`1c73664`](https://github.com/marko-js/marko/commit/1c73664f966a0ad26ea1ad71e9aa1d693ea30ae5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Escape text content in `output: "source"` and `"migrate"` with htmljs-parser's `escapeText`, so a literal `\${text}` no longer comes back as a live placeholder, and stop inserting a space between adjacent text nodes, which rendered as an extra space.
+
+- [#4242](https://github.com/marko-js/marko/pull/4242) [`4c04d1d`](https://github.com/marko-js/marko/commit/4c04d1df5b6527355b7093d9ae5f29d4355a9f0a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Accept a tag var that ends in a line comment (`<div/el // the box\n  class="box"/>`), which htmljs-parser folds into the var, and keep the comment from swallowing the rest of the tag in source output.
+
+- [#4244](https://github.com/marko-js/marko/pull/4244) [`710a6f2`](https://github.com/marko-js/marko/commit/710a6f2c727321a673f3aaa1a23551ab070f8790) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Template text now collapses only HTML's ASCII whitespace (space, tab, newline, carriage return, form feed). A non-breaking space, U+2028, U+2029 or U+FEFF typed in text is kept instead of becoming a plain space, matching attribute values.
+
 ## 5.42.6
 
 ### Patch Changes
