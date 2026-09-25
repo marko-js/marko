@@ -2,6 +2,7 @@ import assert from "assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { stripVTControlCharacters } from "node:util";
 
 import {
   compile,
@@ -27,6 +28,15 @@ const fromMemory = (src) => ({
   readFile: (_file, _encoding, cb) => cb(null, src),
   readFileSync: () => src,
 });
+
+const failing = (src) => {
+  try {
+    compileSync(src, "test.marko", { translator, code: false });
+  } catch (err) {
+    return err;
+  }
+  assert.fail("expected a compile error");
+};
 
 describe("compiler/compile", () => {
   describe("compileFile", () => {
@@ -166,15 +176,6 @@ describe("compiler/compile", () => {
   // one compile can report several; the fixture harness only ever reads
   // `.message`, so nothing else exercises how the aggregate serializes.
   describe("aggregate errors", () => {
-    const failing = (src) => {
-      try {
-        compileSync(src, "test.marko", { translator, code: false });
-      } catch (err) {
-        return err;
-      }
-      assert.fail("expected a compile error");
-    };
-
     it("throws the error itself when there is only one", () => {
       const err = failing("<if>a</if>");
       assert.equal(err.name, "CompileError");
@@ -199,6 +200,30 @@ describe("compiler/compile", () => {
       const err = failing("<if>a</if>\n<if>b</if>");
       assert.equal(err.toJSON(), String(err));
       assert.equal(JSON.parse(JSON.stringify({ err })).err, String(err));
+    });
+  });
+
+  describe("code frame", () => {
+    const long = "x".repeat(100_000);
+    const frameLines = (err) => stripVTControlCharacters(err.frame).split("\n");
+
+    it("windows a long line around the error and keeps the label", () => {
+      const err = failing(`<div>${long}<if>a</if>${long}</div>`);
+      assert.ok(err.message.length < 1_000, `${err.message.length} chars`);
+      assert.match(err.message, /test\.marko:1:100007/);
+      const [source, marker] = frameLines(err);
+      assert.match(source, /^> 1 \| …x+<if>a<\/if>x+…$/);
+      assert.equal(marker.indexOf("^"), source.indexOf("if>"));
+      assert.match(marker, /\^\^ The \[`if` tag\]/);
+    });
+
+    it("windows the long lines around it to the same columns", () => {
+      const err = failing(`<div>${long}</div>\n<if>a</if>`);
+      assert.ok(err.message.length < 1_000, `${err.message.length} chars`);
+      const [above, source, marker] = frameLines(err);
+      assert.match(above, /^  1 \| <div>x+…$/);
+      assert.equal(source, "> 2 | <if>a</if>");
+      assert.equal(marker.indexOf("^"), source.indexOf("if>"));
     });
   });
 
