@@ -1,28 +1,30 @@
 <button>show</button><!--M_$1 #button/0--><!--M_[--><!--M_|3 #text/0--><!--M_]1 #text/1 3--><!--M_[--><!--M_|6 #text/0--><!--M_]4 #text/0 6--><!--M_[--><!--M_!^8-->layout
-loading<!--M_!8--><!--M_]1 #text/3 8-->
+loading<!--M_!8--><!--M_]1 #text/3 8--><!--M_[--><!--M_|12 #text/0--><!--M_]1 #text/4 12--><!--M_[--><!--M_!^14-->button
+loading<!--M_!14--><!--M_]1 #text/5 14-->
 <t hidden M_=8>
   <div class=layout><!--M_#b--></div>
 </t>
+<t hidden M_=14><!--M_#c--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
       Content: {
         content: _(1,
-          "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_2*content"
+          "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_3*content"
           )
       },
-      "ClosureScopes:show": new Set([_(3)]),
+      "ClosureScopes:show": new Set([_(3), _(12)]),
       "#childScope/2": _(4)
     }, 1, {
       _: _(1),
       "#PlaceholderContent": _(1,
-        "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_5*content"
+        "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_7*content"
         )
     }, {
       rest: {
         content: _(1,
-          "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_6*content"
+          "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_8*content"
           )
       },
       "ClosureScopes:show": new Set([_(6)])
@@ -30,6 +32,12 @@ loading<!--M_!8--><!--M_]1 #text/3 8-->
       _: _(4),
       "#PlaceholderContent": _(4,
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/tags/wrapper.marko_3*content"
+        )
+    }, 5, {
+      _: _(1),
+      "ClosureSignalIndex:show": 1,
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_14*content"
         )
     }],
     "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_0 1"
@@ -40,6 +48,16 @@ loading<!--M_!8--><!--M_]1 #text/3 8-->
 <!-- FLUSH -->
 
 <t hidden M_=b>laid out</t>
+<t hidden M_=c><button>pressed</button><!--M_$19 #button/0--></t>
 <script>
+  M._.r.push(_ => [19, {
+    "BranchScopes:#button/0": _(20),
+    "ConditionalRenderer:#button/0": "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/template.marko_18*content 18"
+  }]);
+  M._.j.c = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-rendered-content/tags/base-button.marko_0_input#2 19"
+      )
+  };
   M._.w()
 </script>

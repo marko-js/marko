@@ -13,12 +13,13 @@
 <button>
   show
 </button>
-layout loading
+layout loadingbutton loading
 ```
 ## Change
 ```
+INSERT: ::text@0 + ::text("button loading")
 INSERT: button + ::text("layout loading")
-REMOVE: ::text + div
+REMOVE: ::text@0 + div
 ```
 
 # Update
@@ -31,11 +32,18 @@ REMOVE: ::text + div
 >
   laid out
 </div>
+<button>
+  pressed
+</button>
 ```
 ## Change
 ```
-INSERT: button + .layout
+INSERT: .layout + button
+REMOVE: button:nth-of-type(2) + ::text("button loading")
+INSERT: button:nth-of-type(1) + .layout
 REMOVE: .layout + ::text("layout loading")
+INSERT: button:nth-of-type(2)::text("pressed")
+UPDATE: button:nth-of-type(2)::text " " => "pressed"
 ```
 
 # Update
@@ -53,11 +61,18 @@ document.querySelector("button").click();
 >
   laid out
 </div>
+<div
+  class="layout"
+/>
+<button>
+  pressed
+</button>
 ```
 ## Change
 ```
 INSERT: div:nth-of-type(1) + section
-INSERT: button + div
+INSERT: button:nth-of-type(1) + div
+INSERT: div:nth-of-type(2) + div
 ```
 
 # Update
@@ -71,13 +86,19 @@ define loadingwrapper loading
 >
   laid out
 </div>
+layout attr loading
+<button>
+  pressed
+</button>
 ```
 ## Change
 ```
 INSERT: ::text@0 + ::text("wrapper loading")
 REMOVE: ::text@14 + section
-INSERT: button + ::text("define loading")
+INSERT: button:nth-of-type(1) + ::text("define loading")
 REMOVE: ::text@0 + div
+INSERT: .layout + ::text("layout attr loading")
+REMOVE: ::text@29 + .layout
 ```
 
 # Update
@@ -96,11 +117,21 @@ REMOVE: ::text@0 + div
 >
   laid out
 </div>
+<div
+  class="layout"
+>
+  defined
+</div>
+<button>
+  pressed
+</button>
 ```
 ## Change
 ```
 INSERT: div:nth-of-type(1) + section
 REMOVE: section + ::text("wrapper loading")
-INSERT: button + div
+INSERT: button:nth-of-type(1) + div
 REMOVE: div:nth-of-type(1) + ::text("define loading")
+INSERT: div:nth-of-type(2) + div
+REMOVE: div:nth-of-type(3) + ::text("layout attr loading")
 ```

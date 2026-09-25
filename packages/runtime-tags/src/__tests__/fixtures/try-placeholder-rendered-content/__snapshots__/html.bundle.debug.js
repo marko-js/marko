@@ -43,6 +43,17 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
 });
 
+// tags/base-button.marko
+var base_button_default = _template("__tests__/tags/base-button.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	_html("<button");
+	_attrs_content(input, "#button/0", $scope0_id, "button");
+	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
+	_script($scope0_id, "__tests__/tags/base-button.marko_0_input#2");
+	_scope($scope0_id, {}, "__tests__/tags/base-button.marko", 0, { "EventAttributes:#button/0": ["...input", "1:12"] });
+});
+
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
@@ -50,11 +61,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $show__closures = new Set();
 	let show = false;
 	_html(`<button>show</button>${_el_resume($scope0_id, "#button/0")}`);
-	const Content = { content: _content_resume("__tests__/template.marko_2*content", () => {
-		const $scope2_id = _scope_id();
+	const Content = { content: _content_resume("__tests__/template.marko_3*content", () => {
+		const $scope3_id = _scope_id();
 		_scope_reason();
-		_await($scope2_id, "#text/0", resolveAfter("defined"), (v) => {
-			const $scope4_id = _scope_id();
+		_await($scope3_id, "#text/0", resolveAfter("defined"), (v) => {
+			const $scope6_id = _scope_id();
 			_html(_escape(v));
 		}, 0);
 	}, $scope0_id) };
@@ -63,48 +74,84 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_if(() => {
 			if (show) {
-				const $scope3_id = _scope_id();
+				const $scope4_id = _scope_id();
 				_html("<div>");
-				_attr_content("#div/0", $scope3_id, Content, 0);
+				_attr_content("#div/0", $scope4_id, Content, 0);
 				_html("</div>");
-				_scope($scope3_id, {}, "__tests__/template.marko", "10:4");
+				_scope($scope4_id, {}, "__tests__/template.marko", "10:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
-		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2"), "__tests__/template.marko_1_show#4/subscribe");
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
+		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2"), "__tests__/template.marko_1_show#6/subscribe");
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_7*content", () => {
 		_scope_reason();
-		const $scope5_id = _scope_id();
+		const $scope7_id = _scope_id();
 		_html("define loading");
 	}, $scope0_id) }) });
 	_set_serialize_reason(10);
 	const $childScope = _peek_scope_id();
 	wrapper_default({
 		show,
-		content: _content_resume("__tests__/template.marko_6*content", () => {
+		content: _content_resume("__tests__/template.marko_8*content", () => {
 			_scope_reason();
-			const $scope6_id = _scope_id();
-			_await($scope6_id, "#text/0", resolveAfter("wrapped"), (v) => {
-				const $scope7_id = _scope_id();
+			const $scope8_id = _scope_id();
+			_await($scope8_id, "#text/0", resolveAfter("wrapped"), (v) => {
+				const $scope9_id = _scope_id();
 				_html(_escape(v));
 			}, 0);
 		}, $scope0_id)
 	});
-	_try($scope0_id, "#text/3", _content_resume("__tests__/template.marko_8*content", () => {
-		const $scope8_id = _scope_id();
+	_try($scope0_id, "#text/3", _content_resume("__tests__/template.marko_10*content", () => {
+		const $scope10_id = _scope_id();
 		_scope_reason();
-		layout_default({ content: _content("__tests__/template.marko_10*content", () => {
+		layout_default({ content: _content("__tests__/template.marko_12*content", () => {
 			_scope_reason();
-			const $scope10_id = _scope_id();
-			_await($scope10_id, "#text/0", resolveAfter("laid out"), (v) => {
-				const $scope11_id = _scope_id();
+			const $scope12_id = _scope_id();
+			_await($scope12_id, "#text/0", resolveAfter("laid out"), (v) => {
+				const $scope13_id = _scope_id();
 				_html(_escape(v));
 			}, 0);
-		}, $scope8_id) });
-	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_9*content", () => {
+		}, $scope10_id) });
+	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_11*content", () => {
 		_scope_reason();
-		const $scope9_id = _scope_id();
+		const $scope11_id = _scope_id();
 		_html("layout loading");
+	}, $scope0_id) }) }, 0);
+	_try($scope0_id, "#text/4", _content_resume("__tests__/template.marko_2*content", () => {
+		const $scope2_id = _scope_id();
+		_scope_reason();
+		_if(() => {
+			if (show) {
+				const $scope5_id = _scope_id();
+				layout_default({ content: Content });
+				_scope($scope5_id, {}, "__tests__/template.marko", "23:4");
+				return 0;
+			}
+		}, $scope2_id, "#text/0", 1, 1, 1, 0, 1);
+		_subscribe($show__closures, _scope($scope2_id, {
+			_: _scope_with_id($scope0_id),
+			"ClosureSignalIndex:show": 1
+		}, "__tests__/template.marko", "21:2"), "__tests__/template.marko_2_show#6/subscribe");
+	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_14*content", () => {
+		_scope_reason();
+		const $scope14_id = _scope_id();
+		_html("layout attr loading");
+	}, $scope0_id) }) });
+	_try($scope0_id, "#text/5", _content_resume("__tests__/template.marko_15*content", () => {
+		const $scope15_id = _scope_id();
+		_scope_reason();
+		_await($scope15_id, "#text/0", resolveAfter("pressed"), (v) => {
+			const $scope17_id = _scope_id();
+			base_button_default({ content: _content("__tests__/template.marko_18*content", () => {
+				_scope_reason();
+				const $scope18_id = _scope_id();
+				_html(_escape(v));
+			}, $scope17_id) });
+		}, 0);
+	}, $scope0_id), { placeholder: attrTag({ content: _content("__tests__/template.marko_16*content", () => {
+		_scope_reason();
+		const $scope16_id = _scope_id();
+		_html("button loading");
 	}, $scope0_id) }) }, 0);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

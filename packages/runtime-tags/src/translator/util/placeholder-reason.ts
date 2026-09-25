@@ -51,7 +51,13 @@ type PendingSource =
     }
   // Content rendered from a value (a dynamic tag, or a native tag's `content`
   // or spread), which may be anything unless it is the template's own input.
-  | { section: Section; renderer: t.Node | undefined; spread: boolean };
+  | { section: Section; renderer: RendererRef | undefined };
+
+/** A renderer read as `id.path…` of a declared identifier. */
+interface RendererRef {
+  id: t.Identifier;
+  path: string[];
+}
 
 interface PlaceholderTry {
   tag: t.NodePath<t.MarkoTag>;
@@ -81,7 +87,7 @@ export function trackPendingTemplate(
   getPendingSources().push(
     // A `<define>` body or this template itself is still being analyzed.
     template.program === section.program
-      ? { section, renderer: undefined, spread: false }
+      ? { section, renderer: undefined }
       : {
           section,
           template,
@@ -102,10 +108,20 @@ export function trackPendingRenderer(
   renderer: t.Node | undefined,
   spread = false,
 ) {
+  const path = spread ? ["content"] : [];
+  while (
+    t.isMemberExpression(renderer) &&
+    !renderer.computed &&
+    t.isIdentifier(renderer.property)
+  ) {
+    path.unshift(renderer.property.name);
+    renderer = renderer.object;
+  }
+  const id =
+    t.isIdentifier(renderer) && tag.scope.getBinding(renderer.name)?.identifier;
   getPendingSources().push({
     section: getOrCreateSection(tag),
-    renderer,
-    spread,
+    renderer: id ? { id, path } : undefined,
   });
 }
 
@@ -185,7 +201,7 @@ function addPendingSource(
     // accounts for where it wrote it.
     const input = boundary.parent
       ? undefined
-      : getRenderedInput(source.renderer, source.spread, boundary);
+      : getRenderedInput(source.renderer, boundary);
     if (input !== undefined) {
       (pending.renders ||= new Set()).add(input);
       return;
@@ -223,26 +239,16 @@ function addPendingSource(
 
 // The `input` property a renderer is exactly (`input.content`, a destructured
 // `content`, or through a spread of `input` its `content`).
-function getRenderedInput(
-  renderer: t.Node | undefined,
-  spread: boolean,
-  program: Section,
-) {
-  let property = spread ? "content" : undefined;
-  while (
-    t.isMemberExpression(renderer) &&
-    !renderer.computed &&
-    t.isIdentifier(renderer.property)
-  ) {
-    property = renderer.property.name;
-    renderer = renderer.object;
-  }
-  let binding = t.isIdentifier(renderer) ? renderer.extra?.binding : undefined;
-  while (binding?.upstreamAlias) {
-    if (binding.property !== undefined) property = binding.property;
+function getRenderedInput(renderer: RendererRef | undefined, program: Section) {
+  if (!renderer) return;
+  const path = [...renderer.path];
+  let binding = renderer.id.extra?.binding;
+  while (binding?.upstreamAlias && !binding.restOffset) {
+    if (binding.property !== undefined) path.unshift(binding.property);
     binding = binding.upstreamAlias;
   }
-  return binding && binding === program.params ? property : undefined;
+  // The template's params hold its `input` first.
+  return binding === program.params && path[0] === "0" ? path[1] : undefined;
 }
 
 // A child's input params resolve through the call site; its own state, or

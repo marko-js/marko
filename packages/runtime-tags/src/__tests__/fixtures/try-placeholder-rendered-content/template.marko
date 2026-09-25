@@ -18,3 +18,13 @@ import { resolveAfter } from "../../utils/resolve";
   </layout>
   <@placeholder>layout loading</@placeholder>
 </try>
+<try>
+  <@placeholder>layout attr loading</@placeholder>
+  <if=show><layout content=Content/></if>
+</try>
+<try>
+  <await|v|=resolveAfter("pressed")>
+    <base-button>${v}</base-button>
+  </await>
+  <@placeholder>button loading</@placeholder>
+</try>
