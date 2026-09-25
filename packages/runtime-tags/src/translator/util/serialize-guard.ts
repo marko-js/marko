@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
-import { type Opt, some, type SortedOpt } from "./optional";
+import { some } from "./optional";
 import {
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -18,7 +18,6 @@ import {
   isReasonDynamic,
   type SerializeReason,
   type SerializeReasons,
-  sourcesUtil,
 } from "./serialize-reasons";
 import { createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
@@ -31,11 +30,11 @@ interface SectionReasonState {
   declarators: t.VariableDeclarator[];
 }
 
+// Keyed by param reason group: a section's guard for a set of params is
+// that group's check, whatever else the reason reads.
 interface TypeState {
-  names: Map<Sources, string>;
-  pending: Map<Sources, t.ParenthesizedExpression>;
-  seenReasons: SortedOpt<Sources>;
-  hoistedReasons: SortedOpt<Sources>;
+  names: Map<number, string>;
+  pending: Map<number, t.ParenthesizedExpression>;
 }
 
 const [getSectionReasonState] = createSectionState<SectionReasonState>(
@@ -170,76 +169,51 @@ function getOrHoist(
   reason: DynamicSerializeReason,
   isGuard: boolean,
 ): t.Expression | undefined {
-  const onlySection = getOnlySection(reason.param);
-
-  if (onlySection) {
-    const state = getSectionReasonState(onlySection);
-    const tracking = isGuard ? state.guard : state.if;
-    const existingFound = sourcesUtil.find(tracking.hoistedReasons, reason);
-
-    if (existingFound) {
-      return t.identifier(tracking.names.get(existingFound)!);
-    }
-
-    const guard = buildGuardExpr(onlySection, reason.param!, isGuard);
-    const seenFound = sourcesUtil.find(tracking.seenReasons, reason);
-    if (!seenFound) {
-      const expr = t.parenthesizedExpression(guard);
-      tracking.pending.set(reason, expr);
-      tracking.seenReasons = sourcesUtil.add(tracking.seenReasons, reason);
-      return expr;
-    }
-
-    const name = generateUid(
-      `${isGuard ? "sg" : "si"}__${getDebugNamesAsIdentifier(reason.param)}`,
-    );
-    tracking.hoistedReasons = sourcesUtil.add(tracking.hoistedReasons, reason);
-    tracking.names.set(reason, name);
-    state.declarators.push(t.variableDeclarator(t.identifier(name), guard));
-
-    const pendingParen = tracking.pending.get(seenFound);
-    if (pendingParen) {
-      pendingParen.expression = t.identifier(name);
-      tracking.pending.delete(seenFound);
-    }
-
-    return t.parenthesizedExpression(t.identifier(name));
+  let expr: t.Expression | undefined;
+  for (const [section, params] of groupParamsBySection(reason.param)) {
+    const part = getOrHoistSectionGuard(section, params, isGuard);
+    expr = expr ? t.logicalExpression("||", expr, part) : part;
   }
 
-  let orExpr: t.Expression | undefined;
-  for (const [paramsSection, params] of groupParamsBySection(reason.param)) {
-    const expr = buildGuardExpr(paramsSection, params, isGuard);
-    orExpr = orExpr ? t.logicalExpression("||", orExpr, expr) : expr;
-  }
-
-  return orExpr;
+  return expr;
 }
 
-function buildGuardExpr(
-  paramsSection: Section,
+// The first use stays inline; a second hoists it into a shared declarator.
+function getOrHoistSectionGuard(
+  section: Section,
   params: NonNullable<Sources["param"]>,
   isGuard: boolean,
-) {
-  const serializeIdentifier = scopeReasonIdentifier(paramsSection);
-  return paramsSection.paramReasonGroups
-    ? callRuntime(
-        (isGuard
-          ? "_serialize_guard"
-          : "_serialize_if") satisfies HTMLRuntimeHelpers,
-        serializeIdentifier,
-        withLeadingComment(
-          t.numericLiteral(getParamReasonGroupIndex(paramsSection, params)),
-          getDebugNames(params),
-        ),
-      )
-    : serializeIdentifier;
-}
+): t.Expression {
+  if (!section.paramReasonGroups) return scopeReasonIdentifier(section);
 
-function getOnlySection(params: Opt<{ section: Section }>) {
-  if (params === undefined) return undefined;
-  if (!Array.isArray(params)) return params.section;
-  const { section } = params[0];
-  return section === params[params.length - 1].section ? section : undefined;
+  const state = getSectionReasonState(section);
+  const tracking = isGuard ? state.guard : state.if;
+  const index = getParamReasonGroupIndex(section, params);
+  const name = tracking.names.get(index);
+  if (name) return t.identifier(name);
+
+  const guard = callRuntime(
+    (isGuard
+      ? "_serialize_guard"
+      : "_serialize_if") satisfies HTMLRuntimeHelpers,
+    scopeReasonIdentifier(section),
+    withLeadingComment(t.numericLiteral(index), getDebugNames(params)),
+  );
+  const pending = tracking.pending.get(index);
+  if (!pending) {
+    const expr = t.parenthesizedExpression(guard);
+    tracking.pending.set(index, expr);
+    return expr;
+  }
+
+  const hoisted = generateUid(
+    `${isGuard ? "sg" : "si"}__${getDebugNamesAsIdentifier(params)}`,
+  );
+  tracking.names.set(index, hoisted);
+  tracking.pending.delete(index);
+  state.declarators.push(t.variableDeclarator(t.identifier(hoisted), guard));
+  pending.expression = t.identifier(hoisted);
+  return t.parenthesizedExpression(t.identifier(hoisted));
 }
 
 // Whether the guard for a reason is a runtime mask rather than a constant.
@@ -261,8 +235,6 @@ function createTypeState(): TypeState {
   return {
     names: new Map(),
     pending: new Map(),
-    seenReasons: undefined,
-    hoistedReasons: undefined,
   };
 }
 
