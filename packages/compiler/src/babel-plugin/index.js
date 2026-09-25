@@ -579,6 +579,8 @@ function stripTypes(file) {
   }
 }
 
+// These outputs reprint the AST, so blank lines between tags are not kept;
+// keeping them would mean patching Babel's printer beyond our node types.
 function isMarkoOutput(output) {
   return output === "source" || output === "migrate";
 }
