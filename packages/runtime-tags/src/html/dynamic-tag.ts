@@ -199,6 +199,7 @@ export let _dynamic_tag = (
           _set_serialize_reason(undefined);
         }
       } else if (content) {
+        // A falsy name renders only its body; `content=` is input for a named tag.
         return content();
       }
     };

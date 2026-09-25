@@ -75,6 +75,8 @@ let failedIds: undefined | Set<string>;
 // is before any resume; a page without lazy tags folds it and the retention away.
 let lazyEnabled: undefined | 1;
 
+// Rescans every render's ready channels: there is one per lazy module and a
+// page loads few, so an index would cost more than the scan.
 export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
   for (const renderId in curRenders) {
@@ -104,6 +106,8 @@ export function withLazy<T>(runtime: T) {
 export function initEmbedded(readyId: string, runtimeId?: string) {
   if (!embedRenders) {
     embedRenders = new Map();
+    // Checks each embedded render's anchor on every batch: pages hold few embeds
+    // and isConnected is cheap, so filtering by mutation records saves nothing.
     new MutationObserver(() => {
       for (const [anchor, [renderId, scopes]] of embedRenders!) {
         if (!anchor.isConnected) {
