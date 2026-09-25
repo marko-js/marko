@@ -1,0 +1,9 @@
+import Card from "./tags/card.marko";
+import Label from "./tags/label.marko";
+
+// Each tag names both templates, in either order, and only the card renders
+// its body, later, on the client.
+<let/useCard=false>
+<button#swap onClick() { useCard = !useCard }>swap</button>
+<${useCard ? Card : Label} text="first">first body</>
+<${useCard ? Label : Card} text="second">second body</>

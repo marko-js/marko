@@ -28,7 +28,7 @@ import {
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
-import { type SortedOpt } from "../../util/optional";
+import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -40,7 +40,6 @@ import {
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
-  bindingUtil,
 } from "../../util/references";
 import {
   callRuntime,
@@ -206,7 +205,7 @@ export default {
         ) {
           // Every attribute merged into the tag's expression, so the tag is
           // the value any prop those templates read.
-          setTagDownstream(tag, getDynamicTagInputBindings(tagExtra), {
+          setTagDownstream(tag, getTagNameTemplateInputs(tagExtra), {
             value: tagExtra,
           });
         }
@@ -694,17 +693,14 @@ function addRuntimeOnce(key: string) {
   return !added.has(key) && !!added.add(key);
 }
 
-// The input binding of every template the name may resolve to; none when
-// any is a Class API template.
-function getDynamicTagInputBindings(
-  tagExtra: t.MarkoTagExtra,
-): SortedOpt<Binding> {
-  let inputBindings: SortedOpt<Binding>;
+// The input binding of each template the name may resolve to (none if any is
+// Class API), listed apart: bindings of different templates can compare equal.
+function getTagNameTemplateInputs(tagExtra: t.MarkoTagExtra): Opt<Binding> {
+  let inputBindings: Opt<Binding>;
   for (const childExtra of tagExtra.tagNameTemplates || []) {
     if (childExtra.featureType === "class") return;
     const inputBinding = childExtra.domExports?.params?.props?.[0]?.binding;
-    if (inputBinding)
-      inputBindings = bindingUtil.add(inputBindings, inputBinding);
+    if (inputBinding) inputBindings = push(inputBindings, inputBinding);
   }
   return inputBindings;
 }
