@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.44
+
+### Patch Changes
+
+- [#4292](https://github.com/marko-js/marko/pull/4292) [`a81b35e`](https://github.com/marko-js/marko/commit/a81b35e190786f7b001e0c17248ac4115ce523bb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep the comments of a body that has no statements, such as `<button onClick() { /* todo */ }>`, without the stray `;` that source output printed before them, and keep the comments of a `static`, `server` or `client` block that holds only comments, which were dropped. A shorthand method also keeps its directives, such as `"use strict"`. The new `parseBlock` helper in `@marko/compiler/babel-utils` parses statements as a block that holds them. A `<script>` whose body has no statements, such as `<script value() {}/>`, no longer registers an effect, which left the client template referencing a setup function it never defined.
+
+- Updated dependencies [[`a81b35e`](https://github.com/marko-js/marko/commit/a81b35e190786f7b001e0c17248ac4115ce523bb)]:
+  - @marko/compiler@5.42.8
+  - @marko/runtime-tags@6.3.55
+
 ## 5.39.43
 
 ### Patch Changes

@@ -209,16 +209,16 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0
       marko:
-        specifier: ^5.39.42
+        specifier: ^5.39.44
         version: link:../runtime-class
 
   packages/runtime-class:
     dependencies:
       '@marko/compiler':
-        specifier: ^5.42.6
+        specifier: ^5.42.8
         version: link:../compiler
       '@marko/runtime-tags':
-        specifier: ^6.3.53
+        specifier: ^6.3.55
         version: link:../runtime-tags
       app-module-path:
         specifier: ^2.2.0
@@ -267,7 +267,7 @@ importers:
   packages/runtime-tags:
     dependencies:
       '@marko/compiler':
-        specifier: ^5.42.7
+        specifier: ^5.42.8
         version: link:../compiler
       csstype:
         specifier: ^3.2.3
