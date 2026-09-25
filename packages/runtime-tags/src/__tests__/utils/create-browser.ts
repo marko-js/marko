@@ -23,6 +23,8 @@ export default function createBrowser(
   rejectLoad?: (id: string) => boolean,
 ) {
   const virtualConsole = new VirtualConsole();
+  // A fresh window per run: fully resetting a reused one costs about as much,
+  // and a partial reset leaks state between fixtures.
   const dom = new JSDOM("", {
     runScripts: "dangerously",
     pretendToBeVisual: true,

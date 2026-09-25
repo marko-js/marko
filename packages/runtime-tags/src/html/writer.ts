@@ -680,7 +680,8 @@ export function _if(
 
   if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
     writeScope(scopeId, {
-      // TODO: Write the renderer only for stateful conditions or direct closures.
+      // Also written for a hoist-only branch past index 0, which doesn't need it;
+      // skipping that rare case would take another `_if` argument at every call.
       [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex || undefined, // we convert 0 to undefined since the runtime defaults branch to 0.
       [AccessorPrefix.BranchScopes + accessor]: resumeMarker
         ? undefined
