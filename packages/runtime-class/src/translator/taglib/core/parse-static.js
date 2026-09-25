@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { parseStatements } from "@marko/compiler/babel-utils";
+import { parseBlock } from "@marko/compiler/babel-utils";
 
 export default function (path) {
   const {
@@ -9,10 +9,12 @@ export default function (path) {
   const { rawValue, end } = node;
   const code = rawValue.replace(/^static\s*/, "");
   const start = node.start + (rawValue.length - code.length);
-  let body = parseStatements(file, code, start, end);
-  if (body.length === 1 && t.isBlockStatement(body[0])) {
-    body = body[0].body;
+  let block = parseBlock(file, code, start, end);
+  if (block.body.length === 1 && t.isBlockStatement(block.body[0])) {
+    block = block.body[0];
   }
 
-  path.replaceWith(t.markoScriptlet(body, true));
+  const scriptlet = t.markoScriptlet(block.body, true);
+  scriptlet.innerComments = block.innerComments;
+  path.replaceWith(scriptlet);
 }

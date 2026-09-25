@@ -4,7 +4,7 @@ import {
   parseExpression as babelParseExpression,
 } from "@marko/compiler/internal/babel";
 
-import { getLoc, getLocRange } from "./loc";
+import { getLoc, getLocRange, withLoc } from "./loc";
 
 export function parseStatements(
   file,
@@ -13,7 +13,24 @@ export function parseStatements(
   sourceEnd,
   sourceOffset,
 ) {
-  return tryParse(file, false, str, sourceStart, sourceEnd, sourceOffset);
+  return tryParse(file, false, str, sourceStart, sourceEnd, sourceOffset).body;
+}
+
+// Also keeps what Babel parses beside the statements: their directives, and
+// the comments of code that has no statements to attach them to.
+export function parseBlock(file, str, sourceStart, sourceEnd) {
+  const { body, directives, innerComments } = tryParse(
+    file,
+    false,
+    str,
+    sourceStart,
+    sourceEnd,
+  );
+  const block = t.blockStatement(body, directives);
+  block.innerComments = innerComments;
+  return typeof sourceStart === "number"
+    ? withLoc(file, block, sourceStart, sourceEnd)
+    : block;
 }
 
 export function parseExpression(
@@ -149,13 +166,7 @@ function tryParse(
       if (isExpression) {
         return babelParseExpression(code, parserOpts);
       } else {
-        const { program } = babelParse(code, parserOpts);
-        if (program.innerComments) {
-          const lastNode = t.emptyStatement();
-          lastNode.trailingComments = program.innerComments;
-          program.body.push(lastNode);
-        }
-        return program.body;
+        return babelParse(code, parserOpts).program;
       }
     } catch (err) {
       const parseError = createParseError(
@@ -169,7 +180,7 @@ function tryParse(
       if (isExpression) {
         return parseError;
       } else {
-        return [parseError];
+        return t.program([parseError]);
       }
     } finally {
       parserOpts.startIndex = 0;
@@ -179,9 +190,7 @@ function tryParse(
   } else {
     return isExpression
       ? t.cloneDeepWithoutLoc(babelParseExpression(code, parserOpts))
-      : babelParse(code, parserOpts).program.body.map((node) =>
-          t.cloneDeepWithoutLoc(node),
-        );
+      : t.cloneDeepWithoutLoc(babelParse(code, parserOpts).program);
   }
 }
 

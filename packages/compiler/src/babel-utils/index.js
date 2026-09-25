@@ -27,6 +27,7 @@ export {
 export { getEnd, getLoc, getLocRange, getStart, withLoc } from "./loc";
 export {
   parseArgs,
+  parseBlock,
   parseExpression,
   parseParams,
   parseStatements,

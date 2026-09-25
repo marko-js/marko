@@ -1,9 +1,9 @@
 diff --git a/lib/generators/marko.js b/lib/generators/marko.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..062dd4270071c38c552b3a8ac47d919989f45f5e
+index 0000000000000000000000000000000000000000..06464c62e2595ab8fcb1c157a6262505a782bc02
 --- /dev/null
 +++ b/lib/generators/marko.js
-@@ -0,0 +1,504 @@
+@@ -0,0 +1,523 @@
 +"use strict";
 +
 +const { escapeText } = require("htmljs-parser");
@@ -88,9 +88,11 @@ index 0000000000000000000000000000000000000000..062dd4270071c38c552b3a8ac47d9199
 +  this.token("}");
 +}
 +exports.MarkoScriptlet = function MarkoScriptlet(node) {
++  const comments = takeComments.call(this, node.innerComments);
 +  this.token(`${node.static ? (node.target ?? "static") : "$"} `);
 +
 +  if (
++    !comments.length &&
 +    node.body.length === 1 &&
 +    !statementCouldHaveUnenclosedNewline(node.body[0])
 +  ) {
@@ -99,6 +101,7 @@ index 0000000000000000000000000000000000000000..062dd4270071c38c552b3a8ac47d9199
 +  } else {
 +    this.token("{");
 +    this.printSequence(node.body, true, true);
++    printBodyComments.call(this, comments);
 +    this.token("}");
 +  }
 +}
@@ -194,6 +197,7 @@ index 0000000000000000000000000000000000000000..062dd4270071c38c552b3a8ac47d9199
 +  // Printed after the tag's head, rather than at its first token.
 +  const headComments = takeComments.call(this, node.innerComments);
 +  let bodyOverride;
++  let bodyComments = [];
 +  let indented = false;
 +  // The rest of the open tag continues on the lines after a line comment.
 +  const indentOnce = () => {
@@ -295,7 +299,9 @@ index 0000000000000000000000000000000000000000..062dd4270071c38c552b3a8ac47d9199
 +              attr.value.typeParameters
 +            )
 +          ) {
-+            bodyOverride = attributes[i].value.body.body;
++            const { body } = attributes[i].value;
++            bodyOverride = body.body;
++            bodyComments = takeComments.call(this, body.innerComments);
 +            attributes = toSpliced(attributes, i);
 +            break;
 +          }
@@ -356,6 +362,7 @@ index 0000000000000000000000000000000000000000..062dd4270071c38c552b3a8ac47d9199
 +        this.dedent();
 +      }
 +    }
++    printBodyComments.call(this, bodyComments);
 +    if (bodyNodes.length > 0 && !preserveWhitespace) this.newline(1);
 +    this.token("</");
 +    if (!isDynamicTag) {
@@ -389,6 +396,18 @@ index 0000000000000000000000000000000000000000..062dd4270071c38c552b3a8ac47d9199
 +
 +// Marks the comments printed, so printing the node they are attached to leaves
 +// them to the open tag.
++// Comments with no statement to attach to, each on its own line of the body.
++function printBodyComments(comments) {
++  if (!comments.length) return;
++  this.indent();
++  for (const comment of comments) {
++    this.newline(1);
++    this._printComment(comment, 1);
++  }
++  this.dedent();
++  this.newline(1);
++}
++
 +function takeComments(comments) {
 +  if (!comments) return [];
 +  return comments.filter((comment) => {
