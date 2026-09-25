@@ -138,12 +138,7 @@ exports.p = function (domCompat) {
 
   const rendererCache = new WeakMap();
 
-  domCompat.patchDynamicTag((dynamicTag) => (...args) => {
-    const signal = dynamicTag(...args);
-    return (scope, renderer, getInput) => {
-      return signal(scope, create5to6Renderer(renderer), getInput);
-    };
-  });
+  domCompat.patchDynamicTag(create5to6Renderer);
 
   function create5to6Renderer(renderer) {
     let newRenderer = renderer;

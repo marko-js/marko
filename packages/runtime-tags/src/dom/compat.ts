@@ -1,4 +1,5 @@
 import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
+import { withBranches } from "../common/helpers";
 import {
   AccessorProp,
   type BranchScope,
@@ -36,6 +37,9 @@ export const compat = {
   patchDynamicTag,
   queueEffect,
   init(warp10Noop: any) {
+    // Class components render Tags content into branches this layer creates
+    // and destroys, so branch handling stays on even without Tags control flow.
+    withBranches();
     _resumed[SET_SCOPE_REGISTER_ID] = (scope: Scope & { m5c?: string }) => {
       getRenderScopes(scope[AccessorProp.Global]!)![scope[AccessorProp.Id]] =
         scope;

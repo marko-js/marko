@@ -537,11 +537,11 @@ export function rendererKey(renderer: Renderer | string | undefined) {
     : (renderer as Renderer | undefined)?.[RendererProp.Id] || renderer;
 }
 
-export function patchDynamicTag(
-  fn: <T extends typeof _dynamic_tag>(cond: T) => T,
-) {
-  // Injection point for compat layer.
-  _dynamic_tag = fn(_dynamic_tag);
+// Set by the Class API compat layer. Read on every update, so templates that
+// loaded before the compat layer can still render Class components.
+let toCompatRenderer: undefined | ((renderer: unknown) => unknown);
+export function patchDynamicTag(fn: typeof toCompatRenderer) {
+  toCompatRenderer = fn;
 }
 export let _dynamic_tag = /*@__PURE__*/ withBranches(
   (
@@ -554,8 +554,9 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
     const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
     const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
     return (scope, newRenderer, getInput?: () => any) => {
-      const normalizedRenderer =
-        normalizeDynamicRenderer<Renderer>(newRenderer);
+      const normalizedRenderer = normalizeDynamicRenderer<Renderer>(
+        toCompatRenderer ? toCompatRenderer(newRenderer) : newRenderer,
+      );
       if (
         scope[rendererAccessor] !==
           (scope[rendererAccessor] = rendererKey(normalizedRenderer)) ||
