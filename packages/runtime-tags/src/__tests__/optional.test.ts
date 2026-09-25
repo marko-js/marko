@@ -14,12 +14,12 @@ import {
   some,
   Sorted,
   type SortedOpt,
-  toIter,
 } from "../translator/util/optional";
 
 const compare = (a: number, b: number) => a - b;
 const sorted = new Sorted(compare);
-const toArray = (data: Opt<number>) => [...toIter(data)];
+const toArray = (data: Opt<number>) =>
+  data === undefined ? [] : Array.isArray(data) ? data : [data];
 
 // Deterministic PRNG (mulberry32) so failures reproduce.
 function createRandom(seed: number) {
@@ -236,12 +236,12 @@ describe("runtime-tags/translator/util/optional", () => {
       }
     });
 
-    it("fromIter and toIter round-trip", () => {
+    it("fromIter round-trips through toArray", () => {
       assert.equal(fromIter([]), undefined);
       assert.equal(fromIter([1]), 1);
       assert.deepEqual(fromIter([1, 2, 1]), [1, 2, 1]);
       for (const values of [[], [1], [3, 1, 2]]) {
-        assert.deepEqual([...toIter(fromIter(values))], values);
+        assert.deepEqual(toArray(fromIter(values)), values);
       }
     });
 

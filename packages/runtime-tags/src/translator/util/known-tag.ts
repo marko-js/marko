@@ -18,13 +18,7 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import {
-  forEach,
-  fromIter,
-  type Opt,
-  type SortedOpt,
-  toIter,
-} from "./optional";
+import { forEach, fromIter, type Opt, type SortedOpt } from "./optional";
 import {
   addRead,
   type Binding,
@@ -922,7 +916,7 @@ function applyAttrObject(
   const translatedAttrs = translateAttrs(
     tag,
     true,
-    propTree.rest && new Set(toIter(propTree.rest.binding.excludeProperties)),
+    propTree.rest?.binding.excludeProperties,
   );
   let translatedProps = propsToExpression(translatedAttrs.properties);
 

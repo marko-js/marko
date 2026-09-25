@@ -28,7 +28,6 @@ import { finalizeKnownTags } from "./known-tag";
 import { isOptimize, isOutputDOM } from "./marko-config";
 import {
   addSorted,
-  addUnique,
   concat,
   every,
   filter,
@@ -3163,7 +3162,7 @@ export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
 // lands in, each recording its position (an effect, a dynamic tag's input).
 interface Serialization {
   reason: undefined | SerializeReason;
-  reads: Opt<ReferencedExtra>;
+  reads: ReadonlySet<ReferencedExtra> | undefined;
 }
 const UNSERIALIZED: Serialization = { reason: undefined, reads: undefined };
 const FORCED_SERIALIZATION: Serialization = {
@@ -3210,18 +3209,17 @@ export function getRegisterReasonForExtra(
 ): undefined | SerializeReason {
   if (extra.forceRegister) return FORCED;
   const { reason, reads } = serializationForExtra(extra);
-  return some(reads, isForceRegisterRead) ? FORCED : reason;
-}
-
-function isForceRegisterRead(read: ReferencedExtra) {
-  return !!read.forceRegister;
+  if (reads) {
+    for (const read of reads) if (read.forceRegister) return FORCED;
+  }
+  return reason;
 }
 
 function serializationForExtra(extra: t.NodeExtra): Serialization {
   if (extra.isEffect) return FORCED_SERIALIZATION;
   const serialization = extraSerialization(extra);
   const reads = isReferencedExtra(extra)
-    ? addUnique(serialization.reads, extra)
+    ? addSerializationRead(serialization.reads, extra)
     : serialization.reads;
   return reads === serialization.reads
     ? serialization
@@ -3381,7 +3379,7 @@ function computeBindingSerialization(
       }
       continue;
     }
-    const reads = addUnique(serialization.reads, expr);
+    const reads = addSerializationRead(serialization.reads, expr);
     if (reads !== serialization.reads) {
       serialization = { reason: serialization.reason, reads };
     }
@@ -3431,15 +3429,31 @@ function mergeSerialization(a: Serialization, b: Serialization): Serialization {
   if (a === UNSERIALIZED) return b;
   if (b === UNSERIALIZED) return a;
   const reason = mergeSources(a.reason, b.reason);
-  // Reads are a set (their order never matters); a merge that adds none
-  // keeps the identity.
-  let reads = a.reads;
-  forEach(b.reads, (read) => {
-    reads = addUnique(reads, read);
-  });
+  const reads = unionSerializationReads(a.reads, b.reads);
   if (reason === a.reason && reads === a.reads) return a;
   if (reason === b.reason && reads === b.reads) return b;
   return { reason, reads };
+}
+
+// Answers are shared across memo keys: adding copies (at most once per
+// merge), and adding nothing new keeps the identity.
+function addSerializationRead(
+  reads: ReadonlySet<ReferencedExtra> | undefined,
+  read: ReferencedExtra,
+) {
+  return reads?.has(read) ? reads : new Set(reads).add(read);
+}
+
+function unionSerializationReads(
+  a: ReadonlySet<ReferencedExtra> | undefined,
+  b: ReadonlySet<ReferencedExtra> | undefined,
+) {
+  if (!a || !b || a === b) return a || b;
+  let result: Set<ReferencedExtra> | undefined;
+  for (const read of b) {
+    if (!a.has(read)) (result ??= new Set(a)).add(read);
+  }
+  return result || a;
 }
 
 function addNumericPropertiesUntil(props: SortedOpt<string>, len: number) {
