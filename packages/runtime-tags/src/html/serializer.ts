@@ -2087,6 +2087,8 @@ function throwUnserializable(
     message += ". Values referenced in the browser must be serializable.";
 
     const err = new TypeError(message, { cause });
+    // The stack would only show the serializer's flush; the message already
+    // names the template file and the value's path.
     err.stack = undefined;
     state.boundary.abort(err);
   }
