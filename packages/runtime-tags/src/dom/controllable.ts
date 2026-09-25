@@ -467,6 +467,8 @@ function assertSelectValueMatchesOption(
   }
 }
 
+// Writes `open` only: modality has no attribute, so an app that opens a dialog
+// with `showModal()` must also close it with `close()`.
 export function _attr_details_or_dialog_open_default(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -548,6 +550,8 @@ function syncControllableFormInput<
 ) {
   (el as any)._ = onChange;
   (el as any).c = hasChanged;
+  // `input` only: browsers and autofill fire it for every control, so a lone
+  // `change` (eg testing-library's `fireEvent.change`) goes unhandled.
   delegate("input", handleChange);
   if ((el as any).form) {
     delegate("reset", handleFormReset);
