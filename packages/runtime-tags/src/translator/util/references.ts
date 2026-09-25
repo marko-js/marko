@@ -416,6 +416,13 @@ function getExistingPropertyAlias(
   }
 }
 
+// Whether anything reads a native tag's variable (an element reference);
+// an unread one leaves nothing for the client to resolve.
+export function isTagVarRead(tag: t.NodePath<t.MarkoTag>) {
+  const tagVar = tag.node.var as t.Identifier | undefined;
+  return !!tagVar && !!tag.scope.getBinding(tagVar.name)?.referencePaths.length;
+}
+
 export function trackDomVarReferences(
   tag: t.NodePath<t.MarkoTag>,
   binding: Binding,

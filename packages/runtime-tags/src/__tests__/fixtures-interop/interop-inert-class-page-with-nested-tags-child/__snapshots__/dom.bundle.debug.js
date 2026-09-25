@@ -1,3 +1,11 @@
+// tags/tags-label.marko
+const $template = "<span> </span>";
+const $walks = "D l";
+const $setup = () => {};
+const $input_text = ($scope, input_text) => _text($scope["#text/0"], input_text);
+const $input = ($scope, input) => $input_text($scope, input.text);
+var tags_label_default = /*@__PURE__*/ _template("__tests__/tags/tags-label.marko", $template, "D l", 0, $input);
+
 // components/class-section.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
@@ -39,14 +47,6 @@ var v_template_marko_hydrate_6_default = () => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};
-
-// tags/tags-label.marko
-const $template$1 = "<span> </span>";
-const $walks$1 = "D l";
-const $setup$1 = () => {};
-const $input_text = ($scope, input_text) => _text($scope["#text/0"], input_text);
-const $input = ($scope, input) => $input_text($scope, input.text);
-var tags_label_default = /*@__PURE__*/ _template("__tests__/tags/tags-label.marko", $template$1, "D l", 0, $input);
 
 // tags/tags-counter.marko
 const $template = "<button id=counter> </button>";
