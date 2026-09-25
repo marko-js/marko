@@ -19,7 +19,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		const $inputa11yTextbutton_scope = _peek_scope_id();
-		let $btn = _dynamic_tag($scope1_id, "#text/0", input.a11yText && "button", { "aria-label": input.a11yText }, _content_resume("__tests__/tags/child/index.marko_2*content", () => {
+		let $btn = _dynamic_tag($scope1_id, "#text/0", input.a11yText && "button", { "aria-label": input.a11yText }, _content("__tests__/tags/child/index.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_html("content");
@@ -28,7 +28,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 		_subscribe($si__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			$btn,
 			_: $si__input_a11yText && _scope_with_id($scope0_id)
-		}, "__tests__/tags/child/index.marko", "1:2", { $btn: "2:36" })));
+		}, "__tests__/tags/child/index.marko", "1:2", { $btn: "2:36" })), "__tests__/tags/child/index.marko_1_input_a11yText#3/subscribe");
 		_assert_hoist($btn);
 	}, $scope0_id) });
 	const $return = { btn: $btn_getter };

@@ -11,7 +11,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper/index.mark
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-const $wrapper_content__input_button_label = /*@__PURE__*/ _closure_get("label", ($scope) => _text($scope["#text/1"], $scope._.label));
+const $wrapper_content__input_button_label = /*@__PURE__*/ _closure_get("label", ($scope) => _text($scope["#text/1"], $scope._.label), 0, "__tests__/template.marko_1_label#4/subscribe");
 const $wrapper_content__setup = ($scope) => {
 	$wrapper_content__input_button_label($scope);
 	$wrapper_content__rest($scope);
@@ -20,7 +20,7 @@ const $wrapper_content__rest__script = _script("__tests__/template.marko_1_rest#
 const $wrapper_content__rest = /*@__PURE__*/ _closure_get("rest", ($scope) => {
 	_attrs($scope, "#button/0", $scope._.rest);
 	$wrapper_content__rest__script($scope);
-});
+}, 0, "__tests__/template.marko_1_rest#5/subscribe");
 const $wrapper_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button> </button>", " D ", $wrapper_content__setup);
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $wrapper_content($scope));

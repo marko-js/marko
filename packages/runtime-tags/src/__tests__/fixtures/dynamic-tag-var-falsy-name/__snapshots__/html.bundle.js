@@ -15,11 +15,11 @@ var child_default = _template("b", (input) => {
 	const $btn_getter = _hoist($scope0_id, "b0");
 	const $wrapper_content__subscribers = /* @__PURE__ */ new Set();
 	const $input_a11yText__closures = /* @__PURE__ */ new Set();
-	wrapper_default({ content: _content("b3", () => {
+	wrapper_default({ content: _content("b4", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const $inputa11yTextbutton_scope = _peek_scope_id();
-		let $btn = _dynamic_tag($scope1_id, "a", input.a11yText && "button", { "aria-label": input.a11yText }, _content_resume("b1", () => {
+		let $btn = _dynamic_tag($scope1_id, "a", input.a11yText && "button", { "aria-label": input.a11yText }, _content("b1", () => {
 			_scope_id();
 			_scope_reason();
 			_html("content");
@@ -28,7 +28,7 @@ var child_default = _template("b", (input) => {
 		_subscribe($si__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			c: $btn,
 			_: $si__input_a11yText && _scope_with_id($scope0_id)
-		})));
+		})), "b3");
 	}, $scope0_id) });
 	const $return = { btn: $btn_getter };
 	_scope($scope0_id, {

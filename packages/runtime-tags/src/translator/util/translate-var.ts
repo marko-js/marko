@@ -67,14 +67,9 @@ export default function translateVar(
         );
       }
 
-      let childPath: t.NodePath = tag;
       let curPath = tag.parentPath as t.NodePath | null;
       while (curPath) {
         if (curPath.node.extra?.section === binding.section) {
-          const insertTarget =
-            curPath.type === "Program" || curPath.type === "MarkoTagBody"
-              ? childPath
-              : curPath;
           const canonicalUpstreamAlias = getCanonicalBinding(
             binding.upstreamAlias,
           );
@@ -88,7 +83,7 @@ export default function translateVar(
           );
 
           props.push(restPath.node);
-          insertTarget.insertBefore(
+          curPath.insertBefore(
             t.variableDeclaration(kind, [
               t.variableDeclarator(
                 t.objectPattern(props),
@@ -105,7 +100,6 @@ export default function translateVar(
           break;
         }
 
-        childPath = curPath;
         curPath = curPath.parentPath;
       }
 
