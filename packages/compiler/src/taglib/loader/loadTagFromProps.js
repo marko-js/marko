@@ -266,8 +266,6 @@ class TagLoader {
 
           tag.addAttribute(attr);
         }
-      } else {
-        return false;
       }
     }
   }

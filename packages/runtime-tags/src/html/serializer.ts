@@ -313,7 +313,7 @@ class State {
   strs = new Map<string, Reference>();
   refs = new WeakMap<WeakKey, Reference>();
   pendingAssignments = new Set<Reference>();
-  boundary: Boundary | undefined = undefined;
+  boundary!: Boundary;
   channel: SerializeChannel | undefined = undefined;
   channelDeps: Set<string> | null = null;
   mutated: Mutation[] = [];
@@ -797,7 +797,7 @@ function writeRegistered(
     // The serialize context resolves both registry id and render-local scope.
     const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
     trackScope(state, scope, scopeId);
-    const locals = registered.locals?.(state.boundary!.state.scope);
+    const locals = registered.locals?.(state.boundary.state.scope);
     if (locals) {
       // Calls the registered factory itself to also pass render-only locals.
       state.buf.push(registered.access + "(_(" + scopeId + ")");
@@ -1150,8 +1150,6 @@ function writeRegExp(state: State, val: RegExp) {
 
 function writePromise(state: State, val: Promise<unknown>, ref: Reference) {
   const { boundary, channel } = state;
-  if (!boundary) return false;
-
   const pId = nextRefAccess(state);
   const handle = newAsyncHandle(state, ref, pId);
   state.buf.push(
@@ -1767,8 +1765,9 @@ function writeReadableStream(
   val: ReadableStream<unknown>,
   ref: Reference,
 ) {
+  if (val.locked) return false;
+
   const { boundary, channel } = state;
-  if (!boundary || val.locked) return false;
 
   const reader = val.getReader();
   const iterId = nextRefAccess(state);
@@ -1900,8 +1899,6 @@ function writeAsyncGenerator(
   }
 
   const { boundary, channel } = state;
-  if (!boundary) return false;
-
   const iterId = nextRefAccess(state);
   const handle = newAsyncHandle(state, ref, iterId);
   const onFulfilled = ({ value, done }: IteratorResult<unknown>) => {
@@ -2032,7 +2029,7 @@ function throwUnserializable(
   ref: Reference | null = null,
   accessor: string = "",
 ) {
-  if (cause !== undefined && state.boundary?.abort) {
+  if (cause !== undefined) {
     let message = "Unable to serialize";
     let access = "";
     while (ref) {
@@ -2158,14 +2155,12 @@ function trackChannel(state: State, ref: Reference) {
 }
 
 function abortUnreachableChannel(state: State, val: unknown) {
-  if (state.boundary?.abort) {
-    const err = new TypeError(
-      "Unable to serialize a value shared between independently lazy loaded content. Values shared this way must also be serialized by content that is not lazily loaded, or by a common parent.",
-      { cause: val },
-    );
-    err.stack = undefined;
-    state.boundary.abort(err);
-  }
+  const err = new TypeError(
+    "Unable to serialize a value shared between independently lazy loaded content. Values shared this way must also be serialized by content that is not lazily loaded, or by a common parent.",
+    { cause: val },
+  );
+  err.stack = undefined;
+  state.boundary.abort(err);
 }
 
 function isCircular(

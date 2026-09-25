@@ -56,37 +56,7 @@ class TaglibLoader {
   }
 
   load(taglibProps) {
-    var taglib = this.taglib;
-
     propertyHandlers(taglibProps, this, this.dependencyChain.toString());
-
-    if (!taglib.id) {
-      // Fixes #73
-      // See if there is a package.json in the same directory as the taglib file.
-      // If so, and if that package.json file has a "name" property then we will
-      // use the the name as the "taglib ID". The taglib ID is used to uniquely
-      // identity a taglib (ignoring version) and it is used to prevent the same
-      // taglib from being loaded multiple times.
-      //
-      // Using the file path as the taglib ID doesn't work so well since we might find
-      // the same taglib multiple times in the Node.js module search path with
-      // different paths.
-      var filePath = this.filePath;
-      var dirname = this.dirname;
-
-      var packageJsonPath = nodePath.join(dirname, "package.json");
-
-      try {
-        var pkg = jsonFileReader.readFileSync(packageJsonPath);
-        taglib.id = pkg.name;
-      } catch (e) {
-        /* ignore error */
-      }
-
-      if (!taglib.id) {
-        taglib.id = filePath;
-      }
-    }
   }
 
   _handleTag(tagName, value, dependencyChain) {
@@ -356,8 +326,7 @@ class TaglibLoader {
    * @param  {String} value The taglib ID
    */
   taglibId(value) {
-    var taglib = this.taglib;
-    taglib.id = value;
+    this.taglib.id = value || this.filePath;
   }
 
   /**

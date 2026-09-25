@@ -1129,7 +1129,10 @@ describe("serializer", () => {
     it("a long option string reused in a later flush resumes", () => {
       const tz = "America/Los_Angeles";
       const { scopes, apply } = createSerializeContext({});
-      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const boundary = {
+        signal: { aborted: false },
+        abort() {},
+      } as any as Boundary;
       const ser = new Serializer();
       apply(
         ser.stringifyScopes(
@@ -1149,7 +1152,10 @@ describe("serializer", () => {
       rules.resolvedOptions = () =>
         ({ locale: "en", pluralCategories: categories }) as any;
       const { scopes, apply } = createSerializeContext({});
-      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const boundary = {
+        signal: { aborted: false },
+        abort() {},
+      } as any as Boundary;
       const ser = new Serializer();
       apply(ser.stringifyScopes([[1, {}, { p: rules }]], boundary));
       apply(ser.stringifyScopes([[2, {}, { c: categories }]], boundary));
@@ -1901,7 +1907,10 @@ describe("serializer", () => {
       register("fn", fn, scope);
       const { scopes, apply } = createSerializeContext({ _: { fn: builder } });
       const serializer = new Serializer();
-      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const boundary = {
+        signal: { aborted: false },
+        abort() {},
+      } as any as Boundary;
       const first = serializer.stringifyScopes(
         [
           [1, scope, { value: 1 }],
@@ -2029,7 +2038,10 @@ describe("serializer", () => {
     it("references a string first serialized in globals from a later flush", () => {
       const { scopes, apply } = createSerializeContext();
       const serializer = new Serializer();
-      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const boundary = {
+        signal: { aborted: false },
+        abort() {},
+      } as any as Boundary;
       const msg = "this string is long enough to dedup";
       const globals = { settings: { msg } };
       const first = serializer.stringifyScopes(
@@ -2056,7 +2068,10 @@ describe("serializer", () => {
     it("references an object first serialized in globals from a later flush", () => {
       const { scopes, apply } = createSerializeContext();
       const serializer = new Serializer();
-      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const boundary = {
+        signal: { aborted: false },
+        abort() {},
+      } as any as Boundary;
       const settings = { msg: 1 };
       const globals = { settings };
       const first = serializer.stringifyScopes(
@@ -2077,7 +2092,10 @@ describe("serializer", () => {
     it("references a value shared with globals within the same flush", () => {
       const { scopes, apply } = createSerializeContext();
       const serializer = new Serializer();
-      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const boundary = {
+        signal: { aborted: false },
+        abort() {},
+      } as any as Boundary;
       const settings = { msg: 1 };
       const globals = { settings };
       const payload = serializer.stringifyScopes(
@@ -2623,13 +2641,19 @@ describe("serializer", () => {
 
   it("skips the payload entirely when every scope is empty", () => {
     const serializer = new Serializer();
-    const boundary = { signal: { aborted: false } } as any as Boundary;
+    const boundary = {
+      signal: { aborted: false },
+      abort() {},
+    } as any as Boundary;
     assert.equal(serializer.stringifyScopes([[1, {}, {}]], boundary), "");
   });
 
   it("handles very large scope flushes within call argument limits", () => {
     const serializer = new Serializer();
-    const boundary = { signal: { aborted: false } } as any as Boundary;
+    const boundary = {
+      signal: { aborted: false },
+      abort() {},
+    } as any as Boundary;
     const flushes: [number, object, object][] = [];
     for (let i = 1; i <= 25000; i++) {
       flushes.push([i, {}, { i }]);
@@ -2765,6 +2789,7 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
         endAsync() {
           promises[promiseIndex++].resolve();
         },
+        abort() {},
       } as any as Boundary;
 
       const id = ++scopeId;
@@ -2805,7 +2830,10 @@ function assertStringify(
 }
 
 function serialize(val: unknown) {
-  const boundary = { signal: { aborted: false } } as any as Boundary;
+  const boundary = {
+    signal: { aborted: false },
+    abort() {},
+  } as any as Boundary;
   return normalizePayload(
     new Serializer().stringifyScopes([[1, {}, { value: val }]], boundary),
   );
@@ -2813,7 +2841,10 @@ function serialize(val: unknown) {
 
 function deserialize<T>(val: T): T {
   const { scopes, apply } = createSerializeContext({});
-  const boundary = { signal: { aborted: false } } as any as Boundary;
+  const boundary = {
+    signal: { aborted: false },
+    abort() {},
+  } as any as Boundary;
   apply(new Serializer().stringifyScopes([[1, {}, { value: val }]], boundary));
   return scopes.get(1)?.value as T;
 }
@@ -2828,6 +2859,7 @@ function assertStringifyScopes(
   const boundary = {
     signal: { aborted: false },
     state: {},
+    abort() {},
   } as any as Boundary;
   const actual = serializer.stringifyScopes(flushes, boundary);
   assert.equal(actual, serialized);
