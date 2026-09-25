@@ -41,7 +41,7 @@ Before submitting your PR, make sure that all new and previous tests pass and th
 ```
 pnpm run @ci:test
 
-# to view the coverage report
+# to write the HTML coverage report and print its location
 pnpm run report
 ```
 
