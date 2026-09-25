@@ -3,6 +3,8 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import type { Section } from "./sections";
 
+// One value per program: analyze runs on the cached file and each output
+// translates its own clone, so analyze state never reaches translate.
 export function createProgramState<T>(init: () => T) {
   const map = new WeakMap<t.NodePath<t.Program>, T>();
   return [
@@ -20,6 +22,7 @@ export function createProgramState<T>(init: () => T) {
   ] as const;
 }
 
+// Kept on `program.state`, which each traversal pass resets.
 export function createSectionState<T = unknown>(
   key: string,
   init?: ((section: Section) => T) | (() => T),

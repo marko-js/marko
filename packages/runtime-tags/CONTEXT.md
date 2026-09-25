@@ -52,6 +52,12 @@ passes it when it creates that content, which holds it as a binding of its own
 that nested sections read as a closure.
 _Avoid_: loop local holder
 
+**Tag variable**:
+The value a tag returns, named after `/` (`<let/count=0>`, `<child/api>`). It
+is a render-time value of the scope that declares it, so module scope
+(`static`, `export`) never sees it.
+_Avoid_: ref
+
 **Hoist**:
 A tag-variable read before its declaring tag within the enclosing body, or from
 outside that body. It lowers through a getter and may cross sections; it is not
@@ -135,7 +141,9 @@ _Avoid_: fragment, component instance, renderer
 A native element whose value, checked, or open state Marko synchronizes with
 bound state (`dom/controllable.ts`). Controllable is the capability; the
 `Controlled*` accessors and `ControlledType` are the per-element state, which
-is `ControlledType.None` until a change handler binds it.
+is `ControlledType.None` until a change handler binds it. A change handler
+intercepts the element's own change (typing, a `<details>` toggling): it receives
+the new value, and the element then shows only what the bound state holds.
 _Avoid_: controlled component
 
 **Walk string**:
