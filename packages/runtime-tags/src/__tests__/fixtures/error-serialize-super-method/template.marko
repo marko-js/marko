@@ -1,0 +1,6 @@
+static const base = { key() { return "key" }, label() { return "base" } };
+<let/n=0/>
+<const/obj={ __proto__: base, label() { return super.label() + n } }/>
+<const/keyed={ __proto__: base, label() { return { [super.key()]() { return n } } } }/>
+<let/text=""/>
+<button onClick() { text = obj.label() + " " + keyed.label().key(); n++ }>${text}</button>

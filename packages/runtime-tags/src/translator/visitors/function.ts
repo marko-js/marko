@@ -29,7 +29,7 @@ import {
 } from "../util/serialize-reasons";
 import { createProgramState } from "../util/state";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
-import { traverseFindAwait } from "../util/traverse";
+import { skip, traverseContains, traverseFindAwait } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
 
 declare module "@marko/compiler/dist/types" {
@@ -54,6 +54,8 @@ interface ImportedFn extends ResolvedExport {
   node: t.ImportDeclaration;
   local: string;
 }
+
+type TraverseCheck = Parameters<typeof traverseContains>[1];
 
 const [getReferencesByFn] = createProgramState(
   () => new Map<RegisteredFnExtra, Set<t.NodeExtra>>(),
@@ -97,6 +99,16 @@ export default {
     const exprRoot = getExprRoot(fn);
     const markoRoot = getMarkoRoot(exprRoot);
     if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) return;
+
+    // A registered method becomes a plain function without `super`, and a
+    // registered arrow moves away from the `this` and `super` it inherits.
+    if (
+      t.isArrowFunctionExpression(node)
+        ? functionContains(node, isInheritedByArrow)
+        : t.isObjectMethod(node) && functionContains(node, isSuper)
+    ) {
+      return;
+    }
 
     const section = getSection(fn);
     const fnExtra = (node.extra ??= {}) as RegisteredFnExtra;
@@ -369,8 +381,62 @@ function canIgnoreRegister(
         !hasSpreadAttributeAfter(markoRoot)) ||
         isCoreTagName(markoRoot.parentPath, "script") ||
         isCoreTagName(markoRoot.parentPath, "lifecycle") ||
-        isCoreTagName(markoRoot.parentPath, "for")))
+        // `by=` only keys the items, so its functions never reach the body.
+        (isCoreTagName(markoRoot.parentPath, "for") &&
+          markoRoot.node.name === "by")))
   );
+}
+
+function functionContains(node: t.Function, check: TraverseCheck) {
+  return (
+    traverseContains(node.params, check) || traverseContains(node.body, check)
+  );
+}
+
+function isInheritedByArrow(node: t.Node) {
+  switch (node.type) {
+    case "Super":
+    case "ThisExpression":
+      return true;
+    case "MetaProperty":
+      return node.meta.name === "new";
+    case "Identifier":
+      return node.name === "arguments";
+    // A property named `arguments` is not the function's `arguments`.
+    case "MemberExpression":
+    case "OptionalMemberExpression":
+      return node.computed
+        ? undefined
+        : traverseContains(node.object, isInheritedByArrow) || skip;
+    case "ObjectProperty":
+      return node.computed || node.shorthand
+        ? undefined
+        : traverseContains(node.value, isInheritedByArrow) || skip;
+    default:
+      return skipNestedFunction(node, isInheritedByArrow);
+  }
+}
+
+function isSuper(node: t.Node) {
+  return node.type === "Super" || skipNestedFunction(node, isSuper);
+}
+
+// Nested functions and class members have their own `this` and `super`, but a
+// computed key is evaluated in the enclosing code.
+function skipNestedFunction(node: t.Node, check: TraverseCheck) {
+  switch (node.type) {
+    case "FunctionDeclaration":
+    case "FunctionExpression":
+    case "ClassPrivateMethod":
+    case "ClassPrivateProperty":
+    case "StaticBlock":
+      return skip;
+    case "ObjectMethod":
+    case "ClassMethod":
+    case "ClassProperty":
+    case "ClassAccessorProperty":
+      return (node.computed && traverseContains(node.key, check)) || skip;
+  }
 }
 
 function getStaticDeclRefs(

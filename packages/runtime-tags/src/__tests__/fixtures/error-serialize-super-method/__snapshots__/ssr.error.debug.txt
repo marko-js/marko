@@ -1,0 +1,1 @@
+Unable to serialize "obj" in packages/runtime-tags/src/__tests__/fixtures/error-serialize-super-method/template.marko:3:8 (reading label). Values referenced in the browser must be serializable.

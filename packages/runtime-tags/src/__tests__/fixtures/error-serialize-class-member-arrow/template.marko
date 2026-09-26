@@ -1,0 +1,18 @@
+static class Base { label() { return "Base" } }
+<let/n=0/>
+<const/Derived=(class extends Base {
+  static offset = 10;
+  static fromThis = () => this.offset + n;
+  constructor(...args) {
+    super();
+    this.fromArguments = () => arguments.length + n;
+    this.fromNewTarget = () => typeof new.target + n;
+  }
+  fromSuper() { return () => super.label() + n }
+})/>
+<let/text=""/>
+<button onClick() {
+  const derived = new Derived(1, 2);
+  text = [Derived.fromThis(), derived.fromArguments(), derived.fromNewTarget(), derived.fromSuper()()].join(" ");
+  n++;
+}>${text}</button>

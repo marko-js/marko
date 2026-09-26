@@ -1,0 +1,12 @@
+static const base = { label() { return "base" } };
+static class Base { label() { return "Base" } }
+<let/n=0/>
+<const/make=() => ({ __proto__: base, label() { return super.label() + n } })/>
+<const/makeClass=(() => class extends Base { label() { return super.label() + n } })/>
+<const/makeBound=() => function () { return this.label + n }/>
+<const/count=(call) => ({ arguments: call.arguments.length + n }).arguments/>
+<let/text=""/>
+<button onClick() {
+  text = [make().label(), new (makeClass())().label(), makeBound().call({ label: "bound" }), count({ arguments: [1, 2] })].join(" ");
+  n++;
+}>${text}</button>

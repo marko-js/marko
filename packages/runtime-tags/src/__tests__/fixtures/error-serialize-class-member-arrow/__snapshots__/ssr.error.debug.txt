@@ -1,0 +1,1 @@
+Unable to serialize "Derived" in packages/runtime-tags/src/__tests__/fixtures/error-serialize-class-member-arrow/template.marko:3:8. Values referenced in the browser must be serializable.
