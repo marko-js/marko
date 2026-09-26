@@ -1,0 +1,43 @@
+<script async type=module src="other.marko.load.mjs"></script><button
+  id=other>0<!--M_$2 b--></button><!--M_$2 a--><!--M_[--><!--M_!^b--><!--M_!^4-->loading<!--M_!4--><!--M_!b--><!--M_]1 c 4-->
+<t hidden M_=4>
+  <script async type=module src="child.marko.load.mjs"></script><button
+    id=child>0<!--M_$5 b--></button><!--M_$5 a--><!--M_#c-->
+</t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _b: [_ => [2, {
+      c: 0
+    }]]
+  };
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [4, {
+    E: _(1, "c1"),
+    Q: _(1, "c0")
+  }]];
+  M._.b._a = [1];
+  M._.j[4] = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [5, {
+      c: 0
+    }]))(M._.b._a)
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c></t>
+<t hidden M_=b>caught</t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<p>done</p>
+<script>
+  M._.b._b.push("b0 2");
+  M._.b._a.push("a0 5");
+  M._.w()
+</script>

@@ -325,7 +325,7 @@ class ServerRendered implements RenderedTemplate {
             // boundary listener, or serialize lazy data that starts async work.
             head = head.consume();
             if (boundary.signal.aborted) break;
-            html += head.flushHTML();
+            html += head.flushHTML(boundary);
             if (!(boundary.count || boundary.signal.aborted)) {
               settle(boundary);
               resolve(html);
@@ -375,7 +375,7 @@ class ServerRendered implements RenderedTemplate {
           head = head.consume();
           // An abort re-entered above, so the next pass reports it.
           if (boundary.signal.aborted) continue;
-          const html = head.flushHTML();
+          const html = head.flushHTML(boundary);
           if (boundary.signal.aborted) continue;
           if (html) onWrite(html);
           // Serializing lazy data may have started async work.
@@ -405,7 +405,7 @@ class ServerRendered implements RenderedTemplate {
     const { boundary } = head;
     const html =
       boundary.flush() === FlushStatus.complete
-        ? head.consume().flushHTML()
+        ? head.consume().flushHTML(boundary)
         : "";
     if (boundary.count) {
       boundary.abort(
