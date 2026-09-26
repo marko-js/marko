@@ -12,8 +12,18 @@ import type {
   Template,
 } from "@marko/runtime-tags/common/types";
 
+import {
+  _html,
+  _scope,
+  _scope_id,
+  _script,
+  _template,
+  _text_resume,
+  withPageAssets,
+} from "../html";
 import * as tagsTranslator from "../translator";
 import { createServerRunner } from "./utils/bundle";
+import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 
 type ServerResult = RenderedTemplate;
 
@@ -87,6 +97,47 @@ describe("runtime-tags/html render result", () => {
         $global: { runtimeId: "_R", renderId: "r0" },
       }) as ServerResult;
       assertBody(result.toString());
+    });
+
+    it("keeps its runtimeId across a nested page entry compiled with another", () => {
+      const page = (id: string, renderer: () => void, runtimeId?: string) =>
+        withPageAssets(
+          _template(id, renderer, 1) as any,
+          () => "",
+          id,
+          runtimeId,
+        ) as any;
+      const inner = page(
+        "nested-inner",
+        () => _html("<span>inner</span>"),
+        "X",
+      );
+      const outer = page("nested-outer", () => {
+        const scopeId = _scope_id();
+        _html(_text_resume(scopeId, "#text/0", "a"));
+        inner({});
+        _html(_text_resume(scopeId, "#text/1", "b"));
+        _scope(scopeId, { v: 1 });
+        _script(scopeId, "nested-outer-effect");
+      });
+      const capture = captureConsole();
+      let html: string;
+      let records: ConsoleRecord[];
+      try {
+        html = outer.render({}).toString();
+      } finally {
+        records = capture.cleanup();
+      }
+      assert.match(html, /<!--M_\$1 #text\/1-->/);
+      assert.match(html, /\("M"\)\("_"\);M\._\.r=/);
+      assert.deepEqual(records, [
+        {
+          type: "error",
+          args: [
+            'A page entry compiled with runtimeId "X" is nested in a render using runtimeId "M", so its content cannot resume.',
+          ],
+        },
+      ]);
     });
   });
 

@@ -1,0 +1,31 @@
+<button>0<!--M_$2 b--></button><!--M_$2 a-->
+<div><button>0<!--M_2$1 b--></button><!--M_2$1 a-->
+  <script>
+    WALKER_RUNTIME("M")("_2");
+    M._2.b = {
+      a: [_ => [1, {
+        c: 0
+      }], "a0 1"]
+    };
+    M._2.w()
+  </script>
+</div>
+<script>
+  (e => (self[e] ||= (l, f = e + l, s = f.length, a = {}, d = [], t = document,
+    n = t.createTreeWalker(t, 129)) => t = self[e][l] = {
+    i: f,
+    d: t,
+    l: a,
+    v: d,
+    x() {},
+    w(e, l, r) {
+      for (; e = n.nextNode();) t.x(l = (l = e.data) && !l.indexOf(f) && (
+          r = l.slice(s + 1), (l = l[s]) > "#" || (a[r] = e), l), r, e), l >
+        "#" && d.push(e)
+    }
+  }, self[e]))("M")("_");
+  M._.r = [_ => [2, {
+    c: 0
+  }], "a0 2"];
+  M._.w()
+</script>

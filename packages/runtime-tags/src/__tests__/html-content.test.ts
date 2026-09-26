@@ -3,6 +3,7 @@ import * as assert from "assert/strict";
 import { JSDOM } from "jsdom";
 
 import * as helpers from "../html/content";
+import { Boundary, Chunk, State, withChunk } from "../html/writer";
 
 const falseishValues = [undefined, null, false];
 
@@ -126,34 +127,41 @@ describe("runtime-tags/html/content", () => {
   });
 
   describe("escapeComment", () => {
+    // Reads the resume comment prefix of the render it writes into.
+    const escapeComment = (val: unknown) => {
+      const state = new State({ runtimeId: "M", renderId: "_" });
+      return withChunk(new Chunk(new Boundary(state), null, null, state), () =>
+        helpers._escape_comment(val),
+      );
+    };
+
     it("should return empty string for falseish values", () => {
       for (const value of falseishValues) {
-        assert.equal(helpers._escape_comment(value), "");
+        assert.equal(escapeComment(value), "");
       }
     });
 
     it("should escape > to prevent comment termination", () => {
-      assert.equal(helpers._escape_comment("-->"), "--&gt;");
-      assert.equal(helpers._escape_comment("--!>"), "--!&gt;");
-      assert.equal(helpers._escape_comment(">"), "&gt;");
+      assert.equal(escapeComment("-->"), "--&gt;");
+      assert.equal(escapeComment("--!>"), "--!&gt;");
+      assert.equal(escapeComment(">"), "&gt;");
+    });
+
+    it("should escape a leading resume comment prefix", () => {
+      assert.equal(escapeComment("M_$1 #text/1"), "&#77;_$1 #text/1");
+      assert.equal(escapeComment("a M_$1 #text/1"), "a M_$1 #text/1");
     });
 
     it("should allow < and & through unchanged", () => {
-      assert.equal(
-        helpers._escape_comment("foo < bar & baz"),
-        "foo < bar & baz",
-      );
+      assert.equal(escapeComment("foo < bar & baz"), "foo < bar & baz");
     });
 
     it("should toString anything else", () => {
-      assert.equal(helpers._escape_comment(0), "0");
-      assert.equal(helpers._escape_comment(42), "42");
-      assert.equal(helpers._escape_comment(true), "true");
-      assert.equal(helpers._escape_comment("foo"), "foo");
-      assert.equal(
-        helpers._escape_comment({ toString: () => "custom" }),
-        "custom",
-      );
+      assert.equal(escapeComment(0), "0");
+      assert.equal(escapeComment(42), "42");
+      assert.equal(escapeComment(true), "true");
+      assert.equal(escapeComment("foo"), "foo");
+      assert.equal(escapeComment({ toString: () => "custom" }), "custom");
     });
   });
 

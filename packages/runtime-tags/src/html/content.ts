@@ -1,5 +1,6 @@
 import { assertValidTextValue } from "../common/errors";
 import { escapeStyleValue } from "../common/helpers";
+import { getState } from "./writer";
 
 export function _to_text(val: unknown) {
   if (MARKO_DEBUG) {
@@ -61,11 +62,15 @@ export function _escape_style_value(val: unknown) {
   return val || val === 0 ? escapeStyleValue(val + "") : "";
 }
 
-// Comment data is never parsed for character references, so escaping `>` keeps
-// the markup intact at the cost of data a client render would leave raw.
+// Escapes `>` and a leading resume comment prefix so a value can neither close
+// the comment nor pass as a resume comment; comment data never decodes them.
 const unsafeCommentReg = />/g;
-const escapeCommentStr = (str: string) =>
-  unsafeCommentReg.test(str) ? str.replace(unsafeCommentReg, "&gt;") : str;
+function escapeCommentStr(str: string) {
+  if (unsafeCommentReg.test(str)) str = str.replace(unsafeCommentReg, "&gt;");
+  return str.startsWith(getState().commentPrefix)
+    ? "&#" + str.charCodeAt(0) + ";" + str.slice(1)
+    : str;
+}
 
 export function _escape_comment(val: unknown) {
   if (MARKO_DEBUG) {

@@ -414,6 +414,17 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               `Marko rendered multiple times with $global.runtimeId as ${JSON.stringify(runtimeId)} and $global.renderId as ${JSON.stringify(renderId)}. Ensure each render into a page has a unique $global.renderId.`,
             );
           }
+
+          for (const otherId in curRenders) {
+            if (
+              otherId !== renderId &&
+              (otherId.startsWith(renderId) || renderId.startsWith(otherId))
+            ) {
+              console.error(
+                `Marko rendered with $global.runtimeId as ${JSON.stringify(runtimeId)} and $global.renderId as both ${JSON.stringify(otherId)} and ${JSON.stringify(renderId)}, so one render claims the other's resume comments. Ensure no $global.renderId in a page starts another.`,
+              );
+            }
+          }
         }
 
         render.m = (effects: unknown[]) => {
