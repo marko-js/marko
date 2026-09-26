@@ -164,6 +164,8 @@ export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   }
 }
 
+// The translator calls these on static values and writes the result into the template, so they
+// must stay pure: output depends only on the arguments, never on render state or context.
 export function getHTMLRuntime() {
   return {
     _escape,

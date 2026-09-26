@@ -34,6 +34,8 @@ export const delegate = (type: string, handler: EventListener) =>
     (document.addEventListener(type, handler, true), 1));
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
+  // Ignores events fired by a render's own DOM changes (removing a focused input fires `blur`):
+  // a handler's state writes would be dropped mid render.
   let target = !rendering && (ev.target as ParentNode | null);
   if (MARKO_DEBUG) {
     Object.defineProperty(ev, "currentTarget", {

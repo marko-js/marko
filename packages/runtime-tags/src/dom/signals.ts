@@ -102,6 +102,8 @@ export function _const<T>(
   }) as Signal<T>;
 }
 
+// Each intersection member must call this exactly once in the scope's creating run: the first
+// stores how many others remain (`defaultPending`), and the last runs `fn`.
 export function _or(
   id: number,
   fn: SignalFn,

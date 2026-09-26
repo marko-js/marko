@@ -106,9 +106,13 @@ _Avoid_: slot, value
 `runId` counter in `dom/queue.ts` (which starts at 2). Four states: `0`
 destroyed, `1` resumed from SSR, `=== runId` created during this run, and
 `> 0 && < runId` live from an earlier run. The distinction decides whether a
-write lands in place or queues a render — a `<let>` write into a same-run scope
-is applied directly, while an earlier-run scope schedules one — and destroyed
-scopes are skipped entirely.
+write lands in place or queues a render: `_or` counts a same-run scope's
+arrivals in place and queues a render for an earlier-run one. During a render a
+plain `<let>` initializer (no change handler) applies only to a same-run scope,
+and an earlier-run scope keeps its value. Destroyed scopes are skipped entirely;
+destroying a branch writes `0` only on it and its nested branches, so any other
+scope keeps its generation and reads as destroyed only through its
+`ClosestBranch`.
 _Avoid_: version, revision
 
 **Owner**:

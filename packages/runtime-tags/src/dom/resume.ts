@@ -148,6 +148,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         const render = (curRenders[renderId] =
           renders[renderId] || renders(renderId));
         const walk = render.w;
+        // Keeps every scope, destroyed ones too, for the render's life: a later fill or
+        // visit must reach the same object, never a fresh live one.
         const scopeLookup: Record<string | number, Scope> = {};
         // Ended branches and visit owners awaiting the branch enclosing them.
         const pending: Scope[] = [];

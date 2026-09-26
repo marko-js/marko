@@ -1,3 +1,5 @@
+// `inlined-runtimes.ts` hand-minifies these scripts for optimized builds: change both together.
+
 // Inside the walker, `doc` is rebound from the document to the runtime object,
 // so every later `doc.x(...)` is a late-bound call the reorder runtime replaces.
 export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||= (
@@ -41,6 +43,8 @@ export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||
     },
   })
 , self[runtimeId]))`;
+// A reorder swap waits for the walk to reach the node after what it detaches (a detached
+// current node stalls the walker for good), so that node must be a comment or element.
 export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
   if (runtime.j) return;
   let onNextSibling,

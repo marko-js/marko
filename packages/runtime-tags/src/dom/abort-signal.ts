@@ -20,7 +20,7 @@ export function $signal(scope: Scope, id: string | number) {
     new AbortController()).signal;
 }
 
-/** Enrols `scope` with its branch so destroying the branch cleans it up. */
+/** Enrols `scope` with the `ClosestBranch` it has now, so destroying that branch cleans it up. */
 export function trackCleanup(scope: Scope, subscribers?: Set<Scope>) {
   const branch = scope[AccessorProp.ClosestBranch];
   if (branch) (branch[AccessorProp.AbortScopes] ||= new Set()).add(scope);

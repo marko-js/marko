@@ -59,6 +59,8 @@ type ScopeInternals = PartialScope & {
   [K_SCOPE_ID]?: number;
 };
 
+// The chunk the running render pass writes to, shared by every concurrent render: code that runs
+// later, like a promise callback, must re-enter through `chunk.render` rather than read it.
 let $chunk: Chunk;
 
 export function getChunk(): Chunk | undefined {
@@ -210,6 +212,8 @@ export function _trailers(html: string) {
   $chunk.boundary.state.trailerHTML += html;
 }
 
+// With a `scopeId`, pass a value created for this call: registrations are keyed by value
+// across all renders, so a reused one serializes with the last scope registered for it.
 export function _resume<T extends WeakKey>(
   val: T,
   id: string,
@@ -757,6 +761,8 @@ function writeBranchEnd(
   }
 }
 
+// The first `partialScope` for a scope becomes the serialize state's pending write and later
+// writes for that scope are assigned into it, so callers pass a fresh object they never reuse.
 let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const { state } = $chunk.boundary;
   const target = $chunk.serializeState;
@@ -1038,6 +1044,8 @@ export function _try(
   if (!renderersAtSettle) {
     writeTryRenderers(branchId, catchContent, placeholderContent);
   }
+  // With a catch, an async body's BranchEnd directly follows its placeholder end marker: the
+  // node the reorder runtime waits on to swap in a catch that arrived first.
   $chunk.writeHTML(
     state.mark(
       ResumeSymbol.BranchEnd,
@@ -1395,6 +1403,8 @@ export class Chunk {
   public html = "";
   public scripts = "";
   public effects = "";
+  // Empty, or the register id `effects` ends with: `writeEffect` then appends only a scope id,
+  // which resume binds to the last id it read. Reset this wherever `effects` is cleared or moved.
   public lastEffect = "";
   public async = false;
   public consumed = false;
@@ -1794,6 +1804,8 @@ export class Chunk {
 
         reordered = concatScripts(
           reordered,
+          // A block body returns nothing: the reorder runtime chains a root's scripts with
+          // `||`, where a truthy result would skip the ones after it.
           reorderScripts &&
             runtimePrefix +
               RuntimeKey.Scripts +

@@ -30,8 +30,8 @@ export function queueRender<T, U extends Scope = Scope>(
   scopeKey = scope[AccessorProp.Id],
 ) {
   let render: PendingRender | undefined;
-  // Slots live at the signal key (small indexes stay fast elements);
-  // accessors are strings and pending counters use complemented keys.
+  // A slot lives at the signal key (fast elements; pending counters use complemented keys) and
+  // keeps the signal that created it, so a key >= 0 must be unique per section.
   if (signalKey >= 0 && (render = scope[signalKey])) {
     render[PendingRenderProp.Value] = value;
     if (

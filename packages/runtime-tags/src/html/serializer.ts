@@ -337,6 +337,8 @@ class Reference {
   public parent: Reference | null;
   public accessor: string | null;
   public flushId: number;
+  // `buf` index of the value's first chunk during `flushId`: `assignId` inserts `id=`
+  // there, so it must be `buf.length` right before the value is pushed.
   public pos: number | null;
   public id: string | null;
   // The access path a reference in another flush spelled; a second one
@@ -517,6 +519,8 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   // Everything elided and nothing else to flush.
   if (!result) return "";
 
+  // Resume calls a payload with only the serialize context, so `$` is undefined; nested writes
+  // read both, so no write wraps a nested value in a function that rebinds `_` or `$`.
   if (state.wroteUndefined) {
     state.wroteUndefined = false;
     return "(_,$)=>" + result;
@@ -664,6 +668,8 @@ function mutationMatchesReadyId(
     : !readyId;
 }
 
+// Returns false having pushed nothing, so a caller drops only its key. `undefined` does this to
+// omit the property, which `_serialize_if(...) && v` relies on; resume reads the slot as unset.
 function writeProp(
   state: State,
   val: unknown,

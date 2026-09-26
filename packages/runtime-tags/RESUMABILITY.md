@@ -116,6 +116,10 @@ generation, closure helpers notify live child scopes, and `_script` queues
 effects. `dom/queue.ts` orders renders by `scopeId * 1e6 + signalId`, deduplicates
 pending signals in scope slots, runs renders before effects, and uses `runId` as
 the generation boundary (resumed scopes start at 1; normal client work at 2).
+Server and client both give a scope a larger id than its owner (client ids
+start at 1e6, assumed above every server id), so a render keyed by an owner's id
+runs before those keyed by its descendants' (`_for_closure` and `_or`
+deliberately key some owner renders at or after a child's id).
 
 ## SSR payload and DOM adoption
 
@@ -177,8 +181,11 @@ fixed point because one channel can unblock another.
 
 Async reorders may execute after later main-stream scripts. The server therefore
 reserves each ready-stream position with a numeric gate; the reorder script
-replaces that gate in place. Module registration, scope identity, dependency
-order, DOM arrival, and effect order must remain aligned.
+replaces that gate in place. A gate holds back its channel, and every channel
+that depends on it, until its reorder's root swaps in, so the server writes a
+`<t>` for every reorder marker it streams, empty once its boundary aborts.
+Module registration, scope identity, dependency order, DOM arrival, and effect
+order must remain aligned.
 
 ## Modes and verification
 

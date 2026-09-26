@@ -55,6 +55,8 @@ export function startRender(
   input: TemplateInput,
   StateClass: typeof State,
 ): RenderedTemplate {
+  // Copied per render: the runtime and bundler plugins write per-render state onto `$global`
+  // (`__flush__`, lazy assets, `runtimeId`) that must never reach an object shared by renders.
   let { $global } = input;
   if ($global) {
     ({ $global, ...input } = input);

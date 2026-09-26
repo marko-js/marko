@@ -275,6 +275,8 @@ export function _attrs(
   tagName: string,
 ) {
   let result = "";
+  // Spread keys are written unescaped, so every `skip` below must keep this character class: the
+  // only check in production builds that stops a key from breaking out of the start tag.
   let skip = /[\s/>"'=]/;
   let events: Record<string, unknown> | undefined;
   // A lone `null`/`undefined`/`false` spread reaches here unwrapped; skip the

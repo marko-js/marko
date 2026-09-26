@@ -535,6 +535,8 @@ export function isDynamicClosure(section: Section, closure: Binding) {
   return !isDirectClosure(section, closure);
 }
 
+// A subscriber section's position among its closure's `_closure(...)` arguments, which the dom
+// output passes in this same `closureSections` order, skipping direct closures.
 export function getDynamicClosureIndex(
   closure: Binding,
   closureSection: Section,

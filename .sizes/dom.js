@@ -495,7 +495,7 @@ function $signal(scope, id) {
     ((scope.A ||= {})[id] ||= new AbortController()).signal
   );
 }
-/** Enrols `scope` with its branch so destroying the branch cleans it up. */
+/** Enrols `scope` with the `ClosestBranch` it has now, so destroying that branch cleans it up. */
 function trackCleanup(scope, subscribers) {
   let branch = scope.F;
   (branch && (branch.B ||= /* @__PURE__ */ new Set()).add(scope),
