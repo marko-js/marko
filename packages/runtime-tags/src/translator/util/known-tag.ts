@@ -562,7 +562,7 @@ function analyzeAttrs(
             known[attrTagMeta.name] = {
               value: rootTagExtra as ReferencedExtra,
             };
-          } else if (childAttrExport.props) {
+          } else if (childAttrExport.props && !attrTagMeta.repeated) {
             remaining.delete(attrTagMeta.name);
             known[attrTagMeta.name] = analyzeAttrs(
               rootTagExtra,
@@ -914,34 +914,33 @@ function applyAttrObject(
   info: TranslateDOMInfo,
 ) {
   const referencedBindings = tag.node.extra?.referencedBindings;
-  const translatedAttrs = translateAttrs(
-    tag,
-    true,
-    propTree.rest?.binding.excludeProperties,
-  );
-  let translatedProps = propsToExpression(translatedAttrs.properties);
+  const statements: t.Statement[] = [];
+  let translatedProps: t.Expression | undefined;
 
-  if (translatedAttrs.statements.length) {
-    addStatement(
-      "render",
-      info.tagSection,
-      referencedBindings,
-      translatedAttrs.statements,
+  if (isAttributeTag(tag)) {
+    // Analysis merges every occurrence's references into the first, so its
+    // signal builds them all.
+    const attrTagName = getTagName(tag);
+    for (const attrTag of (tag.parentPath as t.NodePath<t.MarkoTag>).get(
+      "attributeTags",
+    )) {
+      if (attrTag.isMarkoTag() && getTagName(attrTag) === attrTagName) {
+        const props = t.objectExpression(
+          translateAttrs(attrTag, propTree, undefined, statements).properties,
+        );
+        translatedProps = translatedProps
+          ? callRuntime("attrTags", translatedProps, props)
+          : callRuntime("attrTag", props);
+      }
+    }
+  } else {
+    translatedProps = propsToExpression(
+      translateAttrs(tag, propTree, undefined, statements).properties,
     );
   }
 
-  if (isAttributeTag(tag)) {
-    const repeated = analyzeAttributeTags(
-      tag.parentPath as t.NodePath<t.MarkoTag>,
-    )?.[getTagName(tag)]?.repeated;
-    const mergedProps = getAttrTagProps(
-      tag,
-      repeated,
-      t.objectExpression(translatedAttrs.properties),
-      info,
-    );
-    if (!mergedProps) return;
-    translatedProps = mergedProps;
+  if (statements.length) {
+    addStatement("render", info.tagSection, referencedBindings, statements);
   }
 
   addStatement(
@@ -951,7 +950,7 @@ function applyAttrObject(
     t.expressionStatement(
       t.callExpression(tagInputIdentifier, [
         createScopeReadExpression(info.childScopeBinding, info.tagSection),
-        translatedProps,
+        translatedProps!,
       ]),
     ),
     true,
@@ -1032,7 +1031,7 @@ function writeAttrsToSignals(
   const seen = new Set<string>();
   const tagReferencedBindings = tag.node.extra?.referencedBindings;
   const remaining = new Set(getAllKnownPropNames(propTree));
-  let restProps: t.ObjectExpression["properties"] | undefined;
+  const contentProps: t.ObjectExpression["properties"] = [];
 
   if (attrTagLookup) {
     const attrTags = tag.get("attributeTags");
@@ -1067,8 +1066,19 @@ function writeAttrsToSignals(
       );
     };
 
+    // The rest input keeps the `translateAttrs` key order HTML passes:
+    // attributes, then dynamic attribute tags, static ones, and content.
     for (const attrTagName in attrTagLookup) {
-      seen.add(attrTagLookup[attrTagName].name);
+      const attrTagMeta = attrTagLookup[attrTagName];
+      seen.add(attrTagMeta.name);
+      if (
+        attrTagMeta.dynamic &&
+        getKnownFromPropTree(propTree, attrTagMeta.name) === true
+      ) {
+        contentProps.push(
+          toObjectProperty(attrTagMeta.name, getAttrTagIdentifier(attrTagMeta)),
+        );
+      }
     }
 
     for (let i = 0; i < attrTags.length; i++) {
@@ -1101,8 +1111,22 @@ function writeAttrsToSignals(
             );
 
             if (translatedAttrs) {
-              (restProps ||= []).push(
+              contentProps.push(
                 toObjectProperty(attrTagMeta.name, translatedAttrs),
+              );
+            }
+          } else if (attrTagMeta.repeated) {
+            // Like HTML, the first occurrence passes the whole `attrTags` value:
+            // members read the first, and a rest or `<for>` reaches the others.
+            if (remaining.delete(attrTagMeta.name)) {
+              applyAttrObject(
+                child,
+                childAttrExport,
+                info.getBindingIdentifier(
+                  childAttrExport.binding,
+                  `${importAlias}_${attrTagMeta.name}`,
+                ),
+                info,
               );
             }
           } else {
@@ -1158,14 +1182,7 @@ function writeAttrsToSignals(
       );
 
       for (const [attrTagMeta, read] of reads) {
-        if (read === true) {
-          (restProps ||= []).push(
-            toObjectProperty(
-              attrTagMeta.name,
-              getAttrTagIdentifier(attrTagMeta),
-            ),
-          );
-        } else {
+        if (read !== true) {
           remaining.delete(attrTagMeta.name);
           addStatement(
             "render",
@@ -1201,7 +1218,7 @@ function writeAttrsToSignals(
         scopeIdentifier,
       ]);
       if (contentExport === true) {
-        (restProps ||= []).push(toObjectProperty("content", bodyValue));
+        contentProps.push(toObjectProperty("content", bodyValue));
       } else {
         remaining.delete("content");
         // The direct content signal applies no parameters, so it can only be
@@ -1234,7 +1251,8 @@ function writeAttrsToSignals(
   }
 
   let knownSpread: ReturnType<typeof getSingleKnownSpread>;
-  let spreadProps: t.ObjectExpression["properties"] | undefined;
+  let hasSpread = false;
+  const attrProps: t.ObjectExpression["properties"] = [];
 
   const staticAttrs: t.MarkoAttribute[] = [];
   const { attributes } = tag.node;
@@ -1248,24 +1266,26 @@ function writeAttrsToSignals(
 
       seen.add(attr.name);
 
-      if (spreadProps) {
-        spreadProps.push(toObjectProperty(attr.name, attr.value));
-      } else if (templateExportAttr === true) {
-        (restProps ||= []).push(toObjectProperty(attr.name, attr.value));
+      if (hasSpread || templateExportAttr === true) {
+        attrProps.push(toObjectProperty(attr.name, attr.value));
       } else {
         staticAttrs.push(attr);
       }
-    } else if (spreadProps) {
-      spreadProps.push(t.spreadElement(attr.value));
+    } else if (hasSpread) {
+      attrProps.push(t.spreadElement(attr.value));
     } else {
       knownSpread = hasAllKnownProps(propTree)
         ? getSingleKnownSpread(attributes)
         : undefined;
       if (!knownSpread) {
-        (spreadProps = restProps || []).push(t.spreadElement(attr.value));
+        hasSpread = true;
+        attrProps.push(t.spreadElement(attr.value));
       }
     }
   }
+
+  // Attributes were gathered last to first so the last duplicate wins.
+  const inputProps = attrProps.reverse().concat(contentProps);
 
   for (let i = staticAttrs.length; i--;) {
     const attr = staticAttrs[i];
@@ -1317,10 +1337,10 @@ function writeAttrsToSignals(
       );
     }
   } else if (
-    spreadProps &&
+    hasSpread &&
     (remaining.size || (propTree.rest && !propTree.rest.props))
   ) {
-    const spreadExpr = propsToExpression(spreadProps.reverse());
+    const spreadExpr = propsToExpression(inputProps);
     let spreadId = spreadExpr;
 
     if (!isSimpleReference(spreadExpr)) {
@@ -1435,7 +1455,7 @@ function writeAttrsToSignals(
                 info.childScopeBinding,
                 info.tagSection,
               ),
-              t.objectExpression(restProps || []),
+              t.objectExpression(inputProps),
             ],
           ),
         ),
