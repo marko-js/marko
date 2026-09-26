@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27220 (min) 10163 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -26,6 +26,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
   placeholderShown = /* @__PURE__ */ new WeakSet(),
   pendingEffects = [],
   pendingRenders = [],
+  scopeKeyOffset = 1e6,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
@@ -413,7 +414,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
     render.e = runId;
   } else
     ((render = {
-      a: scopeKey * 1e6 + signalKey,
+      a: scopeKey * scopeKeyOffset + signalKey,
       b: scope,
       c: signal,
       d: value,
@@ -660,7 +661,7 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
           },
           -1,
           0,
-          scopes[0].L,
+          ownerScope.L + 1,
         );
     };
   return ((ownerSignal._ = fn), ownerSignal);
@@ -673,8 +674,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
     mapAccessor = "O" + ownerLoopNodeAccessor,
     prevKeyProp = `_${ownerValueAccessor}`,
     ownerSignal = (ownerScope) => {
-      let scopes = toArray(ownerScope[scopeAccessor]);
-      if (ownerScope.H < runId && scopes.length) {
+      if (ownerScope.H < runId && toArray(ownerScope[scopeAccessor]).length) {
         let nextKey = ownerScope[ownerValueAccessor];
         queueRender(
           ownerScope,
@@ -690,7 +690,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
           },
           -1,
           0,
-          scopes[0].L,
+          ownerScope.L + 1,
         );
       }
     };

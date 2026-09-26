@@ -1,0 +1,8 @@
+import One from "./tags/one.marko";
+import Two from "./tags/two.marko";
+<let/a=0/>
+<let/Tag=One/>
+<${Tag}/v/>
+<button.swap onClick() { a++; Tag = Tag === One ? Two : One }>${a + ":" + v?.n}</button>
+<button.clear onClick() { Tag = null }/>
+<button.mount onClick() { a++; Tag = One }/>

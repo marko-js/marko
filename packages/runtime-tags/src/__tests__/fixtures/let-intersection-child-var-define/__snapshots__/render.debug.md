@@ -11,12 +11,12 @@
 ```
 ```html
 <button>
-  0,1
+  1,1
 </button>
 ```
 ## Change
 ```
-UPDATE: button::text "0,0" => "0,1"
+UPDATE: button::text "0,0" => "1,1"
 ```
 
 # Update
@@ -25,12 +25,12 @@ UPDATE: button::text "0,0" => "0,1"
 ```
 ```html
 <button>
-  1,2
+  2,2
 </button>
 ```
 ## Change
 ```
-UPDATE: button::text "0,1" => "1,2"
+UPDATE: button::text "1,1" => "2,2"
 ```
 
 # Update
@@ -39,10 +39,10 @@ UPDATE: button::text "0,1" => "1,2"
 ```
 ```html
 <button>
-  2,3
+  3,3
 </button>
 ```
 ## Change
 ```
-UPDATE: button::text "1,2" => "2,3"
+UPDATE: button::text "2,2" => "3,3"
 ```

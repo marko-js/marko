@@ -18,6 +18,10 @@ export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
 let pendingRenders: PendingRender[] = [];
+// A dynamic tag's branch can be newer than the scopes reading its variable, so
+// bundles with one re-key reused renders and let a render queue again after it ran.
+export let dynamicTagVarsEnabled: undefined | 1;
+const ranRenders = /*@__PURE__*/ new WeakMap<PendingRender, number>();
 
 // Orders pending renders across scopes; signal keys are per-section
 // binding ids, so they always fit well below the offset.
@@ -38,9 +42,21 @@ export function queueRender<T, U extends Scope = Scope>(
       render[PendingRenderProp.Gen] === runId ||
       (catchEnabled && render[PendingRenderProp.Pending])
     ) {
+      if (
+        MARKO_DEBUG &&
+        !render[PendingRenderProp.Pending] &&
+        ranRenders.get(render) === runId
+      ) {
+        console.error(
+          "A render was queued again after it already ran in this update, so its latest value is dropped. This is a bug in Marko.",
+        );
+      }
       return;
     }
     render[PendingRenderProp.Gen] = runId;
+    if (dynamicTagVarsEnabled) {
+      render[PendingRenderProp.Key] = scopeKey * scopeKeyOffset + signalKey;
+    }
   } else {
     render = {
       [PendingRenderProp.Key]: scopeKey * scopeKeyOffset + signalKey,
@@ -152,6 +168,10 @@ export function installCatch(
   runRender = wrapRender(runRender);
 }
 
+export function enableDynamicTagVars() {
+  dynamicTagVarsEnabled = 1;
+}
+
 function runRenders() {
   while (pendingRenders.length) {
     const render = pendingRenders[0];
@@ -186,6 +206,12 @@ function runRenders() {
       pendingRenders[i] = item;
     }
 
+    if (dynamicTagVarsEnabled) {
+      // Lets a render that ran before a tag variable's value arrived queue again.
+      render[PendingRenderProp.Gen] = 0;
+    } else if (MARKO_DEBUG) {
+      ranRenders.set(render, runId);
+    }
     runRender(render);
   }
 }

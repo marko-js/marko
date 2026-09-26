@@ -22,6 +22,8 @@ import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   caughtError,
+  dynamicTagVarsEnabled,
+  enableDynamicTagVars,
   runEffects,
   pendingEffects,
   type PendingRender,
@@ -47,10 +49,12 @@ import {
   findBranchWithKey,
   insertBranchBefore,
   removeAndDestroyBranch,
+  skipScope,
   syncGen,
   tempDetachBranch,
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
+import { getDebugKey } from "./walker";
 
 export function _await_promise(
   nodeAccessor: EncodedAccessor,
@@ -550,6 +554,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
     getTagVar?: (() => Signal<unknown>) | 0,
     inputIsArgs?: 1,
   ): Signal<Renderer | string | undefined> => {
+    const encodedNodeAccessor = nodeAccessor;
     if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
     const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
     const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
@@ -576,6 +581,20 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
             scope[childScopeAccessor][AccessorProp.TagVariable] = (
               value: unknown,
             ) => getTagVar()(scope, value);
+            // Renders reading the variable sort after the new branch's, keyed
+            // by the scope offset the walker reserves right after the node.
+            if (dynamicTagVarsEnabled) {
+              scope[
+                MARKO_DEBUG
+                  ? getDebugKey(
+                      +(encodedNodeAccessor as string).slice(
+                        (encodedNodeAccessor as string).lastIndexOf("/") + 1,
+                      ) + 1,
+                      "#scopeOffset",
+                    )
+                  : decodeAccessor((encodedNodeAccessor as number) + 1)
+              ] = skipScope();
+            }
             // A native branch has no renderer to call `_return`.
             if (typeof normalizedRenderer === "string") {
               bindNativeTagVar?.(scope[childScopeAccessor]);
@@ -695,11 +714,12 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
   },
 );
 
-// The native tag variable lives in `dynamic-tag-var.feat`; bundles without one
-// fold this away rather than carrying the binding in the update path.
+// Dynamic tag variables live in `dynamic-tag-var.feat`; bundles without one fold
+// away the native binding and the render re-keying it enables.
 export let bindNativeTagVar: undefined | ((branch: Scope) => void);
 export function installDynamicTagVar(bind: typeof bindNativeTagVar) {
   bindNativeTagVar = bind;
+  enableDynamicTagVars();
 }
 
 export function dynamicTagScript(branch: Scope) {

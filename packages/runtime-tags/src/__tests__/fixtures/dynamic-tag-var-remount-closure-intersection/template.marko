@@ -1,0 +1,11 @@
+import Child from "./tags/child.marko";
+<let/b=0/>
+<let/Tag=Child/>
+<let/items=[1, 2]/>
+<${Tag}/v/>
+<const/c=(v ? v.n : 0) + b/>
+<for|item| of=items>
+  <let/m=0/>
+  <button class="row" + item onClick() { m++; b++ }>${m + ":" + c}</button>
+</for>
+<button.toggle onClick() { Tag = Tag ? null : Child }/>

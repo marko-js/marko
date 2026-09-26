@@ -1,0 +1,8 @@
+<let/items=[1, 2]/>
+<let/n=0/>
+<button.prepend onClick() { items = [0, ...items] }/>
+<for|item| of=items by=(x) => x>
+  <let/m=0/>
+  <const/label="n" + n/>
+  <button class="row" + item onClick() { m++; n++ }>${m + ":" + label}</button>
+</for>
