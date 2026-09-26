@@ -69,7 +69,6 @@ import {
   getSerializeReason,
 } from "../../util/serialize-reasons";
 import { setTagDownstream } from "../../util/set-tag-sections-downstream";
-import { addSetupStatement } from "../../util/setup-statements";
 import {
   addStatement,
   addValue,
@@ -77,7 +76,6 @@ import {
   getSignal,
   initValue,
   type Signal,
-  signalHasStatements,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { createProgramState } from "../../util/state";
@@ -141,7 +139,6 @@ export default {
       const { node } = tag;
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
-        addSetupStatement(getOrCreateSection(tag));
         knownTagAnalyze(
           tag,
           definedBodySection,
@@ -278,15 +275,17 @@ export default {
                 : getSignal(definedBodySection, binding, preferredName)
                     .identifier,
             (section, childBinding) => {
-              const signal = getSignal(definedBodySection, undefined);
-              if (signalHasStatements(signal)) {
+              if (definedBodySection.hasSetupStatements) {
                 addStatement(
                   "render",
                   section,
                   undefined,
                   t.expressionStatement(
                     t.callExpression(
-                      t.memberExpression(signal.identifier, t.identifier("_")),
+                      t.memberExpression(
+                        getSignal(definedBodySection, undefined).identifier,
+                        t.identifier("_"),
+                      ),
                       [
                         createScopeReadExpression(childBinding, section),
                         getScopeExpression(section, definedBodySection.parent!),

@@ -130,7 +130,6 @@ export interface Section {
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
-  hoistedTo: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
@@ -147,7 +146,8 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  /** For a `<define>` body, the sections whose direct calls render it. */
+  /** For a `<define>` body or a template rendering itself, the sections whose
+   * direct calls render it. */
   callSections: SortedOpt<Section>;
   /** The content's rendering tag (its extra), and each child binding the
    * content feeds, at `properties`. */
@@ -164,6 +164,9 @@ export interface Section {
    * root's `abortId` from this so translates read, never re-derive. */
   abortSignalExprs: number;
   readsOwner: boolean;
+  /** Whether translate may add statements to the section's setup signal;
+   * never false when it does. */
+  hasSetupStatements: boolean;
   isBranch: boolean;
   content: null | {
     startType: ContentType;
@@ -230,7 +233,6 @@ export function startSection(
       referencedHoists: undefined,
       bindings: undefined,
       hoisted: undefined,
-      hoistedTo: undefined,
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
@@ -248,6 +250,7 @@ export function startSection(
       hasAbortSignal: false,
       abortSignalExprs: 0,
       readsOwner: false,
+      hasSetupStatements: false,
       isBranch: false,
       structure: parentSection && !parentSection.structure ? null : [],
     };

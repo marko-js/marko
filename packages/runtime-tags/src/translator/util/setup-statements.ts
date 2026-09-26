@@ -1,11 +1,12 @@
 import type { types as t } from "@marko/compiler";
 
-import type { Section } from "./sections";
+import { forEach } from "./optional";
+import { forEachSection, type Section } from "./sections";
 import { createSectionState } from "./state";
 
 /**
- * Tracks during analyze whether translate will add setup-signal statements, so a
- * template can prove its setup export is a noop and parents can skip calling it.
+ * Tracks during analyze whether translate may add setup-signal statements, so
+ * callers of a template or `<define>` body can skip calling a noop setup.
  */
 
 const [getSetupInfo] = createSectionState("setupStatements", () => ({
@@ -25,9 +26,35 @@ export function addSetupExpr(section: Section, node: t.Node | undefined) {
   }
 }
 
-export function sectionHasSetupStatements(section: Section) {
+export function finalizeSetupStatements() {
+  forEachSection((section) => {
+    if (hasOwnSetupStatements(section)) {
+      section.hasSetupStatements = true;
+    }
+  });
+
+  forEachSection((section) => {
+    if (section.hasSetupStatements || section.readsOwner) {
+      setCallSectionsSetup(section);
+    }
+  });
+}
+
+// A direct call of a `<define>` body or of the template itself sets up the
+// called scope, or its owner, in the calling section's setup.
+function setCallSectionsSetup(body: Section) {
+  forEach(body.callSections, (callSection) => {
+    if (!callSection.hasSetupStatements) {
+      callSection.hasSetupStatements = true;
+      setCallSectionsSetup(callSection);
+    }
+  });
+}
+
+function hasOwnSetupStatements(section: Section) {
   const info = getSetupInfo(section);
-  if (info.forced) return true;
+  // Setup subscribes the section to the closures it reads.
+  if (info.forced || section.referencedClosures) return true;
   for (let extra of info.exprs) {
     while (extra.merged) extra = extra.merged;
     if (!extra.pruned && !extra.referencedBindings) {

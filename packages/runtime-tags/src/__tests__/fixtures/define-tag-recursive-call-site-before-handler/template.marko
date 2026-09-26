@@ -1,0 +1,8 @@
+<define/Item|{ depth }|>
+  <if=depth>
+    <Item depth=depth - 1/>
+  </if>
+  <button onClick(e) { e.target.textContent = `clicked ${depth}` }>${depth}</button>
+</define>
+
+<Item depth=2/>

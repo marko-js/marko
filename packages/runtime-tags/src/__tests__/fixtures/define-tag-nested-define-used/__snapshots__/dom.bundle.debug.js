@@ -3,4 +3,4 @@ const $Inner_content__walks = "b", $Inner_content__template = "<span>inner</span
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Outer_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Outer_content__walks);
 const $setup = () => {};
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks);

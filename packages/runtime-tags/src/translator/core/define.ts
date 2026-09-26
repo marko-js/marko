@@ -151,8 +151,24 @@ export default {
           if (bodySection && hasDirectReferences) {
             const signal = getSignal(bodySection, undefined);
             signal.build = () => {
-              if (signalHasStatements(signal)) {
-                return callRuntime("_child_setup", getSignalFn(signal));
+              const hasStatements = signalHasStatements(signal);
+              // Call sites skip this setup when analysis proved it a noop, so
+              // statements here mean that proof was wrong.
+              if (hasStatements && !bodySection.hasSetupStatements) {
+                throw new Error(
+                  "Marko internal error: analysis marked a `<define>` body's setup as empty but translation produced statements for it. Please open an issue with a reproduction.",
+                );
+              }
+
+              if (bodySection.hasSetupStatements) {
+                // Call sites still call it once dom output drops work analysis
+                // counted (a class API tag); an empty block body would become `0`.
+                return callRuntime(
+                  "_child_setup",
+                  hasStatements
+                    ? getSignalFn(signal)
+                    : t.arrowFunctionExpression([], t.numericLiteral(0)),
+                );
               }
             };
           }
