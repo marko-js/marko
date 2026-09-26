@@ -36,7 +36,7 @@ import * as writer from "../util/writer";
 
 const kNodeBinding = Symbol("comment tag binding");
 
-// Matches the runtime `_escape_comment` transform.
+// Applies the `>` escape of the runtime `_escape_comment`.
 const escapeCommentText = (text: string) => text.replace(/>/g, "&gt;");
 
 declare module "@marko/compiler/dist/types" {

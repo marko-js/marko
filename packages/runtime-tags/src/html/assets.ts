@@ -79,17 +79,23 @@ export function withPageAssets(
   return Object.assign((input: unknown) => {
     const g = $global();
     if (runtimeId) {
-      if (MARKO_DEBUG) {
-        if (g.runtimeId !== DEFAULT_RUNTIME_ID && g.runtimeId !== runtimeId) {
-          throw new Error(
-            `$global.runtimeId ("${g.runtimeId}") conflicts with the runtimeId this entry was compiled with ("${runtimeId}").`,
-          );
+      // The compiled browser entry bakes in its runtimeId, so the render's first
+      // page entry applies it before any resume comment is written.
+      if (!g[kAssets]) {
+        if (MARKO_DEBUG) {
+          if (g.runtimeId !== DEFAULT_RUNTIME_ID && g.runtimeId !== runtimeId) {
+            throw new Error(
+              `$global.runtimeId ("${g.runtimeId}") conflicts with the runtimeId this entry was compiled with ("${runtimeId}").`,
+            );
+          }
         }
-      }
 
-      // The compiled browser entry bakes in its runtimeId, so the compiled
-      // value must win for the client and server halves to agree.
-      g.runtimeId = runtimeId;
+        g.runtimeId = runtimeId;
+      } else if (MARKO_DEBUG && g.runtimeId !== runtimeId) {
+        console.error(
+          `A page entry compiled with runtimeId "${runtimeId}" is nested in a render using runtimeId "${g.runtimeId}", so its content cannot resume.`,
+        );
+      }
     }
     addAsset(g, assetId);
     // A page entry rendered after the first flush cleared `__flush__` takes the
