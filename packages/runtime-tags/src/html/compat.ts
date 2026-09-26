@@ -62,9 +62,9 @@ export const compat = {
   },
   onFlush(fn: (chunk: Chunk) => void) {
     const { flushHTML } = Chunk.prototype;
-    Chunk.prototype.flushHTML = function () {
+    Chunk.prototype.flushHTML = function (boundary) {
       fn(this);
-      return flushHTML.call(this);
+      return flushHTML.call(this, boundary);
     };
   },
   patchDynamicTag,
@@ -111,7 +111,7 @@ export const compat = {
         );
     }
 
-    return chunk.flushScript().scripts;
+    return chunk.flushScript(boundary).scripts;
   },
   render(
     renderer: ServerRenderer,

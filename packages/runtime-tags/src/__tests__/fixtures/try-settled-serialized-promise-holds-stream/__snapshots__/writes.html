@@ -1,0 +1,53 @@
+<html>
+
+<head></head>
+
+<body><button>0<!--M_$2 b--></button><!--M_$2 a--><!--M_[--><!--M_!^b-->
+  <script>
+    WALKER_RUNTIME("M")("_");
+    M._.r = [_ => [2, {
+      c: 0
+    }, {
+      E: _(1, "b0")
+    }]]
+  </script>
+
+  <!-- FLUSH -->
+
+  <span>a</span>
+  <script async type=module src="child.marko.load.mjs"></script>
+  <div id=ref>0</div><!--M_!b--><!--M_]1 b 3-->
+  <script>
+    M._.b = {
+      _a: [_ => [4, {
+        G: 3,
+        a: (p => p = new Promise((f, r) => _.a = {
+          f,
+          r(e) {
+            p.catch(_ => 0);
+            r(e)
+          }
+        }))()
+      }]]
+    };
+    M._.w()
+  </script>
+
+  <!-- FLUSH -->
+
+  <script>
+    M._.b._a.push(_ => (_.a.f("hello"), 0));
+    M._.w()
+  </script>
+
+  <!-- FLUSH -->
+
+  <p>b</p>
+  <script>
+    M._.b._a.push("a0 4");
+    M._.r.push("c0 2");
+    M._.w()
+  </script>
+</body>
+
+</html>

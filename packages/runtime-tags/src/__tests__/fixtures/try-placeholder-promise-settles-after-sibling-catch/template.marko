@@ -1,0 +1,20 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<try>
+  <await|v| = resolveAfter("done", 3)>
+    <span>${v}</span>
+  </await>
+  <@placeholder>
+    <const/promise = resolveAfter("hello", 2)/>
+    <script>
+      document.getElementById("ref").textContent = await promise;
+    </script>
+    <div id="ref">0</div>
+  </@placeholder>
+</try>
+<try>
+  <await|v| = rejectAfter(new Error("caught"), 1)>
+    <p>${v}</p>
+  </await>
+  <@catch|err|>${err.message}</@catch>
+</try>

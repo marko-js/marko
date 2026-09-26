@@ -155,6 +155,13 @@ export function withContext<T, U>(
   }
 }
 
+// A chunk that renders later keeps the context values set at its position.
+function captureContext(chunk: Chunk) {
+  if (chunk.context?.[kPendingContexts]) {
+    chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
+  }
+}
+
 const kBranchId = Symbol("Branch Id");
 
 const kIsAsync = Symbol("Is Async");
@@ -943,9 +950,7 @@ export function _await<T>(
   const { boundary } = chunk;
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
-  if (chunk.context?.[kPendingContexts]) {
-    chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
-  }
+  captureContext(chunk);
   boundary.startAsync();
   promise.then(
     (value) => {
@@ -1063,6 +1068,7 @@ function tryPlaceholder(
   }
 
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
+  captureContext(chunk);
   chunk.placeholder = {
     body,
     render: placeholder,
@@ -1088,7 +1094,7 @@ function tryBoundary(
   // work; the outer-aborted check in onNext keeps that from firing the catch.
   const catchBoundary = new Boundary(state, boundary.signal, boundary);
   const body = chunk.fork(catchBoundary, null);
-  const bodyEnd = withBranchId(branchId, () => body.render(content));
+  const bodyEnd = body.render(() => withBranchId(branchId, content));
 
   if (catchBoundary.signal.aborted) {
     // Sync error. The body's already-written scopes stay in the resume payload
@@ -1120,6 +1126,8 @@ function tryBoundary(
   if (reorderId) {
     chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
     bodyEnd.writeHTML(endMarker);
+    // The catch renders later, forked from this chunk.
+    captureContext(chunk);
   }
 
   catchBoundary.onNext = () => {
@@ -1384,7 +1392,10 @@ export class Boundary extends AbortController {
   }
 
   endAsync() {
-    if (!this.signal.aborted && this.count) {
+    if (!this.signal.aborted) {
+      if (MARKO_DEBUG && !this.count) {
+        throw new Error("A boundary ended more async work than it started.");
+      }
       this.count--;
       this.onNext();
     }
@@ -1586,14 +1597,18 @@ export class Chunk {
     }
   }
 
-  flushReadyScripts(reservations?: string[], holdEffects?: boolean) {
-    const { boundary, serializeState } = this;
+  flushReadyScripts(
+    boundary: Boundary,
+    reservations?: string[],
+    holdEffects?: boolean,
+  ) {
+    const { serializeState } = this;
     const { readyId } = serializeState;
     let scripts = "";
     forEach(this.takeDeferredReady(), (chunk) => {
       scripts = concatScripts(
         scripts,
-        chunk.flushReadyScripts(reservations, holdEffects),
+        chunk.flushReadyScripts(boundary, reservations, holdEffects),
       );
       // Effects held for in-order content flush with a later pass.
       if (chunk.effects || chunk.deferredReady) {
@@ -1640,15 +1655,20 @@ export class Chunk {
     return scripts;
   }
 
-  flushScript() {
-    const { boundary } = this;
+  // Takes the render's root boundary: a `<try>` body chunk's own may settle or
+  // abort before the async values serialized in its flush do.
+  flushScript(boundary: Boundary) {
     const { state } = boundary;
     const { $global, runtimePrefix } = state;
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) state.walkOnNextFlush = false;
 
     // Lazy content's effects wait on in-order content like the rest.
-    let readyResumeScripts = this.flushReadyScripts(undefined, this.async);
+    let readyResumeScripts = this.flushReadyScripts(
+      boundary,
+      undefined,
+      this.async,
+    );
     for (let channel; (channel = state.serializer.pendingReadyChannel());) {
       const resumes = state.serializer.stringifyScopes([], boundary, channel);
       const deps = state.serializer.takeChannelDeps();
@@ -1741,6 +1761,7 @@ export class Chunk {
           const { next } = cur;
           // Reorder-ready batches fill slots reserved by the main stream.
           const readyResumeScripts = cur.flushReadyScripts(
+            boundary,
             readyReservations,
             this.async,
           );
@@ -1838,15 +1859,14 @@ export class Chunk {
     return this;
   }
 
-  flushHTML() {
-    const { boundary } = this;
+  flushHTML(boundary: Boundary) {
     const { state } = boundary;
     if (this.needsWalk) {
       this.needsWalk = false;
       state.walkOnNextFlush = true;
     }
 
-    this.flushScript();
+    this.flushScript(boundary);
     const { html, scripts } = this;
     this.html = this.scripts = "";
     return state.flushChunk(html, scripts, boundary.count);

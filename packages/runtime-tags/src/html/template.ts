@@ -322,7 +322,7 @@ class ServerRendered implements RenderedTemplate {
           case FlushStatus.complete: {
             // `consume` may abort and re-enter through the boundary listener.
             const consumed = head.consume();
-            if (!boundary.signal.aborted) resolve(consumed.flushHTML());
+            if (!boundary.signal.aborted) resolve(consumed.flushHTML(boundary));
             break;
           }
         }
@@ -354,7 +354,7 @@ class ServerRendered implements RenderedTemplate {
       } else if (write || status === FlushStatus.complete) {
         head = head.consume();
         if (boundary.signal.aborted) return;
-        const html = head.flushHTML();
+        const html = head.flushHTML(boundary);
         if (html) onWrite(html);
         if (status === FlushStatus.complete) {
           if (!tick) offTick(onNext);
@@ -383,7 +383,7 @@ class ServerRendered implements RenderedTemplate {
       case FlushStatus.continue:
         throw new Error("Cannot consume asynchronous render with 'toString'");
     }
-    return head.consume().flushHTML();
+    return head.consume().flushHTML(boundary);
   }
 }
 
