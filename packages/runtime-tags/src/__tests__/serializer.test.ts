@@ -738,6 +738,28 @@ describe("serializer", () => {
         arr.constructor = Map;
         assertStringify(arr, `[1,2]`);
       });
+      it("error", () =>
+        assertStringify(
+          Object.assign(new Error("x"), parsedConstructor()),
+          `new Error("x")`,
+        ));
+      it("typed array", () =>
+        assertStringify(
+          Object.assign(new Uint8Array([1, 2]), parsedConstructor()),
+          `new Uint8Array([1,2])`,
+        ));
+      it("typed array view", () =>
+        assertStringify(
+          Object.assign(
+            new Uint8Array(new ArrayBuffer(4), 1, 2),
+            parsedConstructor(),
+          ),
+          `new Uint8Array(new ArrayBuffer(4),1,2)`,
+        ));
+
+      function parsedConstructor() {
+        return JSON.parse('{"constructor":{"name":"(alert(1),Error)"}}');
+      }
     });
 
     it("Symbol.iterator inline", () => {
@@ -1723,6 +1745,10 @@ describe("serializer", () => {
       const fn = () => 1;
       assertStringify([fn, "a"], `[,"a"]`);
     });
+
+    it("server-only timers are unknown", () => {
+      assertStringify([setImmediate, clearImmediate, "a"], `[,,"a"]`);
+    });
   });
 
   describe("registry", () => {
@@ -2339,6 +2365,15 @@ describe("serializer", () => {
         errored,
       });
     });
+
+    it("reports a locked stream in debug", () => {
+      const stream = new ReadableStream();
+      stream.getReader();
+      assert.match(
+        String(abortedStringifying([[1, {}, { stream }]])),
+        /\(reading stream\)\. The ReadableStream is locked/,
+      );
+    });
   });
 
   describe("aborted boundary", () => {
@@ -2536,6 +2571,16 @@ describe("serializer", () => {
       });
 
     shouldTestRequestAndResponse &&
+      it("reports a locked body in debug", () => {
+        const response = new Response(new ReadableStream());
+        response.body!.getReader();
+        assert.match(
+          String(abortedStringifying([[1, {}, { response }]])),
+          /\(reading response\.body\)\. The ReadableStream is locked .*`clone\(\)`/,
+        );
+      });
+
+    shouldTestRequestAndResponse &&
       it("buffer", async () => {
         const serializer = assertSerializer();
         const response = new Response(new Int8Array([116, 101, 115, 116]));
@@ -2668,6 +2713,30 @@ describe("serializer", () => {
     assert.ok(Array.isArray(partials));
     assert.equal(partials[0], 1);
     assert.equal(partials.length, 25001);
+  });
+
+  it("skips the `name` id, which the serialize context cannot reassign", () => {
+    // The 909,070th id would otherwise spell `name`.
+    const serializer = new Serializer();
+    const { scopes, apply } = createSerializeContext();
+    const boundary = {
+      signal: { aborted: false },
+      abort() {},
+    } as any as Boundary;
+    let payload = "";
+    for (let remaining = 909_070; remaining > 0; remaining -= 50_000) {
+      const objs = Array.from(
+        { length: Math.min(remaining, 50_000) },
+        () => ({}),
+      );
+      payload = serializer.stringifyScopes(
+        [[1, {}, { value: objs.flatMap((obj) => [obj, obj]) }]],
+        boundary,
+      );
+    }
+    apply(payload);
+    const value = scopes.get(1)!.value as object[];
+    assert.equal(value.at(-1), value.at(-2));
   });
 });
 

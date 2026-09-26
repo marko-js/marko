@@ -143,7 +143,6 @@ const KNOWN_FUNCTIONS = /* @__PURE__ */ (() =>
     [Function, "Function"],
     [globalThis.atob, "atob"],
     [globalThis.btoa, "btoa"],
-    [globalThis.clearImmediate, "clearImmediate"],
     [globalThis.clearInterval, "clearInterval"],
     [globalThis.clearTimeout, "clearTimeout"],
     [globalThis.crypto?.getRandomValues, "crypto.getRandomValues"],
@@ -151,7 +150,6 @@ const KNOWN_FUNCTIONS = /* @__PURE__ */ (() =>
     [globalThis.fetch, "fetch"],
     [globalThis.performance?.now, "performance.now"],
     [globalThis.queueMicrotask, "queueMicrotask"],
-    [globalThis.setImmediate, "setImmediate"],
     [globalThis.setInterval, "setInterval"],
     [globalThis.setTimeout, "setTimeout"],
     [globalThis.structuredClone, "structuredClone"],
@@ -957,9 +955,10 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
   if (proto === objectProto) return writePlainObject(state, val, ref);
   if (proto === arrayProto) return writeArray(state, val as unknown[], ref);
 
-  // The constructor is read from the prototype so an own `constructor`
-  // property (e.g. parsed JSON data) cannot change how a value is written.
-  switch (proto?.constructor) {
+  // Read the constructor once, off the prototype: an own `constructor` (e.g.
+  // parsed JSON data) must not change how a value is written or named.
+  const constructor = proto?.constructor;
+  switch (constructor) {
     case undefined:
       return writeNullObject(state, val, ref);
     case Object:
@@ -987,7 +986,7 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
     case SyntaxError:
     case TypeError:
     case URIError:
-      return writeError(state, val as Error, ref);
+      return writeError(state, val as Error, constructor.name, ref);
     case AggregateError:
       return writeAggregateError(state, val as AggregateError, ref);
     case ArrayBuffer:
@@ -1003,7 +1002,7 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
     case Float64Array:
     case BigInt64Array:
     case BigUint64Array:
-      return writeTypedArray(state, val as TypedArray, ref);
+      return writeTypedArray(state, val as TypedArray, constructor.name, ref);
     case DataView:
       return writeDataView(state, val as DataView, ref);
     // Boxed primitives (`Object(1)`) are deliberately unsupported (wont-fix:
@@ -1030,8 +1029,8 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
       return writeRequest(state, val as Request, ref);
     case globalThis.Response:
       return writeResponse(state, val as Response, ref);
-    // Each name is a literal: re-reading it off the prototype would let an
-    // exotic `constructor` inject arbitrary source into the payload.
+    // Intl and Temporal names are literals: a minified server polyfill's
+    // `constructor.name` need not match the global the browser reads.
     case globalThis.Intl?.NumberFormat:
       return writeIntl(state, val, "NumberFormat", ref);
     case globalThis.Intl?.DateTimeFormat:
@@ -1434,10 +1433,12 @@ function writeArrayBuffer(state: State, val: ArrayBuffer) {
   return true;
 }
 
-function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
-  // `constructor.name` is read off the instance (not the matched prototype):
-  // only a deliberately corrupted typed array differs, never parsed data.
-
+function writeTypedArray(
+  state: State,
+  val: TypedArray,
+  name: string,
+  ref: Reference,
+) {
   // Partial views serialize their full shared buffer for later sibling views.
   if (
     val.byteOffset ||
@@ -1446,7 +1447,7 @@ function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
   ) {
     if (!canWriteBuffer(state, val.buffer, ref)) return false;
     const needsLength = val.byteOffset + val.byteLength < val.buffer.byteLength;
-    state.buf.push("new " + val.constructor.name + "(");
+    state.buf.push("new " + name + "(");
     writeProp(state, val.buffer, ref, "buffer");
     state.buf.push(
       (val.byteOffset || needsLength
@@ -1460,7 +1461,7 @@ function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
     );
     state.buf.push(
       "new " +
-        val.constructor.name +
+        name +
         (val.length === 0
           ? ""
           : "(" +
@@ -1482,13 +1483,10 @@ function writeWeakMap(state: State) {
   return true;
 }
 
-// The own `constructor` is trusted here: dispatch already matched a built-in
-// error prototype, so only this object's owner could have replaced it.
 // Errors round-trip only `message` and `cause` (plus `AggregateError.errors`);
 // own enumerable props hung on an error are deliberately not serialized.
-function writeError(state: State, val: Error, ref: Reference) {
-  const result =
-    "new " + val.constructor.name + "(" + quote(val.message + "", 0);
+function writeError(state: State, val: Error, name: string, ref: Reference) {
+  const result = "new " + name + "(" + quote(val.message + "", 0);
   if (val.cause !== undefined) {
     const pos = state.buf.push(result + ",{cause:") - 1;
     if (writeProp(state, val.cause, ref, "cause")) {
@@ -1765,7 +1763,17 @@ function writeReadableStream(
   val: ReadableStream<unknown>,
   ref: Reference,
 ) {
-  if (val.locked) return false;
+  if (val.locked) {
+    MARKO_DEBUG &&
+      throwUnserializable(
+        state,
+        val,
+        ref,
+        "",
+        "The ReadableStream is locked by a reader on the server; to also send it to the browser, `tee()` it (or `clone()` its `Request`/`Response`) before reading.",
+      );
+    return false;
+  }
 
   const { boundary, channel } = state;
 
@@ -2028,6 +2036,7 @@ function throwUnserializable(
   cause: unknown,
   ref: Reference | null = null,
   accessor: string = "",
+  hint = "Values referenced in the browser must be serializable.",
 ) {
   if (cause !== undefined) {
     let message = "Unable to serialize";
@@ -2084,7 +2093,7 @@ function throwUnserializable(
       message += ` (reading ${access})`;
     }
 
-    message += ". Values referenced in the browser must be serializable.";
+    message += ". " + hint;
 
     const err = new TypeError(message, { cause });
     // The stack would only show the serializer's flush; the message already
@@ -2405,7 +2414,7 @@ function nextRefAccess(state: State) {
   return "_." + nextId(state);
 }
 
-function nextId(state: State) {
+function nextId(state: State): string {
   const c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
   let n = state.ids++;
   let r = c[n % 53]; // Avoids chars that cannot start a property name and _ (reserved).
@@ -2413,7 +2422,9 @@ function nextId(state: State) {
     r += c[n & 63];
   }
 
-  return r;
+  // Ids are properties of the browser's serialize context, a function whose own
+  // `name` cannot be reassigned; longer ones such as `length` are out of reach.
+  return r === "name" ? nextId(state) : r;
 }
 
 function hasSymbolIterator(

@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27066 (min) 10082 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -792,13 +792,7 @@ function _script(id, fn) {
   );
 }
 function _global_read($global, key) {
-  return (
-    key in $global ||
-      console.error(
-        `\`$global.${key}\` is not serialized to the client, so this read is \`undefined\`. Add \`${key}\` to \`serializedGlobals\` at the render call.`,
-      ),
-    $global[key]
-  );
+  return $global[key];
 }
 function _el_read(value) {
   return value;
