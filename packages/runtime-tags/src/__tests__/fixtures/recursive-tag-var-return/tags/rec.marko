@@ -1,0 +1,7 @@
+<let/n=0/>
+<if=input.depth>
+  <rec/child depth=input.depth - 1/>
+  <span>${child}</span>
+</if>
+<button onClick() { n++ }>${n}</button>
+<return=n/>
