@@ -6,7 +6,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#6/init;b%;<!><!><!>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_title = _source_guard($scope0_reason, 1), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	let count = 0;
@@ -17,8 +17,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			if ($scope0_page) _if(() => {
 				if (count > 1) {
 					const $scope2_id = _scope_id();
-					_html(`<p>${_text_resume($scope2_id, "#text/0", input.title)}</p>`);
-					_subscribe(_source_if($scope0_reason, 1) && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_title#5/subscribe");
+					_html(`<p>${_text_resume($scope2_id, "#text/0", input.title, $sg__input_title)}</p>`);
+					_subscribe(_source_if($scope0_reason, 1) && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_title#5/subscribe", $sg__input_title);
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);

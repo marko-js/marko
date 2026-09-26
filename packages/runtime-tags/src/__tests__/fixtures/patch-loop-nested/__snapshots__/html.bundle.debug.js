@@ -13,7 +13,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		if ($scope0_page) _for_of(inner, (i) => {
 			const $scope2_id = _scope_id();
-			_html(`<div>${_text_resume($scope2_id, "#text/0", o)}${_text_resume($scope2_id, "#text/1", i, 2)}: ${_text_resume($scope2_id, "#text/2", input.note, 2)}</div>`);
+			_html(`<div>${_text_resume($scope2_id, "#text/0", o)}${_text_resume($scope2_id, "#text/1", i, 2)}: ${_text_resume($scope2_id, "#text/2", input.note, _source_guard($scope0_reason, 0) * 2)}</div>`);
 			_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_note#5/subscribe");
 		}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
 		_scope($scope1_id, { o }, "__tests__/template.marko", "4:4", { o: "4:8" });

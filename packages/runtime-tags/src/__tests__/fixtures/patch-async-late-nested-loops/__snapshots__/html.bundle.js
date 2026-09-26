@@ -37,10 +37,10 @@ var template_default = _template_patch("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				e: $for_content2__item_promise__closures
 			});
-		}, 0, $scope1_id, "a", 1, $sg__input_groups, $sg__input_groups, void 0, void 0, "a4", $scope0_reason, 0);
-		_html(`</section>${_el_resume($scope1_id, "a", $sg__input_groups)}`);
-		$scope0_page && _scope($scope1_id, {});
-	}, "id", $scope0_id, "a", 1, $sg__input_groups, $sg__input_groups, void 0, void 0, "a3", $scope0_reason, 0);
+		}, 0, $scope1_id, "a", 1, 1, $sg__input_groups, void 0, void 0, "a4", $scope0_reason, 0);
+		_html(`</section>${_el_resume($scope1_id, "a")}`);
+		_scope($scope1_id, {});
+	}, "id", $scope0_id, "a", 1, 1, $sg__input_groups, void 0, void 0, "a3", $scope0_reason, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a7");
 	$scope0_page && _scope($scope0_id, {});

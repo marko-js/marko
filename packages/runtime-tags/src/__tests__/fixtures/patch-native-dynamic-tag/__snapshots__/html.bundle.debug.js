@@ -13,7 +13,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`${_text_resume($scope1_id, "#text/0", input.label)} ${_text_resume($scope1_id, "#text/1", count, 2)}`);
+		_html(`${_text_resume($scope1_id, "#text/0", input.label, _source_guard($scope0_reason, 1))} ${_text_resume($scope1_id, "#text/1", count, 2)}`);
 		_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_label#5/subscribe"), "__tests__/template.marko_1_count#6/subscribe");
 	}, $scope0_id));
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);

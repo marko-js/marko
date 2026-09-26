@@ -34,7 +34,7 @@ var template_default = _template_patch("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
 	let content = child_default({ label: input.label });
-	_var($scope0_id, "b", $childScope, "a0");
+	_client_guard($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "a0");
 	_filled_guard(0, 0) && _patch_write($scope0_id, "j", content, 1);
 	_dynamic_tag($scope0_id, "c", content, {}, 0, 0, 0, _patch_dynamic_tag($scope0_id, "c", content, 0, 0, 0));
 	_html(`<button>${_text_resume($scope0_id, "e", n)}</button>${_el_resume($scope0_id, "d")}`);

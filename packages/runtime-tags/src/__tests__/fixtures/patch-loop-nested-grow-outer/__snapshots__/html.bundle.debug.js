@@ -17,12 +17,12 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "#text/0", row.id + "@" + count)}</p>`);
 			_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_count#5/subscribe");
-		}, (cell) => cell, $scope1_id, "#text/0", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
+		}, (cell) => cell, $scope1_id, "#text/0", 1, 1, $sg__input_rows, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 		_scope($scope1_id, {
 			"#LoopKey": row?.id,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { "#LoopKey": ["row.id", "2:6"] });
-	}, (row) => row.id, $scope0_id, "#text/0", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, (row) => row.id, $scope0_id, "#text/0", 1, 1, $sg__input_rows, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {

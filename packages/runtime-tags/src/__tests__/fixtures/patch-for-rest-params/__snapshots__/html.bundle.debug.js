@@ -17,7 +17,7 @@ var my_for_default = _template_patch("__tests__/tags/my-for.marko", (input) => {
 			args: _source_if($scope0_reason, 2) && args,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/my-for.marko", "1:2", { args: "1:6" });
-	}, 0, $scope0_id, "#text/0", 1, $sg__input_to__OR__input_content, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/tags/my-for.marko_1*shell", $scope0_reason, 1);
+	}, 0, $scope0_id, "#text/0", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/tags/my-for.marko_1*shell", $scope0_reason, 1);
 	$scope0_page ? _scope($scope0_id, { input_content: _source_if($scope0_reason, 1) && input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/my-for.marko0", input.content);
 }, 0, 1);
 

@@ -14,10 +14,6 @@ const $count = /*@__PURE__*/ _fill_let("b1", 3, /* @__PURE__ */ _closure($Conten
 
 // template.marko
 const $n = /*@__PURE__*/ _let(10, ($scope) => _text($scope.g, $scope.k));
-const $setup__script = _script("a2", ($scope) => _on($scope.f, "click", function() {
+const $setup__script = _script("a0", ($scope) => _on($scope.f, "click", function() {
 	$n($scope, +$scope.k + 1);
 }));
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(4);
-const $input_first__OR__a__OR__b = /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.j ? $scope.l : $scope.m), 2);
-const $a = _var_resume("a0", /*@__PURE__*/ _const(11, $input_first__OR__a__OR__b));
-const $b = _var_resume("a1", /*@__PURE__*/ _const(12, $input_first__OR__a__OR__b));

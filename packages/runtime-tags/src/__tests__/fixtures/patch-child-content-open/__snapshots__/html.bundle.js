@@ -16,7 +16,7 @@ _shells({
 	a: "a !a1;D%b ;<main><!><button>+</button></main>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_title = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	let open = true;
@@ -24,14 +24,14 @@ var template_default = _template_patch("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			box_default({ content: _content_elide("a0", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<p>${_text_resume($scope2_id, "a", "t:" + input.title)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "a", "t:" + input.title, $sg__input_title)}</p>`);
 				_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+				$sg__input_title || _resume_branch($scope2_id);
 			}, $scope1_id) });
-			_scope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 1, 0, 1);

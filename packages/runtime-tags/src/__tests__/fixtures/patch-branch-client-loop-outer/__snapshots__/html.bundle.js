@@ -4,7 +4,9 @@ _shells({
 	a0: "a0 a5;D%b%;<li><!><!></li>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
+	_source_guard($scope0_reason, 1);
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let expand = false;

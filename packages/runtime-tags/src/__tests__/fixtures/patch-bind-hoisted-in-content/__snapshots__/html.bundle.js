@@ -32,7 +32,7 @@ var frame_default = _template_patch("b", (input) => {
 _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `0${_w0}&`)("D l"), $template$1),
 	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `/${_w0}&%c`)("D%l"), ((_w0) => `${_w0}<!><!>`)($template)),
-	a1: "a1 !a4;Db%l ;<span>Seen <!></span><button>+</button>"
+	a1: "a1 !a3;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -48,8 +48,6 @@ var template_default = _template_patch("a", (input) => {
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "a", $childScope);
 		let setLast = store_default({});
-		_var($scope1_id, "b", $childScope, "a3");
-		_filled_guard(0, 0) && _patch_write($scope1_id, "c", setLast, 1);
 		_subscribe($frame_content__subscribers, _scope($scope1_id, {
 			c: setLast,
 			a: _existing_scope($childScope)
@@ -60,7 +58,7 @@ var template_default = _template_patch("a", (input) => {
 			const $scope2_id = _scope_id();
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope2_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope2_id, "b")}`);
-			_script($scope2_id, "a4");
+			_script($scope2_id, "a3");
 			_patch_value($scope2_id, "a0", count, 1);
 			_patch_bind($scope2_id, "d", $setLast_getter || void 0);
 			_scope($scope2_id, {

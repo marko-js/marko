@@ -12,11 +12,13 @@ import {
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
 import { isOutputHTML, isPatch } from "../util/marko-config";
+import { push } from "../util/optional";
 import { writesPatchHole } from "../util/patch/decisions";
 import { onFinalizePatch } from "../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   isBranchPathSection,
+  getWriteReason,
 } from "../util/patch/structure";
 import {
   type Binding,
@@ -44,9 +46,7 @@ import {
 import { getExprWriteOwnership } from "../util/serialize-guard";
 import {
   addSerializeExpr,
-  addPatchSerializeReason,
   addSerializeReason,
-  getSerializeReason,
 } from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
 import * as structure from "../util/structure";
@@ -113,12 +113,13 @@ export default {
       if (isTagVarRead(tag))
         addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
+      if (referenceNodes.length)
+        nodeBinding.holes = push(nodeBinding.holes, tagExtra);
       if (
         isPatch() &&
         referenceNodes.length &&
         isBranchPathSection(tagSection)
       ) {
-        addPatchSerializeReason(tagSection, FORCED, nodeBinding);
         ensurePatchWriteGroups(() => tagExtra);
         onFinalizePatch(() => {
           if (writesPatchHole(tagSection, tagExtra)) {
@@ -226,7 +227,7 @@ export default {
         writer.markNode(
           tag,
           nodeBinding,
-          getSerializeReason(tagSection, nodeBinding),
+          getWriteReason(tagSection, nodeBinding),
         );
       }
 

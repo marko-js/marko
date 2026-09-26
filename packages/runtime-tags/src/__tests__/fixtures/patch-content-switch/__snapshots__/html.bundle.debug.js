@@ -57,7 +57,6 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope3_id = _scope_id();
-			const $childScope2 = _peek_scope_id();
 			widget_default({ content: _content_elide("__tests__/template.marko_4*content", () => {
 				const $scope4_reason = _scope_reason();
 				const $scope4_id = _scope_id();
@@ -69,7 +68,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 						return 0;
 					} else if (input.inner === "b") {
 						const $scope5_id = _scope_id();
-						_html(`<i>B:${_text_resume($scope5_id, "#text/0", input.inner, 2)}</i>`);
+						_html(`<i>B:${_text_resume($scope5_id, "#text/0", input.inner, $sg__input_inner * 2)}</i>`);
 						_subscribe($si__input_inner && $input_inner__closures, _scope($scope5_id, {
 							_: _scope_with_id($scope4_id),
 							"ClosureSignalIndex:input_inner": 1
@@ -80,7 +79,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_subscribe($si__input_inner && $input_inner__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "8:6"));
 				$sg__input_inner || _resume_branch($scope4_id);
 			}, $scope3_id) });
-			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "7:4");
+			_scope($scope3_id, {}, "__tests__/template.marko", "7:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);

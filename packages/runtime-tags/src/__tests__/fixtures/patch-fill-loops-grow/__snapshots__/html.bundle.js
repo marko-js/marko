@@ -20,9 +20,9 @@ var template_default = _template_patch("a", (input) => {
 				M: cell,
 				_: _scope_with_id($scope1_id)
 			}), _client_guard($scope0_reason, 1) && "a2"), "a3");
-		}, (cell) => cell, $scope1_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a1", $scope0_reason, 0);
+		}, (cell) => cell, $scope1_id, "a", 1, 1, $sg__input_rows, void 0, void 0, "a1", $scope0_reason, 0);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, (row) => row.id, $scope0_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a0", $scope0_reason, 0);
+	}, (row) => row.id, $scope0_id, "a", 1, 1, $sg__input_rows, void 0, void 0, "a0", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
 	$scope0_page ? _scope($scope0_id, {

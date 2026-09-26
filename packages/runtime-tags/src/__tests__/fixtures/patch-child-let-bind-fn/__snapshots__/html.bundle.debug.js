@@ -51,8 +51,6 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	let refresh = picker_default({ refreshingChange: _resume(function(v) {
 		busy = v;
 	}, "__tests__/template.marko_0/refreshingChange", $scope0_id) });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_refresh#5/var");
-	_filled_guard(0, 0) && _patch_write($scope0_id, "refresh", refresh, 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/2", busy ? "busy" : "idle")}</p><button id=outer>outer</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {

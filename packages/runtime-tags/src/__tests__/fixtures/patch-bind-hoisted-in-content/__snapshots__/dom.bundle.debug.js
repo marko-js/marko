@@ -34,7 +34,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__count($scope, 0, $setLast_getter($scope._));
 };
 const $setLast_getter = _hoist_resume("__tests__/template.marko_0_setLast#2/hoist", "setLast", "ClosureScopes:1");
-const $frame_content__setLast = _var_resume("__tests__/template.marko_1_setLast#2/var", /*@__PURE__*/ _const("setLast", ($scope) => _assert_hoist($scope.setLast)));
+const $frame_content__setLast = /*@__PURE__*/ _const("setLast", ($scope) => _assert_hoist($scope.setLast));
 const $frame_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $frame_content__setLast);
 	$setup$2($scope["#childScope/0"]);

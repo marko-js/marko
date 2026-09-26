@@ -3,7 +3,7 @@ const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $si__input_upper = _source_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $sg__input_title__OR__input_upper = _source_guard($scope0_reason, 0), $scope0_page = _page_render(), $si__input_upper = _source_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const up = _resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
 	const low = _resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
@@ -13,7 +13,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", pick())}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", pick(), $sg__input_title__OR__input_upper)}</p>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "6:4");
 			return 0;
 		}

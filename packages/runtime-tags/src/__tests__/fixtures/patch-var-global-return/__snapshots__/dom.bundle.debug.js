@@ -11,7 +11,7 @@ var tagger_default = /*@__PURE__*/ _template("__tests__/tags/tagger/index.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p> </p></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D0${_w0}&D m`)("b");
-const $tag = _var_resume("__tests__/template.marko_0_tag#3/var", ($scope, tag) => _text($scope["#text/2"], tag));
+const $tag = ($scope, tag) => _text($scope["#text/2"], tag);
 function $setup($scope) {
 	_var($scope, "#childScope/0", $tag);
 	$setup$1($scope["#childScope/0"]);

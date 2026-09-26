@@ -25,7 +25,7 @@ var panel_default = _template_patch("__tests__/tags/panel.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_html(`<p class=summary>${_text_resume($scope1_id, "#text/0", JSON.stringify(summary))}</p><p class=total>${_text_resume($scope1_id, "#text/1", pending.length)}</p>`);
+			_html(`<p class=summary>${_text_resume($scope1_id, "#text/0", JSON.stringify(summary), $scope0_page)}</p><p class=total>${_text_resume($scope1_id, "#text/1", pending.length, $scope0_page)}</p>`);
 			_scope($scope1_id, {}, "__tests__/tags/panel.marko", "12:2");
 			return 0;
 		}

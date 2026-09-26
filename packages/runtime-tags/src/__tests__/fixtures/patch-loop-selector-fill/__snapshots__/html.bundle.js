@@ -7,7 +7,7 @@ var template_default = _template_patch("a", (input) => {
 	_html("<main><ul>");
 	if ($scope0_page) _for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "a", item.id)}`);
+		_html(`<li>${_escape(item.id)}`);
 		if ($scope0_page) _if(() => {
 			if (input.selected === item.id) {
 				const $scope2_id = _scope_id();

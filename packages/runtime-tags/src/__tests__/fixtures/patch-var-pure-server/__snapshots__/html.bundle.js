@@ -29,6 +29,8 @@ var template_default = _template_patch("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
 	let double = doubler_default({ value: input.n });
+	_client_guard($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "a0");
+	_filled_guard(0, 0) && _patch_write($scope0_id, "g", double, 1);
 	_set_serialize_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "c", $childScope2);

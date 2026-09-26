@@ -10,17 +10,17 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const thing = { content: _content("__tests__/template.marko_1*content", (attrs) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_patch_text($scope1_id, "#text/0", attrs.x)} ${_patch_text($scope1_id, "#text/1", input.title, 2, $scope0_reason, 1)}</em>`);
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_title#4/subscribe");
+		_html(`<em>${_patch_text($scope1_id, "#text/0", attrs.x)} ${_patch_text($scope1_id, "#text/1", input.title, 2, $scope0_reason, 2)}</em>`);
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_title#4/subscribe");
 	}, $scope0_id) };
-	_set_serialize_reason(_mask_group($scope0_reason, 2) << 1);
+	_set_serialize_reason(_mask_group($scope0_reason, 3) << 1);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	thing.content({ x: input.n });
-	_html(`<div${_patch_attr_class($scope0_id, "#div/1", [input.cls, { on: input.on }], $scope0_reason, 0)}${_patch_attr_style($scope0_id, "#div/1", { color: input.color }, $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "#div/1")}`);
+	_html(`<div${_patch_attr_class($scope0_id, "#div/1", [input.cls, { on: input.on }], $scope0_reason, 0)}${_patch_attr_style($scope0_id, "#div/1", { color: input.color }, $scope0_reason, 6)}>x</div>${_el_resume($scope0_id, "#div/1")}`);
 	$scope0_page && _scope($scope0_id, {
-		input_cls: _source_if($scope0_reason, 4) && input.cls,
-		input_on: _source_if($scope0_reason, 3) && input.on,
+		input_cls: _source_if($scope0_reason, 5) && input.cls,
+		input_on: _source_if($scope0_reason, 4) && input.on,
 		"ClosureScopes:input_title": $input_title__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

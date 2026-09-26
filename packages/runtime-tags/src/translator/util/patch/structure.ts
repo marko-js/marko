@@ -2,21 +2,32 @@
 // ownership conclusions and wire channels belong to translate (./refresh).
 import type { types as t } from "@marko/compiler";
 
+import type { AccessorPrefix, AccessorProp } from "../../../common/types";
 import { kDirectContent } from "../binding-prop-tree";
 import { createCyclicMemo } from "../cyclic-memo";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, some, toArray } from "../optional";
-import type { Binding, ReferencedExtra, Sources } from "../references";
+import {
+  type Binding,
+  FORCED,
+  type ReferencedExtra,
+  type Sources,
+} from "../references";
 import {
   ensureReasonGroups,
   getChildSectionOf,
   type Section,
+  getChildSections,
+  hasDomBindingsOrNestedSections,
 } from "../sections";
 import {
   getSerializeSourcesForDownstream,
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
+  getSerializeReason,
+  mergeSerializeReasons,
 } from "../serialize-reasons";
+import { writesPatchHole } from "./decisions";
 import { onFinalizePatch } from "./lifecycle";
 import { isPatchFillBinding } from "./refresh";
 
@@ -259,4 +270,41 @@ export function isBranchPathSection(section: Section) {
     section = section.parent;
   }
   return true;
+}
+
+// A node anchors when the writer emits a patch entry keyed on it: a hole a
+// flush writes, a child scope ref it pairs through, a loop marker with items
+// to pair.
+export function isAnchor(section: Section, binding: Binding) {
+  if (!isPatch() || binding.section !== section) return false;
+  if (binding.childScope) return isPatchRendered(section);
+  if (some(binding.holes, (extra) => writesPatchHole(section, extra))) {
+    return true;
+  }
+  const body = getChildSections(section).find(
+    (child) => child.iterates && child.sectionAccessor?.binding === binding,
+  );
+  return (
+    !!body &&
+    writesPatchIn(section) &&
+    !isStatefulBranch(body) &&
+    hasDomBindingsOrNestedSections(body)
+  );
+}
+
+export function hasAnchors(section: Section) {
+  return some(section.bindings, (binding) => isAnchor(section, binding));
+}
+
+// The reason a value writes: its serialize reason, forced where it anchors.
+export function getWriteReason(
+  section: Section,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
+) {
+  const reason = getSerializeReason(section, prop, prefix);
+  const anchored = prop
+    ? typeof prop === "object" && isAnchor(section, prop as Binding)
+    : hasAnchors(section);
+  return anchored ? mergeSerializeReasons(reason, FORCED) : reason;
 }

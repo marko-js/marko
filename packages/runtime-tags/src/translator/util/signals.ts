@@ -45,6 +45,8 @@ import {
   isBranchPathSection,
   isBranchSectionChain,
   isStatefulBranch,
+  getWriteReason,
+  hasAnchors,
 } from "./patch/structure";
 import {
   bindingUtil,
@@ -278,7 +280,7 @@ export function setSectionSerializedValue(
   prop: AccessorProp,
   expression: t.Expression,
 ) {
-  const reason = getSerializeReason(section, prop);
+  const reason = getWriteReason(section, prop);
   if (reason) {
     getSerializedAccessors(section).set(prop, { expression, reason });
   }
@@ -289,7 +291,7 @@ export function setBindingSerializedValue(
   expression: t.Expression,
   prefix?: AccessorPrefix,
 ) {
-  const reason = getSerializeReason(section, binding, prefix);
+  const reason = getWriteReason(section, binding, prefix);
   if (reason) {
     if (prefix === undefined) {
       getSerializedAccessors(section).set(getScopeAccessor(binding), {
@@ -1966,14 +1968,12 @@ export function writeHTMLResumeStatements(
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   // Whether any node of the section writes a marker, as the same argument
   // shape `_if` and `_await` take: absent when always, `0` when never.
-  const markerSerializeArg = getSerializeGuardForAny(
-    section,
-    section.domSerializeReasons,
-    true,
-  );
+  const markerSerializeArg = hasAnchors(section)
+    ? undefined
+    : getSerializeGuardForAny(section, section.domSerializeReasons, true);
   const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
     ? FORCED
-    : section.serializeReason;
+    : getWriteReason(section);
   forEach(section.referencedClosures, (closure) => {
     // A constant never changes, so nothing subscribes to it.
     if (closure.sources && closure.type !== BindingType.constant) {
@@ -2141,7 +2141,7 @@ export function writeHTMLResumeStatements(
 
   let debugVars: t.ObjectProperty[] | undefined;
   const writeSerializedBinding = (binding: Binding) => {
-    const reason = getSerializeReason(section, binding);
+    const reason = getWriteReason(section, binding);
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
     serializedLookup.delete(accessor);

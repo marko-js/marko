@@ -16,9 +16,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (s) {
 			const $scope2_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			foo.content({});
-			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:2");
+			_scope($scope2_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");

@@ -26,7 +26,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/1", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 		_html("</li>");
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
-	}, "id", $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
-	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
+	}, "id", $scope0_id, "#ul/0", 1, 1, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, 0);

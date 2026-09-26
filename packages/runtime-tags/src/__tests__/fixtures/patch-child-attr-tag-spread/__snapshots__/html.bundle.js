@@ -37,9 +37,8 @@ var template_default = _template_patch("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			tabs_default({ tab: attrTag({ ...thing2 }) });
-			_scope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a");

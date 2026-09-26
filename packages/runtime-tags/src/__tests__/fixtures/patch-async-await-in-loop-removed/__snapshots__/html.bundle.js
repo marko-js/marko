@@ -7,7 +7,7 @@ _shells({
 	b2: "b2;D%;<div><!></div>"
 });
 var rows_default = _template_patch("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_items__OR__input_promise = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
@@ -22,7 +22,7 @@ var rows_default = _template_patch("b", (input) => {
 			M: _source_if($scope0_reason, 2) && item?.id,
 			_: _scope_with_id($scope0_id)
 		});
-	}, "id", $scope0_id, "a", 1, $sg__input_items__OR__input_promise, _source_guard($scope0_reason, 1), void 0, void 0, "b2", $scope0_reason, 1);
+	}, "id", $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "b2", $scope0_reason, 1);
 	$scope0_page ? _scope($scope0_id, { e: _source_if($scope0_reason, 1) && input.promise }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.promise);
 }, 0, 0);
 

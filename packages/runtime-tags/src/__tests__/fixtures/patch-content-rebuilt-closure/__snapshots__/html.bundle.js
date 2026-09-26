@@ -12,7 +12,7 @@ var list_default = _template_patch("c", (input) => {
 		const $tag = item.content;
 		_dynamic_tag($scope1_id, "a", $tag, {}, 0, 0, $sg__input_item, _patch_dynamic_tag($scope1_id, "a", $tag, 0, 0, 0, $scope0_reason, 0));
 		$scope0_page && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, $sg__input_item, $sg__input_item, void 0, void 0, "c0", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, $sg__input_item, void 0, void 0, "c0", $scope0_reason, 0);
 	$scope0_page && _scope($scope0_id, {});
 }, 0, 1);
 

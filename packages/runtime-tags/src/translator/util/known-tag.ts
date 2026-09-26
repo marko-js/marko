@@ -1,9 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
-  getProgram,
-  isAttributeTag,
-  loadFileForTag,
-} from "@marko/compiler/babel-utils";
+import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from "../visitors/program";
 import {
@@ -32,6 +28,7 @@ import {
   isPatchRendered,
   isReadAsValue,
   recordStructuralParams,
+  getWriteReason,
 } from "./patch/structure";
 import {
   addRead,
@@ -83,15 +80,16 @@ import {
   buildGroupMask,
   getSerializeGuard,
   scopePageIdentifier,
+  getPatchWriteOwnership,
 } from "./serialize-guard";
 import {
   addSerializeExpr,
-  addPatchSerializeReason,
   addSerializeReason,
   getSerializeReason,
   getSerializeSourcesForExpr,
   getSerializeSourcesForExprs,
   getSerializeSourcesForRef,
+  isReasonDynamic,
 } from "./serialize-reasons";
 import { setTagDownstream } from "./set-tag-sections-downstream";
 import { addSetupExpr, addSetupStatement } from "./setup-statements";
@@ -158,14 +156,12 @@ export function knownTagAnalyze(
     BindingType.dom,
     section,
   ));
+  childScopeBinding.childScope = true;
   const attrExprs = new Set([tagExtra]);
   if (isPatch()) {
     let staticBody = true;
     for (const child of tagBody.get("body")) staticBody &&= isStatic(child);
     tagExtra[kStaticBody] = staticBody;
-    // The ref must serialize so a patch can pair the child scope through a
-    // parent entry, even for a scriptless child.
-    addPatchSerializeReason(section, FORCED, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
     onFinalizePatch(() => {
       if (isPatchRendered(section)) linkRuntimeFeature("patch-child");
@@ -274,6 +270,8 @@ export function knownTagTranslateHTML(
     section,
     childScopeBinding,
   );
+  // A patch pairs the child through its scope ref, whatever the reason.
+  const childScopeWriteReason = getWriteReason(section, childScopeBinding);
   // Every child renderer joins this template's intrinsics union, so a
   // parent's patch-skip decision sees the whole subtree at render time.
   if (isPatch()) addPatchChildRenderer(tagIdentifier);
@@ -286,7 +284,7 @@ export function knownTagTranslateHTML(
     : undefined;
 
   let varStatement: t.Statement | undefined;
-  if (childScopeSerializeReason) {
+  if (childScopeWriteReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
@@ -318,27 +316,31 @@ export function knownTagTranslateHTML(
       }
     }
 
-    // A patch page serializes the child scope for pairing even with no
-    // client code, where nothing could resolve the var's registration.
-    if (
-      tagVar &&
-      (!isPatch() ||
-        getProgram().node.extra.isInteractive ||
-        loadFileForTag(tag)?.ast.program.extra?.isInteractive)
-    ) {
+    if (tagVar && childScopeSerializeReason) {
       // Deferred below the render call: `_var` mints the post-render scope id
       // for the scope offset.
-      varStatement = t.expressionStatement(
-        callRuntime(
-          "_var",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
-          peekScopeId,
-          t.stringLiteral(
-            getResumeRegisterId(section, tagVar.extra?.binding, "var"),
-          ),
+      let varCall: t.Expression = callRuntime(
+        "_var",
+        getScopeIdIdentifier(section),
+        getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
+        peekScopeId,
+        t.stringLiteral(
+          getResumeRegisterId(section, tagVar.extra?.binding, "var"),
         ),
       );
+      // The anchor writes the child scope even when a param-only reason is
+      // unfed; the wiring resolves only where a client feeds it.
+      if (isPatch() && isReasonDynamic(childScopeSerializeReason)) {
+        const ownership = getPatchWriteOwnership(childScopeSerializeReason);
+        if (ownership.length) {
+          varCall = t.logicalExpression(
+            "&&",
+            callRuntime("_client_guard", ...ownership),
+            varCall,
+          );
+        }
+      }
+      varStatement = t.expressionStatement(varCall);
     }
   }
 

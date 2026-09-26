@@ -11,7 +11,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html(`<button>load</button>${_el_resume($scope0_id, "#button/0")}`);
 	if ($scope0_page) _for_of(input.active ? shown : shown.slice(0, 1), (s) => {
 		const $scope1_id = _scope_id();
-		_html(`<div>${_text_resume($scope1_id, "#text/0", s.id)}</div>`);
+		_html(`<div>${_escape(s.id)}</div>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 	}, "id", $scope0_id, "#text/1", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");

@@ -17,7 +17,7 @@ var relay_default = _template_patch("__tests__/tags/relay/index.marko", (input) 
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<section>");
-	_set_serialize_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_serialize_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	leaf_default({
@@ -37,7 +37,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_serialize_reason(8 | _mask_group($scope0_reason, 0) << 1);
+	_set_serialize_reason(38 | _mask_group($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	relay_default({
@@ -46,8 +46,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "1:6" });
+	}, "__tests__/template.marko", 0, { count: "1:6" }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
 }, 1, () => [relay_default]);

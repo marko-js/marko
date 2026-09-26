@@ -1,7 +1,9 @@
 // template.marko
 _shells({ a: "a !a0;E l%b ;<main><h2> </h2><!><button>toggle</button></main>" });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
+	_source_guard($scope0_reason, 1);
+	const $sg__input_no = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let on = false;
 	const label = input.no + "!";
@@ -9,7 +11,7 @@ var template_default = _template_patch("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope2_id = _scope_id();
-			_html(`<i>${_text_resume($scope2_id, "a", label)}</i>`);
+			_html(`<i>${_text_resume($scope2_id, "a", label, $sg__input_no)}</i>`);
 			_scope($scope2_id, {});
 			return 1;
 		}

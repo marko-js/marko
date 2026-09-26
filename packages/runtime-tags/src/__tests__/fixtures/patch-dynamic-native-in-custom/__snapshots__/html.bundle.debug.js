@@ -16,7 +16,7 @@ var card_default = _template_patch("__tests__/card.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($walks$1);
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_label = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_on__closures = new Set();
@@ -33,8 +33,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_dynamic_tag($scope1_id, "#text/0", input.on ? "p" : "div", { "data-n": count }, _content("__tests__/template.marko_2*content", () => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
-				_html(_text_resume($scope2_id, "#text/0", input.label));
-				_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_label#5/subscribe");
+				_html(_text_resume($scope2_id, "#text/0", input.label, $sg__input_label));
+				_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_label#5/subscribe", $sg__input_label);
+				$sg__input_label || _resume_branch($scope2_id);
 			}, $scope1_id));
 			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 0) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_on#4/subscribe"), "__tests__/template.marko_1_count#6/subscribe");
 		}, $scope0_id)

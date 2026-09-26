@@ -15,32 +15,32 @@ _shells({
 	a1: "a1;D ;<p> </p>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items__OR__input_path = _source_guard($scope0_reason, 0), $sg__input_page = _source_guard($scope0_reason, 4), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_page = _source_guard($scope0_reason, 3), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<nav>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<a${_patch_attr_class($scope1_id, "a", ["link", { active: item.href === input.path }], $scope0_reason, 0)}${_patch_attr($scope1_id, "a", "href", item.href, $scope0_reason, 2)}>`);
-		_set_serialize_reason(_mask_group($scope0_reason, 2) << 1);
+		_html(`<a${_patch_attr_class($scope1_id, "a", ["link", { active: item.href === input.path }], $scope0_reason, 0)}${_patch_attr($scope1_id, "a", "href", item.href, $scope0_reason, 1)}>`);
+		_set_serialize_reason(_mask_group($scope0_reason, 1) << 1);
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "b", $childScope);
 		icon_default({ name: item.icon });
-		_html(`<span>${_patch_text($scope1_id, "c", item.label, void 0, $scope0_reason, 2)}</span></a>${_el_resume($scope1_id, "a")}`);
+		_html(`<span>${_patch_text($scope1_id, "c", item.label, void 0, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "a")}`);
 		_scope($scope1_id, {
-			f: _source_if($scope0_reason, 3) && item?.href,
+			f: _source_if($scope0_reason, 2) && item?.href,
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, $sg__input_items__OR__input_path, _source_guard($scope0_reason, 2), void 0, void 0, "a0", $scope0_reason, 2);
-	_html(`</nav>${_el_resume($scope0_id, "a", $sg__input_items__OR__input_path)}<main>`);
+	}, 0, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "a0", $scope0_reason, 1);
+	_html(`</nav>${_el_resume($scope0_id, "a")}<main>`);
 	_if(() => {
 		if (input.page) {
 			const $scope2_id = _scope_id();
-			_html(`<p>${_patch_text($scope2_id, "a", input.page, void 0, $scope0_reason, 4)}</p>`);
+			_html(`<p>${_patch_text($scope2_id, "a", input.page, void 0, $scope0_reason, 3)}</p>`);
 			_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["a1"], $scope0_reason, 4);
+	}, $scope0_id, "b", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["a1"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "b", $sg__input_page)}`);
-	$scope0_page && _scope($scope0_id, { f: _source_if($scope0_reason, 2) && input.path });
+	$scope0_page && _scope($scope0_id, { f: _source_if($scope0_reason, 1) && input.path });
 }, 1, () => [icon_default]);

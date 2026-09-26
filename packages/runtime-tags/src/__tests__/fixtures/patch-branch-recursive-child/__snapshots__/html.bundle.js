@@ -21,9 +21,9 @@ const $content = (input) => {
 				_patch_child($scope2_id, "a", $childScope);
 				$content({ node: child });
 				_scope($scope2_id, { a: _existing_scope($childScope) });
-			}, 0, $scope1_id, "a", 1, $sg__input_node_children, $sg__input_node_children, void 0, void 0, "b1", $scope0_reason, 1);
-			_html(`</ul>${_el_resume($scope1_id, "a", $sg__input_node_children)}`);
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			}, 0, $scope1_id, "a", 1, 1, $sg__input_node_children, void 0, void 0, "b1", $scope0_reason, 1);
+			_html(`</ul>${_el_resume($scope1_id, "a")}`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, $sg__input_node_children, $sg__input_node_children, void 0, void 0, ["b0"], $scope0_reason, 1);

@@ -29,7 +29,7 @@ _shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/te
 var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_set_serialize_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 5);
+	_set_serialize_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 1) << 5);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	text_field_default({

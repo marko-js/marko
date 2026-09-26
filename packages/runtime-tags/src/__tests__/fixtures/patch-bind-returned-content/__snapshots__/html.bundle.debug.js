@@ -42,7 +42,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let content = child_default({ label: input.label });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_content#9/var");
+	_client_guard($scope0_reason, 0) && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_content#9/var");
 	_filled_guard(0, 0) && _patch_write($scope0_id, "content", content, 1);
 	_dynamic_tag($scope0_id, "#text/2", content, {}, 0, 0, 0, _patch_dynamic_tag($scope0_id, "#text/2", content, 0, 0, 0));
 	_html(`<button>${_text_resume($scope0_id, "#text/4", n)}</button>${_el_resume($scope0_id, "#button/3")}`);

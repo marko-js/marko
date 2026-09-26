@@ -16,8 +16,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			if ($scope0_page) _if(() => {
 				if (show) {
 					const $scope2_id = _scope_id();
-					_html(`<p>${_text_resume($scope2_id, "#text/0", label)}</p>`);
-					_subscribe(_source_if($scope0_reason, 0) && $label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_label#6/subscribe");
+					_html(`<p>${_text_resume($scope2_id, "#text/0", label, $sg__input_title)}</p>`);
+					_subscribe(_source_if($scope0_reason, 0) && $label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_label#6/subscribe", $sg__input_title);
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_title, $sg__input_title, $sg__input_title, 0, 1);

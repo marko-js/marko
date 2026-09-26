@@ -5,7 +5,7 @@ _shells({
 	a1: "a1 a6 a7;D ;<p> </p>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -21,7 +21,7 @@ var template_default = _template_patch("a", (input) => {
 					M: item,
 					_: _scope_with_id($scope1_id)
 				}), _client_guard($scope0_reason, 3) && "a2"), "a3");
-			}, (item) => item, $scope1_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_reason, 2);
+			}, (item) => item, $scope1_id, "a", 1, 1, _source_guard($scope0_reason, 2), void 0, void 0, "a1", $scope0_reason, 2);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

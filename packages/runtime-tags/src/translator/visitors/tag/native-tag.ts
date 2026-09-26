@@ -51,6 +51,7 @@ import {
   ensurePatchWriteGroups,
   isBranchPathSection,
   writesPatchIn,
+  getWriteReason,
 } from "../../util/patch/structure";
 import {
   type Binding,
@@ -88,9 +89,7 @@ import {
 } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
-  addPatchSerializeReason,
   addSerializeReason,
-  getSerializeReason,
   getSerializeSourcesForRef,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
@@ -173,6 +172,7 @@ export default {
       const { attributes } = tag.node;
       let injectNonce = isInjectNonceTag(tagName);
       let hasDynamicAttributes = false;
+      let attrHoles: Opt<t.NodeExtra>;
       let hasEventHandlers = false;
       let relatedControllable: RelatedControllable;
       let spreadReferenceNodes: t.Node[] | undefined;
@@ -231,6 +231,7 @@ export default {
             }
             if (!evaluate(attr.value).confident) {
               hasDynamicAttributes = true;
+              attrHoles = push(attrHoles, valueExtra);
             }
           }
         } else if (t.isMarkoSpreadAttribute(attr)) {
@@ -238,6 +239,7 @@ export default {
           valueExtra.forceRegister = true;
           hasEventHandlers = true;
           hasDynamicAttributes = true;
+          attrHoles = push(attrHoles, valueExtra);
         }
 
         if (spreadReferenceNodes) {
@@ -362,12 +364,12 @@ export default {
           (node.extra ??= {}).attrSetSpread = true;
         }
 
+        nodeBinding.holes = attrHoles;
         if (
           isPatch() &&
           hasDynamicAttributes &&
           isBranchPathSection(tagSection)
         ) {
-          addPatchSerializeReason(tagSection, FORCED, nodeBinding);
           for (const attr of node.attributes) {
             if (t.isMarkoAttribute(attr) && !isEventHandler(attr.name)) {
               const { value } = attr;
@@ -459,8 +461,8 @@ export default {
           exprExtras = push(exprExtras, textExtra);
           addSetupExpr(tagSection, textPlaceholders[0]);
           tagExtra[kTextContentExtra] = textExtra;
+          nodeBinding.holes = push(nodeBinding.holes, textExtra);
           if (isPatch() && isBranchPathSection(tagSection)) {
-            addPatchSerializeReason(tagSection, FORCED, nodeBinding);
             ensurePatchWriteGroups(() => textExtra);
             onFinalizePatch(() => {
               if (writesPatchHole(tagSection, textExtra)) {
@@ -1005,7 +1007,7 @@ export default {
                 content,
                 getSerializeGuard(
                   tagSection,
-                  nodeBinding && getSerializeReason(tagSection, nodeBinding),
+                  nodeBinding && getWriteReason(tagSection, nodeBinding),
                   true,
                 ),
               ),
@@ -1015,7 +1017,7 @@ export default {
         } else if (spreadContent) {
           const serializeReason = getSerializeGuard(
             tagSection,
-            nodeBinding && getSerializeReason(tagSection, nodeBinding),
+            nodeBinding && getWriteReason(tagSection, nodeBinding),
             true,
           );
           tagExtra[kTagContentAttr] = true;
@@ -1076,7 +1078,7 @@ export default {
         const markerSerializeReason =
           !tagExtra[kSkipEndTag] &&
           nodeBinding &&
-          getSerializeReason(tagSection, nodeBinding);
+          getWriteReason(tagSection, nodeBinding);
         const write = writer.writeTo(
           tag,
           // `</html>` defers even when marked (its `#html/0` marker resolves to

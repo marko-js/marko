@@ -4,12 +4,8 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/0": {
         "PatchSetup:": {
-          0: "packages/runtime-tags/src/__tests__/fixtures/patch-bind-hoisted-in-content/template.marko_1_setLast#2/var",
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-hoisted-in-content/tags/store.marko0": 0
         }
-      },
-      "PatchSetup:": {
-        "PatchWrite:setLast": _(["#childScope/0", "BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-hoisted-in-content/tags/store.marko_0/_return")
       }
     }
   },

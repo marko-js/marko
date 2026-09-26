@@ -5,7 +5,7 @@ _shells({
 	a1: "a1;D ;<li> </li>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 0), $sg__input_promo = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_promo = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main><ul>");
@@ -13,8 +13,8 @@ var template_default = _template_patch("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_patch_text($scope2_id, "a", item.label, void 0, $scope0_reason, 0)}</li>`);
 		_scope($scope2_id, {});
-	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_reason, 0);
-	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
+	}, "id", $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a1", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
 		if (input.promo) {
 			const $scope1_id = _scope_id();

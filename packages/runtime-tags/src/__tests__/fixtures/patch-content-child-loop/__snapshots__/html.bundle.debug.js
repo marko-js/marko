@@ -6,7 +6,7 @@ _shells({
 	"__tests__/tags/card/index.marko_1*shell": "__tests__/tags/card/index.marko_1*shell;D%b%;<li><!><!></li>"
 });
 var card_default = _template_patch("__tests__/tags/card/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_count__OR__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.count, (i) => {
@@ -16,8 +16,8 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 		_dynamic_tag($scope1_id, "#text/1", $tag, {}, 0, 0, _source_guard($scope0_reason, 2), _patch_dynamic_tag($scope1_id, "#text/1", $tag, 0, 0, 0, $scope0_reason, 2));
 		_html("</li>");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");
-	}, 0, $scope0_id, "#ul/0", 1, $sg__input_count__OR__input_content, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/tags/card/index.marko_1*shell", $scope0_reason, 1);
-	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_count__OR__input_content)}`);
+	}, 0, $scope0_id, "#ul/0", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/tags/card/index.marko_1*shell", $scope0_reason, 1);
+	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	$scope0_page ? _scope($scope0_id, { input_content: _source_if($scope0_reason, 1) && input.content }, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
 }, 0, 0);
 

@@ -16,15 +16,16 @@ var card_default = _template_patch("__tests__/card.marko", (input) => {
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_label = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let count = 0;
 	_dynamic_tag($scope0_id, "#text/0", input.on ? card_default : null, { meta: attrTag({ n: count }) }, _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(_text_resume($scope1_id, "#text/0", input.label));
-		_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_label#5/subscribe");
+		_html(_text_resume($scope1_id, "#text/0", input.label, $sg__input_label));
+		_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_label#5/subscribe", $sg__input_label);
+		$sg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id));
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

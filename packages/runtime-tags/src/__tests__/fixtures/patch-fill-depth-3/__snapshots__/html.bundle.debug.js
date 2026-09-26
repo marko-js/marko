@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_input_suffix#7/init __tests__/template.marko_3_count#8/init;D ;<p> </p>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 3), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const $count__closures = new Set();
@@ -28,8 +28,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 							"#LoopKey": item,
 							_: _scope_with_id($scope2_id)
 						}, "__tests__/template.marko", "5:8", { "#LoopKey": "5:12" }), _client_guard($scope0_reason, 4) && "__tests__/template.marko_3_input_suffix#7/subscribe"), "__tests__/template.marko_3_count#8/subscribe");
-					}, (item) => item, $scope2_id, "#text/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
-					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_items#6/subscribe", $sg__input_items);
+					}, (item) => item, $scope2_id, "#text/0", 1, 1, _source_guard($scope0_reason, 3), void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_items#6/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);

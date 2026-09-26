@@ -12,15 +12,16 @@ var card_default = _template_patch("a", (input) => {
 
 // template.marko
 var template_default = _template_patch("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_label = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_dynamic_tag($scope0_id, "a", input.on ? card_default : null, { meta: attrTag({ n: count }) }, _content("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(_text_resume($scope1_id, "a", input.label));
-		_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b1");
+		_html(_text_resume($scope1_id, "a", input.label, $sg__input_label));
+		_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b1", $sg__input_label);
+		$sg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id));
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b2");

@@ -24,9 +24,11 @@ import {
   Sorted,
   type SortedOpt,
   reduce,
+  some,
 } from "./optional";
 import {
   type Binding,
+  BindingType,
   bindingUtil,
   compareReferences,
   getAllSerializeReasonsForBinding,
@@ -139,9 +141,6 @@ export interface Section {
   hoistedTo: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
-  /** The serialize reasons code of the template revives, merged: every
-   * reason but a patch record. */
-  resumeReason: undefined | SerializeReason;
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
    * (not merged) so each one's guard stays buildable. */
   domSerializeReasons: undefined | SerializeReasons;
@@ -174,6 +173,8 @@ export interface Section {
   abortSignalExprs: number;
   readsOwner: boolean;
   isBranch: boolean;
+  /** A `<for>` body: rendered once per item. */
+  iterates: boolean;
   /** An `<await>`/`<try>` body: always-rendered like the branch path, but
    * paired (never created) by patches. */
   isBoundary: boolean;
@@ -256,7 +257,6 @@ export function startSection(
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
-      resumeReason: undefined,
       domSerializeReasons: undefined,
       serializeExprs: undefined,
       propSerializeExprs: undefined,
@@ -272,6 +272,7 @@ export function startSection(
       abortSignalExprs: 0,
       readsOwner: false,
       isBranch: false,
+      iterates: false,
       isBoundary: false,
       // Known at creation so descendants analyzing under it see it.
       boundaryContent: !!parentTag && isTryAttrTag(parentTag),
@@ -635,8 +636,13 @@ export function getCommonSection(section: Section, other: Section) {
   throw new Error("No common section");
 }
 
-export function finalizeParamSerializeReasonGroups(section: Section) {
-  ensureReasonGroups(section.serializeReason);
+// An anchored scope writes whatever its reason says, so the reason's own
+// param group (a merge of its props') would gate nothing.
+export function finalizeParamSerializeReasonGroups(
+  section: Section,
+  anchored?: boolean,
+) {
+  if (!anchored) ensureReasonGroups(section.serializeReason);
 
   for (const reason of section.serializeReasons.values()) {
     ensureReasonGroups(reason);
@@ -718,4 +724,13 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
     }
   }
   return analyzeTagNameType(tag) === TagNameType.NativeTag;
+}
+
+// Whether a body has anything a patch pairs per instance: a dom node or a
+// nested section.
+export function hasDomBindingsOrNestedSections(section: Section) {
+  return (
+    some(section.bindings, (binding) => binding.type === BindingType.dom) ||
+    getChildSections(section).length > 0
+  );
 }

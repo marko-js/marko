@@ -32,6 +32,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				const $childScope = _peek_scope_id();
 				_patch_child($scope2_id, "#childScope/0", $childScope);
 				let w = widget_default({ label: input.value });
+				_client_guard($scope0_reason, 2) && _var($scope2_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_2_w#3/var");
+				_filled_guard(0, 0) && _patch_write($scope2_id, "w", w, 1);
 				_html(`<em>${_patch_text($scope2_id, "#text/2", w, void 0, $scope0_reason, 2)}</em>`);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),

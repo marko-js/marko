@@ -51,8 +51,6 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "#childScope/0", $childScope);
 		let setLast = store_default({});
-		_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_setLast#2/var");
-		_filled_guard(0, 0) && _patch_write($scope1_id, "setLast", setLast, 1);
 		_subscribe($frame_content__subscribers, _scope($scope1_id, {
 			setLast,
 			"#childScope/0": _existing_scope($childScope)

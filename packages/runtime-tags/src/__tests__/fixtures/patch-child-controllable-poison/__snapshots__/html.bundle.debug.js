@@ -65,7 +65,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "6:4");
-	}, 0, $scope0_id, "#text/2", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "__tests__/template.marko_1*shell", 0, 0);
+	}, 0, $scope0_id, "#text/2", 1, 1, 0, void 0, void 0, "__tests__/template.marko_1*shell", 0, 0);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, () => [counter_default]);

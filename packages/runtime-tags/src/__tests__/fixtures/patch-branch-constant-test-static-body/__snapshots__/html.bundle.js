@@ -8,6 +8,7 @@ _shells({
 });
 var page_default = _template_patch("a", (input) => {
 	_scope_reason();
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_for_of(ITEMS, (m) => {
 		const $scope1_id = _scope_id();
@@ -21,6 +22,7 @@ var page_default = _template_patch("a", (input) => {
 		}, $scope1_id, "b", 1, 0, 0, void 0, void 0, ["a1"], 0, 0);
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 0, void 0, void 0, "a0", 0, 0);
+	$scope0_page && _scope($scope0_id, {});
 }, 0, 0);
 
 // template.marko

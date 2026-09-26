@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D%c%;<li><!>:<!></li>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 3), $scope0_page = _page_render(), $sg__input_on = _source_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $sg__input_on = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_items__closures = new Set();
@@ -44,9 +44,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 						const $scope3_id = _scope_id();
 						_html(`<li>${_patch_text($scope3_id, "#text/0", x, void 0, $scope0_reason, 3)}:${_patch_text($scope3_id, "#text/1", input.label, 2, $scope0_reason, 4)}</li>`);
 						_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:21"));
-					}, 0, $scope2_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
-					_html(`</ul>${_el_resume($scope2_id, "#ul/0", $sg__input_items)}`);
-					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:4"));
+					}, 0, $scope2_id, "#ul/0", 1, 1, _source_guard($scope0_reason, 3), void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
+					_html(`</ul>${_el_resume($scope2_id, "#ul/0")}`);
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:4"));
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $sg__input_on, $sg__input_on, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);

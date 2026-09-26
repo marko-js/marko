@@ -6,7 +6,7 @@ _shells({
 	a2: "a2 a8 a9;D ;<p> </p>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 3), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -26,8 +26,8 @@ var template_default = _template_patch("a", (input) => {
 							M: item,
 							_: _scope_with_id($scope2_id)
 						}), _client_guard($scope0_reason, 4) && "a3"), "a4");
-					}, (item) => item, $scope2_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a2", $scope0_reason, 3);
-					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a5", $sg__input_items);
+					}, (item) => item, $scope2_id, "a", 1, 1, _source_guard($scope0_reason, 3), void 0, void 0, "a2", $scope0_reason, 3);
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a5");
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["a1"], $scope0_reason, 2);

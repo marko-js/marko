@@ -34,7 +34,7 @@ _shells({
 	a1: /*@__PURE__*/ ((_w0, _w1) => `a1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template)
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $p_name__closures = /* @__PURE__ */ new Set();
@@ -61,7 +61,7 @@ var template_default = _template_patch("a", (input) => {
 			f: $for_content__item_id__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "a1", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
 	$scope0_page && _scope($scope0_id, {

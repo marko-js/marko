@@ -61,7 +61,7 @@ var template_default = _template_patch("a", (input) => {
 			g: $for_content__item_alt__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_reason, 0);
-	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
+	}, 0, $scope0_id, "a", 1, 1, $sg__input_items, void 0, void 0, "a1", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	$scope0_page && _scope($scope0_id, {});
 }, 1, () => [card_default]);

@@ -3,7 +3,7 @@ const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $si__input_title = _source_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_title = _source_guard($scope0_reason, 0), $scope0_page = _page_render(), $si__input_title = _source_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	let a = false;
@@ -15,16 +15,16 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			if ($scope0_page) _if(() => {
 				if (b) {
 					const $scope2_id = _scope_id();
-					_html(`<p>${_text_resume($scope2_id, "#text/0", "p:" + input.title)}</p>`);
-					_subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_title#4/subscribe");
+					_html(`<p>${_text_resume($scope2_id, "#text/0", "p:" + input.title, $sg__input_title)}</p>`);
+					_subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_title#4/subscribe", $sg__input_title);
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
 			if ($scope0_page) _if(() => {
 				if (b) {
 					const $scope3_id = _scope_id();
-					_html(`<span>${_text_resume($scope3_id, "#text/0", "s:" + input.title)}</span>`);
-					_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, { "ClosureSignalIndex:input_title": 1 }, "__tests__/template.marko", "8:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_3_input_title#4/subscribe");
+					_html(`<span>${_text_resume($scope3_id, "#text/0", "s:" + input.title, $sg__input_title)}</span>`);
+					_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, { "ClosureSignalIndex:input_title": 1 }, "__tests__/template.marko", "8:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_3_input_title#4/subscribe", $sg__input_title);
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);

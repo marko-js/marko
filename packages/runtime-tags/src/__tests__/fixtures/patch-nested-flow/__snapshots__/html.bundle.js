@@ -38,8 +38,8 @@ var template_default = _template_patch("a", (input) => {
 		}, $scope3_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a3"], $scope0_reason, 1);
 		_html("</li>");
 		_scope($scope3_id, {});
-	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a2", $scope0_reason, 1);
-	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
+	}, "id", $scope0_id, "a", 1, 1, $sg__input_items, void 0, void 0, "a2", $scope0_reason, 1);
+	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
 		if (input.summary) {
 			const $scope1_id = _scope_id();

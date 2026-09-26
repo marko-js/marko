@@ -6,7 +6,7 @@ _shells({
 	a2: "a2;b%;<!><!><!>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_items = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_for_of(input.items, (item) => {
@@ -17,7 +17,7 @@ var template_default = _template_patch("a", (input) => {
 			_scope($scope2_id, {});
 		}, 1, "a0");
 		$scope0_page && _scope($scope1_id, {});
-	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a2", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a2", $scope0_reason, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$scope0_page && _scope($scope0_id, {});

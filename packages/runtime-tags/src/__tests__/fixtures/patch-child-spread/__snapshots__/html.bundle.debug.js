@@ -20,18 +20,18 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*shell;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_serialize_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 4) << 3);
+	_set_serialize_reason(_mask_group($scope0_reason, 4) << 1 | _mask_group($scope0_reason, 5) << 3);
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	card_default(input.props);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3);
+			_set_serialize_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 3) << 3);
 			const $childScope2 = _peek_scope_id();
 			_patch_child($scope1_id, "#childScope/0", $childScope2);
 			card_default({
@@ -44,11 +44,11 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_html(`<button id=c>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {
-		input_more: _source_if($scope0_reason, 1) && input.more,
+		input_more: _source_if($scope0_reason, 2) && input.more,
 		count,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

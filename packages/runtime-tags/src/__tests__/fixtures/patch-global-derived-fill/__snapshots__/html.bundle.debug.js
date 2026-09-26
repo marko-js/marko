@@ -12,7 +12,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (count < 2) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "#text/0", greeting)} ${_text_resume($scope1_id, "#text/1", count, 2)}</span>`);
+			_html(`<span>${_text_resume($scope1_id, "#text/0", greeting, $scope0_page || _source_guard($scope0_reason, 0))} ${_text_resume($scope1_id, "#text/1", count, 2)}</span>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:2");
 			return 0;
 		}

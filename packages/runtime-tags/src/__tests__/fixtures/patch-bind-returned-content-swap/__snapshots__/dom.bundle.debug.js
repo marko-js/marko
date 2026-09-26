@@ -43,8 +43,8 @@ function $setup($scope) {
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/4");
 const $input_first__OR__a__OR__b = /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.input_first ? $scope.a : $scope.b), 2);
-const $a = _var_resume("__tests__/template.marko_0_a#11/var", /*@__PURE__*/ _const("a", $input_first__OR__a__OR__b));
-const $b = _var_resume("__tests__/template.marko_0_b#12/var", /*@__PURE__*/ _const("b", $input_first__OR__a__OR__b));
+const $a = /*@__PURE__*/ _const("a", $input_first__OR__a__OR__b);
+const $b = /*@__PURE__*/ _const("b", $input_first__OR__a__OR__b);
 const $input_first = /*@__PURE__*/ _const("input_first", $input_first__OR__a__OR__b);
 const $input = ($scope, input) => $input_first($scope, input.first);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

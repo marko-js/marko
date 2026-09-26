@@ -23,12 +23,13 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPatch } from "../util/marko-config";
-import { fromIter, some } from "../util/optional";
+import { fromIter } from "../util/optional";
 import { onClassifyStructure, onFinalizePatch } from "../util/patch/lifecycle";
 import {
   isBranchPathSection,
   isStatefulBranch,
   recordStructuralParams,
+  isAnchor,
 } from "../util/patch/structure";
 import {
   type Binding,
@@ -45,14 +46,12 @@ import {
 } from "../util/references";
 import { linkRuntimeFeature, callRuntime } from "../util/runtime";
 import {
-  getChildSections,
   getBranchRendererArgs,
   getDirectClosures,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  type Section,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
@@ -62,7 +61,6 @@ import {
 } from "../util/serialize-guard";
 import {
   addSerializeExpr,
-  addPatchSerializeReason,
   addSerializeReason,
   getSerializeReason,
   getSerializeSourcesForExpr,
@@ -244,6 +242,7 @@ export default {
       tagExtra,
       getBranchSectionAccessor(nodeBinding),
     );
+    bodySection.iterates = true;
 
     if (isPatch()) {
       onClassifyStructure(tagSection, () => {
@@ -258,30 +257,15 @@ export default {
         }
       });
       onFinalizePatch(() => {
-        addPatchSerializeReason(
+        // Item fills follow the body's closures through the marker's groups.
+        addSerializeReason(
           tagSection,
           !isStatefulBranch(bodySection) &&
-            (bodySection.isHoistThrough || bodySection.hoisted
-              ? FORCED
-              : getSerializeSourcesForRef(getDirectClosures(bodySection))),
+            !bodySection.isHoistThrough &&
+            !bodySection.hoisted &&
+            getSerializeSourcesForRef(getDirectClosures(bodySection)),
           nodeBinding,
         );
-      });
-      onFinalizeReferences(() => {
-        // Items with dom bindings or nested sections link: a source-less list
-        // (a literal) still resumes its marker.
-        if (
-          !isStatefulBranch(bodySection) &&
-          isBranchPathSection(tagSection) &&
-          hasDomBindingsOrNestedSections(bodySection)
-        ) {
-          if (!getSerializeReason(tagSection, nodeBinding)) {
-            addSerializeReason(tagSection, FORCED, nodeBinding);
-          }
-          if (!getSerializeReason(bodySection, kBranchSerializeReason)) {
-            addSerializeReason(bodySection, FORCED, kBranchSerializeReason);
-          }
-        }
       });
     }
 
@@ -328,10 +312,11 @@ export default {
         // anchor at branch marks, which elision would remove.
         const patchChain =
           isPatch() && !stateful && isBranchPathSection(tagSection);
-        const branchSerializeReason = getSerializeReason(
-          bodySection,
-          kBranchSerializeReason,
-        );
+        const branchSerializeReason =
+          getSerializeReason(bodySection, kBranchSerializeReason) ||
+          (patchChain && isAnchor(tagSection, nodeBinding)
+            ? FORCED
+            : undefined);
 
         resumeOwnerByMarkerWhenStatic(
           tagSection,
@@ -688,13 +673,6 @@ function getStaticMemberChain(
       return chain;
     }
   }
-}
-
-function hasDomBindingsOrNestedSections(section: Section) {
-  return (
-    some(section.bindings, (binding) => binding.type === BindingType.dom) ||
-    getChildSections(section).length > 0
-  );
 }
 
 function forTypeToRuntime(type: ForType) {

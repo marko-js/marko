@@ -34,7 +34,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 						_: _scope_with_id($scope1_id),
 						"#childScope/1": _existing_scope($childScope)
-					}, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_label#5/subscribe");
+					}, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_label#5/subscribe", _source_guard($scope0_reason, 1));
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_show, $sg__input_show, $sg__input_show);

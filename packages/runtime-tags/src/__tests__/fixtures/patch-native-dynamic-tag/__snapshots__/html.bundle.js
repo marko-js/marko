@@ -11,7 +11,7 @@ var template_default = _template_patch("a", (input) => {
 	}, _content("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`${_text_resume($scope1_id, "a", input.label)} ${_text_resume($scope1_id, "b", count, 2)}`);
+		_html(`${_text_resume($scope1_id, "a", input.label, _source_guard($scope0_reason, 1))} ${_text_resume($scope1_id, "b", count, 2)}`);
 		_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a1"), "a2");
 	}, $scope0_id));
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);

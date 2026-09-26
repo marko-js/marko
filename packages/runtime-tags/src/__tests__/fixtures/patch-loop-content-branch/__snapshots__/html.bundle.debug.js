@@ -63,7 +63,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			"ClosureScopes:item_alt": $for_content__item_alt__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4");
-	}, 0, $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
-	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
+	}, 0, $scope0_id, "#ul/0", 1, 1, $sg__input_items, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1, () => [card_default]);

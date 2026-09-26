@@ -7,17 +7,18 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPatch } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
+import { push } from "../util/optional";
 import { writesPatchHole } from "../util/patch/decisions";
 import { onFinalizePatch } from "../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   isBranchPathSection,
+  getWriteReason,
 } from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
   createBinding,
-  FORCED,
   getScopeAccessorLiteral,
 } from "../util/references";
 import {
@@ -37,11 +38,7 @@ import {
   getExprWriteOwnership,
   getSerializeGuard,
 } from "../util/serialize-guard";
-import {
-  addPatchSerializeReason,
-  addSerializeExpr,
-  getSerializeReason,
-} from "../util/serialize-reasons";
+import { addSerializeExpr } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
@@ -88,8 +85,8 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
+        nodeBinding.holes = push(nodeBinding.holes, valueExtra);
         if (isPatch() && isBranchPathSection(section)) {
-          addPatchSerializeReason(section, FORCED, nodeBinding);
           ensurePatchWriteGroups(() => valueExtra);
           // A state-sourced hole recomputes through the signal graph, and
           // inside stateful structure owner fills refresh it.
@@ -185,7 +182,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const section = getSection(placeholder);
     const siblingText = extra[kSiblingText]!;
     const markerSerializeReason =
-      nodeBinding && getSerializeReason(section, nodeBinding);
+      nodeBinding && getWriteReason(section, nodeBinding);
     // A state-sourced hole recomputes through the signal graph, and inside
     // unpatched structure owner fills refresh it: neither patch-writes.
     const patchWrites = !!nodeBinding && writesPatchHole(section, valueExtra);

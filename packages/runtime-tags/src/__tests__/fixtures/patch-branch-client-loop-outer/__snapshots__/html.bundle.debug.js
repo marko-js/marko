@@ -6,7 +6,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_expand#6/init;D%b%;<li><!><!></li>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_note = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	let expand = false;
@@ -17,8 +17,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		if ($scope0_page) _if(() => {
 			if (expand) {
 				const $scope2_id = _scope_id();
-				_html(`<p>${_text_resume($scope2_id, "#text/0", input.note)}</p>`);
-				_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:8"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_note#5/subscribe");
+				_html(`<p>${_text_resume($scope2_id, "#text/0", input.note, $sg__input_note)}</p>`);
+				_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:8"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_note#5/subscribe", $sg__input_note);
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);

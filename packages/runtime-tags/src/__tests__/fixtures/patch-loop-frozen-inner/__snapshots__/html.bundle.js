@@ -11,7 +11,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope1_id = _scope_id();
 		if ($scope0_page) _for_of(inner, (i) => {
 			const $scope2_id = _scope_id();
-			_html(`<div>${_text_resume($scope2_id, "a", o)}${_text_resume($scope2_id, "b", i, 2)}</div>`);
+			_html(`<div>${_text_resume($scope2_id, "a", o)}${_escape(i)}</div>`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 		}, 0, $scope1_id, "a", 1, 0, 0, 0, 1);
 		_scope($scope1_id, {});

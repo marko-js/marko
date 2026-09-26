@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/rows.marko_1*shell": "__tests__/tags/rows.marko_1*shell;D%;<div><!></div>"
 });
 var rows_default = _template_patch("__tests__/tags/rows.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_items__OR__input_promise = _source_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
@@ -23,7 +23,7 @@ var rows_default = _template_patch("__tests__/tags/rows.marko", (input) => {
 			"#LoopKey": _source_if($scope0_reason, 2) && item?.id,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/rows.marko", "1:2", { "#LoopKey": ["item.id", "1:6"] });
-	}, "id", $scope0_id, "#text/0", 1, $sg__input_items__OR__input_promise, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/tags/rows.marko_1*shell", $scope0_reason, 1);
+	}, "id", $scope0_id, "#text/0", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/tags/rows.marko_1*shell", $scope0_reason, 1);
 	$scope0_page ? _scope($scope0_id, { input_promise: _source_if($scope0_reason, 1) && input.promise }, "__tests__/tags/rows.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/rows.marko0", input.promise);
 }, 0, 0);
 

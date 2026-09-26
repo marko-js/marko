@@ -3,7 +3,7 @@ const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_inner = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_inner__closures = new Set();
 	let count = 0;
@@ -12,12 +12,12 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (count > 1) {
 			const $scope1_id = _scope_id();
-			_html(`<h2>${_text_resume($scope1_id, "#text/0", input.outer)}</h2>`);
+			_html(`<h2>${_text_resume($scope1_id, "#text/0", input.outer, _source_guard($scope0_reason, 0))}</h2>`);
 			if ($scope0_page) _if(() => {
 				if (on) {
 					const $scope2_id = _scope_id();
-					_html(`<p>${_text_resume($scope2_id, "#text/0", input.inner)}</p>`);
-					_subscribe(_source_if($scope0_reason, 1) && $input_inner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_inner#5/subscribe");
+					_html(`<p>${_text_resume($scope2_id, "#text/0", input.inner, $sg__input_inner)}</p>`);
+					_subscribe(_source_if($scope0_reason, 1) && $input_inner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_inner#5/subscribe", $sg__input_inner);
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);

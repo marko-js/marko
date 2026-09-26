@@ -26,11 +26,14 @@ var template_default = _template_patch("a", (input) => {
 				_set_serialize_reason(_mask_group($scope0_reason, 2) << 1);
 				const $childScope = _peek_scope_id();
 				_patch_child($scope2_id, "a", $childScope);
-				_html(`<em>${_patch_text($scope2_id, "c", widget_default({ label: input.value }), void 0, $scope0_reason, 2)}</em>`);
+				let w = widget_default({ label: input.value });
+				_client_guard($scope0_reason, 2) && _var($scope2_id, "b", $childScope, "a3");
+				_filled_guard(0, 0) && _patch_write($scope2_id, "d", w, 1);
+				_html(`<em>${_patch_text($scope2_id, "c", w, void 0, $scope0_reason, 2)}</em>`);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
-				}), _client_guard($scope0_reason, 2) && "a3");
+				}), _client_guard($scope0_reason, 2) && "a4");
 			}, 1, "a0");
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

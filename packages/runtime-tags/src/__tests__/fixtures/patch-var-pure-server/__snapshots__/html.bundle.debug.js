@@ -35,6 +35,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/0", $childScope);
 	let double = doubler_default({ value: input.n });
+	_client_guard($scope0_reason, 0) && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_double#6/var");
+	_filled_guard(0, 0) && _patch_write($scope0_id, "double", double, 1);
 	_set_serialize_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope2 = _peek_scope_id();
 	_patch_child($scope0_id, "#childScope/2", $childScope2);

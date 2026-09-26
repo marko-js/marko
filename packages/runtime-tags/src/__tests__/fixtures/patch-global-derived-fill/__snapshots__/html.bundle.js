@@ -9,7 +9,7 @@ var template_default = _template_patch("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "a", greeting)} ${_text_resume($scope1_id, "b", count, 2)}</span>`);
+			_html(`<span>${_text_resume($scope1_id, "a", greeting, $scope0_page || _source_guard($scope0_reason, 0))} ${_text_resume($scope1_id, "b", count, 2)}</span>`);
 			_scope($scope1_id, {});
 			return 0;
 		}

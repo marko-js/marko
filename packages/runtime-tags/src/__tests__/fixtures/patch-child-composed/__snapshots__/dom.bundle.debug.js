@@ -33,6 +33,6 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_title = ($scope, input_title) => $input_label($scope["#childScope/0"], input_title);
+const $input_title = _fill_const_resume("__tests__/template.marko0", "input_title", ($scope) => $input_label($scope["#childScope/0"], $scope.input_title));
 const $input = ($scope, input) => $input_title($scope, input.title);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

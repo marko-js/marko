@@ -52,9 +52,9 @@ var template_default = _template_patch("a", (input) => {
 				_patch_child($scope3_id, "a", $childScope);
 				row_default(item);
 				_scope($scope3_id, { a: _existing_scope($childScope) });
-			}, "id", $scope1_id, "a", 1, $scope0_page, $scope0_page, void 0, void 0, "a2");
-			_html(`</div>${_el_resume($scope1_id, "a", $scope0_page)}`);
-			$scope0_page && _scope($scope1_id, {});
+			}, "id", $scope1_id, "a", 1, 1, $scope0_page, void 0, void 0, "a2");
+			_html(`</div>${_el_resume($scope1_id, "a")}`);
+			_scope($scope1_id, {});
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $scope0_page, $scope0_page, void 0, void 0, ["a1", "a0"]);

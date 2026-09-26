@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_title = _source_guard($scope0_reason, 1), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $input_show__closures = new Set();
@@ -29,14 +29,13 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			box_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				if ($scope0_page) _if(() => {
 					if (input.show) {
 						const $scope3_id = _scope_id();
-						_html(`<p>${_text_resume($scope3_id, "#text/0", "t:" + input.title)}</p>`);
+						_html(`<p>${_text_resume($scope3_id, "#text/0", "t:" + input.title, $sg__input_title)}</p>`);
 						_subscribe(_source_if($scope0_reason, 1) && $input_title__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:8"));
 						return 0;
 					}
@@ -44,7 +43,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_subscribe(_source_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
 				$sg__input_show || _resume_branch($scope2_id);
 			}, $scope1_id) });
-			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);

@@ -19,7 +19,7 @@ var template_default = _template_patch("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
 	let label = labeler_default({ title: input.title });
-	_var($scope0_id, "b", $childScope, "a0");
+	_client_guard($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "a0");
 	_filled_guard(0, 0) && _patch_write($scope0_id, "j", label, 1);
 	_html(`<p>${_patch_text($scope0_id, "c", label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "d", count, 2)}</p><button>+</button>${_el_resume($scope0_id, "e")}</main>`);
 	_script($scope0_id, "a1");

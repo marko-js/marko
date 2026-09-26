@@ -30,14 +30,13 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			box_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "#text/0", count + ":" + input.a)}</p>`);
 				_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 0) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6")));
 			}, $scope1_id) });
-			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);

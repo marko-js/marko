@@ -33,7 +33,7 @@ var picker_default = _template_patch("b", (input) => {
 }, 0, 0);
 
 // template.marko
-_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !a2;${_w0};${_w1}`)(((_w0) => `0${_w0}&D l b`)($walks), ((_w0) => `${_w0}<p> </p><button id=outer>outer</button>`)($template)) });
+_shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !a1;${_w0};${_w1}`)(((_w0) => `0${_w0}&D l b`)($walks), ((_w0) => `${_w0}<p> </p><button id=outer>outer</button>`)($template)) });
 var template_default = _template_patch("a", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();
@@ -45,10 +45,8 @@ var template_default = _template_patch("a", (input) => {
 	let refresh = picker_default({ refreshingChange: _resume(function(v) {
 		busy = v;
 	}, "a0", $scope0_id) });
-	_var($scope0_id, "b", $childScope, "a1");
-	_filled_guard(0, 0) && _patch_write($scope0_id, "f", refresh, 1);
 	_html(`<p>${_text_resume($scope0_id, "c", busy ? "busy" : "idle")}</p><button id=outer>outer</button>${_el_resume($scope0_id, "d")}`);
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a1");
 	$scope0_page && _scope($scope0_id, {
 		f: refresh,
 		a: _existing_scope($childScope)

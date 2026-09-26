@@ -4,7 +4,7 @@ _shells({
 	a0: "a0 !a1;D bD l ;<li> <span> </span><button>+</button></li>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
@@ -14,7 +14,7 @@ var template_default = _template_patch("a", (input) => {
 		_script($scope1_id, "a1");
 		_patch_value($scope1_id, "a0", votes, 1);
 		_scope($scope1_id, { h: votes });
-	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0", $scope0_reason, 0);
-	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
+	}, "id", $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a0", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	$scope0_page && _scope($scope0_id, {});
 }, 1, 0);

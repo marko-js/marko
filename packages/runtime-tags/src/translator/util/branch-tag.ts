@@ -3,6 +3,7 @@ import { types as t } from "@marko/compiler";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 import { getAccessorPrefix } from "./get-accessor-enums";
 import { getParentTag } from "./get-parent-tag";
+import { getWriteReason } from "./patch/structure";
 import { type Binding, kBranchSerializeReason } from "./references";
 import { ContentType, type Section } from "./sections";
 import { getSerializeGuard, getSerializeGuardForAny } from "./serialize-guard";
@@ -50,7 +51,7 @@ export function resumeOwnerByMarkerWhenStatic(
     isStaticSerializeReason(
       getSerializeReason(bodySection, kBranchSerializeReason),
     ) &&
-    isStaticSerializeReason(getSerializeReason(tagSection, nodeBinding))
+    isStaticSerializeReason(getWriteReason(tagSection, nodeBinding))
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
@@ -93,7 +94,7 @@ export function getBranchEndArgs(
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean | undefined,
 ) {
-  const markerSerializeReason = getSerializeReason(tagSection, nodeBinding);
+  const markerSerializeReason = getWriteReason(tagSection, nodeBinding);
   const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
   if (skipParentEnd) {
     getParentTag(tag)!.node.extra![kSkipEndTag] = true;
