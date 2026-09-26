@@ -9,6 +9,7 @@ import {
   getMacroIdentifierForName,
   getTemplateId,
 } from "@marko/compiler/babel-utils";
+import markoModules from "@marko/compiler/modules";
 import * as marko from "marko/translator";
 
 const filename = path.join(import.meta.dirname, "tags.marko");
@@ -133,6 +134,31 @@ describe("compiler/babel-utils tags", () => {
         getTemplateId(opts, filename, "child"),
         getTemplateId(opts, filename, "child"),
       );
+    });
+
+    it("gives a property-name id to a path whose hash digest is otherwise negative", () =>
+      assert.match(
+        getTemplateId(
+          { optimize: true },
+          path.join(markoModules.root, "t3764440.marko"),
+        ),
+        /^[a-z$][\w$]*$/i,
+      ));
+
+    it("keeps known templates and their child ids distinct property names", () => {
+      const known = Array.from({ length: 3000 }, (_, i) =>
+        path.join(import.meta.dirname, `known-${i}.marko`),
+      );
+      const opts = { optimize: true, optimizeKnownTemplates: known };
+      const ids = new Set();
+      for (const template of known) {
+        ids.add(getTemplateId(opts, template));
+        for (let i = 0; i < 20; i++) {
+          ids.add(getTemplateId(opts, template, `child${i}`));
+        }
+      }
+      assert.equal(ids.size, known.length * 21);
+      for (const id of ids) assert.match(id, /^[a-z$][\w$]*$/i);
     });
   });
 });
