@@ -167,7 +167,9 @@ A normal interactive page entry imports its template graph and initializes the
 DOM runtime; a server-only page links assets without shipping it
 (`translator/util/entry-builder.ts`). `import ... with { load: ... }` instead
 creates a load entry and stable `readyId`. Client implementations register when
-that module loads, then `ready(readyId)` permits its data to run.
+that module loads, then `ready(readyId)` permits its data to run. An entry
+that reaches such an import also imports `dom/lazy.feat.ts` ahead of `init`, so
+resume keeps the lazy content's markers until its module walks them.
 
 Lazy state cannot enter the main stream before its registered code exists.
 `writeWaitReady()` renders into `render.b[readyId]`; the serializer records
