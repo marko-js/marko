@@ -20,11 +20,8 @@ INSERT: ::text("loading...")
 ```
 ## Change
 ```
-INSERT: button
+INSERT: button, span
 REMOVE: span + ::text("loading...")
-UPDATE: button::text " " => "1"
-INSERT: button + span
-UPDATE: span::text " " => "1"
 ```
 
 # Update

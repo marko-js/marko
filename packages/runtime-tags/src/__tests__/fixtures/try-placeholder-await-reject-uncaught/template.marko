@@ -1,0 +1,7 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<try>
+  <@placeholder>loading...</@placeholder>
+  <await|v|=rejectAfter(new Error("ERROR!"), 1)>${v}</await>
+  <await|w|=resolveAfter("sibling", 2)><p>${w}</p></await>
+</try>

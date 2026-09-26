@@ -34,7 +34,6 @@ INSERT: ::text("loading inner...")
 ```
 INSERT: div
 REMOVE: div + ::text("loading inner...")
-UPDATE: div::text@9 "" => "0"
 ```
 
 # Update

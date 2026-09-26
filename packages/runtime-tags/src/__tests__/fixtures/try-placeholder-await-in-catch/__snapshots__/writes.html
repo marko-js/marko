@@ -1,0 +1,30 @@
+<!--M_[--><!--M_!^3-->loading...<!--M_!3--><!--M_]1 a 3-->
+<t hidden M_=3><!--M_[--><!--M_!^b--><!--M_#c--><!--M_!b--><!--M_]3 a 4--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c></t>
+<t hidden M_=b><!--M_#d--></t>
+<script>
+  M._.r = [_ => [4, {
+    E: _(3, "a1")
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d>
+  <p>caught ERROR!, retried</p>
+</t>
+<script>
+  M._.r.push(_ => [3, {
+    Q: _(1, "a3")
+  }]);
+  M._.w()
+</script>

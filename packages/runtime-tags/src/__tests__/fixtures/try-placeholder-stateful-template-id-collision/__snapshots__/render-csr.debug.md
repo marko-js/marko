@@ -70,10 +70,8 @@ UPDATE: .n1::text@14 "" => "0"
 ```
 ## Change
 ```
-REMOVE: .n5 + button
 INSERT: .swap + .n5
-UPDATE: .n5::text@0 "" => "body 1"
-UPDATE: .n5::text@7 "" => "0"
+REMOVE: .n5 + button
 ```
 
 # Update

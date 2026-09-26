@@ -1,0 +1,11 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <@placeholder>loading...</@placeholder>
+  <await|outer|=resolveAfter("outer", 1)>
+    <p>${outer}</p>
+    <await|inner|=resolveAfter("inner", 2)>
+      <p>${inner}</p>
+    </await>
+  </await>
+</try>
