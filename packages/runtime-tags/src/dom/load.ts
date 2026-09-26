@@ -8,7 +8,6 @@ import {
 import { addAwaitCounter, renderCatch } from "./control-flow";
 import { queueAsyncRender, queueRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
-import { withLazy } from "./resume";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
@@ -35,71 +34,67 @@ export interface LoadTrigger {
 // A stand-in signal or load: the callers ignore its result.
 const noop = (_?: unknown): any => 0;
 
-export const _load_template = /*@__PURE__*/ withLazy(
-  (id: string, load: () => Promise<Renderer>) => {
-    let pending: ReturnType<typeof load> | undefined;
-    const lazyTemplate = _template(
-      id,
-      0,
-      0,
-      (branch) => {
-        const awaitCounter = addAwaitCounter(branch);
-        branch[AccessorProp.Load] ||= new Map() as LoadValues;
-        (pending ||= load()).then(
-          (renderer) => {
-            Object.assign(lazyTemplate, renderer);
-            queueAsyncRender(branch as BranchScope, (branch) =>
-              insertLoaded(
-                renderer,
-                branch,
-                branch[AccessorProp.StartNode],
-                awaitCounter,
-              ),
-            );
-          },
-          loadFailed(branch as BranchScope, awaitCounter),
-        );
-      },
-      // A template reading no input has no params signal; the loaded value
-      // still has to count as applied so the content inserts.
-      _load_signal(() =>
-        (pending ||= load()).then((r) => ({
-          _: r[RendererProp.Params] || noop,
-        })),
-      ),
-    ) as Template & Renderer;
-    return lazyTemplate;
-  },
-);
+export function _load_template(id: string, load: () => Promise<Renderer>) {
+  let pending: ReturnType<typeof load> | undefined;
+  const lazyTemplate = _template(
+    id,
+    0,
+    0,
+    (branch) => {
+      const awaitCounter = addAwaitCounter(branch);
+      branch[AccessorProp.Load] ||= new Map() as LoadValues;
+      (pending ||= load()).then(
+        (renderer) => {
+          Object.assign(lazyTemplate, renderer);
+          queueAsyncRender(branch as BranchScope, (branch) =>
+            insertLoaded(
+              renderer,
+              branch,
+              branch[AccessorProp.StartNode],
+              awaitCounter,
+            ),
+          );
+        },
+        loadFailed(branch as BranchScope, awaitCounter),
+      );
+    },
+    // A template reading no input has no params signal; the loaded value
+    // still has to count as applied so the content inserts.
+    _load_signal(() =>
+      (pending ||= load()).then((r) => ({
+        _: r[RendererProp.Params] || noop,
+      })),
+    ),
+  ) as Template & Renderer;
+  return lazyTemplate;
+}
 
-export const _load_setup = /*@__PURE__*/ withLazy(
-  (load: () => Promise<LoadModule>) => {
-    let pending: ReturnType<typeof load> | undefined;
-    let renderer: Renderer | undefined;
-    const insertCached = (child: BranchScope, marker: ChildNode) =>
-      insertLoaded(renderer!, child, marker);
+export function _load_setup(load: () => Promise<LoadModule>) {
+  let pending: ReturnType<typeof load> | undefined;
+  let renderer: Renderer | undefined;
+  const insertCached = (child: BranchScope, marker: ChildNode) =>
+    insertLoaded(renderer!, child, marker);
 
-    return (owner: Scope, child: BranchScope, marker: ChildNode) => {
-      if (renderer) {
-        // Later in this run, once the rest of the owner's setup has
-        // buffered every input chunk for the batch below.
-        queueRender(child, insertCached, -1, marker);
-      } else {
-        const awaitCounter = addAwaitCounter(owner);
-        child[AccessorProp.Load] ||= new Map() as LoadValues;
-        (pending ||= load()).then(
-          (mod) => {
-            renderer ||= _content("", ...mod._)();
-            queueAsyncRender(child, (child) =>
-              insertLoaded(renderer!, child, marker, awaitCounter),
-            );
-          },
-          loadFailed(child, awaitCounter),
-        );
-      }
-    };
-  },
-);
+  return (owner: Scope, child: BranchScope, marker: ChildNode) => {
+    if (renderer) {
+      // Later in this run, once the rest of the owner's setup has
+      // buffered every input chunk for the batch below.
+      queueRender(child, insertCached, -1, marker);
+    } else {
+      const awaitCounter = addAwaitCounter(owner);
+      child[AccessorProp.Load] ||= new Map() as LoadValues;
+      (pending ||= load()).then(
+        (mod) => {
+          renderer ||= _content("", ...mod._)();
+          queueAsyncRender(child, (child) =>
+            insertLoaded(renderer!, child, marker, awaitCounter),
+          );
+        },
+        loadFailed(child, awaitCounter),
+      );
+    }
+  };
+}
 
 // Inserts once each chunk's import resolves, relying on the bundler's import to
 // also wait for that chunk's stylesheets.
@@ -167,31 +162,29 @@ function loadFailed(
   };
 }
 
-export const _load_signal = /*@__PURE__*/ withLazy(
-  (load: () => Promise<LoadSignal>): Signal => {
-    let pending: Promise<LoadSignal> | undefined;
-    const apply: LoadApply = (scope: Scope, value: unknown) => {
-      pending ||= load();
-      if (
-        scope[AccessorProp.Load] ||
-        (!(AccessorProp.Load in scope) && scope[AccessorProp.Gen] === runId)
-      ) {
-        (scope[AccessorProp.Load] ||= new Map() as LoadValues).set(pending, [
-          value,
-          apply,
-        ]);
-      } else if (apply._) {
-        apply._(scope, value);
-      } else {
-        pending.then(
-          (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
-          noop,
-        );
-      }
-    };
-    return apply;
-  },
-);
+export function _load_signal(load: () => Promise<LoadSignal>): Signal {
+  let pending: Promise<LoadSignal> | undefined;
+  const apply: LoadApply = (scope: Scope, value: unknown) => {
+    pending ||= load();
+    if (
+      scope[AccessorProp.Load] ||
+      (!(AccessorProp.Load in scope) && scope[AccessorProp.Gen] === runId)
+    ) {
+      (scope[AccessorProp.Load] ||= new Map() as LoadValues).set(pending, [
+        value,
+        apply,
+      ]);
+    } else if (apply._) {
+      apply._(scope, value);
+    } else {
+      pending.then(
+        (mod) => queueAsyncRender(scope, (apply._ = mod._), value),
+        noop,
+      );
+    }
+  };
+  return apply;
+}
 
 export function _load_visible_trigger(
   selector: string,

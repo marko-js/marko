@@ -71,8 +71,8 @@ let embedRenders:
 // `readyIds` checks is dropped from apps without lazy tags.
 let readyIds: undefined | Set<string>;
 let failedIds: undefined | Set<string>;
-// Lazy load support latch, set as `dom/load.ts`'s runtime is evaluated, which
-// is before any resume; a page without lazy tags folds it and the retention away.
+// Lazy load support latch, set by `lazy.feat`, which an entry reaching lazy
+// tags imports ahead of resume; other pages fold it and the retention away.
 let lazyEnabled: undefined | 1;
 
 // Rescans every render's ready channels: there is one per lazy module and a
@@ -98,9 +98,8 @@ export function readyFailed(readyId: string) {
   }
 }
 
-export function withLazy<T>(runtime: T) {
+export function withLazy() {
   lazyEnabled = 1;
-  return runtime;
 }
 
 export function initEmbedded(readyId: string, runtimeId?: string) {
