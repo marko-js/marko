@@ -29,6 +29,8 @@ export interface MarkoMeta {
   deps: Array<string | Dep | VirtualDep>;
   analyzedTags?: [string, ...string[]];
   diagnostics: Diagnostic[];
+  /** `"tags"` for a Marko 6 template, `"class"` for Marko 5. Under the interop translator it is detected per file while the
+   * translator's `preferAPI` stays `"class"`, so read this rather than `preferAPI`. */
   api: undefined | string;
 }
 

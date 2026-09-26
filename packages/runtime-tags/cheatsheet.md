@@ -6,7 +6,7 @@ Marko 6 = HTML superset, not JSX and not Marko 4/5 syntax. `.marko` files are co
 
 1. Text interpolation: `${expr}` inside tag bodies. A bare line at the template root parses as a tag (concise mode): `Welcome aboard` fails to compile, but `p is a tag` compiles silently to `<p is a tag></p>`, since any line starting with a real tag name loses its words to attributes. Wrap text in an element (`<p>Welcome aboard</p>`) or prefix the line with `--` and a space (`-- Welcome ${name}`). Attributes take raw JS after `=` with no braces or quotes: `<div title=user.name data-n=1 + 1>`.
 2. A top-level `>` hugging its operand in an attribute value ends the tag silently: `<button disabled=count>=8 onClick() {…}>More</button>` is `disabled=count` plus the text `=8 onClick() {…}>`, so the handler never binds. Space a `>=` (`disabled=count >= 8`); parenthesize a bare `>` comparison (`hidden=(a > b)`) and a TS type argument (`<let/s=(new Set<string>())>`, else it parses as `new Set() < string`). Do not move the type onto the tag variable instead: `<let/s:Set<string>=new Set()>` compiles but fails type-check with TS2322 (the annotation does not flow into the initializer). A `>` nested inside `(…)`/`{…}`/`[…]` is safe (`class={ big: n > 1 }`). `<` never closes a tag (`disabled=count<=1` is fine).
-3. State: `<let/name=initial>` (slash then var name!). Update by plain assignment in an event handler: `count++`, `text = "hi"`. No setState, no hooks.
+3. State: `<let/name=initial>` (slash then var name!). Update by plain assignment in an event handler: `count++`, `text = "hi"`. No setState, no hooks. Never assign while rendering: a render expression that calls a state-assigning function (`${reset()}`) compiles, but the write is lost or differs between server and browser.
 4. Derived values: `<const/total=items.length * price>` auto-recomputes. Never use an effect to derive state. A tag variable is whatever the tag returns, not the attribute passed to it. `<let/draft=input.text>` re-runs on every `input.text` change but returns state it controls, so `draft` keeps its edits; only a controllable `<let>` (`valueChange=`, or `<let/draft:=input.text>`) takes the new value. Pick by intent: recomputes → `<const>`, seeds then diverges → `<let>`. A `<let>` that is never assigned is just a frozen `<const>`. Updates batch: mid-handler a reassigned `<let>` reads current but its derived `<const>` reads stale, so recompute from the `<let>`.
 5. Never mutate state in place: `items.push(x)` does not update the UI. Always reassign:
    - add: `items = items.concat(x)`
@@ -15,10 +15,10 @@ Marko 6 = HTML superset, not JSX and not Marko 4/5 syntax. `.marko` files are co
    - object: `user = { ...user, name }`
 6. Events: method shorthand `onClick() { ... }` or `onClick=fn`. Handlers receive `(event, element)`; delegation means the element is the second parameter, not `event.currentTarget`: `onSubmit(e) { e.preventDefault(); save() }`, `onClick(e, el) { el.focus() }`. Don't sync input values through `onInput`/`onChange`; that's what the change handlers below are for. Prefix with `async` to `await` in the body: `async onClick() { await save() }`.
 7. Native inputs are uncontrolled by default: `value=` sets the default value. Later writes update what `form.reset()` restores, never a dirty field's display. Adding the matching `*Change` handler is what makes them controlled: `valueChange` on `<input>`/`<textarea>`/`<select>`, `checkedChange` on checkboxes/radios, `openChange` on `<details>`/`<dialog>`. `value:=text` is the shorthand for `value=text valueChange(v) { text = v }`. (`<textarea value:=text/>`: value attribute, not body.) `:=` differs by operand: on an identifier (`value:=text`) it assigns that variable; on a member expression (`<let/count:=input.count>` in a child) it wires `input.countChange`, so the child is controlled when the parent passes that handler and keeps its own state when it doesn't.
-8. Transform in the handler when needed; number inputs give strings: `<input type="number" value=n valueChange(v) { n = +v }>`, or `value:parseFloat:=n`. Uncommitted edits (debounce, commit on blur) never sync through a `<script>`; that is rule 4's derive-by-effect trap. Pair a controllable `<let/value:=input.value>` with `<let/pending=null>`, show `<const/draft=pending ?? value>`, collect with `valueChange(v) { pending = v }`, and commit by assigning `value = pending; pending = null`. Prefer that to calling `input.valueChange(...)`, which throws unless every caller controls the tag.
+8. A change handler must store what the field should show before it returns, since the field is then reset to the bound value: a debounced or async handler reverts every keystroke, and a transform rewrites the typing (`value:parseFloat:=n` turns `1.` back into `1`). Number inputs give strings: bind the string (`value:=text`) and derive `<const/n=parseFloat(text)>`; keep `value:parseFloat:=n` for values that round-trip (`type="range"`). Uncommitted edits (debounce, commit on blur) never sync through a `<script>`; that is rule 4's derive-by-effect trap. Pair a controllable `<let/value:=input.value>` with `<let/pending=null>`, show `<const/draft=pending ?? value>`, collect with `valueChange(v) { pending = v }`, and commit by assigning `value = pending; pending = null`. Prefer that to calling `input.valueChange(...)`, which throws unless every caller controls the tag.
 9. Radio/checkbox groups: `checkedValue:=picked` on each input (shared var, distinct `value=`); the match is checked; array var for multi-checkbox. Dropdown: `<select value:=picked>`.
-10. Module-level values, helpers and type aliases need `static`: `static const LIMIT = 10`, `static function fmt(n) {…}`, `static type Row = {…}`. Prefer it to `<const>` for anything that never changes: `<const/LIMIT=10>` runs per instance, `static` hoists it to a module constant. `server`/`client` narrow `static` to one platform (`client import { Chart } from "chart"`); the binding is `undefined` on the other, so read a `client` one only from `<script>`/handlers/`<lifecycle>`. Reading it while rendering throws `is not a function` during SSR.
-11. `$!{html}` and the contents of `<html-script>`/`<html-style>` are written as-is: the latter are escaped only so they can't close the element, and run as code. Never put user-provided content in them.
+10. Module-level values, helpers and type aliases need `static`: `static const LIMIT = 10`, `static function fmt(n) {…}`, `static type Row = {…}`. Prefer it to `<const>` for anything that never changes: `<const/LIMIT=10>` runs per instance, `static` hoists it to a module constant. `static` code never sees `input` or tag variables (a read compiles, then throws), so pass them in as arguments. `server`/`client` narrow `static` to one platform (`client import { Chart } from "chart"`); the binding is `undefined` on the other, so read a `client` one only from `<script>`/handlers/`<lifecycle>`. Reading it while rendering throws `is not a function` during SSR. A `server` one is `undefined` whenever the browser renders, so use it only in output that never updates there: not in anything derived from state, nor in content an `<if>`/`<for>` creates in the browser.
+11. `$!{html}` and the contents of `<html-script>`/`<html-style>` are written as-is: the latter are escaped only so they can't close the element, and run as code. Never put user-provided content in them. A `$!{}` value that can change in the browser must be a balanced fragment (no unclosed or stray tags), or updating it after resume removes the wrong nodes.
 
 ## Canonical component
 
@@ -88,7 +88,7 @@ import { getUser } from "../data.js";
 </try>
 ```
 
-`@placeholder`/`@catch` go on `<try>`, never on `<await>`. On the server this streams (placeholder flushes first, content follows). It works in the browser too: hand `<await>` a new promise (e.g. a `<const>` derived from state) and it shows the placeholder again, then the new result. `@catch` can't recover in place: redirect (a `<script>` setting `location`), or re-render the `<try>` by bumping a key on a wrapping `<for>`.
+`@placeholder`/`@catch` go on `<try>`, never on `<await>`. On the server this streams (placeholder flushes first, content follows). It works in the browser too: hand `<await>` a new promise (e.g. a `<const>` derived from state) and it shows the placeholder again, then the new result. `@catch` can't recover in place: redirect (a `<script>` setting `location`), or re-render the `<try>` by bumping a key on a wrapping `<for>`. `@catch` never sees an error thrown in a `<script>`, `<lifecycle>` or handler, and one thrown in a `<script>`/`<lifecycle>` also skips the effects after it, so catch those in place.
 
 Don't fetch while rendering: start data loads early, pass the promise through the template, and `<await>` it where the data is rendered. Fetching inside each component that renders the data serializes the requests (waterfalls). Under @marko/run, load in the route handler (`return next({ user: getUser() })`, no await) and render with `<await|user|=$global.data.user>`.
 
@@ -132,15 +132,16 @@ Don't fetch while rendering: start data loads early, pass the promise through th
 - Conditional attrs: `false`/`null` attrs are omitted from HTML. `aria-selected` etc. want strings: `aria-selected=(i === active && "true")`.
 - `class=` / `style=` accept strings, objects, arrays: `class=["btn", { active }]`, `style={ color }` (single braces). `style=` keys are kebab-case CSS names (`{ "background-color": c }`); camelCase keys are written verbatim. `...input` spreads attrs onto a tag; `content=` passes body content as an attr.
 - `<define/Panel|input|>` declares a local tag inline; `<${Toolbar.Undo}/>` renders a dynamic tag (falsy name → content only).
-- `<select value:=picked>`: every `<option>` needs `value=`; `multiple` binds an array.
+- `<select value:=picked>`: every `<option>` needs `value=`, and `picked` must always match a rendered one: while it matches none the browser shows a fallback, which overwrites `picked` on the next options change (e.g. options that load later). `multiple` binds an array.
 - `<id/x>` mints a collision-free id for label/input wiring (`<label for=x>`/`<input id=x>`); don't hardcode ids in reusable tags; `<id/x=input.id>` reuses a caller's.
 - Head tags render where written: a `<title>`/`<meta>`/`<link>` inside a nested component stays in the body, giving a second title or an inert canonical. `<head>` is already written by the time descendants render, so page meta has to be known before it: under @marko/run declare it in the route's `+meta.*` file and read `$global.meta` from the layout that owns `<head>`, otherwise pass it down or set it on `$global` at the render call.
 
 ## Sharing data (`$global`)
 
-- Read request-scoped `$global` from any template, no threading: `${$global.messages.title}`. Otherwise pass data down through `input`.
+- Read request-scoped `$global` from any template, no threading: `${$global.messages.title}`. It is not state: assigning to it compiles but re-renders nothing. Otherwise pass data down through `input`.
 - Populate at the render call: `template.render({ $global: { messages } })`. Under @marko/run a middleware's `return next({ messages })` merges into `$global.data`.
 - `$global` is not serialized to the client by default. Mark any key the browser itself evaluates, e.g. an event handler, a `<script>`, markup the browser (re)creates, or a `<const>` that recomputes from state: `$global.serializedGlobals = { messages: true }` at the render call (under @marko/run, `context.serializedGlobals.data = true`; it ships `params`/`url` already). What the server already rendered needs no opt-in; a debug build logs an unserialized key read in the browser.
+- Never let a `Request`/`Headers` (e.g. `$global.request`) reach the browser, through `serializedGlobals` or a value browser code reads: every header, cookies included, is written into the page. Copy out only the fields it needs.
 
 ## Client-side effects
 
@@ -157,6 +158,8 @@ Rare; prefer state and `<const>`.
 ```
 
 `<style>` = real CSS, extracted & global; `<style/styles>` scopes it (CSS modules): `.card {...}` then `class=styles.card`, or `<style/{card}>` then `class=card`. Don't hand-namespace globals. `<script>` = reactive effect, not an HTML script tag.
+
+Separate `<script>` tags run in no guaranteed order, and it differs between client render and resume: keep steps that depend on each other in one `<script>`.
 
 Imperative libs (charts, maps) needing mount/update/destroy: use `<lifecycle>`, not a hand-wired `<script>`. `this` persists across all three; return an object from `onMount` to stash the instance:
 
@@ -194,6 +197,8 @@ export interface Input<T> {
 
 `tsc` silently skips `.marko`, so a type-broken template still exits 0. Check with `mtc` (`@marko/type-check`); in TS mode an undeclared `Input` is `{}` by design, so declare one before reading `input`.
 
+Import types with `import type` (`import type { Input as PriceInput } from "<price-field>"`): a plain `import { Input }` stays in the compiled JS, and the build fails on the missing export.
+
 ## DON'T
 
 Each left-hand habit is an error or silently wrong.
@@ -211,6 +216,7 @@ Each left-hand habit is an error or silently wrong.
 | `function fmt(n) {…}` / `const LIMIT = 10` at module level  | `static function fmt(n) {…}` / `static const LIMIT = 10`                             |
 | `type Row = {…}` at module level                            | `static type Row = {…}`                                                              |
 | `<let x=0>`                                                 | `<let/x=0>`                                                                          |
+| `<input type="text" /el>` (tag var after attributes)        | `<input/el type="text">`; after `attr=value`, `/el` is division: `el is not defined` |
 | `<if(cond)>`                                                | `<if=cond>`                                                                          |
 | `items.push(x)`                                             | `items = items.concat(x)`                                                            |
 | `input.renderBody` (renders nothing, no error)              | `input.content`                                                                      |
@@ -230,6 +236,7 @@ Each left-hand habit is an error or silently wrong.
 | `createContext`/provider to share data                      | `input` (prop drilling) or request-scoped `$global`                                  |
 | `<title>`/`<meta>` in a nested component                    | put page meta in the layout that owns `<head>`; head tags never hoist                |
 | `<option selected=...>` in a controlled `<select>`          | `value=` on every option and `value:=picked` on the select                           |
+| `<if=typeof window !== "undefined">` for client-only UI     | `<let/mounted=false>` set `true` in a `<script>`; resume keeps the server output     |
 | `$global.x` in client-reactive code, not allow-listed       | `$global.serializedGlobals = { x: true }` first; otherwise the read is `undefined`   |
 | hand-namespaced global classes (`.my-card-title`)           | `<style/styles>` + `class=styles.card` (scoped CSS modules)                          |
 | `tsc --noEmit` to type check templates                      | `mtc`; `tsc` skips `.marko` files and exits 0                                        |

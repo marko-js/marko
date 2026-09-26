@@ -33,21 +33,37 @@ declare global {
       cspNonce?: string;
       /** Used for rendering multiple Marko templates in a single hydrated page. */
       renderId?: string;
-      /** Used to uniquely identify a instance of a Marko runtime. */
+      /**
+       * The `window` global this render's Marko runtime owns (default `"M"`): each runtime copy on a page needs its own, and nothing else
+       * may define it (e.g. Materialize's `window.M`). Under a bundler, set the plugin's `runtimeId` option: the browser entry knows only that one.
+       */
       runtimeId?: string;
-      /** A list of globals that should be serialized to the browser. */
+      /**
+       * A list of globals that should be serialized to the browser, read once at the first flush that writes resume data. Each value must
+       * be serializable and is written into the page: never list a `Request` or `Headers`, which would embed every header, cookies included.
+       */
       serializedGlobals?: string[] | Record<string, boolean>;
     }
 
     export type TemplateInput<Input> = Input & {
-      /**  Data available within all rendered templates as `$global`. */
+      /**
+       * Data available within all rendered templates as `$global`. `render` and `mount` copy its own enumerable properties
+       * (running getters) when called, so later changes to this object are not seen, and `update` ignores it.
+       */
       $global?: Global;
     };
 
-    /** The result of calling `template.render`. */
+    /**
+     * The result of calling `template.render`. A template error never throws from `render`: awaiting or iterating the result rejects,
+     * `toReadable()` errors, `toString()` throws, and `pipe` reports it on the stream, so read the first chunk before committing a response status.
+     */
     export type RenderedTemplate = Promise<string> &
       AsyncIterable<string> & {
         toReadable(): ReadableStream<Uint8Array<ArrayBufferLike>>;
+        /**
+         * Writes the render to a Node-style writable. On a render error it closes `stream` and emits `error` on it; with no `error`
+         * listener (or no `emit`), the error is thrown instead, uncaught once the render is async.
+         */
         pipe(stream: {
           write(chunk: string): unknown;
           end(): unknown;
@@ -107,7 +123,10 @@ declare global {
         input: Marko.TemplateInput<Input>,
       ): Marko.RenderedTemplate;
 
-      /** Render and attach the template to a DOM node. */
+      /**
+       * Render and attach the template to a DOM node. Markup is parsed in the namespace of the parent it is inserted into, so that
+       * parent must be an Element: to render in a ShadowRoot or DocumentFragment, mount into an element inside it.
+       */
       abstract mount(
         input: Marko.TemplateInput<Input>,
         reference: Node,

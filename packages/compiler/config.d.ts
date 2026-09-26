@@ -4,6 +4,8 @@ declare const Config: {
   output?: "html" | "dom" | "migrate" | "source" | "hydrate";
   /** Compiles a page or lazy-load entry instead of a module; requires `linkAssets`. */
   entry?: EntryKind;
+  /** Connects a bundler. An `html` compile calls `onAsset` even from a cached analysis: `"page"` under `entry: "page"`, `"load"` for each file it lazily imports.
+   * Bundle that file with `output: "dom"` and `entry` of that kind; `runtime` exports `flush(g, "block" | "defer", id)`, returning the tags that load it. */
   linkAssets?: {
     runtime: string;
     onAsset(kind: EntryKind, file: string, id: string): void;

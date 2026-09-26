@@ -66,6 +66,8 @@ export default (api, markoOpts) => {
         allowNamespaces: true,
         allowDeclareFields: true,
         optimizeConstEnums: true,
+        // Tag names (`<Foo>`) do not reference their imports yet, so an import can look unused while
+        // in use: only a `type` modifier (`import type`, `import { type X }`) marks one removable.
         onlyRemoveTypeImports: true,
         disallowAmbiguousJSXLike: false,
       }).visitor,

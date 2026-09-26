@@ -30,6 +30,8 @@ export function createInteropTranslator(translate5: any) {
   // so surfacing it on v5/interop compiles would point agents at the wrong guidance.
   return {
     version: translate5.version ?? "0.0.0",
+    // Tooling reads `preferAPI: "tags"` as every file compiling as Marko 6, so interop keeps
+    // Marko 5's value; each file's own API is its `meta.api`.
     preferAPI: translate5.preferAPI,
     transform: mergeVisitors(translate5.transform, translate6.transform),
     analyze: mergeVisitors(translate5.analyze, translate6.analyze),

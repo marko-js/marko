@@ -99,6 +99,8 @@ export default {
           );
       }
 
+      // Only statically resolved children pass `page` up, so under `linkAssets` a template reaching
+      // `<html>`, `<head>` or `<body>` only through a dynamic tag compiles as an embedded render.
       if (childExtra.page) {
         programExtra.page ??= true;
       }

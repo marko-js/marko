@@ -12,6 +12,8 @@ export default {
     exit(text) {
       if (isNonHTMLText(text)) return;
 
+      // `value` is raw markup, written as-is, and never empty (an empty node still emits a walk step):
+      // a transform must escape the text it builds and remove text rather than set it to "".
       structure.writeTextTo(text, text.node.value);
       // Adjacent static text merges into one DOM text node, so only the run's
       // first node emits its walk step; later nodes defer to it.

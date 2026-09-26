@@ -19,6 +19,8 @@ await Promise.all([
     cwd,
     input: "src/translator/index.ts",
     platform: "node",
+    // `package.json` stays external so `runtimeInfo.name` is the installed name: `publish-alias.mts`
+    // also publishes this build as `marko`, whose generated code must import `marko/…`.
     external: [/^[^./]/, path.join(cwd, "package.json")],
     transform: {
       define: {
