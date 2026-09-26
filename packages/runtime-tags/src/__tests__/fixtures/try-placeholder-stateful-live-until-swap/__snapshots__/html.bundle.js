@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		_html(`<button>loading ${_text_resume($scope1_id, "b", clicks, 2)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		b: clicks,
 		c: $clicks__closures

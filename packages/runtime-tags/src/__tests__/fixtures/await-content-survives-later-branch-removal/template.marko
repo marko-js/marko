@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/show=true/>
+<await=resolveAfter(1, 1)>
+  <counter/>
+</await>
+<if=show>
+  <span>shown</span>
+</if>
+<button.hide onClick() { show = false }>hide</button>

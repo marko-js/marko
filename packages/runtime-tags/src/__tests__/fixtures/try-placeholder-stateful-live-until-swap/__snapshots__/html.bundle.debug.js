@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button>loading ${_text_resume($scope1_id, "#text/1", clicks, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_1_clicks#1/subscribe");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		clicks,
 		"ClosureScopes:clicks": $clicks__closures

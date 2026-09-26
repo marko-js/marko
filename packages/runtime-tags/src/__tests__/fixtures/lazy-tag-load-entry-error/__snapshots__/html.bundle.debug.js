@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<div id=error>failed</div>");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_html("</main>");
 	$si__input_label && _scope($scope0_id, { "ClosureScopes:input_label": $input_label__closures }, "__tests__/template.marko", 0);
 }, 1);

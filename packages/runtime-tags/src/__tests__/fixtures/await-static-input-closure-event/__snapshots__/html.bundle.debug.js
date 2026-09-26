@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("Loading");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		count,
 		"ClosureScopes:input_foo": $si__input_foo && $input_foo__closures,

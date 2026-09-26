@@ -29,6 +29,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

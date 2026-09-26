@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope6_id = _scope_id();
 				note_default({ label: "inner placeholder" });
-			}, $scope2_id) }) });
+			}, $scope2_id) }) }, 0);
 			_subscribe($clicks__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_clicks#3/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		note_default({ label: "outer placeholder" });
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		clicks,

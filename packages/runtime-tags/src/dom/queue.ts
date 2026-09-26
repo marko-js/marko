@@ -139,7 +139,7 @@ let runRender = (render: PendingRender) => {
   }
 };
 
-let catchEnabled: undefined | 1;
+export let catchEnabled: undefined | 1;
 // The catch machinery lives in `catch.feat`; it installs by wrapping the
 // plain dispatchers, which imported bindings cannot reassign directly.
 export function installCatch(

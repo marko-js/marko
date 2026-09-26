@@ -18,9 +18,9 @@ import {
   ResumeSymbol,
   type Scope,
 } from "../common/types";
-import { runEffects } from "./queue";
+import { catchEnabled, runEffects } from "./queue";
 import { setParentBranch } from "./renderer";
-import { destroyScope } from "./scope";
+import { destroyBranch, destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
@@ -236,6 +236,15 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             if (visitType === ResumeSymbol.ReorderStart) {
               while (reorderBranch && pending.length >= reorderDepth) {
                 adopt(pending.pop()!, reorderBranch);
+              }
+              // Reorders land in `<try>` branches, whose client code enables catch; a
+              // destroyed one is destroyed again to reach the branches it adopted.
+              if (
+                catchEnabled &&
+                reorderBranch &&
+                !reorderBranch[AccessorProp.Gen]
+              ) {
+                destroyBranch(reorderBranch);
               }
               // Generated reorder ids are not numeric and resolve to the global.
               if ((reorderBranch = (+lastToken && visitScope) as BranchScope)) {

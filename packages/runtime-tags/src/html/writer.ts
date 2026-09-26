@@ -918,10 +918,8 @@ export function _await<T>(
   content: (value: T) => void,
   serializeMarker?: number,
 ) {
-  const resumeMarker = serializeMarker !== 0;
-
   if (!isPromise(promise)) {
-    if (resumeMarker) {
+    if (serializeMarker !== 0) {
       const branchId = _peek_scope_id();
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
@@ -954,20 +952,24 @@ export function _await<T>(
 
         if (!boundary.signal.aborted) {
           chunk.render(() => {
-            if (resumeMarker) {
-              const branchId = _peek_scope_id();
-              $chunk.writeHTML(
-                $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
-              );
-              withBranchId(branchId, () => withIsAsync(content, value));
+            const branchId = _peek_scope_id();
+            const { resumeWrites } = boundary;
+            const beforeBranch = deferBranchStart(chunk);
+            withBranchId(branchId, () => withIsAsync(content, value));
+            // Its scope ids follow later siblings', so content marked to resume, or that
+            // resumes or may once it settles, is bracketed against their adoption.
+            const marked =
+              chunk !== $chunk ||
+              boundary.resumeWrites !== resumeWrites ||
+              serializeMarker !== 0;
+            applyBranchStart(chunk, beforeBranch, marked);
+            if (marked) {
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(
                   ResumeSymbol.BranchEnd,
                   scopeId + " " + accessor + " " + branchId,
                 ),
               );
-            } else {
-              withIsAsync(content, value);
             }
           });
           boundary.endAsync();
@@ -989,6 +991,7 @@ export function _try(
     placeholder?: { content?(): void };
     catch?: { content?(err: unknown): void };
   },
+  serializeMarker?: number,
 ) {
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
@@ -1032,10 +1035,12 @@ export function _try(
   // Custom and dynamic tags hide from analysis whether the body resumes, so its
   // render decides: an async or resumable body keeps its marks, others drop them.
   const rendered = chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
-  applyBranchStart(chunk, beforeBranch, rendered);
-  if (!rendered) return;
+  // A try the client reruns keeps them too, and sets its renderers when it does.
+  const marked = rendered || serializeMarker !== 0;
+  applyBranchStart(chunk, beforeBranch, marked);
+  if (!marked) return;
 
-  if (!renderersAtSettle) {
+  if (rendered && !renderersAtSettle) {
     writeTryRenderers(branchId, catchContent, placeholderContent);
   }
   $chunk.writeHTML(

@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				note_default({ label: "inner placeholder" });
-			}, $scope2_id) }) });
+			}, $scope2_id) }) }, 0);
 			_subscribe($clicks__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a3");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		note_default({ label: "outer placeholder" });
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {
 		d: clicks,

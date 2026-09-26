@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<b>${_text_resume($scope3_id, "#text/0", err.message, $sg__err_message)}</b>`);
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "15:4");
 		}, $scope0_id) })
-	});
+	}, 0);
 	_scope($scope0_id, {
 		attempt,
 		"ClosureScopes:attempt": $attempt__closures

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "#text/0", err, $sg__err));
 		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "12:4");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		clickCount,
 		"ClosureScopes:clickCount": $clickCount__closures

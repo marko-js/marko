@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("loading inner...");
-			}, $scope2_id) }) });
+			}, $scope2_id) }) }, 0);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading outer...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		b: changes,
 		c: $changes__closures

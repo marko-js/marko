@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope6_id = _scope_id();
 				_html("loading inner...");
-			}, $scope2_id) }) });
+			}, $scope2_id) }) }, 0);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html("loading outer...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		changes,
 		"ClosureScopes:changes": $changes__closures

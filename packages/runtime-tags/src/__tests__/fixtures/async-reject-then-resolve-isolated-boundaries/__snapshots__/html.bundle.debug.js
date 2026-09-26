@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("Rejected A");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
@@ -25,5 +25,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html("Rejected B");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 }, 1);

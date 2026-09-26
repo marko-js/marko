@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(_text_resume($scope3_id, "a", err, $sg__err));
 		_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		c: clickCount,
 		d: $clickCount__closures

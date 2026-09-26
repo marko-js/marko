@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<span class=err>${_text_resume($scope4_id, "#text/0", err.message, $sg__err_message)}</span>`);
 					_serialize_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "10:6");
 				}, $scope1_id) })
-			});
+			}, 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}

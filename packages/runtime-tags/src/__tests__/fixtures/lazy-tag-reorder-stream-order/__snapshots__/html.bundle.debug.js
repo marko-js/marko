@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_html("loading");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_await($scope0_id, "#text/1", resolveAfter("streamed", 2), (label) => {
 		const $scope3_id = _scope_id();
 		$Child_withLoadAssets({

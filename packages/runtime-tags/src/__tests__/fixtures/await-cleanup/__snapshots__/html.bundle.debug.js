@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html("loading...");
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "6:1");
 			return 0;
 		}

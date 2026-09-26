@@ -13,7 +13,7 @@ var boundary_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	$si__input_content && _scope($scope0_id, { e: $input_content__closures });
 });
 

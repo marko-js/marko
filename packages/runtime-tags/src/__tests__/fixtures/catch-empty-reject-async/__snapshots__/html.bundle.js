@@ -12,6 +12,6 @@ var template_default = _template("a", (input) => {
 			_html(_escape(data));
 		}, 0);
 		_html("c");
-	}, $scope0_id), { catch: attrTag({}) });
+	}, $scope0_id), { catch: attrTag({}) }, 0);
 	_html("d");
 }, 1);

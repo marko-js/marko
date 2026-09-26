@@ -13,7 +13,7 @@ var boundary_default = _template("__tests__/tags/boundary.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	$si__input_content && _scope($scope0_id, { "ClosureScopes:input_content": $input_content__closures }, "__tests__/tags/boundary.marko", 0);
 });
 

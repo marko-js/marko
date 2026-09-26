@@ -17,5 +17,5 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html(_escape(value));
 		}, 0);
-	}, $scope0_id), { placeholder: $placeholder });
+	}, $scope0_id), { placeholder: $placeholder }, 0);
 }, 1);

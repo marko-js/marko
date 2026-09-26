@@ -1,0 +1,8 @@
+<let/clicks=0/>
+<button onClick() { clicks++ }>${clicks}</button>
+<try>
+  <for|label| of=[`update ${clicks}`]>
+    <@catch>caught ${label}</@catch>
+  </for>
+  static body
+</try>

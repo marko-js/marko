@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_script($scope0_id, "a5");
 	_scope($scope0_id, { d: $value__closures });
 }, 1);

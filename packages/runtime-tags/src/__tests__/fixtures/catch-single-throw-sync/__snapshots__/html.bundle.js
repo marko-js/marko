@@ -14,6 +14,6 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "a", error.message, $sg__error_message));
 		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_html("d");
 }, 1);

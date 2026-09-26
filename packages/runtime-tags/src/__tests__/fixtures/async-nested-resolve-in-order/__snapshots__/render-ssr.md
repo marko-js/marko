@@ -27,5 +27,11 @@ abcdefghijklm
 ```
 ## Change
 ```
-INSERT: ::text@2 + ::text("defghijklm")
+INSERT: ::text@2 + ::text("de")
+INSERT: ::text@3 + ::text("f")
+INSERT: ::text@5 + ::text("g")
+INSERT: ::text@6 + ::text("h")
+INSERT: ::text@7 + ::text("ijk")
+INSERT: ::text@8 + ::text("l")
+INSERT: ::text@11 + ::text("m")
 ```

@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("caught-a");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html("caught-b");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
 		"ClosureScopes:input_a": $si__input_a && $input_a__closures,
 		"ClosureScopes:input_b": $si__input_b && $input_b__closures

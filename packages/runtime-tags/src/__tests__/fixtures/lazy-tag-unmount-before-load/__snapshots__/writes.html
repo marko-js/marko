@@ -11,8 +11,9 @@
 
 <!-- FLUSH -->
 
-<t hidden M_=b>
-  <script async type=module src="child.marko.load.mjs"></script><span>1</span>
+<t hidden M_=b><!--M_[-->
+  <script async type=module src="child.marko.load.mjs"></script>
+  <span>1</span><!--M_]4 a 6-->
 </t>
 <script>
   M._.r.push(_ => [4, {
@@ -23,7 +24,7 @@
   };
   M._.j.b = _ => {
     (b => b.splice(b.indexOf(1), 1, _ => [7, {
-      G: 4
+      G: 6
     }], "a0 7"))(M._.b._a)
   };
   M._.w()

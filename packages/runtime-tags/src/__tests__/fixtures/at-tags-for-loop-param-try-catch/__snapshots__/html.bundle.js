@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		_html(_escape((() => {
 			throw new Error("sync");
 		})()));
-	}, $scope0_id), { catch: $catch });
+	}, $scope0_id), { catch: $catch }, 0);
 	_html("</div><div>");
 	let $catch2;
 	forOf([`update ${clicks}`], (label) => {

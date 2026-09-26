@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			_html(`<b>${_text_resume($scope3_id, "a", err.message, $sg__err_message)}</b>`);
 			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
 		}, $scope0_id) })
-	});
+	}, 0);
 	_scope($scope0_id, {
 		b: attempt,
 		c: $attempt__closures
