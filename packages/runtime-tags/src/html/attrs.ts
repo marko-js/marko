@@ -111,6 +111,27 @@ export function _attr_select_value(
   }
 }
 
+// A spread claims the value only when it has one, as `_controllable_select` does.
+export function _attrs_select_value(
+  scopeId: number,
+  nodeAccessor: Accessor,
+  data: Record<string, unknown>,
+  content: () => void,
+) {
+  if (data && ("value" in data || "valueChange" in data)) {
+    _attr_select_value(
+      scopeId,
+      nodeAccessor,
+      data.value,
+      data.valueChange,
+      content,
+      1,
+    );
+  } else {
+    content();
+  }
+}
+
 export function _attr_textarea_value(
   scopeId: number,
   nodeAccessor: Accessor,
@@ -130,6 +151,22 @@ export function _attr_textarea_value(
   }
 
   return _textarea_value(value);
+}
+
+// Unclaimed and void values both render empty, so unlike `_attrs_select_value`
+// this needs no `in` test; `?.` covers a lone `null`/`undefined` spread.
+export function _attrs_textarea_value(
+  scopeId: number,
+  nodeAccessor: Accessor,
+  data: Record<string, unknown>,
+) {
+  return _attr_textarea_value(
+    scopeId,
+    nodeAccessor,
+    data?.value,
+    data?.valueChange,
+    1,
+  );
 }
 
 // A textarea renders its value as text content, but coerces it like the `value=`
@@ -320,7 +357,7 @@ export function _attrs(
       break;
     case "select":
     case "textarea":
-      if ("value" in data || data.valueChange) {
+      if ("value" in data || "valueChange" in data) {
         skip = /^value(?:Change)?$|[\s/>"'=]/;
       }
       break;

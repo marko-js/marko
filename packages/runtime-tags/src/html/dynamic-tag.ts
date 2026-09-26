@@ -11,7 +11,7 @@ import {
   RendererProp,
   ResumeSymbol,
 } from "../common/types";
-import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
+import { _attr_select_value, _attrs, _attrs_textarea_value } from "./attrs";
 import type { Locals } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
@@ -83,12 +83,10 @@ export let _dynamic_tag = (
             );
           }
           _html(
-            _attr_textarea_value(
+            _attrs_textarea_value(
               branchId,
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-              input.value,
-              input.valueChange,
-              1,
+              input,
             ),
           );
         } else {
