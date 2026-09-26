@@ -1,5 +1,5 @@
 import assert from "assert/strict";
-import { once } from "events";
+import { getEventListeners, once } from "events";
 import http from "http";
 import type { AddressInfo } from "net";
 import path from "path";
@@ -33,6 +33,10 @@ const iterate = (result: RenderedTemplate) =>
 describe("runtime-tags/html render result", () => {
   let sync: Template;
   let async: Template;
+  let serializeThrows: Template;
+  let serializeThrowsPage: Template;
+  let lazyPromise: Template;
+  let lazyPromiseThrows: Template;
   const renderSync = () => sync.render({ name: "world" }) as ServerResult;
   const renderAsync = (value: Promise<string>) =>
     async.render({ value }) as ServerResult;
@@ -42,7 +46,14 @@ describe("runtime-tags/html render result", () => {
     this.timeout(60000);
     const runner = await createServerRunner(
       dir,
-      { sync: "./sync.marko", async: "./async.marko" },
+      {
+        sync: "./sync.marko",
+        async: "./async.marko",
+        serializeThrows: "./serialize-throws.marko",
+        serializeThrowsPage: "./serialize-throws-page.marko",
+        lazyPromise: "./lazy-promise.marko",
+        lazyPromiseThrows: "./lazy-promise-throws.marko",
+      },
       {
         translator: tagsTranslator as any,
         optimize: false,
@@ -53,11 +64,34 @@ describe("runtime-tags/html render result", () => {
         },
       },
     );
-    ({ sync, async } = await runner.runServer());
+    ({
+      sync,
+      async,
+      serializeThrows,
+      serializeThrowsPage,
+      lazyPromise,
+      lazyPromiseThrows,
+    } = await runner.runServer());
     disposeServer = runner.disposeServer;
   });
 
   after(() => disposeServer?.());
+
+  // Resolves with every call a render made on its sink, once a repeated report
+  // would have landed.
+  const pipeSerializeError = (template: Template) =>
+    new Promise<string[]>((resolve) => {
+      const calls: string[] = [];
+      template.render({}).pipe({
+        write: () => calls.push("write"),
+        end: () => calls.push("end"),
+        destroy: () => calls.push("destroy"),
+        emit: (event: PropertyKey, err: Error) => {
+          setImmediate(() => setImmediate(resolve, calls));
+          return calls.push(`${String(event)}: ${err.message}`);
+        },
+      });
+    });
 
   describe("render options", () => {
     it("refuses to mount an html-compiled template", () => {
@@ -88,6 +122,21 @@ describe("runtime-tags/html render result", () => {
       }) as ServerResult;
       assertBody(result.toString());
     });
+
+    it("detaches from $global.signal once the render settles", async () => {
+      const { signal } = new AbortController();
+      const $global = { signal };
+      const stream = new PassThrough();
+      const read = text(stream);
+      sync.render({ name: "world", $global }).toString();
+      await sync.render({ name: "world", $global });
+      sync.render({ name: "world", $global }).pipe(stream);
+      await read;
+      await async
+        .render({ value: Promise.reject(new Error("boom")), $global })
+        .catch(() => {});
+      assert.deepEqual(getEventListeners(signal, "abort"), []);
+    });
   });
 
   describe("toString", () => {
@@ -107,6 +156,26 @@ describe("runtime-tags/html render result", () => {
         /Cannot consume asynchronous render/,
       );
     });
+
+    it("stops the asynchronous render it throws for", async () => {
+      let rendered = false;
+      let resolve!: (value: unknown) => void;
+      const result = async.render({ value: new Promise((r) => (resolve = r)) });
+      assert.throws(
+        () => result.toString(),
+        /Cannot consume asynchronous render/,
+      );
+      resolve({ toString: () => ((rendered = true), "a") });
+      await new Promise(setImmediate);
+      assert.equal(rendered, false);
+    });
+
+    it("throws rather than drop a promise lazy content serializes", () => {
+      assert.throws(
+        () => lazyPromise.render({}).toString(),
+        /Cannot consume asynchronous render/,
+      );
+    });
   });
 
   describe("promise interface", () => {
@@ -117,6 +186,10 @@ describe("runtime-tags/html render result", () => {
     it("awaits asynchronous content", async () => {
       const html = await renderAsync(Promise.resolve("a"));
       assert.match(html, /<p>a<\/p>/);
+    });
+
+    it("awaits a promise lazy content serializes", async () => {
+      assert.match(await lazyPromise.render({}), /\.f\("hello"\)/);
     });
 
     it("rejects through catch when the render aborts", async () => {
@@ -178,6 +251,38 @@ describe("runtime-tags/html render result", () => {
       renderAsync(Promise.reject(reason)).pipe(stream);
       assert.deepEqual(await errored, [reason]);
       assert.equal(stream.destroyed, true);
+    });
+
+    it("ignores $global.signal aborting after the stream ends", async () => {
+      // Hosts commonly abort the render's signal whenever the response closes.
+      const ctrl = new AbortController();
+      const stream = new PassThrough();
+      const errors: unknown[] = [];
+      const closed = once(stream, "close");
+      stream.on("close", () => ctrl.abort());
+      stream.on("error", (err) => errors.push(err));
+      const read = text(stream);
+      sync
+        .render({ name: "world", $global: { signal: ctrl.signal } })
+        .pipe(stream);
+      assertBody(await read);
+      await closed;
+      assert.deepEqual(errors, []);
+    });
+
+    it("reports a serialize error once and writes nothing after it", async () => {
+      const reported = ["destroy", "error: getter failed"];
+      // A page's scopes serialize before it writes; embedded content's as it writes.
+      assert.deepEqual(await pipeSerializeError(serializeThrowsPage), reported);
+      assert.deepEqual(await pipeSerializeError(serializeThrows), reported);
+    });
+
+    it("reports a serialize error once after lazy content held the stream", async () => {
+      assert.deepEqual(await pipeSerializeError(lazyPromiseThrows), [
+        "write",
+        "destroy",
+        "error: getter failed",
+      ]);
     });
 
     it("tears down the response socket when an http render aborts", async () => {

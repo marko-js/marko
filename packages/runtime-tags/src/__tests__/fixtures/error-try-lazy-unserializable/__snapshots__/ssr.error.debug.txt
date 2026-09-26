@@ -1,0 +1,1 @@
+Unable to serialize "obj" in packages/runtime-tags/src/__tests__/fixtures/error-try-lazy-unserializable/child.marko:1:8 (reading buf). Values referenced in the browser must be serializable.

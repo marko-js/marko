@@ -1,0 +1,47 @@
+<!--M_[--><!--M_!^b--><!--M_!b--><!--M_]1 #text/0 3-->
+<t hidden M_=b>caught An @placeholder cannot contain async content.<script async
+    type=module src="child.marko.load.mjs"></script>
+  <div id=ref>0</div>
+</t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [3, {
+    "#CatchContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/catch-async-placeholder-error-writes-once/template.marko_4*content"
+      ),
+    "#PlaceholderContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/catch-async-placeholder-error-writes-once/template.marko_2*content"
+      )
+  }]];
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/catch-async-placeholder-error-writes-once/child.marko": [
+      1
+    ]
+  };
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [6, {
+        promise: (p => p = new Promise((f, r) => _.a = {
+          f,
+          r(e) {
+            p.catch(_ => 0);
+            r(e)
+          }
+        }))()
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/catch-async-placeholder-error-writes-once/child.marko_0_promise#0 6"
+      ))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/catch-async-placeholder-error-writes-once/child.marko"
+      ])
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/catch-async-placeholder-error-writes-once/child.marko"
+    ].push(_ => (_.a.f("hello"), 0));
+  M._.w()
+</script>

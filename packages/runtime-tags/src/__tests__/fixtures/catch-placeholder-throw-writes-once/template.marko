@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <await|value|=resolveAfter("content", 1)>
+    ${value}
+  </await>
+  <@placeholder>
+    <const/x=(() => { throw new Error("bang") })()/>
+    ${x}
+  </@placeholder>
+  <@catch|err|>
+    caught ${err.message}
+  </@catch>
+</try>

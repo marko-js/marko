@@ -1,0 +1,6 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<const/promise=resolveAfter({ get bad() { throw new Error("getter failed"); } }, 1)/>
+<script>
+  console.log(await promise);
+</script>

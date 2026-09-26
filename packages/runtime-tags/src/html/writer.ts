@@ -1358,11 +1358,14 @@ export class Boundary extends AbortController {
       if (signal.aborted) {
         this.abort(signal.reason);
       } else {
-        signal.addEventListener("abort", () => {
-          this.abort(signal.reason);
-        });
+        signal.addEventListener("abort", this);
       }
     }
+  }
+
+  // Listens on the signal it was created with, so a settled render can detach.
+  handleEvent(event: Event) {
+    this.abort((event.target as AbortSignal).reason);
   }
 
   flush() {
@@ -1478,6 +1481,7 @@ export class Chunk {
   flushPlaceholder() {
     const { placeholder } = this;
     if (placeholder) {
+      this.placeholder = null;
       const body = placeholder.body.consume();
 
       if (body.async) {
@@ -1489,20 +1493,25 @@ export class Chunk {
         this.writeHTML(state.mark(Mark.Placeholder, reorderId));
         const { effects } = this;
         const beforeBranch = deferBranchStart(this);
-        const after = this.render(() =>
-          withBranchId(placeholderBranchId, placeholder.render),
-        );
-        // A placeholder with effects is a branch like the body: live while
-        // the body streams, destroyed when the reorder swaps it in.
-        const stateful = after === this && this.effects !== effects;
-        applyBranchStart(this, beforeBranch, stateful);
-        if (after !== this) {
+        if (
+          this.render(() =>
+            withBranchId(placeholderBranchId, placeholder.render),
+          ) !== this
+        ) {
           // TODO: eventually this should be allowed.
           // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
           this.boundary.abort(
             new Error("An @placeholder cannot contain async content."),
           );
-        } else if (stateful) {
+        }
+        // An abort here fires the `@catch` that takes this chunk's place, or
+        // ends the render.
+        if (this.boundary.signal.aborted) return;
+        // A placeholder with effects is a branch like the body: live while
+        // the body streams, destroyed when the reorder swaps it in.
+        const stateful = this.effects !== effects;
+        applyBranchStart(this, beforeBranch, stateful);
+        if (stateful) {
           this.render(() =>
             writeScope(branchId, {
               [AccessorProp.PlaceholderBranch]: scopeWithId(
@@ -1530,8 +1539,6 @@ export class Chunk {
         body.next = this.next;
         this.next = body;
       }
-
-      this.placeholder = null;
     }
   }
 
@@ -1649,7 +1656,12 @@ export class Chunk {
 
     // Lazy content's effects wait on in-order content like the rest.
     let readyResumeScripts = this.flushReadyScripts(undefined, this.async);
-    for (let channel; (channel = state.serializer.pendingReadyChannel());) {
+    // A channel that fails to serialize aborts and stays pending.
+    for (
+      let channel;
+      !boundary.signal.aborted &&
+      (channel = state.serializer.pendingReadyChannel());
+    ) {
       const resumes = state.serializer.stringifyScopes([], boundary, channel);
       const deps = state.serializer.takeChannelDeps();
       state.needsMainRuntime = true;

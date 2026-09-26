@@ -1,0 +1,8 @@
+// use tags
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<Child/>
+<await=resolveAfter(1, 1)>
+  <class-counter/>
+</await>

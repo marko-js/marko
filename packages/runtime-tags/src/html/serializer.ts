@@ -409,6 +409,10 @@ export class Serializer {
       this.#state.boundary = boundary;
       this.#state.channel = channel;
       return writeScopesRoot(this.#state, flushes);
+    } catch (err) {
+      // Flushes run from async callbacks, where a throw would strand the render.
+      abortRender(boundary, err);
+      return "";
     } finally {
       this.#state.flushId++;
       this.#state.buf = [];
@@ -1937,8 +1941,8 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
     if (hasOwnProperty.call(val, key)) {
       const escapedKey = toObjectKey(key);
       state.buf.push(sep + escapedKey + ":");
-      // A getter runs here, once, and the browser receives its result as a plain
-      // property; a throw escapes as is, since its own stack points at the getter.
+      // A getter runs here, once, and the browser receives its result as a
+      // plain property; a throw aborts the render with the getter's own error.
       if (
         writeProp(
           state,
@@ -2090,7 +2094,7 @@ function throwUnserializable(
     // The stack would only show the serializer's flush; the message already
     // names the template file and the value's path.
     err.stack = undefined;
-    state.boundary.abort(err);
+    abortRender(state.boundary, err);
   }
 }
 
@@ -2162,7 +2166,14 @@ function abortUnreachableChannel(state: State, val: unknown) {
     { cause: val },
   );
   err.stack = undefined;
-  state.boundary.abort(err);
+  abortRender(state.boundary, err);
+}
+
+// The whole render shares one serializer, which a failed write leaves holding
+// references the browser never received, so no `@catch` can recover from it.
+function abortRender(boundary: Boundary, err: unknown) {
+  while (boundary.parent) boundary = boundary.parent;
+  boundary.abort(err);
 }
 
 function isCircular(

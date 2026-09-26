@@ -102,16 +102,17 @@ export const compat = {
     chunk ||= this.createChunk($global);
 
     const { boundary } = chunk;
-    switch (boundary.flush()) {
-      case FlushStatus.aborted:
-        throw boundary.signal.reason;
-      case FlushStatus.continue:
-        throw new Error(
-          "Cannot serialize promise across tags/class compat layer.",
-        );
+    const scripts =
+      boundary.flush() === FlushStatus.complete
+        ? chunk.flushScript().scripts
+        : "";
+    if (boundary.signal.aborted) throw boundary.signal.reason;
+    if (boundary.count) {
+      throw new Error(
+        "Cannot serialize promise across tags/class compat layer.",
+      );
     }
-
-    return chunk.flushScript().scripts;
+    return scripts;
   },
   render(
     renderer: ServerRenderer,

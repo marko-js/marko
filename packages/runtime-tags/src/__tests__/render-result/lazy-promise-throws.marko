@@ -1,0 +1,7 @@
+import Child from "./lazy-promise-throws-child.marko" with { load: "render" }
+
+<await|a|=Promise.resolve(1)>${a}</await>
+<await|b|=Promise.resolve(2)>
+  ${b}
+  <Child/>
+</await>
