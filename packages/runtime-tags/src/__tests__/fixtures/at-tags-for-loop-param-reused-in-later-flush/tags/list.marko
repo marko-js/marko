@@ -1,0 +1,7 @@
+<let/open=false>
+<button#open onClick() { open = true }>open</button>
+<if=open>
+  <for|item| of=input.item>
+    <${item.content}/>
+  </for>
+</if>

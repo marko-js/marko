@@ -126,7 +126,7 @@ export function _content(
 
 // Registers content that code the analysis cannot see may render later. Its
 // registration carries the loop's values if it has some, then the closures it
-// reads per owner down to its own (`0` for one with none), set where missing.
+// reads per owner down to its own, set where missing.
 export function _content_resume(
   renderer: (
     owner?: Scope,
@@ -139,6 +139,11 @@ export function _content_resume(
     ...values: Scope[]
   ) => {
     for (let i = values.length, scope = owner; i > hasLocalValues;) {
+      if (MARKO_DEBUG && !scope) {
+        throw new Error(
+          "Unable to resume registered content: its payload does not link the owner of every closure level.",
+        );
+      }
       const closures = values[--i];
       for (const key in closures)
         if (!(key in scope)) scope[key] = closures[key];

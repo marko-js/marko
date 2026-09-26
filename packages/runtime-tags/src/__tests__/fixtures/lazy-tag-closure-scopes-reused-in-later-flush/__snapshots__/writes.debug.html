@@ -1,0 +1,48 @@
+<button id=toggle>toggle</button><!--M_$2 #button/0-->
+<section><!--M_[--><span>x</span><!--M_$4 #span/0--><!--M_)2 #section/1 3-->
+</section>
+<script>
+  ((p, h, d, l = $ => {
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-closure-scopes-reused-in-later-flush/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      )), p.after(d))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("body") || (console.warn(
+    "A lazy load trigger could not find an element matching \"body\". The module was loaded immediately."
+    ), l())))(document.currentScript,
+    "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-closure-scopes-reused-in-later-flush/child.marko": [
+      _ => (_([2, {
+        input_content: {
+          content: _(1,
+            "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-closure-scopes-reused-in-later-flush/template.marko_1*content"
+            )
+        },
+        show: !0
+      }]), (_(1)["ClosureScopes:1"]).add(_(4)), 0)
+    ]
+  };
+  M._.r = [_ => [1, {
+    "ClosureScopes:1": new Set
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<span>x</span><!--M_$6 #span/0-->
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-closure-scopes-reused-in-later-flush/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-closure-scopes-reused-in-later-flush/child.marko_0 2"
+    );
+  M._.r.push(_ => ((_.a = _(1)["ClosureScopes:1"]).add(_(6)), 0),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-closure-scopes-reused-in-later-flush/template.marko_0 1"
+    );
+  M._.w()
+</script>
