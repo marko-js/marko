@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const $Child_scope = _peek_scope_id();
-		let setHtml = _dynamic_tag($scope1_id, "a", child_default, {});
+		let setHtml = _dynamic_tag($scope1_id, "a", child_default, {}, void 0, void 0, void 0, 1);
 		_var($scope1_id, "b", $Child_scope, "a1");
 		_subscribe($thing_content__subscribers, _scope($scope1_id, { c: setHtml }));
 	}, $scope0_id) });
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			const $Child_scope2 = _peek_scope_id();
-			let setHtml2 = _dynamic_tag($scope3_id, "a", child_default, {});
+			let setHtml2 = _dynamic_tag($scope3_id, "a", child_default, {}, void 0, void 0, void 0, 1);
 			_var($scope3_id, "b", $Child_scope2, "a3");
 			_subscribe($thing_content2__subscribers, _scope($scope3_id, { c: setHtml2 }));
 		}, $scope2_id) });
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		const $Child_scope3 = _peek_scope_id();
-		let setHtml3 = _dynamic_tag($scope4_id, "a", child_default, {});
+		let setHtml3 = _dynamic_tag($scope4_id, "a", child_default, {}, void 0, void 0, void 0, 1);
 		_var($scope4_id, "b", $Child_scope3, "a6");
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, { c: setHtml3 }));
 	}, $scope0_id), 0, $sg__input_show);

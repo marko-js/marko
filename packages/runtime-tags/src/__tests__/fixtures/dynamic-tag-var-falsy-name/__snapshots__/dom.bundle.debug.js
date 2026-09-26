@@ -41,4 +41,4 @@ function $setup($scope) {
 const $input = ($scope, input) => $input_a11yText($scope, input.a11yText);
 const $input_a11yText__closure = /*@__PURE__*/ _closure($wrapper_content__input_a11yText);
 const $input_a11yText = /*@__PURE__*/ _const("input_a11yText", $input_a11yText__closure);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template, $walks, $setup, $input);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template, $walks, $setup, $input));

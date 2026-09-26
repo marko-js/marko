@@ -16,7 +16,7 @@ function $_return() {
 	return 1;
 }
 _resumed["__tests__/tags/source.marko_0/_return"] = $_return;
-var source_default = /*@__PURE__*/ _template("__tests__/tags/source.marko", "", "", $setup$1);
+var source_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/source.marko", "", "", $setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$2, "");

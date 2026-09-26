@@ -24,9 +24,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$x($scope, !$scope.x);
 }));
 function $setup($scope) {
-	_var($scope, "#childScope/0", $menuEl);
 	$x($scope, true);
 	$setup__script($scope);
 }
-const $menuEl = _var_resume("__tests__/template.marko_0_menuEl#4/var", ($scope, menuEl) => {});
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

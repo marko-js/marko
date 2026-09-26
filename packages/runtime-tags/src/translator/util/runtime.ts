@@ -39,6 +39,7 @@ const pureDOMFunctions = new Set<string>([
   "_dynamic_tag_content",
   "_content_closures",
   "_template",
+  "_template_return",
   "_closure",
   "_closure_get",
   "_or",

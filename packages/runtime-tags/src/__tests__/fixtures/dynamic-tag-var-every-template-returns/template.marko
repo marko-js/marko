@@ -1,0 +1,6 @@
+import A from "./tags/a.marko";
+import B from "./tags/b.marko";
+
+<let/isA=true/>
+<${isA ? A : B}/value/>
+<button onClick() { isA = !isA }>${value}</button>

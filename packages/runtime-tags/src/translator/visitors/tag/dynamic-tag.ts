@@ -466,6 +466,12 @@ export default {
           serializeReason,
           true,
         );
+        // Only content, never a native element, can `_return` after resume.
+        const resumesContentVar =
+          !!node.var &&
+          isTagVarResumed(tag) &&
+          (analyzeTagNameType(tag, true) !== TagNameType.NativeTag ||
+            !!getSectionForBody(tag.get("body"))?.returnValueExpr);
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -478,6 +484,7 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
+              resumesContentVar && t.numericLiteral(1),
             )
           : callRuntime(
               "_dynamic_tag",
@@ -488,6 +495,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
+              resumesContentVar && t.numericLiteral(1),
             );
 
         if (node.var && isTagVarResumed(tag)) {
@@ -649,13 +657,17 @@ function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// A native branch's tag variable binds the element as the branch renders, and
-// resumes as a getter over the tag's node visit wherever its value serializes.
+// Content without a `<return>` leaves its branch's tag variable `undefined`; a
+// native branch binds the element and resumes as a getter over the node visit.
 function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
+  if (!tag.node.var || !isTagVarResumed(tag)) return;
+
+  const tagExtra = tag.node.extra!;
+  const isCustomTag = analyzeTagNameType(tag, true) === TagNameType.CustomTag;
   if (
-    !tag.node.var ||
-    !isTagVarResumed(tag) ||
-    analyzeTagNameType(tag, true) === TagNameType.CustomTag
+    isCustomTag &&
+    !tagExtra.tagNameNullable &&
+    tagExtra.tagNameTemplates?.every(isReturningTemplate)
   ) {
     return;
   }
@@ -663,17 +675,18 @@ function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
   importRuntimeFeature("dynamic-tag-var");
 
   // A returned or passed on value serializes in another template's scope.
-  if (!tag.node.var.extra!.binding!.pruned) {
-    const accessor = getScopeAccessorLiteral(
-      tag.node.extra!.nodeBinding!,
-      true,
-    );
+  if (!isCustomTag && !tag.node.var.extra!.binding!.pruned) {
+    const accessor = getScopeAccessorLiteral(tagExtra.nodeBinding!, true);
     if (addRuntimeOnce(`_dynamic_tag_var_resume ${accessor.value}`)) {
       getProgram().node.body.push(
         t.expressionStatement(callRuntime("_dynamic_tag_var_resume", accessor)),
       );
     }
   }
+}
+
+function isReturningTemplate(program: t.ProgramExtra) {
+  return program.featureType !== "class" && !!program.section!.returnValueExpr;
 }
 
 function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {

@@ -11,7 +11,7 @@ const $valueChange = ($scope) => (_new_value) => {
 	$value($scope, _new_value);
 };
 _resumed["__tests__/tags/my-let.marko_0/valueChange"] = $valueChange;
-var my_let_default = /*@__PURE__*/ _template("__tests__/tags/my-let.marko", "", "", $setup$2, $input$1);
+var my_let_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/my-let.marko", "", "", $setup$2, $input$1));
 
 // tags/my-tag.marko
 const $template$1 = "<!><!><!>";

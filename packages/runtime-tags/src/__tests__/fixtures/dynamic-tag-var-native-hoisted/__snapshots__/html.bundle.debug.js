@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_scope_reason();
 				_html("body");
-			}, $scope1_id));
+			}, $scope1_id), void 0, void 0, 1);
 			_var($scope1_id, "#scopeOffset/1", $inputtype_scope, "__tests__/template.marko_1_$el#2/var");
 			_scope($scope1_id, {
 				$el,
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`item ${_escape(i)}`);
 			$si__input_itemType && _scope($scope4_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:6");
 			$si__input_itemType && _resume_branch($scope4_id);
-		}, $scope2_id, ($scope) => [{ "#LoopKey": i }]));
+		}, $scope2_id, ($scope) => [{ "#LoopKey": i }]), void 0, void 0, 1);
 		_var($scope2_id, "#scopeOffset/1", $inputitemType_scope, "__tests__/template.marko_2_$item#3/var");
 		_scope($scope2_id, {
 			"#LoopKey": $si__input_itemType && i,

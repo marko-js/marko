@@ -21,7 +21,7 @@ function $setup$1($scope) {
 	$cart$1($scope, null);
 	$setup__script($scope);
 }
-var cart_state_default = /*@__PURE__*/ _template("__tests__/tags/cart-state.marko", "", "", $setup$1);
+var cart_state_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/cart-state.marko", "", "", $setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<header><div><!><a href=/something>Something</a> Test <!></div></header>`)("");

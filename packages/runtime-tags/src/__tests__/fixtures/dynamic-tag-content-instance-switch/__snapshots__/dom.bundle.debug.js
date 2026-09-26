@@ -16,7 +16,7 @@ function $setup$1($scope) {
 	$setup__script$1($scope);
 }
 const $input = ($scope, input) => $input_n($scope, input.n);
-var provider_default = /*@__PURE__*/ _template("__tests__/tags/provider.marko", $template$1, " b", $setup$1, $input);
+var provider_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/provider.marko", $template$1, " b", $setup$1, $input));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<button id=toggle>toggle</button><!><!>`)($template$1, $template$1);

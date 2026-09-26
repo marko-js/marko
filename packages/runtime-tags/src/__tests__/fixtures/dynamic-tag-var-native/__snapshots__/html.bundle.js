@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let tag = "div";
 	let text = "";
 	const $tag_scope = _peek_scope_id();
-	let el = _dynamic_tag($scope0_id, "a", tag, {});
+	let el = _dynamic_tag($scope0_id, "a", tag, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "b", $tag_scope, "a0");
 	_html(`<button id=swap>swap</button>${_el_resume($scope0_id, "c")}<button id=read>read</button>${_el_resume($scope0_id, "d")}<output>${_text_resume($scope0_id, "e", text)}</output>`);
 	_script($scope0_id, "a1");

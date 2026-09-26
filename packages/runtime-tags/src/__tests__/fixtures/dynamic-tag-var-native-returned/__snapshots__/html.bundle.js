@@ -7,7 +7,7 @@ var child_default = _template("b", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html("child body");
-	}, $scope0_id));
+	}, $scope0_id), void 0, void 0, 1);
 	_var($scope0_id, "b", $inputas_scope, "b1");
 	const $return = el;
 	_scope($scope0_id, {});

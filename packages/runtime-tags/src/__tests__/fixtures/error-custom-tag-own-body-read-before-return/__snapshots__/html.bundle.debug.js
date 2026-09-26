@@ -3,7 +3,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $inputcontent_scope = _peek_scope_id();
-	let r = _dynamic_tag($scope0_id, "#text/0", input.content, {});
+	let r = _dynamic_tag($scope0_id, "#text/0", input.content, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "#scopeOffset/1", $inputcontent_scope, "__tests__/tags/child.marko_0_r#5/var");
 	const $return = r;
 	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);

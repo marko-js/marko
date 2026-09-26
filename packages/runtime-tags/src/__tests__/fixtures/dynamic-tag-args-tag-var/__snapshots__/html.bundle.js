@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	_html(`<button>Count: ${_text_resume($scope0_id, "b", x, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	const $tags0_scope = _peek_scope_id();
-	let y = _dynamic_tag($scope0_id, "c", tags[0], [x], 0, 1);
+	let y = _dynamic_tag($scope0_id, "c", tags[0], [x], 0, 1, void 0, 1);
 	_var($scope0_id, "d", $tags0_scope, "a0");
 	_html(`<div>Parent: ${_text_resume($scope0_id, "e", y, 2)}</div>`);
 	_script($scope0_id, "a1");

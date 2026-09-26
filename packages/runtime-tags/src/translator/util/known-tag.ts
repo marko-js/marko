@@ -66,6 +66,7 @@ import { setTagDownstream } from "./set-tag-sections-downstream";
 import { addSetupExpr, addSetupStatement } from "./setup-statements";
 import {
   addStatement,
+  addValue,
   getResumeRegisterId,
   initValue,
   setBindingSerializedValue,
@@ -243,7 +244,7 @@ export function knownTagTranslateHTML(
       callRuntime("_existing_scope", peekScopeId),
     );
 
-    if (tagVar) {
+    if (tagVar && contentSection.returnValueExpr) {
       // Deferred below the render call: `_var` mints the post-render scope id
       // for the scope offset.
       varStatement = t.expressionStatement(
@@ -325,10 +326,6 @@ export function knownTagTranslateDOM(
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
     const source = initValue(varBinding);
-    // Register for resume only when the child scope serializes (mirrors the
-    // HTML `_var` gate); the `_var` setup call below references the signal.
-    source.register = !!getSerializeReason(tagSection, childScopeBinding);
-    source.referenced = true;
     source.buildAssignment = (valueSection, value) => {
       const changeArgs = [
         createScopeReadExpression(childScopeBinding, valueSection),
@@ -339,19 +336,34 @@ export function knownTagTranslateDOM(
       }
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
-    addStatement(
-      "prepare",
-      tagSection,
-      undefined,
-      t.expressionStatement(
-        callRuntime(
-          "_var",
-          scopeIdentifier,
-          getScopeAccessorLiteral(childScopeBinding, true),
-          source.identifier,
+    if (extra[kContentSection]!.returnValueExpr) {
+      // Register for resume only when the child scope serializes (mirrors the
+      // HTML `_var` gate); the `_var` setup call below references the signal.
+      source.register = !!getSerializeReason(tagSection, childScopeBinding);
+      source.referenced = true;
+      addStatement(
+        "prepare",
+        tagSection,
+        undefined,
+        t.expressionStatement(
+          callRuntime(
+            "_var",
+            scopeIdentifier,
+            getScopeAccessorLiteral(childScopeBinding, true),
+            source.identifier,
+          ),
         ),
-      ),
-    );
+      );
+    } else if (!varBinding.pruned) {
+      // Content without a `<return>` never calls `_return`, so the variable is
+      // always `undefined`.
+      addValue(
+        tagSection,
+        undefined,
+        source,
+        t.unaryExpression("void", t.numericLiteral(0)),
+      );
+    }
   }
   callSetup?.(tagSection, childScopeBinding);
 

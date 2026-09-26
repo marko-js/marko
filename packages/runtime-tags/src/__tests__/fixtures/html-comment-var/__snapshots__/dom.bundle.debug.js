@@ -7,7 +7,7 @@ function $setup$1($scope) {
 	$tagName($scope, undefined);
 	$setup__script($scope);
 }
-var parent_el_default = /*@__PURE__*/ _template("__tests__/tags/parent-el.marko", $template$1, " b", $setup$1);
+var parent_el_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/parent-el.marko", $template$1, " b", $setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0} </div><span>${_w1} </span>`)($template$1, $template$1);

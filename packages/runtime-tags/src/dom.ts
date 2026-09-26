@@ -84,7 +84,12 @@ export {
   _load_visible_trigger,
 } from "./dom/load";
 export { run } from "./dom/queue";
-export { _content, _content_closures, _content_resume } from "./dom/renderer";
+export {
+  _content,
+  _content_closures,
+  _content_resume,
+  _content_return,
+} from "./dom/renderer";
 export {
   _dynamic_tag_var_resume,
   _el,
@@ -118,4 +123,4 @@ export {
   _var,
   _var_change,
 } from "./dom/signals";
-export { _template } from "./dom/template";
+export { _template, _template_return } from "./dom/template";

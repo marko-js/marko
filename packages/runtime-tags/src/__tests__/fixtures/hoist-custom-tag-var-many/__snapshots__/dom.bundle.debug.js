@@ -6,7 +6,7 @@ function $setup$1($scope) {
 }
 const $_return = ($scope) => () => (html) => _el_read($scope["#div/0"]).innerHTML = html;
 _resumed["__tests__/tags/child.marko_0/_return"] = $_return;
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", $setup$1);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", $setup$1));
 
 // template.marko
 const $template = "<!><!><hr><!><hr><!><!>";

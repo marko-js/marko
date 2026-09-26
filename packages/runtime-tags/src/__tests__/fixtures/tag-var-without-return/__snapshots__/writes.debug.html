@@ -1,0 +1,20 @@
+<span>child</span><b>foo</b><!--M_[--><span>child</span><!--M_]1 #text/4 4-->
+<div class=x>none</div>
+<div class=z>none</div>
+<div class=w>none<!--M_$1 #text/8--></div>
+<button>toggle</button><!--M_$1 #button/9-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "#scopeOffset/5": 5,
+      "ConditionalRenderer:#text/4": "packages/runtime-tags/src/__tests__/fixtures/tag-var-without-return/tags/child.marko",
+      returns: !1
+    }, 2, {
+      "#TagVariable": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/tag-var-without-return/template.marko_0_w#13/var"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/tag-var-without-return/template.marko_0 1"
+  ];
+  M._.w()
+</script>

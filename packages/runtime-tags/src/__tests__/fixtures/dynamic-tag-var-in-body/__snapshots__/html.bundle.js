@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a1", 0);
 		_subscribe($setHtml__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}, $scope0_id));
+	}, $scope0_id), void 0, void 0, 1);
 	_var($scope0_id, "b", $Child_scope, "a2");
 	_scope($scope0_id, {
 		c: setHtml,

@@ -20,7 +20,7 @@ const $_return = ($scope) => function() {
 };
 _resumed["__tests__/tags/child.marko_0/_return2"] = $_return2;
 _resumed["__tests__/tags/child.marko_0/_return"] = $_return;
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=inc>inc</button><button class=assign>assign</button><div><!>:<!></div>`)($template$1);

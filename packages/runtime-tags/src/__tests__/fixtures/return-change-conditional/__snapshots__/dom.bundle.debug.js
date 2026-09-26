@@ -11,7 +11,7 @@ const $valueChange = ($scope) => (v) => {
 	$x($scope, v);
 };
 _resumed["__tests__/tags/editable.marko_0/valueChange"] = $valueChange;
-var editable_default = /*@__PURE__*/ _template("__tests__/tags/editable.marko", "", "", $setup$1, $input);
+var editable_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/editable.marko", "", "", $setup$1, $input));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button id=toggle>toggle</button><button id=assign>assign</button><div> </div>`)("");

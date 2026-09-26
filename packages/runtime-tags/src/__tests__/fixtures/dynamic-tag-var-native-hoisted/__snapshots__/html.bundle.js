@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 				_scope_id();
 				_scope_reason();
 				_html("body");
-			}, $scope1_id));
+			}, $scope1_id), void 0, void 0, 1);
 			_var($scope1_id, "b", $inputtype_scope, "a2");
 			_scope($scope1_id, {
 				c: $el,
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			_html(`item ${_escape(i)}`);
 			$si__input_itemType && _scope($scope4_id, { _: _scope_with_id($scope2_id) });
 			$si__input_itemType && _resume_branch($scope4_id);
-		}, $scope2_id, ($scope) => [{ M: i }]));
+		}, $scope2_id, ($scope) => [{ M: i }]), void 0, void 0, 1);
 		_var($scope2_id, "b", $inputitemType_scope, "a4");
 		_scope($scope2_id, {
 			M: $si__input_itemType && i,

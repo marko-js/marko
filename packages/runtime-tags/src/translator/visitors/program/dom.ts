@@ -160,7 +160,16 @@ export default {
 
               // `_content` registers any renderer the bundle keeps; one that must
               // be registered whatever else the client keeps is left impure.
-              if (!registerReason || registerWrapper) {
+              const isPure = !registerReason || registerWrapper;
+              if (childSection.returnValueExpr) {
+                renderer = callRuntime(
+                  "_content_return",
+                  isPure
+                    ? t.addComment(renderer, "leading", "@__PURE__")
+                    : renderer,
+                );
+              }
+              if (isPure) {
                 renderer = t.addComment(renderer, "leading", "@__PURE__");
               }
 
@@ -236,18 +245,21 @@ export default {
       writeStructureExports(program);
       writeModuleRegistrations(program);
 
+      const template = callRuntime(
+        "_template",
+        t.stringLiteral(getFile().metadata.marko.id),
+        ...replaceNullishAndEmptyFunctionsWith0([
+          templateIdentifier,
+          walksIdentifier,
+          domExports.setupEmpty ? undefined : setupIdentifier,
+          programInputSignal?.identifier,
+        ]),
+      );
       program.node.body.push(
         t.exportDefaultDeclaration(
-          callRuntime(
-            "_template",
-            t.stringLiteral(getFile().metadata.marko.id),
-            ...replaceNullishAndEmptyFunctionsWith0([
-              templateIdentifier,
-              walksIdentifier,
-              domExports.setupEmpty ? undefined : setupIdentifier,
-              programInputSignal?.identifier,
-            ]),
-          ),
+          section.returnValueExpr
+            ? callRuntime("_template_return", template)
+            : template,
         ),
       );
     },

@@ -4,7 +4,7 @@ const $walks$2 = "";
 const $setup$2 = () => {};
 const $input_x = /*@__PURE__*/ _const("input_x", ($scope) => _return($scope, $scope.input_x));
 const $input$1 = ($scope, input) => $input_x($scope, input.x);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", 0, $input$1);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", 0, $input$1));
 
 // tags/list.marko
 const $template$1 = "<!><!><!>";
