@@ -54,7 +54,6 @@ REMOVE: ::text + span
 ```
 INSERT: button + :is(span, b)
 REMOVE: b + ::text("loading...")
-UPDATE: b::text " " => "2"
 ```
 
 # Update

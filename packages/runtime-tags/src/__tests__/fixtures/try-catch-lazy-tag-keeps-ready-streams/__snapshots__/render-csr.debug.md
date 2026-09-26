@@ -43,31 +43,12 @@ REMOVE: ::text + #child
 >
   0
 </button>
-<button
-  id="child"
->
-  0
-</button>
-```
-## Change
-```
-INSERT: #other + #child
-REMOVE: #child + ::text("loading")
-```
-
-# Update
-```html
-<button
-  id="other"
->
-  0
-</button>
 caught
 ```
 ## Change
 ```
 INSERT: #other + ::text("caught")
-REMOVE: ::text + #child
+REMOVE: ::text + ::text("loading")
 UPDATE: ::text " " => "caught"
 ```
 

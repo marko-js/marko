@@ -30,6 +30,4 @@ INSERT: div + ::text("loading...")
 ```
 INSERT: div:nth-of-type(1) + div
 REMOVE: div:nth-of-type(2) + ::text("loading...")
-UPDATE: div:nth-of-type(2)::text@2 "" => "1"
-UPDATE: div:nth-of-type(2)::text@0 "" => "1"
 ```

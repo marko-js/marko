@@ -141,8 +141,8 @@ REMOVE: p:nth-of-type(5)::text@5 + ::text("10")
 ## Change
 ```
 INSERT: p:nth-of-type(1)::text@5 + ::text("3")
-INSERT: p:nth-of-type(5)::text@5 + ::text("15")
-INSERT: p:nth-of-type(4)::text@5 + ::text("12")
-INSERT: p:nth-of-type(3)::text@5 + ::text("9")
 INSERT: p:nth-of-type(2)::text@5 + ::text("6")
+INSERT: p:nth-of-type(3)::text@5 + ::text("9")
+INSERT: p:nth-of-type(4)::text@5 + ::text("12")
+INSERT: p:nth-of-type(5)::text@5 + ::text("15")
 ```

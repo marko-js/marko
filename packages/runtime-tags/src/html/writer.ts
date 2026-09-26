@@ -966,6 +966,8 @@ export function _await<T>(
   chunk.async = true;
   captureContext(chunk);
   boundary.startAsync();
+  // Won't fix: a thenable that calls back synchronously settles before a `<try>`
+  // waits on it; adopting it through `Promise.resolve` would cost another promise.
   promise.then(
     (value) => {
       if (chunk.async) {

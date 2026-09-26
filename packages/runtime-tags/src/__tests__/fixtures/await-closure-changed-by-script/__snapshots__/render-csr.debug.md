@@ -21,8 +21,6 @@ new Promise((r) => setTimeout(r, 50));
 INSERT: button + ::text("loading")
 INSERT: button + :is(p, span)
 REMOVE: span + ::text("loading")
-UPDATE: span::text " " => "5"
-UPDATE: p::text " " => "7"
 ```
 ## Console
 ```
