@@ -1,4 +1,4 @@
-// size: 27018 (min) 10090 (brotli)
+// size: 26980 (min) 10060 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -23,8 +23,6 @@ let branchesEnabled;
 let dynamicHtmlEnabled;
 let rendering;
 let runId = 2;
-let caughtError = /* @__PURE__ */ new WeakSet();
-let placeholderShown = /* @__PURE__ */ new WeakSet();
 let pendingEffects = [];
 let pendingRenders = [];
 let runEffects = (effects) => {
@@ -1087,7 +1085,7 @@ function init(runtimeId = "M") {
 }
 function runResumeEffects(render) {
   try {
-    ((isResuming = 1), runEffects(render.m([]), 1));
+    ((isResuming = 1), runEffects(render.m([])));
   } finally {
     isResuming = 0;
   }
@@ -1759,20 +1757,19 @@ function _await_promise(nodeAccessor, params) {
           ? awaitPromise(scope, Promise.resolve(promise))
           : resolveAwait(scope, scope[nodeAccessor], promise);
       let awaitCounter = tryBranch.O;
-      (placeholderShown.add(pendingEffects),
-        !tryPlaceholder &&
-          !awaitCounter?.i &&
-          (awaitCounter = createAwaitCounter(tryBranch, () => {
-            if (tryBranch === scope[branchAccessor]) {
-              let anchor = scope[nodeAccessor];
-              if (anchor.parentNode) {
-                let detachedParent = scope[branchAccessor].S.parentNode;
-                detachedParent === anchor.parentNode
-                  ? anchor.remove()
-                  : anchor.replaceWith(detachedParent);
-              }
+      (!tryPlaceholder &&
+        !awaitCounter?.i &&
+        (awaitCounter = createAwaitCounter(tryBranch, () => {
+          if (tryBranch === scope[branchAccessor]) {
+            let anchor = scope[nodeAccessor];
+            if (anchor.parentNode) {
+              let detachedParent = scope[branchAccessor].S.parentNode;
+              detachedParent === anchor.parentNode
+                ? anchor.remove()
+                : anchor.replaceWith(detachedParent);
             }
-          })),
+          }
+        })),
         scope[promiseAccessor] ||
           (awaitBranch && (awaitBranch.W ||= []),
           tryPlaceholder
@@ -1796,7 +1793,6 @@ function _await_promise(nodeAccessor, params) {
               if (
                 ((awaitBranch.W = 0),
                 pendingRenders?.forEach(queuePendingRender),
-                placeholderShown.add(pendingEffects),
                 awaitCounter.c(),
                 awaitCounter.m)
               ) {
@@ -1852,7 +1848,6 @@ function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
   return (
     awaitCounter?.i ||
       (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
-    placeholderShown.add(pendingEffects),
     scheduleAwaitFrame(awaitCounter, tryBranch, () => {
       (insertBranchBefore(
         (tryBranch.P = createAndSetupBranch(
@@ -1885,9 +1880,11 @@ function createAwaitCounter(tryBranch, done) {
   });
   return awaitCounter;
 }
-function runPendingEffects(scope) {
-  let effects = scope.J;
-  effects && ((scope.J = []), runEffects(effects, 1));
+function runPendingEffects(tryBranch) {
+  tryBranch.JS?.forEach(
+    (scope) => scope.J.forEach((fn) => runEffects([fn, scope]), (scope.J = null)),
+    (tryBranch.JS = null),
+  );
 }
 function dismissPlaceholder(tryBranch) {
   let placeholderBranch = tryBranch.P;
@@ -1913,11 +1910,10 @@ function renderCatch(scope, error) {
   if (tryWithCatch) {
     let owner = tryWithCatch._,
       placeholderBranch = tryWithCatch.P;
-    (placeholderBranch &&
+    placeholderBranch &&
       (tryWithCatch.O && (tryWithCatch.O.i = 0),
       (owner["A" + tryWithCatch.C] = placeholderBranch),
-      destroyBranch(tryWithCatch)),
-      caughtError.add(pendingEffects));
+      destroyBranch(tryWithCatch));
     let catchContent = tryWithCatch.E();
     (setConditionalRenderer(owner, tryWithCatch.C, catchContent, createAndSetupBranch),
       catchContent.d?.(owner["A" + tryWithCatch.C], [error]));

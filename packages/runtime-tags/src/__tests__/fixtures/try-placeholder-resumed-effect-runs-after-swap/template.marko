@@ -1,0 +1,17 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <@placeholder>loading</@placeholder>
+  <await|a|=resolveAfter("a", 1)>
+    <span/el>${a}</span>
+    <script>
+      console.log("connected " + el().isConnected);
+    </script>
+  </await>
+  <await|b|=resolveAfter("b", 3)>
+    <div>${b}</div>
+  </await>
+</try>
+<await|c|=resolveAfter("c", 2)>
+  <p>${c}</p>
+</await>

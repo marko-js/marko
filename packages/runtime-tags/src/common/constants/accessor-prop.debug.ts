@@ -17,6 +17,7 @@ export const LoopKey = "#LoopKey";
 export const LoopIndex = "#LoopIndex";
 export const ParentBranch = "#ParentBranch";
 export const PendingEffects = "#PendingEffects";
+export const PendingEffectScopes = "#PendingEffectScopes";
 export const PendingRenders = "#PendingRenders";
 export const PendingScopes = "#PendingScopes";
 export const PlaceholderBranch = "#PlaceholderBranch";

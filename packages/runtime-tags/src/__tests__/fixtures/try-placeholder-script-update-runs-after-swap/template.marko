@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/n=0/>
+<let/m=0/>
+<button#load onClick() { m++ }>load</button>
+<button#inc onClick() { n++ }>inc</button>
+<try>
+  <@placeholder>LOADING</@placeholder>
+  <div/el>n ${n}</div>
+  <script>
+    console.log("script n=" + n + " connected=" + el().isConnected);
+  </script>
+  <await|v|=m ? resolveAfter(m) : 0>value ${v}</await>
+</try>

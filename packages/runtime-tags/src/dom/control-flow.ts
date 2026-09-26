@@ -21,11 +21,9 @@ import {
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
-  caughtError,
   runEffects,
   pendingEffects,
   type PendingRender,
-  placeholderShown,
   prepareEffects,
   queueAsyncRender,
   queueEffect,
@@ -116,8 +114,6 @@ export function _await_promise(
 
     let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
 
-    placeholderShown.add(pendingEffects);
-
     if (!tryPlaceholder && !awaitCounter?.i) {
       awaitCounter = createAwaitCounter(tryBranch, () => {
         if (tryBranch === scope[branchAccessor]) {
@@ -183,8 +179,6 @@ export function _await_promise(
               | undefined;
             awaitBranch[AccessorProp.PendingRenders] = 0;
             pendingRenders?.forEach(queuePendingRender);
-
-            placeholderShown.add(pendingEffects); // TODO: check if still needed
 
             awaitCounter!.c();
             if (awaitCounter!.m) {
@@ -268,7 +262,6 @@ export function addAwaitCounter(
       dismissPlaceholder(tryBranch),
     );
   }
-  placeholderShown.add(pendingEffects);
   scheduleAwaitFrame(awaitCounter, tryBranch, () => {
     insertBranchBefore(
       (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
@@ -315,12 +308,17 @@ function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   return awaitCounter;
 }
 
-function runPendingEffects(scope: BranchScope) {
-  const effects = scope[AccessorProp.PendingEffects];
-  if (effects) {
-    scope[AccessorProp.PendingEffects] = [];
-    runEffects(effects, 1);
-  }
+export function runPendingEffects(tryBranch: BranchScope) {
+  // `forEach`'s second argument clears each list and set before its effects run,
+  // so an effect deferred again starts a new one.
+  tryBranch[AccessorProp.PendingEffectScopes]?.forEach(
+    (scope) =>
+      scope[AccessorProp.PendingEffects]!.forEach(
+        (fn) => runEffects([fn, scope]),
+        (scope[AccessorProp.PendingEffects] = null),
+      ),
+    (tryBranch[AccessorProp.PendingEffectScopes] = null),
+  );
 }
 
 function dismissPlaceholder(tryBranch: BranchScope) {
@@ -383,7 +381,6 @@ export function renderCatch(scope: Scope, error: unknown) {
       ] = placeholderBranch;
       destroyBranch(tryWithCatch);
     }
-    caughtError.add(pendingEffects);
     const catchContent = tryWithCatch[AccessorProp.CatchContent]();
     setConditionalRenderer(
       owner,
