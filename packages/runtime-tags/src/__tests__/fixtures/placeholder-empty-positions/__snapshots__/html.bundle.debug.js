@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, 0, 0, 0, 1);
+	}, $scope0_id, "#text/1", 1, 0, 0);
 	_for_of([1], (i) => {
 		const $scope2_id = _scope_id();
 		_html(`${_text_resume($scope2_id, "#text/0", a)} tail`);

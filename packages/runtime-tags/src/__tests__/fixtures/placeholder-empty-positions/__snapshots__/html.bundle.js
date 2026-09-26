@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, 0, 0, 0, 1);
+	}, $scope0_id, "b", 1, 0, 0);
 	_for_of([1], (i) => {
 		const $scope2_id = _scope_id();
 		_html(`${_text_resume($scope2_id, "a", a)} tail`);
