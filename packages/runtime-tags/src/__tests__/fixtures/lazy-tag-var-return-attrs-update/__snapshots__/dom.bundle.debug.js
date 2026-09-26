@@ -37,8 +37,8 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 	$scope.focusChild();
 }));
 const $if_content__setup = ($scope) => {
-	_var($scope, "#childScope/1", $if_content__focusChild);
 	$if_content__n._($scope);
+	_var($scope, "#childScope/1", $if_content__focusChild);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$if_content__setup__script($scope);
 };

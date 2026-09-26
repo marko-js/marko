@@ -5,9 +5,9 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Rec_content__template
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Rec_content__walks);
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Rec_content__tag_input_depth($scope["#childScope/0"], $scope._.input_depth - 1));
 const $if_content__setup = ($scope) => {
-	_var($scope, "#childScope/0", $if_content__child);
 	$if_content__input_depth._($scope);
 	$if_content__s._($scope);
+	_var($scope, "#childScope/0", $if_content__child);
 	$Rec_content__setup._($scope["#childScope/0"], $scope._._);
 };
 const $if_content__s = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Rec_content__input_label($scope["#childScope/0"], $scope._.s));

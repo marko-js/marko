@@ -4,9 +4,9 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&0${_w1}&`)($walks$1, $walks
 const $plain = ($scope, plain) => {};
 function $setup($scope) {
 	_var($scope, "#childScope/0", $plain);
-	_var($scope, "#childScope/2", $labeled);
 	$setup$1($scope["#childScope/0"]);
 	$input_a11yText($scope["#childScope/0"]);
+	_var($scope, "#childScope/2", $labeled);
 	$setup$1($scope["#childScope/2"]);
 	$input_a11yText($scope["#childScope/2"], "Close");
 }

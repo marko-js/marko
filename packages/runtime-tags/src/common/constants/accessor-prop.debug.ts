@@ -22,6 +22,7 @@ export const PendingScopes = "#PendingScopes";
 export const PlaceholderBranch = "#PlaceholderBranch";
 export const PlaceholderContent = "#PlaceholderContent";
 export const Renderer = "#Renderer";
+export const ReturnValue = "#ReturnValue";
 export const StartNode = "#StartNode";
 export const Subscriptions = "#Subscriptions";
 export const TagVariable = "#TagVariable";

@@ -1,4 +1,4 @@
-// size: 26981 (min) 10050 (brotli)
+// size: 27018 (min) 10090 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -46,7 +46,7 @@ let destroyNestedScopes = function destroyNestedScopes(scope) {
 };
 let isScheduled;
 let channel;
-let _return = (scope, value) => scope.T?.(value);
+let _return = (scope, value) => (scope.T ? scope.T(value) : (scope.RV = value));
 let _var_change = (scope, value) => scope.U?.(value);
 let tagIdsByGlobal = /* @__PURE__ */ new WeakMap();
 let currentNode;
@@ -767,7 +767,9 @@ function _child_setup(setup) {
   );
 }
 function _var(scope, childAccessor, signal) {
-  scope[decodeAccessor(childAccessor)].T = (value) => signal(scope, value);
+  let childScope = scope[decodeAccessor(childAccessor)];
+  ((childScope.T = (value) => signal(scope, value)),
+    "RV" in childScope && signal(scope, childScope.RV));
 }
 function _return_change(scope, changeHandler) {
   scope.U = changeHandler || void 0;
