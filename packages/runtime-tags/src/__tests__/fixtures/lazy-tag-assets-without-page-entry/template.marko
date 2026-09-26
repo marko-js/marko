@@ -1,0 +1,6 @@
+server import Partial from "./partial.marko"
+
+// Renders before this page's entry module evaluates.
+server const partialHTML = Partial.render({ $global: { renderId: "partial" } }).toString();
+
+<div>${partialHTML.includes("child.marko.load.mjs")}</div>

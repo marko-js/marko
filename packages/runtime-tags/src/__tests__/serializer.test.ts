@@ -2032,6 +2032,45 @@ describe("serializer", () => {
       assert.deepEqual([...serializer.takeChannelDeps()!], ["a"]);
       assert.deepEqual(aborted, []);
     });
+
+    it("omits a value registered by lazy content outside its ready channel", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      const fn = register("fn", () => {}, { [K_SCOPE_ID]: 1 }, undefined, {
+        readyId: "a",
+      });
+      assert.equal(
+        serializer.stringifyScopes([[2, {}, { fn, x: 1 }]], boundary),
+        `_=>[2,{x:1}]`,
+      );
+      assert.equal(aborted.length, 1);
+      assert.match(
+        String(aborted[0]),
+        /value from lazily loaded content outside of that content/,
+      );
+    });
+
+    it("reaches a value registered by an ancestor ready channel", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      const parent = { readyId: "a" };
+      const fn = register(
+        "fn",
+        () => {},
+        { [K_SCOPE_ID]: 1 },
+        undefined,
+        parent,
+      );
+      assert.equal(
+        serializer.stringifyScopes([[2, {}, { fn }]], boundary, {
+          readyId: "b",
+          parent,
+        }),
+        `_=>[2,{fn:_(1,"fn")}]`,
+      );
+      assert.deepEqual([...serializer.takeChannelDeps()!], ["a"]);
+      assert.deepEqual(aborted, []);
+    });
   });
 
   describe("globals", () => {

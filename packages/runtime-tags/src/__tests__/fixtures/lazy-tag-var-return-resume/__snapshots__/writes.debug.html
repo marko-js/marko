@@ -1,0 +1,45 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<p>n <!>0<!--M_$2 #text/0--></p><!--M_[-->
+<p>n <!>0<!--M_$4 #text/0--></p><!--M_]1 #text/3 4--><button
+  class=inc>inc</button><!--M_$1 #button/5-->
+<div class=count>0<!--M_$1 #text/6-->
+  <!>0<!--M_$1 #text/7-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-var-return-resume/child.marko": [
+      _ => [1, {
+        inc: _(2,
+          "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-var-return-resume/child.marko_0/_return"
+          )
+      }, {
+        n: 0,
+        "#TagVariable": _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-var-return-resume/template.marko_0_$pattern#11/var"
+          )
+      }]
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-var-return-resume/child.marko"
+    ].push(_ => [1, {
+    dynamicInc: _(4,
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-var-return-resume/child.marko_0/_return"
+      )
+  }, 2, {
+    n: 0,
+    "#TagVariable": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-var-return-resume/template.marko_0_$pattern2#14/var"
+      )
+  }]);
+  M._.r = [_ => [1, {
+      "#scopeOffset/2": 3,
+      "#scopeOffset/4": 5,
+      "ConditionalRenderer:#text/3": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-var-return-resume/child.marko",
+      "#childScope/1": _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-var-return-resume/template.marko_0_inc#13_dynamicInc#16 1"
+  ];
+  M._.w()
+</script>

@@ -1,0 +1,6 @@
+import Child from "./child.marko" with { load: "render" }
+
+<Child/{ count, inc }/>
+<${input.show && Child}/{ count: dynamicCount, inc: dynamicInc }/>
+<button.inc onClick() { inc(); dynamicInc() }>inc</button>
+<div.count>${count} ${dynamicCount}</div>

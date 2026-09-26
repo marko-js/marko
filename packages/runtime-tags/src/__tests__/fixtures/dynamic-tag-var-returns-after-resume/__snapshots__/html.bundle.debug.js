@@ -35,11 +35,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		DoubleTag,
-		counter
+		DoubleTag
 	}, "__tests__/template.marko", 0, {
 		count: "6:6",
 		DoubleTag: "8:6",
 		counter: "9:16"
 	});
+	_var_scope($CounterTag_scope, $scope0_id, { counter });
 }, 1);

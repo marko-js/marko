@@ -32,13 +32,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		b,
-		Tag,
-		v,
-		c
+		Tag
 	}, "__tests__/template.marko", 0, {
 		b: "2:6",
 		Tag: "3:6",
 		v: "5:9",
 		c: "6:8"
+	});
+	_var_scope($Tag_scope, $scope0_id, {
+		v,
+		c
 	});
 }, 1);

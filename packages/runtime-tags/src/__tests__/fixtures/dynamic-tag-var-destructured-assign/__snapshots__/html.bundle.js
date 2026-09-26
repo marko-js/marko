@@ -39,7 +39,8 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $inputaAB_scope, "a0");
 	_html(`<button>${_text_resume($scope0_id, "d", value)}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
-	_scope($scope0_id, {
+	_scope($scope0_id, {});
+	_var_scope($inputaAB_scope, $scope0_id, {
 		i: value,
 		j: $valueChange
 	});

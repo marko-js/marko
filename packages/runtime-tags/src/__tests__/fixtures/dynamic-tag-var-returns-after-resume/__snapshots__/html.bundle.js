@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		j: count,
-		l: DoubleTag,
-		n: counter
+		l: DoubleTag
 	});
+	_var_scope($CounterTag_scope, $scope0_id, { n: counter });
 }, 1);

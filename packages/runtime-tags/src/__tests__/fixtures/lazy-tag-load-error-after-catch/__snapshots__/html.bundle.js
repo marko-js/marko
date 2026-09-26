@@ -6,7 +6,7 @@ var child_default = _template("a", (input) => {
 });
 
 // template.marko
-withLoadAssets(child_default, "_a", [{
+withLoadAssets(child_default, flush$1, "_a", [{
 	type: "on-click",
 	selector: "#load"
 }]);

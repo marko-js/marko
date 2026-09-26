@@ -29,11 +29,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		a,
-		Tag,
-		v_n: v?.n
+		Tag
 	}, "__tests__/template.marko", 0, {
 		a: "3:6",
 		Tag: "4:6",
 		v_n: ["v.n", "5:9"]
 	});
+	_var_scope($Tag_scope, $scope0_id, { v_n: v?.n });
 }, 1);

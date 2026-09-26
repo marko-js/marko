@@ -27,7 +27,9 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		f: a,
-		g: Tag,
+		g: Tag
+	});
+	_var_scope($Tag_scope, $scope0_id, {
 		h: v,
 		i: v?.n
 	});

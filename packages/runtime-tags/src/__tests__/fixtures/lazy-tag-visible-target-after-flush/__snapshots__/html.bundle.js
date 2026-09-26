@@ -8,7 +8,7 @@ var child_default = _template("a", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_a", [{
+const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a", [{
 	type: "visible",
 	selector: "#footer"
 }]);

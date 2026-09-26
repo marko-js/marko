@@ -294,9 +294,9 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
       sourcemap: true,
       sourcemapExcludeSources: true,
       entryFileNames: "[name].mjs",
-      // `renderChunk` returning code without a map discards every mapping
-      // rolldown accumulated, leaving bundled modules unattributable.
-      footer: async () => {
+      // A banner (`renderChunk` drops rolldown's mappings) so import-time renders
+      // see the manifest; @marko/vite appends it, and there they link no assets.
+      banner: async () => {
         const { output } = await domBuiltBox.promise!;
         const manifest: {
           [entry: string]: {
@@ -317,7 +317,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
               };
           }
         }
-        return `;var __MARKO_MANIFEST__=${JSON.stringify(manifest)}`;
+        return `var __MARKO_MANIFEST__=${JSON.stringify(manifest)};`;
       },
     },
   });

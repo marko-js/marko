@@ -75,5 +75,6 @@ export {
   _trailers,
   _try,
   _var,
+  _var_scope,
   $global,
 } from "./html/writer";

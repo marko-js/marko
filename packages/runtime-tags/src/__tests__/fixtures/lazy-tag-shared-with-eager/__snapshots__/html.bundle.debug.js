@@ -18,7 +18,7 @@ var lazy_part_default = _template("__tests__/lazy-part.marko", (input) => {
 });
 
 // inert-a.marko
-const $LazyPart_withLoadAssets = withLoadAssets(lazy_part_default, "ready:__tests__/lazy-part.marko", [{
+const $LazyPart_withLoadAssets = withLoadAssets(lazy_part_default, flush, "ready:__tests__/lazy-part.marko", [{
 	type: "visible",
 	selector: "body"
 }]);

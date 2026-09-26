@@ -30,7 +30,9 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		e: b,
-		f: Tag,
+		f: Tag
+	});
+	_var_scope($Tag_scope, $scope0_id, {
 		h: v,
 		j: c
 	});

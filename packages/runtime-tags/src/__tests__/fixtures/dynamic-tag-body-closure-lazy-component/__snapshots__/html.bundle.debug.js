@@ -41,7 +41,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 });
 
 // template.marko
-const $Card_withLoadAssets = withLoadAssets(card_default, "ready:__tests__/tags/card.marko", [{ type: "idle" }]);
+const $Card_withLoadAssets = withLoadAssets(card_default, flush, "ready:__tests__/tags/card.marko", [{ type: "idle" }]);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

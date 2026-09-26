@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 });
 
 // tags/parent-a.marko
-const $Child_withLoadAssets$1 = withLoadAssets(child_default, "_b");
+const $Child_withLoadAssets$1 = withLoadAssets(child_default, flush, "_b");
 var parent_a_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
@@ -19,7 +19,7 @@ var parent_a_default = _template("c", (input) => {
 });
 
 // tags/parent-b.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_b");
+const $Child_withLoadAssets = withLoadAssets(child_default, flush, "_b");
 var parent_b_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();

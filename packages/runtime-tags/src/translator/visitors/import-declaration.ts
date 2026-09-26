@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   getFile,
   getProgram,
+  importNamed,
   loadFileForImport,
   resolveRelativePath,
   resolveTagImport,
@@ -178,24 +179,29 @@ export default {
               importDecl.remove();
             } else {
               importRuntimeFeature("catch");
+              const loadTemplate = callRuntime(
+                "_load_template",
+                t.stringLiteral(loadFile.metadata.marko.id),
+                t.arrowFunctionExpression(
+                  [],
+                  dynamicImport(
+                    resolveRelativePath(file, loadFile.opts.filename),
+                    t.arrowFunctionExpression(
+                      [t.identifier("mod")],
+                      toMemberExpression(t.identifier("mod"), "default"),
+                    ),
+                  ),
+                ),
+              );
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(
                     local,
-                    callRuntime(
-                      "_load_template",
-                      t.stringLiteral(loadFile.metadata.marko.id),
-                      t.arrowFunctionExpression(
-                        [],
-                        dynamicImport(
-                          resolveRelativePath(file, loadFile.opts.filename),
-                          t.arrowFunctionExpression(
-                            [t.identifier("mod")],
-                            toMemberExpression(t.identifier("mod"), "default"),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Marked before it loads, since a dynamic tag reads the mark
+                    // when it creates the branch.
+                    loadFile.ast.program.extra!.section!.returnValueExpr
+                      ? callRuntime("_template_return", loadTemplate)
+                      : loadTemplate,
                   ),
                 ]),
               );
@@ -238,12 +244,12 @@ function getOrCreateHtmlLoadWrapped(
   filename: string,
   triggers: LoadTrigger[] | undefined,
 ) {
-  const markoOpts = getMarkoOpts();
+  const linkAssets = getMarkoOpts().linkAssets!;
   const loadWrapped = getHtmlLoadWrapped();
   const existing = loadWrapped.get(readyId);
   if (existing) return existing;
 
-  markoOpts.linkAssets?.onAsset("load", filename, readyId);
+  linkAssets.onAsset("load", filename, readyId);
 
   const wrappedName = generateUid(
     `${(originalIdentifier as t.Identifier).name ?? "tag"}_withLoadAssets`,
@@ -258,6 +264,7 @@ function getOrCreateHtmlLoadWrapped(
             callRuntime(
               "withLoadAssets",
               originalIdentifier,
+              importNamed(getFile(), linkAssets.runtime, "flush"),
               t.stringLiteral(readyId),
               triggers ? t.valueToNode(triggers) : undefined,
             ),

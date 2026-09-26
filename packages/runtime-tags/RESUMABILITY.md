@@ -173,7 +173,10 @@ Lazy state cannot enter the main stream before its registered code exists.
 `writeWaitReady()` renders into `render.b[readyId]`; the serializer records
 ancestor-channel dependencies. Dependency arrays block a channel until named
 modules are ready and their earlier data is drained. `ready()` processes to a
-fixed point because one channel can unblock another.
+fixed point because one channel can unblock another. A lazy tag's variable is
+returned during SSR; its link and the parent's values holding it are written
+into the tag's ready stream (`_var`, `_var_scope`), since they name code its
+module registers.
 
 Async reorders may execute after later main-stream scripts. The server therefore
 reserves each ready-stream position with a numeric gate; the reorder script
