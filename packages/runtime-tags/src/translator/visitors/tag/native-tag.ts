@@ -12,6 +12,7 @@ import {
 
 import { assertExclusiveAttrs } from "../../../common/errors";
 import {
+  getAttrNamespace,
   getEventHandlerName,
   getWrongAttrSuggestion,
   isEventHandler,
@@ -1043,16 +1044,18 @@ export default {
                   ),
                 );
               } else {
+                const namespace = getAttrNamespace(name);
                 addStatement(
                   "render",
                   tagSection,
                   valueReferences,
                   t.expressionStatement(
                     callRuntime(
-                      "_attr",
+                      namespace ? "_attr_ns" : "_attr",
                       createScopeReadExpression(nodeBinding!),
                       t.stringLiteral(name),
                       value,
+                      namespace && t.stringLiteral(namespace),
                     ),
                   ),
                   true,

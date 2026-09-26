@@ -6,6 +6,7 @@ import {
 } from "../common/errors";
 import {
   escapeStyleValue,
+  getAttrNamespace,
   getEventHandlerName,
   isEventHandler,
   isNotVoid,
@@ -58,6 +59,28 @@ function setAttribute(
       element.removeAttribute(name);
     } else {
       element.setAttribute(name, value);
+    }
+  }
+}
+
+export function _attr_ns(
+  element: Element,
+  name: string,
+  value: unknown,
+  namespace: string,
+) {
+  if (MARKO_DEBUG) {
+    assertValidAttrValue(name, value);
+  }
+  const normalizedValue = normalizeAttrValue(value);
+  if (element.getAttribute(name) != normalizedValue) {
+    if (normalizedValue === undefined) {
+      element.removeAttribute(name);
+    } else if (element.namespaceURI === "http://www.w3.org/1999/xhtml") {
+      // Like the HTML parser, namespace these only within SVG and MathML.
+      element.setAttribute(name, normalizedValue);
+    } else {
+      element.setAttributeNS(namespace, name, normalizedValue);
     }
   }
 }
@@ -246,6 +269,7 @@ export function _attrs_partial_content(
   _attr_content(scope, nodeAccessor, nextAttrs?.content);
 }
 
+const warnedNamespacedAttrs = MARKO_DEBUG ? new Set<string>() : undefined;
 function attrsInternal(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -281,6 +305,19 @@ function attrsInternal(
       default: {
         if (MARKO_DEBUG) {
           assertValidAttrName(name);
+          const namespace = getAttrNamespace(name);
+          if (
+            namespace &&
+            // Namespace declarations (`xmlns`) never affect rendering.
+            namespace !== "http://www.w3.org/2000/xmlns/" &&
+            el.namespaceURI !== "http://www.w3.org/1999/xhtml" &&
+            !warnedNamespacedAttrs!.has(name)
+          ) {
+            warnedNamespacedAttrs!.add(name);
+            console.warn(
+              `\`${name}\` loses its namespace when set by a spread or dynamic tag, so browsers may ignore it; write it on a native tag, after any spread.`,
+            );
+          }
         }
 
         if (isEventHandler(name)) {

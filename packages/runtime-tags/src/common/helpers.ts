@@ -47,6 +47,26 @@ export function getWrongAttrSuggestion(name: string): string | undefined {
   }
 }
 
+// The attributes the HTML parser puts in a namespace (within SVG and MathML).
+export function getAttrNamespace(name: string) {
+  switch (name) {
+    case "xlink:actuate":
+    case "xlink:arcrole":
+    case "xlink:href":
+    case "xlink:role":
+    case "xlink:show":
+    case "xlink:title":
+    case "xlink:type":
+      return "http://www.w3.org/1999/xlink";
+    case "xml:lang":
+    case "xml:space":
+      return "http://www.w3.org/XML/1998/namespace";
+    case "xmlns":
+    case "xmlns:xlink":
+      return "http://www.w3.org/2000/xmlns/";
+  }
+}
+
 export function _call<T>(fn: (v: T) => unknown, v: T): T {
   fn(v);
   return v;

@@ -7,7 +7,11 @@ import {
   type TagDefinition,
 } from "@marko/compiler/babel-utils";
 
-import { htmlAttrNameReg, userAttrNameReg } from "../../../common/helpers";
+import {
+  getAttrNamespace,
+  htmlAttrNameReg,
+  userAttrNameReg,
+} from "../../../common/helpers";
 import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
@@ -165,12 +169,20 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   for (let i = 0; i < attributes.length; i++) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
+      if (attr.modifier != null) {
+        const name = attr.name + ":" + attr.modifier;
+        // A bound attribute's modifier is its refining function, unless it
+        // completes a native tag's namespaced attribute name (`xlink:href:=x`).
+        if (!attr.bound || (nativeTagDef && getAttrNamespace(name))) {
+          attr.name = name;
+          attr.modifier = null;
+        }
+      }
+
       if (attr.bound) {
         // Inject change handler functions from the binding shorthand.
         attributes.splice(++i, 0, getChangeHandler(tag, attr));
         attr.bound = false;
-      } else if (attr.modifier != null) {
-        attr.name += ":" + attr.modifier;
       }
 
       if (attrNameReg.test(attr.name)) {

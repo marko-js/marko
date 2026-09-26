@@ -292,11 +292,12 @@ function formatMutationRecord(record: MutationRecord) {
 
   switch (record.type) {
     case "attributes": {
-      const { attributeName } = record;
-      const newValue = (target as HTMLElement).getAttribute(
-        attributeName as string,
+      const { attributeName, attributeNamespace } = record;
+      const newValue = (target as Element).getAttributeNS(
+        attributeNamespace,
+        attributeName!,
       );
-      return `UPDATE: ${nodeInfo.getNodePath(target)}[${attributeName}] ${JSON.stringify(
+      return `UPDATE: ${nodeInfo.getNodePath(target)}[${getAttrName(record)}] ${JSON.stringify(
         oldValue,
       )} => ${JSON.stringify(newValue)}`;
     }
@@ -327,6 +328,18 @@ function formatMutationRecord(record: MutationRecord) {
 
       return details.join("\n");
     }
+  }
+}
+
+// A mutation record names an attribute by its local name, without its prefix.
+function getAttrName({ attributeName, attributeNamespace }: MutationRecord) {
+  switch (attributeNamespace) {
+    case "http://www.w3.org/1999/xlink":
+      return `xlink:${attributeName}`;
+    case "http://www.w3.org/XML/1998/namespace":
+      return `xml:${attributeName}`;
+    default:
+      return attributeName;
   }
 }
 
