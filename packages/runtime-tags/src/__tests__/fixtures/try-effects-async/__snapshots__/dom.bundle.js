@@ -12,7 +12,7 @@ const $try_content__clickCount__script = _script("a3", ($scope) => $scope._.b.te
 const $try_content__clickCount = /*@__PURE__*/ _closure_get(4, ($scope) => {
 	$try_content__await_promise($scope, resolveAfter($scope._.d));
 	$try_content__clickCount__script($scope);
-}, 0, "a4", 3);
+}, 0, "a4");
 const $clickCount = /*@__PURE__*/ _let(3, /* @__PURE__ */ _closure($try_content__clickCount));
 const $setup__script = _script("a5", ($scope) => _on($scope.a, "click", function() {
 	$clickCount($scope, +$scope.d + 1);

@@ -12,7 +12,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<div><!></div>", "D%", 0, $for_co
 const $input_row = ($scope, input_row) => $for($scope, [input_row]);
 
 // template.marko
-const $cell_content__a_id = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c), 0, "a0", 2);
+const $cell_content__a_id = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c), 0, "a0");
 const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<!>-<!>;", "%c%", $cell_content__a_id), { 2($scope) {
 	_text($scope.b, $scope.c);
 } });

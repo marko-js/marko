@@ -1,6 +1,6 @@
 // tags/menu.marko
 const $if_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $if_content2__input_content = /*@__PURE__*/ _closure_get(7, ($scope) => $if_content2__dynamicTag($scope, $scope._._.f), ($scope) => $scope._._, "b0", 5);
+const $if_content2__input_content = /*@__PURE__*/ _closure_get(7, ($scope) => $if_content2__dynamicTag($scope, $scope._._.f), ($scope) => $scope._._, "b0");
 const $if_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content2__input_content);
 const $if_content__input_content = /*@__PURE__*/ _if_closure(2, 0, ($scope) => $if_content__if($scope, $scope._.f ? 0 : 1));
 const $if = /*@__PURE__*/ _if(2, "<!><!><!>", "b%", $if_content__input_content);

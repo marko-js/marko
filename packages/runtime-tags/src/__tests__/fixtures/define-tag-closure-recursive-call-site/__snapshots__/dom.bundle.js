@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 };
 const $Tree_content__if = /*@__PURE__*/ _if(2, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content__walks), $if_content__setup);
 const $Tree_content__depth__OR__level = /*@__PURE__*/ _or(6, ($scope) => $Tree_content__if($scope, $scope.f < $scope._.c ? 0 : 1));
-const $Tree_content__depth = /*@__PURE__*/ _closure_get(4, $Tree_content__depth__OR__level, 0, "a1", 2);
+const $Tree_content__depth = /*@__PURE__*/ _closure_get(4, $Tree_content__depth__OR__level, 0, "a1");
 const $Tree_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
 	$Tree_content__depth($scope);
 	$Tree_content__label($scope);

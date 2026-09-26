@@ -6,7 +6,7 @@ const $content = /*@__PURE__*/ _const(3, $input_content__OR__input_value);
 const $value = /*@__PURE__*/ _const(4, $input_content__OR__input_value);
 
 // template.marko
-const $child_content2__outer = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c), 0, "a0", 2);
+const $child_content2__outer = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c), 0, "a0");
 const $child_content2__setup = $child_content2__outer;
 const $child_content2__inner = ($scope, inner) => _text($scope.b, inner);
 const $child_content2__$params = ($scope, $params3) => $child_content2__inner($scope, $params3[0]);

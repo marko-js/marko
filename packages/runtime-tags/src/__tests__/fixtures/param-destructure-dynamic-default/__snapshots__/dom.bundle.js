@@ -6,7 +6,7 @@ const $ChildB_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $Chil
 const $ChildB_content__count = /*@__PURE__*/ _closure_get(8, ($scope) => {
 	$ChildB_content__count__OR__$foo($scope);
 	$ChildB_content__count__OR__$bar($scope);
-}, 0, "a3", 7);
+}, 0, "a3");
 const $ChildB_content__$bar = /*@__PURE__*/ _const(8, $ChildB_content__count__OR__$bar);
 const $ChildA_content__$pattern = ($scope, $pattern) => $ChildA_content__$bar($scope, $pattern.bar);
 const $ChildA_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildA_content__$pattern($scope, void 0 !== $scope.g ? $scope.g : { bar: $scope._.h + 2 }));
@@ -15,7 +15,7 @@ const $ChildA_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $Chil
 const $ChildA_content__count = /*@__PURE__*/ _closure_get(8, ($scope) => {
 	$ChildA_content__count__OR__$foo($scope);
 	$ChildA_content__count__OR__$bar($scope);
-}, 0, "a1", 7);
+}, 0, "a1");
 const $ChildA_content__$bar = /*@__PURE__*/ _const(8, $ChildA_content__count__OR__$bar);
 const $count = /*@__PURE__*/ _let(7, /* @__PURE__ */ _closure($ChildA_content__count, $ChildB_content__count));
 const $setup__script = _script("a4", ($scope) => _on($scope.g, "click", function() {

@@ -12,19 +12,19 @@ const $for_content__setup = ($scope) => {
 	$for_content__i._($scope);
 	_text($scope.b, $scope.M);
 };
-const $showbi_content__i = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a1", 3);
+const $showbi_content__i = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a1");
 const $showbi_content = /*@__PURE__*/ _content("a0", "tag <!>", "b%", $showbi_content__i);
 const $if_content__i = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.d));
 const $if_content__setup = $if_content__i;
 const $item_content2__if = /*@__PURE__*/ _if(0, "<strong> </strong>", "D ", $if_content2__setup);
-const $item_content2__show = /*@__PURE__*/ _closure_get(8, ($scope) => $item_content2__if($scope, $scope._.g ? 0 : 1), 0, "a4", 6);
+const $item_content2__show = /*@__PURE__*/ _closure_get(8, ($scope) => $item_content2__if($scope, $scope._.g ? 0 : 1), 0, "a4");
 const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a5", "<!><!><!>", "b%", $item_content2__show), { 1: $if_content2__item_text });
 const $item_content__if = /*@__PURE__*/ _if(0, "<em>if <!></em>", "Db%", $if_content__setup);
 const $item_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(1, $showbi_content);
 const $item_content__show = /*@__PURE__*/ _closure_get(8, ($scope) => {
 	$item_content__if($scope, $scope._.g ? 0 : 1);
 	$item_content__dynamicTag($scope, $scope._.g ? "b" : "i");
-}, 0, "a2", 6);
+}, 0, "a2");
 const $item_content__for = /*@__PURE__*/ _for_until_unkeyed(2, "<span><!>.<!></span>", "D%c%", $for_content__setup);
 const $item_content__setup = ($scope) => {
 	$item_content__show($scope);

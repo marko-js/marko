@@ -409,7 +409,6 @@ export function getSignal(
           return closureSignalBuilder(closure, render);
         }
 
-        const changeable = isChangeableDynamicClosure(section, closure);
         return callRuntime(
           "_closure_get",
           // Optimized builds pass the reserved closure accessor id.
@@ -426,15 +425,10 @@ export function getSignal(
           // Match the HTML registration, which is gated on this subscriber
           // section (writeHTMLResumeStatements); keying on any sibling closure
           // section would ship a subscribe id that nothing looks up.
-          changeable
+          isChangeableDynamicClosure(section, closure)
             ? t.stringLiteral(
                 getResumeRegisterId(section, closure, "subscribe"),
               )
-            : undefined,
-          // The owner's value accessor a resumed subscriber tests; debug builds
-          // reuse the first.
-          changeable && isOptimize()
-            ? getScopeAccessorLiteral(closure, true)
             : undefined,
         );
       };

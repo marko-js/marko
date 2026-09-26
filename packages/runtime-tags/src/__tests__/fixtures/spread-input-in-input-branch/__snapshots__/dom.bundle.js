@@ -19,7 +19,7 @@ const $input = /*@__PURE__*/ _const(2, ($scope) => {
 });
 
 // template.marko
-const $mybtn_content__count = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "a0", 4);
+const $mybtn_content__count = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "a0");
 const $mybtn_content = /*@__PURE__*/ _content("a1", "Label <!>", "b%", $mybtn_content__count);
 const $href = /*@__PURE__*/ _let(3, ($scope) => $input($scope.c, {
 	href: $scope.d,

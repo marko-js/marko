@@ -8,5 +8,5 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $Card_content__input_depth = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a0", 3);
+const $Card_content__input_depth = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a0");
 const $Card_content = _content("a1", "depth <!>", "b%", $Card_content__input_depth);

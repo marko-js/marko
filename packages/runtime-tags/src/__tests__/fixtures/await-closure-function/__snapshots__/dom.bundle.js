@@ -4,5 +4,5 @@ const $await_content__value__script = _script("a0", ($scope) => !$scope._._.b &&
 const $await_content__value = /*@__PURE__*/ _closure_get(2, ($scope) => {
 	_text($scope.a, $scope._._.b);
 	$await_content__value__script($scope);
-}, ($scope) => $scope._._, "a1", 1);
+}, ($scope) => $scope._._, "a1");
 const $value = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($await_content__value));

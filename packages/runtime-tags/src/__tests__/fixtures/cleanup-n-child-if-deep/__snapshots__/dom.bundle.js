@@ -26,7 +26,7 @@ const $if_content3__setup = ($scope) => {
 	$name($scope.a, "Inner");
 };
 const $if_content2__if = /*@__PURE__*/ _if(1, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $if_content3__setup);
-const $if_content2__showInner = /*@__PURE__*/ _closure_get(10, ($scope) => $if_content2__if($scope, $scope._._.h ? 0 : 1), ($scope) => $scope._._, "a1", 7);
+const $if_content2__showInner = /*@__PURE__*/ _closure_get(10, ($scope) => $if_content2__if($scope, $scope._._.h ? 0 : 1), ($scope) => $scope._._, "a1");
 const $if_content2__setup = ($scope) => {
 	$if_content2__showInner($scope);
 	$if_content2__write($scope);

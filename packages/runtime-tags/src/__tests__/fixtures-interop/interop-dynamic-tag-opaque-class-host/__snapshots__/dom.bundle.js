@@ -36,7 +36,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $inputuseClassClassLayoutsection_content__count = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.b, $scope._.f), 0, "a2", 5);
+const $inputuseClassClassLayoutsection_content__count = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.b, $scope._.f), 0, "a2");
 const $inputuseClassClassLayoutsection_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._, +$scope._.f + 1);
 }));

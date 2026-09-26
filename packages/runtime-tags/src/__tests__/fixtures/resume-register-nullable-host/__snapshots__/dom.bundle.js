@@ -7,7 +7,7 @@ const $input = ($scope, input) => $input_content($scope, input.content);
 var card_default = /*@__PURE__*/ _template("b", $template, "D%l", 0, $input);
 
 // template.marko
-const $showCardnull_content__count = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.b, $scope._.d), 0, "a2", 3);
+const $showCardnull_content__count = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.b, $scope._.d), 0, "a2");
 const $showCardnull_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._, +$scope._.d + 1);
 }));

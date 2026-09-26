@@ -6,5 +6,5 @@ const $Box_content2__open = /*@__PURE__*/ _let(5, ($scope) => $Box_content2__if(
 const $Box_content2__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$Box_content2__open($scope, !$scope.f);
 }));
-const $Box_content__input_label = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a2", 3);
+const $Box_content__input_label = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a2");
 const $Box_content = _content("a3", "label: <!>", "b%", $Box_content__input_label);

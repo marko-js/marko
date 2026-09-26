@@ -17,7 +17,7 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
 const $item_content2 = /*@__PURE__*/ _content("a3", "Two");
-const $item_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b), 0, "a1", 1);
+const $item_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b), 0, "a1");
 const $item_content = /*@__PURE__*/ _content("a2", "One <!>", "b%", $item_content__count);
 const $count__closure = /*@__PURE__*/ _closure($item_content__count);
 const $count = /*@__PURE__*/ _let(1, ($scope) => {

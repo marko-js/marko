@@ -1,5 +1,5 @@
 // template.marko
-const $if_content2__input_name = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._._.e || "Fallback"), ($scope) => $scope._._, "a0", 4);
+const $if_content2__input_name = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._._.e || "Fallback"), ($scope) => $scope._._, "a0");
 const $if_content__if = /*@__PURE__*/ _if(0, "<div> </div>", "D ", $if_content2__input_name);
 const $if_content__setup = ($scope) => $if_content__if($scope, 0);
 const $Child_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__setup);
