@@ -373,13 +373,23 @@ export function _var(
   childAccessor: EncodedAccessor,
   signal: Signal<unknown>,
 ) {
-  scope[MARKO_DEBUG ? childAccessor : decodeAccessor(childAccessor as number)][
-    AccessorProp.TagVariable
-  ] = (value: unknown) => signal(scope, value);
+  const childScope =
+    scope[
+      MARKO_DEBUG ? childAccessor : decodeAccessor(childAccessor as number)
+    ];
+  childScope[AccessorProp.TagVariable] = (value: unknown) =>
+    signal(scope, value);
+  // A section's first params (its setup is queued) or an earlier tag's setup
+  // can make the child return before this binds.
+  if (AccessorProp.ReturnValue in childScope) {
+    signal(scope, childScope[AccessorProp.ReturnValue]);
+  }
 }
 
 export const _return = (scope: Scope, value: unknown) =>
-  scope[AccessorProp.TagVariable]?.(value);
+  scope[AccessorProp.TagVariable]
+    ? scope[AccessorProp.TagVariable](value)
+    : (scope[AccessorProp.ReturnValue] = value);
 
 export function _return_change(
   scope: Scope,

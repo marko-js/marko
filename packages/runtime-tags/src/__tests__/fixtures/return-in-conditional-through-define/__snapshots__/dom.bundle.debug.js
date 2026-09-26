@@ -12,8 +12,8 @@ const $walks = " b%c";
 const $if_content__value = ($scope, value) => $Wrapper_content__input_value($scope["#childScope/2"], value);
 const $if_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $if_content__value);
-	_var($scope, "#childScope/2", $if_content__wrapped);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/2", $if_content__wrapped);
 };
 const $if_content__wrapped = _var_resume("__tests__/template.marko_2_wrapped#6/var", ($scope, wrapped) => _text($scope["#text/4"], wrapped));
 const $Wrapper_content__input_value = /*@__PURE__*/ _const("input_value", ($scope) => _return($scope, $scope.input_value));

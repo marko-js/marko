@@ -6,8 +6,8 @@ const $if_content__setup__script = _script("b1", ($scope) => _on($scope.d, "clic
 	$scope.e();
 }));
 const $if_content__setup = ($scope) => {
-	_var($scope, 1, $if_content__focusChild);
 	$if_content__n._($scope);
+	_var($scope, 1, $if_content__focusChild);
 	$load_Child_setup($scope, $scope.b, $scope.a);
 	$if_content__setup__script($scope);
 };

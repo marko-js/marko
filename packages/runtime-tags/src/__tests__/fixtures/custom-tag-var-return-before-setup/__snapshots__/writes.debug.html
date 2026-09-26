@@ -1,0 +1,69 @@
+<button></button><!--M_$1 #button/0--><!--M_[-->
+<p>a<!--M_$2 #text/2--></p>
+<p class=row>a<!--M_$5 #text/2--></p><!--M_[2-->
+<p>b<!--M_$8 #text/2--></p>
+<p class=row>b<!--M_$11 #text/2--></p><!--M_]1 #text/1 8-->
+<p class=define>2<!--M_$14 #text/2--></p>
+<p class=wrap>w</p>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    list: ["a", "b"],
+    "#childScope/2": _(14)
+  }, {
+    "#scopeOffset/1": 4,
+    "#childScope/0": _(3),
+    "#childScope/3": _(5)
+  }, {
+    "#TagVariable": _(2,
+      "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-return-before-setup/template.marko_1_v#6/var"
+      )
+  }, 1, {
+    "#scopeOffset/1": 7,
+    "#childScope/0": _(6)
+  }, {
+    "#TagVariable": _(5,
+      "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-return-before-setup/tags/row.marko_0_v#6/var"
+      )
+  }, 1, {
+    "#scopeOffset/1": 10,
+    "#childScope/0": _(9),
+    "#childScope/3": _(11)
+  }, {
+    "#TagVariable": _(8,
+      "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-return-before-setup/template.marko_1_v#6/var"
+      )
+  }, 1, {
+    "#scopeOffset/1": 13,
+    "#childScope/0": _(12)
+  }, {
+    "#TagVariable": _(11,
+      "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-return-before-setup/tags/row.marko_0_v#6/var"
+      )
+  }, 1, {
+    "#scopeOffset/1": 16,
+    "#childScope/0": _(15)
+  }, {
+    "#TagVariable": _(14,
+      "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-return-before-setup/template.marko_2_v#6/var"
+      )
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<p class=await>a</p><!--M_[--><!--M_!^b-->
+
+<!-- FLUSH -->
+
+<!--M_!b--><!--M_]1 #text/5 21-->
+<t hidden M_=b>
+  <p class=catch>e</p>
+</t>
+<script>
+  REORDER_RUNTIME(M._);
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-return-before-setup/template.marko_0 1"
+    );
+  M._.w()
+</script>
