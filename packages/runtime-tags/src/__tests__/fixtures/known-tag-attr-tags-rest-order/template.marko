@@ -1,6 +1,13 @@
 <let/n = 1/>
 <button onClick() { n++ }>inc ${n}</button>
-<child first=n>
+<child first=n s=n>
+  <@row x=1/>
+  <if=n>
+    <@cond z=2/>
+  </if>
+  <@other y=2/>
+</child>
+<child first=n ...input s=n>
   <@row x=1/>
   <@other y=2/>
 </child>

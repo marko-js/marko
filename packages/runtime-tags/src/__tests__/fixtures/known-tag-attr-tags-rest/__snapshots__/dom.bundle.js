@@ -22,9 +22,9 @@ const $cond = /*@__PURE__*/ _let(2, ($scope) => {
 	if ($scope.c) $cond2 = attrTag({ a: 1 });
 	else $cond2 = attrTag({ a: 2 });
 	$rest($scope.b, {
+		cond: $cond2,
 		row: attrTags(attrTag({ x: 1 }), { x: 2 }),
-		other: attrTag({ y: 1 }),
-		cond: $cond2
+		other: attrTag({ y: 1 })
 	});
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
