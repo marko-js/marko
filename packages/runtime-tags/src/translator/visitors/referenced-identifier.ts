@@ -117,8 +117,9 @@ export default {
           );
         } else {
           const exprRoot = identifier.node.extra!.exprRoot!;
+          const canonicalExtra = getCanonicalExtra(exprRoot);
           // A dropped expression is never emitted, so it needs no signal or reset.
-          if (getCanonicalExtra(exprRoot).pruned) break;
+          if (canonicalExtra.pruned) break;
 
           const section = getSection(identifier);
           const exprId = exprRoot.abortId!;
@@ -129,7 +130,7 @@ export default {
             addStatement(
               "render",
               section,
-              exprRoot.referencedBindings,
+              canonicalExtra.referencedBindings,
               t.expressionStatement(
                 t.callExpression(importRuntime("$signalReset"), [
                   scopeIdentifier,
@@ -172,7 +173,8 @@ function getSignalGlobalKey(identifier: t.NodePath<t.Identifier>) {
 
   const { name } = parent.property;
   if (name === "runtimeId" || name === "renderId") return;
-  return getExprRoot(identifier).node.extra?.referencedBindings
+  return getCanonicalExtra(getExprRoot(identifier).node.extra!)
+    .referencedBindings
     ? name
     : undefined;
 }
