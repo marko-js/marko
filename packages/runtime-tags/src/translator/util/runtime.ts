@@ -21,12 +21,8 @@ import { toMemberExpression } from "./to-property-name";
 export type DOMRuntimeHelpers = keyof typeof import("../../dom");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 
-// Marked `@__PURE__` (see callRuntime) so a bundler may drop a call whose
-// result is unused, despite call-time side effects: `_resume` registration
-// (`_template`, `_dynamic_tag`). This is sound because registration only
-// matters when the value is referenced by a serialized register id, which
-// keeps it in the module graph.
-//
+// Pure despite registering into `_resumed` (`_template`, `_closure_get`): that
+// matters only for a value a serialized register id keeps in the module graph.
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_await_content",

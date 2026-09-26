@@ -12,19 +12,8 @@ import { createScope, skipScope } from "./scope";
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 let currentNode: Node;
 
-// Laws of the walks string:
-//  - Always prefer Get to Before to After, or Replace
-//    - Get must always be used to get a static node from cloneable template if possible
-//    - Replace must only be used to insert between two static text nodes
-//    - After must only be used to insert a last child or immediately following another action (if it makes the walks string smaller)
-//  - Adjacent actions must always be in source order (Before* Get* After* || Before* Replace)
-//    - When an element is both walked into and needs to insert After, you must walk in first (Next) and then walk Out before After
-//  - Unless the inserted node is Text, After & Replace must be followed by Out/Over to skip over unknown children
-//  - Out must always be followed by After or Over
-//    - Before must be done before walking into the node
-//    - Next would walk back in the node we just walked Out of
-//  - A component must assume the walker is on its first node, and include instructions for walking to its assumed nextSibling
-
+// Codes claim nodes in document order: Get a template node, Replace a `<!>`
+// marker. A child's codes (BeginChild to EndChild) walk past its own nodes.
 export function walk(startNode: Node, walkCodes: string, branch: BranchScope) {
   currentNode = startNode;
   walkInternal(0, walkCodes, branch);
