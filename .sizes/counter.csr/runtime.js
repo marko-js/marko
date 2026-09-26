@@ -1,73 +1,71 @@
 // size: 3851 (min) 1725 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
-let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  rendering,
-  runId = 2,
-  pendingEffects = [],
-  pendingRenders = [],
-  runEffects = (effects) => {
-    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
-  },
-  runRender = (render) => {
-    render.c(render.b, render.d);
-  },
-  catchEnabled,
-  delegate = (type, handler) =>
-    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
-  parsers = {},
-  nextScopeId = 1e6,
-  destroyNestedScopes = function destroyNestedScopes(scope) {
-    ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
-  },
-  isScheduled,
-  channel,
-  _var_change = (scope, value) => scope.U?.(value),
-  currentNode,
-  walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
-    let value,
-      currentMultiplier,
-      storedMultiplier = 0,
-      currentScopeIndex = 0;
-    for (; currentWalkIndex < walkCodes.length;)
-      if (
-        ((value = walkCodes.charCodeAt(currentWalkIndex++)),
-        (currentMultiplier = storedMultiplier),
-        (storedMultiplier = 0),
-        value === 32)
-      )
-        scope[decodeAccessor(currentScopeIndex++)] = currentNode;
-      else if (value === 37 || value === 49)
-        (currentNode.replaceWith(
-          (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
-        ),
-          value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-      else if (value === 38) return currentWalkIndex;
-      else if (value === 47 || value === 48)
-        ((currentWalkIndex = walkInternal(
-          currentWalkIndex,
-          walkCodes,
-          (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
-        )),
-          value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-      else if (value < 92)
-        for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
-      else if (value < 107)
-        for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
-      else if (value < 117) {
-        for (value = 10 * currentMultiplier + value - 107; value--;)
-          currentNode = currentNode.parentNode || currentNode;
-        walkNextSibling();
-      } else storedMultiplier = currentMultiplier * 10 + value - 117;
-  },
-  walkNextNode = () => {
-    if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
-    for (; !currentNode.nextSibling && currentNode.parentNode;)
-      currentNode = currentNode.parentNode;
-    walkNextSibling();
-  },
-  walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode),
-  _resumed = {},
-  cloneCache = {};
+let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
+let rendering;
+let runId = 2;
+let pendingEffects = [];
+let pendingRenders = [];
+let runEffects = (effects) => {
+  for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
+};
+let runRender = (render) => {
+  render.c(render.b, render.d);
+};
+let catchEnabled;
+let delegate = (type, handler) =>
+  (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1));
+let parsers = {};
+let nextScopeId = 1e6;
+let destroyNestedScopes = function destroyNestedScopes(scope) {
+  ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
+};
+let isScheduled;
+let channel;
+let _var_change = (scope, value) => scope.U?.(value);
+let currentNode;
+let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
+  let value,
+    currentMultiplier,
+    storedMultiplier = 0,
+    currentScopeIndex = 0;
+  for (; currentWalkIndex < walkCodes.length;)
+    if (
+      ((value = walkCodes.charCodeAt(currentWalkIndex++)),
+      (currentMultiplier = storedMultiplier),
+      (storedMultiplier = 0),
+      value === 32)
+    )
+      scope[decodeAccessor(currentScopeIndex++)] = currentNode;
+    else if (value === 37 || value === 49)
+      (currentNode.replaceWith(
+        (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
+      ),
+        value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+    else if (value === 38) return currentWalkIndex;
+    else if (value === 47 || value === 48)
+      ((currentWalkIndex = walkInternal(
+        currentWalkIndex,
+        walkCodes,
+        (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
+      )),
+        value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+    else if (value < 92) for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
+    else if (value < 107)
+      for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
+    else if (value < 117) {
+      for (value = 10 * currentMultiplier + value - 107; value--;)
+        currentNode = currentNode.parentNode || currentNode;
+      walkNextSibling();
+    } else storedMultiplier = currentMultiplier * 10 + value - 117;
+};
+let walkNextNode = () => {
+  if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
+  for (; !currentNode.nextSibling && currentNode.parentNode;) currentNode = currentNode.parentNode;
+  walkNextSibling();
+};
+let walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode);
+let _resumed = {};
+let cloneCache = {};
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {

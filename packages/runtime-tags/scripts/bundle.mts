@@ -51,7 +51,6 @@ await Promise.all([
           ),
         },
         platform: name === "dom" ? "browser" : "node",
-        experimental: { nativeMagicString: true },
         transform: {
           define: { MARKO_DEBUG: String(!isProd) },
         },

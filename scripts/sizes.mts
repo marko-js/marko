@@ -286,6 +286,13 @@ async function bundleUserCode(examplePath: string, hydrate: boolean) {
     Promise.all(output.filter(isUserChunk).map(analyzeChunk)),
   ]);
   const runtimeSize = analyzedRuntimeCode?.sizes;
+  if (runtimeSize) {
+    await assertTreeShaken(
+      runtimeChunk!,
+      runtimeSize.min,
+      `${examplePath} (${hydrate ? "ssr" : "csr"})`,
+    );
+  }
   const userSize = addSizes(analyzedUserCode.map((it) => it.sizes));
   const totalSize = runtimeSize ? addSizes([userSize, runtimeSize]) : userSize;
   const files: Record<string, string> = {};
@@ -296,6 +303,37 @@ async function bundleUserCode(examplePath: string, hydrate: boolean) {
   }
 
   return [userSize, runtimeSize, totalSize, files] as const;
+}
+
+// Tree-shaking the runtime chunk again must drop nothing: whatever it drops is
+// dead code the dist output keeps reachable (e.g. through joined declarations).
+async function assertTreeShaken(
+  chunk: OutputChunk,
+  min: number,
+  label: string,
+) {
+  const { output } = await build({
+    input: virtualEntry,
+    plugins: [
+      {
+        name: "chunk",
+        resolveId: {
+          filter: { id: { include: virtualEntryRe } },
+          handler: (id) => id,
+        },
+        load: {
+          filter: { id: { include: virtualEntryRe } },
+          handler: () => chunk.code,
+        },
+      },
+    ],
+  });
+  const { sizes } = await analyzeChunk(output[0]);
+  if (sizes.min < min) {
+    throw new Error(
+      `${label}: tree-shaking the runtime chunk again drops it from ${min} to ${sizes.min} bytes (min), so the dist output keeps dead code reachable.`,
+    );
+  }
 }
 
 function brotli(src: string): Promise<Buffer> {
