@@ -3,7 +3,7 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier } from "../visitors/program";
-import { isSectionRendererElided } from "./binding-has-prop";
+import { getSectionRendererIdentifier } from "./binding-has-prop";
 import {
   type BindingPropTree,
   getKnownFromPropTree,
@@ -429,17 +429,17 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         serialized && getRegisteredLocals(bodySection),
       );
     } else {
-      // The section renderer declaration is elided when nothing reads the
-      // content, so the property must be too.
-      if (isSectionRendererElided(bodySection)) return;
-
-      const localClosureValues = getLocalClosureValues(bodySection);
-      return t.callExpression(
-        t.identifier(bodySection.name),
-        localClosureValues
-          ? [scopeIdentifier, localClosureValues]
-          : [scopeIdentifier],
-      );
+      // Nothing reads content whose renderer is elided, so it has no property.
+      const renderer = getSectionRendererIdentifier(bodySection);
+      if (renderer) {
+        const localClosureValues = getLocalClosureValues(bodySection);
+        return t.callExpression(
+          renderer,
+          localClosureValues
+            ? [scopeIdentifier, localClosureValues]
+            : [scopeIdentifier],
+        );
+      }
     }
   }
 }

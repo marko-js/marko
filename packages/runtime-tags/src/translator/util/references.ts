@@ -133,8 +133,8 @@ export const globalSources: Sources = {
 
 export interface Binding {
   id: number;
-  // Creation order, never renumbered, so distinct bindings stay distinct to
-  // `bindingUtil` once `id` is reassigned per section.
+  // Creation order in its program, never renumbered, so `bindingUtil` orders
+  // by it while `finalizeReferences` reassigns `id` per section.
   uid: number;
   name: string;
   originalName: string | undefined;
@@ -2045,20 +2045,25 @@ function isInParams(binding: Binding, params: Sources["param"]) {
   return bindingUtil.has(params, binding as ParamBinding);
 }
 
+// Lists such as a dynamic tag's input bindings mix templates, whose ids and
+// uids restart per program, so the file orders them first.
 export const bindingUtil = new Sorted(function compareBindings(
   a: Binding,
   b: Binding,
 ) {
-  return a === b
-    ? 0
-    : a.section.id - b.section.id ||
+  if (a === b) return 0;
+  const order =
+    a.section.filename !== b.section.filename
+      ? a.section.filename < b.section.filename
+        ? -1
+        : 1
+      : a.section.id - b.section.id ||
         (a.type !== b.type &&
         (a.type === BindingType.dom || b.type === BindingType.dom)
-          ? a.type - b.type || a.id - b.id
-          : a.id - b.id) ||
-        // A pure alias keeps its creation id while its section mates are
-        // renumbered, so only `uid` separates the two `Sorted` treats as one.
-        a.uid - b.uid;
+          ? a.type - b.type
+          : a.uid - b.uid);
+  if (!order) throw new Error("Distinct bindings must not compare equal.");
+  return order;
 });
 
 export const propsUtil = new Sorted(function compareProps(

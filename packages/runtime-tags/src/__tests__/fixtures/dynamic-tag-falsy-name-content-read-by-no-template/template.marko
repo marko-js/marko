@@ -1,0 +1,8 @@
+import A from "./tags/a.marko";
+
+<let/show=false/>
+<${show && A} x=1>
+  <@item>Item</@item>
+  Hello
+</>
+<button onClick() { show = !show }/>

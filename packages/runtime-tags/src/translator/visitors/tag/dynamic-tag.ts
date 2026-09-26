@@ -10,6 +10,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../../common/types";
+import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
 import {
   getBindingPropTree,
   kDirectContent,
@@ -568,7 +569,7 @@ export default {
           return callRuntime(
             "_dynamic_tag",
             getScopeAccessorLiteral(nodeBinding, true),
-            bodySection && t.identifier(bodySection.name),
+            bodySection && getSectionRendererIdentifier(bodySection),
             tagVarSignal
               ? t.arrowFunctionExpression([], tagVarSignal.identifier)
               : undefined,

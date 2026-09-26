@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from "../visitors/program";
+import { getSectionRendererIdentifier } from "./binding-has-prop";
 import {
   type BindingPropTree,
   getAllKnownPropNames,
@@ -1197,9 +1198,10 @@ function writeAttrsToSignals(
     const bodySection = getSectionForBody(tag.get("body"));
     if (bodySection) {
       seen.add("content");
-      const bodyValue = t.callExpression(t.identifier(bodySection.name), [
-        scopeIdentifier,
-      ]);
+      const bodyValue = t.callExpression(
+        getSectionRendererIdentifier(bodySection)!,
+        [scopeIdentifier],
+      );
       if (contentExport === true) {
         (restProps ||= []).push(toObjectProperty("content", bodyValue));
       } else {

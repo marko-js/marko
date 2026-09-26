@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getFile,
   getProgram,
   isAttributeTag,
   isNativeTag,
@@ -117,6 +118,7 @@ export interface StructureChild {
 export interface Section {
   id: number;
   name: string;
+  filename: string;
   loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
@@ -219,6 +221,7 @@ export function startSection(
     section = extra.section = {
       id: sections.length,
       name: sectionName,
+      filename: getFile().opts.filename!,
       loc: parentTag?.node.name.loc || undefined,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
