@@ -295,7 +295,6 @@ function resolveMarkoFile(file, filename) {
 }
 
 const idCache = new WeakMap();
-const templateIdHashOpts = { outputLength: 5 };
 // Percent-encode only what is unsafe in string, URL or filesystem contexts;
 // `%` always encodes so the encoding stays reversible (custom ids too).
 const unsafeTemplateIdCharReg = /[\u0000-\u0020\u007f-\uffff"%\\`<>;,]/g;
@@ -322,7 +321,7 @@ export function getTemplateId(opts, request, child) {
         idCache.set(optimizeKnownTemplates, lookup);
         for (let i = 0; i < knownTemplatesSize; i++) {
           lookup.set(optimizeKnownTemplates[i], {
-            id: encodeTemplateId(i),
+            id: encodeTemplateId(i, 54),
             children: new Map(),
           });
         }
@@ -400,15 +399,16 @@ function createNewFileOpts(opts, filename) {
   };
 }
 
-function encodeTemplateId(id) {
+function encodeTemplateId(id, base = 64) {
   const c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
   let n = id;
   let r = c[n % 53]; // Avoids chars that cannot start a property name and _ (reserved).
   n = Math.floor(n / 53);
 
-  // ensure at most 7 characters.
-  for (let i = 6; n > 0 && i--; n = Math.floor(n / 64)) {
-    r += c[n & 63];
+  // At most 7 characters. Known template ids pass base 54 (no digits), so one
+  // plus a decimal child index never equals another id.
+  for (let i = 6; n > 0 && i--; n = Math.floor(n / base)) {
+    r += c[n % base];
   }
 
   return r;

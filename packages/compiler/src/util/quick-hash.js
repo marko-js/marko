@@ -1,5 +1,5 @@
 /**
- * Outputs a noncryptographic hash as a safe integer (<= Number.MAX_SAFE_INTEGER).
+ * Outputs a noncryptographic hash as a non-negative safe integer (<= Number.MAX_SAFE_INTEGER).
  */
 export class Hash {
   a = 0xdeadbeef;
@@ -30,6 +30,6 @@ export class Hash {
     b = Math.imul(b ^ a, 0x165667b1);
     b ^= b >>> 15;
     a = Math.imul(a ^ (b >>> 13), 0x5bd1e995);
-    return (b & 0x1fffff) * 0x100000000 + a;
+    return (b & 0x1fffff) * 0x100000000 + (a >>> 0);
   }
 }

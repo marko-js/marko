@@ -5,30 +5,22 @@ import { isTranslate } from "./get-compile-stage";
 import type { Section } from "./sections";
 import { traverse } from "./traverse";
 
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    uidCounts?: Map<string, number>;
+  }
+}
+
 const countsForFile = new WeakMap<t.BabelFile, Map<string, number>>();
 export function generateUid(name = "") {
   const file = getFile();
   let counts = countsForFile.get(file);
 
   if (!counts) {
-    const { cache } = file.markoOpts;
-    const { filename } = file.opts;
-    const cacheKey = `uid-counts:${filename}`;
-    counts = cache.get(cacheKey) as typeof counts;
-
-    if (counts) {
-      if (isTranslate()) {
-        // Translate for DOM does not impact translate HTML
-        // but both inherit the counts from previous stages.
-        counts = new Map(counts);
-      }
-    } else {
-      counts = getInitialCounts(file);
-      if (!isTranslate()) {
-        cache.set(cacheKey, counts);
-      }
-    }
-
+    // Counts live on the analyzed program so a re-analysis starts over, and
+    // each translate continues a copy so dom and html do not affect each other.
+    counts = (file.path.node.extra ??= {}).uidCounts ??= getInitialCounts(file);
+    if (isTranslate()) counts = new Map(counts);
     countsForFile.set(file, counts);
   }
 
@@ -50,28 +42,7 @@ export function getSharedUid(name: string, section?: Section) {
   let sharedUIDs = sharedUIDsForFile.get(file);
 
   if (!sharedUIDs) {
-    const { cache } = file.markoOpts;
-    const { filename } = file.opts;
-    let cacheKey = `uid-shared:${filename}`;
-    if (section) {
-      cacheKey += `:${section.id}`;
-    }
-    sharedUIDs = cache.get(cacheKey) as typeof sharedUIDs;
-
-    if (sharedUIDs) {
-      if (isTranslate()) {
-        // Translate for DOM does not impact translate HTML
-        // but both inherit the counts from previous stages.
-        sharedUIDs = new Map(sharedUIDs);
-      }
-    } else {
-      sharedUIDs = new Map();
-      if (!isTranslate()) {
-        cache.set(cacheKey, sharedUIDs);
-      }
-    }
-
-    sharedUIDsForFile.set(file, sharedUIDs);
+    sharedUIDsForFile.set(file, (sharedUIDs = new Map()));
   }
 
   const nameKey = section ? `${section.id}:${name}` : name;
