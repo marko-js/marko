@@ -451,8 +451,13 @@ export function getNodeContentType(
         return ContentType.Tag;
       } else if (isAttributeTag(tag)) {
         return null;
-      } else if (t.isStringLiteral(tag.node.name)) {
-        const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
+      } else {
+        // The section `structure.child` inlines; a load tag renders behind a marker.
+        const tagSection =
+          tag.node.extra?.defineBodySection ||
+          (analyzeTagNameType(tag) === TagNameType.CustomTag &&
+            !tag.node.extra!.tagNameLoad &&
+            loadFileForTag(tag)!.ast.program.extra.section);
         if (tagSection) {
           if (tagSection.content) {
             if (contentInfo && !tagSection.content.singleChild) {

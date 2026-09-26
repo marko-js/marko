@@ -1,0 +1,36 @@
+import EffectOnly from "./tags/effect-only.marko";
+<let/n=0/>
+<define/Foo|{ n }|><script>console.log(n)</script></define>
+<div>
+  <effect-only n=n/>
+</div>
+<span>${n}</span>
+<p>
+  <text-end/>
+  <effect-only n=n/>
+  more
+  <span>${n}</span>
+  <i>${n}</i>
+</p>
+<p>
+  lead
+  <effect-only n=n/>
+  <text-start/>
+  <span>${n}</span>
+  <i>${n}</i>
+</p>
+<p>
+  lead
+  <EffectOnly n=n/>
+  more
+  <span>${n}</span>
+  <i>${n}</i>
+</p>
+<p>
+  lead
+  <Foo n=n/>
+  more
+  <span>${n}</span>
+  <i>${n}</i>
+</p>
+<button onClick() { n++ }/>

@@ -1,0 +1,14 @@
+<let/show=true/>
+<!doctype html>
+<html>
+  <head>
+    <for|href| of=input.styles>
+      <link rel="stylesheet" href=href>
+    </for>
+  </head>
+  <body>
+    <if=show>
+      <button onClick() { show = false }>hide</button>
+    </if>
+  </body>
+</html>

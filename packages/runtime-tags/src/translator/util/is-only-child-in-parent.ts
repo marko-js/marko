@@ -29,6 +29,8 @@ export function getOnlyChildParentTagName(
     parentTag &&
     analyzeTagNameType(parentTag) === TagNameType.NativeTag &&
     parentTag.node.name.type === "StringLiteral" &&
+    // Pages put nodes Marko did not render in these (resume scripts, assets).
+    !["html", "head", "body"].includes(parentTag.node.name.value) &&
     (tag.parent as t.MarkoTagBody).body.filter(
       (node) => node.type !== "MarkoComment",
     ).length === branchSize

@@ -18,8 +18,8 @@ const $input_content = /*@__PURE__*/ _const("input_content", $if_content__input_
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $Card_content__input_depth = /*@__PURE__*/ _closure_get("input_depth", ($scope) => _text($scope["#text/0"], $scope._.input_depth), 0, "__tests__/template.marko_1_input_depth#3/subscribe");
 const $Card_content__setup = $Card_content__input_depth;
 const $Card_content = _content("__tests__/template.marko_1*content", "depth <!>", "b%", $Card_content__setup);

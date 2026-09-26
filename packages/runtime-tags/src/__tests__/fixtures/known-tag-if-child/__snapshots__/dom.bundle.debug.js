@@ -9,8 +9,8 @@ const $input = ($scope, input) => $input_content($scope, input.content);
 var wrapper_default = /*@__PURE__*/ _template("__tests__/components/wrapper.marko", $template$1, "D%l", 0, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<button>toggle</button>${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("D%l");
+const $template = /*@__PURE__*/ ((_w0) => `<button>toggle</button>${_w0}`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l");
 const $Wrapper_content__if = /*@__PURE__*/ _if("#text/0", "<b>on</b>", 0, 0, "<i>off</i>");
 const $Wrapper_content__on = /*@__PURE__*/ _closure_get("on", ($scope) => $Wrapper_content__if($scope, $scope._.on ? 0 : 1), 0, "__tests__/template.marko_1_on#2/subscribe");
 const $Wrapper_content__setup = $Wrapper_content__on;

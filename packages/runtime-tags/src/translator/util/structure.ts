@@ -153,12 +153,15 @@ export function resolveStructure(section: Section) {
           break;
         case StructureKind.Child: {
           const content = refContent(op.renderer);
-          if (textEdge && content?.startType === ContentType.Text) {
-            separate(resolved);
+          // A child with no content has no node for the walker to reach.
+          if (content) {
+            if (textEdge && content.startType === ContentType.Text) {
+              separate(resolved);
+            }
+            textEdge =
+              content.endType === ContentType.Text ? "child" : undefined;
+            flushSteps(resolved);
           }
-          textEdge =
-            content?.endType === ContentType.Text ? "child" : undefined;
-          flushSteps(resolved);
           const template = op.renderer && resolveRef(op.renderer, "template");
           if (template) {
             resolved.writes.push(template, "");

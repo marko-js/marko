@@ -6,6 +6,6 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)("");
-const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("");
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)("");
 const $setup = () => {};
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks);

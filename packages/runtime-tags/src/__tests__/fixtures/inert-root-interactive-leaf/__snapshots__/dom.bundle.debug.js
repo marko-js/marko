@@ -7,8 +7,8 @@ function $setup$1($scope) {
 var layout_default = /*@__PURE__*/ _template("__tests__/layout.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1);
+const $template = $template$1;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 }

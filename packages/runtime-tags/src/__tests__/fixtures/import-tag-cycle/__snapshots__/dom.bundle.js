@@ -11,7 +11,7 @@ const $input_depth$1 = ($scope, input_depth) => {
 const $template = "<div>a <!></div><!><!>";
 const $walks = "Db%l%c";
 const $if_content__input_depth = /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_depth$1($scope.a, $scope._.e + 1));
-const $if = /*@__PURE__*/ _if(1, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1), $if_content__input_depth);
+const $if = /*@__PURE__*/ _if(1, /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1), $if_content__input_depth);
 const $input_depth = /*@__PURE__*/ _const(4, ($scope) => {
 	_text($scope.a, $scope.e);
 	$if($scope, $scope.e < 2 ? 0 : 1);
