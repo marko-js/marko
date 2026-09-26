@@ -1,0 +1,10 @@
+<const/x=input.foo * 2/>
+<child a=1>
+  <@junk foo=x/>
+  <if=x>
+    <@junk2 foo=x/>
+  </if>
+  <for|i| of=[x]>
+    <@junk3 foo=i/>
+  </for>
+</child>

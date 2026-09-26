@@ -233,7 +233,7 @@ interface SectionMeta {
 export const [getSectionMeta] = createSectionState<SectionMeta>(
   "SectionMeta",
   (section) => {
-    if (!section.structure) {
+    if (!section.structure || section.pruned) {
       return { walks: undefined, writes: undefined };
     }
     const { writes, walks, walkComment } = resolveStructure(section);

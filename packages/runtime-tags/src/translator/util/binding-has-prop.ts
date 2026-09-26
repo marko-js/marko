@@ -10,19 +10,20 @@ export function getSectionRendererIdentifier(section: Section) {
     : t.identifier(section.name);
 }
 
-// A content section that only flows into a binding which never reads it has
-// its renderer elided; references to the renderer must be elided in sync.
+// A pruned content section, or one only flowing into a binding that never
+// reads it, has its renderer elided; references to it must be elided in sync.
 export function isSectionRendererElided(section: Section) {
   return (
-    !!section.downstream &&
-    // A falsy dynamic tag name renders its body in place.
-    !(
-      section.downstream.tag.tagNameNullable &&
-      section.downstream.properties === "content"
-    ) &&
-    !some(section.downstream.binding, (binding) =>
-      bindingHasProperty(binding, section.downstream!.properties),
-    )
+    section.pruned ||
+    (!!section.downstream &&
+      // A falsy dynamic tag name renders its body in place.
+      !(
+        section.downstream.tag.tagNameNullable &&
+        section.downstream.properties === "content"
+      ) &&
+      !some(section.downstream.binding, (binding) =>
+        bindingHasProperty(binding, section.downstream!.properties),
+      ))
   );
 }
 

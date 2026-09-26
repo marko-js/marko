@@ -1,0 +1,24 @@
+<let/n=1/>
+<let/m=1/>
+<child a=1>
+  <@junk>
+    ${n}
+    <if=n>${n}</if>
+    <@nested>${n}</@nested>
+  </@junk>
+  <if=n>
+    <@item>
+      item
+      <@sub>${n}</@sub>
+    </@item>
+    <@junk2>${n}</@junk2>
+  </if>
+</child>
+<static-child>
+  <@junk>
+    ${n}
+    <counter/>
+    <button onClick() { m = 2 }>set</button>
+  </@junk>
+</static-child>
+<button.inc onClick() { n++ }>inc</button>
