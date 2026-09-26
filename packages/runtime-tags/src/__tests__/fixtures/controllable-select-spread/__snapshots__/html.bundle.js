@@ -4,10 +4,10 @@ var my_select_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $select_input = input;
 	_html("<select");
-	_attr_select_value($scope0_id, "a", $select_input.value, $select_input.valueChange, () => {
+	_attrs_select_value($scope0_id, "a", $select_input, () => {
 		_attrs_content($select_input, "a", $scope0_id, "select");
 		_html("</select>");
-	}, 1);
+	});
 	_html(_el_resume($scope0_id, "a"));
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});

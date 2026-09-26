@@ -4,10 +4,10 @@ var my_select_default = _template("__tests__/tags/my-select.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $select_input = input;
 	_html("<select");
-	_attr_select_value($scope0_id, "#select/0", $select_input.value, $select_input.valueChange, () => {
+	_attrs_select_value($scope0_id, "#select/0", $select_input, () => {
 		_attrs_content($select_input, "#select/0", $scope0_id, "select");
 		_html("</select>");
-	}, 1);
+	});
 	_html(_el_resume($scope0_id, "#select/0"));
 	_script($scope0_id, "__tests__/tags/my-select.marko_0_input#2");
 	_scope($scope0_id, {}, "__tests__/tags/my-select.marko", 0, {
