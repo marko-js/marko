@@ -18,6 +18,7 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
+import { $signal } from "./abort-signal";
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
@@ -57,6 +58,7 @@ export function _await_promise(
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const tryAccessor = AccessorPrefix.TryBranch + nodeAccessor;
   const resolveAwait = (
     scope: Scope,
     referenceNode: ChildNode,
@@ -85,10 +87,11 @@ export function _await_promise(
     let awaitBranch = scope[branchAccessor] as BranchScope;
     // A pending value holds a placeholder, so it needs no branch to start, and
     // a value after one settles through the count that one holds.
-    const tryPlaceholder =
-      (isPromise(promise) || scope[promiseAccessor]) &&
-      findBranchWithKey(scope, AccessorProp.PlaceholderContent);
-    const tryBranch = tryPlaceholder || awaitBranch;
+    const tryBranch: BranchScope | undefined =
+      scope[tryAccessor] ||
+      (isPromise(promise) &&
+        findBranchWithKey(scope, AccessorProp.PlaceholderContent)) ||
+      awaitBranch;
     if (!tryBranch) {
       // `_await_content` creates the branch, or resume adopts a streamed one
       // as its `@placeholder` completes; either runs the deferred latest value.
@@ -107,41 +110,53 @@ export function _await_promise(
 
     if (!isPromise(promise)) {
       // After a pending value, it settles through that value's placeholder.
-      return scope[promiseAccessor]
+      return scope[tryAccessor]
         ? awaitPromise(scope, Promise.resolve(promise))
         : resolveAwait(scope, scope[nodeAccessor] as ChildNode, promise);
     }
 
     let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
 
-    if (!tryPlaceholder && !awaitCounter?.i) {
-      awaitCounter = createAwaitCounter(tryBranch, () => {
-        if (tryBranch === scope[branchAccessor]) {
-          const anchor = scope[nodeAccessor] as ChildNode;
-          if (anchor.parentNode) {
-            const detachedParent = (scope[branchAccessor] as BranchScope)[
-              AccessorProp.StartNode
-            ].parentNode!;
-            if (detachedParent === anchor.parentNode) {
-              // Branch never detached (re-await raced its resolution);
-              // replacing the anchor with its own parent would cycle.
-              anchor.remove();
-            } else {
-              anchor.replaceWith(detachedParent);
-            }
-          }
+    if (!scope[tryAccessor]) {
+      scope[tryAccessor] = tryBranch;
+      // Destroying the await drops its value and releases its count after the
+      // flush's renders, so an await swapped in keeps the `@placeholder` up.
+      $signal(scope, promiseAccessor).onabort = () => {
+        scope[promiseAccessor] = 0;
+        if (scope[tryAccessor]) {
+          queueAsyncRender(
+            scope[tryAccessor],
+            completeAwaitCounter,
+            awaitCounter,
+          );
         }
-      });
-    }
-
-    if (!scope[promiseAccessor]) {
+      };
       if (awaitBranch) {
         awaitBranch[AccessorProp.PendingRenders] ||= [];
       }
-      if (tryPlaceholder) {
-        awaitCounter = addAwaitCounter(scope, tryPlaceholder)!;
+      if (tryBranch !== awaitBranch) {
+        awaitCounter = addAwaitCounter(scope, tryBranch)!;
       } else {
-        scheduleAwaitFrame(awaitCounter!, scope, () => {
+        if (!awaitCounter?.i) {
+          awaitCounter = createAwaitCounter(tryBranch, () => {
+            if (tryBranch === scope[branchAccessor]) {
+              const anchor = scope[nodeAccessor] as ChildNode;
+              if (anchor.parentNode) {
+                const detachedParent = (scope[branchAccessor] as BranchScope)[
+                  AccessorProp.StartNode
+                ].parentNode!;
+                if (detachedParent === anchor.parentNode) {
+                  // Branch never detached (re-await raced its resolution);
+                  // replacing the anchor with its own parent would cycle.
+                  anchor.remove();
+                } else {
+                  anchor.replaceWith(detachedParent);
+                }
+              }
+            }
+          });
+        }
+        scheduleAwaitFrame(awaitCounter, scope, () => {
           if (!awaitBranch[AccessorProp.DetachedAwait]) {
             awaitBranch[AccessorProp.StartNode].parentNode!.insertBefore(
               scope[nodeAccessor] as Node,
@@ -159,46 +174,48 @@ export function _await_promise(
           const referenceNode = scope[nodeAccessor] as ChildNode;
           scope[promiseAccessor] = 0;
 
-          if (
-            !scope[branchAccessor] ||
-            scope[AccessorProp.ClosestBranch]?.[AccessorProp.Gen] === 0
-          ) {
-            // Render nothing when the await is gone or its branch is still
-            // streaming in (the value waits); complete so `@placeholder` ends.
-            if (!scope[branchAccessor]) awaitPromise(scope, data);
+          if (!scope[branchAccessor]) {
+            // The value waits for its branch to stream in; complete so
+            // `@placeholder` ends.
+            scope[tryAccessor] = 0;
+            awaitPromise(scope, data);
             awaitCounter!.c();
             run();
-            return;
+          } else {
+            queueAsyncRender(scope, () => {
+              // A value that went pending meanwhile supersedes this one and
+              // settles through the count it holds.
+              if (!scope[promiseAccessor]) {
+                awaitBranch = resolveAwait(scope, referenceNode, data);
+
+                const pendingRenders = awaitBranch[
+                  AccessorProp.PendingRenders
+                ] as PendingRender[] | undefined;
+                awaitBranch[AccessorProp.PendingRenders] = 0;
+                pendingRenders?.forEach(queuePendingRender);
+
+                scope[tryAccessor] = 0;
+                // Complete after every other render of this flush, so an `<await>` the
+                // resolved content starts is counted before `@placeholder` ends.
+                queueRender(
+                  tryBranch,
+                  completeAwaitCounter,
+                  -1,
+                  awaitCounter,
+                  tryBranch[AccessorProp.Id] + 1e9,
+                );
+              }
+            });
           }
-
-          queueAsyncRender(scope, () => {
-            awaitBranch = resolveAwait(scope, referenceNode, data);
-
-            const pendingRenders = awaitBranch[AccessorProp.PendingRenders] as
-              | PendingRender[]
-              | undefined;
-            awaitBranch[AccessorProp.PendingRenders] = 0;
-            pendingRenders?.forEach(queuePendingRender);
-
-            // Complete after every other render of this flush, so an `<await>` the
-            // resolved content starts is counted before `@placeholder` ends.
-            queueRender(
-              tryBranch,
-              completeAwaitCounter,
-              -1,
-              awaitCounter,
-              tryBranch[AccessorProp.Id] + 1e9,
-            );
-          });
         }
       },
       (error) => {
         if (thisPromise === scope[promiseAccessor]) {
-          scope[promiseAccessor] = 0;
+          scope[promiseAccessor] = scope[tryAccessor] = 0;
           queueAsyncRender(scope, renderCatch, error);
           // Complete after the catch renders to dismiss an ancestor `@placeholder`
           // (renderCatch unwinds only its own try); zero a placeholder-less or resumed one.
-          if (tryPlaceholder && !awaitCounter!.m) {
+          if (tryBranch !== awaitBranch && !awaitCounter!.m) {
             if (findBranchWithKey(scope, AccessorProp.CatchContent)) {
               queueRender(
                 tryBranch,
@@ -257,6 +274,8 @@ export function addAwaitCounter(
 ): AwaitCounter | undefined {
   if (!tryBranch) return;
   let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
+  // The frame shows the `@placeholder` present when the count was taken.
+  const placeholder = tryBranch[AccessorProp.PlaceholderContent] as Renderer;
   if (!awaitCounter?.i) {
     awaitCounter = createAwaitCounter(tryBranch, () =>
       dismissPlaceholder(tryBranch),
@@ -266,7 +285,7 @@ export function addAwaitCounter(
     insertBranchBefore(
       (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
         tryBranch[AccessorProp.Global],
-        tryBranch[AccessorProp.PlaceholderContent] as Renderer,
+        placeholder,
         tryBranch[AccessorProp.Owner]!,
         tryBranch[AccessorProp.StartNode].parentNode!,
       )),
@@ -319,6 +338,9 @@ function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   const awaitCounter: AwaitCounter = (tryBranch[AccessorProp.AwaitCounter] = {
     i: 0,
     c() {
+      if (MARKO_DEBUG && awaitCounter.i < 1) {
+        throw new Error("An await counter completed more counts than it took.");
+      }
       if (--awaitCounter.i) return 1;
       done();
       queueEffect(tryBranch, runPendingEffects);

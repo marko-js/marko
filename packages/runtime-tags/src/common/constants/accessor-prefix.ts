@@ -13,6 +13,7 @@ export const KeyedScopes = "O";
 export const Lifecycle = "K";
 export const Promise = "L";
 export const TagVariableChange = "M";
+export const TryBranch = "P";
 
 type Self = typeof import("./accessor-prefix");
 export type Value = Self[keyof Self];

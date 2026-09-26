@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/show = true/>
+<let/promise = null/>
+<button onClick() { promise = resolveAfter("loaded", 1) }>start</button>
+<script>
+  promise && promise.then(() => { show = false });
+</script>
+<try>
+  <@placeholder>LOADING</@placeholder>
+  <if=show>
+    <await|value|=promise || "idle">
+      ${value}
+    </await>
+  </if>
+  <div>settled</div>
+</try>

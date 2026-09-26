@@ -1,0 +1,11 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/n = 0/>
+<button onClick() { n++ }>inc</button>
+<try>
+  <if=n !== 2>
+    <@placeholder>LOADING</@placeholder>
+  </if>
+  <await|value|=n ? resolveAfter(n) : 0>
+    value ${value}
+  </await>
+</try>
