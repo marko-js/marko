@@ -412,10 +412,11 @@ function testFixtures(interop?: true) {
             browsers.push(browser);
             const { window } = browser;
             const flushNext = browser.stream(chunks);
-            const flushAndRun = async () => {
+            // As in a browser, a resumed chunk's work schedules its own flush; a
+            // missing one leaves it pending.
+            const flushAndResume = async () => {
               hasFlush = flushNext();
               await browser.runAsyncScripts();
-              run();
             };
             // Attach the tracker's error listener before the first flush so
             // errors thrown by inline resume scripts in it aren't swallowed.
@@ -436,13 +437,13 @@ function testFixtures(interop?: true) {
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
             await runSteps(steps, tracker, browser, run, {
-              onFlush: hasFlush ? flushAndRun : undefined,
+              onFlush: hasFlush ? flushAndResume : undefined,
             });
 
             while (hasFlush) {
               await resolveAfter(0, 1);
               tracker.beginUpdate();
-              await flushAndRun();
+              await flushAndResume();
               tracker.logUpdate();
             }
 
