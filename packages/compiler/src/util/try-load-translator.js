@@ -2,10 +2,10 @@ import path from "path";
 
 import markoModules from "@marko/compiler/modules";
 
-import config from "../config";
+import { globalConfig } from "../config";
 const cache = {};
 
-export default function (requested = config.translator) {
+export default function (requested = globalConfig.translator) {
   if (typeof requested === "string") {
     let translator = cache[requested];
     if (!translator) {

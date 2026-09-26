@@ -9,8 +9,10 @@ import {
   compileFile,
   compileFileSync,
   compileSync,
+  configure,
   getRuntimeEntryFiles,
   getRuntimeVersion,
+  taglib,
 } from "@marko/compiler";
 import * as translator from "@marko/runtime-tags/translator";
 
@@ -253,6 +255,20 @@ describe("compiler/compile", () => {
 
     it("is empty for a translator that offers none", () =>
       assert.deepEqual(getRuntimeEntryFiles("html", {}), []));
+
+    it("follows the configured optimize over the environment", () => {
+      try {
+        for (const optimize of [true, false]) {
+          configure({ optimize });
+          assert.deepEqual(
+            getRuntimeEntryFiles("dom", translator),
+            translator.getRuntimeEntryFiles("dom", optimize),
+          );
+        }
+      } finally {
+        configure();
+      }
+    });
   });
 
   describe("getRuntimeVersion", () => {
@@ -261,6 +277,25 @@ describe("compiler/compile", () => {
 
     it("falls back for a translator that has no version", () =>
       assert.equal(getRuntimeVersion({}), "0.0.0"));
+  });
+
+  describe("configure", () => {
+    it("sets the translator the runtime and taglib helpers default to", () => {
+      try {
+        configure({ translator, optimize: false });
+        assert.deepEqual(
+          getRuntimeEntryFiles("dom"),
+          translator.getRuntimeEntryFiles("dom", false),
+        );
+        assert.equal(getRuntimeVersion(), translator.version);
+        assert.equal(
+          taglib.buildLookup(import.meta.dirname),
+          taglib.buildLookup(import.meta.dirname, translator),
+        );
+      } finally {
+        configure();
+      }
+    });
   });
 
   describe("cache", () => {

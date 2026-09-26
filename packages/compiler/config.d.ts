@@ -10,6 +10,7 @@ declare const Config: {
   };
   errorRecovery?: boolean;
   applyFixes?: Map<number, unknown>;
+  /** Defaults to on for every output but `"source"` and `"migrate"`; the Marko 6 translator rejects `false` for Tags API templates with any other output. */
   stripTypes?: boolean;
   runtimeId?: string | null;
   ast?: boolean;

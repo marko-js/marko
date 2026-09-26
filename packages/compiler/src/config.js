@@ -157,7 +157,7 @@ const config = {
    * A regexp or function that receives an import path that matches file types known to be client side assets.
    */
   hydrateIncludeImports:
-    /\.(css|less|s[ac]ss|styl|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)$/,
+    /\.(css(\.[cm]?[jt]s)?|less|s[ac]ss|styl(us)?|p(ost)?css|sss|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)(\?|$)/,
 
   /**
    * When compiling in hydrate mode, this option will cause the compiler to
@@ -196,6 +196,11 @@ if (
 }
 
 export default config;
+
+export let globalConfig = { ...config };
+export function configure(newConfig) {
+  globalConfig = { ...config, ...newConfig };
+}
 
 import taglibConfig from "./taglib/config";
 taglibConfig.fs = config.fileSystem;

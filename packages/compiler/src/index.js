@@ -13,7 +13,7 @@ import markoModules from "@marko/compiler/modules";
 
 import pkg from "../package.json" with { type: "json" };
 import corePlugin from "./babel-plugin";
-import defaultConfig from "./config";
+import { configure, globalConfig } from "./config";
 import * as taglib from "./taglib";
 import appendAgentFixGuide, { agentFixGuide } from "./util/agent-fix-guide";
 import { buildCodeFrameError } from "./util/build-code-frame";
@@ -21,17 +21,13 @@ import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
 export const version = pkg.version;
-export { taglib, types };
+export { configure, globalConfig, taglib, types };
 
 const hasBabel = !!(
   markoModules.pkg &&
   (markoModules.pkg.dependencies?.["@babel/core"] ||
     markoModules.pkg.devDependencies?.["@babel/core"])
 );
-export let globalConfig = { ...defaultConfig };
-export function configure(newConfig) {
-  globalConfig = { ...defaultConfig, ...newConfig };
-}
 
 export async function compile(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
@@ -77,7 +73,10 @@ export function compileFileSync(filename, config) {
 export function getRuntimeEntryFiles(output, requestedTranslator) {
   const translator = tryLoadTranslator(requestedTranslator);
   if (translator && translator.getRuntimeEntryFiles) {
-    return translator.getRuntimeEntryFiles(output, shouldOptimize());
+    return translator.getRuntimeEntryFiles(
+      output,
+      globalConfig.optimize ?? shouldOptimize(),
+    );
   }
 
   return [];

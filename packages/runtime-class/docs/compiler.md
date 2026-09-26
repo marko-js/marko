@@ -142,6 +142,8 @@ If the value is `undefined` (the default), the compiler will remove types if the
 
 For example, to run migrations _and_ strip types, you can set both `output: "migrate"` and `stripTypes: true`.
 
+The Marko 6 translator requires types stripped from Tags API templates, so `stripTypes: false` is a compile error for them with any `output` other than `source` or `migrate`.
+
 #### `runtimeId`
 
 Type: `string`<br>
@@ -291,7 +293,7 @@ The `hydrateIncludeImports` option allows you to provide a function which receiv
 The default regexp includes a list of common known asset file extensions, and is as follows:
 
 ```js
-/\.(css|less|s[ac]ss|styl|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|[ot]tf)$/;
+/\.(css(\.[cm]?[jt]s)?|less|s[ac]ss|styl(us)?|p(ost)?css|sss|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)(\?|$)/;
 ```
 
 Looking at a partial Marko file such as:

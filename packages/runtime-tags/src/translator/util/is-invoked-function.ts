@@ -6,19 +6,10 @@ export default function isInvokedFunction(
   parent: t.CallExpression | t.OptionalCallExpression;
   parentPath: t.NodePath<t.CallExpression>;
 } {
-  let curPath: t.NodePath<t.Node> | null = expr;
-  while (curPath) {
-    const { parent, node } = curPath;
-    switch (parent.type) {
-      case "OptionalCallExpression":
-      case "CallExpression":
-        return parent.callee === node;
-      case "TSNonNullExpression":
-        curPath = curPath.parentPath;
-        break;
-      default:
-        return false;
-    }
-  }
-  return false;
+  const { parent, node } = expr;
+  return (
+    (parent.type === "CallExpression" ||
+      parent.type === "OptionalCallExpression") &&
+    parent.callee === node
+  );
 }
