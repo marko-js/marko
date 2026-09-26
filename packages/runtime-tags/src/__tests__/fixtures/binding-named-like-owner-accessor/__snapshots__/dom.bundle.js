@@ -9,7 +9,7 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__setup__script($scope);
 };
 const $if_content__count__OR___ = /*@__PURE__*/ _or(1, ($scope) => _text($scope.a, $scope._.e + $scope._._.c));
-const $if_content__count = /*@__PURE__*/ _closure_get(3, $if_content__count__OR___, ($scope) => $scope._._, "a0", 2);
+const $if_content__count = /*@__PURE__*/ _closure_get(3, $if_content__count__OR___, ($scope) => $scope._._, "a0");
 const $if_content__setup = ($scope) => {
 	$if_content__count($scope);
 	$if_content___._($scope);

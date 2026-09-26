@@ -19,7 +19,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 
 // template.marko
 _resumed.b = _marko_template;
-const $mybutton_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b), 0, "a2", 1);
+const $mybutton_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b), 0, "a2");
 const $mybutton_content = _content("a1", " ", " ", $mybutton_content__count);
 _content_resume($mybutton_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $mybutton_content);

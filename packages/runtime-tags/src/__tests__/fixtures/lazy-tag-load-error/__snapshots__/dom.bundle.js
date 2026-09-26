@@ -10,7 +10,7 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content("b1", "<div id=error> </div>", "D ", 0, $catch_content__$params);
 const $placeholder_content = _content("b0", "<div id=loading>loading</div>");
 const $try_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%/&", $if_content__setup);
-const $try_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__if($scope, $scope._.c ? 0 : 1), 0, "b3", 2);
+const $try_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__if($scope, $scope._.c ? 0 : 1), 0, "b3");
 const $show = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($try_content__show));
 const $setup__script = _script("b4", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, true);

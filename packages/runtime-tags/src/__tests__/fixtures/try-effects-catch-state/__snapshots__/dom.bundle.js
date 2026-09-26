@@ -8,7 +8,7 @@ const $try_content__clickCount = /*@__PURE__*/ _closure_get(3, ($scope) => {
 		if ($scope._.c > 1) throw new Error("ERROR!");
 	})());
 	$try_content__clickCount__script($scope);
-}, 0, "a4", 2);
+}, 0, "a4");
 const $try_content__setup__script = _script("a3", ($scope) => _on($scope.a, "click", function() {
 	$clickCount($scope._, +$scope._.c + 1);
 }));

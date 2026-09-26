@@ -1,5 +1,6 @@
 import * as AccessorPrefix from "./constants/accessor-prefix.debug";
 import * as AccessorProp from "./constants/accessor-prop.debug";
+import * as ClosureScopesProp from "./constants/closure-scopes-prop.debug";
 import * as ClosureSignalProp from "./constants/closure-signal-prop.debug";
 import * as KeyedScopesProp from "./constants/keyed-scopes-prop.debug";
 import * as PendingRenderProp from "./constants/pending-render-prop.debug";
@@ -18,6 +19,9 @@ export { PendingRenderProp };
 
 type ClosureSignalProp = ClosureSignalProp.Value;
 export { ClosureSignalProp };
+
+type ClosureScopesProp = ClosureScopesProp.Value;
+export { ClosureScopesProp };
 
 type KeyedScopesProp = KeyedScopesProp.Value;
 export { KeyedScopesProp };

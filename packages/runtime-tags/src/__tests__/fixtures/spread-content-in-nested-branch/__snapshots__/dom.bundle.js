@@ -12,7 +12,7 @@ const $setup__script$1 = _script("b1", ($scope) => _on($scope.a, "click", functi
 }));
 
 // template.marko
-const $item_content__count = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c), 0, "a0", 2);
+const $item_content__count = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c), 0, "a0");
 const $item_content = _content("a1", "One <!>", "b%", $item_content__count);
 const $count = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($item_content__count));
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {

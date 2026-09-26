@@ -43,7 +43,7 @@ _resumed.a3 = $catch_content;
 const $try_content__fail = /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, (() => {
 	if ($scope._.h) throw new Error("click");
 	return "ok";
-})()), 0, "a5", 7);
+})()), 0, "a5");
 const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", " <b> </b>", " bD "), { 2($scope) {
 	_text($scope.a, $scope.c);
 	_text($scope.b, $scope.c);

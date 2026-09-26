@@ -4,7 +4,7 @@ const $detailsTag_content__text__OR__textareaTag = /*@__PURE__*/ _or(1, ($scope)
 	value: $scope._.e,
 	valueChange: $valueChange($scope)
 })));
-const $detailsTag_content__text = /*@__PURE__*/ _closure_get(8, $detailsTag_content__text__OR__textareaTag, 0, "a3", 4);
+const $detailsTag_content__text = /*@__PURE__*/ _closure_get(8, $detailsTag_content__text__OR__textareaTag, 0, "a3");
 const $detailsTag_content__setup = ($scope) => {
 	$detailsTag_content__text($scope);
 	$detailsTag_content__textareaTag($scope);

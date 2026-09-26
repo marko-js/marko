@@ -1,5 +1,5 @@
 // template.marko
-const $tag_content__n = /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.h), 0, "a1", 7);
+const $tag_content__n = /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.h), 0, "a1");
 const $tag_content = _content("a0", "<option value=a>A<!></option>", "Db%", $tag_content__n);
 _content_resume($tag_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, $tag_content);

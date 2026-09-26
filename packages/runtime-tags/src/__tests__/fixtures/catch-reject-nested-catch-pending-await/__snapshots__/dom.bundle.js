@@ -5,7 +5,7 @@ const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("a2", "caught: <!>", "b%", 0, $catch_content__$params);
 const $placeholder_content = _content("a6", "loading outer...");
-const $await_content__changes = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.c, $scope._._.b), ($scope) => $scope._._, "a5", 1);
+const $await_content__changes = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.c, $scope._._.b), ($scope) => $scope._._, "a5");
 const $await_content__setup__script = _script("a4", ($scope) => _on($scope.b, "change", function() {
 	$changes($scope._._, +$scope._._.b + 1);
 }));

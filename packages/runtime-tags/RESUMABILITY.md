@@ -157,7 +157,9 @@ no reconciliation. Only content that can arrive after effects ran, a reorder
 once the main stream completed or ready-stream data, may find its owners
 changed; an `<await>` value deferred until its branch exists
 (`_await_promise`) and a late closure subscriber's resume effect (`_subscribe`)
-cover it.
+cover it. That subscriber renders only for a change its owner notified meanwhile
+(`_closure` marks the owner's subscriber set), never for a value merely serialized,
+so it reads exactly what a live update would, which serialize reasons provide.
 
 ## Lazy entries and ready streams
 

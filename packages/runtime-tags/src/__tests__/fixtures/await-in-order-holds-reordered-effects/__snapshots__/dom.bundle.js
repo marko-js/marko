@@ -6,7 +6,7 @@ const $await_content2__v = /*@__PURE__*/ _const(2, ($scope) => {
 });
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $placeholder_content = _content("a2", "loading button");
-const $await_content__value = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.b, $scope._._.c), ($scope) => $scope._._, "a1", 2);
+const $await_content__value = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.b, $scope._._.c), ($scope) => $scope._._, "a1");
 const $await_content__setup__script = _script("a0", ($scope) => {
 	_on($scope.a, "click", function() {
 		$value($scope._._, +$scope._._.c + 1);

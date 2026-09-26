@@ -14,7 +14,7 @@ _resumed.a0 = $catch_content;
 const $try_content__clicks = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, (() => {
 	if ($scope._.d) throw new Error("click");
 	return $scope._.d;
-})()), 0, "a4", 3);
+})()), 0, "a4");
 const $try2 = /*@__PURE__*/ _try(2, "clicks <!>", "b%", $try_content__clicks);
 const $clicks__closure = /*@__PURE__*/ _closure($try_content__clicks);
 const $clicks = /*@__PURE__*/ _let(3, ($scope) => {

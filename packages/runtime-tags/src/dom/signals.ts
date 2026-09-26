@@ -6,6 +6,7 @@ import {
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
+  ClosureScopesProp,
   ClosureSignalProp,
   type EncodedAccessor,
   KeyedScopesProp,
@@ -23,6 +24,9 @@ export type Signal<T = unknown, U extends Scope = Scope> = (
 ) => void;
 type KeyedScopes = Map<unknown, BranchScope> & {
   [x: `${typeof KeyedScopesProp.PreviousKey}${string}`]: unknown;
+};
+type ClosureScopes = Set<Scope> & {
+  [ClosureScopesProp.Changed]?: 1;
 };
 
 export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
@@ -286,7 +290,9 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
 
   return (scope: Scope) => {
     if (scope[scopeInstances]) {
-      for (const childScope of scope[scopeInstances] as Set<Scope>) {
+      // A subscriber that resumes after this renders the change it missed.
+      (scope[scopeInstances] as ClosureScopes)[ClosureScopesProp.Changed] = 1;
+      for (const childScope of scope[scopeInstances] as ClosureScopes) {
         if (
           childScope[AccessorProp.Gen] > 0 &&
           childScope[AccessorProp.Gen] < runId
@@ -307,7 +313,6 @@ export function _closure_get(
   fn: SignalFn,
   getOwnerScope?: (scope: Scope) => Scope,
   resumeId?: string,
-  ownerValueAccessor?: EncodedAccessor,
 ) {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   const closureSignal = ((scope: Scope, resumed?: 1) => {
@@ -316,9 +321,18 @@ export function _closure_get(
       : scope[AccessorProp.Owner]!;
     scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
       closureSignal[ClosureSignalProp.Index];
-    // A resumed scope shows the owner's server value, which an owner the
-    // server never sent it to has not changed.
-    if (!resumed || (ownerValueAccessor as string) in ownerScope) fn(scope);
+    // The server's HTML is current on resume, and the server sends only the
+    // values an owner's change needs, so render only after such a change.
+    if (
+      !resumed ||
+      (
+        ownerScope[
+          closureSignal[ClosureSignalProp.ScopeInstancesAccessor]
+        ] as ClosureScopes
+      )[ClosureScopesProp.Changed]
+    ) {
+      fn(scope);
+    }
     subscribeToScopeSet(
       ownerScope,
       closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
@@ -339,12 +353,7 @@ export function _closure_get(
 
   // A subscriber that resumes after its owner applies what the client changed
   // since the server render, then subscribes.
-  if (resumeId) {
-    ownerValueAccessor = MARKO_DEBUG
-      ? valueAccessor
-      : decodeAccessor(ownerValueAccessor as number);
-    _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
-  }
+  if (resumeId) _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
 
   return closureSignal;
 }
