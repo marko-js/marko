@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27249 (min) 10186 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1653,8 +1653,8 @@ function observeOnce(scope, nodeAccessor, init, callback) {
 function syncControllableFormInput(el, hasChanged, onChange) {
   ((el._ = onChange),
     (el.c = hasChanged),
-    delegate("input", handleChange),
-    el.form && delegate("reset", handleFormReset),
+    self.addEventListener("input", handleChange, !0),
+    delegate("reset", handleFormReset),
     isResuming && hasChanged(el) && queueMicrotask(onChange));
 }
 function handleChange(ev) {
@@ -1662,7 +1662,7 @@ function handleChange(ev) {
 }
 function handleFormReset(ev) {
   let handlers = [];
-  for (let el of ev.target.elements) el._ && el.c(el) && handlers.push(el._);
+  for (let el of ev.target.elements || []) el._ && el.c(el) && handlers.push(el._);
   requestAnimationFrame(() => {
     if (!ev.defaultPrevented) for (let change of handlers) change();
   });
