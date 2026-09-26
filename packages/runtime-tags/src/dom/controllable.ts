@@ -11,7 +11,7 @@ import {
   type Scope,
 } from "../common/types";
 import { _attr, normalizeAttrValue } from "./dom";
-import { delegate } from "./event";
+import { delegate, delegateControllable } from "./event";
 import { pendingEffects, run, runId } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
@@ -552,10 +552,8 @@ function syncControllableFormInput<
   (el as any).c = hasChanged;
   // `input` only: browsers and autofill fire it for every control, so a lone
   // `change` (eg testing-library's `fireEvent.change`) goes unhandled.
-  delegate("input", handleChange);
-  if ((el as any).form) {
-    delegate("reset", handleFormReset);
-  }
+  delegateControllable(handleChange);
+  delegate("reset", handleFormReset);
 
   if (isResuming && hasChanged(el)) {
     queueMicrotask(onChange);
@@ -563,12 +561,12 @@ function syncControllableFormInput<
 }
 
 function handleChange(ev: Event) {
-  (ev.target as any)._?.(ev);
+  if (ev.type === "input") (ev.target as any)._?.(ev);
 }
 
 function handleFormReset(ev: Event) {
   const handlers: (() => void)[] = [];
-  for (const el of (ev.target as HTMLFormElement).elements) {
+  for (const el of (ev.target as HTMLFormElement).elements || []) {
     if ((el as any)._ && (el as any).c(el)) {
       handlers.push((el as any)._);
     }

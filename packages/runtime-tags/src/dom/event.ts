@@ -33,7 +33,17 @@ export const delegate = (type: string, handler: EventListener) =>
   ((handler as any)[1 + type] ||=
     (document.addEventListener(type, handler, true), 1));
 
+let syncControllable: undefined | ((ev: Event) => void);
+
+// A Controllable syncs in the one delegated `input` listener, so its bound value
+// is stored before any `onInput` handler reads it.
+export function delegateControllable(sync: (ev: Event) => void) {
+  syncControllable = sync;
+  delegate("input", handleDelegated);
+}
+
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
+  if (syncControllable) syncControllable(ev);
   let target = !rendering && (ev.target as ParentNode | null);
   if (MARKO_DEBUG) {
     Object.defineProperty(ev, "currentTarget", {

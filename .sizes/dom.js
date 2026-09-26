@@ -1,4 +1,4 @@
-// size: 26981 (min) 10050 (brotli)
+// size: 27034 (min) 10066 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -38,6 +38,7 @@ let abortsEnabled;
 let subscriptionsEnabled;
 let delegate = (type, handler) =>
   (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1));
+let syncControllable;
 let parsers = {};
 let nextScopeId = 1e6;
 let collectingScopes;
@@ -519,7 +520,11 @@ function _on(element, type, handler) {
   (element[1 + type] === void 0 && delegate(type, handleDelegated),
     (element[1 + type] = handler || null));
 }
+function delegateControllable(sync) {
+  ((syncControllable = sync), delegate("input", handleDelegated));
+}
 function handleDelegated(ev) {
+  syncControllable && syncControllable(ev);
   let target = !rendering && ev.target;
   for (; target;)
     (target[1 + ev.type]?.(ev, target),
@@ -1643,16 +1648,16 @@ function observeOnce(scope, nodeAccessor, init, callback) {
 function syncControllableFormInput(el, hasChanged, onChange) {
   ((el._ = onChange),
     (el.c = hasChanged),
-    delegate("input", handleChange),
-    el.form && delegate("reset", handleFormReset),
+    delegateControllable(handleChange),
+    delegate("reset", handleFormReset),
     isResuming && hasChanged(el) && queueMicrotask(onChange));
 }
 function handleChange(ev) {
-  ev.target._?.(ev);
+  ev.type === "input" && ev.target._?.(ev);
 }
 function handleFormReset(ev) {
   let handlers = [];
-  for (let el of ev.target.elements) el._ && el.c(el) && handlers.push(el._);
+  for (let el of ev.target.elements || []) el._ && el.c(el) && handlers.push(el._);
   requestAnimationFrame(() => {
     if (!ev.defaultPrevented) for (let change of handlers) change();
   });
