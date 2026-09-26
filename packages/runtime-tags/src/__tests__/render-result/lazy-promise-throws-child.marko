@@ -1,0 +1,4 @@
+<const/promise=Promise.resolve({ get bad() { throw new Error("getter failed"); } })/>
+<script>
+  console.log(await promise);
+</script>

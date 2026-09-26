@@ -1,0 +1,6 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<await|value|=resolveAfter(1, 1)>
+  <const/obj={ get bad() { throw new Error("getter failed"); } }/>
+  <button onClick() { console.log(obj) }>${value}</button>
+</await>

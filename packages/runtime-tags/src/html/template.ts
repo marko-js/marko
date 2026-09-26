@@ -305,7 +305,7 @@ class ServerRendered implements RenderedTemplate {
 
   #promise() {
     return (this.#cachedPromise ||= new Promise<string>((resolve, reject) => {
-      const head = this.#head!;
+      let head = this.#head!;
       this.#head = null;
 
       if (!head) {
@@ -313,18 +313,23 @@ class ServerRendered implements RenderedTemplate {
       }
 
       const { boundary } = head;
+      let html = "";
       (boundary.onNext = () => {
         switch (!boundary.count && boundary.flush()) {
           case FlushStatus.aborted:
-            boundary.onNext = NOOP;
+            settle(boundary);
             reject(boundary.signal.reason);
             break;
-          case FlushStatus.complete: {
-            // `consume` may abort and re-enter through the boundary listener.
-            const consumed = head.consume();
-            if (!boundary.signal.aborted) resolve(consumed.flushHTML());
-            break;
-          }
+          case FlushStatus.complete:
+            // Consuming and serializing may abort, re-entering through the
+            // boundary listener, or serialize lazy data that starts async work.
+            head = head.consume();
+            if (boundary.signal.aborted) break;
+            html += head.flushHTML();
+            if (!(boundary.count || boundary.signal.aborted)) {
+              settle(boundary);
+              resolve(html);
+            }
         }
       })();
     }));
@@ -336,6 +341,8 @@ class ServerRendered implements RenderedTemplate {
     onClose: () => void,
   ) {
     let tick = true;
+    let flushing = false;
+    let again = false;
     let head = this.#head!;
     this.#head = null;
 
@@ -346,26 +353,45 @@ class ServerRendered implements RenderedTemplate {
 
     const { boundary } = head;
     const onNext = (boundary.onNext = (write?: boolean) => {
-      const status = boundary.flush();
-      if (status === FlushStatus.aborted) {
-        if (!tick) offTick(onNext);
-        boundary.onNext = NOOP;
-        onAbort(boundary.signal.reason);
-      } else if (write || status === FlushStatus.complete) {
-        head = head.consume();
-        if (boundary.signal.aborted) return;
-        const html = head.flushHTML();
-        if (html) onWrite(html);
-        if (status === FlushStatus.complete) {
-          if (!tick) offTick(onNext);
-          onClose();
-        } else {
-          tick = true;
-        }
-      } else if (tick) {
-        tick = false;
-        queueTick(onNext);
+      // Flushing can abort or end async work, which re-enters here through the
+      // boundary; the pass in progress runs again rather than interleave.
+      if (flushing) {
+        again = true;
+        return;
       }
+
+      flushing = true;
+      do {
+        again = false;
+        const status = boundary.flush();
+        if (status === FlushStatus.aborted) {
+          if (!tick) offTick(onNext);
+          settle(boundary);
+          onAbort(boundary.signal.reason);
+          return;
+        }
+
+        if (write || status === FlushStatus.complete) {
+          head = head.consume();
+          // An abort re-entered above, so the next pass reports it.
+          if (boundary.signal.aborted) continue;
+          const html = head.flushHTML();
+          if (boundary.signal.aborted) continue;
+          if (html) onWrite(html);
+          // Serializing lazy data may have started async work.
+          if (!boundary.count) {
+            if (!tick) offTick(onNext);
+            settle(boundary);
+            onClose();
+            return;
+          }
+          if (write) tick = true;
+        } else if (tick) {
+          tick = false;
+          queueTick(onNext);
+        }
+      } while (again);
+      flushing = false;
     });
 
     onNext();
@@ -377,14 +403,26 @@ class ServerRendered implements RenderedTemplate {
     this.#head = null;
     if (!head) throw new Error(CONSUMED_RESULT_MESSAGE);
     const { boundary } = head;
-    switch (boundary.flush()) {
-      case FlushStatus.aborted:
-        throw boundary.signal.reason;
-      case FlushStatus.continue:
-        throw new Error("Cannot consume asynchronous render with 'toString'");
+    const html =
+      boundary.flush() === FlushStatus.complete
+        ? head.consume().flushHTML()
+        : "";
+    if (boundary.count) {
+      boundary.abort(
+        new Error("Cannot consume asynchronous render with 'toString'"),
+      );
     }
-    return head.consume().flushHTML();
+    settle(boundary);
+    if (boundary.signal.aborted) throw boundary.signal.reason;
+    return html;
   }
+}
+
+// A settled render reports nothing more, and a shared `$global.signal` no
+// longer holds it.
+function settle(boundary: Boundary) {
+  boundary.onNext = NOOP;
+  boundary.state.$global.signal?.removeEventListener("abort", boundary);
 }
 
 function NOOP() {}
