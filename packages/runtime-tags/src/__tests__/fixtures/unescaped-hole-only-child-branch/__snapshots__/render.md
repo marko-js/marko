@@ -23,9 +23,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: main::text(" ")
 INSERT: main > b
-REMOVE: main > b + ::text(" ")
 ```
 
 # Update
@@ -60,7 +58,5 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-INSERT: main::text(" ")
 INSERT: main > b
-REMOVE: main > b + ::text(" ")
 ```

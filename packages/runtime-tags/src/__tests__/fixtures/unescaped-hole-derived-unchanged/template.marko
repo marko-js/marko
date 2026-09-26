@@ -1,0 +1,5 @@
+<let/n=0/>
+<const/html=(n > 0 ? "<i>big</i>" : "<b>small</b>")/>
+<div>$!{html}</div>
+<p>$!{n > 0 ? "<i>big</i>" : "<b>small</b>"}</p>
+<button onClick() { n++ }>${n}</button>

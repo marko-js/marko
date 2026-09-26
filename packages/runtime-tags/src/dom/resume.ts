@@ -450,6 +450,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               if (visitType === ResumeSymbol.HtmlStart) {
                 htmlStart = visit;
               } else {
+                if (MARKO_DEBUG && visit.parentNode !== htmlStart!.parentNode) {
+                  console.error(
+                    "An unescaped placeholder (`$!{}`) rendered HTML that does not parse as a balanced fragment where it is placed (an unclosed, stray or misnested tag), so updating it removes the wrong nodes.",
+                  );
+                }
                 // Both markers join the claimed range so the first update
                 // replaces them along with the server-rendered markup.
                 visitScope[nextToken(/* read accessor */)] = htmlStart!;

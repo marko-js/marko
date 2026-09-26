@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27266 (min) 10183 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -100,18 +100,20 @@ let unsafeStyleAttrReg = /[\\;]/g,
   isResuming,
   cloneCache = {},
   _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
-    let firstChild = scope[accessor],
-      parentNode = firstChild.parentNode,
-      lastChild = scope["H" + accessor] || firstChild,
-      newContent = parseHTML(_to_text(value), parentNode.namespaceURI),
-      newFirstChild = (scope[accessor] =
-        newContent.firstChild || newContent.appendChild(new Text())),
-      newLastChild = (scope["H" + accessor] = newContent.lastChild),
-      branch = scope.F;
-    (branch?.S === firstChild && (branch.S = newFirstChild),
-      branch?.K === lastChild && (branch.K = newLastChild),
-      insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild),
-      removeChildNodes(firstChild, lastChild));
+    if (scope["P" + accessor] !== (scope["P" + accessor] = _to_text(value))) {
+      let firstChild = scope[accessor],
+        parentNode = firstChild.parentNode,
+        lastChild = scope["H" + accessor] || firstChild,
+        newContent = parseHTML(scope["P" + accessor], parentNode.namespaceURI),
+        newFirstChild = (scope[accessor] =
+          newContent.firstChild || newContent.appendChild(new Text())),
+        newLastChild = (scope["H" + accessor] = newContent.lastChild),
+        branch = scope.F;
+      (branch?.S === firstChild && (branch.S = newFirstChild),
+        branch?.K === lastChild && (branch.K = newLastChild),
+        insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild),
+        removeChildNodes(firstChild, lastChild));
+    }
   }),
   R = /[\p{L}\p{N}]/gu,
   inputType = "",

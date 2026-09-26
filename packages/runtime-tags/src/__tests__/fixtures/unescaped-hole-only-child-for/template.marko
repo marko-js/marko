@@ -1,0 +1,8 @@
+<let/list=[]/>
+<div>
+  <span>before</span>
+  <for|x| of=list>$!{x}</for>
+  <span>after</span>
+</div>
+<button.add onClick() { list = [`<b>${list.length}</b><i>${list.length}</i>`, ...list] }>add</button>
+<button.clear onClick() { list = [] }>clear</button>

@@ -128,7 +128,7 @@ Don't fetch while rendering: start data loads early, pass the promise through th
 ```
 
 - Repeated attr tags (many `<@tab ...>`) arrive as the singular prop `input.tab`: the first tab's attrs, made iterable, not an array: `input.tab[i]` and `input.tab.length` are undefined. To index or count, spread first: `<const/tabs=[...input.tab ?? []]>` then `tabs[active]`/`tabs.length`. Looping directly is fine: `<for|tab| of=input.tab>`.
-- Text: `0` renders; `false`/`null`/`undefined`/`""`/`NaN` render nothing. `$!{html}` inserts raw HTML.
+- Text: `0` renders; `false`/`null`/`undefined`/`""`/`NaN` render nothing. `$!{html}` inserts raw HTML; it must be a balanced fragment (no truncated excerpts), or updating it after SSR removes the wrong nodes.
 - Conditional attrs: `false`/`null` attrs are omitted from HTML. `aria-selected` etc. want strings: `aria-selected=(i === active && "true")`.
 - `class=` / `style=` accept strings, objects, arrays: `class=["btn", { active }]`, `style={ color }` (single braces). `style=` keys are kebab-case CSS names (`{ "background-color": c }`); camelCase keys are written verbatim. `...input` spreads attrs onto a tag; `content=` passes body content as an attr.
 - `<define/Panel|input|>` declares a local tag inline; `<${Toolbar.Undo}/>` renders a dynamic tag (falsy name → content only).

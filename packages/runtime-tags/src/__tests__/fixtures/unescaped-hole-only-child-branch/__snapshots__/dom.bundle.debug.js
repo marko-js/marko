@@ -3,7 +3,7 @@ const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
 const $if_content__input_html = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _html($scope, $scope._.input_html, "#text/0"));
 const $if_content__setup = $if_content__input_html;
-const $if = /*@__PURE__*/ _if("#text/0", " ", " ", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<!>", "%", $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);

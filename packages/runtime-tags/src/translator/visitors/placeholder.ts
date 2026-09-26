@@ -90,9 +90,14 @@ export default {
         structure.writeTextTo(placeholder, staticText!);
       } else {
         const siblingText = extra[kSiblingText]!;
+        const { content } = getSection(placeholder);
         if (
           siblingText === SiblingText.Before ||
-          siblingText === SiblingText.After
+          siblingText === SiblingText.After ||
+          // A lone text node is cloned without a parent, and `_html` needs one.
+          (!node.escape &&
+            content!.singleChild &&
+            content!.startType === ContentType.Placeholder)
         ) {
           structure.visit(placeholder, WalkCode.Replace);
         } else {

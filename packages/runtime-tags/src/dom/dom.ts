@@ -348,29 +348,36 @@ export const _html = /*@__PURE__*/ withDynamicHtml(function _html(
   value: unknown,
   accessor: Accessor,
 ) {
-  const firstChild = scope[accessor] as ChildNode;
-  const parentNode = firstChild.parentNode!;
-  const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
-    firstChild) as ChildNode;
-  const newContent = parseHTML(
-    _to_text(value),
-    (parentNode as Element).namespaceURI!,
-  );
+  // Equal markup stays, since re-parsing it loses focus and element identity.
+  if (
+    scope[AccessorPrefix.DynamicHTMLValue + accessor] !==
+    (scope[AccessorPrefix.DynamicHTMLValue + accessor] = _to_text(value))
+  ) {
+    const firstChild = scope[accessor] as ChildNode;
+    const parentNode = firstChild.parentNode!;
+    const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
+      firstChild) as ChildNode;
+    const newContent = parseHTML(
+      scope[AccessorPrefix.DynamicHTMLValue + accessor],
+      (parentNode as Element).namespaceURI!,
+    );
 
-  const newFirstChild = (scope[accessor] =
-    newContent.firstChild || newContent.appendChild(new Text()));
-  const newLastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] =
-    newContent.lastChild!);
-  // A hole at a branch's edge moves the edge with it.
-  const branch = scope[AccessorProp.ClosestBranch];
-  if (branch?.[AccessorProp.StartNode] === firstChild) {
-    branch[AccessorProp.StartNode] = newFirstChild;
+    const newFirstChild = (scope[accessor] =
+      newContent.firstChild || newContent.appendChild(new Text()));
+    const newLastChild = (scope[
+      AccessorPrefix.DynamicHTMLLastChild + accessor
+    ] = newContent.lastChild!);
+    // A hole at a branch's edge moves the edge with it.
+    const branch = scope[AccessorProp.ClosestBranch];
+    if (branch?.[AccessorProp.StartNode] === firstChild) {
+      branch[AccessorProp.StartNode] = newFirstChild;
+    }
+    if (branch?.[AccessorProp.EndNode] === lastChild) {
+      branch[AccessorProp.EndNode] = newLastChild;
+    }
+    insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild);
+    removeChildNodes(firstChild, lastChild);
   }
-  if (branch?.[AccessorProp.EndNode] === lastChild) {
-    branch[AccessorProp.EndNode] = newLastChild;
-  }
-  insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild);
-  removeChildNodes(firstChild, lastChild);
 });
 
 function normalizeClientRender(value: any) {
