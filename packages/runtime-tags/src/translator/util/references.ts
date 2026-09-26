@@ -174,6 +174,8 @@ export interface Binding {
    * creates that reads it. */
   localClosures: Map<Section, Binding> | undefined;
   declared: boolean;
+  /** False only when never nullish, or destructured (nullish throws there anyway): generated
+   * property reads then omit `?.`, even outside the template's own guards. */
   nullable: boolean;
   /** Settled only once `finalizeReferences` runs at program analyze exit. */
   pruned: boolean | undefined;
@@ -2262,6 +2264,8 @@ function addReadToExpression(
   }
 }
 
+// One hop suffices: a direct alias is only created on a canonical binding (`trackVarReferences`
+// canonicalizes its upstream; `createBinding` reuses a property's first binding), never on another.
 export function getCanonicalBinding(binding: Binding) {
   const alias = binding.upstreamAlias;
   if (alias && isDirectAlias(binding)) {
@@ -2852,6 +2856,8 @@ function findClosestUpstream(from: Binding, to: Binding) {
   } while ((closest = closest.upstreamAlias));
 }
 
+// Skips a binding whose upstream alias the expression also reads, since the read resolves
+// through that alias; `pruneBinding` relies on this when it drops the read from the binding.
 function getRootBindings(reads: Many<Read>): SortedOneMany<Binding> {
   let rootRefs!: SortedOneMany<Binding>;
   let allBindings!: SortedOneMany<Binding>;

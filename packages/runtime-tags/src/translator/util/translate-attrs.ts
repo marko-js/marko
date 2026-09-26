@@ -227,6 +227,8 @@ export function addDynamicAttrTagStatements(
         }
       }
     } else {
+      // Only `<if>` chains and `<for>` translate here; any other `controlFlow` tag
+      // must reject attribute tags (as `<show>` does) or they are silently dropped.
       switch (getTagName(tag)) {
         case "if":
           return translateIfAttrTag(

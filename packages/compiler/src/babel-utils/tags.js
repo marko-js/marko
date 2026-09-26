@@ -11,6 +11,8 @@ import { getTagDefForTagName } from "./taglib";
 const { cwd, root } = markoModules;
 const MACRO_IDS_KEY = Symbol();
 const MACRO_NAMES_KEY = "__marko_macro_names__"; // must be a string literal since it is used across compiler stages.
+// Attribute tags inside these pass through to the enclosing tag, so the set must include
+// every `parseOptions.controlFlow` tag that accepts attribute tags.
 const TRANSPARENT_TAGS = new Set([
   "for",
   "while",
@@ -406,7 +408,8 @@ function encodeTemplateId(id) {
   let r = c[n % 53]; // Avoids chars that cannot start a property name and _ (reserved).
   n = Math.floor(n / 53);
 
-  // ensure at most 7 characters.
+  // At most 7 characters (~3.6e12 ids). Hashed ids key `_resumed` and the compile cache
+  // app-wide, so shortening them trades bytes for collisions.
   for (let i = 6; n > 0 && i--; n = Math.floor(n / 64)) {
     r += c[n & 63];
   }

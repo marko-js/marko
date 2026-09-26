@@ -49,6 +49,7 @@ export interface TagDefinition {
     descriptionMoreURL?: string;
   }>;
   htmlType?: "html" | "svg" | "math";
+  /** Also true for a custom tag named after an HTML element, which inherits that element's definition; test nativeness with `isNativeTag`. */
   html?: boolean;
   name: string;
   isNestedTag?: boolean;
@@ -267,6 +268,8 @@ export function withLoc<T extends t.Node>(
   end: number,
 ): T;
 
+// Pass the `parse*` helpers a source position only while parsing or migrating: a positioned parse
+// returns its error as a `MarkoParseError` node, which nothing reports after migrate.
 export function parseStatements<T extends t.Statement[]>(
   file: t.BabelFile,
   str: string,
@@ -337,6 +340,8 @@ export function resolveRelativePath(
   request: string,
   tagDef?: TagDefinition,
 ): string;
+// `importDefault`/`importStar`/`importNamed` are translate-only: an import added earlier lands in
+// the cached AST every output clones, where each output's import dedupe cannot see it.
 export function importDefault(
   file: t.BabelFile,
   request: string,
@@ -387,6 +392,8 @@ export interface Diagnostic {
 export interface DiagnosticOptions {
   label: string;
   loc?: undefined | false | LocRange;
+  /** Without `applyFixes`, each uncached compile calls every fix with `undefined`, which a confirm/select `apply` must ignore;
+   * `applyFixes` picks fixes by diagnostic index, so applying one must not add or drop diagnostics. */
   fix?:
     | undefined
     | (() => void)

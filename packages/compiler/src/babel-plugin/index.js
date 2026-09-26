@@ -301,6 +301,8 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     }
 
     rootTransformers.push(transform);
+    // The translator's transform goes last, so its Program exit (runtime-tags' pre-analyze)
+    // runs after every taglib transformer.
     if (translator.transform) {
       rootTransformers.push(translator.transform);
     }
@@ -405,6 +407,8 @@ function isNewerThan(filename, time, markoOpts) {
   return mtime > time;
 }
 
+// Translate gets analyze's `metadata.marko` copied one level deep, minus Symbol keys (`for...in`
+// skips them): keep per-output state such as NodePaths under a Symbol so each output starts empty.
 function shallowClone(data) {
   const clone = {};
 

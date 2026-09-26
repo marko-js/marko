@@ -260,6 +260,8 @@ export function knownTagTranslateHTML(
     }
   }
 
+  // Nothing between this and the child call may render a template or content body: the next
+  // one to render consumes the reason set here.
   if (contentSection.paramReasonGroups) {
     const childSerializeReasonExpr = buildChildSerializeReason(
       section,
@@ -1053,6 +1055,8 @@ function writeAttrsToSignals(
       if (!statements) {
         statements = [];
         statementsByGroup.set(group, {
+          // `analyzeAttrs` merged the group's references into its `firstTag`: for `child` to be
+          // that tag, this walk must skip and group attribute tags exactly as `analyzeAttrs` does.
           referencedBindings: child.node.extra?.referencedBindings,
           statements,
         });

@@ -1,3 +1,5 @@
+// Codes other than Next/Over/Out/Multiplier stay at or below 49 (`"1"`): `_content`
+// and `trimTrailingExits` strip a trailing run of codes above it as exits.
 export const Get = 32;
 export const Replace = 37;
 export const EndChild = 38;

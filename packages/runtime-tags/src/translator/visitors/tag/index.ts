@@ -24,6 +24,8 @@ export default {
       try {
         const tagDef = getTagDef(tag);
         const type = analyzeTagNameType(tag);
+        // A tag's own `analyze` skips the built-in analysis the built-in translate reads, and its
+        // own `translate` skips what that analysis planned, so a tag defines both hooks or neither.
         const hook = tagDef?.analyzer?.hook as Plugin;
 
         if (hook) {

@@ -154,6 +154,8 @@ export default {
       let spreadReferenceNodes: t.Node[] | undefined;
       let exprExtras: Opt<t.NodeExtra>;
 
+      // Must classify as `getUsedAttrs` does, where the last spread absorbs every attr before it
+      // plus a controllable after it that sets only some of its attrs.
       for (let i = attributes.length; i--;) {
         const attr = attributes[i];
 

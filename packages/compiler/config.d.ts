@@ -36,9 +36,11 @@ declare const Config: {
   hydrateInit?: boolean;
   optimize?: boolean;
   optimizeKnownTemplates?: string[];
-  /** Overrides the default template id (the root-relative, percent-encoded path). */
+  /** Overrides the template id (by default derived from the path relative to the cwd's package root), not child
+   * register ids, which still derive from that path. Must not start with `_`, `-`, `$C_` or `$compat_`, which runtime-owned ids use. */
   getTemplateId?(request: string): string;
-  /** Share one only across compiles whose config differs in nothing but `output`. */
+  /** Share one only across compiles whose config differs in nothing but `output` and `entry`. It rechecks each template's content and
+   * its dependencies' mtimes, but taglib discovery is cached apart: after adding or removing files or editing `marko.json`, clear it and call `taglib.clearCaches()`. */
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */

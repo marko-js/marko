@@ -301,6 +301,8 @@ export function getBindingGetterIdentifier(
   return identifier;
 }
 
+// Pass resolved `referencedBindings` (intersections are canonical per section). Signals other than
+// setup, intersections and closures get `build` from `initValue` or their tag, or write only effects.
 export function getSignal(
   section: Section,
   referencedBindings: ReferencedBindings,
@@ -893,6 +895,8 @@ function subscribe(references: ReferencedBindings, subscriber: Signal) {
   }
 }
 
+// A helper param with a default, or an encoded accessor (0 decodes to `a`), must come last:
+// absent, `null`, `void` and empty-block arrow arguments become 0 and are dropped only when trailing.
 export function replaceNullishAndEmptyFunctionsWith0(
   args: (t.Expression | undefined | false)[],
 ): t.Expression[] {
@@ -1271,6 +1275,8 @@ export function addHTMLEffectCall(
   signal.hasHTMLEffect = signal.hasSideEffect = true;
 }
 
+// Runs once per section, after its descendant sections: a serialized value, write
+// scope builder, or HTML section statement added for the section later is lost.
 export function writeHTMLResumeStatements(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
 ) {
@@ -1534,6 +1540,8 @@ export function writeHTMLResumeStatements(
   }
 
   const additionalStatements = getHTMLSectionStatements(section);
+  // `_scope_id()` must be the section's first scope id allocation: callers of a branch or
+  // child renderer `_peek_scope_id()` before running it and use that id as its scope.
   if (body.length || additionalStatements.length) {
     body.unshift(
       t.variableDeclaration("const", [

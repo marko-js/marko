@@ -363,6 +363,7 @@ export function forEachAncestorSection<A>(
   for (let cur = from; cur !== to && cur.parent; cur = cur.parent) fn(cur, arg);
 }
 
+// Visits children before parents: `startSection` numbers a parent before its children.
 export function forEachSectionReverse(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;
   for (let i = sections!.length; i--;) {

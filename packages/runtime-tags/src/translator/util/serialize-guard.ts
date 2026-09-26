@@ -99,7 +99,7 @@ export function buildGroupMask(
     : literal || dynamic || t.numericLiteral(0);
 }
 
-// Every section body consumes (and clears) its caller's reason; it binds it,
+// Every template and content body consumes (and clears) its caller's reason; it binds it,
 // with its hoisted guards, only when a guard is dynamic.
 export function getScopeReasonStatement(section: Section): t.Statement {
   return hasDynamicSerializeReason(section)
@@ -107,6 +107,8 @@ export function getScopeReasonStatement(section: Section): t.Statement {
     : t.expressionStatement(callRuntime("_scope_reason"));
 }
 
+// `optional` omits a static truthy guard, which is safe only for a runtime flag tested
+// `=== 0`/`!== 0`; a flag read for truthiness (`_show_start`) must pass `false`.
 export function getSerializeGuard(
   section: Section,
   reason: undefined | SerializeReason,

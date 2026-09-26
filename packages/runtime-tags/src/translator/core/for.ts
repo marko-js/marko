@@ -524,6 +524,8 @@ function findLoopParamRead(
   }
 }
 
+// The returned binding lives in the branch's `LoopKey` slot, which the loop fills with each
+// item's key, so it must be exactly the value `by` returns, or the default key without `by`.
 function getLoopKeyBinding(
   byAttr: t.Expression | undefined,
   paramsBinding: Binding | undefined,

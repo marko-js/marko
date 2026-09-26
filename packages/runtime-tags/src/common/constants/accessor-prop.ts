@@ -1,3 +1,5 @@
+// Each key is one character that is not a lowercase letter or digit, so it never
+// equals a binding accessor (`decodeAccessor`), a render slot, or a prefixed key.
 export const Global = "$";
 export const Owner = "_";
 export const AbortControllers = "A";

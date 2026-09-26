@@ -11,6 +11,8 @@ import {
 import type { Section } from "./sections";
 import { toPropertyName } from "./to-property-name";
 
+// A scope's Owner is a scope of its section's parent, so `targetSection` must be
+// `section` or an ancestor: only the depth difference is checked.
 export function getScopeExpression(section: Section, targetSection: Section) {
   let scope: t.Expression = scopeIdentifier ?? t.identifier("undefined");
   const diff = section.depth - targetSection.depth;

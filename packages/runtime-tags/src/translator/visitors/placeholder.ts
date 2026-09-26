@@ -289,6 +289,8 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       break;
     }
   }
+  // The parent's `resolveStructure` separates only a child template's static text
+  // edges, so a placeholder at a program edge separates itself.
   if (!prev.node && prevParent.isProgram()) {
     return (placeholderExtra[kSiblingText] = SiblingText.Before);
   }

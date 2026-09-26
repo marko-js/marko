@@ -136,8 +136,8 @@ payloads with trailing assignments apply the fill through the context and end in
 
 DOM association has two encodings:
 
-- DOM **walk strings** (`translator/util/walks.ts`, `dom/walker.ts`) locate nodes
-  when cloning new client branches.
+- DOM **walk strings** (`translator/util/structure.ts`, `dom/walker.ts`) locate
+  nodes when cloning new client branches.
 - SSR **resume comments** (`html/writer.ts`, `dom/resume.ts`) attach existing
   nodes/ranges to scopes and reconstruct owners, branches, keys, and await state.
 

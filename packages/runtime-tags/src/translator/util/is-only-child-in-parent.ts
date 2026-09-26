@@ -15,6 +15,8 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
+// Memoized per tag: the first call must be in analyze, since translate rewrites the
+// siblings this counts, and every call for a tag must pass the same `branchSize`.
 export function getOnlyChildParentTagName(
   tag: t.NodePath<t.MarkoTag>,
   branchSize = 1,

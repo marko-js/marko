@@ -350,6 +350,8 @@ function getExportedName(specifier: t.ExportSpecifier) {
   return exported.type === "Identifier" ? exported.name : exported.value;
 }
 
+// A native `on*` attribute with a spread after it joins the spread object passed to `_attrs`,
+// so it must still register.
 function canIgnoreRegister(
   markoRoot: MarkoExprRootPath,
   exprRoot: t.NodePath<t.Node>,

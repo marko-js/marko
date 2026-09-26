@@ -117,6 +117,8 @@ interface ResolvedStructure {
 // Resolves a section's structure stream into its inert template markup and the
 // walk string claiming each visited node, including dynamic content edges.
 export function resolveStructure(section: Section) {
+  // Nested control flow removes its marker once it renders a branch, so a section starting
+  // or ending with dynamic content gets a `<!>` to hold its branch's start or end node.
   const startDynamic = section.content?.startType === ContentType.Dynamic;
   const resolved: ResolvedStructure = {
     writes: [startDynamic ? "<!>" : ""],
@@ -210,6 +212,8 @@ function resolveRef(ref: StructureRef, part: "template" | "walks") {
       part === "template" ? "writes" : "walks"
     ];
   }
+  // Imported even for a child whose setup import is skipped: below an entry root this may be
+  // the only import that loads the child module and runs its registrations.
   const name = ref.program.domExports![part];
   // Sections survive the per-compile AST clone; the extra objects do not.
   return ref.program.section === getProgram().node.extra.section

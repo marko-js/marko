@@ -23,6 +23,7 @@ export function createProgramState<T>(init: () => T) {
 }
 
 // Kept on `program.state`, which each traversal pass resets.
+// Keyed by `section.id`, which restarts per template: pass only this program's sections.
 export function createSectionState<T = unknown>(
   key: string,
   init?: ((section: Section) => T) | (() => T),
