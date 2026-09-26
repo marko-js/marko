@@ -20,7 +20,7 @@ pnpm test -- --grep "runtime-tags/translator <fixture> "  # scoped test run
 pnpm run test:serial -- --grep "..."                      # same run in one process: bail at first failure, live output, --inspect-brk
 pnpm test -- <file.test.ts>                               # only the given spec files (dirs and globs work too)
 pnpm run test:update -- --grep "..."                      # regenerate snapshots (review the diff!)
-pnpm run compile -- -o dom -d foo.marko                   # compiled output -> foo.marko.js (-o html for SSR; omit -d for optimized)
+pnpm run compile -- -o dom -d foo.marko                   # print compiled output (-o html for SSR; omit -d for optimized)
 pnpm run build                                            # all packages -> dist/ + .d.ts
 pnpm run build:sizes                                      # bundle-size table; diffs vs .sizes.json
 pnpm run lint                                             # oxlint + oxfmt check
@@ -28,7 +28,7 @@ pnpm run format                                           # oxlint --fix + oxfmt
 pnpm run change                                           # add a changeset (required for user-facing changes)
 ```
 
-`pnpm run compile` is the fastest way to inspect what the translator generates. (Pass `-t class` for the Marko 5 translator; `-t` also accepts a full translator module id.)
+`pnpm run compile` is the fastest way to inspect what the translator generates. It writes nothing: each compiled module, and then any module the translator generates for it, prints to stdout under a `// <resolved path>` header. (Pass `-t class` for the Marko 5 translator; `-t` also accepts a full translator module id.)
 
 `pnpm run change` prompts, so write `.changeset/<name>.md` directly, naming the package that owns the changed code: `packages/compiler` is `@marko/compiler`, `packages/runtime-tags` is `@marko/runtime-tags`, `packages/runtime-class` is `marko`. `pnpm exec changeset status` fails on a name that is no workspace package (which would break the release on `main`), but not on the wrong one: `marko` for a runtime-tags fix passes and publishes the wrong package.
 

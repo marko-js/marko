@@ -1,4 +1,3 @@
-import fs from "fs";
 import path from "path";
 import { parseArgs } from "util";
 
@@ -42,24 +41,19 @@ const translator =
   args.values.translator ||
   TRANSLATORS.tags;
 
+// Printed rather than written so inspecting a template never adds files beside
+// it; each module prints under its resolved path, the entry first.
 for (const entry of args.positionals) {
-  const inputFileName = path.resolve(entry);
-  const outputFileName = inputFileName + ".js";
-
-  const { code } = compileFileSync(inputFileName, {
+  const filename = path.resolve(entry);
+  const generated = new Map<string, string>();
+  const { code } = compileFileSync(filename, {
     output: args.values.output as Config["output"],
     optimize: !args.values.dev,
     sourceMaps: false,
     modules: "esm",
-    // Generated modules are written beside the output, with their path
-    // flattened into the name so they stay in one directory.
-    resolveVirtualDependency(filename, { virtualPath, code }) {
-      const request =
-        "./" + virtualPath.replace(/^\.\//, "").replaceAll("/", "__");
-      const virtualFileName = path.resolve(filename, "..", request);
-      fs.writeFileSync(virtualFileName, code);
-      console.log(virtualFileName);
-      return request;
+    resolveVirtualDependency(from, { virtualPath, code }) {
+      generated.set(path.resolve(from, "..", virtualPath), code);
+      return virtualPath;
     },
     babelConfig: {
       babelrc: false,
@@ -69,6 +63,10 @@ for (const entry of args.positionals) {
     translator,
   });
 
-  fs.writeFileSync(outputFileName, code);
-  console.log(outputFileName);
+  printModule(filename, code);
+  generated.forEach((code, name) => printModule(name, code));
+}
+
+function printModule(name: string, code: string) {
+  console.log(`// ${name}\n${code}\n`);
 }
