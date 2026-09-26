@@ -7,7 +7,7 @@ import {
 } from "../common/types";
 import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
-import { prepareEffects, queueEffect, runEffects } from "./queue";
+import { prepareEffects, queueEffect, rendering, runEffects } from "./queue";
 import { _content, createAndSetupBranch, type Renderer } from "./renderer";
 import { _resumed, getRegisteredWithScope, init } from "./resume";
 import { destroyBranch } from "./scope";
@@ -136,7 +136,7 @@ export const compat = {
       }
     }
 
-    component.effects = prepareEffects(() => {
+    const renderBranch = () => {
       if (!branch) {
         created = 1;
         // The insertion point is still virtual here, so a template rooted at a
@@ -153,7 +153,12 @@ export const compat = {
         branch,
         (renderer as any)._ ? args[0] : args,
       );
-    });
+    };
+    // A tags parent re-rendering this class component is mid-run; that run
+    // flushes this render and its effects.
+    component.effects = rendering
+      ? renderBranch()
+      : prepareEffects(renderBranch);
 
     if (created) {
       return toInsertNode(

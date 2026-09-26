@@ -13,7 +13,13 @@ import {
   type Scope,
 } from "../common/types";
 import { trackCleanup } from "./abort-signal";
-import { queueEffect, queueRender, rendering, runId } from "./queue";
+import {
+  queueAsyncRender,
+  queueEffect,
+  queueRender,
+  rendering,
+  runId,
+} from "./queue";
 import { _resumed } from "./resume";
 import { schedule } from "./schedule";
 
@@ -351,9 +357,12 @@ export function _closure_get(
   closureSignal[ClosureSignalProp.SignalIndexAccessor] =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
 
-  // A subscriber that resumes after its owner applies what the client changed
-  // since the server render, then subscribes.
-  if (resumeId) _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
+  // A subscriber resuming after its owner, as Reorder content does, queues a
+  // render to apply the owner's client-side changes and subscribe.
+  if (resumeId) {
+    _resumed[resumeId] = (scope: Scope) =>
+      queueAsyncRender(scope, closureSignal, 1);
+  }
 
   return closureSignal;
 }

@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/n=1/>
+<let/m=2/>
+<button onClick() { m++ }/>
+<script>n = 5</script>
+<try>
+  <await|v|=resolveAfter(0, 1)>
+    <let/local=n/>
+    <p>${n + m}</p>
+    <span>${local}</span>
+    <script>console.log("e" + n)</script>
+  </await>
+  <@placeholder>loading</@placeholder>
+</try>

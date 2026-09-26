@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27246 (min) 10183 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -754,7 +754,7 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   return (
     (closureSignal.a = valueAccessor),
     (closureSignal.b = "C" + valueAccessor),
-    resumeId && (_resumed[resumeId] = (scope) => closureSignal(scope, 1)),
+    resumeId && (_resumed[resumeId] = (scope) => queueAsyncRender(scope, closureSignal, 1)),
     closureSignal
   );
 }
@@ -2100,19 +2100,19 @@ let empty = [],
           normalizedInput = (args[0] = {});
         for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];
       }
+      let renderBranch = () => {
+        ((branch ||=
+          ((created = 1),
+          (component.scope = createAndSetupBranch(
+            out.global,
+            renderer,
+            renderer.e,
+            document.body,
+          )))),
+          renderer.d?.(branch, renderer._ ? args[0] : args));
+      };
       if (
-        ((component.effects = prepareEffects(() => {
-          ((branch ||=
-            ((created = 1),
-            (component.scope = createAndSetupBranch(
-              out.global,
-              renderer,
-              renderer.e,
-              document.body,
-            )))),
-            renderer.d?.(branch, renderer._ ? args[0] : args));
-        })),
-        created)
+        ((component.effects = rendering ? renderBranch() : prepareEffects(renderBranch)), created)
       )
         return toInsertNode(branch.S, branch.K);
     },
