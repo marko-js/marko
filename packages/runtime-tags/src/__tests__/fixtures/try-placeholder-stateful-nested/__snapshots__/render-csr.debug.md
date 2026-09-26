@@ -37,7 +37,6 @@ LOG "mounted" "outer placeholder"
 ```
 INSERT: button + p
 REMOVE: p + span
-UPDATE: p::text@6 "" => "0"
 ```
 ## Console
 ```
@@ -82,12 +81,11 @@ LOG "mounted" "inner placeholder"
 ```
 INSERT: p + span
 REMOVE: span + span
-UPDATE: span::text " " => "inner 0"
 ```
 ## Console
 ```
-LOG "destroyed" "inner placeholder"
 LOG "mounted" "inner 0"
+LOG "destroyed" "inner placeholder"
 ```
 
 # Update

@@ -30,7 +30,6 @@ INSERT: button + ::text("loading...")
 ```
 INSERT: button + span
 REMOVE: span + ::text("loading...")
-UPDATE: span::text " " => "1"
 ```
 
 # Update

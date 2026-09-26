@@ -28,8 +28,8 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text@6 "1" => "2"
-REMOVE: button
 INSERT: b
+REMOVE: b + button
 UPDATE: b::text " " => "nope"
 ```
 ## Console

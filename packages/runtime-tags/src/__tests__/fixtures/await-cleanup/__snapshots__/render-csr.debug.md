@@ -52,7 +52,6 @@ INSERT: #two + ::text("loading...")
 ```
 INSERT: #two + ::text("1")
 REMOVE: ::text + ::text("loading...")
-UPDATE: ::text " " => "1"
 ```
 
 # Update
