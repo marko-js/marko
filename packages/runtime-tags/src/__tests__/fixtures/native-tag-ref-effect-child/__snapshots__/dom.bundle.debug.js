@@ -9,7 +9,7 @@ var hello_setter_default = /*@__PURE__*/ _template("__tests__/tags/hello-setter.
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)("");
-const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("");
+const $walks = /*@__PURE__*/ ((_w0) => ` /${_w0}&b`)("");
 const $el_getter = _el("__tests__/template.marko_0_#div#0", "#div/0");
 function $setup($scope) {
 	$el($scope["#childScope/1"], $el_getter($scope));

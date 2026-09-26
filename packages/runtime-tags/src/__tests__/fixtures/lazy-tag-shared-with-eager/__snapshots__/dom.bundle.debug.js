@@ -17,8 +17,8 @@ function $setup$1($scope) {
 var inert_b_default = /*@__PURE__*/ _template("__tests__/inert-b.marko", $template$1, $walks$1, $setup$1);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)($template$2, $template$1);
-const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&b`)($walks$2, $walks$1);
+const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}`)($template$2, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&`)($walks$2, $walks$1);
 function $setup($scope) {
 	$setup$2($scope["#childScope/0"]);
 	$setup$1($scope["#childScope/1"]);

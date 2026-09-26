@@ -8,7 +8,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}<div></div>${_w1}`)("", "");
-const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}& b/${_w1}&`)("", "");
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}& /${_w1}&b`)("", "");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _el_read($scope["#div/1"]).innerHTML = "works");
 function $setup($scope) {
 	$input($scope["#childScope/0"], { action: $action($scope) });

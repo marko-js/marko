@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { kNativeTagBinding } from "../visitors/tag/native-tag";
+import { isPageElement, kNativeTagBinding } from "../visitors/tag/native-tag";
 import { getParentTag } from "./get-parent-tag";
 import { type Binding, BindingType, createBinding } from "./references";
 import type { Section } from "./sections";
@@ -29,6 +29,8 @@ export function getOnlyChildParentTagName(
     parentTag &&
     analyzeTagNameType(parentTag) === TagNameType.NativeTag &&
     parentTag.node.name.type === "StringLiteral" &&
+    // Marko does not own every child of a page element.
+    !isPageElement(parentTag.node.name.value) &&
     (tag.parent as t.MarkoTagBody).body.filter(
       (node) => node.type !== "MarkoComment",
     ).length === branchSize
