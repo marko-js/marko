@@ -151,6 +151,7 @@ export default {
       let hasDynamicAttributes = false;
       let hasEventHandlers = false;
       let relatedControllable: RelatedControllable;
+      let inputTypeWriter: InputTypeWriter;
       let spreadReferenceNodes: t.Node[] | undefined;
       let exprExtras: Opt<t.NodeExtra>;
 
@@ -221,6 +222,12 @@ export default {
         } else if (t.isMarkoSpreadAttribute(attr)) {
           spreadReferenceNodes = [attr.value];
           relatedControllable = getRelatedControllable(tagName, seen);
+          inputTypeWriter = getInputTypeWriter(
+            tagName,
+            seen,
+            relatedControllable,
+            true,
+          );
         } else {
           exprExtras = push(exprExtras, valueExtra);
         }
@@ -263,6 +270,14 @@ export default {
       }
 
       relatedControllable ||= getRelatedControllable(tagName, seen);
+      if (!spreadReferenceNodes) {
+        inputTypeWriter = getInputTypeWriter(
+          tagName,
+          seen,
+          relatedControllable,
+          false,
+        );
+      }
       const valueChangeEval =
         tagName === "input" && seen.valueChange
           ? evaluate(seen.valueChange.value)
@@ -324,6 +339,9 @@ export default {
             }
             relatedControllable = undefined;
           }
+          if (inputTypeWriter === "spread") {
+            spreadReferenceNodes.push(seen.type!.value);
+          }
           const spreadExtra = mergeReferences(
             tagSection,
             tag.node,
@@ -340,8 +358,15 @@ export default {
           mergeReferences(
             tagSection,
             relatedControllable.attrs.find(Boolean)!.value,
-            relatedControllable.attrs.map((it) => it?.value),
+            [
+              ...relatedControllable.attrs.map((it) => it?.value),
+              inputTypeWriter === "controllable" ? seen.type!.value : undefined,
+            ],
           );
+        }
+
+        if (inputTypeWriter === "value" && seen.value) {
+          mergeReferences(tagSection, seen.type!.value, [seen.value.value]);
         }
 
         if (textPlaceholders) {
@@ -888,6 +913,7 @@ export default {
           skipExpression,
           spreadExpression,
           injectNonce,
+          inputType,
         } = getUsedAttrs(tagName, tag.node);
 
         if (injectNonce) {
@@ -906,21 +932,27 @@ export default {
           );
         }
 
+        const inputValueIndex =
+          inputType && getControllableValueIndex(staticControllable);
         if (staticControllable) {
           const hasChangeHandler = !!staticControllable.attrs[1];
           const defaultHelper =
             getDOMControllableDefaultHelper(staticControllable);
           const firstAttr = staticControllable.attrs.find(Boolean)!;
           const referencedBindings = firstAttr.value.extra?.referencedBindings;
-          const values = (
-            hasChangeHandler
-              ? staticControllable.attrs
-              : staticControllable.attrs.toSpliced(1, 1)
-          ).map((attr) => attr?.value);
-          if (
-            hasChangeHandler &&
-            defaultHelper !== `${staticControllable.helper}_default`
-          ) {
+          const values: (t.Expression | undefined)[] =
+            staticControllable.attrs.map((attr) => attr?.value);
+          if (inputValueIndex !== undefined) {
+            values[inputValueIndex] = callRuntime(
+              "_attr_input_type",
+              createScopeReadExpression(nodeBinding!),
+              inputType!.value,
+              values[inputValueIndex],
+            );
+          }
+          if (!hasChangeHandler) {
+            values.splice(1, 1);
+          } else if (defaultHelper !== `${staticControllable.helper}_default`) {
             values.push(importRuntime(defaultHelper));
           }
 
@@ -954,7 +986,33 @@ export default {
           }
         }
 
+        if (inputType && inputValueIndex === undefined) {
+          const valueAttr = staticAttrs.find((attr) => attr.name === "value");
+          addStatement(
+            "render",
+            tagSection,
+            inputType.value.extra?.referencedBindings,
+            t.expressionStatement(
+              callRuntime(
+                "_attr",
+                createScopeReadExpression(nodeBinding!),
+                t.stringLiteral("value"),
+                callRuntime(
+                  "_attr_input_type",
+                  createScopeReadExpression(nodeBinding!),
+                  inputType.value,
+                  valueAttr?.value,
+                ),
+              ),
+            ),
+            true,
+          );
+        }
+
         for (const attr of staticAttrs) {
+          if (inputType && (attr === inputType || attr.name === "value")) {
+            continue;
+          }
           const { name, value } = attr;
           const { confident } = value.extra || {};
           const valueReferences = value.extra?.referencedBindings;
@@ -1279,6 +1337,47 @@ function getInputValueMode(typeAttr: t.MarkoAttribute | undefined) {
   }
 }
 
+type InputTypeWriter = ReturnType<typeof getInputTypeWriter>;
+// An input applies its value by its current `type`, so `_attr_input_type` writes a dynamic
+// `type` first in whichever write sets the value: a claiming spread, a controllable or `value`.
+function getInputTypeWriter(
+  tagName: string,
+  attrs: Record<string, t.MarkoAttribute | undefined>,
+  controllable: RelatedControllable,
+  spread: boolean,
+) {
+  if (tagName === "input" && getInputValueMode(attrs.type) === "dynamic") {
+    const writesValue = getControllableValueIndex(controllable) !== undefined;
+    if (
+      spread &&
+      !controllable?.attrs.every(Boolean) &&
+      (writesValue || !attrs.value)
+    ) {
+      return "spread" as const;
+    }
+    if (
+      writesValue &&
+      (controllable!.special ||
+        controllable!.attrs[1] ||
+        !evaluate(attrs.value!.value).confident)
+    ) {
+      return "controllable" as const;
+    }
+    if (!spread || attrs.value) {
+      return "value" as const;
+    }
+  }
+}
+
+function getControllableValueIndex(controllable: RelatedControllable) {
+  switch (controllable?.helper) {
+    case "_attr_input_value":
+      return 0;
+    case "_attr_input_checkedValue":
+      return 2;
+  }
+}
+
 function getDOMControllableDefaultHelper(
   controllable: NonNullable<RelatedControllable>,
 ) {
@@ -1311,6 +1410,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
   let skipExpression: undefined | t.Expression;
   let spreadProps: undefined | t.ObjectExpression["properties"];
   let staticControllable: RelatedControllable;
+  let inputTypeWriter: InputTypeWriter;
   let staticContentAttr: undefined | t.MarkoAttribute;
   let injectNonce = isInjectNonceTag(tagName);
   for (let i = attributes.length; i--;) {
@@ -1320,6 +1420,12 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
       if (!spreadProps) {
         spreadProps = [];
         staticControllable = getRelatedControllable(tagName, seen);
+        inputTypeWriter = getInputTypeWriter(
+          tagName,
+          seen,
+          staticControllable,
+          true,
+        );
         if (staticControllable && !staticControllable.attrs.every(Boolean)) {
           for (const attr of staticControllable.attrs) {
             if (attr) {
@@ -1329,6 +1435,10 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
           }
 
           staticControllable = undefined;
+        }
+        if (inputTypeWriter === "spread") {
+          spreadProps.push(toObjectProperty("type", seen.type!.value));
+          maybeStaticAttrs.delete(seen.type!);
         }
       }
       spreadProps.push(t.spreadElement(value));
@@ -1353,6 +1463,12 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
 
   if (!spreadProps) {
     staticControllable = getRelatedControllable(tagName, seen);
+    inputTypeWriter = getInputTypeWriter(
+      tagName,
+      seen,
+      staticControllable,
+      false,
+    );
     if (!isDynamicControllable(staticControllable)) {
       staticControllable = undefined;
     }
@@ -1367,6 +1483,8 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
   }
 
   const staticAttrs = [...maybeStaticAttrs].reverse();
+  const inputType =
+    inputTypeWriter && inputTypeWriter !== "spread" ? seen.type : undefined;
 
   if (staticOnly) {
     // Analyze reads only the static attrs; skip building the spread AST.
@@ -1377,6 +1495,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
       staticControllable,
       spreadExpression,
       skipExpression,
+      inputType,
     };
   }
 
@@ -1430,6 +1549,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
     staticControllable,
     spreadExpression,
     skipExpression,
+    inputType,
   };
 }
 
