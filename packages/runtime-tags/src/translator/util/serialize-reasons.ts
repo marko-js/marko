@@ -28,7 +28,11 @@ import {
   type Sources,
   getCanonicalExtra,
 } from "./references";
-import { forEachAncestorSection, type Section } from "./sections";
+import {
+  forEachAncestorSection,
+  type ParamSerializeReasonGroups,
+  type Section,
+} from "./sections";
 
 // Reasons any one of which serializes (a chain's branches, a section's
 // dom nodes); the guard builder answers for the set.
@@ -283,15 +287,6 @@ export function isOwnResumeReason(reason: SerializeReason | undefined) {
   return !!reason && !!(reason.state || reason.forced);
 }
 
-// A prop reason a reference finalizer adds never merges into the scope reason.
-export function hasOwnResumeReason(section: Section) {
-  if (isOwnResumeReason(section.serializeReason)) return true;
-  for (const reason of section.serializeReasons.values()) {
-    if (isOwnResumeReason(reason)) return true;
-  }
-  return false;
-}
-
 export function applySerializeExprs(section: Section) {
   const propExprs = section.propSerializeExprs;
   if (propExprs) {
@@ -399,8 +394,8 @@ function isStrOrSym(v: unknown): v is string | symbol {
   }
 }
 
-// Moves each time a section reason gains a source. The setters below only take
-// merges, so reasons only grow and a pass repeating until this holds settles.
+// Moves when a section reason gains a source or a section gains a param reason
+// group; both only grow, so a pass repeating until this holds settles.
 let reasonsVersion = 0;
 export function getSerializeReasonsVersion() {
   return reasonsVersion;
@@ -422,6 +417,16 @@ function setPropSerializeReason(
     reasonsVersion++;
   }
   section.serializeReasons.set(key, reason);
+}
+
+// Exists as the single point of assigning param reason groups: call sites feed
+// each group a reason, so a new one moves the version too.
+export function setParamReasonGroups(
+  section: Section,
+  groups: ParamSerializeReasonGroups,
+) {
+  reasonsVersion++;
+  section.paramReasonGroups = groups;
 }
 
 // Merges rebuild equal sources, so only a change in them counts.

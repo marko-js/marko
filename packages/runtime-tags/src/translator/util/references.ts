@@ -1424,6 +1424,10 @@ export function finalizeReferences() {
     }
   });
 
+  for (const finalize of getReferenceFinalizers()) {
+    finalize();
+  }
+
   forEachSection(applySerializeExprs);
 
   // Rules that follow other reasons repeat until none moves; every write merges,
@@ -1548,10 +1552,6 @@ export function finalizeReferences() {
     programSection.returnSerializeReason = getSerializeSourcesForExpr(
       programSection.returnValueExpr,
     );
-  }
-
-  for (const finalize of getReferenceFinalizers()) {
-    finalize();
   }
 
   readsByExpression.clear();
@@ -2077,6 +2077,8 @@ const [getFunctionReadsByExpression] = createProgramState(
 );
 const [getReferenceFinalizers] = createProgramState<(() => void)[]>(() => []);
 
+// Runs once reads and assignments settle, before serialize reasons propagate,
+// so a finalizer may add reasons but never reads them.
 export function onFinalizeReferences(finalize: () => void) {
   getReferenceFinalizers().push(finalize);
 }

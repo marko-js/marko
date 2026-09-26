@@ -44,6 +44,7 @@ import {
   type SerializeKey,
   type SerializeReason,
   type SerializeReasons,
+  setParamReasonGroups,
 } from "./serialize-reasons";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -616,9 +617,12 @@ function ensureParamReasonGroup(
     id: Symbol(getDebugNames(reason)),
     reason,
   };
-  section.paramReasonGroups = paramReasonGroups
-    ? addSorted(compareParamGroups, paramReasonGroups, group)
-    : [group];
+  setParamReasonGroups(
+    section,
+    paramReasonGroups
+      ? addSorted(compareParamGroups, paramReasonGroups, group)
+      : [group],
+  );
 }
 
 export function getParamReasonGroupIndex(
