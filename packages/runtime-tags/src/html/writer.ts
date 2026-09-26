@@ -947,7 +947,7 @@ export function _await<T>(
     chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
   }
   boundary.startAsync();
-  promise.then(
+  Promise.resolve(promise).then(
     (value) => {
       if (chunk.async) {
         chunk.async = false;

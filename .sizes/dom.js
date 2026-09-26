@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27315 (min) 10199 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1790,7 +1790,7 @@ function _await_promise(nodeAccessor, params) {
                   (awaitBranch.S.parentNode.insertBefore(scope[nodeAccessor], awaitBranch.S),
                   tempDetachBranch(tryBranch));
               })));
-      let thisPromise = (scope[promiseAccessor] = promise.then(
+      let thisPromise = (scope[promiseAccessor] = Promise.resolve(promise).then(
         (data) => {
           if (thisPromise === scope[promiseAccessor]) {
             let referenceNode = scope[nodeAccessor];
@@ -1801,35 +1801,22 @@ function _await_promise(nodeAccessor, params) {
             queueAsyncRender(scope, () => {
               awaitBranch = resolveAwait(scope, referenceNode, data);
               let pendingRenders = awaitBranch.W;
-              if (
-                ((awaitBranch.W = 0),
+              ((awaitBranch.W = 0),
                 pendingRenders?.forEach(queuePendingRender),
                 placeholderShown.add(pendingEffects),
-                awaitCounter.c(),
-                awaitCounter.m)
-              ) {
-                let fnScopes = /* @__PURE__ */ new Map(),
-                  effects = awaitCounter.m([]);
-                for (let i = 0; i < pendingEffects.length;) {
-                  let fn = pendingEffects[i++],
-                    scopes = fnScopes.get(fn);
-                  (scopes || fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
-                    scopes.add(pendingEffects[i++]));
-                }
-                for (let i = 0; i < effects.length;) {
-                  let fn = effects[i++],
-                    scope = effects[i++];
-                  fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
-                }
-              }
+                queueRender(tryBranch, completeAwaitCounter, -1, awaitCounter, tryBranch.L + 1e9));
             });
           }
         },
         (error) => {
           thisPromise === scope[promiseAccessor] &&
             ((scope[promiseAccessor] = 0),
-            tryPlaceholder && !awaitCounter.m ? awaitCounter.c() : (awaitCounter.i = 0),
-            queueAsyncRender(scope, renderCatch, error));
+            queueAsyncRender(scope, renderCatch, error),
+            tryPlaceholder && !awaitCounter.m
+              ? findBranchWithKey(scope, "E")
+                ? queueRender(tryBranch, completeAwaitCounter, -1, awaitCounter, tryBranch.L + 1e9)
+                : awaitCounter.c()
+              : (awaitCounter.i = 0));
         },
       ));
     };
@@ -1882,6 +1869,23 @@ function scheduleAwaitFrame(awaitCounter, scope, render) {
     requestAnimationFrame(
       () => awaitCounter.i && runEffects(prepareEffects(() => queueRender(scope, render, -1))),
     );
+}
+function completeAwaitCounter(_scope, awaitCounter) {
+  if ((awaitCounter.c(), awaitCounter.m)) {
+    let fnScopes = /* @__PURE__ */ new Map(),
+      effects = awaitCounter.m([]);
+    for (let i = 0; i < pendingEffects.length;) {
+      let fn = pendingEffects[i++],
+        scopes = fnScopes.get(fn);
+      (scopes || fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
+        scopes.add(pendingEffects[i++]));
+    }
+    for (let i = 0; i < effects.length;) {
+      let fn = effects[i++],
+        scope = effects[i++];
+      fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
+    }
+  }
 }
 function createAwaitCounter(tryBranch, done) {
   let awaitCounter = (tryBranch.O = {

@@ -19,5 +19,4 @@ INSERT: ::text("loading...")
 ```
 INSERT: span
 REMOVE: span + ::text("loading...")
-UPDATE: span::text " " => "1"
 ```

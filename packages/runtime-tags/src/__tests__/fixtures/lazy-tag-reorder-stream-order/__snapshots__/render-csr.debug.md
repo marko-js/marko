@@ -10,12 +10,6 @@ INSERT: ::text("loading")
 ```
 
 # Update
-## Change
-```
-REMOVE: ::text("loading")
-```
-
-# Update
 ```html
 <button
   class="reordered"
@@ -26,6 +20,7 @@ REMOVE: ::text("loading")
 ## Change
 ```
 INSERT: .reordered
+REMOVE: .reordered + ::text("loading")
 ```
 
 # Update

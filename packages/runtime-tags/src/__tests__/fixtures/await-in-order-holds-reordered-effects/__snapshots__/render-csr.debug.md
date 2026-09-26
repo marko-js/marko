@@ -19,7 +19,6 @@ INSERT: ::text("loading button")
 ```
 INSERT: button
 REMOVE: button + ::text("loading button")
-UPDATE: button::text " " => "0"
 ```
 ## Console
 ```

@@ -157,7 +157,7 @@ export function _await_promise(
       }
     }
 
-    const thisPromise = (scope[promiseAccessor] = promise.then(
+    const thisPromise = (scope[promiseAccessor] = Promise.resolve(promise).then(
       (data) => {
         if (thisPromise === scope[promiseAccessor]) {
           const referenceNode = scope[nodeAccessor] as ChildNode;
@@ -186,40 +186,40 @@ export function _await_promise(
 
             placeholderShown.add(pendingEffects); // TODO: check if still needed
 
-            awaitCounter!.c();
-            if (awaitCounter!.m) {
-              const fnScopes = new Map<unknown, Set<Scope>>();
-              const effects = awaitCounter!.m([]);
-              for (let i = 0; i < pendingEffects.length;) {
-                const fn = pendingEffects[i++] as any;
-                let scopes = fnScopes.get(fn);
-                if (!scopes) {
-                  fnScopes.set(fn, (scopes = new Set()));
-                }
-                scopes.add(pendingEffects[i++] as Scope);
-              }
-              for (let i = 0; i < effects.length;) {
-                const fn = effects[i++] as any;
-                const scope = effects[i++] as Scope;
-                if (!fnScopes.get(fn)?.has(scope)) {
-                  queueEffect(scope, fn);
-                }
-              }
-            }
+            // Complete after every other render of this flush, so an `<await>` the
+            // resolved content starts is counted before `@placeholder` ends.
+            queueRender(
+              tryBranch,
+              completeAwaitCounter,
+              -1,
+              awaitCounter,
+              tryBranch[AccessorProp.Id] + 1e9,
+            );
           });
         }
       },
       (error) => {
         if (thisPromise === scope[promiseAccessor]) {
           scope[promiseAccessor] = 0;
-          // Complete the counter to dismiss an ancestor `@placeholder` (renderCatch
-          // only unwinds the catch's own try); zero a placeholder-less or resumed one.
+          queueAsyncRender(scope, renderCatch, error);
+          // Complete after the catch renders to dismiss an ancestor `@placeholder`
+          // (renderCatch unwinds only its own try); zero a placeholder-less or resumed one.
           if (tryPlaceholder && !awaitCounter!.m) {
-            awaitCounter!.c();
+            if (findBranchWithKey(scope, AccessorProp.CatchContent)) {
+              queueRender(
+                tryBranch,
+                completeAwaitCounter,
+                -1,
+                awaitCounter,
+                tryBranch[AccessorProp.Id] + 1e9,
+              );
+            } else {
+              // With no `@catch`, renderCatch rethrows and the flush drops its renders.
+              awaitCounter!.c();
+            }
           } else {
             awaitCounter!.i = 0;
           }
-          queueAsyncRender(scope, renderCatch, error);
         }
       },
     ));
@@ -296,6 +296,29 @@ function scheduleAwaitFrame(
         awaitCounter.i &&
         runEffects(prepareEffects(() => queueRender(scope, render, -1))),
     );
+  }
+}
+
+function completeAwaitCounter(_scope: Scope, awaitCounter: AwaitCounter) {
+  awaitCounter.c();
+  if (awaitCounter.m) {
+    const fnScopes = new Map<unknown, Set<Scope>>();
+    const effects = awaitCounter.m([]);
+    for (let i = 0; i < pendingEffects.length;) {
+      const fn = pendingEffects[i++] as any;
+      let scopes = fnScopes.get(fn);
+      if (!scopes) {
+        fnScopes.set(fn, (scopes = new Set()));
+      }
+      scopes.add(pendingEffects[i++] as Scope);
+    }
+    for (let i = 0; i < effects.length;) {
+      const fn = effects[i++] as any;
+      const scope = effects[i++] as Scope;
+      if (!fnScopes.get(fn)?.has(scope)) {
+        queueEffect(scope, fn);
+      }
+    }
   }
 }
 

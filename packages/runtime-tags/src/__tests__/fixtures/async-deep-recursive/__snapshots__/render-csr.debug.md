@@ -30,9 +30,8 @@ INSERT: div::text("LOADING...")
 ```
 ## Change
 ```
-REMOVE: div > div + ::text("LOADING...")
 INSERT: div > div
-UPDATE: div > div[data-level] null => "3"
+REMOVE: div > div + ::text("LOADING...")
 ```
 
 # Update
@@ -68,9 +67,8 @@ INSERT: div > div::text("LOADING...")
 ```
 ## Change
 ```
-REMOVE: div > div > div + ::text("LOADING...")
 INSERT: div > div > div
-UPDATE: div > div > div[data-level] null => "2"
+REMOVE: div > div > div + ::text("LOADING...")
 ```
 
 # Update
@@ -114,9 +112,8 @@ INSERT: div > div > div::text("LOADING...")
 ```
 ## Change
 ```
-REMOVE: div > div > div > div + ::text("LOADING...")
 INSERT: div > div > div > div
-UPDATE: div > div > div > div[data-level] null => "1"
+REMOVE: div > div > div > div + ::text("LOADING...")
 ```
 
 # Update

@@ -1,0 +1,9 @@
+<let/n = 1/>
+<try>
+  <@catch|err|>caught ${err.message}</@catch>
+  <await|value|={ then(resolve) { resolve(n) } }>
+    value ${value}
+  </await>
+</try>
+<div>after</div>
+<button onClick() { n++ }>inc</button>

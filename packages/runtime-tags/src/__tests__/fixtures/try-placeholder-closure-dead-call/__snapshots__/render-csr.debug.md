@@ -19,6 +19,4 @@ INSERT: ::text("loading...")
 ```
 INSERT: div
 REMOVE: div + ::text("loading...")
-UPDATE: div::text@2 "" => "1"
-UPDATE: div::text@0 "" => "1"
 ```

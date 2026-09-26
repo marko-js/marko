@@ -31,7 +31,6 @@ LOG "placeholder mounted"
 ```
 INSERT: button
 REMOVE: button + button
-UPDATE: button::text@7 "" => "0"
 ```
 ## Console
 ```
