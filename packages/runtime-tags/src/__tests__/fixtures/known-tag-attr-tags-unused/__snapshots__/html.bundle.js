@@ -14,11 +14,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_serialize_reason(2);
 	const $childScope = _peek_scope_id();
-	child_default({
-		a: n,
-		junk: attrTag({ foo: 2 }),
-		junk3: attrTag({ baz: 6 })
-	});
+	child_default({ a: n });
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d: n,

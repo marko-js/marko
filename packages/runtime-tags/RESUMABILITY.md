@@ -59,10 +59,13 @@ Terms live in [CONTEXT.md](./CONTEXT.md); start here:
 
 Analysis tracks reads per expression (`references.ts`). A tag may _merge_ its
 attribute expressions into one (`mergeReferences`), _drop_ an expression neither
-output will emit (`dropNodes`: an attribute or spread the child never reads,
-an unread pure value), or _untrack_ one that is emitted but read another way
-(`untrackNode`: a spread of a known object, an alias `<const>`, a positional
-argument). A merged expression is never dropped and a dropped one never merged.
+output will emit (`dropNodes`: an attribute, spread or attribute tag the child
+never reads, or an unread pure value), or _untrack_ one that is emitted but read
+another way (`untrackNode`: a spread of a known object, an alias `<const>`, a
+positional argument). A merged expression is never dropped and a dropped one
+never merged. Content the child never reads, a tag's or an attribute tag's, is
+dropped whole (`dropContent`): its expressions are untracked and its sections
+marked `Section.pruned`, so reads later recorded in them are not kept.
 
 `finalizeReferences()` is the center of analysis. It resolves each expression to
 canonical bindings, separates constant/live/hoisted/lazy reads, prunes unused

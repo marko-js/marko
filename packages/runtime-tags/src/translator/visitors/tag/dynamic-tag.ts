@@ -58,6 +58,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  removePrunedContent,
   type Section,
   startSection,
   StructureKind,
@@ -246,6 +247,7 @@ export default {
         return;
       }
 
+      removePrunedContent(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }

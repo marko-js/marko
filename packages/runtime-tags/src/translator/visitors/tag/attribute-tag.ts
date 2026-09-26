@@ -8,7 +8,7 @@ import {
 import { getAttributeTagParent } from "../../util/get-parent-tag";
 import { isOutputHTML } from "../../util/marko-config";
 import { BindingType, trackParamsReferences } from "../../util/references";
-import { startSection } from "../../util/sections";
+import { removePrunedContent, startSection } from "../../util/sections";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -44,6 +44,14 @@ export default {
 
   translate: {
     enter(tag) {
+      // An attribute tag the child never reads was dropped.
+      if (tag.node.extra!.pruned) {
+        tag.remove();
+        return;
+      }
+
+      removePrunedContent(tag);
+
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }

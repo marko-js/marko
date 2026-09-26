@@ -2102,6 +2102,9 @@ export function addRead(
     comparedTo: undefined,
     deferred: false,
   };
+  // Content no output renders keeps no binding alive: reads recorded before it
+  // was dropped are untracked by `dropContent`, and later ones stop here.
+  if (section.pruned) return read;
   binding.reads.add(exprExtra);
   exprExtra.section = section;
   readsByExpression.set(
@@ -2116,8 +2119,8 @@ function isEmitted(exprExtra: t.NodeExtra) {
   return !getCanonicalExtra(exprExtra).pruned;
 }
 
-function inEmittedExpr({ exprRoot }: AssignedBindingExtra) {
-  return isEmitted(exprRoot);
+function inEmittedExpr({ exprRoot, section }: AssignedBindingExtra) {
+  return !section.pruned && isEmitted(exprRoot);
 }
 
 function isDroppableValue(expr: t.NodeExtra) {
@@ -2172,8 +2175,47 @@ function untrackExtra(exprExtra: ReferencedExtra) {
     getFunctionReadsByExpression().delete(exprExtra);
     forEach(reads, (read) => {
       read.binding.reads.delete(exprExtra);
-      if (!exprExtra.pruned) read.binding.untracked = true;
+      if (!exprExtra.pruned && !exprExtra.section.pruned) {
+        read.binding.untracked = true;
+      }
     });
+  }
+}
+
+// Content no output renders: the expressions in it are untracked, and each body
+// in it is pruned along with its section, whether started or not.
+export function dropContent(body: t.MarkoTagBody) {
+  const bodyExtra = (body.extra ??= {});
+  bodyExtra.pruned = true;
+  if (bodyExtra.section) bodyExtra.section.pruned = true;
+  for (const param of body.params) untrackNode(param);
+  dropChildren(body.body);
+}
+
+// Reads key on expression roots, the children of Marko nodes, so only the
+// Marko structure is walked.
+function dropChildren(
+  children: t.MarkoTagBody["body"] | t.MarkoTag["attributeTags"],
+) {
+  for (const child of children) {
+    switch (child.type) {
+      case "MarkoTag":
+        untrackNode(child.name);
+        if (child.arguments) {
+          for (const arg of child.arguments) untrackNode(arg);
+        }
+        if (child.var) untrackNode(child.var);
+        for (const attr of child.attributes) untrackNode(attr.value);
+        dropChildren(child.attributeTags);
+        dropContent(child.body);
+        break;
+      case "MarkoPlaceholder":
+        untrackNode(child.value);
+        break;
+      case "MarkoScriptlet":
+        for (const statement of child.body) untrackNode(statement);
+        break;
+    }
   }
 }
 
@@ -2313,11 +2355,12 @@ export function isDirectAlias(binding: Binding) {
   );
 }
 
-// `getAttrTagNodes` picks where an attribute tag within control flow collects.
+// `collectAttrTag`, when given, collects each attribute tag (and what is nested
+// in it) in place of this walk.
 export function getAllTagReferenceNodes(
   tag: t.MarkoTag,
   referenceNodes: t.Node[] = [],
-  getAttrTagNodes?: (attrTag: t.MarkoTag) => t.Node[],
+  collectAttrTag?: (attrTag: t.MarkoTag) => void,
 ) {
   if (tag.arguments) {
     for (const arg of tag.arguments) {
@@ -2335,13 +2378,13 @@ export function getAllTagReferenceNodes(
     switch (child.type) {
       case "MarkoTag":
         if (
-          getAttrTagNodes &&
+          collectAttrTag &&
           t.isStringLiteral(child.name) &&
           child.name.value[0] === "@"
         ) {
-          getAllTagReferenceNodes(child, getAttrTagNodes(child));
+          collectAttrTag(child);
         } else {
-          getAllTagReferenceNodes(child, referenceNodes, getAttrTagNodes);
+          getAllTagReferenceNodes(child, referenceNodes, collectAttrTag);
         }
         break;
       case "MarkoScriptlet":

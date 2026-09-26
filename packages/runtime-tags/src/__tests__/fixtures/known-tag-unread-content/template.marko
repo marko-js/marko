@@ -1,0 +1,22 @@
+<let/n=1/>
+<let/m=1/>
+<static-child>
+  ${n}
+  <if=n>${n}</if>
+  <button onClick() { m = 2 }>set</button>
+</static-child>
+<label-child>
+  <@item label="item">${n}</@item>
+</label-child>
+<label-child>
+  <if=n>
+    <@item label="if">${n}</@item>
+  </if>
+</label-child>
+<label-child>
+  <for|i| to=1>
+    <@item label=`for ${i}`>${n}</@item>
+  </for>
+</label-child>
+<span>${m}</span>
+<button.inc onClick() { n++ }>inc</button>

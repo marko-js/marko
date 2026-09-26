@@ -160,6 +160,8 @@ export interface Section {
         exprs: KnownExprs | undefined;
       }
     | undefined;
+  /** Content a known child never reads, which no output renders. */
+  pruned: boolean;
   hasAbortSignal: boolean;
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's `abortId` from this so translates read, never re-derive. */
@@ -248,6 +250,7 @@ export function startSection(
       upstreamExpression: undefined,
       callSections: undefined,
       downstream: undefined,
+      pruned: !!extra.pruned,
       hasAbortSignal: false,
       abortSignalExprs: 0,
       readsOwner: false,
@@ -283,6 +286,12 @@ export function getSectionForBody(
   body: t.NodePath<t.MarkoTagBody | t.Program>,
 ) {
   return body.node.extra?.section;
+}
+
+// Content analysis pruned is rendered by no output, so translate never visits it.
+// Attribute tags are inputs, not content: an unread one is removed on its own.
+export function removePrunedContent(tag: t.NodePath<t.MarkoTag>) {
+  if (tag.node.body.extra?.pruned) tag.node.body.body = [];
 }
 
 export function getSection(path: t.NodePath) {

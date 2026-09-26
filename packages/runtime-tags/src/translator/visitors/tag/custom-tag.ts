@@ -38,7 +38,11 @@ import {
   importRuntimeFeature,
 } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
-import { getOrCreateSection, StructureKind } from "../../util/sections";
+import {
+  getOrCreateSection,
+  removePrunedContent,
+  StructureKind,
+} from "../../util/sections";
 import { addSetupWork } from "../../util/setup-work";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
@@ -145,6 +149,7 @@ export default {
   },
   translate: {
     enter(tag) {
+      removePrunedContent(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
