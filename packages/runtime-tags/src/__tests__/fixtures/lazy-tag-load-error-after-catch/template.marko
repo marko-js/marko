@@ -1,0 +1,16 @@
+import { rejectAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "on-click#load" }
+
+<let/show=false/>
+<button id="toggle" onClick() { show = true }>toggle</button>
+<button id="load">load</button>
+<try>
+  <@placeholder>loading</@placeholder>
+  <@catch|err|>caught: ${err.message}</@catch>
+  <if=show>
+    <Child/>
+    <await|value|=rejectAfter(new Error("rejected"), 1)>
+      ${value}
+    </await>
+  </if>
+</try>

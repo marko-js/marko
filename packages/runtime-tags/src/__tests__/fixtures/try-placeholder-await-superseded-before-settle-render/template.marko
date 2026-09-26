@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/value = "idle"/>
+<button id="first" onClick() { value = resolveAfter("first") }>first</button>
+<button id="third" onClick() { value = resolveAfter("third") }>third</button>
+<script>
+  value.then?.((v) => {
+    if (v === "first") value = resolveAfter("second");
+    if (v === "third") value = "fourth";
+  });
+</script>
+<try>
+  <@placeholder>LOADING</@placeholder>
+  <child value=value/>
+</try>

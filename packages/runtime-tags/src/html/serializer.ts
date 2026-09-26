@@ -2112,6 +2112,7 @@ const accessorPrefixDescriptions: Record<string, string> = {
   Lifecycle: "the lifecycle handlers",
   Promise: "the pending promise",
   TagVariableChange: "the tag variable change handler",
+  TryBranch: "the try branch",
 };
 
 // A readable phrase for an internal `<Prefix>:<node accessor>` scope slot.

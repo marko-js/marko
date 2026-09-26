@@ -158,10 +158,10 @@ function loadFailed(
 ) {
   return (error: unknown) => {
     if (awaitCounter) {
-      // Complete to dismiss an ancestor `@placeholder` (renderCatch only unwinds
-      // the catch's own try); zero a resumed reorder record (its `c()` reorders).
+      // Complete to dismiss an ancestor `@placeholder`, unless renderCatch zeroed
+      // it with its try; zero a resumed reorder record (its `c()` reorders).
       if (awaitCounter.m) awaitCounter.i = 0;
-      else awaitCounter.c();
+      else if (awaitCounter.i) awaitCounter.c();
     }
     queueAsyncRender(scope, renderCatch, error);
   };

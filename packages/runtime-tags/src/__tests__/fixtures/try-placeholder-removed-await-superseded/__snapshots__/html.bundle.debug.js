@@ -1,0 +1,32 @@
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	const $n__closures = new Set();
+	let n = 0;
+	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
+	let $placeholder;
+	if (n !== 2) {
+		$placeholder = attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
+			_scope_reason();
+			const $scope2_id = _scope_id();
+			_html("LOADING");
+		}, $scope0_id) });
+	}
+	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1*content", () => {
+		const $scope1_id = _scope_id();
+		_scope_reason();
+		_await($scope1_id, "#text/0", n ? resolveAfter(n) : 0, (value) => {
+			const $scope3_id = _scope_id();
+			_html(`value ${_text_resume($scope3_id, "#text/0", value, 2)}`);
+			_scope($scope3_id, {}, "__tests__/template.marko", "8:4");
+		});
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_n#2/subscribe", 0);
+		_resume_branch($scope1_id);
+	}, $scope0_id), { placeholder: $placeholder });
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, {
+		n,
+		"ClosureScopes:n": $n__closures
+	}, "__tests__/template.marko", 0, { n: "2:6" });
+}, 1);
