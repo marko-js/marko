@@ -152,7 +152,9 @@ export function _for_closure(
         },
         -1,
         0,
-        scopes[0][AccessorProp.Id],
+        // Every row is created after its owner, so this sorts after the
+        // owner's renders and before every row's.
+        ownerScope[AccessorProp.Id] + 1,
       );
     }
   };
@@ -177,8 +179,10 @@ export function _for_selector(
   const mapAccessor = AccessorPrefix.KeyedScopes + ownerLoopNodeAccessor;
   const prevKeyProp: `${typeof KeyedScopesProp.PreviousKey}${string}` = `${KeyedScopesProp.PreviousKey}${ownerValueAccessor as string}`;
   const ownerSignal = (ownerScope: Scope) => {
-    const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
-    if (ownerScope[AccessorProp.Gen] < runId && scopes.length) {
+    if (
+      ownerScope[AccessorProp.Gen] < runId &&
+      toArray(ownerScope[scopeAccessor] as BranchScope).length
+    ) {
       const nextKey = ownerScope[ownerValueAccessor];
       queueRender(
         ownerScope,
@@ -207,7 +211,7 @@ export function _for_selector(
         },
         -1,
         0,
-        scopes[0][AccessorProp.Id],
+        ownerScope[AccessorProp.Id] + 1,
       );
     }
   };

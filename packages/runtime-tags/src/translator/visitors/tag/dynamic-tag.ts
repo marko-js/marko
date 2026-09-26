@@ -649,21 +649,18 @@ function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// A native branch's tag variable binds the element as the branch renders, and
-// resumes as a getter over the tag's node visit wherever its value serializes.
+// A branch the tag creates can be newer than the scopes reading its variable. A
+// native branch's variable binds the element and resumes as a node visit getter.
 function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
-  if (
-    !tag.node.var ||
-    !isTagVarResumed(tag) ||
-    analyzeTagNameType(tag, true) === TagNameType.CustomTag
-  ) {
-    return;
-  }
+  if (!tag.node.var || !isTagVarResumed(tag)) return;
 
   importRuntimeFeature("dynamic-tag-var");
 
   // A returned or passed on value serializes in another template's scope.
-  if (!tag.node.var.extra!.binding!.pruned) {
+  if (
+    !tag.node.var.extra!.binding!.pruned &&
+    analyzeTagNameType(tag, true) !== TagNameType.CustomTag
+  ) {
     const accessor = getScopeAccessorLiteral(
       tag.node.extra!.nodeBinding!,
       true,

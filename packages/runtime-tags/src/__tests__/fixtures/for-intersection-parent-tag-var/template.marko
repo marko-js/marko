@@ -1,0 +1,6 @@
+<counter/v/>
+<for|item| of=[1, 2]>
+  <let/m=0/>
+  <const/c=v.n + item/>
+  <button class="row" + item onClick() { m++; v.inc() }>${c + ":" + m}</button>
+</for>

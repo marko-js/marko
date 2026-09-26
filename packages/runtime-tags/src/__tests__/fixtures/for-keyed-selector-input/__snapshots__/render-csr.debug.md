@@ -130,6 +130,6 @@ UPDATE: .sel[class] null => "sel"
 ## Change
 ```
 INSERT: ul > .sel
-UPDATE: .sel[class] null => "sel"
 UPDATE: ul > li:nth-of-type(4)[class] "sel" => null
+UPDATE: .sel[class] null => "sel"
 ```

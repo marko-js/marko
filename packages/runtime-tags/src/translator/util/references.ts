@@ -1787,8 +1787,11 @@ function addRegisteredFnSerializeReasons(
 function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
   let scopeOffset: Binding | undefined;
 
+  // A tag variable's value arrives after its child renders, so its own offset counts;
+  // offsets from other sections are not accessors on this scope.
   const trackScopeOffset = (source: Binding) => {
     if (
+      source.section === section &&
       source.scopeOffset &&
       (!scopeOffset || scopeOffset.id < source.scopeOffset.id)
     ) {
@@ -1797,6 +1800,7 @@ function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
   };
   for (const binding of intersection) {
     if (binding.section === section && binding.sources) {
+      trackScopeOffset(binding);
       forEach(binding.sources.state, trackScopeOffset);
       forEach(binding.sources.param, trackScopeOffset);
     }

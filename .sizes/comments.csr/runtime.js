@@ -1,4 +1,4 @@
-// size: 5895 (min) 2591 (brotli)
+// size: 5894 (min) 2590 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -6,6 +6,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
+  scopeKeyOffset = 1e6,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
@@ -178,7 +179,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
     render.e = runId;
   } else
     ((render = {
-      a: scopeKey * 1e6 + signalKey,
+      a: scopeKey * scopeKeyOffset + signalKey,
       b: scope,
       c: signal,
       d: value,
@@ -331,7 +332,7 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
           },
           -1,
           0,
-          scopes[0].L,
+          ownerScope.L + 1,
         );
     };
   return ((ownerSignal._ = fn), ownerSignal);

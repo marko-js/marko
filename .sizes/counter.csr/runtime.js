@@ -5,6 +5,7 @@ let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
+  scopeKeyOffset = 1e6,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
@@ -75,7 +76,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
     render.e = runId;
   } else
     ((render = {
-      a: scopeKey * 1e6 + signalKey,
+      a: scopeKey * scopeKeyOffset + signalKey,
       b: scope,
       c: signal,
       d: value,
