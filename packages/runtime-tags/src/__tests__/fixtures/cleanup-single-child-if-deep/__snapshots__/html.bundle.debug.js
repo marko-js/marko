@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		showMiddle,
 		showInner,
 		write,
-		"ClosureScopes:showInner": $showInner__closures
+		"ClosureScopes:showInner/10": $showInner__closures
 	}, "__tests__/template.marko", 0, {
 		showOuter: "1:6",
 		showMiddle: "2:6",

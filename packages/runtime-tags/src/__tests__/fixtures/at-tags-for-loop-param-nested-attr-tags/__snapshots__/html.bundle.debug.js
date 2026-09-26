@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id();
 			inner_default({ cell: $cell });
 			_scope($scope1_id, {
-				"ClosureScopes:a_id": $row_content__a_id__closures,
+				"ClosureScopes:a_id/3": $row_content__a_id__closures,
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "4:6");
 		}, $scope0_id) });

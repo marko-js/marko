@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_value: input.value,
 		Parent,
 		Child,
-		"ClosureScopes:input_value": $si__input_value && $input_value__closures
+		"ClosureScopes:input_value/14": $si__input_value && $input_value__closures
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		Parent: "1:5",

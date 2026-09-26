@@ -22,6 +22,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) }) });
 	_scope($scope0_id, {
 		clickCount,
-		"ClosureScopes:clickCount": $clickCount__closures
+		"ClosureScopes:clickCount/3": $clickCount__closures
 	}, "__tests__/template.marko", 0, { clickCount: "1:6" });
 }, 1);

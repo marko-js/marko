@@ -19,7 +19,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 		_script($scope1_id, "__tests__/tags/outer.marko_1");
 		_subscribe($si__input_content && $input_content__closures, _scope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }, "__tests__/tags/outer.marko", "1:2"), "__tests__/tags/outer.marko_1_input_content#3/subscribe");
 	}, $scope0_id) });
-	$si__input_content && _scope($scope0_id, { "ClosureScopes:input_content": $input_content__closures }, "__tests__/tags/outer.marko", 0);
+	$si__input_content && _scope($scope0_id, { "ClosureScopes:input_content/4": $input_content__closures }, "__tests__/tags/outer.marko", 0);
 });
 
 // template.marko

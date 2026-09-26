@@ -4,12 +4,12 @@ const $walks = " b%c";
 const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
 const $catch_content = _content("__tests__/template.marko_3*content", " ", " ", 0, $catch_content__$params);
-const $for_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => _text($scope["#text/0"], (() => {
+const $for_content__clickCount = /*@__PURE__*/ _closure_get("clickCount/3", ($scope) => _text($scope["#text/0"], (() => {
 	if ($scope._._.clickCount > 1) throw new Error("ERROR!");
 })()), ($scope) => $scope._._, "__tests__/template.marko_2_clickCount#2/subscribe");
 const $for_content__setup = $for_content__clickCount;
 const $try_content__clickCount__script = _script("__tests__/template.marko_1_clickCount#2", ($scope) => _el_read($scope._["#div/0"]).textContent = $scope._.clickCount);
-const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", $try_content__clickCount__script, 0, "__tests__/template.marko_1_clickCount#2/subscribe");
+const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount/3", $try_content__clickCount__script, 0, "__tests__/template.marko_1_clickCount#2/subscribe");
 const $try_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "-- <!>", "b%", $for_content__setup);
 const $try_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clickCount($scope._, +$scope._.clickCount + 1);

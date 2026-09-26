@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_subscribe($attempt__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
-			"ClosureSignalIndex:attempt": 1
+			"ClosureSignalIndex:attempt/2": 1
 		}, "__tests__/template.marko", "4:2"), "__tests__/template.marko_2_attempt#1/subscribe", 0);
 		_resume_branch($scope2_id);
 	}, $scope0_id), {
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_scope($scope0_id, {
 		attempt,
-		"ClosureScopes:attempt": $attempt__closures
+		"ClosureScopes:attempt/2": $attempt__closures
 	}, "__tests__/template.marko", 0, { attempt: "3:6" });
 	_resume_branch($scope0_id);
 }, 1);

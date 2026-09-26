@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		href,
 		count,
-		"ClosureScopes:count": $count__closures,
+		"ClosureScopes:count/5": $count__closures,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		href: "1:6",

@@ -32,7 +32,7 @@ const $content = (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $sg__input_level, $sg__input_level, $sg__input_level, 0, 1);
-	$si__input_level && _scope($scope0_id, { "ClosureScopes:input_level": $input_level__closures }, "__tests__/tags/recurse.marko", 0);
+	$si__input_level && _scope($scope0_id, { "ClosureScopes:input_level/4": $input_level__closures }, "__tests__/tags/recurse.marko", 0);
 };
 var recurse_default = _template("__tests__/tags/recurse.marko", $content);
 

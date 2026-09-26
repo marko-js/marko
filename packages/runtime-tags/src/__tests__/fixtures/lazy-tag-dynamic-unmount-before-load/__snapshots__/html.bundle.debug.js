@@ -32,6 +32,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		show,
-		"ClosureScopes:show": $show__closures
+		"ClosureScopes:show/3": $show__closures
 	}, "__tests__/template.marko", 0, { show: "4:6" });
 }, 1);

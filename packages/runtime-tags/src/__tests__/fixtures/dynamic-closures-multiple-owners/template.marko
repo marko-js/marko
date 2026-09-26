@@ -1,0 +1,16 @@
+<let/x=1/>
+<const/z=x/>
+<button.outer onClick() { x++ }>${z}</button>
+<p>${z}</p>
+<wrap>
+  <let/x=1/>
+  <button.inner onClick() { x++ }/>
+  <em>${z}</em>
+  <wrap>
+    <i>${z}</i>
+    <b>${x}</b>
+  </wrap>
+  <wrap>
+    <s>${x}</s>
+  </wrap>
+</wrap>

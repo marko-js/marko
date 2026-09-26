@@ -6,7 +6,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__value($sco
 const $placeholder_content = _content("__tests__/template.marko_2*content", "LOADING...");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.clickCount)), 0, "__tests__/template.marko_1_clickCount#2/subscribe");
+const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount/3", ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.clickCount)), 0, "__tests__/template.marko_1_clickCount#2/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__clickCount($scope);
 	$await_content($scope);

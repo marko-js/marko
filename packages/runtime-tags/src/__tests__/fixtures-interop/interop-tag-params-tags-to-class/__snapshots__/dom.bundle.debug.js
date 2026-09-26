@@ -38,7 +38,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $classlayout_content__multiplier__OR__baseCount = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/4"], $scope._.multiplier * $scope.baseCount));
-const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get("multiplier", ($scope) => {
+const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get("multiplier/2", ($scope) => {
 	_text($scope["#text/2"], $scope._.multiplier);
 	$classlayout_content__multiplier__OR__baseCount($scope);
 }, 0, "__tests__/template.marko_1_multiplier#1/subscribe");

@@ -24,7 +24,7 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 	_scope($scope0_id, {
 		input_content: input.content,
 		open,
-		"ClosureScopes:input_content": $si__input_content && $input_content__closures
+		"ClosureScopes:input_content/7": $si__input_content && $input_content__closures
 	}, "__tests__/tags/menu.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"

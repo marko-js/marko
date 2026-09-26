@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`Got: ${_escape(value)} ${_text_resume($scope2_id, "#text/1", count, 2)}`);
 		_subscribe($count__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
-			"ClosureSignalIndex:count": 1
+			"ClosureSignalIndex:count/5": 1
 		}, "__tests__/template.marko", "9:4"), "__tests__/template.marko_2_count#4/subscribe");
 	});
 	_await($scope0_id, "#text/2", resolveAfter("c", 1), (value) => {
@@ -23,13 +23,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`Got: ${_escape(value)} ${_text_resume($scope3_id, "#text/1", count, 2)}`);
 		_subscribe($count__closures, _scope($scope3_id, {
 			_: _scope_with_id($scope0_id),
-			"ClosureSignalIndex:count": 2
+			"ClosureSignalIndex:count/5": 2
 		}, "__tests__/template.marko", "13:4"), "__tests__/template.marko_3_count#4/subscribe");
 	});
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "#button/3")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:count": $count__closures
+		"ClosureScopes:count/5": $count__closures
 	}, "__tests__/template.marko", 0, { count: "3:6" });
 }, 1);

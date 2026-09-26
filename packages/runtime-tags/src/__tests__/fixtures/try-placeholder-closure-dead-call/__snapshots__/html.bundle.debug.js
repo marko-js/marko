@@ -41,6 +41,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html("loading...");
 	}, $scope0_id) }) });
-	_scope($scope0_id, { "ClosureScopes:on": $on__closures }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "ClosureScopes:on/2": $on__closures }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

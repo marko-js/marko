@@ -31,12 +31,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`${_escape(a)} ${_escape(b)} ${_text_resume($scope3_id, "#text/2", c, 2)}`);
 			_subscribe($c__closures, _scope($scope3_id, {
 				_: _scope_with_id($scope2_id),
-				"ClosureSignalIndex:c": 1
+				"ClosureSignalIndex:c/6": 1
 			}, "__tests__/template.marko", "11:6"), "__tests__/template.marko_3_c#4/subscribe");
 		}
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:4");
 	}
 	_html("</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
-	_scope($scope0_id, { "ClosureScopes:c": $c__closures }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "ClosureScopes:c/6": $c__closures }, "__tests__/template.marko", 0);
 }, 1);

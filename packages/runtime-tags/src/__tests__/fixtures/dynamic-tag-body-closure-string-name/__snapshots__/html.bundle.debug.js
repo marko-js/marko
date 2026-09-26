@@ -12,7 +12,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	}, $scope0_id, ($scope) => [{ input_text: input.text }]), 0, $sg__input_as);
 	$si__input_as__OR__input_text && _scope($scope0_id, {
 		input_text: _serialize_if($scope0_reason, 1) && input.text,
-		"ClosureScopes:input_text": $si__input_text && $input_text__closures
+		"ClosureScopes:input_text/5": $si__input_text && $input_text__closures
 	}, "__tests__/tags/heading.marko", 0, { input_text: ["input.text"] });
 });
 

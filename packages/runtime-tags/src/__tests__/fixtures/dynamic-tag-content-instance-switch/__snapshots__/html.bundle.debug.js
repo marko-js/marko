@@ -15,7 +15,7 @@ var provider_default = _template("__tests__/tags/provider.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/provider.marko_0");
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:count": $count__closures
+		"ClosureScopes:count/6": $count__closures
 	}, "__tests__/tags/provider.marko", 0, { count: "1:6" });
 	return $return;
 });

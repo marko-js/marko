@@ -33,8 +33,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		show,
 		value,
-		"ClosureScopes:show": $show__closures,
-		"ClosureScopes:value": $value__closures
+		"ClosureScopes:show/5": $show__closures,
+		"ClosureScopes:value/6": $value__closures
 	}, "__tests__/template.marko", 0, {
 		show: "3:6",
 		value: "4:6"
