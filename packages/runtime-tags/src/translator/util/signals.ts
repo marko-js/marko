@@ -94,9 +94,6 @@ export interface Signal {
   /** Signals this one forwards into: they must declare first when the
    * forward simplifies to a bare, eagerly evaluated reference. */
   forwards: Opt<Signal>;
-  /** Runs before `render`: registrations (eg `_var`) that an earlier tag's
-   * synchronous `_return` may reach before the registering tag's own setup. */
-  prepare: t.Statement[];
   render: t.Statement[];
   effect: t.Statement[];
   hasHTMLEffect: boolean;
@@ -346,7 +343,6 @@ export function getSignal(
         values: [],
         intersection: undefined,
         forwards: undefined,
-        prepare: [],
         render: [],
         effect: [],
         hasHTMLEffect: false,
@@ -494,7 +490,6 @@ export function signalHasStatements(signal: Signal): boolean {
   if (
     signal.extraArgs ||
     signal.forcePersist ||
-    signal.prepare.length ||
     signal.render.length ||
     signal.effect.length ||
     signal.hasHTMLEffect ||
@@ -781,13 +776,9 @@ export function getSignalFn(signal: Signal): t.Expression {
     signal.hasSideEffect = true;
   }
 
-  const render = signal.prepare.length
-    ? signal.prepare.concat(signal.render)
-    : signal.render;
-
   if (!signal.hasSideEffect) {
-    if (isValue && render.length === 1) {
-      const first = render[0];
+    if (isValue && signal.render.length === 1) {
+      const first = signal.render[0];
       if (first.type === "ExpressionStatement") {
         const { expression } = first;
         if (
@@ -808,11 +799,11 @@ export function getSignalFn(signal: Signal): t.Expression {
       isValue
         ? [scopeIdentifier, getSignalValueIdentifier(signal)]
         : [scopeIdentifier],
-      toFirstExpressionOrBlock(render),
+      toFirstExpressionOrBlock(signal.render),
     );
   }
 
-  return toScopeFn(render);
+  return toScopeFn(signal.render);
 }
 
 // `(scope) => fn(scope)` is `fn`.
@@ -935,7 +926,7 @@ export function replaceNullishAndEmptyFunctionsWith0(
   return args as t.Expression[];
 }
 export function addStatement(
-  type: "prepare" | "render" | "effect",
+  type: "render" | "effect",
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],

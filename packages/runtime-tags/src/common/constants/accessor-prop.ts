@@ -22,6 +22,7 @@ export const PendingScopes = "Y";
 export const PlaceholderBranch = "P";
 export const PlaceholderContent = "Q";
 export const Renderer = "R";
+export const ReturnValue = "RV";
 export const StartNode = "S";
 export const Subscriptions = "Z";
 export const TagVariable = "T";

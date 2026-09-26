@@ -1,0 +1,29 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<let/list=["a", "b"]/>
+<button onClick() { list = [...list, "c"] }/>
+<for|item| of=list>
+  <child/v x=item/>
+  <p>${v}</p>
+  <row x=item/>
+</for>
+<define/Count|{ x }|>
+  <child/v x=x/>
+  <p.define>${v}</p>
+</define>
+<Count x=list.length/>
+<wrap|{ value }|>
+  <child/v x=value/>
+  <p.wrap>${v}</p>
+</wrap>
+<await|value|=resolveAfter("a", 1)>
+  <child/v x=value/>
+  <p.await>${v}</p>
+</await>
+<try>
+  <await|value|=rejectAfter(new Error("e"), 2)>${value}</await>
+  <@catch|err|>
+    <child/v x=err.message/>
+    <p.catch>${v}</p>
+  </@catch>
+</try>

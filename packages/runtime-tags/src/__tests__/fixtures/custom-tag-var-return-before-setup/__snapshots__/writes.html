@@ -1,0 +1,57 @@
+<button></button><!--M_$1 a--><!--M_[-->
+<p>a<!--M_$2 c--></p>
+<p class=row>a<!--M_$5 c--></p><!--M_[2-->
+<p>b<!--M_$8 c--></p>
+<p class=row>b<!--M_$11 c--></p><!--M_]1 b 8-->
+<p class=define>2<!--M_$14 c--></p>
+<p class=wrap>w</p>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    g: ["a", "b"],
+    c: _(14)
+  }, {
+    b: 4,
+    a: _(3),
+    d: _(5)
+  }, {
+    T: _(2, "a0")
+  }, 1, {
+    b: 7,
+    a: _(6)
+  }, {
+    T: _(5, "c0")
+  }, 1, {
+    b: 10,
+    a: _(9),
+    d: _(11)
+  }, {
+    T: _(8, "a0")
+  }, 1, {
+    b: 13,
+    a: _(12)
+  }, {
+    T: _(11, "c0")
+  }, 1, {
+    b: 16,
+    a: _(15)
+  }, {
+    T: _(14, "a1")
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<p class=await>a</p><!--M_[--><!--M_!^b-->
+
+<!-- FLUSH -->
+
+<!--M_!b--><!--M_]1 f 21-->
+<t hidden M_=b>
+  <p class=catch>e</p>
+</t>
+<script>
+  REORDER_RUNTIME(M._);
+  M._.r.push("a8 1");
+  M._.w()
+</script>
