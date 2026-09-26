@@ -62,9 +62,9 @@ export const compat = {
   },
   onFlush(fn: (chunk: Chunk) => void) {
     const { flushHTML } = Chunk.prototype;
-    Chunk.prototype.flushHTML = function () {
+    Chunk.prototype.flushHTML = function (boundary) {
       fn(this);
-      return flushHTML.call(this);
+      return flushHTML.call(this, boundary);
     };
   },
   patchDynamicTag,
@@ -104,7 +104,7 @@ export const compat = {
     const { boundary } = chunk;
     const scripts =
       boundary.flush() === FlushStatus.complete
-        ? chunk.flushScript().scripts
+        ? chunk.flushScript(boundary).scripts
         : "";
     if (boundary.signal.aborted) throw boundary.signal.reason;
     if (boundary.count) {

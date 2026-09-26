@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<select value="b">
+  <option value="a">A</option>
+  <try>
+    <await|v| = resolveAfter("b", 1)>
+      <option value=v>async ${v}</option>
+    </await>
+    <@placeholder>
+      <option value="b">placeholder b</option>
+    </@placeholder>
+  </try>
+</select>
