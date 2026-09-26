@@ -140,7 +140,7 @@ Don't fetch while rendering: start data loads early, pass the promise through th
 
 - Read request-scoped `$global` from any template, no threading: `${$global.messages.title}`. Otherwise pass data down through `input`.
 - Populate at the render call: `template.render({ $global: { messages } })`. Under @marko/run a middleware's `return next({ messages })` merges into `$global.data`.
-- `$global` is not serialized to the client by default. Mark any key the browser itself evaluates, e.g. an event handler, a `<script>`, markup the browser (re)creates, or a `<const>` that recomputes from state: `$global.serializedGlobals = { messages: true }` at the render call (under @marko/run, `context.serializedGlobals.data = true`; it ships `params`/`url` already). What the server already rendered needs no opt-in; a debug build logs an unserialized key read in the browser.
+- `$global` is not serialized to the client by default. Mark any key the browser itself evaluates, e.g. an event handler, a `<script>`, markup the browser (re)creates, or a `<const>` that recomputes from state: `$global.serializedGlobals = { messages: true }` at the render call (under @marko/run, `context.serializedGlobals.data = true`; it ships `params`/`url` already). A serialized key is embedded in the page, so copy the non-secret field the browser needs into its own key rather than serializing a whole request or session. What the server already rendered needs no opt-in; a debug build logs an unserialized key read in the browser.
 
 ## Client-side effects
 
