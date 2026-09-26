@@ -1,0 +1,63 @@
+<button>0<!--M_$2 #text/1--></button><!--M_$2 #button/0-->
+<div><button>0<!--M_2$1 #text/1--></button><!--M_2$1 #button/0-->
+  <script>
+    WALKER_RUNTIME("M")("_2");
+    M._2.b = {
+      "packages/runtime-tags/src/__tests__/fixtures/render-id-prefix-overlap/counter.marko": [
+        _ => [1, {
+          count: 0
+        }],
+        "packages/runtime-tags/src/__tests__/fixtures/render-id-prefix-overlap/counter.marko_0 1"
+      ]
+    };
+    M._2.w()
+  </script>
+</div>
+<script>
+  ((runtimeId) => (self[runtimeId] ||= (
+      renderId,
+      prefix = runtimeId + renderId,
+      prefixLen = prefix.length,
+      lookup = {},
+      visits = [],
+      doc = document,
+      walker = doc.createTreeWalker(
+        doc,
+        129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */ ,
+      ),
+    ) =>
+    doc = (self[runtimeId][renderId] = {
+      i: prefix,
+      d: doc,
+      l: lookup,
+      v: visits,
+      x() {},
+      w(node, op, id) {
+        while ((node = walker.nextNode())) {
+          // Only reorder markers ("#", "!") are ever looked up, so only they are
+          // kept: the lookup lives as long as the page, and every node marker
+          // would otherwise stay referenced in it after resume consumed it.
+          doc.x(
+            (op =
+              (op = node.data) &&
+              !op.indexOf(prefix) &&
+              ((id = op.slice(prefixLen + 1)),
+                (op = op[prefixLen]) > "#" || (lookup[id] = node),
+                op)),
+            id,
+            node,
+          );
+
+          if (op > "#") {
+            visits.push(node);
+          }
+        }
+      },
+    }), self[runtimeId]))("M")("_");
+  M._.r = [_ => [2, {
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/render-id-prefix-overlap/counter.marko_0 2"
+  ];
+  M._.w()
+</script>
