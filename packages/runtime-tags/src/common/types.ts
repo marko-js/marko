@@ -17,6 +17,7 @@ export interface BranchScope extends Scope {
   [AccessorProp.AwaitCounter]: AwaitCounter | undefined;
   [AccessorProp.PendingEffects]: unknown[] | undefined;
   [AccessorProp.PlaceholderBranch]: BranchScope | undefined | 0;
+  [AccessorProp.TryBranch]: BranchScope | undefined;
   [AccessorProp.PendingRenders]: PendingRender[] | 0 | undefined;
   [AccessorProp.DetachedAwait]: Renderer | 0 | undefined;
   [AccessorProp.PendingScopes]: Scope[] | void;

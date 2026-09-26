@@ -270,13 +270,15 @@ export function addAwaitCounter(
   }
   placeholderShown.add(pendingEffects);
   scheduleAwaitFrame(awaitCounter, tryBranch, () => {
+    // Parented beside the try for effects and awaits; the try still catches its errors.
+    (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
+      tryBranch[AccessorProp.Global],
+      tryBranch[AccessorProp.PlaceholderContent] as Renderer,
+      tryBranch[AccessorProp.Owner]!,
+      tryBranch[AccessorProp.StartNode].parentNode!,
+    ))[AccessorProp.TryBranch] = tryBranch;
     insertBranchBefore(
-      (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
-        tryBranch[AccessorProp.Global],
-        tryBranch[AccessorProp.PlaceholderContent] as Renderer,
-        tryBranch[AccessorProp.Owner]!,
-        tryBranch[AccessorProp.StartNode].parentNode!,
-      )),
+      tryBranch[AccessorProp.PlaceholderBranch],
       tryBranch[AccessorProp.StartNode].parentNode!,
       tryBranch[AccessorProp.StartNode],
     );
@@ -344,18 +346,19 @@ export function _try(
   const renderer = _content("", template, walks, setup)();
 
   return (scope: Scope, input: { catch: unknown; placeholder: unknown }) => {
-    if (!scope[branchAccessor]) {
+    if (!(branchAccessor in scope)) {
       setConditionalRenderer(
         scope,
         nodeAccessor as string,
         renderer,
         createAndSetupBranch,
       );
+      scope[branchAccessor][AccessorProp.BranchAccessor] = nodeAccessor;
     }
 
+    // A client catch leaves the catch branch (0 for an empty `@catch`) in the slot, not a try.
     const branch = scope[branchAccessor];
-    if (branch) {
-      branch[AccessorProp.BranchAccessor] = nodeAccessor;
+    if (branch[AccessorProp.BranchAccessor]) {
       branch[AccessorProp.CatchContent] =
         input.catch && (normalizeDynamicRenderer(input.catch) || 0);
       branch[AccessorProp.PlaceholderContent] = normalizeDynamicRenderer(
@@ -368,7 +371,12 @@ export function _try(
 // Catching destroys the content branch (and its subscriptions) for good: a new
 // promise can't recover the boundary, only re-rendering the `<try>` itself.
 export function renderCatch(scope: Scope, error: unknown) {
-  const tryWithCatch = findBranchWithKey(scope, AccessorProp.CatchContent);
+  let tryWithCatch = scope[AccessorProp.ClosestBranch];
+  while (tryWithCatch && tryWithCatch[AccessorProp.CatchContent] == null) {
+    tryWithCatch =
+      tryWithCatch[AccessorProp.TryBranch] ||
+      tryWithCatch[AccessorProp.ParentBranch];
+  }
   if (!tryWithCatch) {
     throw error;
   } else {

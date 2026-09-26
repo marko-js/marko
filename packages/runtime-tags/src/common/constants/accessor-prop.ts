@@ -26,6 +26,7 @@ export const StartNode = "S";
 export const Subscriptions = "Z";
 export const TagVariable = "T";
 export const TagVariableChange = "U";
+export const TryBranch = "PT";
 
 type Self = typeof import("./accessor-prop");
 export type Value = Self[keyof Self];

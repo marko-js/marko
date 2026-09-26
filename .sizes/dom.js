@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27275 (min) 10181 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -1862,16 +1862,13 @@ function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
       (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
     placeholderShown.add(pendingEffects),
     scheduleAwaitFrame(awaitCounter, tryBranch, () => {
-      (insertBranchBefore(
-        (tryBranch.P = createAndSetupBranch(
-          tryBranch.$,
-          tryBranch.Q,
-          tryBranch._,
-          tryBranch.S.parentNode,
-        )),
+      (((tryBranch.P = createAndSetupBranch(
+        tryBranch.$,
+        tryBranch.Q,
+        tryBranch._,
         tryBranch.S.parentNode,
-        tryBranch.S,
-      ),
+      )).PT = tryBranch),
+        insertBranchBefore(tryBranch.P, tryBranch.S.parentNode, tryBranch.S),
         tempDetachBranch(tryBranch));
     }),
     awaitCounter
@@ -1909,17 +1906,18 @@ function _try(nodeAccessor, template, walks, setup) {
   let branchAccessor = "A" + nodeAccessor,
     renderer = _content("", template, walks, setup)();
   return (scope, input) => {
-    scope[branchAccessor] ||
-      setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch);
+    branchAccessor in scope ||
+      (setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch),
+      (scope[branchAccessor].C = nodeAccessor));
     let branch = scope[branchAccessor];
-    branch &&
-      ((branch.C = nodeAccessor),
-      (branch.E = input.catch && (normalizeDynamicRenderer(input.catch) || 0)),
+    branch.C &&
+      ((branch.E = input.catch && (normalizeDynamicRenderer(input.catch) || 0)),
       (branch.Q = normalizeDynamicRenderer(input.placeholder)));
   };
 }
 function renderCatch(scope, error) {
-  let tryWithCatch = findBranchWithKey(scope, "E");
+  let tryWithCatch = scope.F;
+  for (; tryWithCatch && tryWithCatch.E == null;) tryWithCatch = tryWithCatch.PT || tryWithCatch.N;
   if (tryWithCatch) {
     let owner = tryWithCatch._,
       placeholderBranch = tryWithCatch.P;
