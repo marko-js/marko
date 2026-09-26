@@ -14,7 +14,7 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
-import { forEach, type Opt, push, reduce, some } from "./optional";
+import { filter, forEach, type Opt, push, reduce, some } from "./optional";
 import {
   type AssignedBindingExtra,
   type Binding,
@@ -138,10 +138,13 @@ export function setSectionOwnerResumedByMarker(section: Section) {
   setOwnerResumedByMarker(section, true);
 }
 
-// Registered content's closures, one values object per owner down to the
-// content's own (`0` for none), each read through `scope`; they sort by section.
+// Registered content's closures its owners' fills may lack, sorted by section:
+// one values object per owner down to the content's own.
 export function getContentClosureValues(bodySection: Section) {
-  const contentClosures = getContentClosures(bodySection);
+  const contentClosures = filter(
+    getContentClosures(bodySection),
+    isConditionallySerialized,
+  );
   if (!contentClosures) return;
   const scope = generateUidIdentifier("scope");
   const closures = Array.isArray(contentClosures)
@@ -149,24 +152,20 @@ export function getContentClosureValues(bodySection: Section) {
     : [contentClosures];
   const ownerAccessor = getAccessorProp().Owner;
   const levels: t.Expression[] = [];
-  let length = 0;
   for (let i = closures.length, section = bodySection.parent!; i;) {
     const props: t.ObjectProperty[] = [];
     while (i && closures[i - 1].section === section) {
       const closure = closures[--i];
-      if (!isStaticSerializeReason(getSerializeReason(section, closure))) {
-        props.push(
-          toObjectProperty(
-            getScopeAccessor(closure),
-            getDeclaredBindingExpression(closure),
-          ),
-        );
-      }
+      props.push(
+        toObjectProperty(
+          getScopeAccessor(closure),
+          getDeclaredBindingExpression(closure),
+        ),
+      );
     }
-    if (
-      i &&
-      !isStaticSerializeReason(getSerializeReason(section, ownerAccessor))
-    ) {
+    // Resume walks up through each owner while the payload evaluates, before
+    // any fill could link it, so every level below another links its owner.
+    if (i) {
       props.push(
         toObjectProperty(
           ownerAccessor,
@@ -174,11 +173,14 @@ export function getContentClosureValues(bodySection: Section) {
         ),
       );
     }
-    levels.push(props.length ? t.objectExpression(props) : t.numericLiteral(0));
-    if (props.length) length = levels.length;
+    levels.push(t.objectExpression(props));
     section = section.parent!;
   }
-  if (length) return { scope, levels: levels.slice(0, length).reverse() };
+  return { scope, levels: levels.reverse() };
+}
+
+function isConditionallySerialized(closure: Binding) {
+  return !isStaticSerializeReason(getSerializeReason(closure.section, closure));
 }
 
 const [getSerializedAccessors] = createSectionState<

@@ -22,10 +22,10 @@ interface Registered {
 
 // What registered content reads that its scopes may lack, computed only once
 // it is sent, as arguments to its registered factory: an attribute tag loop's
-// values, then the closures it reads per owner down to its own (`0` for none).
+// values, then the closures it reads per owner down to its own.
 export type Locals = (
   scope: (scopeId: number) => PartialScope,
-) => (PartialScope | 0)[];
+) => PartialScope[];
 
 interface ScopeInternals {
   [K_SCOPE_ID]?: number;
@@ -579,7 +579,7 @@ function writeAssigned(state: State) {
       if (writeProp(state, mutation.object, null, "")) {
         const objectRef = state.refs.get(mutation.object as object);
         if (objectRef && objectRef.scopeId === undefined) {
-          if (!objectRef.id) {
+          if (!objectRef.id && !isAncestorChannelRef(state, objectRef)) {
             objectRef.id = nextRefAccess(state);
             state.buf[objectStartIndex] =
               "(" + objectRef.id + "=" + state.buf[objectStartIndex];
@@ -607,7 +607,12 @@ function writeAssigned(state: State) {
             ? state.strs.get(mutation.value)
             : state.refs.get(mutation.value as object);
         // Scopes never claim a binding (`_(N)` is self-resolving).
-        if (valueRef && !valueRef.id && valueRef.scopeId === undefined) {
+        if (
+          valueRef &&
+          !valueRef.id &&
+          valueRef.scopeId === undefined &&
+          !isAncestorChannelRef(state, valueRef)
+        ) {
           valueRef.id = mutation.valueId || nextRefAccess(state);
           state.buf[valueStartIndex] =
             valueRef.id + "=" + state.buf[valueStartIndex];
@@ -635,7 +640,7 @@ function writeCallArg(state: State, val: unknown) {
   } else if (writeProp(state, val, null, "")) {
     // Args have no parent access path, so a later reuse needs an eager id.
     const ref = state.refs.get(val as WeakKey) || state.strs.get(val as string);
-    if (ref && ref.id === null) assignId(state, ref);
+    if (ref) ensureId(state, ref);
   } else {
     state.buf.push("void 0");
   }
@@ -803,15 +808,7 @@ function writeRegistered(
       state.buf.push(registered.access + "(_(" + scopeId + ")");
       for (const local of locals) {
         state.buf.push(",");
-        if (local) {
-          writePlainObject(
-            state,
-            local,
-            new Reference(ref, null, state.flushId, state.buf.length),
-          );
-        } else {
-          state.buf.push("0");
-        }
+        writePlainObject(state, local, newArgReference(state, ref, local));
       }
     } else {
       state.buf.push("_(" + scopeId + "," + quoteRegisterId(registered.id));
@@ -1379,6 +1376,31 @@ function writeArrayArg(
   state.buf.push(")");
 }
 
+// A call argument no access path reaches back into (`resolvedOptions()`, a
+// registered factory's locals) binds an id when it first writes a reusable member.
+function newArgReference(state: State, parent: Reference, val: object) {
+  for (const key in val) {
+    const member = (val as Record<string, unknown>)[key];
+    if (
+      isDedupedMember(member) &&
+      !(typeof member === "string"
+        ? state.strs.has(member)
+        : state.refs.has(member as WeakKey))
+    ) {
+      const ref = new Reference(
+        parent,
+        null,
+        state.flushId,
+        null,
+        nextRefAccess(state),
+      );
+      state.buf.push(ref.id + "=");
+      return ref;
+    }
+  }
+  return new Reference(parent, null, state.flushId, state.buf.length);
+}
+
 // Only a reusable non-scope member makes its container need an id.
 function isDedupedMember(val: unknown) {
   switch (typeof val) {
@@ -1716,31 +1738,9 @@ function writeResponse(state: State, val: Response, ref: Reference) {
 // instead. It reports a locale's best match, not the request (tc39/ecma402#58).
 function writeIntl(state: State, val: object, name: string, ref: Reference) {
   const { locale, ...options } = (val as Intl.NumberFormat).resolvedOptions();
-  let needsId = false;
-  for (const key in options) {
-    if (isDedupedMember((options as Record<string, unknown>)[key])) {
-      needsId = true;
-      break;
-    }
-  }
-
   state.buf.push("new Intl." + name + "(" + quote(locale, 0) + ",");
-  // `resolvedOptions()` is a call, not a property, so a reusable member needs
-  // its own id here — it cannot be reached back through the formatter.
-  let optionsRef: Reference;
-  if (needsId) {
-    optionsRef = new Reference(
-      ref,
-      null,
-      state.flushId,
-      null,
-      nextRefAccess(state),
-    );
-    state.buf.push(optionsRef.id + "={");
-  } else {
-    optionsRef = new Reference(ref, null, state.flushId, state.buf.length);
-    state.buf.push("{");
-  }
+  const optionsRef = newArgReference(state, ref, options);
+  state.buf.push("{");
   writeObjectProps(state, options, optionsRef);
   state.buf.push("})");
   return true;
@@ -1866,7 +1866,7 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     state.buf.push("," + holder.id + "={}");
     writeProp(state, returnValue, holder, "v");
   } else if (returnValue !== undefined) {
-    const sepIndex = state.buf.push(",") - 1;
+    state.buf.push(",");
     if (
       writeProp(state, returnValue, ref, "") &&
       isDedupedMember(returnValue)
@@ -1877,10 +1877,7 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
         typeof returnValue === "string"
           ? state.strs.get(returnValue)
           : state.refs.get(returnValue as WeakKey);
-      if (retRef && !retRef.id && retRef.scopeId === undefined) {
-        retRef.id = nextRefAccess(state);
-        state.buf[sepIndex] = "," + retRef.id + "=";
-      }
+      if (retRef) ensureId(state, retRef);
     }
   }
 
@@ -2156,6 +2153,12 @@ function trackChannel(state: State, ref: Reference) {
   return false;
 }
 
+// A value main or an ancestor channel wrote, which a ready stream reads back by
+// path: an id it claimed would be unset wherever the ready stream has not run.
+function isAncestorChannelRef(state: State, ref: Reference) {
+  return ref.channel?.readyId !== state.channel?.readyId;
+}
+
 function abortUnreachableChannel(state: State, val: unknown) {
   const err = new TypeError(
     "Unable to serialize a value shared between independently lazy loaded content. Values shared this way must also be serialized by content that is not lazily loaded, or by a common parent.",
@@ -2312,12 +2315,12 @@ function writeRef(state: State, ref: Reference) {
     ref.id === null &&
     ref.scopeId === undefined &&
     ref.path === null &&
-    (ref.pos === null || ref.flushId !== state.flushId)
+    (ref.pos === null || ref.flushId !== state.flushId) &&
+    !isAncestorChannelRef(state, ref)
   ) {
     ref.path = accessPath(state, ref);
     ref.pos = state.buf.length;
     ref.flushId = state.flushId;
-    ref.channel = state.channel;
     state.buf.push(ref.path);
   } else {
     state.buf.push(ensureId(state, ref));
@@ -2345,9 +2348,8 @@ function accessId(state: State, ref: Reference): string {
 
 function assignId(state: State, ref: Reference): string {
   const { pos } = ref;
-  ref.id = nextRefAccess(state);
-
   if (pos !== null && ref.flushId === state.flushId) {
+    ref.id = nextRefAccess(state);
     if (pos === 0) {
       state.buf[0] = ref.id + "=" + state.buf[0];
     } else {
@@ -2357,7 +2359,9 @@ function assignId(state: State, ref: Reference): string {
     return ref.id;
   }
 
-  ref.channel = state.channel;
+  if (isAncestorChannelRef(state, ref))
+    return ref.path || accessPath(state, ref);
+  ref.id = nextRefAccess(state);
   return ref.id + "=" + (ref.path || accessPath(state, ref));
 }
 
@@ -2366,13 +2370,17 @@ function accessPath(state: State, ref: Reference): string {
   let accessPrevValue = "";
 
   do {
+    if (MARKO_DEBUG && cur.accessor === null) {
+      throw new Error(
+        "Unable to serialize a reused value: no access path reaches where it was first written, and it has no id.",
+      );
+    }
     accessPrevValue = toAccess(cur.accessor!) + accessPrevValue;
     const parent = cur.parent!;
 
     if (parent.id) {
-      if (trackChannel(state, parent) || !parent.parent) {
-        return parent.id + accessPrevValue;
-      }
+      trackChannel(state, parent);
+      return parent.id + accessPrevValue;
     }
 
     if (parent.flushId === state.flushId || parent.scopeId !== undefined) {

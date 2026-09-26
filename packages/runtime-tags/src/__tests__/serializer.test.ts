@@ -446,6 +446,20 @@ describe("serializer", () => {
       );
     });
 
+    it("inserts a scope member that follows a deferred one", () => {
+      const scope = { [K_SCOPE_ID]: 1, value: 1 };
+      const parent: any = {};
+      parent.set = new Set([parent, scope]);
+      const scopes = assertStringifyScopes(
+        [
+          [1, scope, { value: 1 }],
+          [2, {}, { parent }],
+        ],
+        `_=>(_([1,{value:1},{parent:_.b={set:_.a=new Set([])}}]),_.a.add(_.b),_.a.add(_(1)),0)`,
+      );
+      assert.ok((scopes.get(2)!.parent as any).set.has(scopes.get(1)));
+    });
+
     it("serializes a nested circular found inside a deferred insert arg", () => {
       const root: any = {};
       const child: any = {};
@@ -1816,7 +1830,7 @@ describe("serializer", () => {
             [1, scope, { value: 1 }],
             [2, {}, { fn, item }],
           ],
-          `_=>[1,{value:1},{fn:_._.fn(_(1),{item:_.a={text:"x"}}),item:_.a}]`,
+          `_=>[1,{value:1},{fn:_._.fn(_(1),_.a={item:_.b={text:"x"}}),item:_.b}]`,
           { _: { fn: builder } },
         );
         const [, locals] = (scopes.get(2)!.fn as () => any)();
@@ -1833,7 +1847,7 @@ describe("serializer", () => {
             [1, scope, { value: 1 }],
             [2, {}, { fn, label }],
           ],
-          `_=>[1,{value:1},{fn:_._.fn(_(1),{label:_.a="a long repeated label"}),label:_.a}]`,
+          `_=>[1,{value:1},{fn:_._.fn(_(1),_.a={label:_.b="a long repeated label"}),label:_.b}]`,
           { _: { fn: builder } },
         );
         const [, locals] = (scopes.get(2)!.fn as () => any)();
@@ -1853,7 +1867,7 @@ describe("serializer", () => {
             [1, scope, { value: 1 }],
             [2, {}, { fn }],
           ],
-          `_=>(_([1,{value:1},{fn:_.a=_._.fn(_(1),{item:_.b={text:"x"}})}]),_.b.fn=_.a,0)`,
+          `_=>(_([1,{value:1},{fn:_.b=_._.fn(_(1),_.a={item:_.c={text:"x"}})}]),_.c.fn=_.b,0)`,
           { _: { fn: builder } },
         );
         const resumed = scopes.get(2)!.fn as () => any;
@@ -2030,6 +2044,98 @@ describe("serializer", () => {
         `_=>[2,{shared:_(1).shared}]`,
       );
       assert.deepEqual([...serializer.takeChannelDeps()!], ["a"]);
+      assert.deepEqual(aborted, []);
+    });
+
+    it("keeps a main-stream value reachable after a ready stream reuses it", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      const shared = { x: 1 };
+      const ready = { readyId: "a" };
+      serializer.stringifyScopes([[1, {}, { shared }]], boundary);
+      assert.equal(
+        serializer.stringifyScopes(
+          [[2, {}, { a: shared, b: shared }]],
+          boundary,
+          ready,
+        ),
+        `_=>[2,{a:_(1).shared,b:_(1).shared}]`,
+      );
+      assert.equal(
+        serializer.stringifyScopes([[3, {}, { shared }]], boundary),
+        `_=>[3,{shared:_(1).shared}]`,
+      );
+      assert.deepEqual(aborted, []);
+    });
+
+    it("claims no id for a main-stream object a ready stream mutates", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      const subs = new Set();
+      const ready = { readyId: "a" };
+      serializer.stringifyScopes([[1, {}, { subs }]], boundary);
+      serializer.writeCall({ [K_SCOPE_ID]: 2 }, subs, "add", ready);
+      assert.equal(
+        serializer.stringifyScopes([], boundary, ready),
+        `_=>((_(1).subs).add(_(2)),0)`,
+      );
+      serializer.writeCall({ [K_SCOPE_ID]: 3 }, subs, "add", undefined);
+      assert.equal(
+        serializer.stringifyScopes([], boundary),
+        `_=>((_.a=_(1).subs).add(_(3)),0)`,
+      );
+      assert.equal(
+        serializer.stringifyScopes([[4, {}, { subs }]], boundary),
+        `_=>[4,{subs:_.a}]`,
+      );
+      assert.deepEqual(aborted, []);
+    });
+
+    it("claims no id for an ancestor channel's object a child channel mutates", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      const subs = new Set();
+      const parent = { readyId: "a" };
+      const child = { readyId: "b", parent };
+      serializer.stringifyScopes([[1, {}, { subs }]], boundary, parent);
+      serializer.writeCall({ [K_SCOPE_ID]: 2 }, subs, "add", child);
+      assert.equal(
+        serializer.stringifyScopes([], boundary, child),
+        `_=>((_(1).subs).add(_(2)),0)`,
+      );
+      assert.deepEqual([...serializer.takeChannelDeps()!], ["a"]);
+      serializer.writeCall({ [K_SCOPE_ID]: 3 }, subs, "add", parent);
+      assert.equal(
+        serializer.stringifyScopes([], boundary, parent),
+        `_=>((_.a=_(1).subs).add(_(3)),0)`,
+      );
+      assert.deepEqual(aborted, []);
+    });
+
+    it("claims no id for a main-stream value a ready stream writes where no path reaches", async () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new Serializer();
+      const shared = { x: 1 };
+      const ready = { readyId: "a" };
+      // eslint-disable-next-line require-yield
+      const g = (function* () {
+        return shared;
+      })();
+      const p = Promise.resolve(shared);
+      serializer.stringifyScopes([[1, {}, { shared }]], boundary);
+      assert.equal(
+        serializer.stringifyScopes([[2, {}, { g, p }]], boundary, ready),
+        `_=>[2,{g:(function*(a,r){yield*a;return r})([],_(1).shared),p:(p=>p=new Promise((f,r)=>_.a={f,r(e){p.catch(_=>0);r(e)}}))()}]`,
+      );
+      await tick();
+      assert.equal(
+        serializer.stringifyScopes([], boundary, ready),
+        `_=>(_.a.f(_(1).shared),0)`,
+      );
+      assert.equal(
+        serializer.stringifyScopes([[3, {}, { shared }]], boundary),
+        `_=>[3,{shared:_(1).shared}]`,
+      );
       assert.deepEqual(aborted, []);
     });
   });

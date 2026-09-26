@@ -1,0 +1,13 @@
+import Child from "./child.marko" with { load: "on-click body" }
+import { resolveAfter } from "../../utils/resolve";
+
+<define/Item>
+  <span/el>x</span>
+</define>
+<Child content=Item/>
+<await|v|=resolveAfter(1)>
+  <Item/>
+</await>
+<script>
+  for (const e of el) e.textContent = "y";
+</script>
