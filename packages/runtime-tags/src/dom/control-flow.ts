@@ -21,11 +21,9 @@ import {
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
-  caughtError,
   runEffects,
   pendingEffects,
   type PendingRender,
-  placeholderShown,
   prepareEffects,
   queueAsyncRender,
   queueEffect,
@@ -50,7 +48,7 @@ import {
   syncGen,
   tempDetachBranch,
 } from "./scope";
-import { type Signal, subscribeToScopeSet } from "./signals";
+import { type Signal, type SignalFn, subscribeToScopeSet } from "./signals";
 
 export function _await_promise(
   nodeAccessor: EncodedAccessor,
@@ -115,8 +113,6 @@ export function _await_promise(
     }
 
     let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
-
-    placeholderShown.add(pendingEffects);
 
     if (!tryPlaceholder && !awaitCounter?.i) {
       awaitCounter = createAwaitCounter(tryBranch, () => {
@@ -183,8 +179,6 @@ export function _await_promise(
               | undefined;
             awaitBranch[AccessorProp.PendingRenders] = 0;
             pendingRenders?.forEach(queuePendingRender);
-
-            placeholderShown.add(pendingEffects); // TODO: check if still needed
 
             awaitCounter!.c();
             if (awaitCounter!.m) {
@@ -268,7 +262,6 @@ export function addAwaitCounter(
       dismissPlaceholder(tryBranch),
     );
   }
-  placeholderShown.add(pendingEffects);
   scheduleAwaitFrame(awaitCounter, tryBranch, () => {
     insertBranchBefore(
       (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
@@ -311,12 +304,16 @@ function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   return awaitCounter;
 }
 
-function runPendingEffects(scope: BranchScope) {
-  const effects = scope[AccessorProp.PendingEffects];
-  if (effects) {
-    scope[AccessorProp.PendingEffects] = [];
-    runEffects(effects, 1);
+export function runPendingEffects(tryBranch: BranchScope) {
+  const pending = tryBranch[AccessorProp.PendingEffects];
+  if (pending) {
+    tryBranch[AccessorProp.PendingEffects] = 0;
+    pending.forEach(runPendingScopeEffects);
   }
+}
+
+function runPendingScopeEffects(fns: Set<SignalFn>, scope: Scope) {
+  fns.forEach((fn) => runEffects([fn, scope]));
 }
 
 function dismissPlaceholder(tryBranch: BranchScope) {
@@ -384,7 +381,6 @@ export function renderCatch(scope: Scope, error: unknown) {
       ] = placeholderBranch;
       destroyBranch(tryWithCatch);
     }
-    caughtError.add(pendingEffects);
     setConditionalRenderer(
       owner,
       tryWithCatch[AccessorProp.BranchAccessor],
