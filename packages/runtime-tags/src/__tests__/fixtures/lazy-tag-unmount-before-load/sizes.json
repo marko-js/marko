@@ -5,8 +5,8 @@
       "brotli": 69
     },
     "template.marko.page.mjs": {
-      "min": 1738,
-      "brotli": 929
+      "min": 1750,
+      "brotli": 931
     },
     "child.mjs": {
       "min": 177,
@@ -17,8 +17,8 @@
       "brotli": 75
     },
     "shared": {
-      "min": 9038,
-      "brotli": 3945
+      "min": 9028,
+      "brotli": 3944
     }
   },
   "html": {

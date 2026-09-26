@@ -135,6 +135,7 @@ export const domRuntimeFeatures = [
   "controllable-textarea",
   "dynamic-tag-script",
   "dynamic-tag-var",
+  "lazy",
   "placeholder",
 ] as const;
 export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
@@ -150,10 +151,7 @@ export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!features) importedFeatures.set(program.node, (features = new Set()));
   if (!features.has(feature)) {
     features.add(feature);
-    const decl = t.importDeclaration(
-      [],
-      t.stringLiteral(`${getRuntimePath("dom")}/${feature}.feat`),
-    );
+    const decl = getRuntimeFeatureImport(feature);
     // Kept with the imports, since one among statements splits the bundler's
     // view of the body; a path insert keeps queued sibling keys in sync.
     const lastImport = program
@@ -162,6 +160,13 @@ export function importRuntimeFeature(feature: DOMRuntimeFeature) {
     if (lastImport) lastImport.insertAfter(decl);
     else program.unshiftContainer("body", decl);
   }
+}
+
+export function getRuntimeFeatureImport(feature: DOMRuntimeFeature) {
+  return t.importDeclaration(
+    [],
+    t.stringLiteral(`${getRuntimePath("dom")}/${feature}.feat`),
+  );
 }
 
 export function getHTMLRuntime() {

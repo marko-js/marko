@@ -6,7 +6,11 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
-import { type DOMRuntimeHelpers, getRuntimePath } from "./runtime";
+import {
+  type DOMRuntimeHelpers,
+  getRuntimeFeatureImport,
+  getRuntimePath,
+} from "./runtime";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -20,6 +24,8 @@ declare module "@marko/compiler/dist/types" {
 interface EntryState {
   init: boolean;
   load: boolean;
+  /** Whether a reached template lazily imports another. */
+  lazy: boolean;
   /** Depth of enclosing templates whose modules the bundle already loads:
    * below a root everything arrives through its imports, and a lazy subtree
    * is loaded by its own load entry. */
@@ -70,6 +76,7 @@ const builder = {
             t.stringLiteral(getRuntimePath("dom")),
           ),
         );
+        if (state.lazy) body.push(getRuntimeFeatureImport("lazy"));
       }
 
       // The topmost templates with client side work; everything below one of
@@ -150,6 +157,7 @@ const builder = {
     const state = (entryFile[kState] ||= {
       init: false,
       load: false,
+      lazy: false,
       bundled: 0,
       roots: [],
       assets: new Set(),
@@ -174,6 +182,7 @@ const builder = {
 
     if (init) state.init = true;
     if (load) state.load = true;
+    if (loadImports) state.lazy = true;
     if (isRoot) {
       state.roots.push(
         resolveRelativePath(entryFile, file.opts.filename as string),

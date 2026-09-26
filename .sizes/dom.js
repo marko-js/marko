@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27161 (min) 10150 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -96,7 +96,6 @@ let unsafeStyleAttrReg = /[\\;]/g,
   curRenders,
   embedRenders,
   readyIds,
-  lazyEnabled,
   isResuming,
   cloneCache = {},
   _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
@@ -836,9 +835,6 @@ function ready(readyId) {
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
 function readyFailed(readyId) {}
-function withLazy(runtime) {
-  return ((lazyEnabled = 1), runtime);
-}
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
     ((embedRenders = /* @__PURE__ */ new Map()),
@@ -1047,20 +1043,18 @@ function init(runtimeId = "M") {
                       ? (htmlStart = visit)
                       : ((visitScope[nextToken()] = htmlStart),
                         (visitScope["H" + lastToken] = visit),
-                        (branchesEnabled || lazyEnabled) &&
+                        branchesEnabled &&
                           pending[pending.length - 1] !== visitScope &&
                           pending.push(visitScope))
                     : branchesEnabled && visitType > "'"
                       ? (visitBranches ||= createVisitBranches())()
-                      : lazyEnabled && render.b && visitType > "%"
-                        ? (visits[retained++] = visit)
-                        : ((visitScope[nextToken()] =
-                            visitType === "%"
-                              ? visit.parentNode.insertBefore(new Text(), visit)
-                              : visit.previousSibling),
-                          (branchesEnabled || lazyEnabled) &&
-                            pending[pending.length - 1] !== visitScope &&
-                            pending.push(visitScope)));
+                      : ((visitScope[nextToken()] =
+                          visitType === "%"
+                            ? visit.parentNode.insertBefore(new Text(), visit)
+                            : visit.previousSibling),
+                        branchesEnabled &&
+                          pending[pending.length - 1] !== visitScope &&
+                          pending.push(visitScope)));
               return (
                 branchesEnabled &&
                   visitBranches &&
@@ -2121,63 +2115,7 @@ let empty = [],
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
   },
-  noop = (_) => 0,
-  _load_template = /*@__PURE__*/ withLazy((id, load) => {
-    let pending,
-      lazyTemplate = _template(
-        id,
-        0,
-        0,
-        (branch) => {
-          let awaitCounter = addAwaitCounter(branch);
-          ((branch.X ||= /* @__PURE__ */ new Map()),
-            (pending ||= load()).then(
-              (renderer) => {
-                (Object.assign(lazyTemplate, renderer),
-                  queueAsyncRender(branch, (branch) =>
-                    insertLoaded(renderer, branch, branch.S, awaitCounter),
-                  ));
-              },
-              loadFailed(branch, awaitCounter),
-            ));
-        },
-        _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d || noop }))),
-      );
-    return lazyTemplate;
-  }),
-  _load_setup = /*@__PURE__*/ withLazy((load) => {
-    let pending,
-      renderer,
-      insertCached = (child, marker) => insertLoaded(renderer, child, marker);
-    return (owner, child, marker) => {
-      if (renderer) queueRender(child, insertCached, -1, marker);
-      else {
-        let awaitCounter = addAwaitCounter(owner);
-        ((child.X ||= /* @__PURE__ */ new Map()),
-          (pending ||= load()).then(
-            (mod) => {
-              ((renderer ||= _content("", ...mod._)()),
-                queueAsyncRender(child, (child) =>
-                  insertLoaded(renderer, child, marker, awaitCounter),
-                ));
-            },
-            loadFailed(child, awaitCounter),
-          ));
-      }
-    };
-  }),
-  _load_signal = /*@__PURE__*/ withLazy((load) => {
-    let pending,
-      apply = (scope, value) => {
-        ((pending ||= load()),
-          scope.X || (!("X" in scope) && scope.H === runId)
-            ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, [value, apply])
-            : apply._
-              ? apply._(scope, value)
-              : pending.then((mod) => queueAsyncRender(scope, (apply._ = mod._), value), noop));
-      };
-    return apply;
-  });
+  noop = (_) => 0;
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
 }
@@ -2253,6 +2191,50 @@ function mount(input = {}, reference, position) {
     }
   );
 }
+function _load_template(id, load) {
+  let pending,
+    lazyTemplate = _template(
+      id,
+      0,
+      0,
+      (branch) => {
+        let awaitCounter = addAwaitCounter(branch);
+        ((branch.X ||= /* @__PURE__ */ new Map()),
+          (pending ||= load()).then(
+            (renderer) => {
+              (Object.assign(lazyTemplate, renderer),
+                queueAsyncRender(branch, (branch) =>
+                  insertLoaded(renderer, branch, branch.S, awaitCounter),
+                ));
+            },
+            loadFailed(branch, awaitCounter),
+          ));
+      },
+      _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d || noop }))),
+    );
+  return lazyTemplate;
+}
+function _load_setup(load) {
+  let pending,
+    renderer,
+    insertCached = (child, marker) => insertLoaded(renderer, child, marker);
+  return (owner, child, marker) => {
+    if (renderer) queueRender(child, insertCached, -1, marker);
+    else {
+      let awaitCounter = addAwaitCounter(owner);
+      ((child.X ||= /* @__PURE__ */ new Map()),
+        (pending ||= load()).then(
+          (mod) => {
+            ((renderer ||= _content("", ...mod._)()),
+              queueAsyncRender(child, (child) =>
+                insertLoaded(renderer, child, marker, awaitCounter),
+              ));
+          },
+          loadFailed(child, awaitCounter),
+        ));
+    }
+  };
+}
 function insertLoaded(renderer, branch, marker, awaitCounter) {
   let parent = marker.parentNode,
     values = branch.X,
@@ -2286,6 +2268,18 @@ function loadFailed(scope, awaitCounter) {
     (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
       queueAsyncRender(scope, renderCatch, error));
   };
+}
+function _load_signal(load) {
+  let pending,
+    apply = (scope, value) => {
+      ((pending ||= load()),
+        scope.X || (!("X" in scope) && scope.H === runId)
+          ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, [value, apply])
+          : apply._
+            ? apply._(scope, value)
+            : pending.then((mod) => queueAsyncRender(scope, (apply._ = mod._), value), noop));
+    };
+  return apply;
 }
 function _load_visible_trigger(selector, options) {
   let pending, el;
