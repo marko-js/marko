@@ -145,7 +145,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return "ok";
 		})()));
 		_subscribe($fail__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "28:4"), "__tests__/template.marko_4_fail#7/subscribe");
-	}, $scope0_id), { catch: $catch });
+	}, $scope0_id), { catch: $catch }, 0);
 	_html("</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

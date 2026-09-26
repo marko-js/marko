@@ -36,7 +36,7 @@ var template_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_await($scope0_id, "b", resolveAfter("streamed", 2), (label) => {
 		_scope_id();
 		$Child_withLoadAssets({

@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("loading...");
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_scope($scope1_id, {});
 			return 0;
 		}

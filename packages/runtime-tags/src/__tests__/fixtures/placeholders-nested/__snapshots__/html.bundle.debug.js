@@ -25,12 +25,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope5_id = _scope_id();
 			_html("_A_");
-		}, $scope1_id) }) });
+		}, $scope1_id) }) }, 0);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("_B_");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_html("h");
 	_await($scope0_id, "#text/1", resolveAfter("i", 1), (data) => {
 		const $scope7_id = _scope_id();

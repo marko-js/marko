@@ -119,7 +119,7 @@ var template_default = _template("a", (input) => {
 			return "ok";
 		})()));
 		_subscribe($fail__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), "a5");
-	}, $scope0_id), { catch: $catch });
+	}, $scope0_id), { catch: $catch }, 0);
 	_html("</div>");
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {

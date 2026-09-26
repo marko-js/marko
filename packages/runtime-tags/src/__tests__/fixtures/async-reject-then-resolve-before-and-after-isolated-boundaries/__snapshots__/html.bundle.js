@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("Rejected A");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_try($scope0_id, "b", _content_resume("a3", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("Rejected B");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_try($scope0_id, "c", _content_resume("a6", () => {
 		const $scope7_id = _scope_id();
 		_scope_reason();
@@ -39,5 +39,5 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("Rejected C");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 }, 1);

@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(" loading");
 				_script($scope3_id, "__tests__/template.marko_3", 0);
 				_resume_branch($scope3_id);
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}

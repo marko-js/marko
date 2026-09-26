@@ -7,5 +7,5 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html(_escape(value));
-	}, $scope0_id), {});
+	}, $scope0_id), {}, 0);
 }, 1);

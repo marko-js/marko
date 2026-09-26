@@ -11,6 +11,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("ERROR!");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_html("c");
 }, 1);

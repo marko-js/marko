@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope_reason();
 					const $scope7_id = _scope_id();
 					_html("inner caught");
-				}, $scope4_id) }) });
+				}, $scope4_id) }) }, 0);
 				_await($scope4_id, "#text/1", rejectAfter(new Error("ERROR!"), 2), () => {
 					const $scope9_id = _scope_id();
 					_html("never outer");
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`caught: ${_text_resume($scope5_id, "#text/0", err.message, $sg__err_message * 2)}`);
 				_serialize_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "21:8");
-			}, $scope2_id) }) });
+			}, $scope2_id) }) }, 0);
 			_html(`<div>changes: ${_text_resume($scope2_id, "#text/2", changes, 2)}</div>${_el_resume($scope2_id, "#div/1")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			_subscribe($changes__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4"), "__tests__/template.marko_2_changes#1/subscribe");
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("loading outer...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_scope($scope0_id, {
 		changes,
 		"ClosureScopes:changes": $changes__closures

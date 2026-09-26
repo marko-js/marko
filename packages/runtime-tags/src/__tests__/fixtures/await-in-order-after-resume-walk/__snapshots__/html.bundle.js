@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading button");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_await($scope0_id, "b", resolveAfter(value, 3), (v) => {
 		const $scope4_id = _scope_id();
 		_html(`<div>${_text_resume($scope4_id, "a", v)}</div>`);

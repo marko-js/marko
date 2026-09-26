@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				_html(" loading");
 				_script($scope3_id, "a0", 0);
 				_resume_branch($scope3_id);
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_scope($scope1_id, {});
 			return 0;
 		}

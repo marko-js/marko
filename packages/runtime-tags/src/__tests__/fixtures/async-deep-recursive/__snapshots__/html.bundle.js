@@ -26,7 +26,7 @@ const $content = (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("LOADING...");
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_html(`</div>${_el_resume($scope1_id, "a", $sg__input_level)}`);
 			$si__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

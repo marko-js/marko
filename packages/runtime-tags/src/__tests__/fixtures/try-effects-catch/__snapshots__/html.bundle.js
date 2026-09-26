@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "a", err.message, $sg__err_message));
 		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_html(`<div></div>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {});

@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("loading button");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_await($scope0_id, "#text/1", value ? value : resolveAfter(value, 3), (v) => {
 		const $scope4_id = _scope_id();
 		_html(`<div>${_text_resume($scope4_id, "#text/0", v)}</div>`);

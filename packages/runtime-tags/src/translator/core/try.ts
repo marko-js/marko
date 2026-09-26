@@ -27,6 +27,11 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
+import { getSerializeGuard } from "../util/serialize-guard";
+import {
+  addSerializeExpr,
+  getSerializeReason,
+} from "../util/serialize-reasons";
 import {
   addStatement,
   addValue,
@@ -83,6 +88,8 @@ export default {
 
     if (bodySection) {
       bodySection.upstreamExpression = tagExtra;
+      // The client `_try` reruns when its input changes, which needs its marks.
+      addSerializeExpr(section, tagExtra, tagExtra.nodeBinding);
       structure.visit(tag, WalkCode.Replace);
       structure.enterShallow(tag);
     }
@@ -131,6 +138,11 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                getSerializeGuard(
+                  section,
+                  getSerializeReason(section, nodeRef),
+                  true,
+                ),
               ),
             ),
           )[0]

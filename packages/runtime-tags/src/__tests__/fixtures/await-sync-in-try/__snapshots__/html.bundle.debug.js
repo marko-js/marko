@@ -25,6 +25,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html("Loading...");
 		}, $scope0_id) })
-	});
+	}, 0);
 	$si__input_value && _scope($scope0_id, { "ClosureScopes:input_value": $input_value__closures }, "__tests__/template.marko", 0);
 }, 1);

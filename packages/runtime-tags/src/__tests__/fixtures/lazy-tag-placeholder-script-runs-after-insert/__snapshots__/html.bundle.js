@@ -20,5 +20,5 @@ var template_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 }, 1);

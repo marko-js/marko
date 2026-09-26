@@ -26,5 +26,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			message: "8:12",
 			clicked: "9:10"
 		});
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 }, 1);

@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "10:4"), "__tests__/template.marko_1_clicks#4/subscribe");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		clicks,

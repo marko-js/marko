@@ -25,6 +25,6 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html("Loading...");
 		}, $scope0_id) })
-	});
+	}, 0);
 	$si__input_value && _scope($scope0_id, { e: $input_value__closures });
 }, 1);

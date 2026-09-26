@@ -29,6 +29,6 @@ var template_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("ERROR!");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_html("f");
 	_await($scope0_id, "#text/1", resolveAfter("g", 1), (data) => {
 		const $scope4_id = _scope_id();

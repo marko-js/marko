@@ -26,7 +26,7 @@ const $content = (input) => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html("LOADING...");
-			}, $scope1_id) }) });
+			}, $scope1_id) }) }, 0);
 			_html(`</div>${_el_resume($scope1_id, "#div/0", $sg__input_level)}`);
 			$si__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/recurse.marko", "3:1");
 			return 0;

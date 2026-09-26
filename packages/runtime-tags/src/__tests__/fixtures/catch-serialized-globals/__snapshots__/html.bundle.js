@@ -22,5 +22,5 @@ var template_default = _template("a", (input) => {
 			f: message,
 			g: _serialize_if($scope2_reason, 0) && clicked
 		});
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 }, 1);

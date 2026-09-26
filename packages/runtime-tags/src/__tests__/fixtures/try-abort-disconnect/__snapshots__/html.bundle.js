@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-a");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_try($scope0_id, "b", _content_resume("a4", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-b");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
 		g: $si__input_a && $input_a__closures,
 		h: $si__input_b && $input_b__closures

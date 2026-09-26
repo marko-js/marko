@@ -33,26 +33,26 @@ var template_default = _template("__tests__/template.marko", (input) => {
 								_scope_reason();
 								const $scope11_id = _scope_id();
 								_html("LOADING B2");
-							}, $scope8_id) }) });
+							}, $scope8_id) }) }, 0);
 							_html("</div>");
 						}, 0);
 					}, $scope6_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_10*content", () => {
 						_scope_reason();
 						const $scope10_id = _scope_id();
 						_html("LOADING B1");
-					}, $scope6_id) }) });
+					}, $scope6_id) }) }, 0);
 					_html("</div>");
 				}, 0);
 			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
 				_scope_reason();
 				const $scope5_id = _scope_id();
 				_html("LOADING A2");
-			}, $scope2_id) }) });
+			}, $scope2_id) }) }, 0);
 			_html("</div>");
 		}, 0);
 	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_4*content", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_html("LOADING A1");
-	}, $scope0_id) }) });
+	}, $scope0_id) }) }, 0);
 }, 1);
