@@ -17,6 +17,8 @@ import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
 
 let inputType = "";
+// Attribute-backed value types: button, checkbox, hidden, image, radio, reset, submit.
+const attributeBackedInputType = /i[ot]|e[cns]|^[bi]/;
 
 export function _attr_input_checked_default(
   scope: Scope,
@@ -217,14 +219,26 @@ export function _attr_input_value_default(
     setInputValue(el, restoreValue);
   }
 }
+// Runs ahead of the value, which applies by type. Leaving an attribute-backed
+// type resets the live value from the attribute, so the new value goes there first.
+export function _attr_input_type(
+  el: HTMLInputElement,
+  type: unknown,
+  value: unknown,
+) {
+  if (attributeBackedInputType.test(el.type)) {
+    _attr(el, "value", value);
+  }
+  _attr(el, "type", type);
+  return value;
+}
 export function _attr_input_value_dynamic_default(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  // Attribute-backed value types: button, checkbox, hidden, image, radio, reset, submit.
-  if (/i[ot]|e[cns]|^[bi]/.test(el.type)) {
+  if (attributeBackedInputType.test(el.type)) {
     _attr(el, "value", value);
   } else {
     _attr_input_value_default(scope, nodeAccessor, value);
@@ -241,7 +255,10 @@ export function _attr_input_value(
   const normalizedValue = normalizeAttrValue(value) || "";
   if (MARKO_DEBUG) {
     assertHandlerIsFunction("valueChange", valueChange);
-    assertNoValueBindingOnCheckable(el.type, valueChange);
+    // A new element is checked by its script, once every attr has set its type.
+    if (scope[AccessorProp.Gen] < runId) {
+      assertNoValueBindingOnCheckable(el.type, valueChange);
+    }
   }
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
   scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedValue;
@@ -619,6 +636,14 @@ export function _controllable_input(
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
+  if ("type" in nextAttrs && "value" in nextAttrs) {
+    _attr_input_type(
+      scope[nodeAccessor] as HTMLInputElement,
+      nextAttrs.type,
+      nextAttrs.value,
+    );
+  }
+
   if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
     _attr_input_checked(
       scope,

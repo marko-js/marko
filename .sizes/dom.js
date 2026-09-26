@@ -1,4 +1,4 @@
-// size: 26981 (min) 10050 (brotli)
+// size: 27111 (min) 10087 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -112,6 +112,7 @@ let _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
 });
 let R = /[\p{L}\p{N}]/gu;
 let inputType = "";
+let attributeBackedInputType = /i[ot]|e[cns]|^[bi]/;
 let controllableScripts = {};
 let controllableRenders = {};
 let _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
@@ -1483,9 +1484,16 @@ function _attr_input_value_default(scope, nodeAccessor, value) {
     ((el.defaultValue = normalizedValue), setInputValue(el, restoreValue));
   }
 }
+function _attr_input_type(el, type, value) {
+  return (
+    attributeBackedInputType.test(el.type) && _attr(el, "value", value),
+    _attr(el, "type", type),
+    value
+  );
+}
 function _attr_input_value_dynamic_default(scope, nodeAccessor, value) {
   let el = scope[nodeAccessor];
-  /i[ot]|e[cns]|^[bi]/.test(el.type)
+  attributeBackedInputType.test(el.type)
     ? _attr(el, "value", value)
     : _attr_input_value_default(scope, nodeAccessor, value);
 }
@@ -1678,19 +1686,24 @@ function updateList(arr, val, push) {
   );
 }
 function _controllable_input(scope, nodeAccessor, nextAttrs) {
-  return "checked" in nextAttrs || "checkedChange" in nextAttrs
-    ? (_attr_input_checked(scope, nodeAccessor, nextAttrs.checked, nextAttrs.checkedChange),
-      /^checked(?:Value)?(?:Change)?$/)
-    : "checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs
-      ? (_attr_input_checkedValue(
-          scope,
-          nodeAccessor,
-          nextAttrs.checkedValue,
-          nextAttrs.checkedValueChange,
-          nextAttrs.value,
-        ),
-        /^(?:value|checked(?:Value)?)(?:Change)?$/)
-      : _controllable_textarea(scope, nodeAccessor, nextAttrs, _attr_input_value_dynamic_default);
+  return (
+    "type" in nextAttrs &&
+      "value" in nextAttrs &&
+      _attr_input_type(scope[nodeAccessor], nextAttrs.type, nextAttrs.value),
+    "checked" in nextAttrs || "checkedChange" in nextAttrs
+      ? (_attr_input_checked(scope, nodeAccessor, nextAttrs.checked, nextAttrs.checkedChange),
+        /^checked(?:Value)?(?:Change)?$/)
+      : "checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs
+        ? (_attr_input_checkedValue(
+            scope,
+            nodeAccessor,
+            nextAttrs.checkedValue,
+            nextAttrs.checkedValueChange,
+            nextAttrs.value,
+          ),
+          /^(?:value|checked(?:Value)?)(?:Change)?$/)
+        : _controllable_textarea(scope, nodeAccessor, nextAttrs, _attr_input_value_dynamic_default)
+  );
 }
 function _controllable_textarea(scope, nodeAccessor, nextAttrs, dynamicDefault) {
   if ("value" in nextAttrs || "valueChange" in nextAttrs)

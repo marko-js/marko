@@ -33,6 +33,7 @@ export {
   _attr_input_checkedValue,
   _attr_input_checkedValue_default,
   _attr_input_checkedValue_script,
+  _attr_input_type,
   _attr_input_value,
   _attr_input_value_attribute_default,
   _attr_input_value_default,

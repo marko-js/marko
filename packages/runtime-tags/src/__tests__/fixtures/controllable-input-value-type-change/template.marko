@@ -1,0 +1,5 @@
+<let/value="5"/>
+<let/type="number"/>
+<input type=type value:=value/>
+<input ...{ type, value, valueChange(next) { value = next } }/>
+<button onClick() { type = undefined; value = "abc" }/>

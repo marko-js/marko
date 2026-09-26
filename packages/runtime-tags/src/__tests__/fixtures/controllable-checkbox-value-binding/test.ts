@@ -10,5 +10,11 @@ import type { TestConfig } from "../../main.test";
 export const config: TestConfig = {
   skip_optimize: true,
   equivalent: false,
-  steps: [{ checkboxType: "checkbox", hiddenType: "hidden" }],
+  steps: [
+    {
+      checkboxType: "checkbox",
+      hiddenType: "hidden",
+      attrs: { type: "checkbox" },
+    },
+  ],
 };
