@@ -9,7 +9,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/child.marko");
+const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "ready:__tests__/child.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0), $si__input_value = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();

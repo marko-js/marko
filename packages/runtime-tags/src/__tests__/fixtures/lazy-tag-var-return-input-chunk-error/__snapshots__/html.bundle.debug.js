@@ -26,7 +26,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/child.marko");
+const $Child_withLoadAssets = withLoadAssets(child_default, flush, "ready:__tests__/child.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -43,10 +43,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_var($scope2_id, "#scopeOffset/2", $childScope, "__tests__/template.marko_2_focusChild#4/var");
 				_html(`<button class=focus>focus</button>${_el_resume($scope2_id, "#button/3")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
-				_scope($scope2_id, {
-					focusChild,
-					"#childScope/1": _existing_scope($childScope)
-				}, "__tests__/template.marko", "6:4", { focusChild: "7:12" });
+				_scope($scope2_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "6:4", { focusChild: "7:12" });
+				_var_scope($childScope, $scope2_id, { focusChild });
 			}, $scope1_id), {
 				placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
 					_scope_reason();

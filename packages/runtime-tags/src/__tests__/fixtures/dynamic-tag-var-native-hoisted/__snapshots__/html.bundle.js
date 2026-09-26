@@ -13,10 +13,8 @@ var template_default = _template("a", (input) => {
 				_html("body");
 			}, $scope1_id));
 			_var($scope1_id, "b", $inputtype_scope, "a2");
-			_scope($scope1_id, {
-				c: $el,
-				_: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id)
-			});
+			_scope($scope1_id, { _: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
+			_var_scope($inputtype_scope, $scope1_id, { c: $el });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show);
@@ -33,9 +31,9 @@ var template_default = _template("a", (input) => {
 		_var($scope2_id, "b", $inputitemType_scope, "a4");
 		_scope($scope2_id, {
 			M: $si__input_itemType && i,
-			d: $item,
 			_: $si__input_itemType && _scope_with_id($scope0_id)
 		});
+		_var_scope($inputitemType_scope, $scope2_id, { d: $item });
 	}, 0, $scope0_id, "b", 1, 0, 0);
 	_script($scope0_id, "a5", $sg__input_show);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { f: input.type });

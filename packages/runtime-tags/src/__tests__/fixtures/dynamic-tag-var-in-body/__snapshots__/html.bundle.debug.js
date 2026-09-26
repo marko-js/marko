@@ -23,8 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_resume_branch($scope1_id);
 	}, $scope0_id));
 	_var($scope0_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_0_setHtml#2/var");
-	_scope($scope0_id, {
-		setHtml,
-		"ClosureScopes:setHtml": $setHtml__closures
-	}, "__tests__/template.marko", 0, { setHtml: "3:16" });
+	_scope($scope0_id, { "ClosureScopes:setHtml": $setHtml__closures }, "__tests__/template.marko", 0, { setHtml: "3:16" });
+	_var_scope($Child_scope, $scope0_id, { setHtml });
 }, 1);

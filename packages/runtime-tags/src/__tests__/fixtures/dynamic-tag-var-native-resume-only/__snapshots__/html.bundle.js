@@ -10,7 +10,8 @@ var heading_default = _template("b", (input) => {
 	}, $scope0_id));
 	_var($scope0_id, "b", $inputtype_scope, "b1");
 	_script($scope0_id, "b2");
-	_scope($scope0_id, { f: el });
+	_scope($scope0_id, {});
+	_var_scope($inputtype_scope, $scope0_id, { f: el });
 });
 
 // template.marko

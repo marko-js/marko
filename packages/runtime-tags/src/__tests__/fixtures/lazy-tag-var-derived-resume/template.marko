@@ -1,0 +1,7 @@
+import Child from "./child.marko" with { load: "render" }
+
+<Child/api/>
+<const/actions={ api }>
+<const/inc() { api() }>
+<button.actions onClick() { actions.api() }>inc</button>
+<button.inc onClick=inc>inc</button>

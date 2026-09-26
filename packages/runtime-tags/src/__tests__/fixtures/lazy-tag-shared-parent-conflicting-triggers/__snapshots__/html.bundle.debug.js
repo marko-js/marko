@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 });
 
 // tags/parent-a.marko
-const $Child_withLoadAssets$1 = withLoadAssets(child_default, "ready:__tests__/tags/child.marko", [{
+const $Child_withLoadAssets$1 = withLoadAssets(child_default, flush, "ready:__tests__/tags/child.marko", [{
 	type: "visible",
 	selector: "body"
 }]);
@@ -19,7 +19,7 @@ var parent_a_default = _template("__tests__/tags/parent-a.marko", (input) => {
 });
 
 // tags/parent-b.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/tags/child.marko", [{ type: "idle" }]);
+const $Child_withLoadAssets = withLoadAssets(child_default, flush, "ready:__tests__/tags/child.marko", [{ type: "idle" }]);
 var parent_b_default = _template("__tests__/tags/parent-b.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

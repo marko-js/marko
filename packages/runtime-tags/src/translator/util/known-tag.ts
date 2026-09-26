@@ -68,7 +68,9 @@ import {
   addStatement,
   getResumeRegisterId,
   initValue,
+  isTagVarSerialized,
   setBindingSerializedValue,
+  setTagVarScopeId,
   writeHTMLResumeStatements,
 } from "./signals";
 import { createSectionState } from "./state";
@@ -227,7 +229,13 @@ export function knownTagTranslateHTML(
   );
 
   let varStatement: t.Statement | undefined;
-  if (childScopeSerializeReason) {
+  const varBinding = tagVar?.extra!.binding;
+  const lazyVar = !!(
+    tagExtra.tagNameLoad &&
+    varBinding &&
+    isTagVarSerialized(section, varBinding)
+  );
+  if (childScopeSerializeReason || lazyVar) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
@@ -237,26 +245,30 @@ export function knownTagTranslateHTML(
       ]),
     );
 
-    setBindingSerializedValue(
-      section,
-      childScopeBinding,
-      callRuntime("_existing_scope", peekScopeId),
-    );
+    if (lazyVar) {
+      setTagVarScopeId(section, varBinding!, peekScopeId);
+    }
 
-    if (tagVar) {
-      // Deferred below the render call: `_var` mints the post-render scope id
-      // for the scope offset.
-      varStatement = t.expressionStatement(
-        callRuntime(
-          "_var",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
-          peekScopeId,
-          t.stringLiteral(
-            getResumeRegisterId(section, tagVar.extra?.binding, "var"),
-          ),
-        ),
+    if (childScopeSerializeReason) {
+      setBindingSerializedValue(
+        section,
+        childScopeBinding,
+        callRuntime("_existing_scope", peekScopeId),
       );
+
+      if (tagVar) {
+        // Deferred below the render call: `_var` mints the post-render scope
+        // id for the scope offset.
+        varStatement = t.expressionStatement(
+          callRuntime(
+            "_var",
+            getScopeIdIdentifier(section),
+            getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
+            peekScopeId,
+            t.stringLiteral(getResumeRegisterId(section, varBinding, "var")),
+          ),
+        );
+      }
     }
   }
 

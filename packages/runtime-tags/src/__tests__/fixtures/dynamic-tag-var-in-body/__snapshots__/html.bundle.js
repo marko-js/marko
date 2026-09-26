@@ -23,8 +23,6 @@ var template_default = _template("a", (input) => {
 		_resume_branch($scope1_id);
 	}, $scope0_id));
 	_var($scope0_id, "b", $Child_scope, "a2");
-	_scope($scope0_id, {
-		c: setHtml,
-		d: $setHtml__closures
-	});
+	_scope($scope0_id, { d: $setHtml__closures });
+	_var_scope($Child_scope, $scope0_id, { c: setHtml });
 }, 1);

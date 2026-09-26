@@ -1,0 +1,6 @@
+import Child from "./child.marko" with { load: "on-click .load" }
+
+<button.load>load</button>
+<Child/api/>
+<const/actions={ api }>
+<button.call onClick() { api(); actions.api() }>call</button>

@@ -9,8 +9,6 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $tag_scope, "a0");
 	_html(`<button id=swap>swap</button>${_el_resume($scope0_id, "c")}<button id=read>read</button>${_el_resume($scope0_id, "d")}<output>${_text_resume($scope0_id, "e", text)}</output>`);
 	_script($scope0_id, "a1");
-	_scope($scope0_id, {
-		f: tag,
-		h: el
-	});
+	_scope($scope0_id, { f: tag });
+	_var_scope($tag_scope, $scope0_id, { h: el });
 }, 1);

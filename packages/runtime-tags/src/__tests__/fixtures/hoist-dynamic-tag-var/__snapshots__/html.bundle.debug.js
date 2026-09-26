@@ -30,7 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $Child_scope = _peek_scope_id();
 					let setHtml = _dynamic_tag($scope2_id, "#text/0", 1 && child_default, {});
 					_var($scope2_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_2_setHtml#2/var");
-					_scope($scope2_id, { setHtml }, "__tests__/template.marko", "4:4", { setHtml: "5:20" });
+					_scope($scope2_id, {}, "__tests__/template.marko", "4:4", { setHtml: "5:20" });
+					_var_scope($Child_scope, $scope2_id, { setHtml });
 					_assert_hoist(setHtml);
 					return 0;
 				}
@@ -46,7 +47,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $Child_scope2 = _peek_scope_id();
 			let setHtml2 = _dynamic_tag($scope3_id, "#text/0", 1 && child_default, {});
 			_var($scope3_id, "#scopeOffset/1", $Child_scope2, "__tests__/template.marko_3_setHtml2#2/var");
-			_scope($scope3_id, { setHtml2 }, "__tests__/template.marko", "15:2", { setHtml2: "16:18" });
+			_scope($scope3_id, {}, "__tests__/template.marko", "15:2", { setHtml2: "16:18" });
+			_var_scope($Child_scope2, $scope3_id, { setHtml2 });
 			_assert_hoist(setHtml2);
 			return 0;
 		}
@@ -57,7 +59,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $Child_scope3 = _peek_scope_id();
 			let setHtml3 = _dynamic_tag($scope4_id, "#text/0", 1 && child_default, {});
 			_var($scope4_id, "#scopeOffset/1", $Child_scope3, "__tests__/template.marko_4_setHtml3#2/var");
-			_scope($scope4_id, { setHtml3 }, "__tests__/template.marko", "24:2", { setHtml3: "25:18" });
+			_scope($scope4_id, {}, "__tests__/template.marko", "24:2", { setHtml3: "25:18" });
+			_var_scope($Child_scope3, $scope4_id, { setHtml3 });
 			_assert_hoist(setHtml3);
 			return 0;
 		}

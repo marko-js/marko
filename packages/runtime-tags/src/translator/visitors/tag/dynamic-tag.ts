@@ -76,6 +76,7 @@ import {
   getResumeRegisterId,
   getSignal,
   initValue,
+  setTagVarScopeId,
   type Signal,
   signalHasStatements,
   writeHTMLResumeStatements,
@@ -502,6 +503,11 @@ export default {
                 callRuntime("_peek_scope_id"),
               ),
             ]),
+          );
+          setTagVarScopeId(
+            tagSection,
+            node.var.extra!.binding!,
+            dynamicScopeIdentifier,
           );
           translateVar(tag, dynamicTagExpr, "let", statements);
           statements.push(

@@ -225,6 +225,48 @@ export function setBindingSerializedValue(
   }
 }
 
+const [getTagVarScopeIds] = createSectionState<Map<Binding, t.Identifier>>(
+  "tagVarScopeIds",
+  () => new Map(),
+);
+// A tag that may render lazily sends the section's values holding its
+// variable's value with the child scope's ready stream (`_var_scope`).
+export function setTagVarScopeId(
+  section: Section,
+  tagVar: Binding,
+  childScopeId: t.Identifier,
+) {
+  const tagVarScopeIds = getTagVarScopeIds(section);
+  for (const binding of getTagVarValues(tagVar)) {
+    tagVarScopeIds.set(binding, childScopeId);
+  }
+}
+
+export function isTagVarSerialized(section: Section, tagVar: Binding) {
+  for (const binding of getTagVarValues(tagVar)) {
+    if (getSerializeReason(section, binding)) return true;
+  }
+  return false;
+}
+
+// The tag variable and the bindings beside it whose value may hold its value:
+// a registered function reading it holds only its scope.
+function getTagVarValues(tagVar: Binding) {
+  const values = new Set<Binding>();
+  const add = (binding: Binding) => {
+    if (binding.section === tagVar.section && !values.has(binding)) {
+      values.add(binding);
+      for (const read of binding.reads) {
+        if (!isRegisteredFnExtra(read)) forEach(read.downstream, add);
+      }
+      binding.aliases.forEach(add);
+      binding.propertyAliases.forEach(add);
+    }
+  };
+  add(tagVar);
+  return values;
+}
+
 const [getSectionDebugVars] = createSectionState<
   Map<string, [name: string, loc?: string]>
 >("sectionDebugVars", () => new Map());
@@ -1385,6 +1427,7 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
+  const tagVarProperties = new Map<t.Identifier, t.ObjectProperty[]>();
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (isSameReason(sectionSerializeReason, reason)) return expr;
     return getExprIfSerialized(section, reason, expr);
@@ -1395,8 +1438,14 @@ export function writeHTMLResumeStatements(
     const reason = getSerializeReason(section, binding);
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
+    const childScopeId = getTagVarScopeIds(section).get(binding);
+    let properties = serializedProperties;
+    if (childScopeId) {
+      properties = tagVarProperties.get(childScopeId) || [];
+      tagVarProperties.set(childScopeId, properties);
+    }
     serializedLookup.delete(accessor);
-    serializedProperties.push(
+    properties.push(
       toObjectProperty(
         accessor,
         ifSerialized(reason, getDeclaredBindingExpression(binding)),
@@ -1458,15 +1507,7 @@ export function writeHTMLResumeStatements(
   }
 
   if (sectionSerializeReason) {
-    for (const prop of serializedProperties) {
-      if (
-        prop.key.type === "Identifier" &&
-        prop.value.type === "Identifier" &&
-        prop.key.name === prop.value.name
-      ) {
-        prop.shorthand = true;
-      }
-    }
+    serializedProperties.forEach(setShorthand);
 
     const writeScopeArgs: t.Expression[] = [
       scopeIdIdentifier,
@@ -1505,6 +1546,24 @@ export function writeHTMLResumeStatements(
         ),
       ),
     );
+
+    for (const [childScopeId, properties] of tagVarProperties) {
+      properties.forEach(setShorthand);
+      body.push(
+        t.expressionStatement(
+          getExprIfSerialized(
+            section,
+            sectionSerializeReason,
+            callRuntime(
+              "_var_scope",
+              childScopeId,
+              scopeIdIdentifier,
+              t.objectExpression(properties),
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   const resumeClosestBranch =
@@ -1558,6 +1617,16 @@ export function writeHTMLResumeStatements(
   const returnIdentifier = getSectionReturnValueIdentifier(section);
   if (returnIdentifier !== undefined) {
     body.push(t.returnStatement(returnIdentifier));
+  }
+}
+
+function setShorthand(prop: t.ObjectProperty) {
+  if (
+    prop.key.type === "Identifier" &&
+    prop.value.type === "Identifier" &&
+    prop.key.name === prop.value.name
+  ) {
+    prop.shorthand = true;
   }
 }
 

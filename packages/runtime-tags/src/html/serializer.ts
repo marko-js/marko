@@ -18,6 +18,7 @@ interface Registered {
   access: string;
   scope: unknown;
   locals: Locals | undefined;
+  channel: SerializeChannel | undefined;
 }
 
 // What registered content reads that its scopes may lack, computed only once
@@ -442,11 +443,13 @@ export function register<T extends WeakKey>(
   val: T,
   scope?: unknown,
   locals?: Locals,
+  channel?: SerializeChannel,
 ) {
   REGISTRY.set(val, {
     id,
     scope,
     locals,
+    channel,
     access: "_._" + toAccess(toObjectKey(id)),
   });
   return val;
@@ -781,6 +784,19 @@ function writeRegistered(
 ) {
   const { scope } = registered;
   if (scope) {
+    // A factory registered while rendering lazy content may live in its module,
+    // so only that content's ready stream (or one nested in it) can resume it.
+    if (!trackChannel(state, registered)) {
+      if (MARKO_DEBUG) {
+        abortUnreachableChannel(
+          state,
+          val,
+          "Unable to serialize a value from lazily loaded content outside of that content, since its module may not have loaded yet. A lazy tag's variable resumes only through values beside the tag that hold it: not through nested content, another tag's input, or a `<return>`.",
+        );
+      }
+      return false;
+    }
+
     // Registered factories read their self-resolving scope only when invoked.
     const ref = new Reference(
       parent,
@@ -2142,7 +2158,7 @@ function fromObjectKey(key: string) {
   return key;
 }
 
-function trackChannel(state: State, ref: Reference) {
+function trackChannel(state: State, ref: Reference | Registered) {
   const refReadyId = ref.channel?.readyId;
   if (!refReadyId || refReadyId === state.channel?.readyId) return true;
   let cur = state.channel?.parent;
@@ -2156,11 +2172,12 @@ function trackChannel(state: State, ref: Reference) {
   return false;
 }
 
-function abortUnreachableChannel(state: State, val: unknown) {
-  const err = new TypeError(
-    "Unable to serialize a value shared between independently lazy loaded content. Values shared this way must also be serialized by content that is not lazily loaded, or by a common parent.",
-    { cause: val },
-  );
+function abortUnreachableChannel(
+  state: State,
+  val: unknown,
+  message = "Unable to serialize a value shared between independently lazy loaded content. Values shared this way must also be serialized by content that is not lazily loaded, or by a common parent.",
+) {
+  const err = new TypeError(message, { cause: val });
   err.stack = undefined;
   state.boundary.abort(err);
 }

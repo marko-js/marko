@@ -31,7 +31,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $Child_scope = _peek_scope_id();
 		let setHtml = _dynamic_tag($scope1_id, "#text/0", 1 && child_default, {});
 		_var($scope1_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_1_setHtml#2/var");
-		_subscribe($thing_content__subscribers, _scope($scope1_id, { setHtml }, "__tests__/template.marko", "4:2", { setHtml: "5:18" }));
+		_subscribe($thing_content__subscribers, _scope($scope1_id, {}, "__tests__/template.marko", "4:2", { setHtml: "5:18" }));
+		_var_scope($Child_scope, $scope1_id, { setHtml });
 		_assert_hoist(setHtml);
 	}, $scope0_id) });
 	_dynamic_tag($scope0_id, "#text/1", input.show ? thing_default : null, {}, _content("__tests__/template.marko_2*content", () => {
@@ -44,7 +45,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $Child_scope2 = _peek_scope_id();
 			let setHtml2 = _dynamic_tag($scope3_id, "#text/0", 1 && child_default, {});
 			_var($scope3_id, "#scopeOffset/1", $Child_scope2, "__tests__/template.marko_3_setHtml2#2/var");
-			_subscribe($thing_content2__subscribers, _scope($scope3_id, { setHtml2 }, "__tests__/template.marko", "17:4", { setHtml2: "18:20" }));
+			_subscribe($thing_content2__subscribers, _scope($scope3_id, {}, "__tests__/template.marko", "17:4", { setHtml2: "18:20" }));
+			_var_scope($Child_scope2, $scope3_id, { setHtml2 });
 			_assert_hoist(setHtml2);
 		}, $scope2_id) });
 		_subscribe($inputshowThingnull_content__subscribers, _scope($scope2_id, { "ClosureScopes:3": $thing_content2__subscribers }, "__tests__/template.marko", "16:4"));
@@ -55,7 +57,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $Child_scope3 = _peek_scope_id();
 		let setHtml3 = _dynamic_tag($scope4_id, "#text/0", 1 && child_default, {});
 		_var($scope4_id, "#scopeOffset/1", $Child_scope3, "__tests__/template.marko_4_setHtml3#2/var");
-		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, { setHtml3 }, "__tests__/template.marko", "27:4", { setHtml3: "28:18" }));
+		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, {}, "__tests__/template.marko", "27:4", { setHtml3: "28:18" }));
+		_var_scope($Child_scope3, $scope4_id, { setHtml3 });
 		_assert_hoist(setHtml3);
 	}, $scope0_id), 0, $sg__input_show);
 	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);

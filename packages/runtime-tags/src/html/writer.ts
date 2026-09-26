@@ -55,8 +55,10 @@ interface SerializeState {
   flushScopes: boolean;
 }
 
+const kReadyChunk = Symbol();
 type ScopeInternals = PartialScope & {
   [K_SCOPE_ID]?: number;
+  [kReadyChunk]?: Chunk;
 };
 
 let $chunk: Chunk;
@@ -216,12 +218,15 @@ export function _resume<T extends WeakKey>(
   scopeId?: number,
   locals?: Locals,
 ): T {
-  return serializerRegister(
-    id,
-    val,
-    scopeId === undefined ? undefined : _scope_with_id(scopeId),
-    locals,
-  );
+  return scopeId === undefined
+    ? serializerRegister(id, val)
+    : serializerRegister(
+        id,
+        val,
+        _scope_with_id(scopeId),
+        locals,
+        $chunk.serializeState,
+      );
 }
 
 // Registers a function closing over render-only locals (attr tag control flow
@@ -235,7 +240,13 @@ export function _resume_locals<T extends WeakKey>(
   if (ownerScopeId !== undefined) {
     locals[AccessorProp.Owner] = _scope_with_id(ownerScopeId);
   }
-  return serializerRegister(id, val, writeScope(_scope_id(), locals));
+  return serializerRegister(
+    id,
+    val,
+    writeScope(_scope_id(), locals),
+    undefined,
+    $chunk.serializeState,
+  );
 }
 
 export function _el(scopeId: number, id: string) {
@@ -369,15 +380,40 @@ export function _var(
   nodeAccessor?: Accessor,
 ) {
   writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
+  const chunk = $chunk;
+  $chunk = getTagVarChunk(childScopeId);
+  // Passive props ride only a scope write in their own stream, and a lazy
+  // child's ready stream may hold none, so the link writes the child scope.
   // TODO: if the return value is already registered, use that.
-  const childScope = writeScopePassive(childScopeId, {
-    [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId),
-  });
+  const childScope = (chunk === $chunk ? writeScopePassive : writeScope)(
+    childScopeId,
+    {
+      [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId),
+    },
+  );
+  $chunk = chunk;
   if (nodeAccessor !== undefined) {
     writeScope(parentScopeId, {
       [AccessorPrefix.BranchScopes + nodeAccessor]: childScope,
     });
   }
+}
+
+export function _var_scope(
+  childScopeId: number,
+  scopeId: number,
+  partialScope: PartialScope,
+) {
+  const chunk = $chunk;
+  $chunk = getTagVarChunk(childScopeId);
+  writeScope(scopeId, partialScope);
+  $chunk = chunk;
+}
+
+// A tag variable is written from the ready stream its tag renders into, so a
+// lazy tag's value and link resume once its module registers.
+function getTagVarChunk(childScopeId: number) {
+  return getScopeById(childScopeId)?.[kReadyChunk] || $chunk;
 }
 
 function writeScopePassive(scopeId: number, partialScope: PartialScope) {
@@ -897,7 +933,9 @@ export function writeWaitReady(
     writeScopes: {},
     flushScopes: false,
   });
-  const bodyEnd = body.render(renderer, input);
+  let result: unknown;
+  _scope_with_id(_peek_scope_id())[kReadyChunk] = body;
+  const bodyEnd = body.render(() => (result = renderer(input)));
 
   if (body === bodyEnd) {
     chunk.writeHTML(body.html);
@@ -909,6 +947,8 @@ export function writeWaitReady(
     bodyEnd.next = $chunk = chunk.fork(boundary, chunk.next);
     chunk.next = body;
   }
+
+  return result;
 }
 
 export function _await<T>(

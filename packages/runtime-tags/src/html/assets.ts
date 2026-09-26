@@ -58,9 +58,11 @@ let assetFlush: AssetFlush;
 
 export function withLoadAssets(
   renderer: ServerRenderer,
+  runtime: AssetFlush,
   assetId: string,
   triggers?: Trigger[],
 ): ServerRenderer {
+  assetFlush = runtime;
   return Object.assign((input: unknown) => {
     const g = $global();
     addAsset(g, assetId, triggers);

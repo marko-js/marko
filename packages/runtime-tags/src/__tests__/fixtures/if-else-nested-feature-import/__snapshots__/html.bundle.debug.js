@@ -12,10 +12,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html("body");
 			}, $scope1_id));
 			_var($scope1_id, "#scopeOffset/1", $inputtype_scope, "__tests__/template.marko_1_$el#2/var");
-			_scope($scope1_id, {
-				$el,
-				_: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id)
-			}, "__tests__/template.marko", "3:2", { $el: "4:18" });
+			_scope($scope1_id, { _: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2", { $el: "4:18" });
+			_var_scope($inputtype_scope, $scope1_id, { $el });
 			_assert_hoist($el);
 			return 0;
 		} else {

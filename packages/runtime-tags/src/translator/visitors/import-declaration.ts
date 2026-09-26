@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   getFile,
   getProgram,
+  importNamed,
   loadFileForImport,
   resolveRelativePath,
   resolveTagImport,
@@ -238,12 +239,12 @@ function getOrCreateHtmlLoadWrapped(
   filename: string,
   triggers: LoadTrigger[] | undefined,
 ) {
-  const markoOpts = getMarkoOpts();
+  const linkAssets = getMarkoOpts().linkAssets!;
   const loadWrapped = getHtmlLoadWrapped();
   const existing = loadWrapped.get(readyId);
   if (existing) return existing;
 
-  markoOpts.linkAssets?.onAsset("load", filename, readyId);
+  linkAssets.onAsset("load", filename, readyId);
 
   const wrappedName = generateUid(
     `${(originalIdentifier as t.Identifier).name ?? "tag"}_withLoadAssets`,
@@ -258,6 +259,7 @@ function getOrCreateHtmlLoadWrapped(
             callRuntime(
               "withLoadAssets",
               originalIdentifier,
+              importNamed(getFile(), linkAssets.runtime, "flush"),
               t.stringLiteral(readyId),
               triggers ? t.valueToNode(triggers) : undefined,
             ),
