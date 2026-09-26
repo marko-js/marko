@@ -312,6 +312,22 @@ describe("compiler/compile", () => {
       writeTag("my-grandchild", STATEFUL);
       assert.match(compileParent(cache), /_var_resume/);
     });
+
+    it("compiles an edited template as a fresh cache would", () => {
+      const file = path.join(dir, "counter.marko");
+      const src = `<let/count=0>\n<const/inc = () => count++>\n<button onClick=inc>\${count}</button>\n`;
+      const edited = `${src}<p>edited</p>\n`;
+      for (const output of ["dom", "html"]) {
+        const compileWith = (code, cache) =>
+          compileSync(code, file, { translator, output, cache }).code;
+        const cache = new Map();
+        compileWith(src, cache);
+        assert.equal(
+          compileWith(edited, cache),
+          compileWith(edited, new Map()),
+        );
+      }
+    });
   });
 
   // Node's `--enable-source-maps` joins `sourceRoot` and a source by plain
