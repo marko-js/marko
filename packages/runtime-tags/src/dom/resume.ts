@@ -268,13 +268,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               }
 
               if (singleNode) {
-                // A set makes this linear but adds ~18 B brotli to every
-                // bundle; the scan costs ~1 ms only past ~1000 branches here.
+                // Step back over resume comments to each branch's element,
+                // stopping at the first child if misnested HTML moved it out.
                 while (
                   startVisit.previousSibling &&
-                  ~visits.indexOf(
-                    (startVisit = startVisit.previousSibling) as Comment,
-                  )
+                  (startVisit = startVisit.previousSibling).nodeType >
+                    NodeType.Element
                 );
                 branch[AccessorProp.Owner] ??= visitScope;
                 branch[AccessorProp.EndNode] = branch[AccessorProp.StartNode] =

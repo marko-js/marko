@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_scope($scope6_id, {}, "__tests__/template.marko", "8:8");
 						return 0;
 					}
-				}, $scope5_id, "#text/0", 1, 1, 1, 0, 1);
+				}, $scope5_id, "#text/0");
 				_html(`<button>${_escape(value)} ${_text_resume($scope5_id, "#text/3", n, 2)}</button>${_el_resume($scope5_id, "#button/1")}`);
 				_script($scope5_id, "__tests__/template.marko_5");
 				_scope($scope5_id, { n }, "__tests__/template.marko", "6:6", { n: "7:12" });

@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", $sg__v, $sg__v, $sg__v, 0, 1);
+			}, $scope1_id, "#text/0", $sg__v, $sg__v, $sg__v);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2");
 		}, $scope0_id)
 	});

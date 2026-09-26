@@ -116,9 +116,11 @@ export function getBranchEndArgs(
   ];
 }
 
+// Resume adopts the element before a branch's resume comments, so only a
+// body of one tag qualifies; a placeholder may write zero or many nodes.
 export function isSingleNodeBranch(bodySection: Section | undefined) {
   return !!(
     bodySection?.content?.singleChild &&
-    bodySection.content.startType !== ContentType.Text
+    bodySection.content.startType === ContentType.Tag
   );
 }

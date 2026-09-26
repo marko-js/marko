@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/items=[1, 2]/>
+<try>
+  <@placeholder>loading</@placeholder>
+  <await|x|=resolveAfter("done", 1)>
+    <span onClick() { console.log(x) }>${x}</span>
+  </await>
+</try>
+<for|item| of=items by=(x) => x>
+  <button onClick() { items = items.filter((i) => i !== item) }>
+    ${item}:<await|v|=resolveAfter(item, item)>${v}</await>
+  </button>
+</for>

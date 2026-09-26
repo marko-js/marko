@@ -6,6 +6,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "#text/0", item.id, $sg__input_items));
 		$si__input_items && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}, () => "dup", $scope0_id, "#text/0", $sg__input_items, $sg__input_items, $sg__input_items, 0, 1);
+	}, () => "dup", $scope0_id, "#text/0", $sg__input_items, $sg__input_items, $sg__input_items);
 	$si__input_items && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -3,7 +3,7 @@ var boom_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_if(() => {}, $scope0_id, "a", 1, 1, 1, 0, 1);
+	_if(() => {}, $scope0_id, "a");
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { d: n });

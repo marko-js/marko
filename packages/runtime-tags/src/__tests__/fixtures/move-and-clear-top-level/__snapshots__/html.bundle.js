@@ -8,6 +8,6 @@ var template_default = _template("a", (input) => {
 		$si__input_children && _scope($scope1_id, {});
 	}, function(c) {
 		return c.id;
-	}, $scope0_id, "a", $sg__input_children, $sg__input_children, $sg__input_children, 0, 1);
+	}, $scope0_id, "a", $sg__input_children, $sg__input_children, $sg__input_children);
 	$si__input_children && _scope($scope0_id, {});
 }, 1);

@@ -1,0 +1,5 @@
+<let/list=["a", "b"]/>
+<const/empty=""/>
+<div><span>S</span><for|x| of=list>${empty}</for></div>
+<div>hello<for|x| of=list>${x}</for></div>
+<button onClick() { list = list.slice(1) }>drop</button>

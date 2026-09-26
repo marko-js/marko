@@ -1,0 +1,5 @@
+<let/list=[1, 2]/>
+<let/count=0/>
+<table><for|x| of=list><div>${x}</div></for></table>
+<button.count onClick() { count++ }>${count}</button>
+<button.clear onClick() { list = [] }>clear</button>

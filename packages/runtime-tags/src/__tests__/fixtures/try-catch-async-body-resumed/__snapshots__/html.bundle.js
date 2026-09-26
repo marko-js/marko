@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		_await($scope1_id, "a", resolveAfter("ready", 1), (value) => {
 			const $scope3_id = _scope_id();
 			let n = 0;
-			_if(() => {}, $scope3_id, "a", 1, 1, 1, 0, 1);
+			_if(() => {}, $scope3_id, "a");
 			_html(`<button>${_escape(value)} ${_text_resume($scope3_id, "d", n, 2)}</button>${_el_resume($scope3_id, "b")}`);
 			_script($scope3_id, "a0");
 			_scope($scope3_id, { g: n });
