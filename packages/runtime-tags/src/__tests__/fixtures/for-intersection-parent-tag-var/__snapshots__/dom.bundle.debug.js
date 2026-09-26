@@ -12,7 +12,7 @@ const $_return = ($scope) => function() {
 	$n($scope, +$scope.n + 1);
 };
 _resumed["__tests__/tags/counter.marko_0/_return"] = $_return;
-var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", "", "", $setup$1);
+var counter_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/counter.marko", "", "", $setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!>`)("");

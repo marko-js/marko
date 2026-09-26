@@ -10,7 +10,7 @@ const $valueChange = ($scope) => function(next) {
 	$scope.$global.store = next;
 };
 _resumed["__tests__/tags/g.marko_0/valueChange"] = $valueChange;
-var g_default = /*@__PURE__*/ _template("__tests__/tags/g.marko", "", "", $setup$1);
+var g_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/g.marko", "", "", $setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button> </button>`)("");

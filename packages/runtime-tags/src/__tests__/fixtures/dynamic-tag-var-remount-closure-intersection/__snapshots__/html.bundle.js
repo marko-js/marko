@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	let Tag = child_default;
 	let items = [1, 2];
 	const $Tag_scope = _peek_scope_id();
-	let v = _dynamic_tag($scope0_id, "a", Tag, {});
+	let v = _dynamic_tag($scope0_id, "a", Tag, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "b", $Tag_scope, "a0");
 	const c = (v ? v.n : 0) + b;
 	_for_of(items, (item) => {

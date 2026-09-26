@@ -1,0 +1,12 @@
+import Counter from "./tags/counter.marko";
+import Forward from "./tags/forward.marko";
+
+<let/Tag=Counter/>
+<${Tag}/api/>
+<if=api>
+  <let/clicks=0/>
+  <button.inner onClick() { clicks++ }>${clicks}</button>
+</if>
+<button.swap onClick() { Tag = Tag === Counter ? Forward : Counter }>
+  swap
+</button>

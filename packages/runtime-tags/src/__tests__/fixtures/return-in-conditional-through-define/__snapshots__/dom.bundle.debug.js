@@ -4,7 +4,7 @@ const $walks$1 = "";
 function $setup$1($scope) {
 	_return($scope, "foo");
 }
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1));
 
 // template.marko
 const $template = "<button>Toggle</button><!><!>";

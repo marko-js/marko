@@ -648,10 +648,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
                   : decodeAccessor((encodedNodeAccessor as number) + 1)
               ] = skipScope();
             }
-            // A native branch has no renderer to call `_return`.
-            if (typeof normalizedRenderer === "string") {
-              bindNativeTagVar?.(scope[childScopeAccessor]);
-            }
+            bindDynamicTagVar?.(scope[childScopeAccessor], renderer!);
           } else {
             // The branch tore down; clear the tag variable with it.
             getTagVar()(scope, undefined);
@@ -768,10 +765,12 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
 );
 
 // Dynamic tag variables live in `dynamic-tag-var.feat`; bundles without one fold
-// away the native binding and the render re-keying it enables.
-export let bindNativeTagVar: undefined | ((branch: Scope) => void);
-export function installDynamicTagVar(bind: typeof bindNativeTagVar) {
-  bindNativeTagVar = bind;
+// away the new branch binding and the render re-keying it enables.
+export let bindDynamicTagVar:
+  | undefined
+  | ((branch: Scope, renderer: Renderer | string) => void);
+export function installDynamicTagVar(bind: typeof bindDynamicTagVar) {
+  bindDynamicTagVar = bind;
   enableDynamicTagVars();
 }
 

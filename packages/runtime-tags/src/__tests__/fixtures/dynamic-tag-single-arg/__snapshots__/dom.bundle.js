@@ -5,7 +5,7 @@ const $input = ($scope, input) => _text($scope.a, input);
 function $setup($scope) {
 	_return($scope, "hello from other");
 }
-var custom_tag_default = /*@__PURE__*/ _template("b", $template, "D l", $setup, $input);
+var custom_tag_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("b", $template, "D l", $setup, $input));
 
 // template.marko
 const tags = [custom_tag_default];

@@ -5,7 +5,7 @@ const $n = /*@__PURE__*/ _let(0, ($scope) => _return($scope, { n: $scope.a }));
 function $setup($scope) {
 	$n($scope, 0);
 }
-var child_default = /*@__PURE__*/ _template("b", "", "", $setup);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("b", "", "", $setup));
 
 // template.marko
 _dynamic_tag_var_resume(0);

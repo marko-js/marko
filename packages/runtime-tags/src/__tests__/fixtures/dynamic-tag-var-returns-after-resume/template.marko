@@ -1,0 +1,12 @@
+import Counter from "./tags/counter.marko";
+
+<define/Double|{ value }|>
+  <return=value * 2/>
+</define>
+<let/count=1/>
+<let/CounterTag=Counter/>
+<let/DoubleTag=Double/>
+<${CounterTag}/counter/>
+<${DoubleTag}/doubled value=count/>
+<button.counter onClick() { counter.set(counter.n + 1) }>${counter.n}</button>
+<button.doubled onClick() { count++ }>${doubled}</button>

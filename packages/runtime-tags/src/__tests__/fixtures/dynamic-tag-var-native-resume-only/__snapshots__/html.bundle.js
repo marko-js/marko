@@ -7,7 +7,7 @@ var heading_default = _template("b", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html("<span>body</span>");
-	}, $scope0_id));
+	}, $scope0_id), void 0, void 0, 1);
 	_var($scope0_id, "b", $inputtype_scope, "b1");
 	_script($scope0_id, "b2");
 	_scope($scope0_id, { f: el });

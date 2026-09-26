@@ -42,6 +42,12 @@ export const _template = (
   return (_resumed[id] = renderer);
 };
 
+// Marks a template with a `<return>`; the object is its own registration.
+export function _template_return(template: Template & Renderer) {
+  template[RendererProp.Returns] = 1;
+  return template;
+}
+
 function mount(
   this: Template & Renderer,
   input: TemplateInput = {},

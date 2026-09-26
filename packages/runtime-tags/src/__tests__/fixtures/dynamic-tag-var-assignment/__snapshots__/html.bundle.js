@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $getCounter_scope = _peek_scope_id();
-	_dynamic_tag($scope0_id, "a", getCounter(), {});
+	_dynamic_tag($scope0_id, "a", getCounter(), {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "b", $getCounter_scope, "a0", "a");
 	_html(`<button class=reset>reset</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");

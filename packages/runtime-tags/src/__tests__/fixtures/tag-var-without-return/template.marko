@@ -1,0 +1,14 @@
+import Child from "./tags/child.marko";
+import Returns from "./tags/returns.marko";
+
+<define/Foo>
+  <b>foo</b>
+</define>
+<let/returns=false/>
+<child/x/>
+<Foo/z/>
+<${returns ? Returns : Child}/w/>
+<div.x>${x === undefined ? "none" : x}</div>
+<div.z>${z === undefined ? "none" : z}</div>
+<div.w>${w === undefined ? "none" : w}</div>
+<button onClick() { returns = !returns }>toggle</button>

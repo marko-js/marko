@@ -22,6 +22,9 @@ export type Renderer = {
   [RendererProp.Owner]: Scope | undefined;
   [RendererProp.Accessor]: Accessor | undefined;
   [RendererProp.LocalClosures]?: SetupFn;
+  // Set on a renderer with a `<return>`; a dynamic tag variable over any other
+  // is `undefined`.
+  [RendererProp.Returns]?: 1;
 };
 
 export type SetupFn = (scope: Scope) => void;
@@ -121,6 +124,15 @@ export function _content(
       [RendererProp.Params]: params,
       [RendererProp.Accessor]: dynamicScopesAccessor,
     };
+  });
+}
+
+// Marks content with a `<return>`, registered so a resumed instance is marked too.
+export function _content_return(renderer: ReturnType<typeof _content>) {
+  return (_resumed[renderer()[RendererProp.Id]] = (owner?: Scope) => {
+    const instance = renderer(owner);
+    instance[RendererProp.Returns] = 1;
+    return instance;
   });
 }
 

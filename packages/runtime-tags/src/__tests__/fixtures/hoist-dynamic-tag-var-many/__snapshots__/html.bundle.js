@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	_for_to(5, 0, 1, () => {
 		const $scope1_id = _scope_id();
 		const $Child_scope = _peek_scope_id();
-		let setHtml = _dynamic_tag($scope1_id, "a", child_default, {});
+		let setHtml = _dynamic_tag($scope1_id, "a", child_default, {}, void 0, void 0, void 0, 1);
 		_var($scope1_id, "b", $Child_scope, "a1");
 		_scope($scope1_id, { c: setHtml });
 	}, 0, $scope0_id, "a", 1, 0, 0);
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	_for_to(to, 0, 1, () => {
 		const $scope2_id = _scope_id();
 		const $Child_scope2 = _peek_scope_id();
-		let setHtml2 = _dynamic_tag($scope2_id, "a", child_default, {});
+		let setHtml2 = _dynamic_tag($scope2_id, "a", child_default, {}, void 0, void 0, void 0, 1);
 		_var($scope2_id, "b", $Child_scope2, "a2");
 		_scope($scope2_id, { c: setHtml2 });
 	}, 0, $scope0_id, "b", 1, 0, 0);
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 		_for_to(3, 0, 1, (j) => {
 			const $scope4_id = _scope_id();
 			const $Child_scope3 = _peek_scope_id();
-			let setHtml3 = _dynamic_tag($scope4_id, "a", child_default, {});
+			let setHtml3 = _dynamic_tag($scope4_id, "a", child_default, {}, void 0, void 0, void 0, 1);
 			_var($scope4_id, "b", $Child_scope3, "a3");
 			_scope($scope4_id, { c: setHtml3 });
 		}, 0, $scope3_id, "a", 1, 0, 0);

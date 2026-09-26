@@ -11,7 +11,6 @@ const $x = /*@__PURE__*/ _let(3, ($scope) => {
 	if ($scope.d) $item = attrTag({ content: $item_content($scope) });
 	$input_item($scope.a, $item);
 });
-const $setup__script = _script("a2", ($scope) => _on($scope.c, "click", function() {
+const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$x($scope, !$scope.d);
 }));
-const $menuEl = _var_resume("a1", ($scope, menuEl) => {});

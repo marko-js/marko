@@ -5,7 +5,7 @@ function $setup$1($scope) {
 	_return($scope, 1);
 	_return_change($scope, false);
 }
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button></button>`)("");

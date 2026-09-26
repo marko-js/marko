@@ -1,4 +1,4 @@
-// size: 27468 (min) 10251 (brotli)
+// size: 27542 (min) 10257 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -184,8 +184,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
           getTagVar &&
             (scope[childScopeAccessor]
               ? ((scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
-                typeof normalizedRenderer == "string" &&
-                  bindNativeTagVar?.(scope[childScopeAccessor]))
+                bindDynamicTagVar?.(scope[childScopeAccessor], renderer))
               : getTagVar()(scope, void 0)),
           typeof renderer == "string")
         ) {
@@ -236,7 +235,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
         renderer?.g?.(scope[childScopeAccessor]));
     };
   }),
-  bindNativeTagVar,
+  bindDynamicTagVar,
   loop = /*@__PURE__*/ withBranches(
     (forEach, reorder) => (nodeAccessor, template, walks, setup, params) => {
       nodeAccessor = decodeAccessor(nodeAccessor);
@@ -1158,6 +1157,12 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     d: params,
     f: dynamicScopesAccessor,
   }));
+}
+function _content_return(renderer) {
+  return (_resumed[renderer().a] = (owner) => {
+    let instance = renderer(owner);
+    return ((instance.h = 1), instance);
+  });
 }
 function _content_resume(renderer, hasLocalValues = 0) {
   return (_resumed[renderer().a] = (owner, ...values) => {
@@ -2209,6 +2214,9 @@ function attrTags(first, attrs) {
 }
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
+}
+function _template_return(template) {
+  return ((template.h = 1), template);
 }
 function mount(input = {}, reference, position) {
   let branch,

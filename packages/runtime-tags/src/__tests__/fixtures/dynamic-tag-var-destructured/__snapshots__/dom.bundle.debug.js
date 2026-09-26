@@ -15,7 +15,7 @@ const $_return = ($scope) => function() {
 	$count$1($scope, +$scope.count + 1);
 };
 _resumed["__tests__/tags/child/index.marko_0/_return"] = $_return;
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=inc>inc</button><div> </div>`)($template$1);

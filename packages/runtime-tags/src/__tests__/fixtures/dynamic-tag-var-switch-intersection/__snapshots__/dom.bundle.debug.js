@@ -5,7 +5,7 @@ const $n$1 = /*@__PURE__*/ _let("n/0", ($scope) => _return($scope, { n: $scope.n
 function $setup$2($scope) {
 	$n$1($scope, 1);
 }
-var one_default = /*@__PURE__*/ _template("__tests__/tags/one.marko", "", "", $setup$2);
+var one_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/one.marko", "", "", $setup$2));
 
 // tags/two.marko
 const $template$1 = "";
@@ -14,7 +14,7 @@ const $n = /*@__PURE__*/ _let("n/0", ($scope) => _return($scope, { n: $scope.n }
 function $setup$1($scope) {
 	$n($scope, 2);
 }
-var two_default = /*@__PURE__*/ _template("__tests__/tags/two.marko", "", "", $setup$1);
+var two_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/two.marko", "", "", $setup$1));
 
 // template.marko
 const $template = "<!><!><button class=swap> </button><button class=clear></button><button class=mount></button>";

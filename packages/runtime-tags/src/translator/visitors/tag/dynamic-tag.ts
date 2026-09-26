@@ -466,6 +466,12 @@ export default {
           serializeReason,
           true,
         );
+        // Only content, never a native element, can `_return` after resume.
+        const resumesContentVar =
+          !!node.var &&
+          isTagVarResumed(tag) &&
+          (analyzeTagNameType(tag, true) !== TagNameType.NativeTag ||
+            !!getSectionForBody(tag.get("body"))?.returnValueExpr);
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -478,6 +484,7 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
+              resumesContentVar && t.numericLiteral(1),
             )
           : callRuntime(
               "_dynamic_tag",
@@ -488,6 +495,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
+              resumesContentVar && t.numericLiteral(1),
             );
 
         if (node.var && isTagVarResumed(tag)) {
@@ -649,8 +657,8 @@ function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// A branch the tag creates can be newer than the scopes reading its variable. A
-// native branch's variable binds the element and resumes as a node visit getter.
+// A new branch can be newer than its variable's readers, and one without a
+// `<return>` leaves it `undefined`; a native one binds and resumes its node.
 function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
   if (!tag.node.var || !isTagVarResumed(tag)) return;
 

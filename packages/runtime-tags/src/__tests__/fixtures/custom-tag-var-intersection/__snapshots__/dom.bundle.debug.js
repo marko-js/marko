@@ -15,7 +15,7 @@ function $setup$1($scope) {
 }
 const $input_extra = /*@__PURE__*/ _const("input_extra", $input_extra__OR__x);
 const $input = ($scope, input) => $input_extra($scope, input.extra);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div>`)($template$1);

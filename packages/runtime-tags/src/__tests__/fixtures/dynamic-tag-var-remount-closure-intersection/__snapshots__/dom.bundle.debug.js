@@ -5,7 +5,7 @@ const $n = /*@__PURE__*/ _let("n/0", ($scope) => _return($scope, { n: $scope.n }
 function $setup$1($scope) {
 	$n($scope, 0);
 }
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1));
 
 // template.marko
 const $template = "<!><!><!><button class=toggle></button>";

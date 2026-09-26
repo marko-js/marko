@@ -14,7 +14,7 @@ const $setter = ($scope) => function() {
 	$scope.input_valueChange(1);
 };
 _resumed["__tests__/tags/setter.marko_0/setter"] = $setter;
-var setter_default = /*@__PURE__*/ _template("__tests__/tags/setter.marko", "", "", 0, $input);
+var setter_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/setter.marko", "", "", 0, $input));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div>`)("");

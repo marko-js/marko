@@ -15,7 +15,7 @@ const $_return$1 = ($scope) => function(v) {
 	$value$2($scope, v);
 };
 _resumed["__tests__/tags/a.marko_0/_return"] = $_return$1;
-var a_default = /*@__PURE__*/ _template("__tests__/tags/a.marko", $template$2, $walks$2, $setup$2);
+var a_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/a.marko", $template$2, $walks$2, $setup$2));
 
 // tags/b.marko
 const $template$1 = "<span>b:<!></span>";
@@ -34,7 +34,7 @@ const $_return = ($scope) => function(v) {
 	$value$1($scope, v);
 };
 _resumed["__tests__/tags/b.marko_0/_return"] = $_return;
-var b_default = /*@__PURE__*/ _template("__tests__/tags/b.marko", $template$1, $walks$1, $setup$1);
+var b_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/b.marko", $template$1, $walks$1, $setup$1));
 
 // template.marko
 const $template = "<!><!><button> </button>";

@@ -5,7 +5,7 @@ const $n$1 = /*@__PURE__*/ _let(0, ($scope) => _return($scope, { n: $scope.a }))
 function $setup$1($scope) {
 	$n$1($scope, 1);
 }
-var one_default = /*@__PURE__*/ _template("b", "", "", $setup$1);
+var one_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("b", "", "", $setup$1));
 
 // tags/two.marko
 const $template = "";
@@ -14,7 +14,7 @@ const $n = /*@__PURE__*/ _let(0, ($scope) => _return($scope, { n: $scope.a }));
 function $setup($scope) {
 	$n($scope, 2);
 }
-var two_default = /*@__PURE__*/ _template("c", "", "", $setup);
+var two_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("c", "", "", $setup));
 
 // template.marko
 _dynamic_tag_var_resume(0);

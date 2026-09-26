@@ -16,6 +16,7 @@ import type { Locals } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   _el,
+  _existing_scope,
   _html,
   _peek_scope_id,
   _resume,
@@ -48,6 +49,7 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  resumeVar?: 1,
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
@@ -205,6 +207,9 @@ export let _dynamic_tag = (
     };
     result = shouldResume ? withBranchId(branchId, render) : render();
     rendered = _peek_scope_id() !== branchId;
+    // Only content can `_return` after resume, so only its branch flushes the
+    // tag variable `_var` writes passively.
+    if (resumeVar && rendered) _existing_scope(branchId);
 
     if (beforeBranch !== undefined) {
       applyBranchStart(chunk, beforeBranch, rendered);
@@ -260,6 +265,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
       content,
       inputIsArgs,
       resume,
+      resumeVar,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -272,6 +278,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
         content,
         inputIsArgs,
         resume,
+        resumeVar,
       );
     };
   }

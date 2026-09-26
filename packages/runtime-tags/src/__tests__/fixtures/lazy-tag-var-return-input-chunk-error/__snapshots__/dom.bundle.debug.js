@@ -13,7 +13,7 @@ const $focus$1 = ($scope) => () => {
 	$focused($scope, +$scope.focused + 1);
 };
 _resumed["__tests__/tags/inner.marko_0/focus"] = $focus$1;
-var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner.marko", $template$1, $walks$1, $setup$1);
+var inner_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/tags/inner.marko", $template$1, $walks$1, $setup$1));
 
 // child.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<span> </span>`)($template$1);
@@ -25,7 +25,7 @@ function $setup($scope) {
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/2"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
-var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input));
 
 // template.marko
 const $template = "<button class=mount>mount</button><!><!>";

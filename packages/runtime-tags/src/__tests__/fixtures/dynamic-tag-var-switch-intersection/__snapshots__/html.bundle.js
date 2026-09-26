@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	let a = 0;
 	let Tag = one_default;
 	const $Tag_scope = _peek_scope_id();
-	let v = _dynamic_tag($scope0_id, "a", Tag, {});
+	let v = _dynamic_tag($scope0_id, "a", Tag, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "b", $Tag_scope, "a0");
 	_html(`<button class=swap>${_text_resume($scope0_id, "d", "0:" + v?.n)}</button>${_el_resume($scope0_id, "c")}<button class=clear></button>${_el_resume($scope0_id, "e")}<button class=mount></button>${_el_resume($scope0_id, "f")}`);
 	_script($scope0_id, "a1");

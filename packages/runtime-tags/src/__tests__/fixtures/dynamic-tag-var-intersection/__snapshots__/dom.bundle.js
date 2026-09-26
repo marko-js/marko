@@ -15,7 +15,7 @@ const $_return = ($scope) => function(value) {
 	$n($scope, value);
 };
 _resumed.b0 = $_return;
-var child_default = /*@__PURE__*/ _template("b", $template, "D l", $setup);
+var child_default = /*@__PURE__*/ _template_return(/*@__PURE__*/ _template("b", $template, "D l", $setup));
 
 // template.marko
 _dynamic_tag_var_resume(0);
