@@ -50,6 +50,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  isSameOrChildSection,
   type ParamSerializeReasonGroups,
   type Section,
   sectionUtil,
@@ -151,16 +152,20 @@ export function knownTagAnalyze(
       tag.node.var!.type === "Identifier" &&
       tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
     );
-    const varExpr = tagExtra.defineBodySection
-      ? contentSection.returnValueExpr
-      : mapParamReasonToExpr(
-          exprs,
-          contentSection.returnSerializeReason &&
-            (contentSection.returnSerializeReason.forced ||
-              !!contentSection.returnSerializeReason.state ||
-              (contentSection.returnSerializeReason
-                .param as Opt<InputBinding>)),
-        );
+    // A recursive call's return is taken as forced: the content's `<return>`
+    // is unsettled here and is not mapped through the call's inputs.
+    const varExpr =
+      isSameOrChildSection(contentSection, section) ||
+      (tagExtra.defineBodySection
+        ? contentSection.returnValueExpr
+        : mapParamReasonToExpr(
+            exprs,
+            contentSection.returnSerializeReason &&
+              (contentSection.returnSerializeReason.forced ||
+                !!contentSection.returnSerializeReason.state ||
+                (contentSection.returnSerializeReason
+                  .param as Opt<InputBinding>)),
+          ));
     varBinding.scopeOffset = tagExtra[kChildOffsetScopeBinding] = createBinding(
       "#scopeOffset",
       BindingType.dom,

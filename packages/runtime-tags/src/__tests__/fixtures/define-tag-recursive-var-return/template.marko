@@ -1,0 +1,10 @@
+<define/Rec|input|>
+  <let/n=0/>
+  <if=input.depth>
+    <Rec/child depth=input.depth - 1/>
+    <span>${child}</span>
+  </if>
+  <button onClick() { n++ }>${n}</button>
+  <return=n/>
+</define>
+<Rec depth=1/>
