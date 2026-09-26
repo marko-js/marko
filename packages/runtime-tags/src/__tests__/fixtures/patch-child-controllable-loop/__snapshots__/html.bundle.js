@@ -53,7 +53,7 @@ var template_default = _template_patch("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			c: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "b", 1, _source_guard($scope0_reason, 1), 0, void 0, void 0, "a1", 0, 0);
+	}, 0, $scope0_id, "b", 1, 1, 0, void 0, void 0, "a1", 0, 0);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {});
 }, 1, () => [counter_default]);

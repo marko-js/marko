@@ -56,6 +56,7 @@ import {
   isPatchFillBinding,
   isPatchWriteBinding,
 } from "./patch/refresh";
+import { getPatchKeyedReasonKeys } from "./patch/structure";
 import { linkRuntimeFeature, callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
@@ -154,6 +155,13 @@ export interface Binding {
   assignments: Opt<AssignedBindingExtra>;
   /** Emitted code the graph stopped tracking still names it. */
   untracked?: true;
+  /** The dynamic values a dom node renders (attributes, text, a comment's
+   * or a style's). */
+  renders?: Opt<t.NodeExtra>;
+  /** A known tag's child scope ref in the parent scope. */
+  childScope?: true;
+  /** The `<for>` body rendered at the node, once per item. */
+  loopBody?: Section;
   sources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one upstream. Set on alias roots only. */
   upstreamIntersection: Intersection | undefined;
@@ -1519,7 +1527,10 @@ export function finalizeReferences() {
         });
       }
       finalizeSerializeReason(section);
-      finalizeParamSerializeReasonGroups(section);
+      finalizeParamSerializeReasonGroups(
+        section,
+        getPatchKeyedReasonKeys(section),
+      );
     });
   } while (reasonsVersion !== getSerializeReasonsVersion());
 

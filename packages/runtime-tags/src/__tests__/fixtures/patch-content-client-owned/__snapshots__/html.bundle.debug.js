@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_note = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	let open = input.open;
@@ -34,8 +34,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				content: _content_elide("__tests__/template.marko_2*content", () => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
-					_html(`<em>${_text_resume($scope2_id, "#text/0", input.note)}</em>`);
+					_html(`<em>${_text_resume($scope2_id, "#text/0", input.note, $sg__input_note)}</em>`);
 					_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"));
+					$sg__input_note || _resume_branch($scope2_id);
 				}, $scope1_id)
 			});
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");

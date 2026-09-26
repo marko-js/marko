@@ -14,9 +14,8 @@ var template_default = _template_patch("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope2_id = _scope_id();
-			const $childScope = _peek_scope_id();
 			foo.content({});
-			_scope($scope2_id, { a: _existing_scope($childScope) });
+			_scope($scope2_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a");

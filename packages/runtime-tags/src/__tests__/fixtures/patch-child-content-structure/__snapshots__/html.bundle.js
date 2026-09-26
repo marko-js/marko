@@ -17,6 +17,7 @@ _shells({
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason();
+	_source_guard($scope0_reason, 1);
 	_source_guard($scope0_reason, 0);
 	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

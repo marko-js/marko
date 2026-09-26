@@ -21,9 +21,9 @@ const $content = (input) => {
 				_patch_child($scope2_id, "#childScope/0", $childScope);
 				$content({ node: child });
 				_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/tree.marko", "5:8");
-			}, 0, $scope1_id, "#ul/0", 1, $sg__input_node_children, $sg__input_node_children, void 0, void 0, "__tests__/tags/tree.marko_2*shell", $scope0_reason, 1);
-			_html(`</ul>${_el_resume($scope1_id, "#ul/0", $sg__input_node_children)}`);
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/tree.marko", "3:4");
+			}, 0, $scope1_id, "#ul/0", 1, 1, $sg__input_node_children, void 0, void 0, "__tests__/tags/tree.marko_2*shell", $scope0_reason, 1);
+			_html(`</ul>${_el_resume($scope1_id, "#ul/0")}`);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/tree.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, $sg__input_node_children, $sg__input_node_children, void 0, void 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);

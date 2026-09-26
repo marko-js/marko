@@ -299,12 +299,16 @@ use; content resolves to its renderer. Both ride `patch-bind`, which the
 module registering a scope-bound value imports.
 _Avoid_: bind table, bind source, bind 0
 
-**Patch record**:
-A serialize reason a patch pairs or addresses through (a marker, a child
-scope ref, a hole's owner), added with `addPatchSerializeReason`. It serializes
-like any reason, but the patch runtime resolves it, so it never makes a
-template a root.
-_Avoid_: patch serialize reason, forced reason (as a synonym)
+**Patch-keyed node**:
+A dom node the writer emits a patch entry keyed on, so its marker or scope ref
+is written whatever the serialize reasons say: a node rendering a value a flush
+writes (`Binding.renders`, `writesPatchHole`), a known tag's child scope ref
+(`Binding.childScope`, `isPatchRendered`), or the marker of loop rows a flush
+pairs (`Binding.loopBody`, `patchesLoopRows`). Analyze records what the template
+renders there; translate concludes which nodes are keyed (`isPatchKeyed`) and
+forces their writes (`getWriteReason`). Being keyed is no serialize reason, so it
+never makes a template a root, wires a tag variable, or registers a subscriber.
+_Avoid_: anchor (a DOM reference node), patch record, paired reason
 
 ## Compilation modes
 
@@ -324,6 +328,6 @@ with resumes the client's own code revives (a registration, or a state-backed
 or forced serialize reason). Everything below a root arrives through its
 imports. An entry that initializes the runtime imports every root; a patch page
 always initializes, so a registration its payload names always resolves. A
-param-only reason is never a root's own: the parent feeding it client state
-already bundles the template.
+param-only reason is never a root's own (the parent feeding it client state
+already bundles the template), and being patch-keyed is no reason at all.
 _Avoid_: linked page, unlinked page, scriptless page (as a bundling state)

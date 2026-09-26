@@ -120,7 +120,7 @@ export default {
       // has to reach the client on its own.
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
-          isOwnResumeReason(childSection.resumeReason) ||
+          isOwnResumeReason(childSection.serializeReason) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
             getSectionRegisterReasons(childSection))

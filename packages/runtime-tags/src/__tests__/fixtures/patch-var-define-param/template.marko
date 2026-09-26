@@ -1,0 +1,7 @@
+<let/n=0/>
+<define/Row|{ value }|>
+  <labeler/label title=(value + input.suffix)/>
+  <p>${label}</p>
+</define>
+<Row value=n/>
+<button onClick() { n++ }>+</button>

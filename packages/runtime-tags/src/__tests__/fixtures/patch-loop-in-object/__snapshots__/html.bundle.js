@@ -7,7 +7,7 @@ var template_default = _template_patch("a", (input) => {
 	_html("<main><ul>");
 	if ($scope0_page) _for_in(pairs, (k, v) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "a", k)}=${_text_resume($scope1_id, "b", v, 2)} (${_text_resume($scope1_id, "c", input.note, 2)})</li>`);
+		_html(`<li>${_escape(k)}=${_text_resume($scope1_id, "b", v, 2)} (${_text_resume($scope1_id, "c", input.note, _source_guard($scope0_reason, 0) * 2)})</li>`);
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);

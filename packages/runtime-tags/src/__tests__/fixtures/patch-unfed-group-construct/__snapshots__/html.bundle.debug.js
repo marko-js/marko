@@ -3,14 +3,14 @@ const $template$1 = "<div> </div><!><button>t</button>";
 const $walks$1 = "D l%b b";
 _shells({ "__tests__/tags/kid.marko": "__tests__/tags/kid.marko !__tests__/tags/kid.marko_0;D l%b ;<div> </div><!><button>t</button>" });
 var kid_default = _template_patch("__tests__/tags/kid.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_b = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let on = false;
 	_html(`<div>${_patch_text($scope0_id, "#text/0", input.a, void 0, $scope0_reason, 0)}</div>`);
 	if ($scope0_page) _if(() => {
 		if (on) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", input.b)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.b, $sg__input_b)}</p>`);
 			_scope($scope1_id, {}, "__tests__/tags/kid.marko", "3:2");
 			return 0;
 		}

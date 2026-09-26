@@ -3,14 +3,14 @@ const $template = "<main><div> </div><!><button>+</button></main>";
 const $walks = "E l%b l";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E l%b ;<main><div> </div><!><button>+</button></main>" });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_html = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<main><div>${_patch_html($scope0_id, "#text/0", input.html, void 0, $scope0_reason, 0)}</div>`);
 	if ($scope0_page) _if(() => {
 		if (count) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_html_resume($scope1_id, "#text/0", input.html)}</p>`);
+			_html(`<p>${_html_resume($scope1_id, "#text/0", input.html, $sg__input_html)}</p>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}

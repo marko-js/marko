@@ -21,14 +21,17 @@ import { addAssetImport } from "../util/asset-imports";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
-import { type Opt, push } from "../util/optional";
+import { type Opt, push, fromIter } from "../util/optional";
 import { writesPatchHole } from "../util/patch/decisions";
-import { ensurePatchWriteGroups, writesPatchIn } from "../util/patch/structure";
+import {
+  ensurePatchWriteGroups,
+  writesPatchIn,
+  getWriteReason,
+} from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
   createBinding,
-  FORCED,
   getScopeAccessorLiteral,
   mergeReferences,
   onFinalizeReferences,
@@ -42,11 +45,7 @@ import {
   getSection,
 } from "../util/sections";
 import { getExprWriteOwnership } from "../util/serialize-guard";
-import {
-  addSerializeExpr,
-  addPatchSerializeReason,
-  getSerializeReason,
-} from "../util/serialize-reasons";
+import { addSerializeExpr } from "../util/serialize-reasons";
 import { addSetupWork } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import * as structure from "../util/structure";
@@ -140,11 +139,11 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   addSerializeExpr(section, exprExtras, binding);
   // Stateful structure is known only once sources resolve.
   const valueExtras = dynamicStyleValues(node).map((value) => value.extra!);
+  binding.renders = fromIter(valueExtras);
   onFinalizeReferences(() => {
     // A dynamic style in server-owned structure writes its rule from the
     // flush (a state-fed interpolation recomputes through the signal graph).
     if (writesPatchIn(section)) {
-      addPatchSerializeReason(section, FORCED, binding);
       for (const extra of valueExtras) ensurePatchWriteGroups(() => extra);
       if (valueExtras.some((extra) => writesPatchHole(section, extra))) {
         linkRuntimeFeature("patch-style");
@@ -257,7 +256,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           : callRuntime("_escape_style_value", value),
       ),
     )}`;
-    writer.markNode(tag, binding, getSerializeReason(section, binding));
+    writer.markNode(tag, binding, getWriteReason(section, binding));
   }
 
   emitStyleImport(tag);

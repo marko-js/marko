@@ -54,9 +54,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_patch_child($scope3_id, "#childScope/0", $childScope);
 				row_default(item);
 				_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "10:6");
-			}, "id", $scope1_id, "#div/0", 1, $scope0_page, $scope0_page, void 0, void 0, "__tests__/template.marko_3*shell");
-			_html(`</div>${_el_resume($scope1_id, "#div/0", $scope0_page)}`);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "7:2");
+			}, "id", $scope1_id, "#div/0", 1, 1, $scope0_page, void 0, void 0, "__tests__/template.marko_3*shell");
+			_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
+			_scope($scope1_id, {}, "__tests__/template.marko", "7:2");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $scope0_page, $scope0_page, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_1*shell"]);

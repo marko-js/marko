@@ -23,8 +23,8 @@ var template_default = _template_patch("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<a${_patch_attr($scope3_id, "a", "href", `?q=${params.q.trim()}&i=${item}`)}>${_patch_text($scope3_id, "b", item)}</a>${_el_resume($scope3_id, "a")}`);
 				_subscribe(_unfilled_if() && $params_q__closures, _scope($scope3_id, {}), "a6");
-			}, 0, $scope2_id, "a", 1, $scope0_page, $scope0_page, void 0, void 0, "a3");
-			$scope0_page && _scope($scope2_id, {});
+			}, 0, $scope2_id, "a", 1, 1, $scope0_page, void 0, void 0, "a3");
+			_scope($scope2_id, {});
 		}, 1, "a0", 1);
 		_global_subscribe("a5", $scope1_id);
 	}, () => {

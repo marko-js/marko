@@ -6,13 +6,13 @@ const $template = "<!><!><button>toggle</button>";
 const $walks = "b%b b";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>toggle</button>" });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_color = _source_guard($scope0_reason, 1), $sg__input_x = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let s = true;
 	if ($scope0_page) _if(() => {
 		if (s) {
 			const $scope1_id = _scope_id();
-			_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19stateful-19branch-1btemplate-1amarko_0:${_escape_style_value(input.color)};`)}${_el_resume($scope1_id, "#style/0", _source_guard($scope0_reason, 1))}<b class=x>${_text_resume($scope1_id, "#text/1", input.x)}</b>`);
+			_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19stateful-19branch-1btemplate-1amarko_0:${_escape_style_value(input.color)};`)}${_el_resume($scope1_id, "#style/0", $sg__input_color)}<b class=x>${_text_resume($scope1_id, "#text/1", input.x, $sg__input_x)}</b>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 			return 0;
 		}

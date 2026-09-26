@@ -1,9 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
-  getProgram,
-  isAttributeTag,
-  loadFileForTag,
-} from "@marko/compiler/babel-utils";
+import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from "../visitors/program";
 import { getSectionRendererIdentifier } from "./binding-has-prop";
@@ -32,6 +28,8 @@ import {
   isPatchRendered,
   isReadAsValue,
   recordStructuralParams,
+  getWriteReason,
+  isPatchKeyed,
 } from "./patch/structure";
 import {
   addRead,
@@ -86,10 +84,10 @@ import {
   buildGroupMask,
   getSerializeGuard,
   scopePageIdentifier,
+  getClientGuard,
 } from "./serialize-guard";
 import {
   addSerializeExpr,
-  addPatchSerializeReason,
   addSerializeReason,
   getSerializeReason,
   getSerializeSourcesForExpr,
@@ -161,14 +159,12 @@ export function knownTagAnalyze(
     BindingType.dom,
     section,
   ));
+  childScopeBinding.childScope = true;
   const attrExprs = new Set([tagExtra]);
   if (isPatch()) {
     let staticBody = true;
     for (const child of tagBody.get("body")) staticBody &&= isStatic(child);
     tagExtra[kStaticBody] = staticBody;
-    // The ref must serialize so a patch can pair the child scope through a
-    // parent entry, even for a scriptless child.
-    addPatchSerializeReason(section, FORCED, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
     onFinalizeReferences(() => {
       if (isPatchRendered(section)) linkRuntimeFeature("patch-child");
@@ -283,6 +279,8 @@ export function knownTagTranslateHTML(
     section,
     childScopeBinding,
   );
+  // A patch pairs the child through its scope ref, whatever the reason.
+  const childScopeWriteReason = getWriteReason(section, childScopeBinding);
   // Every child renderer joins this template's intrinsics union, so a
   // parent's patch-skip decision sees the whole subtree at render time.
   if (isPatch()) addPatchChildRenderer(tagIdentifier);
@@ -295,7 +293,7 @@ export function knownTagTranslateHTML(
     : undefined;
 
   let varStatement: t.Statement | undefined;
-  if (childScopeSerializeReason) {
+  if (childScopeWriteReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
@@ -327,27 +325,25 @@ export function knownTagTranslateHTML(
       }
     }
 
-    // A patch page serializes the child scope for pairing even with no
-    // client code, where nothing could resolve the var's registration.
-    if (
-      tagVar &&
-      (!isPatch() ||
-        getProgram().node.extra.isInteractive ||
-        loadFileForTag(tag)?.ast.program.extra?.isInteractive)
-    ) {
+    if (tagVar && childScopeSerializeReason) {
       // Deferred below the render call: `_var` mints the post-render scope id
       // for the scope offset.
-      varStatement = t.expressionStatement(
-        callRuntime(
-          "_var",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
-          peekScopeId,
-          t.stringLiteral(
-            getResumeRegisterId(section, tagVar.extra?.binding, "var"),
-          ),
+      let varCall: t.Expression = callRuntime(
+        "_var",
+        getScopeIdIdentifier(section),
+        getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
+        peekScopeId,
+        t.stringLiteral(
+          getResumeRegisterId(section, tagVar.extra?.binding, "var"),
         ),
       );
+      // A patch-keyed ref writes the child scope even when a param-only reason
+      // is unfed; the wiring resolves only where a client feeds it.
+      const varGuard =
+        isPatchKeyed(section, childScopeBinding) &&
+        getClientGuard(section, childScopeSerializeReason);
+      if (varGuard) varCall = t.logicalExpression("&&", varGuard, varCall);
+      varStatement = t.expressionStatement(varCall);
     }
   }
 
@@ -409,35 +405,39 @@ export function knownTagTranslateHTML(
       "let",
       statements,
     );
-    if (varStatement) {
-      statements.push(varStatement);
-      // A created scope seeds the var (only there) unless the child's return is
-      // state-fed: its own fill then returns through the wired registration.
-      if (isPatch()) {
-        for (const name in t.getBindingIdentifiers(tag.node.var!)) {
-          const varBinding = tag.scope.getBinding(name)?.identifier.extra
-            ?.binding as Binding | undefined;
-          if (!varBinding || varBinding.sources?.state) continue;
-          statements.push(
-            t.expressionStatement(
-              t.logicalExpression(
-                "&&",
-                callRuntime(
-                  "_filled_guard",
-                  t.numericLiteral(0),
-                  t.numericLiteral(0),
-                ),
-                callRuntime(
-                  "_patch_write",
-                  getScopeIdIdentifier(section),
-                  getScopeAccessorLiteral(varBinding),
-                  t.identifier(name),
-                  t.numericLiteral(1),
-                ),
+    if (varStatement) statements.push(varStatement);
+    // A created scope never runs the child's return, so the flush seeds each
+    // var the client reads, unless its state-fed return reaches it itself.
+    if (isPatch()) {
+      for (const name in t.getBindingIdentifiers(tag.node.var!)) {
+        const varBinding = tag.scope.getBinding(name)?.identifier.extra
+          ?.binding as Binding | undefined;
+        if (
+          !varBinding ||
+          varBinding.sources?.state ||
+          !getSerializeReason(varBinding.section, varBinding)
+        ) {
+          continue;
+        }
+        statements.push(
+          t.expressionStatement(
+            t.logicalExpression(
+              "&&",
+              callRuntime(
+                "_filled_guard",
+                t.numericLiteral(0),
+                t.numericLiteral(0),
+              ),
+              callRuntime(
+                "_patch_write",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(varBinding),
+                t.identifier(name),
+                t.numericLiteral(1),
               ),
             ),
-          );
-        }
+          ),
+        );
       }
     }
   } else if (clientOwnedStatements) {
@@ -526,6 +526,10 @@ export function knownTagTranslateDOM(
 export function finalizeKnownTags(section: Section) {
   for (const tagExtra of getKnownTags(section)) {
     const scopeBinding = tagExtra[kChildScopeBinding];
+    // A var's wiring guards by the ref's reason even where a patch keys it.
+    if (scopeBinding && tagExtra[kChildOffsetScopeBinding]) {
+      ensureReasonGroups(getSerializeReason(section, scopeBinding));
+    }
     const knownExprs = tagExtra[kKnownExprs];
     const contentSection = tagExtra[kContentSection]!;
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {

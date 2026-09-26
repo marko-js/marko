@@ -24,7 +24,7 @@ var template_default = _template_patch("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_patch_child($scope0_id, "a", $childScope);
 	let card = price_card_default({ label: input.label });
-	_var($scope0_id, "b", $childScope, "a0");
+	_client_guard($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "a0");
 	_filled_guard(0, 0) && _patch_write($scope0_id, "i", card, 1);
 	_html(`<main><h1>${_patch_text($scope0_id, "c", input.title, void 0, $scope0_reason, 1)}</h1><button class=read>read</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");
