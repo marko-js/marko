@@ -36,7 +36,7 @@ import {
   getSectionRegisterReasons,
   startSection,
 } from "../../util/sections";
-import { hasOwnResumeReason } from "../../util/serialize-reasons";
+import { isOwnResumeReason } from "../../util/serialize-reasons";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -117,7 +117,7 @@ export default {
       // has to reach the client on its own.
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
-          hasOwnResumeReason(childSection) ||
+          isOwnResumeReason(childSection.serializeReason) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
             getSectionRegisterReasons(childSection))
