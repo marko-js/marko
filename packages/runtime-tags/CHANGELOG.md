@@ -1,5 +1,28 @@
 # @marko/runtime-tags
 
+## 6.3.56
+
+### Patch Changes
+
+- [#4208](https://github.com/marko-js/marko/pull/4208) [`69a2adb`](https://github.com/marko-js/marko/commit/69a2adbd39733d259db698a812b6c67d037460c9) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Allow hoisted tag variables to be `undefined` in debug builds, fixing a false `Hoisted values must be functions` error when a dynamic tag with a falsy tag name does not render.
+
+- [#4305](https://github.com/marko-js/marko/pull/4305) [`07a3199`](https://github.com/marko-js/marko/commit/07a31994990c89cedd9d5fa98516c1d1ba6cdd61) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop declaring `$global` in the server render when every `$global` read sits in a value the compiler drops, such as an attribute the child tag never reads, a repeated native attribute, or the `of=` of an empty `<for>`.
+
+- [#4297](https://github.com/marko-js/marko/pull/4297) [`b421f86`](https://github.com/marko-js/marko/commit/b421f86feffdc057906f3998c454956f37c77a88) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix an html compile crash (`Cannot read properties of null (reading 'isExpressionStatement')`) when hoisting a serialized rest alias whose owning section is the program itself, such as a `{ a, ...rest }` destructure spread inside an `<else>`
+
+- [#4315](https://github.com/marko-js/marko/pull/4315) [`2a105f3`](https://github.com/marko-js/marko/commit/2a105f3d109d1a26011dc7402c4da8d5b2bc2cd4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `Cannot read properties of undefined` error when content that resumes after its owner, such as the body a lazily loaded tag passes to a child or content behind a `<try>` placeholder, reads two values of its owner and only one of them was sent to the browser. Resumed content now re-renders only for a value the page changed while the content was pending, instead of for any value the server happened to send.
+
+- [#4314](https://github.com/marko-js/marko/pull/4314) [`7b55f27`](https://github.com/marko-js/marko/commit/7b55f27a1b8ec975fe0e2dc9b089916fdb327645) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Link a template into the page entry only when its own code revives it: a scope that serializes only behind param reasons links nothing (a client-fed param implies a parent with client work, which already bundles the template), and a native tag variable nothing reads no longer serializes its element.
+
+- [#4304](https://github.com/marko-js/marko/pull/4304) [`4ebc06d`](https://github.com/marko-js/marko/commit/4ebc06d136f5419e067e479a33167399031ecb2b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - The `content` attribute of native tags now rejects a string in TypeScript, except on `<meta>`, where `content` is the HTML attribute. A string was never rendered as content: the server threw `` Invalid `content` attribute ``, so `<button content="Save"/>` or `render({ content: "Save" })` against an `Input` extending `Marko.HTML.Button` type-checked and then failed at runtime.
+
+- [#4309](https://github.com/marko-js/marko/pull/4309) [`f41fa21`](https://github.com/marko-js/marko/commit/f41fa21c8213870ab42f99ff0c293cdeafa806d9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reuse an already hoisted serialize guard in the server output when a guard combines parameters of nested sections, instead of repeating the runtime check inline.
+
+- [#4305](https://github.com/marko-js/marko/pull/4305) [`cdba8bb`](https://github.com/marko-js/marko/commit/cdba8bba9bb71a35bc605fba02316456bf3f479a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compile an unread `<const>`, `<id>` or `<let>` whose value is bare `$global` or `$signal` for the client. It used to fail with "Marko internal error: analysis marked this template's setup export as empty but translation produced statements for it", or leave the dropped value in setup when the template had other setup work. The server render no longer evaluates an unread `<const/s=$signal/>` either, which used to throw "Cannot use $signal in a server render."
+
+- Updated dependencies [[`13cea0d`](https://github.com/marko-js/marko/commit/13cea0ded36449c9cba179deee554fb26b265555), [`6c36c96`](https://github.com/marko-js/marko/commit/6c36c9652df4663bb10f155d10f33b655d9db1f2), [`05b06d7`](https://github.com/marko-js/marko/commit/05b06d77ffd2c25dfb30b4acd222f1fab4b3f854), [`70451d2`](https://github.com/marko-js/marko/commit/70451d297746a9d5a4804308134d8ebaa44d0a31), [`0878583`](https://github.com/marko-js/marko/commit/0878583b3519daeb176b1e143e2943e3b10e717f)]:
+  - @marko/compiler@5.42.9
+
 ## 6.3.55
 
 ### Patch Changes
