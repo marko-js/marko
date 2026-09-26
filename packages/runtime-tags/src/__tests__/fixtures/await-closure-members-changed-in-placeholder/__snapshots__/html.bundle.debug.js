@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_value_a#3");
 	_scope($scope0_id, {
 		value_a: value?.a,
-		"ClosureScopes:value_a": $value_a__closures,
-		"ClosureScopes:value_b": $value_b__closures
+		"ClosureScopes:value_a/5": $value_a__closures,
+		"ClosureScopes:value_b/6": $value_b__closures
 	}, "__tests__/template.marko", 0, { value_a: ["value.a", "2:6"] });
 }, 1);

@@ -12,7 +12,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	});
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:count": $count__closures
+		"ClosureScopes:count/5": $count__closures
 	}, "__tests__/child.marko", 0, { count: "3:6" });
 	_resume_branch($scope0_id);
 });

@@ -25,6 +25,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_0_setHtml#2/var");
 	_scope($scope0_id, {
 		setHtml,
-		"ClosureScopes:setHtml": $setHtml__closures
+		"ClosureScopes:setHtml/3": $setHtml__closures
 	}, "__tests__/template.marko", 0, { setHtml: "3:16" });
 }, 1);

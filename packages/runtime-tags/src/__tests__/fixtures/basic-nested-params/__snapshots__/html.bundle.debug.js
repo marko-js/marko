@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			});
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
-				"ClosureScopes:outer": $si__outer && $child_content__outer__closures
+				"ClosureScopes:outer/5": $si__outer && $child_content__outer__closures
 			}, "__tests__/template.marko", "6:2");
 			_resume_branch($scope1_id);
 		}, $scope0_id)

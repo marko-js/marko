@@ -2,7 +2,7 @@
 const $template$1 = "<button> </button><!><!>";
 const $walks$1 = " D l%c";
 const $if_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content2__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $if_content2__dynamicTag($scope, $scope._._.input_content), ($scope) => $scope._._, "__tests__/tags/menu.marko_2_input_content#5/subscribe");
+const $if_content2__input_content = /*@__PURE__*/ _closure_get("input_content/7", ($scope) => $if_content2__dynamicTag($scope, $scope._._.input_content), ($scope) => $scope._._, "__tests__/tags/menu.marko_2_input_content#5/subscribe");
 const $if_content2__setup = $if_content2__input_content;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content2__setup);
 const $if_content__input_content = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__if($scope, $scope._.input_content ? 0 : 1));

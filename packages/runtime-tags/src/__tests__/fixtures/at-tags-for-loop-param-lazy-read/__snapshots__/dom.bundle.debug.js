@@ -18,7 +18,7 @@ const $if_content__setup__script = _script("__tests__/template.marko_2", ($scope
 }));
 const $if_content__setup = $if_content__setup__script;
 const $item_content__if = /*@__PURE__*/ _if("#text/1", "<button class=nested>nested</button>", " ", $if_content__setup);
-const $item_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $item_content__if($scope, $scope._.show ? 0 : 1));
+const $item_content__show = /*@__PURE__*/ _closure_get("show/6", ($scope) => $item_content__if($scope, $scope._.show ? 0 : 1));
 const $item_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$out($scope._, $scope.item);
 }));

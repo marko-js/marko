@@ -44,7 +44,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.type, { item: $item }, 0, 0, $sg__input_type);
 	$si__input_type__OR__input_text && _scope($scope0_id, {
 		input_text: _serialize_if($scope0_reason, 1) && input.text,
-		"ClosureScopes:input_text": $si__input_text && $input_text__closures
+		"ClosureScopes:input_text/5": $si__input_text && $input_text__closures
 	}, "__tests__/tags/heading.marko", 0, { input_text: ["input.text"] });
 });
 

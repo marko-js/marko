@@ -24,7 +24,7 @@ const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("_
 const $if_content__aa = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.aa));
 const $if_content__setup = $if_content__aa;
 const $item_content__if = /*@__PURE__*/ _if("#text/2", "<span> </span>", "D ", $if_content__setup);
-const $item_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $item_content__if($scope, $scope._.show ? 0 : 1));
+const $item_content__show = /*@__PURE__*/ _closure_get("show/5", ($scope) => $item_content__if($scope, $scope._.show ? 0 : 1));
 const $item_content__setup = $item_content__show;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p><!>:<!></p><!><!>", "D%c%l%", $item_content__setup), {
 	aa($scope) {

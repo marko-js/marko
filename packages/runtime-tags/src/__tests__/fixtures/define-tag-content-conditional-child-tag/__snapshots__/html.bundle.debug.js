@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope2_id) });
 		_scope($scope2_id, {
 			input_content: input.content,
-			"ClosureScopes:input_content": $si__input_content && $Box_content2__input_content__closures
+			"ClosureScopes:input_content/5": $si__input_content && $Box_content2__input_content__closures
 		}, "__tests__/template.marko", "1:2", { input_content: ["input.content", "1:13"] });
 	}, $scope0_id) };
 	Box.content({ content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -52,6 +52,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) });
 	_scope($scope0_id, {
 		input_label: input.label,
-		"ClosureScopes:input_label": $si__input_label && $input_label__closures
+		"ClosureScopes:input_label/4": $si__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, { input_label: ["input.label"] });
 }, 1);

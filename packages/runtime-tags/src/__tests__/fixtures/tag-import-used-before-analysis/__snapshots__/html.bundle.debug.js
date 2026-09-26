@@ -20,5 +20,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$si__input_value && _subscribe($input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), "__tests__/template.marko_1_input_value#3/subscribe", $sg__input_value);
 		$sg__input_value || $si__input_value && _resume_branch($scope1_id);
 	}, $scope0_id) });
-	$si__input_value && _scope($scope0_id, { "ClosureScopes:input_value": $input_value__closures }, "__tests__/template.marko", 0);
+	$si__input_value && _scope($scope0_id, { "ClosureScopes:input_value/4": $input_value__closures }, "__tests__/template.marko", 0);
 }, 1);

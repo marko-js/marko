@@ -21,8 +21,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		a,
 		b,
-		"ClosureScopes:a": $a__closures,
-		"ClosureScopes:b": $b__closures
+		"ClosureScopes:a/4": $a__closures,
+		"ClosureScopes:b/5": $b__closures
 	}, "__tests__/template.marko", 0, {
 		a: "1:6",
 		b: "2:6"

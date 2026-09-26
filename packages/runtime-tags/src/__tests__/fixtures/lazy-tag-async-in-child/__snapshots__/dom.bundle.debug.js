@@ -13,7 +13,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // child.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/child.marko_1_count#4/subscribe");
+const $await_content__count = /*@__PURE__*/ _closure_get("count/5", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/child.marko_1_count#4/subscribe");
 const $await_content__setup__script = _script("__tests__/child.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._, +$scope._.count + 1);
 }));

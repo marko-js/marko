@@ -16,7 +16,7 @@ _resumed["__tests__/template.marko_3*content"] = $catch_content;
 const $try_content2__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("sync");
 })());
-const $try_content__clicks = /*@__PURE__*/ _closure_get("clicks", ($scope) => _text($scope["#text/0"], (() => {
+const $try_content__clicks = /*@__PURE__*/ _closure_get("clicks/4", ($scope) => _text($scope["#text/0"], (() => {
 	if ($scope._.clicks) throw new Error("click");
 	return $scope._.clicks;
 })()), 0, "__tests__/template.marko_1_clicks#3/subscribe");

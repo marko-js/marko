@@ -11,7 +11,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("D%l");
-const $Wrap_content__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => _text($scope["#text/0"], $scope._.input_value), 0, "__tests__/template.marko_1_input_value#3/subscribe");
+const $Wrap_content__input_value = /*@__PURE__*/ _closure_get("input_value/4", ($scope) => _text($scope["#text/0"], $scope._.input_value), 0, "__tests__/template.marko_1_input_value#3/subscribe");
 const $Wrap_content__setup = $Wrap_content__input_value;
 const $Wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span> </span>", "D ", $Wrap_content__setup);
 function $setup($scope) {

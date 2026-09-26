@@ -16,7 +16,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = "<!><!><!>";
 const $walks = "b1c";
 const $Child_content__setHtml__script = _script("__tests__/template.marko_1_setHtml#2", ($scope) => _assert_init($scope._, "setHtml")("Hello World"));
-const $Child_content__setHtml = /*@__PURE__*/ _closure_get("setHtml", $Child_content__setHtml__script);
+const $Child_content__setHtml = /*@__PURE__*/ _closure_get("setHtml/3", $Child_content__setHtml__script);
 const $Child_content__setup = $Child_content__setHtml;
 const $Child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", 0, 0, $Child_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $Child_content, () => $setHtml);

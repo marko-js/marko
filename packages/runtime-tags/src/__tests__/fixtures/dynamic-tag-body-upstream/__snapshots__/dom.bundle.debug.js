@@ -9,11 +9,11 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", 
 // template.marko
 const $template = "<!><!><!><button>toggle</button>";
 const $walks = "b%b%b b";
-const $tag_content__input_foo = /*@__PURE__*/ _closure_get("input_foo", ($scope) => $input_foo$1($scope["#childScope/0"], $scope._.input_foo), 0, "__tests__/template.marko_2_input_foo#6/subscribe");
+const $tag_content__input_foo = /*@__PURE__*/ _closure_get("input_foo/8", ($scope) => $input_foo$1($scope["#childScope/0"], $scope._.input_foo), 0, "__tests__/template.marko_2_input_foo#6/subscribe");
 const $tag_content__setup = $tag_content__input_foo;
 const $tag_content = _content("__tests__/template.marko_2*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $tag_content__setup);
 _content_resume($tag_content);
-const $inputtag_content__input_foo = /*@__PURE__*/ _closure_get("input_foo", ($scope) => $input_foo$1($scope["#childScope/0"], $scope._.input_foo), 0, "__tests__/template.marko_1_input_foo#6/subscribe");
+const $inputtag_content__input_foo = /*@__PURE__*/ _closure_get("input_foo/8", ($scope) => $input_foo$1($scope["#childScope/0"], $scope._.input_foo), 0, "__tests__/template.marko_1_input_foo#6/subscribe");
 const $inputtag_content__setup = $inputtag_content__input_foo;
 const $inputtag_content = _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $inputtag_content__setup);
 _content_resume($inputtag_content);

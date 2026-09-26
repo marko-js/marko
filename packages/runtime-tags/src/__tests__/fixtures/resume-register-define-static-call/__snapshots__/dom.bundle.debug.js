@@ -5,7 +5,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => ` D l/${_w0}&/${_w1}&b`)($Heading_co
 const $Heading_content3 = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "also static: not registered");
 const $Heading_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "static content: not registered");
 const $inputtype_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $inputtype_content__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $inputtype_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/template.marko_2_input_content#4/subscribe");
+const $inputtype_content__input_content = /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $inputtype_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/template.marko_2_input_content#4/subscribe");
 const $inputtype_content__setup = $inputtype_content__input_content;
 const $inputtype_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $inputtype_content__setup);
 _content_resume($inputtype_content);

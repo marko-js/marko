@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id)
 	});
 	$si__input_text && _scope($scope0_id, {
-		"ClosureScopes:input_text": $input_text__closures,
+		"ClosureScopes:input_text/4": $input_text__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0);
 }, 1);

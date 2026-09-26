@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 			});
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
-				d: $si__outer && $child_content__outer__closures
+				f: $si__outer && $child_content__outer__closures
 			});
 			_resume_branch($scope1_id);
 		}, $scope0_id)

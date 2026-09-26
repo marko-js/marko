@@ -9,12 +9,12 @@ const $if_content__setup = ($scope) => {
 };
 const $Tree_content__if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content__walks), $if_content__setup);
 const $Tree_content__depth__OR__level = /*@__PURE__*/ _or(6, ($scope) => $Tree_content__if($scope, $scope.level < $scope._.depth ? 0 : 1));
-const $Tree_content__depth = /*@__PURE__*/ _closure_get("depth", $Tree_content__depth__OR__level, 0, "__tests__/template.marko_1_depth#2/subscribe");
+const $Tree_content__depth = /*@__PURE__*/ _closure_get("depth/4", $Tree_content__depth__OR__level, 0, "__tests__/template.marko_1_depth#2/subscribe");
 const $Tree_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
 	$Tree_content__depth($scope);
 	$Tree_content__label($scope);
 });
-const $Tree_content__label = /*@__PURE__*/ _closure_get("label", ($scope) => _text($scope["#text/0"], $scope._.label));
+const $Tree_content__label = /*@__PURE__*/ _closure_get("label/5", ($scope) => _text($scope["#text/0"], $scope._.label));
 const $Tree_content__level = /*@__PURE__*/ _const("level", ($scope) => {
 	_text($scope["#text/1"], $scope.level);
 	$Tree_content__depth__OR__level($scope);

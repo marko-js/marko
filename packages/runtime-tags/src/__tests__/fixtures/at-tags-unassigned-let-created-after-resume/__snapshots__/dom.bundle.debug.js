@@ -14,7 +14,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $item_content__if = /*@__PURE__*/ _if("#text/0", "<span>shown</span>");
-const $item_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $item_content__if($scope, $scope._.show ? 0 : 1));
+const $item_content__show = /*@__PURE__*/ _closure_get("show/5", ($scope) => $item_content__if($scope, $scope._.show ? 0 : 1));
 const $item_content__setup = $item_content__show;
 const $item_content = /*@__PURE__*/ _content("__tests__/tags/child.marko_1*content", "<!><!><!>", "b%", $item_content__setup);
 const $show = /*@__PURE__*/ _let("show/4");

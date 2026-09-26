@@ -32,8 +32,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$si__input_show__OR__input_value1__OR__input_value && _scope($scope0_id, {
 		value1: $si__input_show && value1,
 		value2: $si__input_show && value2,
-		"ClosureScopes:value1": $si__input_value && $value__closures,
-		"ClosureScopes:value2": $si__input_value2 && $value2__closures
+		"ClosureScopes:value1/6": $si__input_value && $value__closures,
+		"ClosureScopes:value2/7": $si__input_value2 && $value2__closures
 	}, "__tests__/template.marko", 0, {
 		value1: "1:15",
 		value2: "1:23"

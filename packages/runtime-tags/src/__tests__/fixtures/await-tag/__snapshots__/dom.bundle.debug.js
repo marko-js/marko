@@ -1,15 +1,15 @@
 // template.marko
 const $template = "<div><!><!><!><button>Inc</button></div>";
 const $walks = "D%b%b%b l";
-const $await_content3__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_3_count#4/subscribe");
+const $await_content3__count = /*@__PURE__*/ _closure_get("count/5", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_3_count#4/subscribe");
 const $await_content3__setup = $await_content3__count;
 const $await_content3__value = ($scope, value) => _text($scope["#text/0"], value);
 const $await_content3__$params = ($scope, $params4) => $await_content3__value($scope, $params4[0]);
-const $await_content2__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_2_count#4/subscribe");
+const $await_content2__count = /*@__PURE__*/ _closure_get("count/5", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_2_count#4/subscribe");
 const $await_content2__setup = $await_content2__count;
 const $await_content2__value = ($scope, value) => _text($scope["#text/0"], value);
 const $await_content2__$params = ($scope, $params3) => $await_content2__value($scope, $params3[0]);
-const $await_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_1_count#4/subscribe");
+const $await_content__count = /*@__PURE__*/ _closure_get("count/5", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_1_count#4/subscribe");
 const $await_content__setup = $await_content__count;
 const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);

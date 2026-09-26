@@ -3,7 +3,7 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ => [1, {
         count: 0,
-        "ClosureScopes:count": new Set
+        "ClosureScopes:count/5": new Set
       }], _ => [2, {
         _: _(1)
       }]]
@@ -14,7 +14,7 @@
     <script>
       M._.r.push(_ => [3, {
         _: _(1),
-        "ClosureSignalIndex:count": 2
+        "ClosureSignalIndex:count/5": 2
       }])
     </script>
 
@@ -27,7 +27,7 @@
 <script>
   M._.r.push(_ => [4, {
       _: _(1),
-      "ClosureSignalIndex:count": 1
+      "ClosureSignalIndex:count/5": 1
     }],
     "packages/runtime-tags/src/__tests__/fixtures/await-tag/template.marko_1_count#4/subscribe 2 packages/runtime-tags/src/__tests__/fixtures/await-tag/template.marko_2_count#4/subscribe 4 packages/runtime-tags/src/__tests__/fixtures/await-tag/template.marko_3_count#4/subscribe 3 packages/runtime-tags/src/__tests__/fixtures/await-tag/template.marko_0 1"
     );

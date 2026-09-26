@@ -94,7 +94,7 @@ const $catch_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("_
 	_text($scope["#text/0"], $scope.label);
 } });
 _resumed["__tests__/template.marko_5*content"] = $catch_content;
-const $try_content__fail = /*@__PURE__*/ _closure_get("fail", ($scope) => _text($scope["#text/0"], (() => {
+const $try_content__fail = /*@__PURE__*/ _closure_get("fail/9", ($scope) => _text($scope["#text/0"], (() => {
 	if ($scope._.fail) throw new Error("click");
 	return "ok";
 })()), 0, "__tests__/template.marko_4_fail#7/subscribe");
@@ -109,7 +109,7 @@ const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 } });
 _resumed["__tests__/template.marko_2*content"] = $cell_content;
 const $item_content__items_0__OR__item = /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/1"], $scope.item === $scope._.items_0));
-const $item_content__items_ = /*@__PURE__*/ _closure_get("items_0", $item_content__items_0__OR__item);
+const $item_content__items_ = /*@__PURE__*/ _closure_get("items_0/8", $item_content__items_0__OR__item);
 const $item_content__setup = $item_content__items_;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span><!>:<!></span>", "D%c%", $item_content__setup), {
 	item_text($scope) {

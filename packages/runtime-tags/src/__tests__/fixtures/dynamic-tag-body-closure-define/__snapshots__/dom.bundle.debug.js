@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $showFoodiv_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count));
+const $showFoodiv_content__count = /*@__PURE__*/ _closure_get("count/5", ($scope) => _text($scope["#text/0"], $scope._.count));
 const $showFoodiv_content__setup = $showFoodiv_content__count;
 const $showFoodiv_content = _content("__tests__/template.marko_3*content", "count <!>", "b%", $showFoodiv_content__setup);
 _content_resume($showFoodiv_content);

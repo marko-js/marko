@@ -5,7 +5,7 @@ const $walks = " b%b%c";
 const $if_content__setup = ($scope) => {
 	$Box_content__setup._($scope["#childScope/0"], $scope._);
 };
-const $Box_content__attrs_class = /*@__PURE__*/ _closure_get("attrs_class", ($scope) => _attr_class($scope["#div/0"], $scope._.attrs_class));
+const $Box_content__attrs_class = /*@__PURE__*/ _closure_get("attrs_class/8", ($scope) => _attr_class($scope["#div/0"], $scope._.attrs_class));
 const $Box_content__setup = /*@__PURE__*/ _child_setup($Box_content__attrs_class);
 const $Box_content = _content("__tests__/template.marko_1*content", $Box_content__template, $Box_content__walks, $Box_content__setup);
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Box_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Box_content__walks), $if_content__setup);

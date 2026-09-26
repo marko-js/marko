@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		selected: $si__input_show && selected,
 		rows: $si__input_show && rows,
-		"ClosureScopes:selected": $selected__closures
+		"ClosureScopes:selected/6": $selected__closures
 	}, "__tests__/template.marko", 0, {
 		selected: "1:6",
 		rows: "2:6"

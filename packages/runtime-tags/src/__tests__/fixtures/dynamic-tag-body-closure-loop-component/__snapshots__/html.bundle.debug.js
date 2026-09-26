@@ -59,7 +59,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });
-	$si__input_type && _scope($scope0_id, { "ClosureScopes:input_type": $input_type__closures }, "__tests__/tags/heading.marko", 0);
+	$si__input_type && _scope($scope0_id, { "ClosureScopes:input_type/4": $input_type__closures }, "__tests__/tags/heading.marko", 0);
 });
 
 // template.marko

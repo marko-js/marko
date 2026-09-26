@@ -23,6 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		query,
-		"ClosureScopes:query": $query__closures
+		"ClosureScopes:query/4": $query__closures
 	}, "__tests__/template.marko", 0, { query: "2:6" });
 }, 1);

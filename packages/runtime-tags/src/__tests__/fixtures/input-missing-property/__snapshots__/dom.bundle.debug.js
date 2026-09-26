@@ -2,7 +2,7 @@
 const $Child_content__walks = "b%c", $Child_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($Child_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)($Child_content__walks);
-const $if_content2__input_name = /*@__PURE__*/ _closure_get("input_name", ($scope) => _text($scope["#text/0"], $scope._._.input_name || "Fallback"), ($scope) => $scope._._, "__tests__/template.marko_3_input_name#4/subscribe");
+const $if_content2__input_name = /*@__PURE__*/ _closure_get("input_name/5", ($scope) => _text($scope["#text/0"], $scope._._.input_name || "Fallback"), ($scope) => $scope._._, "__tests__/template.marko_3_input_name#4/subscribe");
 const $if_content2__setup = $if_content2__input_name;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<div> </div>", "D ", $if_content2__setup);
 const $if_content__setup = ($scope) => $if_content__if($scope, true ? 0 : 1);

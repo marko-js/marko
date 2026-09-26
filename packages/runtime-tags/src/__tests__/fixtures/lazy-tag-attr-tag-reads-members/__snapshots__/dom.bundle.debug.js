@@ -15,12 +15,12 @@ const $walks = " b%/&c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_item_content = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_item_content.mjs"));
 const $item_content__value_a__OR__value_b = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.value_a + $scope._.value_b));
-const $item_content__value_a = /*@__PURE__*/ _closure_get("value_a", $item_content__value_a__OR__value_b, 0, "__tests__/template.marko_1_value_a#4/subscribe");
+const $item_content__value_a = /*@__PURE__*/ _closure_get("value_a/6", $item_content__value_a__OR__value_b, 0, "__tests__/template.marko_1_value_a#4/subscribe");
 const $item_content__setup = ($scope) => {
 	$item_content__value_a($scope);
 	$item_content__value_b($scope);
 };
-const $item_content__value_b = /*@__PURE__*/ _closure_get("value_b", $item_content__value_a__OR__value_b, 0, "__tests__/template.marko_1_value_b#5/subscribe");
+const $item_content__value_b = /*@__PURE__*/ _closure_get("value_b/7", $item_content__value_a__OR__value_b, 0, "__tests__/template.marko_1_value_b#5/subscribe");
 const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $item_content__setup);
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
 	$value_a($scope, $scope.value?.a);

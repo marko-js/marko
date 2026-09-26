@@ -34,7 +34,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $return = { btn: $btn_getter };
 	_scope($scope0_id, {
 		"ClosureScopes:1": $wrapper_content__subscribers,
-		"ClosureScopes:input_a11yText": $si__input_a11yText && $input_a11yText__closures
+		"ClosureScopes:input_a11yText/4": $si__input_a11yText && $input_a11yText__closures
 	}, "__tests__/tags/child/index.marko", 0);
 	return $return;
 });

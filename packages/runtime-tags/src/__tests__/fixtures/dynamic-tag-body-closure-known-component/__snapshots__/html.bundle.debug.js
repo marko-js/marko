@@ -36,6 +36,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) });
 	_scope($scope0_id, {
 		input_depth: input.depth,
-		"ClosureScopes:input_depth": $si__input_depth && $input_depth__closures
+		"ClosureScopes:input_depth/4": $si__input_depth && $input_depth__closures
 	}, "__tests__/template.marko", 0, { input_depth: ["input.depth"] });
 }, 1);

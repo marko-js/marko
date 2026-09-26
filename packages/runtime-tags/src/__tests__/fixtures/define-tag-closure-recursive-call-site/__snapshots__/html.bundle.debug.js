@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		depth,
 		label,
-		"ClosureScopes:depth": $depth__closures
+		"ClosureScopes:depth/4": $depth__closures
 	}, "__tests__/template.marko", 0, {
 		depth: "1:6",
 		label: "2:8"

@@ -20,18 +20,18 @@ const $for_content__setup = ($scope) => {
 	$for_content__i._($scope);
 	_text($scope["#text/1"], $scope["#LoopKey"]);
 };
-const $showbi_content__i = /*@__PURE__*/ _closure_get("i", ($scope) => _text($scope["#text/0"], $scope._.i), 0, "__tests__/template.marko_4_i#3/subscribe");
+const $showbi_content__i = /*@__PURE__*/ _closure_get("i/9", ($scope) => _text($scope["#text/0"], $scope._.i), 0, "__tests__/template.marko_4_i#3/subscribe");
 const $showbi_content__setup = $showbi_content__i;
 const $showbi_content = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "tag <!>", "b%", $showbi_content__setup);
 const $if_content__i = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.i));
 const $if_content__setup = $if_content__i;
 const $item_content2__if = /*@__PURE__*/ _if("#text/0", "<strong> </strong>", "D ", $if_content2__setup);
-const $item_content2__show = /*@__PURE__*/ _closure_get("show", ($scope) => $item_content2__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_2_show#6/subscribe");
+const $item_content2__show = /*@__PURE__*/ _closure_get("show/8", ($scope) => $item_content2__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_2_show#6/subscribe");
 const $item_content2__setup = $item_content2__show;
 const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $item_content2__setup), { item_text: $if_content2__item_text });
 const $item_content__if = /*@__PURE__*/ _if("#text/0", "<em>if <!></em>", "Db%", $if_content__setup);
 const $item_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1", $showbi_content);
-const $item_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => {
+const $item_content__show = /*@__PURE__*/ _closure_get("show/8", ($scope) => {
 	$item_content__if($scope, $scope._.show ? 0 : 1);
 	$item_content__dynamicTag($scope, $scope._.show ? "b" : "i");
 }, 0, "__tests__/template.marko_1_show#6/subscribe");

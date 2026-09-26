@@ -21,5 +21,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("loading...");
 	}, $scope0_id) }) });
 	_script($scope0_id, "__tests__/template.marko_0");
-	_scope($scope0_id, { "ClosureScopes:count": $count__closures }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "ClosureScopes:count/3": $count__closures }, "__tests__/template.marko", 0);
 }, 1);

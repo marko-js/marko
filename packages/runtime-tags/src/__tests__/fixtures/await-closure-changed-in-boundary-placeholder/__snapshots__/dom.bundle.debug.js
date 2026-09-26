@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $placeholder_content = _content("__tests__/tags/boundary.marko_2*content", "loading...");
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $try_content__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $try_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/boundary.marko_1_input_content#3/subscribe");
+const $try_content__input_content = /*@__PURE__*/ _closure_get("input_content/4", ($scope) => $try_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/boundary.marko_1_input_content#3/subscribe");
 const $try_content__setup = $try_content__input_content;
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
 function $setup$1($scope) {
@@ -17,9 +17,9 @@ var boundary_default = /*@__PURE__*/ _template("__tests__/tags/boundary.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>inc</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
-const $await_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#2/subscribe");
+const $await_content__count = /*@__PURE__*/ _closure_get("count/3", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#2/subscribe");
 const $await_content__setup = $await_content__count;
-const $boundary_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#2/subscribe");
+const $boundary_content__count = /*@__PURE__*/ _closure_get("count/3", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#2/subscribe");
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<b> </b>", "D ", $await_content__setup);
 const $boundary_content__await_promise = /*@__PURE__*/ _await_promise("#text/1");
 const $boundary_content__setup = ($scope) => {

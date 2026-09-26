@@ -5,7 +5,7 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
       clickCount: 0,
-      "ClosureScopes:clickCount": new Set([_(3), _(4), _(2)])
+      "ClosureScopes:clickCount/3": new Set([_(3), _(4), _(2)])
     }, {
       _: _(1),
       "#CatchContent": _(1,
@@ -13,10 +13,10 @@
         )
     }, {
       _: _(2),
-      "ClosureSignalIndex:clickCount": 1
+      "ClosureSignalIndex:clickCount/3": 1
     }, {
       _: _(2),
-      "ClosureSignalIndex:clickCount": 1
+      "ClosureSignalIndex:clickCount/3": 1
     }],
     "packages/runtime-tags/src/__tests__/fixtures/try-for-item-catch/template.marko_1_clickCount#2 2 packages/runtime-tags/src/__tests__/fixtures/try-for-item-catch/template.marko_1 2"
   ];

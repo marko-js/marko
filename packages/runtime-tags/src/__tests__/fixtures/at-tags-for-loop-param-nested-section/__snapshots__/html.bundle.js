@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			_subscribe($show__closures, _scope($scope1_id, {
 				d: i,
 				_: _scope_with_id($scope0_id),
-				e: $item_content__i__closures
+				j: $item_content__i__closures
 			}), "a2");
 		}, $scope0_id) });
 	});

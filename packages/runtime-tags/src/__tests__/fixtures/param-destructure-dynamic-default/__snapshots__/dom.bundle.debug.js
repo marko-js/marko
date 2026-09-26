@@ -6,7 +6,7 @@ const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($
 const $ChildB_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildB_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : { bar: $scope._.count + 2 }));
 const $ChildB_content__bar = ($scope, bar) => _text($scope["#text/1"], bar);
 const $ChildB_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildB_content__bar($scope, void 0 !== $scope.$bar2 ? $scope.$bar2 : $scope._.count + 1));
-const $ChildB_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => {
+const $ChildB_content__count = /*@__PURE__*/ _closure_get("count/8", ($scope) => {
 	$ChildB_content__count__OR__$foo($scope);
 	$ChildB_content__count__OR__$bar($scope);
 }, 0, "__tests__/template.marko_2_count#7/subscribe");
@@ -26,7 +26,7 @@ const $ChildA_content__$pattern = ($scope, $pattern) => $ChildA_content__$bar($s
 const $ChildA_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildA_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : { bar: $scope._.count + 2 }));
 const $ChildA_content__bar = ($scope, bar) => _text($scope["#text/1"], bar);
 const $ChildA_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildA_content__bar($scope, void 0 !== $scope.$bar ? $scope.$bar : $scope._.count + 1));
-const $ChildA_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => {
+const $ChildA_content__count = /*@__PURE__*/ _closure_get("count/8", ($scope) => {
 	$ChildA_content__count__OR__$foo($scope);
 	$ChildA_content__count__OR__$bar($scope);
 }, 0, "__tests__/template.marko_1_count#7/subscribe");

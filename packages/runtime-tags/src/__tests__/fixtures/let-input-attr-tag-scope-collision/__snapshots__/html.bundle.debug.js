@@ -25,8 +25,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$si__input_open__OR__input_openChange__OR__input_submitLabel__OR__input_label && _scope($scope0_id, {
 		input_open: _serialize_if($scope0_reason, 3) && input.open,
 		input_openChange: _serialize_if($scope0_reason, 2) && input.openChange,
-		"ClosureScopes:input_submitLabel": $si__input_submitLabel && $input_submitLabel__closures,
-		"ClosureScopes:input_label": $si__input_label && $input_label__closures
+		"ClosureScopes:input_submitLabel/10": $si__input_submitLabel && $input_submitLabel__closures,
+		"ClosureScopes:input_label/11": $si__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_open: ["input.open"],
 		input_openChange: ["input.openChange"]

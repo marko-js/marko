@@ -31,6 +31,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:1"), "__tests__/template.marko_1_value#1/subscribe");
 		}, $scope0_id)
 	});
-	_scope($scope0_id, { "ClosureScopes:value": $value__closures }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "ClosureScopes:value/2": $value__closures }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

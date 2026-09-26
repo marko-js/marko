@@ -12,7 +12,7 @@ const $placeholder_content = _content("__tests__/template.marko_2*content", "LOA
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "Async: <!>", "b%");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__clickCount__script = _script("__tests__/template.marko_1_clickCount#3", ($scope) => _el_read($scope._["#div/1"]).textContent = $scope._.clickCount);
-const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount", ($scope) => {
+const $try_content__clickCount = /*@__PURE__*/ _closure_get("clickCount/4", ($scope) => {
 	$try_content__await_promise($scope, resolveAfter($scope._.clickCount));
 	$try_content__clickCount__script($scope);
 }, 0, "__tests__/template.marko_1_clickCount#3/subscribe");

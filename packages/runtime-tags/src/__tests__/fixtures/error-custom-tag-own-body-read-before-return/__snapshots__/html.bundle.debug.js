@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_x#3/var");
 	_html(`<div>${_text_resume($scope0_id, "#text/2", x)}</div>`);
 	_scope($scope0_id, {
-		"ClosureScopes:x": $x__closures,
+		"ClosureScopes:x/4": $x__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0);
 }, 1);

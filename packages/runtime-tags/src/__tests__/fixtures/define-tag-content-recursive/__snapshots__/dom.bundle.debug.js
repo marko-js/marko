@@ -2,15 +2,15 @@
 const $Tree_content2__walks = " D l%c", $Tree_content2__template = "<button> </button><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content2__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content2__walks);
-const $Tree_content3__input_depth = /*@__PURE__*/ _closure_get("input_depth", ($scope) => _text($scope["#text/0"], $scope._._._.input_depth), ($scope) => $scope._._._, "__tests__/template.marko_5_input_depth#5/subscribe");
+const $Tree_content3__input_depth = /*@__PURE__*/ _closure_get("input_depth/8", ($scope) => _text($scope["#text/0"], $scope._._._.input_depth), ($scope) => $scope._._._, "__tests__/template.marko_5_input_depth#5/subscribe");
 const $Tree_content3__setup = ($scope) => {
 	$Tree_content3__input_depth($scope);
 	$Tree_content3__input_content($scope);
 };
 const $Tree_content3__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $Tree_content3__input_content = /*@__PURE__*/ _closure_get("input_content", ($scope) => $Tree_content3__dynamicTag($scope, $scope._._._.input_content), ($scope) => $scope._._._, "__tests__/template.marko_5_input_content#6/subscribe");
+const $Tree_content3__input_content = /*@__PURE__*/ _closure_get("input_content/9", ($scope) => $Tree_content3__dynamicTag($scope, $scope._._._.input_content), ($scope) => $scope._._._, "__tests__/template.marko_5_input_content#6/subscribe");
 const $Tree_content3 = _content("__tests__/template.marko_5*content", "<!>: <!><!>", "%c%", $Tree_content3__setup);
-const $if_content2__input_depth = /*@__PURE__*/ _closure_get("input_depth", ($scope) => $Tree_content2__input_depth($scope["#childScope/0"], $scope._._.input_depth - 1), ($scope) => $scope._._, "__tests__/template.marko_4_input_depth#5/subscribe");
+const $if_content2__input_depth = /*@__PURE__*/ _closure_get("input_depth/8", ($scope) => $Tree_content2__input_depth($scope["#childScope/0"], $scope._._.input_depth - 1), ($scope) => $scope._._, "__tests__/template.marko_4_input_depth#5/subscribe");
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_depth($scope);
 	$Tree_content2__setup._($scope["#childScope/0"], $scope._._._);
@@ -49,7 +49,7 @@ const $Tree_content2__input = ($scope, input) => {
 	$Tree_content2__input_depth($scope, input.depth);
 	$Tree_content2__tag_input_content($scope, input.content);
 };
-const $Tree_content__input_label = /*@__PURE__*/ _closure_get("input_label", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#3/subscribe");
+const $Tree_content__input_label = /*@__PURE__*/ _closure_get("input_label/4", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#3/subscribe");
 const $Tree_content__setup = $Tree_content__input_label;
 const $Tree_content = _content("__tests__/template.marko_1*content", "leaf <!>", "b%", $Tree_content__setup);
 function $setup($scope) {

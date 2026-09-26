@@ -34,7 +34,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = () => {};
 const $input_type_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
-const $item_content__input_text = /*@__PURE__*/ _closure_get("input_text", ($scope) => _text($scope["#text/1"], $scope._.input_text), 0, "__tests__/tags/heading.marko_1_input_text#4/subscribe");
+const $item_content__input_text = /*@__PURE__*/ _closure_get("input_text/5", ($scope) => _text($scope["#text/1"], $scope._.input_text), 0, "__tests__/tags/heading.marko_1_input_text#4/subscribe");
 const $item_content__setup = $item_content__input_text;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/tags/heading.marko_1*content", "item <!> <!>", "b%c%", $item_content__setup), { i($scope) {
 	_text($scope["#text/0"], $scope.i);

@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		tag,
 		n,
-		"ClosureScopes:n": $n__closures
+		"ClosureScopes:n/8": $n__closures
 	}, "__tests__/template.marko", 0, {
 		tag: "1:6",
 		n: "2:6"

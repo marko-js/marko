@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($show__closures, _scope($scope1_id, {
 				i,
 				_: _scope_with_id($scope0_id),
-				"ClosureScopes:i": $item_content__i__closures
+				"ClosureScopes:i/9": $item_content__i__closures
 			}, "__tests__/template.marko", "11:6", { i: "10:8" }), "__tests__/template.marko_1_show#6/subscribe");
 		}, $scope0_id) });
 	});
@@ -71,7 +71,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($show__closures, _scope($scope2_id, {
 				item_text: item?.text,
 				_: _scope_with_id($scope0_id),
-				"ClosureSignalIndex:show": 1
+				"ClosureSignalIndex:show/8": 1
 			}, "__tests__/template.marko", "21:6", { item_text: 0 }), "__tests__/template.marko_2_show#6/subscribe");
 		}, $scope0_id) });
 	});
@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count,
 		show,
 		items,
-		"ClosureScopes:show": $show__closures,
+		"ClosureScopes:show/8": $show__closures,
 		"#childScope/3": _existing_scope($childScope),
 		"#childScope/4": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, {

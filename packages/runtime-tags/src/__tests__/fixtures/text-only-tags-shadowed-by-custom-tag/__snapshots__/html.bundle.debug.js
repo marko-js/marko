@@ -37,12 +37,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`textarea ${_text_resume($scope2_id, "#text/0", n, 2)}`);
 		_subscribe($n__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
-			"ClosureSignalIndex:n": 1
+			"ClosureSignalIndex:n/4": 1
 		}, "__tests__/template.marko", "4:2"), "__tests__/template.marko_2_n#3/subscribe");
 	}, $scope0_id) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		n,
-		"ClosureScopes:n": $n__closures
+		"ClosureScopes:n/4": $n__closures
 	}, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

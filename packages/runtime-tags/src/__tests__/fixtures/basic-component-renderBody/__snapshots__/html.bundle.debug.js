@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_scope($scope0_id, {
 		clickCount,
-		"ClosureScopes:clickCount": $clickCount__closures
+		"ClosureScopes:clickCount/2": $clickCount__closures
 	}, "__tests__/template.marko", 0, { clickCount: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

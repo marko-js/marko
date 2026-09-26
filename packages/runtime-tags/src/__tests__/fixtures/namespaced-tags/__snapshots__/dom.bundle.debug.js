@@ -3,7 +3,7 @@ const $template = "<div><svg><!><!></svg><math><!><!></math><!><button class=tog
 const $walks = " E%b%lD%b%l%b b l";
 const $Child_content2 = _content("__tests__/template.marko_3*content", "Hi");
 const $Child_content = _content("__tests__/template.marko_2*content", "Hi");
-const $Parent_content__input_value = /*@__PURE__*/ _closure_get("input_value", ($scope) => _html($scope, $scope._.input_value, "#text/0"), 0, "__tests__/template.marko_1_input_value#10/subscribe");
+const $Parent_content__input_value = /*@__PURE__*/ _closure_get("input_value/14", ($scope) => _html($scope, $scope._.input_value, "#text/0"), 0, "__tests__/template.marko_1_input_value#10/subscribe");
 const $Parent_content__setup = $Parent_content__input_value;
 const $Parent_content = _content("__tests__/template.marko_1*content", " ", " ", $Parent_content__setup);
 _content_resume($Parent_content);

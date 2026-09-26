@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });
-	$si__input_show && _scope($scope0_id, { "ClosureScopes:input_show": $input_show__closures }, "__tests__/template.marko", 0);
+	$si__input_show && _scope($scope0_id, { "ClosureScopes:input_show/4": $input_show__closures }, "__tests__/template.marko", 0);
 }, 1);

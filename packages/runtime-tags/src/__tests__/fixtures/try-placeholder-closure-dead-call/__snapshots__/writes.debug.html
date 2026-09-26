@@ -4,7 +4,7 @@
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
-    "ClosureScopes:on": new Set
+    "ClosureScopes:on/2": new Set
   }, 1, {
     _: _(1),
     "#PlaceholderContent": _(1,
@@ -23,7 +23,7 @@
   M._.r.push(_ => (_([5, {
     _: _(3),
     "#childScope/0": _(6)
-  }]), (_.a = _(1)["ClosureScopes:on"]).add(_(5)), 0));
+  }]), (_.a = _(1)["ClosureScopes:on/2"]).add(_(5)), 0));
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-closure-dead-call/tags/child.marko_0 6"

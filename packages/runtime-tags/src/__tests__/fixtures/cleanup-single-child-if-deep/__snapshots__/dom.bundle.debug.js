@@ -26,19 +26,19 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";
 const $walks = " b b b b%c";
-const $if_content3__write = /*@__PURE__*/ _closure_get("write", ($scope) => $write$1($scope["#childScope/0"], $scope._._._.write), ($scope) => $scope._._._);
+const $if_content3__write = /*@__PURE__*/ _closure_get("write/11", ($scope) => $write$1($scope["#childScope/0"], $scope._._._.write), ($scope) => $scope._._._);
 const $if_content3__setup = ($scope) => {
 	$if_content3__write($scope);
 	$name($scope["#childScope/0"], "Inner");
 };
 const $if_content2__if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content3__setup);
-const $if_content2__showInner = /*@__PURE__*/ _closure_get("showInner", ($scope) => $if_content2__if($scope, $scope._._.showInner ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_showInner#7/subscribe");
+const $if_content2__showInner = /*@__PURE__*/ _closure_get("showInner/10", ($scope) => $if_content2__if($scope, $scope._._.showInner ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_showInner#7/subscribe");
 const $if_content2__setup = ($scope) => {
 	$if_content2__showInner($scope);
 	$if_content2__write($scope);
 	$name($scope["#childScope/0"], "Middle");
 };
-const $if_content2__write = /*@__PURE__*/ _closure_get("write", ($scope) => $write$1($scope["#childScope/0"], $scope._._.write), ($scope) => $scope._._);
+const $if_content2__write = /*@__PURE__*/ _closure_get("write/11", ($scope) => $write$1($scope["#childScope/0"], $scope._._.write), ($scope) => $scope._._);
 const $if_content__if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<div>${_w0}<!></div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)("D l"), $if_content2__setup);
 const $if_content__showMiddle = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $if_content__if($scope, $scope._.showMiddle ? 0 : 1));
 const $if_content__setup = ($scope) => {

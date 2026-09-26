@@ -9,7 +9,7 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
       count: 0,
-      "ClosureScopes:count": new Set([_(2), _(3), _(4), _(5), _(6), _(7)])
+      "ClosureScopes:count/8": new Set([_(2), _(3), _(4), _(5), _(6), _(7)])
     }, {
       foo: {
         bar: 0
@@ -25,14 +25,14 @@
         bar: 0
       },
       _: _(1),
-      "ClosureSignalIndex:count": 1
+      "ClosureSignalIndex:count/8": 1
     }, {
       foo: {},
       _: _(1),
-      "ClosureSignalIndex:count": 1
+      "ClosureSignalIndex:count/8": 1
     }, {
       _: _(1),
-      "ClosureSignalIndex:count": 1
+      "ClosureSignalIndex:count/8": 1
     }],
     "packages/runtime-tags/src/__tests__/fixtures/param-destructure-dynamic-default/template.marko_0 1"
   ];

@@ -12,7 +12,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__i._($scope);
 	_text($scope.b, $scope.M);
 };
-const $showbi_content__i = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a1");
+const $showbi_content__i = /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._.d), 0, "a1");
 const $showbi_content = /*@__PURE__*/ _content("a0", "tag <!>", "b%", $showbi_content__i);
 const $if_content__i = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.d));
 const $if_content__setup = $if_content__i;

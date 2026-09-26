@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($si__input_foo && $input_foo__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": $si__input_foo && _existing_scope($childScope2),
-			"ClosureSignalIndex:input_foo": $si__input_foo && 1
+			"ClosureSignalIndex:input_foo/8": $si__input_foo && 1
 		}, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_input_foo#6/subscribe", $sg__input_foo);
 		$sg__input_foo || _resume_branch($scope2_id);
 	}, $scope0_id));
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_foo: input.foo,
 		tag,
-		"ClosureScopes:input_foo": $si__input_foo && $input_foo__closures
+		"ClosureScopes:input_foo/8": $si__input_foo && $input_foo__closures
 	}, "__tests__/template.marko", 0, {
 		input_foo: ["input.foo"],
 		tag: "1:6"

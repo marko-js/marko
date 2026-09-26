@@ -14,7 +14,7 @@ const $walks = " b%/&c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_content = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_content.mjs"));
 const $Child_content__if = /*@__PURE__*/ _if("#text/0", "shown");
-const $Child_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $Child_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#3/subscribe");
+const $Child_content__show = /*@__PURE__*/ _closure_get("show/4", ($scope) => $Child_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#3/subscribe");
 const $Child_content__setup = $Child_content__show;
 const $Child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Child_content__setup);
 const $show__closure = /*@__PURE__*/ _closure($Child_content__show);

@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", $sg__input_count, $sg__input_count, $sg__input_count);
 		$si__input_count__OR__input_name && _scope($scope1_id, {
 			input_name: _serialize_if($scope1_reason, 1) && input.name,
-			"ClosureScopes:input_name": $si__input_name && $Child_content__input_name__closures
+			"ClosureScopes:input_name/5": $si__input_name && $Child_content__input_name__closures
 		}, "__tests__/template.marko", "6:2", { input_name: ["input.name", "6:15"] });
 	}, $scope0_id) };
 	_set_serialize_reason(10);

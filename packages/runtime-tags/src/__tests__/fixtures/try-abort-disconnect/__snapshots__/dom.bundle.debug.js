@@ -9,14 +9,14 @@ const $await_content__$params = ($scope, $params2) => $await_content__v($scope, 
 const $catch_content = _content("__tests__/template.marko_3*content", "caught-a");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<p>B:<!></p>", "Db%");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
-const $try_content2__input_b = /*@__PURE__*/ _closure_get("input_b", ($scope) => $try_content2__await_promise($scope, $scope._.input_b), 0, "__tests__/template.marko_2_input_b#5/subscribe");
+const $try_content2__input_b = /*@__PURE__*/ _closure_get("input_b/7", ($scope) => $try_content2__await_promise($scope, $scope._.input_b), 0, "__tests__/template.marko_2_input_b#5/subscribe");
 const $try_content2__setup = ($scope) => {
 	$try_content2__input_b($scope);
 	$await_content2($scope);
 };
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p>A:<!></p>", "Db%");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_a = /*@__PURE__*/ _closure_get("input_a", ($scope) => $try_content__await_promise($scope, $scope._.input_a), 0, "__tests__/template.marko_1_input_a#4/subscribe");
+const $try_content__input_a = /*@__PURE__*/ _closure_get("input_a/6", ($scope) => $try_content__await_promise($scope, $scope._.input_a), 0, "__tests__/template.marko_1_input_a#4/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_a($scope);
 	$await_content($scope);

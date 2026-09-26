@@ -1,5 +1,5 @@
 // tags/heading.marko
-const $inputtype_content = _content("c0", "item <!>", "b%", /* @__PURE__ */ _closure_get(2, ($scope) => _text($scope.a, $scope._.b)));
+const $inputtype_content = _content("c0", "item <!>", "b%", /* @__PURE__ */ _closure_get(5, ($scope) => _text($scope.a, $scope._.b)));
 _content_resume($inputtype_content);
 
 // tags/card.marko

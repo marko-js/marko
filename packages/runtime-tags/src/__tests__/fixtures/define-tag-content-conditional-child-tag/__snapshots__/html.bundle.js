@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id) });
 		_scope($scope2_id, {
 			d: input.content,
-			e: $si__input_content && $Box_content2__input_content__closures
+			f: $si__input_content && $Box_content2__input_content__closures
 		});
 	}, $scope0_id) }).content({ content: _content_resume("a4", () => {
 		_scope_reason();

@@ -37,7 +37,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	list_default({ item: $item });
 	$si__input_items__OR__input_show && _scope($scope0_id, {
 		input_show: $si__input_items && input.show,
-		"ClosureScopes:input_show": $si__input_show && $input_show__closures,
+		"ClosureScopes:input_show/5": $si__input_show && $input_show__closures,
 		"#childScope/0": $si__input_items && _existing_scope($childScope)
 	}, "__tests__/tags/child.marko", 0, { input_show: ["input.show"] });
 });

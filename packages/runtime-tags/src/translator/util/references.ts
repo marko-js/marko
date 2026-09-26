@@ -1449,6 +1449,7 @@ export function finalizeReferences() {
 
   finalizeFunctionRegistry();
 
+  const closureIdEnds = new Map<Section, number>();
   forEachSection((section) => {
     const { id, bindings } = section;
     const isOwnedBinding = ({ section }: Binding) => section.id === id;
@@ -1534,13 +1535,16 @@ export function finalizeReferences() {
       assignIntersectionId(intersection);
     }
 
-    // Closure accessor ids trail the id space; `_closure_get` receives the
-    // id directly, so unused reservations never reach the wire.
+    // Closure accessor ids trail the id space, then every ancestor's closure ids,
+    // so the closures one section reads never share a signal index key.
+    let closureId = section.parent ? closureIdEnds.get(section.parent)! : 0;
     forEach(ownedBindings, (binding) => {
       if (binding.closureSections) {
-        closureAccessorIds.set(binding, nextId++);
+        closureId = Math.max(closureId, nextId);
+        closureAccessorIds.set(binding, closureId++);
       }
     });
+    closureIdEnds.set(section, closureId);
   });
 
   const programSection = getProgram().node.extra.section!;
@@ -2413,15 +2417,33 @@ export function getPrefixedScopeAccessor(
       case getAccessorPrefix().ClosureScopes:
         return decodeAccessor(getClosureAccessorId(canonicalBinding));
       case getAccessorPrefix().ClosureSignalIndex:
-        // Lives on the closing sections' scopes where a bare id could
-        // collide, so it keeps the letter but keys off the closure id.
+        // Keeps the letter to not collide with the closing scope's own ids;
+        // closure ids are unique among the closures one section reads.
         return prefix + decodeAccessor(getClosureAccessorId(canonicalBinding));
     }
+  } else if (
+    prefix === getAccessorPrefix().ClosureScopes ||
+    prefix === getAccessorPrefix().ClosureSignalIndex
+  ) {
+    return prefix + getDebugClosureAccessor(binding);
   }
   return prefix + getScopeAccessor(binding);
 }
 
-export function getClosureAccessorId(binding: Binding) {
+// `_closure_get` builds a closure's scopes and signal index keys from this.
+export function getClosureAccessorLiteral(binding: Binding) {
+  return isOptimize()
+    ? t.numericLiteral(getClosureAccessorId(binding))
+    : t.stringLiteral(getDebugClosureAccessor(binding));
+}
+
+// Names repeat across owner sections, so the closure id keeps apart the
+// same-named closures one section reads.
+function getDebugClosureAccessor(binding: Binding) {
+  return `${getScopeAccessor(binding)}/${getClosureAccessorId(binding)}`;
+}
+
+function getClosureAccessorId(binding: Binding) {
   const id = closureAccessorIds.get(getCanonicalBinding(binding)!);
   /* v8 ignore next 5 -- analyze reserves an id for every closure binding */
   if (id === undefined) {

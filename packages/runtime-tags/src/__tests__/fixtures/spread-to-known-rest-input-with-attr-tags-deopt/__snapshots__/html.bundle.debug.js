@@ -40,7 +40,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		input_foo: _serialize_if($scope0_reason, 0) && input.foo,
 		_class: _serialize_if($scope0_reason, 4) && _class,
 		rest: _serialize_if($scope0_reason, 3) && rest,
-		"ClosureScopes:input_foo": $si__input_foo && $input_foo__closures
+		"ClosureScopes:input_foo/7": $si__input_foo && $input_foo__closures
 	}, "__tests__/tags/wrap.marko", 0, {
 		input_foo: ["input.foo"],
 		_class: "1:17",

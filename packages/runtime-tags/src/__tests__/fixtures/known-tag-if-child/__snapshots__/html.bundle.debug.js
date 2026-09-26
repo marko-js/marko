@@ -36,6 +36,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		on,
-		"ClosureScopes:on": $on__closures
+		"ClosureScopes:on/3": $on__closures
 	}, "__tests__/template.marko", 0, { on: "3:6" });
 }, 1);

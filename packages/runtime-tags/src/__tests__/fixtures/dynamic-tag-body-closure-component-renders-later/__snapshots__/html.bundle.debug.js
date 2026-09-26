@@ -36,7 +36,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	}, $scope0_id, ($scope) => [{ input_depth: input.depth }]), 0, $sg__input_type);
 	$si__input_type__OR__input_depth && _scope($scope0_id, {
 		input_depth: _serialize_if($scope0_reason, 1) && input.depth,
-		"ClosureScopes:input_depth": $si__input_depth && $input_depth__closures
+		"ClosureScopes:input_depth/5": $si__input_depth && $input_depth__closures
 	}, "__tests__/tags/heading.marko", 0, { input_depth: ["input.depth"] });
 });
 

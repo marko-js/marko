@@ -37,6 +37,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		mult,
-		"ClosureScopes:mult": $mult__closures
+		"ClosureScopes:mult/4": $mult__closures
 	}, "__tests__/template.marko", 0, { mult: "1:5" });
 }, 1);
