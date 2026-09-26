@@ -8,7 +8,8 @@
   }) => (self.requestIdleCallback || l)(l, {
     timeout: 100
   }))(document.currentScript,
-    "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+    "\u003Cscript async type=module src=\"child.marko.load.mjs\">\u003C/script>"
+    );
   WALKER_RUNTIME("M")("_");
   M._.b = {
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-idle/child.marko": [

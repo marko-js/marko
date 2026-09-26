@@ -829,11 +829,12 @@ export default {
             ),
           );
         } else if (isTextOnly) {
-          const rawTextHelper = getRawTextEscapeHelper(tagName);
-          if (rawTextHelper) {
+          if (isRawTextTag(tag, tagName)) {
             // Raw text escapers neutralize multi-character tokens, so the whole
             // body escapes as one string: a `</script` split across adjacent
             // interpolations slips past per-placeholder calls.
+            const rawTextHelper =
+              tagName === "script" ? "_escape_script" : "_escape_style";
             const body = bodyToTextLiteral(tag.node.body);
             write`${
               t.isStringLiteral(body)
@@ -1142,7 +1143,7 @@ export default {
           if (tagName !== "textarea" && isTextOnlyNativeTag(tag)) {
             const textLiteral = bodyToTextLiteral(
               tag.node.body,
-              tagName === "title",
+              !isRawTextTag(tag, tagName),
             );
             if (!t.isStringLiteral(textLiteral)) {
               addStatement(
@@ -1655,15 +1656,36 @@ function assertOptionInSelectWithValue(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// The html raw text elements, whose token-rewriting escapers only hold in that
-// namespace; other text-only tags use `_escape`, which is per-character.
-function getRawTextEscapeHelper(tagName: string) {
-  switch (tagName) {
-    case "script":
-      return "_escape_script" as const;
-    case "style":
-      return "_escape_style" as const;
+// `<script>`/`<style>` hold raw text only in the html namespace: foreign content
+// (`<svg>`, `<math>`) parses them as markup, escaped per character like `<title>`.
+function isRawTextTag(tag: t.NodePath<t.MarkoTag>, tagName: string) {
+  if (tagName !== "script" && tagName !== "style") return false;
+  let parent: t.NodePath | null = tag.parentPath;
+  while (parent) {
+    if (
+      parent.isMarkoTag() &&
+      analyzeTagNameType(parent) === TagNameType.NativeTag
+    ) {
+      switch (getTagName(parent)) {
+        case "svg":
+        case "math":
+          return false;
+        // The html parser's integration points, whose children are html again.
+        case "foreignObject":
+        case "desc":
+        case "mi":
+        case "mo":
+        case "mn":
+        case "ms":
+        case "mtext":
+          return true;
+      }
+    }
+    parent = parent.parentPath;
   }
+  // Content rendered under an `<svg>` this walk cannot see (another template, a `<define>`
+  // body, a dynamic tag) escapes as html.
+  return true;
 }
 
 // Distribute the attr helper through a conditional, serializing literal branches

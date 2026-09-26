@@ -99,10 +99,18 @@ function escapeStyleAttr(str: string) {
 
 export function escapeStyleValue(str: string) {
   let closers = "";
-  // `;` and `{` are hex escaped so escaped values never contain them raw, which
-  // `_style_rule_item` relies on: a raw `{` opens a rule and a raw `;` ends a declaration.
-  const result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
-    c === "<" ? "\\3C " : c === ";" ? "\\3B " : c === "{" ? "\\7B " : "\\" + c,
+  // Hex escapes keep `{`/`;` (which `_style_rule_item` scans for) out of values, and `<`/`&`,
+  // which server html parses as markup (a `</style>`, or a reference inside `<svg>`).
+  const result = str.replace(/[\\"'{};<>&]|\/(?=\*)/g, (c) =>
+    c === "<"
+      ? "\\3C "
+      : c === ";"
+        ? "\\3B "
+        : c === "{"
+          ? "\\7B "
+          : c === "&"
+            ? "\\26 "
+            : "\\" + c,
   );
   for (const c of result) {
     if (c === "(") closers = ")" + closers;

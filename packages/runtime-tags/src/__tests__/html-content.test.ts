@@ -40,14 +40,14 @@ describe("runtime-tags/html/content", () => {
     it("should escape </script", () => {
       assert.equal(
         helpers._escape_script("foo </script> bar"),
-        "foo \\x3C/script> bar",
+        "foo \\u003C/script> bar",
       );
     });
 
     it("should escape <script and <!--", () => {
       assert.equal(
         helpers._escape_script("foo <!--<script> bar"),
-        "foo \\x3C!--\\x3Cscript> bar",
+        "foo \\u003C!--\\u003Cscript> bar",
       );
     });
 
@@ -120,7 +120,7 @@ describe("runtime-tags/html/content", () => {
     it("should escape </SCRIPT case-insensitively, preserving case", () => {
       assert.equal(
         helpers._escape_script("foo </SCRIPT> bar"),
-        "foo \\x3C/SCRIPT> bar",
+        "foo \\u003C/SCRIPT> bar",
       );
     });
   });

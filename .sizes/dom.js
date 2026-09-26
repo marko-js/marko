@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27247 (min) 10179 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -349,8 +349,16 @@ function escapeStyleAttr(str) {
 }
 function escapeStyleValue(str) {
   let closers = "",
-    result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
-      c === "<" ? "\\3C " : c === ";" ? "\\3B " : c === "{" ? "\\7B " : "\\" + c,
+    result = str.replace(/[\\"'{};<>&]|\/(?=\*)/g, (c) =>
+      c === "<"
+        ? "\\3C "
+        : c === ";"
+          ? "\\3B "
+          : c === "{"
+            ? "\\7B "
+            : c === "&"
+              ? "\\26 "
+              : "\\" + c,
     );
   for (let c of result)
     c === "("

@@ -31,11 +31,11 @@ export function _escape(val: unknown) {
   return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "";
 }
 
-// Escapes `</script`, `<!--`, and `<script`: their combination shifts the parser
-// into the double-escaped state where a real `</script>` no longer closes it.
+// Escapes `</script`, `<!--`, and `<script` (together they enter the double-escaped
+// state) with `\u003C`, which JavaScript and JSON script types both decode.
 const unsafeScriptReg = /<(\/?script|!--)/gi;
 const escapeScriptStr = (str: string) =>
-  unsafeScriptReg.test(str) ? str.replace(unsafeScriptReg, "\\x3C$1") : str;
+  unsafeScriptReg.test(str) ? str.replace(unsafeScriptReg, "\\u003C$1") : str;
 export function _escape_script(val: unknown) {
   if (MARKO_DEBUG) {
     assertValidTextValue(val);
