@@ -1,15 +1,16 @@
 import { type Opt, first, rest, some } from "./optional";
 import type { Binding } from "./references";
-import type { Section } from "./sections";
+import { isSectionDropped, type Section } from "./sections";
 
-// A content section that only flows into a binding which never reads it has
-// its renderer elided; references to the renderer must be elided in sync.
+// A content section that is dropped, or only flows into a binding which never
+// reads it, has its renderer elided; references to it must be elided in sync.
 export function isSectionRendererElided(section: Section) {
   return (
-    !!section.downstream &&
-    !some(section.downstream.binding, (binding) =>
-      bindingHasProperty(binding, section.downstream!.properties),
-    )
+    isSectionDropped(section) ||
+    (!!section.downstream &&
+      !some(section.downstream.binding, (binding) =>
+        bindingHasProperty(binding, section.downstream!.properties),
+      ))
   );
 }
 

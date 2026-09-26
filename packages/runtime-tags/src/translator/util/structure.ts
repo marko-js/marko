@@ -12,6 +12,7 @@ import {
   ContentType,
   getSection,
   getSectionForBody,
+  isSectionDropped,
   type Section,
   StructureKind,
   type StructureOp,
@@ -230,7 +231,7 @@ interface SectionMeta {
 export const [getSectionMeta] = createSectionState<SectionMeta>(
   "SectionMeta",
   (section) => {
-    if (!section.structure) {
+    if (!section.structure || isSectionDropped(section)) {
       return { walks: undefined, writes: undefined };
     }
     const { writes, walks, walkComment } = resolveStructure(section);

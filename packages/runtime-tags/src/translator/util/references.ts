@@ -64,6 +64,7 @@ import {
   getSectionRegisterReasons,
   isDynamicClosure,
   isSameOrChildSection,
+  isSectionDropped,
   forEachAncestorSection,
   type Section,
   sectionUtil,
@@ -1177,11 +1178,18 @@ export function finalizeReferences() {
   const fnReadsByExpression = getFunctionReadsByExpression();
   const intersectionsBySection = new Map<Section, Intersection[]>();
 
+  // Dropped content takes the reads and assignments in it along.
+  for (const expr of readsByExpression.keys()) {
+    if (isSectionDropped(expr.section)) dropExtra(expr);
+  }
+
   // Assignments settle now so pruning can ask each binding directly; an
   // assignment inside a value pruning drops leaves again below.
   const assignments = getAssignments();
   for (const idExtra of assignments) {
-    if (inEmittedExpr(idExtra)) {
+    if (isSectionDropped(idExtra.section)) {
+      dropExtra(getCanonicalExtra(idExtra.exprRoot) as ReferencedExtra);
+    } else if (inEmittedExpr(idExtra)) {
       const binding = idExtra.assignment;
       binding.assignments = push(binding.assignments, idExtra);
     }
@@ -2312,11 +2320,12 @@ export function isDirectAlias(binding: Binding) {
   );
 }
 
-// `getAttrTagNodes` picks where an attribute tag within control flow collects.
+// `collectAttrTag`, when given, collects each attribute tag (and what is nested
+// in it) in place of this walk.
 export function getAllTagReferenceNodes(
   tag: t.MarkoTag,
   referenceNodes: t.Node[] = [],
-  getAttrTagNodes?: (attrTag: t.MarkoTag) => t.Node[],
+  collectAttrTag?: (attrTag: t.MarkoTag) => void,
 ) {
   if (tag.arguments) {
     for (const arg of tag.arguments) {
@@ -2334,13 +2343,13 @@ export function getAllTagReferenceNodes(
     switch (child.type) {
       case "MarkoTag":
         if (
-          getAttrTagNodes &&
+          collectAttrTag &&
           t.isStringLiteral(child.name) &&
           child.name.value[0] === "@"
         ) {
-          getAllTagReferenceNodes(child, getAttrTagNodes(child));
+          collectAttrTag(child);
         } else {
-          getAllTagReferenceNodes(child, referenceNodes, getAttrTagNodes);
+          getAllTagReferenceNodes(child, referenceNodes, collectAttrTag);
         }
         break;
       case "MarkoScriptlet":

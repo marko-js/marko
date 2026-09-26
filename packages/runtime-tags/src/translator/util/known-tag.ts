@@ -417,7 +417,7 @@ function analyzeParams(
 ): KnownExprs {
   const inputExpr: KnownExprs = {};
   if (!propTree) {
-    dropNodes(getAllTagReferenceNodes(tag.node));
+    dropAllTagNodes(tag.node);
     return inputExpr;
   }
 
@@ -468,7 +468,7 @@ function analyzeParams(
   } else {
     const args = tag.node.arguments;
     tag.node.arguments = null;
-    dropNodes(getAllTagReferenceNodes(tag.node));
+    dropAllTagNodes(tag.node);
     tag.node.arguments = args;
   }
 
@@ -512,22 +512,22 @@ function analyzeAttrs(
       group: AttrTagGroup,
       child: t.NodePath<t.MarkoTag>,
     ) => {
-      // Within control flow, an attribute tag the child never reads passes
-      // nothing, so its values are dropped while the flow around it stays.
+      // Within control flow, an attribute tag the child never reads is dropped
+      // with its content, while the flow around it stays.
       const referenceNodes: t.Node[] = [];
-      getAllTagReferenceNodes(
-        child.node,
-        referenceNodes,
-        isAttributeTag(child)
-          ? undefined
-          : (attrTag) =>
-              getKnownFromPropTree(
-                propTree,
-                attrTagLookup[(attrTag.name as t.StringLiteral).value].name,
-              )
-                ? referenceNodes
-                : dropReferenceNodes,
-      );
+      const collectAttrTag = (attrTag: t.MarkoTag) =>
+        collectAttrTagReferenceNodes(
+          attrTag,
+          attrTagLookup,
+          propTree,
+          referenceNodes,
+          dropReferenceNodes,
+        );
+      if (isAttributeTag(child)) {
+        collectAttrTag(child.node);
+      } else {
+        getAllTagReferenceNodes(child.node, referenceNodes, collectAttrTag);
+      }
       const groupReferences = nodeReferencesByGroup.get(group);
       if (groupReferences) {
         groupReferences.referenceNodes =
@@ -554,7 +554,7 @@ function analyzeAttrs(
             attrTagMeta.name,
           );
           if (!childAttrExport) {
-            getAllTagReferenceNodes(child.node, dropReferenceNodes);
+            getAllAttrTagNodes(child.node, dropReferenceNodes);
           } else if (attrTagMeta.dynamic) {
             analyzeDynamicAttrTagChildGroup(attrTagMeta.group, child);
           } else if (childAttrExport === true) {
@@ -580,7 +580,7 @@ function analyzeAttrs(
           if (hasGroupReads(group, attrTagLookup, propTree)) {
             analyzeDynamicAttrTagChildGroup(group, child);
           } else {
-            getAllTagReferenceNodes(child.node, dropReferenceNodes);
+            getAllAttrTagNodes(child.node, dropReferenceNodes);
           }
         }
       }
@@ -800,6 +800,54 @@ function getSingleKnownSpread(
   if (binding) {
     return { extra, binding };
   }
+}
+
+// A child reading no attribute of a tag leaves every expression and attribute
+// tag in it emitted by neither output.
+function dropAllTagNodes(tag: t.MarkoTag) {
+  const nodes: t.Node[] = [];
+  dropNodes(
+    getAllTagReferenceNodes(tag, nodes, (attrTag) =>
+      getAllAttrTagNodes(attrTag, nodes),
+    ),
+  );
+}
+
+// An attribute tag the child reads collects into `referenceNodes`, except for
+// the attribute tags nested in it that the child never reads.
+function collectAttrTagReferenceNodes(
+  attrTag: t.MarkoTag,
+  attrTagLookup: AttrTagLookup,
+  propTree: BindingPropTree | true,
+  referenceNodes: t.Node[],
+  dropReferenceNodes: t.Node[],
+) {
+  const attrTagExport = getKnownFromPropTree(
+    propTree,
+    attrTagLookup[(attrTag.name as t.StringLiteral).value].name,
+  );
+  if (attrTagExport) {
+    getAllTagReferenceNodes(attrTag, referenceNodes, (nestedAttrTag) =>
+      collectAttrTagReferenceNodes(
+        nestedAttrTag,
+        attrTag.extra!.attributeTags!,
+        attrTagExport,
+        referenceNodes,
+        dropReferenceNodes,
+      ),
+    );
+  } else {
+    getAllAttrTagNodes(attrTag, dropReferenceNodes);
+  }
+}
+
+// Neither output emits an attribute tag or control flow the child never reads,
+// nor anything nested in it.
+function getAllAttrTagNodes(tag: t.MarkoTag, nodes: t.Node[]) {
+  nodes.push(tag);
+  return getAllTagReferenceNodes(tag, nodes, (attrTag) =>
+    getAllAttrTagNodes(attrTag, nodes),
+  );
 }
 
 type TranslateDOMInfo = {

@@ -185,7 +185,8 @@ export function addDynamicAttrTagStatements(
   contentKey: ContentKey = "content",
 ): number {
   const tag = attrTags[index];
-  if (tag.isMarkoTag()) {
+  // Analysis drops control flow holding only attribute tags the child never reads.
+  if (tag.isMarkoTag() && !tag.node.extra!.pruned) {
     if (isAttributeTag(tag)) {
       const attrTagMeta = attrTagLookup[getTagName(tag)];
       const attrTagExport = getKnownFromPropTree(propTree, attrTagMeta.name);

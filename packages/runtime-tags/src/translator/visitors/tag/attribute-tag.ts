@@ -21,6 +21,7 @@ export default {
       assertNoArgs(tag);
       const body = tag.get("body");
       const bodySection = startSection(body);
+      if (bodySection && tag.node.extra!.pruned) bodySection.dropped = true;
       trackParamsReferences(body, BindingType.param);
       if (!findParentTag(tag)) {
         throw tag
@@ -44,6 +45,12 @@ export default {
 
   translate: {
     enter(tag) {
+      // An attribute tag the child never reads was dropped.
+      if (tag.node.extra!.pruned) {
+        tag.remove();
+        return;
+      }
+
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }

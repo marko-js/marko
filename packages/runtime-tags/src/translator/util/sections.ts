@@ -159,6 +159,9 @@ export interface Section {
         exprs: KnownExprs | undefined;
       }
     | undefined;
+  /** Content a known child never reads: neither output renders it, nor the
+   * content nested in it. */
+  dropped: boolean;
   hasAbortSignal: boolean;
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's `abortId` from this so translates read, never re-derive. */
@@ -245,6 +248,7 @@ export function startSection(
       upstreamExpression: undefined,
       callSections: undefined,
       downstream: undefined,
+      dropped: false,
       hasAbortSignal: false,
       abortSignalExprs: 0,
       readsOwner: false,
@@ -566,6 +570,12 @@ export function isSameOrChildSection(section: Section, other: Section) {
     }
   } while ((other = other.parent!));
   return false;
+}
+
+// Reference tracking can start a nested section before its attribute tag is
+// analyzed and marks it dropped, so a section cannot inherit the mark.
+export function isSectionDropped(section: Section | undefined): boolean {
+  return !!section && (section.dropped || isSectionDropped(section.parent));
 }
 
 export function getCommonSection(section: Section, other: Section) {
