@@ -96,9 +96,7 @@
 ```
 INSERT: div > math + svg
 REMOVE: div > svg:nth-of-type(2) + div
-INSERT: div > svg:nth-of-type(2)::text(" ")
 INSERT: div > svg:nth-of-type(2) > a
-REMOVE: div > svg:nth-of-type(2) > a + ::text(" ")
 UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
 
@@ -154,9 +152,7 @@ UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
 INSERT: div > math + div
 REMOVE: div > div + svg
-INSERT: div > div::text(" ")
 INSERT: div > div > a
-REMOVE: div > div > a + ::text(" ")
 UPDATE: div > div > a[ns] null => "http://www.w3.org/1999/xhtml"
 ```
 
@@ -212,9 +208,7 @@ UPDATE: div > div > a[ns] null => "http://www.w3.org/1999/xhtml"
 ```
 INSERT: div > math + svg
 REMOVE: div > svg:nth-of-type(2) + div
-INSERT: div > svg:nth-of-type(2)::text(" ")
 INSERT: div > svg:nth-of-type(2) > a
-REMOVE: div > svg:nth-of-type(2) > a + ::text(" ")
 UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
 

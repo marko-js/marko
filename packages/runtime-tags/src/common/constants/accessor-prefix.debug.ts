@@ -7,6 +7,7 @@ export const ControlledHandler = "ControlledHandler:";
 export const ControlledType = "ControlledType:";
 export const ControlledValue = "ControlledValue:";
 export const DynamicHTMLLastChild = "DynamicHTMLLastChild:";
+export const DynamicHTMLValue = "DynamicHTMLValue:";
 export const EventAttributes = "EventAttributes:";
 export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";

@@ -1,4 +1,4 @@
-// size: 27210 (min) 10117 (brotli)
+// size: 27385 (min) 10176 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -96,17 +96,28 @@ let readyIds;
 let isResuming;
 let cloneCache = {};
 let _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
-  let firstChild = scope[accessor],
-    parentNode = firstChild.parentNode,
-    lastChild = scope["H" + accessor] || firstChild,
-    newContent = parseHTML(_to_text(value), parentNode.namespaceURI),
-    newFirstChild = (scope[accessor] = newContent.firstChild || newContent.appendChild(new Text())),
-    newLastChild = (scope["H" + accessor] = newContent.lastChild),
-    branch = scope.F;
-  (branch?.S === firstChild && (branch.S = newFirstChild),
-    branch?.K === lastChild && (branch.K = newLastChild),
-    insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild),
-    removeChildNodes(firstChild, lastChild));
+  let prevValue = scope["R" + accessor];
+  if (prevValue !== (scope["R" + accessor] = _to_text(value))) {
+    let firstChild = scope[accessor],
+      parentNode = firstChild.parentNode,
+      lastChild = scope["H" + accessor] || firstChild,
+      newContent = parseHTML(scope["R" + accessor], parentNode.namespaceURI);
+    if (prevValue === void 0 && lastChild !== firstChild) {
+      let node = firstChild,
+        newNode = newContent.firstChild;
+      for (; (node = node.nextSibling) !== lastChild && node.isEqualNode(newNode);)
+        newNode = newNode.nextSibling;
+      if (node === lastChild && !newNode) return;
+    }
+    let newFirstChild = (scope[accessor] =
+        newContent.firstChild || newContent.appendChild(new Text())),
+      newLastChild = (scope["H" + accessor] = newContent.lastChild),
+      branch = scope.F;
+    (branch?.S === firstChild && (branch.S = newFirstChild),
+      branch?.K === lastChild && (branch.K = newLastChild),
+      insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild),
+      removeChildNodes(firstChild, lastChild));
+  }
 });
 let R = /[\p{L}\p{N}]/gu;
 let inputType = "";
