@@ -1,0 +1,7 @@
+<let/show=true>
+<button#toggle onClick() { show = !show }>toggle</button>
+<section>
+  <if=show>
+    <${input.content}/>
+  </if>
+</section>

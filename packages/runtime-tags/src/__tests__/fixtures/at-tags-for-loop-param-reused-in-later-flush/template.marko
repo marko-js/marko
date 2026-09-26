@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/picked=null>
+<list>
+  <for|item| of=input.items>
+    <@item>
+      <span>${JSON.stringify(item)}</span>
+    </@item>
+  </for>
+</list>
+<await|v|=resolveAfter(input.items[1])>
+  <button#pick onClick() { picked = v }>pick</button>
+</await>
+<div>${picked && picked.text}</div>
