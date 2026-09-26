@@ -98,11 +98,8 @@ const kVisitOp = Symbol("native tag structure visit");
 const htmlSelectArgs = new WeakMap<
   t.MarkoTag,
   {
-    value: t.Expression;
-    valueChange: t.Expression;
-    // Spread attrs resume via `_attrs_script`, which reads the controlled type;
-    // statically-typed controllables don't, so the type is only serialized then.
-    serializeType?: t.Expression;
+    helper: "_attr_select_value" | "_attrs_select_value";
+    args: t.Expression[];
   }
 >();
 
@@ -568,9 +565,11 @@ export default {
         if (tagName === "select") {
           if (staticControllable) {
             htmlSelectArgs.set(tag.node, {
-              value: staticControllable.attrs[0]?.value || buildUndefined(),
-              valueChange:
+              helper: "_attr_select_value",
+              args: [
+                staticControllable.attrs[0]?.value || buildUndefined(),
                 staticControllable.attrs[1]?.value || buildUndefined(),
+              ],
             });
           } else if (spreadExpression) {
             const spreadIdentifier = generateUidIdentifier("select_input");
@@ -580,24 +579,23 @@ export default {
               ]),
             );
             htmlSelectArgs.set(tag.node, {
-              value: t.memberExpression(
-                spreadIdentifier,
-                t.identifier("value"),
-              ),
-              valueChange: t.memberExpression(
-                spreadIdentifier,
-                t.identifier("valueChange"),
-              ),
-              serializeType: t.numericLiteral(1),
+              helper: "_attrs_select_value",
+              args: [spreadIdentifier],
             });
             spreadExpression = spreadIdentifier;
           }
         } else if (tagName === "textarea") {
-          let value: undefined | t.Expression;
-          let valueChange: undefined | t.Expression;
           if (staticControllable) {
-            value = staticControllable.attrs[0]?.value;
-            valueChange = staticControllable.attrs[1]?.value;
+            const [value, valueChange] = staticControllable.attrs;
+            writeAtStartOfBody = valueChange
+              ? callRuntime(
+                  "_attr_textarea_value",
+                  getScopeIdIdentifier(tagSection),
+                  visitAccessor,
+                  value?.value,
+                  valueChange.value,
+                )
+              : callRuntime("_textarea_value", value!.value);
           } else if (spreadExpression) {
             const spreadIdentifier = generateUidIdentifier("textarea_input");
             tag.insertBefore(
@@ -605,27 +603,13 @@ export default {
                 t.variableDeclarator(spreadIdentifier, spreadExpression),
               ]),
             );
-            value = t.memberExpression(spreadIdentifier, t.identifier("value"));
-            valueChange = t.memberExpression(
-              spreadIdentifier,
-              t.identifier("valueChange"),
-            );
-            spreadExpression = spreadIdentifier;
-          }
-
-          if (valueChange) {
             writeAtStartOfBody = callRuntime(
-              "_attr_textarea_value",
+              "_attrs_textarea_value",
               getScopeIdIdentifier(tagSection),
               visitAccessor,
-              value,
-              valueChange,
-              // Spread attrs resume via `_attrs_script`, which reads the
-              // controlled type; statically-typed controllables don't.
-              staticControllable ? undefined : t.numericLiteral(1),
+              spreadIdentifier,
             );
-          } else if (value) {
-            writeAtStartOfBody = callRuntime("_textarea_value", value);
+            spreadExpression = spreadIdentifier;
           }
         }
 
@@ -811,16 +795,14 @@ export default {
           tag.insertBefore(
             t.expressionStatement(
               callRuntime(
-                "_attr_select_value",
+                selectArgs.helper,
                 getScopeIdIdentifier(tagSection),
                 nodeBinding && getScopeAccessorLiteral(nodeBinding),
-                selectArgs.value,
-                selectArgs.valueChange,
+                ...selectArgs.args,
                 t.arrowFunctionExpression(
                   [],
                   t.blockStatement(tag.node.body.body),
                 ),
-                selectArgs.serializeType,
               ),
             ),
           );
@@ -1389,6 +1371,8 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
       if (isEventHandler(name)) {
         skipProps.add(`on-${getEventHandlerName(name)}`);
       } else {
+        // Names match the DOM only as the types spell them (lowercase HTML, canonical SVG and
+        // MathML camelCase); one authored in another case is removed beside a spread.
         skipProps.add(name);
       }
     }

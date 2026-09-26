@@ -25,6 +25,8 @@ export {
   _attrs_content,
   _attrs_partial,
   _attrs_partial_content,
+  _attrs_select_value,
+  _attrs_textarea_value,
   _style_html,
   _textarea_value,
 } from "./html/attrs";
