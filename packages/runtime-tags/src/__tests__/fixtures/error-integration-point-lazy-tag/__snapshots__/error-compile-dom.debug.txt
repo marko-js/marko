@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-integration-point-lazy-tag/template.marko:5:5
+      3 | <svg>
+      4 |   <foreignObject class="host">
+    > 5 |     <Child/>
+        |     ^^^^^^^^ Elements the client creates directly in `<foreignObject>` would be SVG elements, while the page parser makes them HTML. Wrap this content in an HTML element, such as a `<div>`.
+      6 |   </foreignObject>
+      7 | </svg>
+      8 |

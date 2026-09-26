@@ -1,0 +1,8 @@
+<let/editing=false/>
+<svg>
+  <title><if=editing>editing</if><else>viewing</else></title>
+  <foreignObject class="host" width="100" height="100">
+    <div><if=editing><input value="name"/></if></div>
+  </foreignObject>
+</svg>
+<button.edit onClick() { editing = !editing }>edit</button>

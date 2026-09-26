@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-integration-point-unescaped-html/template.marko:3:10
+      1 | <let/html=""/>
+      2 | <math>
+    > 3 |   <mtext>$!{html}</mtext>
+        |          ^^^^^^^^ Elements the client creates directly in `<mtext>` would be MathML elements, while the page parser makes them HTML. Wrap this content in an HTML element, such as a `<div>`.
+      4 | </math>
+      5 | <button onClick() { html = "<b>bold</b>" }>set</button>
+      6 |

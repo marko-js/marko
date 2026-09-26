@@ -8,6 +8,7 @@ import {
   getFile,
   getProgram,
   getTagDef,
+  loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
 import { assertExclusiveAttrs } from "../../../common/errors";
@@ -30,7 +31,7 @@ import {
   getAccessorProp,
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
-import { isControlFlowTag } from "../../util/is-core-tag";
+import { isControlFlowTag, isCoreTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
 import {
@@ -427,6 +428,7 @@ export default {
       const tagExtra = tag.node.extra!;
       const visitOp = tagExtra[kVisitOp];
       if (visitOp) visitOp.claimed = !!tagExtra[kNativeTagBinding];
+      assertIntegrationPointContent(tag, tagName);
 
       if (!getTagDef(tag)?.parseOptions?.openTagOnly) {
         const write = structure.writeTo(tag);
@@ -2026,4 +2028,75 @@ const pageElements = new Set(["html", "head", "body"]);
 
 export function isPageElement(tagName: string) {
   return pageElements.has(tagName);
+}
+
+// The page parser makes the children of an HTML integration point HTML elements, but
+// the client creates a branch's elements in its parent's namespace, so it would differ.
+function assertIntegrationPointContent(
+  tag: t.NodePath<t.MarkoTag>,
+  tagName: string,
+) {
+  const namespace = getIntegrationPointNamespace(tag, tagName);
+  if (namespace) {
+    for (const child of tag.get("body").get("body")) {
+      if (createsClientElements(child)) {
+        throw child.buildCodeFrameError(
+          `Elements the client creates directly in \`<${tagName}>\` would be ${namespace} elements, while the page parser makes them HTML. Wrap this content in an HTML element, such as a \`<div>\`.`,
+        );
+      }
+    }
+  }
+}
+
+function getIntegrationPointNamespace(
+  tag: t.NodePath<t.MarkoTag>,
+  tagName: string,
+) {
+  switch (tagName) {
+    case "foreignObject":
+    case "desc":
+      return "SVG";
+    case "title":
+      // An HTML `<title>` is no integration point; only one inside an `<svg>` is.
+      for (
+        let parent = tag.parentPath.parentPath;
+        parent?.isMarkoTag();
+        parent = parent.parentPath.parentPath
+      ) {
+        const name =
+          analyzeTagNameType(parent) === TagNameType.NativeTag &&
+          getCanonicalTagName(parent);
+        if (name === "svg") return "SVG";
+        if (name === "foreignObject") break;
+      }
+      return;
+    case "mi":
+    case "mo":
+    case "mn":
+    case "ms":
+    case "mtext":
+      return "MathML";
+  }
+}
+
+// Whether a child renders elements the client creates itself instead of cloning them
+// with the template: a `$!{}`, a dynamic or lazy tag, or control flow holding any element.
+function createsClientElements(child: t.NodePath) {
+  if (child.isMarkoTag() && !isCoreTag(child)) {
+    const templateFile = loadFileForTag(child)?.opts.filename;
+    return (
+      analyzeTagNameType(child) === TagNameType.DynamicTag ||
+      !!getProgram().node.extra.loadImports?.has(templateFile!)
+    );
+  }
+  return holdsElements(child);
+}
+
+function holdsElements(child: t.NodePath): boolean {
+  return child.isMarkoPlaceholder()
+    ? !child.node.escape
+    : child.isMarkoTag() &&
+        (!isCoreTag(child) ||
+          (isControlFlowTag(child) &&
+            child.get("body").get("body").some(holdsElements)));
 }

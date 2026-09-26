@@ -21,6 +21,7 @@ import {
 import { trackAbort } from "./abort-signal";
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
+import { parseHTML } from "./parse-html";
 import {
   runEffects,
   pendingEffects,
@@ -1088,6 +1089,7 @@ function createBranchWithTagNameOrRenderer(
 ) {
   if (MARKO_DEBUG && typeof tagNameOrRenderer === "string") {
     assertValidTagName(tagNameOrRenderer);
+    assertParsedTagName(tagNameOrRenderer, parentNode);
   }
 
   const branch = createBranch(
@@ -1113,6 +1115,20 @@ function createBranchWithTagNameOrRenderer(
   }
 
   return branch;
+}
+
+const warnedTagNames = MARKO_DEBUG ? new Set<string>() : undefined;
+function assertParsedTagName(tagName: string, parentNode: ParentNode) {
+  const parsed = (
+    parseHTML(`<${tagName}>`, (parentNode as Element).namespaceURI!)
+      .firstChild as Element | null
+  )?.localName;
+  if (parsed && parsed !== tagName && !warnedTagNames!.has(tagName + parsed)) {
+    warnedTagNames!.add(tagName + parsed);
+    console.warn(
+      `The dynamic tag name \`${tagName}\` parses as \`${parsed}\` here, so the client creates a different element than server rendered HTML. Use \`${parsed}\` instead.`,
+    );
+  }
 }
 
 function bySecondArg(_item: unknown, index: unknown) {

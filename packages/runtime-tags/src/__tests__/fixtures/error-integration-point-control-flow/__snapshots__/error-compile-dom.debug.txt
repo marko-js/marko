@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-integration-point-control-flow/template.marko:4:5
+      2 | <svg>
+      3 |   <foreignObject width="100" height="100">
+    > 4 |     <if=editing><input value="name"/></if>
+        |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Elements the client creates directly in `<foreignObject>` would be SVG elements, while the page parser makes them HTML. Wrap this content in an HTML element, such as a `<div>`.
+      5 |   </foreignObject>
+      6 | </svg>
+      7 | <button onClick() { editing = !editing }>edit</button>

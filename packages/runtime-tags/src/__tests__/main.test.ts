@@ -296,6 +296,9 @@ function testFixtures(interop?: true) {
                           translator: "@marko/runtime-tags/translator",
                         }),
                         linkAssets: { runtime: "asset-runtime", onAsset() {} },
+                        // Lazy imports need one; the error only needs a path back.
+                        resolveVirtualDependency: (_from, { virtualPath }) =>
+                          virtualPath,
                         output,
                       });
                     }
