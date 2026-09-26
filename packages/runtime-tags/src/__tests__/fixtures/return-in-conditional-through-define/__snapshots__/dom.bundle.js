@@ -7,8 +7,8 @@ function $setup($scope) {
 const $if_content__value = ($scope, value) => $Wrapper_content__input_value($scope.c, value);
 const $if_content__setup = ($scope) => {
 	_var($scope, 0, $if_content__value);
-	_var($scope, 2, $if_content__wrapped);
 	$setup($scope.a);
+	_var($scope, 2, $if_content__wrapped);
 };
 const $if_content__wrapped = _var_resume("a1", ($scope, wrapped) => _text($scope.e, wrapped));
 const $Wrapper_content__input_value = /*@__PURE__*/ _const(2, ($scope) => _return($scope, $scope.c));
