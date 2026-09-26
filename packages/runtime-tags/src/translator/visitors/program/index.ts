@@ -70,6 +70,14 @@ export default {
     },
   },
   transform: {
+    enter(program) {
+      const { output, stripTypes } = getMarkoOpts();
+      if (!stripTypes) {
+        throw program.buildCodeFrameError(
+          `The \`stripTypes\` compiler option cannot be \`false\` for the \`${output}\` output; only the \`source\` and \`migrate\` outputs keep types.`,
+        );
+      }
+    },
     exit: preAnalyze,
   },
   analyze: {

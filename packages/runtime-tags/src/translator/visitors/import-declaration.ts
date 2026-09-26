@@ -74,10 +74,6 @@ export default {
 
     const loadAttrPath = getLoadAttr(importDecl);
     if (loadAttrPath) {
-      if ((node.importKind || "value") !== "value") {
-        throw importDecl.buildCodeFrameError("Invalid load import.");
-      }
-
       for (const specifier of importDecl.get("specifiers")) {
         if (!t.isImportDefaultSpecifier(specifier.node)) {
           throw specifier.buildCodeFrameError(
@@ -274,8 +270,8 @@ function trackImportedRegisteredFns(
   importDecl: t.NodePath<t.ImportDeclaration>,
 ) {
   const { node } = importDecl;
-  // Type imports are already stripped: the compiler turns `stripTypes` on for
-  // every output this translator runs for.
+  // Type imports are already stripped: the Program transform rejects a
+  // compile with `stripTypes` off.
   const childFile = loadFileForImport(getFile(), node.source.value);
   if (!childFile) return;
 

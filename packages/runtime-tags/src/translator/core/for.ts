@@ -509,7 +509,6 @@ function findLoopParamRead(
   if (t.isFunction(node) || t.isClass(node)) return;
 
   for (const key of t.VISITOR_KEYS[node.type] || []) {
-    if (key === "typeAnnotation" || key === "typeParameters") continue;
     if (key === "key" && !(node as t.ObjectProperty).computed) continue;
     const value = (node as any)[key];
     if (Array.isArray(value)) {

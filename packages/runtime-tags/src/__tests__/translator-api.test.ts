@@ -222,6 +222,43 @@ describe("runtime-tags/translator-api", () => {
       );
     });
 
+    it("rejects stripTypes: false for html and dom output", () => {
+      for (const output of ["html", "dom"] as const) {
+        assert.throws(
+          () =>
+            compiler.compileSync(
+              "<div/>",
+              path.join(import.meta.dirname, "tmp.marko"),
+              {
+                ...baseConfig,
+                cache: new Map(),
+                output,
+                stripTypes: false,
+              },
+            ),
+          new RegExp(
+            `The \`stripTypes\` compiler option cannot be \`false\` for the \`${output}\` output`,
+          ),
+        );
+      }
+    });
+
+    it("accepts stripTypes: false for class API templates", () => {
+      for (const output of ["html", "dom"] as const) {
+        compiler.compileSync(
+          "class {}\n<div/>",
+          path.join(import.meta.dirname, "tmp.marko"),
+          {
+            ...baseConfig,
+            translator: "marko/translator",
+            cache: new Map(),
+            output,
+            stripTypes: false,
+          },
+        );
+      }
+    });
+
     it("validates the runtimeId option", () => {
       for (const runtimeId of ["123-bad", "$bad"]) {
         assert.throws(
@@ -239,6 +276,34 @@ describe("runtime-tags/translator-api", () => {
           /Invalid runtimeId: .* The runtimeId must start with a letter or underscore and only contain letters, numbers, and underscores\./,
         );
       }
+    });
+  });
+
+  describe("page entry asset imports", () => {
+    it("links style imports in every style language and queried assets by default", () => {
+      const linked = [
+        "./a.pcss",
+        "./b.postcss",
+        "./c.stylus",
+        "./d.sss",
+        "./e.css.ts",
+        "./f.jpg?w=400",
+        "./g.css",
+      ];
+      const { code } = compiler.compileSync(
+        [...linked, "./h.ts"]
+          .map((request) => `import "${request}";\n`)
+          .join("") + "<div/>",
+        path.join(import.meta.dirname, "tmp.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "dom",
+          entry: "page",
+          linkAssets: { runtime: "asset-runtime", onAsset() {} },
+        },
+      );
+      assert.deepEqual(code.match(/(?<=import ")[^"]+/g), linked);
     });
   });
 

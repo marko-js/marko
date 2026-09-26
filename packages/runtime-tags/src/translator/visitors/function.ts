@@ -204,8 +204,7 @@ export function resolveRegisteredExport(
     if (
       (child.type !== "ExportNamedDeclaration" &&
         child.type !== "ExportAllDeclaration") ||
-      !child.source ||
-      (child.exportKind || "value") !== "value"
+      !child.source
     ) {
       continue;
     }
@@ -222,7 +221,6 @@ export function resolveRegisteredExport(
     for (const specifier of child.specifiers) {
       if (
         specifier.type !== "ExportSpecifier" ||
-        (specifier.exportKind || "value") !== "value" ||
         getExportedName(specifier) !== exportName
       ) {
         continue;
@@ -312,7 +310,6 @@ function getExportNames(
       const specifier = ref.parent;
       if (
         specifier?.type === "ExportSpecifier" &&
-        (specifier.exportKind || "value") === "value" &&
         !(ref.parentPath!.parent as t.ExportNamedDeclaration).source
       ) {
         const exportName = getExportedName(specifier);
