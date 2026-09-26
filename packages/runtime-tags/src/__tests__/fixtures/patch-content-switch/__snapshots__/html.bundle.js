@@ -54,7 +54,6 @@ var template_default = _template_patch("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope3_id = _scope_id();
-			const $childScope2 = _peek_scope_id();
 			widget_default({ content: _content_elide("a0", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
@@ -66,7 +65,7 @@ var template_default = _template_patch("a", (input) => {
 						return 0;
 					} else if (input.inner === "b") {
 						const $scope5_id = _scope_id();
-						_html(`<i>B:${_text_resume($scope5_id, "a", input.inner, 2)}</i>`);
+						_html(`<i>B:${_text_resume($scope5_id, "a", input.inner, $sg__input_inner * 2)}</i>`);
 						_subscribe($si__input_inner && $input_inner__closures, _scope($scope5_id, {
 							_: _scope_with_id($scope4_id),
 							Cj: 1
@@ -77,7 +76,7 @@ var template_default = _template_patch("a", (input) => {
 				_subscribe($si__input_inner && $input_inner__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }));
 				$sg__input_inner || _resume_branch($scope4_id);
 			}, $scope3_id) });
-			_scope($scope3_id, { a: _existing_scope($childScope2) });
+			_scope($scope3_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 1, 0, 1);

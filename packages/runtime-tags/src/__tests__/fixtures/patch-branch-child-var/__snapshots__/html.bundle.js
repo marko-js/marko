@@ -29,7 +29,7 @@ var template_default = _template_patch("a", (input) => {
 			const $childScope = _peek_scope_id();
 			_patch_child($scope1_id, "a", $childScope);
 			let el = box_default({ label: input.label });
-			_var($scope1_id, "b", $childScope, "a1");
+			_client_guard($scope0_reason, 2) && _var($scope1_id, "b", $childScope, "a1");
 			_filled_guard(0, 0) && _patch_write($scope1_id, "d", el, 1);
 			_html(`<button id=read>read</button>${_el_resume($scope1_id, "c")}`);
 			_script($scope1_id, "a2");

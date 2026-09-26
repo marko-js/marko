@@ -2,34 +2,41 @@
 // ownership conclusions and wire channels belong to translate (./refresh).
 import type { types as t } from "@marko/compiler";
 
+import type { AccessorPrefix, AccessorProp } from "../../../common/types";
 import { kDirectContent } from "../binding-prop-tree";
 import { createCyclicMemo } from "../cyclic-memo";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, some, toArray } from "../optional";
 import {
   type Binding,
+  FORCED,
   onFinalizeReferences,
   type ReferencedExtra,
   type Sources,
+  kBranchSerializeReason,
 } from "../references";
 import {
   ensureReasonGroups,
   getChildSectionOf,
   type Section,
+  hasDomBindingsOrNestedSections,
 } from "../sections";
 import {
   getSerializeSourcesForDownstream,
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
+  getSerializeReason,
+  mergeSerializeReasons,
+  getSerializeReasonKey,
 } from "../serialize-reasons";
-import { getWriteSources } from "./decisions";
+import { getWriteSources, isStateSourcedExpr } from "./decisions";
 import { isPatchFillBinding } from "./refresh";
 
 // A boundary branch live on every patch page (serialized on every page
 // render, nothing on the chain diverges), so it pairs without creating; the
 // server drops the elision at render time where a catch or branch encloses.
 export function boundaryAlwaysPairs(bodySection: Section) {
-  if (!bodySection.serializeReason) return false;
+  if (!getWriteReason(bodySection)) return false;
   for (let s: Section | undefined = bodySection; s; s = s.parent) {
     if (s.isBranch || s.boundaryContent) return false;
     // A content section can materialize at any consumer (or none), so nothing
@@ -264,4 +271,55 @@ export function isBranchPathSection(section: Section) {
     section = section.parent;
   }
   return true;
+}
+
+// The writer emits a patch entry keyed on the node: a hole a flush writes, a
+// known child's scope ref it pairs through, or the marker of rows it pairs.
+export function isPatchKeyed(section: Section, binding: Binding) {
+  if (!isPatch() || binding.section !== section) return false;
+  if (binding.childScope) return isPatchRendered(section);
+  if (binding.loopBody && patchesLoopRows(binding.loopBody)) return true;
+  return writesPatchIn(section) && !every(binding.renders, isStateSourcedExpr);
+}
+
+export function hasPatchKeyedNodes(section: Section) {
+  return some(section.bindings, (binding) => isPatchKeyed(section, binding));
+}
+
+// The keys of the reasons of the section's nodes a patch keys entries on.
+export function getPatchKeyedReasonKeys(section: Section) {
+  let keys: Set<symbol> | undefined;
+  forEach(section.bindings, (binding) => {
+    if (isPatchKeyed(section, binding)) {
+      (keys ??= new Set()).add(getSerializeReasonKey(section, binding));
+    }
+  });
+  return keys;
+}
+
+// A flush pairs a loop's rows when they hold nodes or sections to pair.
+export function patchesLoopRows(body: Section) {
+  return (
+    writesPatchIn(body.parent!) &&
+    !isStatefulBranch(body) &&
+    hasDomBindingsOrNestedSections(body)
+  );
+}
+
+// The reason a value writes: its serialize reason, forced where a patch keys
+// an entry on it (a loop body's scope, where its rows pair).
+export function getWriteReason(
+  section: Section,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
+) {
+  const reason = getSerializeReason(section, prop, prefix);
+  const keyed =
+    prop === kBranchSerializeReason
+      ? section.sectionAccessor?.binding.loopBody === section &&
+        patchesLoopRows(section)
+      : prop
+        ? typeof prop === "object" && isPatchKeyed(section, prop)
+        : hasPatchKeyedNodes(section);
+  return keyed ? mergeSerializeReasons(reason, FORCED) : reason;
 }

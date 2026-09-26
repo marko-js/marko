@@ -25,8 +25,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<a${_patch_attr($scope3_id, "#a/0", "href", `?q=${params.q.trim()}&i=${item}`)}>${_patch_text($scope3_id, "#text/1", item)}</a>${_el_resume($scope3_id, "#a/0")}`);
 				_subscribe(_unfilled_if() && $params_q__closures, _scope($scope3_id, {}, "__tests__/template.marko", "5:6"), "__tests__/template.marko_3_params_q#0:3/subscribe");
-			}, 0, $scope2_id, "#text/0", 1, $scope0_page, $scope0_page, void 0, void 0, "__tests__/template.marko_3*shell");
-			$scope0_page && _scope($scope2_id, {}, "__tests__/template.marko", "4:4");
+			}, 0, $scope2_id, "#text/0", 1, 1, $scope0_page, void 0, void 0, "__tests__/template.marko_3*shell");
+			_scope($scope2_id, {}, "__tests__/template.marko", "4:4");
 		}, 1, "__tests__/template.marko_2*content", 1);
 		_global_subscribe("__tests__/template.marko_1_$global_data_items#0:6/global", $scope1_id);
 	}, () => {

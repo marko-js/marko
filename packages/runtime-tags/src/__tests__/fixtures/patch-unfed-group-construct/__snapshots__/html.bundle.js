@@ -3,7 +3,9 @@ const $template = "<div> </div><!><button>t</button>";
 const $walks = "D l%b b";
 _shells({ b: "b !b0;D l%b ;<div> </div><!><button>t</button>" });
 var kid_default = _template_patch("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
+	_source_guard($scope0_reason, 1);
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let on = false;
 	_html(`<div>${_patch_text($scope0_id, "a", input.a, void 0, $scope0_reason, 0)}</div>`);

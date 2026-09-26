@@ -11,7 +11,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (on) {
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "#text/0", $global$1.brand)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "#text/0", $global$1.brand, $scope0_page)}</em>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}

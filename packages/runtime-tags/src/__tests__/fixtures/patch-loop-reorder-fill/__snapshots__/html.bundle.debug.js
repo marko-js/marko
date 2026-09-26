@@ -3,13 +3,13 @@ const $template = "<main><ul></ul><button>+</button></main>";
 const $walks = "D b l";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D b ;<main><ul></ul><button>+</button></main>" });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_note = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let items = [{ id: 1 }, { id: 2 }];
 	_html("<main><ul>");
 	if ($scope0_page) _for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "#text/0", item.id)}: ${_text_resume($scope1_id, "#text/1", input.note, 2)}</li>`);
+		_html(`<li>${_escape(item.id)}: ${_text_resume($scope1_id, "#text/1", input.note, $sg__input_note * 2)}</li>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 	}, "id", $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);

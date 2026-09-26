@@ -27,7 +27,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			"#LoopKey": item,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "3:4", { "#LoopKey": "3:8" });
-	}, (item) => item, $scope0_id, "#text/0", 1, _source_guard($scope0_reason, 0), _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	}, (item) => item, $scope0_id, "#text/0", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page ? _scope($scope0_id, {

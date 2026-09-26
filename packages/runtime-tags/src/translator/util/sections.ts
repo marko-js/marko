@@ -24,9 +24,11 @@ import {
   Sorted,
   type SortedOpt,
   reduce,
+  some,
 } from "./optional";
 import {
   type Binding,
+  BindingType,
   bindingUtil,
   compareReferences,
   getAllSerializeReasonsForBinding,
@@ -138,9 +140,6 @@ export interface Section {
   hoisted: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
-  /** The serialize reasons code of the template revives, merged: every
-   * reason but a patch record. */
-  resumeReason: undefined | SerializeReason;
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
    * (not merged) so each one's guard stays buildable. */
   domSerializeReasons: undefined | SerializeReasons;
@@ -260,7 +259,6 @@ export function startSection(
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
-      resumeReason: undefined,
       domSerializeReasons: undefined,
       serializeExprs: undefined,
       propSerializeExprs: undefined,
@@ -652,11 +650,16 @@ export function getCommonSection(section: Section, other: Section) {
   throw new Error("No common section");
 }
 
-export function finalizeParamSerializeReasonGroups(section: Section) {
-  ensureReasonGroups(section.serializeReason);
+// A node a patch keys an entry on writes whatever its reason says, and so
+// does its scope, so neither reason's param group would gate anything.
+export function finalizeParamSerializeReasonGroups(
+  section: Section,
+  patchKeyed?: Set<symbol>,
+) {
+  if (!patchKeyed) ensureReasonGroups(section.serializeReason);
 
-  for (const reason of section.serializeReasons.values()) {
-    ensureReasonGroups(reason);
+  for (const [key, reason] of section.serializeReasons) {
+    if (!patchKeyed?.has(key)) ensureReasonGroups(reason);
   }
 }
 
@@ -737,4 +740,13 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
     }
   }
   return analyzeTagNameType(tag) === TagNameType.NativeTag;
+}
+
+// Whether a body has anything a patch pairs per instance: a dom node or a
+// nested section.
+export function hasDomBindingsOrNestedSections(section: Section) {
+  return (
+    some(section.bindings, (binding) => binding.type === BindingType.dom) ||
+    getChildSections(section).length > 0
+  );
 }

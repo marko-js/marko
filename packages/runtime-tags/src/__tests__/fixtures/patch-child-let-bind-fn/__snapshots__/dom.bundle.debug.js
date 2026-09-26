@@ -45,7 +45,7 @@ function $setup($scope) {
 	$busy($scope, false);
 	$setup__script($scope);
 }
-const $refresh = _var_resume("__tests__/template.marko_0_refresh#5/var", /*@__PURE__*/ _const("refresh"));
+const $refresh = /*@__PURE__*/ _const("refresh");
 const $refreshingChange = ($scope) => function(v) {
 	$busy($scope, v);
 };

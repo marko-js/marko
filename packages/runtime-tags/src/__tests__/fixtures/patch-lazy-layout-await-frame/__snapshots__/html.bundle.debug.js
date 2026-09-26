@@ -46,7 +46,7 @@ _shells({
 	"__tests__/docs.marko_3*shell": "__tests__/docs.marko_3*shell;D ;<a> </a>"
 });
 var docs_default = _template_patch("__tests__/docs.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_list = _source_guard($scope0_reason, 0), $scope0_page = _page_render(), $sg__input_content = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_list = _source_guard($scope0_reason, 0), $sg__input_content = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<nav>");
 	_await($scope0_id, "#text/0", input.list, (list) => {
@@ -55,7 +55,7 @@ var docs_default = _template_patch("__tests__/docs.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<a>${_patch_text($scope3_id, "#text/0", item, void 0, $scope0_reason, 0)}</a>`);
 			_scope($scope3_id, {}, "__tests__/docs.marko", "3:6");
-		}, 0, $scope1_id, "#text/0", 1, $sg__input_list, $sg__input_list, void 0, void 0, "__tests__/docs.marko_3*shell", $scope0_reason, 0);
+		}, 0, $scope1_id, "#text/0", 1, 1, $sg__input_list, void 0, void 0, "__tests__/docs.marko_3*shell", $scope0_reason, 0);
 		_if(() => {
 			if (list[0]) {
 				const $scope2_id = _scope_id();
@@ -70,7 +70,7 @@ var docs_default = _template_patch("__tests__/docs.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, $sg__input_list, $sg__input_list, void 0, void 0, ["__tests__/docs.marko_2*shell"], $scope0_reason, 0);
-		$scope0_page && _scope($scope1_id, {}, "__tests__/docs.marko", "2:4");
+		_scope($scope1_id, {}, "__tests__/docs.marko", "2:4");
 	}, 1, "__tests__/docs.marko_1*content", 1);
 	_html("</nav><article>");
 	const $tag = input.content;

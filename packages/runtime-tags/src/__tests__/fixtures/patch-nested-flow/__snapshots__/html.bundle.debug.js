@@ -40,8 +40,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		}, $scope3_id, "#text/1", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
 		_html("</li>");
 		_scope($scope3_id, {}, "__tests__/template.marko", "3:6");
-	}, "id", $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 1);
-	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
+	}, "id", $scope0_id, "#ul/0", 1, 1, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 1);
+	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_if(() => {
 		if (input.summary) {
 			const $scope1_id = _scope_id();

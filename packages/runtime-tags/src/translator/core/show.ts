@@ -18,6 +18,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { getWriteReason } from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -196,10 +197,7 @@ export default {
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const singleNode = tagExtra[kSingleNodeBody];
         const statefulReason = getSerializeReason(tagSection, kStatefulReason);
-        const markerSerializeReason = getSerializeReason(
-          tagSection,
-          nodeBinding,
-        );
+        const markerSerializeReason = getWriteReason(tagSection, nodeBinding);
         const endArgs = getBranchEndArgs(
           tag,
           tagSection,

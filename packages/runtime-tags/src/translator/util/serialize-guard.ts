@@ -239,6 +239,25 @@ export function scopePageIdentifier(section: Section) {
   return id;
 }
 
+// Whether the client owns a param of the reason, in whichever section it
+// lives: what a value written for a patch needs to wire on the client.
+export function getClientGuard(section: Section, reason: SerializeReason) {
+  if (!isDynamicSerializeGuard(section, reason)) return;
+  let expr: t.Expression | undefined;
+  for (const [paramSection, params] of groupParamsBySection(reason.param)) {
+    const part = callRuntime(
+      "_client_guard",
+      scopeReasonIdentifier(paramSection),
+      withLeadingComment(
+        t.numericLiteral(getParamReasonGroupIndex(paramSection, params)),
+        getDebugNames(params),
+      ),
+    );
+    expr = expr ? t.logicalExpression("||", expr, part) : part;
+  }
+  return expr;
+}
+
 // Ownership args for an expression's write; a value fixed for the scope's
 // lifetime (constant, `<id>`, `<define>`) only seeds a created scope.
 export function getExprWriteOwnership(extra: t.NodeExtra | undefined) {

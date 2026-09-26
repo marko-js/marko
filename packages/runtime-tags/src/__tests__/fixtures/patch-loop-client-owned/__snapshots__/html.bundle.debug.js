@@ -9,7 +9,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html("<main><ul>");
 	if ($scope0_page) _for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "#text/0", item)}: ${_text_resume($scope1_id, "#text/1", input.note, 2)}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", item)}: ${_text_resume($scope1_id, "#text/1", input.note, _source_guard($scope0_reason, 0) * 2)}</li>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);

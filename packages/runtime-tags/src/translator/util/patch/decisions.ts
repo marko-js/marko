@@ -81,13 +81,17 @@ export function isServerOwnedDynamicTag(tag: t.NodePath<t.MarkoTag>) {
   return !hasStateSource(node.extra);
 }
 
-// A hole a patch writes: in patch-written structure and not client-sourced
-// (a state-sourced value recomputes through the signal graph).
+// A hole a patch writes: in patch-written structure and not state-sourced.
 export function writesPatchHole(
   section: Section,
   extra: t.NodeExtra | undefined,
 ) {
-  return writesPatchIn(section) && !getWriteSources(extra)?.state;
+  return writesPatchIn(section) && !isStateSourcedExpr(extra);
+}
+
+// A state-sourced value recomputes through the signal graph, not a patch.
+export function isStateSourcedExpr(extra: t.NodeExtra | undefined) {
+  return !!getWriteSources(extra)?.state;
 }
 
 // What a patch write of the expression follows: its reads' sources and its

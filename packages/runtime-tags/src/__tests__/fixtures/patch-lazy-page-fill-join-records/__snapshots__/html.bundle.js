@@ -8,7 +8,7 @@ _shells({
 	a2: "a2;D ;<a> </a>"
 });
 var layout_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_list = _source_guard($scope0_reason, 0), $scope0_page = _page_render(), $sg__input_content = _source_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<nav>");
 	_await($scope0_id, "a", input.list, (list) => {
@@ -17,8 +17,8 @@ var layout_default = _template_patch("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<a>${_patch_text($scope2_id, "a", item, void 0, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {});
-		}, 0, $scope1_id, "a", 1, $sg__input_list, $sg__input_list, void 0, void 0, "a2", $scope0_reason, 0);
-		$scope0_page && _scope($scope1_id, {});
+		}, 0, $scope1_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a2", $scope0_reason, 0);
+		_scope($scope1_id, {});
 	}, 1, "a0", 1);
 	_html("</nav><main>");
 	const $tag = input.content;

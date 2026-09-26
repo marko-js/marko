@@ -15,7 +15,7 @@ _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template)
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<ul>");
@@ -26,8 +26,8 @@ var template_default = _template_patch("a", (input) => {
 		_patch_child($scope1_id, "a", $childScope);
 		row_default({ item });
 		_scope($scope1_id, { a: _existing_scope($childScope) });
-	}, (item) => item.id, $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0", $scope0_reason, 0);
-	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);
+	}, (item) => item.id, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a0", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "a")}<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	$scope0_page && _scope($scope0_id, { g: count });
 }, 1, () => [row_default]);

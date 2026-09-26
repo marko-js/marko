@@ -1,7 +1,9 @@
 // template.marko
 _shells({ a: "a !a2;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
+	_source_guard($scope0_reason, 0);
+	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const fa = _resume(() => input.a, "a0", $scope0_id);
 	const fb = _resume(() => input.b, "a1", $scope0_id);

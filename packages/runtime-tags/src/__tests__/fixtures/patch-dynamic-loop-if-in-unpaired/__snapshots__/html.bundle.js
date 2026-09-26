@@ -20,7 +20,7 @@ _shells({
 	c2: "c2;D%c%;<li><!>:<!></li>"
 });
 var template_default = _template_patch("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 3), $scope0_page = _page_render(), $sg__input_on = _source_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $sg__input_on = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_items__closures = /* @__PURE__ */ new Set();
@@ -42,9 +42,9 @@ var template_default = _template_patch("c", (input) => {
 						const $scope3_id = _scope_id();
 						_html(`<li>${_patch_text($scope3_id, "a", x, void 0, $scope0_reason, 3)}:${_patch_text($scope3_id, "b", input.label, 2, $scope0_reason, 4)}</li>`);
 						_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
-					}, 0, $scope2_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "c2", $scope0_reason, 3);
-					_html(`</ul>${_el_resume($scope2_id, "a", $sg__input_items)}`);
-					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					}, 0, $scope2_id, "a", 1, 1, _source_guard($scope0_reason, 3), void 0, void 0, "c2", $scope0_reason, 3);
+					_html(`</ul>${_el_resume($scope2_id, "a")}`);
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_on, $sg__input_on, void 0, void 0, ["c1"], $scope0_reason, 2);

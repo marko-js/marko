@@ -19,7 +19,7 @@ _shells({
 	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `D%b/${_w0}&l`)($walks), /*@__PURE__*/ ((_w0) => `<li><!>${_w0}</li>`)($template))
 });
 var template_default = _template_patch("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_rows = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button>${_text_resume($scope0_id, "b", "open")}</button>${_el_resume($scope0_id, "a")}<ul>`);
@@ -32,8 +32,8 @@ var template_default = _template_patch("b", (input) => {
 		$Page_withLoadAssets({ n });
 		_html("</li>");
 		_scope($scope1_id, { b: _existing_scope($childScope) });
-	}, (n) => n, $scope0_id, "c", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "b0", $scope0_reason, 0);
-	_html(`</ul>${_el_resume($scope0_id, "c", $sg__input_rows)}`);
+	}, (n) => n, $scope0_id, "c", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "b0", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b1");
 	$scope0_page && _scope($scope0_id, { g: open });
 }, 1, () => [$Page_withLoadAssets]);

@@ -15,7 +15,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", now())}</p>`);
+			_html(`<p>${_escape(now())}</p>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}

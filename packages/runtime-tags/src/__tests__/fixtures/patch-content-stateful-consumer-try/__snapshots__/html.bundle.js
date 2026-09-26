@@ -26,7 +26,7 @@ function check(fail, x) {
 }
 _shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !;${_w0};${_w1}`)(((_w0) => `/${_w0}&b`)($walks), ((_w0) => `${_w0}<!>`)($template)) });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_fail__OR__input_x = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
 	const $input_x__closures = /* @__PURE__ */ new Set();
@@ -39,8 +39,9 @@ var template_default = _template_patch("a", (input) => {
 		_try($scope1_id, "a", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>${_text_resume($scope2_id, "a", check(input.fail, input.x))}</p>`);
-			_subscribe(_source_if($scope0_reason, 2) && $input_x__closures, _subscribe(_source_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0"), "a1");
+			_html(`<p>${_text_resume($scope2_id, "a", check(input.fail, input.x), $sg__input_fail__OR__input_x)}</p>`);
+			_subscribe(_source_if($scope0_reason, 2) && $input_x__closures, _subscribe(_source_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0", $sg__input_fail__OR__input_x), "a1", $sg__input_fail__OR__input_x);
+			$sg__input_fail__OR__input_x || _resume_branch($scope2_id);
 		}, void 0, (err) => {
 			const $scope3_reason = _scope_reason(), $sg__err_message = _source_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
