@@ -20,6 +20,7 @@ import {
 } from "../common/types";
 import { controllableRenders } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
+import { getChildNamespace, parseHTML } from "./parse-html";
 import {
   caughtError,
   runEffects,
@@ -1025,6 +1026,7 @@ function createBranchWithTagNameOrRenderer(
 ) {
   if (MARKO_DEBUG && typeof tagNameOrRenderer === "string") {
     assertValidTagName(tagNameOrRenderer);
+    assertParsedTagName(tagNameOrRenderer, parentNode);
   }
 
   const branch = createBranch(
@@ -1042,7 +1044,7 @@ function createBranchWithTagNameOrRenderer(
             ? "http://www.w3.org/2000/svg"
             : tagNameOrRenderer === "math"
               ? "http://www.w3.org/1998/Math/MathML"
-              : (parentNode as Element).namespaceURI,
+              : getChildNamespace(parentNode),
           tagNameOrRenderer,
         );
   } else {
@@ -1050,6 +1052,20 @@ function createBranchWithTagNameOrRenderer(
   }
 
   return branch;
+}
+
+const warnedTagNames = MARKO_DEBUG ? new Set<string>() : undefined;
+function assertParsedTagName(tagName: string, parentNode: ParentNode) {
+  const parsed = (
+    parseHTML(`<${tagName}>`, getChildNamespace(parentNode))
+      .firstChild as Element | null
+  )?.localName;
+  if (parsed && parsed !== tagName && !warnedTagNames!.has(tagName + parsed)) {
+    warnedTagNames!.add(tagName + parsed);
+    console.warn(
+      `The dynamic tag name \`${tagName}\` parses as \`${parsed}\` here, so the client creates a different element than server rendered HTML. Use \`${parsed}\` instead.`,
+    );
+  }
 }
 
 function bySecondArg(_item: unknown, index: unknown) {

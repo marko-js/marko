@@ -5,6 +5,7 @@ import {
   subscriptionsEnabled,
 } from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
+import { getChildNamespace } from "./parse-html";
 import { runId } from "./queue";
 
 let nextScopeId = 1e6; // Intentionally high to avoid conflict with server rendered ids.
@@ -139,9 +140,9 @@ export function tempDetachBranch(branch: BranchScope) {
   // Park the range in a DocumentFragment; the namespaceURI shim preserves the
   // namespace for branches created while it is detached.
   const fragment = new DocumentFragment() as any;
-  fragment.namespaceURI = (
-    branch[AccessorProp.StartNode].parentNode as Element
-  ).namespaceURI;
+  fragment.namespaceURI = getChildNamespace(
+    branch[AccessorProp.StartNode].parentNode!,
+  );
   insertChildNodes(
     fragment,
     null,

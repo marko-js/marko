@@ -7,7 +7,7 @@ import {
   type Scope,
 } from "../common/types";
 import { insertChildNodes } from "./dom";
-import { parseHTML } from "./parse-html";
+import { getChildNamespace, parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
 import { _resumed } from "./resume";
 import { createScope } from "./scope";
@@ -43,7 +43,7 @@ export function createBranch(
 
   (renderer as Renderer)[RendererProp.Clone]?.(
     branch,
-    (parentNode as Element).namespaceURI!,
+    getChildNamespace(parentNode),
   );
 
   return branch;

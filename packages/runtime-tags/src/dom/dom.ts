@@ -27,7 +27,7 @@ import { $signal } from "./abort-signal";
 import { rendererKey, setConditionalRenderer } from "./control-flow";
 import { type ControllableAttrs, controllableScripts } from "./controllable";
 import { _on } from "./event";
-import { parseHTML } from "./parse-html";
+import { getChildNamespace, parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { _id, subscribeToScopeSet } from "./signals";
 
@@ -352,10 +352,7 @@ export const _html = /*@__PURE__*/ withDynamicHtml(function _html(
   const parentNode = firstChild.parentNode!;
   const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
     firstChild) as ChildNode;
-  const newContent = parseHTML(
-    _to_text(value),
-    (parentNode as Element).namespaceURI!,
-  );
+  const newContent = parseHTML(_to_text(value), getChildNamespace(parentNode));
 
   const newFirstChild = (scope[accessor] =
     newContent.firstChild || newContent.appendChild(new Text()));

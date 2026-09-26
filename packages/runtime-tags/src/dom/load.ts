@@ -6,6 +6,7 @@ import {
   type Template,
 } from "../common/types";
 import { addAwaitCounter, renderCatch } from "./control-flow";
+import { getChildNamespace } from "./parse-html";
 import { queueAsyncRender, queueRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
 import { withLazy } from "./resume";
@@ -109,14 +110,14 @@ function insertLoaded(
   marker: ChildNode,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
 ) {
-  const parent = marker.parentNode as Element,
+  const parent = marker.parentNode!,
     values = branch[AccessorProp.Load] as LoadValues,
     // Clone in the run that sets up: nested scopes take the generation of
     // the run that creates them, and a `<let>` seeded by setup in a later
     // run is dropped as stale, taking the nested tag's `<return>` with it.
     clone = () => {
       syncGen(branch);
-      renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
+      renderer[RendererProp.Clone]!(branch, getChildNamespace(parent));
       branch[AccessorProp.Load] = 0;
     },
     insert = () => {

@@ -1,4 +1,4 @@
-// size: 27230 (min) 10172 (brotli)
+// size: 27315 (min) 10215 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g,
   replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\"),
@@ -103,7 +103,7 @@ let unsafeStyleAttrReg = /[\\;]/g,
     let firstChild = scope[accessor],
       parentNode = firstChild.parentNode,
       lastChild = scope["H" + accessor] || firstChild,
-      newContent = parseHTML(_to_text(value), parentNode.namespaceURI),
+      newContent = parseHTML(_to_text(value), getChildNamespace(parentNode)),
       newFirstChild = (scope[accessor] =
         newContent.firstChild || newContent.appendChild(new Text())),
       newLastChild = (scope["H" + accessor] = newContent.lastChild),
@@ -529,6 +529,11 @@ function parseHTML(html, ns) {
   let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
   return ((parser.innerHTML = html), parser.content || parser);
 }
+function getChildNamespace(parentNode) {
+  return /^(foreignObject|desc|title|m([inos]|text))$/.test(parentNode.localName)
+    ? "http://www.w3.org/1999/xhtml"
+    : parentNode.namespaceURI;
+}
 function createScope($global, closestBranch) {
   let scope = {
     L: nextScopeId++,
@@ -582,7 +587,7 @@ function insertBranchBefore(branch, parentNode, nextSibling) {
 }
 function tempDetachBranch(branch) {
   let fragment = new DocumentFragment();
-  ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
+  ((fragment.namespaceURI = getChildNamespace(branch.S.parentNode)),
     insertChildNodes(fragment, null, branch.S, branch.K));
 }
 function schedule() {
@@ -1121,7 +1126,7 @@ function createBranch($global, renderer, parentScope, parentNode) {
   return (
     (branch._ = renderer.e || parentScope),
     setParentBranch(branch, parentScope?.F),
-    renderer.b?.(branch, parentNode.namespaceURI),
+    renderer.b?.(branch, getChildNamespace(parentNode)),
     branch
   );
 }
@@ -1998,7 +2003,7 @@ function createBranchWithTagNameOrRenderer($global, tagNameOrRenderer, parentSco
                 ? "http://www.w3.org/2000/svg"
                 : tagNameOrRenderer === "math"
                   ? "http://www.w3.org/1998/Math/MathML"
-                  : parentNode.namespaceURI,
+                  : getChildNamespace(parentNode),
               tagNameOrRenderer,
             ))
       : setupBranch(tagNameOrRenderer, branch),
@@ -2257,7 +2262,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
   let parent = marker.parentNode,
     values = branch.X,
     clone = () => {
-      (syncGen(branch), renderer.b(branch, parent.namespaceURI), (branch.X = 0));
+      (syncGen(branch), renderer.b(branch, getChildNamespace(parent)), (branch.X = 0));
     },
     insert = () => {
       (insertBranchBefore(branch, parent, marker), marker.remove(), awaitCounter?.c());

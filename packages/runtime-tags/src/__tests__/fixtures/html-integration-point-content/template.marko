@@ -1,0 +1,18 @@
+<let/editing=false>
+<let/visible=true>
+<svg>
+  <foreignObject class="host" width="100" height="100">
+    <if=editing><input value="if"/></if>
+    <${editing && "input"} value="dynamic"/>
+    $!{editing ? "<input value=html>" : ""}
+  </foreignObject>
+  <foreignObject class="host">
+    <show=visible>hidden: <if=editing><input value="hidden"/></if></show>
+  </foreignObject>
+  <desc class="host"><if=editing><a>desc</a></if></desc>
+</svg>
+<math>
+  <mtext class="host"><if=editing><a>mtext</a></if></mtext>
+</math>
+<button.edit onClick() { editing = !editing }>edit</button>
+<button.show onClick() { visible = !visible }>show</button>

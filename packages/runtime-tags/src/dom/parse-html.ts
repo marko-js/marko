@@ -6,3 +6,13 @@ export function parseHTML(html: string, ns: string) {
   parser.innerHTML = html;
   return (parser as HTMLTemplateElement).content || parser;
 }
+
+// Children of HTML and MathML text integration points parse as XHTML (except MathML
+// `mglyph`/`malignmark`); `annotation-xml` depends on its `encoding`, so is left out.
+export function getChildNamespace(parentNode: ParentNode) {
+  return /^(foreignObject|desc|title|m([inos]|text))$/.test(
+    (parentNode as Element).localName,
+  )
+    ? "http://www.w3.org/1999/xhtml"
+    : (parentNode as Element).namespaceURI!;
+}

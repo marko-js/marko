@@ -1,4 +1,4 @@
-// size: 5895 (min) 2591 (brotli)
+// size: 6016 (min) 2646 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   branchesEnabled,
@@ -263,6 +263,11 @@ function parseHTML(html, ns) {
   let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
   return ((parser.innerHTML = html), parser.content || parser);
 }
+function getChildNamespace(parentNode) {
+  return /^(foreignObject|desc|title|m([inos]|text))$/.test(parentNode.localName)
+    ? "http://www.w3.org/1999/xhtml"
+    : parentNode.namespaceURI;
+}
 function createScope($global, closestBranch) {
   return {
     L: nextScopeId++,
@@ -367,7 +372,7 @@ function createBranch($global, renderer, parentScope, parentNode) {
   return (
     (branch._ = renderer.e || parentScope),
     setParentBranch(branch, parentScope?.F),
-    renderer.b?.(branch, parentNode.namespaceURI),
+    renderer.b?.(branch, getChildNamespace(parentNode)),
     branch
   );
 }
