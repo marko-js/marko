@@ -27,31 +27,31 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "a", text));
 		_scope($scope1_id, {});
-	}, "id", $scope0_id, "a", 1, 1, 1, "</div>", 1);
+	}, "id", $scope0_id, "a", 1, 1, 1, "</div>");
 	_html("<div class=by-function>");
 	_for_of(items, ({ text }) => {
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "a", text));
 		_scope($scope2_id, {});
-	}, (item) => item.id, $scope0_id, "b", 1, 1, 1, "</div>", 1);
+	}, (item) => item.id, $scope0_id, "b", 1, 1, 1, "</div>");
 	_html("<div class=by-unknown-string>");
 	_for_of(items, ({ text }) => {
 		const $scope3_id = _scope_id();
 		_html(_text_resume($scope3_id, "a", text));
 		_scope($scope3_id, {});
-	}, getStringBy(), $scope0_id, "c", 1, 1, 1, "</div>", 1);
+	}, getStringBy(), $scope0_id, "c", 1, 1, 1, "</div>");
 	_html("<div class=by-unknown-function>");
 	_for_of(items, ({ text }) => {
 		const $scope4_id = _scope_id();
 		_html(_text_resume($scope4_id, "a", text));
 		_scope($scope4_id, {});
-	}, getFunctionBy(), $scope0_id, "d", 1, 1, 1, "</div>", 1);
+	}, getFunctionBy(), $scope0_id, "d", 1, 1, 1, "</div>");
 	_html("<div class=by-unknown-missing>");
 	_for_of(items, ({ text }) => {
 		const $scope5_id = _scope_id();
 		_html(_text_resume($scope5_id, "a", text));
 		_scope($scope5_id, {});
-	}, void 0, $scope0_id, "e", 1, 1, 1, "</div>", 1);
+	}, void 0, $scope0_id, "e", 1, 1, 1, "</div>");
 	_html(`<button>Rotate</button>${_el_resume($scope0_id, "f")}</div>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { g: items });

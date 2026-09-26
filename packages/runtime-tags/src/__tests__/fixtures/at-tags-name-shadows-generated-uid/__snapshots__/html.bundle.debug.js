@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "#text/0", s.a, $sg__input_scope));
 		$si__input_scope && _scope($scope1_id, {}, "__tests__/tags/child/index.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $sg__input_scope, $sg__input_scope, $sg__input_scope, 0, 1);
+	}, 0, $scope0_id, "#text/0", $sg__input_scope, $sg__input_scope, $sg__input_scope);
 	$si__input_scope && _scope($scope0_id, {}, "__tests__/tags/child/index.marko", 0);
 });
 
