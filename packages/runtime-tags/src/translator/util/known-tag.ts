@@ -126,7 +126,9 @@ export function knownTagAnalyze(
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
   tagExtra[kContentSection] = contentSection;
-  if (tagExtra.defineBodySection) {
+  // A `<define>` body, or the template rendering itself, renders in place of
+  // this call.
+  if (contentSection.program === section.program) {
     contentSection.callSections = sectionUtil.add(
       contentSection.callSections,
       section,

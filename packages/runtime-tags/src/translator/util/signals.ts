@@ -1562,9 +1562,7 @@ export function writeHTMLResumeStatements(
 }
 
 export function getSetup(section: Section) {
-  return section.hoistedTo
-    ? getSignal(section, undefined)
-    : getSignals(section).get(undefined);
+  return getSignals(section).get(undefined);
 }
 
 function replaceRenderNode(node: t.Node, signal?: Signal) {
