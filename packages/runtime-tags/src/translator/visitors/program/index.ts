@@ -37,7 +37,7 @@ import {
   startSection,
 } from "../../util/sections";
 import { isOwnResumeReason } from "../../util/serialize-reasons";
-import { sectionHasSetupStatements } from "../../util/setup-statements";
+import { finalizeSetupWork } from "../../util/setup-statements";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -124,7 +124,8 @@ export default {
         );
       });
 
-      if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
+      finalizeSetupWork();
+      if (!section.hasSetupWork) {
         // The setup export will be a noop, letting parent templates skip
         // importing and calling it (checked when this template translates).
         programExtra.domExports!.setupEmpty = true;

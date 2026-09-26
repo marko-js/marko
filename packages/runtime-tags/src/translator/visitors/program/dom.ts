@@ -101,8 +101,8 @@ export default {
           const { writes } = getSectionMeta(childSection);
           // Reaches the runtime through `_content`, which strips these.
           const walks = trimTrailingExits(getSectionMeta(childSection).walks);
-          const setup = getSetup(childSection);
           const written = writeSignals(childSection);
+          const setup = getSetup(childSection);
           const setupIdentifier =
             setup && written.has(setup) ? setup.identifier : undefined;
 
@@ -212,7 +212,8 @@ export default {
       writeRegisteredFns();
 
       const setup = getSetup(section);
-      if (domExports.setupEmpty && setup && written.has(setup)) {
+      const setupWritten = !!setup && written.has(setup);
+      if (domExports.setupEmpty && setupWritten) {
         // Parents skip calling this setup export because analyze proved it a noop;
         // a non-noop setup here means that proof was wrong, so fail loudly.
         throw program.buildCodeFrameError(
@@ -220,7 +221,7 @@ export default {
         );
       }
 
-      if (!setup) {
+      if (!setupWritten) {
         program.node.body.unshift(
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [

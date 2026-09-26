@@ -1327,11 +1327,6 @@ export function finalizeReferences() {
           highestHoistSection = hoistSection;
         }
 
-        hoistSection.hoistedTo = bindingUtil.add(
-          hoistSection.hoistedTo,
-          binding,
-        );
-
         forceSerialize(binding);
       });
 

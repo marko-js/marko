@@ -13,4 +13,4 @@ const $input_obj = ($scope, input_obj) => {
 	$input_obj_label($scope, input_obj?.label);
 };
 const $input = ($scope, input) => $input_obj($scope, input.obj);
-var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

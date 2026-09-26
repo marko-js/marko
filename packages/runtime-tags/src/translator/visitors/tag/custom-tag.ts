@@ -111,9 +111,12 @@ export default {
         );
       }
 
-      if (tagExtra.tagNameLoad || !childExtra.domExports?.setupEmpty) {
-        // Add the child's setup call unless it proved its setup export a noop
-        // (mid-analysis children assumed to have one); load tags always wire it up.
+      if (
+        tagExtra.tagNameLoad ||
+        (childSection !== programSection && !childExtra.domExports?.setupEmpty)
+      ) {
+        // Add the child's setup call unless it proved its setup export a noop;
+        // load tags always wire it up, and a self call follows `callSections`.
         addSetupStatement(getOrCreateSection(tag));
       }
 
