@@ -1,0 +1,27 @@
+<let/n=0/>
+<button onClick() { n++ }>inc</button>
+
+<div>
+  <try>
+    <for|label| of=[`empty ${n}`]>
+      <@catch/>
+    </for>
+    ${n === 1 ? (() => { throw new Error("body") })() : `body ${n}`}
+  </try>
+</div>
+
+<div>
+  <try>
+    <@catch|outer|>
+      outer caught ${outer.message}
+    </@catch>
+    <try>
+      <for|label| of=[`inner ${n}`]>
+        <@catch|err|>
+          ${label} caught ${err.message}${n > 1 && err.message === "body 1" ? (() => { throw new Error("from catch") })() : ""}
+        </@catch>
+      </for>
+      ${n ? (() => { throw new Error("body " + n) })() : "ok"}
+    </try>
+  </try>
+</div>
