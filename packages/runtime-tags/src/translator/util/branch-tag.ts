@@ -64,18 +64,23 @@ export function getBranchResumeArgs(
   statefulReasonKey: symbol,
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean,
+  // A patched branch keeps its markers and pairs statically: patches anchor
+  // at the markers, and interior writes reach it through the pairing.
+  patchChain?: boolean,
 ) {
   const endArgs = getBranchEndArgs(
     tag,
     tagSection,
     nodeBinding,
     getSerializeReason(tagSection, statefulReasonKey),
-    onlyChildParentTagName,
-    singleNode,
+    !patchChain && onlyChildParentTagName,
+    !patchChain && singleNode,
   );
   const [serializeMarker] = endArgs;
   return [
-    getSerializeGuardForAny(tagSection, branchReasons, !serializeMarker),
+    patchChain
+      ? t.numericLiteral(1)
+      : getSerializeGuardForAny(tagSection, branchReasons, !serializeMarker),
     ...endArgs,
   ];
 }

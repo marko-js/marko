@@ -4,6 +4,8 @@ declare const Config: {
   output?: "html" | "dom" | "migrate" | "source" | "hydrate";
   /** Compiles a page or lazy-load entry instead of a module; requires `linkAssets`. */
   entry?: EntryKind;
+  /** Enables the patch protocol: pages patched in place across navigations. */
+  patches?: boolean;
   linkAssets?: {
     runtime: string;
     onAsset(kind: EntryKind, file: string, id: string): void;

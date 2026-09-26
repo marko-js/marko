@@ -3,15 +3,28 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
+import { isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
+import { find, forEach } from "../../util/optional";
 import {
+  getRootGlobalReads,
+  hasPatchEffectRead,
+  isPatchWriteBinding,
+} from "../../util/patch/refresh";
+import {
+  type Binding,
   BindingType,
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
+  someAlias,
 } from "../../util/references";
-import { callRuntime, registerRuntimeValue } from "../../util/runtime";
 import {
+  callRuntime,
+  importRuntimeFeature,
+  registerRuntimeValue,
+} from "../../util/runtime";
+import {
+  forEachSection,
   forEachSectionReverse,
   getContentClosures,
   getSectionForBody,
@@ -26,6 +39,7 @@ import {
   getSetup,
   getSignal,
   getSignalFn,
+  initGlobalRead,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
   signalHasStatements,
@@ -43,6 +57,11 @@ import type { TemplateVisitor } from "../../util/visitors";
 export default {
   translate: {
     enter(program) {
+      // A page that loads this module takes the features analyze linked
+      // from it rather than from its entry.
+      for (const feature of program.node.extra.runtimeFeatures || []) {
+        importRuntimeFeature(feature);
+      }
       const section = getSectionForBody(program)!;
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
@@ -164,6 +183,11 @@ export default {
                 renderer = t.addComment(renderer, "leading", "@__PURE__");
               }
 
+              // A flush binds registered content by id.
+              if (registerReason && !registerWrapper && isPatch()) {
+                importRuntimeFeature("patch-bind");
+              }
+
               if (objProps.length) {
                 renderer = callRuntime(
                   "_content_closures",
@@ -208,6 +232,15 @@ export default {
         }
       });
 
+      if (isPatch()) {
+        forEachSection((fillSection) => {
+          if (find(fillSection.bindings, needsPatchEffectRuntime)) {
+            importRuntimeFeature("patch-effect");
+          }
+        });
+      }
+
+      forEach(getRootGlobalReads(section), initGlobalRead);
       const written = writeSignals(section);
       writeRegisteredFns();
 
@@ -253,3 +286,12 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+// A destructured property alias inherits its declaration's function-carrying
+// potential through the alias chain.
+function needsPatchEffectRuntime(binding: Binding) {
+  return (
+    isPatchWriteBinding(binding) &&
+    someAlias(binding, hasPatchEffectRead, undefined, true)
+  );
+}

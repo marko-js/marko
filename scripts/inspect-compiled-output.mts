@@ -34,6 +34,11 @@ const args = parseArgs({
       short: "t",
       default: "tags",
     },
+    patches: {
+      type: "boolean",
+      short: "p",
+      default: false,
+    },
   },
 });
 
@@ -49,6 +54,7 @@ for (const entry of args.positionals) {
   const { code } = compileFileSync(inputFileName, {
     output: args.values.output as Config["output"],
     optimize: !args.values.dev,
+    patches: args.values.patches,
     sourceMaps: false,
     modules: "esm",
     // Generated modules are written beside the output, with their path

@@ -20,6 +20,7 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isPatch,
 } from "../../util/marko-config";
 import {
   BindingType,
@@ -36,9 +37,11 @@ import {
   getSectionRegisterReasons,
   startSection,
 } from "../../util/sections";
-import { hasOwnResumeReason } from "../../util/serialize-reasons";
+import { isOwnResumeReason } from "../../util/serialize-reasons";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
+import { buildShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
+import { recordCreatedLoadImports } from "../import-declaration";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
@@ -117,13 +120,17 @@ export default {
       // has to reach the client on its own.
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
-          hasOwnResumeReason(childSection) ||
+          isOwnResumeReason(childSection.resumeReason) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
             getSectionRegisterReasons(childSection))
         );
       });
 
+      if (isPatch()) {
+        buildShells();
+        recordCreatedLoadImports(program);
+      }
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip
         // importing and calling it (checked when this template translates).
@@ -165,11 +172,9 @@ export default {
           const entryFile = getFile();
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
-          // A rejected chunk blocks this ready id forever: the debug build
-          // reports it instead of leaving the content silently inert, while
-          // production keeps the arm's bytes out (the failure still surfaces
-          // as a network error in devtools).
-          const report = !markoOpts.optimize;
+          // A rejected chunk blocks this ready id forever: debug reports it;
+          // patches also report in production so deferred patches settle.
+          const report = !markoOpts.optimize || isPatch();
           program.node.body = [
             t.importDeclaration(
               [

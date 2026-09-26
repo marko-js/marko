@@ -1,0 +1,26 @@
+// template.marko
+const $template = "<main><!><button>+</button></main>";
+const $walks = "D%b l";
+const $for_content__input_title__OR__count = /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_title#5/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.input_title + " " + $scope["#LoopKey"] + " #" + $scope._.count))), 0, "#text/0");
+const $for_content__input_title = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_title__OR__count);
+const $for_content__setup = ($scope) => {
+	$for_content__input_title._($scope);
+	$for_content__count._($scope);
+};
+const $for_content__count = /*@__PURE__*/ _init_for_closure("__tests__/template.marko_1_count#6/init", "#text/0", $for_content__input_title__OR__count);
+const $count = /*@__PURE__*/ _let("count/6", $for_content__count);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$count($scope, +$scope.count + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	$setup__script($scope);
+}
+const $for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", $for_content__setup);
+const $input_items = ($scope, input_items) => $for($scope, [input_items, (item) => item]);
+const $input = ($scope, input) => {
+	$input_items($scope, input.items);
+	$input_title($scope, input.title);
+};
+const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $for_content__input_title);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -3,6 +3,7 @@ import { types as t } from "@marko/compiler";
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getPropertyPathAlias } from "./binding-has-prop";
 import { getAccessorProp } from "./get-accessor-enums";
+import { isPatch } from "./marko-config";
 import {
   concat,
   forEach,
@@ -19,6 +20,7 @@ import {
   createSources,
   FORCED,
   getCanonicalBinding,
+  globalSources,
   type InputBinding,
   isReferencedExtra,
   type KnownExprs,
@@ -63,13 +65,44 @@ export function isForceSerialized(
   )?.forced;
 }
 
+// A reason code of the template revives (a closure, handler or tag variable
+// reads the scope): also merged into the section's `resumeReason`.
 export function addSerializeReason(
   section: Section,
   reason: undefined | false | SerializeReason,
   prop?: Binding | AccessorProp | symbol,
   prefix?: AccessorPrefix | symbol,
 ) {
+  if (reason && addReason(section, reason, prop, prefix)) {
+    addResumeReason(section, reason);
+  }
+}
+
+function addResumeReason(section: Section, reason: SerializeReason) {
+  section.resumeReason = mergeSerializeReasons(section.resumeReason, reason);
+}
+
+// A record a patch pairs or addresses through (a marker, a child scope ref):
+// the patch runtime alone reads it, so it is no `resumeReason`.
+export function addPatchSerializeReason(
+  section: Section,
+  reason: undefined | false | SerializeReason,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
+) {
+  addReason(section, reason, prop, prefix);
+}
+
+function addReason(
+  section: Section,
+  reason: undefined | false | SerializeReason,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
+) {
   if (reason) {
+    // A `$global` read alone never serializes (the client reads the
+    // globals object, as without patches); it stays a source.
+    if (!reason.state && !reason.param && !reason.forced) return false;
     const key = prop && getPropKey(section, prop, prefix);
     if (key) {
       const curReason = section.serializeReasons.get(key);
@@ -84,7 +117,9 @@ export function addSerializeReason(
         setSerializeReason(section, newReason);
       }
     }
+    return true;
   }
+  return false;
 }
 
 export function addSerializeExpr(
@@ -161,9 +196,17 @@ export function getSerializeReason(
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExtra(expr);
-  return isReferencedExtra(root)
-    ? getSerializeSourcesForRef(root.referencedBindings)
-    : undefined;
+  if (isReferencedExtra(root)) {
+    const sources = getSerializeSourcesForRef(root.referencedBindings);
+    // A keyed `$global` read aliases a property binding and is a reference
+    // like any other. An opaque read (`fn($global)`) compiles verbatim: no
+    // read slot, no signal, so it is not among the references (joining them
+    // would make it a closure) and contributes here, as request identity a
+    // patch flush re-ships what reads.
+    return root.globalBindings && isPatch()
+      ? mergeSources(sources, globalSources)
+      : sources;
+  }
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
@@ -283,15 +326,6 @@ export function isOwnResumeReason(reason: SerializeReason | undefined) {
   return !!reason && !!(reason.state || reason.forced);
 }
 
-// A prop reason a reference finalizer adds never merges into the scope reason.
-export function hasOwnResumeReason(section: Section) {
-  if (isOwnResumeReason(section.serializeReason)) return true;
-  for (const reason of section.serializeReasons.values()) {
-    if (isOwnResumeReason(reason)) return true;
-  }
-  return false;
-}
-
 export function applySerializeExprs(section: Section) {
   const propExprs = section.propSerializeExprs;
   if (propExprs) {
@@ -299,6 +333,7 @@ export function applySerializeExprs(section: Section) {
     for (const [key, exprs] of propExprs) {
       const reason = getSerializeSourcesForExprs(exprs);
       if (reason) {
+        addResumeReason(section, reason);
         const curReason = section.serializeReasons.get(key);
         const newReason = mergeSerializeReasons(curReason, reason);
         if (curReason !== newReason) {
@@ -313,6 +348,7 @@ export function applySerializeExprs(section: Section) {
     section.serializeExprs = undefined;
     const reason = getSerializeSourcesForExprs(scopeExprs);
     if (reason) {
+      addResumeReason(section, reason);
       const curReason = section.serializeReason;
       const newReason = mergeSerializeReasons(curReason, reason);
       if (curReason !== newReason) {
@@ -404,6 +440,10 @@ function isStrOrSym(v: unknown): v is string | symbol {
 let reasonsVersion = 0;
 export function getSerializeReasonsVersion() {
   return reasonsVersion;
+}
+// A new param reason group moves it too: call sites stamp their groups.
+export function addSerializeReasonsVersion() {
+  reasonsVersion++;
 }
 
 // Exists as the single point of assigning section reasons to aid in debugging.

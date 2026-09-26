@@ -38,9 +38,47 @@ export {
   _to_text,
   _unescaped,
 } from "./html/content";
-export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
+export {
+  _content,
+  _content_elide,
+  _content_shell,
+  _content_resume,
+  _dynamic_tag,
+} from "./html/dynamic-tag";
 export { forIn, forOf, forTo, forUntil } from "./html/for";
+export { _shells } from "./html/shells";
 export { _template } from "./html/template";
+export {
+  _must_render,
+  _patch_attr,
+  _patch_attr_class,
+  _patch_attr_option_value,
+  _patch_attrs,
+  _patch_attrs_content,
+  _patch_attrs_partial,
+  _patch_attrs_partial_content,
+  _patch_attr_style,
+  _patch_bind,
+  _patch_child,
+  _patch_control,
+  _patch_effect,
+  _patch_dynamic_tag,
+  _content_withheld,
+  _patch_html,
+  _patch_style,
+  _patch_text,
+  _patch_text_content,
+  _patch_init,
+  _patch_value,
+  _patch_write,
+  _template_patch,
+  renderPatch,
+  _mask_group,
+  _filled_guard,
+  _unfilled_if,
+  _source_guard,
+  _source_if,
+} from "./html/patch";
 export {
   _attr_content,
   _await,
@@ -55,6 +93,7 @@ export {
   _html,
   _id,
   _if,
+  _client_guard,
   _peek_scope_id,
   _resume,
   _resume_branch,
@@ -62,6 +101,7 @@ export {
   _scope,
   _scope_id,
   _scope_reason,
+  _page_render,
   _html_resume,
   _scope_with_id,
   _script,
@@ -72,6 +112,7 @@ export {
   _show_start,
   _text_resume,
   _subscribe,
+  _global_subscribe,
   _trailers,
   _try,
   _var,

@@ -9,7 +9,7 @@ import {
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPatch } from "../util/marko-config";
 import {
   BindingType,
   FORCED,
@@ -140,9 +140,9 @@ export default {
         }
       });
     } else {
-      // An uncontrolled `<let>` is not reactive to its initial value; an
-      // unread let drops it.
-      tagExtra.initialValue = true;
+      // An uncontrolled `<let>` is not reactive to its initial value, though a
+      // patch re-renders it from that value; an unread let drops it.
+      if (!isPatch()) tagExtra.initialValue = true;
       tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
     }
   },

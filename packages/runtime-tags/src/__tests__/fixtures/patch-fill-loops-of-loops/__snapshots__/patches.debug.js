@@ -1,0 +1,10 @@
+// PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_2_input_suffix#5/init packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_2_count#6/init;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_1*shell;b%;<!><!><!>`, {
+  "PatchLoop:#text/0": ["r2", {
+    "PatchLoop:#text/0": ["c", {}, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_2*shell"]
+  }, "r1", {
+    "PatchLoop:#text/0": ["b", {}, "a", {}, _.a]
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko_1*shell"],
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-loops-of-loops/template.marko0": "y"
+}]
+"AwEA"

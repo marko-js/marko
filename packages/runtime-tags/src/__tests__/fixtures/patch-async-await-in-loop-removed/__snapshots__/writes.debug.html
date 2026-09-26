@@ -1,0 +1,37 @@
+<button>drop</button><!--M_$1 #button/0--><!--M_[-->
+<div><!--M_[--><em>1<!--M_$5 #text/0-->:<!>
+      a<!--M_$5 #text/1--></em><!--M_]3 #text/0 5--></div><!--M_[3-->
+<div><!--M_[--><em>2<!--M_$6 #text/0-->:<!>
+      a<!--M_$6 #text/1--></em><!--M_]4 #text/0 6--></div><!--M_]2 #text/0 4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      items: [{
+        id: 1
+      }, {
+        id: 2
+      }],
+      "#childScope/1": _(2)
+    }, {
+      input_promise: (p => p = new Promise((f, r) => _.a = {
+        f,
+        r(e) {
+          p.catch(_ => 0);
+          r(e)
+        }
+      }))()
+    }, {
+      "#LoopKey": 1,
+      _: _(2)
+    }, {
+      "#LoopKey": 2,
+      _: _(2)
+    }], _ => [5, {
+      _: _(3)
+    }], _ => [6, {
+      _: _(4)
+    }], _ => (_.a.f("a"), 0),
+    "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-loop-removed/template.marko_0 1"
+  ];
+  M._.w()
+</script>

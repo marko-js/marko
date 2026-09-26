@@ -25,7 +25,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize, isOutputDOM } from "./marko-config";
+import { isOptimize, isOutputDOM, isPatch } from "./marko-config";
 import {
   addSorted,
   concat,
@@ -50,9 +50,17 @@ import {
   size,
   reduce,
 } from "./optional";
-import { callRuntime } from "./runtime";
+import { finalizePatch } from "./patch/lifecycle";
+import {
+  getFillConditions,
+  getRootGlobalReads,
+  isPatchFillBinding,
+  isPatchWriteBinding,
+} from "./patch/refresh";
+import { linkRuntimeFeature, callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
+  ensureReasonGroups,
   finalizeParamSerializeReasonGroups,
   forEachSection,
   forEachSectionReverse,
@@ -62,6 +70,7 @@ import {
   getOrCreateSection,
   getSectionForBody,
   getSectionRegisterReasons,
+  groupChildSections,
   isDynamicClosure,
   isSameOrChildSection,
   forEachAncestorSection,
@@ -151,6 +160,9 @@ export interface Binding {
   upstreamIntersection: Intersection | undefined;
   /** Complete only once `finalizeReferences` runs at program analyze exit. */
   reads: Set<ReferencedExtra>;
+  /** Fixed for the scope's lifetime (an `<id>`, a `<define>` renderer):
+   * never derived from inputs, so never rewritten. */
+  stable?: true;
   aliases: Set<Binding>;
   hoists: SortedOpt<Section>;
   getters: Map<Getter["hoisted"], boolean>;
@@ -179,6 +191,18 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
+  /** A root param whose reads sit upstream of a branch or loop (here, or in a
+   * child it is upstream of). */
+  upstreamOfStructure: boolean;
+  /** Captured inside a registered function: live-scope reads reach it at
+   * any later invocation. */
+  registeredFnCapture: boolean;
+  /** The bindings a derived value's expressions read directly. `sources`
+   * flattens a derivation chain to its root params, but an intermediate
+   * derivation (`<const/ws=input.workspace>`) is itself the canonical
+   * binding that fills (`upstreamSourcesFill`), and the value expressions
+   * drop after resolution. */
+  upstreams: SortedOpt<Binding>;
   /** Binding-side counterpart of `Section.serializePropKeys`, keyed by
    * accessor prefix (`undefined` is the plain binding key). */
   serializePropKeys:
@@ -245,6 +269,9 @@ declare module "@marko/compiler/dist/types" {
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a downstream template's binding, for dereferencing its reasons. */
     downstreamExprs?: KnownExprs;
+    /** The sources a downstream template re-derives this expression's
+     * value with (its input group's other members). */
+    downstreamSources?: Sources;
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
@@ -258,12 +285,18 @@ declare module "@marko/compiler/dist/types" {
     forceRegister?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
+    /** Loop keys this expression reads: constant within their branch, they
+     * change only with the collection they key. */
+    constantBindings?: ReferencedBindings;
     /** `$global` bindings this expression reads: the root means an opaque
      * (dynamic/aliased) read, a property alias names the key. */
     globalBindings?: ReferencedBindings;
     /** The bindings this expression reads only by spreading them as is. */
     spreadFrom?: SortedOpt<Binding>;
     nativeTagSpread?: true;
+    /** A native tag spread that is the element's whole attribute set (no
+     * content renderer it could carry). */
+    attrSetSpread?: true;
     merged?: NodeExtra;
   }
 
@@ -335,6 +368,9 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
+    upstreamOfStructure: false,
+    registeredFnCapture: false,
+    upstreams: undefined,
     serializePropKeys: undefined,
     reserveSize: 0,
   };
@@ -796,7 +832,8 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
-// One signal-inert root binding per template, minted on first access.
+// One root binding per template, minted on first access; patches key
+// its property aliases as client-reactive reads of the globals object.
 const [getGlobalBinding] = createProgramState(() =>
   createBinding(
     "$global",
@@ -809,6 +846,15 @@ const [getGlobalBinding] = createProgramState(() =>
 // aliases record the keys read.
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
   trackReference(path, getGlobalBinding());
+}
+
+// The first-hop `$global` key a keyed alias reads through.
+export function getGlobalKey(binding: Binding) {
+  let hop: Binding | undefined;
+  for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
+    if (cur.upstreamAlias) hop = cur;
+  }
+  return hop?.property;
 }
 
 function createBindingsAndTrackReferences(
@@ -1172,6 +1218,7 @@ function compareIntersections(a: Intersection, b: Intersection) {
 }
 
 export function finalizeReferences() {
+  groupChildSections();
   const bindings = getBindings();
   const readsByExpression = getReadsByExpression();
   const fnReadsByExpression = getFunctionReadsByExpression();
@@ -1228,6 +1275,7 @@ export function finalizeReferences() {
       );
       expr.referencedBindings = exprBindings.referencedBindings;
       expr.lazyBindings = exprBindings.lazyBindings;
+      expr.constantBindings = exprBindings.constantBindings;
       expr.globalBindings = exprBindings.globalBindings;
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
@@ -1289,12 +1337,16 @@ export function finalizeReferences() {
 
   for (const binding of bindings) {
     const { name, section } = binding;
-    // `$global` bindings resolve sources only: no collision rename (it
-    // would burn a UID and shift later generated names), no section
-    // membership, no closures — reads compile verbatim.
     if (binding.type === BindingType.global) {
       getProgram().node.extra.hasGlobalRead = true;
+    }
+    // Verbatim globals resolve sources only: no collision rename (it would
+    // burn a UID and shift later generated names), no section, no closures.
+    if (isVerbatimGlobal(binding)) {
       resolveBindingSources(binding);
+      // LOCAL-only bit (no cross-file roll-up): the html output exports it
+      // as the template's intrinsics, composed across templates at render.
+      if (isPatch()) getProgram().node.extra!.readsGlobals = true;
       continue;
     }
     if (binding.type !== BindingType.dom) {
@@ -1426,6 +1478,27 @@ export function finalizeReferences() {
 
   forEachSection(applySerializeExprs);
 
+  // Ownership gates query fill/effect groups at translate time; group order
+  // freezes during analyze, so ensure them alongside the resume groups.
+  if (isPatch()) {
+    finalizePatch();
+    // Setup renders a root's keyed `$global` reads (see `initGlobalRead`).
+    const rootSection = getProgram().node.extra.section!;
+    if (getRootGlobalReads(rootSection)) addSetupStatement(rootSection);
+  }
+
+  // The RETURN classifies like a patch write, BEFORE group finalize and
+  // known-tag stamping, or same-file call sites fail on a group-count mismatch.
+  const programSection = getProgram().node.extra.section!;
+  if (programSection.returnValueExpr) {
+    programSection.returnSerializeReason = getSerializeSourcesForExpr(
+      programSection.returnValueExpr,
+    );
+    if (isPatch()) {
+      ensureReasonGroups(programSection.returnSerializeReason);
+    }
+  }
+
   // Rules that follow other reasons repeat until none moves; every write merges,
   // so reasons only grow and this settles, even through cycles.
   let reasonsVersion: number;
@@ -1442,6 +1515,20 @@ export function finalizeReferences() {
     addRegisteredFnSerializeReasons(fnReadsByExpression);
     forEachSectionReverse((section) => {
       finalizeKnownTags(section);
+      // Call-site sources (above) can make more root params fills.
+      if (isPatch()) {
+        forEach(section.bindings, (binding) => {
+          const fills = isPatchFillBinding(binding);
+          // A fill entry needs its patcher on every page this template renders
+          // into; one only a client upstream needs rides the call site's link.
+          if (fills && !getFillConditions(binding)?.upstreams) {
+            linkRuntimeFeature("patch-value");
+          }
+          if (fills || isPatchWriteBinding(binding)) {
+            ensureReasonGroups(getSerializeSourcesForRef(binding));
+          }
+        });
+      }
       finalizeSerializeReason(section);
       finalizeParamSerializeReasonGroups(section);
     });
@@ -1542,13 +1629,6 @@ export function finalizeReferences() {
       }
     });
   });
-
-  const programSection = getProgram().node.extra.section!;
-  if (programSection.returnValueExpr) {
-    programSection.returnSerializeReason = getSerializeSourcesForExpr(
-      programSection.returnValueExpr,
-    );
-  }
 
   for (const finalize of getReferenceFinalizers()) {
     finalize();
@@ -1777,7 +1857,12 @@ function addRegisteredFnSerializeReasons(
             addOwnerSerializeReason(fn.section, binding.section, reason);
           }
         };
-        forEach(fn.referencedBindingsInFunction, addRead);
+        forEach(fn.referencedBindingsInFunction, (binding) => {
+          // A registered factory reads this capture from its live scope
+          // whenever it is invoked, so patches must keep the slot fresh.
+          binding.registeredFnCapture = true;
+          addRead(binding);
+        });
         forEach(fn.constantBindingsInFunction, addRead);
       }
     }
@@ -1884,6 +1969,14 @@ const [getResolvedSources] = createProgramState(() => new Set<Binding>());
 const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
+// A `$global` read compiles verbatim (no read slot, signal, or register
+// id) unless patches key it: a keyed read refreshes like any reference.
+function isVerbatimGlobal(binding: Binding) {
+  return (
+    binding.type === BindingType.global && !(isPatch() && binding.upstreamAlias)
+  );
+}
+
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
@@ -1933,6 +2026,7 @@ function resolveBindingSources(binding: Binding) {
     }
 
     binding.sources = aliasRoot.sources;
+    if (aliasRoot.stable) binding.stable = true;
   } else {
     resolveDerivedSources(binding);
   }
@@ -1955,13 +2049,27 @@ function resolveDerivedSources(binding: Binding) {
     binding.sources = createSources(binding, undefined);
   } else if (exprs) {
     const refs = getValueReferences(exprs);
+    // A derived value (a `<const>`, a loop param) of stable upstreams alone
+    // is stable itself: nothing request-derived or client-owned reaches it.
+    let stable = binding.type === BindingType.derived;
     forEach(refs, (ref) => {
       resolveBindingSources(ref);
-      binding.sources = mergeSources(binding.sources, ref.sources);
+      stable &&= !!ref.stable;
+    });
+    binding.upstreams = refs;
+    // An expression's serialize sources read its references' resolved ones.
+    forEach(exprs, (expr) => {
+      if (!expr.initialValue) {
+        binding.sources = mergeSources(
+          binding.sources,
+          getSerializeSourcesForExpr(getCanonicalExtra(expr)),
+        );
+      }
     });
     binding.upstreamIntersection = Array.isArray(refs)
       ? refs
       : refs && getUpstreamIntersection(refs);
+    if (stable) binding.stable = true;
   }
 }
 
@@ -2041,7 +2149,7 @@ function unionParamSources(a: Sources["param"], b: Sources["param"]) {
   return merged;
 }
 
-function isInParams(binding: Binding, params: Sources["param"]) {
+export function isInParams(binding: Binding, params: Sources["param"]) {
   return bindingUtil.has(params, binding as ParamBinding);
 }
 
@@ -2562,7 +2670,9 @@ export function getReadReplacement(
           replacement = t.cloneNode(inlined, true);
         } else if (
           signal?.referencedBindings === readBinding &&
-          !signal.hasSideEffect
+          !signal.hasSideEffect &&
+          // A keyed `$global` read always reads the globals object.
+          readBinding.type !== BindingType.global
         ) {
           replacement = getSignalValueIdentifier(signal);
         } else if (read.getter?.hoisted) {
@@ -2946,15 +3056,13 @@ function resolveReferencedBindings(
           if (upstreamRoot) {
             binding = upstreamRoot;
           }
-        } else if (binding.type !== BindingType.global) {
+        } else if (!isVerbatimGlobal(binding)) {
           extra.section = expr.section;
           ({ binding } = extra.read ??=
             resolveConstantReference(binding) ??
             resolveExpressionReference(rootBindings, binding));
         }
-        if (binding.type === BindingType.global) {
-          // `$global` reads stay verbatim member chains: no read slot,
-          // no signal, no register-id participation.
+        if (isVerbatimGlobal(binding)) {
           globalBindings = bindingUtil.add(globalBindings, binding);
         } else if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
           lazyBindings = bindingUtil.add(lazyBindings, binding);
@@ -2977,9 +3085,7 @@ function resolveReferencedBindings(
         binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
         hoistedBindings = bindingUtil.add(hoistedBindings, binding);
       }
-    } else if (binding.type === BindingType.global) {
-      // `$global` reads stay verbatim member chains: no read slot,
-      // no signal, no register-id participation.
+    } else if (isVerbatimGlobal(binding)) {
       globalBindings = binding;
     } else {
       extra.read =
@@ -3338,7 +3444,7 @@ function isPartOf(binding: Binding, value: Binding | undefined) {
 
 // An effect runs on resume with the values it references, except a native tag
 // spread's, which reads only the element data `_attrs` wrote.
-function readsValuesOnResume(expr: t.NodeExtra) {
+export function readsValuesOnResume(expr: t.NodeExtra) {
   return !!expr.isEffect && !expr.nativeTagSpread;
 }
 

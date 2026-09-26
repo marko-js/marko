@@ -9,6 +9,8 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
+import { isPatch } from "../util/marko-config";
+import { boundaryAlwaysPairs, isPatchRendered } from "../util/patch/structure";
 import {
   BindingType,
   createBinding,
@@ -16,7 +18,11 @@ import {
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -28,7 +34,9 @@ import {
   startSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
+import { getSerializeSourcesForExpr } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
+import { findShellId } from "../util/shell";
 import {
   addStatement,
   addValue,
@@ -101,6 +109,16 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
+    bodySection.isBoundary = true;
+    // Any await a patch may reach (scriptless, or in content one consumer
+    // renders stateful) pairs its body scope through a `PatchChild` entry.
+    if (isPatch()) {
+      linkRuntimeFeature("patch-boundary");
+      (section.awaits ??= []).push({
+        binding: tagExtra.nodeBinding!,
+        body: bodySection,
+      });
+    }
     const valueExtra = evaluate(valueAttr.value);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -144,6 +162,23 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
+        const valueSources = getSerializeSourcesForExpr(
+          valueAttr.value.extra || {},
+        );
+        // A thenable of client state alone resolves via `_await_promise`, so a
+        // patch must not Pending it; otherwise (a server value, or a promise
+        // made in the template) Pending carries the body's shell id.
+        const shellId = bodySection && findShellId(bodySection);
+        const patchContent =
+          isPatch() &&
+          valueSources?.state &&
+          !valueSources.param &&
+          !valueSources.global
+            ? t.numericLiteral(0)
+            : shellId
+              ? t.stringLiteral(shellId)
+              : undefined;
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -156,7 +191,21 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(section, bodySection?.serializeReason, true),
+                // A patch page always marks a patchable boundary: the
+                // flush pairs its body through the resumed branch link.
+                isPatchRendered(section)
+                  ? t.numericLiteral(1)
+                  : getSerializeGuard(
+                      section,
+                      bodySection?.serializeReason,
+                      true,
+                    ),
+                patchContent,
+                // An always-pairing body's Pending entry drops its
+                // creation id outside divergent contexts.
+                ...(isPatch() && bodySection && boundaryAlwaysPairs(bodySection)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]
