@@ -1,10 +1,13 @@
 <button>inc <!>1<!--M_$1 #text/1--></button><!--M_$1 #button/0-->
-<div>1<!--M_$2 #text/0-->:row,other</div>
+<div>1<!--M_$2 #text/0-->:<!>s,cond,row,other<!--M_$2 #text/1--></div>
+<div>1<!--M_$3 #text/0-->:<!>s,row,other<!--M_$3 #text/1--></div>
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
+      input: {},
       n: 1,
-      "#childScope/2": _(2)
+      "#childScope/2": _(2),
+      "#childScope/3": _(3)
     }],
     "packages/runtime-tags/src/__tests__/fixtures/known-tag-attr-tags-rest-order/template.marko_0 1"
   ];

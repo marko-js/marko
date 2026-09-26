@@ -13,16 +13,31 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 1;
 	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(10);
+	_set_serialize_reason(42);
+	let $cond;
+	$cond = attrTag({ z: 2 });
 	const $childScope = _peek_scope_id();
 	child_default({
 		first: n,
+		s: n,
+		cond: $cond,
+		row: attrTag({ x: 1 }),
+		other: attrTag({ y: 2 })
+	});
+	_set_serialize_reason(42);
+	const $childScope2 = _peek_scope_id();
+	child_default({
+		first: n,
+		...input,
+		s: n,
 		row: attrTag({ x: 1 }),
 		other: attrTag({ y: 2 })
 	});
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
-		d: n,
-		c: _existing_scope($childScope)
+		f: input,
+		g: n,
+		c: _existing_scope($childScope),
+		d: _existing_scope($childScope2)
 	});
 }, 1);

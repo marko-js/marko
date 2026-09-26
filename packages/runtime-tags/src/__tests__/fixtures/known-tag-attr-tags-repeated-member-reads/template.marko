@@ -1,0 +1,30 @@
+<let/n = 1/>
+<child>
+  <@item foo="first" n=n>
+    <if=(n > 1)>
+      <@sub x=n/>
+    </if>
+  </@item>
+  <@item foo="second" n=2>
+    <if=(n > 1)>
+      <@sub x=n/>
+    </if>
+  </@item>
+</child>
+<child-rest>
+  <@item foo="first" n=n/>
+  <@item foo="second" n=2/>
+</child-rest>
+<child-for>
+  <@item foo="first">
+    <if=(n > 1)>
+      <@sub x=n/>
+    </if>
+  </@item>
+  <@item foo="second">
+    <if=(n > 1)>
+      <@sub x=n/>
+    </if>
+  </@item>
+</child-for>
+<button onClick() { n++ }>inc</button>
