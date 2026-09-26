@@ -1,0 +1,12 @@
+---
+type: bug
+impact: med
+effort: med
+site: packages/runtime-tags/src/dom/resume.ts › createVisitBranches
+---
+
+# Run effects deferred onto a resumed streaming `<try>` when its content arrives
+
+Resume gives a still-streaming `<try>` branch the inline runtime's placeholder counter (`AwaitCounter.m = render.m`), and that counter completes through the inline `c()` (`html/inlined-runtimes.debug.ts` › `REORDER_RUNTIME_CODE`), which never queues `dom/control-flow.ts` › `runPendingEffects`. Every effect `dom/catch.feat.ts` › `handlePendingTry` defers onto that branch while it streams therefore never runs, not even once the content swaps in. Two sources hit it: a `<script>` in content the client creates inside the try (after a click), and a server effect that `html/writer.ts` › `Chunk.flushScript` sends with in-order content before its reorder root's last `<t>` arrives, which `runResumeEffects` defers because it runs resume effects with the pending check. Direction: when a resumed counter completes, drain the branch's `PendingEffects` as `createAwaitCounter`'s `c` does for client counters (wrapping the resumed counter's `c` in `createVisitBranches` to call `runPendingEffects` makes both checks below log), and run the drained resume effects with `isResuming` set, as "Run resume effects drained by a client `<await>` with `isResuming` set" requires.
+
+Check: fixture with template `import { resolveAfter } from "../../utils/resolve";` + `<let/show=false/><button onClick() { show = true }>show</button><try><@placeholder>loading</@placeholder><if=show><span>shown</span><script>console.log("if script ran")</script></if><await|v|=resolveAfter(show ? "client" : "server", 1)><div>${v}</div></await></try>`, `equivalent: false`, steps `[{}, click, wait, flush, wait]`: `render-csr.debug.md` logs `if script ran`, while `render-ssr.debug.md` ends showing `shown` and `client` and never logs it. Fixture with template `import { resolveAfter } from "../../utils/resolve";` + `<try><@placeholder>loading</@placeholder><await|a|=resolveAfter("a", 1)><span/el>${a}</span><script>console.log("connected " + el().isConnected)</script></await><await|b|=resolveAfter("b", 3)><div>${b}</div></await></try><await|c|=resolveAfter("c", 2)><p>${c}</p></await>`, `equivalent: false`, steps `[{}, flush, wait, flush, wait, flush, wait]`: `render-ssr.md` has no Console section while `render-csr.debug.md` logs "connected true", and `writes.debug.html` sends the `template.marko_3 5` effect with `<p>c</p>` before the `<t>` carrying `<div>b</div>`.

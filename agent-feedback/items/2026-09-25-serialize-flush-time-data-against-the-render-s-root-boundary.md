@@ -1,0 +1,12 @@
+---
+type: bug
+impact: high
+effort: med
+site: packages/runtime-tags/src/html/writer.ts › Chunk.flushReadyScripts
+---
+
+# Serialize flush-time data against the render's root boundary, and release a try's count once
+
+`Chunk.flushScript` and `Chunk.flushReadyScripts` serialize with the flushed chunk's `boundary` and read its `boundary.state`, but a chunk rendered inside a `<try>` carries that try's `catchBoundary`, which may already have settled, may abort later, and on abort swaps in a fresh `State` (the `Boundary` constructor's abort listener). `tryBoundary` also leaves `catchBoundary.onNext` installed after the body settles, so a promise the serializer counts on that boundary at flush time (`serializer.ts › writePromise`) calls the outer `boundary.endAsync()` a second time when it settles; `Boundary.endAsync`'s `this.count` guard hides the double release, and the stream closes while a sibling `<await>` is still pending. The same binding drops a promise's `_.a.f(…)` settlement (`writeAsyncCall` returns on an aborted boundary) when a `@placeholder`'s content is serialized in a flush headed by a try body whose `@catch` fires later, and makes lazy content flushed after its enclosing try caught write `M._.b={…}` from the fresh State, wiping every other ready stream. Direction: bind flush-time serialization and State reads to the render's root `Boundary` and `State`, set `catchBoundary.onNext = NOOP` once the try releases its outer count, and throw in MARKO_DEBUG when `endAsync` runs at count 0.
+
+Check: fixture with `child.marko` = `<const/promise=resolveAfter("hello", 2)/><script>document.getElementById("ref").textContent = await promise;</script><div id="ref">0</div>`, `tags/counter.marko` = `<let/count=0><button onClick() { count++ }>${count}</button>`, and template `import Child from "./child.marko" with { load: "render" }` + `<counter/><try><await|v|=resolveAfter("a", 1)><span>${v}</span></await><Child/><@catch|err|>${err.message}</@catch></try><await|v|=resolveAfter("b", 3)><p>${v}</p></await>`: `pnpm run test:update -- --grep "runtime-tags/translator <fixture> "` fails `ssr` with `TypeError: run is not a function` (replacing `<Child/>` with `<div/>` passes), and a `for await` over `template.render({})` (loaded through `createServerRunner` in `packages/runtime-tags/src/__tests__/utils/bundle.ts`, run with `node --experimental-vm-modules -r ~ts`) ends right after the chunk with `_.a.f("hello")`, never writing `<p>b</p>`.
