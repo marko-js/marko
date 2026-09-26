@@ -1,5 +1,19 @@
 # Change Log
 
+## 5.42.9
+
+### Patch Changes
+
+- [#4302](https://github.com/marko-js/marko/pull/4302) [`13cea0d`](https://github.com/marko-js/marko/commit/13cea0ded36449c9cba179deee554fb26b265555) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep each comment in its own syntax in `output: "source"`, which printed `// a note` and `/* a note */` as `<!-- -->` HTML comments. The parser records the syntax on a new `MarkoComment.kind` field (`"html"`, `"line"` or `"block"`), which the `t.markoComment(value, kind)` builder also takes.
+
+- [#4300](https://github.com/marko-js/marko/pull/4300) [`6c36c96`](https://github.com/marko-js/marko/commit/6c36c9652df4663bb10f155d10f33b655d9db1f2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Parse a template in time linear in its tag count. Each parsed tag used to re-key every sibling parsed before it, so 16k sibling tags took about 2.9 s to parse instead of 0.35 s.
+
+- [#4303](https://github.com/marko-js/marko/pull/4303) [`05b06d7`](https://github.com/marko-js/marko/commit/05b06d77ffd2c25dfb30b4acd222f1fab4b3f854) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expression parse errors no longer name Babel's internal `parseExpression()` API. An expression that is empty or only comments now reports "Expected an expression, but found only whitespace or comments.", and one followed by more input, such as `${a b}`, reports "Expected a single expression, but found `b` after it."
+
+- [#4302](https://github.com/marko-js/marko/pull/4302) [`70451d2`](https://github.com/marko-js/marko/commit/70451d297746a9d5a4804308134d8ebaa44d0a31) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Strip a tag's type arguments and type parameters with `stripTypes`, so `output: "source"` prints `<foo<T>|x: T|>` as `<foo|x|>` and `<foo<string>/>` as `<foo/>`, like every other type annotation in the template.
+
+- [#4300](https://github.com/marko-js/marko/pull/4300) [`0878583`](https://github.com/marko-js/marko/commit/0878583b3519daeb176b1e143e2943e3b10e717f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Window a compile error's code frame around the error column when a framed line is longer than 160 characters, so a long line (an inlined data URI, generated markup) no longer makes the error message grow with the source. The label still follows the markers, and the reported line and column are unchanged.
+
 ## 5.42.8
 
 ### Patch Changes
