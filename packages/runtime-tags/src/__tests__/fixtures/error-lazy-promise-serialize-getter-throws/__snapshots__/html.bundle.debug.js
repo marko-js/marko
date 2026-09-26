@@ -1,0 +1,18 @@
+// child.marko
+var child_default = _template("__tests__/child.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	const promise = resolveAfter({ get bad() {
+		throw new Error("getter failed");
+	} }, 1);
+	_script($scope0_id, "__tests__/child.marko_0_promise#0", 0);
+	_scope($scope0_id, { promise }, "__tests__/child.marko", 0, { promise: "3:8" });
+});
+
+// template.marko
+const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/child.marko");
+var template_default = _template("__tests__/template.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	$Child_withLoadAssets({});
+}, 1);

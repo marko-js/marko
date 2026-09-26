@@ -1,0 +1,7 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<const/promise=resolveAfter("hello", 3)/>
+<script>
+  document.getElementById("ref").textContent = await promise;
+</script>
+<div id="ref">0</div>
