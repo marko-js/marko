@@ -19,7 +19,7 @@ const $if_content__wrapped = _var_resume("__tests__/template.marko_2_wrapped#6/v
 const $Wrapper_content__input_value = /*@__PURE__*/ _const("input_value", ($scope) => _return($scope, $scope.input_value));
 const $Wrapper_content__$params = ($scope, $params2) => $Wrapper_content__input($scope, $params2[0]);
 const $Wrapper_content__input = ($scope, input) => $Wrapper_content__input_value($scope, input.value);
-const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<div>Value: <!></div>`)(""), /*@__PURE__*/ ((_w0) => `b0${_w0}&0&Db%l`)(""), $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<div>Value: <!></div>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&0&bDb%l`)(""), $if_content__setup);
 const $open = /*@__PURE__*/ _let("open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);

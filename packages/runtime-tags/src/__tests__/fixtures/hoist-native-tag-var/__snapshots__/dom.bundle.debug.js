@@ -9,7 +9,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<hr><!><!>`)("");
-const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b%c`)("");
+const $walks = /*@__PURE__*/ ((_w0) => `b%/${_w0}&c%c`)("");
 const $el2_getter = /*@__PURE__*/ _hoist("#div/0", "BranchScopes:#text/2");
 const $el_getter = _hoist_resume("__tests__/template.marko_0_#div#0/hoist", "#div/0", "BranchScopes:#text/0", "BranchScopes:#text/0");
 const $if_content2__$el_getter = _el("__tests__/template.marko_2_#div#0", "#div/0");
@@ -17,7 +17,7 @@ const $if_content2__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$input$1($scope["#childScope/1"], { value: $if_content2__$el_getter($scope) });
 };
-const $if_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)(""), /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)(""), $if_content2__setup);
+const $if_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)(""), /*@__PURE__*/ ((_w0) => ` /${_w0}&b`)(""), $if_content2__setup);
 const $if_content__input_show = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1));
 const $if_content__setup = $if_content__input_show;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);

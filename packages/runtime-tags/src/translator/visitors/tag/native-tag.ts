@@ -132,12 +132,8 @@ export default {
       }
 
       const tagName = getCanonicalTagName(tag);
-      switch (tagName) {
-        case "html":
-        case "body":
-        case "head":
-          getProgram().node.extra.page ??= true;
-          break;
+      if (isPageElement(tagName)) {
+        getProgram().node.extra.page ??= true;
       }
 
       if (tagName === "option") {
@@ -2038,4 +2034,12 @@ export function controllableFeatureFor(tagName: string | undefined) {
 
 export function enableControllable(feature: DOMRuntimeFeature | undefined) {
   if (feature) importRuntimeFeature(feature);
+}
+
+// The document's own elements: the parser implies and moves nodes into them,
+// and the page writes assets and resume scripts into them.
+const pageElements = new Set(["html", "head", "body"]);
+
+export function isPageElement(tagName: string) {
+  return pageElements.has(tagName);
 }

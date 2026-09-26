@@ -19,7 +19,7 @@ var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", "", ""
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!><!><!><!>`)("");
-const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&%b%b%b%c`)("");
+const $walks = /*@__PURE__*/ ((_w0) => `b%/${_w0}&b%b%b%b%c`)("");
 const $setHtml4_getter = /*@__PURE__*/ _hoist("setHtml4", "BranchScopes:#text/5");
 const $if_content6__setHtml = /*@__PURE__*/ _const("setHtml4", ($scope) => _assert_hoist($scope.setHtml4));
 const $if_content6__setup = ($scope) => {

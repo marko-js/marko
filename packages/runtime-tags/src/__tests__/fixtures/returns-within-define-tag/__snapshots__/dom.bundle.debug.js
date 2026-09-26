@@ -1,6 +1,6 @@
 // template.marko
 const $template = "<!><button class=once> </button><button class=twice> </button>";
-const $walks = "b0& D l0& D l";
+const $walks = "0&b D 0&l D l";
 const $Twice_content__value__OR__call = /*@__PURE__*/ _or(4, ($scope) => _return($scope, $_return2($scope)));
 const $Twice_content__call = /*@__PURE__*/ _let("call/3", $Twice_content__value__OR__call);
 const $Twice_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Twice_content__call($scope, 2));
