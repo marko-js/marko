@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id), 0, 0);
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:count": $count__closures
+		"ClosureScopes:count/2": $count__closures
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

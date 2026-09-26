@@ -34,6 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) });
 	_scope($scope0_id, {
 		input_label: input.label,
-		"ClosureScopes:input_label": $si__input_label && $input_label__closures
+		"ClosureScopes:input_label/4": $si__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, { input_label: ["input.label"] });
 }, 1);

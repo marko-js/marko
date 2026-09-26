@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		text,
 		detailsTag,
 		textareaTag,
-		"ClosureScopes:text": $text__closures
+		"ClosureScopes:text/8": $text__closures
 	}, "__tests__/template.marko", 0, {
 		text: "2:6",
 		detailsTag: "3:8",

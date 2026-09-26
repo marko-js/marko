@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		count,
 		MyThing,
-		"ClosureScopes:count": $count__closures
+		"ClosureScopes:count/4": $count__closures
 	}, "__tests__/template.marko", 0, {
 		count: "3:5",
 		MyThing: "5:8"

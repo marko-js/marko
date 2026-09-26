@@ -53,12 +53,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(_text_resume($scope2_id, "#text/0", x));
 			_subscribe($x__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope0_id),
-				"ClosureSignalIndex:x": 1
+				"ClosureSignalIndex:x/3": 1
 			}, "__tests__/template.marko", "4:2"), "__tests__/template.marko_2_x#2/subscribe");
 		}, $scope0_id)
 	});
 	_scope($scope0_id, {
-		"ClosureScopes:x": $x__closures,
+		"ClosureScopes:x/3": $x__closures,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0);

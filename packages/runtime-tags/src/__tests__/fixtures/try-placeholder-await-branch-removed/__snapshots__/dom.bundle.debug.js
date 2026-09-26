@@ -11,7 +11,7 @@ const $if_content__setup = ($scope) => {
 };
 const $placeholder_content = _content("__tests__/template.marko_2*content", "LOADING...");
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
-const $try_content__show = /*@__PURE__*/ _closure_get("show", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#2/subscribe");
+const $try_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => $try_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#2/subscribe");
 const $try_content__setup = $try_content__show;
 const $show__closure = /*@__PURE__*/ _closure($try_content__show);
 const $show = /*@__PURE__*/ _let("show/2", $show__closure);

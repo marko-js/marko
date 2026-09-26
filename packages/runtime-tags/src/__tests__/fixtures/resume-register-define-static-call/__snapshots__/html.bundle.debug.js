@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, ($scope) => [{ input_content: input.content }]), 0, $sg__input_type);
 		$si__input_type__OR__input_content && _scope($scope1_id, {
 			input_content: _serialize_if($scope1_reason, 1) && input.content,
-			"ClosureScopes:input_content": $si__input_content && $Heading_content__input_content__closures
+			"ClosureScopes:input_content/5": $si__input_content && $Heading_content__input_content__closures
 		}, "__tests__/template.marko", "6:2", { input_content: ["input.content", "6:17"] });
 	}, $scope0_id) };
 	Heading.content({

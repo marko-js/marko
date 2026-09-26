@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		x,
-		"ClosureScopes:input": $si__input && $input__closures,
+		"ClosureScopes:input/9": $si__input && $input__closures,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, { x: "1:6" });

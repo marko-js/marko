@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_c: $si__input_a__OR__input_b && input.c,
 		input_b: _serialize_if($scope0_reason, 4) && input.b,
 		bar: $si__input_a__OR__input_b && bar,
-		"ClosureScopes:bar": $si__input_c && $bar2__closures
+		"ClosureScopes:bar/8": $si__input_c && $bar2__closures
 	}, "__tests__/template.marko", 0, {
 		input_c: ["input.c"],
 		input_b: ["input.b"],

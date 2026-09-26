@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			})(), 2)}`);
 			_subscribe($clickCount__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
-				"ClosureSignalIndex:clickCount": 1
+				"ClosureSignalIndex:clickCount/3": 1
 			}, "__tests__/template.marko", "11:4"), "__tests__/template.marko_2_clickCount#2/subscribe");
 		});
 		_script($scope1_id, "__tests__/template.marko_1_clickCount#2");
@@ -30,6 +30,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) }) });
 	_scope($scope0_id, {
 		clickCount,
-		"ClosureScopes:clickCount": $clickCount__closures
+		"ClosureScopes:clickCount/3": $clickCount__closures
 	}, "__tests__/template.marko", 0, { clickCount: "1:6" });
 }, 1);

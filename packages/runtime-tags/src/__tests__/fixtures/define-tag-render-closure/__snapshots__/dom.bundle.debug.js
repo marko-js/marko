@@ -5,7 +5,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b D l`)($MyTag_content__walks)
 const $if_content__setup = ($scope) => {
 	$MyTag_content__setup._($scope["#childScope/0"], $scope._);
 };
-const $MyTag_content__x = /*@__PURE__*/ _closure_get("x", ($scope) => _text($scope["#text/0"], $scope._.x), 0, "__tests__/template.marko_1_x#4/subscribe");
+const $MyTag_content__x = /*@__PURE__*/ _closure_get("x/5", ($scope) => _text($scope["#text/0"], $scope._.x), 0, "__tests__/template.marko_1_x#4/subscribe");
 const $MyTag_content__setup = /*@__PURE__*/ _child_setup($MyTag_content__x);
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($MyTag_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($MyTag_content__walks), $if_content__setup);
 const $x__closure = /*@__PURE__*/ _closure($MyTag_content__x);

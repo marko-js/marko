@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($count__closures, _scope($scope2_id, {
 			foo,
 			_: _scope_with_id($scope0_id),
-			"ClosureSignalIndex:count": 1
+			"ClosureSignalIndex:count/8": 1
 		}, "__tests__/template.marko", "9:1", { foo: "10:11" }), "__tests__/template.marko_2_count#7/subscribe");
 	}, $scope0_id) };
 	ChildB.content({
@@ -50,6 +50,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:count": $count__closures
+		"ClosureScopes:count/8": $count__closures
 	}, "__tests__/template.marko", 0, { count: "1:5" });
 }, 1);

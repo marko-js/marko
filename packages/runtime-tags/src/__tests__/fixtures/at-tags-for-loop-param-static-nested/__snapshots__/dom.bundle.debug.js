@@ -16,7 +16,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $if_content__item = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.item));
 const $if_content__setup = $if_content__item;
 const $item_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_content__setup);
-const $item_content__input_show = /*@__PURE__*/ _closure_get("input_show", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#3/subscribe");
+const $item_content__input_show = /*@__PURE__*/ _closure_get("input_show/4", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#3/subscribe");
 const $item_content__setup = $item_content__input_show;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $item_content__setup), { item($scope) {} });
 function $setup($scope) {

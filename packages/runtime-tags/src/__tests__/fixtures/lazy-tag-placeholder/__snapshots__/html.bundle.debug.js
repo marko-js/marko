@@ -32,6 +32,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:count": $count__closures
+		"ClosureScopes:count/6": $count__closures
 	}, "__tests__/template.marko", 0, { count: "3:6" });
 }, 1);

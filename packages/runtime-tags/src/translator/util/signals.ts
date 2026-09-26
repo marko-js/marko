@@ -21,7 +21,7 @@ import {
   BindingType,
   FORCED,
   getCanonicalBinding,
-  getClosureAccessorId,
+  getClosureAccessorLiteral,
   getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -411,10 +411,7 @@ export function getSignal(
 
         return callRuntime(
           "_closure_get",
-          // Optimized builds pass the reserved closure accessor id.
-          isOptimize()
-            ? t.numericLiteral(getClosureAccessorId(closure))
-            : getScopeAccessorLiteral(closure, true),
+          getClosureAccessorLiteral(closure),
           render,
           isImmediateOwner(section, closure)
             ? undefined

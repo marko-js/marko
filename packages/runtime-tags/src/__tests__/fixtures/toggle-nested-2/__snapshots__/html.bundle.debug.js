@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		outer,
 		inner,
 		count,
-		"ClosureScopes:count": $count__closures
+		"ClosureScopes:count/6": $count__closures
 	}, "__tests__/template.marko", 0, {
 		outer: "1:6",
 		inner: "2:6",

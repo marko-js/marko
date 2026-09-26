@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("caught-b");
 	}, $scope0_id) }) });
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
-		"ClosureScopes:input_a": $si__input_a && $input_a__closures,
-		"ClosureScopes:input_b": $si__input_b && $input_b__closures
+		"ClosureScopes:input_a/6": $si__input_a && $input_a__closures,
+		"ClosureScopes:input_b/7": $si__input_b && $input_b__closures
 	}, "__tests__/template.marko", 0);
 }, 1);

@@ -26,7 +26,7 @@ var my_btn_default = /*@__PURE__*/ _template("__tests__/tags/my-btn.marko", $tem
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=link>link</button><button class=inc>inc</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b b/${_w0}&b`)("b%c");
-const $mybtn_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#4/subscribe");
+const $mybtn_content__count = /*@__PURE__*/ _closure_get("count/5", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#4/subscribe");
 const $mybtn_content__setup = $mybtn_content__count;
 const $mybtn_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Label <!>", "b%", $mybtn_content__setup);
 const $href = /*@__PURE__*/ _let("href/3", ($scope) => $input($scope["#childScope/2"], {

@@ -41,8 +41,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope3_id, {
 			outer_label: outer.label,
 			outer_content: outer.content,
-			"ClosureScopes:outer_label": $si__outer_label && $Outer_content2__outer_label__closures,
-			"ClosureScopes:outer_content": $si__outer_content && $Outer_content2__outer_content__closures
+			"ClosureScopes:outer_label/5": $si__outer_label && $Outer_content2__outer_label__closures,
+			"ClosureScopes:outer_content/6": $si__outer_content && $Outer_content2__outer_content__closures
 		}, "__tests__/template.marko", "9:2", {
 			outer_label: ["outer.label", "9:15"],
 			outer_content: ["outer.content", "9:15"]
@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_scope($scope0_id, {
 		input_label: input.label,
-		"ClosureScopes:input_label": $si__input_label && $input_label__closures,
+		"ClosureScopes:input_label/4": $si__input_label && $input_label__closures,
 		"#childScope/0": $si__input_label && _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { input_label: ["input.label"] });
 }, 1);

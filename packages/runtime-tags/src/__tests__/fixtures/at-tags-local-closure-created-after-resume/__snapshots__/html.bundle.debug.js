@@ -150,6 +150,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		items_0: items?.[0],
-		"ClosureScopes:fail": $fail__closures
+		"ClosureScopes:fail/9": $fail__closures
 	}, "__tests__/template.marko", 0, { items_0: ["items[0]", "2:6"] });
 }, 1);

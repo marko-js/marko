@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 								_dynamic_tag($scope5_id, "#text/1", input.content, {}, 0, 0, $sg__input_content);
 								_subscribe($si__input_content && $Tree_content2__input_content__closures, _subscribe($si__input_depth && $Tree_content2__input_depth__closures, _scope($scope5_id, {
 									_: _scope_with_id($scope4_id),
-									"ClosureSignalIndex:input_depth": $si__input_depth && 1
+									"ClosureSignalIndex:input_depth/8": $si__input_depth && 1
 								}, "__tests__/template.marko", "7:8"), "__tests__/template.marko_5_input_depth#5/subscribe", $sg__input_depth || $sg__input_content), "__tests__/template.marko_5_input_content#6/subscribe", $sg__input_depth || $sg__input_content);
 								$sg__input_depth || $sg__input_content || _resume_branch($scope5_id);
 							}, $scope4_id)
@@ -49,8 +49,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_depth: input.depth,
 			input_content: input.content,
 			open,
-			"ClosureScopes:input_depth": $si__input_depth && $Tree_content2__input_depth__closures,
-			"ClosureScopes:input_content": $si__input_content && $Tree_content2__input_content__closures
+			"ClosureScopes:input_depth/8": $si__input_depth && $Tree_content2__input_depth__closures,
+			"ClosureScopes:input_content/9": $si__input_content && $Tree_content2__input_content__closures
 		}, "__tests__/template.marko", "1:2", {
 			input_depth: ["input.depth", "1:14"],
 			input_content: ["input.content", "1:14"],
@@ -69,6 +69,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_scope($scope0_id, {
 		input_label: input.label,
-		"ClosureScopes:input_label": $si__input_label && $input_label__closures
+		"ClosureScopes:input_label/4": $si__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, { input_label: ["input.label"] });
 }, 1);

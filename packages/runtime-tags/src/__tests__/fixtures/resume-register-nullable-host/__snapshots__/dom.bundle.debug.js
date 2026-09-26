@@ -11,7 +11,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<button id=toggle>toggle</button><!><!>";
 const $walks = " b%c";
-const $showCardnull_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_1_count#3/subscribe");
+const $showCardnull_content__count = /*@__PURE__*/ _closure_get("count/4", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_1_count#3/subscribe");
 const $showCardnull_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._, +$scope._.count + 1);
 }));

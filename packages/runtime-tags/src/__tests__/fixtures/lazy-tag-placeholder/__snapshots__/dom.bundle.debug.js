@@ -12,7 +12,7 @@ const $walks = "b%b b";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $placeholder_content = _content("__tests__/template.marko_2*content", "loading...");
-const $try_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => $load_Child_tag_input_value($scope["#childScope/1"], $scope._.count), 0, "__tests__/template.marko_1_count#5/subscribe");
+const $try_content__count = /*@__PURE__*/ _closure_get("count/6", ($scope) => $load_Child_tag_input_value($scope["#childScope/1"], $scope._.count), 0, "__tests__/template.marko_1_count#5/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__count($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

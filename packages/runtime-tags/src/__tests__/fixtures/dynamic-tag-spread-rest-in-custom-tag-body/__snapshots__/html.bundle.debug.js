@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($si__rest && $rest__closures, _subscribe($si__input_button_label && $label__closures, _scope($scope1_id, { _: $si__input_button_label__OR__rest && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2", { "EventAttributes:#button/0": ["...rest", "4:21"] }), "__tests__/template.marko_1_label#4/subscribe"), "__tests__/template.marko_1_rest#5/subscribe");
 	}, $scope0_id) });
 	$si__input_button_label__OR__rest && _scope($scope0_id, {
-		"ClosureScopes:label": $si__input_button_label && $label__closures,
-		"ClosureScopes:rest": $si__rest && $rest__closures
+		"ClosureScopes:label/6": $si__input_button_label && $label__closures,
+		"ClosureScopes:rest/7": $si__rest && $rest__closures
 	}, "__tests__/template.marko", 0);
 }, 1);
