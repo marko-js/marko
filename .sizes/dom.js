@@ -1,4 +1,4 @@
-// size: 26997 (min) 10053 (brotli)
+// size: 27014 (min) 10064 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -748,7 +748,7 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   let closureSignal = (scope, resumed) => {
     let ownerScope = getOwnerScope ? getOwnerScope(scope) : scope._;
     ((scope[closureSignal.b] = closureSignal.c),
-      (!resumed || ownerScope[closureSignal.a]._) && fn(scope),
+      resumed ? ownerScope[closureSignal.a]._ && queueAsyncRender(scope, closureSignal) : fn(scope),
       subscribeToScopeSet(ownerScope, closureSignal.a, scope));
   };
   return (
@@ -2091,20 +2091,13 @@ let compat = {
         normalizedInput = (args[0] = {});
       for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];
     }
-    if (
-      ((component.effects = prepareEffects(() => {
-        ((branch ||=
-          ((created = 1),
-          (component.scope = createAndSetupBranch(
-            out.global,
-            renderer,
-            renderer.e,
-            document.body,
-          )))),
-          renderer.d?.(branch, renderer._ ? args[0] : args));
-      })),
-      created)
-    )
+    let renderBranch = () => {
+      ((branch ||=
+        ((created = 1),
+        (component.scope = createAndSetupBranch(out.global, renderer, renderer.e, document.body)))),
+        renderer.d?.(branch, renderer._ ? args[0] : args));
+    };
+    if (((component.effects = rendering ? renderBranch() : prepareEffects(renderBranch)), created))
       return toInsertNode(branch.S, branch.K);
   },
 };

@@ -13,7 +13,13 @@ import {
   type Scope,
 } from "../common/types";
 import { trackCleanup } from "./abort-signal";
-import { queueEffect, queueRender, rendering, runId } from "./queue";
+import {
+  queueAsyncRender,
+  queueEffect,
+  queueRender,
+  rendering,
+  runId,
+} from "./queue";
 import { _resumed } from "./resume";
 import { schedule } from "./schedule";
 
@@ -321,17 +327,18 @@ export function _closure_get(
       : scope[AccessorProp.Owner]!;
     scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
       closureSignal[ClosureSignalProp.Index];
-    // The server's HTML is current on resume, and the server sends only the
-    // values an owner's change needs, so render only after such a change.
-    if (
-      !resumed ||
+    if (!resumed) {
+      fn(scope);
+    } else if (
       (
         ownerScope[
           closureSignal[ClosureSignalProp.ScopeInstancesAccessor]
         ] as ClosureScopes
       )[ClosureScopesProp.Changed]
     ) {
-      fn(scope);
+      // The server's HTML is current unless the owner changed since, so only then
+      // does it render, in its own run as resumed async content does.
+      queueAsyncRender(scope, closureSignal);
     }
     subscribeToScopeSet(
       ownerScope,
