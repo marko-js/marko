@@ -25,8 +25,8 @@ declare module "@marko/compiler/dist/types" {
   // Written by `analyzeExpressionTagName`, on the tag whose name it types.
   export interface NodeExtra {
     tagNameType?: TagNameType;
-    // Kept unread for a planned nullable tag name optimization; incomplete when
-    // `tagNameType` is `DynamicTag`, since that ends the analysis early.
+    // Incomplete when `tagNameType` is `DynamicTag`, since that ends the
+    // analysis early.
     tagNameNullable?: boolean;
     tagNameImported?: string;
     /** Every template the name may resolve to, when it can resolve to

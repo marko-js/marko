@@ -1,0 +1,6 @@
+import A from "./tags/a.marko";
+import B from "./tags/b.marko";
+
+<let/useB=true/>
+<${useB ? B : A} x=1>Hello</>
+<button onClick() { useB = !useB }/>

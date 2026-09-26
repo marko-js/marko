@@ -10,6 +10,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../../common/types";
+import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
 import {
   getBindingPropTree,
   kDirectContent,
@@ -28,7 +29,7 @@ import {
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
-import { type SortedOpt } from "../../util/optional";
+import { concat, type Opt } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -40,7 +41,6 @@ import {
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
-  bindingUtil,
 } from "../../util/references";
 import {
   callRuntime,
@@ -567,7 +567,7 @@ export default {
           return callRuntime(
             "_dynamic_tag",
             getScopeAccessorLiteral(nodeBinding, true),
-            bodySection && t.identifier(bodySection.name),
+            bodySection && getSectionRendererIdentifier(bodySection),
             tagVarSignal
               ? t.arrowFunctionExpression([], tagVarSignal.identifier)
               : undefined,
@@ -693,17 +693,14 @@ function addRuntimeOnce(key: string) {
   return !added.has(key) && !!added.add(key);
 }
 
-// The input binding of every template the name may resolve to; none when
-// any is a Class API template.
-function getDynamicTagInputBindings(
-  tagExtra: t.MarkoTagExtra,
-): SortedOpt<Binding> {
-  let inputBindings: SortedOpt<Binding>;
+// The input binding of every template the name may resolve to; none when any is
+// a Class API template. They come from different programs, so the list is unsorted.
+function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
+  let inputBindings: Opt<Binding>;
   for (const childExtra of tagExtra.tagNameTemplates || []) {
     if (childExtra.featureType === "class") return;
     const inputBinding = childExtra.domExports?.params?.props?.[0]?.binding;
-    if (inputBinding)
-      inputBindings = bindingUtil.add(inputBindings, inputBinding);
+    if (inputBinding) inputBindings = concat(inputBindings, inputBinding);
   }
   return inputBindings;
 }
