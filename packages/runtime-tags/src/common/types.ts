@@ -1,5 +1,6 @@
 import type { PendingRender } from "../dom/queue";
 import type { Renderer as ClientRenderer, Renderer } from "../dom/renderer";
+import type { SignalFn } from "../dom/signals";
 import type { AccessorProp } from "./accessor.debug";
 import * as ControlledType from "./constants/controlled-type";
 import * as NodeType from "./constants/node-type";
@@ -15,7 +16,7 @@ export interface BranchScope extends Scope {
   [AccessorProp.BranchScopes]: Set<BranchScope> | undefined;
   [AccessorProp.Renderer]: ClientRenderer | string;
   [AccessorProp.AwaitCounter]: AwaitCounter | undefined;
-  [AccessorProp.PendingEffects]: unknown[] | undefined;
+  [AccessorProp.PendingEffects]: Map<Scope, Set<SignalFn>> | 0 | undefined;
   [AccessorProp.PlaceholderBranch]: BranchScope | undefined | 0;
   [AccessorProp.PendingRenders]: PendingRender[] | 0 | undefined;
   [AccessorProp.DetachedAwait]: Renderer | 0 | undefined;

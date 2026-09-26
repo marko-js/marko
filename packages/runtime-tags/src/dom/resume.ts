@@ -541,7 +541,7 @@ export let isResuming: undefined | 0 | 1;
 function runResumeEffects(render: RenderData) {
   try {
     isResuming = 1;
-    runEffects(render.m!([]), 1);
+    runEffects(render.m!([]));
   } finally {
     isResuming = 0;
   }

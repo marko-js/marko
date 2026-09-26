@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/show=false/>
+<button onClick() { show = true }>show</button>
+<try>
+  <@placeholder>loading</@placeholder>
+  <if=show>
+    <span>shown</span>
+    <script>
+      console.log("if script ran");
+    </script>
+  </if>
+  <await|v|=resolveAfter(show ? "client" : "server", 1)>
+    <div>${v}</div>
+  </await>
+</try>

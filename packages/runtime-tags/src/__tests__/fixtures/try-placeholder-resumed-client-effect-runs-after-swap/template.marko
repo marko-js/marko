@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/show=false/>
+<button#show onClick() { show = true }>show</button>
+<try>
+  <@placeholder>loading</@placeholder>
+  <if=show>
+    <button#inner onClick() { console.log("inner clicked") }>inner</button>
+  </if>
+  <await|v|=resolveAfter("server", 1)>
+    <div>${v}</div>
+  </await>
+</try>

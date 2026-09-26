@@ -1,0 +1,34 @@
+<!--M_[--><!--M_!^3-->loading<!--M_!3--><!--M_]1 a 3-->
+<t hidden M_=3><!--M_#b--><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[--><span>a</span><!--M_$5 a--><!--M_]3 a 5--></t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<p>c</p>
+<script>
+  M._.r = ["a0 5"];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c>
+  <div>b</div>
+</t>
+<script>
+  M._.r.push(_ => [3, {
+    Q: _(1, "a1")
+  }]);
+  M._.w()
+</script>
