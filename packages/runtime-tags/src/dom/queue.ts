@@ -14,8 +14,6 @@ export type PendingRender = {
 
 export let rendering: undefined | 0 | 1;
 export let runId = 2; // resumed scopes get `1`
-export const caughtError = new WeakSet<unknown[]>();
-export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
 let pendingRenders: PendingRender[] = [];
 
@@ -121,7 +119,7 @@ export let runEffects = ((effects) => {
   for (let i = 0; i < effects.length;) {
     (effects[i++] as (scope: Scope) => void)(effects[i++] as Scope);
   }
-}) as (effects: unknown[], checkPending?: boolean | 1) => void;
+}) as (effects: unknown[]) => void;
 
 let runRender = (render: PendingRender) => {
   // Skip renders whose branch was destroyed; short-circuits to a single flag
@@ -140,15 +138,15 @@ let runRender = (render: PendingRender) => {
 };
 
 let catchEnabled: undefined | 1;
-// The catch machinery lives in `catch.feat`; it installs by wrapping the
+// The catch machinery lives in `catch.feat`; it installs by replacing the
 // plain dispatchers, which imported bindings cannot reassign directly.
 export function installCatch(
-  wrapEffects: (base: typeof runEffects) => typeof runEffects,
+  catchEffects: typeof runEffects,
   wrapRender: (base: typeof runRender) => typeof runRender,
 ) {
   catchEnabled = 1;
   withBranches();
-  runEffects = wrapEffects(runEffects);
+  runEffects = catchEffects;
   runRender = wrapRender(runRender);
 }
 

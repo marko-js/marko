@@ -17,6 +17,7 @@ export const LoopKey = "M";
 export const LoopIndex = "I";
 export const ParentBranch = "N";
 export const PendingEffects = "J";
+export const PendingEffectScopes = "JS";
 export const PendingRenders = "W";
 export const PendingScopes = "Y";
 export const PlaceholderBranch = "P";

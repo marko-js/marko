@@ -1,15 +1,16 @@
 import {
   AccessorProp,
+  type AwaitCounter,
   type BranchScope,
   PendingRenderProp,
   type Scope,
 } from "../common/types";
-import { renderCatch } from "./control-flow";
+import { renderCatch, runPendingEffects } from "./control-flow";
 import {
-  caughtError,
   installCatch,
   type PendingRender,
-  placeholderShown,
+  queueAsyncRender,
+  queueEffect,
 } from "./queue";
 import type { SignalFn } from "./signals";
 
@@ -18,11 +19,23 @@ const handlePendingTry = (
   scope: Scope,
   branch: BranchScope | undefined,
 ) => {
-  // Defer the fn onto the nearest ancestor try branch still awaiting;
-  // a truthy return means it was deferred.
+  // Defer the fn onto its scope, listed on the nearest ancestor try branch still
+  // awaiting, once per scope and fn; a truthy return means it was deferred.
   while (branch) {
     if (branch[AccessorProp.AwaitCounter]?.i) {
-      return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
+      // A resumed counter completes in the inline runtime, outside any flush,
+      // so the try's first deferral makes it schedule one to release them.
+      return (scope[AccessorProp.PendingEffects] ||=
+        ((branch[AccessorProp.PendingEffectScopes] ||=
+          (branch[AccessorProp.AwaitCounter].m &&
+            ((complete: AwaitCounter["c"]) =>
+              (branch[AccessorProp.AwaitCounter]!.c = () =>
+                complete() ||
+                queueAsyncRender(branch!, queueEffect, runPendingEffects)))(
+              branch[AccessorProp.AwaitCounter].c,
+            ),
+          [])).push(scope),
+        new Set())).add(fn);
     }
     branch = branch[AccessorProp.ParentBranch];
   }
@@ -33,28 +46,23 @@ const handlePendingTry = (
 installCatch(
   // Deliberately no per-effect try/catch: an error thrown from a `<script>` or
   // `<lifecycle>` body escapes the flush instead of reaching `@catch`.
-  (runEffects) =>
-    (effects, checkPending = placeholderShown.has(effects)) => {
-      if (checkPending || caughtError.has(effects)) {
-        let i = 0;
-        let fn: SignalFn;
-        let scope: Scope;
-        let branch: BranchScope | undefined;
-        for (; i < effects.length;) {
-          fn = effects[i++] as SignalFn;
-          scope = effects[i++] as Scope;
-          if (
-            (branch = scope[AccessorProp.ClosestBranch])?.[AccessorProp.Gen] !==
-              0 &&
-            !(checkPending && handlePendingTry(fn, scope, branch))
-          ) {
-            fn(scope);
-          }
-        }
-      } else {
-        runEffects(effects);
+  (effects) => {
+    let i = 0;
+    let fn: SignalFn;
+    let scope: Scope;
+    let branch: BranchScope | undefined;
+    for (; i < effects.length;) {
+      fn = effects[i++] as SignalFn;
+      scope = effects[i++] as Scope;
+      if (
+        (branch = scope[AccessorProp.ClosestBranch])?.[AccessorProp.Gen] !==
+          0 &&
+        !handlePendingTry(fn, scope, branch)
+      ) {
+        fn(scope);
       }
-    },
+    }
+  },
   (runRender) => (render: PendingRender) => {
     try {
       let branch = render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
