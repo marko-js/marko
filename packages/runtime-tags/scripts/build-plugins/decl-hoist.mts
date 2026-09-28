@@ -2,7 +2,7 @@ import type { Plugin } from "rolldown";
 
 /**
  * Rolldown plugin that hoists all module-scope variable declarations into a
- * single `let` statement at the top of the chunk.
+ * single `let` statement at the top of the chunk, after its directive prologue.
  */
 export default function moduleScopeVarHoistPlugin(): Plugin {
   return {
@@ -16,9 +16,14 @@ export default function moduleScopeVarHoistPlugin(): Plugin {
       const decls: ((typeof ast.body)[number] & {
         type: "VariableDeclaration";
       })["declarations"] = [];
+      // Above a `"use strict"` directive the declarations would demote it to a
+      // plain string, which the minifier then drops.
+      let top = 0;
 
       for (const node of ast.body) {
-        if (
+        if ("directive" in node) {
+          top = node.end;
+        } else if (
           node.type === "VariableDeclaration" &&
           (node.kind === "let" || node.kind === "const")
         ) {
@@ -42,17 +47,17 @@ export default function moduleScopeVarHoistPlugin(): Plugin {
 
       if (!decls.length) return null;
 
-      // Move segments to position 0 in output order: names first, then inits.
-      // Each move() appends to what was previously moved to position 0, so we
+      // Move segments to `top` in output order: names first, then inits.
+      // Each move() appends to what was previously moved to `top`, so we
       // move them in natural output order (not reversed). prependRight() content
       // at seg.start travels with the segment when moved.
       for (let i = 0; i < decls.length; i++) {
         s.prependRight(decls[i].start, i === 0 ? "let " : ", ");
-        s.move(decls[i].start, decls[i].end, 0);
+        s.move(decls[i].start, decls[i].end, top);
       }
 
       // Append ";\n" after all moved segments, before the remaining file content.
-      s.prependRight(0, ";\n");
+      s.prependRight(top, ";\n");
 
       return s;
     },
