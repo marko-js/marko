@@ -15,7 +15,7 @@ import { isOutputDOM } from "../util/marko-config";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { addSetupExpr } from "../util/setup-statements";
+import { addSetupExpr } from "../util/setup-work";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains, traverseFindAwait } from "../util/traverse";
 

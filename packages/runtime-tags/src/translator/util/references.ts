@@ -85,7 +85,7 @@ import {
   type SerializeReason,
 } from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
-import { addSetupStatement } from "./setup-statements";
+import { addSetupWork } from "./setup-work";
 import {
   getBindingGetterIdentifier,
   getSignals,
@@ -1232,7 +1232,7 @@ export function finalizeReferences() {
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
         // lands in its section's setup signal.
-        addSetupStatement(expr.section);
+        addSetupWork(expr.section);
       }
       forEach(exprBindings.lazyBindings, (binding) => {
         binding.forcePersist = true;

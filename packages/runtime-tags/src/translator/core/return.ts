@@ -18,7 +18,7 @@ import { FORCED } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSerializeReason } from "../util/serialize-reasons";
-import { addSetupExpr } from "../util/setup-statements";
+import { addSetupExpr } from "../util/setup-work";
 import { addStatement, setSectionSerializedValue } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { translateByTarget } from "../util/visitors";

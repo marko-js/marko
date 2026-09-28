@@ -37,7 +37,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
-import { addSetupStatement } from "../util/setup-statements";
+import { addSetupWork } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
 import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
@@ -110,7 +110,7 @@ export default {
         addSerializeExpr(tagSection, tagExtra, kStatefulReason);
       } else {
         // A statically hidden `<show>` still writes its display in setup.
-        addSetupStatement(tagSection);
+        addSetupWork(tagSection);
       }
     },
     exit(tag) {

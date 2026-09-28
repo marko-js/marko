@@ -40,7 +40,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
-import { addSetupStatement } from "../util/setup-statements";
+import { addSetupWork } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import * as structure from "../util/structure";
 import {
@@ -99,7 +99,7 @@ export default {
     if (names) {
       analyzeDynamicStyle(tag, names);
       // Dynamic styles write their shell statement in setup.
-      addSetupStatement(getOrCreateSection(tag));
+      addSetupWork(getOrCreateSection(tag));
       structure.visit(tag, WalkCode.Get);
       structure.enterShallow(tag);
       structure.writeTo(tag)`<style></style>`;

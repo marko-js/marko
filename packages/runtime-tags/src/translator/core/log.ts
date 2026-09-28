@@ -10,7 +10,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { addSetupExpr } from "../util/setup-statements";
+import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 
 export default {

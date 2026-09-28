@@ -37,7 +37,7 @@ import {
   startSection,
 } from "../../util/sections";
 import { isOwnResumeReason } from "../../util/serialize-reasons";
-import { finalizeSetupWork } from "../../util/setup-statements";
+import { finalizeSetupWork } from "../../util/setup-work";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
