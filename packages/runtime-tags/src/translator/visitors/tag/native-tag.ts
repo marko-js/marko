@@ -72,7 +72,7 @@ import {
   addSerializeReason,
   getSerializeReason,
 } from "../../util/serialize-reasons";
-import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
+import { addSetupExpr, addSetupWork } from "../../util/setup-work";
 import {
   addHTMLEffectCall,
   addStatement,
@@ -360,12 +360,12 @@ export default {
 
         if (injectNonce) {
           // A nonce statement with no references is written in setup.
-          addSetupStatement(tagSection);
+          addSetupWork(tagSection);
         }
 
         if (relatedControllable?.attrs[1]) {
           // Controllable change handlers register an effect in setup.
-          addSetupStatement(tagSection);
+          addSetupWork(tagSection);
         }
 
         for (const name in seen) {

@@ -39,7 +39,7 @@ import {
 } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection, StructureKind } from "../../util/sections";
-import { addSetupStatement } from "../../util/setup-statements";
+import { addSetupWork } from "../../util/setup-work";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
@@ -117,7 +117,7 @@ export default {
       ) {
         // Add the child's setup call unless it proved its setup export a noop;
         // load tags always wire it up, and a self call follows `callSections`.
-        addSetupStatement(getOrCreateSection(tag));
+        addSetupWork(getOrCreateSection(tag));
       }
 
       knownTagAnalyze(

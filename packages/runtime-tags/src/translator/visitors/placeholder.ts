@@ -27,7 +27,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
-import { addSetupExpr } from "../util/setup-statements";
+import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";

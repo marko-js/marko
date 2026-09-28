@@ -63,7 +63,7 @@ import {
   getSerializeSourcesForExprs,
 } from "./serialize-reasons";
 import { setTagDownstream } from "./set-tag-sections-downstream";
-import { addSetupExpr, addSetupStatement } from "./setup-statements";
+import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
   addStatement,
   getResumeRegisterId,
@@ -148,7 +148,7 @@ export function knownTagAnalyze(
 
   if (varBinding) {
     // Tag variables emit a `_var` statement in the parent's setup.
-    addSetupStatement(section);
+    addSetupWork(section);
     const mutatesTagVar = !!(
       tag.node.var!.type === "Identifier" &&
       tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
@@ -660,7 +660,7 @@ function analyzeAttrs(
         remaining.delete("content");
         known.content = { value: undefined }; // TODO: update when supporting default params
         // The content signal call is applied unconditionally in setup.
-        addSetupStatement(section);
+        addSetupWork(section);
       }
     }
   }
@@ -767,7 +767,7 @@ function analyzeAttrs(
 
     if (remaining.size) {
       // Unset props are applied with no value (and no references) in setup.
-      addSetupStatement(section);
+      addSetupWork(section);
     }
 
     if (propTree.rest && !propTree.rest.props) {

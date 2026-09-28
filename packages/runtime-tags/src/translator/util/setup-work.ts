@@ -5,16 +5,16 @@ import { forEachSection, type Section } from "./sections";
 import { createSectionState } from "./state";
 
 /**
- * Tracks during analyze whether translate may add setup-signal statements, so
- * callers of a template or `<define>` body can skip calling a noop setup.
+ * Tracks during analyze whether a section has work keyed by setup, so callers
+ * of a template or `<define>` body can skip calling a noop setup.
  */
 
-const [getSetupInfo] = createSectionState("setupStatements", () => ({
+const [getSetupInfo] = createSectionState("setupWork", () => ({
   forced: false,
   exprs: new Set<t.NodeExtra>(),
 }));
 
-export function addSetupStatement(section: Section) {
+export function addSetupWork(section: Section) {
   getSetupInfo(section).forced = true;
 }
 

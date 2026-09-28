@@ -16,7 +16,7 @@ import {
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { addSetupExpr } from "../util/setup-statements";
+import { addSetupExpr } from "../util/setup-work";
 import { addValue, initValue } from "../util/signals";
 import translateVar from "../util/translate-var";
 
