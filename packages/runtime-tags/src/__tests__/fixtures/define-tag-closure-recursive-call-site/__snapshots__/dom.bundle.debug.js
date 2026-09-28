@@ -1,5 +1,6 @@
 // template.marko
-const $Tree_content__walks = "D%b%l%c", $Tree_content__template = "<span><!><!></span><!><!>";
+const $Tree_content__walks = "D%b%l%c";
+const $Tree_content__template = "<span><!><!></span><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<button>deeper</button>${_w0}<!>`)($Tree_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($Tree_content__walks);
 const $if_content__level = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $Tree_content__level($scope["#childScope/0"], $scope._.level + 1));

@@ -13,7 +13,8 @@ var child_default = _template("a", (input) => {
 var import_html = require_html();
 var import_escape_xml = require_escape_xml();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType = "c", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "c";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<button id=class>${(0, import_escape_xml.x)(state.count)}</button>`);
 }, { t: _marko_componentType }, {
@@ -33,6 +34,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	$Child_withLoadAssets({});
 	_await($scope0_id, "c", resolveAfter(1, 1), () => {
-		_dynamic_tag(_scope_id(), "a", _marko_template, {}, 0, 0, 0);
+		const $scope1_id = _scope_id();
+		_dynamic_tag($scope1_id, "a", _marko_template, {}, 0, 0, 0);
 	}, 0);
 }, 1);

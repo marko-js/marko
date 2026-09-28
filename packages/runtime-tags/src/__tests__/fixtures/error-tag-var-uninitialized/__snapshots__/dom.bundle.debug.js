@@ -1,5 +1,6 @@
 // template.marko
-const $Tag_content__walks = "b%c", $Tag_content__template = "<!><!><!>";
+const $Tag_content__walks = "b%c";
+const $Tag_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tag_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b0${_w0}&b`)($Tag_content__walks);
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");

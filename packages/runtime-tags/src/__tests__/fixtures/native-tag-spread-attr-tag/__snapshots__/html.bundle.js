@@ -15,6 +15,7 @@ var my_box_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	my_box_default({
 		head: attrTag({
 			id: "h",
@@ -25,7 +26,7 @@ var template_default = _template("a", (input) => {
 				_html(`<button>${_text_resume($scope1_id, "b", n)}</button>${_el_resume($scope1_id, "a")}`);
 				_script($scope1_id, "a0");
 				_scope($scope1_id, { c: n });
-			}, _scope_id())
+			}, $scope0_id)
 		}),
 		foot: attrTag({ class: "f" })
 	});

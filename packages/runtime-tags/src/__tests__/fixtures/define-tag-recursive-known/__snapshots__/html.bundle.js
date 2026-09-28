@@ -1,6 +1,7 @@
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	const Foo = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__input_bar = _serialize_guard($scope1_reason, 1), $sg__input_message = _serialize_guard($scope1_reason, 2), $si__input_bar = _serialize_if($scope1_reason, 1);
@@ -23,6 +24,6 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", _serialize_guard($scope1_reason, 0) || $sg__input_bar, $sg__input_bar, $sg__input_bar);
 		$si__input_bar && _scope($scope1_id, { e: input.message });
-	}, _scope_id()) };
+	}, $scope0_id) };
 	Foo.content({ bar: "hi" });
 }, 1);

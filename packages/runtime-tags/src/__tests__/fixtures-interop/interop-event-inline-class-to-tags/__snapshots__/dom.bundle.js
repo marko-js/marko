@@ -20,7 +20,8 @@ var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "a", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "a";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 const _marko_class_fn = (_component) => function(count) {
 	_component.handlePing(count);
 };

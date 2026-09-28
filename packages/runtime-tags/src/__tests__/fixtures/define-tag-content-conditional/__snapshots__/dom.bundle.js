@@ -1,5 +1,6 @@
 // template.marko
-const $Layout_content__walks = "D%l", $Layout_content__template = "<section><!></section>";
+const $Layout_content__walks = "D%l";
+const $Layout_content__template = "<section><!></section>";
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content(0);
 const $Layout_content2 = /*@__PURE__*/ _content("a1", "shown content");
 const $if_content__setup = ($scope) => $content_direct($scope.a, $Layout_content2($scope));

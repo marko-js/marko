@@ -21,7 +21,8 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let data = child_default({ extra: 1 });
 	_var($scope0_id, "b", $childScope, "a0");
-	_html(`<div>${_text_resume($scope0_id, "c", `${name} ${data}`)}</div>`);
+	const message = `${name} ${data}`;
+	_html(`<div>${_text_resume($scope0_id, "c", message)}</div>`);
 	_scope($scope0_id, {
 		d: name,
 		a: _existing_scope($childScope)

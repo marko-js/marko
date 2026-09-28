@@ -1,7 +1,8 @@
 // tags/components/hello-internal.marko
 var import_html = require_html();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType = "c", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "c";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<h1>Hello world</h1>");
 }, { t: _marko_componentType }, {});
@@ -10,7 +11,8 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 s("c", _marko_template);
 var hello_default = _template("b", (input) => {
 	_scope_reason();
-	_dynamic_tag(_scope_id(), "a", _marko_template, {}, 0, 0, 0);
+	const $scope0_id = _scope_id();
+	_dynamic_tag($scope0_id, "a", _marko_template, {}, 0, 0, 0);
 });
 
 // template.marko

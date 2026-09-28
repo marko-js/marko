@@ -4,8 +4,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Inner = { content: _content("a0", (input) => {
-		const $scope2_id = _scope_id();
-		_serialize_guard(_scope_reason(), 0);
+		const $scope2_id = _scope_id(), $scope2_reason = _scope_reason();
+		_serialize_guard($scope2_reason, 0);
 		let open = false;
 		_html(`<button>toggle</button>${_el_resume($scope2_id, "a")}`);
 		_if(() => {}, $scope2_id, "b");

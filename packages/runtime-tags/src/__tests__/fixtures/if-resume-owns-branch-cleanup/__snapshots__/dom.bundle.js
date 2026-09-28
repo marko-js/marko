@@ -1,8 +1,9 @@
 // tags/child.marko
 const $template = "<!><!><!>";
-const $if$1 = /*@__PURE__*/ _if(0, "<p>inner</p>", 0, _script("b0", ($scope) => _lifecycle($scope, { onDestroy: function() {
+const $if_content__setup = _script("b0", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	document.getElementById("ref").textContent = "inner destroyed";
-} })));
+} }));
+const $if$1 = /*@__PURE__*/ _if(0, "<p>inner</p>", 0, $if_content__setup);
 const $show$1 = ($scope, show) => $if$1($scope, show ? 0 : 1);
 
 // template.marko

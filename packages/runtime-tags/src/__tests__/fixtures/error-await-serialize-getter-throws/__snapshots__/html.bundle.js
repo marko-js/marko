@@ -1,7 +1,8 @@
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_await(_scope_id(), "a", resolveAfter(1, 1), (value) => {
+	const $scope0_id = _scope_id();
+	_await($scope0_id, "a", resolveAfter(1, 1), (value) => {
 		const $scope1_id = _scope_id();
 		const obj = { get bad() {
 			throw new Error("getter failed");

@@ -11,7 +11,8 @@ var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType$1 = "__tests__/components/class-layout.marko", _marko_template$1 = (0, import_vdom.t)(_marko_componentType$1);
+const _marko_componentType$1 = "__tests__/components/class-layout.marko";
+const _marko_template$1 = (0, import_vdom.t)(_marko_componentType$1);
 (0, import_registry.r)(_marko_componentType$1, () => _marko_template$1);
 const _marko_component$1 = {
 	onCreate() {
@@ -35,7 +36,8 @@ _marko_template$1._ = (0, import_renderer.default)(function(input, out, _compone
 _marko_template$1.Component = (0, import_defineComponent.default)(_marko_component$1, _marko_template$1._);
 
 // components/class-static.marko
-const _marko_componentType = "__tests__/components/class-static.marko", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "__tests__/components/class-static.marko";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {

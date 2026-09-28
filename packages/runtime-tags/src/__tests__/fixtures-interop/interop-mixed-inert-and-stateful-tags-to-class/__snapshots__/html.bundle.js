@@ -2,7 +2,8 @@
 var import_html = require_html();
 var import_escape_xml = require_escape_xml();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType$1 = "c", _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
+const _marko_componentType$1 = "c";
+const _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
 _marko_template$1._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<div id=message>${(0, import_escape_xml.x)(input.value)}</div>`);
 }, {
@@ -12,7 +13,8 @@ _marko_template$1._ = (0, import_renderer.default)(function(input, out, _compone
 
 // components/class-counter.marko
 var import_attr = /* @__PURE__ */ __toESM(require_attr());
-const _marko_componentType = "b", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "b";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<button id=class${(0, import_attr.default)("data-parent", input.count)}>${(0, import_escape_xml.x)(state.count)}</button>`);
 }, { t: _marko_componentType }, {

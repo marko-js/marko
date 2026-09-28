@@ -1,6 +1,7 @@
 // tags/list.marko
 var list_default = _template("e", (input) => {
-	_serialize_guard(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason();
+	_serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<button id=open>open</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");

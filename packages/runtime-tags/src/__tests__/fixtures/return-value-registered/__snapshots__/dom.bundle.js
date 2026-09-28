@@ -5,4 +5,4 @@ function $getter() {
 _resumed.b0 = $getter;
 
 // template.marko
-const $get = /*@__PURE__*/ _const(3, _script("a0", ($scope) => $scope.c.textContent = $scope.d()));
+const $get__script = _script("a0", ($scope) => $scope.c.textContent = $scope.d());

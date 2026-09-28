@@ -18,7 +18,8 @@ const $input_content = /*@__PURE__*/ _const("input_content", $if_content__input_
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $Box_content2__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1), $Box_content2__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
+const $Box_content2__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
+const $Box_content2__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Box_content2__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Box_content2__walks);
 const $child_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");

@@ -17,6 +17,7 @@ const $pattern2 = _var_resume("a0", ($scope, $pattern) => {
 	$inc($scope, $pattern.inc);
 });
 const $count = ($scope, count) => _text($scope.d, count);
-const $inc = /*@__PURE__*/ _const(6, _script("a1", ($scope) => _on($scope.c, "click", function() {
+const $inc__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$scope.g();
-})));
+}));
+const $inc = /*@__PURE__*/ _const(6, $inc__script);

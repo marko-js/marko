@@ -1,5 +1,6 @@
 // template.marko
-const $Box_content__walks = " D%c%l", $Box_content__template = "<button class=box><!> <!></button>";
+const $Box_content__walks = " D%c%l";
+const $Box_content__template = "<button class=box><!> <!></button>";
 const $template = /*@__PURE__*/ ((_w0) => `<button id=toggle>toggle</button>${_w0}<!><!>`)($Box_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&%c`)($Box_content__walks);
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");

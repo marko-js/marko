@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 	_set_serialize_reason(2);
 	let $item5;
 	forUntil(count, 0, 1, (j) => {
-		if (j % 2 === mode % 2) $item5 = attrTags($item5, { content: _content("a4", () => {
+		if (j % 2 === 0) $item5 = attrTags($item5, { content: _content("a4", () => {
 			_scope_reason();
 			const $scope5_id = _scope_id();
 			_html(`for-if ${_text_resume($scope5_id, "a", j, 2)}`);

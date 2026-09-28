@@ -3,7 +3,8 @@ const $input_n__script = _script("b0", ($scope) => console.log($scope.c));
 const $input_n = /*@__PURE__*/ _const(2, $input_n__script);
 
 // template.marko
-const $Foo_content__n = /*@__PURE__*/ _const(2, _script("a1", ($scope) => console.log($scope.c)));
+const $Foo_content__n__script = _script("a1", ($scope) => console.log($scope.c));
+const $Foo_content__n = /*@__PURE__*/ _const(2, $Foo_content__n__script);
 const $n = /*@__PURE__*/ _let(17, ($scope) => {
 	$input_n($scope.a, $scope.r);
 	_text($scope.b, $scope.r);

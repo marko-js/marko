@@ -22,4 +22,5 @@ const $store = _var_resume("a0", ($scope, store) => {
 });
 const $for = /*@__PURE__*/ _for_of_unkeyed(3, "<li> </li>", "D ", 0, $for_content__$params);
 const $list = ($scope, list) => $for($scope, [list]);
-const $clear = /*@__PURE__*/ _const(6, _script("a1", ($scope) => _on($scope.c, "click", $scope.g)));
+const $clear__script = _script("a1", ($scope) => _on($scope.c, "click", $scope.g));
+const $clear = /*@__PURE__*/ _const(6, $clear__script);

@@ -11,7 +11,8 @@ var component_browser_default = class {
 
 // components/split-button/index.marko
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "b", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "b";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => component_browser_default);
 const _marko_component = {};
 component_browser_default.renderer = _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {

@@ -2,7 +2,8 @@
 var import_html = require_html();
 var import_escape_xml = require_escape_xml();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "__tests__/template.marko";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_component = {
 	onCreate() {
 		this.state = { count: 0 };

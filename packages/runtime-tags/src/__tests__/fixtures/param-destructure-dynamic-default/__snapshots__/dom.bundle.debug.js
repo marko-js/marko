@@ -1,5 +1,8 @@
 // template.marko
-const $ChildA_content__walks = " D%c%l", $ChildA_content__template = "<div class=a><!> <!></div>", $ChildB_content__walks = " D%c%l", $ChildB_content__template = "<div class=b><!> <!></div>";
+const $ChildA_content__walks = " D%c%l";
+const $ChildA_content__template = "<div class=a><!> <!></div>";
+const $ChildB_content__walks = " D%c%l";
+const $ChildB_content__template = "<div class=b><!> <!></div>";
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `<!>${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}<button>Increment default</button>`)($ChildA_content__template, $ChildA_content__template, $ChildA_content__template, $ChildB_content__template, $ChildB_content__template, $ChildB_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}& b`)($ChildA_content__walks, $ChildA_content__walks, $ChildA_content__walks, $ChildB_content__walks, $ChildB_content__walks, $ChildB_content__walks);
 const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);

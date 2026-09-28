@@ -1,5 +1,6 @@
 // template.marko
-const $Item_content__walks = "b%b D l", $Item_content__template = "<!><!><button> </button>";
+const $Item_content__walks = "b%b D l";
+const $Item_content__template = "<!><!><button> </button>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks);
 const $if_content__depth = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Item_content__tag_input_depth($scope["#childScope/0"], $scope._.depth - 1));

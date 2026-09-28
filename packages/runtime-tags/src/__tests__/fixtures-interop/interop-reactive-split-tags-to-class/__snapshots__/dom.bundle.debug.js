@@ -18,7 +18,8 @@ var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_component_browser = /* @__PURE__ */ __toESM(require_component_browser());
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "__tests__/components/split-display/index.marko", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "__tests__/components/split-display/index.marko";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => import_component_browser.default);
 const _marko_component = {};
 import_component_browser.default.renderer = _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {

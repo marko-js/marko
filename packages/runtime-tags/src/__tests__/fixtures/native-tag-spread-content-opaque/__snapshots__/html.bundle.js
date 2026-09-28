@@ -8,7 +8,8 @@ var render_input_default = _template("c", (input) => {
 
 // tags/my-box.marko
 var my_box_default = _template("b", (input) => {
-	_serialize_guard(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason();
+	_serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let show = false;
 	_html("<div");
@@ -26,12 +27,13 @@ var my_box_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	my_box_default({
 		class: "x",
 		content: _content_resume("a0", () => {
 			_scope_reason();
 			_scope_id();
 			_html("Body Content");
-		}, _scope_id())
+		}, $scope0_id)
 	});
 }, 1);

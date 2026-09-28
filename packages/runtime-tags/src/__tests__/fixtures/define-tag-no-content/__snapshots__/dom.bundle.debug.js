@@ -1,5 +1,6 @@
 // template.marko
-const $Baz_content__walks = "b", $Baz_content__template = "<div>Baz Content</div>";
+const $Baz_content__walks = "b";
+const $Baz_content__template = "<div>Baz Content</div>";
 const $template = /*@__PURE__*/ ((_w0) => `<!><!><!>${_w0}<!>`)($Baz_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b%b/${_w0}&b`)($Baz_content__walks);
 const $Baz_content2 = _content("__tests__/template.marko_4*content", "<div>Baz Fallback</div>");

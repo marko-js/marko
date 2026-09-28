@@ -10,9 +10,10 @@ const $state = /*@__PURE__*/ _let(4, ($scope) => {
 	$state_tag($scope, $scope.e.tag);
 	$state_n__OR__state_tag($scope);
 });
-const $state_tag__OR__n = /*@__PURE__*/ _or(8, _script("a0", ($scope) => _on($scope.b, "click", function() {
+const $state_tag__OR__n__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$log($scope, `${$scope.h}[${$scope.f}:${$scope.g}]`);
-})));
+}));
+const $state_tag__OR__n = /*@__PURE__*/ _or(8, $state_tag__OR__n__script);
 const $state_n = /*@__PURE__*/ _const(5, ($scope) => {
 	$n($scope, $scope.f);
 	$state_tag__OR__n($scope);

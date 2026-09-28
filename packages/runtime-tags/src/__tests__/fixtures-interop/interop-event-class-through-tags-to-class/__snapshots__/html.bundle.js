@@ -2,7 +2,8 @@
 var import_escape_xml = require_escape_xml();
 var import_html = require_html();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType$1 = "b", _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
+const _marko_componentType$1 = "b";
+const _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
 _marko_template$1._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<button id=class-child>Change</button>");
 }, { t: _marko_componentType$1 }, { handleClick() {
@@ -12,7 +13,7 @@ _marko_template$1._ = (0, import_renderer.default)(function(input, out, _compone
 // components/tags-child.marko
 s("b", _marko_template$1);
 var tags_child_default = _template("c", (input) => {
-	const $sg__input_onChange = _serialize_guard(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason(), $sg__input_onChange = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", _marko_template$1, { "on-change": _resume(function() {
 		input.onChange?.();
@@ -24,7 +25,8 @@ var tags_child_default = _template("c", (input) => {
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components_tag());
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
-const _marko_componentType = "a", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "a";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_class_fn = (_component) => function() {
 	_component.handleChange();
 };

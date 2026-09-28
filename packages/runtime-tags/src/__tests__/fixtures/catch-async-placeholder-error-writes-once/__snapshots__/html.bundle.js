@@ -23,7 +23,8 @@ var template_default = _template("b", (input) => {
 	}, $scope0_id), {
 		placeholder: attrTag({ content: _content_resume("b0", () => {
 			_scope_reason();
-			_await(_scope_id(), "a", resolveAfter("placeholder", 2), (value) => {
+			const $scope2_id = _scope_id();
+			_await($scope2_id, "a", resolveAfter("placeholder", 2), (value) => {
 				_scope_id();
 				_html(_escape(value));
 			}, 0);

@@ -11,7 +11,8 @@ const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	$input_value($scope.a, $scope.d);
 	_text($scope.c, $scope.d);
 });
-const $setCount = _var_resume("a1", /*@__PURE__*/ _const(4, _script("a2", ($scope) => $scope.e())));
+const $setCount__script = _script("a2", ($scope) => $scope.e());
+const $setCount = _var_resume("a1", /*@__PURE__*/ _const(4, $setCount__script));
 const $valueChange = ($scope) => (_new_count) => {
 	$count($scope, _new_count);
 };

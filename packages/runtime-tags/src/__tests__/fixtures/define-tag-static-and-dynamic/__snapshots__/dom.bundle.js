@@ -1,5 +1,6 @@
 // template.marko
-const $Box_content__walks = " D%c%l", $Box_content__template = "<button class=box><!> <!></button>";
+const $Box_content__walks = " D%c%l";
+const $Box_content__template = "<button class=box><!> <!></button>";
 const $useBoxBoxdiv_content = _content("a3", "dynamic");
 const $Box_content__count = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
 const $Box_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {

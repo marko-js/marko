@@ -3,7 +3,8 @@ var import_vdom = require_vdom();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType$2 = "__tests__/components/class-card.marko", _marko_template$2 = (0, import_vdom.t)(_marko_componentType$2);
+const _marko_componentType$2 = "__tests__/components/class-card.marko";
+const _marko_template$2 = (0, import_vdom.t)(_marko_componentType$2);
 (0, import_registry.r)(_marko_componentType$2, () => _marko_template$2);
 const _marko_component$2 = {};
 _marko_template$2._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
@@ -18,7 +19,8 @@ _marko_template$2._ = (0, import_renderer.default)(function(input, out, _compone
 _marko_template$2.Component = (0, import_defineComponent.default)(_marko_component$2, _marko_template$2._);
 
 // components/class-default.marko
-const _marko_componentType$1 = "__tests__/components/class-default.marko", _marko_template$1 = (0, import_vdom.t)(_marko_componentType$1);
+const _marko_componentType$1 = "__tests__/components/class-default.marko";
+const _marko_template$1 = (0, import_vdom.t)(_marko_componentType$1);
 (0, import_registry.r)(_marko_componentType$1, () => _marko_template$1);
 const _marko_component$1 = {};
 _marko_template$1._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
@@ -60,7 +62,8 @@ function render(input, out) {
 // template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
-const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "__tests__/template.marko";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => _marko_template);
 const _marko_component = {
 	onCreate() {

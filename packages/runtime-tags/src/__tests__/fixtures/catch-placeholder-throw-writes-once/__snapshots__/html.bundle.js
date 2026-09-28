@@ -13,9 +13,10 @@ var template_default = _template("a", (input) => {
 		placeholder: attrTag({ content: _content_resume("a0", () => {
 			_scope_reason();
 			_scope_id();
-			_html(_escape((() => {
+			const x = (() => {
 				throw new Error("bang");
-			})()));
+			})();
+			_html(_escape(x));
 		}, $scope0_id) }),
 		catch: attrTag({ content: _content_resume("a1", (err) => {
 			const $scope3_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope3_reason, 0);

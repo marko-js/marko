@@ -1,5 +1,6 @@
 // template.marko
-const $Child_content__walks = " b", $Child_content__template = "<button></button>";
+const $Child_content__walks = " b";
+const $Child_content__template = "<button></button>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b0${_w0}&b`)($Child_content__walks);
 const $Child_content__$el_getter = _el("__tests__/template.marko_1_#button#0", "#button/0");

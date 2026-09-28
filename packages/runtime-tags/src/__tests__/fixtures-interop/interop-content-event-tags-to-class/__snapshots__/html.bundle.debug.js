@@ -3,7 +3,8 @@ var import_html = require_html();
 var import_escape_xml = require_escape_xml();
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType$1 = "__tests__/components/class-inner.marko", _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
+const _marko_componentType$1 = "__tests__/components/class-inner.marko";
+const _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
 const _marko_component$1 = {
 	onCreate() {
 		this.state = { m: 0 };
@@ -44,7 +45,8 @@ var tags_mid_default = _template("__tests__/components/tags-mid.marko", (input) 
 
 // template.marko
 var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components_tag());
-const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "__tests__/template.marko";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_component = {
 	onCreate() {
 		this.state = { n: 0 };

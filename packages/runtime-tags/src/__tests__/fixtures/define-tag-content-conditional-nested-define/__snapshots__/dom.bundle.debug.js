@@ -1,5 +1,8 @@
 // template.marko
-const $Inner_content__walks = " b%c", $Inner_content__template = "<button>toggle</button><!><!>", $Outer_content2__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Inner_content__walks), $Outer_content2__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Inner_content__template);
+const $Inner_content__walks = " b%c";
+const $Inner_content__template = "<button>toggle</button><!><!>";
+const $Outer_content2__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Inner_content__walks);
+const $Outer_content2__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Inner_content__template);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Outer_content2__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Outer_content2__walks);
 const $Inner_content2__outer_label = /*@__PURE__*/ _closure_get("outer_label/5", ($scope) => _text($scope["#text/0"], $scope._.outer_label), 0, "__tests__/template.marko_5_outer_label#3/subscribe");

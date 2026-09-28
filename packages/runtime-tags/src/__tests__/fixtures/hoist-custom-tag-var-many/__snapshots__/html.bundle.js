@@ -14,19 +14,25 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_hoist($scope0_id, "a0");
 	_for_to(5, 0, 1, () => {
-		_scope(_scope_id(), { c: child_default({}) });
+		const $scope1_id = _scope_id();
+		let setHtml = child_default({});
+		_scope($scope1_id, { c: setHtml });
 	}, 0, $scope0_id, "a", 1, 0, 0, 0, 1);
 	let to = 3;
 	_html("<hr>");
 	_for_to(to, 0, 1, () => {
-		_scope(_scope_id(), { c: child_default({}) });
+		const $scope2_id = _scope_id();
+		let setHtml2 = child_default({});
+		_scope($scope2_id, { c: setHtml2 });
 	}, 0, $scope0_id, "b", 1, 0, 0, 0, 1);
 	_html("<hr>");
 	_for_to(3, 0, 1, (i) => {
 		const $scope3_id = _scope_id();
 		_html("<ul>");
 		_for_to(3, 0, 1, (j) => {
-			_scope(_scope_id(), { c: child_default({}) });
+			const $scope4_id = _scope_id();
+			let setHtml3 = child_default({});
+			_scope($scope4_id, { c: setHtml3 });
 		}, 0, $scope3_id, "a", 1, 0, 0, 0, 1);
 		_html("</ul>");
 		_scope($scope3_id, {});

@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $sg__input_show = _serialize_guard(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_hoist($scope0_id, "a0");
 	const $thing_content__subscribers = /* @__PURE__ */ new Set();

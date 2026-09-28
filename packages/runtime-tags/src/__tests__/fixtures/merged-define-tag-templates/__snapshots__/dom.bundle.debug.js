@@ -1,5 +1,8 @@
 // template.marko
-const $A_content__walks = " b", $A_content__template = " ", $B_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($A_content__walks), $B_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($A_content__template);
+const $A_content__walks = " b";
+const $A_content__template = " ";
+const $B_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($A_content__walks);
+const $B_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($A_content__template);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($B_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($B_content__walks);
 const $B_content__value_length = ($scope, value_length) => $A_content__value($scope["#childScope/0"], value_length);

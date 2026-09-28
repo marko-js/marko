@@ -1,5 +1,8 @@
 // template.marko
-const $Child_content__walks = " b", $Child_content__template = "<select></select>", $Wrap_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks), $Wrap_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
+const $Child_content__walks = " b";
+const $Child_content__template = "<select></select>";
+const $Wrap_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks);
+const $Wrap_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks);
 const $option_content3 = /*@__PURE__*/ _content("__tests__/template.marko_6*content", "Three");

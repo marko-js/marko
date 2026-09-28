@@ -4,7 +4,8 @@ var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "__tests__/template.marko";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
@@ -53,7 +54,8 @@ var component_browser_default = class {
 
 // components/class-host/index.marko
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "__tests__/components/class-host/index.marko", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "__tests__/components/class-host/index.marko";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 const _marko_class_fn = (_component) => function(count) {
 	_component.handlePing(count);
 };

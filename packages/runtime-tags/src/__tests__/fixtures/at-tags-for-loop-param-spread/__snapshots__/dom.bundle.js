@@ -11,7 +11,8 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
-const $Row_content__walks = "D l", $Row_content__template = "<em> </em>";
+const $Row_content__walks = "D l";
+const $Row_content__template = "<em> </em>";
 const $if_content__item_text = /*@__PURE__*/ _if_closure(2, 0, ($scope) => $input_text($scope.a, $scope._.f));
 const $if_content__setup = ($scope) => {
 	$if_content__item_text._($scope);

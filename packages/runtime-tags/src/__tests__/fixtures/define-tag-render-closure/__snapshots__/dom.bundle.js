@@ -1,5 +1,6 @@
 // template.marko
-const $MyTag_content__walks = "D l", $MyTag_content__template = "<div> </div>";
+const $MyTag_content__walks = "D l";
+const $MyTag_content__template = "<div> </div>";
 const $if_content__setup = ($scope) => {
 	$MyTag_content__setup._($scope.a, $scope._);
 };

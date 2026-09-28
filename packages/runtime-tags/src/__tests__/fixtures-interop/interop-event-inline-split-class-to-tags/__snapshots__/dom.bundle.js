@@ -28,7 +28,8 @@ var component_browser_default = class {
 
 // components/class-host/index.marko
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "c", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "c";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 const _marko_node = (0, import_const_element.default)("div", { "id": "class" }, 1).t("none");
 const _marko_class_fn = (_component) => function(count) {
 	_component.handlePing(count);

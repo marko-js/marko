@@ -12,6 +12,7 @@ var my_box_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	my_box_default({
 		class: "x",
 		content: _content("a1", () => {
@@ -21,6 +22,6 @@ var template_default = _template("a", (input) => {
 			_html(`<button type=button class=inc>increment</button>${_el_resume($scope1_id, "a")}<span class=count>${_text_resume($scope1_id, "b", count)}</span>`);
 			_script($scope1_id, "a0");
 			_scope($scope1_id, { c: count });
-		}, _scope_id())
+		}, $scope0_id)
 	});
 }, 1);

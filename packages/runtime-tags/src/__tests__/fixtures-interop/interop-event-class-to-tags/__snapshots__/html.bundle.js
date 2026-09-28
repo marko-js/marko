@@ -18,7 +18,8 @@ var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components_tag());
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType = "a", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "a";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<div id=class>${(0, import_escape_xml.x)(state.pinged)}</div>`);
 	(0, import_dynamic_tag.default)(out, tags_pinger_default, null, null, null, null, _componentDef, "1", [[
