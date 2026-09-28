@@ -40,6 +40,8 @@ export function _to_text(value: unknown) {
   return value || value === 0 ? value + "" : "";
 }
 
+// Every name is set without a namespace, so `xlink:href` and `xml:lang` are
+// unsupported on the client; SVG 2's `href` and plain `lang` replace them.
 export function _attr(element: Element, name: string, value: unknown) {
   if (MARKO_DEBUG) {
     assertValidAttrValue(name, value);
