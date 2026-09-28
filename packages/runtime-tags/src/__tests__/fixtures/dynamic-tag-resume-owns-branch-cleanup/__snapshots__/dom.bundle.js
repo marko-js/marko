@@ -1,8 +1,9 @@
 // tags/child.marko
 const $template = "<!><!><!>";
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, /* @__PURE__ */ _content("b0", 0, 0, _script("b1", ($scope) => _lifecycle($scope, { onDestroy: function() {
+const $showdivnull_content__setup = _script("b1", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	document.getElementById("ref").textContent = "dyn destroyed";
-} }))));
+} }));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, /* @__PURE__ */ _content("b0", 0, 0, $showdivnull_content__setup));
 const $show$1 = ($scope, show) => $dynamicTag($scope, show ? "div" : null);
 
 // template.marko

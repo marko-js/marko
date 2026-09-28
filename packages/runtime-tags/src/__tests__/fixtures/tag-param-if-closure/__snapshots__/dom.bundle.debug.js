@@ -1,5 +1,6 @@
 // template.marko
-const $Foo_content2__walks = "b%c", $Foo_content2__template = "<!><!><!>";
+const $Foo_content2__walks = "b%c";
+const $Foo_content2__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<button>Increment</button>${_w0}<!>`)($Foo_content2__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($Foo_content2__walks);
 const $Foo_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);

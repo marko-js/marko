@@ -19,7 +19,8 @@ var tags_counter_default = _template("__tests__/tags/tags-counter.marko", (input
 
 // components/class-section.marko
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType$1 = "__tests__/components/class-section.marko", _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
+const _marko_componentType$1 = "__tests__/components/class-section.marko";
+const _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
 const _marko_component$1 = {};
 _marko_template$1._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<section>");
@@ -34,7 +35,8 @@ _marko_template$1._ = (0, import_renderer.default)(function(input, out, _compone
 
 // template.marko
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
-const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "__tests__/template.marko";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_component = {};
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<div>");

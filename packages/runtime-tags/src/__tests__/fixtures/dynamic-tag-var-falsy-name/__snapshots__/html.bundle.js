@@ -10,7 +10,7 @@ var wrapper_default = _template("c", (input) => {
 
 // tags/child/index.marko
 var child_default = _template("b", (input) => {
-	const $si__input_a11yText = _serialize_if(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason(), $si__input_a11yText = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $btn_getter = _hoist($scope0_id, "b0");
 	const $wrapper_content__subscribers = /* @__PURE__ */ new Set();

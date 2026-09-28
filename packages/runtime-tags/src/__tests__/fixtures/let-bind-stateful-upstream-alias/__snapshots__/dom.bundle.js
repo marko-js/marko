@@ -26,4 +26,5 @@ const $list = /*@__PURE__*/ _let_change(9, ($scope) => $for($scope, [$scope.j]))
 const $store_list__OR__store_listChange = /*@__PURE__*/ _or(7, ($scope) => $list($scope, $scope.f, $scope.g), 1, 1);
 const $store_list = /*@__PURE__*/ _const(5, $store_list__OR__store_listChange);
 const $store_listChange = /*@__PURE__*/ _const(6, $store_list__OR__store_listChange);
-const $store_clear = /*@__PURE__*/ _const(8, _script("a1", ($scope) => _on($scope.c, "click", $scope.i)));
+const $store_clear__script = _script("a1", ($scope) => _on($scope.c, "click", $scope.i));
+const $store_clear = /*@__PURE__*/ _const(8, $store_clear__script);

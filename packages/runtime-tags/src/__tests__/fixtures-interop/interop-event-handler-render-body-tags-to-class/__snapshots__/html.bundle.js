@@ -4,7 +4,8 @@ var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_data_marko = /* @__PURE__ */ __toESM(require_data_marko());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_skip_serialize = /* @__PURE__ */ __toESM(require_skip_serialize());
-const _marko_componentType = "b", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "b";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_component = {};
 _marko_template._ = (0, import_renderer.default)(function(_input, out, _componentDef, _component, state, $global) {
 	const input = (0, import_skip_serialize.default)(_input);

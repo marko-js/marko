@@ -1,6 +1,6 @@
 // tags/list.marko
 var list_default = _template("b", (input) => {
-	const $sg__input_item = _serialize_guard(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let show = true;
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);

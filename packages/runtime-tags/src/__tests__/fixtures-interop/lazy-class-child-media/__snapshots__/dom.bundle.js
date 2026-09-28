@@ -7,7 +7,8 @@ var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "a", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "a";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 const _marko_load_Child = (0, import_load_tag_browser.default)("b", () => import("./child.mjs").then((n) => n.t), (0, import_load_tag_media_trigger.default)("(width <= 600px)"));
 (0, import_registry.r)(_marko_componentType, () => _marko_template);
 const _marko_component = {
@@ -32,7 +33,8 @@ var import_vdom = require_vdom();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "b", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "b";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => _marko_template);
 const _marko_component = { onMount() {
 	console.log("loaded");

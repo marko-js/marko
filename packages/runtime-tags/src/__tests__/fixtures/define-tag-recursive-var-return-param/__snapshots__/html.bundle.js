@@ -1,9 +1,10 @@
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	const Rec = { content: _content("a1", (input) => {
 		const $scope1_id = _scope_id();
-		const $sg__input_depth = _serialize_guard(_scope_reason(), 0);
+		const $scope1_reason = _scope_reason(), $sg__input_depth = _serialize_guard($scope1_reason, 0);
 		let s = 0;
 		const $return = input.label;
 		_if(() => {
@@ -28,7 +29,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a2");
 		_scope($scope1_id, { h: s });
 		return $return;
-	}, _scope_id()) };
+	}, $scope0_id) };
 	Rec.content({
 		depth: 1,
 		label: "x"

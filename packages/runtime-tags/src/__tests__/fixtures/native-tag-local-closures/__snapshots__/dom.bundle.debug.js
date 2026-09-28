@@ -1,5 +1,6 @@
 // template.marko
-const $Child_content__walks = "b%c", $Child_content__template = "<!><!><!>";
+const $Child_content__walks = "b%c";
+const $Child_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>Add</button>`)($Child_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Child_content__walks);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_3*content", " ", " "), { i($scope) {

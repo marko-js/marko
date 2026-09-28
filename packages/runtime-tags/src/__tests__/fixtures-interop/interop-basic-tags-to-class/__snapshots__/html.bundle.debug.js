@@ -3,7 +3,8 @@ var import_html = require_html();
 var import_escape_xml = require_escape_xml();
 var import_attr = /* @__PURE__ */ __toESM(require_attr());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType = "__tests__/components/class-counter.marko", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "__tests__/components/class-counter.marko";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_component = {
 	onCreate() {
 		this.state = { count: 0 };

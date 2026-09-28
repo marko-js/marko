@@ -1,24 +1,24 @@
-// size: 2584 (min) 1279 (brotli)
+// size: 2366 (min) 1206 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
-let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  rendering,
-  runId = 2,
-  pendingEffects = [],
-  pendingRenders = [],
-  runEffects = (effects) => {
-    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
-  },
-  runRender = (render) => {
-    render.c(render.b, render.d);
-  },
-  catchEnabled,
-  delegate = (type, handler) =>
-    (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1)),
-  isScheduled,
-  channel,
-  _resumed = {},
-  curRenders,
-  readyIds;
+let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
+let rendering;
+let runId = 2;
+let pendingEffects = [];
+let pendingRenders = [];
+let runEffects = (effects) => {
+  for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
+};
+let runRender = (render) => {
+  render.c(render.b, render.d);
+};
+let catchEnabled;
+let delegate = (type, handler) =>
+  (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1));
+let isScheduled;
+let channel;
+let _resumed = {};
+let curRenders;
+let readyIds;
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
@@ -242,22 +242,5 @@ function _to_text(value) {
 function _text(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  if (parentNode.isConnected)
-    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-  else {
-    let stop = endNode.nextSibling;
-    for (; startNode !== stop;) {
-      let next = startNode.nextSibling;
-      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
-    }
-  }
-  return parentNode;
-}
-function toInsertNode(startNode, endNode) {
-  return startNode === endNode
-    ? startNode
-    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
 //#endregion

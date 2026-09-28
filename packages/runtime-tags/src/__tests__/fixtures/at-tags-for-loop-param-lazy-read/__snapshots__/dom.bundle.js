@@ -5,9 +5,10 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
-const $item_content__if = /*@__PURE__*/ _if(1, "<button class=nested>nested</button>", " ", _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $if_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$out($scope._._, `nested ${$scope._.c}`);
-})));
+}));
+const $item_content__if = /*@__PURE__*/ _if(1, "<button class=nested>nested</button>", " ", $if_content__setup);
 const $item_content__show = /*@__PURE__*/ _closure_get(6, ($scope) => $item_content__if($scope, $scope._.e ? 0 : 1));
 const $item_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$out($scope._, $scope.c);

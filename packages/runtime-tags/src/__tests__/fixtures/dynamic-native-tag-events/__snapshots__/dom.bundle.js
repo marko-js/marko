@@ -1,5 +1,6 @@
 // template.marko
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content("a1", "body content"));
+const $tagName_content = _content("a1", "body content");
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $tagName_content);
 const $tagName = /*@__PURE__*/ _let(1, ($scope) => $dynamicTag($scope, $scope.b, () => ({
 	class: "A",
 	onClick: $onClick($scope)

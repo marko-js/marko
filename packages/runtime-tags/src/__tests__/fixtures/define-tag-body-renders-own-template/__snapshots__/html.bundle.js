@@ -34,8 +34,8 @@ const $content = (input) => {
 	const $scope0_id = _scope_id();
 	const Level = { content: _content("b0", ({ depth }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason();
-		_set_serialize_reason(_serialize_guard($scope2_reason, 0) << 1);
+		const $scope2_reason = _scope_reason(), $sg__depth = _serialize_guard($scope2_reason, 0);
+		_set_serialize_reason($sg__depth << 1);
 		const $childScope = _peek_scope_id();
 		$content({ depth: depth - 1 });
 		_serialize_if($scope2_reason, 0) && _scope($scope2_id, { a: _existing_scope($childScope) });

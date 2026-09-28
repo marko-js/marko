@@ -1,12 +1,13 @@
 // template.marko
-const $placeholder_content = _content("a1", " loading", 0, _script("a0", ($scope) => _lifecycle($scope, {
+const $placeholder_content__setup = _script("a0", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		console.log("placeholder mounted");
 	},
 	onDestroy: function() {
 		console.log("placeholder destroyed");
 	}
-})));
+}));
+const $placeholder_content = _content("a1", " loading", 0, $placeholder_content__setup);
 const $await_content = /*@__PURE__*/ _await_content(0, "done");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0);
 const $try_content__setup = ($scope) => {

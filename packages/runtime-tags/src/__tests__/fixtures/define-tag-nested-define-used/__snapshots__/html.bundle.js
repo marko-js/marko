@@ -1,6 +1,7 @@
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	({ content: _content("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
@@ -12,5 +13,5 @@ var template_default = _template("a", (input) => {
 		_html("<div>");
 		Inner.content({});
 		_html("</div>");
-	}, _scope_id()) }).content({});
+	}, $scope0_id) }).content({});
 }, 1);

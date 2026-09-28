@@ -1,5 +1,6 @@
 // template.marko
-const $Wrap_content__walks = "D%c%l", $Wrap_content__template = "<div><!>|<!></div>";
+const $Wrap_content__walks = "D%c%l";
+const $Wrap_content__template = "<div><!>|<!></div>";
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button>inc</button>${_w0}${_w1}<!>`)($Wrap_content__template, $Wrap_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b/${_w0}&/${_w1}&b`)($Wrap_content__walks, $Wrap_content__walks);
 const $Wrap_content__a = ($scope, a) => _text($scope["#text/0"], a);

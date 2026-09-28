@@ -1,5 +1,6 @@
 // template.marko
-const $Layout_content__walks = "D%l", $Layout_content__template = "<section><!></section>";
+const $Layout_content__walks = "D%l";
+const $Layout_content__template = "<section><!></section>";
 const $template = "<button id=toggle>toggle</button><!><!>";
 const $walks = " b%c";
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");

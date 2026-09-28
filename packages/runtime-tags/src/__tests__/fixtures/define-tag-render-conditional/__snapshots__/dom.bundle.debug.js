@@ -1,5 +1,6 @@
 // template.marko
-const $MyTag_content__walks = "Db%l", $MyTag_content__template = "<div>Hello <!></div>";
+const $MyTag_content__walks = "Db%l";
+const $MyTag_content__template = "<div>Hello <!></div>";
 const $template = "<!><!><button> </button>";
 const $walks = "b%b D l";
 const $MyTag_content__value = ($scope, value) => _text($scope["#text/0"], value);

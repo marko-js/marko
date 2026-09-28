@@ -13,8 +13,10 @@ const $clickTwiceCount = /*@__PURE__*/ _let(10, ($scope) => {
 	$Twice_content__value($scope.e, $onClickTwice($scope));
 	_text($scope.h, $scope.k);
 });
-const $onClickOnce2 = _var_resume("a5", /*@__PURE__*/ _const(9, _script("a9", ($scope) => _on($scope.c, "click", $scope.j))));
-const $onClickTwice2 = _var_resume("a7", /*@__PURE__*/ _const(11, _script("a8", ($scope) => _on($scope.g, "click", $scope.l))));
+const $onClickOnce2__script = _script("a9", ($scope) => _on($scope.c, "click", $scope.j));
+const $onClickOnce2 = _var_resume("a5", /*@__PURE__*/ _const(9, $onClickOnce2__script));
+const $onClickTwice2__script = _script("a8", ($scope) => _on($scope.g, "click", $scope.l));
+const $onClickTwice2 = _var_resume("a7", /*@__PURE__*/ _const(11, $onClickTwice2__script));
 const $_return2 = ($scope) => function() {
 	if ($scope.d) {
 		$Twice_content__call($scope, +$scope.d - 1);

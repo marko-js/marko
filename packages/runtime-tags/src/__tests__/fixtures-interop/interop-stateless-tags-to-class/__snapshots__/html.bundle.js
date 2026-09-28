@@ -4,7 +4,8 @@ var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_data_marko = /* @__PURE__ */ __toESM(require_data_marko());
 var import_attrs = /* @__PURE__ */ __toESM(require_attrs());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType = "b", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "b";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<button${(0, import_data_marko.default)(out, _componentDef, { "onclick": _componentDef.d("click", "handleClick", false) })}${(0, import_attrs.default)(input)}>`);
 	(0, import_dynamic_tag.default)(out, input.renderBody, null, null, null, null, _componentDef, "1");

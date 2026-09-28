@@ -3,7 +3,8 @@ var import_html = require_html();
 var import_escape_xml = require_escape_xml();
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType = "b", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "b";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w(`<button id=class>${(0, import_escape_xml.x)(state.count)}</button><div>`);
 	(0, import_dynamic_tag.default)(out, input.renderBody, null, null, [state.count, "hello"], null, _componentDef, "2");

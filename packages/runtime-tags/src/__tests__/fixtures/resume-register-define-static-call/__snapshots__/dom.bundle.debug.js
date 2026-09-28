@@ -1,5 +1,6 @@
 // template.marko
-const $Heading_content__walks = "b%c", $Heading_content__template = "<!><!><!>";
+const $Heading_content__walks = "b%c";
+const $Heading_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button id=inc> </button>${_w0}${_w1}<!>`)($Heading_content__template, $Heading_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` D l/${_w0}&/${_w1}&b`)($Heading_content__walks, $Heading_content__walks);
 const $Heading_content3 = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "also static: not registered");

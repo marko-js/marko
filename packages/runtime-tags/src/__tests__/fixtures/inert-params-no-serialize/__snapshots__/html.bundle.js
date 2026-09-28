@@ -12,6 +12,7 @@ var child_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	child_default({
 		value: "Hi",
 		content: _content("a0", (x) => {
@@ -19,6 +20,6 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", x, $sg__x));
 			_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
-		}, _scope_id())
+		}, $scope0_id)
 	});
 }, 1);

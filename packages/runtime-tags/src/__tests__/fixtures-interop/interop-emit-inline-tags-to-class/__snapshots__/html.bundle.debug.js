@@ -2,7 +2,8 @@
 var import_html = require_html();
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
-const _marko_componentType = "__tests__/components/inline-button.marko", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "__tests__/components/inline-button.marko";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_component = { handleClick() {
 	this.emit("click");
 } };

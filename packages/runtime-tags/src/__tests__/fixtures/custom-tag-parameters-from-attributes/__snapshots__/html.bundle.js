@@ -19,6 +19,7 @@ var custom_tag_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	custom_tag_default({
 		name: "hello",
 		content: _content_resume("a0", ({ count, name }) => {
@@ -26,6 +27,6 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<div>Count (${_text_resume($scope1_id, "a", name, $sg__name * 2)}): ${_text_resume($scope1_id, "b", count, $sg__count * 2)}</div>`);
 			_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
-		}, _scope_id())
+		}, $scope0_id)
 	});
 }, 1);

@@ -1,5 +1,6 @@
 // template.marko
-const $resetCount2 = /*@__PURE__*/ _const(4, _script("a2", ($scope) => _on($scope.c, "click", $scope.e)));
+const $resetCount2__script = _script("a2", ($scope) => _on($scope.c, "click", $scope.e));
+const $resetCount2 = /*@__PURE__*/ _const(4, $resetCount2__script);
 const $count__script = _script("a1", ($scope) => $scope.d);
 const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);

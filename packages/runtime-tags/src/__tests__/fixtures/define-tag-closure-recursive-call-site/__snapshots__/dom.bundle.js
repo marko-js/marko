@@ -1,5 +1,6 @@
 // template.marko
-const $Tree_content__walks = "D%b%l%c", $Tree_content__template = "<span><!><!></span><!><!>";
+const $Tree_content__walks = "D%b%l%c";
+const $Tree_content__template = "<span><!><!></span><!><!>";
 const $if_content__level = /*@__PURE__*/ _if_closure(2, 0, ($scope) => $Tree_content__level($scope.a, $scope._.f + 1));
 const $if_content__setup = ($scope) => {
 	$if_content__level._($scope);

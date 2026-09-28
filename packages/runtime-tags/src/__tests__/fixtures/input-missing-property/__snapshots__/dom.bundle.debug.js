@@ -1,5 +1,6 @@
 // template.marko
-const $Child_content__walks = "b%c", $Child_content__template = "<!><!><!>";
+const $Child_content__walks = "b%c";
+const $Child_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($Child_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)($Child_content__walks);
 const $if_content2__input_name = /*@__PURE__*/ _closure_get("input_name/5", ($scope) => _text($scope["#text/0"], $scope._._.input_name || "Fallback"), ($scope) => $scope._._, "__tests__/template.marko_3_input_name#4/subscribe");

@@ -1,6 +1,6 @@
 // tags/note.marko
 var note_default = _template("b", (input) => {
-	const $sg__input_label = _serialize_guard(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_resume($scope0_id, "a", input.label, $sg__input_label)}</span>`);
 	_script($scope0_id, "b0", $sg__input_label);

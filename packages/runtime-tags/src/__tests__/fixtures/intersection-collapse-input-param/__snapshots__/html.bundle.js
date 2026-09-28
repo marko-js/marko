@@ -2,7 +2,9 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_n = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.n * 2 + input.n * 3, $sg__input_n)}</div>`);
+	const doubled = input.n * 2;
+	const tripled = input.n * 3;
+	_html(`<div>${_text_resume($scope0_id, "a", doubled + tripled, $sg__input_n)}</div>`);
 	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

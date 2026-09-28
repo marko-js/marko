@@ -1,5 +1,6 @@
 // template.marko
-const $Row_content__walks = "D l", $Row_content__template = "<div> </div>";
+const $Row_content__walks = "D l";
+const $Row_content__template = "<div> </div>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<div>added=<!></div>`)($Row_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&Db%l`)($Row_content__walks);
 const $setup = () => {};

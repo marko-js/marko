@@ -33,8 +33,8 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=rename>rename</button>${_el_resume($scope0_id, "a")}`);
 	const Row = { content: _content("a0", ({ text }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope2_id, "a", text, _serialize_guard($scope2_reason, 0))}</em>`);
+		const $scope2_reason = _scope_reason(), $sg__text = _serialize_guard($scope2_reason, 0);
+		_html(`<em>${_text_resume($scope2_id, "a", text, $sg__text)}</em>`);
 		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason(2);

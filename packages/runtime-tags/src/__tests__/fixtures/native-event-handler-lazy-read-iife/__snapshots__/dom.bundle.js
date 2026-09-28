@@ -1,10 +1,11 @@
 // template.marko
-const $n__OR__log = /*@__PURE__*/ _or(6, _script("a0", ($scope) => _on($scope.b, "click", (() => {
+const $n__OR__log__script = _script("a0", ($scope) => _on($scope.b, "click", (() => {
 	const captured = $scope.e;
 	return () => {
 		$log($scope, `${$scope.f}[${captured}:${$scope.e}]`);
 	};
-})())));
+})()));
+const $n__OR__log = /*@__PURE__*/ _or(6, $n__OR__log__script);
 const $n = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.c, $scope.e);
 	$n__OR__log($scope);

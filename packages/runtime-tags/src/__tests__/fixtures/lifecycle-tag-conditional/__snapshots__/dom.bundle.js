@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__x = /*@__PURE__*/ _if_closure(0, 0, _script("a0", ($scope) => _lifecycle($scope, {
+const $if_content__x__script = _script("a0", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		document.getElementById("ref").textContent = "Mount " + $scope._.d;
 	},
@@ -9,7 +9,8 @@ const $if_content__x = /*@__PURE__*/ _if_closure(0, 0, _script("a0", ($scope) =>
 	onDestroy: function() {
 		document.getElementById("ref").textContent = "Destroy";
 	}
-})));
+}));
+const $if_content__x = /*@__PURE__*/ _if_closure(0, 0, $if_content__x__script);
 const $if_content__setup = $if_content__x;
 const $x = /*@__PURE__*/ _let(3, $if_content__x);
 const $if = /*@__PURE__*/ _if(0, 0, 0, $if_content__setup);

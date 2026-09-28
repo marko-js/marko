@@ -1,6 +1,7 @@
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	const Child = { content: _content("a0", ({ item: items }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__items = _serialize_guard($scope1_reason, 0), $si__items = _serialize_if($scope1_reason, 0);
@@ -10,7 +11,7 @@ var template_default = _template("a", (input) => {
 			$si__items && _scope($scope3_id, {});
 		}, 0, $scope1_id, "a", $sg__items, $sg__items, $sg__items);
 		$si__items && _scope($scope1_id, {});
-	}, _scope_id()) };
+	}, $scope0_id) };
 	forOf([[{ text: "hello" }, { text: "world" }]], (texts) => {
 		const $scope2_id = _scope_id();
 		let $item;

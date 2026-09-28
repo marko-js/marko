@@ -9,7 +9,8 @@ var child_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	_await(_scope_id(), "a", resolveAfter("X", 1), (value) => {
+	const $scope0_id = _scope_id();
+	_await($scope0_id, "a", resolveAfter("X", 1), (value) => {
 		const $scope1_id = _scope_id();
 		child_default({ x: value });
 		_html(`<input${_attr_input_value($scope1_id, "b", value)}><span>got: ${_escape(value)}</span>`);

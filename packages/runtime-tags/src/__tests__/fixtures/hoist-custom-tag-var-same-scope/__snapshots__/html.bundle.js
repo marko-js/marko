@@ -20,6 +20,8 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	thing_default({ value: _hoist($scope0_id, "a0") });
-	_scope($scope0_id, { d: child_default({}) });
+	const $setHtml_getter = _hoist($scope0_id, "a0");
+	thing_default({ value: $setHtml_getter });
+	let setHtml = child_default({});
+	_scope($scope0_id, { d: setHtml });
 }, 1);

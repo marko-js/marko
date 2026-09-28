@@ -1,5 +1,6 @@
 // template.marko
-const $Box_content__walks = " b", $Box_content__template = "<div></div>";
+const $Box_content__walks = " b";
+const $Box_content__template = "<div></div>";
 const $template = "<button>toggle</button><!><!><!>";
 const $walks = " b%b%c";
 const $if_content__setup = ($scope) => {

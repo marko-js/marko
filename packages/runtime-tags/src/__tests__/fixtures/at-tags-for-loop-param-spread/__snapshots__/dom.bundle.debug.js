@@ -23,7 +23,8 @@ const $input = ($scope, input) => $input_item($scope, input.item);
 var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
-const $Row_content__walks = "D l", $Row_content__template = "<em> </em>";
+const $Row_content__walks = "D l";
+const $Row_content__template = "<em> </em>";
 const $template = /*@__PURE__*/ ((_w0) => `<button id=rename>rename</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 const $if_content__item_text = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_text($scope["#childScope/0"], $scope._.item_text));

@@ -36,6 +36,7 @@ const PEOPLE = [
 ];
 var template_default = _template("a", (input) => {
 	_scope_reason();
+	const $scope0_id = _scope_id();
 	menu_default({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_scope_id();
@@ -43,5 +44,5 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html(`<div>person: ${_escape(person)}</div>`);
 		});
-	}, _scope_id()) });
+	}, $scope0_id) });
 }, 1);

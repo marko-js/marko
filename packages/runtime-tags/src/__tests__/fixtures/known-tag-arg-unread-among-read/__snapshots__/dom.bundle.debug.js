@@ -1,5 +1,6 @@
 // template.marko
-const $Foo_content__walks = "D l", $Foo_content__template = "<span> </span>";
+const $Foo_content__walks = "D l";
+const $Foo_content__template = "<span> </span>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Foo_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks);
 const $setup = () => {};

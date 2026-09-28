@@ -6,11 +6,11 @@ const $Wrap_content__a__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
 });
 const $Wrap_content__a = /*@__PURE__*/ _const(6, $Wrap_content__a__OR__$valueChange);
 const $Wrap_content__$aChange = /*@__PURE__*/ _const(5, $Wrap_content__a__OR__$valueChange);
-const $Wrap_content__setup = /*@__PURE__*/ _child_setup(_script("a1", ($scope) => {
+const $Wrap_content__setup__script = _script("a1", ($scope) => {
 	_attr_input_value_script($scope, "a");
 	_attr_input_value_script($scope, "b");
 	_attr_input_value_script($scope, "c");
-}));
+});
 const $Wrap_content__tag_param_ = ($scope, $temp) => {
 	$Wrap_content__$aChange($scope, $temp.aChange);
 	$Wrap_content__a($scope, $temp.a);

@@ -1,5 +1,6 @@
 // tags/countdown.marko
-const $Level_content__walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&b`)("b%c"), $Level_content__template = /*@__PURE__*/ ((_w0) => `<span> </span>${_w0}<!>`)($template$1);
+const $Level_content__walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&b`)("b%c");
+const $Level_content__template = /*@__PURE__*/ ((_w0) => `<span> </span>${_w0}<!>`)($template$1);
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
@@ -30,7 +31,8 @@ function $setup($scope) {
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // tags/countdown-buttons.marko
-const $Level_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks), $Level_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template);
+const $Level_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks);
+const $Level_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template);
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $Level_content__setup = /*@__PURE__*/ _child_setup(($scope) => $setup($scope["#childScope/0"]));

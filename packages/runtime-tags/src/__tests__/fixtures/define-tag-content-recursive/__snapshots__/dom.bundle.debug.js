@@ -1,5 +1,6 @@
 // template.marko
-const $Tree_content2__walks = " D l%c", $Tree_content2__template = "<button> </button><!><!>";
+const $Tree_content2__walks = " D l%c";
+const $Tree_content2__template = "<button> </button><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content2__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content2__walks);
 const $Tree_content3__input_depth = /*@__PURE__*/ _closure_get("input_depth/8", ($scope) => _text($scope["#text/0"], $scope._._._.input_depth), ($scope) => $scope._._._, "__tests__/template.marko_5_input_depth#5/subscribe");

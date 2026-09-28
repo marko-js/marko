@@ -67,7 +67,7 @@
     "oxlint": "1.75.0",
     "pretty-format": "^30.4.1",
     "resolve-sync": "^1.2.2",
-    "rolldown": "^1.1.4",
+    "rolldown": "^1.2.11",
     "table": "^6.9.0",
     "through": "^2.3.8",
     "tiny-glob": "^0.2.9",

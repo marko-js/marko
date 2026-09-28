@@ -3,7 +3,8 @@ var import_attr_tag = require_attr_tag();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 var import_renderer$1 = /* @__PURE__ */ __toESM(require_renderer$1());
-const _marko_componentType$1 = "__tests__/components/class-child.marko", _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
+const _marko_componentType$1 = "__tests__/components/class-child.marko";
+const _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
 const _marko_component$1 = {};
 _marko_template$1._ = (0, import_renderer$1.default)(function(input, out, _componentDef, _component, state, $global) {
 	(0, import_render_tag.default)(import_renderer.default, (0, import_attr_tag.i)(() => {
@@ -36,7 +37,8 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 // template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components_tag());
-const _marko_componentType = "__tests__/template.marko", _marko_template = (0, import_html.t)(_marko_componentType);
+const _marko_componentType = "__tests__/template.marko";
+const _marko_template = (0, import_html.t)(_marko_componentType);
 const _marko_component = { onCreate() {
 	this.state = { n: 0 };
 } };

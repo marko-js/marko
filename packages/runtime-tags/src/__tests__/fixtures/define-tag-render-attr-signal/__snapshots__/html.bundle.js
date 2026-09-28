@@ -5,8 +5,8 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	const MyTag = { content: _content("a0", ({ number }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
-		_html(`<div>${_text_resume($scope1_id, "a", number, _serialize_guard($scope1_reason, 0))}</div>`);
+		const $scope1_reason = _scope_reason(), $sg__number = _serialize_guard($scope1_reason, 0);
+		_html(`<div>${_text_resume($scope1_id, "a", number, $sg__number)}</div>`);
 		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_serialize_reason(2);

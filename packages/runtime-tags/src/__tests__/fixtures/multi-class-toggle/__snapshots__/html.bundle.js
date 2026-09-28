@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<button${_attr_class({
 		"a b c": true,
-		"d e f": count % 2
+		"d e f": 0
 	})}>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: count });

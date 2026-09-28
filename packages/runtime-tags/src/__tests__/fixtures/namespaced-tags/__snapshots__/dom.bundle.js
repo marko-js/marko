@@ -5,11 +5,12 @@ const $Parent_content__input_value = /*@__PURE__*/ _closure_get(14, ($scope) => 
 const $Parent_content = _content("a2", " ", " ", $Parent_content__input_value);
 _content_resume($Parent_content);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag(5, $Parent_content);
-const $Parent__OR__Child = /*@__PURE__*/ _or(13, _script("a4", ($scope) => {
+const $Parent__OR__Child__script = _script("a4", ($scope) => {
 	$scope.l;
 	$scope.m;
 	for (const node of $scope.a.querySelectorAll("a")) if (node.getAttribute("ns") !== node.namespaceURI) node.setAttribute("ns", node.namespaceURI);
-}));
+});
+const $Parent__OR__Child = /*@__PURE__*/ _or(13, $Parent__OR__Child__script);
 const $Parent = /*@__PURE__*/ _let(11, ($scope) => {
 	$dynamicTag3($scope, $scope.l);
 	$Parent__OR__Child($scope);

@@ -1,5 +1,8 @@
 // template.marko
-const $Foo_content__walks = " b", $Foo_content__template = " ", $Bar_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks), $Bar_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Foo_content__template);
+const $Foo_content__walks = " b";
+const $Foo_content__template = " ";
+const $Bar_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks);
+const $Bar_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Foo_content__template);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Bar_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Bar_content__walks);
 const $Bar_content__input_foo = ($scope, input_foo) => $Foo_content__input_foo($scope["#childScope/0"], input_foo);

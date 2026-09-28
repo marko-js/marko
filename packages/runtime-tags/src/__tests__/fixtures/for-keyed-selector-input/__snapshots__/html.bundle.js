@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $sg__input_rows = _serialize_guard(_scope_reason(), 0);
+	const $scope0_reason = _scope_reason(), $sg__input_rows = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let enabled = true;
 	_html(`<button class=flip>flip</button>${_el_resume($scope0_id, "a")}<ul>`);

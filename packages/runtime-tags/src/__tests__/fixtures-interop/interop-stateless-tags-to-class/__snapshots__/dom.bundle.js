@@ -12,7 +12,8 @@ var component_browser_default = class {
 
 // components/my-button/index.marko
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
-const _marko_componentType = "b", _marko_template = (0, import_vdom.t)(_marko_componentType);
+const _marko_componentType = "b";
+const _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => component_browser_default);
 const _marko_component = {};
 component_browser_default.renderer = _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
@@ -26,7 +27,7 @@ component_browser_default.renderer = _marko_template._ = (0, import_renderer.def
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content("a1", "Say Hi"));
+const $mybutton_content = _content("a1", "Say Hi");
 function $onClick() {
 	document.getElementById("display").innerHTML = "Hi!";
 }
