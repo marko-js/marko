@@ -1,12 +1,8 @@
 import { types as t } from "@marko/compiler";
 
+import { getDebugNames, getDebugNamesAsIdentifier } from "./bindings";
 import { generateUid, getSharedUid } from "./generate-uid";
 import { some } from "./optional";
-import {
-  getDebugNames,
-  getDebugNamesAsIdentifier,
-  type Sources,
-} from "./references";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
@@ -19,6 +15,7 @@ import {
   type SerializeReason,
   type SerializeReasons,
 } from "./serialize-reasons";
+import { type Sources } from "./sources";
 import { createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 

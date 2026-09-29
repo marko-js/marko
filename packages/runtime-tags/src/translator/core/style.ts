@@ -18,17 +18,14 @@ import MagicString, { type SourceMap } from "magic-string";
 
 import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";
+import { BindingType, createBinding } from "../util/bindings";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
-import {
-  BindingType,
-  createBinding,
-  getScopeAccessorLiteral,
-  mergeReferences,
-} from "../util/references";
+import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   getNodeContentType,

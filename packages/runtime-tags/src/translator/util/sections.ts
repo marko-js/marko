@@ -2,6 +2,15 @@ import { types as t } from "@marko/compiler";
 import { getProgram, loadFileForTag } from "@marko/compiler/babel-utils";
 
 import type { WalkCode } from "../../common/types";
+import {
+  type Binding,
+  bindingUtil,
+  compareReferences,
+  getDebugNames,
+  type InputBinding,
+  type ParamBinding,
+  type ReferencedBindings,
+} from "./bindings";
 import * as ContentType from "./constants/content-type";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
@@ -18,18 +27,8 @@ import {
   type SortedOpt,
   reduce,
 } from "./optional";
-import {
-  type Binding,
-  bindingUtil,
-  compareReferences,
-  getAllSerializeReasonsForBinding,
-  getDebugNames,
-  type InputBinding,
-  type KnownExprs,
-  type ParamBinding,
-  type ReferencedBindings,
-  type Sources,
-} from "./references";
+import { type KnownExprs } from "./references";
+import { getAllSerializeReasonsForBinding } from "./serialize-propagation";
 import {
   hasSerializeReasons,
   isReasonDynamic,
@@ -40,6 +39,7 @@ import {
   type SerializeReasons,
   setParamReasonGroups,
 } from "./serialize-reasons";
+import { type Sources } from "./sources";
 import { createSectionState } from "./state";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -628,4 +628,12 @@ function compareParamGroups(
   b: Pick<ParamSerializeReasonGroup, "reason">,
 ) {
   return compareReferences(a.reason, b.reason);
+}
+
+export function setReadsOwner(from: Section, to: Section) {
+  forEachAncestorSection(from, to, markReadsOwner, undefined);
+}
+
+function markReadsOwner(section: Section) {
+  section.readsOwner = true;
 }

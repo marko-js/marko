@@ -8,17 +8,16 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import {
-  BindingType,
-  createBinding,
-  getScopeAccessorLiteral,
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
   getOrCreateSection,

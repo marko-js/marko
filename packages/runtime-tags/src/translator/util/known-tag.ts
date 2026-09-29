@@ -9,6 +9,17 @@ import {
   getKnownFromPropTree,
   hasAllKnownProps,
 } from "./binding-prop-tree";
+import {
+  type Binding,
+  BindingType,
+  bindingUtil,
+  createBinding,
+  getDebugNames,
+  getOrCreatePropertyAlias,
+  type InputBinding,
+  isInvokeOnlyBinding,
+  propsUtil,
+} from "./bindings";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
 import { isOptimize } from "./marko-config";
@@ -22,20 +33,10 @@ import {
 import { forEach, fromIter, type Opt, type SortedOpt } from "./optional";
 import {
   addRead,
-  type Binding,
-  BindingType,
-  bindingUtil,
-  createBinding,
   dropContent,
   dropNodes,
   untrackNode,
-  FORCED,
   getAllTagReferenceNodes,
-  getDebugNames,
-  getOrCreatePropertyAlias,
-  getScopeAccessorLiteral,
-  type InputBinding,
-  isInvokeOnlyBinding,
   type KnownExprs,
   mapParamReasonToExpr,
   mergeReferences,
@@ -43,9 +44,9 @@ import {
   setBindingDownstream,
   trackParamsReferences,
   trackVarReferences,
-  propsUtil,
 } from "./references";
 import { callRuntime, importRuntime } from "./runtime";
+import { getScopeAccessorLiteral } from "./scope-accessor";
 import { createScopeReadExpression } from "./scope-read";
 import {
   getOrCreateSection,
@@ -74,6 +75,7 @@ import {
   setBindingSerializedValue,
   writeHTMLResumeStatements,
 } from "./signals";
+import { FORCED } from "./sources";
 import { createSectionState } from "./state";
 import {
   toMemberExpression,

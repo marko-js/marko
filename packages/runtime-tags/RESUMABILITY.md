@@ -9,9 +9,9 @@ template modules, payload, and markers transitively.
 ## System in one pass
 
 1. `sections.ts` divides the template into independently rendered **sections**.
-2. `references.ts` models values as **bindings** and tracks reads, writes,
+2. `bindings.ts` models values as **bindings**; `references.ts` tracks reads, writes,
    aliases, properties, closures, hoists, and downstream consumers.
-3. `finalizeReferences()` resolves sources, prunes unused bindings, propagates
+3. `finalizeReferences()` (`finalize-references.ts`) resolves sources, prunes unused bindings, propagates
    serialization requirements, canonicalizes intersections, and allocates dense
    per-section ids.
 4. `signals.ts` groups work by its exact binding set and emits the smallest
@@ -49,13 +49,13 @@ and Brotli size. Inspect optimized `dom.bundle.js`, chunk placement, and
 
 Terms live in [CONTEXT.md](./CONTEXT.md); start here:
 
-| Area                 | Primary code                                                 |
-| -------------------- | ------------------------------------------------------------ |
-| Compiler graph       | `translator/util/sections.ts`, `references.ts`, `signals.ts` |
-| Serialization policy | `translator/util/serialize-reasons.ts`, `serialize-guard.ts` |
-| DOM scopes/ranges    | `dom/scope.ts`, `dom/renderer.ts`, `dom/control-flow.ts`     |
-| Streaming/resume     | `html/writer.ts`, `html/serializer.ts`, `dom/resume.ts`      |
-| Lazy entries         | `translator/util/entry-builder.ts`, `html/writer.ts`         |
+| Area                 | Primary code                                                                                          |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| Compiler graph       | `translator/util/sections.ts`, `bindings.ts`, `references.ts`, `finalize-references.ts`, `signals.ts` |
+| Serialization policy | `translator/util/serialize-reasons.ts`, `serialize-guard.ts`                                          |
+| DOM scopes/ranges    | `dom/scope.ts`, `dom/renderer.ts`, `dom/control-flow.ts`                                              |
+| Streaming/resume     | `html/writer.ts`, `html/serializer.ts`, `dom/resume.ts`                                               |
+| Lazy entries         | `translator/util/entry-builder.ts`, `html/writer.ts`                                                  |
 
 Analysis tracks reads per expression (`references.ts`). A tag may _merge_ its
 attribute expressions into one (`mergeReferences`), _drop_ an expression neither
@@ -201,7 +201,7 @@ Testing commands and fixture anatomy live in `AGENTS.md`. High-value examples:
 - `title-counter`: bindings → signals → scope/markers → resumed update/effect.
 - `lazy-tag-nested-shared`: ready dependencies and cross-channel identity.
 
-Routing: serialization questions start in `references.ts` →
+Routing: serialization questions start in `serialize-propagation.ts` →
 `serialize-reasons.ts` → `serialize-guard.ts`; bundle retention in compiler
 `signals.ts`, `runtime.ts`, program DOM output, and Rolldown output; wire format in
 `html/writer.ts`/`serializer.ts`; adoption in `dom/resume.ts`/`walker.ts`;

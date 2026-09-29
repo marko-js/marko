@@ -21,12 +21,9 @@ import {
   analyzeNodeBinding,
   getOnlyChildParentTagName,
 } from "../util/is-only-child-in-parent";
-import {
-  getScopeAccessorLiteral,
-  kBranchSerializeReason,
-  mergeReferences,
-} from "../util/references";
+import { mergeReferences } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
   getOrCreateSection,
@@ -36,6 +33,7 @@ import {
   type Section,
   startSection,
 } from "../util/sections";
+import { kBranchSerializeReason } from "../util/serialize-reasons";
 import {
   addSerializeExpr,
   getSerializeReason,

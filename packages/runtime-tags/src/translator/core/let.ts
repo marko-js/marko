@@ -7,12 +7,11 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
+import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOutputDOM } from "../util/marko-config";
 import {
-  BindingType,
-  FORCED,
   mergeReferences,
   onFinalizeReferences,
   setBindingDownstream,
@@ -28,6 +27,7 @@ import {
   setBindingSerializedValue,
   signalHasStatements,
 } from "../util/signals";
+import { FORCED } from "../util/sources";
 import translateVar from "../util/translate-var";
 
 declare module "@marko/compiler/dist/types" {

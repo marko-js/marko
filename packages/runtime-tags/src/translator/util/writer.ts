@@ -1,16 +1,13 @@
 import { types as t } from "@marko/compiler";
 
 import { getScopeIdIdentifier, getSection } from "../util/sections";
+import { type Binding, BindingType } from "./bindings";
 import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
-import {
-  type Binding,
-  BindingType,
-  getScopeAccessorLiteral,
-} from "./references";
 import { callRuntime } from "./runtime";
+import { getScopeAccessorLiteral } from "./scope-accessor";
 import { getSerializeGuard } from "./serialize-guard";
 import type { SerializeReason } from "./serialize-reasons";
 import { createSectionState } from "./state";

@@ -51,7 +51,7 @@ Everything through `analyze` is cached and reused across outputs. Therefore:
 - Naming follows the same contract: analyze metadata (Binding/Section/`node.extra` fields) records **what the template does** — observed facts, in template terms (sources, reads, uses, shapes). Translate names its **conclusions** — decisions, policies, and output mechanisms (ownership, wire channels, masks). A shared field named after a decision (e.g. server/client "owned", "required") is a smell: name the observation and derive the decision where it is made. Never coin a term the compiler does not already use; a new concept gets a `CONTEXT.md` entry first.
 - Gather in analyze, act in translate. There are currently zero Babel `traverse` calls in the translator; keep it that way. Before adding analysis, find the fact in what exists (`Section`, a binding's reads/aliases/sources, `node.extra`, serialize reasons, tag-name and known-tag analysis) and extend it; after adding one, check what else can use it.
 - Analyze facts settle once. `Binding.reads`, `Binding.pruned`, and serialize reasons are complete only once `finalizeReferences` runs at program analyze `exit`, so tag and expression analyze visitors never read them. Hold intermediate analysis in `node.extra` or `createProgramState`, write a `Binding`/`Section` field only when final, never un-set one, and never read a field for a fact it was not built for.
-- `util/references.ts` is tag-agnostic: a tag records a generic fact on its expression's `node.extra`, and the analysis reads it without naming the tag.
+- Reference analysis (`util/references.ts`, `finalize-references.ts`, `serialize-propagation.ts`) is tag-agnostic: a tag records a generic fact on its expression's `node.extra`, and the analysis reads it without naming the tag. Known tags are the one exception: the solver maps each call site's param reason groups every pass (`finalizeKnownTags`).
 - Compile-context helpers (`isOptimize`, `isOutputHTML`, `getMarkoOpts`, `callRuntime`) are called where needed, never passed in as overridable parameters. Non-capturing callbacks become named file-level functions here too.
 
 Node visitors live in `visitors/` and are split per phase by `extractVisitors` (`util/visitors.ts`); `visitors/tag/index.ts` dispatches to `native-tag.ts` / `custom-tag.ts` / `dynamic-tag.ts` / `attribute-tag.ts` or a tag definition's own hooks.
@@ -144,7 +144,7 @@ To add a fixture: create the dir + `template.marko` (+ `test.ts` with steps exer
 
 ## Gotchas
 
-- `translator/util/references.ts` imports `toAccess` from `html/serializer.ts` — serializer key encoding changes affect the translator.
+- `translator/util/bindings.ts` imports `toAccess` from `html/serializer.ts` — serializer key encoding changes affect the translator.
 - Adding an accessor enum member: keep the `src/common/constants/*[.debug].ts` pair in lockstep (same members, char vs. readable string values).
 - Size regressions count as review findings: check the fixture `sizes.json` diffs and root `.sizes.json` (updated by the pre-commit hook).
 - Language semantics questions (what a tag/attribute should do) are answered by the docs, not inferred: <https://markojs.com/llms.txt>.

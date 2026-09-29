@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
+import { type Binding } from "./bindings";
 import { type Opt, first, rest, some } from "./optional";
-import type { Binding } from "./references";
 import type { Section } from "./sections";
 
 export function getSectionRendererIdentifier(section: Section) {

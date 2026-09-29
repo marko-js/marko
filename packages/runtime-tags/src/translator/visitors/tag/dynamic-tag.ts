@@ -15,6 +15,7 @@ import {
   getBindingPropTree,
   kDirectContent,
 } from "../../util/binding-prop-tree";
+import { type Binding, BindingType, createBinding } from "../../util/bindings";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
   getAccessorPrefix,
@@ -31,13 +32,7 @@ import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
 import {
-  type Binding,
-  BindingType,
-  createBinding,
-  FORCED,
   getAllTagReferenceNodes,
-  getScopeAccessor,
-  getScopeAccessorLiteral,
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
@@ -49,6 +44,10 @@ import {
   importRuntimeFeature,
   registerRuntimeValue,
 } from "../../util/runtime";
+import {
+  getScopeAccessor,
+  getScopeAccessorLiteral,
+} from "../../util/scope-accessor";
 import {
   createScopeReadExpression,
   getScopeExpression,
@@ -79,6 +78,7 @@ import {
   type Signal,
   writeHTMLResumeStatements,
 } from "../../util/signals";
+import { FORCED } from "../../util/sources";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";

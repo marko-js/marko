@@ -8,19 +8,14 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
-import {
-  type Binding,
-  BindingType,
-  createBinding,
-  getAllTagReferenceNodes,
-  getScopeAccessorLiteral,
-  mergeReferences,
-} from "../util/references";
+import { getAllTagReferenceNodes, mergeReferences } from "../util/references";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
   getOrCreateSection,

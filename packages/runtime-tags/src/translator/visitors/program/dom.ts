@@ -3,14 +3,14 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
+import { BindingType } from "../../util/bindings";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
+import { callRuntime, registerRuntimeValue } from "../../util/runtime";
 import {
-  BindingType,
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
-} from "../../util/references";
-import { callRuntime, registerRuntimeValue } from "../../util/runtime";
+} from "../../util/scope-accessor";
 import {
   forEachSectionReverse,
   getContentClosures,

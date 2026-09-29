@@ -19,6 +19,7 @@ import {
   toDelimitedString,
 } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
+import { BindingType, createBinding } from "../../util/bindings";
 import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
@@ -41,12 +42,7 @@ import {
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
 import {
-  BindingType,
-  createBinding,
   dropNodes,
-  FORCED,
-  getPrefixedScopeAccessor,
-  getScopeAccessorLiteral,
   mergeReferences,
   trackDomVarReferences,
   isTagVarRead,
@@ -58,6 +54,10 @@ import {
   importRuntime,
   importRuntimeFeature,
 } from "../../util/runtime";
+import {
+  getPrefixedScopeAccessor,
+  getScopeAccessorLiteral,
+} from "../../util/scope-accessor";
 import { createScopeReadExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
@@ -77,6 +77,7 @@ import {
   addStatement,
   setSectionDebugVar,
 } from "../../util/signals";
+import { FORCED } from "../../util/sources";
 import * as structure from "../../util/structure";
 import { getTagFacts, isTextOnlyNativeTag } from "../../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";

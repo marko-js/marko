@@ -1,13 +1,13 @@
 import type { types as t } from "@marko/compiler";
 
-import { forEach } from "./optional";
 import {
   type Binding,
   BindingType,
   getCanonicalBinding,
-  getExpressionReads,
   getPropertyAlias,
-} from "./references";
+} from "./bindings";
+import { forEach } from "./optional";
+import { getExpressionReads } from "./references";
 import { isDirectClosure, type Section } from "./sections";
 
 const forSelectorsBySection = new WeakMap<

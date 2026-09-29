@@ -6,10 +6,10 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
+import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
-  BindingType,
   untrackNode,
   setBindingDownstream,
   trackVarReferences,

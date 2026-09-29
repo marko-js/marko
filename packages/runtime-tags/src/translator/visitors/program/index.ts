@@ -12,7 +12,9 @@ import {
   type BindingPropTree,
   getBindingPropTree,
 } from "../../util/binding-prop-tree";
+import { BindingType } from "../../util/bindings";
 import entryBuilder from "../../util/entry-builder";
+import { finalizeReferences } from "../../util/finalize-references";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import getStyleFile from "../../util/get-style-file";
 import {
@@ -21,11 +23,7 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
-import {
-  BindingType,
-  finalizeReferences,
-  trackParamsReferences,
-} from "../../util/references";
+import { trackParamsReferences } from "../../util/references";
 import {
   dynamicImport,
   getCompatRuntimeFile,

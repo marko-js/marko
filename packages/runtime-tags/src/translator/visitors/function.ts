@@ -17,12 +17,9 @@ import {
 } from "../util/get-root";
 import { isCoreTagName } from "../util/is-core-tag";
 import isInvokedFunction from "../util/is-invoked-function";
-import {
-  getRegisterReasonForExtra,
-  getCanonicalExtra,
-  type RegisteredFnExtra,
-} from "../util/references";
+import { getCanonicalExtra, type RegisteredFnExtra } from "../util/references";
 import { getSection } from "../util/sections";
+import { getRegisterReasonForExtra } from "../util/serialize-propagation";
 import {
   mergeSerializeReasons,
   type SerializeReason,

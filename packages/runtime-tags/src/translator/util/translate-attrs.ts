@@ -8,6 +8,7 @@ import {
   type BindingPropTree,
   getKnownFromPropTree,
 } from "./binding-prop-tree";
+import { propsUtil } from "./bindings";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
@@ -19,8 +20,8 @@ import {
   getAttrTagPaths,
 } from "./nested-attribute-tags";
 import { type SortedOpt, toArray, toSet } from "./optional";
-import { getScopeAccessor, propsUtil } from "./references";
 import { callRuntime } from "./runtime";
+import { getScopeAccessor } from "./scope-accessor";
 import {
   getScopeIdIdentifier,
   getSection,

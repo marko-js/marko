@@ -5,9 +5,10 @@ import {
   findParentTag,
 } from "@marko/compiler/babel-utils";
 
+import { BindingType } from "../../util/bindings";
 import { getAttributeTagParent } from "../../util/get-parent-tag";
 import { isOutputHTML } from "../../util/marko-config";
-import { BindingType, trackParamsReferences } from "../../util/references";
+import { trackParamsReferences } from "../../util/references";
 import { removePrunedContent, startSection } from "../../util/sections";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";

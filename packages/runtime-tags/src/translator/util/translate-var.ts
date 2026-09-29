@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
 
+import { getCanonicalBinding } from "./bindings";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { toArray } from "./optional";
-import { getCanonicalBinding } from "./references";
 import { getOrCreateSection } from "./sections";
 import { getSerializeReason } from "./serialize-reasons";
 import { toPropertyName } from "./to-property-name";

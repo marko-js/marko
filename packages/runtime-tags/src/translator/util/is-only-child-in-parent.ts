@@ -1,8 +1,8 @@
 import { types as t } from "@marko/compiler";
 
+import { BindingType, createBinding } from "./bindings";
 import { getParentTag } from "./get-parent-tag";
 import { isPageElement } from "./insertion-context";
-import { BindingType, createBinding } from "./references";
 import type { Section } from "./sections";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 

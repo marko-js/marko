@@ -1,8 +1,9 @@
 import { types as t } from "@marko/compiler";
 
-import { type Binding, kBranchSerializeReason } from "./references";
+import { type Binding } from "./bindings";
 import { ContentType, type Section } from "./sections";
 import { getSerializeGuard, getSerializeGuardForAny } from "./serialize-guard";
+import { kBranchSerializeReason } from "./serialize-reasons";
 import {
   getSerializeReason,
   isStateSerializeReason,

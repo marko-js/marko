@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getFile } from "@marko/compiler/babel-utils";
 
+import { BindingType } from "../../util/bindings";
 import {
   generateUidIdentifier,
   getSharedUid,
@@ -11,14 +12,13 @@ import isStatic from "../../util/is-static";
 import { getMarkoOpts } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
+import { getReadReplacement } from "../../util/read-replacement";
+import { isRegisteredFnExtra } from "../../util/references";
+import { callRuntime, importRuntime } from "../../util/runtime";
 import {
-  BindingType,
-  getReadReplacement,
   getLocalsScopeAccessor,
   getSectionInstancesAccessor,
-  isRegisteredFnExtra,
-} from "../../util/references";
-import { callRuntime, importRuntime } from "../../util/runtime";
+} from "../../util/scope-accessor";
 import {
   forEachSection,
   getScopeIdIdentifier,

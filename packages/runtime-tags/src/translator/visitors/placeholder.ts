@@ -1,16 +1,13 @@
 import { types as t } from "@marko/compiler";
 
 import { WalkCode } from "../../common/types";
+import { BindingType, createBinding } from "../util/bindings";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
-import {
-  BindingType,
-  createBinding,
-  getScopeAccessorLiteral,
-} from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   ContentType,
