@@ -18,6 +18,12 @@ export interface TagFacts {
   textBody?: true;
   /** It renders its body in its own place, with no node of its own. */
   controlFlow?: true;
+  /** One of the document's own elements: the parser implies and moves nodes
+   * into it, and the page writes assets and resume scripts into it. */
+  pageElement?: true;
+  /** Its insertion mode drops an unknown element but keeps its children, so a
+   * wrapper around content inside it is discarded. */
+  discardsWrapperChildren?: true;
 }
 
 const noContentFacts: TagFacts = { content: null };
@@ -71,6 +77,29 @@ const textOnlyNativeTagFacts: TagFacts = {
   inlineBody: true,
   textBody: true,
 };
+const pageElementFacts: TagFacts = {
+  content: ContentType.Tag,
+  inlineBody: true,
+  pageElement: true,
+};
+const discardsWrapperChildrenFacts: TagFacts = {
+  content: ContentType.Tag,
+  inlineBody: true,
+  discardsWrapperChildren: true,
+};
+const nativeElementFacts = new Map<string, TagFacts>([
+  ["html", pageElementFacts],
+  ["head", pageElementFacts],
+  ["body", pageElementFacts],
+  ["table", discardsWrapperChildrenFacts],
+  ["thead", discardsWrapperChildrenFacts],
+  ["tbody", discardsWrapperChildrenFacts],
+  ["tfoot", discardsWrapperChildrenFacts],
+  ["tr", discardsWrapperChildrenFacts],
+  ["colgroup", discardsWrapperChildrenFacts],
+  ["select", discardsWrapperChildrenFacts],
+  ["optgroup", discardsWrapperChildrenFacts],
+]);
 
 export function getTagFacts(tag: t.NodePath<t.MarkoTag>): TagFacts {
   if (isCoreTag(tag)) {
@@ -83,7 +112,11 @@ export function getTagFacts(tag: t.NodePath<t.MarkoTag>): TagFacts {
 
   switch (analyzeTagNameType(tag)) {
     case TagNameType.NativeTag:
-      return isTextOnlyNativeTag(tag) ? textOnlyNativeTagFacts : nativeTagFacts;
+      return (
+        (t.isStringLiteral(tag.node.name) &&
+          nativeElementFacts.get(tag.node.name.value)) ||
+        (isTextOnlyNativeTag(tag) ? textOnlyNativeTagFacts : nativeTagFacts)
+      );
     case TagNameType.AttributeTag:
       return noContentFacts;
     default:
@@ -106,7 +139,7 @@ export function isNonHTMLText(
   );
 }
 
-export function isTextOnlyNativeTag(tag: t.NodePath<t.MarkoTag>) {
+function isTextOnlyNativeTag(tag: t.NodePath<t.MarkoTag>) {
   if (analyzeTagNameType(tag) !== TagNameType.NativeTag) return false;
 
   const def = getTagDef(tag);

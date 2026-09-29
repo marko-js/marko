@@ -169,10 +169,12 @@ export function _assert_hoist(value: unknown) {
 export function assertExclusiveAttrs(
   attrs: Record<string, unknown> | undefined,
   onError = throwErr,
+  // The translator passes attribute positions, where 0 is set.
+  isSet: (value: unknown) => unknown = isTruthy,
 ) {
   if (attrs) {
     let exclusiveAttrs: undefined | string[];
-    if (attrs.checkedChange) {
+    if (isSet(attrs.checkedChange)) {
       (exclusiveAttrs ||= []).push("checkedChange");
     }
 
@@ -182,14 +184,14 @@ export function assertExclusiveAttrs(
       if ("checked" in attrs) {
         exclusiveAttrs.push("checked");
       }
-    } else if (attrs.checkedValueChange) {
+    } else if (isSet(attrs.checkedValueChange)) {
       (exclusiveAttrs ||= []).push("checkedValueChange");
       if ("checked" in attrs) {
         exclusiveAttrs.push("checked");
       }
     }
 
-    if (attrs.valueChange) {
+    if (isSet(attrs.valueChange)) {
       (exclusiveAttrs ||= []).push("valueChange");
 
       // Only `checked` makes an `<input>` checkable, and a checkable's value is
@@ -240,6 +242,10 @@ export function assertValidTagName(tagName: string) {
       `Invalid tag name: "${tagName}". Tag names must start with a letter and contain only letters, numbers, periods, hyphens, and underscores.`,
     );
   }
+}
+
+function isTruthy(value: unknown) {
+  return value;
 }
 
 function throwErr(msg: string) {

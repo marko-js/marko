@@ -1,0 +1,23 @@
+# Render `{"value":"b","attrs":{"name":"letter"}}`
+```html
+<select
+  name="letter"
+>
+  <option
+    value="a"
+  >
+    A
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    B
+  </option>
+  <option
+    value="c"
+  >
+    C
+  </option>
+</select>
+```

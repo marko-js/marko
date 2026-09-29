@@ -1,5 +1,4 @@
 import { type Binding, BindingType, propsUtil } from "./bindings";
-import { pruneBinding } from "./finalize-references";
 import { generateUid } from "./generate-uid";
 import { forEach, type SortedOpt } from "./optional";
 
@@ -17,11 +16,12 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export function getBindingPropTree(binding: Binding) {
-  if (pruneBinding(binding)) {
-    return undefined;
-  }
-
+// `bodyAnalyzed`: every read of the binding is recorded, as for a `<define>`
+// body called from outside it.
+export function getBindingPropTree(
+  binding: Binding,
+  bodyAnalyzed?: boolean,
+): BindingPropTree {
   binding.exposed = true;
 
   const props: BindingPropTree = {
@@ -31,15 +31,22 @@ export function getBindingPropTree(binding: Binding) {
   };
 
   if (!binding.reads.size) {
-    if (!binding.aliases.size) {
+    let restAlias: Binding | undefined;
+    let aliasCount = 0;
+    for (const alias of binding.aliases) {
+      if (!bodyAnalyzed || isPossiblyRead(alias)) {
+        restAlias = alias;
+        if (++aliasCount > 1) break;
+      }
+    }
+    if (!restAlias) {
       props.props = Object.create(null) as { [prop: string]: BindingPropTree };
       for (const [property, alias] of binding.propertyAliases) {
-        props.props[property] = getBindingPropTree(alias)!;
+        props.props[property] = getBindingPropTree(alias, bodyAnalyzed)!;
       }
-    } else if (binding.aliases.size === 1) {
-      const [restAlias] = binding.aliases;
+    } else if (aliasCount === 1) {
       if (hasSupersetExcludeProperties(binding, restAlias.excludeProperties)) {
-        props.rest = getBindingPropTree(restAlias);
+        props.rest = getBindingPropTree(restAlias, bodyAnalyzed);
         props.props = Object.create(null) as {
           [prop: string]: BindingPropTree;
         };
@@ -51,7 +58,10 @@ export function getBindingPropTree(binding: Binding) {
         forEach(restAlias.excludeProperties, (property) => {
           const propAlias = binding.propertyAliases.get(property);
           if (propAlias) {
-            props.props![property] = getBindingPropTree(propAlias)!;
+            props.props![property] = getBindingPropTree(
+              propAlias,
+              bodyAnalyzed,
+            )!;
           }
         });
       }
@@ -80,6 +90,19 @@ function isDirectContentBinding(binding: Binding) {
   return read[kDirectContent] && read.section === binding.section;
 }
 
+// Pruning keeps an alias of an analyzed body only if something reads it, names
+// it, or reads an alias of it.
+function isPossiblyRead(alias: Binding): boolean {
+  if (alias.reads.size || alias.untracked) return true;
+  for (const nested of alias.aliases) {
+    if (isPossiblyRead(nested)) return true;
+  }
+  for (const prop of alias.propertyAliases.values()) {
+    if (isPossiblyRead(prop)) return true;
+  }
+  return false;
+}
+
 function hasSupersetExcludeProperties(
   binding: Binding,
   excludeProperties: SortedOpt<string>,
@@ -95,6 +118,24 @@ function hasSupersetExcludeProperties(
   }
 
   return true;
+}
+
+// The tree analysis shaped a call site by, less what pruning settled unread.
+export function getSettledPropTree(
+  propTree: BindingPropTree | undefined,
+): BindingPropTree | undefined {
+  if (!propTree || propTree.binding.pruned) return;
+  if (!propTree.props) return propTree;
+  const props = Object.create(null) as { [prop: string]: BindingPropTree };
+  for (const name in propTree.props) {
+    const prop = getSettledPropTree(propTree.props[name]);
+    if (prop) props[name] = prop;
+  }
+  return {
+    binding: propTree.binding,
+    props,
+    rest: getSettledPropTree(propTree.rest),
+  };
 }
 
 export function getKnownFromPropTree(

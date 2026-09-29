@@ -22,9 +22,9 @@ type BindingType = BindingType.Value;
 export { BindingType };
 
 export interface Binding {
+  /** Its scope accessor id, allocated per section once references finalize. */
   id: number;
-  // Creation order, never renumbered, so distinct bindings stay distinct to
-  // `bindingUtil` once `id` is reassigned per section.
+  /** Creation order, never renumbered: the order `bindingUtil` sorts by. */
   uid: number;
   name: string;
   originalName: string | undefined;
@@ -32,6 +32,8 @@ export interface Binding {
   loc: t.SourceLocation | null;
   section: Section;
   closureSections: SortedOpt<Section>;
+  /** The id its closure accessors take, past its section's and ancestors' ids. */
+  closureId: number | undefined;
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
   /** Emitted code the graph stopped tracking still names it. */
@@ -93,6 +95,12 @@ export type ReferencedBindings = SortedOpt<Binding>;
 
 export type Intersection = SortedMany<Binding>;
 
+/** Every member computed from one local source in the same pass, or the
+ * intersection's own render id and scope offset. */
+export type IntersectionMeta =
+  | { source: Binding; id?: undefined; scopeOffset?: undefined }
+  | { source: undefined; id: number; scopeOffset: Binding | undefined };
+
 export interface Getter {
   hoisted: Section | false;
   invoked: boolean;
@@ -127,6 +135,7 @@ export function createBinding(
     property,
     declared,
     closureSections: undefined,
+    closureId: undefined,
     assignments: undefined,
     excludeProperties,
     sources: undefined,
@@ -267,15 +276,15 @@ export const bindingUtil = new Sorted(function compareBindings(
   a: Binding,
   b: Binding,
 ) {
+  // Creation order, dom bindings first as the walker indexes them; ids are
+  // allocated in this order, so sets sorted before and after agree.
+  if (MARKO_DEBUG && a.section.program !== b.section.program) {
+    throw new Error("A sorted binding set holds one template's bindings.");
+  }
   return a === b
     ? 0
     : a.section.id - b.section.id ||
-        (a.type !== b.type &&
-        (a.type === BindingType.dom || b.type === BindingType.dom)
-          ? a.type - b.type || a.id - b.id
-          : a.id - b.id) ||
-        // A pure alias keeps its creation id while its section mates are
-        // renumbered, so only `uid` separates the two `Sorted` treats as one.
+        +(b.type === BindingType.dom) - +(a.type === BindingType.dom) ||
         a.uid - b.uid;
 });
 

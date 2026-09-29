@@ -14,7 +14,6 @@ import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
-import { discardsWrapperChildren } from "../util/insertion-context";
 import {
   analyzeNodeBinding,
   getOnlyChildParentTagName,
@@ -36,6 +35,7 @@ import {
 import { addSetupWork } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
 import * as structure from "../util/structure";
+import { getTagFacts } from "../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
@@ -324,15 +324,13 @@ function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function assertLegalHiddenContext(tag: t.NodePath<t.MarkoTag>) {
-  const parentName = getParentTag(tag)?.node.name;
-  if (
-    t.isStringLiteral(parentName) &&
-    discardsWrapperChildren(parentName.value)
-  ) {
+  const parentTag = getParentTag(tag);
+  if (parentTag && getTagFacts(parentTag).discardsWrapperChildren) {
+    const parentName = getTagName(parentTag);
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `A [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) cannot be a direct child of \`<${parentName.value}>\`: hidden content is wrapped in an element that \`<${parentName.value}>\` discards, which would render the content instead of hiding it. Move the \`<${getTagName(tag)}>\` inside the row or option, or use [\`<if>\`](https://markojs.com/docs/reference/core-tag#if).`,
+        `A [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) cannot be a direct child of \`<${parentName}>\`: hidden content is wrapped in an element that \`<${parentName}>\` discards, which would render the content instead of hiding it. Move the \`<${getTagName(tag)}>\` inside the row or option, or use [\`<if>\`](https://markojs.com/docs/reference/core-tag#if).`,
       );
   }
 }

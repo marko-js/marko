@@ -59,6 +59,18 @@ export function createSources(
   return { state, param, global, forced };
 }
 
+// `sources` with other state and params, keeping everything else it says;
+// unset once it says nothing.
+export function withSources(
+  sources: Sources,
+  state: Sources["state"],
+  param: Sources["param"],
+): Sources | undefined {
+  return state || param || sources.global || sources.forced
+    ? createSources(state, param, sources.global, sources.forced)
+    : undefined;
+}
+
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;
 

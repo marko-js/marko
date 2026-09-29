@@ -166,9 +166,6 @@ export default {
 
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const childFile = loadFileForTag(tag)!;
-  const childProgram = childFile.ast.program;
-  const childExtra = childProgram.extra;
   let tagIdentifier: t.Expression;
   if (t.isStringLiteral(node.name)) {
     const relativePath = getTagRelativePath(tag);
@@ -179,12 +176,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     tagIdentifier = node.name;
   }
 
-  knownTagTranslateHTML(
-    tag,
-    tagIdentifier,
-    childExtra.section!,
-    childExtra.domExports?.params,
-  );
+  knownTagTranslateHTML(tag, tagIdentifier);
 }
 
 function translateDOM(tag: t.NodePath<t.MarkoTag>) {
@@ -219,7 +211,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
     knownTagTranslateDOM(
       tag,
-      childExports.params,
       (binding) => {
         const signalKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}\0${binding.export!}`;
         let signalIdent = signals.get(signalKey);
@@ -307,7 +298,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   } else if (programSection === childSection) {
     knownTagTranslateDOM(
       tag,
-      childExports.params,
       (binding, preferredName) =>
         getSignal(programSection, binding, preferredName).identifier,
       childExports.setupEmpty
@@ -328,7 +318,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   } else {
     knownTagTranslateDOM(
       tag,
-      childExports.params,
       (binding, preferredName, directContent) =>
         importOrSelfReferenceName(
           getFile(),
