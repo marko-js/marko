@@ -1,0 +1,14 @@
+<main>
+  <p>1<!--M_$1 #text/0-->
+    <!>x+y<!--M_$1 #text/1-->
+  </p>
+  <h1>a<!--M_$1 #text/2--></h1>
+  <!--M_[--><i>x<!--M_$2 #text/0--></i><!--M_[2--><i>y<!--M_$3 #text/0--></i><!--M_]1 #text/3 3--><!--M_]1 #text/4-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    label: "x+y"
+  }]];
+  M._.w()
+</script>

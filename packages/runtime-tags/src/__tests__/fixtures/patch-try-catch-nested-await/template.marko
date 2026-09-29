@@ -1,0 +1,11 @@
+<main>
+  <try>
+    <await|a|=input.a>
+      <em>${a}</em>
+      <await|b|=input.b>
+        <strong>${b}</strong>
+      </await>
+    </await>
+    <@catch|err|><span>${err.message}</span></@catch>
+  </try>
+</main>

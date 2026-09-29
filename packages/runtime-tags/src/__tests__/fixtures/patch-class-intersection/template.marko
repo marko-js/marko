@@ -1,0 +1,11 @@
+<let/count=0/>
+<main>
+  <button
+    class=["btn", input.tone, count % 2 && "odd"]
+    onClick() { count++ }
+  >+</button>
+  <span class=count % 2 ? "odd" : "even">parity</span>
+  <if=input.show>
+    <em class=input.tone>note</em>
+  </if>
+</main>

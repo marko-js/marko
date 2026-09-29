@@ -1,0 +1,26 @@
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/tags/panel/index.marko_fill0": !1,
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/tags/panel/index.marko_fill1": "b"
+  },
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/template.marko_fill0": "b"
+}
+
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/tags/panel/index.marko_fill0": !0,
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/tags/panel/index.marko_fill1": "c"
+  },
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/template.marko_fill0": "c"
+}
+
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/tags/panel/index.marko_fill0": !0,
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/tags/panel/index.marko_fill1": "d"
+  },
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-state-structure-nested/template.marko_fill0": "d"
+}

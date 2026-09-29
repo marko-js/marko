@@ -1,0 +1,6 @@
+// PATCH
+{
+  "$global:": {
+    brand: "Runtime"
+  }
+}

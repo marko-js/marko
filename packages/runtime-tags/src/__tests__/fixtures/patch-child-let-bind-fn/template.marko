@@ -1,0 +1,8 @@
+<let/busy=false/>
+<picker/refresh
+  refreshingChange(v) {
+    busy = v;
+  }
+/>
+<p>${busy ? "busy" : "idle"}</p>
+<button id="outer" onClick() { refresh() }>outer</button>

@@ -29,6 +29,7 @@ export const Subscriptions = "#Subscriptions";
 export const TagVariable = "#TagVariable";
 export const TagVariableChange = "#TagVariableChange";
 export const TryBranch = "#TryBranch";
+export const PatchChanged = "#PatchChanged";
 
 type Self = typeof import("./accessor-prop.debug");
 export type Value = Self[keyof Self];

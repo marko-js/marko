@@ -1,0 +1,9 @@
+<const/mk=() => input.title/>
+<let/open=false/>
+<main>
+  <if=open>
+    <const/pick=() => mk/>
+    <p>${pick()()}</p>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

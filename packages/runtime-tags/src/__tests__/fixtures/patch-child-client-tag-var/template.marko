@@ -1,0 +1,8 @@
+<let/show=true/>
+<main>
+  <if=show>
+    <widget/w label=input.label/>
+    <p.echo>${w}</p>
+  </if>
+  <button.toggle onClick() { show = !show }>t</button>
+</main>

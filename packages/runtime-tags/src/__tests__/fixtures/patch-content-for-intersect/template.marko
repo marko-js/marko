@@ -1,0 +1,11 @@
+<let/open=false/>
+<main>
+  <if=open>
+    <box>
+      <for|item| of=["p", "q"]>
+        <span>${input.title + ":" + item}</span>
+      </for>
+    </box>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

@@ -1,0 +1,10 @@
+<let/n=0/>
+<main>
+  <try>
+    <await|value|=input.promise>
+      <em>${value}</em>
+    </await>
+    <@placeholder><p>${input.label}</p></@placeholder>
+  </try>
+  <button onClick() { n++ }>${n}</button>
+</main>

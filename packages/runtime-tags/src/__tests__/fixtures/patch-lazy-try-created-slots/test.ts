@@ -1,0 +1,14 @@
+import type { TestConfig } from "../../main.test";
+import { navigate, rejectAfter } from "../../utils/resolve";
+
+// A patch creates a lazily loaded child's `<try>`: its `@placeholder` and
+// `@catch` resolve by id once the child's module registers them.
+export const config: TestConfig = {
+  patches: true,
+  steps: () => [
+    { show: false },
+    { show: true, p: Promise.resolve("a") },
+    navigate(() => ({ show: true, p: rejectAfter(new Error("boom")) })),
+    { show: true, p: Promise.resolve("c") },
+  ],
+};

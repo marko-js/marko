@@ -1,0 +1,10 @@
+<li>
+  ${input.node.name}
+  <if=input.node.children>
+    <ul>
+      <for|child| of=input.node.children>
+        <tree node=child/>
+      </for>
+    </ul>
+  </if>
+</li>
