@@ -32,9 +32,7 @@ import {
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isPageElement } from "../../util/insertion-context";
-import { isControlFlowTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
-import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
 import {
   getMarkoOpts,
   isOptimize,
@@ -80,6 +78,7 @@ import {
   setSectionDebugVar,
 } from "../../util/signals";
 import * as structure from "../../util/structure";
+import { getTagFacts, isTextOnlyNativeTag } from "../../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import {
   toMemberExpression,
@@ -1622,7 +1621,7 @@ function assertOptionInSelectWithValue(tag: t.NodePath<t.MarkoTag>) {
         }
 
         if (parentName !== "optgroup") return;
-      } else if (!isControlFlowTag(parent)) {
+      } else if (!getTagFacts(parent).controlFlow) {
         return;
       }
     } else if (parent.isProgram()) {

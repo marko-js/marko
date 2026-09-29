@@ -1,9 +1,9 @@
 import { types as t } from "@marko/compiler";
 
-import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML } from "../util/marko-config";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
+import { isNonHTMLText } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
 import * as writer from "../util/writer";
 

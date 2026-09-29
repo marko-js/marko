@@ -1,10 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
-  getProgram,
-  isAttributeTag,
-  isNativeTag,
-  loadFileForTag,
-} from "@marko/compiler/babel-utils";
+import { getProgram, loadFileForTag } from "@marko/compiler/babel-utils";
 
 import type { WalkCode } from "../../common/types";
 import * as ContentType from "./constants/content-type";
@@ -46,6 +41,7 @@ import {
   setParamReasonGroups,
 } from "./serialize-reasons";
 import { createSectionState } from "./state";
+import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export interface ParamSerializeReasonGroup {
@@ -279,7 +275,7 @@ export function getOrCreateSection(path: t.NodePath<any>) {
       cur.type === "Program" ||
       (cur.type === "MarkoTagBody" &&
         !cur.node.attributeTags &&
-        !isNativeNode(cur.parentPath as t.NodePath<t.MarkoTag>))
+        !getTagFacts(cur.parentPath as t.NodePath<t.MarkoTag>).inlineBody)
     ) {
       return startSection(cur)!;
     }
@@ -421,56 +417,24 @@ export function getNodeContentType(
       return null;
     case "MarkoTag": {
       const tag = path as t.NodePath<t.MarkoTag>;
-      if (isCoreTag(tag)) {
-        switch (tag.node.name.value) {
-          case "html-comment":
-            return ContentType.Comment;
-          case "html-script":
-          case "html-style":
-            return ContentType.Tag;
-          case "style":
-            return tag.node.body.body.some((child) =>
-              t.isMarkoPlaceholder(child),
-            )
-              ? ContentType.Tag
-              : null;
-          case "for":
-          case "if":
-          case "await":
-          case "try":
-            return ContentType.Dynamic;
-          case "show":
-            // Optimizing a redundant `<show=true>` only saves its placeholder,
-            // so all `<show>` tags intentionally remain dynamic here.
-            return ContentType.Dynamic;
-          default:
-            return null;
-        }
-      } else if (isNativeTag(tag)) {
-        return ContentType.Tag;
-      } else if (isAttributeTag(tag)) {
-        return null;
-      } else {
-        // The section `structure.child` inlines; a load tag renders behind a marker.
-        const tagSection =
-          tag.node.extra?.defineBodySection ||
-          (analyzeTagNameType(tag) === TagNameType.CustomTag &&
-            !tag.node.extra!.tagNameLoad &&
-            loadFileForTag(tag)!.ast.program.extra.section);
-        if (tagSection) {
-          if (tagSection.content) {
-            if (contentInfo && !tagSection.content.singleChild) {
-              if (extraMember === "endType") {
-                contentInfo.startType = tagSection.content.startType;
-                contentInfo.singleChild = false;
-              }
-            }
-            return tagSection.content[extraMember];
-          } else {
-            return null;
+      // The section `structure.child` inlines; a load tag renders behind a marker.
+      const tagSection =
+        tag.node.extra?.defineBodySection ||
+        (!isCoreTag(tag) &&
+          analyzeTagNameType(tag) === TagNameType.CustomTag &&
+          !tag.node.extra!.tagNameLoad &&
+          loadFileForTag(tag)!.ast.program.extra.section);
+      if (!tagSection) return getTagContentType(tag);
+      if (tagSection.content) {
+        if (contentInfo && !tagSection.content.singleChild) {
+          if (extraMember === "endType") {
+            contentInfo.startType = tagSection.content.startType;
+            contentInfo.singleChild = false;
           }
         }
+        return tagSection.content[extraMember];
       }
+      return null;
     }
   }
 
@@ -664,23 +628,4 @@ function compareParamGroups(
   b: Pick<ParamSerializeReasonGroup, "reason">,
 ) {
   return compareReferences(a.reason, b.reason);
-}
-
-function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
-  if (isCoreTag(tag)) {
-    // The `<show>` body, like the html-* tags' content, always renders exactly
-    // once, so it compiles inline into the parent section rather than its own.
-    switch (tag.node.name.value) {
-      case "html-comment":
-      case "html-script":
-      case "html-style":
-      case "show":
-        return true;
-      case "style":
-        return tag.node.body.body.some((child) => t.isMarkoPlaceholder(child));
-      default:
-        return false;
-    }
-  }
-  return analyzeTagNameType(tag) === TagNameType.NativeTag;
 }
