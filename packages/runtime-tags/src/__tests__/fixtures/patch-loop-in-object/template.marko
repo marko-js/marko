@@ -1,0 +1,9 @@
+<let/pairs={ a: 1 }/>
+<main>
+  <ul>
+    <for|k, v| in=pairs>
+      <li>${k}=${v} (${input.note})</li>
+    </for>
+  </ul>
+  <button onClick() { pairs = { ...pairs, ["k" + Object.keys(pairs).length]: 2 } }>+</button>
+</main>

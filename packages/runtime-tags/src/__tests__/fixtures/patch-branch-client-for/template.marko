@@ -1,0 +1,9 @@
+<let/count=0/>
+<main>
+  <if=(count > 1)>
+    <for|item| of=input.items>
+      <p>${item}</p>
+    </for>
+  </if>
+  <button onClick() { count++ }>+</button>
+</main>

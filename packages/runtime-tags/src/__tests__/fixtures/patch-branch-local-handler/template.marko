@@ -1,0 +1,7 @@
+<main>
+  <if=input.show>
+    <const/label=input.title + "!"/>
+    <p>${label}</p>
+    <button onClick() { document.querySelector("main").dataset.clicked = label }>c</button>
+  </if>
+</main>

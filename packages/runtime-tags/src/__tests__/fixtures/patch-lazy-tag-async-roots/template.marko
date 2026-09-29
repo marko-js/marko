@@ -1,0 +1,6 @@
+import Child from "./child.marko" with { load: "render" }
+
+<main>
+  <await|first|=input.first><Child label=first/></await>
+  <await|second|=input.second><Child label=second/></await>
+</main>

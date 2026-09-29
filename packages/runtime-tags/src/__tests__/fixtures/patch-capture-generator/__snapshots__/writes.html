@@ -1,0 +1,12 @@
+<p>one<!--M_$1 a-->
+  <!>none<!--M_$1 b-->
+</p><button>go</button><!--M_$1 c-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    g: (function*(a) {
+      yield* a
+    })(["a", "b"])
+  }], "a0 1"];
+  M._.w()
+</script>

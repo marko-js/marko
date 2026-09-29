@@ -1,0 +1,10 @@
+<let/count=0/>
+<main>
+  <if=(count > 1)>
+    <p>big</p>
+    <script>
+      document.querySelector("main")!.dataset.title = input.title;
+    </script>
+  </if>
+  <button onClick() { count++ }>+</button>
+</main>

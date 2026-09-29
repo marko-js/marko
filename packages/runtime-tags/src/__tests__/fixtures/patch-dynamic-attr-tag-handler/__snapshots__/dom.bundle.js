@@ -1,0 +1,2 @@
+// tags/child.marko
+const $htmlInput__script = _script("b2", ($scope) => _attrs_script($scope, "a"));

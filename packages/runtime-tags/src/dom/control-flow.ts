@@ -288,7 +288,7 @@ export function addAwaitCounter(
   return awaitCounter;
 }
 
-function scheduleAwaitFrame(
+export function scheduleAwaitFrame(
   awaitCounter: AwaitCounter,
   scope: Scope,
   render: () => void,
@@ -339,7 +339,7 @@ function completeAwaitCounter(_scope: Scope, awaitCounter: AwaitCounter) {
   }
 }
 
-function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
+export function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   const awaitCounter: AwaitCounter = (tryBranch[AccessorProp.AwaitCounter] = {
     i: 0,
     c() {
@@ -367,7 +367,7 @@ export function runPendingEffects(tryBranch: BranchScope) {
   );
 }
 
-function dismissPlaceholder(tryBranch: BranchScope) {
+export function dismissPlaceholder(tryBranch: BranchScope) {
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
@@ -445,7 +445,7 @@ export function renderCatch(scope: Scope, error: unknown) {
 
 // `ParentBranch` links a branch to its enclosing one (on resume through the serialized
 // closest branch id and markers), and a `@placeholder` is parented beside its `<try>`.
-function findTryWithPlaceholder(scope: Scope) {
+export function findTryWithPlaceholder(scope: Scope) {
   let branch = scope[AccessorProp.ClosestBranch];
   while (branch && !branch[AccessorProp.PlaceholderContent]) {
     branch = branch[AccessorProp.ParentBranch];

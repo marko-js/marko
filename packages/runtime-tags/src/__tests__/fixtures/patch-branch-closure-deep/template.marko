@@ -1,0 +1,11 @@
+<let/count=0/>
+<main>
+  <h1>${input.title}</h1>
+  <if=input.outer>
+    <p>promo</p>
+    <if=input.inner>
+      <span>Seen ${count}</span>
+    </if>
+  </if>
+  <button onClick() { count++ }>+</button>
+</main>
