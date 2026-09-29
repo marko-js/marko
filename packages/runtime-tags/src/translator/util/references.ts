@@ -740,6 +740,17 @@ function createBindingsAndTrackReferences(
               declaresPattern,
             );
           } else if (t.isLVal(element)) {
+            if (element.type === "Identifier") {
+              // An array has no property to carry a change handler.
+              const assignment = scope
+                .getBinding(element.name)!
+                .constantViolations.find(isAssignment);
+              if (assignment) {
+                throw assignment.buildCodeFrameError(
+                  `\`${element.name}\` comes from array destructuring, which has no [change handler](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding), so it cannot be assigned to. Destructure it from an object instead, where assigning it calls the object's \`${element.name}Change\`.`,
+                );
+              }
+            }
             createBindingsAndTrackReferences(
               element,
               type,
@@ -757,6 +768,10 @@ function createBindingsAndTrackReferences(
       break;
     }
   }
+}
+
+function isAssignment(ref: t.NodePath) {
+  return ref.type !== "MarkoTag";
 }
 
 function trackReference(

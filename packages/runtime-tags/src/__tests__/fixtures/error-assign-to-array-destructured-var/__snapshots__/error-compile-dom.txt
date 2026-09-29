@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-array-destructured-var/template.marko:2:21
+      1 | <const/[x]=input.list/>
+    > 2 | <button onClick() { x = 2 }>${x}</button>
+        |                     ^^^^^ `x` comes from array destructuring, which has no [change handler](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding), so it cannot be assigned to. Destructure it from an object instead, where assigning it calls the object's `xChange`.
+      3 |
