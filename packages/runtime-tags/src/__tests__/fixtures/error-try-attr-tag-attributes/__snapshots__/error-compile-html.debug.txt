@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-try-attr-tag-attributes/template.marko:3:4
+      1 | <try>
+      2 |   <await=input.p>ok</await>
+    > 3 |   <@catch message="failed">caught</@catch>
+        |    ^^^^^^ The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try)'s `<@catch>` takes no attributes, only content.
+      4 | </try>
+      5 |

@@ -7,7 +7,6 @@ export const config: TestConfig = {
     click("toggle-0"),
     click("toggle-0"),
     click("save-last"),
-    click("fail"),
   ],
 };
 

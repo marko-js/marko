@@ -22,13 +22,3 @@
   </for>
 </last>
 
-<let/fail=false>
-<button#fail onClick() { fail = true }>fail</button>
-<div>
-  <try>
-    <for|label| of=["static"]>
-      <@catch|err|>caught ${label}: ${err.message}</@catch>
-    </for>
-    ${(() => { if (fail) throw new Error("click"); return "ok" })()}
-  </try>
-</div>

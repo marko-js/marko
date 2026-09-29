@@ -8,6 +8,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { getTagName } from "../util/get-tag-name";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   BindingType,
@@ -61,6 +62,31 @@ export default {
             `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
           );
         }
+
+        // Each is static content of the try, written once, directly inside it.
+        const { dynamic, repeated } = attrTags[name];
+        if (dynamic || repeated) {
+          throw tag
+            .get("name")
+            .buildCodeFrameError(
+              dynamic
+                ? `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) needs its \`<${name}>\` written directly inside it, not within control flow such as \`<if>\` or \`<for>\`.`
+                : `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) takes a single \`<${name}>\`.`,
+            );
+        }
+      }
+
+      for (const child of tag.get("attributeTags")) {
+        if (
+          child.isMarkoTag() &&
+          (child.node.attributes.length || child.node.arguments)
+        ) {
+          throw child
+            .get("name")
+            .buildCodeFrameError(
+              `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try)'s \`<${getTagName(child)}>\` takes no attributes, only content.`,
+            );
+        }
       }
     }
     const section = getOrCreateSection(tag);
@@ -76,6 +102,14 @@ export default {
         .get("name")
         .buildCodeFrameError(
           "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
+        );
+    }
+
+    if (!attrTags) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) needs a `<@catch>` to handle errors or a `<@placeholder>` to show while its content is pending. Without either it has no effect, so render its content directly.",
         );
     }
 

@@ -1,4 +1,4 @@
-// size: 27014 (min) 10064 (brotli)
+// size: 27003 (min) 10056 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1899,11 +1899,9 @@ function _try(nodeAccessor, template, walks, setup) {
   let branchAccessor = "A" + nodeAccessor,
     renderer = _content("", template, walks, setup)();
   return (scope, input) => {
-    scope[branchAccessor] ||
-      setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch);
+    setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch);
     let branch = scope[branchAccessor];
-    branch &&
-      ((branch.C = nodeAccessor),
+    ((branch.C = nodeAccessor),
       (branch.E = input.catch && (normalizeDynamicRenderer(input.catch) || 0)),
       (branch.Q = normalizeDynamicRenderer(input.placeholder)));
   };

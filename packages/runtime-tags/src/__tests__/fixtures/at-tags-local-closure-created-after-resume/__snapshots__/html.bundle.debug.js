@@ -88,7 +88,6 @@ var last_default = _template("__tests__/tags/last.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $fail__closures = new Set();
 	let items = [{ text: "a" }, { text: "b" }];
 	let $item;
 	forOf(items, (item) => {
@@ -126,30 +125,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id, () => [{ i }]) });
 	});
 	last_default({ item: $item2 });
-	let fail = false;
-	_html(`<button id=fail>fail</button>${_el_resume($scope0_id, "#button/3")}<div>`);
-	let $catch;
-	forOf(["static"], (label) => {
-		$catch = attrTags($catch, { content: _content_resume("__tests__/template.marko_5*content", (err) => {
-			const $scope5_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope5_reason, 0);
-			const $scope5_id = _scope_id();
-			_html(`caught ${_escape(label)}: ${_text_resume($scope5_id, "#text/1", err.message, $sg__err_message * 2)}`);
-			_serialize_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "30:8");
-		}, $scope0_id, () => [{ label }]) });
-	});
-	_try($scope0_id, "#text/4", _content_resume("__tests__/template.marko_4*content", () => {
-		const $scope4_id = _scope_id();
-		_scope_reason();
-		_html(_text_resume($scope4_id, "#text/0", (() => {
-			if (fail) throw new Error("click");
-			return "ok";
-		})()));
-		_subscribe($fail__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "28:4"), "__tests__/template.marko_4_fail#7/subscribe");
-	}, $scope0_id), { catch: $catch });
-	_html("</div>");
-	_script($scope0_id, "__tests__/template.marko_0");
-	_scope($scope0_id, {
-		items_0: items?.[0],
-		"ClosureScopes:fail/9": $fail__closures
-	}, "__tests__/template.marko", 0, { items_0: ["items[0]", "2:6"] });
+	_scope($scope0_id, { items_0: items?.[0] }, "__tests__/template.marko", 0, { items_0: ["items[0]", "2:6"] });
+	_resume_branch($scope0_id);
 }, 1);

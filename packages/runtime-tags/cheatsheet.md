@@ -88,7 +88,7 @@ import { getUser } from "../data.js";
 </try>
 ```
 
-`@placeholder`/`@catch` go on `<try>`, never on `<await>`. On the server this streams (placeholder flushes first, content follows). It works in the browser too: hand `<await>` a new promise (e.g. a `<const>` derived from state) and it shows the placeholder again, then the new result. `@catch` can't recover in place: redirect (a `<script>` setting `location`), or re-render the `<try>` by bumping a key on a wrapping `<for>`.
+`@placeholder`/`@catch` go on `<try>`, never on `<await>`, written directly inside it: once each, with only content, never inside `<if>`/`<for>`. A `<try>` needs at least one. On the server this streams (placeholder flushes first, content follows). It works in the browser too: hand `<await>` a new promise (e.g. a `<const>` derived from state) and it shows the placeholder again, then the new result. `@catch` can't recover in place: redirect (a `<script>` setting `location`), or re-render the `<try>` by bumping a key on a wrapping `<for>`.
 
 Don't fetch while rendering: start data loads early, pass the promise through the template, and `<await>` it where the data is rendered. Fetching inside each component that renders the data serializes the requests (waterfalls). Under @marko/run, load in the route handler (`return next({ user: getUser() })`, no await) and render with `<await|user|=$global.data.user>`.
 
