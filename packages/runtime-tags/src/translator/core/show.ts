@@ -15,8 +15,8 @@ import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { discardsWrapperChildren } from "../util/insertion-context";
 import {
+  analyzeNodeBinding,
   getOnlyChildParentTagName,
-  getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import {
   type Binding,
@@ -49,7 +49,7 @@ const kStartBinding = Symbol("<show> range start binding");
 const kEndBinding = Symbol("<show> range end binding");
 const kStaticDisplay = Symbol("<show> static display");
 const kSingleNodeBody = Symbol("<show> single node body");
-const kDisplayRef = Symbol("<show> hoisted display reference");
+const htmlDisplayRefs = new WeakMap<t.MarkoTag, t.Identifier>();
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
@@ -57,7 +57,6 @@ declare module "@marko/compiler/dist/types" {
     [kEndBinding]?: Binding;
     [kStaticDisplay]?: boolean;
     [kSingleNodeBody]?: boolean;
-    [kDisplayRef]?: t.Expression;
   }
 }
 
@@ -94,7 +93,7 @@ export default {
       // Bindings are created in walk order: the only-child parent, or the body
       // range's start marker, precedes the body and so is created here.
       if (getOnlyChildParentTagName(tag)) {
-        getOptimizedOnlyChildNodeBinding(tag, tagSection);
+        analyzeNodeBinding(tag, tagSection);
       } else {
         tagExtra[kStartBinding] = createBinding(
           "#text",
@@ -132,13 +131,14 @@ export default {
           structure.enterShallow(tag);
         }
 
-        // The reference node the display signal anchors to; its binding is
-        // created below, after the markers, keeping bindings in walk order.
+        // The reference node the display signal anchors to, after the markers
+        // to keep bindings in walk order.
+        analyzeNodeBinding(tag, tagSection);
         structure.visit(tag, WalkCode.Replace);
         structure.enterShallow(tag);
       }
 
-      const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+      const nodeBinding = tagExtra.nodeBinding!;
 
       if (tagExtra[kStaticDisplay] === undefined) {
         addSerializeExpr(tagSection, tagExtra, nodeBinding);
@@ -168,7 +168,7 @@ export default {
               t.variableDeclarator(displayRef, display),
             ]),
           );
-          tagExtra[kDisplayRef] = displayRef;
+          htmlDisplayRefs.set(tag.node, displayRef);
         }
       },
       exit(tag) {
@@ -191,8 +191,9 @@ export default {
         }
 
         const tagSection = getSection(tag);
-        const display = tagExtra[kDisplayRef] || tag.node.attributes[0].value;
-        const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+        const display =
+          htmlDisplayRefs.get(tag.node) || tag.node.attributes[0].value;
+        const nodeBinding = tagExtra.nodeBinding!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const singleNode = tagExtra[kSingleNodeBody];
         const statefulReason = getSerializeReason(tagSection, kStatefulReason);
@@ -201,7 +202,6 @@ export default {
           nodeBinding,
         );
         const endArgs = getBranchEndArgs(
-          tag,
           tagSection,
           nodeBinding,
           statefulReason,
@@ -257,7 +257,7 @@ export default {
 
         const tagSection = getSection(tag);
         const endBinding = tagExtra[kEndBinding];
-        const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+        const nodeBinding = tagExtra.nodeBinding!;
         const startBinding = tagExtra[kStartBinding];
         const display =
           tagExtra[kStaticDisplay] === false

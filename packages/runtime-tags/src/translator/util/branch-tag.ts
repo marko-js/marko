@@ -1,8 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { kSkipEndTag } from "../visitors/tag/native-tag";
 import { getAccessorPrefix } from "./get-accessor-enums";
-import { getParentTag } from "./get-parent-tag";
 import { type Binding, kBranchSerializeReason } from "./references";
 import { ContentType, type Section } from "./sections";
 import { getSerializeGuard, getSerializeGuardForAny } from "./serialize-guard";
@@ -14,6 +12,7 @@ import {
   type SerializeReasons,
 } from "./serialize-reasons";
 import { setSectionOwnerResumedByMarker } from "./signals";
+import { createProgramState } from "./state";
 
 // Shared wiring for `<if>`/`<for>` branches (and `<show>`'s end args), so
 // the tags cannot drift apart one copy at a time.
@@ -57,7 +56,6 @@ export function resumeOwnerByMarkerWhenStatic(
 }
 
 export function getBranchResumeArgs(
-  tag: t.NodePath<t.MarkoTag>,
   tagSection: Section,
   nodeBinding: Binding,
   branchReasons: SerializeReasons,
@@ -66,7 +64,6 @@ export function getBranchResumeArgs(
   singleNode: boolean,
 ) {
   const endArgs = getBranchEndArgs(
-    tag,
     tagSection,
     nodeBinding,
     getSerializeReason(tagSection, statefulReasonKey),
@@ -81,7 +78,6 @@ export function getBranchResumeArgs(
 }
 
 export function getBranchEndArgs(
-  tag: t.NodePath<t.MarkoTag>,
   tagSection: Section,
   nodeBinding: Binding,
   statefulReason: SerializeReason | undefined,
@@ -91,7 +87,7 @@ export function getBranchEndArgs(
   const markerSerializeReason = getSerializeReason(tagSection, nodeBinding);
   const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
   if (skipParentEnd) {
-    getParentTag(tag)!.node.extra![kSkipEndTag] = true;
+    getBranchEndTags().add(nodeBinding);
   }
 
   const serializeStateful = getSerializeGuard(
@@ -114,6 +110,12 @@ export function getBranchEndArgs(
         : undefined,
     singleNode ? t.numericLiteral(1) : undefined,
   ];
+}
+
+// Elements whose only child branch writes their end tag, after its marker.
+const [getBranchEndTags] = createProgramState(() => new Set<Binding>());
+export function isEndTagWrittenByBranch(nodeBinding: Binding | undefined) {
+  return !!nodeBinding && getBranchEndTags().has(nodeBinding);
 }
 
 // Resume adopts the element before a branch's resume comments, so only a

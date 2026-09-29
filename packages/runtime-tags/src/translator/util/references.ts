@@ -234,8 +234,8 @@ declare module "@marko/compiler/dist/types" {
 
   export interface NodeExtra {
     section?: Section;
-    /** The dom node binding of a tag rendering a branch or body (a dynamic
-     * tag, `<try>`, `<await>`). */
+    /** The dom binding a tag or placeholder is addressed by: its node, marker
+     * or child scope; an only child control flow tag shares its parent's. */
     nodeBinding?: Binding;
     referencedBindings?: ReferencedBindings;
     downstream?: SortedOpt<Binding>;

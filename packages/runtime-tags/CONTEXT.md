@@ -22,6 +22,13 @@ runtime values occupy accessor-addressed scope slots. Distinct from Babel's
 lexical `Binding`.
 _Avoid_: dependency, runtime container
 
+**Node binding**:
+The dom binding for the node client code reaches a tag at (`extra.nodeBinding`):
+its element, a control-flow tag's marker, or an only child's parent element.
+Its accessor is the runtime's `nodeAccessor`; the tag's other scope slots
+(branch scopes, conditional renderer) are keyed by a prefix plus it.
+_Avoid_: node ref
+
 **Referenced bindings**:
 The canonical zero/one/many collection of bindings that schedule an expression
 or function. Constants, DOM getters, and safe lazy reads are tracked separately.

@@ -8,7 +8,6 @@ import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
-  type Binding,
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
@@ -36,12 +35,10 @@ import * as writer from "../util/writer";
 import * as SiblingText from "./constants/sibling-text";
 import { scopeIdentifier } from "./program";
 
-const kNodeBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
 type SiblingText = SiblingText.Value;
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
-    [kNodeBinding]?: Binding;
     [kSiblingText]?: SiblingText;
   }
 }
@@ -65,7 +62,7 @@ export default {
 
       if (!isStaticText(node)) {
         const section = getOrCreateSection(placeholder);
-        const nodeBinding = ((node.extra ??= {})[kNodeBinding] = createBinding(
+        const nodeBinding = ((node.extra ??= {}).nodeBinding = createBinding(
           "#text",
           BindingType.dom,
           section,
@@ -146,7 +143,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const isHTML = isOutputHTML();
   const write = writer.writeTo(placeholder);
   const extra = node.extra || {};
-  const nodeBinding = extra[kNodeBinding];
+  const nodeBinding = extra.nodeBinding;
   const canWriteHTML = isHTML || (confident && node.escape);
   const method = canWriteHTML
     ? node.escape

@@ -15,3 +15,11 @@ const discardsUnknownChildren = new Set([
 export function discardsWrapperChildren(tagName: string) {
   return discardsUnknownChildren.has(tagName);
 }
+
+// The document's own elements: the parser implies and moves nodes into them,
+// and the page writes assets and resume scripts into them.
+const pageElements = new Set(["html", "head", "body"]);
+
+export function isPageElement(tagName: string) {
+  return pageElements.has(tagName);
+}

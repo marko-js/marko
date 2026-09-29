@@ -96,15 +96,11 @@ const [getKnownTags] = createSectionState(
 );
 
 const kContentSection = Symbol("known tag content section");
-const kChildScopeBinding = Symbol("known tag scope binding");
-const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
 const kKnownExprs = Symbol("known tag exprs");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kContentSection]?: Section;
-    [kChildScopeBinding]?: Binding;
-    [kChildOffsetScopeBinding]?: Binding;
     [kKnownExprs]?: KnownExprs;
   }
 }
@@ -119,7 +115,7 @@ export function knownTagAnalyze(
   const section = getOrCreateSection(tag);
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {});
-  const childScopeBinding = (tagExtra[kChildScopeBinding] = createBinding(
+  const childScopeBinding = (tagExtra.nodeBinding = createBinding(
     "#childScope",
     BindingType.dom,
     section,
@@ -170,7 +166,7 @@ export function knownTagAnalyze(
                 (contentSection.returnSerializeReason
                   .param as Opt<InputBinding>)),
           ));
-    varBinding.scopeOffset = tagExtra[kChildOffsetScopeBinding] = createBinding(
+    varBinding.scopeOffset = createBinding(
       "#scopeOffset",
       BindingType.dom,
       section,
@@ -229,7 +225,7 @@ export function knownTagTranslateHTML(
           statements: [],
         };
 
-  const childScopeBinding = tagExtra[kChildScopeBinding]!;
+  const childScopeBinding = tagExtra.nodeBinding!;
   const childScopeSerializeReason = getSerializeReason(
     section,
     childScopeBinding,
@@ -259,7 +255,7 @@ export function knownTagTranslateHTML(
         callRuntime(
           "_var",
           getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
+          getScopeAccessorLiteral(tagVar.extra!.binding!.scopeOffset!),
           peekScopeId,
           t.stringLiteral(
             getResumeRegisterId(section, tagVar.extra?.binding, "var"),
@@ -329,7 +325,7 @@ export function knownTagTranslateDOM(
   const tagSection = getSection(tag);
   const { node } = tag;
   const extra = node.extra!;
-  const childScopeBinding = extra[kChildScopeBinding]!;
+  const childScopeBinding = extra.nodeBinding!;
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
@@ -376,7 +372,7 @@ export function knownTagTranslateDOM(
 
 export function finalizeKnownTags(section: Section) {
   for (const tagExtra of getKnownTags(section)) {
-    const scopeBinding = tagExtra[kChildScopeBinding];
+    const scopeBinding = tagExtra.nodeBinding;
     const knownExprs = tagExtra[kKnownExprs];
     const contentSection = tagExtra[kContentSection]!;
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
