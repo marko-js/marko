@@ -48,6 +48,12 @@ collection, or a dynamic tag's renderer is a branch section's
 `upstreamExpression`. A tag or read is _downstream_ of what it reads.
 _Avoid_: feed, feeder, selection (a keyed `<for>` row selector aside)
 
+**Optional branch**:
+A branch section its upstream's value can leave unrendered: an `<if>` body, or
+a `<for>` body (rendered once per item). An `<await>` or `<try>` body renders
+for every value its upstream takes; an error renders the catch content instead.
+_Avoid_: reselected, conditional branch
+
 **Closure**:
 A binding read by another section, allowing its signal to notify live child
 scopes. This names a binding relationship, not a JavaScript function closure.

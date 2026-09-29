@@ -6,7 +6,6 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
-import type { AccessorPrefix } from "../../common/accessor.debug";
 import type { WalkCode } from "../../common/types";
 import * as ContentType from "./constants/content-type";
 import type * as Step from "./constants/step";
@@ -123,7 +122,6 @@ export interface Section {
   parent: Section | undefined;
   children: Section[];
   program: Section;
-  sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
   params: undefined | ParamBinding | InputBinding;
   /** The attribute tag `<for>` params this content reads, held as its own
    * bindings that the loop binds as it creates it. */
@@ -171,7 +169,9 @@ export interface Section {
   /** Whether analysis found work keyed by setup in the section, or in a
    * `<define>` body or template it calls in place. */
   hasSetupWork: boolean;
-  isBranch: boolean;
+  /** Its tag, which renders it in place into branch scopes at the tag's node
+   * binding, and whether its upstream's value can leave it unrendered. */
+  branch: { nodeBinding: Binding; optional: boolean } | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -231,7 +231,6 @@ export function startSection(
       parent: parentSection,
       children: [],
       program: undefined as unknown as Section,
-      sectionAccessor: undefined,
       params: undefined,
       localClosures: undefined,
       referencedClosures: undefined,
@@ -257,7 +256,7 @@ export function startSection(
       abortSignalExprs: 0,
       readsOwner: false,
       hasSetupWork: false,
-      isBranch: false,
+      branch: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     if (parentSection) {
@@ -315,9 +314,6 @@ export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
   "scopeIdIdentifier",
   (section) => generateUidIdentifier(`scope${section.id}_id`),
 );
-
-export const [getSectionParentIsOwner, setSectionParentIsOwner] =
-  createSectionState<boolean>("parentIsOwner", () => false);
 
 export const [getBranchRendererArgs, setBranchRendererArgs] =
   createSectionState<
@@ -482,7 +478,7 @@ export function getNodeContentType(
 }
 
 export function getSectionRegisterReasons(section: Section) {
-  if (section.isBranch) return false; // Branches handle whether to register their section/renderer.
+  if (isResumedBranch(section)) return false; // Branches handle whether to register their section/renderer.
 
   // Only a component receives a dynamic tag's body as a value; SSR otherwise
   // writes just its id, to compare against the client's renderer.
@@ -531,12 +527,20 @@ export function getSectionRegisterReasons(section: Section) {
   return true;
 }
 
+// Resume restores an optional branch's scopes into its owner, so a change can
+// remove them; an `<await>` or `<try>` body serializes its owner link instead.
+export function isResumedBranch(
+  section: Section,
+): section is Section & { branch: NonNullable<Section["branch"]> } {
+  return !!section.branch?.optional;
+}
+
 export function isImmediateOwner(section: Section, binding: Binding) {
   return section.parent?.id === binding.section.id;
 }
 
 export function isDirectClosure(section: Section, closure: Binding) {
-  return section.isBranch && isImmediateOwner(section, closure);
+  return !!isResumedBranch(section) && isImmediateOwner(section, closure);
 }
 
 export function isDynamicClosure(section: Section, closure: Binding) {
@@ -560,7 +564,7 @@ export function getDynamicClosureIndex(
 }
 
 export function getDirectClosures(section: Section) {
-  if (section.isBranch) {
+  if (isResumedBranch(section)) {
     return bindingUtil.filter(section.referencedClosures, (closure) =>
       isImmediateOwner(section, closure),
     );

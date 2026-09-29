@@ -8,6 +8,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
@@ -27,7 +28,6 @@ import {
   getSection,
   getSectionForBody,
   type Section,
-  setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
 import { getScopeReasonStatement } from "../util/serialize-guard";
@@ -93,7 +93,11 @@ export default {
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
-    tagExtra.nodeBinding = createBinding("#text", BindingType.dom, section);
+    const nodeBinding = (tagExtra.nodeBinding = createBinding(
+      "#text",
+      BindingType.dom,
+      section,
+    ));
 
     if (!tag.node.body.body.length) {
       throw tag
@@ -111,25 +115,16 @@ export default {
         );
     }
 
-    const bodySection = startSection(tag.get("body"));
-
-    if (bodySection) {
-      bodySection.upstreamExpression = tagExtra;
-      structure.visit(tag, WalkCode.Replace);
-      structure.enterShallow(tag);
-    }
+    initBranchSection(startSection(tag.get("body"))!, tagExtra, {
+      nodeBinding,
+      optional: false,
+    });
+    structure.visit(tag, WalkCode.Replace);
+    structure.enterShallow(tag);
   },
   translate: translateByTarget({
     html: {
       enter(tag) {
-        const tagBody = tag.get("body");
-        const bodySection = getSectionForBody(tagBody);
-        if (!bodySection) {
-          tag.remove();
-          return;
-        }
-
-        setSectionParentIsOwner(bodySection, true);
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -176,9 +171,6 @@ export default {
       },
     },
     dom: {
-      enter(tag) {
-        setSectionParentIsOwner(getSectionForBody(tag.get("body"))!, true);
-      },
       exit(tag) {
         const nodeBinding = tag.node.extra!.nodeBinding!;
         const section = getSection(tag);

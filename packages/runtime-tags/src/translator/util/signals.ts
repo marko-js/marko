@@ -52,6 +52,7 @@ import {
   getSectionForBody,
   isDynamicClosure,
   isImmediateOwner,
+  isResumedBranch,
   type Section,
   sectionUtil,
 } from "./sections";
@@ -1503,7 +1504,7 @@ export function writeHTMLResumeStatements(
   }
 
   const resumeClosestBranch =
-    !section.isBranch &&
+    !isResumedBranch(section) &&
     (section.hasAbortSignal ||
       !!section.referencedClosures ||
       (sectionSerializeReason && some(section.bindings, isLetBinding)));

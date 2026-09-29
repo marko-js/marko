@@ -23,6 +23,7 @@ import {
   forEachSection,
   getScopeIdIdentifier,
   getSection,
+  isResumedBranch,
   type Section,
 } from "../../util/sections";
 import { getScopeReasonStatement } from "../../util/serialize-guard";
@@ -96,7 +97,7 @@ export default {
           while (currentSection && currentSection !== highestHoistSection) {
             const parentSection: Section = currentSection.parent!;
             if (
-              !currentSection.sectionAccessor &&
+              !isResumedBranch(currentSection) &&
               !sectionDynamicSubscribers.has(currentSection)
             ) {
               const subscribersIdentifier = generateUidIdentifier(

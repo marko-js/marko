@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { initBranchSection } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import {
   BindingType,
@@ -24,7 +25,6 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
@@ -59,7 +59,11 @@ export default {
     const section = getOrCreateSection(tag);
     const [valueAttr] = node.attributes;
     const tagExtra = (tag.node.extra ??= {});
-    tagExtra.nodeBinding = createBinding("#text", BindingType.dom, section);
+    const nodeBinding = (tagExtra.nodeBinding = createBinding(
+      "#text",
+      BindingType.dom,
+      section,
+    ));
 
     if (!valueAttr) {
       throw tag
@@ -111,7 +115,10 @@ export default {
       setBindingDownstream(paramsBinding, valueExtra);
     }
 
-    bodySection.upstreamExpression = valueAttr.value.extra;
+    initBranchSection(bodySection, valueExtra, {
+      nodeBinding,
+      optional: false,
+    });
 
     // The content renderer is initialized unconditionally in setup.
     addSetupWork(section);
@@ -122,15 +129,6 @@ export default {
   translate: translateByTarget({
     html: {
       enter(tag) {
-        const tagBody = tag.get("body");
-        const bodySection = getSectionForBody(tagBody);
-
-        if (!bodySection) {
-          tag.remove();
-          return;
-        }
-
-        setSectionParentIsOwner(bodySection, true);
         writer.flushBefore(tag);
       },
       exit(tag) {
@@ -164,17 +162,6 @@ export default {
       },
     },
     dom: {
-      enter(tag) {
-        const tagBody = tag.get("body");
-        const bodySection = getSectionForBody(tagBody);
-
-        if (!bodySection) {
-          tag.remove();
-          return;
-        }
-
-        setSectionParentIsOwner(bodySection, true);
-      },
       exit(tag) {
         const { node } = tag;
         const tagExtra = node.extra!;

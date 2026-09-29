@@ -10,7 +10,6 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import {
   getBranchResumeArgs,
-  getBranchSectionAccessor,
   initBranchSection,
   isSingleNodeBranch,
   resumeOwnerByMarkerWhenStatic,
@@ -42,7 +41,6 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
 import {
@@ -219,11 +217,10 @@ export default {
         onFinalizeReferences(() => detectForSelector(bodySection, keyBinding));
       }
     }
-    initBranchSection(
-      bodySection,
-      tagExtra,
-      getBranchSectionAccessor(nodeBinding),
-    );
+    initBranchSection(bodySection, tagExtra, {
+      nodeBinding,
+      optional: true,
+    });
 
     if (!isAttrTag && !getOnlyChildParentTagName(tag)) {
       structure.visit(tag, WalkCode.Replace);
@@ -242,8 +239,6 @@ export default {
           tag.remove();
           return;
         }
-
-        setSectionParentIsOwner(bodySection, true);
 
         writer.flushBefore(tag);
       },
@@ -321,10 +316,7 @@ export default {
 
         if (!bodySection) {
           tag.remove();
-          return;
         }
-
-        setSectionParentIsOwner(bodySection, true);
       },
       exit(tag) {
         if (tag.node.body.attributeTags) return;
