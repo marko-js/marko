@@ -164,6 +164,11 @@ export function _content_closures(
   return (owner: Scope, closureValues: Record<Accessor, unknown>): Renderer => {
     const instance = renderer(owner);
     const clone = instance[RendererProp.Clone];
+    // A loop's instances share section and owner, so its key tells them apart;
+    // `_content_resume` reads the section id through a call without values.
+    if (closureValues) {
+      instance[RendererProp.Id] += " " + closureValues[AccessorProp.LoopKey];
+    }
     const setClosures = (instance[RendererProp.LocalClosures] = (branch) => {
       for (const key in closureSignals) {
         closureSignals[key](branch, closureValues[key]);

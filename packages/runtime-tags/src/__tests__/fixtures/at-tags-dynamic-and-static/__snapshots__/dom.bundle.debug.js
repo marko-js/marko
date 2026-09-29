@@ -37,7 +37,8 @@ function $setup($scope) {
 	}, (a, v) => {
 		$item = attrTags($item, { content: $item_content($scope, {
 			a,
-			v
+			v,
+			"#LoopKey": a
 		}) });
 	});
 	$input_item($scope["#childScope/0"], $item);

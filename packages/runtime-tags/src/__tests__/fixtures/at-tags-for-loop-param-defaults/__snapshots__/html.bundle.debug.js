@@ -33,17 +33,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope1_id, "#text/2", 1, 0, 0, 0, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6");
-		}, $scope0_id) });
+		}, $scope0_id, index) });
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	let $item2;
-	forOf([["a"], ["b", "c"]], ([x, y = "dy"]) => {
+	forOf([["a"], ["b", "c"]], ([x, y = "dy"], $key) => {
 		$item2 = attrTags($item2, { content: _content("__tests__/template.marko_3*content", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<i>${_escape(x)}${_escape(y)}</i>`);
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	list_default({ item: $item2 });
 	_script($scope0_id, "__tests__/template.marko_0");

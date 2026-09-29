@@ -26,7 +26,10 @@ var heading_default = _template("c", (input) => {
 			_html(`item ${_text_resume($scope1_id, "a", i, $sg__input_type * 2)} ${_text_resume($scope1_id, "b", input.text, $sg__input_text * 2)}`);
 			$si__input_type__OR__input_text && _subscribe($si__input_text && $input_text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c0", $sg__input_type || $sg__input_text);
 			$sg__input_type || $sg__input_text || $si__input_type__OR__input_text && _resume_branch($scope1_id);
-		}, $scope0_id, ($scope) => [{ 2: i }, { e: input.text }]) });
+		}, $scope0_id, ($scope) => [{
+			2: i,
+			M: i
+		}, { e: input.text }], i) });
 	});
 	_dynamic_tag($scope0_id, "a", input.type, { item: $item }, 0, 0, $sg__input_type);
 	$si__input_type__OR__input_text && _scope($scope0_id, {

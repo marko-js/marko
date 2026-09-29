@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let items = [{ text: "a" }, { text: "b" }];
 	let $item;
-	forOf(items, (item) => {
+	forOf(items, (item, $key) => {
 		$item = attrTags($item, { content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
@@ -76,30 +76,37 @@ var template_default = _template("a", (input) => {
 			_resume_branch($scope1_id);
 		}, $scope0_id, () => [{
 			2: item?.text,
-			3: item
-		}]) });
+			3: item,
+			M: $key
+		}], $key) });
 	});
 	list_default({ item: $item });
 	let $row;
-	forOf(["a", "b"], (row) => {
+	forOf(["a", "b"], (row, $key3) => {
 		let $cell;
-		forOf([1], (n) => {
+		forOf([1], (n, $key2) => {
 			$cell = attrTags($cell, { content: _content_resume("a1", () => {
 				_scope_reason();
 				_scope_id();
 				_html(`<em>${_escape(n)}</em>`);
-			}, $scope0_id, () => [{ 1: n }]) });
+			}, $scope0_id, () => [{
+				1: n,
+				M: $key3 + " " + $key2
+			}], $key3 + " " + $key2) });
 		});
 		$row = attrTags($row, { cell: $cell });
 	});
 	grid_default({ row: $row });
 	let $item2;
-	forOf([1], (i) => {
+	forOf([1], (i, $key4) => {
 		$item2 = attrTags($item2, { content: _content_resume("a2", () => {
 			_scope_reason();
 			_scope_id();
 			_html(`${_escape(i)}<b>${_escape(i)}</b>`);
-		}, $scope0_id, () => [{ 2: i }]) });
+		}, $scope0_id, () => [{
+			2: i,
+			M: $key4
+		}], $key4) });
 	});
 	last_default({ item: $item2 });
 	_scope($scope0_id, { e: items?.[0] });

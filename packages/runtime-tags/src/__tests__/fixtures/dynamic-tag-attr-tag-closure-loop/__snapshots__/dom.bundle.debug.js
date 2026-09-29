@@ -44,7 +44,10 @@ const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_type = ($scope, input_type) => $dynamicTag($scope, input_type, () => {
 	let $item;
 	forUntil(2, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { i }) });
+		$item = attrTags($item, { content: $item_content($scope, {
+			i,
+			"#LoopKey": i
+		}) });
 	});
 	return { item: $item };
 });

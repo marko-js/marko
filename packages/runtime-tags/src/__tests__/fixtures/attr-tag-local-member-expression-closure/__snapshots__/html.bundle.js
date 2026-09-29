@@ -15,12 +15,12 @@ var template_default = _template("a", (input) => {
 	forOf([[{ text: "hello" }, { text: "world" }]], (texts) => {
 		const $scope2_id = _scope_id();
 		let $item;
-		forOf(texts, (item) => {
+		forOf(texts, (item, $key) => {
 			$item = attrTags($item, { content: _content("a1", () => {
 				_scope_reason();
 				_scope_id();
 				_html(_escape(item.text));
-			}, $scope2_id) });
+			}, $scope2_id, $key) });
 		});
 		Child.content({ item: $item });
 	});

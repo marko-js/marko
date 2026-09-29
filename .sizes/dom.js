@@ -1,4 +1,4 @@
-// size: 27385 (min) 10176 (brotli)
+// size: 27407 (min) 10188 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1174,10 +1174,11 @@ function _content_closures(renderer, closureFns) {
   for (let key in closureFns) closureSignals[key] = _const(+key, closureFns[key]);
   return (owner, closureValues) => {
     let instance = renderer(owner),
-      clone = instance.b,
-      setClosures = (instance.g = (branch) => {
-        for (let key in closureSignals) closureSignals[key](branch, closureValues[key]);
-      });
+      clone = instance.b;
+    closureValues && (instance.a += " " + closureValues.M);
+    let setClosures = (instance.g = (branch) => {
+      for (let key in closureSignals) closureSignals[key](branch, closureValues[key]);
+    });
     return (
       (instance.b = (branch, ns) => {
         (clone(branch, ns), setClosures(branch));

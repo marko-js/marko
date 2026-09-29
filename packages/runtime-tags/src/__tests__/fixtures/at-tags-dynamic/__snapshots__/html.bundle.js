@@ -59,14 +59,14 @@ var template_default = _template("a", (input) => {
 	});
 	forOf([["a", "b"], ["c", "d"]], (col, i) => {
 		let $row;
-		forOf(col, (row) => {
+		forOf(col, (row, $key) => {
 			$row = attrTags($row, {
 				row,
 				content: _content("a2", () => {
 					_scope_reason();
 					_scope_id();
 					_html(_escape(row));
-				}, $scope0_id)
+				}, $scope0_id, i + " " + $key)
 			});
 		});
 		$col = attrTags($col, {

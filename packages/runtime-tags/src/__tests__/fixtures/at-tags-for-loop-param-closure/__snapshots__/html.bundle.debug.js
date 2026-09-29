@@ -19,12 +19,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		1,
 		2,
 		3
-	], (zzz) => {
+	], (zzz, $key) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_escape(zzz));
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	list_default({ item: $item });
 }, 1);

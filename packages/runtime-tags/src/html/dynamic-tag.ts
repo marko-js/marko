@@ -228,8 +228,14 @@ export let _dynamic_tag = (
   return result;
 };
 
-export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
-  fn[RendererProp.Id] = id;
+export function _content(
+  id: string,
+  fn: ServerRenderer,
+  scopeId?: number,
+  loopKey?: unknown,
+) {
+  // Keyed like `dom/renderer.ts` › `_content_closures` keys a loop's instances.
+  fn[RendererProp.Id] = loopKey === undefined ? id : id + " " + loopKey;
   // The owner id the client derives from `RendererProp.Owner`; both sides key a
   // content instance by it, so they must be written from the same scope.
   fn[RendererProp.Owner] = scopeId;
@@ -243,8 +249,9 @@ export function _content_resume(
   fn: ServerRenderer,
   scopeId?: number,
   locals?: Locals,
+  loopKey?: unknown,
 ) {
-  return _resume(_content(id, fn, scopeId), id, scopeId, locals);
+  return _resume(_content(id, fn, scopeId, loopKey), id, scopeId, locals);
 }
 
 export const patchDynamicTag = /* @__PURE__ */ (

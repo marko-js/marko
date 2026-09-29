@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_set_serialize_reason(2);
 	let $item;
-	forOf(items, (item) => {
+	forOf(items, (item, $key) => {
 		$item = attrTags($item, { content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 				a: _existing_scope($childScope),
 				b: _existing_scope($childScope2)
 			});
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	const $childScope4 = _peek_scope_id();
 	list_default({ item: $item });

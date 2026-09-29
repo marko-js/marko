@@ -47,7 +47,7 @@ var heading_default = _template("c", (input) => {
 				_: _scope_with_id($scope0_id)
 			}), "c1", $sg__input_type);
 			$sg__input_type || $si__input_type && _resume_branch($scope1_id);
-		}, $scope0_id) });
+		}, $scope0_id, i) });
 	});
 	list_default({ item: $item });
 	$si__input_type && _scope($scope0_id, { e: $input_type__closures });

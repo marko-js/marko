@@ -41,7 +41,8 @@ const $items = /*@__PURE__*/ _let("items/4", ($scope) => {
 	forOf($scope.items, ({ a: aa = "default" }, index) => {
 		$item = attrTags($item, { content: $item_content($scope, {
 			aa,
-			index
+			index,
+			"#LoopKey": index
 		}) });
 	});
 	$input_item($scope["#childScope/1"], $item);
@@ -51,10 +52,11 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	let $item2;
-	forOf([["a"], ["b", "c"]], ([x, y = "dy"]) => {
+	forOf([["a"], ["b", "c"]], ([x, y = "dy"], $key) => {
 		$item2 = attrTags($item2, { content: $item_content2($scope, {
 			x,
-			y
+			y,
+			"#LoopKey": $key
 		}) });
 	});
 	$input_item($scope["#childScope/2"], $item2);

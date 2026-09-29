@@ -19,12 +19,12 @@ var template_default = _template("a", (input) => {
 		1,
 		2,
 		3
-	], (zzz) => {
+	], (zzz, $key) => {
 		$item = attrTags($item, { content: _content("a0", () => {
 			_scope_reason();
 			_scope_id();
 			_html(_escape(zzz));
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	list_default({ item: $item });
 }, 1);

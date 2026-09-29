@@ -21,8 +21,11 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2
 const $out = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $items = /*@__PURE__*/ _let(5, ($scope) => {
 	let $item;
-	forOf($scope.f, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { 2: item }) });
+	forOf($scope.f, (item, $key) => {
+		$item = attrTags($item, { content: $item_content($scope, {
+			2: item,
+			M: $key
+		}) });
 	});
 	$input_item($scope.c, $item);
 });

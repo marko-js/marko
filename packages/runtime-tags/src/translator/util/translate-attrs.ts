@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { isAttributeTag } from "@marko/compiler/babel-utils";
+import { isAttributeTag, isTransparentTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier } from "../visitors/program";
@@ -8,9 +8,11 @@ import {
   type BindingPropTree,
   getKnownFromPropTree,
 } from "./binding-prop-tree";
+import { generateUidIdentifier } from "./generate-uid";
+import { getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
-import { getAttributeTagParent } from "./get-parent-tag";
+import { getAttributeTagParent, getParentTag } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isOutputHTML } from "./marko-config";
 import {
@@ -411,29 +413,38 @@ function getConditionTestValue({
 function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
+    const tag = body.parentPath as t.NodePath<t.MarkoTag>;
     if (isOutputHTML()) {
+      const loopKey = bodySection.localClosures && getLoopKey(tag);
       const serialized = getSectionRegisterReasons(bodySection);
       body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
-
-      return callRuntime(
-        serialized ? "_content_resume" : "_content",
-        t.stringLiteral(getResumeRegisterId(bodySection, "content")),
-        t.arrowFunctionExpression(
-          body.node.params,
-          t.blockStatement(body.node.body),
-        ),
-        getScopeIdIdentifier(
-          getSection(
-            getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
-          )!,
-        ),
-        serialized && getRegisteredLocals(bodySection),
+      const id = t.stringLiteral(getResumeRegisterId(bodySection, "content"));
+      const renderer = t.arrowFunctionExpression(
+        body.node.params,
+        t.blockStatement(body.node.body),
       );
+      const ownerId = getScopeIdIdentifier(
+        getSection(getAttributeTagParent(tag))!,
+      );
+
+      return serialized
+        ? callRuntime(
+            "_content_resume",
+            id,
+            renderer,
+            ownerId,
+            getRegisteredLocals(bodySection, loopKey),
+            loopKey && t.cloneNode(loopKey),
+          )
+        : callRuntime("_content", id, renderer, ownerId, loopKey);
     } else {
       // Nothing reads content whose renderer is elided, so it has no property.
       const renderer = getSectionRendererIdentifier(bodySection);
       if (renderer) {
-        const localClosureValues = getLocalClosureValues(bodySection);
+        const localClosureValues = getLocalClosureValues(
+          bodySection,
+          bodySection.localClosures && getLoopKey(tag),
+        );
         return t.callExpression(
           renderer,
           localClosureValues
@@ -445,11 +456,68 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   }
 }
 
+// Content a loop creates is keyed by the iteration of each attribute tag
+// `<for>` around it: by index for `of`, as `<for>` keys, else by its first param.
+function getLoopKey(tag: t.NodePath<t.MarkoTag>) {
+  let key: t.Expression | undefined;
+  let parent = getParentTag(tag)!;
+  while (isAttributeTag(parent) || isTransparentTag(parent)) {
+    if (getTagName(parent) === "for") {
+      const loopKey = getForKeyParam(parent.node);
+      key = key
+        ? t.binaryExpression(
+            "+",
+            t.binaryExpression("+", loopKey, t.stringLiteral(" ")),
+            key,
+          )
+        : loopKey;
+    }
+    parent = getParentTag(parent)!;
+  }
+  return key!;
+}
+
+// The loop's key param, added when missing. Params that cannot name it move into
+// a default after the loop's arguments, which binds them as the params would.
+function getForKeyParam(tag: t.MarkoTag) {
+  const forType = getForType(tag);
+  const { params } = tag.body;
+  const keyIndex = forType === "of" ? 1 : 0;
+  const keyParam = params[keyIndex];
+  if (keyParam?.type === "Identifier") return t.identifier(keyParam.name);
+
+  const key = generateUidIdentifier("key");
+  if (keyParam || params[0]?.type === "RestElement") {
+    const args =
+      forType === "of"
+        ? [generateUidIdentifier("item"), key]
+        : forType === "in"
+          ? [key, generateUidIdentifier("value")]
+          : [key];
+    params.splice(
+      0,
+      params.length,
+      ...args,
+      t.assignmentPattern(
+        t.arrayPattern(params.slice()),
+        t.arrayExpression(args.map((arg) => t.cloneNode(arg))),
+      ),
+    );
+  } else {
+    if (keyIndex > params.length) params.push(generateUidIdentifier("item"));
+    params.push(key);
+  }
+  return t.identifier(key.name);
+}
+
 // What registered content reads that its scopes may lack, as a thunk the
 // serializer calls only once the content is sent: its registered factory's args.
-function getRegisteredLocals(bodySection: Section) {
+function getRegisteredLocals(
+  bodySection: Section,
+  loopKey: t.Expression | undefined,
+) {
   const contentClosureValues = getContentClosureValues(bodySection);
-  const localClosureValues = getLocalClosureValues(bodySection);
+  const localClosureValues = getLocalClosureValues(bodySection, loopKey);
   if (contentClosureValues || localClosureValues) {
     return t.arrowFunctionExpression(
       contentClosureValues ? [contentClosureValues.scope] : [],
@@ -461,16 +529,21 @@ function getRegisteredLocals(bodySection: Section) {
   }
 }
 
-// The attribute tag `<for>` params content reads, keyed by its local closures.
-function getLocalClosureValues(bodySection: Section) {
+// The attribute tag `<for>` params content reads, keyed by its local closures,
+// and the loop key that tells its instances apart.
+function getLocalClosureValues(
+  bodySection: Section,
+  loopKey: t.Expression | undefined,
+) {
   if (bodySection.localClosures) {
-    return t.objectExpression(
-      toArray(bodySection.localClosures, (closure) =>
+    return t.objectExpression([
+      ...toArray(bodySection.localClosures, (closure) =>
         toObjectProperty(
           getScopeAccessor(closure, true),
           getDeclaredBindingExpression(closure),
         ),
       ),
-    );
+      toObjectProperty(getAccessorProp().LoopKey, loopKey!),
+    ]);
   }
 }

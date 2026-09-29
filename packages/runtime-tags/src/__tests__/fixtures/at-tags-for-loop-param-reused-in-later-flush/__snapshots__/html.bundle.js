@@ -16,13 +16,16 @@ var template_default = _template("a", (input) => {
 	let picked = null;
 	_set_serialize_reason($sg__input_items << 1);
 	let $item;
-	forOf(input.items, (item) => {
+	forOf(input.items, (item, $key) => {
 		$item = attrTags($item, { content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_resume($scope2_id, "a", JSON.stringify(item), $sg__input_items)}</span>`);
 			$si__input_items && _scope($scope2_id, {});
-		}, $scope0_id, () => [{ 1: item }]) });
+		}, $scope0_id, () => [{
+			1: item,
+			M: $key
+		}], $key) });
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });

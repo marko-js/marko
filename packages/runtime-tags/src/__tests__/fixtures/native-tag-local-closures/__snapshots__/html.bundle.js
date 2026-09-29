@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(_text_resume($scope3_id, "a", i));
 			_scope($scope3_id, {});
-		}, $scope0_id) });
+		}, $scope0_id, i) });
 	});
 	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });

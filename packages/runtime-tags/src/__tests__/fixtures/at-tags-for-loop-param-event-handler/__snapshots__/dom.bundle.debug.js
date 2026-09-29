@@ -21,13 +21,16 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 } });
 const $clicked = /*@__PURE__*/ _let("clicked/2", ($scope) => {
 	let $item;
-	forOf(["a", "b"], (foo) => {
+	forOf(["a", "b"], (foo, $key) => {
 		$item = attrTags($item, {
 			onClick: $onClick({
 				_: $scope,
 				"foo/5": foo
 			}),
-			content: $item_content($scope, { foo })
+			content: $item_content($scope, {
+				foo,
+				"#LoopKey": $key
+			})
 		});
 	});
 	$input_item($scope["#childScope/0"], $item);

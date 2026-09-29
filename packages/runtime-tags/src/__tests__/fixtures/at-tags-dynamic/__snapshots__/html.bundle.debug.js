@@ -62,14 +62,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	forOf([["a", "b"], ["c", "d"]], (col, i) => {
 		let $row;
-		forOf(col, (row) => {
+		forOf(col, (row, $key) => {
 			$row = attrTags($row, {
 				row,
 				content: _content("__tests__/template.marko_3*content", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_html(_escape(row));
-				}, $scope0_id)
+				}, $scope0_id, i + " " + $key)
 			});
 		});
 		$col = attrTags($col, {

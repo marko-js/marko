@@ -15,10 +15,11 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0
 });
 const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	let $item;
-	forOf($scope.d, ({ id, ...rest }) => {
+	forOf($scope.d, ({ id, ...rest }, $key) => {
 		$item = attrTags($item, { content: $item_content($scope, {
 			2: id,
-			3: rest.extra
+			3: rest.extra,
+			M: $key
 		}) });
 	});
 	$input_item($scope.b, $item);

@@ -585,9 +585,8 @@ export const _show = /*@__PURE__*/ withBranches(
   },
 );
 
-// `_content` bakes one id per section, so two instances of it share that id and
-// only their owner tells them apart. Ownerless renderers and string tags keep
-// the bare id, so nothing but owner-bound content pays the suffix.
+// Instances of one `_content` share its section id, so their owner, and the loop
+// key `_content_closures` adds to the id, tell them apart.
 export function rendererKey(renderer: Renderer | string | undefined) {
   // Only owner-bound content is qualified; a Class-API interop renderer has no
   // owner, so its non-string id keeps comparing as it always has.

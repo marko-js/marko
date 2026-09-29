@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		1,
 		2,
 		3
-	], (item) => {
+	], (item, $key) => {
 		$item = attrTags($item, { content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 				b: item,
 				_: _scope_with_id($scope0_id)
 			}), "a0");
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	list_default({ item: $item });
 	_html(`<button>Multiplier: ${_text_resume($scope0_id, "c", mult, 2)}</button>${_el_resume($scope0_id, "b")}`);

@@ -18,13 +18,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button id=rename>rename</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(2);
 	let $item;
-	forOf(items, (item) => {
+	forOf(items, (item, $key) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", item.text)}|${_text_resume($scope1_id, "#text/1", JSON.stringify(item), 2)}</p>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "7:6");
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });

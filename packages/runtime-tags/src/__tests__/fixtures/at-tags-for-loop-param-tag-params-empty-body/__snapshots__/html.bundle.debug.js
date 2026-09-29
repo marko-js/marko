@@ -23,13 +23,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let $item;
-	forOf(["a", "b"], (item) => {
+	forOf(["a", "b"], (item, $key) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			child_default({ x: item });
 			_html(`<p>${_escape(item)}</p>`);
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	list_default({ item: $item });
 }, 1);

@@ -36,20 +36,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}];
 	_set_serialize_reason(2);
 	let $row;
-	forOf(rows, (a) => {
+	forOf(rows, (a, $key2) => {
 		$row = attrTags($row, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			const $row_content__a_id__closures = new Set();
 			_set_serialize_reason(2);
 			let $cell;
-			forOf(a.items, (b) => {
+			forOf(a.items, (b, $key) => {
 				$cell = attrTags($cell, { content: _content("__tests__/template.marko_2*content", () => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
 					_html(`${_text_resume($scope2_id, "#text/0", a.id)}-${_text_resume($scope2_id, "#text/1", b, 2)};`);
 					_subscribe($row_content__a_id__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"), "__tests__/template.marko_2_a_id#1:2/subscribe");
-				}, $scope1_id) });
+				}, $scope1_id, $key) });
 			});
 			const $childScope = _peek_scope_id();
 			inner_default({ cell: $cell });
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				"ClosureScopes:a_id/3": $row_content__a_id__closures,
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "4:6");
-		}, $scope0_id) });
+		}, $scope0_id, $key2) });
 	});
 	const $childScope2 = _peek_scope_id();
 	outer_default({ row: $row });

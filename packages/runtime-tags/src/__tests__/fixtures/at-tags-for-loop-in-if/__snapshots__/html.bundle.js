@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html(`static ${_escape(i)}`);
-		}, $scope0_id) });
+		}, $scope0_id, i) });
 	});
 	list_default({ item: $item });
 	_set_serialize_reason(2);
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`if ${_text_resume($scope2_id, "a", i, 2)}`);
 			_scope($scope2_id, {});
-		}, $scope0_id) });
+		}, $scope0_id, i) });
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item2 });
@@ -69,7 +69,7 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			_html(`for-if ${_text_resume($scope5_id, "a", j, 2)}`);
 			_scope($scope5_id, {});
-		}, $scope0_id) });
+		}, $scope0_id, j) });
 	});
 	const $childScope4 = _peek_scope_id();
 	list_default({ item: $item5 });

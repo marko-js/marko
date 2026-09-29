@@ -52,14 +52,20 @@ const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	let $item2;
 	if ($scope.mode === 0) {
 		forUntil($scope.count, 0, 1, (i) => {
-			$item2 = attrTags($item2, { content: $item_content2($scope, { i }) });
+			$item2 = attrTags($item2, { content: $item_content2($scope, {
+				i,
+				"#LoopKey": i
+			}) });
 		});
 	}
 	$input_item$1($scope["#childScope/3"], $item2);
 	let $item3;
 	if ($scope.mode === 0) {} else if ($scope.mode === 1) {
 		forUntil($scope.count, 0, 1, (i) => {
-			$item3 = attrTags($item3, { content: $item_content3($scope, { i }) });
+			$item3 = attrTags($item3, { content: $item_content3($scope, {
+				i,
+				"#LoopKey": i
+			}) });
 		});
 	}
 	$input_item$1($scope["#childScope/4"], $item3);
@@ -67,7 +73,10 @@ const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	if ($scope.mode !== 2) {} else {
 		if ($scope.count) {
 			forUntil($scope.count, 0, 1, (i) => {
-				$item4 = attrTags($item4, { content: $item_content4($scope, { i }) });
+				$item4 = attrTags($item4, { content: $item_content4($scope, {
+					i,
+					"#LoopKey": i
+				}) });
 			});
 		}
 	}
@@ -75,7 +84,10 @@ const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	let $item5;
 	forUntil($scope.count, 0, 1, (j) => {
 		if (j % 2 === $scope.mode % 2) {
-			$item5 = attrTags($item5, { content: $item_content5($scope, { j }) });
+			$item5 = attrTags($item5, { content: $item_content5($scope, {
+				j,
+				"#LoopKey": j
+			}) });
 		}
 	});
 	$input_item$1($scope["#childScope/6"], $item5);
@@ -84,7 +96,10 @@ const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 		$label = attrTag({ text: "zero" });
 	} else {
 		forUntil($scope.count, 0, 1, (i) => {
-			$item6 = attrTags($item6, { content: $item_content6($scope, { i }) });
+			$item6 = attrTags($item6, { content: $item_content6($scope, {
+				i,
+				"#LoopKey": i
+			}) });
 		});
 	}
 	$input_label($scope["#childScope/7"], $label);
@@ -104,7 +119,10 @@ function $setup($scope) {
 	let $item;
 	if (true) {
 		forUntil(3, 0, 1, (i) => {
-			$item = attrTags($item, { content: $item_content($scope, { i }) });
+			$item = attrTags($item, { content: $item_content($scope, {
+				i,
+				"#LoopKey": i
+			}) });
 		});
 	}
 	$input_item$1($scope["#childScope/2"], $item);

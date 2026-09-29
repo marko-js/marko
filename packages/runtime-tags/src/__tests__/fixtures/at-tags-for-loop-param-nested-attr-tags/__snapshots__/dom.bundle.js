@@ -19,8 +19,11 @@ const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1
 const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")), {
 	1($scope) {
 		let $cell;
-		forOf($scope.b, (b) => {
-			$cell = attrTags($cell, { content: $cell_content($scope, { 2: b }) });
+		forOf($scope.b, (b, $key) => {
+			$cell = attrTags($cell, { content: $cell_content($scope, {
+				2: b,
+				M: $key
+			}) });
 		});
 		$input_cell($scope.a, $cell);
 	},
@@ -28,10 +31,11 @@ const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2"
 });
 const $rows = /*@__PURE__*/ _let(2, ($scope) => {
 	let $row;
-	forOf($scope.c, (a) => {
+	forOf($scope.c, (a, $key2) => {
 		$row = attrTags($row, { content: $row_content($scope, {
 			1: a?.items,
-			2: a?.id
+			2: a?.id,
+			M: $key2
 		}) });
 	});
 	$input_row($scope.a, $row);

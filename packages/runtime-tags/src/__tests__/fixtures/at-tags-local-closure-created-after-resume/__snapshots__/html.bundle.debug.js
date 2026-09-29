@@ -90,7 +90,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let items = [{ text: "a" }, { text: "b" }];
 	let $item;
-	forOf(items, (item) => {
+	forOf(items, (item, $key) => {
 		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
@@ -99,30 +99,37 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_resume_branch($scope1_id);
 		}, $scope0_id, () => [{
 			item_text: item?.text,
-			item
-		}]) });
+			item,
+			"#LoopKey": $key
+		}], $key) });
 	});
 	list_default({ item: $item });
 	let $row;
-	forOf(["a", "b"], (row) => {
+	forOf(["a", "b"], (row, $key3) => {
 		let $cell;
-		forOf([1], (n) => {
+		forOf([1], (n, $key2) => {
 			$cell = attrTags($cell, { content: _content_resume("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_escape(n)}</em>`);
-			}, $scope0_id, () => [{ n }]) });
+			}, $scope0_id, () => [{
+				n,
+				"#LoopKey": $key3 + " " + $key2
+			}], $key3 + " " + $key2) });
 		});
 		$row = attrTags($row, { cell: $cell });
 	});
 	grid_default({ row: $row });
 	let $item2;
-	forOf([1], (i) => {
+	forOf([1], (i, $key4) => {
 		$item2 = attrTags($item2, { content: _content_resume("__tests__/template.marko_3*content", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`${_escape(i)}<b>${_escape(i)}</b>`);
-		}, $scope0_id, () => [{ i }]) });
+		}, $scope0_id, () => [{
+			i,
+			"#LoopKey": $key4
+		}], $key4) });
 	});
 	last_default({ item: $item2 });
 	_scope($scope0_id, { items_0: items?.[0] }, "__tests__/template.marko", 0, { items_0: ["items[0]", "2:6"] });

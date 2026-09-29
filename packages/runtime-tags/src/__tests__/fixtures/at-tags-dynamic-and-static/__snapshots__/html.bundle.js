@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html(`${_escape(a)}:${_escape(v)}`);
-		}, $scope0_id) });
+		}, $scope0_id, a) });
 	});
 	hello_default({
 		item: $item,

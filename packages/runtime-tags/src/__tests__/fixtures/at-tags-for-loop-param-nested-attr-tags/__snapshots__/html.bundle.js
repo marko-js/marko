@@ -36,20 +36,20 @@ var template_default = _template("a", (input) => {
 	}];
 	_set_serialize_reason(2);
 	let $row;
-	forOf(rows, (a) => {
+	forOf(rows, (a, $key2) => {
 		$row = attrTags($row, { content: _content("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			const $row_content__a_id__closures = /* @__PURE__ */ new Set();
 			_set_serialize_reason(2);
 			let $cell;
-			forOf(a.items, (b) => {
+			forOf(a.items, (b, $key) => {
 				$cell = attrTags($cell, { content: _content("a1", () => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
 					_html(`${_text_resume($scope2_id, "a", a.id)}-${_text_resume($scope2_id, "b", b, 2)};`);
 					_subscribe($row_content__a_id__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0");
-				}, $scope1_id) });
+				}, $scope1_id, $key) });
 			});
 			const $childScope = _peek_scope_id();
 			inner_default({ cell: $cell });
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 				d: $row_content__a_id__closures,
 				a: _existing_scope($childScope)
 			});
-		}, $scope0_id) });
+		}, $scope0_id, $key2) });
 	});
 	const $childScope2 = _peek_scope_id();
 	outer_default({ row: $row });

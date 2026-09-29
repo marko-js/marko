@@ -15,12 +15,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	forOf([[{ text: "hello" }, { text: "world" }]], (texts) => {
 		const $scope2_id = _scope_id();
 		let $item;
-		forOf(texts, (item) => {
+		forOf(texts, (item, $key) => {
 			$item = attrTags($item, { content: _content("__tests__/template.marko_4*content", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html(_escape(item.text));
-			}, $scope2_id) });
+			}, $scope2_id, $key) });
 		});
 		Child.content({ item: $item });
 	});

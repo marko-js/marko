@@ -22,8 +22,11 @@ function $setup($scope) {
 		1,
 		2,
 		3
-	], (zzz) => {
-		$item = attrTags($item, { content: $item_content($scope, { zzz }) });
+	], (zzz, $key) => {
+		$item = attrTags($item, { content: $item_content($scope, {
+			zzz,
+			"#LoopKey": $key
+		}) });
 	});
 	$input_item($scope["#childScope/0"], $item);
 }

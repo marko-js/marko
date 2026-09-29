@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	let $item;
-	forOf(["a", "b"], (item) => {
+	forOf(["a", "b"], (item, $key) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:6", { item: "3:8" }), "__tests__/template.marko_1_input_show#0:3/subscribe", $sg__input_show);
 			$sg__input_show || $si__input_show && _resume_branch($scope1_id);
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	list_default({ item: $item });
 	$si__input_show && _scope($scope0_id, { "ClosureScopes:input_show/4": $input_show__closures }, "__tests__/template.marko", 0);

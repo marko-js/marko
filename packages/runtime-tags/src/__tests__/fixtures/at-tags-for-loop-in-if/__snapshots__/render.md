@@ -98,7 +98,9 @@ REMOVE: div:nth-of-type(2) > :is(::text("if "), ::text("0"), ::text("if "), ::te
 INSERT: div:nth-of-type(3) > :is(::text("else-if "), ::text("0"))
 INSERT: div:nth-of-type(3)::text@8 + :is(::text("else-if "), ::text("1"))
 INSERT: div:nth-of-type(3)::text@17 + :is(::text("else-if "), ::text("2"))
-UPDATE: div:nth-of-type(5)::text@7 "0" => "1"
+INSERT: div:nth-of-type(5) > :is(::text("for-if "), ::text("1"))
+REMOVE: div:nth-of-type(5)::text@7 + ::text("for-if ")
+REMOVE: div:nth-of-type(5)::text@7 + ::text("0")
 REMOVE: div:nth-of-type(5)::text@7 + ::text("for-if ")
 REMOVE: div:nth-of-type(5)::text@7 + ::text("2")
 UPDATE: div:nth-of-type(6)::text "zero" => ""
@@ -143,7 +145,9 @@ REMOVE: div:nth-of-type(3) > :is(::text("else-if "), ::text("0"), ::text("else-i
 INSERT: div:nth-of-type(4) > :is(::text("else "), ::text("0"))
 INSERT: div:nth-of-type(4)::text@5 + :is(::text("else "), ::text("1"))
 INSERT: div:nth-of-type(4)::text@11 + :is(::text("else "), ::text("2"))
-UPDATE: div:nth-of-type(5)::text@7 "1" => "0"
+INSERT: div:nth-of-type(5) > :is(::text("for-if "), ::text("0"))
+REMOVE: div:nth-of-type(5)::text@7 + ::text("for-if ")
+REMOVE: div:nth-of-type(5)::text@7 + ::text("1")
 INSERT: div:nth-of-type(5)::text@7 + :is(::text("for-if "), ::text("2"))
 ```
 

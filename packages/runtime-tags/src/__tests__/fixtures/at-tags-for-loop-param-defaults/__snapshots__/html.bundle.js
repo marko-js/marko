@@ -33,17 +33,17 @@ var template_default = _template("a", (input) => {
 				}
 			}, $scope1_id, "c", 1, 0, 0, 0, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-		}, $scope0_id) });
+		}, $scope0_id, index) });
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	let $item2;
-	forOf([["a"], ["b", "c"]], ([x, y = "dy"]) => {
+	forOf([["a"], ["b", "c"]], ([x, y = "dy"], $key) => {
 		$item2 = attrTags($item2, { content: _content("a1", () => {
 			_scope_reason();
 			_scope_id();
 			_html(`<i>${_escape(x)}${_escape(y)}</i>`);
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	list_default({ item: $item2 });
 	_script($scope0_id, "a2");

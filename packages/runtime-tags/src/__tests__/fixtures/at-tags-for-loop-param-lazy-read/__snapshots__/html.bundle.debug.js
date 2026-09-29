@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button id=rename>rename</button>${_el_resume($scope0_id, "#button/0")}<div id=out>${_text_resume($scope0_id, "#text/1", out)}</div>`);
 	_set_serialize_reason(2);
 	let $item;
-	forOf(items, (item) => {
+	forOf(items, (item, $key) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				item,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "10:6", { item: "9:8" });
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });

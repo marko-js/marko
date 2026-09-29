@@ -43,15 +43,21 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3
 const $count = /*@__PURE__*/ _let(5, ($scope) => {
 	let $item;
 	forUntil($scope.f, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { 3: i }) });
+		$item = attrTags($item, { content: $item_content($scope, {
+			3: i,
+			M: i
+		}) });
 	});
 	$input_item($scope.d, $item);
 });
 const $show = /*@__PURE__*/ _let(6, /* @__PURE__ */ _closure($item_content__show, $item_content2__show));
 const $items = /*@__PURE__*/ _let(7, ($scope) => {
 	let $item2;
-	forOf($scope.h, (item) => {
-		$item2 = attrTags($item2, { content: $item_content2($scope, { 1: item?.text }) });
+	forOf($scope.h, (item, $key) => {
+		$item2 = attrTags($item2, { content: $item_content2($scope, {
+			1: item?.text,
+			M: $key
+		}) });
 	});
 	$input_item($scope.e, $item2);
 });

@@ -13,7 +13,10 @@ const $Child_content__input_item = ($scope, input_item) => $Child_content__for($
 const $size = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
 	forUntil($scope.c, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { 1: i }) });
+		$item = attrTags($item, { content: $item_content($scope, {
+			1: i,
+			M: i
+		}) });
 	});
 	$Child_content__input_item($scope.a, $item);
 });

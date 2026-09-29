@@ -50,13 +50,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope0_id),
 				"ClosureScopes:i/9": $item_content__i__closures
 			}, "__tests__/template.marko", "11:6", { i: "10:8" }), "__tests__/template.marko_1_show#0:6/subscribe");
-		}, $scope0_id) });
+		}, $scope0_id, i) });
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	_set_serialize_reason(2);
 	let $item2;
-	forOf(items, (item) => {
+	forOf(items, (item, $key) => {
 		$item2 = attrTags($item2, { content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
@@ -73,7 +73,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope0_id),
 				"ClosureSignalIndex:show/8": 1
 			}, "__tests__/template.marko", "21:6", { item_text: 0 }), "__tests__/template.marko_2_show#0:6/subscribe");
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	const $childScope2 = _peek_scope_id();
 	list_default({ item: $item2 });

@@ -21,7 +21,8 @@ const $items = /*@__PURE__*/ _let(4, ($scope) => {
 	forOf($scope.e, ({ a: aa = "default" }, index) => {
 		$item = attrTags($item, { content: $item_content($scope, {
 			3: aa,
-			4: index
+			4: index,
+			M: index
 		}) });
 	});
 	$input_item($scope.b, $item);

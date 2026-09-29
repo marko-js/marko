@@ -14,13 +14,16 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1
 } });
 const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
-	forOf(["a", "b"], (foo) => {
+	forOf(["a", "b"], (foo, $key) => {
 		$item = attrTags($item, {
 			onClick: $onClick({
 				_: $scope,
 				f: foo
 			}),
-			content: $item_content($scope, { 1: foo })
+			content: $item_content($scope, {
+				1: foo,
+				M: $key
+			})
 		});
 	});
 	$input_item($scope.a, $item);

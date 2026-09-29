@@ -24,23 +24,23 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button id=rename>rename</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_serialize_reason(2);
 	let $item;
-	forOf(items, ({ id, ...rest }) => {
+	forOf(items, ({ id, ...rest }, $key) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", id)}:${_text_resume($scope1_id, "#text/1", rest.extra, 2)}</p>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "6:6");
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	let $item2;
-	forOf([["a", "b"], ["c", "d"]], ([first, ...others]) => {
+	forOf([["a", "b"], ["c", "d"]], ([first, ...others], $key2) => {
 		$item2 = attrTags($item2, { content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<b>${_escape(first)}${_escape(others[0])}</b>`);
-		}, $scope0_id) });
+		}, $scope0_id, $key2) });
 	});
 	list_default({ item: $item2 });
 	_script($scope0_id, "__tests__/template.marko_0");

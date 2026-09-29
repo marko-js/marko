@@ -14,7 +14,8 @@
           "packages/runtime-tags/src/__tests__/fixtures/at-tags-local-closure-created-after-resume/template.marko_1*content"
           ](_(1), {
           item_text: "a",
-          item: _.a
+          item: _.a,
+          "#LoopKey": 0
         }),
         *[(_.b = [{
           content: _._[
@@ -23,7 +24,8 @@
             item_text: "b",
             item: {
               text: "b"
-            }
+            },
+            "#LoopKey": 1
           })
         }], Symbol.iterator)]() {
           yield this;
@@ -35,7 +37,8 @@
         content: _._[
           "packages/runtime-tags/src/__tests__/fixtures/at-tags-local-closure-created-after-resume/template.marko_2*content"
           ](_(1), {
-          n: 1
+          n: 1,
+          "#LoopKey": "0 0"
         }),
         *[Symbol.iterator]() {
           yield this
@@ -47,7 +50,8 @@
         content: _._[
           "packages/runtime-tags/src/__tests__/fixtures/at-tags-local-closure-created-after-resume/template.marko_2*content"
           ](_(1), {
-          n: 1
+          n: 1,
+          "#LoopKey": "1 0"
         }),
         *[Symbol.iterator]() {
           yield this
@@ -59,7 +63,8 @@
         content: _._[
           "packages/runtime-tags/src/__tests__/fixtures/at-tags-local-closure-created-after-resume/template.marko_3*content"
           ](_(1), {
-          i: 1
+          i: 1,
+          "#LoopKey": 0
         }),
         *[Symbol.iterator]() {
           yield this

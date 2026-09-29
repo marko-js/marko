@@ -39,7 +39,10 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 			_html(`item ${_text_resume($scope1_id, "#text/0", i, $sg__input_type * 2)} ${_text_resume($scope1_id, "#text/1", input.text, $sg__input_text * 2)}`);
 			$si__input_type__OR__input_text && _subscribe($si__input_text && $input_text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "3:6"), "__tests__/tags/heading.marko_1_input_text#0:4/subscribe", $sg__input_type || $sg__input_text);
 			$sg__input_type || $sg__input_text || $si__input_type__OR__input_text && _resume_branch($scope1_id);
-		}, $scope0_id, ($scope) => [{ i }, { input_text: input.text }]) });
+		}, $scope0_id, ($scope) => [{
+			i,
+			"#LoopKey": i
+		}, { input_text: input.text }], i) });
 	});
 	_dynamic_tag($scope0_id, "#text/0", input.type, { item: $item }, 0, 0, $sg__input_type);
 	$si__input_type__OR__input_text && _scope($scope0_id, {

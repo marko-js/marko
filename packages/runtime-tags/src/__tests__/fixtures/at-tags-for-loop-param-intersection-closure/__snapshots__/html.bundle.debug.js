@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		1,
 		2,
 		3
-	], (item) => {
+	], (item, $key) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				item,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:5", { item: "3:7" }), "__tests__/template.marko_1_mult#0:3/subscribe");
-		}, $scope0_id) });
+		}, $scope0_id, $key) });
 	});
 	list_default({ item: $item });
 	_html(`<button>Multiplier: ${_text_resume($scope0_id, "#text/2", mult, 2)}</button>${_el_resume($scope0_id, "#button/1")}`);

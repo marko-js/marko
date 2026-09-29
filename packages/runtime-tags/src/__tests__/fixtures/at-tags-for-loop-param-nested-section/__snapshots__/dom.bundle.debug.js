@@ -53,7 +53,10 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
 	let $item;
 	forUntil($scope.count, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { i }) });
+		$item = attrTags($item, { content: $item_content($scope, {
+			i,
+			"#LoopKey": i
+		}) });
 	});
 	$input_item($scope["#childScope/3"], $item);
 });
@@ -61,8 +64,11 @@ const $show__closure = /*@__PURE__*/ _closure($item_content__show, $item_content
 const $show = /*@__PURE__*/ _let("show/6", $show__closure);
 const $items = /*@__PURE__*/ _let("items/7", ($scope) => {
 	let $item2;
-	forOf($scope.items, (item) => {
-		$item2 = attrTags($item2, { content: $item_content2($scope, { item_text: item?.text }) });
+	forOf($scope.items, (item, $key) => {
+		$item2 = attrTags($item2, { content: $item_content2($scope, {
+			item_text: item?.text,
+			"#LoopKey": $key
+		}) });
 	});
 	$input_item($scope["#childScope/4"], $item2);
 });

@@ -19,7 +19,10 @@ const $Child_content__input = ($scope, input) => $Child_content__input_item($sco
 const $size = /*@__PURE__*/ _let("size/2", ($scope) => {
 	let $item;
 	forUntil($scope.size, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { i }) });
+		$item = attrTags($item, { content: $item_content($scope, {
+			i,
+			"#LoopKey": i
+		}) });
 	});
 	$Child_content__input_item($scope["#childScope/0"], $item);
 });

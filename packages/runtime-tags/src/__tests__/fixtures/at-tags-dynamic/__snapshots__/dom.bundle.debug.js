@@ -30,10 +30,13 @@ function $setup($scope) {
 	let $col;
 	forOf([["a", "b"], ["c", "d"]], (col, i) => {
 		let $row;
-		forOf(col, (row) => {
+		forOf(col, (row, $key) => {
 			$row = attrTags($row, {
 				row,
-				content: $row_content($scope, { row })
+				content: $row_content($scope, {
+					row,
+					"#LoopKey": i + " " + $key
+				})
 			});
 		});
 		$col = attrTags($col, {

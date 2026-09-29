@@ -11,8 +11,11 @@ const $for_content2__item = $for_content2__dynamicTag;
 const $for_content2__$params = ($scope, $params3) => $for_content2__item($scope, $params3[0]);
 const $for_content__texts = /*@__PURE__*/ _const("texts", ($scope) => {
 	let $item;
-	forOf($scope.texts, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item_text: item?.text }) });
+	forOf($scope.texts, (item, $key) => {
+		$item = attrTags($item, { content: $item_content($scope, {
+			item_text: item?.text,
+			"#LoopKey": $key
+		}) });
 	});
 	$Child_content__items($scope["#childScope/0"], $item);
 });

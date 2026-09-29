@@ -52,7 +52,10 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 function $setup($scope) {
 	let $item;
 	forUntil(2, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { i }) });
+		$item = attrTags($item, { content: $item_content($scope, {
+			i,
+			"#LoopKey": i
+		}) });
 	});
 	$input_item($scope["#childScope/0"], $item);
 }

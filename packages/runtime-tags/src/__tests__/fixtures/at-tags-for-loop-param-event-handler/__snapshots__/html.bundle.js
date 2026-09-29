@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	let clicked = "";
 	_set_serialize_reason(2);
 	let $item;
-	forOf(["a", "b"], (foo) => {
+	forOf(["a", "b"], (foo, $key) => {
 		$item = attrTags($item, {
 			onClick: _resume_locals(function() {
 				clicked += foo;
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 				const $scope1_id = _scope_id();
 				_html(`Click ${_text_resume($scope1_id, "a", foo, 2)}`);
 				_scope($scope1_id, {});
-			}, $scope0_id)
+			}, $scope0_id, $key)
 		});
 	});
 	const $childScope = _peek_scope_id();

@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html(`static ${_escape(i)}`);
-			}, $scope0_id) });
+			}, $scope0_id, i) });
 		});
 	}
 	list_default({ item: $item });
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`if ${_text_resume($scope2_id, "#text/0", i, 2)}`);
 				_scope($scope2_id, {}, "__tests__/template.marko", "14:26");
-			}, $scope0_id) });
+			}, $scope0_id, i) });
 		});
 	}
 	const $childScope = _peek_scope_id();
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`else-if ${_text_resume($scope3_id, "#text/0", i, 2)}`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "21:26");
-			}, $scope0_id) });
+			}, $scope0_id, i) });
 		});
 	}
 	const $childScope2 = _peek_scope_id();
@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_id = _scope_id();
 					_html(`else ${_text_resume($scope4_id, "#text/0", i, 2)}`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "29:28");
-				}, $scope0_id) });
+				}, $scope0_id, i) });
 			});
 		}
 	}
@@ -96,7 +96,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`for-if ${_text_resume($scope5_id, "#text/0", j, 2)}`);
 				_scope($scope5_id, {}, "__tests__/template.marko", "36:29");
-			}, $scope0_id) });
+			}, $scope0_id, j) });
 		}
 	});
 	const $childScope4 = _peek_scope_id();
@@ -113,7 +113,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope6_id = _scope_id();
 				_html(`labeled ${_text_resume($scope6_id, "#text/0", i, 2)}`);
 				_scope($scope6_id, {}, "__tests__/template.marko", "43:26");
-			}, $scope0_id) });
+			}, $scope0_id, i) });
 		});
 	}
 	const $childScope5 = _peek_scope_id();

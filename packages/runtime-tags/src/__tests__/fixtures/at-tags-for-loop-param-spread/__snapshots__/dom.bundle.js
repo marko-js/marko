@@ -33,8 +33,11 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1
 } });
 const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	let $item;
-	forOf($scope.d, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { 3: item }) });
+	forOf($scope.d, (item, $key) => {
+		$item = attrTags($item, { content: $item_content($scope, {
+			3: item,
+			M: $key
+		}) });
 	});
 	$input_item($scope.b, $item);
 });

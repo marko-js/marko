@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let foo = "outer";
 	let $item;
-	forOf(["a", "b"], (foo) => {
+	forOf(["a", "b"], (foo, $key) => {
 		$item = attrTags($item, {
 			onClick: _resume_locals(function(ev) {
 				ev.target.textContent = foo;
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html(_escape(foo));
-			}, $scope0_id)
+			}, $scope0_id, $key)
 		});
 	});
 	my_menu_default({ item: $item });
