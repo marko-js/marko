@@ -1,0 +1,8 @@
+<let/count=0/>
+<for|handler| of=[() => count++]>
+  <button#of onClick=handler>of</button>
+</for>
+<for|key, handler| in={ add() { count += 10 } }>
+  <button#in onClick=handler>${key}</button>
+</for>
+<span>${count}</span>

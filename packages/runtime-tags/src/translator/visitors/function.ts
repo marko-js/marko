@@ -96,6 +96,8 @@ export default {
 
     const exprRoot = getExprRoot(fn);
     const markoRoot = getMarkoRoot(exprRoot);
+    // Won't fix: registering makes a method a plain function and lifts an arrow to module
+    // scope, so a method's `super`, or an arrow's `this` or `arguments`, no longer resolves.
     if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) return;
 
     const section = getSection(fn);
@@ -369,7 +371,10 @@ function canIgnoreRegister(
         !hasSpreadAttributeAfter(markoRoot)) ||
         isCoreTagName(markoRoot.parentPath, "script") ||
         isCoreTagName(markoRoot.parentPath, "lifecycle") ||
-        isCoreTagName(markoRoot.parentPath, "for")))
+        // A `<for>` hands only `of` and `in` values to its items; `by` only keys them.
+        (isCoreTagName(markoRoot.parentPath, "for") &&
+          markoRoot.node.name !== "of" &&
+          markoRoot.node.name !== "in")))
   );
 }
 
