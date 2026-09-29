@@ -21,7 +21,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml#2/hoist");
+	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml#1:2/hoist");
 	const $thing_content__subscribers = new Set();
 	const $inputshowThingnull_content__subscribers = new Set();
 	const $inputshowsectionnull_content__subscribers = new Set();

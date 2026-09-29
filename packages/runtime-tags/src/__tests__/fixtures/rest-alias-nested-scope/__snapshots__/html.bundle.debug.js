@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(` -- ${_text_resume($scope1_id, "#text/0", foo, _serialize_guard($scope0_reason, 2) * 2)}<span`);
 			_attrs_content(rest, "#span/1", $scope1_id, "span");
 			_html(`</span>${_el_resume($scope1_id, "#span/1")}`);
-			_script($scope1_id, "__tests__/template.marko_1_rest#5");
+			_script($scope1_id, "__tests__/template.marko_1_rest#0:5");
 			_scope($scope1_id, { _: _serialize_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2", { "EventAttributes:#span/1": ["...rest", "6:12"] });
 			return 0;
 		}

@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (value1) {
 					const $scope2_id = _scope_id();
 					_html(`<span>${_text_resume($scope2_id, "#text/0", value1, $sg__input_value)}</span>`);
-					_serialize_if($scope0_reason, 0) && _subscribe($si__input_value && $value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), "__tests__/template.marko_2_value1#4/subscribe", $sg__input_value);
+					_serialize_if($scope0_reason, 0) && _subscribe($si__input_value && $value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), "__tests__/template.marko_2_value1#0:4/subscribe", $sg__input_value);
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_value, $sg__input_value, $sg__input_value1__OR__input_value, 0, 1);
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (value2) {
 					const $scope3_id = _scope_id();
 					_html(`<span>${_text_resume($scope3_id, "#text/0", value2, $sg__input_value2)}</span>`);
-					_serialize_if($scope0_reason, 1) && _subscribe($si__input_value2 && $value2__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), "__tests__/template.marko_3_value2#5/subscribe", $sg__input_value2);
+					_serialize_if($scope0_reason, 1) && _subscribe($si__input_value2 && $value2__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), "__tests__/template.marko_3_value2#0:5/subscribe", $sg__input_value2);
 					return 0;
 				}
 			}, $scope1_id, "#text/1", $sg__input_value2, $sg__input_value2, $sg__input_value1__OR__input_value, 0, 1);

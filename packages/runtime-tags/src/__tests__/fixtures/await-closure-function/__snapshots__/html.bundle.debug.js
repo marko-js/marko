@@ -10,8 +10,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", resolveAfter(0, 4), () => {
 			const $scope2_id = _scope_id();
 			_html(_text_resume($scope2_id, "#text/0", value));
-			_script($scope2_id, "__tests__/template.marko_2_value#1");
-			_subscribe($value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3"), "__tests__/template.marko_2_value#1/subscribe");
+			_script($scope2_id, "__tests__/template.marko_2_value#0:1");
+			_subscribe($value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3"), "__tests__/template.marko_2_value#0:1/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:1");
 	}, () => {

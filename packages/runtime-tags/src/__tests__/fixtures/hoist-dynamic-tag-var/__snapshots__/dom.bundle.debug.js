@@ -30,7 +30,7 @@ const $setHtml2_getter = /*@__PURE__*/ _hoist("setHtml2", "BranchScopes:#text/2"
 const $if_content3__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $if_content3__setHtml);
 const $if_content3__setHtml = _var_resume("__tests__/template.marko_3_setHtml2#2/var", /*@__PURE__*/ _const("setHtml2", ($scope) => _assert_hoist($scope.setHtml2)));
 const $if_content3__setup = ($scope) => $if_content3__dynamicTag($scope, 1 && child_default);
-const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2/hoist", "setHtml", "BranchScopes:#text/0", "BranchScopes:#text/0");
+const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2:2/hoist", "setHtml", "BranchScopes:#text/0", "BranchScopes:#text/0");
 const $if_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $if_content2__setHtml);
 const $if_content2__setHtml = _var_resume("__tests__/template.marko_2_setHtml#2/var", /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml)));
 const $if_content2__setup = ($scope) => $if_content2__dynamicTag($scope, 1 && child_default);

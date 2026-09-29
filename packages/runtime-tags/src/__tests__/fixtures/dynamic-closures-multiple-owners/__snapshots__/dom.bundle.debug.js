@@ -11,17 +11,17 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=outer> </button><p> </p>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D lD l/${_w0}&`)("D%l");
-const $wrap_content3__x = /*@__PURE__*/ _closure_get("x/6", ($scope) => _text($scope["#text/0"], $scope._.x), 0, "__tests__/template.marko_3_x#4/subscribe");
+const $wrap_content3__x = /*@__PURE__*/ _closure_get("x/6", ($scope) => _text($scope["#text/0"], $scope._.x), 0, "__tests__/template.marko_3_x#1:4/subscribe");
 const $wrap_content3__setup = $wrap_content3__x;
 const $wrap_content3 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<s> </s>", "D ", $wrap_content3__setup);
-const $wrap_content2__x = /*@__PURE__*/ _closure_get("x/5", ($scope) => _text($scope["#text/0"], $scope._._.x), ($scope) => $scope._._, "__tests__/template.marko_2_x#4/subscribe");
+const $wrap_content2__x = /*@__PURE__*/ _closure_get("x/5", ($scope) => _text($scope["#text/0"], $scope._._.x), ($scope) => $scope._._, "__tests__/template.marko_2_x#0:4/subscribe");
 const $wrap_content2__setup = ($scope) => {
 	$wrap_content2__x($scope);
 	$wrap_content2__x2($scope);
 };
-const $wrap_content2__x2 = /*@__PURE__*/ _closure_get("x/6", ($scope) => _text($scope["#text/1"], $scope._.x), 0, "__tests__/template.marko_2_x#4/subscribe");
+const $wrap_content2__x2 = /*@__PURE__*/ _closure_get("x/6", ($scope) => _text($scope["#text/1"], $scope._.x), 0, "__tests__/template.marko_2_x#1:4/subscribe");
 const $wrap_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<i> </i><b> </b>", "D lD ", $wrap_content2__setup);
-const $wrap_content__x = /*@__PURE__*/ _closure_get("x/5", ($scope) => _text($scope["#text/1"], $scope._.x), 0, "__tests__/template.marko_1_x#4/subscribe");
+const $wrap_content__x = /*@__PURE__*/ _closure_get("x/5", ($scope) => _text($scope["#text/1"], $scope._.x), 0, "__tests__/template.marko_1_x#0:4/subscribe");
 const $wrap_content__x2__closure = /*@__PURE__*/ _closure($wrap_content2__x2, $wrap_content3__x);
 const $wrap_content__x2 = /*@__PURE__*/ _let("x/4", $wrap_content__x2__closure);
 const $wrap_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {

@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
 					_html(`${_text_resume($scope2_id, "#text/0", a.id)}-${_text_resume($scope2_id, "#text/1", b, 2)};`);
-					_subscribe($row_content__a_id__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"), "__tests__/template.marko_2_a_id#2/subscribe");
+					_subscribe($row_content__a_id__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"), "__tests__/template.marko_2_a_id#1:2/subscribe");
 				}, $scope1_id) });
 			});
 			const $childScope = _peek_scope_id();

@@ -11,7 +11,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<!><!><hr><!><hr><!><!>";
 const $walks = "b%c%c%c";
-const $setHtml3_getter = _hoist_resume("__tests__/template.marko_0_setHtml3#2/hoist", "setHtml3", "BranchScopes:#ul/0", "BranchScopes:#text/2");
+const $setHtml3_getter = _hoist_resume("__tests__/template.marko_0_setHtml3#4:2/hoist", "setHtml3", "BranchScopes:#ul/0", "BranchScopes:#text/2");
 const $for_content4__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $for_content4__setHtml);
 const $for_content4__setHtml = _var_resume("__tests__/template.marko_4_setHtml3#2/var", /*@__PURE__*/ _const("setHtml3", ($scope) => _assert_hoist($scope.setHtml3)));
 const $for_content4__setup = ($scope) => $for_content4__dynamicTag($scope, 1 && child_default);

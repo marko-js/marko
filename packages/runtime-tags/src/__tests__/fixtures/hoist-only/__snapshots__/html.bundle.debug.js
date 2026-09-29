@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $if_content2__hoist3_getter = _hoist($scope2_id, "__tests__/template.marko_2_hoist3#2/hoist");
 					const z = $if_content2__hoist3_getter;
 					const hoist3 = _resume(() => input.value, "__tests__/template.marko_2/hoist2", $scope2_id);
-					_script($scope2_id, "__tests__/template.marko_2_x#4_z#0", 0);
+					_script($scope2_id, "__tests__/template.marko_2_x#0:4_z#0", 0);
 					_subscribe($si__input_value && $input_value__closures, _scope($scope2_id, {
 						z,
 						hoist3,
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					}, "__tests__/template.marko", "8:4", {
 						z: "9:12",
 						hoist3: "10:12"
-					}), "__tests__/template.marko_2_input_value#3/subscribe", 0);
+					}), "__tests__/template.marko_2_input_value#0:3/subscribe", 0);
 					_assert_hoist(hoist3);
 					return 0;
 				}

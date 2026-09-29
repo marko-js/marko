@@ -4,11 +4,11 @@ const $walks = " b b%c";
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "LOADING");
-const $try_content__n__script = _script("__tests__/template.marko_1_n#3", ($scope) => console.log("script n=" + $scope._.n + " connected=" + _el_read($scope["#div/0"]).isConnected));
+const $try_content__n__script = _script("__tests__/template.marko_1_n#0:3", ($scope) => console.log("script n=" + $scope._.n + " connected=" + _el_read($scope["#div/0"]).isConnected));
 const $try_content__n = /*@__PURE__*/ _closure_get("n/5", ($scope) => {
 	_text($scope["#text/1"], $scope._.n);
 	$try_content__n__script($scope);
-}, 0, "__tests__/template.marko_1_n#3/subscribe");
+}, 0, "__tests__/template.marko_1_n#0:3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__n($scope);
 	$try_content__m($scope);
@@ -16,7 +16,7 @@ const $try_content__setup = ($scope) => {
 };
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "value <!>", "b%");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
-const $try_content__m = /*@__PURE__*/ _closure_get("m/6", ($scope) => $try_content__await_promise($scope, $scope._.m ? resolveAfter($scope._.m) : 0), 0, "__tests__/template.marko_1_m#4/subscribe");
+const $try_content__m = /*@__PURE__*/ _closure_get("m/6", ($scope) => $try_content__await_promise($scope, $scope._.m ? resolveAfter($scope._.m) : 0), 0, "__tests__/template.marko_1_m#0:4/subscribe");
 const $n__closure = /*@__PURE__*/ _closure($try_content__n);
 const $n = /*@__PURE__*/ _let("n/3", $n__closure);
 const $m__closure = /*@__PURE__*/ _closure($try_content__m);

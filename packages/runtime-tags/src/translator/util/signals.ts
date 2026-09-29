@@ -968,14 +968,18 @@ function buildResumeRegisterKey(
   referencedBindings: string | ReferencedBindings,
   type?: string,
 ) {
-  // Every segment is self-delimiting (`#id` per binding, `*` for string
-  // kinds), so same-named bindings and `_`-joined names cannot collide.
+  // Every segment is self-delimiting (`#id` per binding, `*` for string kinds),
+  // and a binding another section owns names that section, since ids restart.
   let name = "";
   if (referencedBindings) {
     if (typeof referencedBindings === "string") {
       name += `*${referencedBindings}`;
     } else {
-      name = reduce(referencedBindings, appendBindingKey, name);
+      name = reduce(
+        referencedBindings,
+        (name, binding) => appendBindingKey(name, binding, section),
+        name,
+      );
     }
   }
   return `${section.id}${name}${type ? "/" + type : ""}`;
@@ -1886,8 +1890,8 @@ function getRegisteredFnExpression(node: t.Function) {
   }
 }
 
-function appendBindingKey(name: string, binding: Binding) {
-  return `${name}_${binding.name}#${binding.id}`;
+function appendBindingKey(name: string, binding: Binding, section: Section) {
+  return `${name}_${binding.name}#${binding.section === section ? "" : binding.section.id + ":"}${binding.id}`;
 }
 
 function isLetBinding(binding: Binding) {

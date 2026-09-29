@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
-const $if_content__tag__script = _script("__tests__/tags/child.marko_2_tag#3", ($scope) => _attrs_script($scope, "#div/0"));
+const $if_content__tag__script = _script("__tests__/tags/child.marko_2_tag#1:3", ($scope) => _attrs_script($scope, "#div/0"));
 const $if_content__tag = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	_attrs_content($scope, "#div/0", {
 		"data-name": $scope._["#LoopKey"],
@@ -23,7 +23,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $b_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "B");
-const $a_content__count = /*@__PURE__*/ _closure_get("count/2", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#1/subscribe");
+const $a_content__count = /*@__PURE__*/ _closure_get("count/2", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:1/subscribe");
 const $a_content__setup = $a_content__count;
 const $a_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "A <!>", "b%", $a_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($a_content__count);

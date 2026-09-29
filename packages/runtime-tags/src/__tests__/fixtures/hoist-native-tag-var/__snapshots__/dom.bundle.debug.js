@@ -11,7 +11,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<hr><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `b%/${_w0}&c%c`)("");
 const $el2_getter = /*@__PURE__*/ _hoist("#div/0", "BranchScopes:#text/2");
-const $el_getter = _hoist_resume("__tests__/template.marko_0_#div#0/hoist", "#div/0", "BranchScopes:#text/0", "BranchScopes:#text/0");
+const $el_getter = _hoist_resume("__tests__/template.marko_0_#div#2:0/hoist", "#div/0", "BranchScopes:#text/0", "BranchScopes:#text/0");
 const $if_content2__$el_getter = _el("__tests__/template.marko_2_#div#0", "#div/0");
 const $if_content2__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);

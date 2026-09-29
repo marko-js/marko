@@ -46,7 +46,7 @@ const $inputtype_content__setup = $inputtype_content__i;
 const $inputtype_content = _content("__tests__/tags/heading.marko_2*content", "item <!>", "b%", $inputtype_content__setup);
 _content_resume($inputtype_content);
 const $item_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content);
-const $item_content__input_type = /*@__PURE__*/ _closure_get("input_type/4", ($scope) => $item_content__dynamicTag($scope, $scope._.input_type), 0, "__tests__/tags/heading.marko_1_input_type#3/subscribe");
+const $item_content__input_type = /*@__PURE__*/ _closure_get("input_type/4", ($scope) => $item_content__dynamicTag($scope, $scope._.input_type), 0, "__tests__/tags/heading.marko_1_input_type#0:3/subscribe");
 const $item_content__setup = $item_content__input_type;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/tags/heading.marko_1*content", "<!><!><!>", "b%", $item_content__setup), { i($scope) {} });
 function $setup($scope) {

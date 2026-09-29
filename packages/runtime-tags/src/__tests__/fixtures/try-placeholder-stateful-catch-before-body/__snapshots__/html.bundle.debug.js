@@ -15,14 +15,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($attempt__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:attempt/2": 1
-		}, "__tests__/template.marko", "4:2"), "__tests__/template.marko_2_attempt#1/subscribe", 0);
+		}, "__tests__/template.marko", "4:2"), "__tests__/template.marko_2_attempt#0:1/subscribe", 0);
 		_resume_branch($scope2_id);
 	}, () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<button>retry ${_text_resume($scope1_id, "#text/1", attempt, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_subscribe($attempt__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_1_attempt#1/subscribe");
+		_subscribe($attempt__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_1_attempt#0:1/subscribe");
 	}, (err) => {
 		const $scope3_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();

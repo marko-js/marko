@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "#text/0", input.item, $sg__input_item)}</span>`);
-			_script($scope1_id, "__tests__/tags/child.marko_1_input#2", $sg__input_item);
+			_script($scope1_id, "__tests__/tags/child.marko_1_input#0:2", $sg__input_item);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;
 		}

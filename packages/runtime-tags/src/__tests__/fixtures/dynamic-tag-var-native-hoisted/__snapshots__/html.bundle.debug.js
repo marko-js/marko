@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_itemType = _serialize_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	const $item_getter = _hoist($scope0_id, "__tests__/template.marko_0_$item#3/hoist");
+	const $item_getter = _hoist($scope0_id, "__tests__/template.marko_0_$item#2:3/hoist");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", resolveAfter(undefined, 1), (_) => {
 			const $scope2_id = _scope_id();
 			_dynamic_tag($scope2_id, "#text/0", show ? $Child_withLoadAssets : null, { value: 1 });
-			_subscribe($show__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_show#2/subscribe");
+			_subscribe($show__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_show#0:2/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 	}, () => {

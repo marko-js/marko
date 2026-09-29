@@ -8,7 +8,7 @@ var my_btn_default = _template("__tests__/tags/my-btn.marko", (input) => {
 			_html("<a");
 			_attrs_content(input, "#a/0", $scope1_id, "a");
 			_html(`</a>${_el_resume($scope1_id, "#a/0")}`);
-			_script($scope1_id, "__tests__/tags/my-btn.marko_1_input#2");
+			_script($scope1_id, "__tests__/tags/my-btn.marko_1_input#0:2");
 			_scope($scope1_id, { _: $si__input && _scope_with_id($scope0_id) }, "__tests__/tags/my-btn.marko", "1:2", { "EventAttributes:#a/0": ["...input", "2:9"] });
 			return 0;
 		} else {
@@ -16,7 +16,7 @@ var my_btn_default = _template("__tests__/tags/my-btn.marko", (input) => {
 			_html("<button");
 			_attrs_content(input, "#button/0", $scope2_id, "button");
 			_html(`</button>${_el_resume($scope2_id, "#button/0")}`);
-			_script($scope2_id, "__tests__/tags/my-btn.marko_2_input#2");
+			_script($scope2_id, "__tests__/tags/my-btn.marko_2_input#0:2");
 			_scope($scope2_id, { _: $si__input && _scope_with_id($scope0_id) }, "__tests__/tags/my-btn.marko", "4:2", { "EventAttributes:#button/0": ["...input", "5:14"] });
 			return 1;
 		}
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`Label ${_text_resume($scope1_id, "#text/0", count, 2)}`);
-			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"), "__tests__/template.marko_1_count#4/subscribe");
+			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"), "__tests__/template.marko_1_count#0:4/subscribe");
 		}, $scope0_id)
 	});
 	_script($scope0_id, "__tests__/template.marko_0");

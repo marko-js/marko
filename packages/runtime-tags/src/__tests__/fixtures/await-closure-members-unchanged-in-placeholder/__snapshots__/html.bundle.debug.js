@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", resolveAfter(0, 1), () => {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_resume($scope2_id, "#text/0", value.a + value.b)}</span>`);
-			_subscribe($value_b__closures, _subscribe($value_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_2_value_a#3/subscribe"), "__tests__/template.marko_2_value_b#4/subscribe");
+			_subscribe($value_b__closures, _subscribe($value_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_2_value_a#0:3/subscribe"), "__tests__/template.marko_2_value_b#0:4/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 	}, () => {

@@ -36,7 +36,7 @@ const $thing_content2__setup = ($scope) => $thing_content2__dynamicTag($scope, 1
 const $thing_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<!><!><!>", "b1", $thing_content2__setup, 0, "ClosureScopes:3");
 const $inputshowThingnull_content__setup = ($scope) => $input_content($scope["#childScope/0"], $thing_content2($scope));
 const $inputshowThingnull_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$1), $inputshowThingnull_content__setup, 0, "ClosureScopes:2");
-const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2/hoist", "setHtml", "ClosureScopes:1");
+const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#1:2/hoist", "setHtml", "ClosureScopes:1");
 const $thing_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $thing_content__setHtml);
 const $thing_content__setHtml = _var_resume("__tests__/template.marko_1_setHtml#2/var", /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml)));
 const $thing_content__setup = ($scope) => $thing_content__dynamicTag($scope, 1 && child_default);

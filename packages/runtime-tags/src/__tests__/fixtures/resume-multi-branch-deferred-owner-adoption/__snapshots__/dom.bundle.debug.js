@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
-const $if_content__input__script = _script("__tests__/tags/child.marko_1_input#2", ($scope) => _lifecycle($scope, { onDestroy: function() {
+const $if_content__input__script = _script("__tests__/tags/child.marko_1_input#0:2", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	$scope._.input.log().append(`destroyed ${$scope._.input.item}`);
 } }));
 const $if_content__input = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input__script);

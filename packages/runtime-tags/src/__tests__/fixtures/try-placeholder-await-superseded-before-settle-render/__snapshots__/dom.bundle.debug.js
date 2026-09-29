@@ -14,7 +14,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = "<button id=first>first</button><button id=third>third</button><!><!>";
 const $walks = " b b%c";
 const $placeholder_content = _content("__tests__/template.marko_2*content", "LOADING");
-const $try_content__value = /*@__PURE__*/ _closure_get("value/4", ($scope) => $input_value($scope["#childScope/0"], $scope._.value), 0, "__tests__/template.marko_1_value#3/subscribe");
+const $try_content__value = /*@__PURE__*/ _closure_get("value/4", ($scope) => $input_value($scope["#childScope/0"], $scope._.value), 0, "__tests__/template.marko_1_value#0:3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__value($scope);
 	$setup$1($scope["#childScope/0"]);

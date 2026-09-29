@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($value__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "11:2"), "__tests__/template.marko_1_value#3/subscribe");
+		}, "__tests__/template.marko", "11:2"), "__tests__/template.marko_1_value#0:3/subscribe");
 	}, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

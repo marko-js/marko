@@ -12,7 +12,7 @@ const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $awa
 const $try_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => {
 	$try_content__if($scope, $scope._.show ? 0 : 1);
 	$try_content__await_promise($scope, resolveAfter($scope._.show ? "client" : "server", 1));
-}, 0, "__tests__/template.marko_1_show#2/subscribe");
+}, 0, "__tests__/template.marko_1_show#0:2/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__show($scope);
 	$await_content($scope);

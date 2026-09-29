@@ -1,0 +1,11 @@
+<let/x=1/>
+<const/z=x/>
+<button.x onClick() { x++ }>${x}</button>
+<wrap>
+  <let/x=10/>
+  <button.y onClick() { x++ }/>
+  <script>console.log("outer", z)</script>
+  <script>console.log("inner", x)</script>
+  <em>${x}</em>
+  <wrap><s>${x}</s></wrap>
+</wrap>

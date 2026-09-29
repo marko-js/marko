@@ -40,7 +40,7 @@ const $if_content3__setup = ($scope) => {
 	_var($scope, "#childScope/0", $if_content3__setHtml);
 	$setup$2($scope["#childScope/0"]);
 };
-const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2/hoist", "setHtml", "BranchScopes:#text/0", "BranchScopes:#text/0");
+const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2:2/hoist", "setHtml", "BranchScopes:#text/0", "BranchScopes:#text/0");
 const $if_content2__setHtml = /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
 const $if_content2__setup = ($scope) => {
 	_var($scope, "#childScope/0", $if_content2__setHtml);
