@@ -19,7 +19,7 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 		}
 	}, $scope0_id, "#section/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/card/index.marko_1*shell"], $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $sg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { input_content: input.content }, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
+	$scope0_page ? _scope($scope0_id, { input_content: input.content }, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko_fill0", input.content);
 }, 0, 0);
 
 // template.marko

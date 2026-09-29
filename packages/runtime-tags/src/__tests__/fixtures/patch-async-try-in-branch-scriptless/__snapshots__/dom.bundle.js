@@ -1,2 +1,2 @@
 // template.marko
-const $placeholder_content = _content$1("a0", "loading");
+const $placeholder_content = _content$1("a6", "loading");

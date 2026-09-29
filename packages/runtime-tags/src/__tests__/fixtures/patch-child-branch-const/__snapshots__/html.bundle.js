@@ -20,7 +20,7 @@ var card_default = _template_patch("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.title,
 		f: input.note
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "b0", input.title), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "b1", input.note));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "b1", input.title), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "b2", input.note));
 }, 0, 0);
 
 // template.marko

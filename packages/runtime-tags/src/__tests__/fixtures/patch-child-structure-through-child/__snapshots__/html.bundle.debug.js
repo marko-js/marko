@@ -16,7 +16,7 @@ var leaf_default = _template_patch("__tests__/tags/leaf.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_flag, $sg__input_flag, void 0, void 0, ["__tests__/tags/leaf.marko_1*shell"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_label: input.label }, "__tests__/tags/leaf.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/leaf.marko0", input.label);
+	$scope0_page ? _scope($scope0_id, { input_label: input.label }, "__tests__/tags/leaf.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/leaf.marko_fill0", input.label);
 }, 0, 0);
 
 // tags/mid.marko
@@ -54,7 +54,7 @@ var mid_default = _template_patch("__tests__/tags/mid.marko", (input) => {
 	}, "__tests__/tags/mid.marko", 0, {
 		input_flag: ["input.flag"],
 		input_label: ["input.label"]
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/tags/mid.marko0", input.flag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/tags/mid.marko1", input.label));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/tags/mid.marko_fill0", input.flag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/tags/mid.marko_fill1", input.label));
 }, 0, () => [leaf_default]);
 
 // template.marko
@@ -79,5 +79,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "1:6" }) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
+	}, "__tests__/template.marko", 0, { count: "1:6" }) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.label);
 }, 1, () => [mid_default]);

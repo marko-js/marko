@@ -1,11 +1,11 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/tags/loader.marko_1*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_1*content;/D%l&;<div class=ld><!></div>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_1*content;/D%l&;<div class=ld><!></div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/tags/loader.marko_1*content;D ;<em> </em>`, {
   "PatchChild:BranchScopes:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/tags/loader.marko_1*content"
     }
-  }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_2*content"],
-  "PatchCatch:#text/0": [new Error("boom"), _.a]
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_2*content"],
+  "PatchCatch:#text/0": [new Error("boom")]
 }]
 "BQIB"
 

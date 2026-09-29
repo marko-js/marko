@@ -1,5 +1,5 @@
 // PATCH
-[`a0;D%c%;<em><!>.<!></em>`, `a2;b%;<!><!><!>`, `a4;b%;<!><!><!>`, `a3; ;<section></section>`, {
+[`a2;b%;<!><!><!>`, `a0;D%c%;<em><!>.<!></em>`, `a4;b%;<!><!><!>`, `a3; ;<section></section>`, {
   la: ["b", {
     la: [{
       cAa: [{
@@ -49,7 +49,7 @@
 {
   ra: [_(2).ra[0], {
     ra: [1, {
-      ka: [new Error("nope"), "a2"]
+      ka: [new Error("nope")]
     }]
   }]
 }

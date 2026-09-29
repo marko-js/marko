@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a: "a !a2;D%b ;<main><!><button>+</button></main>",
-	a0: "a0 a5;b%;<!><!><!>"
+	a0: "a0 a6;b%;<!><!><!>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 0);
@@ -23,5 +23,5 @@ var template_default = _template_patch("a", (input) => {
 		f: input.title,
 		g: count,
 		h: $input_title__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a3", input.title);
 }, 1, 0);

@@ -1,7 +1,7 @@
 // counter.marko
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
-const $n$1 = /*@__PURE__*/ _fill_let("__tests__/counter.marko0", "n/4", ($scope) => {
+const $n$1 = /*@__PURE__*/ _fill_let("__tests__/counter.marko_fill0", "n/4", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	_return($scope, $scope.n);
 });

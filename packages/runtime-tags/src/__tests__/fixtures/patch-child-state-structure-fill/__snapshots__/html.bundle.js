@@ -17,7 +17,7 @@ var toggle_panel_default = _template_patch("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { e: input.title }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.title);
+	$scope0_page ? _scope($scope0_id, { e: input.title }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.title);
 }, 0, 0);
 
 // template.marko
@@ -39,5 +39,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: count,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.title);
 }, 1, () => [toggle_panel_default]);

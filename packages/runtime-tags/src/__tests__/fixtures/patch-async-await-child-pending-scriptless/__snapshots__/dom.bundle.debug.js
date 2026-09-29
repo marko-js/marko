@@ -1,7 +1,7 @@
 // tags/pill.marko
 const $template$1 = "<b class=pill><!>:<!></b><button class=inc>+</button>";
 const $walks$1 = "D%c%l b";
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/pill.marko0", "n/7", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/pill.marko_fill0", "n/7", ($scope) => _text($scope["#text/1"], $scope.n));
 const $input_start = $n;
 const $input_text = ($scope, input_text) => _text($scope["#text/0"], input_text);
 const $setup__script = _script("__tests__/tags/pill.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {

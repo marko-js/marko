@@ -1,5 +1,5 @@
 // tags/kid.marko
-const $c = /*@__PURE__*/ _fill_let("b0", 2, ($scope) => {
+const $c = /*@__PURE__*/ _fill_let("b1", 2, ($scope) => {
 	_text($scope.b, $scope.c);
 	_return($scope, $scope.c);
 });

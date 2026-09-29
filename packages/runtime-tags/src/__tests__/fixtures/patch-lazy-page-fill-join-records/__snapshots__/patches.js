@@ -1,5 +1,5 @@
 // PATCH
-[`a0;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c5;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b%b/D%lD%l&b;<!><!><nav><!></nav><main><!></main><!>`, {
+[`a0;b%;<!><!><!>`, `d0;b%;<!><!><!>`, `c0 c6;D%c%c%;<span><!>/<!>/<!></span>`, `c1;/E l%l&;<section><h2> </h2><!></section>`, `d3;b%b/b%b D l&b;<!><!><h1>B</h1><!><button> </button><!>`, `d1;b%b/D%lD%l&b;<!><!><nav><!></nav><main><!></main><!>`, {
   z2_a_c: {
     ba: [1, {
       cb: {
@@ -29,7 +29,7 @@
               }, "c1"],
               s: {
                 i: "!c2",
-                vc0: 0
+                vc3: 0
               }
             }
           }, "d3"]
@@ -67,7 +67,7 @@
               bb: "b0",
               s: {
                 i: "!b1",
-                vb0: 0
+                vb2: 0
               }
             }
           }, "d2"]
@@ -114,7 +114,7 @@
               }, "c1"],
               s: {
                 i: "!c2",
-                vc0: 0
+                vc3: 0
               }
             }
           }, "d3"]

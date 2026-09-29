@@ -19,11 +19,11 @@ var template_default = _template_patch("a", (input) => {
 						{
 							const $scope3_id = _scope_id();
 							_html(`<u>${_text_resume($scope3_id, "a", "z:" + input.title)}</u>`);
-							_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, { Cg: 1 }), _client_guard($scope0_reason, 0) && "a0");
+							_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, { Cg: 1 }), "a0");
 							return 0;
 						}
 					}, $scope2_id, "b", 1, 1, 1, 0, 1);
-					_subscribe($open__closures, _subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {}), _client_guard($scope0_reason, 0) && "a1"), "a2");
+					_subscribe($open__closures, _subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {}), "a1"), "a2");
 					return 0;
 				}
 			}, $scope1_id, "b");
@@ -38,5 +38,5 @@ var template_default = _template_patch("a", (input) => {
 		f: open,
 		g: $input_title__closures,
 		h: $open__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a4", input.title);
 }, 1, 0);

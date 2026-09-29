@@ -1,7 +1,7 @@
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-spread-state/template.marko0": {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-spread-state/template.marko_fill0": {
     title: "B"
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-spread-state/template.marko1": "b2"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-spread-state/template.marko_fill1": "b2"
 }

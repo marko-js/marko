@@ -3,7 +3,7 @@
   $: {
     prefix: "yo"
   },
-  va0: "yo:amy"
+  va1: "yo:amy"
 }
 
 // PATCH
@@ -11,5 +11,5 @@
   $: {
     prefix: "yo"
   },
-  va0: "yo:bob"
+  va1: "yo:bob"
 }

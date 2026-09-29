@@ -2,7 +2,7 @@
 _shells({
 	a: "a;E l%;<main><h1> </h1><!></main>",
 	a0: "a0 !a2; b%;<button>+</button><!><!>",
-	a1: "a1 a4;Db%;<p>Seen <!></p>"
+	a1: "a1 a5;Db%;<p>Seen <!></p>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_inner = _source_guard($scope0_reason, 3), $sg__input_outer = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
@@ -22,7 +22,7 @@ var template_default = _template_patch("a", (input) => {
 				}
 			}, $scope1_id, "b", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["a1"], $scope0_reason, 3);
 			_script($scope1_id, "a2");
-			_patch_value($scope1_id, "a0", count, 1);
+			_patch_value($scope1_id, "a3", count, 1);
 			_scope($scope1_id, {
 				c: count,
 				_: _scope_with_id($scope0_id)

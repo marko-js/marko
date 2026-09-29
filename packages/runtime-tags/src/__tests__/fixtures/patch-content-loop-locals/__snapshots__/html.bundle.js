@@ -11,15 +11,15 @@ var list_default = _template_patch("b", (input) => {
 		const $scope1_id = _scope_id();
 		const $tag = item.content;
 		_dynamic_tag($scope1_id, "a", $tag, {}, 0, 0, $sg__input_item, _patch_dynamic_tag($scope1_id, "a", $tag, 0, 0, 0, $scope0_reason, 0));
-		_scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, 1, $sg__input_item, void 0, void 0, "b0", $scope0_reason, 0);
+		$scope0_page && _scope($scope1_id, {});
+	}, 0, $scope0_id, "a", 1, $sg__input_item, $sg__input_item, void 0, void 0, "b0", $scope0_reason, 0);
 	$scope0_page && _scope($scope0_id, {});
 }, 0, 1);
 
 // template.marko
 _shells({
-	a0: "a0 a5;D l%;<em> </em><!><!>",
-	a: /*@__PURE__*/ ((_w0, _w1) => `a !a2;${_w0};${_w1}`)(((_w0) => `b/${_w0}& D l`)("b%c"), ((_w0) => `<!>${_w0}<button> </button>`)($template)),
+	a0: "a0 a6;D l%;<em> </em><!><!>",
+	a: /*@__PURE__*/ ((_w0, _w1) => `a !a3;${_w0};${_w1}`)(((_w0) => `b/${_w0}& D l`)("b%c"), ((_w0) => `<!>${_w0}<button> </button>`)($template)),
 	a1: "a1;D%;<b><!>!</b>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -34,7 +34,7 @@ var template_default = _template_patch("a", (input) => {
 		$item = attrTags($item, { content: _content_elide("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "a0", label);
+			_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "a2", label);
 			_html(`<em>${_text_resume($scope1_id, "a", label + n)}</em>`);
 			_if(() => {
 				if (input.show) {
@@ -54,7 +54,7 @@ var template_default = _template_patch("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	list_default({ item: $item });
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	$scope0_page && _scope($scope0_id, {
 		g: _source_if($scope0_reason, 1) && input.show,
 		h: n,

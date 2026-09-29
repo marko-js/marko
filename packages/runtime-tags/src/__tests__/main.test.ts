@@ -586,7 +586,13 @@ function testFixtures(interop?: true) {
                         if (flushes.length && betweenFlushes) {
                           tracker.logUpdate(input);
                           tracker.beginUpdate();
-                          await betweenFlushes(browser.window.document);
+                          if (
+                            (await betweenFlushes(browser.window.document)) ===
+                            "abandon"
+                          ) {
+                            tracker.logUpdate("abandon");
+                            break;
+                          }
                           run();
                           await browser.runAsyncScripts();
                           run();

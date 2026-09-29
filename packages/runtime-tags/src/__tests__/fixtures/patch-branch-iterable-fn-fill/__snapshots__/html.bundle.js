@@ -19,5 +19,5 @@ var template_default = _template_patch("a", (input) => {
 		f: getTitle,
 		g: api,
 		h: api.label
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", api), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", api.label), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "e", input.title), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "f", getTitle));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a3", api), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a4", api.label), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "e", input.title), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "f", getTitle));
 }, 1, 0);

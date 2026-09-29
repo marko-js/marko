@@ -35,7 +35,7 @@ var code_block_default = _template_patch("__tests__/tags/code-block.marko", (inp
 		input_cursor: ["input.cursor"],
 		input_text: ["input.text"],
 		highlight: "1:8"
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "__tests__/tags/code-block.marko0", input.text), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "__tests__/tags/code-block.marko1", highlight), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "input_cursor", input.cursor));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "__tests__/tags/code-block.marko_fill0", input.text), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "__tests__/tags/code-block.marko_fill1", highlight), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "input_cursor", input.cursor));
 }, 0, 1);
 
 // template.marko

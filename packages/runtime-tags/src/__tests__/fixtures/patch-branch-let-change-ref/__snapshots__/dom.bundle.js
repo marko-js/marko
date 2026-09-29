@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__count = /*@__PURE__*/ _fill_let_change("a0", 3, ($scope) => _text($scope.a, $scope.d));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("a3", 3, ($scope) => _text($scope.a, $scope.d));
 const $if_content__setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$if_content__count($scope, +$scope.d + 1);
 }));

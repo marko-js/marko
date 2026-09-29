@@ -4,7 +4,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko_0/valueChange",
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko0": 5
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko_fill0": 5
     }
   },
   "PatchText:#text/2": "5"
@@ -23,7 +23,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko_0/valueChange",
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko0": 7
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/counter.marko_fill0": 7
     }
   },
   "PatchText:#text/2": "7"

@@ -7,7 +7,7 @@ _shells({
 	a3: "a3;D ;<li> </li>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_note = _source_guard($scope0_reason, 1), $sg__input_show = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<ul>");
@@ -15,8 +15,8 @@ var template_default = _template_patch("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_patch_text($scope1_id, "a", x, void 0, 0, 0)}:${_patch_text($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</li>`);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "a", 1, 1, 0, void 0, void 0, "a0", 0, 0);
-	_html(`</ul>${_el_resume($scope0_id, "a")}<ol>`);
+	}, 0, $scope0_id, "a", 1, $sg__input_note, 0, void 0, void 0, "a0", 0, 0);
+	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_note)}<ol>`);
 	_for_of([1, 2], (x) => {
 		const $scope4_id = _scope_id();
 		_html(`<li>${_patch_text($scope4_id, "a", x, void 0, 0, 0)}</li>`);

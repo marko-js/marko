@@ -8,7 +8,7 @@
   "PatchAttr:#p/1 title": "fr",
   "PatchText:#text/2": "Acme Co",
   "PatchChild:#childScope/3": {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-client-intersections/tags/price-card.marko0": "Gadget"
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-client-intersections/tags/price-card.marko_fill0": "Gadget"
   },
   "PatchChild:#childScope/5": {
     "PatchText:#text/0": "2027"

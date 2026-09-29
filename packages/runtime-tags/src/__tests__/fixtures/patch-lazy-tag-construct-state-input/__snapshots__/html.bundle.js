@@ -12,7 +12,7 @@ var child_default = _template_patch("a", (input) => {
 const $Child_withLoadAssets = withLoadAssets(child_default, "_a", void 0, 1);
 _shells({
 	b: "b !b1; D l ;<button class=n> </button><main></main>",
-	b0: /*@__PURE__*/ ((_w0, _w1) => `b0 b3 b4;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l"), /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template))
+	b0: /*@__PURE__*/ ((_w0, _w1) => `b0 b4 b5;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l"), /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template))
 });
 var template_default = _template_patch("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -38,5 +38,5 @@ var template_default = _template_patch("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: input.label,
 		h: n
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.label);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b2", input.label);
 }, 1, () => [$Child_withLoadAssets]);

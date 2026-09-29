@@ -27,10 +27,10 @@ var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $templ
 // tags/card.marko
 const $template = "<section class=card><h2> </h2><button class=toggle>toggle</button><!></section>";
 const $walks = "E l b%l";
-const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko0", "input_title", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_title)));
+const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_title)));
 const $if_content__setup = $if_content__input_title;
 const $if = /*@__PURE__*/ _if("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko1", "open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));
@@ -38,7 +38,7 @@ function $setup($scope) {
 	$setup__script($scope);
 	$open($scope, false);
 }
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko0", "input_title", ($scope) => {
+const $input_title = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko_fill0", "input_title", ($scope) => {
 	$if_content__input_title($scope);
 	_text($scope["#text/0"], $scope.input_title);
 }, $if_content__input_title);

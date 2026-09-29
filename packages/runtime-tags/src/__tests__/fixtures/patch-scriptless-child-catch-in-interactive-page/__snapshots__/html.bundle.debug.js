@@ -26,7 +26,7 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_resume($scope2_id, "#text/0", err.message, $sg__err_message)}</b>`);
 		_source_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/card/index.marko", "5:4");
-	}, void 0, "__tests__/tags/card/index.marko_2*content", "__tests__/tags/card/index.marko_1*content", 1);
+	}, void 0, "__tests__/tags/card/index.marko_2*content", "__tests__/tags/card/index.marko_1*content");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $input_promise__closures }, "__tests__/tags/card/index.marko", 0);
 }, 0, 0);
 

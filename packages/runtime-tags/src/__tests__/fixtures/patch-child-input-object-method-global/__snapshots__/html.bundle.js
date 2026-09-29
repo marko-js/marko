@@ -30,7 +30,7 @@ var code_block_default = _template_patch("b", (input) => {
 		d: $si__input_text && input.cursor,
 		e: ($scope0_page || _source_if($scope0_reason, 1)) && input.text,
 		g: $si__input_text && highlight
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "b0", input.text), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "b1", highlight), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "d", input.cursor));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "b4", input.text), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "b5", highlight), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "d", input.cursor));
 }, 0, 1);
 
 // template.marko

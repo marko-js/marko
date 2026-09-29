@@ -7,7 +7,7 @@
           "PatchChild:#childScope/1": {
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-b.marko_0",
-              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-b.marko0": 0
+              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-b.marko_fill0": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/template.marko_3*shell"]
@@ -26,7 +26,7 @@
           "PatchChild:#childScope/1": {
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-a.marko_0",
-              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-a.marko0": 0
+              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-a.marko_fill0": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/template.marko_2*shell"]
@@ -45,7 +45,7 @@
           "PatchChild:#childScope/1": {
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-b.marko_0",
-              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-b.marko0": 0
+              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/page-b.marko_fill0": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-held-shell-revisit/template.marko_3*shell"]

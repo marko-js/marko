@@ -13,7 +13,6 @@ import {
 } from "../util/body-to-text-literal";
 import { isOutputHTML, isPatch } from "../util/marko-config";
 import { writesPatchHole } from "../util/patch/decisions";
-import { onFinalizePatch } from "../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   isBranchPathSection,
@@ -28,6 +27,7 @@ import {
   trackDomVarReferences,
   isReferencedExtra,
   isTagVarRead,
+  onFinalizeReferences,
 } from "../util/references";
 import {
   linkRuntimeFeature,
@@ -120,7 +120,7 @@ export default {
       ) {
         addPatchSerializeReason(tagSection, FORCED, nodeBinding);
         ensurePatchWriteGroups(() => tagExtra);
-        onFinalizePatch(() => {
+        onFinalizeReferences(() => {
           if (writesPatchHole(tagSection, tagExtra)) {
             linkRuntimeFeature("patch-text-content");
           }

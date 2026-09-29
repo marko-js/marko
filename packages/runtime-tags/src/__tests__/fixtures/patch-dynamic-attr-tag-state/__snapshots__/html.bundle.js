@@ -20,7 +20,7 @@ var template_default = _template_patch("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(_text_resume($scope1_id, "a", input.label));
-		_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b1");
+		_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
 	}, $scope0_id));
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b2");
@@ -29,5 +29,5 @@ var template_default = _template_patch("b", (input) => {
 		f: input.label,
 		g: count,
 		i: $input_label__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.on), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b3", input.on), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b4", input.label));
 }, 1, 1);

@@ -9,16 +9,15 @@ var probe_default = _template_patch("b", (input) => {
 	_html(`<div>${_text_resume($scope0_id, "b", "pending")}</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_patch_effect($scope0_id, "b0", "e");
-	_patch_value($scope0_id, "b0", settled, 1);
+	_patch_value($scope0_id, "b1", settled, 1);
 	$scope0_page ? _scope($scope0_id, { e: input.promise }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "e", input.promise);
 }, 0, 0);
 
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
-	a1: "a1,<span class=loading>...</span>",
-	a2: "a2;D ;<em> </em>",
-	a3: "a3;b%;<!><!><!>",
+	a1: "a1;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
 	a: /*@__PURE__*/ ((_w0, _w1) => `a !a5;${_w0};${_w1}`)(((_w0) => ` Db%l/${_w0}&%c`)($walks), ((_w0) => `<button>Count <!></button>${_w0}<!><!>`)($template))
 });
 var template_default = _template_patch("a", (input) => {
@@ -39,13 +38,13 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "a", v.name, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a0", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<span class=loading>...</span>");
-	}, void 0, "a1", void 0, "a3", 1);
+	}, void 0, "a4", void 0, "a2", 1);
 	_script($scope0_id, "a5");
 	$scope0_page && _scope($scope0_id, {
 		h: count,

@@ -1,6 +1,6 @@
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-controllable-static-with-spread/template.marko0": {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-controllable-static-with-spread/template.marko_fill0": {
     placeholder: "p2"
   }
 }

@@ -27,7 +27,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<em>${_text_resume($scope2_id, "#text/0", err.message, $sg__err_message)}</em>`);
 		_source_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "6:6");
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1);
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

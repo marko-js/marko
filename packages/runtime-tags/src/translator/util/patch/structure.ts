@@ -6,7 +6,12 @@ import { kDirectContent } from "../binding-prop-tree";
 import { createCyclicMemo } from "../cyclic-memo";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, some, toArray } from "../optional";
-import type { Binding, ReferencedExtra, Sources } from "../references";
+import {
+  type Binding,
+  onFinalizeReferences,
+  type ReferencedExtra,
+  type Sources,
+} from "../references";
 import {
   ensureReasonGroups,
   getChildSectionOf,
@@ -18,7 +23,6 @@ import {
   getSerializeSourcesForRef,
 } from "../serialize-reasons";
 import { getWriteSources } from "./decisions";
-import { onFinalizePatch } from "./lifecycle";
 import { isPatchFillBinding } from "./refresh";
 
 // A boundary branch live on every patch page (serialized on every page
@@ -222,7 +226,7 @@ export function recordStructuralParams(sources: Sources | undefined) {
 // Shared per-patch-write analyze hook: freezes the value's reason groups
 // for translate-time ownership gates.
 export function ensurePatchWriteGroups(getExtra: () => t.NodeExtra) {
-  onFinalizePatch(() => {
+  onFinalizeReferences(() => {
     ensureReasonGroups(getWriteSources(getExtra()));
   });
 }
@@ -253,10 +257,10 @@ export function isBranchSectionChain(section: Section, owner: Section) {
 }
 
 // Sections whose holes patch-write directly: every level down to them links
-// structurally, except boundary content, which renders outside the patch.
+// structurally, except boundary content (rendered outside the patch) and pruned content.
 export function isBranchPathSection(section: Section) {
   while (section.parent) {
-    if (section.boundaryContent) return false;
+    if (section.boundaryContent || section.pruned) return false;
     section = section.parent;
   }
   return true;

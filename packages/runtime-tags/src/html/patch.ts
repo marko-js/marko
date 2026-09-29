@@ -262,7 +262,7 @@ class PatchState extends State {
     accessor: Accessor,
     branchId: number,
     contentId?: string,
-    slotIds?: (string | 0 | undefined)[],
+    slotIds?: (string | undefined)[],
     ownerScopeId?: number,
   ) {
     if (!peekPatchPartial(this, branchId)) {
@@ -762,10 +762,14 @@ export function _patch_dynamic_tag(
         [PatchKey.DynamicTag + accessor]:
           entry.length > 1 || native ? entry : entry[0],
       });
+    } else if (!_client_guard(owned, group!)) {
+      // No entry ships, so the live branch stays paired: its body is no
+      // divergence for an unfed hole to seed.
+      return 3;
     }
   }
   // How a patch treats the tag (`_dynamic_tag`'s `patchPairing`): `1` pairs it,
-  // `2` skips it (a client-owned group is upstream of the renderer).
+  // `3` pairs a kept renderer, `2` skips it (a client-owned group is upstream).
   return _client_guard(owned, group!) ? 2 : 1;
 }
 

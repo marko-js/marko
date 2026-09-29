@@ -2,8 +2,8 @@
 const $template = "<div><!><button id=c>c</button></div>";
 const $walks = "D%b l";
 _shells({
-	b: "b !b2;D%b ;<div><!><button id=c>c</button></div>",
-	b0: "b0 b4;D ;<p> </p>"
+	b: "b !b3;D%b ;<div><!><button id=c>c</button></div>",
+	b0: "b0 b7;D ;<p> </p>"
 });
 var child_default = _template_patch("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -14,7 +14,7 @@ var child_default = _template_patch("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const l = input.label + "!";
-			_filled_guard($scope0_reason, 1) ? _patch_value($scope1_id, "b2", l) : _patch_init($scope1_id, "b1");
+			_filled_guard($scope0_reason, 1) ? _patch_value($scope1_id, "b1", l) : _patch_init($scope1_id, "b2");
 			_html(`<p>${_text_resume($scope1_id, "a", l + "#0")}</p>`);
 			_scope($scope1_id, {
 				b: l,
@@ -24,12 +24,12 @@ var child_default = _template_patch("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_reason, 0);
 	_html(`<button id=c>c</button>${_el_resume($scope0_id, "b")}</div>`);
-	_script($scope0_id, "b2");
-	_patch_value($scope0_id, "b1", c, 1);
+	_script($scope0_id, "b3");
+	_patch_value($scope0_id, "b5", c, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: _source_if($scope0_reason, 0) && input.label,
 		g: c
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.label);
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "b4", input.label);
 }, 0, 0);
 
 // template.marko

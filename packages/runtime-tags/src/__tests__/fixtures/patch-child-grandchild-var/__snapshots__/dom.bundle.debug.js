@@ -1,7 +1,7 @@
 // tags/widget/tags/inner/index.marko
 const $template$2 = "<button class=bump>+</button>";
 const $walks$2 = " b";
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/widget/tags/inner/index.marko0", "n/1", ($scope) => _return($scope, $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/widget/tags/inner/index.marko_fill0", "n/1", ($scope) => _return($scope, $scope.n));
 const $setup__script$1 = _script("__tests__/tags/widget/tags/inner/index.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

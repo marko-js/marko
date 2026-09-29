@@ -2,7 +2,7 @@
 const $template = "<b>t</b><!><!>";
 const $walks = " b%c";
 const $if = /*@__PURE__*/ _if("#text/1", "<i>open</i>");
-const $open = /*@__PURE__*/ _fill_let("__tests__/child.marko0", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/child.marko_fill0", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#b/0"], "click", function() {
 	$open($scope, !$scope.open);
 	document.body.dataset.item = JSON.stringify($scope.input_item);

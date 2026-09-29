@@ -12,11 +12,11 @@ var wrap_default = _template_patch("b", (input) => {
 	_html("</div>");
 	if ($scope0_page) _if(() => {}, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b1", open, 1);
+	_patch_value($scope0_id, "b2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.content,
 		g: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b1", input.content);
 }, 0, 0);
 
 // template.marko
@@ -40,7 +40,7 @@ var template_default = _template_patch("a", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", check(input.fail, input.x))}</p>`);
-			_subscribe(_source_if($scope0_reason, 2) && $input_x__closures, _subscribe(_source_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a0"), _client_guard($scope0_reason, 2) && "a1");
+			_subscribe(_source_if($scope0_reason, 2) && $input_x__closures, _subscribe(_source_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0"), "a1");
 		}, void 0, (err) => {
 			const $scope3_reason = _scope_reason(), $sg__err_message = _source_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
@@ -55,5 +55,5 @@ var template_default = _template_patch("a", (input) => {
 		f: $input_fail__closures,
 		g: $input_x__closures,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.fail), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a1", input.x));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a5", input.fail), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a6", input.x));
 }, 1, () => [wrap_default]);

@@ -38,5 +38,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.o,
 		f: show
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.o);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.o);
 }, 1, () => [widget_default]);

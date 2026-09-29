@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a: "a !a1;D%b ;<main><!><button>+</button></main>",
-	a0: "a0 a3;D ;<p> </p>"
+	a: "a !a3;D%b ;<main><!><button>+</button></main>",
+	a0: "a0 a5;D ;<p> </p>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -10,9 +10,9 @@ var template_default = _template_patch("a", (input) => {
 	_html("<main>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "a1", item.id);
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "a2", item.id);
 		const { name } = item;
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "a0", name);
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "a1", name);
 		const same = item;
 		_html(`<p>${_text_resume($scope1_id, "a", name + "/" + same.id + "#0")}</p>`);
 		_scope($scope1_id, {
@@ -22,6 +22,6 @@ var template_default = _template_patch("a", (input) => {
 		});
 	}, (item) => item.id, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a0", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a3");
 	$scope0_page && _scope($scope0_id, { f: count });
 }, 1, 0);

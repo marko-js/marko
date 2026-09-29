@@ -182,8 +182,8 @@ export interface Section {
   /** An `<await>`/`<try>` body: always-rendered like the branch path, but
    * paired (never created) by patches. */
   isBoundary: boolean;
-  /** A content renderer slot-serialized by register id (`<try>` bodies):
-   * static ones re-register from entry data, others load the dom module. */
+  /** A `<try>`'s `@catch` or `@placeholder`: content that always
+   * registers, so its slot names it by id. */
   boundaryContent: boolean;
   /** A content body shipped as a shell: `"static"` rides its slot
    * in-band, a dynamic one is created by id from a dynamic tag entry. */

@@ -6,7 +6,7 @@
     }, 2, {
       "PatchPending:#text/0": _.a
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-loop-removed/tags/rows.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-loop-removed/tags/rows.marko0": (p => p = new Promise((f, r) => _.b = {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-loop-removed/tags/rows.marko_fill0": (p => p = new Promise((f, r) => _.b = {
       f,
       r(e) {
         p.catch(_ => 0);

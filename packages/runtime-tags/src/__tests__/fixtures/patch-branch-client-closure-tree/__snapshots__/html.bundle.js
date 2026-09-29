@@ -22,5 +22,5 @@ var template_default = _template_patch("a", (input) => {
 		e: input.title,
 		f: show,
 		g: $input_title__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a2", input.title);
 }, 1, () => [note_default]);

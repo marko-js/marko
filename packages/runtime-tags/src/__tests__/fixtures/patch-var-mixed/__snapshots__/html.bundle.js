@@ -8,11 +8,11 @@ var mixer_default = _template_patch("b", (input) => {
 	_html(`<button>bump</button>${_el_resume($scope0_id, "a")}`);
 	const $return = input.value + local;
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b1", local, 1);
+	_patch_value($scope0_id, "b2", local, 1);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.value,
 		e: local
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.value);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b1", input.value);
 	return $return;
 }, 0, 0);
 

@@ -8,7 +8,7 @@ var pill_default = _template_patch("__tests__/tags/pill.marko", (input) => {
 	let n = input.start;
 	_html(`<b class=pill>${_patch_text($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/1", n, 2)}</b><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/pill.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/pill.marko0", n, 1);
+	_patch_value($scope0_id, "__tests__/tags/pill.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, { n }, "__tests__/tags/pill.marko", 0, { n: "1:6" });
 }, 0, 0);
 

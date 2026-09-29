@@ -3,7 +3,7 @@
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko0": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_fill0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1*shell"]
 }]
@@ -20,7 +20,7 @@
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko0": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_fill0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let/template.marko_1*shell"]
 }

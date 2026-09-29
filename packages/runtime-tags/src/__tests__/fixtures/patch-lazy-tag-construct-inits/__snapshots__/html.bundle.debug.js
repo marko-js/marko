@@ -12,7 +12,7 @@ var child_default = _template_patch("__tests__/child.marko", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/0")}`);
 	_for_of([1, 2], (i) => {
 		const $scope1_id = _scope_id();
-		_patch_value($scope1_id, "__tests__/child.marko1", i);
+		_patch_value($scope1_id, "__tests__/child.marko_fill1", i);
 		_html(`<span>${_patch_text($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope1_id, "#text/1", count + i, 2)}</span>`);
 		_scope($scope1_id, {
 			i,
@@ -20,7 +20,7 @@ var child_default = _template_patch("__tests__/child.marko", (input) => {
 		}, "__tests__/child.marko", "3:2", { i: "3:6" });
 	}, 0, $scope0_id, "#text/1", 1, 1, 0, void 0, void 0, "__tests__/child.marko_1*shell", 0, 0);
 	_script($scope0_id, "__tests__/child.marko_0");
-	_patch_value($scope0_id, "__tests__/child.marko0", count, 1);
+	_patch_value($scope0_id, "__tests__/child.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 }, 0, 0);
 

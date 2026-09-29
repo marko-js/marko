@@ -3,7 +3,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchPending:#text/0": 1
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-placeholder-fill/template.marko0": "second"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-placeholder-fill/template.marko_fill0": "second"
 }
 {
   "PatchChild:BranchScopes:#text/0": {

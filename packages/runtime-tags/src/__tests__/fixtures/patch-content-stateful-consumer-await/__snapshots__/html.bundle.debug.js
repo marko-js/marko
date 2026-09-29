@@ -21,14 +21,14 @@ var wrap_default = _template_patch("__tests__/tags/wrap.marko", (input) => {
 		}
 	}, $scope0_id, "#text/2", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/tags/wrap.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/wrap.marko1", open, 1);
+	_patch_value($scope0_id, "__tests__/tags/wrap.marko_fill1", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_content: input.content,
 		open
 	}, "__tests__/tags/wrap.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/wrap.marko0", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/wrap.marko_fill0", input.content);
 }, 0, 0);
 
 // template.marko
@@ -50,12 +50,12 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_html(`<em>${_text_resume($scope2_id, "#text/0", v)}</em>`);
 			_scope($scope2_id, {}, "__tests__/template.marko", "2:4");
 		});
-		_subscribe(_source_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
+		_subscribe(_source_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_page ? _scope($scope0_id, {
 		input_promise: input.promise,
 		"ClosureScopes:input_promise/4": $input_promise__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.promise);
+	}, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.promise);
 }, 1, () => [wrap_default]);

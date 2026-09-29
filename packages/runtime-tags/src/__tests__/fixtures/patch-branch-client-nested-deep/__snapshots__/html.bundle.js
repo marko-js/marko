@@ -16,5 +16,5 @@ var template_default = _template_patch("a", (input) => {
 		f: input.b,
 		g: open,
 		i: $input_b__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.a), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a1", input.b));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a2", input.a), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a3", input.b));
 }, 1, 0);

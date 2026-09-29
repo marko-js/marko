@@ -21,7 +21,7 @@ var child_default = _template_patch("__tests__/tags/child.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $sg__input_button, $sg__input_button, void 0, void 0, ["__tests__/tags/child.marko_2*shell"], $scope0_reason, 0);
-		_scope($scope1_id, {}, "__tests__/tags/child.marko", "3:4");
+		$scope0_page && _scope($scope1_id, {}, "__tests__/tags/child.marko", "3:4");
 	}, 0, $scope0_id, "#div/0", 1, 1, $sg__input_button, void 0, void 0, "__tests__/tags/child.marko_1*shell", $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput#4");

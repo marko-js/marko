@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<button class=count><!>:<!></button>";
 const $walks = " D%c%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko0", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_fill0", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

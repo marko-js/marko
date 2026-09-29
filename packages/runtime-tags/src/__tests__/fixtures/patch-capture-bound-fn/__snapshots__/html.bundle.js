@@ -8,7 +8,7 @@ var child_default = _template_patch("b", (input) => {
 	let shown = "none";
 	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}: ${_text_resume($scope0_id, "c", shown, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b0", shown, 1);
+	_patch_value($scope0_id, "b1", shown, 1);
 	$scope0_page ? _scope($scope0_id, { e: input }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "e", input);
 }, 0, 0);
 

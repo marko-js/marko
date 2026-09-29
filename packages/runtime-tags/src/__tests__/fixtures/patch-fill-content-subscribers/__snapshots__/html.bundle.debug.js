@@ -65,5 +65,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_label: ["input.label"],
 		a: "1:6",
 		b: "2:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.label);
 }, 1, () => [frame_default]);

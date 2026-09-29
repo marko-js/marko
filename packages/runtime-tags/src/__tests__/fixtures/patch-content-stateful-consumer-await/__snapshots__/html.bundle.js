@@ -12,11 +12,11 @@ var wrap_default = _template_patch("b", (input) => {
 	_html("</div>");
 	if ($scope0_page) _if(() => {}, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b1", open, 1);
+	_patch_value($scope0_id, "b2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.content,
 		g: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b1", input.content);
 }, 0, 0);
 
 // template.marko
@@ -36,12 +36,12 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<em>${_text_resume($scope2_id, "a", v)}</em>`);
 			_scope($scope2_id, {});
 		});
-		_subscribe(_source_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a0", 0);
+		_subscribe(_source_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_page ? _scope($scope0_id, {
 		d: input.promise,
 		e: $input_promise__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.promise);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a2", input.promise);
 }, 1, () => [wrap_default]);

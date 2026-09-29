@@ -3,6 +3,6 @@
   bc: [{
     "aa class": "warn"
   }, "a0"],
-  va0: "warn"
+  va2: "warn"
 }]
 "AgE"

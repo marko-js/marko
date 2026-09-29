@@ -1,6 +1,6 @@
 // tags/widget/index.marko
 const $template = "<!><!><!>";
-const $catch_content = _content$1("b0", "<em>bad</em>");
+const $catch_content = _content$1("b1", "<em>bad</em>");
 const $try = /*@__PURE__*/ _try(0, "<em>ok</em>", 0, 0, 0, $catch_content);
 function $setup($scope) {
 	$try($scope);

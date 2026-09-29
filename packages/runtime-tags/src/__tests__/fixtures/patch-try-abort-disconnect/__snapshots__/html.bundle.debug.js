@@ -3,8 +3,6 @@ const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;Db%;<p>A:<!></p>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,caught-a",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,<em>wait</em>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;Db%;<p>A:<!></p>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
@@ -33,7 +31,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("caught-a");
-	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1);
+	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {
 		n,

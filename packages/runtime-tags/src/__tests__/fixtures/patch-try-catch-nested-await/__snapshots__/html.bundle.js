@@ -33,7 +33,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<span>${_text_resume($scope3_id, "a", err.message, $sg__err_message)}</span>`);
 		_source_if($scope3_reason, 0) && _scope($scope3_id, {});
-	}, void 0, "a7", "a4", 1);
+	}, void 0, "a7", "a4");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
 		e: _source_if($scope0_reason, 1) && input.b,

@@ -1,5 +1,5 @@
 // layout.marko
-const $open = /*@__PURE__*/ _fill_let("a0", 6, ($scope) => _text($scope.b, $scope.g ? "close" : "open"));
+const $open = /*@__PURE__*/ _fill_let("a1", 6, ($scope) => _text($scope.b, $scope.g ? "close" : "open"));
 const $setup__script$1 = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
@@ -10,13 +10,13 @@ _load_lazy("_c", () => import("./page-b.mjs").then(() => {}));
 const $setup__script = _script("d3", ($scope) => $scope.$.log?.("router"));
 
 // page-a.marko
-const $count = /*@__PURE__*/ _fill_let("b0", 2, ($scope) => _text($scope.b, $scope.c));
+const $count = /*@__PURE__*/ _fill_let("b1", 2, ($scope) => _text($scope.b, $scope.c));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.c + 1);
 }));
 
 // page-b.marko
-const $count = /*@__PURE__*/ _fill_let("c0", 2, ($scope) => _text($scope.b, $scope.c));
+const $count = /*@__PURE__*/ _fill_let("c1", 2, ($scope) => _text($scope.b, $scope.c));
 const $setup__script = _script("c0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.c + 1);
 }));

@@ -1,11 +1,10 @@
 // template.marko
 _shells({
-	a0: "a0,loading",
+	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
-	a2: "a2;D ;<em> </em>",
-	a3: "a3;b%;<!><!><!>",
+	a2: "a2;b%;<!><!><!>",
 	a: "a; ;<main></main>",
-	a4: "a4;b%;<!><!><!>"
+	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 1);
@@ -24,19 +23,19 @@ var template_default = _template_patch("a", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						Cf: 1
-					}), _client_guard($scope0_reason, 2) && "a5");
-				}, 1, "a1");
-				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a6", 0);
+					}), _client_guard($scope0_reason, 2) && "a4");
+				}, 1, "a0");
+				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a5", 0);
 				$scope0_page && _resume_branch($scope2_id);
 			}, () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
-			}, void 0, "a0", void 0, "a3");
+			}, void 0, "a6", void 0, "a2");
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a4"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a3"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_page && _scope($scope0_id, {
 		e: _source_if($scope0_reason, 1) && input.value,

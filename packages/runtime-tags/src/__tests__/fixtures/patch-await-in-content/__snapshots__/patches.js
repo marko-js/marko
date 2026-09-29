@@ -1,14 +1,14 @@
 // PATCH
-[`a1;D%;<div id=done><!> done</div>`, `a3;b%;<!><!><!>`, `a0,<em>loading</em>`, {
+[`a2;b%;<!><!><!>`, `a0;D%;<div id=done><!> done</div>`, {
   cc: {
     cAa: {
       cAa: [{
-        pa: "a1",
+        pa: "a0",
         cAa: {
           ta: "b"
         }
-      }, "a3", $, "a0"]
+      }, "a2", $, "a4"]
     }
   }
 }]
-"BwEAAQ"
+"BgEB"

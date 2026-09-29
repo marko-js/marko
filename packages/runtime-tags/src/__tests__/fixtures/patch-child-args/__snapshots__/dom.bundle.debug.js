@@ -8,7 +8,7 @@ var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__input_tag = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], $scope._.input_tag)));
+const $if_content__input_tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], $scope._.input_tag)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_tag._($scope);
 	$input$1($scope["#childScope/0"], "x");
@@ -23,5 +23,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_tag($scope, input.tag);
-const $input_tag = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_tag", $if_content__input_tag);
+const $input_tag = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_tag", $if_content__input_tag);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

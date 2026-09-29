@@ -3,5 +3,5 @@
   $: {
     brand: "bmce"
   },
-  va0: "bmce"
+  va2: "bmce"
 }

@@ -2055,7 +2055,8 @@ export function writeHTMLResumeStatements(
             resumeId = t.stringLiteral(
               getResumeRegisterId(section, closure, "subscribe"),
             );
-            if (clientOwnership?.length) {
+            // A value a patch fills can change before the subscriber resumes.
+            if (clientOwnership?.length && !isPatchFillBinding(closure)) {
               resumeId = t.logicalExpression(
                 "&&",
                 callRuntime("_client_guard", ...clientOwnership),

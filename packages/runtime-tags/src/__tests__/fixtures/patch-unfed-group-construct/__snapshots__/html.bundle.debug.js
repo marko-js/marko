@@ -17,14 +17,14 @@ var kid_default = _template_patch("__tests__/tags/kid.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/kid.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/kid.marko1", on, 1);
+	_patch_value($scope0_id, "__tests__/tags/kid.marko_fill1", on, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_b: input.b,
 		on
 	}, "__tests__/tags/kid.marko", 0, {
 		input_b: ["input.b"],
 		on: "1:6"
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/kid.marko0", input.b);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/kid.marko_fill0", input.b);
 }, 0, 0);
 
 // template.marko

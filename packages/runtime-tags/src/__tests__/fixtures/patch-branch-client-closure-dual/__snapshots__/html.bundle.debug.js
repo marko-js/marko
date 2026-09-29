@@ -16,7 +16,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				if (b) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "#text/0", "p:" + input.title)}</p>`);
-					_subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_title#0:4/subscribe");
+					_subscribe($si__input_title && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:6"), "__tests__/template.marko_2_input_title#0:4/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
@@ -24,7 +24,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				if (b) {
 					const $scope3_id = _scope_id();
 					_html(`<span>${_text_resume($scope3_id, "#text/0", "s:" + input.title)}</span>`);
-					_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, { "ClosureSignalIndex:input_title/7": 1 }, "__tests__/template.marko", "8:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_3_input_title#0:4/subscribe");
+					_subscribe($si__input_title && $input_title__closures, _scope($scope3_id, { "ClosureSignalIndex:input_title/7": 1 }, "__tests__/template.marko", "8:6"), "__tests__/template.marko_3_input_title#0:4/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);
@@ -43,5 +43,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		a: "1:6",
 		b: "2:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, 0);

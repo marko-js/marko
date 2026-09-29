@@ -1,7 +1,7 @@
 // tags/store.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $last = /*@__PURE__*/ _fill_let("__tests__/tags/store.marko0", "last/0", ($scope) => _return($scope, {
+const $last = /*@__PURE__*/ _fill_let("__tests__/tags/store.marko_fill0", "last/0", ($scope) => _return($scope, {
 	last: $scope.last,
 	set: $_return($scope)
 }));
@@ -23,7 +23,7 @@ const $if_content__store = _var_resume("__tests__/template.marko_1_store#5/var",
 	$if_content__store_set($scope, store?.set);
 });
 const $if_content__store_last = ($scope, store_last) => _text($scope["#text/2"], store_last);
-const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko0", "count/8", ($scope) => _text($scope["#text/3"], $scope.count));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill0", "count/8", ($scope) => _text($scope["#text/3"], $scope.count));
 const $if_content__store_set = ($scope, store_set) => $if_content__count($scope, 0, store_set);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/4"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);

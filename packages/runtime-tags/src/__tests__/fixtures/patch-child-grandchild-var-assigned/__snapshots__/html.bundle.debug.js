@@ -12,7 +12,7 @@ var inner_default = _template_patch("__tests__/tags/widget/tags/inner/index.mark
 	_patch_bind($scope0_id, "#TagVariableChange", _resume(function(v) {
 		n = v;
 	}, "__tests__/tags/widget/tags/inner/index.marko_0/valueChange", $scope0_id) || void 0);
-	_patch_value($scope0_id, "__tests__/tags/widget/tags/inner/index.marko0", n, 1);
+	_patch_value($scope0_id, "__tests__/tags/widget/tags/inner/index.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		n,
 		"#TagVariableChange": _resume(function(v) {

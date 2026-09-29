@@ -35,7 +35,6 @@ import {
   isServerOwnedDynamicTag,
 } from "../../util/patch/decisions";
 import { addPatchChildRenderer } from "../../util/patch/intrinsics";
-import { onFinalizePatch } from "../../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   writesPatchIn,
@@ -52,6 +51,7 @@ import {
   trackParamsReferences,
   setBindingDownstream,
   trackVarReferences,
+  onFinalizeReferences,
 } from "../../util/references";
 import {
   linkRuntimeFeature,
@@ -192,7 +192,7 @@ export default {
       // The dynamic tag entry applies without this template's dom module;
       // decided once references and structure resolve, as translate decides.
       if (isPatch() && !t.isStringLiteral(node.name)) {
-        onFinalizePatch(() => {
+        onFinalizeReferences(() => {
           if (isServerOwnedDynamicTag(tag)) {
             ensurePatchWriteGroups(() => tagExtra);
             if (writesPatchDynamicTag(tag, tagSection)) {

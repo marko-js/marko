@@ -10,11 +10,11 @@ var kid_default = _template_patch("b", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b1", on, 1);
+	_patch_value($scope0_id, "b2", on, 1);
 	$scope0_page ? _scope($scope0_id, {
 		g: input.b,
 		h: on
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.b);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.b);
 }, 0, 0);
 
 // template.marko

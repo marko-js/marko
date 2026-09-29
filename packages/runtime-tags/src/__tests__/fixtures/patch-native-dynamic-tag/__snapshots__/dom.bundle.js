@@ -1,12 +1,12 @@
 // template.marko
-const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _fill_join_closure("a1", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f), 0, "a1"), 0);
+const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _fill_join_closure("a5", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f), 0, "a1"), 0);
 const $inputonsectionarticle_content__setup = ($scope) => {
 	$inputonsectionarticle_content__input_label($scope);
 	$inputonsectionarticle_content__count($scope);
 };
 const $inputonsectionarticle_content__count = /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.b, $scope._.g), 0, "a2");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, /* @__PURE__ */ _content("a0", "<!> <!>", "%c%", $inputonsectionarticle_content__setup));
-const $input_on__OR__input_label__OR__count = /*@__PURE__*/ _fill_join("a1", 5, /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.e ? "section" : "article", () => ({
+const $input_on__OR__input_label__OR__count = /*@__PURE__*/ _fill_join("a5", 5, /*@__PURE__*/ _fill_join("a4", 4, /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.e ? "section" : "article", () => ({
 	class: $scope.f,
 	"data-count": $scope.g
 })), 2)));

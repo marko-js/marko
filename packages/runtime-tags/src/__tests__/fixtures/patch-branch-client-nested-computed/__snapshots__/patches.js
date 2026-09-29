@@ -1,6 +1,6 @@
 // PATCH
 {
-  va0: {
+  va1: {
     key: "a",
     a: !1
   }
@@ -8,7 +8,7 @@
 
 // PATCH
 {
-  va0: {
+  va1: {
     key: "b",
     b: !0
   }

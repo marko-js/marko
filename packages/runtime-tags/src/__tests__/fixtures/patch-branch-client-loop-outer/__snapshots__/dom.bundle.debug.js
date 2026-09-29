@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:5/subscribe"), 0);
+const $if_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:5/subscribe"), 0);
 const $if_content__setup = $if_content__input_note;
 const $for_content__if = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup);
 const $for_content__expand = /*@__PURE__*/ _init_for_closure("__tests__/template.marko_1_expand#0:6/init", "#text/0", ($scope) => $for_content__if($scope, $scope._.expand ? 0 : 1));
@@ -23,5 +23,5 @@ const $input = ($scope, input) => {
 	$input_note($scope, input.note);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($if_content__input_note);
-const $input_note = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_note", $input_note__closure);
+const $input_note = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_note", $input_note__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

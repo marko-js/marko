@@ -50,7 +50,6 @@ import {
   size,
   reduce,
 } from "./optional";
-import { finalizePatch } from "./patch/lifecycle";
 import {
   getFillConditions,
   getRootGlobalReads,
@@ -1477,24 +1476,15 @@ export function finalizeReferences() {
 
   forEachSection(applySerializeExprs);
 
-  // Ownership gates query fill/effect groups at translate time; group order
-  // freezes during analyze, so ensure them alongside the resume groups.
   if (isPatch()) {
-    finalizePatch();
     // Setup renders a root's keyed `$global` reads (see `initGlobalRead`).
     const rootSection = getProgram().node.extra.section!;
     if (getRootGlobalReads(rootSection)) addSetupWork(rootSection);
-  }
-
-  // The RETURN classifies like a patch write, BEFORE group finalize and
-  // known-tag stamping, or same-file call sites fail on a group-count mismatch.
-  const programSection = getProgram().node.extra.section!;
-  if (programSection.returnValueExpr) {
-    programSection.returnSerializeReason = getSerializeSourcesForExpr(
-      programSection.returnValueExpr,
-    );
-    if (isPatch()) {
-      ensureReasonGroups(programSection.returnSerializeReason);
+    // The return classifies like a patch write, before known tags stamp
+    // their group sources, or same-file call sites miss its group.
+    const { returnValueExpr } = rootSection;
+    if (returnValueExpr) {
+      ensureReasonGroups(getSerializeSourcesForExpr(returnValueExpr));
     }
   }
 
@@ -1632,6 +1622,13 @@ export function finalizeReferences() {
     });
     closureIdEnds.set(section, closureId);
   });
+
+  const programSection = getProgram().node.extra.section!;
+  if (programSection.returnValueExpr) {
+    programSection.returnSerializeReason = getSerializeSourcesForExpr(
+      programSection.returnValueExpr,
+    );
+  }
 
   readsByExpression.clear();
   fnReadsByExpression.clear();

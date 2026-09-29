@@ -20,7 +20,7 @@ var row_default = _template_patch("__tests__/tags/row.marko", (input) => {
 	let clicks = 0;
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}<button>${_text_resume($scope0_id, "#text/2", clicks)}</button>${_el_resume($scope0_id, "#button/1")}</p>`);
 	_script($scope0_id, "__tests__/tags/row.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/row.marko0", clicks, 1);
+	_patch_value($scope0_id, "__tests__/tags/row.marko_fill0", clicks, 1);
 	$scope0_page && _scope($scope0_id, { clicks }, "__tests__/tags/row.marko", 0, { clicks: "6:6" });
 }, 0, 0);
 
@@ -54,9 +54,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_patch_child($scope3_id, "#childScope/0", $childScope);
 				row_default(item);
 				_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "10:6");
-			}, "id", $scope1_id, "#div/0", 1, 1, $scope0_page, void 0, void 0, "__tests__/template.marko_3*shell");
-			_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
-			_scope($scope1_id, {}, "__tests__/template.marko", "7:2");
+			}, "id", $scope1_id, "#div/0", 1, $scope0_page, $scope0_page, void 0, void 0, "__tests__/template.marko_3*shell");
+			_html(`</div>${_el_resume($scope1_id, "#div/0", $scope0_page)}`);
+			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "7:2");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $scope0_page, $scope0_page, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_1*shell"]);

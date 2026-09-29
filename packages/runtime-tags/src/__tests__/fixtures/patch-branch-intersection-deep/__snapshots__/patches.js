@@ -1,9 +1,9 @@
 // PATCH
-[`a1 a6 a7;D ;<p> </p>`, `a0;b%;<!><!><!>`, {
+[`a1 a7 a8;D ;<p> </p>`, `a0;b%;<!><!><!>`, {
   ba: [{
     ba: "a1"
   }, "a0"],
-  va0: "Store!"
+  va5: "Store!"
 }]
 "AwEA"
 
@@ -12,5 +12,5 @@
   ba: [{
     ba: 0
   }, "a0"],
-  va0: "Store?"
+  va5: "Store?"
 }

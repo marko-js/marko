@@ -8,7 +8,7 @@ var counter_default = _template_patch("__tests__/tags/counter/index.marko", (inp
 	let spins = 0;
 	_html(`<section><p>Value ${_patch_text($scope0_id, "#text/0", input.value, 2, $scope0_reason, 0)} (spun ${_text_resume($scope0_id, "#text/1", spins, 2)})</p><button class=spin>spin</button>${_el_resume($scope0_id, "#button/2")}</section>`);
 	_script($scope0_id, "__tests__/tags/counter/index.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/counter/index.marko0", spins, 1);
+	_patch_value($scope0_id, "__tests__/tags/counter/index.marko_fill0", spins, 1);
 	$scope0_page && _scope($scope0_id, { spins }, "__tests__/tags/counter/index.marko", 0, { spins: "1:6" });
 }, 0, 0);
 

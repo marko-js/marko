@@ -12,7 +12,7 @@ var field_default = _template_patch("__tests__/tags/field/index.marko", (input) 
 		v = _new_v;
 	}, "__tests__/tags/field/index.marko_0/valueChange", $scope0_id), 0, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_text_resume($scope0_id, "#text/1", v)}</em>`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/field/index.marko0", v, 1);
+	_patch_value($scope0_id, "__tests__/tags/field/index.marko_fill0", v, 1);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/field/index.marko", 0, { "ControlledHandler:#input/0": ["valueChange"] });
 }, 0, 0);
 

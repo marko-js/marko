@@ -1,7 +1,7 @@
 // tags/store.marko
 const $template$2 = "";
 const $walks$2 = "";
-const $last = /*@__PURE__*/ _fill_let("__tests__/tags/store.marko0", "last/0", ($scope) => _return($scope, {
+const $last = /*@__PURE__*/ _fill_let("__tests__/tags/store.marko_fill0", "last/0", ($scope) => _return($scope, {
 	last: $scope.last,
 	set: $_return($scope)
 }));

@@ -11,7 +11,7 @@ var tagged_default = _template_patch("__tests__/tags/tagged/index.marko", (input
 	let label = "";
 	_html(`<button>${_text_resume($scope0_id, "#text/1", label)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/tagged/index.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/tagged/index.marko0", label, 1);
+	_patch_value($scope0_id, "__tests__/tags/tagged/index.marko_fill0", label, 1);
 	$scope0_page ? _scope($scope0_id, { input_node: input.node }, "__tests__/tags/tagged/index.marko", 0, { input_node: ["input.node"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "input_node", input.node);
 }, 0, 0);
 

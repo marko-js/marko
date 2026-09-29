@@ -25,7 +25,7 @@ var card_default = _template_patch("b", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $sg__input_content);
-		_subscribe(_source_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b3", $sg__input_content);
+		_subscribe(_source_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b3", $sg__input_content);
 		$sg__input_content || _resume_branch($scope1_id);
 	}, void 0, "b5", void 0, "b2", 1);
 	_html("</section>");
@@ -33,7 +33,7 @@ var card_default = _template_patch("b", (input) => {
 		d: input.content,
 		f: $input_content__closures,
 		g: $input_promise__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b6", input.content);
 }, 0, 0);
 
 // template.marko

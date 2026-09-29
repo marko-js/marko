@@ -208,8 +208,10 @@ export function _fill_join_closure<T extends SignalFn>(
     fillJoin(key, valueAccessor, join, (scope) => {
       const instances = scope[
         closureJoin[ClosureSignalProp.ScopeInstancesAccessor]
-      ] as Set<Scope> | undefined;
+      ] as ClosureScopes | undefined;
       if (instances) {
+        // A subscriber that resumes after this renders the change it missed.
+        instances[ClosureScopesProp.Changed] = 1;
         const signalIndex = closureJoin[ClosureSignalProp.SignalIndexAccessor];
         for (const childScope of instances) {
           if (
@@ -241,9 +243,10 @@ export function _fill_join_subscribers<T extends SignalFn>(
   return fillJoin(key, valueAccessor, value, (scope) => {
     const join = getJoin();
     const instances = scope[join[ClosureSignalProp.ScopeInstancesAccessor]] as
-      | Set<Scope>
+      | ClosureScopes
       | undefined;
     if (instances) {
+      instances[ClosureScopesProp.Changed] = 1;
       const signalIndex = join[ClosureSignalProp.SignalIndexAccessor];
       for (const childScope of instances) {
         if (

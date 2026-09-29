@@ -9,7 +9,7 @@ var inner_default = _template_patch("c", (input) => {
 	_html(`<button class=bump>+</button>${_el_resume($scope0_id, "a")}`);
 	const $return = n;
 	_script($scope0_id, "c0");
-	_patch_value($scope0_id, "c0", n, 1);
+	_patch_value($scope0_id, "c1", n, 1);
 	$scope0_page && _scope($scope0_id, { b: n });
 	return $return;
 }, 0, 0);

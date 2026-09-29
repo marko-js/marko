@@ -6,7 +6,7 @@
         "PatchText:#text/1": "b",
         "PatchSetup:": {
           "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-destroyed-while-loading/child.marko_0",
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-destroyed-while-loading/child.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-destroyed-while-loading/child.marko_fill0": 0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-destroyed-while-loading/template.marko_1*shell"]
@@ -27,7 +27,7 @@
         "PatchText:#text/1": "c",
         "PatchSetup:": {
           "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-destroyed-while-loading/child.marko_0",
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-destroyed-while-loading/child.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-destroyed-while-loading/child.marko_fill0": 0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-destroyed-while-loading/template.marko_1*shell"]

@@ -6,7 +6,7 @@ var child_default = _template_patch("a", (input) => {
 	let count = 0;
 	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	_patch_value($scope0_id, "a0", count, 1);
+	_patch_value($scope0_id, "a1", count, 1);
 	$scope0_page && _scope($scope0_id, { g: count });
 }, 0, 0);
 
@@ -28,5 +28,5 @@ var template_default = _template_patch("b", (input) => {
 		f: input.label,
 		g: open,
 		i: $input_label__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.show), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b2", input.show), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b3", input.label));
 }, 1, () => [$Child_withLoadAssets]);

@@ -21,7 +21,7 @@ const $input_note = ($scope, input_note) => {
 };
 
 // template.marko
-const $if_content__input_note = /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_note($scope.a, $scope._.e)));
+const $if_content__input_note = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_note($scope.a, $scope._.e)));
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $if_content__input_note);
 const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {

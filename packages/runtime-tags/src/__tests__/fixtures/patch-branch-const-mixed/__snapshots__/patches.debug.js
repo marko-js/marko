@@ -1,18 +1,18 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_1_input_title#0:5/init packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_1_count#0:6/init;D ;<p> </p>`, {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_1*shell",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko0": "Store?"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_fill0": "Store?"
 }]
 "AgE"
 
 // PATCH holding AgE
 {
   "PatchBranch:#text/0": 0,
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko0": "Store?"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_fill0": "Store?"
 }
 
 // PATCH holding AgE
 {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_1*shell",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko0": "Fresh"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-const-mixed/template.marko_fill0": "Fresh"
 }

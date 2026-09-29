@@ -2,9 +2,10 @@
 {
   ca: {
     cAb: {
-      ka: [new Error("boom two"), $]
+      cAa: [{}, "a3", "a2"],
+      ka: [new Error("boom two")]
     }
   },
-  va0: !0,
-  va1: "two"
+  va5: !0,
+  va6: "two"
 }

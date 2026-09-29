@@ -14,7 +14,7 @@ function $setup($scope) {
 }
 
 // template.marko
-const $if_content__input_a = /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_label($scope.a, $scope._.e)));
+const $if_content__input_a = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_label($scope.a, $scope._.e)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
 	$setup($scope.a);

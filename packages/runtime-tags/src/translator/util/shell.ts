@@ -54,8 +54,7 @@ export function findShellId(section: Section) {
 export function buildShells() {
   const keep = new Set<Section>();
   const shells = (getProgram().node.extra.shells ??= {});
-  // A content body nothing registers ships as a shell; static
-  // boundary content is a shell too.
+  // A content body nothing registers ships as a shell.
   forEachSectionReverse((section) => {
     // Kept root awaits let `Pending` carry a body shell id; the root
     // ships under the template id so a dynamic tag entry can create it.
@@ -92,14 +91,9 @@ export function buildShells() {
       }
       return;
     }
-    if (section.boundaryContent) {
-      // A boundary inside stateful structure never patches, nor do its slots.
-      if (!inStatefulBranch(section.parent) && isStaticShell(section)) {
-        section.contentShell = "static";
-        shells[getResumeRegisterId(section, "content")] = section;
-        linkRuntimeFeature("patch-content");
-      }
-    } else if (
+    // Boundary content always registers, so its slot resolves by id.
+    if (
+      !section.boundaryContent &&
       !isAwaitBody(section) &&
       contentNeedsShell(section) &&
       isShellExpressible(section)

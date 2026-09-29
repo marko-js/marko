@@ -8,11 +8,11 @@ var price_card_default = _template_patch("b", (input) => {
 	let qty = 1;
 	_html(`<section><h2>${_text_resume($scope0_id, "a", input.label + " x1")}</h2><button>+</button>${_el_resume($scope0_id, "b")}</section>`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b1", qty, 1);
+	_patch_value($scope0_id, "b2", qty, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.label,
 		f: qty
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b1", input.label);
 }, 0, 0);
 
 // tags/promo-tag.marko
@@ -25,11 +25,11 @@ var promo_tag_default = _template_patch("c", (input) => {
 	let seen = 0;
 	_html(`<aside>${_text_resume($scope0_id, "a", input.text + " (0)")}</aside><button class=promo>seen</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "c0");
-	_patch_value($scope0_id, "c1", seen, 1);
+	_patch_value($scope0_id, "c2", seen, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.text,
 		f: seen
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "c0", input.text);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "c1", input.text);
 }, 0, 0);
 
 // tags/site-footer.marko

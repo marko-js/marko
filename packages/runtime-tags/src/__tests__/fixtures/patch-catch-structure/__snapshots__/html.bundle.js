@@ -31,13 +31,13 @@ var template_default = _template_patch("a", (input) => {
 				_subscribe($si__input_detail && $input_detail__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ci: 1
-				}), _client_guard($scope0_reason, 0) && "a3", $sg__input_detail);
+				}), "a3", $sg__input_detail);
 				return 0;
 			}
 		}, $scope1_id, "a", $sg__input_detail, $sg__input_detail, $sg__input_detail, 0, 1);
-		_subscribe($si__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", $sg__input_detail);
+		_subscribe($si__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4", $sg__input_detail);
 		$sg__input_detail || _resume_branch($scope1_id);
-	}, void 0, "a6", "a2", 1);
+	}, void 0, "a6", "a2");
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a7");
 	$scope0_page ? _scope($scope0_id, {
@@ -45,5 +45,5 @@ var template_default = _template_patch("a", (input) => {
 		h: count,
 		i: $input_detail__closures,
 		j: $input_promise__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.detail);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a8", input.detail);
 }, 1, 0);

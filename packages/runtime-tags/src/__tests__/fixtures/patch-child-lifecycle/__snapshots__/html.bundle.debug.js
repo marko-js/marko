@@ -8,7 +8,7 @@ var widget_default = _template_patch("__tests__/tags/widget/index.marko", (input
 	let mounted = 0;
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/1", mounted, 2)}</p>`);
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0_mounted#5");
-	_patch_value($scope0_id, "__tests__/tags/widget/index.marko0", mounted, 1);
+	_patch_value($scope0_id, "__tests__/tags/widget/index.marko_fill0", mounted, 1);
 	$scope0_page && _scope($scope0_id, { mounted }, "__tests__/tags/widget/index.marko", 0, { mounted: "1:6" });
 }, 0, 0);
 
@@ -38,5 +38,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		show: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.label);
 }, 1, () => [widget_default]);

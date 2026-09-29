@@ -1,22 +1,22 @@
 // PATCH
-[`a0;D ;<em> </em>`, `a3;b%;<!><!><!>`, `a1,<p>oops</p>`, `a4;b%;<!><!><!>`, {
+[`a2;b%;<!><!><!>`, `a0;D ;<em> </em>`, `a3;b%;<!><!><!>`, {
   ba: [{
     cAa: [{
       pa: "a0",
       cAa: {
         ta: "hi"
       }
-    }, "a3", "a1"]
-  }, "a4"]
+    }, "a2", "a5"]
+  }, "a3"]
 }]
-"BgEAAQA"
+"BQEBAA"
 
-// PATCH holding BgEAAQA
+// PATCH holding BQEBAA
 {
   ba: [{
     cAa: [{
       pa: "a0"
-    }, "a3", "a1"],
-    ka: [new Error("boom"), "a3"]
-  }, "a4"]
+    }, "a2", "a5"],
+    ka: [new Error("boom")]
+  }, "a3"]
 }

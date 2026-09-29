@@ -29,14 +29,14 @@ var card_default = _template_patch("__tests__/tags/card.marko", (input) => {
 	}, $scope0_id, "#text/2", 1, 1, 1, 0, 1);
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/card.marko1", open, 1);
+	_patch_value($scope0_id, "__tests__/tags/card.marko_fill1", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
 		open
 	}, "__tests__/tags/card.marko", 0, {
 		input_title: ["input.title"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/card.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/card.marko_fill0", input.title);
 }, 0, () => [badge_default]);
 
 // template.marko

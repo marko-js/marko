@@ -26,7 +26,7 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
-		_subscribe(_source_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "4:6"), _client_guard($scope0_reason, 0) && "__tests__/tags/card/index.marko_1_input_content#0:3/subscribe", $sg__input_content);
+		_subscribe(_source_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "4:6"), "__tests__/tags/card/index.marko_1_input_content#0:3/subscribe", $sg__input_content);
 		$sg__input_content || _resume_branch($scope1_id);
 	}, void 0, "__tests__/tags/card/index.marko_1*content", void 0, "__tests__/tags/card/index.marko_2*content", 1);
 	_html("</section>");
@@ -34,7 +34,7 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 		input_content: input.content,
 		"ClosureScopes:input_content/5": $input_content__closures,
 		"ClosureScopes:input_promise/6": $input_promise__closures
-	}, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
+	}, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/card/index.marko_fill0", input.content);
 }, 0, 0);
 
 // template.marko

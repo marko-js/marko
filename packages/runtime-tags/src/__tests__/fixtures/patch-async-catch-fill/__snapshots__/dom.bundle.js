@@ -1,5 +1,5 @@
 // template.marko
-const $catch_content__input_title = /*@__PURE__*/ _fill_join_closure("a0", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f), 0, "a3"), 0);
+const $catch_content__input_title = /*@__PURE__*/ _fill_join_closure("a7", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f), 0, "a3"), 0);
 const $catch_content__setup = $catch_content__input_title;
 const $catch_content__err_message = ($scope, err_message) => _text($scope.b, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);

@@ -13,7 +13,7 @@ var template_default = _template_patch("a", (input) => {
 			let count = 0;
 			_html(`<p>Seen ${_text_resume($scope1_id, "a", count, 2)}</p><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a1");
-			_patch_value($scope1_id, "a0", count, 1);
+			_patch_value($scope1_id, "a2", count, 1);
 			_scope($scope1_id, { c: count });
 			return 0;
 		}

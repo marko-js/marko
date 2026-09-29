@@ -15,7 +15,7 @@ const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup$1 = () => {};
 const $item_content__if = /*@__PURE__*/ _if("#text/0", "<span>shown</span>");
-const $item_content__input_show = /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko0", "input_show", /*@__PURE__*/ _closure_get("input_show/5", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/tags/child.marko_1_input_show#0:4/subscribe"), 0);
+const $item_content__input_show = /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/5", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/tags/child.marko_1_input_show#0:4/subscribe"), 0);
 const $item_content__setup = $item_content__input_show;
 const $item_content = /*@__PURE__*/ _content("__tests__/tags/child.marko_1*content", "<!><!><!>", "b%", $item_content__setup);
 const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {
@@ -30,7 +30,7 @@ const $input$1 = ($scope, input) => {
 	$input_show$1($scope, input.show);
 };
 const $input_show__closure = /*@__PURE__*/ _closure($item_content__input_show);
-const $input_show$1 = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko0", "input_show", $input_show__closure);
+const $input_show$1 = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "input_show", $input_show__closure);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko

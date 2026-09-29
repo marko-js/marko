@@ -1,11 +1,11 @@
 // PATCH
 {
-  va0: !1,
-  va1: "a"
+  va2: !1,
+  va3: "a"
 }
 
 // PATCH
 {
-  va0: !0,
-  va1: "b"
+  va2: !0,
+  va3: "b"
 }

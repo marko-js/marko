@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<button><!>: <!></button>";
 const $walks$1 = " D%c%l";
-const $shown = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko0", "shown/7", ($scope) => _text($scope["#text/2"], $scope.shown));
+const $shown = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "shown/7", ($scope) => _text($scope["#text/2"], $scope.shown));
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$shown($scope, $scope.fn());
 }));

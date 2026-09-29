@@ -8,7 +8,7 @@ var counter_default = _template_patch("b", (input) => {
 	let n = input.start;
 	_html(`<div class=counter><span>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}: ${_text_resume($scope0_id, "b", n, 2)}</span><button class=inc>+</button>${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b0", n, 1);
+	_patch_value($scope0_id, "b1", n, 1);
 	$scope0_page && _scope($scope0_id, { h: n });
 }, 0, 0);
 

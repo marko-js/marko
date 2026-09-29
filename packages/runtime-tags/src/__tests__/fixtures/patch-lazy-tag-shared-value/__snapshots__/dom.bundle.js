@@ -7,7 +7,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 
 // child.marko
 const $if = /*@__PURE__*/ _if(1, "<i>open</i>");
-const $open = /*@__PURE__*/ _fill_let("a0", 5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("a1", 5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.f);
 	document.body.dataset.item = JSON.stringify($scope.e);

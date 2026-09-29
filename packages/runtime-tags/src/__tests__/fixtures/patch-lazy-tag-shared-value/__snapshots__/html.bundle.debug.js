@@ -16,7 +16,7 @@ var child_default = _template_patch("__tests__/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/child.marko_0");
-	_patch_value($scope0_id, "__tests__/child.marko0", open, 1);
+	_patch_value($scope0_id, "__tests__/child.marko_fill0", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_item: input.item,
 		open

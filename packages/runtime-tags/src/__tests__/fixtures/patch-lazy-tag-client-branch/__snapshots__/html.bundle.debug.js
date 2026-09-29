@@ -8,7 +8,7 @@ var child_default = _template_patch("__tests__/child.marko", (input) => {
 	let count = 0;
 	_html(`<button>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
-	_patch_value($scope0_id, "__tests__/child.marko0", count, 1);
+	_patch_value($scope0_id, "__tests__/child.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 }, 0, 0);
 
@@ -34,7 +34,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 						_: _scope_with_id($scope1_id),
 						"#childScope/1": _existing_scope($childScope)
-					}, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_label#0:5/subscribe");
+					}, "__tests__/template.marko", "7:6"), "__tests__/template.marko_2_input_label#0:5/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_show, $sg__input_show, $sg__input_show);
@@ -52,5 +52,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_show: ["input.show"],
 		input_label: ["input.label"],
 		open: "3:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.show), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.show), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill1", input.label));
 }, 1, () => [$Child_withLoadAssets]);

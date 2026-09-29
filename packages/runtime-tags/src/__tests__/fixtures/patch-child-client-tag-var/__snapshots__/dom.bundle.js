@@ -1,7 +1,7 @@
 // tags/widget/index.marko
 const $template = "<em><!> x<!></em><button class=bump>+</button>";
 const $walks = "D%c%l b";
-const $count = /*@__PURE__*/ _fill_let("b0", 6, ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("b1", 6, ($scope) => {
 	_text($scope.b, $scope.g);
 	_return($scope, $scope.g);
 });
@@ -15,7 +15,7 @@ function $setup($scope) {
 const $input_label = ($scope, input_label) => _text($scope.a, input_label);
 
 // template.marko
-const $if_content__input_label = /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_label($scope.a, $scope._.e)));
+const $if_content__input_label = /*@__PURE__*/ _fill_join("a2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_label($scope.a, $scope._.e)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	_var($scope, 0, $if_content__w);

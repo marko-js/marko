@@ -1,17 +1,17 @@
 // template.marko
 const $template = "<main><!><button>show</button></main>";
 const $walks = "D%b l";
-const $if_content__api = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "api", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.api.get())));
+const $if_content__api = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "api", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.api.get())));
 const $if_content__setup = ($scope) => {
 	$if_content__api._($scope);
 	$if_content__api_label._($scope);
 };
-const $if_content__api_label = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "api_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.api_label)));
-const $api2 = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "api", ($scope) => {
+const $if_content__api_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "api_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.api_label)));
+const $api2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "api", ($scope) => {
 	$if_content__api($scope);
 	$api_label($scope, $scope.api.label);
 }, $if_content__api);
-const $api_label = /*@__PURE__*/ _fill_const("__tests__/template.marko1", "api_label", $if_content__api_label);
+const $api_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "api_label", $if_content__api_label);
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => $api2($scope, {
 	get: $api($scope),
 	label: "title"

@@ -1,23 +1,23 @@
 // PATCH
 {
   ca: {
-    vb0: "b"
+    vb1: "b"
   },
-  va0: "b"
+  va1: "b"
 }
 
 // PATCH
 {
   ca: {
-    vb0: "c"
+    vb1: "c"
   },
-  va0: "c"
+  va1: "c"
 }
 
 // PATCH
 {
   ca: {
-    vb0: "d"
+    vb1: "d"
   },
-  va0: "d"
+  va1: "d"
 }

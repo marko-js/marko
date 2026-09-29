@@ -1,12 +1,12 @@
 // PATCH
 {
-  va0: {
+  va3: {
     label: "b",
     *[(_.a = [_([], "a0")], Symbol.iterator)]() {
       yield* _.a
     }
   },
-  va1: "b",
+  va4: "b",
   we: "b",
   df: "a0"
 }

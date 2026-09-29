@@ -9,7 +9,7 @@ var probe_default = _template_patch("__tests__/tags/probe.marko", (input) => {
 	_html(`<p>${_text_resume($scope0_id, "#text/0", seen)}</p>`);
 	_script($scope0_id, "__tests__/tags/probe.marko_0_input_opts#3_input_label#4");
 	_patch_effect($scope0_id, "__tests__/tags/probe.marko_0_input_opts#3_input_label#4", "input_opts input_label");
-	_patch_value($scope0_id, "__tests__/tags/probe.marko0", seen, 1);
+	_patch_value($scope0_id, "__tests__/tags/probe.marko_fill0", seen, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_opts: input.opts,
 		input_label: input.label

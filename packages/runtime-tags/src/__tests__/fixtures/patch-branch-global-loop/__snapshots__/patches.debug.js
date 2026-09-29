@@ -11,7 +11,7 @@
         "PatchText:#text/0": "b1",
         "PatchSetup:": {
           "PatchInit:": _.a = "!packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_0",
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_fill0": 0
         }
       }
     }, 2, {
@@ -19,7 +19,7 @@
         "PatchText:#text/0": "b2",
         "PatchSetup:": {
           "PatchInit:": _.a,
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_fill0": 0
         }
       }
     }, 3, {
@@ -27,7 +27,7 @@
         "PatchText:#text/0": "b3",
         "PatchSetup:": {
           "PatchInit:": _.a,
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_fill0": 0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell"]
@@ -57,7 +57,7 @@
         "PatchText:#text/0": "c1",
         "PatchSetup:": {
           "PatchInit:": _.a = "!packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_0",
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_fill0": 0
         }
       }
     }, 2, {
@@ -65,7 +65,7 @@
         "PatchText:#text/0": "c2",
         "PatchSetup:": {
           "PatchInit:": _.a,
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_fill0": 0
         }
       }
     }, 3, {
@@ -73,7 +73,7 @@
         "PatchText:#text/0": "c3",
         "PatchSetup:": {
           "PatchInit:": _.a,
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/tags/row.marko_fill0": 0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-global-loop/template.marko_3*shell"]

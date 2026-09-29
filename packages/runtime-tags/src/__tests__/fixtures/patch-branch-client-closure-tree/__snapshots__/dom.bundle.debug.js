@@ -9,9 +9,9 @@ var note_default = /*@__PURE__*/ _template("__tests__/tags/note/index.marko", $t
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], "d:" + $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0);
+const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], "d:" + $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0);
 const $if_content2__setup = $if_content2__input_title;
-const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_text($scope["#childScope/1"], $scope._.input_title)));
+const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_text($scope["#childScope/1"], $scope._.input_title)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$if_content__show._($scope);
@@ -32,7 +32,7 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_title($scope, input.title);
 const $input_title__closure = /*@__PURE__*/ _closure($if_content2__input_title);
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", ($scope) => {
+const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_title", ($scope) => {
 	$if_content__input_title($scope);
 	$input_title__closure($scope);
 });

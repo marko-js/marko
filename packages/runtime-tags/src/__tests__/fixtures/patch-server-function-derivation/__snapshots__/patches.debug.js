@@ -13,10 +13,10 @@
     }, "c", {
       "PatchText:#text/0": "C3"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_fill0": {
       n: 3
     },
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko1": 3
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_fill1": 3
   }
 }]
 "AwE"

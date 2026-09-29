@@ -22,7 +22,7 @@ const $walks = " D l";
 function describe(n) {
 	return n.name + "/" + n.self.name;
 }
-const $label = /*@__PURE__*/ _fill_let("__tests__/tags/tagged/index.marko0", "label/5", ($scope) => _text($scope["#text/1"], $scope.label));
+const $label = /*@__PURE__*/ _fill_let("__tests__/tags/tagged/index.marko_fill0", "label/5", ($scope) => _text($scope["#text/1"], $scope.label));
 const $setup__script = _script("__tests__/tags/tagged/index.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$label($scope, describe($scope.input_node));
 }));

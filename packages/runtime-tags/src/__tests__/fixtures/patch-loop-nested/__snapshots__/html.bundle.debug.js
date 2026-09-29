@@ -14,7 +14,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		if ($scope0_page) _for_of(inner, (i) => {
 			const $scope2_id = _scope_id();
 			_html(`<div>${_text_resume($scope2_id, "#text/0", o)}${_text_resume($scope2_id, "#text/1", i, 2)}: ${_text_resume($scope2_id, "#text/2", input.note, 2)}</div>`);
-			_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_note#0:5/subscribe");
+			_subscribe(_source_if($scope0_reason, 0) && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:6"), "__tests__/template.marko_2_input_note#0:5/subscribe");
 		}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
 		_scope($scope1_id, { o }, "__tests__/template.marko", "4:4", { o: "4:8" });
 	}, 0, $scope0_id, "#text/0");
@@ -29,5 +29,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_note: ["input.note"],
 		outer: "1:6",
 		inner: "2:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.note);
 }, 1, 0);

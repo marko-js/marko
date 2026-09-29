@@ -1,9 +1,8 @@
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
-	a1: "a1,loading",
-	a2: "a2;D ;<em> </em>",
-	a3: "a3;b%;<!><!><!>",
+	a1: "a1;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -19,7 +18,7 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<em>${_patch_text($scope4_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -30,7 +29,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<em>${_text_resume($scope3_id, "a", err.message, $sg__err_message)}</em>`);
 		_source_if($scope3_reason, 0) && _scope($scope3_id, {});
-	}, "a1", "a5", "a3", 1);
+	}, "a4", "a5", "a2");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { e: $input_promise__closures });
 }, 1, 0);

@@ -10,7 +10,7 @@ function rows(data, summary) {
 }
 _shells({
 	b: "b !b2; D l b%b%;<button class=count> </button><button class=open>open</button><!><!><!>",
-	b0: "b0 b5;D%c%;<p><!>/<!></p>"
+	b0: "b0 b9;D%c%;<p><!>/<!></p>"
 });
 var panel_default = _template_patch("b", (input) => {
 	_scope_reason();
@@ -30,14 +30,14 @@ var panel_default = _template_patch("b", (input) => {
 	}, "id", $scope0_id, "e", 1, 1, $scope0_page, void 0, void 0, "b0");
 	_global_subscribe("b1", $scope0_id);
 	_script($scope0_id, "b2");
-	_patch_value($scope0_id, "b2", count, 1);
-	_patch_value($scope0_id, "b3", open, 1);
+	_patch_value($scope0_id, "b5", count, 1);
+	_patch_value($scope0_id, "b6", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		h: summary,
 		k: pending?.length,
 		l: count,
 		m: open
-	}) : (_patch_value($scope0_id, "b0", summary), _patch_value($scope0_id, "b1", pending?.length));
+	}) : (_patch_value($scope0_id, "b3", summary), _patch_value($scope0_id, "b4", pending?.length));
 }, 0, 1);
 
 // template.marko

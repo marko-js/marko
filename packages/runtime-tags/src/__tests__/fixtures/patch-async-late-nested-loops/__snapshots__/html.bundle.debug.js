@@ -35,14 +35,14 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_html(`<b>${_text_resume($scope5_id, "#text/0", err.message, $sg__err_message)}</b>`);
 				_source_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "7:12");
 			}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_3*content");
-			_scope($scope2_id, {
+			$scope0_page && _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureScopes:item_promise/6": $for_content2__item_promise__closures
 			}, "__tests__/template.marko", "4:8");
-		}, 0, $scope1_id, "#section/0", 1, 1, $sg__input_groups, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
-		_html(`</section>${_el_resume($scope1_id, "#section/0")}`);
-		_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
-	}, "id", $scope0_id, "#text/0", 1, 1, $sg__input_groups, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+		}, 0, $scope1_id, "#section/0", 1, $sg__input_groups, $sg__input_groups, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
+		_html(`</section>${_el_resume($scope1_id, "#section/0", $sg__input_groups)}`);
+		$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "2:4");
+	}, "id", $scope0_id, "#text/0", 1, $sg__input_groups, $sg__input_groups, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);

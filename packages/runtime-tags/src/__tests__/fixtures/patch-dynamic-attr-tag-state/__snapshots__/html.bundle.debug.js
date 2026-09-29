@@ -24,7 +24,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(_text_resume($scope1_id, "#text/0", input.label));
-		_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_label#0:5/subscribe");
+		_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_input_label#0:5/subscribe");
 	}, $scope0_id));
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
@@ -37,5 +37,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_on: ["input.on"],
 		input_label: ["input.label"],
 		count: "2:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.on), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.on), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill1", input.label));
 }, 1, 1);

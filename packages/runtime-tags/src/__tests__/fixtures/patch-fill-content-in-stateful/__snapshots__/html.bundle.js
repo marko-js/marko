@@ -42,5 +42,5 @@ var template_default = _template_patch("a", (input) => {
 		f: count,
 		g: $input_msg__closures,
 		h: $count__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.msg);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a2", input.msg);
 }, 1, () => [wrap_default]);

@@ -9,14 +9,14 @@ var mixer_default = _template_patch("__tests__/tags/mixer/index.marko", (input) 
 	_html(`<button>bump</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $return = input.value + local;
 	_script($scope0_id, "__tests__/tags/mixer/index.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/mixer/index.marko1", local, 1);
+	_patch_value($scope0_id, "__tests__/tags/mixer/index.marko_fill1", local, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_value: input.value,
 		local
 	}, "__tests__/tags/mixer/index.marko", 0, {
 		input_value: ["input.value"],
 		local: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/mixer/index.marko0", input.value);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/mixer/index.marko_fill0", input.value);
 	return $return;
 }, 0, 0);
 

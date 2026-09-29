@@ -7,7 +7,7 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_2*shell"]
     }
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko0": "b"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_fill0": "b"
 }]
 "BgM"
 
@@ -18,7 +18,7 @@
       "PatchBranch:#text/0": 0
     }
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko0": "a"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_fill0": "a"
 }
 
 // PATCH holding BgM
@@ -30,7 +30,7 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_2*shell"]
     }
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko0": $
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_fill0": $
 }
 
 // PATCH holding BgM
@@ -40,6 +40,6 @@
       "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_6*shell"
     }
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko0": "a"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-switch/template.marko_fill0": "a"
 }]
 "BgMB"

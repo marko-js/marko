@@ -2,9 +2,9 @@ import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
+  type BranchScope,
   PatchKey,
   RendererProp,
-  type Scope,
 } from "../common/types";
 import { setConditionalRenderer } from "./control-flow";
 import "./patch-child.feat";
@@ -13,36 +13,36 @@ import { createAndSetupBranch } from "./renderer";
 import { patchers, patchScope, withCreating } from "./resume";
 
 // A boundary entry `[partial, contentId, catchId?, placeholderId?]` creates
-// a missing branch from its content id (`0` keeps a slot elided), then
+// a missing branch, or one its catch replaced, from its content id, then
 // applies the partial; a live branch pairs the partial alone.
 const applyChild = patchers[PatchKey.Child]!;
 patchers[PatchKey.Child] = (scope, key, value) => {
   if (Array.isArray(value)) {
     const link = key.slice(PatchKey.Child.length) as Accessor;
+    const accessor = link.slice(AccessorPrefix.BranchScopes.length);
     const [partial, contentId, catchId, placeholderId] = value;
-    value = partial;
-    if (!scope[link]) {
-      const accessor = link.slice(AccessorPrefix.BranchScopes.length);
+    // A live try with a catch keeps its `CatchContent`; a catch branch has none.
+    if (!scope[link] || (catchId && !scope[link][AccessorProp.CatchContent])) {
       const renderer = getContent(contentId)!;
       setConditionalRenderer(scope, accessor, renderer, createAndSetupBranch);
-      const branch = scope[link] as Scope;
-      branch[AccessorProp.BranchAccessor] = accessor as Accessor;
-      if (catchId !== undefined) {
-        branch[AccessorProp.CatchContent] = (catchId &&
-          getContentFactory(catchId)) as never;
+      const branch = scope[link] as BranchScope;
+      branch[AccessorProp.BranchAccessor] = accessor;
+      if (catchId) {
+        branch[AccessorProp.CatchContent] = getContentFactory(catchId);
       }
-      if (placeholderId !== undefined) {
-        branch[AccessorProp.PlaceholderContent] = (placeholderId &&
-          getContentFactory(placeholderId)) as never;
+      if (placeholderId) {
+        branch[AccessorProp.PlaceholderContent] =
+          getContentFactory(placeholderId);
       }
       // A shell content's walk created the body's scopes with no setup.
       if (renderer[RendererProp.Shell]) {
-        withCreating(() => patchScope(value as Scope, branch));
+        withCreating(() => patchScope(partial, branch));
       } else {
-        patchScope(value as Scope, branch);
+        patchScope(partial, branch);
       }
       return;
     }
+    value = partial;
   }
   applyChild(scope, key, value);
 };

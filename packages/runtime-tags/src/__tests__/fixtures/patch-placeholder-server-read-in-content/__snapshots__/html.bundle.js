@@ -57,5 +57,5 @@ var template_default = _template_patch("a", (input) => {
 		i: $input_msg__closures,
 		j: $input_promise__closures,
 		c: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.msg);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a6", input.msg);
 }, 1, () => [wrap_default]);

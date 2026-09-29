@@ -2,7 +2,7 @@
 _shells({
 	a: "a !a4;D%b ;<main><!><button>+</button></main>",
 	a0: "a0;b%;<!><!><!>",
-	a1: "a1 a6 a7 a8;D ;<p> </p>"
+	a1: "a1 a7 a8 a9;D ;<p> </p>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_flag = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
@@ -17,7 +17,7 @@ var template_default = _template_patch("a", (input) => {
 			if (input.flag) {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "a", item + ":" + input.suffix + "@0")}</p>`);
-				_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 3) && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a2"), "a3");
+				_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 3) && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a2"), "a3");
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $sg__input_flag, $sg__input_flag, void 0, void 0, ["a1"], $scope0_reason, 2);
@@ -25,7 +25,7 @@ var template_default = _template_patch("a", (input) => {
 			M: item,
 			_: _scope_with_id($scope0_id)
 		});
-	}, (item) => item, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "a0", $scope0_reason, 1);
+	}, (item) => item, $scope0_id, "a", 1, _source_guard($scope0_reason, 0), _source_guard($scope0_reason, 1), void 0, void 0, "a0", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
 	$scope0_page ? _scope($scope0_id, {
@@ -34,5 +34,5 @@ var template_default = _template_patch("a", (input) => {
 		h: count,
 		j: $input_suffix__closures,
 		k: $count__closures
-	}) : _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "a0", input.suffix);
+	}) : _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "a5", input.suffix);
 }, 1, 0);

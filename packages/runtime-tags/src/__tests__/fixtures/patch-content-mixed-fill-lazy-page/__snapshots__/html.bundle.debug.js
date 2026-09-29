@@ -10,7 +10,7 @@ var box_default = _template_patch("__tests__/tags/box.marko", (input) => {
 	_patch_bind($scope0_id, "#TagVariableChange", _resume(function(next) {
 		value = next;
 	}, "__tests__/tags/box.marko_0/valueChange", $scope0_id) || void 0);
-	_patch_value($scope0_id, "__tests__/tags/box.marko0", value, 1);
+	_patch_value($scope0_id, "__tests__/tags/box.marko_fill0", value, 1);
 	$scope0_page && _scope($scope0_id, { "#TagVariableChange": _resume(function(next) {
 		value = next;
 	}, "__tests__/tags/box.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/tags/box.marko", 0);
@@ -28,14 +28,14 @@ var counter_default = _template_patch("__tests__/tags/counter.marko", (input) =>
 	let tick = 0;
 	_html(`<button class=tick>${_text_resume($scope0_id, "#text/1", input.base + tick)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/counter.marko1", tick, 1);
+	_patch_value($scope0_id, "__tests__/tags/counter.marko_fill1", tick, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_base: input.base,
 		tick
 	}, "__tests__/tags/counter.marko", 0, {
 		input_base: ["input.base"],
 		tick: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/counter.marko0", input.base);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/counter.marko_fill0", input.base);
 }, 0, 0);
 
 // tags/panel.marko
@@ -94,7 +94,7 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 	}, "__tests__/page.marko", 0, {
 		input_base: ["input.base"],
 		bonus: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/page.marko0", input.base);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/page.marko_fill0", input.base);
 }, 0, () => [
 	box_default,
 	counter_default,

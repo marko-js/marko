@@ -1,11 +1,11 @@
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko0": "b",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko1": "y"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko_fill0": "b",
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko_fill1": "y"
 }
 
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko0": "c",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko1": "z"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko_fill0": "c",
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-client-owned/template.marko_fill1": "z"
 }

@@ -5,7 +5,7 @@
       pa: 1
     }
   },
-  va0: (p => p = new Promise((f, r) => _.a = {
+  va2: (p => p = new Promise((f, r) => _.a = {
     f,
     r(e) {
       p.catch(_ => 0);

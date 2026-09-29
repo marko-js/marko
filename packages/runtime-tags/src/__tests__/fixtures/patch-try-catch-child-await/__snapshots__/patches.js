@@ -1,11 +1,11 @@
 // PATCH
-[`b0;D ;<em> </em>`, `a0;/D%l&;<div class=ld><!></div>`, {
+[`a0;/D%l&;<div class=ld><!></div>`, `b0;D ;<em> </em>`, {
   cAa: [{
     ca: {
       pa: "b0"
     }
   }, "a0", "a2"],
-  ka: [new Error("boom"), "a0"]
+  ka: [new Error("boom")]
 }]
 "BQEB"
 

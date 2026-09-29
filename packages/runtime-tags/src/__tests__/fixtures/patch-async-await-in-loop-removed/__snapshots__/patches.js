@@ -6,7 +6,7 @@
     }, 2, {
       pa: "b0"
     }, "b2"],
-    vb0: (p => p = new Promise((f, r) => _.a = {
+    vb3: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
         p.catch(_ => 0);

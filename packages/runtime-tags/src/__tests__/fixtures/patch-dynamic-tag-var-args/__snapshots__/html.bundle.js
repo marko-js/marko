@@ -11,7 +11,7 @@ var counter_default = _template_patch("a", (input) => {
 	_patch_bind($scope0_id, "U", _resume(function(v) {
 		n = v;
 	}, "a0", $scope0_id) || void 0);
-	_patch_value($scope0_id, "a0", n, 1);
+	_patch_value($scope0_id, "a2", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		e: n,
 		U: _resume(function(v) {

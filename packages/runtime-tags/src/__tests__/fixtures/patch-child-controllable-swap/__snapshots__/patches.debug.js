@@ -12,7 +12,7 @@
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/tags/counter/index.marko1": 0
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/tags/counter/index.marko_fill1": 0
       },
       "PatchBind:TagVariableChange:count": ["packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/template.marko_0/tenfold", 2]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/tags/counter/index.marko_1*shell"]

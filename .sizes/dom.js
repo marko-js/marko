@@ -1,4 +1,4 @@
-// size: 29602 (min) 10879 (brotli)
+// size: 29614 (min) 10878 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -693,6 +693,7 @@ function _fill_join_closure(key, valueAccessor, join, index) {
       fillJoin(key, valueAccessor, join, (scope) => {
         let instances = scope[closureJoin.a];
         if (instances) {
+          instances._ = 1;
           let signalIndex = closureJoin.b;
           for (let childScope of instances)
             if (childScope.H > 0 && childScope.H < runId) {
@@ -709,6 +710,7 @@ function _fill_join_subscribers(key, valueAccessor, value, getJoin, index) {
     let join = getJoin(),
       instances = scope[join.a];
     if (instances) {
+      instances._ = 1;
       let signalIndex = join.b;
       for (let childScope of instances)
         childScope.H > 0 &&

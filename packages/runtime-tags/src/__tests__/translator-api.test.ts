@@ -75,21 +75,20 @@ describe("runtime-tags/translator-api", () => {
   });
 
   it("imports the shared text patch register module", () => {
-    const { meta } = compiler.compileSync(
+    const { code } = compiler.compileSync(
       "<div>${input.value}</div>",
       path.join(import.meta.dirname, "tmp.marko"),
       {
         ...baseConfig,
         cache: new Map(),
-        output: "html",
+        output: "dom",
+        entry: "page",
         optimize: true,
         patches: true,
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
       },
     );
-    assert.deepEqual(
-      [...meta.assetImports!],
-      ["@marko/runtime-tags/dom/patch-text.feat"],
-    );
+    assert.match(code, /import "@marko\/runtime-tags\/dom\/patch-text\.feat";/);
   });
 
   describe("style blocks with sourceMaps", () => {

@@ -2,7 +2,7 @@
 _shells({
 	a: "a !a4;E l%b ;<main><h1> </h1><!><button>+</button></main>",
 	a0: "a0;b%;<!><!><!>",
-	a1: "a1 a6 a7;D ;<p> </p>"
+	a1: "a1 a7 a8;D ;<p> </p>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_rows = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
@@ -19,10 +19,10 @@ var template_default = _template_patch("a", (input) => {
 			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 2) && $input_suffix__closures, _scope($scope2_id, {
 				M: cell,
 				_: _scope_with_id($scope1_id)
-			}), _client_guard($scope0_reason, 2) && "a2"), "a3");
-		}, (cell) => cell, $scope1_id, "a", 1, 1, $sg__input_rows, void 0, void 0, "a1", $scope0_reason, 1);
+			}), "a2"), "a3");
+		}, (cell) => cell, $scope1_id, "a", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a1", $scope0_reason, 1);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, (row) => row.id, $scope0_id, "b", 1, 1, $sg__input_rows, void 0, void 0, "a0", $scope0_reason, 1);
+	}, (row) => row.id, $scope0_id, "b", 1, $sg__input_rows, $sg__input_rows, void 0, void 0, "a0", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a4");
 	$scope0_page ? _scope($scope0_id, {
@@ -30,5 +30,5 @@ var template_default = _template_patch("a", (input) => {
 		i: count,
 		j: $input_suffix__closures,
 		k: $count__closures
-	}) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a0", input.suffix);
+	}) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a5", input.suffix);
 }, 1, 0);

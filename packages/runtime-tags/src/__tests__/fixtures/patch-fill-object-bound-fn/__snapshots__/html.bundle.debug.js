@@ -12,7 +12,7 @@ var store_default = _template_patch("__tests__/tags/store.marko", (input) => {
 			last = next;
 		}, "__tests__/tags/store.marko_0/_return", $scope0_id)
 	};
-	_patch_value($scope0_id, "__tests__/tags/store.marko0", last, 1);
+	_patch_value($scope0_id, "__tests__/tags/store.marko_fill0", last, 1);
 	return $return;
 }, 0, 0);
 

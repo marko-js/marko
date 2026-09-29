@@ -5,7 +5,7 @@
   }, "b", {
     "PatchBranch:#text/0": _.a
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_1*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko0": "y"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_fill0": "y"
 }]
 "AwEA"
 
@@ -16,5 +16,5 @@
   }, "b", {
     "PatchBranch:#text/0": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_1*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko0": "z"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-branch-intersection/template.marko_fill0": "z"
 }

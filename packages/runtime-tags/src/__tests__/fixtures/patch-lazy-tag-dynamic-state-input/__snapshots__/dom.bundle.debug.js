@@ -11,7 +11,7 @@ const $template = "<button class=n> </button><main><!></main>";
 const $walks = " D lD%l";
 const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", () => import("./child.mjs").then((mod) => mod.default));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
-const $input_show__OR__input_label__OR__n = /*@__PURE__*/ _fill_join("__tests__/template.marko1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_show", /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.input_show ? Child : null, () => ({ label: `${$scope.input_label}${$scope.n}` })), 2)));
+const $input_show__OR__input_label__OR__n = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.input_show ? Child : null, () => ({ label: `${$scope.input_label}${$scope.n}` })), 2)));
 const $n = /*@__PURE__*/ _let("n/7", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$input_show__OR__input_label__OR__n($scope);
@@ -23,8 +23,8 @@ function $setup($scope) {
 	$n($scope, 0);
 	$setup__script($scope);
 }
-const $input_show = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_show", $input_show__OR__input_label__OR__n);
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko1", "input_label", $input_show__OR__input_label__OR__n);
+const $input_show = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_show", $input_show__OR__input_label__OR__n);
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "input_label", $input_show__OR__input_label__OR__n);
 const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 	$input_label($scope, input.label);

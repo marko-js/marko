@@ -6,7 +6,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/1": "b",
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-effects/card-live.marko0": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-effects/card-live.marko_fill0": 0
     }
   }
 }]

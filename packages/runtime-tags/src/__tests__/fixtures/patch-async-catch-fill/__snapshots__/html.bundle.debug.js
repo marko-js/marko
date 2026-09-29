@@ -28,9 +28,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $sg__err_message = _source_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_resume($scope1_id, "#text/0", input.title, $sg__input_title)} ${_text_resume($scope1_id, "#text/1", err.message, $sg__err_message * 2)}</p>`);
-		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_title#0:5/subscribe", $sg__input_title || $sg__err_message);
+		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_1_input_title#0:5/subscribe", $sg__input_title || $sg__err_message);
 		$sg__input_title || $sg__err_message || _resume_branch($scope1_id);
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1);
+	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content");
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page ? _scope($scope0_id, {
@@ -41,5 +41,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		n: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, 0);

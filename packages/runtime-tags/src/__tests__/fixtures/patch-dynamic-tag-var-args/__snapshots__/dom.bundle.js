@@ -1,5 +1,5 @@
 // counter.marko
-const $n$1 = /*@__PURE__*/ _fill_let("a0", 4, ($scope) => {
+const $n$1 = /*@__PURE__*/ _fill_let("a2", 4, ($scope) => {
 	_text($scope.b, $scope.e);
 	_return($scope, $scope.e);
 });

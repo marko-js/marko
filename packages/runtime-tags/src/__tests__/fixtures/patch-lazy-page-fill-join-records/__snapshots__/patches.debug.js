@@ -29,7 +29,7 @@
               }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell"],
               "PatchSetup:": {
                 "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_0",
-                "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko0": 0
+                "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_fill0": 0
               }
             }
           }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell"]
@@ -67,7 +67,7 @@
               "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell",
               "PatchSetup:": {
                 "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_0",
-                "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko0": 0
+                "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_fill0": 0
               }
             }
           }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell"]
@@ -114,7 +114,7 @@
               }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell"],
               "PatchSetup:": {
                 "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_0",
-                "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko0": 0
+                "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_fill0": 0
               }
             }
           }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell"]

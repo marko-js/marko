@@ -30,7 +30,7 @@ var template_default = _template_patch("a", (input) => {
 		_html(`<p>${_text_resume($scope2_id, "a", tag, $scope2_page)}</p>`);
 		_subscribe($tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a4", $scope2_page);
 		$scope2_page || _resume_branch($scope2_id);
-	}, void 0, "a6", "a2", 1);
+	}, void 0, "a6", "a2");
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_global_subscribe("a3", $scope0_id);
 	_script($scope0_id, "a7");
@@ -38,5 +38,5 @@ var template_default = _template_patch("a", (input) => {
 		g: tag,
 		i: n,
 		j: $input_promise__closures
-	}) : _patch_value($scope0_id, "a0", tag);
+	}) : _patch_value($scope0_id, "a8", tag);
 }, 1, 1);

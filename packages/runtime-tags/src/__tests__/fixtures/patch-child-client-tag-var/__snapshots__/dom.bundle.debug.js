@@ -1,7 +1,7 @@
 // tags/widget/index.marko
 const $template$1 = "<em><!> x<!></em><button class=bump>+</button>";
 const $walks$1 = "D%c%l b";
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/widget/index.marko0", "count/6", ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/widget/index.marko_fill0", "count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	_return($scope, $scope.count);
 });
@@ -19,7 +19,7 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 // template.marko
 const $template = "<main><!><button class=toggle>t</button></main>";
 const $walks = "D%b l";
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)));
+const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	_var($scope, "#childScope/0", $if_content__w);
@@ -36,5 +36,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_label($scope, input.label);
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_label", $if_content__input_label);
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $if_content__input_label);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

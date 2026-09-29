@@ -4,6 +4,6 @@
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read/template.marko_3*content",
     "PatchChild:BranchScopes:#text/0": {}
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read/template.marko0": "b"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-placeholder-server-read/template.marko_fill0": "b"
 }]
 "BAM"

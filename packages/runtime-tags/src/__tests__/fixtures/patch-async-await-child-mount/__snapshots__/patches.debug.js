@@ -11,7 +11,7 @@
         "PatchText:#text/0": "A",
         "PatchSetup:": {
           "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/tags/counter.marko_0",
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/tags/counter.marko0": 1
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-mount/tags/counter.marko_fill0": 1
         }
       }
     }

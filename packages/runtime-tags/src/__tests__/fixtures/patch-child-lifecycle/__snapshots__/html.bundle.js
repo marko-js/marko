@@ -6,7 +6,7 @@ var widget_default = _template_patch("b", (input) => {
 	let mounted = 0;
 	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "b", mounted, 2)}</p>`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b0", mounted, 1);
+	_patch_value($scope0_id, "b1", mounted, 1);
 	$scope0_page && _scope($scope0_id, { f: mounted });
 }, 0, 0);
 
@@ -23,5 +23,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.label,
 		f: show
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.label);
 }, 1, () => [widget_default]);

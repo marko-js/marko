@@ -24,7 +24,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				}
 			}, $scope1_id, "#text/1", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_value($scope1_id, "__tests__/template.marko0", count, 1);
+			_patch_value($scope1_id, "__tests__/template.marko_fill0", count, 1);
 			_scope($scope1_id, {
 				count,
 				_: _scope_with_id($scope0_id)

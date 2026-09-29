@@ -126,6 +126,7 @@ export function _peek_scope_id() {
 }
 
 const kPendingContexts = Symbol("Pending Contexts");
+
 export function withContext<T>(
   key: PropertyKey,
   value: unknown,
@@ -419,12 +420,7 @@ export function patchPartial(
       // it; a paired branch ignores them), or a loop item by its hop.
       const { parent, link: hop, content: contentId, slots: slotIds } = link;
       if (typeof hop === "string") {
-        if (contentId) {
-          state.shipShell?.(contentId);
-          for (const id of slotIds || []) {
-            if (typeof id === "string") state.shipShell?.(id);
-          }
-        }
+        if (contentId) state.shipShell?.(contentId);
         writePatch(parent, {
           [PatchKey.Child + hop]: contentId
             ? slotIds
@@ -1362,8 +1358,7 @@ export function _try(
   placeholderId?: string,
   catchId?: string,
   bodyId?: string,
-  alwaysPairs?: 0 | 1,
-  emptyCatch?: 1,
+  alwaysPairs?: 1,
 ) {
   // The placeholder's branch id precedes the body's so the walker parents it
   // to the try's enclosing branch (a sibling of the try), as CSR does.
@@ -1377,11 +1372,9 @@ export function _try(
   // the document reorder/`<t hidden>` path must not ride the flush stream.
   const { writesPatches } = state;
   if (writesPatches) {
-    // Creation payload (body shell id + slot ids, `0` = an empty catch) rides
-    // the pairing entry, except for always-pairing branches outside
-    // divergence (a caught body included: its catch replaces it).
-    const create =
-      catchContent || !alwaysPairs || isInResumedBranch() || inCaughtTry();
+    // The entry carries the creation payload (body shell, slot ids) unless the
+    // try always pairs: no catch, outside divergent branches and caught bodies.
+    const create = !alwaysPairs || isInResumedBranch() || inCaughtTry();
     state.pairBranch!(
       scopeId,
       accessor,
@@ -1389,11 +1382,14 @@ export function _try(
       create ? bodyId : undefined,
       create
         ? placeholderId
-          ? [catchContent && (emptyCatch ? 0 : catchId), placeholderId]
-          : [emptyCatch ? 0 : catchId]
+          ? [catchId, placeholderId]
+          : [catchId]
         : undefined,
       scopeId,
     );
+    // A try this flush may create, or rebuild from its catch, needs its
+    // entry even when its body writes nothing.
+    if (create) patchPartial(state, branchId);
   }
   const beforeBranch = deferBranchStart(chunk);
   const renderers = (): void =>
@@ -1415,9 +1411,7 @@ export function _try(
             // A body that threw before claiming its id keeps it paired.
             if (_peek_scope_id() === branchId) _scope_id();
             writePatch(scopeId, {
-              [PatchKey.Catch + accessor]: emptyCatch
-                ? [err, state.shipShell!(bodyId), ""]
-                : [err, state.shipShell!(bodyId)],
+              [PatchKey.Catch + accessor]: [err],
             });
           },
         )
@@ -1439,9 +1433,13 @@ export function _try(
       );
 
   // Custom and dynamic tags hide from analysis whether the body resumes, so its
-  // render decides: an async or resumable body keeps its marks, others drop them.
+  // render decides: an async or resumable body keeps its marks, others drop
+  // them; a patch page keeps every try's, since a flush may rebuild it.
   const rendered =
-    writesPatches || chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
+    writesPatches ||
+    (state.patchPage && !inUnpatched()) ||
+    chunk !== $chunk ||
+    boundary.resumeWrites !== resumeWrites;
   applyBranchStart(chunk, beforeBranch, rendered);
   if (!rendered) return;
 
@@ -1481,6 +1479,9 @@ function tryPlaceholder(
   };
 }
 
+// Returns whether it writes the renderers itself: a body whose sync part wrote
+// nothing resumable cannot re-run client side while streaming, so they follow
+// at settle, and only if the settled body (or a fired catch) resumes at all.
 function tryBoundary(
   content: () => void,
   catchContent: ServerRenderer | undefined,
@@ -1577,6 +1578,12 @@ function tryBoundary(
       } else {
         catchChunk.reorderId = reorderId;
         catchChunk.render(catchContent, catchBoundary.signal.reason);
+        // The catch replaced the body: a patch rebuilds the try.
+        if (state.patchPage) {
+          catchChunk.render(() =>
+            writeScope(branchId, { [AccessorProp.CatchContent]: 0 }),
+          );
+        }
         state.reorder(catchChunk);
       }
       boundary.endAsync();
@@ -1640,7 +1647,7 @@ export interface PatchLink {
   // A child accessor, or a loop item: its index, with its key when not that.
   link: string | [accessor: string, at: number | [index: number, key: unknown]];
   content?: string;
-  slots?: (string | 0 | undefined)[];
+  slots?: (string | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
   owner?: number;
 }
@@ -1696,7 +1703,7 @@ export class State implements SerializeState {
     accessor: Accessor,
     branchId: number,
     contentId?: string,
-    slotIds?: (string | 0 | undefined)[],
+    slotIds?: (string | undefined)[],
     ownerScopeId?: number,
   ): void;
   declare rootScopeId?: number;

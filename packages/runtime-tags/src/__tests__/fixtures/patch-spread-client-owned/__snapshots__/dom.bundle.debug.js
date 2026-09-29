@@ -2,7 +2,7 @@
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
 const $if_content__input_attrs__script = _script("__tests__/template.marko_1_input_attrs#0:4", ($scope) => _attrs_script($scope, "#a/0"));
-const $if_content__input_attrs = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_attrs", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_attrs = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	_attrs($scope, "#a/0", $scope._.input_attrs);
 	$if_content__input_attrs__script($scope);
 }));
@@ -17,5 +17,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_attrs($scope, input.attrs);
-const $input_attrs = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_attrs", $if_content__input_attrs);
+const $input_attrs = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_attrs", $if_content__input_attrs);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

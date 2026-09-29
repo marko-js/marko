@@ -12,8 +12,8 @@ var list_default = _template_patch("__tests__/tags/list.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $tag = item.content;
 		_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, $sg__input_item, _patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, $scope0_reason, 0));
-		_scope($scope1_id, {}, "__tests__/tags/list.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", 1, 1, $sg__input_item, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
+		$scope0_page && _scope($scope1_id, {}, "__tests__/tags/list.marko", "1:2");
+	}, 0, $scope0_id, "#text/0", 1, $sg__input_item, $sg__input_item, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/list.marko", 0);
 }, 0, 1);
 
@@ -54,7 +54,7 @@ var child_default = _template_patch("__tests__/tags/child.marko", (input) => {
 		input_show: _source_if($scope0_reason, 1) && input.show,
 		"ClosureScopes:input_show/5": $input_show__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/tags/child.marko", 0, { input_show: ["input.show"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/child.marko0", input.show);
+	}, "__tests__/tags/child.marko", 0, { input_show: ["input.show"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/child.marko_fill0", input.show);
 }, 0, () => [list_default]);
 
 // template.marko

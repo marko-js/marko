@@ -12,7 +12,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html("<main>");
 	_for_of(input.items, ({ id, ...rest }) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "__tests__/template.marko0", rest);
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "__tests__/template.marko_fill0", rest);
 		_html(`<p>${_text_resume($scope1_id, "#text/0", id + ":" + Object.keys(rest).join("+") + "#" + count)}</p>`);
 		_scope($scope1_id, {
 			"#LoopKey": id,

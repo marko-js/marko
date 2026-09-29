@@ -3,7 +3,7 @@ const $template = "<em> </em>";
 const $input_text = ($scope, input_text) => _text($scope.a, input_text);
 
 // template.marko
-const $if_content__input_suffix__OR__count = /*@__PURE__*/ _fill_join_if("a0", 5, /*@__PURE__*/ _or(1, ($scope) => $input_text($scope.a, $scope._.g + $scope._.f)), 0, 0, 0);
+const $if_content__input_suffix__OR__count = /*@__PURE__*/ _fill_join_if("a1", 5, /*@__PURE__*/ _or(1, ($scope) => $input_text($scope.a, $scope._.g + $scope._.f)), 0, 0, 0);
 const $if_content__input_suffix = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_suffix__OR__count);
 const $if_content__setup = ($scope) => {
 	$if_content__input_suffix._($scope);
@@ -21,4 +21,4 @@ const $setup__script = _script("a0", ($scope) => {
 		$show($scope, !$scope.h);
 	});
 });
-const $input_suffix = _fill_const("a0", 5, $if_content__input_suffix);
+const $input_suffix = _fill_const("a1", 5, $if_content__input_suffix);

@@ -15,5 +15,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.first,
 		f: items
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.first);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.first);
 }, 1, 0);

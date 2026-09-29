@@ -15,10 +15,9 @@ var child_default = _template_patch("a", (input) => {
 
 // template.marko
 _shells({
-	b0: "b0,loading",
-	b1: /*@__PURE__*/ ((_w0, _w1) => `b1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `D l/${_w0}&`)(" b"), /*@__PURE__*/ ((_w0) => `<span> </span>${_w0}`)($template)),
-	b2: /*@__PURE__*/ ((_w0, _w1) => `b2;${_w0};${_w1}`)(((_w0) => `D l/${_w0}&`)(" b"), ((_w0) => `<span> </span>${_w0}`)($template)),
-	b3: "b3;b%;<!><!><!>",
+	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `D l/${_w0}&`)(" b"), /*@__PURE__*/ ((_w0) => `<span> </span>${_w0}`)($template)),
+	b1: /*@__PURE__*/ ((_w0, _w1) => `b1;${_w0};${_w1}`)(((_w0) => `D l/${_w0}&`)(" b"), ((_w0) => `<span> </span>${_w0}`)($template)),
+	b2: "b2;b%;<!><!><!>",
 	b: /*@__PURE__*/ ((_w0, _w1) => `b;${_w0};${_w1}`)(((_w0, _w1) => `D/${_w0}&/${_w1}&%l`)(" b", " b"), ((_w0, _w1) => `<main>${_w0}${_w1}<!></main>`)($template, $template))
 });
 var template_default = _template_patch("b", (input) => {
@@ -58,15 +57,15 @@ var template_default = _template_patch("b", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 1) && $item__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				b: _existing_scope($childScope3)
-			}), _client_guard($scope0_reason, 1) && "b4");
-		}, 1, "b1", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b5", 0);
+			}), _client_guard($scope0_reason, 1) && "b3");
+		}, 1, "b0", 1);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b4", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "b0", void 0, "b3", 1);
+	}, void 0, "b5", void 0, "b2", 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
 		h: _source_if($scope0_reason, 2) && item,

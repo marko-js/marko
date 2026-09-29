@@ -5,9 +5,9 @@
       "PatchText:#text/0": "a",
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko_0",
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko1": !1
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko_fill1": !1
       },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko0": "const"
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko_fill0": "const"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/template.marko_1*shell"]
 }]
@@ -20,9 +20,9 @@
       "PatchText:#text/0": "b",
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko_0",
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko1": !1
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko_fill1": !1
       },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko0": "const"
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/tags/kid.marko_fill0": "const"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unfed-group-construct/template.marko_1*shell"]
 }

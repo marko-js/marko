@@ -3,7 +3,7 @@ const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = () => {};
 const $for_content__label = ($scope, label) => _text($scope["#text/0"], label);
-const $for_content__picks = /*@__PURE__*/ _fill_let("__tests__/template.marko0", "picks/5", ($scope) => _text($scope["#text/1"], $scope.picks));
+const $for_content__picks = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "picks/5", ($scope) => _text($scope["#text/1"], $scope.picks));
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	$for_content__picks($scope, +$scope.picks + 1);
 }));

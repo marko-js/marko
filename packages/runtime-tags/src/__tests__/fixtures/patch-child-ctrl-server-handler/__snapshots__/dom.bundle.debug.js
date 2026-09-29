@@ -15,13 +15,13 @@ var field_default = /*@__PURE__*/ _template("__tests__/tags/field/index.marko", 
 // template.marko
 const $template = "<main><!><button>+</button><output></output></main>";
 const $walks = "D%b l";
-const $if_content__handle = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "handle", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_valueChange($scope["#childScope/0"], $scope._.handle)));
+const $if_content__handle = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "handle", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_valueChange($scope["#childScope/0"], $scope._.handle)));
 const $if_content__setup = ($scope) => {
 	$if_content__handle._($scope);
 	$setup$1($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], "a");
 };
-const $handle2 = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "handle", $if_content__handle);
+const $handle2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "handle", $if_content__handle);
 const $input_prefix = /*@__PURE__*/ _const("input_prefix", ($scope) => $handle2($scope, $handle($scope)));
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
 const $open = /*@__PURE__*/ _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));

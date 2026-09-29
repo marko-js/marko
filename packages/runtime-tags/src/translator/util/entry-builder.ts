@@ -8,6 +8,7 @@ import {
 import { getReadyId } from "./marko-config";
 import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
 import {
+  type DOMRuntimeFeature,
   type DOMRuntimeHelpers,
   dynamicImport,
   getRuntimeFeatureImport,
@@ -44,6 +45,8 @@ interface EntryState {
    * registers every loader (a module never registers its own, which would
    * bundle it), so a flush creating one can load it. */
   lazyLoads: Map<string, string>;
+  /** Runtime features linked by reached templates whose modules never load. */
+  features: Set<DOMRuntimeFeature>;
 }
 type EntryFile = t.BabelFile & {
   [kState]?: EntryState;
@@ -65,6 +68,9 @@ const builder = {
     // not link are imported directly, so that static routes still ship them.
     for (const asset of state.assets) {
       body.push(t.importDeclaration([], t.stringLiteral(asset)));
+    }
+    for (const feature of state.features) {
+      body.push(getRuntimeFeatureImport(feature));
     }
 
     // A patch page's patches apply against the runtime, so its entry
@@ -214,6 +220,7 @@ const builder = {
         ],
       ]),
       lazyLoads: new Map(),
+      features: new Set(),
     });
     const programExtra = file.path.node.extra;
     const { analyzedTags, assetImports } = file.metadata.marko;
@@ -233,6 +240,13 @@ const builder = {
       state.roots.push(
         resolveRelativePath(entryFile, file.opts.filename as string),
       );
+    }
+
+    // A module that loads imports its own features.
+    if (!isRoot && !state.bundled) {
+      for (const feature of programExtra.runtimeFeatures || []) {
+        state.features.add(feature);
+      }
     }
 
     // Collected during analyze (styles, css imports, etc).

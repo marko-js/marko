@@ -16,7 +16,7 @@ var wrap_default = _template_patch("__tests__/tags/wrap.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/wrap.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/wrap.marko2", open, 1);
+	_patch_value($scope0_id, "__tests__/tags/wrap.marko_fill2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_row: input.row,
 		input_label: input.label,
@@ -25,7 +25,7 @@ var wrap_default = _template_patch("__tests__/tags/wrap.marko", (input) => {
 		input_row: ["input.row"],
 		input_label: ["input.label"],
 		open: "1:6"
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/wrap.marko0", input.row), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/tags/wrap.marko1", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/wrap.marko_fill0", input.row), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/tags/wrap.marko_fill1", input.label));
 }, 0, 1);
 
 // template.marko

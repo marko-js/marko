@@ -6,7 +6,7 @@ function format(label) {
 // tags/widget/index.marko
 const $template$1 = "<p><!><!></p><button class=run>run</button>";
 const $walks$1 = "D%b%l b";
-const $last = /*@__PURE__*/ _fill_let("__tests__/tags/widget/index.marko0", "last/6", ($scope) => _text($scope["#text/1"], $scope.last));
+const $last = /*@__PURE__*/ _fill_let("__tests__/tags/widget/index.marko_fill0", "last/6", ($scope) => _text($scope["#text/1"], $scope.last));
 const $setup__script$1 = _script("__tests__/tags/widget/index.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$last($scope, format($scope.input_label));
 }));
@@ -21,7 +21,7 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 // template.marko
 const $template = "<main><!><button class=outer>+</button></main>";
 const $walks = "D%b l";
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)));
+const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$setup$1($scope["#childScope/0"]);
@@ -36,5 +36,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_label($scope, input.label);
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_label", $if_content__input_label);
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $if_content__input_label);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

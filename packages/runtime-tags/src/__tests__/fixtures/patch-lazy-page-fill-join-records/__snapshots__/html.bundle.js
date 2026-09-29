@@ -8,7 +8,7 @@ _shells({
 	a2: "a2;D ;<a> </a>"
 });
 var layout_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_list = _source_guard($scope0_reason, 0), $scope0_page = _page_render(), $sg__input_content = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<nav>");
 	_await($scope0_id, "a", input.list, (list) => {
@@ -17,8 +17,8 @@ var layout_default = _template_patch("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<a>${_patch_text($scope2_id, "a", item, void 0, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {});
-		}, 0, $scope1_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a2", $scope0_reason, 0);
-		_scope($scope1_id, {});
+		}, 0, $scope1_id, "a", 1, $sg__input_list, $sg__input_list, void 0, void 0, "a2", $scope0_reason, 0);
+		$scope0_page && _scope($scope1_id, {});
 	}, 1, "a0", 1);
 	_html("</nav><main>");
 	const $tag = input.content;
@@ -49,7 +49,7 @@ var page_a_default = _template_patch("b", (input) => {
 	}, $scope0_id, "b", 1, $sg__input_wide, $sg__input_wide, void 0, void 0, ["b0"], $scope0_reason, 1);
 	_html(`<button>${_text_resume($scope0_id, "d", n)}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b1");
-	_patch_value($scope0_id, "b0", n, 1);
+	_patch_value($scope0_id, "b2", n, 1);
 	$scope0_page && _scope($scope0_id, { i: n });
 }, 0, 0);
 
@@ -71,7 +71,7 @@ var card_default = _template_patch("e", (input) => {
 const $template = "<h1>B</h1><!><button> </button>";
 const $walks = "b%b D l";
 _shells({
-	c0: "c0 c5;D%c%c%;<span><!>/<!>/<!></span>",
+	c0: "c0 c6;D%c%c%;<span><!>/<!>/<!></span>",
 	c: "c !c2;b%b D ;<h1>B</h1><!><button> </button>",
 	c1: /*@__PURE__*/ ((_w0, _w1) => `c1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });
@@ -104,7 +104,7 @@ var page_b_default = _template_patch("c", (input) => {
 	}, 0, $scope0_id, "a", 1, 1, 0, void 0, void 0, "c1", 0, 0);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "c2");
-	_patch_value($scope0_id, "c0", count, 1);
+	_patch_value($scope0_id, "c3", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		g: count,
 		i: $count__closures,

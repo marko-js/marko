@@ -19,11 +19,11 @@ var card_default = _template_patch("c", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_html("</section>");
 	_script($scope0_id, "c0");
-	_patch_value($scope0_id, "c1", open, 1);
+	_patch_value($scope0_id, "c2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.title,
 		g: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "c0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "c1", input.title);
 }, 0, () => [badge_default]);
 
 // template.marko

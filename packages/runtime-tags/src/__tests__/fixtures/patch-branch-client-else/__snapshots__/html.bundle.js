@@ -20,5 +20,5 @@ var template_default = _template_patch("a", (input) => {
 		g: input.yes,
 		h: on,
 		i: label
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.yes), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a1", input.yes), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a2", label));
 }, 1, 0);

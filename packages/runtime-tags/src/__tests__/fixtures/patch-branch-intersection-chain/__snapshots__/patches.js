@@ -1,32 +1,32 @@
 // PATCH
-[`a0 a5 a6;Db%;<p>A <!></p>`, {
+[`a0 a6 a7;Db%;<p>A <!></p>`, {
   ba: "a0",
-  va0: "Store!"
+  va4: "Store!"
 }]
 "BAE"
 
 // PATCH holding BAE
-[`a1 a7 a8;Db%;<p>B <!></p>`, {
+[`a1 a8 a9;Db%;<p>B <!></p>`, {
   ba: [1, {}, "a1"],
-  va0: "Store!"
+  va4: "Store!"
 }]
 "BAEA"
 
 // PATCH holding BAEA
 {
   ba: [1, {}, "a1"],
-  va0: "Plaza"
+  va4: "Plaza"
 }
 
 // PATCH holding BAEA
-[`a2 a9;Db%;<p>None <!></p>`, {
+[`a2 a10;Db%;<p>None <!></p>`, {
   ba: [2, {}, "a2"],
-  va0: "Plaza"
+  va4: "Plaza"
 }]
 "BAEAAA"
 
 // PATCH holding BAEAAA
 {
   ba: [2, {}, "a2"],
-  va0: "Plaza!"
+  va4: "Plaza!"
 }

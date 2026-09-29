@@ -1,11 +1,11 @@
 // PATCH
 {
   tb: "x",
-  va0: !1
+  va1: !1
 }
 
 // PATCH
 {
   tb: "x",
-  va0: !0
+  va1: !0
 }

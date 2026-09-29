@@ -11,7 +11,7 @@ var counter_box_default = _template_patch("__tests__/tags/counter-box/index.mark
 	_patch_bind($scope0_id, "#TagVariableChange", _resume(function(v) {
 		count = v;
 	}, "__tests__/tags/counter-box/index.marko_0/valueChange", $scope0_id) || void 0);
-	_patch_value($scope0_id, "__tests__/tags/counter-box/index.marko0", count, 1);
+	_patch_value($scope0_id, "__tests__/tags/counter-box/index.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, { "#TagVariableChange": _resume(function(v) {
 		count = v;
 	}, "__tests__/tags/counter-box/index.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/tags/counter-box/index.marko", 0);

@@ -1,8 +1,8 @@
 // PATCH
-[`a0;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
+[`a2;b%;<!><!><!>`, `a0;D ;<em> </em>`, {
   cAa: [{
     pa: "a0"
   }, "a2", "a4"],
-  ka: [new Error("boom"), "a2"]
+  ka: [new Error("boom")]
 }]
 "BAEB"

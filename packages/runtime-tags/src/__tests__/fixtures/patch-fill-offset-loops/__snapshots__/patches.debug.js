@@ -4,6 +4,6 @@
   "PatchLoop:#text/1": ["r1", {
     "PatchLoop:#text/0": ["b", {}, "a", {}, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-offset-loops/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-offset-loops/template.marko_1*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-offset-loops/template.marko0": "y"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-offset-loops/template.marko_fill0": "y"
 }]
 "AwEA"

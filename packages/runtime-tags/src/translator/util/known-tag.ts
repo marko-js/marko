@@ -27,7 +27,6 @@ import {
 import { forEach, fromIter, type Opt, some, type SortedOpt } from "./optional";
 import { getChildPatchPlan } from "./patch/decisions";
 import { addPatchChildRenderer } from "./patch/intrinsics";
-import { onFinalizePatch } from "./patch/lifecycle";
 import {
   inStatefulBranch,
   isPatchRendered,
@@ -61,6 +60,7 @@ import {
   trackParamsReferences,
   trackVarReferences,
   propsUtil,
+  onFinalizeReferences,
 } from "./references";
 import {
   linkRuntimeFeature,
@@ -170,7 +170,7 @@ export function knownTagAnalyze(
     // parent entry, even for a scriptless child.
     addPatchSerializeReason(section, FORCED, childScopeBinding);
     // Children inside client-owned structure never pair from a patch.
-    onFinalizePatch(() => {
+    onFinalizeReferences(() => {
       if (isPatchRendered(section)) linkRuntimeFeature("patch-child");
     });
   }
@@ -630,10 +630,7 @@ export function getParamGroupSources(
   const contentSection = tagExtra[kContentSection];
   const groups = contentSection?.paramReasonGroups;
   if (!tagExtra[kKnownExprs] || !scopeBinding || !groups) return;
-  // Groups born after the record (circular same-file tags) have no
-  // sources: fail closed as unanalyzable input.
-  const recorded = tagExtra[kGroupSources];
-  return recorded?.length === groups.length ? recorded : undefined;
+  return tagExtra[kGroupSources];
 }
 
 // The instance's sources mask (2 bits per group at `1 + 2i`; keyed when

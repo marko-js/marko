@@ -35,7 +35,7 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "3:2"));
 	}, $scope0_id) });
 	_script($scope0_id, "__tests__/tags/card/index.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/card/index.marko0", n, 1);
+	_patch_value($scope0_id, "__tests__/tags/card/index.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		n,
 		"ClosureScopes:input_note/7": $input_note__closures,

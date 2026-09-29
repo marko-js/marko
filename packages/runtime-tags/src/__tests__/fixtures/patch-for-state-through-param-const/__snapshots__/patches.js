@@ -1,7 +1,7 @@
 // PATCH
 {
-  va0: !1,
-  va1: {
+  va1: !1,
+  va2: {
     sessions: [{
       id: "a"
     }, {
@@ -12,8 +12,8 @@
 
 // PATCH
 {
-  va0: !0,
-  va1: {
+  va1: !0,
+  va2: {
     sessions: [{
       id: "d"
     }]
@@ -22,6 +22,6 @@
 
 // PATCH
 {
-  va0: !0,
-  va1: null
+  va1: !0,
+  va2: null
 }

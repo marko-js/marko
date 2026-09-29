@@ -22,7 +22,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		}, 1, "__tests__/template.marko_2*content", 1);
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
 		$scope0_page && _resume_branch($scope1_id);
-	}, void 0, () => {}, void 0, "__tests__/template.marko_0_#text#0/catch", "__tests__/template.marko_1*content", 1, 1);
+	}, void 0, () => {}, void 0, "__tests__/template.marko_0_#text#0/catch", "__tests__/template.marko_1*content");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

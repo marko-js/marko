@@ -1,6 +1,6 @@
 // template.marko
 const $if_content__input_attrs__script = _script("a0", ($scope) => _attrs_script($scope, "a"));
-const $if_content__input_attrs = /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
+const $if_content__input_attrs = /*@__PURE__*/ _fill_join("a2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	_attrs($scope, "a", $scope._.e);
 	$if_content__input_attrs__script($scope);
 }));

@@ -16,7 +16,6 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 const $template = "<main></main>";
 const $walks = " b";
 _shells({
-	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content,loading",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<em> </em>",
 	"__tests__/template.marko_3_#text#0/await": "__tests__/template.marko_3_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",

@@ -11,7 +11,7 @@ var layout_default = _template_patch("a", (input) => {
 	_dynamic_tag($scope0_id, "c", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), _patch_dynamic_tag($scope0_id, "c", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</main>");
 	_script($scope0_id, "a0");
-	_patch_value($scope0_id, "a0", open, 1);
+	_patch_value($scope0_id, "a1", open, 1);
 	$scope0_page && _scope($scope0_id, { g: open });
 }, 0, 0);
 
@@ -26,7 +26,7 @@ var page_a_default = _template_patch("b", (input) => {
 	let count = 0;
 	_html(`<button class=a>a:${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b0", count, 1);
+	_patch_value($scope0_id, "b1", count, 1);
 	$scope0_page && _scope($scope0_id, { c: count });
 }, 0, 0);
 
@@ -41,7 +41,7 @@ var page_b_default = _template_patch("c", (input) => {
 	let count = 0;
 	_html(`<button class=b>b:${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "c0");
-	_patch_value($scope0_id, "c0", count, 1);
+	_patch_value($scope0_id, "c1", count, 1);
 	$scope0_page && _scope($scope0_id, { c: count });
 }, 0, 0);
 

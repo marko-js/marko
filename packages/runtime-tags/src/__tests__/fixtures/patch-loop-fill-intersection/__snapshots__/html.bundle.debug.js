@@ -23,5 +23,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_note: ["input.note"],
 		items: "1:6",
 		count: "2:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.note);
 }, 1, 0);

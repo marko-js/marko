@@ -10,7 +10,7 @@ var store_default = _template_patch("c", (input) => {
 			last = next;
 		}, "c0", $scope0_id)
 	};
-	_patch_value($scope0_id, "c0", last, 1);
+	_patch_value($scope0_id, "c1", last, 1);
 	return $return;
 }, 0, 0);
 
@@ -32,7 +32,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>",
 	a1: /*@__PURE__*/ ((_w0, _w1) => `a1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template),
 	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0, _w1) => `0${_w0}&D l/${_w1}&`)("", "D%l"), ((_w0, _w1) => `${_w0}<p> </p>${_w1}`)("", $template)),
-	a2: "a2 a8!a4;Db%l ;<span>Seen <!></span><button>+</button>"
+	a2: "a2 a9!a4;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -62,7 +62,7 @@ var template_default = _template_patch("a", (input) => {
 					let count = 0;
 					_html(`<span>Seen ${_text_resume($scope3_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope3_id, "b")}`);
 					_script($scope3_id, "a4");
-					_patch_value($scope3_id, "a0", count, 1);
+					_patch_value($scope3_id, "a5", count, 1);
 					_patch_bind($scope3_id, "d", store.set || void 0);
 					_subscribe($store_set__closures, _scope($scope3_id, {
 						c: count,

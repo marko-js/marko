@@ -15,7 +15,7 @@ var leaf_default = _template_patch("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_flag, $sg__input_flag, void 0, void 0, ["b0"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: input.label }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.label);
+	$scope0_page ? _scope($scope0_id, { e: input.label }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.label);
 }, 0, 0);
 
 // tags/mid.marko
@@ -49,7 +49,7 @@ var mid_default = _template_patch("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.flag,
 		f: input.label
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "c0", input.flag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "c1", input.label));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "c1", input.flag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "c2", input.label));
 }, 0, () => [leaf_default]);
 
 // template.marko
@@ -72,5 +72,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: count,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a0", input.label);
+	}) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a1", input.label);
 }, 1, () => [mid_default]);

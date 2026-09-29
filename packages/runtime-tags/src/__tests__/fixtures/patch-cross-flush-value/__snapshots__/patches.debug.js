@@ -10,7 +10,7 @@
       "PatchText:#text/1": "y",
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-cross-flush-value/tags/tagged/index.marko_0",
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-cross-flush-value/tags/tagged/index.marko0": 0
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-cross-flush-value/tags/tagged/index.marko_fill0": 0
       },
       "PatchWrite:input_tag": {
         name: "y"
@@ -25,7 +25,7 @@
       "PatchText:#text/1": "y",
       "PatchSetup:": {
         "PatchInit:": _(1)["PatchChild:BranchScopes:#text/0"]["PatchChild:#childScope/0"]["PatchSetup:"]["PatchInit:"],
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-cross-flush-value/tags/tagged/index.marko0": 0
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-cross-flush-value/tags/tagged/index.marko_fill0": 0
       },
       "PatchWrite:input_tag": _(1)["PatchChild:BranchScopes:#text/0"]["PatchChild:#childScope/0"]["PatchWrite:input_tag"]
     }

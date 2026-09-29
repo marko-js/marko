@@ -36,5 +36,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "1:6" }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}, "__tests__/template.marko", 0, { count: "1:6" }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, () => [combo_default]);

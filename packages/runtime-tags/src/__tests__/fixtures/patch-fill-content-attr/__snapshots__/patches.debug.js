@@ -1,4 +1,4 @@
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-attr/template.marko0": "b"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-attr/template.marko_fill0": "b"
 }

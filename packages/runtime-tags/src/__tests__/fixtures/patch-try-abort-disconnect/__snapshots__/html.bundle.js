@@ -1,10 +1,8 @@
 // template.marko
 _shells({
 	a0: "a0;Db%;<p>A:<!></p>",
-	a1: "a1,caught-a",
-	a2: "a2,<em>wait</em>",
-	a3: "a3;Db%;<p>A:<!></p>",
-	a4: "a4;b%;<!><!><!>",
+	a1: "a1;Db%;<p>A:<!></p>",
+	a2: "a2;b%;<!><!><!>",
 	a: "a !a6; D l%;<button> </button><!><!>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -21,7 +19,7 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<p>A:${_patch_text($scope4_id, "a", v, 2, $scope0_reason, 0)}</p>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -31,7 +29,7 @@ var template_default = _template_patch("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-a");
-	}, "a2", "a1", "a4", 1);
+	}, "a4", "a5", "a2");
 	_script($scope0_id, "a6");
 	$scope0_page && _scope($scope0_id, {
 		g: n,

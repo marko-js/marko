@@ -13,7 +13,7 @@ var counter_default = _template_patch("__tests__/tags/counter/index.marko", (inp
 			count = v;
 		}, "__tests__/tags/counter/index.marko_0/_return", $scope0_id)
 	};
-	_patch_value($scope0_id, "__tests__/tags/counter/index.marko0", count, 1);
+	_patch_value($scope0_id, "__tests__/tags/counter/index.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/counter/index.marko", 0);
 	return $return;
 }, 0, 0);

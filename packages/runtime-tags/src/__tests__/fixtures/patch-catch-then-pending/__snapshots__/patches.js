@@ -1,10 +1,10 @@
 // PATCH
-[`a0,<span>ok</span>`, `a2;b%;<!><!><!>`, {
+[`a2;b%;<!><!><!>`, `a0,<span>ok</span>`, {
   cAa: [{
     pa: "a0"
   }, "a2", "a6"],
-  va0: "b",
-  ka: [new Error("x"), "a2"]
+  va8: "b",
+  ka: [new Error("x")]
 }]
 "BAEB"
 
@@ -13,7 +13,7 @@
   cAa: [{
     pa: "a0"
   }, "a2", "a6"],
-  va0: "c"
+  va8: "c"
 }
 {
   cAa: [{

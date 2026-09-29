@@ -34,7 +34,7 @@ var card_default = _template_patch("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) });
 	_script($scope0_id, "b1");
-	_patch_value($scope0_id, "b0", n, 1);
+	_patch_value($scope0_id, "b2", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		g: n,
 		h: $input_note__closures,

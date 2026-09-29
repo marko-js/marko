@@ -9,7 +9,7 @@ var inner_default = _template_patch("__tests__/tags/widget/tags/inner/index.mark
 	_html(`<button class=bump>+</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $return = n;
 	_script($scope0_id, "__tests__/tags/widget/tags/inner/index.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/widget/tags/inner/index.marko0", n, 1);
+	_patch_value($scope0_id, "__tests__/tags/widget/tags/inner/index.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, { n }, "__tests__/tags/widget/tags/inner/index.marko", 0, { n: "1:6" });
 	return $return;
 }, 0, 0);

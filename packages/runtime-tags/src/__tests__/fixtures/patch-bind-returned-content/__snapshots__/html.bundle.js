@@ -11,15 +11,15 @@ var child_default = _template_patch("b", (input) => {
 		_scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "b", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "c", count, 2)}</em>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b1");
-		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b2"), "b3");
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b2"), "b3");
 	}, $scope0_id) };
-	_patch_value($scope0_id, "b1", count, 1);
+	_patch_value($scope0_id, "b5", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		c: input.label,
 		d: count,
 		f: $input_label__closures,
 		g: $count__closures
-	}) : _filled_guard($scope0_reason, 0) && _content_withheld("b0") && _patch_value($scope0_id, "b0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _content_withheld("b0") && _patch_value($scope0_id, "b4", input.label);
 	$scope0_page && _resume_branch($scope0_id);
 	return $return;
 }, 0, 0);

@@ -16,7 +16,6 @@ var wrap_default = _template_patch("__tests__/tags/wrap/index.marko", (input) =>
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D%l");
 _shells({
-	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content,<em>loading</em>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D%;<div id=done><!> done</div>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;D%;<div id=done><!> done</div>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",

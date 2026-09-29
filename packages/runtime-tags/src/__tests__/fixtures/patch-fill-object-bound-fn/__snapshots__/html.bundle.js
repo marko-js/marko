@@ -10,7 +10,7 @@ var store_default = _template_patch("c", (input) => {
 			last = next;
 		}, "c0", $scope0_id)
 	};
-	_patch_value($scope0_id, "c0", last, 1);
+	_patch_value($scope0_id, "c1", last, 1);
 	return $return;
 }, 0, 0);
 

@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<button>inc</button><!><!>";
 const $walks = " b%c";
-const $if_content__greeting = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "greeting", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.greeting)));
+const $if_content__greeting = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "greeting", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.greeting)));
 const $if_content__setup = ($scope) => {
 	$if_content__greeting._($scope);
 	$if_content__count._($scope);
 };
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.count));
-const $greeting = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "greeting", $if_content__greeting);
+const $greeting = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "greeting", $if_content__greeting);
 const $input_name__OR__$global_prefix = ($scope) => {
 	$greeting($scope, $scope.$global.prefix + ":" + $scope.input_name);
 };

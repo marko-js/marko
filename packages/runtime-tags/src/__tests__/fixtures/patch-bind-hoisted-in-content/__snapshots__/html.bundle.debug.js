@@ -10,7 +10,7 @@ var store_default = _template_patch("__tests__/tags/store.marko", (input) => {
 	const $return = _resume((next) => {
 		last = next;
 	}, "__tests__/tags/store.marko_0/_return", $scope0_id);
-	_patch_value($scope0_id, "__tests__/tags/store.marko0", last, 1);
+	_patch_value($scope0_id, "__tests__/tags/store.marko_fill0", last, 1);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/store.marko", 0);
 	return $return;
 }, 0, 0);
@@ -65,7 +65,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope2_id, "#text/0", count, 2)}</span><button>+</button>${_el_resume($scope2_id, "#button/1")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
-			_patch_value($scope2_id, "__tests__/template.marko0", count, 1);
+			_patch_value($scope2_id, "__tests__/template.marko_fill0", count, 1);
 			_patch_bind($scope2_id, "TagVariableChange:count", $setLast_getter || void 0);
 			_scope($scope2_id, {
 				count,

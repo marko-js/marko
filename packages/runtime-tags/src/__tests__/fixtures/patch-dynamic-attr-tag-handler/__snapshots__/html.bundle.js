@@ -20,7 +20,7 @@ var child_default = _template_patch("b", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $sg__input_button, $sg__input_button, void 0, void 0, ["b1"], $scope0_reason, 0);
-		_scope($scope1_id, {});
+		$scope0_page && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, $sg__input_button, void 0, void 0, "b0", $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b2");

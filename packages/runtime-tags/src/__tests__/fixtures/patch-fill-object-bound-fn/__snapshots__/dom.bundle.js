@@ -1,5 +1,5 @@
 // tags/store.marko
-const $last = /*@__PURE__*/ _fill_let("c0", 0, ($scope) => _return($scope, {
+const $last = /*@__PURE__*/ _fill_let("c1", 0, ($scope) => _return($scope, {
 	last: $scope.a,
 	set: $_return($scope)
 }));

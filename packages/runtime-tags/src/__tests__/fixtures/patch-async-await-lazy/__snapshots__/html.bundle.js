@@ -2,10 +2,9 @@
 _shells({
 	a0: "a0;D ;<span> </span>",
 	a1: "a1;D ;<em> </em>",
-	a2: "a2,loading",
-	a3: "a3;D ;<em> </em>",
-	a4: "a4;b%;<!><!><!>",
-	a5: "a5;D ;<span> </span>",
+	a2: "a2;D ;<em> </em>",
+	a3: "a3;b%;<!><!><!>",
+	a4: "a4;D ;<span> </span>",
 	a: "a !a8;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -23,13 +22,13 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "a", related, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a1", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a6", 0), _client_guard($scope0_reason, 5) && "a7", 0);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a5", 0), _client_guard($scope0_reason, 5) && "a6", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "a2", void 0, "a4", 1);
+	}, void 0, "a7", void 0, "a3", 1);
 	_html("</section><footer>");
 	_await($scope0_id, "c", resolveAfter(input.note, input.slow ? 2 : 0), (note) => {
 		const $scope4_id = _scope_id();

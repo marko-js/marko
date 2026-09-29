@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// A scriptless page's `<try>` inside a branch: the branch shell expresses
-// the try with its `@catch` elided (the flush carries the catch's html).
+// A scriptless page's `<try>` inside a branch: the branch shell holds the
+// try's markers, and the flush creates the try, naming its `@catch` by id.
 export const config: TestConfig = {
   patches: true,
   steps: () => [

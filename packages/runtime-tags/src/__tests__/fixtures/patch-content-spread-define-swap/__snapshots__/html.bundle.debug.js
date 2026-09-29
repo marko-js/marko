@@ -10,7 +10,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>one ${_patch_text($scope1_id, "#text/0", input.title, 2, $scope0_reason, 0)}</em>`);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_title#0:3/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_title#0:3/subscribe");
 	}, $scope0_id) };
 	const two = { content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
@@ -19,7 +19,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_title/8": 1
-		}, "__tests__/template.marko", "2:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_title#0:3/subscribe");
+		}, "__tests__/template.marko", "2:2"), "__tests__/template.marko_2_input_title#0:3/subscribe");
 	}, $scope0_id) };
 	_html("<div");
 	_patch_attrs_content({ content: input.which ? one : two }, "#div/0", $scope0_id, "div", void 0, void 0, $scope0_reason, 1);
@@ -35,5 +35,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		one: "1:9",
 		two: "2:9",
 		"EventAttributes:#div/0": ["...{ content: input.which ? one : two }", "3:9"]
-	}) : _filled_guard($scope0_reason, 0) && (_content_withheld("__tests__/template.marko_1*content") || _content_withheld("__tests__/template.marko_2*content")) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && (_content_withheld("__tests__/template.marko_1*content") || _content_withheld("__tests__/template.marko_2*content")) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, 0);

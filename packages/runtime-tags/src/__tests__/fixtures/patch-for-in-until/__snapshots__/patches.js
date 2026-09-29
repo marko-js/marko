@@ -5,7 +5,7 @@
   }, {
     ta: "1"
   }, "a0"],
-  va0: "two"
+  va2: "two"
 }]
 "AgE"
 
@@ -14,7 +14,7 @@
   lb: [{
     ta: "0"
   }, "a0"],
-  va0: "three"
+  va2: "three"
 }
 
 // PATCH holding AgE
@@ -24,5 +24,5 @@
   }, {
     ta: "1"
   }, "a0"],
-  va0: "four"
+  va2: "four"
 }

@@ -17,5 +17,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: input.opts?.show,
 		g: on
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.opts?.show);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.opts?.show);
 }, 1, 0);

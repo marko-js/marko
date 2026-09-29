@@ -17,7 +17,7 @@ var panel_default = _template_patch("__tests__/tags/panel/index.marko", (input) 
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_open, $sg__input_open, void 0, void 0, ["__tests__/tags/panel/index.marko_1*shell"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_body: input.body }, "__tests__/tags/panel/index.marko", 0, { input_body: ["input.body"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/panel/index.marko0", input.body);
+	$scope0_page ? _scope($scope0_id, { input_body: input.body }, "__tests__/tags/panel/index.marko", 0, { input_body: ["input.body"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/panel/index.marko_fill0", input.body);
 }, 0, 0);
 
 // template.marko
@@ -40,7 +40,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				const $scope1_reason = _scope_reason();
 				const $scope1_id = _scope_id();
 				_html(`<em>${_patch_text($scope1_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</em>`);
-				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_title#0:4/subscribe");
+				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6"), "__tests__/template.marko_1_input_title#0:4/subscribe");
 			}, $scope0_id) })
 		});
 	}
@@ -54,5 +54,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, () => [panel_default]);

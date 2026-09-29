@@ -9,11 +9,11 @@ var card_default = _template_patch("b", (input) => {
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
 	if ($scope0_page) _if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b1", open, 1);
+	_patch_value($scope0_id, "b2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b1", input.content);
 }, 0, 0);
 
 // tags/heading.marko

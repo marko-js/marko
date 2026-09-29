@@ -1,7 +1,7 @@
 // page-a.marko
 const $template = "<button class=a>a:<!></button>";
 const $walks = " Db%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/page-a.marko0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/page-a.marko_fill0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -14,7 +14,7 @@ var page_a_default = /*@__PURE__*/ _template("__tests__/page-a.marko", $template
 // page-b.marko
 const $template = "<button class=b>b:<!></button>";
 const $walks = " Db%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko_fill0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -28,7 +28,7 @@ var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template
 const $template$1 = "<header><button> </button></header><main><!></main>";
 const $walks$1 = "D D mD%l";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
-const $open = /*@__PURE__*/ _fill_let("__tests__/layout.marko0", "open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "close" : "open"));
+const $open = /*@__PURE__*/ _fill_let("__tests__/layout.marko_fill0", "open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "close" : "open"));
 const $setup__script$1 = _script("__tests__/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

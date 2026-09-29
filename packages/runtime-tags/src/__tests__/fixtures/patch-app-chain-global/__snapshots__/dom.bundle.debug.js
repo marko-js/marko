@@ -1,7 +1,7 @@
 // page-a.marko
 const $template = "<button class=a>a:<!></button>";
 const $walks = " Db%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/page-a.marko0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/page-a.marko_fill0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -21,7 +21,7 @@ const $pattern2 = ($scope, $pattern) => {
 const $q = ($scope, q) => _text($scope["#text/1"], q);
 const $issues = ($scope, issues) => _text($scope["#text/2"], issues ? "!" : "");
 const $global_search = /*@__PURE__*/ _global_join("search", "__tests__/page-b.marko_0_$global_search#7/global", ($scope, $global_search) => $pattern2($scope, $scope.$global.search));
-const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko0", "count/8", ($scope) => _text($scope["#text/3"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko_fill0", "count/8", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -36,7 +36,7 @@ var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template
 const $template$1 = "<header><button> </button></header><main><!></main>";
 const $walks$1 = "D D mD%l";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
-const $open = /*@__PURE__*/ _fill_let("__tests__/layout.marko0", "open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "close" : "open"));
+const $open = /*@__PURE__*/ _fill_let("__tests__/layout.marko_fill0", "open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "close" : "open"));
 const $setup__script$1 = _script("__tests__/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

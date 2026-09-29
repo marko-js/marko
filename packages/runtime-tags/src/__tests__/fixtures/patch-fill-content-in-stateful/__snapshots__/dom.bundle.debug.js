@@ -12,7 +12,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap/index.marko", $t
 const $template = "<button>inc</button><!><!>";
 const $walks = " b%c";
 const $wrap_content__input_msg__OR__count = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.input_msg + ":" + $scope._._.count));
-const $wrap_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/6", $wrap_content__input_msg__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_input_msg#0:4/subscribe"), 0);
+const $wrap_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/6", $wrap_content__input_msg__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_input_msg#0:4/subscribe"), 0);
 const $wrap_content__setup = ($scope) => {
 	$wrap_content__input_msg($scope);
 	$wrap_content__count($scope);
@@ -35,5 +35,5 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_msg($scope, input.msg);
 const $input_msg__closure = /*@__PURE__*/ _closure($wrap_content__input_msg);
-const $input_msg = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_msg", $input_msg__closure);
+const $input_msg = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_msg", $input_msg__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

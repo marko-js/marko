@@ -1,12 +1,12 @@
 // PATCH
-[`a0,done`, `a2;b%;<!><!><!>`, `a3;b%;<!><!><!>`, {
+[`a2;b%;<!><!><!>`, `a0,done`, `a3;b%;<!><!><!>`, {
   bc: [{
     cAa: [{
       pa: "a0",
       cAa: {}
     }, "a2", "a6"]
   }, "a3"],
-  va0: "b"
+  va8: "b"
 }]
 "BQEBAA"
 
@@ -16,7 +16,7 @@
     cAa: [{
       pa: "a0"
     }, "a2", "a6"],
-    ka: [new Error("boom"), "a2"]
+    ka: [new Error("boom")]
   }, "a3"],
-  va0: "c"
+  va8: "c"
 }

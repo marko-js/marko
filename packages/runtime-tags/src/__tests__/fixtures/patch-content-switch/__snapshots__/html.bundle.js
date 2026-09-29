@@ -89,5 +89,5 @@ var template_default = _template_patch("a", (input) => {
 		i: $input_kind__closures,
 		a: _existing_scope($childScope),
 		j: $input_inner__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.inner);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a5", input.inner);
 }, 1, () => [widget_default]);

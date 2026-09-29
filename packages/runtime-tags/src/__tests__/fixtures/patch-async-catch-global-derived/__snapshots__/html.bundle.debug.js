@@ -32,7 +32,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_resume($scope2_id, "#text/0", tag, $scope2_page)}</p>`);
 		_subscribe($tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:6"), "__tests__/template.marko_2_tag#0:6/subscribe", $scope2_page);
 		$scope2_page || _resume_branch($scope2_id);
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1);
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content");
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_global_subscribe("__tests__/template.marko_0_$global_brand#7/global", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
@@ -43,5 +43,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		tag: "1:8",
 		n: "2:6"
-	}) : _patch_value($scope0_id, "__tests__/template.marko0", tag);
+	}) : _patch_value($scope0_id, "__tests__/template.marko_fill0", tag);
 }, 1, 1);

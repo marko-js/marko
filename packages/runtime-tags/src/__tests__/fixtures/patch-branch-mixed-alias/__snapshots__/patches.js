@@ -1,9 +1,9 @@
 // PATCH
 {
-  va0: 5
+  va1: 5
 }
 
 // PATCH
 {
-  va0: 0
+  va1: 0
 }

@@ -11,12 +11,12 @@ var wrap_default = _template_patch("b", (input) => {
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
 	if ($scope0_page) _if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b2", open, 1);
+	_patch_value($scope0_id, "b3", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.row,
 		f: input.label,
 		g: open
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.row), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "b1", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.row), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "b2", input.label));
 }, 0, 1);
 
 // template.marko

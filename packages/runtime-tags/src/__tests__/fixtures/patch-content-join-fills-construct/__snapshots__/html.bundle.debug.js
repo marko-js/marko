@@ -10,7 +10,7 @@ var box_default = _template_patch("__tests__/tags/box.marko", (input) => {
 	_patch_bind($scope0_id, "#TagVariableChange", _resume(function(next) {
 		value = next;
 	}, "__tests__/tags/box.marko_0/valueChange", $scope0_id) || void 0);
-	_patch_value($scope0_id, "__tests__/tags/box.marko0", value, 1);
+	_patch_value($scope0_id, "__tests__/tags/box.marko_fill0", value, 1);
 	$scope0_page && _scope($scope0_id, { "#TagVariableChange": _resume(function(next) {
 		value = next;
 	}, "__tests__/tags/box.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/tags/box.marko", 0);
@@ -28,14 +28,14 @@ var counter_default = _template_patch("__tests__/tags/counter.marko", (input) =>
 	let tick = 0;
 	_html(`<button class=tick>${_text_resume($scope0_id, "#text/1", input.base + tick)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/counter.marko1", tick, 1);
+	_patch_value($scope0_id, "__tests__/tags/counter.marko_fill1", tick, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_base: input.base,
 		tick
 	}, "__tests__/tags/counter.marko", 0, {
 		input_base: ["input.base"],
 		tick: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/counter.marko0", input.base);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/tags/counter.marko_fill0", input.base);
 }, 0, 0);
 
 // tags/panel.marko
@@ -61,7 +61,7 @@ _shells({
 	"__tests__/page.marko_1*shell": /*@__PURE__*/ ((_w0, _w1) => `__tests__/page.marko_1*shell !;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $template$2)
 });
 var page_default = _template_patch("__tests__/page.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_items = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $bonus__closures = new Set();
 	const $p_base__closures = new Set();
@@ -75,7 +75,7 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_n__closures = new Set();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "__tests__/page.marko1", item?.n);
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "__tests__/page.marko_fill1", item?.n);
 		_set_serialize_reason(0);
 		const $childScope3 = _peek_scope_id();
 		_patch_child($scope1_id, "#childScope/0", $childScope3);
@@ -97,7 +97,7 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 			"ClosureScopes:item_n/13": $for_content__item_n__closures,
 			"#childScope/0": _existing_scope($childScope3)
 		}, "__tests__/page.marko", "4:2", { item_n: ["item.n", "4:6"] });
-	}, 0, $scope0_id, "#text/3", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/3", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);
 	_global_subscribe("__tests__/page.marko_0_$global_data#10/global", $scope0_id);
 	_script($scope0_id, "__tests__/page.marko_0");
 	$scope0_page ? _scope($scope0_id, {
@@ -108,7 +108,7 @@ var page_default = _template_patch("__tests__/page.marko", (input) => {
 	}, "__tests__/page.marko", 0, {
 		bonus: "1:6",
 		p_base: ["p.base", "2:8"]
-	}) : _patch_value($scope0_id, "__tests__/page.marko0", p?.base);
+	}) : _patch_value($scope0_id, "__tests__/page.marko_fill0", p?.base);
 }, 0, 1);
 
 // template.marko

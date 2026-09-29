@@ -15,7 +15,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__highlight._($scope);
 };
 const $if_content__highlight = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_text__OR__highlight);
-const $highlight2 = /*@__PURE__*/ _fill_const("__tests__/tags/code-block.marko1", "highlight", ($scope) => {
+const $highlight2 = /*@__PURE__*/ _fill_const("__tests__/tags/code-block.marko_fill1", "highlight", ($scope) => {
 	$if_content__highlight($scope);
 	$else_content__highlight($scope);
 });
@@ -30,7 +30,7 @@ const $input$1 = ($scope, input) => {
 	$input_cursor($scope, input.cursor);
 	$input_text$1($scope, input.text);
 };
-const $input_text$1 = /*@__PURE__*/ _fill_const("__tests__/tags/code-block.marko0", "input_text", ($scope) => {
+const $input_text$1 = /*@__PURE__*/ _fill_const("__tests__/tags/code-block.marko_fill0", "input_text", ($scope) => {
 	$if_content__input_text($scope);
 	$else_content__input_text($scope);
 	$input_text_length($scope, $scope.input_text?.length);

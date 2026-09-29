@@ -4,7 +4,6 @@ const $walks = "D%b l";
 _shells({
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content;D ;<em> </em>",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<b> </b>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<i>loading</i>",
 	"__tests__/template.marko_1_#text#1/await": "__tests__/template.marko_1_#text#1/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D%b%;<div><!><!></div>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>x</button></main>",

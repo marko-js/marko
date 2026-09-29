@@ -10,7 +10,7 @@
     },
     "page.mjs": {
       "min": 283,
-      "brotli": 197
+      "brotli": 174
     },
     "shared": {
       "min": 7857,
@@ -23,6 +23,6 @@
   },
   "patch": {
     "min": 245,
-    "brotli": 152
+    "brotli": 134
   }
 }

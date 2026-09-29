@@ -1,7 +1,7 @@
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko0": !1,
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko1": {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko_fill0": !1,
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko_fill1": {
     sessions: [{
       id: "a"
     }, {
@@ -12,8 +12,8 @@
 
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko0": !0,
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko1": {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko_fill0": !0,
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko_fill1": {
     sessions: [{
       id: "d"
     }]
@@ -22,6 +22,6 @@
 
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko0": !0,
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko1": null
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko_fill0": !0,
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-for-state-through-param-const/template.marko_fill1": null
 }

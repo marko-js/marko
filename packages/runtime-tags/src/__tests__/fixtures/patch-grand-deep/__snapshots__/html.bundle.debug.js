@@ -23,7 +23,7 @@ var l2_default = _template_patch("__tests__/tags/l1/tags/l2/index.marko", (input
 	_patch_child($scope0_id, "#childScope/2", $childScope);
 	l3_default({ note: input.note });
 	_script($scope0_id, "__tests__/tags/l1/tags/l2/index.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/l1/tags/l2/index.marko0", n, 1);
+	_patch_value($scope0_id, "__tests__/tags/l1/tags/l2/index.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		n,
 		"#childScope/2": _existing_scope($childScope)
@@ -70,5 +70,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],
 		show: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.note);
 }, 1, () => [l1_default]);

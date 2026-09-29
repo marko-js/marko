@@ -25,5 +25,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		sessions: "1:6",
 		ws: "2:8",
 		shown: "3:8"
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.active), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko1", ws));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.active), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill1", ws));
 }, 1, 0);

@@ -9,7 +9,7 @@
             "PatchText:#text/2": "",
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko_0",
-              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko0": 0
+              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko_fill0": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
@@ -30,7 +30,7 @@
             "PatchText:#text/2": "!",
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko_0",
-              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko0": 0
+              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko_fill0": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]
@@ -48,7 +48,7 @@
           "PatchChild:#childScope/1": {
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-a.marko_0",
-              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-a.marko0": 0
+              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-a.marko_fill0": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_2*shell"]
@@ -69,7 +69,7 @@
             "PatchText:#text/2": "",
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko_0",
-              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko0": 0
+              "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/page-b.marko_fill0": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-app-chain-global/template.marko_3*shell"]

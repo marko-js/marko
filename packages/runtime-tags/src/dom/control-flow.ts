@@ -303,7 +303,7 @@ export function scheduleAwaitFrame(
 }
 
 // Keyed past every scope id, so it runs after every other render of the flush.
-function queueCompleteAwaitCounter(
+export function queueCompleteAwaitCounter(
   tryBranch: BranchScope,
   awaitCounter: AwaitCounter,
 ) {
@@ -316,7 +316,10 @@ function queueCompleteAwaitCounter(
   );
 }
 
-function completeAwaitCounter(_scope: Scope, awaitCounter: AwaitCounter) {
+export function completeAwaitCounter(
+  _scope: Scope,
+  awaitCounter: AwaitCounter,
+) {
   awaitCounter.c();
   if (awaitCounter.m) {
     const fnScopes = new Map<unknown, Set<Scope>>();
@@ -367,7 +370,7 @@ export function runPendingEffects(tryBranch: BranchScope) {
   );
 }
 
-export function dismissPlaceholder(tryBranch: BranchScope) {
+function dismissPlaceholder(tryBranch: BranchScope) {
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;

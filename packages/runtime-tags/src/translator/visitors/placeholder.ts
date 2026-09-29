@@ -8,7 +8,6 @@ import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML, isPatch } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { writesPatchHole } from "../util/patch/decisions";
-import { onFinalizePatch } from "../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   isBranchPathSection,
@@ -19,6 +18,7 @@ import {
   createBinding,
   FORCED,
   getScopeAccessorLiteral,
+  onFinalizeReferences,
 } from "../util/references";
 import {
   callRuntime,
@@ -93,7 +93,7 @@ export default {
           ensurePatchWriteGroups(() => valueExtra);
           // A state-sourced hole recomputes through the signal graph, and
           // inside stateful structure owner fills refresh it.
-          onFinalizePatch(() => {
+          onFinalizeReferences(() => {
             if (writesPatchHole(section, valueExtra)) {
               linkRuntimeFeature(node.escape ? "patch-text" : "patch-html");
             }

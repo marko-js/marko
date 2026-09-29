@@ -1,5 +1,5 @@
 // PATCH
-[`a0,<div id=done>done</div>`, `a2;b%;<!><!><!>`, {
+[`a2;b%;<!><!><!>`, `a0,<div id=done>done</div>`, {
   cc: {
     cAa: {
       cAa: [{
@@ -8,6 +8,6 @@
       }, "a2", $, "a4"]
     }
   },
-  va0: "b"
+  va6: "b"
 }]
 "BgEB"

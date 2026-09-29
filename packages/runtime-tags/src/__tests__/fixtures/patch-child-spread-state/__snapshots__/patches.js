@@ -1,7 +1,7 @@
 // PATCH
 {
-  va0: {
+  va1: {
     title: "B"
   },
-  va1: "b2"
+  va2: "b2"
 }

@@ -1,17 +1,17 @@
 // PATCH
 {
-  va0: "b",
-  va1: "y"
+  va2: "b",
+  va3: "y"
 }
 
 // PATCH
 {
-  va0: "c",
-  va1: "z"
+  va2: "c",
+  va3: "z"
 }
 
 // PATCH
 {
-  va0: "d",
-  va1: "w"
+  va2: "d",
+  va3: "w"
 }

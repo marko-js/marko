@@ -9,9 +9,9 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__brand = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "brand", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_text($scope["#childScope/0"], $scope._.brand)));
+const $if_content__brand = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "brand", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_text($scope["#childScope/0"], $scope._.brand)));
 const $if_content__setup = $if_content__brand;
-const $brand = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "brand", $if_content__brand);
+const $brand = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "brand", $if_content__brand);
 const $global_brand = /*@__PURE__*/ _global_join("brand", "__tests__/template.marko_0_$global_brand#3/global", ($scope, $global_brand) => $brand($scope, `${$scope.$global.brand}`));
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/4", ($scope) => $if($scope, $scope.show ? 0 : 1));

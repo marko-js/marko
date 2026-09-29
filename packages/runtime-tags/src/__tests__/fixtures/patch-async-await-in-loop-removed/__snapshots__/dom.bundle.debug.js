@@ -7,7 +7,7 @@ const $await_content__v = ($scope, v) => _text($scope["#text/1"], v);
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em><!>:<!></em>", "D%c%", $await_content__setup);
 const $for_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $for_content__input_promise = /*@__PURE__*/ _fill_join("__tests__/tags/rows.marko0", "input_promise", /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__await_promise($scope, $scope._.input_promise)));
+const $for_content__input_promise = /*@__PURE__*/ _fill_join("__tests__/tags/rows.marko_fill0", "input_promise", /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__await_promise($scope, $scope._.input_promise)));
 const $for_content__setup = ($scope) => {
 	$for_content__input_promise._($scope);
 	$await_content($scope);
@@ -18,7 +18,7 @@ const $input$1 = ($scope, input) => {
 	$input_items($scope, input.items);
 	$input_promise$1($scope, input.promise);
 };
-const $input_promise$1 = /*@__PURE__*/ _fill_const("__tests__/tags/rows.marko0", "input_promise", $for_content__input_promise);
+const $input_promise$1 = /*@__PURE__*/ _fill_const("__tests__/tags/rows.marko_fill0", "input_promise", $for_content__input_promise);
 var rows_default = /*@__PURE__*/ _template("__tests__/tags/rows.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko

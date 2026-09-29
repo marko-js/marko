@@ -5,9 +5,9 @@
       ta: "a",
       s: {
         i: "!b0",
-        vb1: !1
+        vb2: !1
       },
-      vb0: "const"
+      vb1: "const"
     }
   }, "a0"]
 }]
@@ -20,9 +20,9 @@
       ta: "b",
       s: {
         i: "!b0",
-        vb1: !1
+        vb2: !1
       },
-      vb0: "const"
+      vb1: "const"
     }
   }, "a0"]
 }

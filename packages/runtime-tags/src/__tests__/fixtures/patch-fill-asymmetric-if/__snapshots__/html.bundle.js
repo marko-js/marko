@@ -2,7 +2,7 @@
 _shells({
 	a: "a !a5;D%b ;<main><!><button>+</button></main>",
 	a0: "a0;b%;<!><!><!>",
-	a1: "a1 a7 a8;D ;<p> </p>",
+	a1: "a1 a8 a9;D ;<p> </p>",
 	a2: "a2,<p>shown</p>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -24,7 +24,7 @@ var template_default = _template_patch("a", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "a", input.title + "@0")}</p>`);
-					_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 3) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a3"), "a4");
+					_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 3) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a3"), "a4");
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["a1"], $scope0_reason, 2);
@@ -40,5 +40,5 @@ var template_default = _template_patch("a", (input) => {
 		h: count,
 		j: $input_title__closures,
 		k: $count__closures
-	}) : _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "a6", input.title);
 }, 1, 0);

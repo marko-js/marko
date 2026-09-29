@@ -10,7 +10,7 @@ var kid_default = _template_patch("b", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "b", c)}</button>${_el_resume($scope0_id, "a")}`);
 	const $return = c;
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b0", c, 1);
+	_patch_value($scope0_id, "b1", c, 1);
 	$scope0_page && _scope($scope0_id, { c });
 	return $return;
 }, 0, 0);

@@ -17,14 +17,14 @@ var template_default = _template_patch("a", (input) => {
 				let notes = 0;
 				_html(`<span>${_text_resume($scope2_id, "a", notes)}</span><button>note</button>${_el_resume($scope2_id, "b")}`);
 				_script($scope2_id, "a2");
-				_patch_value($scope2_id, "a0", notes, 1);
+				_patch_value($scope2_id, "a3", notes, 1);
 				_scope($scope2_id, { c: notes });
 				return 0;
 			}
 		}, $scope1_id, "b", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a1"], $scope0_reason, 0);
 		_html("</li>");
 		_scope($scope1_id, {});
-	}, "id", $scope0_id, "a", 1, 1, $sg__input_items, void 0, void 0, "a0", $scope0_reason, 0);
-	_html(`</ul>${_el_resume($scope0_id, "a")}`);
+	}, "id", $scope0_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a0", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "a", $sg__input_items)}`);
 	$scope0_page && _scope($scope0_id, {});
 }, 1, 0);

@@ -1,14 +1,14 @@
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko0": "two"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_fill0": "two"
 }
 
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko0": "three"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_fill0": "three"
 }
 
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko0": "four"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-known-stateful-content/template.marko_fill0": "four"
 }

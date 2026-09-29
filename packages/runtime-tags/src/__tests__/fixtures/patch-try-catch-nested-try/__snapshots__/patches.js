@@ -1,11 +1,12 @@
 // PATCH
-[`a4;D l%;<em> </em><!><!>`, {
-  ka: [new Error("boom"), "a4"]
+[`a3;D l%;<em> </em><!><!>`, {
+  cAa: [{}, "a3", "a7"],
+  ka: [new Error("boom")]
 }]
-"BgU"
+"BQQ"
 
-// PATCH holding BgU
-[`a0;D ;<strong> </strong>`, `a3;b%;<!><!><!>`, `a1,<span>inner</span>`, {
+// PATCH holding BQQ
+[`a2;b%;<!><!><!>`, `a0;D ;<strong> </strong>`, {
   cAa: [{
     ta: "ok",
     cAb: [{
@@ -13,7 +14,7 @@
       cAa: {
         ta: "v3"
       }
-    }, "a3", "a1"]
-  }, "a4", "a7"]
+    }, "a2", "a5"]
+  }, "a3", "a7"]
 }]
-"BgEAAQA"
+"BQEBAA"

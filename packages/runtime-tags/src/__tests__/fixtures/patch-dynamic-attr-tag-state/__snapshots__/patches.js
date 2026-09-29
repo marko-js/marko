@@ -1,17 +1,17 @@
 // PATCH
 {
-  vb0: !0,
-  vb1: "two"
+  vb3: !0,
+  vb4: "two"
 }
 
 // PATCH
 {
-  vb0: !0,
-  vb1: "three"
+  vb3: !0,
+  vb4: "three"
 }
 
 // PATCH
 {
-  vb0: !0,
-  vb1: "four"
+  vb3: !0,
+  vb4: "four"
 }

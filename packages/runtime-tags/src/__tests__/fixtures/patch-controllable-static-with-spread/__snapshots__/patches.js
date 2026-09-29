@@ -1,6 +1,6 @@
 // PATCH
 {
-  va0: {
+  va2: {
     placeholder: "p2"
   }
 }

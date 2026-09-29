@@ -13,7 +13,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button> </button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& D l`)("b%c");
-const $if_content__label = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
+const $if_content__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
 const $if_content__setup = $if_content__label;
 const $item_content__if = /*@__PURE__*/ _if("#text/1", "<b><!>!</b>", "D%", $if_content__setup);
 const $item_content__input_show = /*@__PURE__*/ _closure_get("input_show/8", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#0:6/subscribe");
@@ -21,7 +21,7 @@ const $item_content__setup = ($scope) => {
 	$item_content__input_show($scope);
 	$item_content__n($scope);
 };
-const $item_content__n__OR__label = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "label", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.label + $scope._.n)));
+const $item_content__n__OR__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.label + $scope._.n)));
 const $item_content__n = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_1_n#0:7/init", "n/9", $item_content__n__OR__label, 0, "__tests__/template.marko_1_n#0:7/subscribe");
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em> </em><!><!>", "D l%", $item_content__setup), { label($scope) {
 	$item_content__n__OR__label($scope);

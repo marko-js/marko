@@ -1,26 +1,26 @@
 // PATCH
 {
   ca: {
-    vb0: !1,
-    vb1: "b"
+    vb3: !1,
+    vb4: "b"
   },
-  va0: "b"
+  va1: "b"
 }
 
 // PATCH
 {
   ca: {
-    vb0: !0,
-    vb1: "c"
+    vb3: !0,
+    vb4: "c"
   },
-  va0: "c"
+  va1: "c"
 }
 
 // PATCH
 {
   ca: {
-    vb0: !0,
-    vb1: "d"
+    vb3: !0,
+    vb4: "d"
   },
-  va0: "d"
+  va1: "d"
 }

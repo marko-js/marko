@@ -46,7 +46,6 @@ import {
   hasStateSource,
   writesPatchHole,
 } from "../../util/patch/decisions";
-import { onFinalizePatch } from "../../util/patch/lifecycle";
 import {
   ensurePatchWriteGroups,
   isBranchPathSection,
@@ -64,6 +63,7 @@ import {
   mergeSources,
   trackDomVarReferences,
   isTagVarRead,
+  onFinalizeReferences,
 } from "../../util/references";
 import {
   callRuntime,
@@ -344,7 +344,7 @@ export default {
           contentExtra.contentAttr = true;
           if (isPatch() && isBranchPathSection(tagSection)) {
             ensurePatchWriteGroups(() => contentExtra);
-            onFinalizePatch(() => {
+            onFinalizeReferences(() => {
               if (writesPatchContent(tagSection, contentExtra)) {
                 linkRuntimeFeature("patch-dynamic-tag");
               }
@@ -368,7 +368,7 @@ export default {
             }
           }
           if (spreadReferenceNodes && isAttrSetSpread(tagName)) {
-            onFinalizePatch(() => {
+            onFinalizeReferences(() => {
               if (writesPatchHole(tagSection, node.extra)) {
                 const { staticContentAttr, staticControllable } = getUsedAttrs(
                   tagName,
@@ -423,7 +423,7 @@ export default {
           // A patched control's entries apply through these features, for the
           // controllable left static (a spread merges in a partial one).
           if (isPatch()) {
-            onFinalizePatch(() => {
+            onFinalizeReferences(() => {
               const controllable = getUsedAttrs(
                 tagName,
                 node,
@@ -455,7 +455,7 @@ export default {
           if (isPatch() && isBranchPathSection(tagSection)) {
             addPatchSerializeReason(tagSection, FORCED, nodeBinding);
             ensurePatchWriteGroups(() => textExtra);
-            onFinalizePatch(() => {
+            onFinalizeReferences(() => {
               if (writesPatchHole(tagSection, textExtra)) {
                 linkRuntimeFeature("patch-text-content");
               }
@@ -502,7 +502,7 @@ export default {
 
       const { staticAttrs } = getUsedAttrs(tagName, tag.node, true);
       if (isPatch()) {
-        onFinalizePatch(() => {
+        onFinalizeReferences(() => {
           if (
             staticAttrs.some(
               ({ name, value }) =>

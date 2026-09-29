@@ -1,6 +1,6 @@
 // template.marko
 const $for_content__if = /*@__PURE__*/ _if(1, "<span>*</span>");
-const $for_content__input_selected = /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _for_closure(0, ($scope) => $for_content__if($scope, $scope._.e === $scope.M ? 0 : 1)));
+const $for_content__input_selected = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _for_closure(0, ($scope) => $for_content__if($scope, $scope._.e === $scope.M ? 0 : 1)));
 const $for_content__setup = ($scope) => {
 	$for_content__input_selected._($scope);
 	_text($scope.a, $scope.M);

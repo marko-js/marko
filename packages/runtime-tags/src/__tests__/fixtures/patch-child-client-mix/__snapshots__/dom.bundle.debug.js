@@ -9,7 +9,7 @@ var label_default = /*@__PURE__*/ _template("__tests__/tags/label/index.marko", 
 // template.marko
 const $template = "<main><!><button>+</button><button class=t>t</button></main>";
 const $walks = "D%b b l";
-const $if_content__input_suffix__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _or(1, ($scope) => $input_text($scope["#childScope/0"], $scope._.count + $scope._.input_suffix)), 0, "#text/0", 0);
+const $if_content__input_suffix__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _or(1, ($scope) => $input_text($scope["#childScope/0"], $scope._.count + $scope._.input_suffix)), 0, "#text/0", 0);
 const $if_content__input_suffix = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_suffix__OR__count);
 const $if_content__setup = ($scope) => {
 	$if_content__input_suffix._($scope);
@@ -33,5 +33,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_suffix($scope, input.suffix);
-const $input_suffix = _fill_const_resume("__tests__/template.marko0", "input_suffix", $if_content__input_suffix);
+const $input_suffix = _fill_const_resume("__tests__/template.marko_fill0", "input_suffix", $if_content__input_suffix);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

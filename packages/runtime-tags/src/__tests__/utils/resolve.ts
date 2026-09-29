@@ -106,6 +106,7 @@ export function isThrows(value: any): value is Throws {
 
 // A function input is built as the step runs, so a promise it creates
 // (`resolveAfter`) starts pending at that render rather than at setup.
+// `betweenFlushes` returning `"abandon"` stops applying the response there.
 export type Navigate = {
   navigateInput: Record<string, unknown> | (() => Record<string, unknown>);
   betweenFlushes?: (document: Document) => unknown;

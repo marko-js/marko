@@ -1,10 +1,10 @@
 // PATCH
-[`a0;D ;<em> </em>`, `a3;b%;<!><!><!>`, `a1,loading`, {
+[`a2;b%;<!><!><!>`, `a0;D ;<em> </em>`, {
   cAa: [{
     pa: "a0"
-  }, "a3", "a5", "a1"]
+  }, "a2", "a5", "a4"]
 }]
 {
-  ka: [new Error("boom"), "a3"]
+  ka: [new Error("boom")]
 }
-"BQEAAQ"
+"BAEB"

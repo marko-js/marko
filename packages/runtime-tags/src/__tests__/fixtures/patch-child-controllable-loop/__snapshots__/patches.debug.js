@@ -7,7 +7,7 @@
       "PatchBranch:#text/0": 0
     },
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko0": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_fill0": 0
     }
   }, {
     "PatchText:#text/0": "b",
@@ -15,7 +15,7 @@
       "PatchBranch:#text/0": 0
     },
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko0": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_fill0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1*shell"]
 }]
@@ -29,26 +29,26 @@
     "PatchChild:#childScope/2": {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko1": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_fill1": 0
         },
         "PatchBind:TagVariableChange:count": [_.a = "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1/onCount", 2]
       }, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1*shell"]
     },
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko0": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_fill0": 0
     }
   }, {
     "PatchText:#text/0": "b",
     "PatchChild:#childScope/2": {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko1": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_fill1": 0
         },
         "PatchBind:TagVariableChange:count": [_.a, 2]
       }, _.b]
     },
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko0": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_fill0": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1*shell"]
 }]

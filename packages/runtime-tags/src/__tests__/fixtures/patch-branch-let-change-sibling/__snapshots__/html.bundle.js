@@ -10,14 +10,14 @@ var store_default = _template_patch("b", (input) => {
 			last = next;
 		}, "b0", $scope0_id)
 	};
-	_patch_value($scope0_id, "b0", last, 1);
+	_patch_value($scope0_id, "b1", last, 1);
 	return $return;
 }, 0, 0);
 
 // template.marko
 _shells({
 	a: /*@__PURE__*/ ((_w0, _w1) => `a;${_w0};${_w1}`)(((_w0) => `0${_w0}&E lDb%l%l`)(""), ((_w0) => `${_w0}<main><h1> </h1><p>Last <!></p><!></main>`)("")),
-	a0: "a0 a4!a2;Db%l ;<span>Seen <!></span><button>+</button>"
+	a0: "a0 a5!a2;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
@@ -33,7 +33,7 @@ var template_default = _template_patch("a", (input) => {
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope1_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a2");
-			_patch_value($scope1_id, "a0", count, 1);
+			_patch_value($scope1_id, "a3", count, 1);
 			_patch_bind($scope1_id, "d", store.set || void 0);
 			_scope($scope1_id, {
 				c: count,

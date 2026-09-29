@@ -1,9 +1,8 @@
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
-	a1: "a1,loading",
-	a2: "a2;D ;<em> </em>",
-	a3: "a3;b%;<!><!><!>",
+	a1: "a1;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
 	a: "a !a5;E l%b ;<main><h1> </h1><!><button>Next</button></main>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -20,13 +19,13 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<em>${_text_resume($scope3_id, "a", value)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, 0, 1);
-		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4", 0);
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3", 0);
 		_resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "a1", void 0, "a3", 1);
+	}, void 0, "a4", void 0, "a2", 1);
 	_html(`<button>Next</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a5");
 	$scope0_page && _scope($scope0_id, {

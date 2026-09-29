@@ -30,7 +30,6 @@ export const TagVariable = "#TagVariable";
 export const TagVariableChange = "#TagVariableChange";
 export const TryBranch = "#TryBranch";
 export const PatchChanged = "#PatchChanged";
-export const RecoverContent = "#RecoverContent";
 
 type Self = typeof import("./accessor-prop.debug");
 export type Value = Self[keyof Self];

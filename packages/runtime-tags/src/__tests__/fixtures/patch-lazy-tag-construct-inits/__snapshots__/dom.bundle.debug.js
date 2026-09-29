@@ -6,11 +6,11 @@ const $for_content__setup = ($scope) => {
 	$for_content__input_label._($scope);
 	$for_content__count._($scope);
 };
-const $for_content__count__OR__i = /*@__PURE__*/ _fill_join("__tests__/child.marko1", "i", /*@__PURE__*/ _fill_join_for("__tests__/child.marko0", "count", /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/1"], $scope._.count + $scope.i)), 0, "#text/1"));
+const $for_content__count__OR__i = /*@__PURE__*/ _fill_join("__tests__/child.marko_fill1", "i", /*@__PURE__*/ _fill_join_for("__tests__/child.marko_fill0", "count", /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/1"], $scope._.count + $scope.i)), 0, "#text/1"));
 const $for_content__count = /*@__PURE__*/ _init_for_closure("__tests__/child.marko_1_count#0:5/init", "#text/1", $for_content__count__OR__i);
-const $for_content__i = /*@__PURE__*/ _fill_const("__tests__/child.marko1", "i", $for_content__count__OR__i);
+const $for_content__i = /*@__PURE__*/ _fill_const("__tests__/child.marko_fill1", "i", $for_content__count__OR__i);
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
-const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko0", "count/5", $for_content__count);
+const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_fill0", "count/5", $for_content__count);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<span><!>:<!></span>", "D%c%", $for_content__setup, $for_content__$params);
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

@@ -1,10 +1,10 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $for_content__count__OR__rest = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "rest", /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + Object.keys($scope.rest).join("+") + "#" + $scope._.count)));
+const $for_content__count__OR__rest = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "rest", /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + Object.keys($scope.rest).join("+") + "#" + $scope._.count)));
 const $for_content__count = /*@__PURE__*/ _init_for_closure("__tests__/template.marko_1_count#0:5/init", "#text/0", $for_content__count__OR__rest);
 const $for_content__setup = $for_content__count;
-const $for_content__rest = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "rest", $for_content__count__OR__rest);
+const $for_content__rest = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "rest", $for_content__count__OR__rest);
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
 const $for_content__$temp = ($scope, $temp) => (({ id, ...rest }) => $for_content__rest($scope, rest))($temp);
 const $count = /*@__PURE__*/ _let("count/5", $for_content__count);

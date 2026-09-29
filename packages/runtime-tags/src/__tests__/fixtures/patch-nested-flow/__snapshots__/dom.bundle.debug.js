@@ -1,18 +1,3 @@
-// tags/badge.marko
-const $template$1 = "<footer><span><!> (<!>)</span><button>ack</button></footer>";
-const $walks$1 = "E%c%l l";
-const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko0", "seen/6", ($scope) => _text($scope["#text/1"], $scope.seen));
-const $setup__script = _script("__tests__/tags/badge.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
-	$seen($scope, +$scope.seen + 1);
-}));
-function $setup$1($scope) {
-	$setup__script($scope);
-	$seen($scope, 0);
-}
-const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
-const $input$1 = ($scope, input) => $input_label($scope, input.label);
-var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$1, $walks$1, $setup$1, $input$1);
-
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><ul></ul><!>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D b%b/${_w0}&l`)($walks$1);
@@ -55,3 +40,18 @@ const $input_detail = /*@__PURE__*/ _const("input_detail", ($scope) => {
 	$input_detail__closure($scope);
 });
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+
+// tags/badge.marko
+const $template = "<footer><span><!> (<!>)</span><button>ack</button></footer>";
+const $walks = "E%c%l l";
+const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_fill0", "seen/6", ($scope) => _text($scope["#text/1"], $scope.seen));
+const $setup__script = _script("__tests__/tags/badge.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+	$seen($scope, +$scope.seen + 1);
+}));
+function $setup($scope) {
+	$setup__script($scope);
+	$seen($scope, 0);
+}
+const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
+const $input = ($scope, input) => $input_label($scope, input.label);
+var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template, $walks, $setup, $input);

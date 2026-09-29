@@ -22,7 +22,7 @@
     "PatchChild:#childScope/0": {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/tags/counter/index.marko1": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/tags/counter/index.marko_fill1": 0
         },
         "PatchBind:TagVariableChange:count": [_.a = "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/template.marko_0/onCount", 3]
       }, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/tags/counter/index.marko_1*shell"],
@@ -32,7 +32,7 @@
     "PatchChild:#childScope/0": {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/tags/counter/index.marko1": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-poison/tags/counter/index.marko_fill1": 0
         },
         "PatchBind:TagVariableChange:count": [_.a, 3]
       }, _.b],

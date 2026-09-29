@@ -1,24 +1,24 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_1_count#0:6/init;b%;<!><!><!>`, {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_1*shell",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko0": "b"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_fill0": "b"
 }]
 "AgE"
 
 // PATCH holding AgE
 {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_1*shell",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko0": "c"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_fill0": "c"
 }
 
 // PATCH holding AgE
 {
   "PatchBranch:#text/0": 0,
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko0": "d"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_fill0": "d"
 }
 
 // PATCH holding AgE
 {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_1*shell",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko0": "e"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-client-inner/template.marko_fill0": "e"
 }

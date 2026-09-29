@@ -1,15 +1,15 @@
 // PATCH
 {
   z_a: {
-    vb0: !0,
-    vb1: "b"
+    vb1: !0,
+    vb2: "b"
   }
 }
 
 // PATCH
 {
   z_a: {
-    vb0: !0,
-    vb1: "c"
+    vb1: !0,
+    vb2: "c"
   }
 }

@@ -8,7 +8,7 @@ var probe_default = _template_patch("b", (input) => {
 	_html(`<p>${_text_resume($scope0_id, "a", seen)}</p>`);
 	_script($scope0_id, "b0");
 	_patch_effect($scope0_id, "b0", "d e");
-	_patch_value($scope0_id, "b0", seen, 1);
+	_patch_value($scope0_id, "b1", seen, 1);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.opts,
 		e: input.label

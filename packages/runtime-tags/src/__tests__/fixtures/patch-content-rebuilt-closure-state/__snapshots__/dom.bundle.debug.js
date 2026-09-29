@@ -24,10 +24,10 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 const $template = /*@__PURE__*/ ((_w0) => `<button>add</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 const $item_content__if = /*@__PURE__*/ _if("#text/0", "<span>shown</span>");
-const $item_content__input_show = /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko0", "input_show", /*@__PURE__*/ _closure_get("input_show/6", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/tags/child.marko_1_input_show#0:4/subscribe"), 0);
+const $item_content__input_show = /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/6", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/tags/child.marko_1_input_show#0:4/subscribe"), 0);
 const $item_content__setup = $item_content__input_show;
 const $item_content = /*@__PURE__*/ _content("__tests__/tags/child.marko_1*content", "<!><!><!>", "b%", $item_content__setup);
-const $items = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko1", "items/5", ($scope) => {
+const $items = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill1", "items/5", ($scope) => {
 	let $item;
 	forOf($scope.items, (item) => {
 		$item = attrTags($item, { content: $item_content($scope) });
@@ -43,5 +43,5 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_show($scope, input.show);
 const $input_show__closure = /*@__PURE__*/ _closure($item_content__input_show);
-const $input_show = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko0", "input_show", $input_show__closure);
+const $input_show = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "input_show", $input_show__closure);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

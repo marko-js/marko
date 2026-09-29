@@ -4,7 +4,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-content-owner/template.marko0": 0,
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-content-owner/template.marko_fill0": 0,
           "PatchWrite:TagVariableChange:count": _(["#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-content-owner/tags/store.marko_0/_return")
         },
         "PatchWrite:TagVariableChange:count": _(["#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-content-owner/tags/store.marko_0/_return")

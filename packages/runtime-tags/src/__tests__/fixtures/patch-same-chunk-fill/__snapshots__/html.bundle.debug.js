@@ -9,7 +9,7 @@ var probe_default = _template_patch("__tests__/tags/probe.marko", (input) => {
 	_html(`<div>${_text_resume($scope0_id, "#text/1", settled ? "settled" : "pending")}</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/probe.marko_0_input_promise#4");
 	_patch_effect($scope0_id, "__tests__/tags/probe.marko_0_input_promise#4", "input_promise");
-	_patch_value($scope0_id, "__tests__/tags/probe.marko0", settled, 1);
+	_patch_value($scope0_id, "__tests__/tags/probe.marko_fill0", settled, 1);
 	$scope0_page ? _scope($scope0_id, { input_promise: input.promise }, "__tests__/tags/probe.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "input_promise", input.promise);
 }, 0, 0);
 
@@ -18,7 +18,6 @@ const $template = /*@__PURE__*/ ((_w0) => `<button>Count <!></button>${_w0}<!><!
 const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&%c`)($walks$1);
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,<span class=loading>...</span>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !__tests__/template.marko_0;${_w0};${_w1}`)(((_w0) => ` Db%l/${_w0}&%c`)($walks$1), ((_w0) => `<button>Count <!></button>${_w0}<!><!>`)($template$1))

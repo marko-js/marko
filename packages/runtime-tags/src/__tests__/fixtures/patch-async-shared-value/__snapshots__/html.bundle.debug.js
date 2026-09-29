@@ -21,7 +21,6 @@ var child_default = _template_patch("__tests__/child.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<!></main>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}&%l`)(" b", " b");
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,loading",
 	"__tests__/template.marko_2*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*content;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `D l/${_w0}&`)(" b"), /*@__PURE__*/ ((_w0) => `<span> </span>${_w0}`)($template$1)),
 	"__tests__/template.marko_1_#text#0/await": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1_#text#0/await;${_w0};${_w1}`)(((_w0) => `D l/${_w0}&`)(" b"), ((_w0) => `<span> </span>${_w0}`)($template$1)),
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",

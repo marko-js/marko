@@ -1,7 +1,7 @@
 // tags/kid.marko
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
-const $c = /*@__PURE__*/ _fill_let("__tests__/tags/kid.marko0", "c/2", ($scope) => {
+const $c = /*@__PURE__*/ _fill_let("__tests__/tags/kid.marko_fill0", "c/2", ($scope) => {
 	_text($scope["#text/1"], $scope.c);
 	_return($scope, $scope.c);
 });

@@ -14,7 +14,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const base = 10 * 2;
-			_patch_value($scope1_id, "__tests__/template.marko0", base);
+			_patch_value($scope1_id, "__tests__/template.marko_fill0", base);
 			const alias = base;
 			_html(`<p>${_text_resume($scope1_id, "#text/0", alias + count)}</p>`);
 			_scope($scope1_id, {

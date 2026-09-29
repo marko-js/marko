@@ -1,6 +1,6 @@
 // tags/widget/tags/inner/index.marko
 const $template$1 = "<button class=bump>+</button>";
-const $n = /*@__PURE__*/ _fill_let("c0", 1, ($scope) => _return($scope, $scope.b));
+const $n = /*@__PURE__*/ _fill_let("c2", 1, ($scope) => _return($scope, $scope.b));
 const $setup__script$2 = _script("c1", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.b + 1);
 }));

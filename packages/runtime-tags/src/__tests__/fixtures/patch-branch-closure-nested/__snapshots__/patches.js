@@ -4,19 +4,19 @@
   bb: [{
     bb: 0,
     s: {
-      va0: 0
+      va3: 0
     }
   }, "a0"]
 }]
 "AwE"
 
 // PATCH holding AwE
-[`a1 a4;Db%;<p>Seen <!></p>`, {
+[`a1 a5;Db%;<p>Seen <!></p>`, {
   ta: "Store!",
   bb: [{
     bb: "a1",
     s: {
-      va0: 0
+      va3: 0
     }
   }, "a0"]
 }]
@@ -34,7 +34,7 @@
   bb: [{
     bb: "a1",
     s: {
-      va0: 0
+      va3: 0
     }
   }, "a0"]
 }

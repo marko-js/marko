@@ -3,8 +3,6 @@ const $template = "<main><!></main>";
 const $walks = "D%l";
 _shells({
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content;D ;<em> </em>",
-	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content,<em>inner</em>",
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<em>outer</em>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
@@ -32,13 +30,13 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
 			_html("<em>inner</em>");
-		}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1);
+		}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content");
 		$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 	}, void 0, () => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<em>outer</em>");
-	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1);
+	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

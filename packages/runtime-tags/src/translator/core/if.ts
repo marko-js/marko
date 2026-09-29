@@ -23,7 +23,6 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPatch } from "../util/marko-config";
-import { onClassifyStructure } from "../util/patch/lifecycle";
 import {
   isBranchPathSection,
   isStatefulBranch,
@@ -34,6 +33,7 @@ import {
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
+  onFinalizeReferences,
 } from "../util/references";
 import {
   linkRuntimeFeature,
@@ -119,7 +119,7 @@ export const IfTag = {
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
       if (isPatch()) {
-        onClassifyStructure(ifTagSection, () => {
+        onFinalizeReferences(() => {
           // Patches render a chain that is not stateful.
           if (
             !branches.some(

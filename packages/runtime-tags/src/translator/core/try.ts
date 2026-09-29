@@ -185,13 +185,14 @@ export default {
                       : getEmptyCatchId(section, nodeRef),
                   ),
                 // A patch pairs the try by its body's shell, which an
-                // always-pairing branch drops outside divergent contexts.
+                // always-pairing branch drops outside divergent contexts;
+                // a try with a catch may rebuild its body from it.
                 isPatch() &&
                   t.stringLiteral(getResumeRegisterId(bodySection, "content")),
                 isPatch() &&
+                  !catchTag &&
                   boundaryAlwaysPairs(bodySection) &&
                   t.numericLiteral(1),
-                isPatch() && catchTag && !catchSection && t.numericLiteral(1),
               ),
             ),
           )[0]

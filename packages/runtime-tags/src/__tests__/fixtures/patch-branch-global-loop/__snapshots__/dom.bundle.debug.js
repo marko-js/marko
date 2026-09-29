@@ -10,21 +10,6 @@ function itemsFor(q) {
 	}));
 }
 
-// tags/row.marko
-const $template$1 = "<p> <button> </button></p>";
-const $walks$1 = "D b D m";
-const $clicks = /*@__PURE__*/ _fill_let("__tests__/tags/row.marko0", "clicks/6", ($scope) => _text($scope["#text/2"], $scope.clicks));
-const $setup__script = _script("__tests__/tags/row.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$clicks($scope, +$scope.clicks + 1);
-}));
-function $setup$1($scope) {
-	$setup__script($scope);
-	$clicks($scope, 0);
-}
-const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
-const $input = ($scope, input) => $input_label($scope, input.label);
-var row_default = /*@__PURE__*/ _template("__tests__/tags/row.marko", $template$1, $walks$1, $setup$1, $input);
-
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
@@ -49,3 +34,18 @@ function $setup($scope) {
 	$global_search($scope, $scope.$global.search);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
+
+// tags/row.marko
+const $template = "<p> <button> </button></p>";
+const $walks = "D b D m";
+const $clicks = /*@__PURE__*/ _fill_let("__tests__/tags/row.marko_fill0", "clicks/6", ($scope) => _text($scope["#text/2"], $scope.clicks));
+const $setup__script = _script("__tests__/tags/row.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$clicks($scope, +$scope.clicks + 1);
+}));
+function $setup($scope) {
+	$setup__script($scope);
+	$clicks($scope, 0);
+}
+const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
+const $input = ($scope, input) => $input_label($scope, input.label);
+var row_default = /*@__PURE__*/ _template("__tests__/tags/row.marko", $template, $walks, $setup, $input);

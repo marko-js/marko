@@ -3,7 +3,6 @@ const $template = "<main><!></main>";
 const $walks = "D%l";
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content;D ;<em> </em>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,loading",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
@@ -32,7 +31,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<em>${_text_resume($scope3_id, "#text/0", err.message, $sg__err_message)}</em>`);
 		_source_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "7:6");
-	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1);
+	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

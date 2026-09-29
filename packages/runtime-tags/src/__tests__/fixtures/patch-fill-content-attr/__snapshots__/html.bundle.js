@@ -40,5 +40,5 @@ var template_default = _template_patch("a", (input) => {
 		g: $input_label__closures,
 		h: $count__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a2", input.label);
 }, 1, () => [frame_default]);

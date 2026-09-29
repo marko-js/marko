@@ -20,7 +20,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "#text/0", input.title + "@" + count)}</p>`);
-					_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_2_input_title#0:8/subscribe"), "__tests__/template.marko_2_count#0:9/subscribe");
+					_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), "__tests__/template.marko_2_input_title#0:8/subscribe"), "__tests__/template.marko_2_count#0:9/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
@@ -40,5 +40,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_inner: ["input.inner"],
 		input_title: ["input.title"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, 0);

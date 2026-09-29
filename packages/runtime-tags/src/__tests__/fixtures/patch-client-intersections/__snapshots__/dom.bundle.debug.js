@@ -36,8 +36,8 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/price-card.marko
 const $template$1 = "<section><h2> </h2><button>+</button></section>";
 const $walks$1 = "E l l";
-const $input_label__OR__qty = /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko1", "qty", /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko0", "input_label", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty))));
-const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko1", "qty/5", $input_label__OR__qty);
+const $input_label__OR__qty = /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko_fill1", "qty", /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko_fill0", "input_label", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty))));
+const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko_fill1", "qty/5", $input_label__OR__qty);
 const $setup__script$1 = _script("__tests__/tags/price-card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$qty($scope, +$scope.qty + 1);
 }));
@@ -45,15 +45,15 @@ function $setup$1($scope) {
 	$setup__script$1($scope);
 	$qty($scope, 1);
 }
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/tags/price-card.marko0", "input_label", $input_label__OR__qty);
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/tags/price-card.marko_fill0", "input_label", $input_label__OR__qty);
 const $input$1 = ($scope, input) => $input_label($scope, input.label);
 var price_card_default = /*@__PURE__*/ _template("__tests__/tags/price-card.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // tags/promo-tag.marko
 const $template = "<aside> </aside><button class=promo>seen</button>";
 const $walks = "D l b";
-const $input_text__OR__seen = /*@__PURE__*/ _fill_join("__tests__/tags/promo-tag.marko1", "seen", /*@__PURE__*/ _fill_join("__tests__/tags/promo-tag.marko0", "input_text", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_text + " (" + $scope.seen + ")"))));
-const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/promo-tag.marko1", "seen/5", $input_text__OR__seen);
+const $input_text__OR__seen = /*@__PURE__*/ _fill_join("__tests__/tags/promo-tag.marko_fill1", "seen", /*@__PURE__*/ _fill_join("__tests__/tags/promo-tag.marko_fill0", "input_text", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_text + " (" + $scope.seen + ")"))));
+const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/promo-tag.marko_fill1", "seen/5", $input_text__OR__seen);
 const $setup__script = _script("__tests__/tags/promo-tag.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$seen($scope, +$scope.seen + 1);
 }));
@@ -61,6 +61,6 @@ function $setup($scope) {
 	$setup__script($scope);
 	$seen($scope, 0);
 }
-const $input_text = /*@__PURE__*/ _fill_const("__tests__/tags/promo-tag.marko0", "input_text", $input_text__OR__seen);
+const $input_text = /*@__PURE__*/ _fill_const("__tests__/tags/promo-tag.marko_fill0", "input_text", $input_text__OR__seen);
 const $input = ($scope, input) => $input_text($scope, input.text);
 var promo_tag_default = /*@__PURE__*/ _template("__tests__/tags/promo-tag.marko", $template, $walks, $setup, $input);

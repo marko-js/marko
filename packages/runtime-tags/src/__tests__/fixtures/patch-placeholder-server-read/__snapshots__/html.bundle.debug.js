@@ -27,7 +27,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>loading ${_text_resume($scope1_id, "#text/0", input.msg, $sg__input_msg * 2)}</em>`);
-		_subscribe(_source_if($scope0_reason, 0) && $input_msg__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_msg#0:5/subscribe", $sg__input_msg);
+		_subscribe(_source_if($scope0_reason, 0) && $input_msg__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_1_input_msg#0:5/subscribe", $sg__input_msg);
 		$sg__input_msg || _resume_branch($scope1_id);
 	}, void 0, "__tests__/template.marko_1*content", void 0, "__tests__/template.marko_2*content", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
@@ -39,5 +39,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_msg: ["input.msg"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.msg);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.msg);
 }, 1, 0);

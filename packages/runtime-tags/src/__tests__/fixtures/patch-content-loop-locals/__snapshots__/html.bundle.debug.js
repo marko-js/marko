@@ -12,8 +12,8 @@ var list_default = _template_patch("__tests__/tags/list.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $tag = item.content;
 		_dynamic_tag($scope1_id, "#text/0", $tag, {}, 0, 0, $sg__input_item, _patch_dynamic_tag($scope1_id, "#text/0", $tag, 0, 0, 0, $scope0_reason, 0));
-		_scope($scope1_id, {}, "__tests__/tags/list.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", 1, 1, $sg__input_item, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
+		$scope0_page && _scope($scope1_id, {}, "__tests__/tags/list.marko", "1:2");
+	}, 0, $scope0_id, "#text/0", 1, $sg__input_item, $sg__input_item, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/list.marko", 0);
 }, 0, 1);
 
@@ -37,7 +37,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		$item = attrTags($item, { content: _content_elide("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "__tests__/template.marko0", label);
+			_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "__tests__/template.marko_fill0", label);
 			_html(`<em>${_text_resume($scope1_id, "#text/0", label + n)}</em>`);
 			_if(() => {
 				if (input.show) {

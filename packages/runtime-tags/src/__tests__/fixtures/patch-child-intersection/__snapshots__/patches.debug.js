@@ -2,6 +2,6 @@
 {
   "PatchText:#text/0": "Cart!",
   "PatchChild:#childScope/1": {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-intersection/tags/price-card.marko0": "Gadget"
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-intersection/tags/price-card.marko_fill0": "Gadget"
   }
 }

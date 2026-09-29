@@ -2,7 +2,7 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = () => {};
-const $if_content__count = /*@__PURE__*/ _fill_let("__tests__/template.marko0", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
+const $if_content__count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));

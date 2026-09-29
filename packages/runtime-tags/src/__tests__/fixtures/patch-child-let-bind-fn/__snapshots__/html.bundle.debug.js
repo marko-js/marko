@@ -20,9 +20,9 @@ var picker_default = _template_patch("__tests__/tags/picker.marko", (input) => {
 		_scope($scope1_id, {}, "__tests__/tags/picker.marko", "10:6");
 	}, 0, $scope0_id, "#ul/1", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "__tests__/tags/picker.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/picker.marko0", refreshing, 1);
+	_patch_value($scope0_id, "__tests__/tags/picker.marko_fill0", refreshing, 1);
 	_patch_bind($scope0_id, "TagVariableChange:refreshing", input.refreshingChange || void 0);
-	_patch_value($scope0_id, "__tests__/tags/picker.marko1", catalog, 1);
+	_patch_value($scope0_id, "__tests__/tags/picker.marko_fill1", catalog, 1);
 	$scope0_page && _scope($scope0_id, {
 		input_refreshing: _source_if($scope0_reason, 1) && input.refreshing,
 		input_refreshingChange: _source_if($scope0_reason, 0) && input.refreshingChange,

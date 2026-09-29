@@ -1,7 +1,7 @@
 // PATCH
 {
   ca: {
-    vb0: "Widget"
+    vb1: "Widget"
   },
   tc: "Cart!"
 }

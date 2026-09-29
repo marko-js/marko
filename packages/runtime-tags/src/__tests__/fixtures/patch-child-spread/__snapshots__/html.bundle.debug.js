@@ -8,7 +8,7 @@ var card_default = _template_patch("__tests__/tags/card.marko", (input) => {
 	let open = false;
 	_html(`<div class=card><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2><p>${_patch_text($scope0_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</p><button class=t>${_text_resume($scope0_id, "#text/3", open ? "hide" : "show")}</button>${_el_resume($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/card.marko0", open, 1);
+	_patch_value($scope0_id, "__tests__/tags/card.marko_fill0", open, 1);
 	$scope0_page && _scope($scope0_id, { open }, "__tests__/tags/card.marko", 0, { open: "1:6" });
 }, 0, 0);
 

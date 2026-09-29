@@ -1,10 +1,10 @@
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $two_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_title", /*@__PURE__*/ _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_2_input_title#0:3/subscribe"), 1);
+const $two_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_2_input_title#0:3/subscribe"), 1);
 const $two_content__setup = $two_content__input_title;
 const $two_content = _content("__tests__/template.marko_2*content", "<strong>two <!></strong>", "Db%", $two_content__setup);
-const $one_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_title", /*@__PURE__*/ _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:3/subscribe"), 0);
+const $one_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:3/subscribe"), 0);
 const $one_content__setup = $one_content__input_title;
 const $one_content = _content("__tests__/template.marko_1*content", "<em>one <!></em>", "Db%", $one_content__setup);
 const $input_which__OR__one__OR__two__script = _script("__tests__/template.marko_0_input_which#4_one#5_two#6", ($scope) => _attrs_script($scope, "#div/0"));
@@ -24,5 +24,5 @@ const $input = ($scope, input) => {
 	$input_title($scope, input.title);
 };
 const $input_title__closure = /*@__PURE__*/ _closure($one_content__input_title, $two_content__input_title);
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $input_title__closure);
+const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_title", $input_title__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup, $input);

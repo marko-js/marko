@@ -30,9 +30,9 @@ var template_default = _template_patch("c", (input) => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_html(_text_resume($scope2_id, "a", input.label));
-				_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "c1");
+				_subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "c1");
 			}, $scope1_id));
-			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 0) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "c2"), "c3");
+			_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 0) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c2"), "c3");
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
@@ -45,5 +45,5 @@ var template_default = _template_patch("c", (input) => {
 		h: $input_on__closures,
 		j: $count__closures,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "c0", input.on), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "c1", input.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "c6", input.on), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "c7", input.label));
 }, 1, 1);

@@ -23,7 +23,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // card-live.marko
 const $template = "<button><!> <!></button>";
 const $walks = " D%c%l";
-const $n = /*@__PURE__*/ _fill_let("__tests__/card-live.marko0", "n/6", ($scope) => _text($scope["#text/2"], $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/card-live.marko_fill0", "n/6", ($scope) => _text($scope["#text/2"], $scope.n));
 const $setup__script = _script("__tests__/card-live.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

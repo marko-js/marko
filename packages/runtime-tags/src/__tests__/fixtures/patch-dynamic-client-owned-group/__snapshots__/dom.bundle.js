@@ -20,4 +20,4 @@ const $on = /*@__PURE__*/ _let(5, ($scope) => $input_on($scope.a, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$on($scope, !$scope.f);
 }));
-const $input_label = _fill_const("a0", 4, ($scope) => $input_label$1($scope.a, $scope.e));
+const $input_label = _fill_const("a1", 4, ($scope) => $input_label$1($scope.a, $scope.e));

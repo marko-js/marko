@@ -1,45 +1,45 @@
 // PATCH
-[`a0 a7 a8 a9;/ D l&;<button class=tick> </button>`, `a1 !;/DbD%m&;<section><h2>Panel</h2><div class=aside><!></div></section>`, `b0;/0& b%c&b;<button class=bonus>bonus</button><!><!><!>`, {
+[`a0 a9 a10 a11;/ D l&;<button class=tick> </button>`, `a1 !;/DbD%m&;<section><h2>Panel</h2><div class=aside><!></div></section>`, `b0;/0& b%c&b;<button class=bonus>bonus</button><!><!><!>`, {
   ba: [{
     ca: {
       ca: {
         dU: "c0",
         s: {
           0: "a2",
-          vc0: null
+          vc1: null
         }
       },
       ld: [{
-        va1: 0,
+        va4: 0,
         ca: {
           fa: "^^a0",
           cAa: {
             ca: {
               s: {
                 i: "!d0",
-                vd1: 0
+                vd2: 0
               }
             }
           }
         }
       }, {
-        va1: 1,
+        va4: 1,
         ca: {
           fa: "^^a0",
           cAa: {
             ca: {
               s: {
                 i: "!d0",
-                vd1: 0
+                vd2: 0
               }
             }
           }
         }
       }, "a1"],
       s: {
-        i: "!a4"
+        i: "!a5"
       },
-      va0: 0
+      va6: 0
     }
   }, "b0"]
 }]
@@ -53,27 +53,27 @@
         dU: "c0",
         s: {
           0: "a2",
-          vc0: null
+          vc1: null
         }
       },
       ld: [{
-        va1: 1,
+        va4: 1,
         ca: {
           fa: "^^a0",
           cAa: {
             ca: {
               s: {
                 i: "!d0",
-                vd1: 0
+                vd2: 0
               }
             }
           }
         }
       }, "a1"],
       s: {
-        i: "!a4"
+        i: "!a5"
       },
-      va0: 2
+      va6: 2
     }
   }, "b0"]
 }

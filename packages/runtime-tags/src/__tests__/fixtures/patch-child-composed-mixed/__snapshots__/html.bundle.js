@@ -41,5 +41,5 @@ var template_default = _template_patch("a", (input) => {
 		e: input.base,
 		f: count,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.base);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.base);
 }, 1, () => [relay_default]);

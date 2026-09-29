@@ -1,6 +1,10 @@
 // Translate-side patch fills: which bindings a patch fills or writes, fill
 // identity, and what a fresh scope can render. Analyze facts: ./structure.
-import { getProgram, getFile } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  getProgram,
+  getTemplateId,
+} from "@marko/compiler/babel-utils";
 
 import * as BindingType from "../constants/binding-type";
 import { createCyclicMemo } from "../cyclic-memo";
@@ -28,12 +32,7 @@ import {
   isInParams,
   readsValuesOnResume,
 } from "../references";
-import {
-  getChildSectionOf,
-  getSectionRegisterReasons,
-  type Section,
-  someSection,
-} from "../sections";
+import { getChildSectionOf, type Section, someSection } from "../sections";
 import { isStableExpr } from "../serialize-guard";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
@@ -47,7 +46,7 @@ import {
   someContentRead,
 } from "./structure";
 
-// Stable wire/registry key for a fill: template id plus a program-wide fill
+// Stable wire/registry key for a fill: a register id for a program-wide fill
 // ordinal built in section order so every output agrees.
 const [getFillOrdinals] = createProgramState<{ m?: Map<Binding, number> }>(
   () => ({}),
@@ -67,7 +66,8 @@ export function getPatchFillKey(binding: Binding) {
   if (ordinal === undefined) {
     throw new Error("Marko: a patch fill binding is missing its ordinal.");
   }
-  return getFile().metadata.marko.id + ordinal;
+  const { markoOpts, opts } = getFile();
+  return getTemplateId(markoOpts, opts.filename as string, "fill" + ordinal);
 }
 
 // The template's fill bindings.
@@ -231,13 +231,7 @@ function computeFillReadKind(
       let content: Section | undefined;
       while (readSection && readSection !== binding.section) {
         if (isStatefulBranch(readSection)) return true;
-        if (
-          readSection.boundaryContent &&
-          (getProgram().node.extra.isInteractive ||
-            getSectionRegisterReasons(readSection))
-        ) {
-          return true;
-        }
+        if (readSection.boundaryContent) return true;
         // The nearest content a consumer renders (or withholds).
         if (
           !content &&

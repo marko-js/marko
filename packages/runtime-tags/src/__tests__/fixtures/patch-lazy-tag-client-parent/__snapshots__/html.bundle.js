@@ -8,7 +8,7 @@ var child_default = _template_patch("b", (input) => {
 	let count = 0;
 	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b0", count, 1);
+	_patch_value($scope0_id, "b1", count, 1);
 	$scope0_page && _scope($scope0_id, { g: count });
 }, 0, 0);
 
@@ -37,7 +37,7 @@ var wrapper_default = _template_patch("c", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["c0"], $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { e: input.label }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "c0", input.label);
+	$scope0_page ? _scope($scope0_id, { e: input.label }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "c1", input.label);
 }, 0, () => [$Child_withLoadAssets]);
 
 // template.marko
@@ -51,5 +51,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: input.show,
 		e: input.label
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.show), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a1", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a1", input.show), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a2", input.label));
 }, 1, () => [wrapper_default]);

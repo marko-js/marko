@@ -19,7 +19,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope1_id, "#text/0", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_value($scope1_id, "__tests__/template.marko0", count, 1);
+			_patch_value($scope1_id, "__tests__/template.marko_fill0", count, 1);
 			_patch_bind($scope1_id, "TagVariableChange:count", handler || void 0);
 			_scope($scope1_id, {
 				count,

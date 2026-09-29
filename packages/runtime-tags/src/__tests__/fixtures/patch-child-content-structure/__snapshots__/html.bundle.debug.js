@@ -60,5 +60,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_show: ["input.show"],
 		input_title: ["input.title"],
 		open: "1:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.show), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko1", input.title));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.show), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill1", input.title));
 }, 1, () => [box_default]);

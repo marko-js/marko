@@ -23,7 +23,6 @@ import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
 import { writesPatchHole } from "../util/patch/decisions";
-import { onFinalizePatch } from "../util/patch/lifecycle";
 import { ensurePatchWriteGroups, writesPatchIn } from "../util/patch/structure";
 import {
   type Binding,
@@ -32,6 +31,7 @@ import {
   FORCED,
   getScopeAccessorLiteral,
   mergeReferences,
+  onFinalizeReferences,
 } from "../util/references";
 import { linkRuntimeFeature, callRuntime } from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -140,7 +140,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   addSerializeExpr(section, exprExtras, binding);
   // Stateful structure is known only once sources resolve.
   const valueExtras = dynamicStyleValues(node).map((value) => value.extra!);
-  onFinalizePatch(() => {
+  onFinalizeReferences(() => {
     // A dynamic style in server-owned structure writes its rule from the
     // flush (a state-fed interpolation recomputes through the signal graph).
     if (writesPatchIn(section)) {

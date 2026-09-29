@@ -8,7 +8,7 @@ var counter_default = _template_patch("b", (input) => {
 	let spins = 0;
 	_html(`<section><p>Value ${_patch_text($scope0_id, "a", input.value, 2, $scope0_reason, 0)} (spun ${_text_resume($scope0_id, "b", spins, 2)})</p><button class=spin>spin</button>${_el_resume($scope0_id, "c")}</section>`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b0", spins, 1);
+	_patch_value($scope0_id, "b1", spins, 1);
 	$scope0_page && _scope($scope0_id, { g: spins });
 }, 0, 0);
 

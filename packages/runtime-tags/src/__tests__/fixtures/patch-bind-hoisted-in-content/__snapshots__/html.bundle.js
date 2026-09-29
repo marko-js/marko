@@ -10,7 +10,7 @@ var store_default = _template_patch("c", (input) => {
 	const $return = _resume((next) => {
 		last = next;
 	}, "c0", $scope0_id);
-	_patch_value($scope0_id, "c0", last, 1);
+	_patch_value($scope0_id, "c1", last, 1);
 	$scope0_page && _scope($scope0_id, {});
 	return $return;
 }, 0, 0);
@@ -61,7 +61,7 @@ var template_default = _template_patch("a", (input) => {
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope2_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope2_id, "b")}`);
 			_script($scope2_id, "a4");
-			_patch_value($scope2_id, "a0", count, 1);
+			_patch_value($scope2_id, "a5", count, 1);
 			_patch_bind($scope2_id, "d", $setLast_getter || void 0);
 			_scope($scope2_id, {
 				c: count,

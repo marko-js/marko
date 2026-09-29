@@ -1,13 +1,13 @@
 // tags/child.marko
-const $if_content__count = /*@__PURE__*/ _fill_let_change("b1", 2, ($scope) => _text($scope.a, $scope.c));
-const $if_content__input_on = /*@__PURE__*/ _fill_join("b0", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__count($scope, 0, $scope._.e)));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("b2", 2, ($scope) => _text($scope.a, $scope.c));
+const $if_content__input_on = /*@__PURE__*/ _fill_join("b3", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__count($scope, 0, $scope._.e)));
 const $if_content__setup__script = _script("b1", ($scope) => _on($scope.b, "click", function() {
 	$if_content__count($scope, +$scope.c + 1);
 }));
-const $input_on = /*@__PURE__*/ _fill_const("b0", 4, $if_content__input_on);
+const $input_on = /*@__PURE__*/ _fill_const("b3", 4, $if_content__input_on);
 
 // tags/store.marko
-const $last = /*@__PURE__*/ _fill_let("c0", 0, ($scope) => _return($scope, {
+const $last = /*@__PURE__*/ _fill_let("c1", 0, ($scope) => _return($scope, {
 	last: $scope.a,
 	set: $_return($scope)
 }));

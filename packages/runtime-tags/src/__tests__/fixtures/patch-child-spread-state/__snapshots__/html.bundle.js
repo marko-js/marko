@@ -17,7 +17,7 @@ var card_default = _template_patch("c", (input) => {
 	let open = false;
 	_html(`<div class=card><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2><p>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_reason, 1)}</p><button class=t>${_text_resume($scope0_id, "d", "show")}</button>${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "c0");
-	_patch_value($scope0_id, "c0", open, 1);
+	_patch_value($scope0_id, "c1", open, 1);
 	$scope0_page && _scope($scope0_id, { i: open });
 }, 0, 0);
 
@@ -43,5 +43,5 @@ var template_default = _template_patch("a", (input) => {
 		h: on,
 		j: input.badge?.label,
 		b: _existing_scope($childScope2)
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.props), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a1", input.badge?.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.props), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a2", input.badge?.label));
 }, 1, () => [badge_default, card_default]);

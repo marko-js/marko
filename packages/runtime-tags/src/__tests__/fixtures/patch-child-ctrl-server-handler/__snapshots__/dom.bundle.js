@@ -7,7 +7,7 @@ const $setup__script$1 = _script("b0", ($scope) => _attr_input_value_script($sco
 const $setup = $setup__script$1;
 
 // template.marko
-const $if_content__handle = /*@__PURE__*/ _fill_join("a0", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_valueChange($scope.a, $scope._.f)));
+const $if_content__handle = /*@__PURE__*/ _fill_join("a2", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_valueChange($scope.a, $scope._.f)));
 const $if_content__setup = ($scope) => {
 	$if_content__handle._($scope);
 	$setup($scope.a);

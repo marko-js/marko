@@ -1,24 +1,24 @@
 // PATCH
-[`a0 a5;b%;<!><!><!>`, {
+[`a0 a6;b%;<!><!><!>`, {
   ba: "a0",
-  va0: "b"
+  va3: "b"
 }]
 "AgE"
 
 // PATCH holding AgE
 {
   ba: "a0",
-  va0: "c"
+  va3: "c"
 }
 
 // PATCH holding AgE
 {
   ba: 0,
-  va0: "d"
+  va3: "d"
 }
 
 // PATCH holding AgE
 {
   ba: "a0",
-  va0: "e"
+  va3: "e"
 }

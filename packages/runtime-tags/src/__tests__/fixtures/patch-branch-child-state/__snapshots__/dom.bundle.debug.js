@@ -23,7 +23,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/counter.marko
 const $template = "<div class=counter><span><!>: <!></span><button class=inc>+</button></div>";
 const $walks = "E%c%l l";
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko0", "n/7", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_fill0", "n/7", ($scope) => _text($scope["#text/1"], $scope.n));
 const $input_start = $n;
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {

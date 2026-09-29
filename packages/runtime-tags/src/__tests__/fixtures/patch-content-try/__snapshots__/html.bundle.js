@@ -13,13 +13,12 @@ var card_default = _template_patch("b", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0,loading",
+	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
-	a2: "a2;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
 	a3: "a3;b%;<!><!><!>",
-	a4: "a4;b%;<!><!><!>",
 	a: "a; ;<main></main>",
-	a5: /*@__PURE__*/ ((_w0, _w1) => `a5;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template)
+	a4: /*@__PURE__*/ ((_w0, _w1) => `a4;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $template)
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 1);
@@ -32,7 +31,7 @@ var template_default = _template_patch("a", (input) => {
 			_set_serialize_reason(0);
 			const $childScope = _peek_scope_id();
 			_patch_child($scope1_id, "a", $childScope);
-			card_default({ content: _content_elide("a4", () => {
+			card_default({ content: _content_elide("a3", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_try($scope2_id, "a", () => {
@@ -45,14 +44,14 @@ var template_default = _template_patch("a", (input) => {
 							_: _scope_with_id($scope3_id),
 							Cf: 1
 						}));
-					}, 1, "a1");
+					}, 1, "a0");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 					$scope0_page && _resume_branch($scope3_id);
 				}, () => {
 					_scope_reason();
 					_scope_id();
 					_html("loading");
-				}, void 0, "a0", void 0, "a3");
+				}, void 0, "a5", void 0, "a2");
 				$scope0_page && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, $scope1_id) });
 			_scope($scope1_id, {
@@ -61,7 +60,7 @@ var template_default = _template_patch("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a5"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a4"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_page && _scope($scope0_id, {
 		e: _source_if($scope0_reason, 1) && input.value,

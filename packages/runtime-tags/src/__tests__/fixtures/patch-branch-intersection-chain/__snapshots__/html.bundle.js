@@ -1,9 +1,9 @@
 // template.marko
 _shells({
 	a: "a !a3;D bD l ;<main><div></div><span> </span><button>+</button></main>",
-	a0: "a0 a5 a6;Db%;<p>A <!></p>",
-	a1: "a1 a7 a8;Db%;<p>B <!></p>",
-	a2: "a2 a9;Db%;<p>None <!></p>"
+	a0: "a0 a6 a7;Db%;<p>A <!></p>",
+	a1: "a1 a8 a9;Db%;<p>B <!></p>",
+	a2: "a2 a10;Db%;<p>None <!></p>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_kind = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -37,5 +37,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: input.title,
 		h: count
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a4", input.title);
 }, 1, 0);

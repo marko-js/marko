@@ -15,8 +15,8 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/price-card.marko
 const $template = "<div><h2> </h2><button>+</button></div>";
 const $walks = "E l l";
-const $input_label__OR__qty = /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko1", "qty", /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko0", "input_label", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty))));
-const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko1", "qty/5", $input_label__OR__qty);
+const $input_label__OR__qty = /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko_fill1", "qty", /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko_fill0", "input_label", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty))));
+const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko_fill1", "qty/5", $input_label__OR__qty);
 const $setup__script = _script("__tests__/tags/price-card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$qty($scope, +$scope.qty + 1);
 }));
@@ -24,6 +24,6 @@ function $setup($scope) {
 	$setup__script($scope);
 	$qty($scope, 1);
 }
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/tags/price-card.marko0", "input_label", $input_label__OR__qty);
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/tags/price-card.marko_fill0", "input_label", $input_label__OR__qty);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var price_card_default = /*@__PURE__*/ _template("__tests__/tags/price-card.marko", $template, $walks, $setup, $input);

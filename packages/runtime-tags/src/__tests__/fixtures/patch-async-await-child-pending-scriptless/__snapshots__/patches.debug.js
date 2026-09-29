@@ -11,7 +11,7 @@
         "PatchText:#text/0": "b",
         "PatchSetup:": {
           "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/tags/pill.marko_0",
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/tags/pill.marko0": 2
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/tags/pill.marko_fill0": 2
         }
       }
     }

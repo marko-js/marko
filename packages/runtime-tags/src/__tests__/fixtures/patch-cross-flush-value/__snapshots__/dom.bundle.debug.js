@@ -1,7 +1,7 @@
 // tags/tagged/index.marko
 const $template$1 = "<button><!>:<!></button>";
 const $walks$1 = " D%c%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/tagged/index.marko0", "count/8", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/tagged/index.marko_fill0", "count/8", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/tags/tagged/index.marko_0", ($scope) => _on($scope["#button/0"], "click", function(event) {
 	$count($scope, +$scope.count + 1);
 	const shared = window.shared;

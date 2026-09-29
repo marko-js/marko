@@ -20,9 +20,9 @@ var picker_default = _template_patch("b", (input) => {
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "b", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "b1");
-	_patch_value($scope0_id, "b0", refreshing, 1);
+	_patch_value($scope0_id, "b2", refreshing, 1);
 	_patch_bind($scope0_id, "i", input.refreshingChange || void 0);
-	_patch_value($scope0_id, "b1", catalog, 1);
+	_patch_value($scope0_id, "b3", catalog, 1);
 	$scope0_page && _scope($scope0_id, {
 		e: _source_if($scope0_reason, 1) && input.refreshing,
 		f: _source_if($scope0_reason, 0) && input.refreshingChange,

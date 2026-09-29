@@ -10,7 +10,7 @@
       "PatchText:#text/1": "m1",
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/tags/card.marko_0",
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/tags/card.marko0": !1
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/tags/card.marko_fill0": !1
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell"]
@@ -29,7 +29,7 @@
       "PatchText:#text/1": "m2",
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/tags/card.marko_0",
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/tags/card.marko0": !1
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/tags/card.marko_fill0": !1
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-spread/template.marko_1*shell"]

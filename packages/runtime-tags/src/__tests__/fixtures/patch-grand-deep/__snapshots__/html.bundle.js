@@ -22,7 +22,7 @@ var l2_default = _template_patch("c", (input) => {
 	_patch_child($scope0_id, "c", $childScope);
 	l3_default({ note: input.note });
 	_script($scope0_id, "c0");
-	_patch_value($scope0_id, "c0", n, 1);
+	_patch_value($scope0_id, "c1", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		g: n,
 		c: _existing_scope($childScope)
@@ -62,5 +62,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.note,
 		f: show
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.note);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.note);
 }, 1, () => [l1_default]);

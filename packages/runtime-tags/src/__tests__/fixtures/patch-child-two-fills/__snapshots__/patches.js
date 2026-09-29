@@ -1,11 +1,11 @@
 // PATCH
 {
-  va0: "t2",
-  va1: "b2"
+  va1: "t2",
+  va2: "b2"
 }
 
 // PATCH
 {
-  va0: "t3",
-  va1: "b3"
+  va1: "t3",
+  va2: "b3"
 }

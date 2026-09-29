@@ -11,7 +11,7 @@ var layout_default = _template_patch("__tests__/layout.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/2", $tag, {}, 0, 0, _source_guard($scope0_reason, 0), _patch_dynamic_tag($scope0_id, "#text/2", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</main>");
 	_script($scope0_id, "__tests__/layout.marko_0");
-	_patch_value($scope0_id, "__tests__/layout.marko0", open, 1);
+	_patch_value($scope0_id, "__tests__/layout.marko_fill0", open, 1);
 	$scope0_page && _scope($scope0_id, { open }, "__tests__/layout.marko", 0, { open: "1:6" });
 }, 0, 0);
 
@@ -25,7 +25,7 @@ var page_a_default = _template_patch("__tests__/page-a.marko", (input) => {
 	let count = 0;
 	_html(`<button class=a>a:${_text_resume($scope0_id, "#text/1", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/page-a.marko_0");
-	_patch_value($scope0_id, "__tests__/page-a.marko0", count, 1);
+	_patch_value($scope0_id, "__tests__/page-a.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, { count }, "__tests__/page-a.marko", 0, { count: "1:6" });
 }, 0, 0);
 
@@ -42,7 +42,7 @@ var page_b_default = _template_patch("__tests__/page-b.marko", (input) => {
 	_html(`<button class=b>b:${_patch_text($scope0_id, "#text/1", q, 2)}:${_patch_text($scope0_id, "#text/2", issues ? "!" : "", 2)}:${_text_resume($scope0_id, "#text/3", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_global_subscribe("__tests__/page-b.marko_0_$global_search#7/global", $scope0_id);
 	_script($scope0_id, "__tests__/page-b.marko_0");
-	_patch_value($scope0_id, "__tests__/page-b.marko0", count, 1);
+	_patch_value($scope0_id, "__tests__/page-b.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, { count }, "__tests__/page-b.marko", 0, { count: "2:6" });
 }, 0, 1);
 

@@ -14,7 +14,7 @@
     "PatchChild:BranchScopes:#text/2": {
       "PatchText:#text/1": "b",
       "PatchSetup:": {
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-let-return-visit/child.marko0": 0
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-let-return-visit/child.marko_fill0": 0
       }
     }
   }
@@ -30,7 +30,7 @@
     "PatchChild:BranchScopes:#text/2": {
       "PatchText:#text/1": "c",
       "PatchSetup:": {
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-let-return-visit/child.marko0": 0
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-dynamic-let-return-visit/child.marko_fill0": 0
       }
     }
   }

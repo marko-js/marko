@@ -19,7 +19,7 @@ var card_live_default = _template_patch("__tests__/card-live.marko", (input) => 
 	let n = 0;
 	_html(`<button>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/card-live.marko_0");
-	_patch_value($scope0_id, "__tests__/card-live.marko0", n, 1);
+	_patch_value($scope0_id, "__tests__/card-live.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, { n }, "__tests__/card-live.marko", 0, { n: "1:6" });
 }, 0, 0);
 

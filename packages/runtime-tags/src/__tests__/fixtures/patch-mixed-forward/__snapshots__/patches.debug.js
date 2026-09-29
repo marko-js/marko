@@ -1,9 +1,9 @@
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-forward/template.marko0": 2
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-forward/template.marko_fill0": 2
 }
 
 // PATCH
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-forward/template.marko0": 3
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-forward/template.marko_fill0": 3
 }

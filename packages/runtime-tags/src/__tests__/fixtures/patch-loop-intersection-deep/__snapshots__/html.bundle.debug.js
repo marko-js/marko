@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_suffix#0:6/init __tests__/template.marko_2_count#0:7/init;D ;<p> </p>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_items = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const $count__closures = new Set();
@@ -22,8 +22,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_subscribe($count__closures, _subscribe(_source_if($scope0_reason, 3) && $input_suffix__closures, _scope($scope2_id, {
 					"#LoopKey": item,
 					_: _scope_with_id($scope1_id)
-				}, "__tests__/template.marko", "4:6", { "#LoopKey": "4:10" }), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_suffix#0:6/subscribe"), "__tests__/template.marko_2_count#0:7/subscribe");
-			}, (item) => item, $scope1_id, "#text/0", 1, 1, _source_guard($scope0_reason, 2), void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
+				}, "__tests__/template.marko", "4:6", { "#LoopKey": "4:10" }), "__tests__/template.marko_2_input_suffix#0:6/subscribe"), "__tests__/template.marko_2_count#0:7/subscribe");
+			}, (item) => item, $scope1_id, "#text/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
@@ -40,5 +40,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_items: ["input.items"],
 		input_suffix: ["input.suffix"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "__tests__/template.marko0", input.suffix);
+	}) : _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.suffix);
 }, 1, 0);

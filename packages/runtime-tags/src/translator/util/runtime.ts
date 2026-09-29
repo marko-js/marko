@@ -11,7 +11,6 @@ import {
   _escape_style,
   _unescaped,
 } from "../../html";
-import { addAssetImport } from "./asset-imports";
 import { isTranslate } from "./get-compile-stage";
 import {
   getMarkoOpts,
@@ -206,7 +205,6 @@ declare module "@marko/compiler/dist/types" {
 // Links a client runtime feature from analyze: the page entry imports it
 // when the template's module never loads, and that module imports it too.
 export function linkRuntimeFeature(feature: DOMRuntimeFeature) {
-  addAssetImport(`${getRuntimePath("dom")}/${feature}.feat`);
   (getProgram().node.extra.runtimeFeatures ??= new Set()).add(feature);
 }
 

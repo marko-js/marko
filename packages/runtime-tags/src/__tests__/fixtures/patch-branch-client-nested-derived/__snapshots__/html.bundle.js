@@ -18,5 +18,5 @@ var template_default = _template_patch("a", (input) => {
 		g: label,
 		h: show,
 		i: $label__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", label), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", show));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a2", label), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a3", show));
 }, 1, 0);

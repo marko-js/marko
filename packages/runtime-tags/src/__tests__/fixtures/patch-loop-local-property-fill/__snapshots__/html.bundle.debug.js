@@ -23,7 +23,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		const item = row.item;
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "__tests__/template.marko0", item?.id);
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "__tests__/template.marko_fill0", item?.id);
 		_set_serialize_reason(6);
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "#childScope/0", $childScope);

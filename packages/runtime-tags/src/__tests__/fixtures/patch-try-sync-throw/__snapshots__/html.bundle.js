@@ -23,7 +23,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_resume($scope2_id, "a", err.message, $sg__err_message)}</b>`);
 		_source_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "a3", "a0", 1);
+	}, void 0, "a3", "a0");
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
 	$scope0_page && _scope($scope0_id, {

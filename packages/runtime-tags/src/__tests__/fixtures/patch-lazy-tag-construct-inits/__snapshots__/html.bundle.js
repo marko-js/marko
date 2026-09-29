@@ -2,8 +2,8 @@
 const $template = "<button>+</button><!><!>";
 const $walks = " b%c";
 _shells({
-	a: "a !a1; b%;<button>+</button><!><!>",
-	a0: "a0 a3;D%c%;<span><!>:<!></span>"
+	a: "a !a2; b%;<button>+</button><!><!>",
+	a0: "a0 a5;D%c%;<span><!>:<!></span>"
 });
 var child_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -19,8 +19,8 @@ var child_default = _template_patch("a", (input) => {
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "b", 1, 1, 0, void 0, void 0, "a0", 0, 0);
-	_script($scope0_id, "a1");
-	_patch_value($scope0_id, "a0", count, 1);
+	_script($scope0_id, "a2");
+	_patch_value($scope0_id, "a3", count, 1);
 	$scope0_page && _scope($scope0_id, { f: count });
 }, 0, 0);
 

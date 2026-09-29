@@ -14,7 +14,7 @@ var counter_default = _template_patch("__tests__/tags/counter/index.marko", (inp
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope1_id, "#text/0", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/tags/counter/index.marko_1");
-			_patch_value($scope1_id, "__tests__/tags/counter/index.marko1", count, 1);
+			_patch_value($scope1_id, "__tests__/tags/counter/index.marko_fill1", count, 1);
 			_patch_bind($scope1_id, "TagVariableChange:count", input.onCount || void 0);
 			_scope($scope1_id, {
 				count,
@@ -27,7 +27,7 @@ var counter_default = _template_patch("__tests__/tags/counter/index.marko", (inp
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/counter/index.marko_1*shell"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_onCount: input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/counter/index.marko0", input.onCount);
+	$scope0_page ? _scope($scope0_id, { input_onCount: input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/counter/index.marko_fill0", input.onCount);
 }, 0, 0);
 
 // template.marko

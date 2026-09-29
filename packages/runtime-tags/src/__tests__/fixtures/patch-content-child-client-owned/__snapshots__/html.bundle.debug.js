@@ -17,14 +17,14 @@ var card_default = _template_patch("__tests__/tags/card/index.marko", (input) =>
 	}, $scope0_id, "#text/1");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</section>`);
 	_script($scope0_id, "__tests__/tags/card/index.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/card/index.marko1", open, 1);
+	_patch_value($scope0_id, "__tests__/tags/card/index.marko_fill1", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_content: input.content,
 		open
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko0", input.content);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/card/index.marko_fill0", input.content);
 }, 0, 0);
 
 // template.marko
@@ -45,7 +45,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "#text/0", input.note)}</em>`);
-			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_note#0:4/subscribe");
+			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), "__tests__/template.marko_1_input_note#0:4/subscribe");
 		}, $scope0_id)
 	});
 	_html("</main>");
@@ -53,5 +53,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_note: input.note,
 		"ClosureScopes:input_note/5": $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.note);
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.note);
 }, 1, () => [card_default]);

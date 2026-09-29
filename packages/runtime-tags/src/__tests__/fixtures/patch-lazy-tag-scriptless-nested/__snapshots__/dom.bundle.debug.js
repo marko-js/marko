@@ -4,7 +4,7 @@ const $walks$1 = " b";
 const $setup$1 = () => {};
 let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_label.mjs"), "ready:__tests__/tags/host/child.marko");
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/tags/host/index.marko0", "input_label", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label)));
+const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/tags/host/index.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
@@ -15,7 +15,7 @@ const $input$1 = ($scope, input) => {
 	$input_show$1($scope, input.show);
 	$input_label$1($scope, input.label);
 };
-const $input_label$1 = /*@__PURE__*/ _fill_const("__tests__/tags/host/index.marko0", "input_label", $if_content__input_label);
+const $input_label$1 = /*@__PURE__*/ _fill_const("__tests__/tags/host/index.marko_fill0", "input_label", $if_content__input_label);
 var host_default = /*@__PURE__*/ _template("__tests__/tags/host/index.marko", $template$1, " b", 0, $input$1);
 
 // template.marko

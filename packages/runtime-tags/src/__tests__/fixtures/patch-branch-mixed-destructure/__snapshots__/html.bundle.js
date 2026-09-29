@@ -19,5 +19,5 @@ var template_default = _template_patch("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: count,
 		f: min
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", min);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", min);
 }, 1, 0);

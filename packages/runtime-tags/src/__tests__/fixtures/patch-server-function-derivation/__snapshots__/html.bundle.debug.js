@@ -37,8 +37,8 @@ var panel_default = _template_patch("__tests__/tags/panel.marko", (input) => {
 	}, "id", $scope0_id, "#text/4", 1, 1, $scope0_page, void 0, void 0, "__tests__/tags/panel.marko_2*shell");
 	_global_subscribe("__tests__/tags/panel.marko_0_$global_data#6/global", $scope0_id);
 	_script($scope0_id, "__tests__/tags/panel.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/panel.marko2", count, 1);
-	_patch_value($scope0_id, "__tests__/tags/panel.marko3", open, 1);
+	_patch_value($scope0_id, "__tests__/tags/panel.marko_fill2", count, 1);
+	_patch_value($scope0_id, "__tests__/tags/panel.marko_fill3", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		summary,
 		pending_length: pending?.length,
@@ -49,7 +49,7 @@ var panel_default = _template_patch("__tests__/tags/panel.marko", (input) => {
 		pending_length: ["pending.length", "7:8"],
 		count: "8:6",
 		open: "9:6"
-	}) : (_patch_value($scope0_id, "__tests__/tags/panel.marko0", summary), _patch_value($scope0_id, "__tests__/tags/panel.marko1", pending?.length));
+	}) : (_patch_value($scope0_id, "__tests__/tags/panel.marko_fill0", summary), _patch_value($scope0_id, "__tests__/tags/panel.marko_fill1", pending?.length));
 }, 0, 1);
 
 // template.marko

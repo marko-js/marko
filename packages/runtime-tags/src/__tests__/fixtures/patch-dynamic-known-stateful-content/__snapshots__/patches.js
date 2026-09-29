@@ -1,14 +1,14 @@
 // PATCH
 {
-  vb0: "two"
+  vb2: "two"
 }
 
 // PATCH
 {
-  vb0: "three"
+  vb2: "three"
 }
 
 // PATCH
 {
-  vb0: "four"
+  vb2: "four"
 }

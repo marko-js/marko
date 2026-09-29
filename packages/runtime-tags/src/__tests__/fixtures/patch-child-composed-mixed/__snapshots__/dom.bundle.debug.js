@@ -17,7 +17,7 @@ var relay_default = /*@__PURE__*/ _template("__tests__/tags/relay/index.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($walks$1);
-const $input_base__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_base", /*@__PURE__*/ _or(6, ($scope) => $input_val($scope["#childScope/0"], $scope.input_base + $scope.count)));
+const $input_base__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_base", /*@__PURE__*/ _or(6, ($scope) => $input_val($scope["#childScope/0"], $scope.input_base + $scope.count)));
 const $count = /*@__PURE__*/ _let("count/5", $input_base__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
@@ -26,6 +26,6 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_base = _fill_const_resume("__tests__/template.marko0", "input_base", $input_base__OR__count);
+const $input_base = _fill_const_resume("__tests__/template.marko_fill0", "input_base", $input_base__OR__count);
 const $input = ($scope, input) => $input_base($scope, input.base);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

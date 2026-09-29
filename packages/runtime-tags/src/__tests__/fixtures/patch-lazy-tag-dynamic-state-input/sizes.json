@@ -6,7 +6,7 @@
     },
     "template.marko.page.mjs": {
       "min": 4169,
-      "brotli": 1971
+      "brotli": 1973
     },
     "child.mjs": {
       "min": 202,
@@ -23,6 +23,6 @@
   },
   "patch": {
     "min": 46,
-    "brotli": 48
+    "brotli": 50
   }
 }

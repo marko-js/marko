@@ -26,7 +26,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>loading ${_text_resume($scope1_id, "a", input.title, $sg__input_title * 2)}</em>`);
 		_script($scope1_id, "a3", $sg__input_title);
-		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", $sg__input_title);
+		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4", $sg__input_title);
 		$sg__input_title || _resume_branch($scope1_id);
 	}, void 0, "a6", void 0, "a2", 1);
 	_html("</main>");
@@ -34,5 +34,5 @@ var template_default = _template_patch("a", (input) => {
 		e: input.title,
 		g: $input_title__closures,
 		h: $input_promise__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a7", input.title);
 }, 1, 0);

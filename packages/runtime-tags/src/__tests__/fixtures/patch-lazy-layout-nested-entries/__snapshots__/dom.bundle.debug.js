@@ -66,7 +66,7 @@ var layout_default = /*@__PURE__*/ _template("__tests__/layout.marko", $template
 // page-a.marko
 const $template = "<h1>A</h1><p> </p><!><button> </button>";
 const $walks = "bD l%b D l";
-const $n = /*@__PURE__*/ _fill_let("__tests__/page-a.marko0", "n/8", ($scope) => _text($scope["#text/3"], $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/page-a.marko_fill0", "n/8", ($scope) => _text($scope["#text/3"], $scope.n));
 const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

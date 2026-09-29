@@ -1,17 +1,17 @@
 // PATCH
 {
-  va0: "t:b",
-  va1: !0
+  va2: "t:b",
+  va3: !0
 }
 
 // PATCH
 {
-  va0: "t:hide",
-  va1: !1
+  va2: "t:hide",
+  va3: !1
 }
 
 // PATCH
 {
-  va0: "t:c",
-  va1: !0
+  va2: "t:c",
+  va3: !0
 }

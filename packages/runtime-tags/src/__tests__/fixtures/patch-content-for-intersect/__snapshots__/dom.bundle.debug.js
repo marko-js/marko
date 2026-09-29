@@ -12,7 +12,7 @@ var box_default = /*@__PURE__*/ _template("__tests__/tags/box/index.marko", $tem
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $for_content__input_title__OR__item = /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope._._._.input_title + ":" + $scope.item));
-const $for_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", $for_content__input_title__OR__item, ($scope) => $scope._._._, "__tests__/template.marko_3_input_title#0:4/subscribe"), 0);
+const $for_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", $for_content__input_title__OR__item, ($scope) => $scope._._._, "__tests__/template.marko_3_input_title#0:4/subscribe"), 0);
 const $for_content__setup = $for_content__input_title;
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_title__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
@@ -31,5 +31,5 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_title($scope, input.title);
 const $input_title__closure = /*@__PURE__*/ _closure($for_content__input_title);
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", $input_title__closure);
+const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_title", $input_title__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

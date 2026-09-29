@@ -24,7 +24,6 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isPatch } from "../util/marko-config";
 import { fromIter, some } from "../util/optional";
-import { onClassifyStructure, onFinalizePatch } from "../util/patch/lifecycle";
 import {
   isBranchPathSection,
   isStatefulBranch,
@@ -246,7 +245,7 @@ export default {
     );
 
     if (isPatch()) {
-      onClassifyStructure(tagSection, () => {
+      onFinalizeReferences(() => {
         // Patches render a loop that is not stateful.
         if (!isStatefulBranch(bodySection) && isBranchPathSection(tagSection)) {
           linkRuntimeFeature(
@@ -257,7 +256,7 @@ export default {
           recordStructuralParams(getSerializeSourcesForExpr(tagExtra));
         }
       });
-      onFinalizePatch(() => {
+      onFinalizeReferences(() => {
         addPatchSerializeReason(
           tagSection,
           !isStatefulBranch(bodySection) &&
@@ -268,19 +267,19 @@ export default {
         );
       });
       onFinalizeReferences(() => {
-        // Items with dom bindings or nested sections link: a source-less list
-        // (a literal) still resumes its marker.
+        // A source-less list (a literal) whose items have dom bindings or nested
+        // sections still resumes its marker; finalizers read sources, not reasons.
         if (
           !isStatefulBranch(bodySection) &&
           isBranchPathSection(tagSection) &&
-          hasDomBindingsOrNestedSections(bodySection)
+          hasDomBindingsOrNestedSections(bodySection) &&
+          !bodySection.isHoistThrough &&
+          !bodySection.hoisted &&
+          !getSerializeSourcesForExpr(tagExtra) &&
+          !getSerializeSourcesForRef(getDirectClosures(bodySection))
         ) {
-          if (!getSerializeReason(tagSection, nodeBinding)) {
-            addSerializeReason(tagSection, FORCED, nodeBinding);
-          }
-          if (!getSerializeReason(bodySection, kBranchSerializeReason)) {
-            addSerializeReason(bodySection, FORCED, kBranchSerializeReason);
-          }
+          addSerializeReason(tagSection, FORCED, nodeBinding);
+          addSerializeReason(bodySection, FORCED, kBranchSerializeReason);
         }
       });
     }

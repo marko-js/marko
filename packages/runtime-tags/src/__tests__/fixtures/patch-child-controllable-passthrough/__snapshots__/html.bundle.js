@@ -13,7 +13,7 @@ var counter_default = _template_patch("b", (input) => {
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope1_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "b1");
-			_patch_value($scope1_id, "b1", count, 1);
+			_patch_value($scope1_id, "b2", count, 1);
 			_patch_bind($scope1_id, "d", input.onCount || void 0);
 			_scope($scope1_id, {
 				c: count,
@@ -23,7 +23,7 @@ var counter_default = _template_patch("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: input.onCount }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.onCount);
+	$scope0_page ? _scope($scope0_id, { e: input.onCount }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b3", input.onCount);
 }, 0, 0);
 
 // tags/middle/index.marko

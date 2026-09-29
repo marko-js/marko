@@ -4,7 +4,7 @@ const $walks = "E%c%l%b l";
 const shout = (s) => s.toUpperCase() + "!";
 var stamp;
 const flag = "cli";
-const $if_content__input_title__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_title#0:6/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], shout($scope._.input_title) + " #" + $scope._.count))), 0, "#text/2", 0);
+const $if_content__input_title__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_title#0:6/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], shout($scope._.input_title) + " #" + $scope._.count))), 0, "#text/2", 0);
 const $if_content__input_title = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_title__OR__count);
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
@@ -20,7 +20,7 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_title", ($scope) => {
+const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_title", ($scope) => {
 	$if_content__input_title($scope);
 	_text($scope["#text/0"], shout($scope.input_title));
 }, $if_content__input_title);

@@ -12,7 +12,7 @@ var box_default = /*@__PURE__*/ _template("__tests__/tags/box/index.marko", $tem
 const $template = "<main><!><button class=toggle>+</button><button class=bump> </button></main>";
 const $walks = "D%b b D m";
 const $box_content__input_a__OR__count = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.count + ":" + $scope._._.input_a));
-const $box_content__input_a = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_a", /*@__PURE__*/ _closure_get("input_a/9", $box_content__input_a__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_input_a#0:6/subscribe"), 0);
+const $box_content__input_a = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _closure_get("input_a/9", $box_content__input_a__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_input_a#0:6/subscribe"), 0);
 const $box_content__setup = ($scope) => {
 	$box_content__input_a($scope);
 	$box_content__count($scope);
@@ -42,5 +42,5 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_a($scope, input.a);
 const $input_a__closure = /*@__PURE__*/ _closure($box_content__input_a);
-const $input_a = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_a", $input_a__closure);
+const $input_a = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_a", $input_a__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

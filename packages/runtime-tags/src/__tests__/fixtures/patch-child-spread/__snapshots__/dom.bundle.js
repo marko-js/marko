@@ -1,5 +1,5 @@
 // tags/card.marko
-const $open = /*@__PURE__*/ _fill_let("b0", 8, ($scope) => _text($scope.d, $scope.i ? "hide" : "show"));
+const $open = /*@__PURE__*/ _fill_let("b1", 8, ($scope) => _text($scope.d, $scope.i ? "hide" : "show"));
 const $setup__script$1 = _script("b0", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.i);
 }));

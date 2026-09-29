@@ -1,16 +1,16 @@
 // PATCH
 {
   ba: 0,
-  va0: "Store?"
+  va4: "Store?"
 }
 
 // PATCH
-[`a0 a4!a1;D l ;<p> </p><button id=n>n</button>`, {
+[`a0 a6!a1;D l ;<p> </p><button id=n>n</button>`, {
   ba: [{
     s: {
-      va1: 0
+      va2: 0
     }
   }, "a0"],
-  va0: "Fresh"
+  va4: "Fresh"
 }]
 "AgE"

@@ -18,7 +18,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				if (count > 1) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "#text/0", input.title)}</p>`);
-					_subscribe(_source_if($scope0_reason, 1) && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_title#0:5/subscribe");
+					_subscribe(_source_if($scope0_reason, 1) && $input_title__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:6"), "__tests__/template.marko_2_input_title#0:5/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
@@ -35,5 +35,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, 0);

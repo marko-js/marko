@@ -9,7 +9,7 @@ var kid_default = _template_patch("__tests__/tags/kid.marko", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "#text/1", c)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $return = c;
 	_script($scope0_id, "__tests__/tags/kid.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/kid.marko0", c, 1);
+	_patch_value($scope0_id, "__tests__/tags/kid.marko_fill0", c, 1);
 	$scope0_page && _scope($scope0_id, { c }, "__tests__/tags/kid.marko", 0, { c: "1:6" });
 	return $return;
 }, 0, 0);

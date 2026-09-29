@@ -1,6 +1,6 @@
 // PATCH
 {
-  va0: {
+  va2: {
     href: "/b",
     title: "B"
   }
@@ -8,7 +8,7 @@
 
 // PATCH
 {
-  va0: {
+  va2: {
     href: "/c"
   }
 }

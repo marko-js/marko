@@ -9,7 +9,7 @@ var child_default = _template_patch("a", (input) => {
 	_html(`<b>t</b>${_el_resume($scope0_id, "a")}`);
 	if ($scope0_page) _if(() => {}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a0");
-	_patch_value($scope0_id, "a0", open, 1);
+	_patch_value($scope0_id, "a1", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.item,
 		f: open

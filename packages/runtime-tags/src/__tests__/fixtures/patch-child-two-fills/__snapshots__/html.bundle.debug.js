@@ -40,5 +40,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		input_body: ["input.body"],
 		show: "1:6"
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.title), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.body));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko_fill1", input.body));
 }, 1, () => [card_default]);

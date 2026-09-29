@@ -8,7 +8,7 @@ var dump_default = /*@__PURE__*/ _template("__tests__/tags/dump/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D l");
-const $input_suffix__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_suffix", /*@__PURE__*/ _or(6, ($scope) => $input$1($scope["#childScope/0"], {
+const $input_suffix__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _or(6, ($scope) => $input$1($scope["#childScope/0"], {
 	value: $scope.count,
 	format: (v) => v + $scope.input_suffix
 })));
@@ -20,6 +20,6 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_suffix = _fill_const_resume("__tests__/template.marko0", "input_suffix", $input_suffix__OR__count);
+const $input_suffix = _fill_const_resume("__tests__/template.marko_fill0", "input_suffix", $input_suffix__OR__count);
 const $input = ($scope, input) => $input_suffix($scope, input.suffix);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

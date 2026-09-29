@@ -6,7 +6,7 @@
         "PatchText:#text/1": "a",
         "PatchSetup:": {
           "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-load-failed/child.marko_0",
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-load-failed/child.marko0": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-load-failed/child.marko_fill0": 0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-load-failed/template.marko_1*shell"]

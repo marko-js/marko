@@ -1,9 +1,9 @@
 // PATCH
 {
-  va0: {
+  va2: {
     get: _([], "a0"),
     label: "title"
   },
-  va1: "title",
+  va3: "title",
   we: "b"
 }

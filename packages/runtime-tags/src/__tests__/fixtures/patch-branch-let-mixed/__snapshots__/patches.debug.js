@@ -2,25 +2,25 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_1;Db%l ;<p>Seen <!></p><button class=inner>+</button>`, {
   "PatchBranch:#text/2": [{
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko1": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_fill1": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_1*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko0": "Store!"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_fill0": "Store!"
 }]
 "AgE"
 
 // PATCH holding AgE
 {
   "PatchBranch:#text/2": 0,
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko0": "Store!"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_fill0": "Store!"
 }
 
 // PATCH holding AgE
 {
   "PatchBranch:#text/2": [{
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko1": 0
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_fill1": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_1*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko0": "Store!"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-mixed/template.marko_fill0": "Store!"
 }

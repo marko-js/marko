@@ -5,6 +5,6 @@
   }, {
     "PatchText:#text/0": "d"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-derived-join/template.marko_1*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-derived-join/template.marko0": "y"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-derived-join/template.marko_fill0": "y"
 }]
 "AgE"

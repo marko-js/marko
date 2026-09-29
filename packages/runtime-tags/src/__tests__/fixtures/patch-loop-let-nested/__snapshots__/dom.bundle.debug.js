@@ -2,7 +2,7 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = () => {};
-const $if_content__notes = /*@__PURE__*/ _fill_let("__tests__/template.marko0", "notes/2", ($scope) => _text($scope["#text/0"], $scope.notes));
+const $if_content__notes = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "notes/2", ($scope) => _text($scope["#text/0"], $scope.notes));
 const $if_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__notes($scope, +$scope.notes + 1);
 }));

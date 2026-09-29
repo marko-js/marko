@@ -3,7 +3,7 @@
   "PatchChild:#childScope/3": {
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/child.marko1": 0,
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/child.marko_fill1": 0,
         "PatchWrite:TagVariableChange:count": _(["#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/store.marko_0/_return")
       },
       "PatchWrite:TagVariableChange:count": _(["#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-through-child/tags/store.marko_0/_return")

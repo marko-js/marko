@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__getTitle = /*@__PURE__*/ _fill_join("a0", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.f())));
+const $if_content__getTitle = /*@__PURE__*/ _fill_join("a2", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.f())));
 const $if_content__setup = $if_content__getTitle;
 const $if = /*@__PURE__*/ _if(0, "<p> </p>", "D ", $if_content__setup);
 const $show = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));

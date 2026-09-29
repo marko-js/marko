@@ -2,10 +2,9 @@
 _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<b> </b>",
-	a2: "a2,<i>loading</i>",
-	a3: "a3;D ;<b> </b>",
-	a4: "a4;D ;<em> </em>",
-	a5: "a5;D%b%;<div><!><!></div>",
+	a2: "a2;D ;<b> </b>",
+	a3: "a3;D ;<em> </em>",
+	a4: "a4;D%b%;<div><!><!></div>",
 	a: "a !a8;D%b ;<main><!><button>x</button></main>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -29,13 +28,13 @@ var template_default = _template_patch("a", (input) => {
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
 		_html("</div>");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0), _client_guard($scope0_reason, 2) && "a7", 0);
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0), _client_guard($scope0_reason, 2) && "a6", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a2", void 0, "a5", 1);
+	}, void 0, "a7", void 0, "a4", 1);
 	_html(`<button>x</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
 	$scope0_page && _scope($scope0_id, {

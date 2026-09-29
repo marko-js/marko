@@ -56,5 +56,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_a: ["input.a"],
 		input_b: ["input.b"],
 		show: "1:6"
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.a), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.b));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.a), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko_fill1", input.b));
 }, 1, () => [badge_default]);

@@ -9,7 +9,7 @@ var box_default = _template_patch("c", (input) => {
 	_patch_bind($scope0_id, "U", _resume(function(next) {
 		value = next;
 	}, "c0", $scope0_id) || void 0);
-	_patch_value($scope0_id, "c0", value, 1);
+	_patch_value($scope0_id, "c1", value, 1);
 	$scope0_page && _scope($scope0_id, { U: _resume(function(next) {
 		value = next;
 	}, "c0", $scope0_id) || void 0 });
@@ -27,11 +27,11 @@ var counter_default = _template_patch("d", (input) => {
 	let tick = 0;
 	_html(`<button class=tick>${_text_resume($scope0_id, "b", input.base + tick)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "d0");
-	_patch_value($scope0_id, "d1", tick, 1);
+	_patch_value($scope0_id, "d2", tick, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.base,
 		f: tick
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "d0", input.base);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "d1", input.base);
 }, 0, 0);
 
 // tags/panel.marko
@@ -52,12 +52,12 @@ var panel_default = _template_patch("e", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)("");
 _shells({
-	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 a7 a8 a9;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $template$2),
-	a: /*@__PURE__*/ ((_w0, _w1) => `a !a4;${_w0};${_w1}`)(((_w0) => `0${_w0}& b%c`)(""), ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("")),
+	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 a9 a10 a11;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $template$2),
+	a: /*@__PURE__*/ ((_w0, _w1) => `a !a5;${_w0};${_w1}`)(((_w0) => `0${_w0}& b%c`)(""), ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("")),
 	a1: /*@__PURE__*/ ((_w0, _w1) => `a1 !;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });
 var page_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_items = _source_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $bonus__closures = /* @__PURE__ */ new Set();
 	const $p_base__closures = /* @__PURE__ */ new Set();
@@ -71,7 +71,7 @@ var page_default = _template_patch("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_n__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "a1", item?.n);
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "a4", item?.n);
 		_set_serialize_reason(0);
 		const $childScope3 = _peek_scope_id();
 		_patch_child($scope1_id, "a", $childScope3);
@@ -93,15 +93,15 @@ var page_default = _template_patch("a", (input) => {
 			n: $for_content__item_n__closures,
 			a: _existing_scope($childScope3)
 		});
-	}, 0, $scope0_id, "d", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a1", $scope0_reason, 0);
+	}, 0, $scope0_id, "d", 1, $sg__input_items, $sg__input_items, void 0, void 0, "a1", $scope0_reason, 0);
 	_global_subscribe("a3", $scope0_id);
-	_script($scope0_id, "a4");
+	_script($scope0_id, "a5");
 	$scope0_page ? _scope($scope0_id, {
 		h: _source_if($scope0_reason, 0) && bonus,
 		j: p?.base,
 		a: _existing_scope($childScope),
 		l: $bonus__closures
-	}) : _patch_value($scope0_id, "a0", p?.base);
+	}) : _patch_value($scope0_id, "a6", p?.base);
 }, 0, 1);
 
 // template.marko

@@ -62,7 +62,7 @@ var layout_default = /*@__PURE__*/ _template("__tests__/layout.marko", $template
 // page-a.marko
 const $template = "<h1>A</h1><p> </p><!><button> </button>";
 const $walks = "bD l%b D l";
-const $n = /*@__PURE__*/ _fill_let("__tests__/page-a.marko0", "n/8", ($scope) => _text($scope["#text/3"], $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/page-a.marko_fill0", "n/8", ($scope) => _text($scope["#text/3"], $scope.n));
 const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));
@@ -109,7 +109,7 @@ const $for_content__setup = ($scope) => $input_content_direct($scope["#childScop
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => $input_title($scope["#childScope/0"], $scope.item));
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $count__closure = /*@__PURE__*/ _closure($card_content__count);
-const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko0", "count/6", ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko_fill0", "count/6", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 	$count__closure($scope);
 });

@@ -10,8 +10,8 @@ var tagged_default = _template_patch("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !a1;b%b ;<!><!><button>+</button>",
-	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 a3;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $template)
+	a: "a !a2;b%b ;<!><!><button>+</button>",
+	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 a4;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $template)
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -20,7 +20,7 @@ var template_default = _template_patch("a", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		const item = row.item;
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "a0", item?.id);
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "a1", item?.id);
 		_set_serialize_reason(6);
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "a", $childScope);
@@ -32,6 +32,6 @@ var template_default = _template_patch("a", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 0), void 0, void 0, "a0", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a2");
 	$scope0_page && _scope($scope0_id, { f: count });
 }, 1, () => [tagged_default]);

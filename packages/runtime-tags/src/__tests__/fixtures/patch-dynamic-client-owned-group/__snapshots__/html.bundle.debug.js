@@ -51,5 +51,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		on,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { on: "1:6" }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.label);
+	}, "__tests__/template.marko", 0, { on: "1:6" }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.label);
 }, 1, () => [picker_default]);

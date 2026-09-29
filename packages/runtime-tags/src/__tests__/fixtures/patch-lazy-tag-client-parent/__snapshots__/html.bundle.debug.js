@@ -8,7 +8,7 @@ var child_default = _template_patch("__tests__/components/child.marko", (input) 
 	let count = 0;
 	_html(`<button>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/components/child.marko_0");
-	_patch_value($scope0_id, "__tests__/components/child.marko0", count, 1);
+	_patch_value($scope0_id, "__tests__/components/child.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, { count }, "__tests__/components/child.marko", 0, { count: "1:6" });
 }, 0, 0);
 
@@ -39,7 +39,7 @@ var wrapper_default = _template_patch("__tests__/components/wrapper.marko", (inp
 		}
 	}, $scope0_id, "#section/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/components/wrapper.marko_1*shell"], $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $sg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { input_label: input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/components/wrapper.marko0", input.label);
+	$scope0_page ? _scope($scope0_id, { input_label: input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/components/wrapper.marko_fill0", input.label);
 }, 0, () => [$Child_withLoadAssets]);
 
 // template.marko
@@ -70,5 +70,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		input_label: ["input.label"]
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko0", input.show), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko1", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.show), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko_fill1", input.label));
 }, 1, () => [wrapper_default]);

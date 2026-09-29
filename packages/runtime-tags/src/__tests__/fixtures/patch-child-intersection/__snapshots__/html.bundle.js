@@ -8,11 +8,11 @@ var price_card_default = _template_patch("b", (input) => {
 	let qty = 1;
 	_html(`<div><h2>${_text_resume($scope0_id, "a", input.label + " x1")}</h2><button>+</button>${_el_resume($scope0_id, "b")}</div>`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b1", qty, 1);
+	_patch_value($scope0_id, "b2", qty, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.label,
 		f: qty
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b1", input.label);
 }, 0, 0);
 
 // template.marko

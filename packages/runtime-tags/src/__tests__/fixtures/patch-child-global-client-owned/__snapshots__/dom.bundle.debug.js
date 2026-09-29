@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_body = /*@__PURE__*/ _fill_join("__tests__/tags/panel/index.marko0", "input_body", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_body)));
+const $if_content__input_body = /*@__PURE__*/ _fill_join("__tests__/tags/panel/index.marko_fill0", "input_body", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_body)));
 const $if_content__setup = $if_content__input_body;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
@@ -11,7 +11,7 @@ const $input = ($scope, input) => {
 	$input_open($scope, input.open);
 	$input_body($scope, input.body);
 };
-const $input_body = /*@__PURE__*/ _fill_const("__tests__/tags/panel/index.marko0", "input_body", $if_content__input_body);
+const $input_body = /*@__PURE__*/ _fill_const("__tests__/tags/panel/index.marko_fill0", "input_body", $if_content__input_body);
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel/index.marko", $template$1, "b%c", 0, $input);
 
 // template.marko

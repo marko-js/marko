@@ -2,6 +2,6 @@
 {
   ta: "Cart!",
   cb: {
-    vb0: "Gadget"
+    vb1: "Gadget"
   }
 }

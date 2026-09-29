@@ -12,7 +12,7 @@ var counter_default = _template_patch("b", (input) => {
 			count = v;
 		}, "b0", $scope0_id)
 	};
-	_patch_value($scope0_id, "b0", count, 1);
+	_patch_value($scope0_id, "b1", count, 1);
 	$scope0_page && _scope($scope0_id, {});
 	return $return;
 }, 0, 0);

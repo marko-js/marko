@@ -20,7 +20,7 @@ var row_default = _template_patch("b", (input) => {
 	let clicks = 0;
 	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}<button>${_text_resume($scope0_id, "c", clicks)}</button>${_el_resume($scope0_id, "b")}</p>`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b0", clicks, 1);
+	_patch_value($scope0_id, "b1", clicks, 1);
 	$scope0_page && _scope($scope0_id, { g: clicks });
 }, 0, 0);
 
@@ -52,9 +52,9 @@ var template_default = _template_patch("a", (input) => {
 				_patch_child($scope3_id, "a", $childScope);
 				row_default(item);
 				_scope($scope3_id, { a: _existing_scope($childScope) });
-			}, "id", $scope1_id, "a", 1, 1, $scope0_page, void 0, void 0, "a2");
-			_html(`</div>${_el_resume($scope1_id, "a")}`);
-			_scope($scope1_id, {});
+			}, "id", $scope1_id, "a", 1, $scope0_page, $scope0_page, void 0, void 0, "a2");
+			_html(`</div>${_el_resume($scope1_id, "a", $scope0_page)}`);
+			$scope0_page && _scope($scope1_id, {});
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $scope0_page, $scope0_page, void 0, void 0, ["a1", "a0"]);

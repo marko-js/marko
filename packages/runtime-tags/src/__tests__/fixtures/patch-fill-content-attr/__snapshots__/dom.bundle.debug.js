@@ -11,8 +11,8 @@ var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D%l");
-const $frame_content__input_label__OR__count = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko0", "input_label", /*@__PURE__*/ _or(1, ($scope) => _attr($scope["#p/0"], "title", $scope._.input_label + ":" + $scope._.count)), () => $frame_content__input_label, 0);
-const $frame_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko0", "input_label", /*@__PURE__*/ _closure_get("input_label/6", $frame_content__input_label__OR__count, 0, "__tests__/template.marko_1_input_label#0:4/subscribe"), 0);
+const $frame_content__input_label__OR__count = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(1, ($scope) => _attr($scope["#p/0"], "title", $scope._.input_label + ":" + $scope._.count)), () => $frame_content__input_label, 0);
+const $frame_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/6", $frame_content__input_label__OR__count, 0, "__tests__/template.marko_1_input_label#0:4/subscribe"), 0);
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_label($scope);
 	$frame_content__count($scope);
@@ -31,5 +31,5 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $input_label($scope, input.label);
 const $input_label__closure = /*@__PURE__*/ _closure($frame_content__input_label);
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_label", $input_label__closure);
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $input_label__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

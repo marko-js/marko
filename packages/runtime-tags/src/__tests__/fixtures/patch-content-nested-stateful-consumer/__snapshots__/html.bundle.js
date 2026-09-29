@@ -22,11 +22,11 @@ var card_default = _template_patch("b", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</section>`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "b1", open, 1);
+	_patch_value($scope0_id, "b2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		g: input.content,
 		h: open
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b0", input.content);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.content);
 }, 0, () => [grand_default]);
 
 // template.marko
@@ -45,7 +45,7 @@ var template_default = _template_patch("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "a", input.note)}</em>`);
-			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a0");
+			_subscribe(_source_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 		}, $scope0_id)
 	});
 	_html("</main>");
@@ -53,5 +53,5 @@ var template_default = _template_patch("a", (input) => {
 		e: input.note,
 		f: $input_note__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a0", input.note);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a2", input.note);
 }, 1, () => [card_default]);

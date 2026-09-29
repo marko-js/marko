@@ -3,6 +3,6 @@
   "PatchBranch:#text/0": [{
     "PatchLoop:#text/0": ["a", {}, "b", {}, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-intersection-deep/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-intersection-deep/template.marko_1*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-intersection-deep/template.marko0": "y"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-intersection-deep/template.marko_fill0": "y"
 }]
 "AwEA"

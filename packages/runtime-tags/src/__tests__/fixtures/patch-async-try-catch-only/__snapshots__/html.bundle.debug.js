@@ -2,7 +2,6 @@
 const $template = "<main><!></main>";
 const $walks = "D%l";
 _shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,<em>bad</em>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>",
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
@@ -20,7 +19,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<em>bad</em>");
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1);
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_message/4": $input_message__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

@@ -16,7 +16,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			let n = 0;
 			_html(`<p>${_text_resume($scope1_id, "#text/0", input.title + "@" + n)}</p><button id=n>n</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_value($scope1_id, "__tests__/template.marko1", n, 1);
+			_patch_value($scope1_id, "__tests__/template.marko_fill1", n, 1);
 			_scope($scope1_id, {
 				n,
 				_: _scope_with_id($scope0_id)
@@ -32,5 +32,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, 0);

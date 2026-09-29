@@ -33,13 +33,13 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_subscribe($si__input_detail && $input_detail__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_detail/8": 1
-				}, "__tests__/template.marko", "8:8"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_detail#0:5/subscribe", $sg__input_detail);
+				}, "__tests__/template.marko", "8:8"), "__tests__/template.marko_2_input_detail#0:5/subscribe", $sg__input_detail);
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $sg__input_detail, $sg__input_detail, $sg__input_detail, 0, 1);
-		_subscribe($si__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_detail#0:5/subscribe", $sg__input_detail);
+		_subscribe($si__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_1_input_detail#0:5/subscribe", $sg__input_detail);
 		$sg__input_detail || _resume_branch($scope1_id);
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content", 1);
+	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content");
 	_html(`<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page ? _scope($scope0_id, {
@@ -50,5 +50,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_detail: ["input.detail"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.detail);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.detail);
 }, 1, 0);

@@ -28,7 +28,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>loading ${_text_resume($scope1_id, "#text/0", input.title, $sg__input_title * 2)}</em>`);
 		_script($scope1_id, "__tests__/template.marko_1_input_title#0:4", $sg__input_title);
-		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_title#0:4/subscribe", $sg__input_title);
+		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_1_input_title#0:4/subscribe", $sg__input_title);
 		$sg__input_title || _resume_branch($scope1_id);
 	}, void 0, "__tests__/template.marko_1*content", void 0, "__tests__/template.marko_2*content", 1);
 	_html("</main>");
@@ -36,5 +36,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_title: input.title,
 		"ClosureScopes:input_title/6": $input_title__closures,
 		"ClosureScopes:input_promise/7": $input_promise__closures
-	}, "__tests__/template.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}, "__tests__/template.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, 0);

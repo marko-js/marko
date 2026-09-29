@@ -11,7 +11,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</em>`);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_title#0:6/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_input_title#0:6/subscribe");
 	}, $scope0_id) };
 	_html(`<main><div${_patch_attrs(input.attrs, "#div/0", $scope0_id, "div", void 0, $scope0_reason, 1)}>`);
 	_patch_dynamic_tag($scope0_id, "#div/0", extra, 0, 0, 0, 0, 0);
@@ -36,5 +36,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		extra: "2:9",
 		"EventAttributes:#div/0": ["...input.attrs", "6:11"],
 		"EventAttributes:#section/1": ["...{ ...input.attrs, content: extra }", "7:15"]
-	}) : _filled_guard($scope0_reason, 0) && _content_withheld("__tests__/template.marko_1*content") && _patch_value($scope0_id, "__tests__/template.marko0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _content_withheld("__tests__/template.marko_1*content") && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.title);
 }, 1, 0);

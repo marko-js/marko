@@ -18,5 +18,5 @@ var template_default = _template_patch("a", (input) => {
 		h: $si__input_upper && low,
 		j: pick,
 		k: open
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", pick), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "e", input.title));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a3", pick), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "e", input.title));
 }, 1, 0);

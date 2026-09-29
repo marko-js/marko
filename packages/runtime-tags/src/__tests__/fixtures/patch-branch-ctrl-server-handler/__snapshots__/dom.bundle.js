@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__onChange = /*@__PURE__*/ _fill_join("a0", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _attr_input_value($scope, "a", "x", $scope._.f)));
+const $if_content__onChange = /*@__PURE__*/ _fill_join("a3", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _attr_input_value($scope, "a", "x", $scope._.f)));
 const $if_content__setup__script = _script("a1", ($scope) => _attr_input_value_script($scope, "a"));
 const $if_content__setup = ($scope) => {
 	$if_content__onChange._($scope);

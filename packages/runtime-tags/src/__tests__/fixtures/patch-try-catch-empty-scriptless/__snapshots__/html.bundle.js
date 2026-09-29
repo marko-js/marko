@@ -20,7 +20,7 @@ var template_default = _template_patch("a", (input) => {
 		}, 1, "a0", 1);
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3", 0);
 		$scope0_page && _resume_branch($scope1_id);
-	}, void 0, () => {}, void 0, "a4", "a2", 1, 1);
+	}, void 0, () => {}, void 0, "a4", "a2");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { e: $input_promise__closures });
 }, 1, 0);

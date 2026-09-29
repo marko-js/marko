@@ -2,9 +2,9 @@
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if_content__pick = ($scope, pick) => _text($scope["#text/0"], pick()());
-const $if_content__mk = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "mk", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__pick($scope, () => $scope._.mk)));
+const $if_content__mk = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "mk", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__pick($scope, () => $scope._.mk)));
 const $if_content__setup = $if_content__mk;
-const $mk2 = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "mk", $if_content__mk);
+const $mk2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "mk", $if_content__mk);
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => $mk2($scope, $mk($scope)));
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $open = /*@__PURE__*/ _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));

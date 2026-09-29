@@ -32,5 +32,5 @@ var template_default = _template_patch("a", (input) => {
 		i: count,
 		j: $input_a__closures,
 		k: $count__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a0", input.a);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a2", input.a);
 }, 1, () => [box_default]);

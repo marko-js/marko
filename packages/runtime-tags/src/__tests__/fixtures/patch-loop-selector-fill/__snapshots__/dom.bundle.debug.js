@@ -2,7 +2,7 @@
 const $template = "<main><ul></ul><button>+</button></main>";
 const $walks = "D b l";
 const $for_content__if = /*@__PURE__*/ _if("#text/1", "<span>*</span>");
-const $for_content__input_selected = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "input_selected", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__if($scope, $scope._.input_selected === $scope["#LoopKey"] ? 0 : 1)));
+const $for_content__input_selected = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_selected", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__if($scope, $scope._.input_selected === $scope["#LoopKey"] ? 0 : 1)));
 const $for_content__setup = ($scope) => {
 	$for_content__input_selected._($scope);
 	_text($scope["#text/0"], $scope["#LoopKey"]);
@@ -17,5 +17,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_selected($scope, input.selected);
-const $input_selected = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_selected", $for_content__input_selected);
+const $input_selected = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_selected", $for_content__input_selected);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

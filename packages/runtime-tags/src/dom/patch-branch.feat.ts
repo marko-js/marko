@@ -89,11 +89,6 @@ function create(
     parentNode,
   );
   scope[branchKey] = branch;
-  // A lone text node clones detached; an html hole there needs a parent
-  // (a shallow clone keeps the namespace).
-  if (!branch[AccessorProp.StartNode].parentNode) {
-    parentNode.cloneNode().appendChild(branch[AccessorProp.StartNode]);
-  }
   // Nested entries create recursively (no live children); applied before
   // insertion so a script's attributes (its nonce) are set when it runs.
   withCreating(() => patchScope(branchPartial, branch as Scope));

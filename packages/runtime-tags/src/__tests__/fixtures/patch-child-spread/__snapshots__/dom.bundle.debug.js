@@ -1,7 +1,7 @@
 // tags/card.marko
 const $template$1 = "<div class=card><h2> </h2><p> </p><button class=t> </button></div>";
 const $walks$1 = "E lD l D m";
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko0", "open/8", ($scope) => _text($scope["#text/3"], $scope.open ? "hide" : "show"));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/8", ($scope) => _text($scope["#text/3"], $scope.open ? "hide" : "show"));
 const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

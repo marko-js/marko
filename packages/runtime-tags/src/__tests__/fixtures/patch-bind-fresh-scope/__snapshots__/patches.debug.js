@@ -4,11 +4,11 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         0: "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1_store#5/var",
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko0": 0
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_fill0": 0
       }
     },
     "PatchSetup:": {
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko0": 0,
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_fill0": 0,
       "PatchWrite:TagVariableChange:count": _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_0/_return")
     },
     "PatchWrite:TagVariableChange:count": _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_0/_return")

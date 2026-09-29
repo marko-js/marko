@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 const $template$1 = "<span>box <!></span>";
 const $walks$1 = "Db%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/counter/index.marko0", "count/1", ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/counter/index.marko_fill0", "count/1", ($scope) => {
 	_text($scope["#text/0"], $scope.count);
 	_return($scope, {
 		value: $scope.count,

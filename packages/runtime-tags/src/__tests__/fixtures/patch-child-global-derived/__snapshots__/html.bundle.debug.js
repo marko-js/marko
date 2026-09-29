@@ -38,5 +38,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		brand: "1:8",
 		show: "2:6"
-	}) : _patch_value($scope0_id, "__tests__/template.marko0", brand);
+	}) : _patch_value($scope0_id, "__tests__/template.marko_fill0", brand);
 }, 1, 1);

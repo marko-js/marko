@@ -3,17 +3,17 @@
   la: [{
     ta: "Apples",
     s: {
-      va0: 0
+      va2: 0
     }
   }, {
     ta: "Bread",
     s: {
-      va0: 0
+      va2: 0
     }
   }, {
     ta: "Milk",
     s: {
-      va0: 0
+      va2: 0
     }
   }, "a0"]
 }]
@@ -24,7 +24,7 @@
   la: [{
     ta: "Apples",
     s: {
-      va0: 0
+      va2: 0
     }
   }, "a0"]
 }
@@ -34,17 +34,17 @@
   la: [{
     ta: "Apples",
     s: {
-      va0: 0
+      va2: 0
     }
   }, {
     ta: "Bread",
     s: {
-      va0: 0
+      va2: 0
     }
   }, {
     ta: "Milk",
     s: {
-      va0: 0
+      va2: 0
     }
   }, "a0"]
 }

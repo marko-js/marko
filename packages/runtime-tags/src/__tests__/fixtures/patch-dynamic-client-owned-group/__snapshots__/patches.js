@@ -3,7 +3,7 @@
   $: {
     brand: "b"
   },
-  va0: "two"
+  va1: "two"
 }
 
 // PATCH
@@ -11,7 +11,7 @@
   $: {
     brand: "c"
   },
-  va0: "three"
+  va1: "three"
 }
 
 // PATCH
@@ -19,5 +19,5 @@
   $: {
     brand: "d"
   },
-  va0: "four"
+  va1: "four"
 }

@@ -8,7 +8,7 @@ var badge_default = _template_patch("__tests__/tags/badge.marko", (input) => {
 	let seen = 0;
 	_html(`<footer><span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)} (${_text_resume($scope0_id, "#text/1", seen, 2)})</span><button>ack</button>${_el_resume($scope0_id, "#button/2")}</footer>`);
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
-	_patch_value($scope0_id, "__tests__/tags/badge.marko0", seen, 1);
+	_patch_value($scope0_id, "__tests__/tags/badge.marko_fill0", seen, 1);
 	$scope0_page && _scope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
 }, 0, 0);
 
@@ -40,8 +40,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		}, $scope3_id, "#text/1", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
 		_html("</li>");
 		_scope($scope3_id, {}, "__tests__/template.marko", "3:6");
-	}, "id", $scope0_id, "#ul/0", 1, 1, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 1);
-	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
+	}, "id", $scope0_id, "#ul/0", 1, $sg__input_items, $sg__input_items, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 1);
+	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $sg__input_items)}`);
 	_if(() => {
 		if (input.summary) {
 			const $scope1_id = _scope_id();

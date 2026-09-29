@@ -15,7 +15,7 @@
       },
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-child-content-in-construct/tags/card/index.marko_0",
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-content-in-construct/tags/card/index.marko0": 0
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-content-in-construct/tags/card/index.marko_fill0": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-content-in-construct/template.marko_1*shell"]

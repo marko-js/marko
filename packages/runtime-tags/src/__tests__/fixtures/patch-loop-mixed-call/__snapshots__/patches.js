@@ -1,9 +1,9 @@
 // PATCH
 {
-  va0: ["y"]
+  va1: ["y"]
 }
 
 // PATCH
 {
-  va0: ["z"]
+  va1: ["z"]
 }

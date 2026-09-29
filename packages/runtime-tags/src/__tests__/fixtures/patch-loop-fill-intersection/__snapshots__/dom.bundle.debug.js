@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><ul></ul><button class=add>+</button><button class=inc>c</button></main>";
 const $walks = "D b b l";
-const $for_content__input_note__OR__count__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/template.marko0", "input_note", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope._.input_note + $scope.item + $scope._.count), 2), 0, "#ul/0");
+const $for_content__input_note__OR__count__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope._.input_note + $scope.item + $scope._.count), 2), 0, "#ul/0");
 const $for_content__input_note = /*@__PURE__*/ _for_closure("#ul/0", $for_content__input_note__OR__count__OR__item);
 const $for_content__setup = ($scope) => {
 	$for_content__input_note._($scope);
@@ -27,5 +27,5 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_note($scope, input.note);
-const $input_note = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "input_note", $for_content__input_note);
+const $input_note = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_note", $for_content__input_note);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

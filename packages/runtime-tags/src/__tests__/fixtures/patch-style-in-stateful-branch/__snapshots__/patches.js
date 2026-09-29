@@ -1,5 +1,5 @@
 // PATCH
 {
-  va0: "blue",
-  va1: "second"
+  va1: "blue",
+  va2: "second"
 }

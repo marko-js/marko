@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content__pick = /*@__PURE__*/ _fill_join("__tests__/template.marko0", "pick", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.pick())));
+const $if_content__pick = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "pick", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.pick())));
 const $if_content__setup = $if_content__pick;
-const $pick = /*@__PURE__*/ _fill_const("__tests__/template.marko0", "pick", $if_content__pick);
+const $pick = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "pick", $if_content__pick);
 const $input_upper__OR__up__OR__low = /*@__PURE__*/ _or(8, ($scope) => $pick($scope, $scope.input_upper ? $scope.up : $scope.low), 2);
 const $up2 = /*@__PURE__*/ _const("up", $input_upper__OR__up__OR__low);
 const $low2 = /*@__PURE__*/ _const("low", $input_upper__OR__up__OR__low);
