@@ -1,0 +1,9 @@
+<let/n=input.start/>
+<div class="counter">
+  <span>${input.label}: ${n}</span>
+  <button class="inc" onClick() { n++ }>+</button>
+  <script>
+    const main = document.querySelector("main")!;
+    main.dataset.mounts = String(+(main.dataset.mounts || 0) + 1);
+  </script>
+</div>

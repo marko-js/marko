@@ -1,0 +1,7 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <a ...{ ...input.attrs, onClick() { count++ } }>go</a>
+  </if>
+  <em>${count}</em>
+</main>

@@ -1,0 +1,9 @@
+import Child from "./child.marko" with { load: "render" }
+
+<Child label="top"/>
+<try>
+  <await|a|=input.a><b>${a}</b></await>
+  <Child label="in-try"/>
+  <await|b|=input.b><em>${b}</em></await>
+  <@placeholder><i>loading</i></@placeholder>
+</try>

@@ -1,0 +1,42 @@
+// tags/widget/index.marko
+const $template$1 = "<!><!><!>";
+const $walks$1 = "b%c";
+_shells({
+	"__tests__/tags/widget/index.marko_1*content": "__tests__/tags/widget/index.marko_1*content,<em>ok</em>",
+	"__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.marko;b%;<!><!><!>"
+});
+var widget_default = _template_patch("__tests__/tags/widget/index.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_try($scope0_id, "#text/0", () => {
+		const $scope1_reason = _scope_reason();
+		const $scope1_id = _scope_id();
+		_html("<em>ok</em>");
+	}, void 0, () => {
+		const $scope2_reason = _scope_reason();
+		const $scope2_id = _scope_id();
+		_html("<em>bad</em>");
+	}, void 0, "__tests__/tags/widget/index.marko_2*content", "__tests__/tags/widget/index.marko_1*content");
+}, 0, 0);
+
+// template.marko
+const $template = "<main><!><button>t</button></main>";
+const $walks = "D%b l";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>t</button></main>" });
+var template_default = _template_patch("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let show = true;
+	_html("<main>");
+	if ($scope0_page) _if(() => {
+		if (show) {
+			const $scope1_id = _scope_id();
+			widget_default({});
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			return 0;
+		}
+	}, $scope0_id, "#text/0");
+	_html(`<button>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_page && _scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
+}, 1, () => [widget_default]);

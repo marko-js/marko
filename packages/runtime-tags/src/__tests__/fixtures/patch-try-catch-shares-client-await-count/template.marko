@@ -1,0 +1,18 @@
+<let/pending=null as null | Promise<string>/>
+<main>
+  <try>
+    <div>
+      <try>
+        <await|a|=input.a><b>${a}</b></await>
+        <@catch|e|><s>${e.message}</s></@catch>
+      </try>
+      <if=pending>
+        <await|c|=pending><em>${c}</em></await>
+      </if>
+    </div>
+    <@placeholder><i>loading</i></@placeholder>
+  </try>
+  <button onClick() {
+    pending = new Promise<string>((r) => ((globalThis as any).__resolve = r));
+  }>x</button>
+</main>

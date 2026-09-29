@@ -3,6 +3,7 @@ import { types as t } from "@marko/compiler";
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getPropertyPathAlias } from "./binding-has-prop";
 import { getAccessorProp } from "./get-accessor-enums";
+import { isPatch } from "./marko-config";
 import {
   concat,
   forEach,
@@ -19,6 +20,7 @@ import {
   createSources,
   FORCED,
   getCanonicalBinding,
+  globalSources,
   type InputBinding,
   isReferencedExtra,
   type KnownExprs,
@@ -74,6 +76,9 @@ export function addSerializeReason(
   prefix?: AccessorPrefix | symbol,
 ) {
   if (reason) {
+    // A `$global` read alone never serializes (the client reads the
+    // globals object, as without patches); it stays a source.
+    if (!reason.state && !reason.param && !reason.forced) return;
     const key = prop && getPropKey(section, prop, prefix);
     if (key) {
       const curReason = section.serializeReasons.get(key);
@@ -165,9 +170,17 @@ export function getSerializeReason(
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExtra(expr);
-  return isReferencedExtra(root)
-    ? getSerializeSourcesForRef(root.referencedBindings)
-    : undefined;
+  if (isReferencedExtra(root)) {
+    const sources = getSerializeSourcesForRef(root.referencedBindings);
+    // A keyed `$global` read aliases a property binding and is a reference
+    // like any other. An opaque read (`fn($global)`) compiles verbatim: no
+    // read slot, no signal, so it is not among the references (joining them
+    // would make it a closure) and contributes here, as request identity a
+    // patch flush re-ships what reads.
+    return root.globalBindings && isPatch()
+      ? mergeSources(sources, globalSources)
+      : sources;
+  }
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
@@ -338,6 +351,11 @@ export function finalizeSerializeReason(section: Section) {
   if (newReason && curReason !== newReason) {
     setSerializeReason(section, newReason);
   }
+}
+
+// The key a binding's own reason is recorded under.
+export function getSerializeReasonKey(section: Section, binding: Binding) {
+  return getPropKey(section, binding);
 }
 
 function getPropKey(

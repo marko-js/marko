@@ -5,15 +5,27 @@ import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPatch } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
+import { push } from "../util/optional";
+import { writesPatchHole } from "../util/patch/decisions";
+import {
+  ensurePatchWriteGroups,
+  isBranchPathSection,
+  getWriteReason,
+} from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
+  onFinalizeReferences,
 } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import {
+  callRuntime,
+  getHTMLRuntime,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   ContentType,
@@ -22,11 +34,11 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
 import {
-  addSerializeExpr,
-  getSerializeReason,
-} from "../util/serialize-reasons";
+  getExprWriteOwnership,
+  getSerializeGuard,
+} from "../util/serialize-guard";
+import { addSerializeExpr } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
@@ -73,6 +85,17 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addSerializeExpr(section, valueExtra, nodeBinding);
+        nodeBinding.renders = push(nodeBinding.renders, valueExtra);
+        if (isPatch() && isBranchPathSection(section)) {
+          ensurePatchWriteGroups(() => valueExtra);
+          // A state-sourced hole recomputes through the signal graph, and
+          // inside stateful structure owner fills refresh it.
+          onFinalizeReferences(() => {
+            if (writesPatchHole(section, valueExtra)) {
+              linkRuntimeFeature(node.escape ? "patch-text" : "patch-html");
+            }
+          });
+        }
       }
     },
     exit(placeholder) {
@@ -164,7 +187,11 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     const section = getSection(placeholder);
     const siblingText = extra[kSiblingText]!;
     const markerSerializeReason =
-      nodeBinding && getSerializeReason(section, nodeBinding);
+      nodeBinding && getWriteReason(section, nodeBinding);
+    // A state-sourced hole recomputes through the signal graph, and inside
+    // unpatched structure owner fills refresh it: neither patch-writes.
+    const patchWrites = !!nodeBinding && writesPatchHole(section, valueExtra);
+    const isPatchText = isHTML && patchWrites;
 
     if (isHTML) {
       if (markerSerializeReason) {
@@ -172,7 +199,13 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         // `<!>` between non-empty text and the mergeable text before it.
         const guard = getSerializeGuard(section, markerSerializeReason, true);
         write`${callRuntime(
-          node.escape ? "_text_resume" : "_html_resume",
+          isPatchText
+            ? node.escape
+              ? "_patch_text"
+              : "_patch_html"
+            : node.escape
+              ? "_text_resume"
+              : "_html_resume",
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding!),
           value,
@@ -181,6 +214,10 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
             : guard,
+          // The patch write doubles as the output (and resume) writer, so the
+          // expression evaluates once; a param-fed write's ownership bit
+          // rides as trailing args.
+          ...(isPatchText ? getExprWriteOwnership(valueExtra) : []),
         )}`;
       } else {
         write`${
@@ -191,7 +228,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       }
     } else {
       addStatement(
-        "render",
+        patchWrites ? "patched" : "render",
         section,
         valueExtra.referencedBindings,
         t.expressionStatement(

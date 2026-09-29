@@ -11,24 +11,42 @@ import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPatch } from "../util/marko-config";
+import { push } from "../util/optional";
+import { writesPatchHole } from "../util/patch/decisions";
+import {
+  ensurePatchWriteGroups,
+  isBranchPathSection,
+  getWriteReason,
+} from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
   createBinding,
   FORCED,
+  getScopeAccessorLiteral,
   mergeReferences,
   trackDomVarReferences,
+  isReferencedExtra,
   isTagVarRead,
+  onFinalizeReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import {
+  linkRuntimeFeature,
+  callRuntime,
+  importRuntime,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { createScopeReadExpression } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import {
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getSection,
+} from "../util/sections";
+import { getExprWriteOwnership } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   addSerializeReason,
-  getSerializeReason,
 } from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
 import * as structure from "../util/structure";
@@ -95,6 +113,20 @@ export default {
       if (isTagVarRead(tag))
         addSerializeReason(tagSection, FORCED, nodeBinding);
       addSerializeExpr(tagSection, tagExtra, nodeBinding);
+      if (referenceNodes.length)
+        nodeBinding.renders = push(nodeBinding.renders, tagExtra);
+      if (
+        isPatch() &&
+        referenceNodes.length &&
+        isBranchPathSection(tagSection)
+      ) {
+        ensurePatchWriteGroups(() => tagExtra);
+        onFinalizeReferences(() => {
+          if (writesPatchHole(tagSection, tagExtra)) {
+            linkRuntimeFeature("patch-text-content");
+          }
+        });
+      }
     }
 
     // The whole client template records here (children are skipped); the html
@@ -126,7 +158,27 @@ export default {
       if (isOutputHTML()) {
         const { body } = tag.node.body;
         write`<!--`;
-        if (nodeBinding && isEmptiableCommentBody(body)) {
+        if (
+          nodeBinding &&
+          isReferencedExtra(tagExtra) &&
+          writesPatchHole(tagSection, tagExtra)
+        ) {
+          // The patch write renders the comment text itself; an emptiable
+          // body still pads so the resume marker claims no stray text.
+          const patched = callRuntime(
+            "_patch_text_content",
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeBinding),
+            bodyToTextLiteral(tag.node.body),
+            importRuntime("_escape_comment"),
+            ...getExprWriteOwnership(tagExtra),
+          );
+          write`${
+            isEmptiableCommentBody(body)
+              ? t.logicalExpression("||", patched, t.stringLiteral(" "))
+              : patched
+          }`;
+        } else if (nodeBinding && isEmptiableCommentBody(body)) {
           // A resumable comment must serialize with content, else its trailing
           // resume marker claims a stray text node; pad an empty body with a space.
           if (body.length) {
@@ -150,10 +202,14 @@ export default {
         write`-->`;
       } else {
         const textLiteral = bodyToTextLiteral(tag.node.body);
+        const patched =
+          !!nodeBinding &&
+          isReferencedExtra(tagExtra) &&
+          writesPatchHole(tagSection, tagExtra);
 
         if (!t.isStringLiteral(textLiteral)) {
           addStatement(
-            "render",
+            patched ? "patched" : "render",
             tagSection,
             tagExtra.referencedBindings,
             t.expressionStatement(
@@ -171,7 +227,7 @@ export default {
         writer.markNode(
           tag,
           nodeBinding,
-          getSerializeReason(tagSection, nodeBinding),
+          getWriteReason(tagSection, nodeBinding),
         );
       }
 

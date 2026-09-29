@@ -1,0 +1,14 @@
+<ul>
+  <for|item| of=input.items by="id">
+    <li>
+      ${item.id}
+      <if=item.children.length>
+        <ul>
+          <for|child| of=item.children>
+            <li>${child}</li>
+          </for>
+        </ul>
+      </if>
+    </li>
+  </for>
+</ul>

@@ -1,0 +1,8 @@
+<let/count=0/>
+<main>
+  <h1>${input.title}</h1>
+  <await|value|=input.promise>
+    <em>${value}</em>
+  </await>
+  <button onClick() { count++ }>Count ${count}</button>
+</main>

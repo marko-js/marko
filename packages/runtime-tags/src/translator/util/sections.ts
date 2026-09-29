@@ -8,6 +8,7 @@ import {
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import type { WalkCode } from "../../common/types";
+import type { LoadImportConfig } from "../visitors/import-declaration";
 import * as ContentType from "./constants/content-type";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
@@ -23,9 +24,11 @@ import {
   Sorted,
   type SortedOpt,
   reduce,
+  some,
 } from "./optional";
 import {
   type Binding,
+  BindingType,
   bindingUtil,
   compareReferences,
   getAllSerializeReasonsForBinding,
@@ -34,6 +37,7 @@ import {
   type KnownExprs,
   type ParamBinding,
   type ReferencedBindings,
+  type ReferencedExtra,
   type Sources,
 } from "./references";
 import {
@@ -113,6 +117,9 @@ export interface StructureChild {
   name: string;
   hasVar: boolean;
   renderer?: StructureRef;
+  // A lazy child: its import's load config and its marker binding.
+  load?: LoadImportConfig;
+  marker?: Binding;
 }
 
 export interface Section {
@@ -136,8 +143,8 @@ export interface Section {
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
    * (not merged) so each one's guard stays buildable. */
   domSerializeReasons: undefined | SerializeReasons;
-  /** Pending serialize exprs, resolved into the reasons once references
-   * finalize. */
+  /** Pending serialize exprs, resolved into the reasons (and sources)
+   * once references finalize. */
   serializeExprs: Opt<t.NodeExtra>;
   propSerializeExprs: Map<SerializeKey, OneMany<t.NodeExtra>> | undefined;
   /** Interned per-prop reason keys for string/symbol props. */
@@ -171,6 +178,19 @@ export interface Section {
    * `<define>` body or template it calls in place. */
   hasSetupWork: boolean;
   isBranch: boolean;
+  /** An `<await>`/`<try>` body: always-rendered like the branch path, but
+   * paired (never created) by patches. */
+  isBoundary: boolean;
+  /** A `<try>`'s `@catch` or `@placeholder`: content that always
+   * registers, so its slot names it by id. */
+  boundaryContent: boolean;
+  /** A content body shipped as a shell: `"static"` rides its slot
+   * in-band, a dynamic one is created by id from a dynamic tag entry. */
+  contentShell: false | true | "static";
+  /** The section's awaits: each marker binding and body section. */
+  awaits: { binding: Binding; body: Section }[] | undefined;
+  /** Branch whose shell would create unfaithfully: the first blocker's
+   * reason code sticks, no shell ships, patches fail closed. */
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -256,6 +276,11 @@ export function startSection(
       readsOwner: false,
       hasSetupWork: false,
       isBranch: false,
+      isBoundary: false,
+      // Known at creation so descendants analyzing under it see it.
+      boundaryContent: !!parentTag && isTryAttrTag(parentTag),
+      contentShell: false,
+      awaits: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     section.program = parentSection ? parentSection.program : section;
@@ -263,6 +288,14 @@ export function startSection(
   }
 
   return section;
+}
+
+// A `<try>`'s `@catch`/`@placeholder` content.
+function isTryAttrTag(tag: t.NodePath<t.MarkoTag>) {
+  if (!isAttributeTag(tag)) return false;
+  let owner: t.NodePath | null = tag.parentPath;
+  while (owner && !owner.isMarkoTag()) owner = owner.parentPath;
+  return !!owner && isCoreTagName(owner, "try");
 }
 
 export function getOrCreateSection(path: t.NodePath<any>) {
@@ -327,21 +360,28 @@ export function forEachSection(fn: (section: Section) => void) {
   sections?.forEach(fn);
 }
 
-// Direct child sections by parent, grouped once per program after analyze
-// (call at finalize or later).
+export function someSection<A>(
+  test: (section: Section, arg: A) => boolean,
+  arg: A,
+): boolean {
+  for (const section of getProgram().node.extra.sections || []) {
+    if (test(section, arg)) return true;
+  }
+  return false;
+}
+
+// Direct child sections by parent, grouped once per program at finalize so
+// a parent can ask about a child program's sections too.
 const childSections = new WeakMap<Section, Section[]>();
 export function getChildSections(section: Section) {
-  let children = childSections.get(section);
-  if (!children) {
-    for (const child of getProgram().node.extra.sections || []) {
-      childSections.set(child, []);
-    }
-    forEachSection((child) => {
-      if (child.parent) childSections.get(child.parent)!.push(child);
-    });
-    children = childSections.get(section) || [];
+  return childSections.get(section) || [];
+}
+
+// The child section a read selects (a branch, a boundary), if any.
+export function getChildSectionOf(read: ReferencedExtra) {
+  for (const child of getChildSections(read.section)) {
+    if (child.upstreamExpression === read) return child;
   }
-  return children;
 }
 
 // For content a tag the analysis cannot resolve receives, which code it cannot
@@ -374,6 +414,12 @@ export function forEachAncestorSection<A>(
   arg: A,
 ) {
   for (let cur = from; cur !== to && cur.parent; cur = cur.parent) fn(cur, arg);
+}
+export function groupChildSections() {
+  forEachSection((section) => childSections.set(section, []));
+  forEachSection((section) => {
+    if (section.parent) childSections.get(section.parent)!.push(section);
+  });
 }
 
 export function forEachSectionReverse(fn: (section: Section) => void) {
@@ -604,11 +650,16 @@ export function getCommonSection(section: Section, other: Section) {
   throw new Error("No common section");
 }
 
-export function finalizeParamSerializeReasonGroups(section: Section) {
-  ensureReasonGroups(section.serializeReason);
+// A node a patch keys an entry on writes whatever its reason says, and so
+// does its scope, so neither reason's param group would gate anything.
+export function finalizeParamSerializeReasonGroups(
+  section: Section,
+  patchKeyed?: Set<symbol>,
+) {
+  if (!patchKeyed) ensureReasonGroups(section.serializeReason);
 
-  for (const reason of section.serializeReasons.values()) {
-    ensureReasonGroups(reason);
+  for (const [key, reason] of section.serializeReasons) {
+    if (!patchKeyed?.has(key)) ensureReasonGroups(reason);
   }
 }
 
@@ -689,4 +740,13 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
     }
   }
   return analyzeTagNameType(tag) === TagNameType.NativeTag;
+}
+
+// Whether a body has anything a patch pairs per instance: a dom node or a
+// nested section.
+export function hasDomBindingsOrNestedSections(section: Section) {
+  return (
+    some(section.bindings, (binding) => binding.type === BindingType.dom) ||
+    getChildSections(section).length > 0
+  );
 }

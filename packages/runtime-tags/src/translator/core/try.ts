@@ -9,7 +9,9 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { getTagName } from "../util/get-tag-name";
+import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { boundaryAlwaysPairs } from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -18,7 +20,11 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   getBranchRendererArgs,
@@ -114,7 +120,15 @@ export default {
     const bodySection = startSection(tag.get("body"));
 
     if (bodySection) {
+      bodySection.isBoundary = true;
       bodySection.upstreamExpression = tagExtra;
+      if (isPatch()) {
+        // Any `<try>` a patch may reach (scriptless, or in content one consumer
+        // renders stateful) applies its body entry through `patch-try`.
+        linkRuntimeFeature("catch");
+        linkRuntimeFeature("patch-try");
+        if (attrTags?.["@catch"]) linkRuntimeFeature("patch-catch");
+      }
       structure.visit(tag, WalkCode.Replace);
       structure.enterShallow(tag);
     }
@@ -135,6 +149,7 @@ export default {
       exit(tag) {
         const section = getSection(tag);
         const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody)!;
         const nodeRef = tag.node.extra!.nodeBinding!;
         const catchTag = getAttrTag(tag, "@catch");
         const placeholderTag = getAttrTag(tag, "@placeholder");
@@ -169,6 +184,15 @@ export default {
                       ? getResumeRegisterId(catchSection, "content")
                       : getEmptyCatchId(section, nodeRef),
                   ),
+                // A patch pairs the try by its body's shell, which an
+                // always-pairing branch drops outside divergent contexts;
+                // a try with a catch may rebuild its body from it.
+                isPatch() &&
+                  t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+                isPatch() &&
+                  !catchTag &&
+                  boundaryAlwaysPairs(bodySection) &&
+                  t.numericLiteral(1),
               ),
             ),
           )[0]

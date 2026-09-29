@@ -1,0 +1,11 @@
+<main>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <await|value|=input.promise>
+      <try>
+        <@catch|err|><em>${err.message}</em></@catch>
+        <span>${value}</span>
+      </try>
+    </await>
+  </try>
+</main>

@@ -1,0 +1,10 @@
+<const/params=$global.data.params/>
+<button onClick() {}>go</button>
+<try>
+  <await|items|=$global.data.items>
+    <for|item| of=items>
+      <a href=`?q=${params.q.trim()}&i=${item}`>${item}</a>
+    </for>
+  </await>
+  <@placeholder>Loading</@placeholder>
+</try>
