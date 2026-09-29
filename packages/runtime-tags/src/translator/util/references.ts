@@ -63,6 +63,7 @@ import {
   getSectionForBody,
   getSectionRegisterReasons,
   isDynamicClosure,
+  isResumedBranch,
   isSameOrChildSection,
   forEachAncestorSection,
   type Section,
@@ -1390,12 +1391,7 @@ export function finalizeReferences() {
       addOwnerSerializeReason(section, hoistedBinding.section, FORCED);
     });
 
-    if (
-      section.parent &&
-      section.isBranch &&
-      section.sectionAccessor &&
-      section.upstreamExpression
-    ) {
+    if (isResumedBranch(section)) {
       const closureSources = getSerializeSourcesForRef(
         getDirectClosures(section),
       );
@@ -1412,9 +1408,9 @@ export function finalizeReferences() {
         kBranchSerializeReason,
       );
       addSerializeExpr(
-        section.parent,
+        section.parent!,
         section.upstreamExpression,
-        section.sectionAccessor.binding,
+        section.branch.nodeBinding,
       );
     }
   });
@@ -2576,9 +2572,9 @@ function getDebugNameAsIdentifier(binding: Binding) {
 export function getSectionInstancesAccessor(section: Section) {
   // Only hoists reach the prefix + section id fallback; a reserved numeric id
   // would be a byte shorter, but hoists are too rare for that to pay.
-  return section.sectionAccessor
-    ? section.sectionAccessor.prefix +
-        getScopeAccessor(section.sectionAccessor.binding)
+  return isResumedBranch(section)
+    ? getAccessorPrefix().BranchScopes +
+        getScopeAccessor(section.branch.nodeBinding)
     : getAccessorPrefix().ClosureScopes + section.id;
 }
 

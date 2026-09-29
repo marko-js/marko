@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 
-import { getAccessorPrefix } from "./get-accessor-enums";
 import { type Binding, kBranchSerializeReason } from "./references";
 import { ContentType, type Section } from "./sections";
 import { getSerializeGuard, getSerializeGuardForAny } from "./serialize-guard";
@@ -14,25 +13,15 @@ import {
 import { setSectionOwnerResumedByMarker } from "./signals";
 import { createProgramState } from "./state";
 
-// Shared wiring for `<if>`/`<for>` branches (and `<show>`'s end args), so
-// the tags cannot drift apart one copy at a time.
-export function getBranchSectionAccessor(
-  nodeBinding: Binding,
-): NonNullable<Section["sectionAccessor"]> {
-  return {
-    binding: nodeBinding,
-    prefix: getAccessorPrefix().BranchScopes,
-  };
-}
-
+// Shared wiring for control flow branches (and `<show>`'s end args), so the
+// tags cannot drift apart one copy at a time.
 export function initBranchSection(
   bodySection: Section,
   upstreamExpression: Section["upstreamExpression"],
-  sectionAccessor: Section["sectionAccessor"],
+  branch: NonNullable<Section["branch"]>,
 ) {
-  bodySection.isBranch = true;
   bodySection.upstreamExpression = upstreamExpression;
-  bodySection.sectionAccessor = sectionAccessor;
+  bodySection.branch = branch;
 }
 
 // The branch id rides the always-rendered resume marker and a state-fed

@@ -15,7 +15,6 @@ import {
   forEachSectionReverse,
   getContentClosures,
   getSectionForBody,
-  getSectionParentIsOwner,
   getSectionRegisterReasons,
   isDynamicClosure,
   setBranchRendererArgs,
@@ -107,7 +106,7 @@ export default {
             setup && written.has(setup) ? setup.identifier : undefined;
 
           if (!isSectionRendererElided(childSection)) {
-            if (getSectionParentIsOwner(childSection)) {
+            if (childSection.branch) {
               setBranchRendererArgs(childSection, [
                 writes,
                 walks,

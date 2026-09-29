@@ -11,7 +11,6 @@ import { assertNoSpreadAttrs } from "../util/assert";
 import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
 import {
   getBranchResumeArgs,
-  getBranchSectionAccessor,
   initBranchSection,
   isSingleNodeBranch,
   resumeOwnerByMarkerWhenStatic,
@@ -35,7 +34,6 @@ import {
   getSection,
   getSectionForBody,
   type Section,
-  setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
 import {
@@ -85,12 +83,14 @@ export const IfTag = {
         ifTagSection,
         branches.length,
       );
-      const sectionAccessor = getBranchSectionAccessor(nodeBinding);
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {
         if (branchBodySection) {
-          initBranchSection(branchBodySection, ifTagExtra, sectionAccessor);
+          initBranchSection(branchBodySection, ifTagExtra, {
+            nodeBinding,
+            optional: true,
+          });
         }
 
         if (branchTag.node.attributes.length) {
@@ -106,15 +106,7 @@ export const IfTag = {
     html: {
       enter(tag) {
         if (tag.node.body.attributeTags) return;
-
-        const tagBody = tag.get("body");
-        const bodySection = getSectionForBody(tagBody);
-
         writer.flushBefore(tag);
-
-        if (bodySection) {
-          setSectionParentIsOwner(bodySection, true);
-        }
       },
       exit(tag) {
         if (tag.node.body.attributeTags) return;
@@ -215,16 +207,6 @@ export const IfTag = {
       },
     },
     dom: {
-      enter(tag) {
-        if (tag.node.body.attributeTags) return;
-
-        const tagBody = tag.get("body");
-        const bodySection = getSectionForBody(tagBody);
-
-        if (bodySection) {
-          setSectionParentIsOwner(bodySection, true);
-        }
-      },
       exit(tag) {
         if (tag.node.body.attributeTags) return;
 
