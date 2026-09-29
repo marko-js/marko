@@ -21,6 +21,7 @@ import {
 } from "./cyclic-memo";
 import { getValueInputs } from "./finalize-references";
 import { getAccessorPrefix } from "./get-accessor-enums";
+import { finalizeKnownTags } from "./known-tag";
 import { concat, first, forEach, type Opt, rest, some } from "./optional";
 import {
   type ReferencedExtra,
@@ -28,6 +29,9 @@ import {
   isReferencedExtra,
 } from "./references";
 import {
+  finalizeParamSerializeReasonGroups,
+  forEachSection,
+  forEachSectionReverse,
   getDynamicClosureIndex,
   getSectionRegisterReasons,
   isDynamicClosure,
@@ -37,7 +41,9 @@ import {
 import {
   addOwnerSerializeReason,
   addSerializeReason,
+  finalizeSerializeReason,
   getSerializeReason,
+  getSerializeReasonsVersion,
   getSerializeSourcesForDownstream,
   getSerializeSourcesForExpr,
   isForceSerialized,
@@ -54,9 +60,34 @@ import {
   sharesSources,
 } from "./sources";
 
+export function solveSerializeReasons(
+  intersectionsBySection: Map<Section, Intersection[]>,
+) {
+  // Rules that follow other reasons repeat until none moves; every write merges,
+  // so reasons only grow and this settles, even through cycles.
+  let reasonsVersion: number;
+  do {
+    reasonsVersion = getSerializeReasonsVersion();
+    resetSerializations();
+    forEachSection((section) =>
+      addIntersectionSerializeReasons(
+        section,
+        intersectionsBySection.get(section),
+      ),
+    );
+    forEachSection(addClosureSerializeReasons);
+    addRegisteredFnSerializeReasons(getFunctionReadsByExpression());
+    forEachSectionReverse((section) => {
+      finalizeKnownTags(section);
+      finalizeSerializeReason(section);
+      finalizeParamSerializeReasonGroups(section);
+    });
+  } while (reasonsVersion !== getSerializeReasonsVersion());
+}
+
 // Serializes an intersection member for its partners' sources, unless those
 // changes always recompute it.
-export function addIntersectionSerializeReasons(
+function addIntersectionSerializeReasons(
   section: Section,
   intersections: Intersection[] | undefined,
 ) {
@@ -191,7 +222,7 @@ function getUpstreamReasonUntil(section: Section, ancestor: Section) {
 
 // Serializes each closure a section reads for every branch or content between
 // the read and the closure's own section, unless creating it recomputes the closure.
-export function addClosureSerializeReasons(section: Section) {
+function addClosureSerializeReasons(section: Section) {
   forEach(section.referencedClosures, (closure) => {
     // mark bindings that need to be serialized due to being closed over by stateful sections
     const sourceSection = closure.section;
@@ -229,7 +260,7 @@ export function addClosureSerializeReasons(section: Section) {
 }
 
 // A registered function serializes what it reads, owners included.
-export function addRegisteredFnSerializeReasons(
+function addRegisteredFnSerializeReasons(
   fnReadsByExpression: ReturnType<typeof getFunctionReadsByExpression>,
 ) {
   resolveFunctionRegisterReasons();
@@ -273,7 +304,7 @@ resetSerializations();
 
 // Answers read the reasons of the moment, so each pass that grows them
 // asks afresh.
-export function resetSerializations() {
+function resetSerializations() {
   extraSerialization = createCyclicMemo(
     computeExtraSerialization,
     UNSERIALIZED,

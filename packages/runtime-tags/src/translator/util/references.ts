@@ -895,8 +895,8 @@ export const [getReferenceFinalizers] = createProgramState<(() => void)[]>(
   () => [],
 );
 
-// Runs once reads and assignments settle, before serialize reasons propagate,
-// so a finalizer may add reasons but never reads them.
+// Runs once reads, assignments, pruning and sources settle, before reasons
+// propagate: a finalizer may add reasons, but reads no reason or fact built on one.
 export function onFinalizeReferences(finalize: () => void) {
   getReferenceFinalizers().push(finalize);
 }
