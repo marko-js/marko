@@ -6,7 +6,11 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { getSectionReturnValueIdentifier } from "../core/return";
-import { localsIdentifier, scopeIdentifier } from "../visitors/program";
+import {
+  getExportNames,
+  localsIdentifier,
+  scopeIdentifier,
+} from "../visitors/program";
 import {
   type Binding,
   BindingType,
@@ -37,6 +41,7 @@ import {
 } from "./reasons";
 import {
   type AssignedBindingExtra,
+  getReferencedBindingsInFunction,
   hasResumableWriter,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
@@ -299,8 +304,8 @@ export function getSignal(
     const exportName = referencedBindings
       ? !Array.isArray(referencedBindings) &&
         referencedBindings.section === section &&
-        getProgram().node.extra.exportNames!.params.get(referencedBindings)
-      : !section.parent && getProgram().node.extra.exportNames!.setup;
+        getExportNames().params.get(referencedBindings)
+      : !section.parent && getExportNames().setup;
 
     signals.set(
       referencedBindings,
@@ -855,19 +860,17 @@ function isOwnValueRead(node: t.Node, binding: Binding) {
 }
 
 function subscribe(references: ReferencedBindings, subscriber: Signal) {
-  if (references) {
-    forEach(references, (binding) => {
-      if (binding.type !== BindingType.constant) {
-        const source = (isDirectAlias(binding) && binding.aliasOf) || binding;
-        const providerSignal = getSignal(subscriber.section, source);
-        providerSignal.hasSideEffect = true;
-        providerSignal.intersection = push(
-          providerSignal.intersection,
-          subscriber,
-        );
-      }
-    });
-  }
+  forEach(references, (binding) => {
+    if (binding.type !== BindingType.constant) {
+      const source = (isDirectAlias(binding) && binding.aliasOf) || binding;
+      const providerSignal = getSignal(subscriber.section, source);
+      providerSignal.hasSideEffect = true;
+      providerSignal.intersection = push(
+        providerSignal.intersection,
+        subscriber,
+      );
+    }
+  });
 }
 
 export function replaceNullishAndEmptyFunctionsWith0(
@@ -945,7 +948,9 @@ export function addValue(
   });
 
   if (
-    (value?.extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction
+    t.isFunction(value) &&
+    value.extra &&
+    getReferencedBindingsInFunction(value.extra)
   ) {
     parentSignal.hasSideEffect = true;
   }
@@ -1817,7 +1822,7 @@ function getRegisteredFnExpression(node: t.Function) {
   if (isRegisteredFnExtra(extra)) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
-    const referencedBindings = extra.referencedBindingsInFunction;
+    const referencedBindings = getReferencedBindingsInFunction(extra);
     const referencedLocals = extra.referencedLocalBindingsInFunction;
     let registeredFns = registeredFnsForProgram.get(getProgram().node);
     if (!registeredFns) {

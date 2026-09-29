@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import {
   getFile,
+  getProgram,
   getTemplateId,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
@@ -33,6 +34,7 @@ import {
 } from "../../util/runtime";
 import {
   forEachSection,
+  getProgramSection,
   getRendererReason,
   startSection,
 } from "../../util/sections";
@@ -69,6 +71,11 @@ declare module "@marko/compiler/dist/types" {
     };
     styleFile?: string;
   }
+}
+
+// Set as analysis starts the program, so every later reader has them.
+export function getExportNames() {
+  return getProgram().node.extra.exportNames!;
 }
 
 export default {
@@ -123,7 +130,7 @@ export default {
         programExtra.paramsTree = getBindingPropTree(paramsBinding);
       }
 
-      const section = programExtra.section!;
+      const section = getProgramSection();
 
       // Anything revived or unconditionally registered against this module
       // has to reach the client on its own.
@@ -275,7 +282,7 @@ export default {
       if (isOutputHTML()) {
         programHTML.translate.enter();
       } else {
-        programDOM.translate.enter(program);
+        programDOM.translate.enter();
       }
     },
     exit(program) {

@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
+import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { ReservedId } from "../../common/types";
 import { scopeIdentifier } from "../visitors/program";
@@ -20,6 +20,7 @@ import {
   getOrCreatePropertyAlias,
   isInvokeOnlyBinding,
   propsUtil,
+  type ReferencedBindings,
   reserveId,
 } from "./bindings";
 import { generateUidIdentifier } from "./generate-uid";
@@ -43,8 +44,8 @@ import {
   addRead,
   dropContent,
   dropNodes,
-  untrackNode,
   getAllTagReferenceNodes,
+  getReferencedBindings,
   type KnownExprs,
   mapParamReasonToExpr,
   mergeReferences,
@@ -52,6 +53,7 @@ import {
   setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
+  untrackNode,
 } from "./references";
 import { callRuntime, importRuntime } from "./runtime";
 import {
@@ -61,6 +63,7 @@ import {
 import { createScopeReadExpression } from "./scope-read";
 import {
   getOrCreateSection,
+  getProgramSection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
@@ -589,9 +592,7 @@ function analyzeAttrs(
             analyzeDynamicAttrTagChildGroup(attrTagMeta.group, child);
           } else if (childAttrExport === true) {
             getAllTagReferenceNodes(child.node, (restReferenceNodes ||= []));
-            known[attrTagMeta.name] = {
-              value: rootTagExtra as ReferencedExtra,
-            };
+            known[attrTagMeta.name] = { value: rootTagExtra };
           } else if (
             childAttrExport.props &&
             !(attrTagMeta.repeated && childAttrExport.rest)
@@ -644,9 +645,7 @@ function analyzeAttrs(
       }
 
       if (hasRest) {
-        const groupKnownValue: KnownExprs = {
-          value: rootTagExtra as ReferencedExtra,
-        };
+        const groupKnownValue: KnownExprs = { value: rootTagExtra };
         restReferenceNodes ||= [];
         for (const node of referenceNodes) {
           restReferenceNodes.push(node);
@@ -693,7 +692,7 @@ function analyzeAttrs(
       seen.add("content");
       if (contentExport === true) {
         // TODO: update when supporting default params
-        known.content = { value: rootTagExtra as ReferencedExtra };
+        known.content = { value: rootTagExtra };
       } else {
         remaining.delete("content");
         known.content = { value: undefined }; // TODO: update when supporting default params
@@ -722,9 +721,9 @@ function analyzeAttrs(
         spreadReferenceNodes.push(attr.value);
       } else if (templateExportAttr === true) {
         (restReferenceNodes ||= []).push(attr.value);
-        known[attr.name] = { value: rootTagExtra as ReferencedExtra };
+        known[attr.name] = { value: rootTagExtra };
       } else {
-        const attrExtra = (attr.value.extra ??= {}) as ReferencedExtra;
+        const attrExtra = (attr.value.extra ??= {});
         remaining.delete(attr.name);
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
@@ -733,8 +732,7 @@ function analyzeAttrs(
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
         if (
-          templateExportAttr.binding.section.program !==
-            getProgram().node.extra.section &&
+          templateExportAttr.binding.section.program !== getProgramSection() &&
           isInvokeOnlyBinding(templateExportAttr.binding)
         ) {
           attrExtra.invokeOnly = true;
@@ -926,7 +924,7 @@ function writeParamsToSignals(
     propTree.rest ||
     tag.node.arguments?.some((node) => t.isSpreadElement(node))
   ) {
-    const referencedBindings = tag.node.extra?.referencedBindings;
+    const referencedBindings = getReferencedBindings(tag.node.extra);
     const tagInputIdentifier = info.getBindingIdentifier(
       propTree.binding,
       `${importAlias}_params`,
@@ -977,7 +975,7 @@ function writeParamsToSignals(
         addStatement(
           "render",
           info.tagSection,
-          arg.extra?.referencedBindings, // TODO: pretty sure content needs to have the reference group of it's param defaults.
+          getReferencedBindings(arg.extra), // TODO: pretty sure content needs to have the reference group of it's param defaults.
           t.expressionStatement(
             t.callExpression(argExportIdentifier, [
               createScopeReadExpression(
@@ -1007,7 +1005,7 @@ function applyAttrObject(
   tagInputIdentifier: t.Identifier,
   info: TranslateDOMInfo,
 ) {
-  const referencedBindings = tag.node.extra?.referencedBindings;
+  const referencedBindings = getReferencedBindings(tag.node.extra);
   const statements: t.Statement[] = [];
   let translatedProps: t.Expression | undefined;
 
@@ -1123,7 +1121,7 @@ function writeAttrsToSignals(
 
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
-  const tagReferencedBindings = tag.node.extra?.referencedBindings;
+  const tagReferencedBindings = getReferencedBindings(tag.node.extra);
   const remaining = new Set(getAllKnownPropNames(propTree));
   const contentProps: t.ObjectExpression["properties"] = [];
 
@@ -1132,7 +1130,7 @@ function writeAttrsToSignals(
     const statementsByGroup = new Map<
       AttrTagGroup,
       {
-        referencedBindings: t.NodeExtra["referencedBindings"];
+        referencedBindings: ReferencedBindings;
         statements: t.Statement[];
       }
     >();
@@ -1146,7 +1144,7 @@ function writeAttrsToSignals(
       if (!statements) {
         statements = [];
         statementsByGroup.set(group, {
-          referencedBindings: child.node.extra?.referencedBindings,
+          referencedBindings: getReferencedBindings(child.node.extra),
           statements,
         });
       }
@@ -1399,7 +1397,7 @@ function writeAttrsToSignals(
     addStatement(
       "render",
       info.tagSection,
-      attr.value.extra?.referencedBindings,
+      getReferencedBindings(attr.value.extra),
       t.expressionStatement(
         t.callExpression(attrExportIdentifier, [
           createScopeReadExpression(info.childScopeBinding, info.tagSection),

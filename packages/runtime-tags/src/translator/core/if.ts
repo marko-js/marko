@@ -7,7 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoSpreadAttrs } from "../util/assert";
-import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
+import { bodyToRawTextLiteral } from "../util/body-to-text-literal";
 import {
   getBranchResumeArgs,
   initBranchSection,
@@ -18,7 +18,7 @@ import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { addReasonExprs, type Reasons, sourcesUtil } from "../util/reasons";
-import { mergeReferences } from "../util/references";
+import { getReferencedBindings, mergeReferences } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -229,7 +229,12 @@ export const IfTag = {
               ...replaceNullishAndEmptyFunctionsWith0(rendererArgs),
             );
           };
-          addValue(ifTagSection, ifTagExtra.referencedBindings, signal, expr);
+          addValue(
+            ifTagSection,
+            getReferencedBindings(ifTagExtra),
+            signal,
+            expr,
+          );
         }
       },
     },
@@ -366,7 +371,7 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   }
   const placeholder = t.markoPlaceholder(expr, true);
   if (rawText) {
-    (placeholder.extra ??= {})[kRawText] = true;
+    (placeholder.extra ??= {}).rawText = true;
   }
   rootTag.replaceWith(placeholder);
 }

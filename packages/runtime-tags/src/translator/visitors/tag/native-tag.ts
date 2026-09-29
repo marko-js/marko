@@ -41,12 +41,14 @@ import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
 import { addReasonExprs, addReason } from "../../util/reasons";
 import {
+  addMergedFact,
   dropNodes,
   getCanonicalExtra,
+  getReferencedBindings,
+  isTagVarUsed,
   mergeReferenceGroup,
   mergeReferences,
   trackDomVarReferences,
-  isTagVarUsed,
 } from "../../util/references";
 import {
   callRuntime,
@@ -102,7 +104,7 @@ const htmlSelectArgs = new WeakMap<
 >();
 
 declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
+  export interface MarkoTagExtra {
     [kNodeOp]?: StructureNode;
     [kNativeAttrs]?: NativeAttrs;
   }
@@ -180,8 +182,8 @@ export default {
         const attr = attributes[i];
         if (t.isMarkoSpreadAttribute(attr)) {
           const valueExtra = (attr.value.extra ??= {});
-          valueExtra.isEffect = true;
-          valueExtra.retained = true;
+          addMergedFact(valueExtra, "isEffect");
+          addMergedFact(valueExtra, "retained");
           hasEventHandlers = true;
           hasDynamicAttributes = true;
           if (!spread) {
@@ -230,7 +232,7 @@ export default {
           }
 
           if (isEventHandlerAttr) {
-            valueExtra.isEffect = true;
+            addMergedFact(valueExtra, "isEffect");
             valueExtra.consumed = true;
             // Attached once and only invoked, so reads inside can be lazy.
             valueExtra.invokeOnly = true;
@@ -238,7 +240,7 @@ export default {
             addSetupExpr(tagSection, attr.value);
           } else {
             assertValidNativeEventHandlerAttr(tag, attr);
-            if (isChangeHandlerAttr) valueExtra.retained = true;
+            if (isChangeHandlerAttr) addMergedFact(valueExtra, "retained");
             if (!evaluate(attr.value).confident) {
               hasDynamicAttributes = true;
               addSetupExpr(tagSection, attr.value);
@@ -446,7 +448,7 @@ export default {
       if (own) {
         for (const index of own) {
           const { name, value } = attributes[index] as t.MarkoAttribute;
-          const { confident, computed } = value.extra || {};
+          const { confident, computed } = evaluate(value);
           if (confident) {
             write`${getStaticAttrMarkup(name, computed)}`;
           } else if (name === "class" || name === "style") {
@@ -672,7 +674,7 @@ export default {
         if (own) {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
-            const { confident, computed } = value.extra || {};
+            const { confident, computed } = evaluate(value);
 
             if (tagName === "option" && name === "value") {
               write`${callRuntime("_attr_option_value", value)}`;
@@ -691,7 +693,7 @@ export default {
           for (const index of handlers) {
             addHTMLEffectCall(
               tagSection,
-              attributes[index].value.extra?.referencedBindings,
+              getReferencedBindings(attributes[index].value.extra),
             );
           }
         }
@@ -703,7 +705,7 @@ export default {
           spreadRendersContent(tag, contentAttr, isTextOnly);
 
         if (spreadExpression) {
-          addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
+          addHTMLEffectCall(tagSection, getReferencedBindings(tagExtra));
 
           if (!spreadContent) {
             if (skipExpression) {
@@ -910,9 +912,11 @@ export default {
             helper,
             controllable,
           );
-          const { referencedBindings } = getCanonicalExtra(
-            attrAt(attributes, controllable.attrs.find(isDefined))!.value
-              .extra!,
+          const referencedBindings = getReferencedBindings(
+            getCanonicalExtra(
+              attrAt(attributes, controllable.attrs.find(isDefined))!.value
+                .extra!,
+            ),
           );
           const values = (
             hasChangeHandler
@@ -952,8 +956,8 @@ export default {
         if (own) {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
-            const { confident } = value.extra || {};
-            const valueReferences = value.extra?.referencedBindings;
+            const { confident } = evaluate(value);
+            const valueReferences = getReferencedBindings(value.extra);
 
             switch (name) {
               case "class":
@@ -1052,7 +1056,7 @@ export default {
             addStatement(
               "effect",
               tagSection,
-              value.extra?.referencedBindings,
+              getReferencedBindings(value.extra),
               t.expressionStatement(
                 callRuntime(
                   "_on",
@@ -1080,7 +1084,7 @@ export default {
             addStatement(
               "render",
               tagSection,
-              tagExtra.referencedBindings,
+              getReferencedBindings(tagExtra),
               t.expressionStatement(
                 callRuntime(
                   spreadContent ? "_attrs_partial_content" : "_attrs_partial",
@@ -1096,7 +1100,7 @@ export default {
             addStatement(
               "render",
               tagSection,
-              tagExtra.referencedBindings,
+              getReferencedBindings(tagExtra),
               t.expressionStatement(
                 callRuntime(
                   spreadContent ? "_attrs_content" : "_attrs",
@@ -1113,7 +1117,7 @@ export default {
           addStatement(
             "effect",
             tagSection,
-            tagExtra.referencedBindings,
+            getReferencedBindings(tagExtra),
             t.expressionStatement(
               callRuntime("_attrs_script", scopeIdentifier, visitAccessor),
             ),
@@ -1124,7 +1128,7 @@ export default {
           addStatement(
             "render",
             tagSection,
-            contentAttr.value.extra?.referencedBindings,
+            getReferencedBindings(contentAttr.value.extra),
             t.expressionStatement(
               callRuntime(
                 "_attr_content",
@@ -1153,7 +1157,7 @@ export default {
               addStatement(
                 "render",
                 getSection(tag),
-                textLiteral.extra?.referencedBindings,
+                getReferencedBindings(textLiteral.extra),
                 t.expressionStatement(
                   callRuntime(
                     "_text_content",

@@ -33,6 +33,7 @@ import { addOwnerReason, type Reason } from "./reasons";
 import {
   getCommonSection,
   getOrCreateSection,
+  getProgramSection,
   getSectionForBody,
   type Section,
   setReadsOwner,
@@ -59,8 +60,15 @@ export interface ExtraRead {
   ownVar: boolean;
   getter: Getter | undefined;
   /** Set for same-section local reads: the function root that owns the read. */
-  localFn?: ReferencedFunctionExtra;
+  localFn?: t.FunctionExtra & t.NodeExtra;
 }
+
+// What finalize resolves an expression to read, settled only then, so it is
+// read through `getReferencedBindings`/`getLazyBindings`.
+const kReferencedBindings = Symbol("referenced bindings");
+const kLazyBindings = Symbol("lazy bindings");
+const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
+const kConstantBindingsInFunction = Symbol("constant bindings in function");
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -69,39 +77,51 @@ declare module "@marko/compiler/dist/types" {
     hasGlobalRead?: true;
   }
 
-  export interface NodeExtra {
-    section?: Section;
-    /** The dom binding a tag or placeholder is addressed by: its node, marker
-     * or child scope; an only child control flow tag shares its parent's. */
+  export interface MarkoTagExtra {
+    /** The dom binding the tag is addressed by: its node, marker or child
+     * scope; an only child control flow tag shares its parent's. */
     nodeBinding?: Binding;
-    referencedBindings?: ReferencedBindings;
+  }
+
+  export interface MarkoPlaceholderExtra {
+    /** The dom binding the placeholder's text node is held in. */
+    nodeBinding?: Binding;
+  }
+
+  export interface NodeExtra {
+    [kReferencedBindings]?: ReferencedBindings;
+    [kLazyBindings]?: ReferencedBindings;
+    section?: Section;
     /** The bindings it feeds, in the order it feeds them: a call site's
      * values feed the child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
     /** The initial value of the binding it feeds, which keeps it rather than
      * following it, so the binding derives no sources from it. */
     initialValue?: true;
+    /** Evaluating it has no side effects, so an unread value can go. */
+    pure?: boolean;
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a derives template's binding, for dereferencing its reasons. */
     callSiteExprs?: KnownExprs;
     binding?: Binding;
+    // On a read's identifier or member expression, which is the expression
+    // root itself when the root is that read.
     assignment?: Binding;
     assignmentTo?: Binding;
     read?: ExtraRead;
     pruned?: true;
     /** The expression this node sits in: dropped or merged as one. */
     exprRoot?: NodeExtra;
-    isEffect?: true;
+    readonly isEffect?: true;
     /** Retained past render (a change handler, a native spread, a dynamic tag's
      * input), so client code may read a value here as it is, a function too. */
-    retained?: true;
+    readonly retained?: true;
     /** Consumed where it is written (a handler its tag attaches, an
      * effect's callback, a key function), so it reaches no client as is. */
     consumed?: true;
     /** Any function it holds is only ever invoked, never read as a value, so
      * the reads inside resolve when it runs. */
     invokeOnly?: true;
-    lazyBindings?: ReferencedBindings;
     /** `$global` bindings this expression reads: the root means an opaque
      * (dynamic/aliased) read, a property alias names the key. */
     globalBindings?: ReferencedBindings;
@@ -114,10 +134,10 @@ declare module "@marko/compiler/dist/types" {
   }
 
   export interface FunctionExtra {
+    [kReferencedBindingsInFunction]?: ReferencedBindings;
+    [kConstantBindingsInFunction]?: ReferencedBindings;
     referencesScope?: boolean;
-    referencedBindingsInFunction?: ReferencedBindings;
     referencedLocalBindingsInFunction?: SortedOpt<Binding>;
-    constantBindingsInFunction?: ReferencedBindings;
     name?: string;
     registerId?: string;
     /** When client code reads the function itself, which registers it. */
@@ -130,6 +150,9 @@ declare module "@marko/compiler/dist/types" {
   export interface ArrowFunctionExpressionExtra extends FunctionExtra {}
   export interface FunctionDeclarationExtra extends FunctionExtra {}
   export interface FunctionExpressionExtra extends FunctionExtra {}
+  export interface ObjectMethodExtra extends FunctionExtra {}
+  export interface ClassMethodExtra extends FunctionExtra {}
+  export interface ClassPrivateMethodExtra extends FunctionExtra {}
 }
 
 // An attribute tag `<for>` param reaches only the content the loop creates, so
@@ -414,7 +437,7 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
       // up registered (hoisted), so the read records that root for translate.
       const fnRoot = getFnRoot(ref);
       if (fnRoot) {
-        const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
+        const fnExtra = (fnRoot.node.extra ??= {});
         fnExtra.referencedLocalBindingsInFunction = bindingUtil.add(
           fnExtra.referencedLocalBindingsInFunction,
           binding,
@@ -487,23 +510,20 @@ function trackAssignment(
   }
 
   const fnRoot = getFnRoot(fnParent);
-  const fnExtra =
-    fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
   const section = getOrCreateSection(assignment);
   setReferencesScope(assignment);
   forEachIdentifierPath(assignment, (id) => {
     if (id.node.name === binding.name) {
-      const idExtra = (id.node.extra ??= {}) as AssignedBindingExtra;
-      idExtra.assignment = binding;
-      idExtra.section = section;
-      idExtra.exprRoot = getExprRoot(fnRoot || assignment).node.extra ??= {};
-      idExtra.fnRoot = fnExtra;
+      const exprRoot = (getExprRoot(fnRoot || assignment).node.extra ??= {});
+      const idExtra = Object.assign((id.node.extra ??= {}), {
+        assignment: binding,
+        section,
+        exprRoot,
+        fnRoot:
+          fnRoot &&
+          Object.assign((fnRoot.node.extra ??= {}), { section, exprRoot }),
+      });
       getAssignments().push(idExtra);
-
-      if (fnExtra) {
-        fnExtra.section = section;
-        fnExtra.exprRoot = idExtra.exprRoot;
-      }
 
       if (binding.aliasOf && binding.property !== undefined) {
         // A positional parameter (`<for|item|>`) has no object that could
@@ -537,7 +557,7 @@ function trackAssignment(
 export function setReferencesScope(path: t.NodePath<any>) {
   const fnRoot = getFnRoot(path);
   if (fnRoot) {
-    ((fnRoot.node.extra ??= {}) as t.FunctionExtra).referencesScope = true;
+    (fnRoot.node.extra ??= {}).referencesScope = true;
   }
 }
 
@@ -803,10 +823,12 @@ export function mergeReferences<T extends t.Node>(
   target: T,
   nodes: (t.Node | undefined)[],
 ): NonNullable<T["extra"]> & ReferencedExtra {
-  return mergeInto(section, (target.extra ??= {}), nodes) as NonNullable<
-    T["extra"]
-  > &
-    ReferencedExtra;
+  // Every extra type is all optional, so a new one starts empty.
+  return mergeInto(
+    section,
+    (target.extra ??= {} as NonNullable<T["extra"]>),
+    nodes,
+  );
 }
 
 // Expressions a tag reads as one, with no node of their own to hold the group,
@@ -814,32 +836,32 @@ export function mergeReferences<T extends t.Node>(
 export function mergeReferenceGroup(
   section: Section,
   nodes: (t.Node | undefined)[],
-) {
+): ReferencedExtra {
   return mergeInto(section, {}, nodes);
 }
 
-function mergeInto(
+function mergeInto<E extends t.NodeExtra>(
   section: Section,
-  extra: t.NodeExtra,
+  extra: E,
   nodes: (t.Node | undefined)[],
-) {
-  const targetExtra = extra as ReferencedExtra;
+): E & ReferencedExtra {
+  const targetExtra = Object.assign(extra, { section });
   const readsByExpression = getReadsByExpression();
   const fnReadsByExpression = getFunctionReadsByExpression();
   let reads = readsByExpression.get(targetExtra);
   let exprFnReads = fnReadsByExpression.get(targetExtra);
-  let { isEffect, retained } = targetExtra;
 
   for (const node of nodes) {
     if (!node) continue;
     const extra = (node.extra ??= {});
     extra.merged = targetExtra;
     // A literal has no reads but still lands in the position.
-    retained ||= extra.retained;
+    for (const fact of mergedFacts) {
+      if (extra[fact]) setMergedFact(targetExtra, fact);
+    }
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
-      isEffect ||= extra.isEffect;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           read.binding.reads.delete(extra);
@@ -869,10 +891,7 @@ function mergeInto(
   }
 
   readsByExpression.set(targetExtra, reads);
-  targetExtra.isEffect = isEffect;
-  targetExtra.retained = retained;
   targetExtra.spreadFrom = getSpreadOnlyBindings(reads);
-  targetExtra.section = section;
 
   return targetExtra;
 }
@@ -902,7 +921,7 @@ export function setDerivedFrom(
   expr: boolean | Opt<t.NodeExtra>,
   exprs?: KnownExprs,
 ) {
-  if (binding.section.program === getProgram().node.extra.section) {
+  if (binding.section.program === getProgramSection()) {
     // Each call site of a same template body feeds its params.
     const prev = binding.derivedFrom;
     binding.derivedFrom =
@@ -927,11 +946,11 @@ export const [getAssignments] = createProgramState<AssignedBindingExtra[]>(
 );
 
 export const [getReadsByExpression] = createProgramState(
-  () => new Map<ReferencedExtra, Opt<Read>>(),
+  () => new Map<t.NodeExtra, Opt<Read>>(),
 );
 
 export const [getFunctionReadsByExpression] = createProgramState(
-  () => new Map<ReferencedExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
+  () => new Map<t.NodeExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
 );
 
 export const [getReferenceFinalizers] = createProgramState<(() => void)[]>(
@@ -949,7 +968,7 @@ export function getExpressionReads(exprExtra: ReferencedExtra) {
 }
 
 export function addRead(
-  exprExtra: ReferencedExtra,
+  expr: t.NodeExtra,
   extra: t.NodeExtra,
   binding: Binding,
   section: Section,
@@ -968,8 +987,8 @@ export function addRead(
   // Content no output renders keeps no binding alive: reads recorded before it
   // was dropped are untracked by `dropContent`, and later ones stop here.
   if (section.pruned) return read;
+  const exprExtra = Object.assign(expr, { section });
   binding.reads.add(exprExtra);
-  exprExtra.section = section;
   readsByExpression.set(
     exprExtra,
     push(readsByExpression.get(exprExtra), read),
@@ -982,16 +1001,16 @@ export function addRead(
 export function dropNodes(node: t.Node | t.Node[]) {
   if (Array.isArray(node)) {
     for (const item of node) {
-      dropExtra((item.extra ??= {}) as ReferencedExtra);
+      dropExtra((item.extra ??= {}));
     }
   } else {
-    dropExtra((node.extra ??= {}) as ReferencedExtra);
+    dropExtra((node.extra ??= {}));
   }
 }
 
 // Still emitted, so the code names what it read past the graph.
 export function untrackNode(node: t.Node) {
-  const exprExtra = (node.extra ??= {}) as ReferencedExtra;
+  const exprExtra = (node.extra ??= {});
   const reads = untrackExtra(exprExtra);
   if (reads && !exprExtra.pruned && !exprExtra.section!.pruned) {
     forEach(reads, (read) => addUntrackedRead(read.binding, exprExtra));
@@ -1001,17 +1020,17 @@ export function untrackNode(node: t.Node) {
 // An alias's value reaches its aliased binding through the alias, so it keeps no
 // read of its own and is emitted only while the alias is.
 export function untrackAliasValue(node: t.Node) {
-  untrackExtra((node.extra ??= {}) as ReferencedExtra);
+  untrackExtra((node.extra ??= {}));
 }
 
-export function dropExtra(exprExtra: ReferencedExtra) {
+export function dropExtra(exprExtra: t.NodeExtra) {
   exprExtra.pruned = true;
   untrackExtra(exprExtra);
 }
 
 // A merged expression is never dropped and a dropped one never merged:
 // both would strand reads the target already took.
-function untrackExtra(exprExtra: ReferencedExtra) {
+function untrackExtra(exprExtra: t.NodeExtra) {
   /* v8 ignore next 3 -- a merged reference is never dropped */
   if (exprExtra.merged) {
     throw new Error("Cannot drop a merged reference");
@@ -1020,9 +1039,11 @@ function untrackExtra(exprExtra: ReferencedExtra) {
   const readsByExpr = getReadsByExpression();
   const reads = readsByExpr.get(exprExtra);
   if (reads) {
-    readsByExpr.delete(exprExtra);
-    getFunctionReadsByExpression().delete(exprExtra);
-    forEach(reads, (read) => read.binding.reads.delete(exprExtra));
+    // Only `addRead` records reads, so an extra with reads is referenced.
+    const referenced = exprExtra as ReferencedExtra;
+    readsByExpr.delete(referenced);
+    getFunctionReadsByExpression().delete(referenced);
+    forEach(reads, (read) => read.binding.reads.delete(referenced));
   }
   return reads;
 }
@@ -1078,7 +1099,7 @@ function addReadToExpression(
   const section = getOrCreateSection(exprRoot);
   // Reads recorded after the owning expression merged into another node's extra
   // must land on the merge target, else its references split and the read is lost.
-  const rootExtra = (exprRoot.node.extra ??= { section }) as ReferencedExtra;
+  const rootExtra = (exprRoot.node.extra ??= { section });
   const exprExtra = getCanonicalExtra(rootExtra);
   // A read tracked after its expression was dropped (`$global`, a hoisted
   // reference) must not keep the binding alive.
@@ -1118,9 +1139,10 @@ function addReadToExpression(
     if (!exprFnReads) {
       fnReadsByExpr.set(exprExtra, (exprFnReads = new Map()));
     }
-    const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
-    fnExtra.section = section;
-    fnExtra.exprRoot = rootExtra;
+    const fnExtra = Object.assign((fnRoot.node.extra ??= {}), {
+      section,
+      exprRoot: rootExtra,
+    });
     exprFnReads.set(fnExtra, push(exprFnReads.get(fnExtra), read));
   }
 }
@@ -1228,13 +1250,98 @@ export function isRegisteredFnExtra(
 ): extra is RegisteredFnExtra {
   return (
     isReferencedExtra(extra) &&
-    (extra as RegisteredFnExtra).registerId !== undefined
+    "registerId" in extra &&
+    extra.registerId !== undefined
   );
 }
 
-export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
+export function getReferencedBindings(extra: t.NodeExtra | undefined) {
+  if (MARKO_DEBUG) assertCanonicalReadsResolved(extra);
+  return extra?.[kReferencedBindings];
+}
+
+export function getLazyBindings(extra: t.NodeExtra | undefined) {
+  if (MARKO_DEBUG) assertCanonicalReadsResolved(extra);
+  return extra?.[kLazyBindings];
+}
+
+// What a function's body reads when invoked, resolved with its expression.
+export function getReferencedBindingsInFunction(
+  extra: t.FunctionExtra & t.NodeExtra,
+) {
+  if (MARKO_DEBUG) assertReadsResolved(extra);
+  return extra[kReferencedBindingsInFunction];
+}
+
+export function getConstantBindingsInFunction(
+  extra: t.FunctionExtra & t.NodeExtra,
+) {
+  if (MARKO_DEBUG) assertReadsResolved(extra);
+  return extra[kConstantBindingsInFunction];
+}
+
+export function setResolvedFunctionReads(
+  extra: t.FunctionExtra,
+  referencedBindings: ReferencedBindings,
+  constantBindings: ReferencedBindings,
+) {
+  extra[kReferencedBindingsInFunction] = referencedBindings;
+  extra[kConstantBindingsInFunction] = constantBindings;
+}
+
+export function setResolvedReads(
+  extra: ReferencedExtra,
+  referencedBindings: ReferencedBindings,
+  lazyBindings: ReferencedBindings,
+) {
+  extra[kReferencedBindings] = referencedBindings;
+  extra[kLazyBindings] = lazyBindings;
+}
+
+// Templates whose reads finalize resolved, which the debug check asks.
+const resolvedPrograms = new WeakSet<Section>();
+
+export function markReadsResolved(program: Section) {
+  if (MARKO_DEBUG) resolvedPrograms.add(program);
+}
+
+// An expression's reads resolve on the extra it merged into.
+function assertCanonicalReadsResolved(extra: t.NodeExtra | undefined) {
+  if (extra?.merged) {
+    throw new Error(
+      "Marko internal error: an expression's references were read from an extra merged into another.",
+    );
+  }
+  assertReadsResolved(extra);
+}
+
+function assertReadsResolved(extra: t.NodeExtra | undefined) {
+  if (!resolvedPrograms.has((extra?.section || getProgramSection()).program)) {
+    throw new Error(
+      "Marko internal error: an expression's references were read before finalize resolved them.",
+    );
+  }
+}
+
+// Facts about what an expression does as a whole: the expression it merges
+// into takes them on, and readers ask the canonical extra.
+const mergedFacts = ["isEffect", "retained"] as const;
+type MergedFact = (typeof mergedFacts)[number];
+
+// Records a merged fact whether or not the expression has merged yet.
+export function addMergedFact(extra: t.NodeExtra, fact: MergedFact) {
+  setMergedFact(extra, fact);
+  setMergedFact(getCanonicalExtra(extra), fact);
+}
+
+// The facts are `readonly` to everything but this writer.
+function setMergedFact(extra: t.NodeExtra, fact: MergedFact) {
+  (extra as { -readonly [F in MergedFact]?: true })[fact] = true;
+}
+
+export function getCanonicalExtra(extra: t.NodeExtra): t.NodeExtra {
   while (extra.merged) {
-    extra = extra.merged as T;
+    extra = extra.merged;
   }
 
   return extra;

@@ -2,6 +2,7 @@ import type { types as t } from "@marko/compiler";
 
 import { callsOtherTemplateSetup } from "./known-tag";
 import { forEach } from "./optional";
+import { getReferencedBindings } from "./references";
 import { forEachSection, type Section } from "./sections";
 import { createSectionState } from "./state";
 
@@ -61,7 +62,7 @@ function hasOwnSetupWork(section: Section) {
   }
   for (let extra of info.exprs) {
     while (extra.merged) extra = extra.merged;
-    if (!extra.pruned && !extra.referencedBindings) {
+    if (!extra.pruned && !getReferencedBindings(extra)) {
       return true;
     }
   }

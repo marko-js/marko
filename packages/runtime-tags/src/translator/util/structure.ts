@@ -1,7 +1,8 @@
 import { types as t } from "@marko/compiler";
-import { getFile, getProgram } from "@marko/compiler/babel-utils";
+import { getFile } from "@marko/compiler/babel-utils";
 
 import { ReservedId, WalkCode, WalkRangeSize } from "../../common/types";
+import { getExportNames } from "../visitors/program";
 import { type Binding, BindingType, createBinding } from "./bindings";
 import * as Step from "./constants/step";
 import { generateUidIdentifier } from "./generate-uid";
@@ -13,12 +14,12 @@ import normalizeStringExpression, {
 } from "./normalize-string-expression";
 import {
   ContentType,
+  getProgramSection,
   getSection,
-  getSectionForBody,
   type Section,
   StructureKind,
-  type StructureOp,
   type StructureNode,
+  type StructureOp,
   type StructureRef,
 } from "./sections";
 import { createProgramState, createSectionState } from "./state";
@@ -277,7 +278,7 @@ function resolveRef(ref: StructureRef, part: "template" | "walks") {
   }
   const name = ref.program.exportNames![part];
   // Sections survive the per-compile AST clone; the extra objects do not.
-  return ref.program.section === getProgram().node.extra.section
+  return ref.program.section === getProgramSection()
     ? t.identifier(name)
     : importOrSelfReferenceName(
         getFile(),
@@ -313,8 +314,8 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
 // Writes the program's template and walks exports, preceded by the constants
 // hoisted for referenced sections. Every needed section meta must exist first.
 export function writeStructureExports(program: t.NodePath<t.Program>) {
-  const { walks, writes } = getSectionMeta(getSectionForBody(program)!);
-  const exportNames = program.node.extra.exportNames!;
+  const { walks, writes } = getSectionMeta(getProgramSection());
+  const exportNames = getExportNames();
   const decls = getMetaDecls();
   program.node.body.unshift(
     t.exportNamedDeclaration(

@@ -1,11 +1,12 @@
 import { types as t } from "@marko/compiler";
 
 import { BindingType, createBinding } from "../util/bindings";
-import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
+import { injectTextCoercion } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { addReasonExprs } from "../util/reasons";
+import { getReferencedBindings } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -44,8 +45,8 @@ export default {
       if (isNonHTMLText(placeholder)) return;
 
       const { node } = placeholder;
-      const valueExtra = evaluate(node.value);
-      const { confident, computed } = valueExtra;
+      const valueExtra = (node.value.extra ??= {});
+      const { confident, computed } = evaluate(node.value);
       if (
         confident &&
         getHTMLRuntime()[node.escape ? "_escape" : "_unescaped"](computed) ===
@@ -120,11 +121,10 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const { node } = placeholder;
   const { value } = node;
   // Restore `_to_text` on a flattened `<if>` now that the output is known.
-  if (node.extra?.[kRawText]) {
+  if (node.extra?.rawText) {
     injectTextCoercion(value);
   }
-  const valueExtra = evaluate(value);
-  const { confident, computed } = valueExtra;
+  const { confident, computed } = evaluate(value);
 
   if (
     confident &&
@@ -183,7 +183,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       addStatement(
         "render",
         section,
-        valueExtra.referencedBindings,
+        getReferencedBindings(value.extra),
         t.expressionStatement(
           method === "_text"
             ? callRuntime(

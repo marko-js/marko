@@ -1,5 +1,4 @@
-import { getProgram } from "@marko/compiler/babel-utils";
-
+import { getExportNames } from "../visitors/program";
 import { type Binding, isTemplateParam, propsUtil } from "./bindings";
 import { generateUid } from "./generate-uid";
 import { forEach, type SortedOpt } from "./optional";
@@ -11,10 +10,10 @@ export type BindingPropTree = {
 };
 
 // Set during analyze on a `<${x}/>` that renders content with no input.
-export const kDirectContent = Symbol("direct content");
+// On the tag's extra, which is the expression root a binding's read lands on.
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    [kDirectContent]?: true;
+    directContent?: true;
   }
 }
 
@@ -66,7 +65,7 @@ export function getBindingPropTree(
     }
   }
 
-  const exportNames = getProgram().node.extra.exportNames!;
+  const exportNames = getExportNames();
   if (isTemplateParam(binding) && !exportNames.params.has(binding)) {
     exportNames.params.set(binding, generateUid(binding.name));
   }
@@ -92,7 +91,7 @@ function isDirectContentBinding(binding: Binding) {
   }
 
   const [read] = binding.reads;
-  return read[kDirectContent] && read.section === binding.section;
+  return read.directContent && read.section === binding.section;
 }
 
 // Pruning keeps an alias of an analyzed body only if something reads it (tracked

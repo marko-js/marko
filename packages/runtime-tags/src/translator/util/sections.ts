@@ -148,7 +148,7 @@ export interface Section {
   pruned: boolean;
   hasAbortSignal: boolean;
   /** Count of distinct `$signal` expression roots; analyze allocates each
-   * root's `abortId` from this so translates read, never re-derive. */
+   * root's abort id from this so translates read, never re-derive. */
   abortSignalExprs: number;
   readsOwner: boolean;
   /** Whether analysis found work keyed by setup in the section, or in a
@@ -283,10 +283,11 @@ export function removePrunedContent(tag: t.NodePath<t.MarkoTag>) {
 }
 
 export function getSection(path: t.NodePath) {
-  let section: Section;
   let currentPath = path;
-  while ((section = currentPath.node.extra?.section as Section) === undefined) {
+  let section = currentPath.node.extra?.section;
+  while (!section) {
     currentPath = currentPath.parentPath!;
+    section = currentPath.node.extra?.section;
   }
 
   return section;
@@ -307,9 +308,18 @@ export const [getBranchRendererArgs, setBranchRendererArgs] =
     ]
   >("rendererExpression");
 
+// The template's own section and every section in it, which analysis starts
+// the program with, so both exist from then on.
+export function getProgramSection() {
+  return getProgram().node.extra.section!;
+}
+
+function getSections() {
+  return getProgram().node.extra.sections!;
+}
+
 export function forEachSection(fn: (section: Section) => void) {
-  const { sections } = getProgram().node.extra;
-  sections?.forEach(fn);
+  getSections().forEach(fn);
 }
 
 // For content a tag the analysis cannot resolve receives, which code it cannot
@@ -345,9 +355,9 @@ export function forEachAncestorSection<A>(
 }
 
 export function forEachSectionReverse(fn: (section: Section) => void) {
-  const { sections } = getProgram().node.extra;
-  for (let i = sections!.length; i--;) {
-    fn(sections![i]);
+  const sections = getSections();
+  for (let i = sections.length; i--;) {
+    fn(sections[i]);
   }
 }
 

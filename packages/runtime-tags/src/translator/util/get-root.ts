@@ -34,7 +34,7 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
         | t.FunctionDeclaration
         | t.FunctionExpression
         | t.ArrowFunctionExpression
-        | t.ObjectMember
+        | t.ObjectMethod
       >;
   while (!isMarko(curPath)) {
     if (isFunction(curPath)) {
@@ -120,7 +120,7 @@ function isFunction(
   | t.FunctionDeclaration
   | t.FunctionExpression
   | t.ArrowFunctionExpression
-  | t.ObjectMember
+  | t.ObjectMethod
 > {
   switch (path.type) {
     case "FunctionDeclaration":

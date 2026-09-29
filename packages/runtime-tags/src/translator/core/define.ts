@@ -8,6 +8,7 @@ import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   dropNodes,
   getAllTagReferenceNodes,
+  getReferencedBindings,
   isReferenceHoisted,
   mergeReferences,
   setDerivedFrom,
@@ -182,7 +183,7 @@ export default {
         }
 
         const section = getSection(tag);
-        const referencedBindings = node.extra?.referencedBindings;
+        const referencedBindings = getReferencedBindings(node.extra);
         if (translatedAttrs.statements.length) {
           addStatement(
             "render",

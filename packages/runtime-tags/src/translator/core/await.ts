@@ -9,8 +9,11 @@ import {
 import { assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
-import evaluate from "../util/evaluate";
-import { setDerivedFrom, trackParamsReferences } from "../util/references";
+import {
+  getReferencedBindings,
+  setDerivedFrom,
+  trackParamsReferences,
+} from "../util/references";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -100,7 +103,7 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
-    const valueExtra = evaluate(valueAttr.value);
+    const valueExtra = (valueAttr.value.extra ??= {});
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
 
@@ -200,7 +203,7 @@ export default {
 
         addValue(
           section,
-          valueExpr.extra?.referencedBindings,
+          getReferencedBindings(valueExpr.extra),
           signal,
           valueExpr,
         );

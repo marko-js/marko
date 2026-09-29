@@ -3,6 +3,15 @@ import { getFile, resolveTagImport } from "@marko/compiler/babel-utils";
 
 import type { TemplateVisitor } from "../util/visitors";
 
+declare module "@marko/compiler/dist/types" {
+  export interface ExportNamedDeclarationExtra {
+    tagImport?: string;
+  }
+  export interface ExportAllDeclarationExtra {
+    tagImport?: string;
+  }
+}
+
 export default {
   analyze(exportDecl) {
     const { node } = exportDecl;

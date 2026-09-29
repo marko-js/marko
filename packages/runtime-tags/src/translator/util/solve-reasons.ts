@@ -1,5 +1,4 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
 
 import { resolveFunctionReason } from "../visitors/function";
 import {
@@ -33,15 +32,18 @@ import {
   type Reason,
 } from "./reasons";
 import {
-  type ReferencedExtra,
+  getConstantBindingsInFunction,
   getFunctionReadsByExpression,
+  getReferencedBindingsInFunction,
   isReferencedExtra,
+  type ReferencedExtra,
 } from "./references";
 import {
   finalizeParamReasonGroups,
   forEachSection,
   forEachSectionReverse,
   getDynamicClosureIndex,
+  getProgramSection,
   getRendererReason,
   isDynamicClosure,
   isSameOrChildSection,
@@ -256,8 +258,8 @@ function addRegisteredFnReasons(
             addOwnerReason(fn.section, binding.section, reason);
           }
         };
-        forEach(fn.referencedBindingsInFunction, addRead);
-        forEach(fn.constantBindingsInFunction, addRead);
+        forEach(getReferencedBindingsInFunction(fn), addRead);
+        forEach(getConstantBindingsInFunction(fn), addRead);
       }
     }
   }
@@ -337,7 +339,7 @@ function readersOfDerives(
   part: Binding | undefined,
   properties?: Opt<string> | true,
 ): Readers {
-  if (extra === getProgram().node.extra?.section!.returnValueExpr) {
+  if (extra === getProgramSection().returnValueExpr) {
     return ALWAYS_READ;
   }
   let readers = UNREAD;

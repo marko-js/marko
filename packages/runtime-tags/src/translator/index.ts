@@ -75,11 +75,17 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {}
   export interface FunctionExpressionExtra {}
   export interface ArrowFunctionExpressionExtra {}
+  export interface ObjectMethodExtra {}
+  export interface ClassMethodExtra {}
+  export interface ClassPrivateMethodExtra {}
   export interface MarkoTagExtra extends NodeExtra {}
   export interface MarkoTagBodyExtra {}
   export interface MarkoAttributeExtra {}
   export interface MarkoSpreadAttributeExtra {}
   export interface MarkoPlaceholderExtra {}
+  export interface ImportDeclarationExtra {}
+  export interface ExportNamedDeclarationExtra {}
+  export interface ExportAllDeclarationExtra {}
 
   export interface Program {
     extra: ProgramExtra & NodeExtra;
@@ -95,6 +101,18 @@ declare module "@marko/compiler/dist/types" {
 
   export interface ArrowFunctionExpression {
     extra?: ArrowFunctionExpressionExtra & NodeExtra;
+  }
+
+  export interface ObjectMethod {
+    extra?: ObjectMethodExtra & NodeExtra;
+  }
+
+  export interface ClassMethod {
+    extra?: ClassMethodExtra & NodeExtra;
+  }
+
+  export interface ClassPrivateMethod {
+    extra?: ClassPrivateMethodExtra & NodeExtra;
   }
 
   export interface MarkoTag {
@@ -115,5 +133,17 @@ declare module "@marko/compiler/dist/types" {
 
   export interface MarkoPlaceholder {
     extra?: MarkoPlaceholderExtra & NodeExtra;
+  }
+
+  export interface ImportDeclaration {
+    extra?: ImportDeclarationExtra & NodeExtra;
+  }
+
+  export interface ExportNamedDeclaration {
+    extra?: ExportNamedDeclarationExtra & NodeExtra;
+  }
+
+  export interface ExportAllDeclaration {
+    extra?: ExportAllDeclarationExtra & NodeExtra;
   }
 }

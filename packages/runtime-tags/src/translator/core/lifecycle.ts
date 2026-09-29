@@ -9,7 +9,12 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { getAllTagReferenceNodes, mergeReferences } from "../util/references";
+import {
+  addMergedFact,
+  getAllTagReferenceNodes,
+  getReferencedBindings,
+  mergeReferences,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
@@ -37,7 +42,7 @@ export default {
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
-    tagExtra.isEffect = true;
+    addMergedFact(tagExtra, "isEffect");
     // `_lifecycle` registers cleanup via `$signal` at runtime, so the scope
     // must resume with its closest branch linked.
     section.hasAbortSignal = true;
@@ -69,7 +74,7 @@ export default {
       const { node } = tag;
       const section = getSection(tag);
       const tagExtra = node.extra!;
-      const { referencedBindings } = tagExtra;
+      const referencedBindings = getReferencedBindings(tagExtra);
 
       if (isOutputDOM()) {
         const translatedAttrs = translateAttrs(tag);

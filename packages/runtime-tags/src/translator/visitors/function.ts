@@ -17,17 +17,18 @@ import {
 } from "../util/get-root";
 import isInvokedFunction from "../util/is-invoked-function";
 import { mergeReasons, type Reason } from "../util/reasons";
-import { getCanonicalExtra, type RegisteredFnExtra } from "../util/references";
+import { getCanonicalExtra, type ReferencedExtra } from "../util/references";
 import { getSection } from "../util/sections";
 import { getValueReason } from "../util/solve-reasons";
 import { createProgramState } from "../util/state";
 import { traverseFindAwait } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
 
+const kRegisteredExports = Symbol("registered exports");
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     // Every name an export is reachable by -> its reserved registration.
-    registeredExports?: Map<string, ReservedExport>;
+    [kRegisteredExports]?: Map<string, ReservedExport>;
   }
 }
 
@@ -47,8 +48,12 @@ interface ImportedFn extends ResolvedExport {
   local: string;
 }
 
+// A function a template may register: where it is and the name it would take.
+type RegisterableFnExtra = ReferencedExtra &
+  t.FunctionExtra & { exprRoot: t.NodeExtra; name: string };
+
 const [getReferencesByFn] = createProgramState(
-  () => new Map<RegisteredFnExtra, Set<t.NodeExtra>>(),
+  () => new Map<RegisterableFnExtra, Set<t.NodeExtra>>(),
 );
 const [getReferencesByImportedFn] = createProgramState(
   () => new Map<ImportedFn, Set<t.NodeExtra>>(),
@@ -90,26 +95,26 @@ export default {
     const markoRoot = getMarkoRoot(exprRoot);
     if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) return;
 
-    const section = getSection(fn);
-    const fnExtra = (node.extra ??= {}) as RegisteredFnExtra;
-    fnExtra.section = section;
-    fnExtra.exprRoot = exprRoot.node.extra ??= {};
-    fnExtra.name =
-      (node as t.FunctionExpression).id?.name ||
-      (isMarkoAttribute(markoRoot)
-        ? markoRoot.node.default
-          ? t.toIdentifier(
-              (markoRoot.parentPath.has("var")
-                ? markoRoot.parentPath.get("var")
-                : markoRoot.parentPath.get("name")
-              ).toString(),
-            )
-          : markoRoot.node.name
-        : t.isVariableDeclarator(fn.parent) && t.isIdentifier(fn.parent.id)
-          ? fn.parent.id.name
-          : t.isObjectMethod(node) && t.isIdentifier(node.key)
-            ? node.key.name
-            : "anonymous");
+    const fnExtra = Object.assign((node.extra ??= {}), {
+      section: getSection(fn),
+      exprRoot: (exprRoot.node.extra ??= {}),
+      name:
+        (node as t.FunctionExpression).id?.name ||
+        (isMarkoAttribute(markoRoot)
+          ? markoRoot.node.default
+            ? t.toIdentifier(
+                (markoRoot.parentPath.has("var")
+                  ? markoRoot.parentPath.get("var")
+                  : markoRoot.parentPath.get("name")
+                ).toString(),
+              )
+            : markoRoot.node.name
+          : t.isVariableDeclarator(fn.parent) && t.isIdentifier(fn.parent.id)
+            ? fn.parent.id.name
+            : t.isObjectMethod(node) && t.isIdentifier(node.key)
+              ? node.key.name
+              : "anonymous"),
+    });
 
     reserveExportRegisterId(fnExtra, fn, markoRoot);
 
@@ -186,7 +191,8 @@ export function resolveRegisteredExport(
   if (seen.has(key)) return;
   seen.add(key);
 
-  const reserved = file.ast.program.extra?.registeredExports?.get(exportName);
+  const reserved =
+    file.ast.program.extra?.[kRegisteredExports]?.get(exportName);
   if (reserved) return { ...reserved, filename };
 
   for (const child of file.ast.program.body) {
@@ -250,7 +256,7 @@ function registerImportedFn({ node, ...importedFn }: ImportedFn) {
 // can register it as is; the id is reserved here so every one of them agrees.
 // A function exported under several names still gets one id, keyed by the first.
 function reserveExportRegisterId(
-  fnExtra: RegisteredFnExtra,
+  fnExtra: RegisterableFnExtra,
   fn: t.NodePath<t.Function>,
   markoRoot: MarkoExprRootPath,
 ) {
@@ -273,9 +279,9 @@ function reserveExportRegisterId(
   );
 
   fnExtra.exportRegisterId = registerId;
-  programExtra.registeredExports ??= new Map();
+  programExtra[kRegisteredExports] ??= new Map();
   for (const name of exportNames!) {
-    programExtra.registeredExports.set(name, { registerId, exportName });
+    programExtra[kRegisteredExports].set(name, { registerId, exportName });
   }
 }
 
@@ -394,7 +400,7 @@ function addBindingRefs(
   }
 }
 
-function registerFunction(fnExtra: RegisteredFnExtra) {
+function registerFunction(fnExtra: RegisterableFnExtra) {
   const {
     markoOpts,
     path: program,

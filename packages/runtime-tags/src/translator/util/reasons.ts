@@ -1,5 +1,4 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
 
 import { getPropertyPathAlias } from "./binding-has-prop";
 import {
@@ -19,13 +18,15 @@ import {
   some,
 } from "./optional";
 import {
+  getCanonicalExtra,
+  getReferencedBindings,
   isReferencedExtra,
   type KnownExprs,
   mapParamBindingToExpr,
-  getCanonicalExtra,
 } from "./references";
 import {
   forEachAncestorSection,
+  getProgramSection,
   type ParamReasonGroups,
   type Section,
 } from "./sections";
@@ -97,7 +98,7 @@ export function isStateReason(reason: undefined | Reason): reason is Sources {
 export function getSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExtra(expr);
   return isReferencedExtra(root)
-    ? getSourcesForRef(root.referencedBindings)
+    ? getSourcesForRef(getReferencedBindings(root))
     : undefined;
 }
 
@@ -189,7 +190,7 @@ export function mapParamReason(
 }
 
 function isOwnBinding(binding: Binding) {
-  return binding.section.program === getProgram().node.extra.section;
+  return binding.section.program === getProgramSection();
 }
 
 function isForeignBinding(binding: Binding) {

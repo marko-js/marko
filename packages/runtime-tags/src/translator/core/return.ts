@@ -13,6 +13,7 @@ import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { addReason } from "../util/reasons";
+import { addMergedFact, getReferencedBindings } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
@@ -97,7 +98,7 @@ export default {
     }
 
     if (attrs.valueChange) {
-      (attrs.valueChange.extra ??= {}).isEffect = true;
+      addMergedFact((attrs.valueChange.extra ??= {}), "isEffect");
       addSetupExpr(section, attrs.valueChange);
       // TODO: this should be based on the parent actually mutating the tag variable.
       addReason(getSectionSlot(section, SlotKind.ReturnChangeHandler), ALWAYS);
@@ -146,7 +147,7 @@ export default {
           addStatement(
             "render",
             section,
-            attrs.value.extra?.referencedBindings,
+            getReferencedBindings(attrs.value.extra),
             t.expressionStatement(
               callRuntime("_return", scopeIdentifier, attrs.value),
             ),
@@ -157,7 +158,7 @@ export default {
           addStatement(
             "render",
             section,
-            attrs.valueChange.extra?.referencedBindings,
+            getReferencedBindings(attrs.valueChange.extra),
             t.expressionStatement(
               callRuntime("_return_change", scopeIdentifier, attrs.valueChange),
             ),

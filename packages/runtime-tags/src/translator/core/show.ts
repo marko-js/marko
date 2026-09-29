@@ -15,7 +15,7 @@ import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { addReasonExprs } from "../util/reasons";
-import { mergeReferences } from "../util/references";
+import { getReferencedBindings, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -40,7 +40,7 @@ const kSingleNodeBody = Symbol("<show> single node body");
 const htmlDisplayRefs = new WeakMap<t.MarkoTag, t.Identifier>();
 
 declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
+  export interface MarkoTagExtra {
     [kStartBinding]?: Binding;
     [kEndBinding]?: Binding;
     [kStaticDisplay]?: boolean;
@@ -247,7 +247,7 @@ export default {
             endBinding ? getScopeAccessorLiteral(endBinding, true) : undefined,
           );
         };
-        addValue(tagSection, tagExtra.referencedBindings, signal, display);
+        addValue(tagSection, getReferencedBindings(tagExtra), signal, display);
 
         tag.remove();
       },

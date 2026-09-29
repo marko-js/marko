@@ -12,10 +12,7 @@ import {
 import { isEventHandler } from "../../../common/helpers";
 import { ReservedId } from "../../../common/types";
 import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
-import {
-  getBindingPropTree,
-  kDirectContent,
-} from "../../util/binding-prop-tree";
+import { getBindingPropTree } from "../../util/binding-prop-tree";
 import {
   type Binding,
   BindingType,
@@ -39,7 +36,9 @@ import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
 import { addReasonExprs, addReason } from "../../util/reasons";
 import {
+  addMergedFact,
   getAllTagReferenceNodes,
+  getReferencedBindings,
   isTagVarUsed,
   mergeReferences,
   trackParamsReferences,
@@ -97,6 +96,7 @@ import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import { getWriteGuard } from "../../util/write-guard";
 import * as writer from "../../util/writer";
+import { getExportNames } from "../program";
 import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath, tagNotFoundError } from "./custom-tag";
 import { controllableFeatureFor, enableControllable } from "./native-tag";
@@ -177,7 +177,7 @@ export default {
       ]);
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
-      if (inputNodes.length) tagExtra.retained = true;
+      if (inputNodes.length) addMergedFact(tagExtra, "retained");
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const usesVar = hasVar && isTagVarUsed(tag);
@@ -189,7 +189,7 @@ export default {
           isInteractive = true;
           // It may resolve to an element, which retains a change handler.
           if (!isEventHandler(attr.name)) {
-            (attr.value.extra ??= {}).retained = true;
+            addMergedFact((attr.value.extra ??= {}), "retained");
           }
         }
       }
@@ -232,7 +232,7 @@ export default {
         !node.attributes.length &&
         !node.body.body.length
       ) {
-        tagExtra[kDirectContent] = true;
+        tagExtra.directContent = true;
       }
 
       structure.marker(tag, nodeBinding);
@@ -276,8 +276,7 @@ export default {
             t.memberExpression(tag.node.name, t.identifier("content")),
           );
         } else {
-          const directContentNames =
-            getProgram().node.extra.exportNames!.directContent;
+          const directContentNames = getExportNames().directContent;
           knownTagTranslateDOM(
             tag,
             (binding, preferredName, directContent) => {
@@ -582,11 +581,11 @@ export default {
 
         // Additional optimized export a known parent calls instead of the
         // general `_dynamic_tag` signal above.
-        const directBinding = tagExtra.referencedBindings;
+        const directBinding = getReferencedBindings(tagExtra);
         const directName =
           directBinding &&
           !Array.isArray(directBinding) &&
-          getProgram().node.extra.exportNames!.directContent.get(directBinding);
+          getExportNames().directContent.get(directBinding);
         if (directName) {
           getProgram().node.body.push(
             t.exportNamedDeclaration(
@@ -629,7 +628,12 @@ export default {
           enableDynamicTagVar(tag);
           enableDynamicTagControllables(tag);
         }
-        addValue(section, tagExtra.referencedBindings, signal, tagExpression);
+        addValue(
+          section,
+          getReferencedBindings(tagExtra),
+          signal,
+          tagExpression,
+        );
         tag.remove();
       }
     },

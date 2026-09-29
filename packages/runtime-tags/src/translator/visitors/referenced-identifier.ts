@@ -5,6 +5,7 @@ import { getExprRoot } from "../util/get-root";
 import { isOptimize, isOutputHTML } from "../util/marko-config";
 import {
   getCanonicalExtra,
+  getReferencedBindings,
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
@@ -15,11 +16,12 @@ import { createSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
 import { scopeIdentifier } from "./program";
 
+const kAbortId = Symbol("abort id");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     /** `$signal` abort id for this expression root, allocated in analyze
      * (see below) so every translate reads the same id. */
-    abortId?: number;
+    [kAbortId]?: number;
   }
 }
 
@@ -70,8 +72,8 @@ export default {
       // even if this extra later merges with another expression's.
       const rootExtra = (getExprRoot(identifier).node.extra ??= { section });
       (identifier.node.extra ??= {}).exprRoot = rootExtra;
-      if (rootExtra.abortId === undefined) {
-        rootExtra.abortId = section.abortSignalExprs++;
+      if (rootExtra[kAbortId] === undefined) {
+        rootExtra[kAbortId] = section.abortSignalExprs++;
       }
     }
   },
@@ -122,7 +124,7 @@ export default {
           if (canonicalExtra.pruned) break;
 
           const section = getSection(identifier);
-          const exprId = exprRoot.abortId!;
+          const exprId = exprRoot[kAbortId]!;
           const resetEmitted = getAbortResetEmitted(section);
 
           if (!resetEmitted.has(exprRoot)) {
@@ -130,7 +132,7 @@ export default {
             addStatement(
               "render",
               section,
-              canonicalExtra.referencedBindings,
+              getReferencedBindings(canonicalExtra),
               t.expressionStatement(
                 t.callExpression(importRuntime("$signalReset"), [
                   scopeIdentifier,
@@ -173,8 +175,9 @@ function getSignalGlobalKey(identifier: t.NodePath<t.Identifier>) {
 
   const { name } = parent.property;
   if (name === "runtimeId" || name === "renderId") return;
-  return getCanonicalExtra(getExprRoot(identifier).node.extra!)
-    .referencedBindings
+  return getReferencedBindings(
+    getCanonicalExtra(getExprRoot(identifier).node.extra!),
+  )
     ? name
     : undefined;
 }

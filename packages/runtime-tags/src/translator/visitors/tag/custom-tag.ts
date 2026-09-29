@@ -39,6 +39,7 @@ import {
 import { createScopeReadExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
+  getProgramSection,
   removePrunedContent,
   StructureKind,
 } from "../../util/sections";
@@ -85,7 +86,7 @@ export default {
 
       const tagExtra = (tag.node.extra ??= {});
       const programExtra = getProgram().node.extra;
-      const programSection = programExtra.section!;
+      const programSection = getProgramSection();
       const childProgram = childFile.ast.program;
       const childExtra = childProgram.extra;
       const childSection = childExtra.section!;
@@ -172,7 +173,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const file = getFile();
   const relativePath = getTagRelativePath(tag);
-  const programSection = getProgram().node.extra.section!;
+  const programSection = getProgramSection();
   const childFile = loadFileForTag(tag)!;
   const childExtra = childFile.ast.program.extra;
   const childExports = childExtra.exportNames!;

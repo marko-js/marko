@@ -14,6 +14,8 @@ import { isNamedOrAssigned } from "../util/finalize-references";
 import { isOptimize, isOutputDOM } from "../util/marko-config";
 import { addReason } from "../util/reasons";
 import {
+  addMergedFact,
+  getReferencedBindings,
   mergeReferences,
   onFinalizeReferences,
   setDerivedFrom,
@@ -32,12 +34,6 @@ import {
 import { findSlot, getSlot, SlotKind } from "../util/slots";
 import { ALWAYS } from "../util/sources";
 import translateVar from "../util/translate-var";
-
-declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
-    static?: boolean;
-  }
-}
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
@@ -130,7 +126,7 @@ export default {
       const changeSlot = getSlot(binding, SlotKind.ChangeHandler);
       // The runtime reads the change handler at the value's reserved id.
       reserveId(binding, ReservedId.ChangeHandler);
-      tagExtra.retained = true;
+      addMergedFact(tagExtra, "retained");
       tagExtra.pure =
         (!valueAttr || evaluate(valueAttr.value).pure) &&
         evaluate(valueChangeAttr.value).pure;
@@ -172,7 +168,7 @@ export default {
       const unused = binding.pruned && !isNamedOrAssigned(binding);
 
       if (isOutputDOM()) {
-        const referencedBindings = tag.node.extra!.referencedBindings;
+        const referencedBindings = getReferencedBindings(tag.node.extra);
         if (unused) {
           // Its impure values run only for what they do, inline as an unread
           // `<const>`'s.

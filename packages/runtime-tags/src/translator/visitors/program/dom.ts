@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
-import { scopeIdentifier } from ".";
+import { getExportNames, scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { BindingType } from "../../util/bindings";
 import { writeModuleRegistrations } from "../../util/module-registrations";
@@ -14,7 +14,7 @@ import {
 import {
   forEachSectionReverse,
   getContentClosures,
-  getSectionForBody,
+  getProgramSection,
   getRendererReason,
   isDynamicClosure,
   type Section,
@@ -43,8 +43,8 @@ import type { TemplateVisitor } from "../../util/visitors";
 
 export default {
   translate: {
-    enter(program) {
-      const section = getSectionForBody(program)!;
+    enter() {
+      const section = getProgramSection();
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
           forEach(childSection.referencedClosures, (closure) => {
@@ -72,8 +72,8 @@ export default {
     exit(program) {
       forEachSectionReverse(getSectionMeta);
 
-      const section = getSectionForBody(program)!;
-      const exportNames = program.node.extra.exportNames!;
+      const section = getProgramSection();
+      const exportNames = getExportNames();
       const templateIdentifier = t.identifier(exportNames.template);
       const walksIdentifier = t.identifier(exportNames.walks);
       const setupIdentifier = t.identifier(exportNames.setup);
