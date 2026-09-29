@@ -2,20 +2,14 @@
 
 <!-- FLUSH -->
 
-<t hidden M_=c>Rejected B</t>
-<script>
-  WALKER_RUNTIME("M")("_");
-  REORDER_RUNTIME(M._);
-  M._.w()
-</script>
-
-<!-- FLUSH -->
-
 <div>Resolved A: A Value</div>
 <!--M_!b--><!--M_]1 a 2--><!--M_[--><!--M_!^c--><!--M_!c--><!--M_]1 b 3--><!--M_[--><!--M_!^d--><!--M_[-->
 <div>Resolved C: C Value</div>
 <button>Before</button><!--M_$7 b--><!--M_]4 a 7--><!--M_!d--><!--M_]1 c 4-->
+<t hidden M_=c>Rejected B</t>
 <script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
   M._.r = [_ => [4, {
     E: _._.a3
   }], "a2 7"];

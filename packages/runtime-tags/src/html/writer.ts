@@ -1162,7 +1162,12 @@ function tryBoundary(
         return;
       }
 
-      if (!bodyEnd.consumed) {
+      const catchChunk = chunk.fork(boundary, null);
+      catchChunk.reorderId = reorderId;
+
+      if (bodyEnd.consumed) {
+        state.reorder(catchChunk);
+      } else {
         let cur: Chunk = body;
         let writeMarker = true;
 
@@ -1177,20 +1182,17 @@ function tryBoundary(
             writeMarker = false;
             cur.async = false;
             cur.next = bodyNext;
-            cur.needsWalk = true;
             cur.html = endMarker;
             cur.scripts = cur.effects = cur.lastEffect = "";
             cur.placeholder = cur.reorderId = cur.deferredReady = null;
+            cur.deferredReorder = catchChunk;
           }
 
           cur = next;
         } while (cur !== bodyNext);
       }
 
-      const catchChunk = chunk.fork(boundary, null);
-      catchChunk.reorderId = reorderId;
       catchChunk.render(catchContent!, catchBoundary.signal.reason);
-      state.reorder(catchChunk);
       boundary.endAsync();
     } else if (!catchBoundary.count) {
       if (renderersAtSettle && catchBoundary.resumeWrites) {
@@ -1440,9 +1442,11 @@ export class Chunk {
   public lastEffect = "";
   public async = false;
   public consumed = false;
-  public needsWalk = false;
   public reorderId: string | null = null;
   public deferredReady: Opt<Chunk> = null;
+  // A reorder whose end marker this chunk writes, queued once the marker streams
+  // so the client always walks the marker before the reorder that replaces it.
+  public deferredReorder: Chunk | null = null;
   public placeholder: {
     body: Chunk;
     render: () => void;
@@ -1491,7 +1495,6 @@ export class Chunk {
 
   append(chunk: Chunk) {
     this.html += chunk.html;
-    this.needsWalk ||= chunk.needsWalk;
     this.effects = concatEffects(this.effects, chunk.effects);
     this.scripts = concatScripts(this.scripts, chunk.scripts);
     this.lastEffect = chunk.lastEffect || this.lastEffect;
@@ -1521,9 +1524,13 @@ export class Chunk {
     const { placeholder } = this;
     if (placeholder) {
       this.placeholder = null;
-      const body = placeholder.body.consume();
+      // The body is left for the pass that streams it, after the markers written
+      // here, so reorders nested in it queue behind its own.
+      const { body } = placeholder;
+      let end = body;
+      while (end.next && !end.async) end = end.next;
 
-      if (body.async) {
+      if (end.async) {
         const { state } = this.boundary;
         const { branchId, scopeId, placeholderBranchId } = placeholder;
         const reorderId = (body.reorderId = branchId
@@ -1545,39 +1552,48 @@ export class Chunk {
         }
         // An abort here fires the `@catch` that takes this chunk's place, or
         // ends the render.
-        if (this.boundary.signal.aborted) return;
-        // A placeholder with effects is a branch like the body: live while
-        // the body streams, destroyed when the reorder swaps it in.
-        const stateful = this.effects !== effects;
-        applyBranchStart(this, beforeBranch, stateful);
-        if (stateful) {
-          this.render(() =>
-            writeScope(branchId, {
-              [AccessorProp.PlaceholderBranch]: scopeWithId(
-                state,
-                placeholderBranchId,
+        if (!this.boundary.signal.aborted) {
+          // A placeholder with effects is a branch like the body: live while
+          // the body streams, destroyed when the reorder swaps it in.
+          const stateful = this.effects !== effects;
+          applyBranchStart(this, beforeBranch, stateful);
+          if (stateful) {
+            this.render(() =>
+              writeScope(branchId, {
+                [AccessorProp.PlaceholderBranch]: scopeWithId(
+                  state,
+                  placeholderBranchId,
+                ),
+              }),
+            );
+            this.writeHTML(
+              state.mark(
+                ResumeSymbol.BranchEnd,
+                scopeId +
+                  " " +
+                  (AccessorProp.PlaceholderBranch + branchId) +
+                  " " +
+                  placeholderBranchId,
               ),
-            }),
-          );
-          this.writeHTML(
-            state.mark(
-              ResumeSymbol.BranchEnd,
-              scopeId +
-                " " +
-                (AccessorProp.PlaceholderBranch + branchId) +
-                " " +
-                placeholderBranchId,
-            ),
-          );
-          // The body's flush ends the placeholder's life on the client.
-          body.writeEffect(branchId, PLACEHOLDER_DISMISS_REGISTER_ID);
+            );
+            // The body's flush ends the placeholder's life on the client.
+            end.writeEffect(branchId, PLACEHOLDER_DISMISS_REGISTER_ID);
+          }
+          this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
+          state.reorder(body);
         }
-        this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
-        state.reorder(body);
       } else {
-        body.next = this.next;
+        end.next = this.next;
         this.next = body;
       }
+    }
+
+    // Queued after the placeholder, whose abort can make this chunk carry a
+    // catch's end marker.
+    const { deferredReorder } = this;
+    if (deferredReorder) {
+      this.deferredReorder = null;
+      deferredReorder.boundary.state.reorder(deferredReorder);
     }
   }
 
@@ -1587,12 +1603,10 @@ export class Chunk {
     let effects = "";
     let scripts = "";
     let lastEffect = "";
-    let needsWalk = false;
     let deferredReady: Opt<Chunk>;
 
     while (cur.next && !cur.async) {
       cur.flushPlaceholder();
-      needsWalk ||= cur.needsWalk;
       html += cur.html;
       if (cur.serializeState.readyId) {
         deferredReady = push(deferredReady, cur);
@@ -1608,7 +1622,6 @@ export class Chunk {
 
     cur.deferOwnReady();
     cur.deferredReady = concat(deferredReady, cur.deferredReady);
-    cur.needsWalk ||= needsWalk;
     cur.html = html + cur.html;
     cur.effects = concatEffects(effects, cur.effects);
     cur.scripts = concatScripts(scripts, cur.scripts);
@@ -1901,11 +1914,6 @@ export class Chunk {
 
   flushHTML(boundary: Boundary) {
     const { state } = boundary;
-    if (this.needsWalk) {
-      this.needsWalk = false;
-      state.walkOnNextFlush = true;
-    }
-
     this.flushScript(boundary);
     const { html, scripts } = this;
     this.html = this.scripts = "";

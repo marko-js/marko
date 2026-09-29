@@ -1,0 +1,17 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<await|a|=resolveAfter("a", 2)>
+  <p>${a}</p>
+</await>
+<try>
+  <@placeholder>outer loading</@placeholder>
+  <try>
+    <@catch>caught</@catch>
+    <await|x|=rejectAfter(new Error("inner"), 1)>
+      <span>${x}</span>
+    </await>
+  </try>
+  <await|y|=resolveAfter("outer", 3)>
+    <div>${y}</div>
+  </await>
+</try>

@@ -1,0 +1,25 @@
+<!--M_[--><!--M_!^3-->outer loading<!--M_!3--><!--M_]1 a 3-->
+<t hidden M_=3><!--M_[--><!--M_!^5-->inner
+  loading<!--M_!5--><!--M_]3 a 5--><!--M_#b--></t>
+<t hidden M_=5><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><span>inner</span></t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>
+  <div>outer</div>
+</t>
+<script>
+  M._.w()
+</script>
