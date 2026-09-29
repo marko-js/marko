@@ -13,7 +13,6 @@ import { generateUidIdentifier } from "../util/generate-uid";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
-import { isControlFlowTag } from "../util/is-core-tag";
 import { FORCED } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
@@ -21,6 +20,7 @@ import { addSerializeReason } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement, setSectionSerializedValue } from "../util/signals";
 import { createSectionState } from "../util/state";
+import { getTagFacts } from "../util/tag-facts";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
@@ -69,7 +69,7 @@ export default {
           .buildCodeFrameError(
             "The [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) can not be used in a [native tag](https://markojs.com/docs/reference/native-tag).",
           );
-      } else if (isControlFlowTag(parentTag)) {
+      } else if (getTagFacts(parentTag).controlFlow) {
         throw tag
           .get("name")
           .buildCodeFrameError(

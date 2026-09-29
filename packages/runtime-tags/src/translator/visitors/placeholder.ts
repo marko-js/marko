@@ -3,8 +3,6 @@ import { types as t } from "@marko/compiler";
 import { WalkCode } from "../../common/types";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
-import { isCoreTagName } from "../util/is-core-tag";
-import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
@@ -30,6 +28,7 @@ import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
+import { getTagFacts, isNonHTMLText } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
 import * as writer from "../util/writer";
 import * as SiblingText from "./constants/sibling-text";
@@ -265,12 +264,10 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   let prevParent: t.NodePath = placeholder.parentPath;
   for (;;) {
     if (!prev.node) {
-      // A `<show>` body is inlined into its parent, so a placeholder at the
-      // edge of the body renders directly against the tag's own siblings.
-      const showTag = getInlinedBodyTag(prevParent);
-      if (showTag) {
-        prev = showTag.getPrevSibling();
-        prevParent = showTag.parentPath;
+      const inlinedTag = getInlinedBodyTag(prevParent);
+      if (inlinedTag) {
+        prev = inlinedTag.getPrevSibling();
+        prevParent = inlinedTag.parentPath;
         continue;
       }
       break;
@@ -298,10 +295,10 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   let nextParent: t.NodePath = placeholder.parentPath;
   for (;;) {
     if (!next.node) {
-      const showTag = getInlinedBodyTag(nextParent);
-      if (showTag) {
-        next = showTag.getNextSibling();
-        nextParent = showTag.parentPath;
+      const inlinedTag = getInlinedBodyTag(nextParent);
+      if (inlinedTag) {
+        next = inlinedTag.getNextSibling();
+        nextParent = inlinedTag.parentPath;
         continue;
       }
       break;
@@ -329,12 +326,13 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   return (placeholderExtra[kSiblingText] = SiblingText.None);
 }
 
-// Returns the owner tag when `parent` is the body of a tag that inlines its
-// content into the surrounding section (currently only `<show>`).
+// The tag rendering `parent` in its own place and section, so the body's
+// edges render against the tag's own siblings.
 function getInlinedBodyTag(parent: t.NodePath) {
   if (parent.isMarkoTagBody()) {
-    const tag = parent.parentPath;
-    if (tag.isMarkoTag() && isCoreTagName(tag, "show")) {
+    const tag = parent.parentPath as t.NodePath<t.MarkoTag>;
+    const facts = getTagFacts(tag);
+    if (facts.controlFlow && facts.inlineBody) {
       return tag;
     }
   }

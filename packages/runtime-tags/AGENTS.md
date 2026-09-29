@@ -71,7 +71,7 @@ export default {
 - `callRuntime("_name", ...args)` (`util/runtime.ts`) references runtime helpers with automatic imports; DOM helpers listed in `pureDOMFunctions` get `/*@__PURE__*/`.
 - Validate early: `assertNoSpreadAttrs` / `assertNoTagVarMutation` / `assertNoBodyContent` are local (`util/assert.ts`), while `assertNoArgs` / `assertNoParams` / `assertNoVar` / `assertAllowedAttributes` come from `@marko/compiler/babel-utils`. Compile errors use `path.buildCodeFrameError` with backticked names and a markojs.com docs link — `core/if.ts` is the canonical style.
 - `util/marko-config.ts` provides `isOutputHTML` / `isOutputDOM` / `isOptimize`.
-- `util/optional.ts` (`Opt`/`Sorted` list algebra) underpins reference tracking; a list a `Sorted` instance builds (`bindingUtil`, `propsUtil`, `sectionUtil`, `sourcesUtil`) is looked up by binary search, so it is typed `SortedOpt` and only that instance can write it (`push`/`concat` results do not type-check into one). Work on these lists with its helpers (`forEach`, `some`, `reduce`, `filter`, the `Sorted` utils): build-then-`reverse` and dedupe-on-add are smells; `util/known-tag.ts` holds the custom/dynamic tag input contracts. Native element work lives in `visitors/tag/native-tag.ts` (with `common/helpers.ts` and `util/is-non-html-text.ts`).
+- `util/optional.ts` (`Opt`/`Sorted` list algebra) underpins reference tracking; a list a `Sorted` instance builds (`bindingUtil`, `propsUtil`, `sectionUtil`, `sourcesUtil`) is looked up by binary search, so it is typed `SortedOpt` and only that instance can write it (`push`/`concat` results do not type-check into one). Work on these lists with its helpers (`forEach`, `some`, `reduce`, `filter`, the `Sorted` utils): build-then-`reverse` and dedupe-on-add are smells; `util/known-tag.ts` holds the custom/dynamic tag input contracts. Native element work lives in `visitors/tag/native-tag.ts` (with `common/helpers.ts` and `util/tag-facts.ts`).
 
 ## Runtime conventions
 
@@ -131,7 +131,7 @@ To add a fixture: create the dir + `template.marko` (+ `test.ts` with steps exer
 
 **New/changed core tag** (see the `<show>` tag commit for a full example):
 
-1. `translator/core/<tag>.ts` + register in `core/index.ts` (and `util/is-core-tag.ts`).
+1. `translator/core/<tag>.ts` + register in `core/index.ts` (and `util/is-core-tag.ts`), and give it an entry in `util/tag-facts.ts`.
 2. Runtime helpers in `src/dom/` / `src/html/`, exported from `src/dom.ts` / `src/html.ts`; add to `util/runtime.ts` lists as needed.
 3. Several small fixtures covering static values, dynamic updates, nesting, and interaction with `<for>`/`<if>`.
 4. `pnpm run change` — user-facing changes need a changeset.
