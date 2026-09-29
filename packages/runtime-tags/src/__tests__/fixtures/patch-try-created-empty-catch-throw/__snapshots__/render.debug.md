@@ -17,8 +17,8 @@
 ## Change
 ```
 INSERT: main > button
-UPDATE: main > button::text " " => "ok"
 INSERT: main > em
+UPDATE: main > button::text " " => "ok"
 ```
 
 # Update

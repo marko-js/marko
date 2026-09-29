@@ -288,7 +288,7 @@ export function addAwaitCounter(
   return awaitCounter;
 }
 
-export function scheduleAwaitFrame(
+function scheduleAwaitFrame(
   awaitCounter: AwaitCounter,
   scope: Scope,
   render: () => void,
@@ -303,7 +303,7 @@ export function scheduleAwaitFrame(
 }
 
 // Keyed past every scope id, so it runs after every other render of the flush.
-export function queueCompleteAwaitCounter(
+function queueCompleteAwaitCounter(
   tryBranch: BranchScope,
   awaitCounter: AwaitCounter,
 ) {
@@ -316,10 +316,7 @@ export function queueCompleteAwaitCounter(
   );
 }
 
-export function completeAwaitCounter(
-  _scope: Scope,
-  awaitCounter: AwaitCounter,
-) {
+function completeAwaitCounter(_scope: Scope, awaitCounter: AwaitCounter) {
   awaitCounter.c();
   if (awaitCounter.m) {
     const fnScopes = new Map<unknown, Set<Scope>>();
@@ -342,7 +339,7 @@ export function completeAwaitCounter(
   }
 }
 
-export function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
+function createAwaitCounter(tryBranch: BranchScope, done: () => void) {
   const awaitCounter: AwaitCounter = (tryBranch[AccessorProp.AwaitCounter] = {
     i: 0,
     c() {
@@ -448,7 +445,7 @@ export function renderCatch(scope: Scope, error: unknown) {
 
 // `ParentBranch` links a branch to its enclosing one (on resume through the serialized
 // closest branch id and markers), and a `@placeholder` is parented beside its `<try>`.
-export function findTryWithPlaceholder(scope: Scope) {
+function findTryWithPlaceholder(scope: Scope) {
   let branch = scope[AccessorProp.ClosestBranch];
   while (branch && !branch[AccessorProp.PlaceholderContent]) {
     branch = branch[AccessorProp.ParentBranch];

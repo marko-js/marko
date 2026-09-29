@@ -12,7 +12,6 @@ export const EventAttributes = "EventAttributes:";
 export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";
-export const PatchSettled = "PatchSettled:";
 export const Promise = "Promise:";
 export const TagVariableChange = "TagVariableChange:";
 export const TryBranch = "TryBranch:";

@@ -27,6 +27,6 @@
 ## Change
 ```
 REMOVE: main > em
-INSERT: main > em
 INSERT: main > em:nth-of-type(1) + em
+INSERT: main > em
 ```

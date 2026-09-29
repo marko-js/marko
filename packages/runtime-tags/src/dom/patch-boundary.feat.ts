@@ -1,36 +1,25 @@
+import { encodeAccessor } from "../common/helpers";
 import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
   type AwaitCounter,
   type BranchScope,
+  type EncodedAccessor,
   PatchKey,
   RendererProp,
   type Scope,
 } from "../common/types";
-import { trackAbort } from "./abort-signal";
-import {
-  addAwaitCounter,
-  completeAwaitCounter,
-  createAwaitCounter,
-  findTryWithPlaceholder,
-  queueCompleteAwaitCounter,
-  scheduleAwaitFrame,
-} from "./control-flow";
+import { _await_promise } from "./control-flow";
 import { applyDeferred, deferApply } from "./patch";
 import "./patch-loop-item";
 import "./patch-try.feat";
 import { getContent } from "./patch-shells";
-import { queueAsyncRender, queueEffect, queueRender, rendering } from "./queue";
+import { queueEffect, queueRender, rendering } from "./queue";
 import { _content, createBranch, type Renderer } from "./renderer";
 import { patchers, patchRender, patchScope, withCreating } from "./resume";
 import { schedule } from "./schedule";
-import {
-  collectScopes,
-  insertBranchBefore,
-  syncGen,
-  tempDetachBranch,
-} from "./scope";
+import { collectScopes, insertBranchBefore, syncGen } from "./scope";
 
 declare module "./resume" {
   interface PatchValues {
@@ -38,124 +27,23 @@ declare module "./resume" {
   }
 }
 
-// An await a flush settled, on its scope: a settle from an earlier response
-// must not hide a later flush's pending UI.
-function markSettled(scope: Scope, accessor: string) {
-  scope[(AccessorPrefix.PatchSettled + accessor) as Accessor] = 1;
-}
+// A flush's pending value: the client awaits it as its own, through the
+// same count, and the flush's settle resolves it within that flush's run.
+type PatchPending = { r?: (value?: unknown) => void };
+const patchPending = { then: (r: () => void): PatchPending => ({ r }) };
 
-// Pending UI a flush begins shows as a client render's does: the try's
-// placeholder, else the detached await, a frame later. Marked `2`, so the
-// settle completes only a count this added.
-function beginAwaitPending(scope: Scope, nodeAccessor: string) {
-  scope[(AccessorPrefix.PatchSettled + nodeAccessor) as Accessor] = 2;
-  const tryPlaceholder = findTryWithPlaceholder(scope);
-  const awaitBranch = scope[
-    AccessorPrefix.BranchScopes + nodeAccessor
-  ] as BranchScope;
-  if (tryPlaceholder) {
-    // Takes one count, or shares a client value's, as `_await_promise` does;
-    // its settle or the await's destroy completes it.
-    const tryAccessor = (AccessorPrefix.TryBranch + nodeAccessor) as Accessor;
-    if (!scope[tryAccessor]) {
-      const awaitCounter = addAwaitCounter(scope, tryPlaceholder)!;
-      scope[tryAccessor] = tryPlaceholder;
-      trackAbort(
-        scope,
-        AccessorPrefix.Promise + nodeAccessor,
-        () =>
-          scope[tryAccessor] &&
-          queueAsyncRender(
-            scope[tryAccessor] as BranchScope,
-            completeAwaitCounter,
-            awaitCounter,
-          ),
-      );
-    }
-  } else if (awaitBranch) {
-    let awaitCounter = awaitBranch[AccessorProp.AwaitCounter] as
-      | AwaitCounter
-      | undefined;
-    if (!awaitCounter?.i) {
-      awaitCounter = createAwaitCounter(awaitBranch, () =>
-        restoreDetached(scope, nodeAccessor),
-      );
-    }
-    scheduleAwaitFrame(awaitCounter, scope, () => {
-      if (!awaitBranch[AccessorProp.DetachedAwait]) {
-        awaitBranch[AccessorProp.StartNode].parentNode!.insertBefore(
-          scope[nodeAccessor] as Node,
-          awaitBranch[AccessorProp.StartNode],
-        );
-        tempDetachBranch(awaitBranch);
-      }
-    });
-  }
-}
-
-function restoreDetached(scope: Scope, nodeAccessor: string) {
-  const anchor = scope[nodeAccessor] as ChildNode;
-  if (!anchor.parentNode) return;
-  const detachedParent = (
-    scope[AccessorPrefix.BranchScopes + nodeAccessor] as BranchScope
-  )[AccessorProp.StartNode].parentNode!;
-  if (detachedParent === anchor.parentNode) anchor.remove();
-  else anchor.replaceWith(detachedParent);
-}
-
-// Settles the await; only pending UI a flush began has a count to complete
-// (the document's streaming try, or a same-flush settle, has none).
-function endAwaitPending(scope: Scope, nodeAccessor: string) {
-  const settled = (AccessorPrefix.PatchSettled + nodeAccessor) as Accessor;
-  const begun = scope[settled] === 2;
-  scope[settled] = 1;
-  if (!begun) return;
-  const tryAccessor = (AccessorPrefix.TryBranch + nodeAccessor) as Accessor;
-  const tryPlaceholder = scope[tryAccessor] as BranchScope | undefined;
-  const awaitBranch = scope[
-    AccessorPrefix.BranchScopes + nodeAccessor
-  ] as BranchScope;
-  if (tryPlaceholder && tryPlaceholder !== awaitBranch) {
-    // The settle supersedes a client value that shares the count, and
-    // completes it after the run's renders, once the awaits its body starts count.
-    scope[tryAccessor] = scope[
-      (AccessorPrefix.Promise + nodeAccessor) as Accessor
-    ] = 0;
-    return queueCompleteAwaitCounter(
-      tryPlaceholder,
-      tryPlaceholder[AccessorProp.AwaitCounter]!,
-    );
-  }
-  const awaitCounter = awaitBranch?.[AccessorProp.AwaitCounter] as
-    | AwaitCounter
-    | undefined;
-  if (!awaitCounter?.i) return;
-
-  const anchor = scope[nodeAccessor] as ChildNode | undefined;
-  const detachedParent = awaitBranch?.[AccessorProp.StartNode]?.parentNode;
-  if (
-    anchor?.parentNode &&
-    detachedParent &&
-    detachedParent !== anchor.parentNode
-  ) {
-    awaitCounter.c();
-  } else if (!awaitCounter.m) {
-    // Settled before its pending frame: complete outright, so the frame skips
-    // and parked effects run (a resumed counter is the document's to finish).
-    awaitCounter.i = 1;
-    awaitCounter.c();
-  }
+function settle(scope: Scope, accessor: string) {
+  (
+    scope[(AccessorPrefix.Promise + accessor) as Accessor] as
+      | PatchPending
+      | undefined
+  )?.r?.();
 }
 
 patchers[PatchKey.Pending] = (scope, key, value) => {
   const accessor = key.slice(PatchKey.Pending.length);
   const link = (AccessorPrefix.BranchScopes + accessor) as Accessor;
-  // The server now owns this await flush. Invalidate a promise started while
-  // setting up a newly created parent body so its stale resolution drops.
-  scope[(AccessorPrefix.Promise + accessor) as Accessor] = 0;
-  // A settle from an earlier response must not hide this flush's pending UI;
-  // pending UI already begun stays counted once.
-  scope[(AccessorPrefix.PatchSettled + accessor) as Accessor] &= 2;
+  const promise = (AccessorPrefix.Promise + accessor) as Accessor;
   // A created scope has no live await branch: the entry's id names the body
   // content shell its flush shipped. Mirrors `_await_content`.
   if (typeof value === "string" && !scope[link]) {
@@ -173,16 +61,19 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
     );
     (scope[link] as BranchScope)[AccessorProp.PendingScopes] = pendingScopes;
   }
-  // Begins in the flush's run, so a same-flush settle skips it; a streaming
-  // document's own pending UI hands over once its body lands.
-  const begin = () =>
-    scope[AccessorProp.Gen] &&
-    !scope[(AccessorPrefix.PatchSettled + accessor) as Accessor] &&
-    beginAwaitPending(scope, accessor);
+  // The server now owns this await: its value supersedes a client one.
+  const pend = () =>
+    _await_promise(
+      (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
+    )(scope, patchPending);
+  // A streaming document keeps its own pending UI until the body lands, as a
+  // deferred value would, unless a settle drops it or a catch destroyed the try.
   if (!scope[link] && (scope[AccessorProp.AwaitCounter] as AwaitCounter)?.m) {
-    onStreamLanded(begin, scope);
+    const deferred = (scope[promise] = () =>
+      deferred === scope[promise] && scope[AccessorProp.Gen] && pend());
+    onStreamLanded(deferred, scope);
   } else {
-    queueRender(scope, begin, -1);
+    pend();
   }
 };
 
@@ -209,10 +100,11 @@ function attachDetachedAwait(
     const anchor = scope[accessor] as ChildNode;
     insertBranchBefore(awaitBranch, anchor.parentNode!, anchor);
     anchor.remove();
-    endAwaitPending(scope, accessor);
+    settle(scope, accessor);
   };
+  // Queued on the owner: the pending body holds its own renders until it settles.
   if (rendering) setupAndAttach();
-  else queueRender(awaitBranch, setupAndAttach, -1);
+  else queueRender(scope, setupAndAttach, -1);
   awaitBranch[AccessorProp.DetachedAwait] = 0;
   return true;
 }
@@ -227,7 +119,7 @@ function onStreamLanded(fn: () => void, tryBranch: Scope) {
     complete() || (queueEffect(tryBranch[AccessorProp.Owner]!, fn), schedule());
 }
 // The flush's body partial waits as a guard applied at landing (the await
-// counts as settled: no pending UI takes over); a body that never came
+// counts as settled: a deferred pending drops); a body that never came
 // (the document rendered its catch) rejects the patch.
 function holdForStream(
   scope: Scope,
@@ -236,7 +128,7 @@ function holdForStream(
   accessor: string,
   value: Scope,
 ) {
-  markSettled(scope, accessor);
+  scope[(AccessorPrefix.Promise + accessor) as Accessor] = 0;
   const render = patchRender;
   const response = render.q;
   deferApply(
@@ -280,6 +172,6 @@ patchers[PatchKey.Child] = (scope, key, value) => {
   // Run that setup before applying the settled child partial.
   if (!attachDetachedAwait(scope, accessor, apply)) {
     apply();
-    endAwaitPending(scope, accessor);
+    settle(scope, accessor);
   }
 };
