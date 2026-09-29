@@ -33,6 +33,21 @@ export default function createBrowser(
   const { window } = dom;
   const ctx = dom.getInternalVMContext();
   const loadedScripts = new Set<string>();
+  // As in a browser, a module script loads once added, even if a reorder then
+  // moves it out of the document before the scripts run.
+  const addedScripts: string[] = [];
+  const collectScripts = (records: MutationRecord[]) => {
+    for (const record of records) {
+      for (const node of record.addedNodes) {
+        const { tagName, src, type } = node as HTMLScriptElement;
+        if (tagName === "SCRIPT" && src && type === "module") {
+          addedScripts.push(src);
+        }
+      }
+    }
+  };
+  const scriptObserver = new window.MutationObserver(collectScripts);
+  scriptObserver.observe(window.document, { childList: true, subtree: true });
   const qmt = window.queueMicrotask;
   const queues = {
     visible: batchQueue<IOEntry>(({ io, targets, callback }) => {
@@ -147,8 +162,9 @@ export default function createBrowser(
         const deferred: (() => void)[] = [];
         const pending: string[] = [];
 
-        for (const { src, type } of window.document.scripts) {
-          if (src && type === "module" && !loadedScripts.has(src)) {
+        collectScripts(scriptObserver.takeRecords());
+        for (const src of addedScripts.splice(0)) {
+          if (!loadedScripts.has(src)) {
             loadedScripts.add(src);
             pending.push(src);
           }

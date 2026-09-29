@@ -56,11 +56,6 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
 
     if (op == "#") {
       (placeholders[id] = placeholder).i++;
-    } else if (op == "!") {
-      if (runtime.l[id] && placeholders[id]) {
-        nextSibling = node.nextSibling;
-        onNextSibling = () => placeholders[id].c();
-      }
     } else if (node.tagName == "T" && (id = node.getAttribute(runtime.i))) {
       nextSibling = node.nextSibling;
       onNextSibling = () => {
@@ -72,7 +67,8 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
         placeholders[id] ||
         (placeholderRoot = placeholders[id] =
           {
-            i: runtime.l[id] ? 1 : 2,
+            // The writer streams a reorder only after its markers.
+            i: 1,
             r: id,
             // Resume may still walk markers inside the dropped placeholder, so
             // park it in any detached parent (a bare <t> clone is the cheapest).
