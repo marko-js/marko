@@ -1,0 +1,7 @@
+<counter/v/>
+<for|item| of=[1, 2]>
+  <let/m=0/>
+  <const/label="m" + m/>
+  <const/c=v.n + item/>
+  <button class="row" + item onClick() { m++; v.inc() }>${c + ":" + label}</button>
+</for>

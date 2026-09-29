@@ -22,7 +22,7 @@ var provider_default = /*@__PURE__*/ _template("__tests__/tags/provider.marko", 
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<button id=toggle>toggle</button><!><!>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&0${_w1}& b%c`)(" b", " b");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5");
-const $a__OR__b__OR__sel = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.sel ? $scope.b : $scope.a), 2);
+const $a__OR__b__OR__sel = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.sel ? $scope.b : $scope.a), 2, "#scopeOffset/3");
 const $a = /*@__PURE__*/ _const("a", $a__OR__b__OR__sel);
 const $sel = /*@__PURE__*/ _let("sel/8", $a__OR__b__OR__sel);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/4"], "click", function() {

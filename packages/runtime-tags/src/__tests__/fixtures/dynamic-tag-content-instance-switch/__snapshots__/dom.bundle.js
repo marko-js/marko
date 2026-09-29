@@ -8,7 +8,7 @@ const $setup__script$1 = _script("b2", ($scope) => _on($scope.a, "click", functi
 
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(5);
-const $a__OR__b__OR__sel = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.i ? $scope.h : $scope.g), 2);
+const $a__OR__b__OR__sel = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.i ? $scope.h : $scope.g), 2, 3);
 const $sel = /*@__PURE__*/ _let(8, $a__OR__b__OR__sel);
 const $setup__script = _script("a0", ($scope) => _on($scope.e, "click", function() {
 	$sel($scope, 1 - $scope.i);

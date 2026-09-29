@@ -1,0 +1,6 @@
+import Child from "./tags/child.marko";
+<let/a=0/>
+<let/Tag=Child/>
+<${Tag}/v/>
+<button.inc onClick() { a++; v.set(a) }>${a + ":" + v?.n}</button>
+<button.toggle onClick() { Tag = Tag ? null : Child }/>

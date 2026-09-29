@@ -16,6 +16,7 @@ import {
   type EncodedAccessor,
   NodeType,
   RendererProp,
+  ReservedId,
   type Scope,
 } from "../common/types";
 import { trackAbort } from "./abort-signal";
@@ -49,6 +50,7 @@ import {
   tempDetachBranch,
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
+import { getDebugKey } from "./walker";
 
 export function _await_promise(
   nodeAccessor: EncodedAccessor,
@@ -613,6 +615,17 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
     getTagVar?: (() => Signal<unknown>) | 0,
     inputIsArgs?: 1,
   ): Signal<Renderer | string | undefined> => {
+    // The walker reserves the variable's scope offset right after the node.
+    const scopeOffsetAccessor =
+      getTagVar &&
+      (MARKO_DEBUG
+        ? getDebugKey(
+            +(nodeAccessor as string).slice(
+              (nodeAccessor as string).lastIndexOf("/") + 1,
+            ) + ReservedId.ScopeOffset,
+            "#scopeOffset",
+          )
+        : decodeAccessor((nodeAccessor as number) + ReservedId.ScopeOffset));
     if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
     const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
     const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
@@ -639,10 +652,12 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
             scope[childScopeAccessor][AccessorProp.TagVariable] = (
               value: unknown,
             ) => getTagVar()(scope, value);
-            // A native branch has no renderer to call `_return`.
-            if (typeof normalizedRenderer === "string") {
-              bindNativeTagVar?.(scope[childScopeAccessor]);
-            }
+            bindTagVar!(
+              scope,
+              scope[childScopeAccessor],
+              scopeOffsetAccessor as Accessor,
+              normalizedRenderer,
+            );
           } else {
             // The branch tore down; clear the tag variable with it.
             getTagVar()(scope, undefined);
@@ -669,12 +684,16 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
               );
             }
           }
-        } else if (renderer?.[RendererProp.Accessor]) {
-          subscribeToScopeSet(
-            renderer[RendererProp.Owner]!,
-            renderer[RendererProp.Accessor],
-            scope[childScopeAccessor],
-          );
+        } else if (renderer) {
+          // Set up once the tag variable placed the branch's renders.
+          setupBranch(renderer, scope[childScopeAccessor]);
+          if (renderer[RendererProp.Accessor]) {
+            subscribeToScopeSet(
+              renderer[RendererProp.Owner]!,
+              renderer[RendererProp.Accessor],
+              scope[childScopeAccessor],
+            );
+          }
         }
       }
 
@@ -758,11 +777,18 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
   },
 );
 
-// The native tag variable lives in `dynamic-tag-var.feat`; bundles without one
-// fold this away rather than carrying the binding in the update path.
-export let bindNativeTagVar: undefined | ((branch: Scope) => void);
-export function installDynamicTagVar(bind: typeof bindNativeTagVar) {
-  bindNativeTagVar = bind;
+// A dynamic tag's variable lives in `dynamic-tag-var.feat`, which the compiler
+// imports with one; bundles without one fold this away.
+let bindTagVar:
+  | undefined
+  | ((
+      scope: Scope,
+      branch: BranchScope,
+      scopeOffsetAccessor: Accessor,
+      renderer: Renderer | string | undefined,
+    ) => void);
+export function installDynamicTagVar(bind: NonNullable<typeof bindTagVar>) {
+  bindTagVar = bind;
 }
 
 export function dynamicTagScript(branch: Scope) {
@@ -1108,8 +1134,6 @@ function createBranchWithTagNameOrRenderer(
               : (parentNode as Element).namespaceURI,
           tagNameOrRenderer,
         );
-  } else {
-    setupBranch(tagNameOrRenderer, branch);
   }
 
   return branch;

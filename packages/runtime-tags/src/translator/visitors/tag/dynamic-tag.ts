@@ -527,10 +527,12 @@ export default {
         const bodySection = getSectionForBody(tag.get("body"));
         const signal = getSignal(section, nodeBinding, "dynamicTag");
         let tagVarSignal: Signal | undefined;
-        if (tag.node.var) {
+        // Only a read or assigned variable resumes the scope offset its
+        // branch's renders run before.
+        if (tag.node.var && isTagVarResumed(tag)) {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
-          tagVarSignal.register = isTagVarResumed(tag);
+          tagVarSignal.register = true;
           tagVarSignal.referenced = true;
           tagVarSignal.buildAssignment = (valueSection, value) => {
             const changeArgs = [
@@ -607,9 +609,9 @@ export default {
           }
         }
 
+        enableDynamicTagVar(tag);
         if (!isClassAPI) {
           enableDynamicTagResume(tag);
-          enableDynamicTagVar(tag);
           enableDynamicTagControllables(tag);
         }
         addValue(
@@ -641,21 +643,18 @@ function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// A native branch's tag variable binds the element as the branch renders, and
-// resumes as a getter over the tag's node visit wherever its value serializes.
+// A branch the tag creates runs its renders before the variable's readers; a
+// native one binds the element, resuming as a getter over the tag's node visit.
 function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
-  if (
-    !tag.node.var ||
-    !isTagVarResumed(tag) ||
-    analyzeTagNameType(tag, true) === TagNameType.CustomTag
-  ) {
-    return;
-  }
+  if (!tag.node.var || !isTagVarResumed(tag)) return;
 
   importRuntimeFeature("dynamic-tag-var");
 
   // A returned or passed on value serializes in another template's scope.
-  if (!tag.node.var.extra!.binding!.pruned) {
+  if (
+    analyzeTagNameType(tag, true) !== TagNameType.CustomTag &&
+    !tag.node.var.extra!.binding!.pruned
+  ) {
     const accessor = getScopeAccessorLiteral(
       tag.node.extra!.nodeBinding!,
       true,

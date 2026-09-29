@@ -4,6 +4,7 @@ export const AbortControllers = "A";
 export const AbortScopes = "B";
 export const AwaitCounter = "O";
 export const BranchAccessor = "C";
+export const BranchRenders = "BR";
 export const BranchScopes = "D";
 export const CatchContent = "E";
 export const ClosestBranch = "F";

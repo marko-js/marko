@@ -1,10 +1,20 @@
-// size: 2569 (min) 1277 (brotli)
+// size: 2565 (min) 1278 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
 let runId = 2;
 let pendingEffects = [];
 let pendingRenders = [];
+let queuePendingRender = (render) => {
+  let i = pendingRenders.push(render) - 1;
+  for (; i;) {
+    let parentIndex = (i - 1) >> 1,
+      parent = pendingRenders[parentIndex];
+    if (render.a - parent.a >= 0) break;
+    ((pendingRenders[i] = parent), (i = parentIndex));
+  }
+  pendingRenders[i] = render;
+};
 let runEffects = (effects) => {
   for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
 };
@@ -38,16 +48,6 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
       signalKey >= 0 && (scope[signalKey] = render));
   queuePendingRender(render);
 }
-function queuePendingRender(render) {
-  let i = pendingRenders.push(render) - 1;
-  for (; i;) {
-    let parentIndex = (i - 1) >> 1,
-      parent = pendingRenders[parentIndex];
-    if (render.a - parent.a >= 0) break;
-    ((pendingRenders[i] = parent), (i = parentIndex));
-  }
-  pendingRenders[i] = render;
-}
 function queueEffect(scope, fn) {
   pendingEffects.push(fn, scope);
 }
@@ -60,27 +60,27 @@ function run() {
   }
   runEffects(effects);
 }
-function runRenders() {
-  for (; pendingRenders.length;) {
-    let render = pendingRenders[0],
-      item = pendingRenders.pop();
+function runRenders(renders = pendingRenders) {
+  for (; renders.length;) {
+    let render = renders[0],
+      item = renders.pop();
     if (render !== item) {
       let i = 0,
-        mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).a;
+        mid = renders.length >> 1,
+        key = (renders[0] = item).a;
       for (; i < mid;) {
         let bestChild = (i << 1) + 1,
           right = bestChild + 1;
         if (
-          (right < pendingRenders.length &&
-            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
+          (right < renders.length &&
+            renders[right].a - renders[bestChild].a < 0 &&
             (bestChild = right),
-          pendingRenders[bestChild].a - key >= 0)
+          renders[bestChild].a - key >= 0)
         )
           break;
-        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
+        ((renders[i] = renders[bestChild]), (i = bestChild));
       }
-      pendingRenders[i] = item;
+      renders[i] = item;
     }
     runRender(render);
   }
