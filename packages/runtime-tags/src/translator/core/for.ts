@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { type Binding, BindingType } from "../util/bindings";
 import {
   getBranchResumeArgs,
   initBranchSection,
@@ -23,18 +24,15 @@ import {
 } from "../util/is-only-child-in-parent";
 import { fromIter } from "../util/optional";
 import {
-  type Binding,
-  BindingType,
   dropNodes,
   getAllTagReferenceNodes,
-  getScopeAccessorLiteral,
-  kBranchSerializeReason,
   mergeReferences,
   onFinalizeReferences,
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
   getOrCreateSection,
@@ -43,6 +41,7 @@ import {
   getSectionForBody,
   startSection,
 } from "../util/sections";
+import { kBranchSerializeReason } from "../util/serialize-reasons";
 import {
   addSerializeExpr,
   getSerializeReason,

@@ -7,17 +7,14 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
+import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOutputHTML } from "../util/marko-config";
-import {
-  BindingType,
-  getPrefixedScopeAccessor,
-  setBindingDownstream,
-  trackVarReferences,
-} from "../util/references";
+import { setBindingDownstream, trackVarReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
+import { getPrefixedScopeAccessor } from "../util/scope-accessor";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addValue, initValue } from "../util/signals";

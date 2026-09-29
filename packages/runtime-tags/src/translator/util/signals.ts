@@ -8,6 +8,21 @@ import {
 import { type AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import { localsIdentifier, scopeIdentifier } from "../visitors/program";
+import {
+  type Binding,
+  BindingType,
+  getCanonicalBinding,
+  getDebugName,
+  getDebugNames,
+  getDebugNamesAsIdentifier,
+  getDebugScopeAccess,
+  type Getter,
+  hasNonConstantPropertyAlias,
+  type Intersection,
+  isDirectAlias,
+  type ReferencedBindings,
+} from "./bindings";
+import { intersectionMeta } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -15,34 +30,22 @@ import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { filter, forEach, type Opt, push, reduce, some } from "./optional";
+import { getReadReplacement } from "./read-replacement";
 import {
   type AssignedBindingExtra,
-  type Binding,
-  BindingType,
-  FORCED,
-  getCanonicalBinding,
+  hasResumableWriter,
+  isAssignedBindingExtra,
+  isRegisteredFnExtra,
+} from "./references";
+import { callRuntime, registerRuntimeValue } from "./runtime";
+import {
   getClosureAccessorLiteral,
-  getDebugName,
-  getDebugNames,
-  getDebugNamesAsIdentifier,
-  getDebugScopeAccess,
   getLocalsScopeAccessor,
   getPrefixedScopeAccessor,
-  getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
   getSectionInstancesAccessorLiteral,
-  type Getter,
-  hasNonConstantPropertyAlias,
-  hasResumableWriter,
-  type Intersection,
-  intersectionMeta,
-  isAssignedBindingExtra,
-  isDirectAlias,
-  isRegisteredFnExtra,
-  type ReferencedBindings,
-} from "./references";
-import { callRuntime, registerRuntimeValue } from "./runtime";
+} from "./scope-accessor";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   forEachAncestorSection,
@@ -68,6 +71,7 @@ import {
   type SerializeReason,
 } from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
+import { FORCED } from "./sources";
 import { createSectionState } from "./state";
 import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
 import {

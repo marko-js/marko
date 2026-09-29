@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { type Binding, getCanonicalBinding, propsUtil } from "./references";
+import { type Binding, getCanonicalBinding, propsUtil } from "./bindings";
 import { toMemberExpression } from "./to-property-name";
 
 export function getDeclaredBindingExpression(

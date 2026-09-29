@@ -18,6 +18,8 @@ import { distance } from "fastest-levenshtein";
 import { WalkCode } from "../../../common/types";
 import type { LoadTrigger } from "../../../html/assets";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
+import { type Binding } from "../../util/bindings";
+import { BindingType, createBinding } from "../../util/bindings";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getStaticTagName, getTagName } from "../../util/get-tag-name";
 import {
@@ -30,8 +32,6 @@ import {
   knownTagTranslateHTML,
 } from "../../util/known-tag";
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
-import type { Binding } from "../../util/references";
-import { BindingType, createBinding } from "../../util/references";
 import {
   callRuntime,
   dynamicImport,

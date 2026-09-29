@@ -2,10 +2,10 @@ import { types as t } from "@marko/compiler";
 import { assertNoArgs, type Tag } from "@marko/compiler/babel-utils";
 
 import { assertNoTagVarMutation } from "../util/assert";
+import { BindingType } from "../util/bindings";
 import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
-  BindingType,
   dropNodes,
   getAllTagReferenceNodes,
   isReferenceHoisted,

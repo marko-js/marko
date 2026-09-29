@@ -7,16 +7,13 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { type Binding, BindingType, createBinding } from "../util/bindings";
 import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
 import { isOutputHTML } from "../util/marko-config";
 import {
-  type Binding,
-  BindingType,
-  createBinding,
-  FORCED,
   mergeReferences,
   trackDomVarReferences,
   isTagVarRead,
@@ -31,6 +28,7 @@ import {
   getSerializeReason,
 } from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
+import { FORCED } from "../util/sources";
 import * as structure from "../util/structure";
 import * as writer from "../util/writer";
 

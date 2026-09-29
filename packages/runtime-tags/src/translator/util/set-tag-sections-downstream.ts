@@ -1,10 +1,11 @@
 import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
+import { type Binding } from "./bindings";
 import { getTagName } from "./get-tag-name";
 import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
 import { concat, type OneMany, type Opt } from "./optional";
-import type { Binding, KnownExprs } from "./references";
+import { type KnownExprs } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
 

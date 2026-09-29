@@ -1,11 +1,7 @@
+import { type Binding, BindingType, propsUtil } from "./bindings";
+import { pruneBinding } from "./finalize-references";
 import { generateUid } from "./generate-uid";
 import { forEach, type SortedOpt } from "./optional";
-import {
-  type Binding,
-  BindingType,
-  propsUtil,
-  pruneBinding,
-} from "./references";
 
 export type BindingPropTree = {
   binding: Binding;

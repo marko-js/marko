@@ -2,6 +2,14 @@ import { types as t } from "@marko/compiler";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getPropertyPathAlias } from "./binding-has-prop";
+import {
+  type Binding,
+  BindingType,
+  bindingUtil,
+  getCanonicalBinding,
+  type InputBinding,
+  type ReferencedBindings,
+} from "./bindings";
 import { getAccessorProp } from "./get-accessor-enums";
 import {
   concat,
@@ -12,20 +20,9 @@ import {
   reduce,
 } from "./optional";
 import {
-  type Binding,
-  BindingType,
-  bindingUtil,
-  compareSources,
-  createSources,
-  FORCED,
-  getCanonicalBinding,
-  type InputBinding,
   isReferencedExtra,
   type KnownExprs,
   mapParamBindingToExpr,
-  mergeSources,
-  type ReferencedBindings,
-  type Sources,
   getCanonicalExtra,
 } from "./references";
 import {
@@ -33,6 +30,13 @@ import {
   type ParamSerializeReasonGroups,
   type Section,
 } from "./sections";
+import {
+  compareSources,
+  createSources,
+  FORCED,
+  mergeSources,
+  type Sources,
+} from "./sources";
 
 // Reasons any one of which serializes (a chain's branches, a section's
 // dom nodes); the guard builder answers for the set.
@@ -433,3 +437,5 @@ export function setParamReasonGroups(
 function isSameSources(a: SerializeReason | undefined, b: SerializeReason) {
   return !!a && compareSources(a, b) === 0;
 }
+
+export const kBranchSerializeReason = Symbol("branch serialize reason");

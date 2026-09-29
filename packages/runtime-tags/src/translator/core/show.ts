@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { getBranchEndArgs } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
@@ -18,15 +19,10 @@ import {
   analyzeNodeBinding,
   getOnlyChildParentTagName,
 } from "../util/is-only-child-in-parent";
-import {
-  type Binding,
-  BindingType,
-  createBinding,
-  getScopeAccessorLiteral,
-  mergeReferences,
-} from "../util/references";
+import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,

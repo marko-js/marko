@@ -1,13 +1,10 @@
 import { types as t } from "@marko/compiler";
 
 import { scopeIdentifier } from "../visitors/program";
+import { type Binding, BindingType } from "./bindings";
 import { getAccessorProp } from "./get-accessor-enums";
-import {
-  type Binding,
-  BindingType,
-  createRead,
-  getScopeAccessor,
-} from "./references";
+import { createRead } from "./references";
+import { getScopeAccessor } from "./scope-accessor";
 import type { Section } from "./sections";
 import { toPropertyName } from "./to-property-name";
 
