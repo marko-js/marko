@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-array-destructured-param/template.marko:2:23
+      1 | <for|[key, value]| of=input.entries>
+    > 2 |   <button onClick() { key = "changed" }>${key}=${value}</button>
+        |                       ^^^^^^^^^^^^^^^ `key` comes from array destructuring, which has no [change handler](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding), so it cannot be assigned to. Destructure it from an object instead, where assigning it calls the object's `keyChange`.
+      3 | </for>
+      4 |

@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-nested-array-destructured-tag-var/template.marko:2:21
+      1 | <child/{ items: [first] }/>
+    > 2 | <button onClick() { first = 2 }>${first}</button>
+        |                     ^^^^^^^^^ `first` comes from array destructuring, which has no [change handler](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding), so it cannot be assigned to. Destructure it from an object instead, where assigning it calls the object's `firstChange`.
+      3 |
