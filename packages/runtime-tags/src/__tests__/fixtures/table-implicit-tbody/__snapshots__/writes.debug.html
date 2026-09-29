@@ -1,0 +1,24 @@
+<table>
+  <tbody>
+    <tr class=rows-1>
+      <th>1<!--M_$1 #text/1--> rows</th>
+    </tr><!--M_$1 #tr/0-->
+    <tr>
+      <td>a<!--M_$2 #text/0--></td>
+    </tr><!--M_|1 #text/2 2-->
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>a<!--M_$1 #text/3--></td>
+    </tr>
+  </tfoot>
+</table><button>add</button><!--M_$1 #button/4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      rows: ["a"]
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/table-implicit-tbody/template.marko_0 1"
+  ];
+  M._.w()
+</script>

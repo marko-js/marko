@@ -1,0 +1,72 @@
+# Render
+```html
+<table>
+  <tbody>
+    <tr>
+      <th>
+        rows
+      </th>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>
+        a
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>
+        a
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<button>
+  add
+</button>
+```
+
+# Update
+```js
+document.querySelector("button").click();
+```
+```html
+<table>
+  <tbody>
+    <tr>
+      <th>
+        rows
+      </th>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td>
+        a
+      </td>
+    </tr>
+    <tr>
+      <td>
+        b
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>
+        a+b
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<button>
+  add
+</button>
+```
+## Change
+```
+UPDATE: table > tfoot > tr > td::text "a" => "a+b"
+INSERT: table > tbody:nth-of-type(2) > tr:nth-of-type(1) + tr
+```

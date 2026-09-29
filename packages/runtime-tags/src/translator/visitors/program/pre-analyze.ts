@@ -12,6 +12,8 @@ import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarko } from "../../util/get-root";
+import { getTagName } from "../../util/get-tag-name";
+import { isControlFlowTag } from "../../util/is-core-tag";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { getHTMLRuntime } from "../../util/runtime";
 import withPreviousLocation from "../../util/with-previous-location";
@@ -159,6 +161,8 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
     }
     if (nativeTagDef.name === "textarea") {
       preAnalyzeTextarea(tag);
+    } else if (nativeTagDef.name === "table") {
+      wrapImplicitTbody(tag);
     }
   }
 
@@ -191,6 +195,52 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
       }
 
       attr.modifier = null;
+    }
+  }
+}
+
+// The HTML parser puts rows written directly in a `<table>` in an implicit `<tbody>`
+// that runs to the next table section; writing it out keeps walks on the parsed tree.
+function wrapImplicitTbody(table: t.NodePath<t.MarkoTag>) {
+  const body: t.MarkoTagBody["body"] = [];
+  let tbody: t.MarkoTag | undefined;
+  for (const child of table.get("body").get("body")) {
+    switch (getLeadingNativeTagName(child)) {
+      case "tr":
+        if (!tbody) {
+          tbody = t.markoTag(t.stringLiteral("tbody"), [], t.markoTagBody());
+          body.push(tbody);
+        }
+        break;
+      case "caption":
+      case "colgroup":
+      case "col":
+      case "thead":
+      case "tbody":
+      case "tfoot":
+        tbody = undefined;
+        break;
+      default:
+        // A tag variable stays in the table so its scope is unchanged.
+        if (child.isMarkoTag() && child.node.var) {
+          tbody = undefined;
+        }
+    }
+    (tbody ? tbody.body.body : body).push(child.node);
+  }
+  table.node.body.body = body;
+}
+
+function getLeadingNativeTagName(child: t.NodePath): string | undefined {
+  if (child.isMarkoTag()) {
+    if (isNativeTag(child)) return getTagName(child);
+    if (isControlFlowTag(child)) {
+      const name = getTagName(child);
+      // An `<else>` renders where its `<if>` does, so the `<if>` places the chain.
+      if (name !== "else" && name !== "else-if") {
+        const [first] = child.get("body").get("body");
+        return first && getLeadingNativeTagName(first);
+      }
     }
   }
 }

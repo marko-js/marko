@@ -1,0 +1,7 @@
+<let/rows=["a"]/>
+<table>
+  <tr class=`rows-${rows.length}`><th>${rows.length} rows</th></tr>
+  <for|row| of=rows><tr><td>${row}</td></tr></for>
+  <tfoot><tr><td>${rows.join("+")}</td></tr></tfoot>
+</table>
+<button onClick() { rows = [...rows, "b"] }>add</button>

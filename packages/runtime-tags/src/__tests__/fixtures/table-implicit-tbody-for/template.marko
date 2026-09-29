@@ -1,0 +1,3 @@
+<let/rows=["a", "b"]/>
+<table><for|row| of=rows><tr><td>${row}</td></tr></for></table>
+<button onClick() { rows = rows.length ? [] : ["c"] }>toggle</button>

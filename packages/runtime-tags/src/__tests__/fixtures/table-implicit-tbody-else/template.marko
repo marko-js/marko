@@ -1,0 +1,6 @@
+<let/loading=true/>
+<table>
+  <if=loading><caption>loading</caption></if>
+  <else><tr><td>loaded</td></tr></else>
+</table>
+<button onClick() { loading = !loading }>toggle</button>

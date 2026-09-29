@@ -1,0 +1,8 @@
+<let/rows=["a"]/>
+<table>
+  <tr><th>rows</th></tr>
+  <const/total=rows.join("+")/>
+  <for|row| of=rows><tr><td>${row}</td></tr></for>
+  <tfoot><tr><td>${total}</td></tr></tfoot>
+</table>
+<button onClick() { rows = [...rows, "b"] }>add</button>
