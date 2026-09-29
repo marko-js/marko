@@ -23,6 +23,7 @@ import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
 } from "../../util/body-to-text-literal";
+import { isEndTagWrittenByBranch } from "../../util/branch-tag";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
@@ -30,6 +31,7 @@ import {
   getAccessorProp,
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
+import { isPageElement } from "../../util/insertion-context";
 import { isControlFlowTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
@@ -41,7 +43,6 @@ import {
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
 import {
-  type Binding,
   BindingType,
   createBinding,
   dropNodes,
@@ -90,11 +91,10 @@ import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
-export const kNativeTagBinding = Symbol("native tag binding");
-export const kSkipEndTag = Symbol("skip native tag mark");
-const kTagContentAttr = Symbol("tag could have dynamic content attribute");
 const kVisitOp = Symbol("native tag structure visit");
 
+// Tags whose body html translate replaced with a content attribute write.
+const htmlContentAttrTags = new WeakSet<t.MarkoTag>();
 const htmlSelectArgs = new WeakMap<
   t.MarkoTag,
   {
@@ -105,9 +105,6 @@ const htmlSelectArgs = new WeakMap<
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    [kNativeTagBinding]?: Binding;
-    [kSkipEndTag]?: true;
-    [kTagContentAttr]?: true;
     [kVisitOp]?: StructureVisit;
   }
 }
@@ -290,7 +287,7 @@ export default {
       ) {
         const tagExtra = (node.extra ??= {});
         const tagSection = getOrCreateSection(tag);
-        const nodeBinding = (tagExtra[kNativeTagBinding] = createBinding(
+        const nodeBinding = (tagExtra.nodeBinding = createBinding(
           "#" + tagName.toLowerCase(),
           BindingType.dom,
           tagSection,
@@ -426,7 +423,7 @@ export default {
       const tagName = getCanonicalTagName(tag);
       const tagExtra = tag.node.extra!;
       const visitOp = tagExtra[kVisitOp];
-      if (visitOp) visitOp.claimed = !!tagExtra[kNativeTagBinding];
+      if (visitOp) visitOp.claimed = !!tagExtra.nodeBinding;
 
       if (!getTagDef(tag)?.parseOptions?.openTagOnly) {
         const write = structure.writeTo(tag);
@@ -448,7 +445,7 @@ export default {
       enter(tag) {
         const tagName = getCanonicalTagName(tag);
         const tagExtra = tag.node.extra!;
-        const nodeBinding = tagExtra[kNativeTagBinding];
+        const nodeBinding = tagExtra.nodeBinding;
         const tagDef = getTagDef(tag);
         const write = writer.writeTo(tag);
         const tagSection = getSection(tag);
@@ -708,7 +705,7 @@ export default {
           write`>`;
         } else if (staticContentAttr) {
           write`>`;
-          tagExtra[kTagContentAttr] = true;
+          htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
             t.expressionStatement(
               callRuntime(
@@ -730,7 +727,7 @@ export default {
             nodeBinding && getSerializeReason(tagSection, nodeBinding),
             true,
           );
-          tagExtra[kTagContentAttr] = true;
+          htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
             skipExpression
               ? t.expressionStatement(
@@ -765,14 +762,15 @@ export default {
       },
       exit(tag) {
         const tagExtra = tag.node.extra!;
-        const nodeBinding = tagExtra[kNativeTagBinding];
+        const nodeBinding = tagExtra.nodeBinding;
         const isOpenOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
         const isTextOnly = isTextOnlyNativeTag(tag);
         const selectArgs = htmlSelectArgs.get(tag.node);
         const tagName = getCanonicalTagName(tag);
         const tagSection = getSection(tag);
+        const skipEndTag = isEndTagWrittenByBranch(nodeBinding);
         const markerSerializeReason =
-          !tagExtra[kSkipEndTag] &&
+          !skipEndTag &&
           nodeBinding &&
           getSerializeReason(tagSection, nodeBinding);
         const write = writer.writeTo(
@@ -782,12 +780,12 @@ export default {
           tagName === "html" || (!markerSerializeReason && tagName === "body"),
         );
 
-        if (tagExtra[kTagContentAttr]) {
+        if (htmlContentAttrTags.has(tag.node)) {
           writer.flushBefore(tag);
         }
 
         if (selectArgs) {
-          if (!tagExtra[kSkipEndTag]) {
+          if (!skipEndTag) {
             write`</${tagName}>`;
           }
 
@@ -831,7 +829,7 @@ export default {
           tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
         }
 
-        if (!tagExtra[kSkipEndTag] && !isOpenOnly && !selectArgs) {
+        if (!skipEndTag && !isOpenOnly && !selectArgs) {
           if (tagName === "head" && getMarkoOpts().linkAssets) {
             write`${callRuntime("_flush_head")}`;
           }
@@ -854,7 +852,7 @@ export default {
       enter(tag) {
         const tagName = getCanonicalTagName(tag);
         const tagExtra = tag.node.extra!;
-        const nodeBinding = tagExtra[kNativeTagBinding];
+        const nodeBinding = tagExtra.nodeBinding;
         const tagSection = getSection(tag);
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
@@ -1112,7 +1110,7 @@ export default {
       },
       exit(tag) {
         const tagExtra = tag.node.extra!;
-        const nodeBinding = tagExtra[kNativeTagBinding];
+        const nodeBinding = tagExtra.nodeBinding;
         const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
         const tagName = getCanonicalTagName(tag);
 
@@ -2018,12 +2016,4 @@ export function controllableFeatureFor(tagName: string | undefined) {
 
 export function enableControllable(feature: DOMRuntimeFeature | undefined) {
   if (feature) importRuntimeFeature(feature);
-}
-
-// The document's own elements: the parser implies and moves nodes into them,
-// and the page writes assets and resume scripts into them.
-const pageElements = new Set(["html", "head", "body"]);
-
-export function isPageElement(tagName: string) {
-  return pageElements.has(tagName);
 }

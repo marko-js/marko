@@ -19,8 +19,8 @@ import {
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import {
+  analyzeNodeBinding,
   getOnlyChildParentTagName,
-  getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import {
   getScopeAccessorLiteral,
@@ -80,7 +80,7 @@ export const IfTag = {
         structure.visit(ifTag, WalkCode.Replace);
         structure.enterShallow(ifTag);
       }
-      const nodeBinding = getOptimizedOnlyChildNodeBinding(
+      const nodeBinding = analyzeNodeBinding(
         ifTag,
         ifTagSection,
         branches.length,
@@ -129,11 +129,7 @@ export const IfTag = {
           resumeOwnerByMarkerWhenStatic(
             ifTagSection,
             bodySection,
-            getOptimizedOnlyChildNodeBinding(
-              ifTag,
-              ifTagSection,
-              branches.length,
-            ),
+            ifTag.node.extra!.nodeBinding!,
             kStatefulReason,
           );
           writer.flushInto(tag);
@@ -144,11 +140,7 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
-          const nodeBinding = getOptimizedOnlyChildNodeBinding(
-            ifTag,
-            ifTagSection,
-            branches.length,
-          );
+          const nodeBinding = ifTag.node.extra!.nodeBinding!;
           const onlyChildParentTagName = getOnlyChildParentTagName(
             ifTag,
             branches.length,
@@ -205,7 +197,6 @@ export const IfTag = {
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
                 ...getBranchResumeArgs(
-                  ifTag,
                   ifTagSection,
                   nodeBinding,
                   branchSerializeReasons,
@@ -242,11 +233,7 @@ export const IfTag = {
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
           const ifTagExtra = branches[0][0].node.extra!;
-          const nodeRef = getOptimizedOnlyChildNodeBinding(
-            ifTag,
-            ifTagSection,
-            branches.length,
-          );
+          const nodeBinding = ifTagExtra.nodeBinding!;
 
           let expr: t.Expression = t.numericLiteral(branches.length);
 
@@ -258,7 +245,7 @@ export const IfTag = {
               setClosureSignalBuilder(branchTag, (_closure, render) => {
                 return callRuntime(
                   "_if_closure",
-                  getScopeAccessorLiteral(nodeRef, true),
+                  getScopeAccessorLiteral(nodeBinding, true),
                   t.numericLiteral(i),
                   render,
                 );
@@ -271,7 +258,7 @@ export const IfTag = {
               : consequent;
           }
 
-          const signal = getSignal(ifTagSection, nodeRef, "if");
+          const signal = getSignal(ifTagSection, nodeBinding, "if");
           signal.build = () => {
             const rendererArgs: (t.Expression | undefined)[] = [];
             for (const [_, branchBodySection] of branches) {
@@ -286,7 +273,7 @@ export const IfTag = {
 
             return callRuntime(
               "_if",
-              getScopeAccessorLiteral(nodeRef, true),
+              getScopeAccessorLiteral(nodeBinding, true),
               ...replaceNullishAndEmptyFunctionsWith0(rendererArgs),
             );
           };

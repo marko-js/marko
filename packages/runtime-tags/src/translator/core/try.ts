@@ -135,7 +135,7 @@ export default {
       exit(tag) {
         const section = getSection(tag);
         const tagBody = tag.get("body");
-        const nodeRef = tag.node.extra!.nodeBinding!;
+        const nodeBinding = tag.node.extra!.nodeBinding!;
         const catchTag = getAttrTag(tag, "@catch");
         const placeholderTag = getAttrTag(tag, "@placeholder");
         const catchSection =
@@ -152,7 +152,7 @@ export default {
               callRuntime(
                 "_try",
                 getScopeIdIdentifier(section),
-                getScopeAccessorLiteral(nodeRef),
+                getScopeAccessorLiteral(nodeBinding),
                 buildContent(tagBody),
                 placeholderSection && buildContent(placeholderTag!.get("body")),
                 catchTag &&
@@ -167,7 +167,7 @@ export default {
                   t.stringLiteral(
                     catchSection
                       ? getResumeRegisterId(catchSection, "content")
-                      : getEmptyCatchId(section, nodeRef),
+                      : getEmptyCatchId(section, nodeBinding),
                   ),
               ),
             ),
@@ -180,7 +180,7 @@ export default {
         setSectionParentIsOwner(getSectionForBody(tag.get("body"))!, true);
       },
       exit(tag) {
-        const nodeRef = tag.node.extra!.nodeBinding!;
+        const nodeBinding = tag.node.extra!.nodeBinding!;
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
         const catchTag = getAttrTag(tag, "@catch");
@@ -190,8 +190,8 @@ export default {
         const placeholderSection =
           placeholderTag && getSectionForBody(placeholderTag.get("body"));
         const emptyCatchId =
-          catchTag && !catchSection && getEmptyCatchId(section, nodeRef);
-        const signal = getSignal(section, nodeRef, "try");
+          catchTag && !catchSection && getEmptyCatchId(section, nodeBinding);
+        const signal = getSignal(section, nodeBinding, "try");
 
         signal.build = () => {
           importRuntimeFeature("catch");
@@ -212,7 +212,7 @@ export default {
           const [template, walks, setup] = getBranchRendererArgs(bodySection);
           return callRuntime(
             "_try",
-            getScopeAccessorLiteral(nodeRef, true),
+            getScopeAccessorLiteral(nodeBinding, true),
             ...replaceNullishAndEmptyFunctionsWith0([
               template,
               walks,
@@ -265,6 +265,6 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
 }
 
 // An empty `@catch` still catches, so it has an empty renderer of its own.
-function getEmptyCatchId(section: Section, nodeRef: Binding) {
-  return getResumeRegisterId(section, nodeRef, "catch");
+function getEmptyCatchId(section: Section, nodeBinding: Binding) {
+  return getResumeRegisterId(section, nodeBinding, "catch");
 }

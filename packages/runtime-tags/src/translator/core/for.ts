@@ -19,8 +19,8 @@ import { detectForSelector, getForSelectorKey } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import {
+  analyzeNodeBinding,
   getOnlyChildParentTagName,
-  getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { fromIter } from "../util/optional";
 import {
@@ -193,7 +193,7 @@ export default {
       return;
     }
 
-    const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+    const nodeBinding = analyzeNodeBinding(tag, tagSection);
     const tagExtra = mergeReferences(
       tagSection,
       tag.node,
@@ -255,7 +255,7 @@ export default {
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
-        const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+        const nodeBinding = node.extra!.nodeBinding!;
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
         const params = node.body.params;
@@ -293,7 +293,6 @@ export default {
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
             ...getBranchResumeArgs(
-              tag,
               tagSection,
               nodeBinding,
               branchSerializeReason,
@@ -336,13 +335,13 @@ export default {
         const { node } = tag;
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
-        const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+        const nodeBinding = tagExtra.nodeBinding!;
         setClosureSignalBuilder(tag, (closure, render) => {
           const selectorKeyBinding = getForSelectorKey(bodySection, closure);
           if (selectorKeyBinding) {
             return callRuntime(
               "_for_selector",
-              getScopeAccessorLiteral(nodeRef, true),
+              getScopeAccessorLiteral(nodeBinding, true),
               getScopeAccessorLiteral(closure, true),
               getScopeAccessorLiteral(selectorKeyBinding, true),
               render,
@@ -350,20 +349,20 @@ export default {
           }
           return callRuntime(
             "_for_closure",
-            getScopeAccessorLiteral(nodeRef, true),
+            getScopeAccessorLiteral(nodeBinding, true),
             render,
           );
         });
 
         const forType = getForType(node)!;
         const forAttrs = getKnownAttrValues(node);
-        const signal = getSignal(tagSection, nodeRef, "for");
+        const signal = getSignal(tagSection, nodeBinding, "for");
         signal.build = () => {
           return callRuntime(
             isKeyedByIndex(forType, forAttrs)
               ? forTypeToUnkeyedBranchRuntime(forType)
               : forTypeToBranchRuntime(forType),
-            getScopeAccessorLiteral(nodeRef, true),
+            getScopeAccessorLiteral(nodeBinding, true),
             ...replaceNullishAndEmptyFunctionsWith0(
               getBranchRendererArgs(bodySection),
             ),

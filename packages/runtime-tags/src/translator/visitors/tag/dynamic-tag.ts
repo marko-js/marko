@@ -95,7 +95,6 @@ import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath, tagNotFoundError } from "./custom-tag";
 import { controllableFeatureFor, enableControllable } from "./native-tag";
 
-const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 // Runtime helpers and features a program adds once, by what each enables.
 const [getAddedRuntime] = createProgramState(() => new Set<string>());
 
@@ -126,7 +125,6 @@ declare module "@marko/compiler" {
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    [kChildOffsetScopeBinding]?: Binding;
     defineBodySection?: Section;
   }
 }
@@ -187,9 +185,11 @@ export default {
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived);
-        tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
-          kChildOffsetScopeBinding
-        ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
+        tag.node.var!.extra!.binding!.scopeOffset = createBinding(
+          "#scopeOffset",
+          BindingType.dom,
+          tagSection,
+        );
       }
 
       const bodySection = startSection(tagBody);
@@ -510,9 +510,7 @@ export default {
               callRuntime(
                 "_var",
                 getScopeIdIdentifier(tagSection),
-                getScopeAccessorLiteral(
-                  tag.node.extra![kChildOffsetScopeBinding]!,
-                ),
+                getScopeAccessorLiteral(node.var.extra!.binding!.scopeOffset!),
                 dynamicScopeIdentifier,
                 t.stringLiteral(
                   getResumeRegisterId(

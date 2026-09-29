@@ -23,7 +23,6 @@ import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
 import {
-  type Binding,
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
@@ -51,15 +50,11 @@ import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
-interface DynamicStyle {
-  names: string[];
-  binding: Binding;
-}
-
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     styleImportPath?: string | null;
-    dynamicStyle?: DynamicStyle;
+    /** The custom property names of a `<style>`'s interpolated values. */
+    dynamicStyleNames?: string[];
   }
 }
 
@@ -121,8 +116,12 @@ export default {
 function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   const { node } = tag;
   const section = getOrCreateSection(tag);
-  const binding = createBinding("#style", BindingType.dom, section);
-  node.extra!.dynamicStyle = { names, binding };
+  const binding = (node.extra!.nodeBinding = createBinding(
+    "#style",
+    BindingType.dom,
+    section,
+  ));
+  node.extra!.dynamicStyleNames = names;
 
   const tagExtra = mergeReferences(section, node, []);
   let exprExtras: Opt<t.NodeExtra> = tagExtra;
@@ -217,10 +216,9 @@ function assertNoStyleAttributes(tag: t.NodePath<t.MarkoTag>) {
 
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const dynamic = node.extra?.dynamicStyle;
+  const binding = node.extra?.nodeBinding;
 
-  if (dynamic) {
-    const { binding } = dynamic;
+  if (binding) {
     const section = getSection(tag);
     writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
     writer.markNode(tag, binding, getSerializeReason(section, binding));
@@ -232,10 +230,10 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
 function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const dynamic = node.extra?.dynamicStyle;
+  const binding = node.extra?.nodeBinding;
 
-  if (dynamic) {
-    const { names, binding } = dynamic;
+  if (binding) {
+    const names = node.extra!.dynamicStyleNames!;
     const section = getSection(tag);
     const readEl = () => createScopeReadExpression(binding);
 
@@ -316,7 +314,7 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function buildStyleDecls(node: t.MarkoTag) {
-  const { names } = node.extra!.dynamicStyle!;
+  const names = node.extra!.dynamicStyleNames!;
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {

@@ -34,16 +34,8 @@ import { addStatement } from "../util/signals";
 import * as structure from "../util/structure";
 import * as writer from "../util/writer";
 
-const kNodeBinding = Symbol("comment tag binding");
-
 // Applies the `>` escape of the runtime `_escape_comment`.
 const escapeCommentText = (text: string) => text.replace(/>/g, "&gt;");
-
-declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
-    [kNodeBinding]?: Binding;
-  }
-}
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
@@ -79,7 +71,7 @@ export default {
     if (needsBinding) {
       const tagSection = getOrCreateSection(tag);
       const tagExtra = mergeReferences(tagSection, tag.node, referenceNodes);
-      nodeBinding = tagExtra[kNodeBinding] = createBinding(
+      nodeBinding = tagExtra.nodeBinding = createBinding(
         "#comment",
         BindingType.dom,
         tagSection,
@@ -120,7 +112,7 @@ export default {
     exit(tag) {
       const tagSection = getSection(tag);
       const tagExtra = tag.node.extra!;
-      const nodeBinding = tagExtra[kNodeBinding];
+      const nodeBinding = tagExtra.nodeBinding;
       const write = writer.writeTo(tag);
 
       if (isOutputHTML()) {

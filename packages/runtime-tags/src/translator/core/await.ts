@@ -137,7 +137,7 @@ export default {
         const { node } = tag;
         const [valueAttr] = node.attributes;
         const tagExtra = node.extra!;
-        const nodeRef = tagExtra.nodeBinding!;
+        const nodeBinding = tagExtra.nodeBinding!;
         const tagBody = tag.get("body");
         const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody);
@@ -150,7 +150,7 @@ export default {
               callRuntime(
                 "_await",
                 getScopeIdIdentifier(section),
-                getScopeAccessorLiteral(nodeRef),
+                getScopeAccessorLiteral(nodeBinding),
                 valueAttr.value,
                 t.arrowFunctionExpression(
                   node.body.params,
@@ -178,10 +178,10 @@ export default {
       exit(tag) {
         const { node } = tag;
         const tagExtra = node.extra!;
-        const nodeRef = tagExtra.nodeBinding!;
+        const nodeBinding = tagExtra.nodeBinding!;
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
-        const signal = getSignal(section, nodeRef, "await_promise");
+        const signal = getSignal(section, nodeBinding, "await_promise");
         const valueExpr = node.attributes[0].value;
 
         signal.build = () => {
@@ -193,7 +193,7 @@ export default {
                 t.identifier(bodySection.name),
                 callRuntime(
                   "_await_content",
-                  getScopeAccessorLiteral(nodeRef, true),
+                  getScopeAccessorLiteral(nodeBinding, true),
                   ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
                 ),
               ),
@@ -202,7 +202,7 @@ export default {
           importRuntimeFeature("catch");
           return callRuntime(
             "_await_promise",
-            getScopeAccessorLiteral(nodeRef, true),
+            getScopeAccessorLiteral(nodeBinding, true),
             branchParams,
           );
         };

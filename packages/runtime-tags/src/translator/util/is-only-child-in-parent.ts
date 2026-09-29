@@ -1,17 +1,15 @@
 import { types as t } from "@marko/compiler";
 
-import { isPageElement, kNativeTagBinding } from "../visitors/tag/native-tag";
 import { getParentTag } from "./get-parent-tag";
-import { type Binding, BindingType, createBinding } from "./references";
+import { isPageElement } from "./insertion-context";
+import { BindingType, createBinding } from "./references";
 import type { Section } from "./sections";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 const kOnlyChildInParent = Symbol("only child in parent");
-const kNodeRef = Symbol("potential only child node ref");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kOnlyChildInParent]?: false | string;
-    [kNodeRef]?: Binding;
   }
 }
 
@@ -38,24 +36,24 @@ export function getOnlyChildParentTagName(
       : false);
 }
 
-export function getOptimizedOnlyChildNodeBinding(
+// A control flow tag that is its element's only child is addressed by that
+// element, else by a marker of its own.
+export function analyzeNodeBinding(
   tag: t.NodePath<t.MarkoTag>,
   section: Section,
   branchSize = 1,
 ) {
+  const extra = (tag.node.extra ??= {});
   if (getOnlyChildParentTagName(tag, branchSize)) {
     const parentTag = getParentTag(tag)!.node;
-    const parentTagName = (parentTag.name as t.StringLiteral)?.value;
-    return ((parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(
-      "#" + parentTagName.toLowerCase(),
-      BindingType.dom,
-      section,
-    ));
-  } else {
-    return ((tag.node.extra ??= {})[kNodeRef] ??= createBinding(
-      "#text",
-      BindingType.dom,
-      section,
-    ));
+    const parentTagName = (parentTag.name as t.StringLiteral).value;
+    return (extra.nodeBinding = (parentTag.extra ??= {}).nodeBinding ??=
+      createBinding(
+        "#" + parentTagName.toLowerCase(),
+        BindingType.dom,
+        section,
+      ));
   }
+
+  return (extra.nodeBinding = createBinding("#text", BindingType.dom, section));
 }
