@@ -1,0 +1,5 @@
+<let/checkedValue = ["a", "z"]/>
+<for|value| of=["a", "b"]>
+  <input type="checkbox" checkedValue:=checkedValue value=value/>
+</for>
+<span>${checkedValue}</span>

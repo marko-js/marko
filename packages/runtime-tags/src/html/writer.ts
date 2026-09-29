@@ -1271,6 +1271,7 @@ export class State implements SerializeState {
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
+  public checkedValuesRefs: WeakMap<unknown[], string[]> | null = null;
   public serializeReason: SerializeReasonValue;
   public $global: $Global & { renderId: string; runtimeId: string };
   constructor($global: $Global & { renderId: string; runtimeId: string }) {

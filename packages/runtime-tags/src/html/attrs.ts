@@ -243,14 +243,17 @@ export function _attr_input_checkedValue(
     : valueAttr;
 }
 
-const checkedValuesRefs = new WeakMap<unknown[], []>();
+// One normalized copy per bound array and render, so a group's checkboxes share
+// it and resume starts from values no checkbox rendered.
 function getCheckedValueRef(checkedValue: unknown) {
   if (Array.isArray(checkedValue)) {
-    let ref = checkedValuesRefs.get(checkedValue);
+    const refs = (getChunk()!.boundary.state.checkedValuesRefs ||=
+      new WeakMap());
+    let ref = refs.get(checkedValue);
 
     if (!ref) {
-      ref = [];
-      checkedValuesRefs.set(checkedValue, ref);
+      ref = checkedValue.map(normalizeStrAttrValue);
+      refs.set(checkedValue, ref);
     }
 
     return ref;

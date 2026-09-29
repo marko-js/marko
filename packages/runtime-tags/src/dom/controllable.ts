@@ -150,14 +150,9 @@ export function _attr_input_checkedValue_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
+  // A bound array resumes as the server sent it; a single value from the DOM.
   if (isResuming && el.defaultChecked) {
-    if (scope[AccessorPrefix.ControlledValue + nodeAccessor]) {
-      (scope[AccessorPrefix.ControlledValue + nodeAccessor] as string[]).push(
-        el.value,
-      );
-    } else {
-      scope[AccessorPrefix.ControlledValue + nodeAccessor] = el.value;
-    }
+    scope[AccessorPrefix.ControlledValue + nodeAccessor] ||= el.value;
   }
 
   syncControllableFormInput(el, hasCheckboxChanged, () => {

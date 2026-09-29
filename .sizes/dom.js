@@ -1,4 +1,4 @@
-// size: 27385 (min) 10176 (brotli)
+// size: 27355 (min) 10171 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1456,11 +1456,7 @@ function _attr_input_checkedValue(scope, nodeAccessor, checkedValue, checkedValu
 }
 function _attr_input_checkedValue_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
-  (isResuming &&
-    el.defaultChecked &&
-    (scope["G" + nodeAccessor]
-      ? scope["G" + nodeAccessor].push(el.value)
-      : (scope["G" + nodeAccessor] = el.value)),
+  (isResuming && el.defaultChecked && (scope["G" + nodeAccessor] ||= el.value),
     syncControllableFormInput(el, hasCheckboxChanged, () => {
       let checkedValueChange = scope["E" + nodeAccessor];
       if (checkedValueChange) {
