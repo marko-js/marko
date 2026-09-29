@@ -6,7 +6,6 @@ import {
 } from "../../common/accessor.debug";
 import { decodeAccessor } from "../../common/helpers";
 import { type Binding, BindingType, getCanonicalBinding } from "./bindings";
-import { closureAccessorIds } from "./finalize-references";
 import { getAccessorPrefix } from "./get-accessor-enums";
 import { isOptimize } from "./marko-config";
 import { isResumedBranch, type Section } from "./sections";
@@ -97,7 +96,7 @@ function getDebugClosureAccessor(binding: Binding) {
 }
 
 function getClosureAccessorId(binding: Binding) {
-  const id = closureAccessorIds.get(getCanonicalBinding(binding)!);
+  const id = getCanonicalBinding(binding).closureId;
   /* v8 ignore next 5 -- analyze reserves an id for every closure binding */
   if (id === undefined) {
     throw new Error(

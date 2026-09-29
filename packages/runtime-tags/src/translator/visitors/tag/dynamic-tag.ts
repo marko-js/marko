@@ -57,6 +57,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  isSameOrChildSection,
   removePrunedContent,
   type Section,
   startSection,
@@ -142,7 +143,15 @@ export default {
           tag,
           definedBodySection,
           definedBodySection.params &&
-            getBindingPropTree(definedBodySection.params),
+            getBindingPropTree(
+              definedBodySection.params,
+              // `<define>` rejects hoisted calls, so a call outside its body
+              // follows the whole body.
+              !isSameOrChildSection(
+                definedBodySection,
+                getOrCreateSection(tag),
+              ),
+            ),
         );
 
         structure.child(tag, getStaticTagName(tag.node), {
@@ -257,20 +266,14 @@ export default {
       const tagSection = getSection(tag);
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
-        const paramsBinding = definedBodySection.params;
-        const propTree = paramsBinding && getBindingPropTree(paramsBinding);
-
         if (isOutputHTML()) {
           knownTagTranslateHTML(
             tag,
             t.memberExpression(tag.node.name, t.identifier("content")),
-            definedBodySection,
-            propTree,
           );
         } else {
           knownTagTranslateDOM(
             tag,
-            propTree,
             (binding, preferredName, directContent) =>
               directContent && binding.directContentExport
                 ? t.identifier(binding.directContentExport)

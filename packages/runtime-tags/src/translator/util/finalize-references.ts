@@ -115,7 +115,7 @@ function pruneBindings() {
   const bindings = getBindings();
   for (const binding of bindings) {
     if (binding.type !== BindingType.dom) {
-      if (pruneBinding(binding, true)) {
+      if (pruneBinding(binding)) {
         bindings.delete(binding);
       }
     }
@@ -356,6 +356,7 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
     const isOwnedBinding = ({ section }: Binding) => section.id === id;
     const ownedBindings = filter(bindings, isOwnedBinding);
     const intersectionSources = new Map<Intersection, Binding | undefined>();
+    const intersectionMeta = (section.intersections = new Map());
     const intersections = (intersectionsBySection.get(section) || []).filter(
       (intersection) => {
         const source = getIntersectionSource(
@@ -442,7 +443,7 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
     forEach(ownedBindings, (binding) => {
       if (binding.closureSections) {
         closureId = Math.max(closureId, nextId);
-        closureAccessorIds.set(binding, closureId++);
+        binding.closureId = closureId++;
       }
     });
     closureIdEnds.set(section, closureId);
@@ -500,18 +501,6 @@ function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
 
   return scopeOffset;
 }
-
-/**
- * Every member computed from one local source in the same pass, or the
- * intersection's own render id and scope offset.
- */
-type IntersectionMeta =
-  | { source: Binding; id?: undefined; scopeOffset?: undefined }
-  | { source: undefined; id: number; scopeOffset: Binding | undefined };
-
-export const intersectionMeta = new WeakMap<Intersection, IntersectionMeta>();
-
-export const closureAccessorIds = new WeakMap<Binding, number>();
 
 function getIntersectionSource(
   intersection: Intersection,
@@ -647,13 +636,17 @@ function inEmittedExpr({ exprRoot, section }: AssignedBindingExtra) {
   return !section.pruned && isEmitted(exprRoot);
 }
 
+// A value with no side effects, or a call site's value, which only the child
+// bindings it feeds observe.
 function isDroppableValue(expr: t.NodeExtra) {
-  return !!expr.pure && !expr.merged && !expr.pruned;
+  return (
+    (!!expr.pure || !!expr.downstreamExprs) && !expr.merged && !expr.pruned
+  );
 }
 
 // A value feeding another binding too (one call site's attribute expression
 // feeds each child that reads it) stays while any of them is read.
-function dropPureExtra(expr: t.NodeExtra) {
+function dropUnreadValue(expr: t.NodeExtra) {
   if (isDroppableValue(expr) && every(expr.downstream, isPrunedBinding)) {
     dropExtra(expr as ReferencedExtra);
   }
@@ -663,25 +656,21 @@ function isPrunedBinding(binding: Binding) {
   return !!binding.pruned;
 }
 
-// The answer is only kept once finalize asks: a read tracked while analysis
-// is still running (a tag of this same program peeks early) can be dropped.
-export function pruneBinding(binding: Binding, settled?: true) {
+function pruneBinding(binding: Binding): boolean {
   if (binding.pruned !== undefined) {
     return binding.pruned;
   }
 
-  if (settled) {
-    // A read from an unread binding's pure value is no read: judge those
-    // bindings first (one met again mid way counts as read).
-    binding.pruned = false;
-    for (const read of binding.reads) {
-      if (isDroppableValue(read)) {
-        forEach(read.downstream, pruneSettledBinding);
-      }
+  // A read from an unread binding's droppable value is no read: judge those
+  // bindings first (one met again mid way counts as read).
+  binding.pruned = false;
+  for (const read of binding.reads) {
+    if (isDroppableValue(read)) {
+      forEach(read.downstream, pruneBinding);
     }
-    // Likewise an assignment from such a value.
-    forEach(binding.assignments, pruneSettledWriter);
   }
+  // Likewise an assignment from such a value.
+  forEach(binding.assignments, pruneWriter);
 
   for (const read of binding.reads) {
     let upstream = binding.upstreamAlias;
@@ -699,7 +688,7 @@ export function pruneBinding(binding: Binding, settled?: true) {
   let shouldPrune = !binding.reads.size && !binding.reserveSize;
 
   for (const alias of binding.aliases) {
-    if (pruneBinding(alias, settled)) {
+    if (pruneBinding(alias)) {
       binding.aliases.delete(alias);
     } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
@@ -707,38 +696,32 @@ export function pruneBinding(binding: Binding, settled?: true) {
   }
 
   for (const [key, alias] of binding.propertyAliases) {
-    if (pruneBinding(alias, settled)) {
+    if (pruneBinding(alias)) {
       binding.propertyAliases.delete(key);
     } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
     }
   }
 
-  if (settled) {
-    binding.pruned = shouldPrune;
-    if (
-      shouldPrune &&
-      !binding.untracked &&
-      !some(binding.assignments, inEmittedExpr)
-    ) {
-      // Its value is never emitted if that has no side effects, and the reads
-      // and assignments inside the value go with it.
-      if (binding.upstreamExpression) {
-        forEach(binding.upstreamExpression, dropPureExtra);
-      }
+  binding.pruned = shouldPrune;
+  if (
+    shouldPrune &&
+    !binding.untracked &&
+    !some(binding.assignments, inEmittedExpr)
+  ) {
+    // Its value is never emitted unless something else observes it, and the
+    // reads and assignments inside the value go with it.
+    if (binding.upstreamExpression) {
+      forEach(binding.upstreamExpression, dropUnreadValue);
     }
   }
 
   return shouldPrune;
 }
 
-function pruneSettledBinding(binding: Binding) {
-  pruneBinding(binding, true);
-}
-
-function pruneSettledWriter({ exprRoot }: AssignedBindingExtra) {
+function pruneWriter({ exprRoot }: AssignedBindingExtra) {
   if (isDroppableValue(exprRoot)) {
-    forEach(exprRoot.downstream, pruneSettledBinding);
+    forEach(exprRoot.downstream, pruneBinding);
   }
 }
 

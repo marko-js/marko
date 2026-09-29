@@ -2,8 +2,8 @@ import { types as t } from "@marko/compiler";
 
 import { BindingType, createBinding } from "./bindings";
 import { getParentTag } from "./get-parent-tag";
-import { isPageElement } from "./insertion-context";
 import type { Section } from "./sections";
+import { getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 const kOnlyChildInParent = Symbol("only child in parent");
@@ -28,7 +28,7 @@ export function getOnlyChildParentTagName(
     analyzeTagNameType(parentTag) === TagNameType.NativeTag &&
     parentTag.node.name.type === "StringLiteral" &&
     // Marko does not own every child of a page element.
-    !isPageElement(parentTag.node.name.value) &&
+    !getTagFacts(parentTag).pageElement &&
     (tag.parent as t.MarkoTagBody).body.filter(
       (node) => node.type !== "MarkoComment",
     ).length === branchSize

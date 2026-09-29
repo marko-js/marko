@@ -32,7 +32,6 @@ import {
   getAccessorProp,
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
-import { isPageElement } from "../../util/insertion-context";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import {
   getMarkoOpts,
@@ -79,7 +78,7 @@ import {
 } from "../../util/signals";
 import { FORCED } from "../../util/sources";
 import * as structure from "../../util/structure";
-import { getTagFacts, isTextOnlyNativeTag } from "../../util/tag-facts";
+import { getTagFacts } from "../../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import {
   toMemberExpression,
@@ -92,6 +91,7 @@ import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
 const kVisitOp = Symbol("native tag structure visit");
+const kNativeAttrs = Symbol("native tag attrs");
 
 // Tags whose body html translate replaced with a content attribute write.
 const htmlContentAttrTags = new WeakSet<t.MarkoTag>();
@@ -106,7 +106,34 @@ const htmlSelectArgs = new WeakMap<
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kVisitOp]?: StructureVisit;
+    [kNativeAttrs]?: NativeAttrs;
   }
+}
+
+// A native tag's attributes by position, which each output's clone keeps:
+// analysis settles what each one is and both outputs write from it.
+interface NativeAttrs {
+  /** Attributes written on their own, apart from the controllable pair. */
+  own: number[];
+  /** Event handlers the element attaches on its own, in source order. */
+  handlers: number[];
+  /** The `content` attribute rendering in place of a body. */
+  content: number | undefined;
+  /** Attributes controlling an element state, its change handler second. */
+  controllable: Controllable | undefined;
+  /** Attributes written as one object with the spreads, in write order. */
+  spread: number[] | undefined;
+  /** No attribute sets the nonce the page requires of it. */
+  nonceUnset: boolean;
+}
+
+type HandlerAttr = t.MarkoAttribute & { name: `on${string}` };
+
+interface Controllable {
+  state: "checked" | "checkedValue" | "value" | "open";
+  special: boolean;
+  valueMode?: "attribute" | "dynamic";
+  attrs: (number | undefined)[];
 }
 
 export default {
@@ -126,7 +153,8 @@ export default {
       }
 
       const tagName = getCanonicalTagName(tag);
-      if (isPageElement(tagName)) {
+      const tagFacts = getTagFacts(tag);
+      if (tagFacts.pageElement) {
         getProgram().node.extra.page ??= true;
       }
 
@@ -134,109 +162,178 @@ export default {
         assertOptionInSelectWithValue(tag);
       }
 
-      const isTextOnly = isTextOnlyNativeTag(tag);
-      const seen: Record<string, t.MarkoAttribute> = Object.create(null);
+      const isTextOnly = tagFacts.textBody;
       const { attributes } = tag.node;
-      let injectNonce = isInjectNonceTag(tagName);
+      const tagSection = getOrCreateSection(tag);
+      // One pass over the attributes, last to first so a repeated one's last value
+      // wins: classifies them, drops unwritten values, records each value's facts.
+      const indexByName: Record<string, number | undefined> =
+        Object.create(null);
+      const pairNames = controllableAttrNames.get(tagName);
+      let own: number[] | undefined;
+      let handlers: number[] | undefined;
+      let content: number | undefined;
+      let controllable: Controllable | undefined;
+      let spread: number[] | undefined;
       let hasDynamicAttributes = false;
       let hasEventHandlers = false;
-      let relatedControllable: RelatedControllable;
-      let spreadReferenceNodes: t.Node[] | undefined;
-      let exprExtras: Opt<t.NodeExtra>;
 
       for (let i = attributes.length; i--;) {
         const attr = attributes[i];
-
-        // Codegen drops a `content` attribute when the tag has body content
-        // (body wins), so skip it here too — otherwise its value creates a dead
-        // scope binding, walk slot, and resume marker for an ignored value.
-        if (
-          t.isMarkoAttribute(attr) &&
-          attr.name === "content" &&
-          tag.node.body.body.length
-        ) {
-          dropNodes(attr.value);
-          continue;
-        }
-
-        const valueExtra = (attr.value.extra ??= {});
-
-        if (t.isMarkoAttribute(attr)) {
-          if (seen[attr.name]) {
-            diagnosticWarn(tag, {
-              label: `The \`${attr.name}\` attribute is set more than once on \`<${tagName}>\`; only the last value is used.`,
-              loc: attr.loc ?? undefined,
-            });
-            // drop references for duplicated attributes.
-            dropNodes(attr.value);
-            continue;
-          }
-
-          seen[attr.name] = attr;
-          assertValidNativeAttrName(tag, attr);
-          assertNativeAttrValueType(tag, attr);
-          if (attr.name === "style") warnCamelCaseStyleKeys(tag, attr);
-
-          if (injectNonce && attr.name === "nonce") {
-            injectNonce = false;
-          }
-
-          if (isEventOrChangeHandler(attr.name)) {
-            assertNativeHandlerAttr(tag, attr);
-          }
-
-          if (isEventHandler(attr.name)) {
-            valueExtra.isEffect = true;
-            // Attached once and only invoked, so reads inside can be lazy.
-            valueExtra.invokeOnly = true;
-            hasEventHandlers = true;
-          } else {
-            assertValidNativeEventHandlerAttr(tag, attr);
-            if (isEventOrChangeHandler(attr.name)) {
-              valueExtra.forceRegister = true;
-            }
-            if (!evaluate(attr.value).confident) {
-              hasDynamicAttributes = true;
-            }
-          }
-        } else if (t.isMarkoSpreadAttribute(attr)) {
+        if (t.isMarkoSpreadAttribute(attr)) {
+          const valueExtra = (attr.value.extra ??= {});
           valueExtra.isEffect = true;
           valueExtra.forceRegister = true;
           hasEventHandlers = true;
           hasDynamicAttributes = true;
-        }
+          if (!spread) {
+            spread = [];
+            controllable = getRelatedControllable(
+              tagName,
+              attributes,
+              indexByName,
+            );
+            own = addUnpaired(own, pairNames, indexByName, controllable);
+            if (controllable && !controllable.attrs.every(isDefined)) {
+              // The spread may set what an incomplete pair leaves out, so the pair
+              // is written with it.
+              for (const index of controllable.attrs) {
+                if (index !== undefined) spread.push(index);
+              }
 
-        if (spreadReferenceNodes) {
-          spreadReferenceNodes.push(attr.value);
-        } else if (t.isMarkoSpreadAttribute(attr)) {
-          spreadReferenceNodes = [attr.value];
-          relatedControllable = getRelatedControllable(tagName, seen);
+              controllable = undefined;
+            }
+          }
+          spread.push(i);
+        } else if (
+          indexByName[attr.name] !== undefined ||
+          (attr.name === "content" && tag.node.body.body.length)
+        ) {
+          // A value nothing writes creates no dead binding, slot, or marker.
+          diagnosticWarn(tag, {
+            label:
+              indexByName[attr.name] === undefined
+                ? `The \`content\` attribute on \`<${tagName}>\` is ignored; its body is rendered instead.`
+                : `The \`${attr.name}\` attribute is set more than once on \`<${tagName}>\`; only the last value is used.`,
+            loc: attr.loc ?? undefined,
+          });
+          dropNodes(attr.value);
         } else {
-          exprExtras = push(exprExtras, valueExtra);
+          const valueExtra = (attr.value.extra ??= {});
+          const isEventHandlerAttr = isEventHandler(attr.name);
+          const isChangeHandlerAttr =
+            !isEventHandlerAttr && isEventOrChangeHandler(attr.name);
+          indexByName[attr.name] = i;
+          assertValidNativeAttrName(tag, attr);
+          assertNativeAttrValueType(tag, attr);
+          if (attr.name === "style") warnCamelCaseStyleKeys(tag, attr);
+          if (isEventHandlerAttr || isChangeHandlerAttr) {
+            assertNativeHandlerAttr(tag, attr);
+          }
+
+          if (isEventHandlerAttr) {
+            valueExtra.isEffect = true;
+            // Attached once and only invoked, so reads inside can be lazy.
+            valueExtra.invokeOnly = true;
+            hasEventHandlers = true;
+            addSetupExpr(tagSection, attr.value);
+          } else {
+            assertValidNativeEventHandlerAttr(tag, attr);
+            if (isChangeHandlerAttr) valueExtra.forceRegister = true;
+            if (!evaluate(attr.value).confident) {
+              hasDynamicAttributes = true;
+              addSetupExpr(tagSection, attr.value);
+            } else if (attr.name === "content" && tagName !== "meta") {
+              // Content is rendered by the client whatever its value.
+              addSetupExpr(tagSection, attr.value);
+            }
+          }
+
+          if (spread) {
+            spread.push(i);
+          } else if (attr.name === "content" && tagName !== "meta") {
+            content = i;
+          } else if (isEventHandlerAttr) {
+            (handlers ||= []).push(i);
+          } else if (!pairNames?.includes(attr.name)) {
+            (own ||= []).push(i);
+          }
         }
       }
 
-      assertExclusiveAttrs(seen, (msg) => {
-        throw tag.get("name").buildCodeFrameError(msg);
-      });
+      own?.reverse();
+      if (!spread) {
+        controllable = getRelatedControllable(tagName, attributes, indexByName);
+        // A pair nothing can update writes as plain attributes.
+        if (
+          controllable &&
+          !controllable.special &&
+          controllable.attrs[1] === undefined &&
+          evaluate(attributes[controllable.attrs.find(isDefined)!].value)
+            .confident
+        ) {
+          controllable = undefined;
+        }
+        own = addUnpaired(own, pairNames, indexByName, controllable);
+      }
 
-      if (seen.content) {
+      // A controllable's change handler is attached like an event handler.
+      if (controllable?.attrs[1] !== undefined) hasEventHandlers = true;
+
+      assertExclusiveAttrs(
+        indexByName,
+        (msg) => {
+          throw tag.get("name").buildCodeFrameError(msg);
+        },
+        isDefined,
+      );
+
+      const contentAttr = attrAt(attributes, indexByName.content);
+      if (contentAttr) {
         const tagDef = getTagDef(tag);
         // `<meta content=x>` is a real html attribute, not renderable content.
         if (tagDef?.parseOptions?.openTagOnly && !tagDef.attributes?.content) {
           throw tag.hub.buildError(
-            seen.content,
+            contentAttr,
             `The \`<${tagName}>\` tag cannot have content, so it does not support the \`content\` attribute.`,
           );
         }
 
         if (isTextOnly) {
           throw tag.hub.buildError(
-            seen.content,
+            contentAttr,
             `The \`<${tagName}>\` tag takes its content from its body as text, so it does not support the \`content\` attribute.`,
           );
         }
       }
+
+      const valueChangeAttr =
+        tagName === "input"
+          ? attrAt(attributes, indexByName.valueChange)
+          : undefined;
+      const valueChangeEval =
+        valueChangeAttr && evaluate(valueChangeAttr.value);
+      const typeAttr = attrAt(attributes, indexByName.type);
+      if (
+        valueChangeEval &&
+        !(valueChangeEval.confident && valueChangeEval.computed == null) &&
+        getInputValueMode(typeAttr) === "attribute"
+      ) {
+        const type = evaluate(typeAttr!.value).computed as string;
+        throw tag.hub.buildError(
+          valueChangeAttr,
+          `\`valueChange\` cannot be used on a \`type="${type}"\` \`<input>\` — user interaction can never change its \`value\`.` +
+            (/^[cr]/i.test(type)
+              ? " Bind `checked` or `checkedValue` instead."
+              : ""),
+        );
+      }
+
+      handlers?.reverse();
+      spread?.reverse();
+      const nonceUnset =
+        isInjectNonceTag(tagName) && indexByName.nonce === undefined;
+      const tagExtra = (node.extra ??= {});
 
       let textPlaceholders: undefined | t.Node[];
       if (isTextOnly) {
@@ -252,41 +349,15 @@ export default {
         }
       }
 
-      relatedControllable ||= getRelatedControllable(tagName, seen);
-      const valueChangeEval =
-        tagName === "input" && seen.valueChange
-          ? evaluate(seen.valueChange.value)
-          : undefined;
-      if (
-        valueChangeEval &&
-        !(valueChangeEval.confident && valueChangeEval.computed == null) &&
-        getInputValueMode(seen.type) === "attribute"
-      ) {
-        const type = evaluate(seen.type!.value).computed as string;
-        throw tag.hub.buildError(
-          seen.valueChange,
-          `\`valueChange\` cannot be used on a \`type="${type}"\` \`<input>\` — user interaction can never change its \`value\`.` +
-            (/^[cr]/i.test(type)
-              ? " Bind `checked` or `checkedValue` instead."
-              : ""),
-        );
-      }
-      if (relatedControllable && relatedControllable.attrs[1]) {
-        hasEventHandlers = true;
-      }
-
       if (
         node.var ||
         hasDynamicAttributes ||
         hasEventHandlers ||
         textPlaceholders ||
-        injectNonce ||
-        // Mirrors `getUsedAttrs`: translate emits `_attr_content` for this.
-        (seen.content && tagName !== "meta" && !node.body.body.length) ||
-        isDynamicControllable(relatedControllable)
+        nonceUnset ||
+        content !== undefined ||
+        controllable
       ) {
-        const tagExtra = (node.extra ??= {});
-        const tagSection = getOrCreateSection(tag);
         const nodeBinding = (tagExtra.nodeBinding = createBinding(
           "#" + tagName.toLowerCase(),
           BindingType.dom,
@@ -302,22 +373,11 @@ export default {
           getProgram().node.extra.isInteractive = true;
         }
 
-        if (spreadReferenceNodes) {
-          if (
-            relatedControllable &&
-            !relatedControllable.attrs.every(Boolean)
-          ) {
-            for (const attr of relatedControllable.attrs) {
-              if (attr) {
-                spreadReferenceNodes.push(attr.value);
-              }
-            }
-            relatedControllable = undefined;
-          }
+        if (spread) {
           const spreadExtra = mergeReferences(
             tagSection,
             tag.node,
-            spreadReferenceNodes,
+            spread.map((index) => attributes[index].value),
           );
 
           spreadExtra.nativeTagSpread = true;
@@ -326,12 +386,26 @@ export default {
           spreadExtra.invokeOnly = true;
         }
 
-        if (relatedControllable) {
-          mergeReferences(
-            tagSection,
-            relatedControllable.attrs.find(Boolean)!.value,
-            relatedControllable.attrs.map((it) => it?.value),
+        let exprExtras: Opt<t.NodeExtra>;
+        if (controllable) {
+          const values = controllable.attrs.map((index) =>
+            index === undefined ? undefined : attributes[index].value,
           );
+          exprExtras = mergeReferences(
+            tagSection,
+            values.find(Boolean)!,
+            values,
+          );
+        }
+
+        for (const index of own || noAttrs) {
+          exprExtras = push(exprExtras, attributes[index].value.extra!);
+        }
+        for (const index of handlers || noAttrs) {
+          exprExtras = push(exprExtras, attributes[index].value.extra!);
+        }
+        if (content !== undefined) {
+          exprExtras = push(exprExtras, attributes[content].value.extra!);
         }
 
         if (textPlaceholders) {
@@ -348,25 +422,14 @@ export default {
           addSetupExpr(tagSection, textPlaceholders[0]);
         }
 
-        if (injectNonce) {
+        if (nonceUnset && !spread) {
           // A nonce statement with no references is written in setup.
           addSetupWork(tagSection);
         }
 
-        if (relatedControllable?.attrs[1]) {
+        if (controllable?.attrs[1] !== undefined) {
           // Controllable change handlers register an effect in setup.
           addSetupWork(tagSection);
-        }
-
-        for (const name in seen) {
-          const attr = seen[name];
-          if (
-            isEventHandler(name) ||
-            name === "content" ||
-            !evaluate(attr.value).confident
-          ) {
-            addSetupExpr(tagSection, attr.value);
-          }
         }
 
         if (hasEventHandlers || isTagVarRead(tag)) {
@@ -381,43 +444,38 @@ export default {
       const write = structure.writeTo(tag);
       // Unclaimed until exit: a child control flow tag may still bind this tag
       // through the only-child optimization.
-      (node.extra ??= {})[kVisitOp] = structure.visit(tag, WalkCode.Get, false);
+      tagExtra[kVisitOp] = structure.visit(tag, WalkCode.Get, false);
 
       write`<${tagName}`;
 
-      for (const attr of getUsedAttrs(tagName, tag.node, true).staticAttrs) {
-        const { name, value } = attr;
+      for (const index of own || noAttrs) {
+        const { name, value } = attributes[index] as t.MarkoAttribute;
         const { confident, computed } = value.extra || {};
-
-        switch (name) {
-          case "class":
-          case "style": {
-            const helper = `_attr_${name}` as const;
-            if (confident) {
-              write`${getHTMLRuntime()[helper](computed)}`;
-            } else {
-              const meta: DelimitedAttrMeta = {
-                staticItems: undefined,
-                dynamicItems: undefined,
-                dynamicValues: undefined,
-              };
-              trackDelimitedAttrValue(value, meta);
-              if (!meta.dynamicItems && meta.staticItems) {
-                write`${getHTMLRuntime()[helper](meta.staticItems)}`;
-              }
-            }
-            break;
+        if (confident) {
+          write`${getStaticAttrMarkup(name, computed)}`;
+        } else if (name === "class" || name === "style") {
+          const meta: DelimitedAttrMeta = {
+            staticItems: undefined,
+            dynamicItems: undefined,
+            dynamicValues: undefined,
+          };
+          trackDelimitedAttrValue(value, meta);
+          if (!meta.dynamicItems && meta.staticItems) {
+            write`${getStaticAttrMarkup(name, meta.staticItems)}`;
           }
-          default:
-            if (confident) {
-              write`${getHTMLRuntime()._attr(name, computed)}`;
-            }
-            break;
         }
       }
 
       write`>`;
       structure.enter(tag);
+      tagExtra[kNativeAttrs] = {
+        own: own || noAttrs,
+        handlers: handlers || noAttrs,
+        content,
+        controllable,
+        spread,
+        nonceUnset,
+      };
     },
     exit(tag) {
       const tagName = getCanonicalTagName(tag);
@@ -427,7 +485,7 @@ export default {
 
       if (!getTagDef(tag)?.parseOptions?.openTagOnly) {
         const write = structure.writeTo(tag);
-        if (tagName !== "textarea" && isTextOnlyNativeTag(tag)) {
+        if (tagName !== "textarea" && getTagFacts(tag).textBody) {
           const textLiteral = bodyToRawTextLiteral(tag.node.body);
           if (t.isStringLiteral(textLiteral)) {
             write`${textLiteral.value}`;
@@ -452,20 +510,20 @@ export default {
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
 
-        const usedAttrs = getUsedAttrs(tagName, tag.node);
-        const {
-          staticAttrs,
-          staticControllable,
-          staticContentAttr,
-          skipExpression,
-          injectNonce,
-        } = usedAttrs;
-        let { spreadExpression } = usedAttrs;
+        const { attributes } = tag.node;
+        const nativeAttrs = tagExtra[kNativeAttrs]!;
+        const { own, handlers, content, controllable, spread, nonceUnset } =
+          nativeAttrs;
+        const contentAttr = attrAt(attributes, content);
+        const skipExpression =
+          spread && buildSkipExpression(attributes, nativeAttrs);
+        let spreadExpression =
+          spread && buildSpreadExpression(attributes, spread, nonceUnset);
 
         // Name the change-handler slot after the attribute the author wrote;
         // other internal slots get generic serializer descriptions instead.
         if (!isOptimize() && nodeBinding) {
-          const changeAttr = staticControllable?.attrs[1];
+          const changeAttr = attrAt(attributes, controllable?.attrs[1]);
           if (changeAttr) {
             const handler = evaluate(changeAttr.value);
             if (!(handler.confident && handler.computed == null)) {
@@ -516,28 +574,29 @@ export default {
 
         // A controlled `<select>` moves the whole pending buffer into its
         // content arrow at exit, so earlier siblings have to leave it first.
-        if (tagName === "select" && (staticControllable || spreadExpression)) {
+        if (tagName === "select" && (controllable || spreadExpression)) {
           writer.flushBefore(tag);
         }
 
         write`<${tagName}`;
 
-        if (injectNonce) {
+        if (nonceUnset && !spread) {
           write`${callRuntime("_attr_nonce")}`;
         }
 
-        if (staticControllable) {
-          const hasChangeHandler = !!staticControllable.attrs[1];
+        if (controllable) {
           if (tagName !== "select" && tagName !== "textarea") {
             write`${callRuntime(
-              staticControllable.helper,
+              getControllableHelper(tagName, controllable.state),
               getScopeIdIdentifier(tagSection),
               visitAccessor,
-              ...staticControllable.attrs.map((attr) => attr?.value),
+              ...controllable.attrs.map(
+                (index) => attrAt(attributes, index)?.value,
+              ),
             )}`;
           }
 
-          if (hasChangeHandler) {
+          if (controllable.attrs[1] !== undefined) {
             addHTMLEffectCall(tagSection, undefined);
           }
         }
@@ -560,12 +619,14 @@ export default {
         }
 
         if (tagName === "select") {
-          if (staticControllable) {
+          if (controllable) {
             htmlSelectArgs.set(tag.node, {
               helper: "_attr_select_value",
               args: [
-                staticControllable.attrs[0]?.value || buildUndefined(),
-                staticControllable.attrs[1]?.value || buildUndefined(),
+                attrAt(attributes, controllable.attrs[0])?.value ||
+                  buildUndefined(),
+                attrAt(attributes, controllable.attrs[1])?.value ||
+                  buildUndefined(),
               ],
             });
           } else if (spreadExpression) {
@@ -582,8 +643,9 @@ export default {
             spreadExpression = spreadIdentifier;
           }
         } else if (tagName === "textarea") {
-          if (staticControllable) {
-            const [value, valueChange] = staticControllable.attrs;
+          if (controllable) {
+            const value = attrAt(attributes, controllable.attrs[0]);
+            const valueChange = attrAt(attributes, controllable.attrs[1]);
             writeAtStartOfBody = valueChange
               ? callRuntime(
                   "_attr_textarea_value",
@@ -610,71 +672,34 @@ export default {
           }
         }
 
-        for (const attr of staticAttrs) {
-          const { name, value } = attr;
+        for (const index of own) {
+          const { name, value } = attributes[index] as t.MarkoAttribute;
           const { confident, computed } = value.extra || {};
-          const valueReferences = value.extra?.referencedBindings;
 
           if (tagName === "option" && name === "value") {
             write`${callRuntime("_attr_option_value", value)}`;
             continue;
           }
 
-          switch (name) {
-            case "class":
-            case "style": {
-              const helper = `_attr_${name}` as const;
-              if (confident) {
-                write`${getHTMLRuntime()[helper](computed)}`;
-              } else {
-                write`${factorAttrConditional(
-                  buildAttrExpression(
-                    value,
-                    (branch) => {
-                      const { confident, computed } = evaluate(branch);
-                      return confident
-                        ? getHTMLRuntime()[helper](computed)
-                        : undefined;
-                    },
-                    (branch) =>
-                      buildStringAttrAnd(helper, branch) ||
-                      (name === "class" && buildClassAttrExpression(branch)) ||
-                      callRuntime(helper, branch),
-                  ),
-                )}`;
-              }
-              break;
-            }
-            default:
-              if (confident) {
-                write`${getHTMLRuntime()._attr(name, computed)}`;
-              } else if (isEventHandler(name)) {
-                addHTMLEffectCall(tagSection, valueReferences);
-              } else {
-                write`${factorAttrConditional(
-                  buildAttrExpression(
-                    value,
-                    (branch) => {
-                      const { confident, computed } = evaluate(branch);
-                      return confident
-                        ? getHTMLRuntime()._attr(name, computed)
-                        : undefined;
-                    },
-                    (branch) =>
-                      buildLogicalAttr(name, branch) ||
-                      callRuntime("_attr", t.stringLiteral(name), branch),
-                  ),
-                )}`;
-              }
+          write`${
+            confident
+              ? getStaticAttrMarkup(name, computed)
+              : factorAttrConditional(buildAttrExpression(name, value))
+          }`;
+        }
 
-              break;
-          }
+        for (const index of handlers) {
+          addHTMLEffectCall(
+            tagSection,
+            attributes[index].value.extra?.referencedBindings,
+          );
         }
 
         const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
-        const isTextOnly = isTextOnlyNativeTag(tag);
+        const isTextOnly = getTagFacts(tag).textBody;
         const spreadContent =
-          !!spreadExpression && spreadRendersContent(tag, staticContentAttr);
+          !!spreadExpression &&
+          spreadRendersContent(tag, contentAttr, isTextOnly);
 
         if (spreadExpression) {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
@@ -703,7 +728,7 @@ export default {
 
         if (isOpenOnly || isTextOnly) {
           write`>`;
-        } else if (staticContentAttr) {
+        } else if (contentAttr) {
           write`>`;
           htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
@@ -712,7 +737,7 @@ export default {
                 "_attr_content",
                 visitAccessor,
                 getScopeIdIdentifier(tagSection),
-                staticContentAttr.value,
+                contentAttr.value,
                 getSerializeGuard(
                   tagSection,
                   nodeBinding && getSerializeReason(tagSection, nodeBinding),
@@ -764,7 +789,7 @@ export default {
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra.nodeBinding;
         const isOpenOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
-        const isTextOnly = isTextOnlyNativeTag(tag);
+        const isTextOnly = getTagFacts(tag).textBody;
         const selectArgs = htmlSelectArgs.get(tag.node);
         const tagName = getCanonicalTagName(tag);
         const tagSection = getSection(tag);
@@ -850,23 +875,25 @@ export default {
     },
     dom: {
       enter(tag) {
-        const tagName = getCanonicalTagName(tag);
         const tagExtra = tag.node.extra!;
-        const nodeBinding = tagExtra.nodeBinding;
+        const { nodeBinding } = tagExtra;
+        // The template holds everything a tag without a node binding writes.
+        if (!nodeBinding) return;
+
+        const tagName = getCanonicalTagName(tag);
         const tagSection = getSection(tag);
-        const visitAccessor =
-          nodeBinding && getScopeAccessorLiteral(nodeBinding);
+        const visitAccessor = getScopeAccessorLiteral(nodeBinding);
+        const { attributes } = tag.node;
+        const nativeAttrs = tagExtra[kNativeAttrs]!;
+        const { own, handlers, content, controllable, spread, nonceUnset } =
+          nativeAttrs;
+        const contentAttr = attrAt(attributes, content);
+        const skipExpression =
+          spread && buildSkipExpression(attributes, nativeAttrs);
+        const spreadExpression =
+          spread && buildSpreadExpression(attributes, spread, nonceUnset);
 
-        const {
-          staticAttrs,
-          staticControllable,
-          staticContentAttr,
-          skipExpression,
-          spreadExpression,
-          injectNonce,
-        } = getUsedAttrs(tagName, tag.node);
-
-        if (injectNonce) {
+        if (nonceUnset && !spread) {
           addStatement(
             "render",
             tagSection,
@@ -875,28 +902,30 @@ export default {
               callRuntime(
                 "_attr_nonce",
                 scopeIdentifier,
-                getScopeAccessorLiteral(nodeBinding!),
+                getScopeAccessorLiteral(nodeBinding),
               ),
             ),
             true,
           );
         }
 
-        if (staticControllable) {
-          const hasChangeHandler = !!staticControllable.attrs[1];
-          const defaultHelper =
-            getDOMControllableDefaultHelper(staticControllable);
-          const firstAttr = staticControllable.attrs.find(Boolean)!;
-          const referencedBindings = firstAttr.value.extra?.referencedBindings;
+        if (controllable) {
+          const hasChangeHandler = controllable.attrs[1] !== undefined;
+          const helper = getControllableHelper(tagName, controllable.state);
+          const defaultHelper = getDOMControllableDefaultHelper(
+            helper,
+            controllable,
+          );
+          const referencedBindings = attrAt(
+            attributes,
+            controllable.attrs.find(isDefined),
+          )!.value.extra?.referencedBindings;
           const values = (
             hasChangeHandler
-              ? staticControllable.attrs
-              : staticControllable.attrs.toSpliced(1, 1)
-          ).map((attr) => attr?.value);
-          if (
-            hasChangeHandler &&
-            defaultHelper !== `${staticControllable.helper}_default`
-          ) {
+              ? controllable.attrs
+              : controllable.attrs.toSpliced(1, 1)
+          ).map((index) => attrAt(attributes, index)?.value);
+          if (hasChangeHandler && defaultHelper !== `${helper}_default`) {
             values.push(importRuntime(defaultHelper));
           }
 
@@ -906,7 +935,7 @@ export default {
             referencedBindings,
             t.expressionStatement(
               callRuntime(
-                hasChangeHandler ? staticControllable.helper : defaultHelper,
+                hasChangeHandler ? helper : defaultHelper,
                 scopeIdentifier,
                 visitAccessor,
                 ...values,
@@ -920,18 +949,14 @@ export default {
               tagSection,
               undefined,
               t.expressionStatement(
-                callRuntime(
-                  `${staticControllable.helper}_script`,
-                  scopeIdentifier,
-                  visitAccessor,
-                ),
+                callRuntime(`${helper}_script`, scopeIdentifier, visitAccessor),
               ),
             );
           }
         }
 
-        for (const attr of staticAttrs) {
-          const { name, value } = attr;
+        for (const index of own) {
+          const { name, value } = attributes[index] as t.MarkoAttribute;
           const { confident } = value.extra || {};
           const valueReferences = value.extra?.referencedBindings;
 
@@ -940,7 +965,7 @@ export default {
             case "style": {
               const helper = `_attr_${name}` as const;
               if (!confident) {
-                const nodeExpr = createScopeReadExpression(nodeBinding!);
+                const nodeExpr = createScopeReadExpression(nodeBinding);
                 const meta: DelimitedAttrMeta = {
                   staticItems: undefined,
                   dynamicItems: undefined,
@@ -1004,20 +1029,6 @@ export default {
               // Confident values are recorded into the template at analyze.
               if (confident) {
                 break;
-              } else if (isEventHandler(name)) {
-                addStatement(
-                  "effect",
-                  tagSection,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "_on",
-                      createScopeReadExpression(nodeBinding!),
-                      t.stringLiteral(getEventHandlerName(name)),
-                      value,
-                    ),
-                  ),
-                );
               } else {
                 addStatement(
                   "render",
@@ -1026,7 +1037,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       "_attr",
-                      createScopeReadExpression(nodeBinding!),
+                      createScopeReadExpression(nodeBinding),
                       t.stringLiteral(name),
                       value,
                     ),
@@ -1039,14 +1050,34 @@ export default {
           }
         }
 
+        for (const index of handlers) {
+          const { name, value } = attributes[index] as HandlerAttr;
+          addStatement(
+            "effect",
+            tagSection,
+            value.extra?.referencedBindings,
+            t.expressionStatement(
+              callRuntime(
+                "_on",
+                createScopeReadExpression(nodeBinding),
+                t.stringLiteral(getEventHandlerName(name)),
+                value,
+              ),
+            ),
+          );
+        }
+
         if (spreadExpression) {
-          const spreadContent = spreadRendersContent(tag, staticContentAttr);
+          const spreadContent = spreadRendersContent(
+            tag,
+            contentAttr,
+            getTagFacts(tag).textBody,
+          );
           const name = tag.get("name");
           const staticName = name.isStringLiteral()
             ? name.node.value
             : undefined;
-          const controllable =
-            !staticControllable && controllableClaimFor(staticName);
+          const spreadClaim = !controllable && controllableClaimFor(staticName);
           if (skipExpression) {
             addStatement(
               "render",
@@ -1059,7 +1090,7 @@ export default {
                   visitAccessor,
                   spreadExpression,
                   skipExpression,
-                  controllable && importRuntime(controllable),
+                  spreadClaim && importRuntime(spreadClaim),
                 ),
               ),
             );
@@ -1074,7 +1105,7 @@ export default {
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
-                  controllable && importRuntime(controllable),
+                  spreadClaim && importRuntime(spreadClaim),
                 ),
               ),
             );
@@ -1091,17 +1122,17 @@ export default {
           );
         }
 
-        if (staticContentAttr) {
+        if (contentAttr) {
           addStatement(
             "render",
             tagSection,
-            staticContentAttr.value.extra?.referencedBindings,
+            contentAttr.value.extra?.referencedBindings,
             t.expressionStatement(
               callRuntime(
                 "_attr_content",
                 scopeIdentifier,
                 visitAccessor,
-                staticContentAttr.value,
+                contentAttr.value,
               ),
             ),
             true,
@@ -1115,7 +1146,7 @@ export default {
         const tagName = getCanonicalTagName(tag);
 
         if (!openTagOnly) {
-          if (tagName !== "textarea" && isTextOnlyNativeTag(tag)) {
+          if (tagName !== "textarea" && getTagFacts(tag).textBody) {
             const textLiteral = bodyToTextLiteral(
               tag.node.body,
               tagName === "title",
@@ -1161,74 +1192,128 @@ function getSpreadControllableValueProps(tagName: string) {
   }
 }
 
-type RelatedControllable = ReturnType<typeof getRelatedControllable>;
 function getRelatedControllable(
   tagName: string,
-  attrs: Record<string, t.MarkoAttribute | undefined>,
-) {
+  attributes: t.MarkoTag["attributes"],
+  indexByName: Record<string, number | undefined>,
+): Controllable | undefined {
   switch (tagName) {
     case "input":
-      if (attrs.checked || attrs.checkedChange) {
+      if ("checked" in indexByName || "checkedChange" in indexByName) {
         return {
+          state: "checked",
           special: false,
-          helper: "_attr_input_checked",
-          attrs: [attrs.checked, attrs.checkedChange],
-        } as const;
+          attrs: [indexByName.checked, indexByName.checkedChange],
+        };
       }
 
-      if (attrs.checkedValue || attrs.checkedValueChange) {
+      if (
+        "checkedValue" in indexByName ||
+        "checkedValueChange" in indexByName
+      ) {
         return {
+          state: "checkedValue",
           special: true,
-          helper: "_attr_input_checkedValue",
-          attrs: [attrs.checkedValue, attrs.checkedValueChange, attrs.value],
-        } as const;
+          attrs: [
+            indexByName.checkedValue,
+            indexByName.checkedValueChange,
+            indexByName.value,
+          ],
+        };
       }
 
-      if (attrs.value || attrs.valueChange) {
+      if ("value" in indexByName || "valueChange" in indexByName) {
         // One-way `value=` is default-value semantics on purpose (updates what
         // `form.reset()` restores), not a missing-change-handler mistake.
-        const valueMode = getInputValueMode(attrs.type);
-        if (valueMode === "attribute" && !attrs.valueChange) {
+        const valueMode = getInputValueMode(
+          attrAt(attributes, indexByName.type),
+        );
+        if (valueMode === "attribute" && !indexByName.valueChange) {
           break;
         }
 
         return {
+          state: "value",
           special: false,
-          helper: "_attr_input_value",
-          attrs: [attrs.value, attrs.valueChange],
+          attrs: [indexByName.value, indexByName.valueChange],
           valueMode,
-        } as const;
+        };
       }
       break;
     case "select":
-      if (attrs.value || attrs.valueChange) {
-        return {
-          special: true,
-          helper: "_attr_select_value",
-          attrs: [attrs.value, attrs.valueChange],
-        } as const;
-      }
-      break;
     case "textarea":
-      if (attrs.value || attrs.valueChange) {
+      if ("value" in indexByName || "valueChange" in indexByName) {
         return {
+          state: "value",
           special: true,
-          helper: "_attr_textarea_value",
-          attrs: [attrs.value, attrs.valueChange],
-        } as const;
+          attrs: [indexByName.value, indexByName.valueChange],
+        };
       }
       break;
     case "details":
     case "dialog":
-      if (attrs.open || attrs.openChange) {
+      if ("open" in indexByName || "openChange" in indexByName) {
         return {
+          state: "open",
           special: false,
-          helper: `_attr_${tagName}_open`,
-          attrs: [attrs.open, attrs.openChange],
-        } as const;
+          attrs: [indexByName.open, indexByName.openChange],
+        };
       }
       break;
   }
+}
+
+// Shared by every element with no attribute of a kind; nothing writes it.
+const noAttrs: number[] = [];
+
+// The attributes an element's controllable pair may take.
+const controllableAttrNames = new Map([
+  [
+    "input",
+    [
+      "checked",
+      "checkedChange",
+      "checkedValue",
+      "checkedValueChange",
+      "value",
+      "valueChange",
+    ],
+  ],
+  ["select", ["value", "valueChange"]],
+  ["textarea", ["value", "valueChange"]],
+  ["details", ["open", "openChange"]],
+  ["dialog", ["open", "openChange"]],
+]);
+
+// A pair attribute the element's pair does not take is its own.
+function addUnpaired(
+  own: number[] | undefined,
+  pairNames: string[] | undefined,
+  indexByName: Record<string, number | undefined>,
+  controllable: Controllable | undefined,
+) {
+  if (pairNames) {
+    for (const name of pairNames) {
+      const index = indexByName[name];
+      if (index !== undefined && !controllable?.attrs.includes(index)) {
+        (own ||= []).push(index);
+      }
+    }
+  }
+  return own;
+}
+
+function attrAt(
+  attributes: t.MarkoTag["attributes"],
+  index: number | undefined,
+) {
+  return index === undefined
+    ? undefined
+    : (attributes[index] as t.MarkoAttribute);
+}
+
+function isDefined<T>(value: T | undefined): value is T {
+  return value !== undefined;
 }
 
 function getInputValueMode(typeAttr: t.MarkoAttribute | undefined) {
@@ -1256,159 +1341,113 @@ function getInputValueMode(typeAttr: t.MarkoAttribute | undefined) {
 }
 
 function getDOMControllableDefaultHelper(
-  controllable: NonNullable<RelatedControllable>,
+  helper: ReturnType<typeof getControllableHelper>,
+  { valueMode }: Controllable,
 ) {
-  return controllable.helper === "_attr_input_value" && controllable.valueMode
-    ? (`_attr_input_value_${controllable.valueMode}_default` as const)
-    : (`${controllable.helper}_default` as const);
+  return helper === "_attr_input_value" && valueMode
+    ? (`_attr_input_value_${valueMode}_default` as const)
+    : (`${helper}_default` as const);
 }
 
 // With nothing else filling the element, the spread's `content` renders it.
 function spreadRendersContent(
   tag: t.NodePath<t.MarkoTag>,
   staticContentAttr: t.MarkoAttribute | undefined,
+  isTextOnly: boolean | undefined,
 ) {
   return !(
     staticContentAttr ||
     tag.node.body.body.length ||
-    isTextOnlyNativeTag(tag) ||
+    isTextOnly ||
     getTagDef(tag)?.parseOptions?.openTagOnly
   );
 }
 
-// `staticOnly` skips building the spread expression (analyze records only the
-// static attrs, and the nonce prop reads translate-phase identifiers).
-function getUsedAttrs(tagName: string, tag: t.MarkoTag, staticOnly?: boolean) {
-  const seen: Record<string, t.MarkoAttribute> = Object.create(null);
-  const { attributes } = tag;
-  const maybeStaticAttrs = new Set<t.MarkoAttribute>();
-  const skipProps = new Set<string>();
-  let spreadExpression: undefined | t.Expression;
-  let skipExpression: undefined | t.Expression;
-  let spreadProps: undefined | t.ObjectExpression["properties"];
-  let staticControllable: RelatedControllable;
-  let staticContentAttr: undefined | t.MarkoAttribute;
-  let injectNonce = isInjectNonceTag(tagName);
-  for (let i = attributes.length; i--;) {
-    const attr = attributes[i];
-    const { value } = attr;
-    if (t.isMarkoSpreadAttribute(attr)) {
-      if (!spreadProps) {
-        spreadProps = [];
-        staticControllable = getRelatedControllable(tagName, seen);
-        if (staticControllable && !staticControllable.attrs.every(Boolean)) {
-          for (const attr of staticControllable.attrs) {
-            if (attr) {
-              spreadProps.push(toObjectProperty(attr.name, attr.value));
-              maybeStaticAttrs.delete(attr);
-            }
-          }
-
-          staticControllable = undefined;
-        }
-      }
-      spreadProps.push(t.spreadElement(value));
-    } else if (
-      !(seen[attr.name] || (attr.name === "content" && tag.body.body.length))
-    ) {
-      seen[attr.name] = attr;
-
-      if (injectNonce && attr.name === "nonce") {
-        injectNonce = false;
-      }
-
-      if (spreadProps) {
-        spreadProps.push(toObjectProperty(attr.name, attr.value));
-      } else if (attr.name === "content" && tagName !== "meta") {
-        staticContentAttr = attr;
-      } else {
-        maybeStaticAttrs.add(attr);
-      }
-    }
-  }
-
-  if (!spreadProps) {
-    staticControllable = getRelatedControllable(tagName, seen);
-    if (!isDynamicControllable(staticControllable)) {
-      staticControllable = undefined;
-    }
-  }
-
-  if (staticControllable) {
-    for (const attr of staticControllable.attrs) {
-      if (attr) {
-        maybeStaticAttrs.delete(attr);
-      }
-    }
-  }
-
-  const staticAttrs = [...maybeStaticAttrs].reverse();
-
-  if (staticOnly) {
-    // Analyze reads only the static attrs; skip building the spread AST.
-    return {
-      injectNonce,
-      staticAttrs,
-      staticContentAttr,
-      staticControllable,
-      spreadExpression,
-      skipExpression,
-    };
-  }
-
-  if (spreadProps) {
-    if (staticControllable) {
-      for (const attr of staticControllable.attrs) {
-        if (attr) {
-          skipProps.add(attr.name);
-        }
-      }
-    }
-
-    for (const { name } of staticAttrs) {
-      if (isEventHandler(name)) {
-        skipProps.add(`on-${getEventHandlerName(name)}`);
-      } else {
-        // Names match the DOM only as the types spell them (lowercase HTML, canonical SVG and
-        // MathML camelCase); one authored in another case is removed beside a spread.
-        skipProps.add(name);
-      }
-    }
-
-    if (injectNonce) {
-      injectNonce = false;
-      spreadProps.push(
-        t.objectProperty(
-          t.identifier("nonce"),
-          t.memberExpression(
-            isOutputHTML()
-              ? callRuntime("$global")
-              : toMemberExpression(scopeIdentifier, getAccessorProp().Global),
-            t.identifier("cspNonce"),
-          ),
+// The spread object both outputs write: the spreads and the attributes among
+// them, with the nonce the page requires when nothing sets it.
+function buildSpreadExpression(
+  attributes: t.MarkoTag["attributes"],
+  spread: number[],
+  nonceUnset: boolean,
+) {
+  const props: t.ObjectExpression["properties"] = [];
+  if (nonceUnset) {
+    props.push(
+      t.objectProperty(
+        t.identifier("nonce"),
+        t.memberExpression(
+          isOutputHTML()
+            ? callRuntime("$global")
+            : toMemberExpression(scopeIdentifier, getAccessorProp().Global),
+          t.identifier("cspNonce"),
         ),
-      );
-    }
-
-    spreadExpression = propsToExpression(spreadProps.reverse());
-  }
-
-  if (skipProps.size) {
-    skipExpression = t.objectExpression(
-      Array.from(skipProps, (name) =>
-        toObjectProperty(name, t.numericLiteral(1)),
       ),
     );
   }
 
-  return {
-    injectNonce,
-    staticAttrs,
-    staticContentAttr,
-    staticControllable,
-    spreadExpression,
-    skipExpression,
-  };
+  for (const index of spread) {
+    const attr = attributes[index];
+    props.push(
+      t.isMarkoSpreadAttribute(attr)
+        ? t.spreadElement(attr.value)
+        : toObjectProperty(attr.name, attr.value),
+    );
+  }
+
+  return propsToExpression(props);
+}
+
+// The names a spread leaves to what the element writes itself.
+function buildSkipExpression(
+  attributes: t.MarkoTag["attributes"],
+  { own, handlers, controllable }: NativeAttrs,
+) {
+  const skipProps = new Set<string>();
+  if (controllable) {
+    for (const index of controllable.attrs) {
+      if (index !== undefined) {
+        skipProps.add((attributes[index] as t.MarkoAttribute).name);
+      }
+    }
+  }
+
+  for (const index of own) {
+    // Names match the DOM only as the types spell them (lowercase HTML, canonical SVG and
+    // MathML camelCase); one authored in another case is removed beside a spread.
+    skipProps.add((attributes[index] as t.MarkoAttribute).name);
+  }
+
+  for (const index of handlers) {
+    const { name } = attributes[index] as HandlerAttr;
+    skipProps.add(`on-${getEventHandlerName(name)}`);
+  }
+
+  if (skipProps.size) {
+    return t.objectExpression(Array.from(skipProps, toSkipProperty));
+  }
+}
+
+function toSkipProperty(name: string) {
+  return toObjectProperty(name, t.numericLiteral(1));
+}
+
+function getControllableHelper(tagName: string, state: Controllable["state"]) {
+  switch (state) {
+    case "checked":
+      return "_attr_input_checked" as const;
+    case "checkedValue":
+      return "_attr_input_checkedValue" as const;
+    case "open":
+      return tagName === "details"
+        ? ("_attr_details_open" as const)
+        : ("_attr_dialog_open" as const);
+    case "value":
+      return tagName === "select"
+        ? ("_attr_select_value" as const)
+        : tagName === "textarea"
+          ? ("_attr_textarea_value" as const)
+          : ("_attr_input_value" as const);
+  }
 }
 
 function isInjectNonceTag(tagName: string) {
@@ -1646,23 +1685,49 @@ function getRawTextEscapeHelper(tagName: string) {
 
 // Distribute the attr helper through a conditional, serializing literal branches
 // at build time: `_attr("a", x ? "b" : dyn)` -> `x ? ' a="b"' : _attr("a", dyn)`.
-function buildAttrExpression(
-  value: t.Expression,
-  serialize: (value: t.Expression) => string | undefined,
-  dynamic: (value: t.Expression) => t.Expression,
-): t.Expression {
+// A known attribute value's markup, the same in the DOM template and in HTML.
+function getStaticAttrMarkup(name: string, computed: unknown) {
+  switch (name) {
+    case "class":
+      return getHTMLRuntime()._attr_class(computed);
+    case "style":
+      return getHTMLRuntime()._attr_style(computed);
+    default:
+      return getHTMLRuntime()._attr(name, computed);
+  }
+}
+
+function buildAttrExpression(name: string, value: t.Expression): t.Expression {
   if (value.type === "ConditionalExpression") {
     return t.conditionalExpression(
       value.test,
-      buildAttrExpression(value.consequent, serialize, dynamic),
-      buildAttrExpression(value.alternate, serialize, dynamic),
+      buildAttrExpression(name, value.consequent),
+      buildAttrExpression(name, value.alternate),
     );
   }
 
-  const serialized = serialize(value);
-  return serialized === undefined
-    ? dynamic(value)
-    : t.stringLiteral(serialized);
+  const { confident, computed } = evaluate(value);
+  if (confident) {
+    return t.stringLiteral(getStaticAttrMarkup(name, computed));
+  }
+
+  switch (name) {
+    case "class":
+      return (
+        buildStringAttrAnd(name, value) ||
+        buildClassAttrExpression(value) ||
+        callRuntime("_attr_class", value)
+      );
+    case "style":
+      return (
+        buildStringAttrAnd(name, value) || callRuntime("_attr_style", value)
+      );
+    default:
+      return (
+        buildLogicalAttr(name, value) ||
+        callRuntime("_attr", t.stringLiteral(name), value)
+      );
+  }
 }
 
 // Hoist a shared `name=` prefix out of a conditional's two literal branches so it folds
@@ -1738,16 +1803,13 @@ function buildLogicalAttr(name: string, value: t.Expression) {
 
 // class/style omit a falsy value, so `x && val` is just `x ? val : ""` — the
 // operand is used once and no helper is needed (unlike `_attr`).
-function buildStringAttrAnd(
-  helper: "_attr_class" | "_attr_style",
-  value: t.Expression,
-) {
+function buildStringAttrAnd(name: "class" | "style", value: t.Expression) {
   if (value.type === "LogicalExpression" && value.operator === "&&") {
     const { confident, computed } = evaluate(value.right);
     if (confident) {
       return t.conditionalExpression(
         value.left,
-        t.stringLiteral(getHTMLRuntime()[helper](computed)),
+        t.stringLiteral(getStaticAttrMarkup(name, computed)),
         t.stringLiteral(""),
       );
     }
@@ -1957,22 +2019,6 @@ function trackDelimitedAttrObjectProperties(
   if (dynamicProps) {
     (meta.dynamicItems ||= []).push(t.objectExpression(dynamicProps));
   }
-}
-
-function isDynamicControllable(controllable: RelatedControllable) {
-  // An otherwise controllable attr is a plain attribute when it is not "special",
-  // has no change handler, and can never update (no referenced bindings).
-  if (controllable) {
-    return (
-      controllable.special ||
-      !!(
-        controllable.attrs[1] ||
-        controllable.attrs.find(Boolean)!.value!.extra?.referencedBindings
-      )
-    );
-  }
-
-  return false;
 }
 
 function buildUndefined() {

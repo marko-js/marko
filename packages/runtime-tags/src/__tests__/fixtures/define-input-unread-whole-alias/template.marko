@@ -1,0 +1,9 @@
+<define/Card|input|>
+  <const/all=input/>
+  <const/{ title, ...rest }=input/>
+  <h1>${title}</h1>
+  <p>${input.body}</p>
+</define>
+<let/t="a"/>
+<Card title=t body="static"/>
+<button onClick() { t += "b" }/>

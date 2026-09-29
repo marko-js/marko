@@ -53,11 +53,11 @@ import {
 import {
   FORCED,
   type Sources,
-  createSources,
   isInParams,
   isSupersetSources,
   mergeSources,
   sharesSources,
+  withSources,
 } from "./sources";
 
 export function solveSerializeReasons(
@@ -173,9 +173,7 @@ function withoutOwnSources(closure: Binding, sources: Sources | undefined) {
     sources.param,
     (binding) => !someUpstream(binding, isInParams, own.param),
   );
-  return state || param || sources.global || sources.forced
-    ? createSources(state, param, sources.global, sources.forced)
-    : undefined;
+  return withSources(sources, state, param);
 }
 
 // What creates a section anew on the client: a branch's expression, or for

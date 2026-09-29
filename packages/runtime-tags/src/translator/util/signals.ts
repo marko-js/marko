@@ -22,7 +22,6 @@ import {
   isDirectAlias,
   type ReferencedBindings,
 } from "./bindings";
-import { intersectionMeta } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -379,7 +378,7 @@ export function getSignal(
     } else if (!referencedBindings) {
       signal.build = () => getSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
-      const meta = intersectionMeta.get(referencedBindings)!;
+      const meta = section.intersections!.get(referencedBindings)!;
       subscribe(meta.source || referencedBindings, signal);
       if (meta.source) {
         const sourceSignal = getSignal(section, meta.source);
@@ -399,7 +398,7 @@ export function getSignal(
         });
       }
       signal.build = () =>
-        buildIntersection(referencedBindings, getSignalFn(signal));
+        buildIntersection(section, referencedBindings, getSignalFn(signal));
     } else if (
       referencedBindings.section !== section &&
       sectionUtil.has(referencedBindings.closureSections, section)
@@ -576,8 +575,12 @@ function pushMemberForwards(
 }
 
 // A source intersection runs in its source's pass, so it needs no `_or`.
-function buildIntersection(intersection: Intersection, fn: t.Expression) {
-  const { source, id, scopeOffset } = intersectionMeta.get(intersection)!;
+function buildIntersection(
+  section: Section,
+  intersection: Intersection,
+  fn: t.Expression,
+) {
+  const { source, id, scopeOffset } = section.intersections!.get(intersection)!;
   if (source) return fn;
   return callRuntime(
     "_or",

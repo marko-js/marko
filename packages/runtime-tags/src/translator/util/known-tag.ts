@@ -7,6 +7,7 @@ import {
   type BindingPropTree,
   getAllKnownPropNames,
   getKnownFromPropTree,
+  getSettledPropTree,
   hasAllKnownProps,
 } from "./binding-prop-tree";
 import {
@@ -98,11 +99,14 @@ const [getKnownTags] = createSectionState(
 );
 
 const kContentSection = Symbol("known tag content section");
+const kPropTree = Symbol("known tag prop tree");
 const kKnownExprs = Symbol("known tag exprs");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kContentSection]?: Section;
+    /** The child input the call site was analyzed against. */
+    [kPropTree]?: BindingPropTree;
     [kKnownExprs]?: KnownExprs;
   }
 }
@@ -127,6 +131,7 @@ export function knownTagAnalyze(
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
   tagExtra[kContentSection] = contentSection;
+  tagExtra[kPropTree] = propTree;
   // A `<define>` body, or the template rendering itself, renders in place of
   // this call.
   if (contentSection.program === section.program) {
@@ -205,12 +210,12 @@ function toRenderArg(arg: t.Expression | t.SpreadElement) {
 export function knownTagTranslateHTML(
   tag: t.NodePath<t.MarkoTag>,
   tagIdentifier: t.Expression,
-  contentSection: Section,
-  propTree: BindingPropTree | undefined,
 ) {
   const tagBody = tag.get("body");
   const { node } = tag;
   const tagExtra = node.extra!;
+  const contentSection = tagExtra[kContentSection]!;
+  const propTree = getSettledPropTree(tagExtra[kPropTree]);
 
   writer.flushInto(tag);
   writeHTMLResumeStatements(tagBody);
@@ -316,7 +321,6 @@ export function knownTagTranslateHTML(
 
 export function knownTagTranslateDOM(
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree | undefined,
   getBindingIdentifier: (
     binding: Binding,
     preferredName?: string,
@@ -327,6 +331,7 @@ export function knownTagTranslateDOM(
   const tagSection = getSection(tag);
   const { node } = tag;
   const extra = node.extra!;
+  const propTree = getSettledPropTree(extra[kPropTree]);
   const childScopeBinding = extra.nodeBinding!;
 
   if (node.var) {
@@ -454,6 +459,7 @@ function analyzeParams(
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
+        setBindingDownstream(argExport.binding, argValueExtra, inputExpr);
       } else {
         dropNodes(arg);
       }

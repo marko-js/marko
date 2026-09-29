@@ -80,7 +80,9 @@ declare module "@marko/compiler/dist/types" {
      * or child scope; an only child control flow tag shares its parent's. */
     nodeBinding?: Binding;
     referencedBindings?: ReferencedBindings;
-    downstream?: SortedOpt<Binding>;
+    /** The bindings it feeds, in the order it feeds them: a call site's
+     * values feed the child template's, so no one template's order sorts them. */
+    downstream?: Opt<Binding>;
     /** The initial value of the binding it feeds, which keeps it rather than
      * following it, so the binding derives no sources from it. */
     initialValue?: true;
@@ -869,11 +871,20 @@ export function setBindingDownstream(
   exprs?: KnownExprs,
 ) {
   if (binding.section.program === getProgram().node.extra.section) {
-    binding.upstreamExpression = expr === true ? undefined : expr || false;
+    // Each call site of a same template body feeds its params.
+    const prev = binding.upstreamExpression;
+    binding.upstreamExpression =
+      expr === true
+        ? undefined
+        : prev
+          ? expr
+            ? concat(prev, expr)
+            : prev
+          : expr || false;
   }
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
-      expr.downstream = bindingUtil.add(expr.downstream, binding);
+      expr.downstream = push(expr.downstream, binding);
       if (exprs) expr.downstreamExprs = exprs;
     });
   }

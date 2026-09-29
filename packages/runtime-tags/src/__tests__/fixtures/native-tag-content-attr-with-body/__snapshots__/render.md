@@ -6,6 +6,9 @@
 <div>
   static body
 </div>
+<div>
+  repeated
+</div>
 ```
 
 # Update

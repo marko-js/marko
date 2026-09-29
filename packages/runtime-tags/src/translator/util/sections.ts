@@ -8,6 +8,8 @@ import {
   compareReferences,
   getDebugNames,
   type InputBinding,
+  type Intersection,
+  type IntersectionMeta,
   type ParamBinding,
   type ReferencedBindings,
 } from "./bindings";
@@ -126,6 +128,8 @@ export interface Section {
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
+  /** The canonical intersections its work waits on, once ids allocate. */
+  intersections: Map<Intersection, IntersectionMeta> | undefined;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
   /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
@@ -233,6 +237,7 @@ export function startSection(
       referencedHoists: undefined,
       bindings: undefined,
       hoisted: undefined,
+      intersections: undefined,
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),

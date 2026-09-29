@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getPropertyPathAlias } from "./binding-has-prop";
@@ -18,6 +19,7 @@ import {
   Sorted,
   type SortedOneMany,
   reduce,
+  some,
 } from "./optional";
 import {
   isReferencedExtra,
@@ -32,10 +34,10 @@ import {
 } from "./sections";
 import {
   compareSources,
-  createSources,
   FORCED,
   mergeSources,
   type Sources,
+  withSources,
 } from "./sources";
 
 // Reasons any one of which serializes (a chain's branches, a section's
@@ -243,24 +245,30 @@ export function mapParamReason(
       params = bindingUtil.add(params, param) as Sources["param"];
     }
   });
-  if (!any) return reason;
-  return mergeRemappedSources(reason, params, mapped);
+  // Another template's state is nothing this one tracks, so it only forces.
+  const foreignState = some(reason.state, isForeignBinding);
+  if (!any && !foreignState) return reason;
+  return mergeSerializeReasons(
+    mergeSerializeReasons(
+      mapped,
+      withSources(
+        reason,
+        foreignState
+          ? bindingUtil.filter(reason.state, isOwnBinding)
+          : reason.state,
+        any ? params : reason.param,
+      ),
+    ),
+    foreignState ? FORCED : undefined,
+  );
 }
 
-// Rebuilding with `createSources` mirrors `mergeSources`; the kept params are
-// a subset of a deduped, sorted, alias-filtered set, so its invariants hold.
-function mergeRemappedSources(
-  reason: Sources,
-  params: Sources["param"],
-  mapped: SerializeReason | undefined,
-): SerializeReason | undefined {
-  if (reason.state || reason.global || params || reason.forced) {
-    mapped = mergeSerializeReasons(
-      mapped,
-      createSources(reason.state, params, reason.global, reason.forced),
-    );
-  }
-  return mapped;
+function isOwnBinding(binding: Binding) {
+  return binding.section.program === getProgram().node.extra.section;
+}
+
+function isForeignBinding(binding: Binding) {
+  return !isOwnBinding(binding);
 }
 
 export function mergeSerializeReasons(
