@@ -121,6 +121,7 @@ export interface Section {
   loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
+  children: Section[];
   program: Section;
   sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
   params: undefined | ParamBinding | InputBinding;
@@ -228,6 +229,7 @@ export function startSection(
       loc: parentTag?.node.name.loc || undefined,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      children: [],
       program: undefined as unknown as Section,
       sectionAccessor: undefined,
       params: undefined,
@@ -258,7 +260,12 @@ export function startSection(
       isBranch: false,
       structure: parentSection && !parentSection.structure ? null : [],
     };
-    section.program = parentSection ? parentSection.program : section;
+    if (parentSection) {
+      section.program = parentSection.program;
+      parentSection.children.push(section);
+    } else {
+      section.program = section;
+    }
     sections.push(section);
   }
 
@@ -327,23 +334,6 @@ export function forEachSection(fn: (section: Section) => void) {
   sections?.forEach(fn);
 }
 
-// Direct child sections by parent, grouped once per program after analyze
-// (call at finalize or later).
-const childSections = new WeakMap<Section, Section[]>();
-export function getChildSections(section: Section) {
-  let children = childSections.get(section);
-  if (!children) {
-    for (const child of getProgram().node.extra.sections || []) {
-      childSections.set(child, []);
-    }
-    forEachSection((child) => {
-      if (child.parent) childSections.get(child.parent)!.push(child);
-    });
-    children = childSections.get(section) || [];
-  }
-  return children;
-}
-
 // For content a tag the analysis cannot resolve receives, which code it cannot
 // see may render later, the closures read in it from outside it.
 export function getContentClosures(section: Section) {
@@ -360,7 +350,7 @@ function getClosuresFromAbove(
     section.referencedClosures,
     (closure) => closure.section.depth < depth,
   );
-  for (const child of getChildSections(section)) {
+  for (const child of section.children) {
     closures = bindingUtil.union(closures, getClosuresFromAbove(child, depth));
   }
   return closures;
