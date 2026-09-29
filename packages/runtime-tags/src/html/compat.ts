@@ -125,12 +125,15 @@ export const compat = {
   ) {
     const state = this.ensureState(classAPIOut.global);
     const boundary = new Boundary(state);
+    // Inherit the enclosing chunk's context so a Class under an async/lazy
+    // Tags region keeps its branch association (`_resume_branch`/ClosestBranchId).
+    const context = getChunk()?.context ?? null;
+    // The class template continues after this render, so its chunks end in one
+    // standing for that content: an `<await>` ending them does not end the page.
     let head = new Chunk(
       boundary,
-      null,
-      // Inherit the enclosing chunk's context so a Class under an async/lazy
-      // Tags region keeps its branch association (`_resume_branch`/ClosestBranchId).
-      getChunk()?.context ?? null,
+      new Chunk(boundary, null, context, state),
+      context,
       state,
     );
     let normalizedInput = input;
