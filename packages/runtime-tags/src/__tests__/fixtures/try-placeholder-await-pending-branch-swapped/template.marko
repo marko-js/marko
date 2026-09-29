@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/tab = 0/>
+<button onClick() { tab++ }>next</button>
+<try>
+  <@placeholder>LOADING</@placeholder>
+  <if=tab < 2>
+    <await|value|=tab === 1 ? new Promise(() => {}) : "ready">
+      ${value}
+    </await>
+  </if>
+  <else>
+    <await|value|=resolveAfter("tab 2", 2)>
+      ${value}
+    </await>
+  </else>
+</try>

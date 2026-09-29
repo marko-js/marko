@@ -8,7 +8,7 @@ export function $signalReset(scope: Scope, id: string | number) {
     // Deferred so `onabort` cannot run user code mid render; a destroy from
     // outside a render has no effect flush to defer to.
     if (rendering) queueEffect(ctrl as any, abort as any);
-    else abort(ctrl as AbortController);
+    else abort(ctrl);
   }
 }
 
@@ -17,7 +17,18 @@ export function $signal(scope: Scope, id: string | number) {
   trackCleanup(scope);
 
   return ((scope[AccessorProp.AbortControllers] ||= {})[id] ||=
-    new AbortController()).signal;
+    new AbortController()).signal!;
+}
+
+/** Runs `abort` as a destroyed scope's `$signal` would fire, without creating one. */
+export function trackAbort(
+  scope: Scope,
+  id: string | number,
+  abort: () => void,
+) {
+  abortsEnabled = 1;
+  trackCleanup(scope);
+  (scope[AccessorProp.AbortControllers] ||= {})[id] = { abort };
 }
 
 /** Enrols `scope` with its branch so destroying the branch cleans it up. */
@@ -35,6 +46,6 @@ export function trackCleanup(scope: Scope, subscribers?: Set<Scope>) {
 export let abortsEnabled: undefined | 1;
 export let subscriptionsEnabled: undefined | 1;
 
-function abort(ctrl: AbortController) {
+function abort(ctrl: { abort(): void }) {
   ctrl.abort();
 }
