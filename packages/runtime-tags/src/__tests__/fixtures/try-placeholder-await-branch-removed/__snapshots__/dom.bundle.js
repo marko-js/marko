@@ -7,10 +7,10 @@ const $if_content__setup = ($scope) => {
 	$await_content($scope);
 	$if_content__await_promise($scope, resolveAfter("loaded", 2));
 };
-const $placeholder_content = _content("a0", "LOADING...");
+const $placeholder_content = _content("a1", "LOADING...");
 const $try_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__setup);
-const $try_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__if($scope, $scope._.c ? 0 : 1), 0, "a2");
+const $try_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__if($scope, $scope._.c ? 0 : 1), 0, "a0");
 const $show = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($try_content__show));
-const $setup__script = _script("a3", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, !$scope.c);
 }));

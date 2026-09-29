@@ -5,9 +5,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $clickCount__closures = new Set();
 	let clickCount = 0;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}<div></div>${_el_resume($scope0_id, "#div/1")}`);
-	_try($scope0_id, "#text/2", _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/2", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter(clickCount), (value) => {
 			const $scope4_id = _scope_id();
 			_html(`Async: ${_text_resume($scope4_id, "#text/0", value > 1 ? (() => {
@@ -18,19 +18,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1_clickCount#3", 0);
 		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"), "__tests__/template.marko_1_clickCount#3/subscribe", 0);
 		_resume_branch($scope1_id);
-	}, $scope0_id), {
-		placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
-			_scope_reason();
-			const $scope2_id = _scope_id();
-			_html("LOADING...");
-		}, $scope0_id) }),
-		catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", (err) => {
-			const $scope3_reason = _scope_reason(), $sg__err = _serialize_guard($scope3_reason, 0);
-			const $scope3_id = _scope_id();
-			_html(_text_resume($scope3_id, "#text/0", err, $sg__err));
-			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "17:4");
-		}, $scope0_id) })
-	});
+	}, () => {
+		_scope_reason();
+		const $scope2_id = _scope_id();
+		_html("LOADING...");
+	}, (err) => {
+		const $scope3_reason = _scope_reason(), $sg__err = _serialize_guard($scope3_reason, 0);
+		const $scope3_id = _scope_id();
+		_html(_text_resume($scope3_id, "#text/0", err, $sg__err));
+		_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "17:4");
+	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		clickCount,

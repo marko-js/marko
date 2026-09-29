@@ -3,17 +3,17 @@ var boundary_default = _template("__tests__/tags/boundary.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0), $si__input_content = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
-	_try($scope0_id, "#text/0", _content_resume("__tests__/tags/boundary.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/0", () => {
 		const $scope1_reason = _scope_reason();
+		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
 		$si__input_content && _subscribe($input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/boundary.marko", "1:2"), "__tests__/tags/boundary.marko_1_input_content#3/subscribe", $sg__input_content);
 		$sg__input_content || $si__input_content && _resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/tags/boundary.marko_2*content", () => {
+	}, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, void 0, "__tests__/tags/boundary.marko_2*content");
 	$si__input_content && _scope($scope0_id, { "ClosureScopes:input_content/4": $input_content__closures }, "__tests__/tags/boundary.marko", 0);
 });
 

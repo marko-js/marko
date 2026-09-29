@@ -44,16 +44,13 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, rejectAfter(new Error("caught"), 1));
 };
-const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!><!>", "b%/&b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!><!>", "b%/&b%", $try_content__setup, $placeholder_content, $catch_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/3", "<p> </p>", "D ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content2__$params);
 function $setup($scope) {
 	$load_Other_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$await_content2($scope);
-	$try($scope, {
-		placeholder: attrTag({ content: $placeholder_content($scope) }),
-		catch: attrTag({ content: $catch_content($scope) })
-	});
+	$try($scope);
 	$await_promise($scope, resolveAfter("done", 2));
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

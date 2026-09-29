@@ -26,10 +26,10 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("done", 3));
 };
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
-const $try2 = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content2__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
+const $try2 = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content2__setup, 0, $catch_content);
 function $setup($scope) {
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
-	$try2($scope, { catch: attrTag({ content: $catch_content($scope) }) });
+	$try($scope);
+	$try2($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

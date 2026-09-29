@@ -17,22 +17,22 @@ var template_default = _template("b", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_try($scope1_id, "a", _content_resume("b1", () => {
-				const $scope2_id = _scope_id();
+			_try($scope1_id, "a", () => {
 				_scope_reason();
+				const $scope2_id = _scope_id();
 				_await($scope2_id, "a", resolveAfter(1, 1), () => {
 					_scope_id();
 					$Child_withLoadAssets({ value: 1 });
 				}, 0);
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
+			}, () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
-			}, $scope1_id) }) });
+			}, void 0, "b0");
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
-	_script($scope0_id, "b2");
+	_script($scope0_id, "b1");
 	_scope($scope0_id, { c: show });
 }, 1);

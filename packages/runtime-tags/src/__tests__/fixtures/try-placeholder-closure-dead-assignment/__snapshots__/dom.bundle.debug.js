@@ -28,12 +28,12 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(0, 4));
 };
 const $on = /*@__PURE__*/ _let("on/2");
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_q($scope["#childScope/0"], 2);
 	$input_on($scope["#childScope/0"], 3);
 	$on($scope, 1);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

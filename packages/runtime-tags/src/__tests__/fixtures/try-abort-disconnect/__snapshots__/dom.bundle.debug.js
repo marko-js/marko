@@ -21,11 +21,11 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_a($scope);
 	$await_content($scope);
 };
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
-const $try2 = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content2__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
+const $try2 = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content2__setup, 0, $catch_content2);
 function $setup($scope) {
-	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
-	$try2($scope, { catch: attrTag({ content: $catch_content2($scope) }) });
+	$try($scope);
+	$try2($scope);
 }
 const $input = ($scope, input) => {
 	$input_a($scope, input.a);

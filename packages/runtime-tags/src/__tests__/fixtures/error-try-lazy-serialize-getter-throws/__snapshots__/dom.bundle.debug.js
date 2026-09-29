@@ -23,9 +23,9 @@ const $catch_content = _content("__tests__/template.marko_2*content", "caught <!
 const $try_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content__setup, 0, $catch_content);
 function $setup($scope) {
-	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
 

@@ -46,11 +46,8 @@ const $try_content__setup = ($scope) => {
 	$load_Child_tag_input_label($scope["#childScope/1"], "x");
 	$try_content__setup__script($scope);
 };
-const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><button class=focus>focus</button>", "b%0&b ", $try_content__setup);
-const $if_content__setup = ($scope) => $if_content__try($scope, {
-	placeholder: attrTag({ content: $placeholder_content($scope) }),
-	catch: attrTag({ content: $catch_content($scope) })
-});
+const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><button class=focus>focus</button>", "b%0&b ", $try_content__setup, $placeholder_content, $catch_content);
+const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $mounted = /*@__PURE__*/ _let("mounted/2", ($scope) => $if($scope, $scope.mounted ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

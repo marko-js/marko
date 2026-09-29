@@ -1,4 +1,4 @@
-// size: 27003 (min) 10056 (brotli)
+// size: 26981 (min) 10050 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1855,7 +1855,7 @@ function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
       (insertBranchBefore(
         (tryBranch.P = createAndSetupBranch(
           tryBranch.$,
-          tryBranch.Q,
+          tryBranch.Q(),
           tryBranch._,
           tryBranch.S.parentNode,
         )),
@@ -1894,16 +1894,16 @@ function dismissPlaceholder(tryBranch) {
     placeholderBranch.S.parentNode.insertBefore(tryBranch.S.parentNode, placeholderBranch.S),
     removeAndDestroyBranch(placeholderBranch));
 }
-function _try(nodeAccessor, template, walks, setup) {
+function _try(nodeAccessor, template, walks, setup, placeholderContent, catchContent) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "A" + nodeAccessor,
     renderer = _content("", template, walks, setup)();
-  return (scope, input) => {
+  return (scope) => {
     setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch);
     let branch = scope[branchAccessor];
     ((branch.C = nodeAccessor),
-      (branch.E = input.catch && (normalizeDynamicRenderer(input.catch) || 0)),
-      (branch.Q = normalizeDynamicRenderer(input.placeholder)));
+      (branch.E = catchContent),
+      (branch.Q = placeholderContent || void 0));
   };
 }
 function renderCatch(scope, error) {
@@ -1915,9 +1915,10 @@ function renderCatch(scope, error) {
       (tryWithCatch.O && (tryWithCatch.O.i = 0),
       (owner["A" + tryWithCatch.C] = placeholderBranch),
       destroyBranch(tryWithCatch)),
-      caughtError.add(pendingEffects),
-      setConditionalRenderer(owner, tryWithCatch.C, tryWithCatch.E, createAndSetupBranch),
-      tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
+      caughtError.add(pendingEffects));
+    let catchContent = tryWithCatch.E();
+    (setConditionalRenderer(owner, tryWithCatch.C, catchContent, createAndSetupBranch),
+      catchContent.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
 }
 function rendererKey(renderer) {

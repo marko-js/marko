@@ -5,9 +5,9 @@ const $placeholder_content = _content("__tests__/tags/boundary.marko_2*content",
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $try_content__input_content = /*@__PURE__*/ _closure_get("input_content/4", ($scope) => $try_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/boundary.marko_1_input_content#3/subscribe");
 const $try_content__setup = $try_content__input_content;
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup$1($scope) {
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 const $input = ($scope, input) => $input_content($scope, input.content);
 const $input_content__closure = /*@__PURE__*/ _closure($try_content__input_content);

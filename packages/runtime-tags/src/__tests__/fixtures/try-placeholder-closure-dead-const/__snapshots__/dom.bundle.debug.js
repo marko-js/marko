@@ -28,9 +28,9 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(0, 4));
 };
 const $on = /*@__PURE__*/ _let("on/1");
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$on($scope, 1);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

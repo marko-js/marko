@@ -32,6 +32,6 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<button class=mount>mount</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");
-	_script($scope0_id, "b5");
+	_script($scope0_id, "b4");
 	_scope($scope0_id, {});
 }, 1);

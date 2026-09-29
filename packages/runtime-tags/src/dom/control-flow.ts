@@ -273,7 +273,11 @@ export function addAwaitCounter(
     insertBranchBefore(
       (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
         tryBranch[AccessorProp.Global],
-        tryBranch[AccessorProp.PlaceholderContent] as Renderer,
+        (
+          tryBranch[AccessorProp.PlaceholderContent] as ReturnType<
+            typeof _content
+          >
+        )(),
         tryBranch[AccessorProp.Owner]!,
         tryBranch[AccessorProp.StartNode].parentNode!,
       )),
@@ -338,13 +342,15 @@ export function _try(
   template?: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
+  placeholderContent?: ReturnType<typeof _content> | 0,
+  catchContent?: ReturnType<typeof _content>,
 ) {
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   const renderer = _content("", template, walks, setup)();
 
   // `@catch` and `@placeholder` are static, so this runs once, in setup.
-  return (scope: Scope, input: { catch: unknown; placeholder: unknown }) => {
+  return (scope: Scope) => {
     setConditionalRenderer(
       scope,
       nodeAccessor as string,
@@ -353,11 +359,8 @@ export function _try(
     );
     const branch = scope[branchAccessor];
     branch[AccessorProp.BranchAccessor] = nodeAccessor;
-    branch[AccessorProp.CatchContent] =
-      input.catch && (normalizeDynamicRenderer(input.catch) || 0);
-    branch[AccessorProp.PlaceholderContent] = normalizeDynamicRenderer(
-      input.placeholder,
-    );
+    branch[AccessorProp.CatchContent] = catchContent;
+    branch[AccessorProp.PlaceholderContent] = placeholderContent || undefined;
   };
 }
 
@@ -381,13 +384,14 @@ export function renderCatch(scope: Scope, error: unknown) {
       destroyBranch(tryWithCatch);
     }
     caughtError.add(pendingEffects);
+    const catchContent = tryWithCatch[AccessorProp.CatchContent]();
     setConditionalRenderer(
       owner,
       tryWithCatch[AccessorProp.BranchAccessor],
-      tryWithCatch[AccessorProp.CatchContent],
+      catchContent,
       createAndSetupBranch,
     );
-    tryWithCatch[AccessorProp.CatchContent]?.[RendererProp.Params]?.(
+    catchContent[RendererProp.Params]?.(
       owner[
         AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
       ],

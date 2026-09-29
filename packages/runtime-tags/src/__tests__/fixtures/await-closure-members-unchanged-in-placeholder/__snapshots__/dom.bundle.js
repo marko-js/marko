@@ -8,7 +8,7 @@ const $value = /*@__PURE__*/ _let(2, ($scope) => {
 	$value_b($scope, $scope.c?.b);
 });
 const $value_a__closure = /*@__PURE__*/ _closure($await_content__value_a);
-const $value_a__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
+const $value_a__script = _script("a3", ($scope) => _on($scope.a, "click", function() {
 	$value($scope, {
 		a: $scope.d + 1,
 		b: 1

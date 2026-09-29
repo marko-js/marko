@@ -25,20 +25,20 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<html><head>${_flush_head()}</head><body>`);
 	counter_default({});
-	_try($scope0_id, "b", _content_resume("b1", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "b", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", resolveAfter("a", 1), (v) => {
 			_scope_id();
 			_html(`<span>${_escape(v)}</span>`);
 		}, 0);
 		$Child_withLoadAssets({});
-	}, $scope0_id), { catch: attrTag({ content: _content_resume("b0", (err) => {
+	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "a", err.message, $sg__err_message));
 		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, $scope0_id) }) });
+	}, void 0, "b0");
 	_await($scope0_id, "c", resolveAfter("b", 3), (v) => {
 		_scope_id();
 		_html(`<p>${_escape(v)}</p>`);

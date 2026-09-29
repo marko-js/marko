@@ -15,13 +15,13 @@ const $try_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => $try
 const $try_content__setup = $try_content__show;
 const $show__closure = /*@__PURE__*/ _closure($try_content__show);
 const $show = /*@__PURE__*/ _let("show/2", $show__closure);
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><div>settled</div>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<!><!><div>settled</div>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$show($scope, !$scope.show);
 }));
 function $setup($scope) {
 	$show($scope, true);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

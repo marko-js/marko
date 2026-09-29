@@ -4,12 +4,12 @@ const $walks = "b%c%c";
 const $await_content__data = ($scope, data) => _text($scope["#text/0"], data);
 const $await_content__$params = ($scope, $params2) => $await_content__data($scope, $params2[0]);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "_A_");
-const $try = /*@__PURE__*/ _try("#text/0", "b");
+const $try = /*@__PURE__*/ _try("#text/0", "b", 0, 0, $placeholder_content);
 const $await_content = /*@__PURE__*/ _await_content("#text/1", " ", " ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
 function $setup($scope) {
 	$await_content($scope);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 	$await_promise($scope, resolveAfter("d", 1));
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

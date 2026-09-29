@@ -4,14 +4,14 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $changes__closures = /* @__PURE__ */ new Set();
 	let changes = 0;
-	_try($scope0_id, "a", _content_resume("a5", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "a", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", resolveAfter("outer", 1), () => {
 			const $scope2_id = _scope_id();
-			_try($scope2_id, "a", _content_resume("a3", () => {
-				const $scope3_id = _scope_id();
+			_try($scope2_id, "a", () => {
 				_scope_reason();
+				const $scope3_id = _scope_id();
 				_await($scope3_id, "a", resolveAfter("inner", 2), () => {
 					const $scope4_id = _scope_id();
 					_html(`<div>changes: ${_text_resume($scope4_id, "b", changes, 2)}</div>${_el_resume($scope4_id, "a")}`);
@@ -19,19 +19,19 @@ var template_default = _template("a", (input) => {
 					_subscribe($changes__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }), "a1");
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
-			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("a2", () => {
+			}, () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading inner...");
-			}, $scope2_id) }) });
+			}, void 0, "a2");
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
+	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading outer...");
-	}, $scope0_id) }) });
+	}, void 0, "a3");
 	_scope($scope0_id, {
 		b: changes,
 		c: $changes__closures

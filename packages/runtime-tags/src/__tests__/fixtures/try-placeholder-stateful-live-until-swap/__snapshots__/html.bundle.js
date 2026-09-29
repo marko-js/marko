@@ -4,9 +4,9 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $clicks__closures = /* @__PURE__ */ new Set();
 	let clicks = 0;
-	_try($scope0_id, "a", _content_resume("a5", () => {
-		const $scope2_id = _scope_id();
+	_try($scope0_id, "a", () => {
 		_scope_reason();
+		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", resolveAfter("done", 1), () => {
 			const $scope3_id = _scope_id();
 			_html(`<button>loaded ${_text_resume($scope3_id, "b", clicks, 2)}</button>${_el_resume($scope3_id, "a")}`);
@@ -17,13 +17,13 @@ var template_default = _template("a", (input) => {
 			}), "a3");
 		});
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
+	}, () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<button>loading ${_text_resume($scope1_id, "b", clicks, 2)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_subscribe($clicks__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
-	}, $scope0_id) }) });
+	}, void 0, "a4");
 	_scope($scope0_id, {
 		b: clicks,
 		c: $clicks__closures

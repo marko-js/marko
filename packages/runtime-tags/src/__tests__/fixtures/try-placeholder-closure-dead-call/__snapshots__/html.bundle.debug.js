@@ -19,9 +19,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const unused = run(() => {
 		on++;
 	});
-	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/0", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter(0, 4), () => {
 			const $scope2_id = _scope_id();
 			_set_serialize_reason(8);
@@ -36,11 +36,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "9:4"));
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2");
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
+	}, () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, void 0, "__tests__/template.marko_3*content");
 	_scope($scope0_id, { "ClosureScopes:on/2": $on__closures }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

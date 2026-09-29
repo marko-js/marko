@@ -5,22 +5,22 @@ var template_default = _template("a", (input) => {
 	const $clickCount__closures = /* @__PURE__ */ new Set();
 	let clickCount = 0;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
-	_try($scope0_id, "b", _content_resume("a1", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "b", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", resolveAfter(clickCount), (value) => {
 			const $scope3_id = _scope_id();
 			_html(_text_resume($scope3_id, "a", value));
 			_scope($scope3_id, {});
 		});
-		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2", 0);
+		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", 0);
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("a0", () => {
+	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("LOADING...");
-	}, $scope0_id) }) });
-	_script($scope0_id, "a3");
+	}, void 0, "a1");
+	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		c: clickCount,
 		d: $clickCount__closures

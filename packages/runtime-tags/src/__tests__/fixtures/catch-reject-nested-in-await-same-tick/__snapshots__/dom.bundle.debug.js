@@ -12,13 +12,13 @@ const $try_content2__setup = ($scope) => {
 };
 const $placeholder_content = _content("__tests__/template.marko_3*content", "loading outer...");
 const $await_content__changes = /*@__PURE__*/ _closure_get("changes/2", ($scope) => _text($scope["#text/2"], $scope._._.changes), ($scope) => $scope._._, "__tests__/template.marko_2_changes#1/subscribe");
-const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup);
+const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, 0, $catch_content);
 const $await_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#div/1"], "change", function() {
 	$changes($scope._._, +$scope._._.changes + 1);
 }));
 const $await_content__setup = ($scope) => {
 	$await_content__changes($scope);
-	$await_content__try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
+	$await_content__try($scope);
 	$await_content__setup__script($scope);
 };
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><div>changes: <!></div>", "b%b Db%", $await_content__setup);
@@ -29,9 +29,9 @@ const $try_content__setup = ($scope) => {
 };
 const $changes__closure = /*@__PURE__*/ _closure($await_content__changes);
 const $changes = /*@__PURE__*/ _let("changes/1", $changes__closure);
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$changes($scope, 0);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

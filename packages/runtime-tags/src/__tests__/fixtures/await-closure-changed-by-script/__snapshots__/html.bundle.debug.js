@@ -7,9 +7,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 1;
 	let m = 2;
 	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
-	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter(0, 1), (v) => {
 			const $scope2_id = _scope_id();
 			let local = n;
@@ -18,11 +18,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($m__closures, _subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_n#2/subscribe"), "__tests__/template.marko_2_m#3/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
+	}, () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("loading");
-	}, $scope0_id) }) });
+	}, void 0, "__tests__/template.marko_3*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		n,

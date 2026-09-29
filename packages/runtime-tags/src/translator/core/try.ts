@@ -11,6 +11,7 @@ import { WalkCode } from "../../common/types";
 import { getTagName } from "../util/get-tag-name";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
+  type Binding,
   BindingType,
   createBinding,
   getAllTagReferenceNodes,
@@ -25,22 +26,19 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
+import { getScopeReasonStatement } from "../util/serialize-guard";
 import {
-  addStatement,
   addValue,
+  getResumeRegisterId,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
-import {
-  getTranslatedBodyContentProperty,
-  propsToExpression,
-  translateAttrs,
-} from "../util/translate-attrs";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
@@ -135,26 +133,18 @@ export default {
         writer.flushBefore(tag);
       },
       exit(tag) {
-        const { node } = tag;
         const section = getSection(tag);
-        const tagExtra = node.extra!;
         const tagBody = tag.get("body");
-        const translatedAttrs = translateAttrs(tag);
-        const nodeRef = tagExtra.nodeBinding!;
-
-        const contentProp = getTranslatedBodyContentProperty(
-          translatedAttrs.properties,
-        );
-        if (contentProp) {
-          translatedAttrs.properties.splice(
-            translatedAttrs.properties.indexOf(contentProp),
-            1,
-          );
-        }
+        const nodeRef = tag.node.extra!.nodeBinding!;
+        const catchTag = getAttrTag(tag, "@catch");
+        const placeholderTag = getAttrTag(tag, "@placeholder");
+        const catchSection =
+          catchTag && getSectionForBody(catchTag.get("body"));
+        const placeholderSection =
+          placeholderTag && getSectionForBody(placeholderTag.get("body"));
 
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
-        tag.insertBefore(translatedAttrs.statements);
 
         tag
           .replaceWith(
@@ -163,8 +153,22 @@ export default {
                 "_try",
                 getScopeIdIdentifier(section),
                 getScopeAccessorLiteral(nodeRef),
-                contentProp?.value,
-                propsToExpression(translatedAttrs.properties),
+                buildContent(tagBody),
+                placeholderSection && buildContent(placeholderTag!.get("body")),
+                catchTag &&
+                  (catchSection
+                    ? buildContent(catchTag.get("body"))
+                    : t.arrowFunctionExpression([], t.blockStatement([]))),
+                placeholderSection &&
+                  t.stringLiteral(
+                    getResumeRegisterId(placeholderSection, "content"),
+                  ),
+                catchTag &&
+                  t.stringLiteral(
+                    catchSection
+                      ? getResumeRegisterId(catchSection, "content")
+                      : getEmptyCatchId(section, nodeRef),
+                  ),
               ),
             ),
           )[0]
@@ -173,61 +177,54 @@ export default {
     },
     dom: {
       enter(tag) {
-        const tagBody = tag.get("body");
-        const bodySection = getSectionForBody(tagBody)!;
-
-        setSectionParentIsOwner(bodySection, true);
+        setSectionParentIsOwner(getSectionForBody(tag.get("body"))!, true);
       },
       exit(tag) {
-        const { node } = tag;
-        const tagExtra = node.extra!;
-        const nodeRef = tagExtra.nodeBinding!;
-        const referencedBindings = tagExtra.referencedBindings;
-
-        const translatedAttrs = translateAttrs(tag);
-        const contentProp = getTranslatedBodyContentProperty(
-          translatedAttrs.properties,
-        );
-        if (contentProp) {
-          translatedAttrs.properties.splice(
-            translatedAttrs.properties.indexOf(contentProp),
-            1,
-          );
-        }
-
+        const nodeRef = tag.node.extra!.nodeBinding!;
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
+        const catchTag = getAttrTag(tag, "@catch");
+        const catchSection =
+          catchTag && getSectionForBody(catchTag.get("body"));
+        const placeholderTag = getAttrTag(tag, "@placeholder");
+        const placeholderSection =
+          placeholderTag && getSectionForBody(placeholderTag.get("body"));
+        const emptyCatchId =
+          catchTag && !catchSection && getEmptyCatchId(section, nodeRef);
         const signal = getSignal(section, nodeRef, "try");
 
-        const hasPlaceholder =
-          !!tag.node.extra?.attributeTags?.["@placeholder"];
         signal.build = () => {
           importRuntimeFeature("catch");
-          if (hasPlaceholder) importRuntimeFeature("placeholder");
+          if (placeholderSection) importRuntimeFeature("placeholder");
+          let catchContent: t.Expression | undefined =
+            catchSection && t.identifier(catchSection.name);
+          if (emptyCatchId) {
+            catchContent = t.identifier(`${signal.identifier.name}__catch`);
+            (signal.prependStatements ||= []).push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  catchContent,
+                  callRuntime("_content", t.stringLiteral(emptyCatchId)),
+                ),
+              ]),
+            );
+          }
+          const [template, walks, setup] = getBranchRendererArgs(bodySection);
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeRef, true),
-            ...replaceNullishAndEmptyFunctionsWith0(
-              getBranchRendererArgs(bodySection),
-            ),
+            ...replaceNullishAndEmptyFunctionsWith0([
+              template,
+              walks,
+              setup,
+              placeholderSection && t.identifier(placeholderSection.name),
+              catchContent,
+            ]),
           );
         };
 
-        if (translatedAttrs.statements.length) {
-          addStatement(
-            "render",
-            section,
-            referencedBindings,
-            translatedAttrs.statements,
-          );
-        }
-
-        addValue(
-          section,
-          referencedBindings,
-          signal,
-          propsToExpression(translatedAttrs.properties),
-        );
+        // Nothing in a try changes, so it renders once, in setup.
+        addValue(section, undefined, signal);
 
         tag.remove();
       },
@@ -243,3 +240,31 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/try.d.marko",
 } as Tag;
+
+// An empty `@placeholder` shows nothing, so it is no placeholder; an empty
+// `@catch` still catches.
+function getAttrTag(tag: t.NodePath<t.MarkoTag>, name: string) {
+  for (const child of tag.get("attributeTags")) {
+    if (child.isMarkoTag() && getTagName(child) === name) {
+      return name === "@catch" || getSectionForBody(child.get("body"))
+        ? child
+        : undefined;
+    }
+  }
+}
+
+// Static content of the try, rendered by the server as a plain function.
+function buildContent(body: t.NodePath<t.MarkoTagBody>) {
+  return t.arrowFunctionExpression(
+    body.node.params,
+    t.blockStatement([
+      getScopeReasonStatement(getSectionForBody(body)!),
+      ...body.node.body,
+    ]),
+  );
+}
+
+// An empty `@catch` still catches, so it has an empty renderer of its own.
+function getEmptyCatchId(section: Section, nodeRef: Binding) {
+  return getResumeRegisterId(section, nodeRef, "catch");
+}

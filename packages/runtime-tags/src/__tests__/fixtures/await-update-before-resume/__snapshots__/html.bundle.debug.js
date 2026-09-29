@@ -5,9 +5,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $value__closures = new Set();
 	let value = 0;
 	_html(`<div id=outside>${_text_resume($scope0_id, "#text/0", value)}</div>`);
-	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter(value, 3), (value) => {
 			const $scope3_id = _scope_id();
 			_html(`<div id=inside>${_text_resume($scope3_id, "#text/0", value)}</div>`);
@@ -17,11 +17,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:1"), "__tests__/template.marko_1_value#2/subscribe", 0);
 		_resume_branch($scope1_id);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
+	}, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, void 0, "__tests__/template.marko_2*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { "ClosureScopes:value/3": $value__closures }, "__tests__/template.marko", 0);
 }, 1);

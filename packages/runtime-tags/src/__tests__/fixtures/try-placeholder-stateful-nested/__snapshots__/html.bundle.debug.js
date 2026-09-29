@@ -15,15 +15,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $clicks__closures = new Set();
 	let clicks = 0;
 	_html(`<button>clicks ${_text_resume($scope0_id, "#text/1", clicks, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_try($scope0_id, "#text/2", _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/2", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter("outer", 2), (outer) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_escape(outer)} ${_text_resume($scope2_id, "#text/1", clicks, 2)}</p>`);
-			_try($scope2_id, "#text/2", _content_resume("__tests__/template.marko_3*content", () => {
-				const $scope3_id = _scope_id();
+			_try($scope2_id, "#text/2", () => {
 				_scope_reason();
+				const $scope3_id = _scope_id();
 				_await($scope3_id, "#text/0", resolveAfter("inner", 4), (inner) => {
 					const $scope4_id = _scope_id();
 					_set_serialize_reason(2);
@@ -37,19 +37,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					}, "__tests__/template.marko", "11:8", { inner: "11:14" }), "__tests__/template.marko_4_clicks#3/subscribe");
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:6");
-			}, $scope2_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_6*content", () => {
+			}, () => {
 				_scope_reason();
 				const $scope6_id = _scope_id();
 				note_default({ label: "inner placeholder" });
-			}, $scope2_id) }) });
+			}, void 0, "__tests__/template.marko_6*content");
 			_subscribe($clicks__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_clicks#3/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_5*content", () => {
+	}, () => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		note_default({ label: "outer placeholder" });
-	}, $scope0_id) }) });
+	}, void 0, "__tests__/template.marko_5*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		clicks,

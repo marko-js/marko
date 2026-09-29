@@ -11,10 +11,10 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter(0, 4));
 };
-const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 const $input_value = ($scope, input_value) => $load_Child_tag_value($scope["#childScope/1"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);

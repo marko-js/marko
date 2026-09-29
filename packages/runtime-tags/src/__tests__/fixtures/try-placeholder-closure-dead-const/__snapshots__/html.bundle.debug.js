@@ -12,9 +12,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let on = 1;
-	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/0", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter(0, 4), () => {
 			const $scope2_id = _scope_id();
 			child_default({
@@ -22,9 +22,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				on
 			});
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
+	}, () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, void 0, "__tests__/template.marko_3*content");
 }, 1);

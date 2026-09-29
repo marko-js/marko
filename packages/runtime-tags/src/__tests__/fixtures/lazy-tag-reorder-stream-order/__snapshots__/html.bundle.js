@@ -22,9 +22,9 @@ var template_default = _template("b", (input) => {
 		reordered: 1,
 		streamed: 2
 	};
-	_try($scope0_id, "a", _content_resume("b1", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "a", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", resolveAfter("reordered", 1), (label) => {
 			_scope_id();
 			$Child_withLoadAssets({
@@ -32,11 +32,11 @@ var template_default = _template("b", (input) => {
 				shared
 			});
 		}, 0);
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
+	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, $scope0_id) }) });
+	}, void 0, "b0");
 	_await($scope0_id, "b", resolveAfter("streamed", 2), (label) => {
 		_scope_id();
 		$Child_withLoadAssets({
