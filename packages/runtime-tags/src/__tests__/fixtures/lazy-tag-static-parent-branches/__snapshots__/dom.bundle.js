@@ -1,4 +1,5 @@
 // child.marko
+const $catch_content = _content("a2", "error");
 const $await_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.b, $scope._._.b), ($scope) => $scope._._, "a1");
 const $await_content__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._._, +$scope._._.b + 1);

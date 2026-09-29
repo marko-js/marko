@@ -10,6 +10,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // child.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
+const $catch_content = _content("__tests__/child.marko_3*content", "error");
 const $await_content__count = /*@__PURE__*/ _closure_get("count/2", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/child.marko_2_count#1/subscribe");
 const $await_content__setup__script = _script("__tests__/child.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._._, +$scope._._.count + 1);
@@ -31,7 +32,7 @@ const $count = /*@__PURE__*/ _let("count/1", $count__closure);
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
 function $setup($scope) {
 	$count($scope, 0);
-	$try($scope, {});
+	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
 }
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "b%c", $setup);
 

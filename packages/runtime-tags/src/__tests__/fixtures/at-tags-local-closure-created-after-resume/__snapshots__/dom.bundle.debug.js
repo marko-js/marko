@@ -9,12 +9,12 @@ const $if_content__input_item = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope)
 const $if_content__setup$2 = $if_content__input_item;
 const $if$2 = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup$2);
 const $open$1 = /*@__PURE__*/ _let("open/5", ($scope) => $if$2($scope, $scope.open ? 0 : 1));
-const $setup__script$3 = _script("__tests__/tags/list.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+const $setup__script$2 = _script("__tests__/tags/list.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open$1($scope, true);
 }));
 function $setup$4($scope) {
 	$open$1($scope, false);
-	$setup__script$3($scope);
+	$setup__script$2($scope);
 }
 const $input$3 = ($scope, input) => $input_item$1($scope, input.item);
 const $input_item$1 = /*@__PURE__*/ _const("input_item", $if_content__input_item);
@@ -31,12 +31,12 @@ const $if_content__input_row_cell = /*@__PURE__*/ _if_closure("#text/1", 0, ($sc
 const $if_content__setup$1 = $if_content__input_row_cell;
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup$1);
 const $open = /*@__PURE__*/ _let("open/7", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
-const $setup__script$2 = _script("__tests__/tags/grid-row.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+const $setup__script$1 = _script("__tests__/tags/grid-row.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
 function $setup$3($scope) {
 	$open($scope, true);
-	$setup__script$2($scope);
+	$setup__script$1($scope);
 }
 const $input_index = ($scope, input_index) => _attr($scope["#button/0"], "id", `toggle-${input_index}`);
 const $input$2 = ($scope, input) => {
@@ -74,31 +74,20 @@ const $saved = /*@__PURE__*/ _let("saved/5", ($scope) => {
 	$if($scope, $scope.saved ? 0 : 1);
 });
 const $saved_content = /*@__PURE__*/ _const("saved_content", $if_content__saved_content);
-const $setup__script$1 = _script("__tests__/tags/last.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+const $setup__script = _script("__tests__/tags/last.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$saved($scope, [...$scope.input_item].at(-1));
 }));
 function $setup$1($scope) {
 	$saved($scope, null);
-	$setup__script$1($scope);
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_item($scope, input.item);
 const $input_item = /*@__PURE__*/ _const("input_item");
 var last_default = /*@__PURE__*/ _template("__tests__/tags/last.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<button id=fail>fail</button><div><!></div>`)($template$4, $template$2, $template$1);
-const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}& bD%l`)($walks$4, "b%c", $walks$1);
-const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/1"], err_message);
-const $catch_content__$params = ($scope, $params7) => $catch_content__err_message($scope, $params7[0]?.message);
-const $catch_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_5*content", "caught <!>: <!>", "b%c%", 0, $catch_content__$params), { label($scope) {
-	_text($scope["#text/0"], $scope.label);
-} });
-_resumed["__tests__/template.marko_5*content"] = $catch_content;
-const $try_content__fail = /*@__PURE__*/ _closure_get("fail/9", ($scope) => _text($scope["#text/0"], (() => {
-	if ($scope._.fail) throw new Error("click");
-	return "ok";
-})()), 0, "__tests__/template.marko_4_fail#7/subscribe");
-const $try_content__setup = $try_content__fail;
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<!>`)($template$4, $template$2, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&b`)($walks$4, "b%c", $walks$1);
 const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_3*content", " <b> </b>", " bD "), { i($scope) {
 	_text($scope["#text/0"], $scope.i);
 	_text($scope["#text/1"], $scope.i);
@@ -109,7 +98,7 @@ const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 } });
 _resumed["__tests__/template.marko_2*content"] = $cell_content;
 const $item_content__items_0__OR__item = /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/1"], $scope.item === $scope._.items_0));
-const $item_content__items_ = /*@__PURE__*/ _closure_get("items_0/8", $item_content__items_0__OR__item);
+const $item_content__items_ = /*@__PURE__*/ _closure_get("items_0/5", $item_content__items_0__OR__item);
 const $item_content__setup = $item_content__items_;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span><!>:<!></span>", "D%c%", $item_content__setup), {
 	item_text($scope) {
@@ -118,7 +107,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 	item: $item_content__items_0__OR__item
 });
 _resumed["__tests__/template.marko_1*content"] = $item_content;
-const $items = /*@__PURE__*/ _let("items/5", ($scope) => {
+const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	let $item;
 	forOf($scope.items, (item) => {
 		$item = attrTags($item, { content: $item_content($scope, {
@@ -130,12 +119,6 @@ const $items = /*@__PURE__*/ _let("items/5", ($scope) => {
 	$items_($scope, $scope.items?.[0]);
 });
 const $items_ = /*@__PURE__*/ _const("items_0");
-const $fail__closure = /*@__PURE__*/ _closure($try_content__fail);
-const $fail = /*@__PURE__*/ _let("fail/7", $fail__closure);
-const $try = /*@__PURE__*/ _try("#text/4", " ", " ", $try_content__setup);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$fail($scope, true);
-}));
 function $setup($scope) {
 	$setup$4($scope["#childScope/0"]);
 	let $row;
@@ -153,13 +136,6 @@ function $setup($scope) {
 		$item2 = attrTags($item2, { content: $item_content2($scope, { i }) });
 	});
 	$input_item($scope["#childScope/2"], $item2);
-	let $catch;
-	forOf(["static"], (label) => {
-		$catch = attrTags($catch, { content: $catch_content($scope, { label }) });
-	});
 	$items($scope, [{ text: "a" }, { text: "b" }]);
-	$fail($scope, false);
-	$try($scope, { catch: $catch });
-	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

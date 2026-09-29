@@ -4,7 +4,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
-	_try($scope0_id, "a", _content_resume("a2", () => {
+	_try($scope0_id, "a", _content_resume("a3", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter(10, 1), (value) => {
@@ -14,7 +14,11 @@ var child_default = _template("a", (input) => {
 			_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id), {});
+	}, $scope0_id), { catch: attrTag({ content: _content_resume("a2", () => {
+		_scope_reason();
+		_scope_id();
+		_html("error");
+	}, $scope0_id) }) });
 	_scope($scope0_id, {
 		b: count,
 		c: $count__closures

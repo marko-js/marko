@@ -7,5 +7,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(_escape(value));
-	}, $scope0_id), {});
+	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
+		_scope_reason();
+		const $scope2_id = _scope_id();
+		_html("error");
+	}, $scope0_id) }) });
 }, 1);

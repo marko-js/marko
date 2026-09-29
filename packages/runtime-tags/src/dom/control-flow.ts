@@ -343,25 +343,21 @@ export function _try(
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   const renderer = _content("", template, walks, setup)();
 
+  // `@catch` and `@placeholder` are static, so this runs once, in setup.
   return (scope: Scope, input: { catch: unknown; placeholder: unknown }) => {
-    if (!scope[branchAccessor]) {
-      setConditionalRenderer(
-        scope,
-        nodeAccessor as string,
-        renderer,
-        createAndSetupBranch,
-      );
-    }
-
+    setConditionalRenderer(
+      scope,
+      nodeAccessor as string,
+      renderer,
+      createAndSetupBranch,
+    );
     const branch = scope[branchAccessor];
-    if (branch) {
-      branch[AccessorProp.BranchAccessor] = nodeAccessor;
-      branch[AccessorProp.CatchContent] =
-        input.catch && (normalizeDynamicRenderer(input.catch) || 0);
-      branch[AccessorProp.PlaceholderContent] = normalizeDynamicRenderer(
-        input.placeholder,
-      );
-    }
+    branch[AccessorProp.BranchAccessor] = nodeAccessor;
+    branch[AccessorProp.CatchContent] =
+      input.catch && (normalizeDynamicRenderer(input.catch) || 0);
+    branch[AccessorProp.PlaceholderContent] = normalizeDynamicRenderer(
+      input.placeholder,
+    );
   };
 }
 

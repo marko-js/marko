@@ -65,7 +65,6 @@ var last_default = _template("d", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $fail__closures = /* @__PURE__ */ new Set();
 	let items = [{ text: "a" }, { text: "b" }];
 	let $item;
 	forOf(items, (item) => {
@@ -103,28 +102,6 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id, () => [{ 2: i }]) });
 	});
 	last_default({ item: $item2 });
-	_html(`<button id=fail>fail</button>${_el_resume($scope0_id, "d")}<div>`);
-	let $catch;
-	forOf(["static"], (label) => {
-		$catch = attrTags($catch, { content: _content_resume("a3", (err) => {
-			const $scope5_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope5_reason, 0);
-			const $scope5_id = _scope_id();
-			_html(`caught ${_escape(label)}: ${_text_resume($scope5_id, "b", err.message, $sg__err_message * 2)}`);
-			_serialize_if($scope5_reason, 0) && _scope($scope5_id, {});
-		}, $scope0_id, () => [{ 2: label }]) });
-	});
-	_try($scope0_id, "e", _content_resume("a4", () => {
-		const $scope4_id = _scope_id();
-		_scope_reason();
-		_html(_text_resume($scope4_id, "a", (() => {
-			return "ok";
-		})()));
-		_subscribe($fail__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), "a5");
-	}, $scope0_id), { catch: $catch });
-	_html("</div>");
-	_script($scope0_id, "a6");
-	_scope($scope0_id, {
-		g: items?.[0],
-		j: $fail__closures
-	});
+	_scope($scope0_id, { e: items?.[0] });
+	_resume_branch($scope0_id);
 }, 1);

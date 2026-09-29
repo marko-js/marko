@@ -1,6 +1,7 @@
 // template.marko
 const $template = "<button></button><!><!>";
 const $walks = " b%c";
+const $catch_content = _content("__tests__/template.marko_3*content", "error");
 const $if_content__a = /*@__PURE__*/ _closure_get("a/4", ($scope) => _text($scope["#text/0"], $scope._._.a), ($scope) => $scope._._, "__tests__/template.marko_2_a#2/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__a($scope);
@@ -21,7 +22,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$a($scope, 0);
 	$b($scope, 0);
-	$try($scope, {});
+	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
