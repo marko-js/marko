@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#input#0/hoist");
+	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#input#1:0/hoist");
 	const $tag_content__subscribers = new Set();
 	let tag = input.tag;
 	let result = "";

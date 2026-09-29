@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope3_id = _scope_id();
 					_html(_text_resume($scope3_id, "#text/0", show));
 					_script($scope3_id, "__tests__/template.marko_3");
-					_subscribe($show__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:5"), "__tests__/template.marko_3_show#2/subscribe");
+					_subscribe($show__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:5"), "__tests__/template.marko_3_show#0:2/subscribe");
 				});
 				_await($scope2_id, "#text/1", resolveAfter(0, 1), () => {
 					const $scope5_id = _scope_id();

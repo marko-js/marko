@@ -21,7 +21,7 @@ var thing_default = /*@__PURE__*/ _template("__tests__/tags/thing.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2/hoist", "setHtml", "ClosureScopes:1");
+const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#1:2/hoist", "setHtml", "ClosureScopes:1");
 const $what_content__setHtml = /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
 const $what_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $what_content__setHtml);

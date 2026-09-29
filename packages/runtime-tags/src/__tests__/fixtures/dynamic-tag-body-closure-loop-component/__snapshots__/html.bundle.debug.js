@@ -54,7 +54,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 			$si__input_type && _subscribe($input_type__closures, _scope($scope1_id, {
 				i,
 				_: _scope_with_id($scope0_id)
-			}, "__tests__/tags/heading.marko", "3:6", { i: "2:8" }), "__tests__/tags/heading.marko_1_input_type#3/subscribe", $sg__input_type);
+			}, "__tests__/tags/heading.marko", "3:6", { i: "2:8" }), "__tests__/tags/heading.marko_1_input_type#0:3/subscribe", $sg__input_type);
 			$sg__input_type || $si__input_type && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});

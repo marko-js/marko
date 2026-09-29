@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_script($scope1_id, "__tests__/template.marko_1_x#3", 0);
+			_script($scope1_id, "__tests__/template.marko_1_x#0:3", 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}

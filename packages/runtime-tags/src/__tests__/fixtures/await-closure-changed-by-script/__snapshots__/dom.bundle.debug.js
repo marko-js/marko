@@ -4,17 +4,17 @@ const $walks = " b%c";
 const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
 const $await_content__local = /*@__PURE__*/ _let("local/3", ($scope) => _text($scope["#text/1"], $scope.local));
 const $await_content__n__OR__m = /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/0"], $scope._._.n + $scope._._.m));
-const $await_content__n__script = _script("__tests__/template.marko_2_n#2", ($scope) => console.log("e" + $scope._._.n));
+const $await_content__n__script = _script("__tests__/template.marko_2_n#0:2", ($scope) => console.log("e" + $scope._._.n));
 const $await_content__n = /*@__PURE__*/ _closure_get("n/4", ($scope) => {
 	$await_content__local($scope, $scope._._.n);
 	$await_content__n__OR__m($scope);
 	$await_content__n__script($scope);
-}, ($scope) => $scope._._, "__tests__/template.marko_2_n#2/subscribe");
+}, ($scope) => $scope._._, "__tests__/template.marko_2_n#0:2/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__n($scope);
 	$await_content__m($scope);
 };
-const $await_content__m = /*@__PURE__*/ _closure_get("m/5", $await_content__n__OR__m, ($scope) => $scope._._, "__tests__/template.marko_2_m#3/subscribe");
+const $await_content__m = /*@__PURE__*/ _closure_get("m/5", $await_content__n__OR__m, ($scope) => $scope._._, "__tests__/template.marko_2_m#0:3/subscribe");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p><span> </span>", "D lD ", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {

@@ -11,7 +11,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#div#0/hoist");
+	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#div#2:0/hoist");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

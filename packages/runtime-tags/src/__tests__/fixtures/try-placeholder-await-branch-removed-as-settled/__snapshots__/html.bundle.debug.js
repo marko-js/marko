@@ -18,12 +18,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(_text_resume($scope4_id, "#text/0", value));
 					_scope($scope4_id, {}, "__tests__/template.marko", "11:6");
 				});
-				_subscribe($promise__closures, _scope($scope2_id, {}, "__tests__/template.marko", "10:4"), "__tests__/template.marko_2_promise#3/subscribe", 0);
+				_subscribe($promise__closures, _scope($scope2_id, {}, "__tests__/template.marko", "10:4"), "__tests__/template.marko_2_promise#0:3/subscribe", 0);
 				return 0;
 			}
 		}, $scope1_id, "#text/0");
 		_html("<div>settled</div>");
-		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2"), "__tests__/template.marko_1_show#2/subscribe");
+		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2"), "__tests__/template.marko_1_show#0:2/subscribe");
 	}, () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();

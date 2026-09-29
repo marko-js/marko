@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(_text_resume($scope5_id, "#text/0", value));
 					_scope($scope5_id, {}, "__tests__/template.marko", "7:6");
 				});
-				_subscribe($tab__closures, _scope($scope2_id, { "ClosureSignalIndex:tab/3": 1 }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_2_tab#2/subscribe", 0);
+				_subscribe($tab__closures, _scope($scope2_id, { "ClosureSignalIndex:tab/3": 1 }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_2_tab#0:2/subscribe", 0);
 				return 0;
 			} else {
 				const $scope4_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "#text/0");
-		_subscribe($tab__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_tab#2/subscribe");
+		_subscribe($tab__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_tab#0:2/subscribe");
 	}, () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();

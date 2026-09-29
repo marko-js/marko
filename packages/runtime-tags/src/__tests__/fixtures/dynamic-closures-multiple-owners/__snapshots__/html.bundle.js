@@ -16,38 +16,38 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	const z = x;
 	_html(`<button class=outer>${_text_resume($scope0_id, "b", z)}</button>${_el_resume($scope0_id, "a")}<p>${_text_resume($scope0_id, "c", z)}</p>`);
-	wrap_default({ content: _content("a6", () => {
+	wrap_default({ content: _content("a7", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const $wrap_content__x__closures = /* @__PURE__ */ new Set();
 		let x = 1;
 		_html(`<button class=inner></button>${_el_resume($scope1_id, "a")}<em>${_text_resume($scope1_id, "b", z)}</em>`);
-		wrap_default({ content: _content("a1", () => {
+		wrap_default({ content: _content("a2", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_text_resume($scope2_id, "a", z)}</i><b>${_text_resume($scope2_id, "b", x)}</b>`);
 			_subscribe($wrap_content__x__closures, _subscribe($x__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				Cf: 1
-			}), "a0"), "a0");
+			}), "a0"), "a1");
 		}, $scope1_id) });
-		wrap_default({ content: _content("a3", () => {
+		wrap_default({ content: _content("a4", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<s>${_text_resume($scope3_id, "a", x)}</s>`);
 			_subscribe($wrap_content__x__closures, _scope($scope3_id, {
 				_: _scope_with_id($scope1_id),
 				Cg: 1
-			}), "a2");
+			}), "a3");
 		}, $scope1_id) });
-		_script($scope1_id, "a4");
+		_script($scope1_id, "a5");
 		_subscribe($x__closures, _scope($scope1_id, {
 			e: x,
 			_: _scope_with_id($scope0_id),
 			g: $wrap_content__x__closures
-		}), "a5");
+		}), "a6");
 	}, $scope0_id) });
-	_script($scope0_id, "a7");
+	_script($scope0_id, "a8");
 	_scope($scope0_id, {
 		e: x,
 		f: $x__closures

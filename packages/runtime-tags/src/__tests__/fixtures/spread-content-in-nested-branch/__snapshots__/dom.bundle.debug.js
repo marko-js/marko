@@ -1,7 +1,7 @@
 // tags/list.marko
 const $template$1 = "<button class=toggle>toggle</button><!><!>";
 const $walks$1 = " b%c";
-const $if_content__item__script = _script("__tests__/tags/list.marko_2_item#2", ($scope) => _attrs_script($scope, "#div/0"));
+const $if_content__item__script = _script("__tests__/tags/list.marko_2_item#1:2", ($scope) => _attrs_script($scope, "#div/0"));
 const $if_content__item = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	_attrs_content($scope, "#div/0", $scope._.item);
 	$if_content__item__script($scope);
@@ -28,7 +28,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=inc>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
-const $item_content__count = /*@__PURE__*/ _closure_get("count/3", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#2/subscribe");
+const $item_content__count = /*@__PURE__*/ _closure_get("count/3", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:2/subscribe");
 const $item_content__setup = $item_content__count;
 const $item_content = _content("__tests__/template.marko_1*content", "One <!>", "b%", $item_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($item_content__count);

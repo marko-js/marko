@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($wrap_content__x__closures, _subscribe($x__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:x/5": 1
-			}, "__tests__/template.marko", "9:4"), "__tests__/template.marko_2_x#4/subscribe"), "__tests__/template.marko_2_x#4/subscribe");
+			}, "__tests__/template.marko", "9:4"), "__tests__/template.marko_2_x#0:4/subscribe"), "__tests__/template.marko_2_x#1:4/subscribe");
 		}, $scope1_id) });
 		wrap_default({ content: _content("__tests__/template.marko_3*content", () => {
 			_scope_reason();
@@ -38,14 +38,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($wrap_content__x__closures, _scope($scope3_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:x/6": 1
-			}, "__tests__/template.marko", "13:4"), "__tests__/template.marko_3_x#4/subscribe");
+			}, "__tests__/template.marko", "13:4"), "__tests__/template.marko_3_x#1:4/subscribe");
 		}, $scope1_id) });
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($x__closures, _scope($scope1_id, {
 			x,
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:x/6": $wrap_content__x__closures
-		}, "__tests__/template.marko", "5:2", { x: "6:8" }), "__tests__/template.marko_1_x#4/subscribe");
+		}, "__tests__/template.marko", "5:2", { x: "6:8" }), "__tests__/template.marko_1_x#0:4/subscribe");
 	}, $scope0_id) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

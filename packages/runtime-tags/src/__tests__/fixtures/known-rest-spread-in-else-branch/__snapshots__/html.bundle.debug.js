@@ -16,7 +16,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html(`<div${_attr("aria-label", a11yText)}`);
 			_attrs_partial_content(rest, { "aria-label": 1 }, "#div/0", $scope1_id, "div");
 			_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
-			_script($scope1_id, "__tests__/tags/child.marko_1_rest#6");
+			_script($scope1_id, "__tests__/tags/child.marko_1_rest#0:6");
 			_scope($scope1_id, { _: _serialize_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "5:2", { "EventAttributes:#div/0": ["...rest", "7:11"] });
 			return 1;
 		}

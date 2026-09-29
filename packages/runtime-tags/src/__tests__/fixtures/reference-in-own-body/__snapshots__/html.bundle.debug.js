@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let name = Tag.content({ content: _content("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_script($scope2_id, "__tests__/template.marko_2_name#2", 0);
+		_script($scope2_id, "__tests__/template.marko_2_name#0:2", 0);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 		_resume_branch($scope2_id);
 	}, $scope0_id) });

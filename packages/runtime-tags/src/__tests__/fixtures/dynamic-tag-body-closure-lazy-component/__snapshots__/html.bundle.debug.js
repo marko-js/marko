@@ -31,7 +31,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`depth ${_text_resume($scope1_id, "#text/0", input.depth, $sg__input_depth * 2)}`);
-		$si__input_type__OR__input_depth && _subscribe($si__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "1:4"), "__tests__/tags/heading.marko_1_input_depth#4/subscribe", $sg__input_depth);
+		$si__input_type__OR__input_depth && _subscribe($si__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "1:4"), "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe", $sg__input_depth);
 		$sg__input_depth || $si__input_type__OR__input_depth && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => [{ input_depth: input.depth }]), 0, $sg__input_type);
 	$si__input_type__OR__input_depth && _scope($scope0_id, {

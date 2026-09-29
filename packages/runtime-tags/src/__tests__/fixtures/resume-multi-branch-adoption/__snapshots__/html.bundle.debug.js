@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (item) {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_resume($scope2_id, "#text/0", item)}</span>`);
-				_script($scope2_id, "__tests__/template.marko_2_item#2");
+				_script($scope2_id, "__tests__/template.marko_2_item#1:2");
 				_scope($scope2_id, {}, "__tests__/template.marko", "7:6");
 				return 0;
 			}

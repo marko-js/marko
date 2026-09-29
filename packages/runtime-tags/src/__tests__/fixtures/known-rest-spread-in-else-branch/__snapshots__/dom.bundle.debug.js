@@ -20,7 +20,7 @@ const $else_content__setup = ($scope) => {
 	$else_content__input_button_a11yText._($scope);
 	$else_content__rest._($scope);
 };
-const $else_content__rest__script = _script("__tests__/tags/child.marko_1_rest#6", ($scope) => _attrs_script($scope, "#div/0"));
+const $else_content__rest__script = _script("__tests__/tags/child.marko_1_rest#0:6", ($scope) => _attrs_script($scope, "#div/0"));
 const $else_content__rest = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => {
 	_attrs_partial_content($scope, "#div/0", $scope._.rest, { "aria-label": 1 });
 	$else_content__rest__script($scope);

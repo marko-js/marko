@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`depth ${_text_resume($scope1_id, "#text/0", input.depth, $sg__input_depth * 2)}`);
-		_subscribe($si__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_input_depth#3/subscribe", $sg__input_depth);
+		_subscribe($si__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_input_depth#0:3/subscribe", $sg__input_depth);
 		$sg__input_depth || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_scope($scope0_id, {

@@ -7,7 +7,7 @@ var boundary_default = _template("__tests__/tags/boundary.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
-		$si__input_content && _subscribe($input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/boundary.marko", "1:2"), "__tests__/tags/boundary.marko_1_input_content#3/subscribe", $sg__input_content);
+		$si__input_content && _subscribe($input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/boundary.marko", "1:2"), "__tests__/tags/boundary.marko_1_input_content#0:3/subscribe", $sg__input_content);
 		$sg__input_content || $si__input_content && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -34,9 +34,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($count__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:count/3": 1
-			}, "__tests__/template.marko", "6:4"), "__tests__/template.marko_2_count#2/subscribe");
+			}, "__tests__/template.marko", "6:4"), "__tests__/template.marko_2_count#0:2/subscribe");
 		});
-		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_count#2/subscribe");
+		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_count#0:2/subscribe");
 	}, $scope0_id) });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

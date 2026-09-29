@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope4_id, "#text/0", resolveAfter("retried", 2), (retry) => {
 				const $scope5_id = _scope_id();
 				_html(`<p>caught ${_text_resume($scope5_id, "#text/0", err.message, $sg__err_message * 2)}, ${_escape(retry)}</p>`);
-				$si__err_message && _subscribe($catch_content__err_message__closures, _scope($scope5_id, { _: _scope_with_id($scope4_id) }, "__tests__/template.marko", "7:8"), "__tests__/template.marko_5_err_message#3/subscribe", $sg__err_message);
+				$si__err_message && _subscribe($catch_content__err_message__closures, _scope($scope5_id, { _: _scope_with_id($scope4_id) }, "__tests__/template.marko", "7:8"), "__tests__/template.marko_5_err_message#4:3/subscribe", $sg__err_message);
 				$sg__err_message || $si__err_message && _resume_branch($scope5_id);
 			}, $sg__err_message);
 			$si__err_message && _scope($scope4_id, { "ClosureScopes:err_message/4": $catch_content__err_message__closures }, "__tests__/template.marko", "6:6");

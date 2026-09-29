@@ -14,13 +14,13 @@ const $else_content__setup = ($scope) => {
 const $placeholder_content = _content("__tests__/template.marko_3*content", "LOADING");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $if_content__tab = /*@__PURE__*/ _closure_get("tab/3", ($scope) => $if_content__await_promise($scope, $scope._._.tab === 1 ? new Promise(() => {}) : "ready"), ($scope) => $scope._._, "__tests__/template.marko_2_tab#2/subscribe");
+const $if_content__tab = /*@__PURE__*/ _closure_get("tab/3", ($scope) => $if_content__await_promise($scope, $scope._._.tab === 1 ? new Promise(() => {}) : "ready"), ($scope) => $scope._._, "__tests__/template.marko_2_tab#0:2/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__tab($scope);
 	$await_content($scope);
 };
 const $try_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup, "<!><!><!>", "b%", $else_content__setup);
-const $try_content__tab = /*@__PURE__*/ _closure_get("tab/3", ($scope) => $try_content__if($scope, $scope._.tab < 2 ? 0 : 1), 0, "__tests__/template.marko_1_tab#2/subscribe");
+const $try_content__tab = /*@__PURE__*/ _closure_get("tab/3", ($scope) => $try_content__if($scope, $scope._.tab < 2 ? 0 : 1), 0, "__tests__/template.marko_1_tab#0:2/subscribe");
 const $try_content__setup = $try_content__tab;
 const $tab__closure = /*@__PURE__*/ _closure($try_content__tab, $if_content__tab);
 const $tab = /*@__PURE__*/ _let("tab/2", $tab__closure);

@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "#text/0", value.a + value.b));
-		_subscribe($value_b__closures, _subscribe($value_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"), "__tests__/template.marko_1_value_a#4/subscribe"), "__tests__/template.marko_1_value_b#5/subscribe");
+		_subscribe($value_b__closures, _subscribe($value_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"), "__tests__/template.marko_1_value_a#0:4/subscribe"), "__tests__/template.marko_1_value_b#0:5/subscribe");
 	}, $scope0_id) });
 	_script($scope0_id, "__tests__/template.marko_0_value_a#4");
 	_scope($scope0_id, {

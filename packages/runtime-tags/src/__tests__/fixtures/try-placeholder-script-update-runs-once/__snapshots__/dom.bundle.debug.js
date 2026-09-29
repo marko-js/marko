@@ -6,11 +6,11 @@ const $await_content__$params = ($scope, $params2) => $await_content__v($scope, 
 const $placeholder_content = _content("__tests__/template.marko_2*content", "LOADING");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "value <!>", "b%");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__n__script = _script("__tests__/template.marko_1_n#2", ($scope) => console.log("script n=" + $scope._.n));
+const $try_content__n__script = _script("__tests__/template.marko_1_n#0:2", ($scope) => console.log("script n=" + $scope._.n));
 const $try_content__n = /*@__PURE__*/ _closure_get("n/3", ($scope) => {
 	$try_content__await_promise($scope, $scope._.n ? resolveAfter($scope._.n) : 0);
 	$try_content__n__script($scope);
-}, 0, "__tests__/template.marko_1_n#2/subscribe");
+}, 0, "__tests__/template.marko_1_n#0:2/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__n($scope);
 	$await_content($scope);

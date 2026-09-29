@@ -12,7 +12,7 @@ var wrapper_default = _template("__tests__/tags/wrapper/index.marko", (input) =>
 var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $si__input_a11yText = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $btn_getter = _hoist($scope0_id, "__tests__/tags/child/index.marko_0_$btn#2/hoist");
+	const $btn_getter = _hoist($scope0_id, "__tests__/tags/child/index.marko_0_$btn#1:2/hoist");
 	const $wrapper_content__subscribers = new Set();
 	const $input_a11yText__closures = new Set();
 	wrapper_default({ content: _content("__tests__/tags/child/index.marko_1*content", () => {
@@ -28,7 +28,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 		_subscribe($si__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			$btn,
 			_: $si__input_a11yText && _scope_with_id($scope0_id)
-		}, "__tests__/tags/child/index.marko", "1:2", { $btn: "2:36" })), "__tests__/tags/child/index.marko_1_input_a11yText#3/subscribe");
+		}, "__tests__/tags/child/index.marko", "1:2", { $btn: "2:36" })), "__tests__/tags/child/index.marko_1_input_a11yText#0:3/subscribe");
 		_assert_hoist($btn);
 	}, $scope0_id) });
 	const $return = { btn: $btn_getter };

@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<button>toggle</button><!><!><!>";
 const $walks = " b%b%c";
-const $if_content2__attrs__script = _script("__tests__/template.marko_3_attrs#4", ($scope) => _attrs_script($scope, "#span/0"));
+const $if_content2__attrs__script = _script("__tests__/template.marko_3_attrs#0:4", ($scope) => _attrs_script($scope, "#span/0"));
 const $if_content2__attrs = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => {
 	_attrs_content($scope, "#span/0", $scope._.attrs);
 	$if_content2__attrs__script($scope);
 });
 const $if_content2__setup = $if_content2__attrs;
-const $if_content__item__script = _script("__tests__/template.marko_2_item#2", ($scope) => _attrs_script($scope, "#div/0"));
+const $if_content__item__script = _script("__tests__/template.marko_2_item#1:2", ($scope) => _attrs_script($scope, "#div/0"));
 const $if_content__item = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	_attrs_content($scope, "#div/0", $scope._.item);
 	$if_content__item__script($scope);
