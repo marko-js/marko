@@ -20,7 +20,6 @@ import {
   propsUtil,
 } from "./bindings";
 import { generateUid } from "./generate-uid";
-import { finalizeKnownTags } from "./known-tag";
 import {
   addSorted,
   every,
@@ -49,9 +48,7 @@ import {
   isReferencedExtra,
 } from "./references";
 import {
-  finalizeParamSerializeReasonGroups,
   forEachSection,
-  forEachSectionReverse,
   getDirectClosures,
   isResumedBranch,
   type Section,
@@ -59,20 +56,15 @@ import {
   setReadsOwner,
 } from "./sections";
 import {
-  addClosureSerializeReasons,
-  addIntersectionSerializeReasons,
-  addRegisteredFnSerializeReasons,
   forceSerialize,
   readsValuesOnResume,
-  resetSerializations,
+  solveSerializeReasons,
 } from "./serialize-propagation";
 import {
   addOwnerSerializeReason,
   addSerializeExpr,
   addSerializeReason,
   applySerializeExprs,
-  finalizeSerializeReason,
-  getSerializeReasonsVersion,
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
   kBranchSerializeReason,
@@ -89,21 +81,38 @@ import {
 import { createProgramState } from "./state";
 
 export function finalizeReferences() {
-  const bindings = getBindings();
-  const readsByExpression = getReadsByExpression();
-  const fnReadsByExpression = getFunctionReadsByExpression();
   const intersectionsBySection = new Map<Section, Intersection[]>();
+  settleAssignments();
+  pruneBindings();
+  dropPrunedAssignments();
+  resolveReads(intersectionsBySection);
+  forEachSection(finalizeTagDownstreams);
+  resolveBindings();
+  forEachSection(addSectionSerializeReasons);
+  for (const finalize of getReferenceFinalizers()) {
+    finalize();
+  }
+  forEachSection(applySerializeExprs);
+  solveSerializeReasons(intersectionsBySection);
+  finalizeFunctionRegistry();
+  allocateIds(intersectionsBySection);
+  finalizeReturnSerializeReason();
+  getReadsByExpression().clear();
+  getFunctionReadsByExpression().clear();
+}
 
-  // Assignments settle now so pruning can ask each binding directly; an
-  // assignment inside a value pruning drops leaves again below.
-  const assignments = getAssignments();
-  for (const idExtra of assignments) {
+// Only emitted assignments count, so pruning can ask each binding directly.
+function settleAssignments() {
+  for (const idExtra of getAssignments()) {
     if (inEmittedExpr(idExtra)) {
       const binding = idExtra.assignment;
       binding.assignments = push(binding.assignments, idExtra);
     }
   }
+}
 
+function pruneBindings() {
+  const bindings = getBindings();
   for (const binding of bindings) {
     if (binding.type !== BindingType.dom) {
       if (pruneBinding(binding, true)) {
@@ -111,9 +120,12 @@ export function finalizeReferences() {
       }
     }
   }
+}
 
+// An assignment inside a value pruning dropped leaves its binding.
+function dropPrunedAssignments() {
   const excluded = new Set<Binding>();
-  for (const idExtra of assignments) {
+  for (const idExtra of getAssignments()) {
     const binding = idExtra.assignment;
     if (!inEmittedExpr(idExtra)) {
       binding.assignments = filter(binding.assignments, inEmittedExpr);
@@ -135,8 +147,11 @@ export function finalizeReferences() {
       }
     }
   }
+}
 
-  for (const [expr, reads] of readsByExpression) {
+function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
+  const fnReadsByExpression = getFunctionReadsByExpression();
+  for (const [expr, reads] of getReadsByExpression()) {
     if (isReferencedExtra(expr)) {
       const exprBindings = resolveReferencedBindings(
         expr,
@@ -200,11 +215,12 @@ export function finalizeReferences() {
       }
     }
   }
+}
 
+// Sources, names, hoists, section membership, and closures, per binding.
+function resolveBindings() {
   const bindingNamesBySection = new Map<Section, Set<string>>();
-  forEachSection(finalizeTagDownstreams);
-
-  for (const binding of bindings) {
+  for (const binding of getBindings()) {
     const { name, section } = binding;
     // `$global` bindings resolve sources only: no collision rename (it
     // would burn a UID and shift later generated names), no section
@@ -296,70 +312,44 @@ export function finalizeReferences() {
       }
     }
   }
+}
 
-  forEachSection((section) => {
-    if (section.isHoistThrough) {
-      addSerializeReason(section, FORCED);
-    }
-
-    forEach(section.referencedHoists, (hoistedBinding) => {
-      setReadsOwner(section, hoistedBinding.section);
-      addOwnerSerializeReason(section, hoistedBinding.section, FORCED);
-    });
-
-    if (isResumedBranch(section)) {
-      const closureSources = getSerializeSourcesForRef(
-        getDirectClosures(section),
-      );
-      addSerializeReason(
-        section,
-        section.isHoistThrough || section.hoisted
-          ? mergeSources(FORCED, closureSources)
-          : closureSources,
-        kBranchSerializeReason,
-      );
-      addSerializeExpr(
-        section,
-        section.upstreamExpression,
-        kBranchSerializeReason,
-      );
-      addSerializeExpr(
-        section.parent!,
-        section.upstreamExpression,
-        section.branch.nodeBinding,
-      );
-    }
-  });
-
-  for (const finalize of getReferenceFinalizers()) {
-    finalize();
+function addSectionSerializeReasons(section: Section) {
+  if (section.isHoistThrough) {
+    addSerializeReason(section, FORCED);
   }
 
-  forEachSection(applySerializeExprs);
+  forEach(section.referencedHoists, (hoistedBinding) => {
+    setReadsOwner(section, hoistedBinding.section);
+    addOwnerSerializeReason(section, hoistedBinding.section, FORCED);
+  });
 
-  // Rules that follow other reasons repeat until none moves; every write merges,
-  // so reasons only grow and this settles, even through cycles.
-  let reasonsVersion: number;
-  do {
-    reasonsVersion = getSerializeReasonsVersion();
-    resetSerializations();
-    forEachSection((section) =>
-      addIntersectionSerializeReasons(
-        section,
-        intersectionsBySection.get(section),
-      ),
+  if (isResumedBranch(section)) {
+    const closureSources = getSerializeSourcesForRef(
+      getDirectClosures(section),
     );
-    forEachSection(addClosureSerializeReasons);
-    addRegisteredFnSerializeReasons(fnReadsByExpression);
-    forEachSectionReverse((section) => {
-      finalizeKnownTags(section);
-      finalizeSerializeReason(section);
-      finalizeParamSerializeReasonGroups(section);
-    });
-  } while (reasonsVersion !== getSerializeReasonsVersion());
+    addSerializeReason(
+      section,
+      section.isHoistThrough || section.hoisted
+        ? mergeSources(FORCED, closureSources)
+        : closureSources,
+      kBranchSerializeReason,
+    );
+    addSerializeExpr(
+      section,
+      section.upstreamExpression,
+      kBranchSerializeReason,
+    );
+    addSerializeExpr(
+      section.parent!,
+      section.upstreamExpression,
+      section.branch.nodeBinding,
+    );
+  }
+}
 
-  finalizeFunctionRegistry();
-
+// Dense per-section ids for bindings, intersections, and closure accessors.
+function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
   const closureIdEnds = new Map<Section, number>();
   forEachSection((section) => {
     const { id, bindings } = section;
@@ -457,16 +447,15 @@ export function finalizeReferences() {
     });
     closureIdEnds.set(section, closureId);
   });
+}
 
+function finalizeReturnSerializeReason() {
   const programSection = getProgram().node.extra.section!;
   if (programSection.returnValueExpr) {
     programSection.returnSerializeReason = getSerializeSourcesForExpr(
       programSection.returnValueExpr,
     );
   }
-
-  readsByExpression.clear();
-  fnReadsByExpression.clear();
 }
 
 // The bindings a binding's value is computed from.
