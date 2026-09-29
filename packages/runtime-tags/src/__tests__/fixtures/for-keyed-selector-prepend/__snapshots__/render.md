@@ -46,8 +46,8 @@
 ## Change
 ```
 INSERT: ul > .danger
-UPDATE: .danger[class] null => "danger"
 UPDATE: ul > li:nth-of-type(2)[class] "danger" => ""
+UPDATE: .danger[class] null => "danger"
 ```
 
 # Update
@@ -84,6 +84,6 @@ UPDATE: ul > li:nth-of-type(2)[class] "danger" => ""
 ## Change
 ```
 INSERT: ul > .danger
-UPDATE: .danger[class] null => "danger"
 UPDATE: ul > li:nth-of-type(2)[class] "danger" => ""
+UPDATE: .danger[class] null => "danger"
 ```

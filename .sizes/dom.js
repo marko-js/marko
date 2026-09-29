@@ -1,4 +1,4 @@
-// size: 27577 (min) 10246 (brotli)
+// size: 27531 (min) 10235 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -25,6 +25,16 @@ let rendering;
 let runId = 2;
 let pendingEffects = [];
 let pendingRenders = [];
+let queuePendingRender = (render) => {
+  let i = pendingRenders.push(render) - 1;
+  for (; i;) {
+    let parentIndex = (i - 1) >> 1,
+      parent = pendingRenders[parentIndex];
+    if (render.a - parent.a >= 0) break;
+    ((pendingRenders[i] = parent), (i = parentIndex));
+  }
+  pendingRenders[i] = render;
+};
 let runEffects = (effects) => {
   for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
 };
@@ -177,6 +187,7 @@ let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor, endNode
 });
 let _dynamic_tag = /*@__PURE__*/ withBranches(
   (nodeAccessor, getContent, getTagVar, inputIsArgs) => {
+    let scopeOffsetAccessor = getTagVar && decodeAccessor(nodeAccessor + 1);
     nodeAccessor = decodeAccessor(nodeAccessor);
     let childScopeAccessor = "A" + nodeAccessor,
       rendererAccessor = "D" + nodeAccessor;
@@ -192,8 +203,12 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
           getTagVar &&
             (scope[childScopeAccessor]
               ? ((scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
-                typeof normalizedRenderer == "string" &&
-                  bindNativeTagVar?.(scope[childScopeAccessor]))
+                bindTagVar(
+                  scope,
+                  scope[childScopeAccessor],
+                  scopeOffsetAccessor,
+                  normalizedRenderer,
+                ))
               : getTagVar()(scope, void 0)),
           typeof renderer == "string")
         ) {
@@ -203,7 +218,9 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
               content.f && subscribeToScopeSet(content.e, content.f, scope[childScopeAccessor].Aa));
           }
         } else
-          renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor]);
+          renderer &&
+            (setupBranch(renderer, scope[childScopeAccessor]),
+            renderer.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor]));
       }
       if (normalizedRenderer) {
         let childScope = scope[childScopeAccessor],
@@ -246,7 +263,7 @@ let _dynamic_tag_content = /*@__PURE__*/ withBranches((nodeAccessor) => {
       renderer?.g?.(scope[childScopeAccessor]));
   };
 });
-let bindNativeTagVar;
+let bindTagVar;
 let loop = /*@__PURE__*/ withBranches(
   (forEach, reorder) => (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
@@ -431,16 +448,6 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
       signalKey >= 0 && (scope[signalKey] = render));
   queuePendingRender(render);
 }
-function queuePendingRender(render) {
-  let i = pendingRenders.push(render) - 1;
-  for (; i;) {
-    let parentIndex = (i - 1) >> 1,
-      parent = pendingRenders[parentIndex];
-    if (render.a - parent.a >= 0) break;
-    ((pendingRenders[i] = parent), (i = parentIndex));
-  }
-  pendingRenders[i] = render;
-}
 function queueEffect(scope, fn) {
   pendingEffects.push(fn, scope);
 }
@@ -468,27 +475,27 @@ function prepareEffects(fn) {
   }
   return preparedEffects;
 }
-function runRenders() {
-  for (; pendingRenders.length;) {
-    let render = pendingRenders[0],
-      item = pendingRenders.pop();
+function runRenders(renders = pendingRenders) {
+  for (; renders.length;) {
+    let render = renders[0],
+      item = renders.pop();
     if (render !== item) {
       let i = 0,
-        mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).a;
+        mid = renders.length >> 1,
+        key = (renders[0] = item).a;
       for (; i < mid;) {
         let bestChild = (i << 1) + 1,
           right = bestChild + 1;
         if (
-          (right < pendingRenders.length &&
-            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
+          (right < renders.length &&
+            renders[right].a - renders[bestChild].a < 0 &&
             (bestChild = right),
-          pendingRenders[bestChild].a - key >= 0)
+          renders[bestChild].a - key >= 0)
         )
           break;
-        ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
+        ((renders[i] = renders[bestChild]), (i = bestChild));
       }
-      pendingRenders[i] = item;
+      renders[i] = item;
     }
     runRender(render);
   }
@@ -661,16 +668,13 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     ownerSignal = (ownerScope) => {
       let scopes = toArray(ownerScope[scopeAccessor]);
-      scopes.length &&
-        queueRender(
-          ownerScope,
-          () => {
-            for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
-          },
-          -1,
-          0,
-          scopes[0].L,
-        );
+      queueRender(
+        ownerScope,
+        () => {
+          for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
+        },
+        -1,
+      );
     };
   return ((ownerSignal._ = fn), ownerSignal);
 }
@@ -682,8 +686,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
     mapAccessor = "O" + ownerLoopNodeAccessor,
     prevKeyProp = `_${ownerValueAccessor}`,
     ownerSignal = (ownerScope) => {
-      let scopes = toArray(ownerScope[scopeAccessor]);
-      if (ownerScope.H < runId && scopes.length) {
+      if (ownerScope.H < runId) {
         let nextKey = ownerScope[ownerValueAccessor];
         queueRender(
           ownerScope,
@@ -698,8 +701,6 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
             map && (map[prevKeyProp] = nextKey);
           },
           -1,
-          0,
-          scopes[0].L,
         );
       }
     };
@@ -2022,19 +2023,18 @@ function reorderKeyed(newScopes, start, newEnd, parentNode, afterReference) {
 function createBranchWithTagNameOrRenderer($global, tagNameOrRenderer, parentScope, parentNode) {
   let branch = createBranch($global, tagNameOrRenderer, parentScope, parentNode);
   return (
-    typeof tagNameOrRenderer == "string"
-      ? (branch.a =
-          branch.S =
-          branch.K =
-            document.createElementNS(
-              tagNameOrRenderer === "svg"
-                ? "http://www.w3.org/2000/svg"
-                : tagNameOrRenderer === "math"
-                  ? "http://www.w3.org/1998/Math/MathML"
-                  : parentNode.namespaceURI,
-              tagNameOrRenderer,
-            ))
-      : setupBranch(tagNameOrRenderer, branch),
+    typeof tagNameOrRenderer == "string" &&
+      (branch.a =
+        branch.S =
+        branch.K =
+          document.createElementNS(
+            tagNameOrRenderer === "svg"
+              ? "http://www.w3.org/2000/svg"
+              : tagNameOrRenderer === "math"
+                ? "http://www.w3.org/1998/Math/MathML"
+                : parentNode.namespaceURI,
+            tagNameOrRenderer,
+          )),
     branch
   );
 }

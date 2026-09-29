@@ -476,8 +476,6 @@ function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {
     : refs;
 }
 
-// The last tag whose child returns one of the intersection's own sources, whose
-// scope offset the intersection renders after.
 function getWalkedBinding(op: StructureOp) {
   return typeof op === "object" &&
     (op.kind === StructureKind.Node || op.kind === StructureKind.Child)
@@ -485,21 +483,26 @@ function getWalkedBinding(op: StructureOp) {
     : undefined;
 }
 
+// The last tag in this section whose child returns a value the intersection
+// reads or derives from, whose scope offset the intersection renders after.
 function getLastOwnSourceReturn(intersection: Intersection, section: Section) {
-  let returnedBy: Binding | undefined;
-  for (const binding of intersection) {
-    if (binding.section === section && binding.sources) {
-      returnedBy = reduce(binding.sources.state, lastReturnedBy, returnedBy);
-      returnedBy = reduce(binding.sources.param, lastReturnedBy, returnedBy);
+  let last: Binding | undefined;
+  const seen = new Set<Binding>();
+  // Another section's tag has no scope offset on this scope.
+  const track = (binding: Binding) => {
+    if (binding.section === section && !seen.has(binding)) {
+      seen.add(binding);
+      const { returnedBy } = getAliasRoot(binding) || binding;
+      if (returnedBy && (!last || last.id < returnedBy.id)) last = returnedBy;
+      if (binding.derivedFrom) {
+        forEach(getValueReferences(binding.derivedFrom), track);
+      }
+      forEach(binding.sources?.state, track);
+      forEach(binding.sources?.param, track);
     }
-  }
-
-  return returnedBy;
-}
-
-function lastReturnedBy(last: Binding | undefined, source: Binding) {
-  const { returnedBy } = source;
-  return returnedBy && (!last || last.id < returnedBy.id) ? returnedBy : last;
+  };
+  forEach(intersection, track);
+  return last;
 }
 
 function getIntersectionSource(

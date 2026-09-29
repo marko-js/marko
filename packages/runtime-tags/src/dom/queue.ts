@@ -16,10 +16,9 @@ export let rendering: undefined | 0 | 1;
 export let runId = 2; // resumed scopes get `1`
 export let pendingEffects: unknown[] = [];
 let pendingRenders: PendingRender[] = [];
+// Debug only: the run each render last ran in.
+const ranRenders = /*@__PURE__*/ new WeakMap<PendingRender, number>();
 
-// Orders pending renders across scopes; signal keys are per-section
-// binding ids, so they always fit well below the offset.
-const scopeKeyOffset = 1e6;
 export function queueRender<T, U extends Scope = Scope>(
   scope: U,
   signal: Signal<T, U>,
@@ -36,12 +35,23 @@ export function queueRender<T, U extends Scope = Scope>(
       render[PendingRenderProp.Gen] === runId ||
       (catchEnabled && render[PendingRenderProp.Pending])
     ) {
+      if (
+        MARKO_DEBUG &&
+        !render[PendingRenderProp.Pending] &&
+        ranRenders.get(render) === runId
+      ) {
+        console.error(
+          "A render was queued again after it ran in this update, so its latest value is dropped. This is a bug in Marko.",
+        );
+      }
       return;
     }
     render[PendingRenderProp.Gen] = runId;
   } else {
     render = {
-      [PendingRenderProp.Key]: scopeKey * scopeKeyOffset + signalKey,
+      // Orders pending renders across scopes; signal keys are per-section
+      // binding ids, so they always fit well below the 1e6 scale.
+      [PendingRenderProp.Key]: scopeKey * 1e6 + signalKey,
       [PendingRenderProp.Scope]: scope,
       [PendingRenderProp.Signal]: signal,
       [PendingRenderProp.Value]: value,
@@ -52,7 +62,8 @@ export function queueRender<T, U extends Scope = Scope>(
   queuePendingRender(render);
 }
 
-export function queuePendingRender(render: PendingRender) {
+// `installBranchRenders` routes some renders into a branch's own heap.
+export let queuePendingRender = (render: PendingRender) => {
   let i = pendingRenders.push(render) - 1;
   while (i) {
     const parentIndex = (i - 1) >> 1;
@@ -63,6 +74,56 @@ export function queuePendingRender(render: PendingRender) {
     i = parentIndex;
   }
   pendingRenders[i] = render;
+};
+
+// A dynamic tag creates its branch after the owner's walk, so the branch's
+// scopes sort after the variable's readers; its renders run from their own
+// heap instead, as one render where a static child's sort.
+export function createBranchRenders(
+  scope: Scope,
+  scopeKey: number,
+): PendingRender {
+  return {
+    // Just before the scope's own renders, as an unkeyed render sorts.
+    [PendingRenderProp.Key]: scopeKey * 1e6 - 1,
+    [PendingRenderProp.Scope]: scope,
+    [PendingRenderProp.Signal]: runBranchRenders,
+    [PendingRenderProp.Value]: [],
+    [PendingRenderProp.Gen]: 0,
+  };
+}
+
+export function installBranchRenders() {
+  const queue = queuePendingRender;
+  queuePendingRender = (render) => {
+    const branchRenders =
+      render[PendingRenderProp.Scope][AccessorProp.ClosestBranch]?.[
+        AccessorProp.BranchRenders
+      ];
+    if (branchRenders) {
+      // A heap a thrown update left is dropped like `pendingRenders`, unless
+      // a pending `<try>` holds its render.
+      if (
+        branchRenders[PendingRenderProp.Gen] !== runId &&
+        !branchRenders[PendingRenderProp.Pending]
+      ) {
+        branchRenders[PendingRenderProp.Value] = [];
+      }
+      branchRenders[PendingRenderProp.Gen] = runId;
+      const renders = branchRenders[PendingRenderProp.Value] as PendingRender[];
+      if (!renders.length) queuePendingRender(branchRenders);
+      const prev = pendingRenders;
+      pendingRenders = renders;
+      queue(render);
+      pendingRenders = prev;
+    } else {
+      queue(render);
+    }
+  };
+}
+
+function runBranchRenders(_scope: Scope, renders: PendingRender[]) {
+  runRenders(renders);
 }
 
 export function queueEffect<S extends Scope, T extends ExecFn<S>>(
@@ -150,40 +211,41 @@ export function installCatch(
   runRender = wrapRender(runRender);
 }
 
-function runRenders() {
-  while (pendingRenders.length) {
-    const render = pendingRenders[0];
-    const item = pendingRenders.pop()!;
+export function runRenders(renders = pendingRenders) {
+  while (renders.length) {
+    const render = renders[0];
+    const item = renders.pop()!;
 
     if (render !== item) {
       let i = 0;
-      const mid = pendingRenders.length >> 1;
-      const key = (pendingRenders[0] = item)[PendingRenderProp.Key];
+      const mid = renders.length >> 1;
+      const key = (renders[0] = item)[PendingRenderProp.Key];
 
       while (i < mid) {
         let bestChild = (i << 1) + 1;
         const right = bestChild + 1;
 
         if (
-          right < pendingRenders.length &&
-          pendingRenders[right][PendingRenderProp.Key] -
-            pendingRenders[bestChild][PendingRenderProp.Key] <
+          right < renders.length &&
+          renders[right][PendingRenderProp.Key] -
+            renders[bestChild][PendingRenderProp.Key] <
             0
         ) {
           bestChild = right;
         }
 
-        if (pendingRenders[bestChild][PendingRenderProp.Key] - key >= 0) {
+        if (renders[bestChild][PendingRenderProp.Key] - key >= 0) {
           break;
         } else {
-          pendingRenders[i] = pendingRenders[bestChild];
+          renders[i] = renders[bestChild];
           i = bestChild;
         }
       }
 
-      pendingRenders[i] = item;
+      renders[i] = item;
     }
 
+    if (MARKO_DEBUG) ranRenders.set(render, runId);
     runRender(render);
   }
 }

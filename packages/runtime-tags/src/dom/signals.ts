@@ -143,24 +143,19 @@ export function _for_closure(
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
   const ownerSignal = (ownerScope: Scope) => {
     const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
-    if (scopes.length) {
-      queueRender(
-        ownerScope,
-        () => {
-          for (const scope of scopes as BranchScope[]) {
-            if (
-              scope[AccessorProp.Gen] > 0 &&
-              scope[AccessorProp.Gen] < runId
-            ) {
-              fn(scope);
-            }
+    // Keyed by the owner, which is older than every row, so this runs
+    // before any row's own renders.
+    queueRender(
+      ownerScope,
+      () => {
+        for (const scope of scopes as BranchScope[]) {
+          if (scope[AccessorProp.Gen] > 0 && scope[AccessorProp.Gen] < runId) {
+            fn(scope);
           }
-        },
-        -1,
-        0,
-        scopes[0][AccessorProp.Id],
-      );
-    }
+        }
+      },
+      -1,
+    );
   };
   ownerSignal._ = fn;
   return ownerSignal;
@@ -183,8 +178,7 @@ export function _for_selector(
   const mapAccessor = AccessorPrefix.KeyedScopes + ownerLoopNodeAccessor;
   const prevKeyProp: `${typeof KeyedScopesProp.PreviousKey}${string}` = `${KeyedScopesProp.PreviousKey}${ownerValueAccessor as string}`;
   const ownerSignal = (ownerScope: Scope) => {
-    const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
-    if (ownerScope[AccessorProp.Gen] < runId && scopes.length) {
+    if (ownerScope[AccessorProp.Gen] < runId) {
       const nextKey = ownerScope[ownerValueAccessor];
       queueRender(
         ownerScope,
@@ -212,8 +206,6 @@ export function _for_selector(
           if (map) map[prevKeyProp] = nextKey;
         },
         -1,
-        0,
-        scopes[0][AccessorProp.Id],
       );
     }
   };
