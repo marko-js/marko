@@ -64,19 +64,6 @@ export function skipScope() {
   return nextScopeId++;
 }
 
-// `ParentBranch` links each branch to its enclosing one, via `createBranch` or, on resume, the
-// serialized closest branch id and branch markers, so a `<for>` item reaches its `<try>`/`<await>`.
-export function findBranchWithKey(
-  scope: Scope,
-  key: string,
-): BranchScope | undefined {
-  let branch = scope[AccessorProp.ClosestBranch];
-  while (branch && branch[key] == null) {
-    branch = branch[AccessorProp.ParentBranch];
-  }
-  return branch;
-}
-
 export function destroyBranch(branch: BranchScope) {
   branch[AccessorProp.ParentBranch]?.[AccessorProp.BranchScopes]?.delete(
     branch,

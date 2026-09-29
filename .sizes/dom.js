@@ -1,4 +1,4 @@
-// size: 27166 (min) 10111 (brotli)
+// size: 27210 (min) 10117 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -557,11 +557,6 @@ function collectScopes(fn) {
 }
 function skipScope() {
   return nextScopeId++;
-}
-function findBranchWithKey(scope, key) {
-  let branch = scope.F;
-  for (; branch && branch[key] == null;) branch = branch.N;
-  return branch;
 }
 function destroyBranch(branch) {
   (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
@@ -1746,12 +1741,12 @@ function _await_promise(nodeAccessor, params) {
       let awaitBranch = scope[branchAccessor],
         tryBranch =
           scope[tryAccessor] ||
-          (isPromise(promise) && findBranchWithKey(scope, "Q")) ||
+          (isPromise(promise) && findTryWithPlaceholder(scope)) ||
           awaitBranch;
       if (!tryBranch) {
         let deferred = (scope[promiseAccessor] = () =>
             deferred === scope[promiseAccessor] && awaitPromise(scope, promise)),
-          awaitCounter = findBranchWithKey(scope, "Q")?.O;
+          awaitCounter = findTryWithPlaceholder(scope)?.O;
         if (awaitCounter?.i) {
           let complete = awaitCounter.c;
           awaitCounter.c = () => complete() || queueAsyncRender(scope, deferred);
@@ -1814,7 +1809,7 @@ function _await_promise(nodeAccessor, params) {
             ((scope[promiseAccessor] = scope[tryAccessor] = 0),
             queueAsyncRender(scope, renderCatch, error),
             tryBranch !== awaitBranch && !awaitCounter.m
-              ? findBranchWithKey(scope, "E")
+              ? findTryWithCatch(scope)
                 ? queueCompleteAwaitCounter(tryBranch, awaitCounter)
                 : awaitCounter.c()
               : (awaitCounter.i = 0));
@@ -1842,23 +1837,20 @@ function _await_content(nodeAccessor, template, walks, setup) {
       typeof scope[promiseAccessor] == "function" && scope[promiseAccessor]());
   };
 }
-function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
+function addAwaitCounter(scope, tryBranch = findTryWithPlaceholder(scope)) {
   if (!tryBranch) return;
   let awaitCounter = tryBranch.O;
   return (
     awaitCounter?.i ||
       (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
     scheduleAwaitFrame(awaitCounter, tryBranch, () => {
-      (insertBranchBefore(
-        (tryBranch.P = createAndSetupBranch(
-          tryBranch.$,
-          tryBranch.Q(),
-          tryBranch._,
-          tryBranch.S.parentNode,
-        )),
+      (((tryBranch.P = createAndSetupBranch(
+        tryBranch.$,
+        tryBranch.Q(),
+        tryBranch._,
         tryBranch.S.parentNode,
-        tryBranch.S,
-      ),
+      )).PT = tryBranch),
+        insertBranchBefore(tryBranch.P, tryBranch.S.parentNode, tryBranch.S),
         tempDetachBranch(tryBranch));
     }),
     awaitCounter
@@ -1926,7 +1918,7 @@ function _try(nodeAccessor, template, walks, setup, placeholderContent, catchCon
   };
 }
 function renderCatch(scope, error) {
-  let tryWithCatch = findBranchWithKey(scope, "E");
+  let tryWithCatch = findTryWithCatch(scope);
   if (tryWithCatch) {
     let owner = tryWithCatch._,
       placeholderBranch = tryWithCatch.P;
@@ -1938,6 +1930,16 @@ function renderCatch(scope, error) {
     (setConditionalRenderer(owner, tryWithCatch.C, catchContent, createAndSetupBranch),
       catchContent.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
+}
+function findTryWithPlaceholder(scope) {
+  let branch = scope.F;
+  for (; branch && !branch.Q;) branch = branch.N;
+  return branch;
+}
+function findTryWithCatch(scope) {
+  let branch = scope.F;
+  for (; branch && !branch.E;) branch = branch.PT || branch.N;
+  return branch;
 }
 function rendererKey(renderer) {
   return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
