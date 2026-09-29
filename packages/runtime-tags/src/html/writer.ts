@@ -166,6 +166,15 @@ const kBranchId = Symbol("Branch Id");
 
 const kIsAsync = Symbol("Is Async");
 
+// Async content under `kIsAsync`: the owner `visit` an unmarked `<await>` writes
+// after its content's `end` chunk once anything in it, or in `parent`'s, resumes.
+interface AsyncContent {
+  visit?: string;
+  end?: Chunk;
+  parent?: AsyncContent;
+  resumed?: true;
+}
+
 export function isInResumedBranch() {
   return $chunk?.context?.[kBranchId] !== undefined;
 }
@@ -184,8 +193,12 @@ export function withBranchId<T, U>(
   return withContext(kBranchId, branchId, cb, cbValue);
 }
 
-function withIsAsync<T, U>(cb: (value: U) => T, value: U): T {
-  return withContext(kIsAsync, true, cb, value);
+function withIsAsync<T, U>(
+  async: AsyncContent,
+  cb: (value: U) => T,
+  value: U,
+): T {
+  return withContext(kIsAsync, async, cb, value);
 }
 
 export function _html(html: string) {
@@ -770,7 +783,7 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const scope = scopeWithId(state, scopeId);
   const pending = target.writeScopes[scopeId];
   state.needsMainRuntime = true;
-  countResumeWrite($chunk.boundary);
+  countResumeWrite($chunk);
   Object.assign(scope, partialScope);
 
   // Each serialize state only flushes the props it wrote itself; the
@@ -948,7 +961,8 @@ export function _await<T>(
 
   const chunk = $chunk;
   const { boundary } = chunk;
-  chunk.next = $chunk = chunk.fork(boundary, chunk.next);
+  const startId = _peek_scope_id();
+  const after = (chunk.next = $chunk = chunk.fork(boundary, chunk.next));
   chunk.async = true;
   captureContext(chunk);
   boundary.startAsync();
@@ -964,7 +978,9 @@ export function _await<T>(
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
-              withBranchId(branchId, () => withIsAsync(content, value));
+              withBranchId(branchId, () =>
+                withIsAsync({ parent: getAsyncContent(chunk) }, content, value),
+              );
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(
                   ResumeSymbol.BranchEnd,
@@ -972,7 +988,20 @@ export function _await<T>(
                 ),
               );
             } else {
-              withIsAsync(content, value);
+              const renderedSince = _peek_scope_id() !== startId;
+              const async: AsyncContent = { parent: getAsyncContent(chunk) };
+              withIsAsync(async, content, value);
+              // Branches rendered after it while it waited took smaller ids and would adopt
+              // its scopes; nothing follows content ending the page or a reordered `<try>` body.
+              async.visit =
+                renderedSince && (after.html || after.next)
+                  ? $chunk.boundary.state.mark(
+                      ResumeSymbol.BranchEnd,
+                      scopeId + " " + accessor,
+                    )
+                  : "";
+              if (async.resumed) $chunk.writeHTML(async.visit);
+              async.end = $chunk;
             }
           });
           boundary.endAsync();
@@ -1188,8 +1217,27 @@ const NOOP = () => {};
 
 // Counted up the parent chain so an enclosing `<try>` sees writes from nested
 // bodies, including ones reordered out of its own chunk chain.
-function countResumeWrite(boundary: Boundary | undefined) {
-  for (; boundary; boundary = boundary.parent) boundary.resumeWrites++;
+function countResumeWrite(chunk: Chunk) {
+  for (
+    let boundary: Boundary | undefined = chunk.boundary;
+    boundary;
+    boundary = boundary.parent
+  ) {
+    boundary.resumeWrites++;
+  }
+  // Content settling later still owes each enclosing unmarked await its visit.
+  for (
+    let async = getAsyncContent(chunk);
+    async && !async.resumed;
+    async = async.parent
+  ) {
+    async.resumed = true;
+    async.end?.writeHTML(async.visit!);
+  }
+}
+
+function getAsyncContent(chunk: Chunk) {
+  return chunk.context?.[kIsAsync] as AsyncContent | undefined;
 }
 
 type Mark = Mark.Value;
@@ -1426,7 +1474,7 @@ export class Chunk {
   }
 
   writeEffect(scopeId: number, registryId: string) {
-    countResumeWrite(this.boundary);
+    countResumeWrite(this);
     if (this.lastEffect === registryId) {
       this.effects += " " + scopeId;
     } else {
