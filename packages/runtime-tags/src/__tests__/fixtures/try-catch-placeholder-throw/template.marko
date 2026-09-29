@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <@placeholder>
+    loading ${(() => { throw new Error("placeholder") })()}
+  </@placeholder>
+  <@catch|err|>
+    caught ${err.message}
+  </@catch>
+  <await|value|=resolveAfter("body", 1)>
+    ${value}
+  </await>
+</try>

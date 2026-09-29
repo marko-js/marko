@@ -43,7 +43,6 @@ import {
 import {
   collectScopes,
   destroyBranch,
-  findBranchWithKey,
   insertBranchBefore,
   removeAndDestroyBranch,
   syncGen,
@@ -89,18 +88,15 @@ export function _await_promise(
     // a value after one settles through the count that one holds.
     const tryBranch: BranchScope | undefined =
       scope[tryAccessor] ||
-      (isPromise(promise) &&
-        findBranchWithKey(scope, AccessorProp.PlaceholderContent)) ||
+      (isPromise(promise) && findTryWithPlaceholder(scope)) ||
       awaitBranch;
     if (!tryBranch) {
       // `_await_content` creates the branch, or resume adopts a streamed one
       // as its `@placeholder` completes; either runs the deferred latest value.
       const deferred = (scope[promiseAccessor] = () =>
         deferred === scope[promiseAccessor] && awaitPromise(scope, promise));
-      const awaitCounter = findBranchWithKey(
-        scope,
-        AccessorProp.PlaceholderContent,
-      )?.[AccessorProp.AwaitCounter];
+      const awaitCounter =
+        findTryWithPlaceholder(scope)?.[AccessorProp.AwaitCounter];
       if (awaitCounter?.i) {
         const complete = awaitCounter.c;
         awaitCounter.c = () => complete() || queueAsyncRender(scope, deferred);
@@ -212,7 +208,7 @@ export function _await_promise(
           // Complete after the catch renders to dismiss an ancestor `@placeholder`
           // (renderCatch unwinds only its own try); zero a placeholder-less or resumed one.
           if (tryBranch !== awaitBranch && !awaitCounter!.m) {
-            if (findBranchWithKey(scope, AccessorProp.CatchContent)) {
+            if (findTryWithCatch(scope)) {
               queueCompleteAwaitCounter(tryBranch, awaitCounter!);
             } else {
               // Won't fix: with no `@catch`, renderCatch rethrows and the flush drops its
@@ -261,7 +257,7 @@ export function _await_content(
 
 export function addAwaitCounter(
   scope: Scope,
-  tryBranch = findBranchWithKey(scope, AccessorProp.PlaceholderContent),
+  tryBranch = findTryWithPlaceholder(scope),
 ): AwaitCounter | undefined {
   if (!tryBranch) return;
   let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
@@ -271,17 +267,19 @@ export function addAwaitCounter(
     );
   }
   scheduleAwaitFrame(awaitCounter, tryBranch, () => {
+    // Parented beside the try for effects and awaits; the try still catches its errors.
+    (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
+      tryBranch[AccessorProp.Global],
+      (
+        tryBranch[AccessorProp.PlaceholderContent] as ReturnType<
+          typeof _content
+        >
+      )(),
+      tryBranch[AccessorProp.Owner]!,
+      tryBranch[AccessorProp.StartNode].parentNode!,
+    ))[AccessorProp.TryBranch] = tryBranch;
     insertBranchBefore(
-      (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
-        tryBranch[AccessorProp.Global],
-        (
-          tryBranch[AccessorProp.PlaceholderContent] as ReturnType<
-            typeof _content
-          >
-        )(),
-        tryBranch[AccessorProp.Owner]!,
-        tryBranch[AccessorProp.StartNode].parentNode!,
-      )),
+      tryBranch[AccessorProp.PlaceholderBranch],
       tryBranch[AccessorProp.StartNode].parentNode!,
       tryBranch[AccessorProp.StartNode],
     );
@@ -413,7 +411,7 @@ export function _try(
 // Catching destroys the content branch (and its subscriptions) for good: a new
 // promise can't recover the boundary, only re-rendering the `<try>` itself.
 export function renderCatch(scope: Scope, error: unknown) {
-  const tryWithCatch = findBranchWithKey(scope, AccessorProp.CatchContent);
+  const tryWithCatch = findTryWithCatch(scope);
   if (!tryWithCatch) {
     throw error;
   } else {
@@ -443,6 +441,26 @@ export function renderCatch(scope: Scope, error: unknown) {
       [error],
     );
   }
+}
+
+// `ParentBranch` links a branch to its enclosing one (on resume through the serialized
+// closest branch id and markers), and a `@placeholder` is parented beside its `<try>`.
+function findTryWithPlaceholder(scope: Scope) {
+  let branch = scope[AccessorProp.ClosestBranch];
+  while (branch && !branch[AccessorProp.PlaceholderContent]) {
+    branch = branch[AccessorProp.ParentBranch];
+  }
+  return branch;
+}
+
+// A `@placeholder`'s errors belong to its own `<try>`, which it reaches through `TryBranch`.
+function findTryWithCatch(scope: Scope) {
+  let branch = scope[AccessorProp.ClosestBranch];
+  while (branch && !branch[AccessorProp.CatchContent]) {
+    branch =
+      branch[AccessorProp.TryBranch] || branch[AccessorProp.ParentBranch];
+  }
+  return branch;
 }
 
 export const _if = /*@__PURE__*/ withBranches(
