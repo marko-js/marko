@@ -83,8 +83,8 @@ export default {
       addReasonExprs(getSlot(nodeBinding), tagExtra);
     }
 
-    // The whole client template records here (children are skipped); the html
-    // output stream writes its own markers during translate.
+    // The whole client template records here (its text children record none);
+    // the html output stream writes its own markers during translate.
     const write = structure.writeTo(tag);
     if (nodeBinding) {
       structure.node(tag, nodeBinding);
@@ -99,8 +99,6 @@ export default {
     }
     structure.exit(tag);
     write`-->`;
-
-    tag.skip();
   },
   translate: {
     exit(tag) {
