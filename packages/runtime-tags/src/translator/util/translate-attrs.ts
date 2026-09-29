@@ -154,24 +154,24 @@ export function translateAttrs(
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     const { value } = attr;
-    if (t.isMarkoSpreadAttribute(attr)) {
-      if (knownSpread) {
-        // Analysis reads it prop by prop, so it spreads what those props read.
-        if (!getCanonicalBinding(knownSpread).pruned) {
-          attrProperties.push(
-            t.spreadElement(getDeclaredBindingExpression(knownSpread, true)),
-          );
-        }
-      } else if (!value.extra?.pruned) {
-        // Analysis drops a spread the child reads nothing from.
-        attrProperties.push(t.spreadElement(value));
+    if (t.isMarkoSpreadAttribute(attr) && knownSpread) {
+      // Analysis reads it prop by prop, so it spreads what those props read.
+      if (!getCanonicalBinding(knownSpread).pruned) {
+        attrProperties.push(
+          t.spreadElement(getDeclaredBindingExpression(knownSpread, true)),
+        );
       }
-    } else if (
-      !seen.has(attr.name) &&
-      getKnownFromPropTree(propTree, attr.name)
-    ) {
-      seen.add(attr.name);
-      attrProperties.push(toObjectProperty(attr.name, value));
+    } else if (!value.extra?.pruned) {
+      // Analysis drops a value nothing reads, so neither output emits it.
+      if (t.isMarkoSpreadAttribute(attr)) {
+        attrProperties.push(t.spreadElement(value));
+      } else if (
+        !seen.has(attr.name) &&
+        getKnownFromPropTree(propTree, attr.name)
+      ) {
+        seen.add(attr.name);
+        attrProperties.push(toObjectProperty(attr.name, value));
+      }
     }
   }
 
