@@ -1,4 +1,4 @@
-// size: 27385 (min) 10176 (brotli)
+// size: 27397 (min) 10185 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -177,6 +177,7 @@ let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor, endNode
 });
 let _dynamic_tag = /*@__PURE__*/ withBranches(
   (nodeAccessor, getContent, getTagVar, inputIsArgs) => {
+    let scopeOffsetAccessor = decodeAccessor(nodeAccessor + 1);
     nodeAccessor = decodeAccessor(nodeAccessor);
     let childScopeAccessor = "A" + nodeAccessor,
       rendererAccessor = "D" + nodeAccessor;
@@ -191,7 +192,8 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
           (setConditionalRenderer(scope, nodeAccessor, renderer, createBranchWithTagNameOrRenderer),
           getTagVar &&
             (scope[childScopeAccessor]
-              ? ((scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
+              ? ((scope[childScopeAccessor].L = scope[scopeOffsetAccessor] - 0.5),
+                (scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
                 typeof normalizedRenderer == "string" &&
                   bindNativeTagVar?.(scope[childScopeAccessor]))
               : getTagVar()(scope, void 0)),
@@ -203,7 +205,9 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
               content.f && subscribeToScopeSet(content.e, content.f, scope[childScopeAccessor].Aa));
           }
         } else
-          renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor]);
+          renderer &&
+            (setupBranch(renderer, scope[childScopeAccessor]),
+            renderer.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor]));
       }
       if (normalizedRenderer) {
         let childScope = scope[childScopeAccessor],
@@ -667,8 +671,6 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
             for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
           },
           -1,
-          0,
-          scopes[0].L,
         );
     };
   return ((ownerSignal._ = fn), ownerSignal);
@@ -681,8 +683,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
     mapAccessor = "O" + ownerLoopNodeAccessor,
     prevKeyProp = `_${ownerValueAccessor}`,
     ownerSignal = (ownerScope) => {
-      let scopes = toArray(ownerScope[scopeAccessor]);
-      if (ownerScope.H < runId && scopes.length) {
+      if (ownerScope.H < runId && toArray(ownerScope[scopeAccessor]).length) {
         let nextKey = ownerScope[ownerValueAccessor];
         queueRender(
           ownerScope,
@@ -697,8 +698,6 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
             map && (map[prevKeyProp] = nextKey);
           },
           -1,
-          0,
-          scopes[0].L,
         );
       }
     };
@@ -2010,19 +2009,18 @@ function reorderKeyed(newScopes, start, newEnd, parentNode, afterReference) {
 function createBranchWithTagNameOrRenderer($global, tagNameOrRenderer, parentScope, parentNode) {
   let branch = createBranch($global, tagNameOrRenderer, parentScope, parentNode);
   return (
-    typeof tagNameOrRenderer == "string"
-      ? (branch.a =
-          branch.S =
-          branch.K =
-            document.createElementNS(
-              tagNameOrRenderer === "svg"
-                ? "http://www.w3.org/2000/svg"
-                : tagNameOrRenderer === "math"
-                  ? "http://www.w3.org/1998/Math/MathML"
-                  : parentNode.namespaceURI,
-              tagNameOrRenderer,
-            ))
-      : setupBranch(tagNameOrRenderer, branch),
+    typeof tagNameOrRenderer == "string" &&
+      (branch.a =
+        branch.S =
+        branch.K =
+          document.createElementNS(
+            tagNameOrRenderer === "svg"
+              ? "http://www.w3.org/2000/svg"
+              : tagNameOrRenderer === "math"
+                ? "http://www.w3.org/1998/Math/MathML"
+                : parentNode.namespaceURI,
+            tagNameOrRenderer,
+          )),
     branch
   );
 }

@@ -541,10 +541,12 @@ export default {
         const bodySection = getSectionForBody(tag.get("body"));
         const signal = getSignal(section, nodeBinding, "dynamicTag");
         let tagVarSignal: Signal | undefined;
-        if (tag.node.var) {
+        // Wired only when read or assigned, as on resume: only then does the
+        // branch find the scope offset it sorts by.
+        if (tag.node.var && isTagVarResumed(tag)) {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
-          tagVarSignal.register = isTagVarResumed(tag);
+          tagVarSignal.register = true;
           tagVarSignal.referenced = true;
           tagVarSignal.buildAssignment = (valueSection, value) => {
             const changeArgs = [

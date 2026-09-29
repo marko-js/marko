@@ -49,6 +49,7 @@ import {
   tempDetachBranch,
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
+import { getDebugKey } from "./walker";
 
 export function _await_promise(
   nodeAccessor: EncodedAccessor,
@@ -613,6 +614,15 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
     getTagVar?: (() => Signal<unknown>) | 0,
     inputIsArgs?: 1,
   ): Signal<Renderer | string | undefined> => {
+    // The walker reserves a tag variable's scope offset right after the node.
+    const scopeOffsetAccessor = MARKO_DEBUG
+      ? getDebugKey(
+          +(nodeAccessor as string).slice(
+            (nodeAccessor as string).lastIndexOf("/") + 1,
+          ) + 1,
+          "#scopeOffset",
+        )
+      : decodeAccessor((nodeAccessor as number) + 1);
     if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
     const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
     const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
@@ -636,6 +646,10 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
 
         if (getTagVar) {
           if (scope[childScopeAccessor]) {
+            // Sorts where a static child would, before the offset that orders
+            // the variable's readers, however late the branch is created.
+            scope[childScopeAccessor][AccessorProp.Id] =
+              scope[scopeOffsetAccessor] - 0.5;
             scope[childScopeAccessor][AccessorProp.TagVariable] = (
               value: unknown,
             ) => getTagVar()(scope, value);
@@ -669,12 +683,15 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
               );
             }
           }
-        } else if (renderer?.[RendererProp.Accessor]) {
-          subscribeToScopeSet(
-            renderer[RendererProp.Owner]!,
-            renderer[RendererProp.Accessor],
-            scope[childScopeAccessor],
-          );
+        } else if (renderer) {
+          setupBranch(renderer, scope[childScopeAccessor]);
+          if (renderer[RendererProp.Accessor]) {
+            subscribeToScopeSet(
+              renderer[RendererProp.Owner]!,
+              renderer[RendererProp.Accessor],
+              scope[childScopeAccessor],
+            );
+          }
         }
       }
 
@@ -1108,8 +1125,6 @@ function createBranchWithTagNameOrRenderer(
               : (parentNode as Element).namespaceURI,
           tagNameOrRenderer,
         );
-  } else {
-    setupBranch(tagNameOrRenderer, branch);
   }
 
   return branch;

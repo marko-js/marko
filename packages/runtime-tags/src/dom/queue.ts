@@ -16,6 +16,8 @@ export let rendering: undefined | 0 | 1;
 export let runId = 2; // resumed scopes get `1`
 export let pendingEffects: unknown[] = [];
 let pendingRenders: PendingRender[] = [];
+// Debug only: the run each render last ran in.
+const ranRenders = /*@__PURE__*/ new WeakMap<PendingRender, number>();
 
 // Orders pending renders across scopes; signal keys are per-section
 // binding ids, so they always fit well below the offset.
@@ -36,6 +38,15 @@ export function queueRender<T, U extends Scope = Scope>(
       render[PendingRenderProp.Gen] === runId ||
       (catchEnabled && render[PendingRenderProp.Pending])
     ) {
+      if (
+        MARKO_DEBUG &&
+        !render[PendingRenderProp.Pending] &&
+        ranRenders.get(render) === runId
+      ) {
+        console.error(
+          "A render was queued again after it ran in this update, so its latest value is dropped. This is a bug in Marko.",
+        );
+      }
       return;
     }
     render[PendingRenderProp.Gen] = runId;
@@ -184,6 +195,7 @@ function runRenders() {
       pendingRenders[i] = item;
     }
 
+    if (MARKO_DEBUG) ranRenders.set(render, runId);
     runRender(render);
   }
 }

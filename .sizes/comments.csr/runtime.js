@@ -1,4 +1,4 @@
-// size: 5889 (min) 2589 (brotli)
+// size: 5880 (min) 2583 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -327,8 +327,6 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
             for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
           },
           -1,
-          0,
-          scopes[0].L,
         );
     };
   return ((ownerSignal._ = fn), ownerSignal);
