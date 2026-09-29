@@ -7,7 +7,7 @@ const $await_content__setup = _script("a0", ($scope) => _on($scope.a, "click", f
 const $placeholder_content = _content("a1", "loading");
 const $await_content2 = /*@__PURE__*/ _await_content(2, " ", " ");
 const $for_content__await_promise = /*@__PURE__*/ _await_promise(2, $await_content2__$params);
-const $for_content__setup__script = _script("a3", ($scope) => _on($scope.a, "click", function() {
+const $for_content__setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$items($scope._, $scope._.c.filter((i) => i !== $scope.M));
 }));
 const $for_content__setup = ($scope) => {

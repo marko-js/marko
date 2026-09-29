@@ -50,7 +50,7 @@ const $clicks = /*@__PURE__*/ _let(4, ($scope) => {
 	$clicks__closure($scope);
 });
 const $tag = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($await_content__tag));
-const $setup__script = _script("a5", ($scope) => {
+const $setup__script = _script("a4", ($scope) => {
 	_on($scope.a, "click", function() {
 		$clicks($scope, +$scope.e + 1);
 	});

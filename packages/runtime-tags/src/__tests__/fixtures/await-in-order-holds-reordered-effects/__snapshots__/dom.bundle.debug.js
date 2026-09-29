@@ -32,10 +32,10 @@ const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 	$await_promise($scope, $scope.value ? $scope.value : resolveAfter($scope.value, 3));
 	$value__closure($scope);
 });
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$await_content2($scope);
 	$value($scope, 0);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

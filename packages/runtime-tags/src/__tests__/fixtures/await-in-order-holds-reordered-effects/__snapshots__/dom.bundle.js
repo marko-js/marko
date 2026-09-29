@@ -1,5 +1,5 @@
 // template.marko
-const $await_content2__v__script = _script("a4", ($scope) => console.log("effect " + $scope.c));
+const $await_content2__v__script = _script("a3", ($scope) => console.log("effect " + $scope.c));
 const $await_content2__v = /*@__PURE__*/ _const(2, ($scope) => {
 	_text($scope.a, $scope.c);
 	$await_content2__v__script($scope);

@@ -68,7 +68,7 @@ const $clicks = /*@__PURE__*/ _let("clicks/4", ($scope) => {
 });
 const $tag__closure = /*@__PURE__*/ _closure($await_content__tag);
 const $tag = /*@__PURE__*/ _let("tag/5", $tag__closure);
-const $try = /*@__PURE__*/ _try("#text/3", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/3", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$clicks($scope, +$scope.clicks + 1);
@@ -80,7 +80,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 function $setup($scope) {
 	$clicks($scope, 0);
 	$tag($scope, n5_default);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

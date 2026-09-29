@@ -22,14 +22,14 @@ const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 	_text($scope["#text/0"], $scope.value);
 	$value__closure($scope);
 });
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => (async () => {
 	await resolveAfter(0, 1);
 	$value($scope, 1);
 })());
 function $setup($scope) {
 	$value($scope, 0);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -6,6 +6,6 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$value__closure($scope);
 });
-const $setup__script = _script("a3", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$value($scope, +$scope.d + 1);
 }));

@@ -24,8 +24,8 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(0, 1));
 	$try_content__await_promise2($scope, resolveAfter(0, 1));
 };
-const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content__setup);
-const $if_content__setup = ($scope) => $if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content__setup, $placeholder_content);
+const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $show__closure = /*@__PURE__*/ _closure($await_content__show);
 const $show = /*@__PURE__*/ _let("show/2", ($scope) => {

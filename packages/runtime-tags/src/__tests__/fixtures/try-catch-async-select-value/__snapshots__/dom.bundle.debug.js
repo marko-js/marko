@@ -13,9 +13,9 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, rejectAfter(new Error("x"), 1));
 };
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 function $setup($scope) {
 	_attr_select_value_default($scope, "#select/0", "b");
-	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

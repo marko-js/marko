@@ -14,12 +14,9 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_value($scope);
 	$await_content($scope);
 };
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content, $catch_content);
 function $setup($scope) {
-	$try($scope, {
-		catch: attrTag({ content: $catch_content($scope) }),
-		placeholder: attrTag({ content: $placeholder_content($scope) })
-	});
+	$try($scope);
 }
 const $input = ($scope, input) => $input_value($scope, input.value);
 const $input_value__closure = /*@__PURE__*/ _closure($try_content__input_value);

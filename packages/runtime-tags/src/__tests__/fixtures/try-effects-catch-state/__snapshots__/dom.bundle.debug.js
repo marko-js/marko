@@ -20,9 +20,9 @@ const $try_content__setup = ($scope) => {
 };
 const $clickCount__closure = /*@__PURE__*/ _closure($try_content__clickCount);
 const $clickCount = /*@__PURE__*/ _let("clickCount/2", $clickCount__closure);
-const $try = /*@__PURE__*/ _try("#text/1", "<button>inc</button> -- <!>", " c%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<button>inc</button> -- <!>", " c%", $try_content__setup, 0, $catch_content);
 function $setup($scope) {
 	$clickCount($scope, 0);
-	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

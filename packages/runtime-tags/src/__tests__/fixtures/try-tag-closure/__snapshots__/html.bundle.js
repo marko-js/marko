@@ -3,13 +3,13 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const value = "Hello";
-	_try($scope0_id, "a", _content_resume("a1", () => {
-		_scope_id();
+	_try($scope0_id, "a", () => {
 		_scope_reason();
+		_scope_id();
 		_html(_escape(value));
-	}, $scope0_id), { catch: attrTag({ content: _content_resume("a0", () => {
+	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("error");
-	}, $scope0_id) }) });
+	}, void 0, "a0");
 }, 1);

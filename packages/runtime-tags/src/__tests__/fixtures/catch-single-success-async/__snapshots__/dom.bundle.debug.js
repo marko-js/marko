@@ -12,12 +12,12 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("c", 2));
 };
-const $try = /*@__PURE__*/ _try("#text/0", "b<!>d", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "b<!>d", "b%", $try_content__setup, 0, $catch_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", " ", " ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
 function $setup($scope) {
 	$await_content2($scope);
-	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
+	$try($scope);
 	$await_promise($scope, resolveAfter("g", 1));
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

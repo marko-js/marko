@@ -13,23 +13,23 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = input.value;
-	_try($scope0_id, "a", _content_resume("b1", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "a", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_set_serialize_reason(2);
 		const $childScope = _peek_scope_id();
 		$Child_withLoadAssets({ value: count });
 		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
-		}), "b2");
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("b0", () => {
+		}), "b0");
+	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
-	}, $scope0_id) }) });
+	}, void 0, "b1");
 	_html(`<button>click</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "b3");
+	_script($scope0_id, "b2");
 	_scope($scope0_id, {
 		f: count,
 		g: $count__closures

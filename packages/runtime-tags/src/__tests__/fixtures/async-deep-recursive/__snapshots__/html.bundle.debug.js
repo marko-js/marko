@@ -7,9 +7,9 @@ const $content = (input) => {
 		if (input.level) {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attr("data-level", input.level)}>`);
-			_try($scope1_id, "#text/1", _content_resume("__tests__/tags/recurse.marko_2*content", () => {
-				const $scope2_id = _scope_id();
+			_try($scope1_id, "#text/1", () => {
 				const $scope2_reason = _scope_reason();
+				const $scope2_id = _scope_id();
 				_await($scope2_id, "#text/0", resolveAfter(0), () => {
 					const $scope3_id = _scope_id();
 					_set_serialize_reason($sg__input_level << 1);
@@ -22,11 +22,11 @@ const $content = (input) => {
 					$sg__input_level || $si__input_level && _resume_branch($scope3_id);
 				}, $sg__input_level);
 				$si__input_level && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/recurse.marko", "5:5");
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/tags/recurse.marko_4*content", () => {
+			}, () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html("LOADING...");
-			}, $scope1_id) }) });
+			}, void 0, "__tests__/tags/recurse.marko_4*content");
 			_html(`</div>${_el_resume($scope1_id, "#div/0", $sg__input_level)}`);
 			$si__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/recurse.marko", "3:1");
 			return 0;

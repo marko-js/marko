@@ -3,10 +3,10 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content("b2", "<span class=err> </span>", "D ", 0, $catch_content__$params);
-const $placeholder_content = _content("b1", "loading");
+const $catch_content = _content("b3", "<span class=err> </span>", "D ", 0, $catch_content__$params);
+const $placeholder_content = _content("b2", "loading");
 const $try_content__focusChild = _var_resume("b0", /*@__PURE__*/ _const(4));
-const $try_content__setup__script = _script("b4", ($scope) => _on($scope.d, "click", function() {
+const $try_content__setup__script = _script("b1", ($scope) => _on($scope.d, "click", function() {
 	$scope.e();
 }));
 const $try_content__setup = ($scope) => {
@@ -15,14 +15,11 @@ const $try_content__setup = ($scope) => {
 	$load_Child_tag_input_label($scope.b, "x");
 	$try_content__setup__script($scope);
 };
-const $if_content__try = /*@__PURE__*/ _try(0, "<!><!><button class=focus>focus</button>", "b%0&b ", $try_content__setup);
-const $if_content__setup = ($scope) => $if_content__try($scope, {
-	placeholder: attrTag({ content: $placeholder_content($scope) }),
-	catch: attrTag({ content: $catch_content($scope) })
-});
+const $if_content__try = /*@__PURE__*/ _try(0, "<!><!><button class=focus>focus</button>", "b%0&b ", $try_content__setup, $placeholder_content, $catch_content);
+const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__setup);
 const $mounted = /*@__PURE__*/ _let(2, ($scope) => $if($scope, $scope.c ? 0 : 1));
-const $setup__script = _script("b5", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("b4", ($scope) => _on($scope.a, "click", function() {
 	$mounted($scope, true);
 }));
 

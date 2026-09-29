@@ -3,20 +3,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
-	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_2*content", () => {
-		const $scope2_id = _scope_id();
+	_try($scope0_id, "#text/0", () => {
 		_scope_reason();
+		const $scope2_id = _scope_id();
 		_await($scope2_id, "#text/0", resolveAfter("done", 1), (x) => {
 			const $scope4_id = _scope_id();
 			_html(`<span>${_escape(x)}</span>${_el_resume($scope4_id, "#span/0")}`);
 			_script($scope4_id, "__tests__/template.marko_4");
 			_scope($scope4_id, { x }, "__tests__/template.marko", "5:4", { x: "5:10" });
 		});
-	}, $scope0_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
+	}, () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("loading");
-	}, $scope0_id) }) });
+	}, void 0, "__tests__/template.marko_3*content");
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>${_escape(item)}:`);

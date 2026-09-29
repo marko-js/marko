@@ -990,17 +990,11 @@ export function _try(
   scopeId: number,
   accessor: Accessor,
   content: () => void,
-  input: {
-    placeholder?: { content?(): void };
-    catch?: { content?(err: unknown): void };
-  },
+  placeholderContent?: ServerRenderer,
+  catchContent?: ServerRenderer,
+  placeholderId?: string,
+  catchId?: string,
 ) {
-  const catchContent = input.catch
-    ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
-    : undefined;
-  const placeholderContent = normalizeDynamicRenderer(input.placeholder) as
-    | ServerRenderer
-    | undefined;
   // The placeholder's branch id precedes the body's so the walker parents it
   // to the try's enclosing branch (a sibling of the try), as CSR does.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
@@ -1010,29 +1004,29 @@ export function _try(
   const { state } = boundary;
   const { resumeWrites } = boundary;
   const beforeBranch = deferBranchStart(chunk);
-  // Whether `tryBoundary` writes the catch and placeholder renderers itself
-  // once the body settles.
-  let renderersAtSettle = false;
-
-  if (catchContent !== undefined || placeholderContent) {
-    renderersAtSettle = tryBoundary(
-      placeholderContent
-        ? () =>
-            tryPlaceholder(
-              content,
-              placeholderContent,
-              branchId,
-              scopeId,
-              placeholderBranchId,
-            )
-        : content,
-      catchContent,
-      placeholderContent,
+  const renderers = (): void =>
+    writeTryRenderers(
       branchId,
+      catchContent && _resume(catchContent, catchId!),
+      placeholderContent && _resume(placeholderContent, placeholderId!),
     );
-  } else {
-    withBranchId(branchId, content);
-  }
+  // Whether `tryBoundary` writes the renderers itself once the body settles,
+  // or not at all once its `@catch` rendered.
+  const renderersWritten = tryBoundary(
+    placeholderContent
+      ? () =>
+          tryPlaceholder(
+            content,
+            placeholderContent,
+            branchId,
+            scopeId,
+            placeholderBranchId,
+          )
+      : content,
+    catchContent,
+    branchId,
+    renderers,
+  );
 
   // Custom and dynamic tags hide from analysis whether the body resumes, so its
   // render decides: an async or resumable body keeps its marks, others drop them.
@@ -1040,9 +1034,7 @@ export function _try(
   applyBranchStart(chunk, beforeBranch, rendered);
   if (!rendered) return;
 
-  if (!renderersAtSettle) {
-    writeTryRenderers(branchId, catchContent, placeholderContent);
-  }
+  if (!renderersWritten) renderers();
   $chunk.writeHTML(
     state.mark(
       ResumeSymbol.BranchEnd,
@@ -1083,9 +1075,9 @@ function tryPlaceholder(
 // at settle, and only if the settled body (or a fired catch) resumes at all.
 function tryBoundary(
   content: () => void,
-  catchContent: ServerRenderer | 0 | undefined,
-  placeholderContent: ServerRenderer | undefined,
+  catchContent: ServerRenderer | undefined,
   branchId: number,
+  renderers: () => void,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -1099,12 +1091,13 @@ function tryBoundary(
   if (catchBoundary.signal.aborted) {
     // Sync error. The body's already-written scopes stay in the resume payload
     // as dead fills; a `@catch` firing is rare enough not to warrant dropping them.
-    if (catchContent === undefined) {
-      boundary.abort(catchBoundary.signal.reason);
-    } else if (catchContent) {
+    if (catchContent) {
       catchContent(catchBoundary.signal.reason);
+    } else {
+      boundary.abort(catchBoundary.signal.reason);
     }
-    return false;
+    // A rendered `@catch` is not a try, as on the client: it gets no renderers.
+    return true;
   }
 
   if (body === bodyEnd) {
@@ -1121,7 +1114,7 @@ function tryBoundary(
   boundary.startAsync();
 
   // With a catch, markers let it take the body's place in the stream.
-  const reorderId = catchContent === undefined ? "" : state.nextReorderId();
+  const reorderId = catchContent ? state.nextReorderId() : "";
   const endMarker = reorderId && state.mark(Mark.PlaceholderEnd, reorderId);
   if (reorderId) {
     chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
@@ -1164,28 +1157,13 @@ function tryBoundary(
       }
 
       const catchChunk = chunk.fork(boundary, null);
-      const { resumeWrites } = boundary;
       catchChunk.reorderId = reorderId;
-      // The body is discarded, so only a catch that itself resumes needs them.
-      if (
-        (catchChunk.render(
-          catchContent || NOOP,
-          catchBoundary.signal.reason,
-        ) !== catchChunk ||
-          boundary.resumeWrites !== resumeWrites) &&
-        renderersAtSettle
-      ) {
-        catchChunk.render(() =>
-          writeTryRenderers(branchId, catchContent, placeholderContent),
-        );
-      }
+      catchChunk.render(catchContent!, catchBoundary.signal.reason);
       state.reorder(catchChunk);
       boundary.endAsync();
     } else if (!catchBoundary.count) {
       if (renderersAtSettle && catchBoundary.resumeWrites) {
-        bodyEnd.render(() =>
-          writeTryRenderers(branchId, catchContent, placeholderContent),
-        );
+        bodyEnd.render(renderers);
       }
       boundary.endAsync();
     } else {
@@ -1197,7 +1175,7 @@ function tryBoundary(
 
 function writeTryRenderers(
   branchId: number,
-  catchContent: ServerRenderer | 0 | undefined,
+  catchContent: ServerRenderer | undefined,
   placeholderContent: ServerRenderer | undefined,
 ) {
   writeScope(branchId, {

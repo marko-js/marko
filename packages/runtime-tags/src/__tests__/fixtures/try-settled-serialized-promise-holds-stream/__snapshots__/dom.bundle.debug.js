@@ -41,13 +41,13 @@ const $try_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/2"], $scope["#text/1"]);
 	$try_content__await_promise($scope, resolveAfter("a", 1));
 };
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!><!>", "b%b%/&", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!><!>", "b%b%/&", $try_content__setup, 0, $catch_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/2", "<p> </p>", "D ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content2__$params);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$await_content2($scope);
-	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
+	$try($scope);
 	$await_promise($scope, resolveAfter("b", 3));
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

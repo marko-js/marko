@@ -36,9 +36,9 @@ const $placeholder_content__setup = ($scope) => {
 const $placeholder_content = _content("__tests__/template.marko_1*content", "<button>loading <!></button>", " Db%", $placeholder_content__setup);
 const $clicks__closure = /*@__PURE__*/ _closure($placeholder_content__clicks, $await_content__clicks);
 const $clicks = /*@__PURE__*/ _let("clicks/1", $clicks__closure);
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$clicks($scope, 0);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

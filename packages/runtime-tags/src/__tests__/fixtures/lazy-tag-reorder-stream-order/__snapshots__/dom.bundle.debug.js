@@ -49,7 +49,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter("reordered", 1));
 };
 const $shared = /*@__PURE__*/ _const("shared");
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%/&", $await_content2__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
 function $setup($scope) {
@@ -58,7 +58,7 @@ function $setup($scope) {
 		reordered: 1,
 		streamed: 2
 	});
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 	$await_promise($scope, resolveAfter("streamed", 2));
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

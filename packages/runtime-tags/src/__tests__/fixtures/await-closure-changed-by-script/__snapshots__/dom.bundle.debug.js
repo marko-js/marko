@@ -25,7 +25,7 @@ const $n__closure = /*@__PURE__*/ _closure($await_content__n);
 const $n = /*@__PURE__*/ _let("n/2", $n__closure);
 const $m__closure = /*@__PURE__*/ _closure($await_content__m);
 const $m = /*@__PURE__*/ _let("m/3", $m__closure);
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$m($scope, +$scope.m + 1);
@@ -35,7 +35,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 function $setup($scope) {
 	$n($scope, 1);
 	$m($scope, 2);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -14,9 +14,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $show__closures = new Set();
 	let show = false;
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	_try($scope0_id, "#text/1", _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_if(() => {
 			if (show) {
 				const $scope4_id = _scope_id();
@@ -26,19 +26,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0");
 		_subscribe($show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"), "__tests__/template.marko_1_show#2/subscribe");
-	}, $scope0_id), {
-		placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
-			_scope_reason();
-			const $scope2_id = _scope_id();
-			_html("<div id=loading>loading</div>");
-		}, $scope0_id) }),
-		catch: attrTag({ content: _content_resume("__tests__/template.marko_3*content", (err) => {
-			const $scope3_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope3_reason, 0);
-			const $scope3_id = _scope_id();
-			_html(`<div id=error>${_text_resume($scope3_id, "#text/0", err.message, $sg__err_message)}</div>`);
-			_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "12:4");
-		}, $scope0_id) })
-	});
+	}, () => {
+		_scope_reason();
+		const $scope2_id = _scope_id();
+		_html("<div id=loading>loading</div>");
+	}, (err) => {
+		const $scope3_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope3_reason, 0);
+		const $scope3_id = _scope_id();
+		_html(`<div id=error>${_text_resume($scope3_id, "#text/0", err.message, $sg__err_message)}</div>`);
+		_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "12:4");
+	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { "ClosureScopes:show/3": $show__closures }, "__tests__/template.marko", 0);
 }, 1);

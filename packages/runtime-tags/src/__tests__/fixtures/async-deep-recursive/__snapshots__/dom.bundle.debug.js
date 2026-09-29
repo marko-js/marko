@@ -12,10 +12,10 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(0));
 };
 const $if_content__input_level = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _attr($scope["#div/0"], "data-level", $scope._.input_level));
-const $if_content__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);
+const $if_content__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $if_content__setup = ($scope) => {
 	$if_content__input_level._($scope);
-	$if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$if_content__try($scope);
 };
 const $if = /*@__PURE__*/ _if("#text/0", "<div><!></div>", " D%", $if_content__setup);
 const $input_level__closure = /*@__PURE__*/ _closure($await_content__input_level);

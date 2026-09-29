@@ -35,9 +35,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (mounted) {
 			const $scope1_id = _scope_id();
-			_try($scope1_id, "#text/0", _content_resume("__tests__/template.marko_2*content", () => {
-				const $scope2_id = _scope_id();
+			_try($scope1_id, "#text/0", () => {
 				_scope_reason();
+				const $scope2_id = _scope_id();
 				const $childScope = _peek_scope_id();
 				let focusChild = $Child_withLoadAssets({ label: "x" });
 				_var($scope2_id, "#scopeOffset/2", $childScope, "__tests__/template.marko_2_focusChild#4/var");
@@ -47,19 +47,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					focusChild,
 					"#childScope/1": _existing_scope($childScope)
 				}, "__tests__/template.marko", "6:4", { focusChild: "7:12" });
-			}, $scope1_id), {
-				placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
-					_scope_reason();
-					const $scope3_id = _scope_id();
-					_html("loading");
-				}, $scope1_id) }),
-				catch: attrTag({ content: _content_resume("__tests__/template.marko_4*content", (err) => {
-					const $scope4_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope4_reason, 0);
-					const $scope4_id = _scope_id();
-					_html(`<span class=err>${_text_resume($scope4_id, "#text/0", err.message, $sg__err_message)}</span>`);
-					_serialize_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "10:6");
-				}, $scope1_id) })
-			});
+			}, () => {
+				_scope_reason();
+				const $scope3_id = _scope_id();
+				_html("loading");
+			}, (err) => {
+				const $scope4_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope4_reason, 0);
+				const $scope4_id = _scope_id();
+				_html(`<span class=err>${_text_resume($scope4_id, "#text/0", err.message, $sg__err_message)}</span>`);
+				_serialize_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "10:6");
+			}, "__tests__/template.marko_3*content", "__tests__/template.marko_4*content");
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}

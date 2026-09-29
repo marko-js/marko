@@ -7,18 +7,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_try($scope1_id, "#text/0", _content_resume("__tests__/template.marko_2*content", () => {
-				const $scope2_id = _scope_id();
+			_try($scope1_id, "#text/0", () => {
 				_scope_reason();
+				const $scope2_id = _scope_id();
 				_await($scope2_id, "#text/0", resolveAfter(0, 1), () => {
 					const $scope4_id = _scope_id();
 					_script($scope4_id, "__tests__/template.marko_4", 0);
 				}, 0);
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_3*content", () => {
+			}, () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html("loading...");
-			}, $scope1_id) }) });
+			}, void 0, "__tests__/template.marko_3*content");
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:1");
 			return 0;
 		}

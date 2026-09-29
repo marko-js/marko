@@ -16,13 +16,13 @@ const $query = /*@__PURE__*/ _let("query/3", ($scope) => {
 	_text($scope["#text/1"], $scope.query);
 	$query__closure($scope);
 });
-const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$query($scope, $scope.query === "a" ? "b" : "");
 }));
 function $setup($scope) {
 	$query($scope, "a");
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -17,18 +17,18 @@ const $await_content__$params = ($scope, $params2) => $await_content__data($scop
 const $placeholder_content = _content("__tests__/template.marko_2*content", "_B_");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__try = /*@__PURE__*/ _try("#text/1", "e<!>g", "b%", $try_content2__setup);
+const $try_content__try = /*@__PURE__*/ _try("#text/1", "e<!>g", "b%", $try_content2__setup, $placeholder_content2);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter("c", 2));
-	$try_content__try($scope, { placeholder: attrTag({ content: $placeholder_content2($scope) }) });
+	$try_content__try($scope);
 };
-const $try = /*@__PURE__*/ _try("#text/0", "b<!>d<!><!>", "b%c%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "b<!>d<!><!>", "b%c%", $try_content__setup, $placeholder_content);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/1", " ", " ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content3__$params);
 function $setup($scope) {
 	$await_content3($scope);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 	$await_promise($scope, resolveAfter("i", 1));
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

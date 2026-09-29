@@ -11,7 +11,7 @@ const $await_content__n = /*@__PURE__*/ _closure_get(4, ($scope) => {
 const $await_content__m = /*@__PURE__*/ _closure_get(5, $await_content__n__OR__m, ($scope) => $scope._._, "a2");
 const $n = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($await_content__n));
 const $m = /*@__PURE__*/ _let(3, /* @__PURE__ */ _closure($await_content__m));
-const $setup__script = _script("a5", ($scope) => {
+const $setup__script = _script("a4", ($scope) => {
 	_on($scope.a, "click", function() {
 		$m($scope, +$scope.d + 1);
 	});

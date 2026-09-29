@@ -29,10 +29,10 @@ const $try_content__setup = ($scope) => {
 };
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
 const $count = /*@__PURE__*/ _let("count/1", $count__closure);
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 function $setup($scope) {
 	$count($scope, 0);
-	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
+	$try($scope);
 }
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "b%c", $setup);
 

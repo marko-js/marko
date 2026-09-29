@@ -34,12 +34,9 @@ const $placeholder_content__setup = ($scope) => {
 const $placeholder_content = _content("__tests__/template.marko_1*content", "<button>retry <!></button>", " Db%", $placeholder_content__setup);
 const $attempt__closure = /*@__PURE__*/ _closure($placeholder_content__attempt, $try_content__attempt);
 const $attempt = /*@__PURE__*/ _let("attempt/1", $attempt__closure);
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content, $catch_content);
 function $setup($scope) {
 	$attempt($scope, 1);
-	$try($scope, {
-		placeholder: attrTag({ content: $placeholder_content($scope) }),
-		catch: attrTag({ content: $catch_content($scope) })
-	});
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

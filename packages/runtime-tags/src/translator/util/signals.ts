@@ -88,7 +88,8 @@ export interface Signal {
   referenced?: boolean;
   values: Array<{
     signal: Signal;
-    value: t.Expression;
+    /** None for a signal that runs on the scope alone. */
+    value: t.Expression | undefined;
   }>;
   intersection: Opt<Signal>;
   /** Signals this one forwards into: they must declare first when the
@@ -102,7 +103,7 @@ export interface Signal {
   hasHTMLEffect: boolean;
   hasSideEffect: boolean;
   forcePersist: boolean;
-  inline: { value: t.Expression } | undefined;
+  inline: { value: t.Expression | undefined } | undefined;
   export: boolean;
   extraArgs: t.Expression[] | undefined;
   prependStatements: t.Statement[] | undefined;
@@ -702,11 +703,11 @@ export function getSignalFn(signal: Signal): t.Expression {
         signalHasStatements(value.signal)
           ? t.callExpression(value.signal.identifier, [
               scopeIdentifier,
-              value.value,
+              ...(value.value ? [value.value] : []),
               ...getTranslatedExtraArgs(value.signal),
             ])
           : withLeadingComment(
-              value.value,
+              value.value!,
               getDebugNames(value.signal.referencedBindings),
             ),
       ),
@@ -956,7 +957,7 @@ export function addValue(
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   signal: Signal,
-  value: t.Expression,
+  value?: t.Expression,
 ) {
   const parentSignal = getSignal(targetSection, referencedBindings);
   parentSignal.values.push({
@@ -965,7 +966,7 @@ export function addValue(
   });
 
   if (
-    (value.extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction
+    (value?.extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction
   ) {
     parentSignal.hasSideEffect = true;
   }

@@ -29,9 +29,9 @@ const $for_content__setup = ($scope) => {
 };
 const $for = /*@__PURE__*/ _for_of("#text/1", "<button><!>:<!></button>", " D%c%", $for_content__setup);
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => $for($scope, [$scope.items, (x) => x]));
-const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$items($scope, [1, 2]);
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

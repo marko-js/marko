@@ -3,14 +3,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_try($scope0_id, "#text/0", _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+	_try($scope0_id, "#text/0", () => {
 		_scope_reason();
+		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", rejectAfter(new Error("ERROR!"), 1), (data) => {
 			const $scope3_id = _scope_id();
 			_html(_escape(data));
 		}, 0);
-	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2*content", (error) => {
+	}, void 0, (error) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		const message = $global$1.settings.message;
@@ -26,5 +26,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			message: "8:12",
 			clicked: "9:10"
 		});
-	}, $scope0_id) }) });
+	}, void 0, "__tests__/template.marko_2*content");
 }, 1);

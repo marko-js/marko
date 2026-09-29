@@ -32,12 +32,12 @@ const $value_a = /*@__PURE__*/ _const("value_a", ($scope) => {
 });
 const $value_b__closure = /*@__PURE__*/ _closure($await_content__value_b);
 const $value_b = /*@__PURE__*/ _const("value_b", $value_b__closure);
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$value($scope, {
 		a: 1,
 		b: 1
 	});
-	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$try($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
