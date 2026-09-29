@@ -30,7 +30,7 @@ export interface Scope {
   // else live from an earlier run. See CONTEXT.md › Generation.
   [AccessorProp.Gen]: number;
   [AccessorProp.AbortControllers]:
-    | Record<string | number, AbortController | void>
+    | Record<string | number, { abort(): void; signal?: AbortSignal } | void>
     | undefined;
   [AccessorProp.ClosestBranch]: BranchScope | undefined;
   [AccessorProp.ClosestBranchId]: number | undefined;

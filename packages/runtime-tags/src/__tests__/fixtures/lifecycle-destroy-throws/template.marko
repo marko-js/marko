@@ -1,0 +1,5 @@
+<let/show=true/>
+<if=show>
+  <lifecycle onDestroy() { throw new Error("onDestroy failed"); }/>
+</if>
+<button#toggle onClick() { show = false }>Toggle</button>

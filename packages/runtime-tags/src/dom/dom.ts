@@ -23,7 +23,7 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
-import { $signal } from "./abort-signal";
+import { trackAbort } from "./abort-signal";
 import { rendererKey, setConditionalRenderer } from "./control-flow";
 import { type ControllableAttrs, controllableScripts } from "./controllable";
 import { _on } from "./event";
@@ -423,7 +423,7 @@ export function _lifecycle(
     } else {
       Object.assign(thisObj, thisObj.onMount?.());
     }
-    $signal(scope, accessor).onabort = () => thisObj.onDestroy?.();
+    trackAbort(scope, accessor, () => thisObj.onDestroy?.());
   }
 }
 
