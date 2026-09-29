@@ -150,6 +150,9 @@ export interface Binding {
   sources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one upstream. Set on alias roots only. */
   upstreamIntersection: Intersection | undefined;
+  /** The expressions its value is computed from, `false` for none; unset when
+   * analysis cannot see them, which makes it its own source. */
+  upstreamExpression: Opt<t.NodeExtra> | false;
   /** Complete only once `finalizeReferences` runs at program analyze exit. */
   reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
@@ -317,6 +320,7 @@ export function createBinding(
     excludeProperties,
     sources: undefined,
     upstreamIntersection: undefined,
+    upstreamExpression: undefined,
     reads: new Set(),
     aliases: new Set(),
     hoists: undefined,
@@ -1628,8 +1632,9 @@ function hasSerializedIntermediate(
 // The bindings a binding's value is computed from.
 function getValueInputs(binding: Binding): ReferencedBindings {
   if (binding.upstreamAlias) return binding.upstreamAlias;
-  const exprs = getBindingValueExprs().get(binding);
-  return typeof exprs === "boolean" ? undefined : getValueReferences(exprs);
+  if (binding.upstreamExpression) {
+    return getValueReferences(binding.upstreamExpression);
+  }
 }
 
 // The bindings value expressions read, apart from an initial value (which a
@@ -1859,14 +1864,16 @@ function resolveIntersectionSource(
     : undefined;
 }
 
-// The expressions a binding's value is made of: pruning drops a pure one
-// nothing reads, and the binding derives its sources from them.
+// A binding's value expressions, its sources and what pruning drops unread
+// when pure; a child template's binding settled, so a call site only links it.
 export function setBindingDownstream(
   binding: Binding,
   expr: boolean | Opt<t.NodeExtra>,
   exprs?: KnownExprs,
 ) {
-  getBindingValueExprs().set(binding, expr || false);
+  if (binding.section.program === getProgram().node.extra.section) {
+    binding.upstreamExpression = expr === true ? undefined : expr || false;
+  }
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
       expr.downstream = bindingUtil.add(expr.downstream, binding);
@@ -1876,9 +1883,6 @@ export function setBindingDownstream(
 }
 
 const [getResolvedSources] = createProgramState(() => new Set<Binding>());
-const [getBindingValueExprs] = createProgramState(
-  () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
-);
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
@@ -1944,9 +1948,9 @@ function getAliasRoot(binding: Binding) {
 }
 
 function resolveDerivedSources(binding: Binding) {
-  const exprs = getBindingValueExprs().get(binding);
+  const exprs = binding.upstreamExpression;
 
-  if (exprs === undefined || exprs === true) {
+  if (exprs === undefined) {
     binding.sources = createSources(binding, undefined);
   } else if (exprs) {
     const refs = getValueReferences(exprs);
@@ -2833,8 +2837,9 @@ export function pruneBinding(binding: Binding, settled?: true) {
     ) {
       // Its value is never emitted if that has no side effects, and the reads
       // and assignments inside the value go with it.
-      const exprs = getBindingValueExprs().get(binding);
-      if (exprs && exprs !== true) forEach(exprs, dropPureExtra);
+      if (binding.upstreamExpression) {
+        forEach(binding.upstreamExpression, dropPureExtra);
+      }
     }
   }
 
