@@ -56,6 +56,8 @@ type AssetFlush = (
 // module shares the one resolver — module scope is intentional, not a leak.
 let assetFlush: AssetFlush;
 
+// Flushes through the resolver a page entry sets as it evaluates: bundler integrations
+// render only after one has loaded, so the resolver is set whenever a lazy tag renders.
 export function withLoadAssets(
   renderer: ServerRenderer,
   assetId: string,
