@@ -198,7 +198,7 @@ order, DOM arrival, and effect order must remain aligned.
 
 Testing commands and fixture anatomy live in `AGENTS.md`. High-value examples:
 
-- `title-counter`: bindings → signals → scope/markers → resumed update/effect.
+- `title-stateful-placeholder`: bindings → signals → scope/markers → resumed update/effect.
 - `lazy-tag-nested-shared`: ready dependencies and cross-channel identity.
 
 Routing: serialization questions start in `references.ts` →

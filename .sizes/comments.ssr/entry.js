@@ -1,5 +1,5 @@
 // size: 115 (min) 100 (brotli)
-//#region packages/runtime-tags/src/__tests__/fixtures/custom-tags/basic-inert-collapsible-tree/tags/comments.marko
+//#region packages/runtime-tags/src/__tests__/fixtures/custom-tags/recursive-tag-collapsible-tree/tags/comments.marko
 const $for_content__open = /*@__PURE__*/ _let(12, ($scope) => {
   _attr($scope.a, "hidden", !$scope.m);
   _text($scope.d, $scope.m ? "[-]" : "[+]");

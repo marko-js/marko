@@ -213,7 +213,7 @@ describe("runtime-tags/translator-api", () => {
       assert.throws(
         () =>
           compiler.compileFileSync(
-            fixture("let/basic-counter/template.marko"),
+            fixture("let/let-increment-handler/template.marko"),
             {
               ...baseConfig,
               cache: new Map(),
