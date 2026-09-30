@@ -1,5 +1,4 @@
 // components/class-child.marko
-var import_vdom = require_vdom();
 var import_attr_tag = require_attr_tag();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());

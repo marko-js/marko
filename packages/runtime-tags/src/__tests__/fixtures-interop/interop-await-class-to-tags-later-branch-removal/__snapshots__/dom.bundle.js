@@ -1,5 +1,4 @@
 // components/counter.marko
-var import_vdom = require_vdom();
 const $template$2 = "<button class=inc> </button>";
 const $walks$2 = " D l";
 const $count = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));

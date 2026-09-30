@@ -519,9 +519,13 @@ function testFixtures(interop?: true) {
                       },
                     );
 
+                    // The inlined walker and reorder runtimes are measured by
+                    // `build:sizes`; what is left is what the fixture wrote.
                     if (optimize) {
                       stats.html = await getSizes(
-                        stripDefaultScript(chunks.join("")),
+                        stripOptimizeRuntime(
+                          stripDefaultScript(chunks.join("")),
+                        ),
                       );
                     }
 
