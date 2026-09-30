@@ -166,7 +166,9 @@ export const entryBuilder = {
     }
 
     if (fileMeta.classHydration) {
+      const loadImports = file.path.node.extra?.loadImports;
       for (const tag of fileMeta.tags) {
+        if (loadImports?.has(tag)) continue;
         if (tag.endsWith(".marko")) {
           visitChild(tag);
         } else if (/^@lasso\/marko-taglib\//.test(tag)) {
