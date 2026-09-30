@@ -1,0 +1,8 @@
+import { resolveAfter } from "../../../utils/resolve";
+try
+  @placeholder -- loading...
+  await=resolveAfter(0, 1)
+    let/value=1
+    button onClick() { value++ } -- ${value}
+    if=(value > 0)
+      span -- ${value}

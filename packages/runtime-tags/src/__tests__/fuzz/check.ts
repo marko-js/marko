@@ -114,7 +114,7 @@ export function writeCase(generated: Case, dir: string) {
   );
 }
 
-// A fixture reproducing the case: its template, child tag and steps.
+// A fixture reproducing the case, ready to move into `fixtures/<area>/`.
 export function writeFixture(generated: Case, failure: Failure, dir: string) {
   writeCase(generated, dir);
   const steps = [
@@ -128,10 +128,10 @@ export function writeFixture(generated: Case, failure: Failure, dir: string) {
     ),
   ];
   const imports = [
-    `import type { TestConfig } from "../../main.test";`,
-    steps.includes("wait") && `import { wait } from "../../utils/resolve";`,
+    `import type { TestConfig } from "../../../main.test";`,
+    steps.includes("wait") && `import { wait } from "../../../utils/resolve";`,
     steps.some((step) => step.startsWith("click(")) &&
-      `import { click } from "../../utils/steps";`,
+      `import { click } from "../../../utils/steps";`,
   ].filter(Boolean);
   fs.writeFileSync(
     path.join(dir, "test.ts"),

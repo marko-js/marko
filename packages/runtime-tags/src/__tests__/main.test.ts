@@ -129,12 +129,11 @@ function testFixtures(interop?: true) {
     interop ? "fixtures-interop" : "fixtures",
   );
   let fixtureIndex = 0;
-  for (const entry of fs.readdirSync(fixturesDir)) {
-    if (entry.endsWith(".skip")) continue;
+  for (const { area, entry } of listFixtures(fixturesDir, interop)) {
     if (!inShard(fixtureIndex++)) continue;
 
-    describe(entry, () => {
-      const fixtureDir = path.join(fixturesDir, entry);
+    describe(area ? `${area} ${entry}` : entry, () => {
+      const fixtureDir = path.join(fixturesDir, area, entry);
       const resolve = (file: string) => path.join(fixtureDir, file);
       const templateFile = resolve("template.marko");
       const testFile = resolve("test.ts");
@@ -492,6 +491,24 @@ function testFixtures(interop?: true) {
       }
     });
   }
+}
+
+// The main suite groups fixtures by the area they pin
+// (`fixtures/<area>/<fixture>`); the interop suite is one flat list.
+function listFixtures(fixturesDir: string, interop?: true) {
+  const fixtures: { area: string; entry: string }[] = [];
+  for (const area of interop ? [""] : fs.readdirSync(fixturesDir)) {
+    const areaDir = path.join(fixturesDir, area);
+    if (!interop && fs.existsSync(path.join(areaDir, "template.marko"))) {
+      throw new Error(
+        `Fixture "${area}" is outside an area; move it to fixtures/<area>/${area}.`,
+      );
+    }
+    for (const entry of fs.readdirSync(areaDir)) {
+      if (!entry.endsWith(".skip")) fixtures.push({ area, entry });
+    }
+  }
+  return fixtures;
 }
 
 function stripDefaultScript(html: string) {

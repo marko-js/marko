@@ -65,11 +65,11 @@ pnpm run test:serial -- --grep=lifecycle
 
 ### Adding tests
 
-Marko makes use of directory based test suites. Most work happens in Marko 6 ([`packages/runtime-tags`](../packages/runtime-tags)), where each directory under [`src/__tests__/fixtures/`](../packages/runtime-tags/src/__tests__/fixtures/) is one test:
+Marko makes use of directory based test suites. Most work happens in Marko 6 ([`packages/runtime-tags`](../packages/runtime-tags)), where each directory under [`src/__tests__/fixtures/<area>/`](../packages/runtime-tags/src/__tests__/fixtures/) is one test, grouped by the area of behavior it pins ([Fixture areas](../packages/runtime-tags/AGENTS.md#fixture-areas)):
 
 ```
 packages/runtime-tags/src/__tests__/fixtures/
-  <name>/
+  <area>/<name>/
     template.marko    # entry (required); custom tags go under tags/
     test.ts           # optional: export const config: TestConfig = { steps: [...] }
     sizes.json        # generated
@@ -78,13 +78,13 @@ packages/runtime-tags/src/__tests__/fixtures/
 
 [`main.test.ts`](../packages/runtime-tags/src/__tests__/main.test.ts) compiles and renders every fixture, server and browser, and compares the results with its `__snapshots__/`. The `TestConfig` options (`steps` for input updates and interactions, `error_*` for expected errors, `skip_*`) and each snapshot file are described in [Fixture anatomy](../packages/runtime-tags/AGENTS.md#fixture-anatomy).
 
-To add a new test, create a fixture directory, generate its snapshots, and review them as part of your change. The trailing space in the grep keeps it from matching other fixtures that share the prefix:
+To add a new test, create a fixture directory in its area, generate its snapshots, and review them as part of your change. The spaces in the grep keep it from matching other fixtures that share part of the name:
 
 ```
-pnpm run test:update -- --grep "runtime-tags/translator <name> "
+pnpm run test:update -- --grep " <name> "
 ```
 
-Marko 5 ([`packages/runtime-class`](../packages/runtime-class)) keeps its suites under [`test/`](../packages/runtime-class/test/), where a fixture is a `template.marko`, a `test.js` and an `expected.html`, as in [`render/fixtures/for-tag/`](../packages/runtime-class/test/render/fixtures/for-tag/).
+Marko 5 ([`packages/runtime-class`](../packages/runtime-class)) keeps its suites under [`test/`](../packages/runtime-class/test/), where a fixture is a `template.marko`, a `test.js` and an `expected.html`, as in [`render/fixtures/for/for-tag/`](../packages/runtime-class/test/render/fixtures/for/for-tag/).
 
 #### Skipping a test
 

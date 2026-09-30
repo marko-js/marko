@@ -12,6 +12,9 @@
     "CHANGELOG.md",
     "**/fixtures/*/*",
     "!**/fixtures/*/*.ts",
+    "!packages/runtime-tags/src/__tests__/fixtures/*/*",
+    "packages/runtime-tags/src/__tests__/fixtures/*/*/*",
+    "!packages/runtime-tags/src/__tests__/fixtures/*/*/*.ts",
     "input.*",
     "pnpm-lock.yaml",
     "snapshots"

@@ -1,9 +1,0 @@
-import { resolveAfter } from "../../utils/resolve";
-
-<let/count=0/>
-<try>
-  <@catch>error</@catch>
-  <await|value|=resolveAfter(10, 1)>
-    <button onClick() { count++ }>${count}:${value}</button>
-  </await>
-</try>

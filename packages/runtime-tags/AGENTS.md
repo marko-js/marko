@@ -91,14 +91,15 @@ export default {
 
 ## Testing
 
-Fixture-based snapshot tests driven by `src/__tests__/main.test.ts`. Fixtures live in `src/__tests__/fixtures/`, plus `fixtures-interop/` (Marko 5 ↔ 6 mixing, suite name `translator-interop`). A dir suffixed `.skip` is ignored.
+Fixture-based snapshot tests driven by `src/__tests__/main.test.ts`. Fixtures live in `src/__tests__/fixtures/<area>/<name>/` (see [Fixture areas](#fixture-areas)), plus `fixtures-interop/<name>/` (Marko 5 ↔ 6 mixing, suite name `translator-interop`). A dir suffixed `.skip` is ignored.
 
 From the repo root:
 
 ```sh
 pnpm test                                                            # whole suite, fanned across CPU cores
-pnpm test -- --grep "runtime-tags/translator <fixture> "             # one fixture (note trailing space)
-pnpm run test:update -- --grep "runtime-tags/translator <fixture> "  # regenerate its snapshots
+pnpm test -- --grep " <fixture> "                                    # one fixture (the spaces keep it from matching others)
+pnpm test -- --grep "translator <area> "                             # one area
+pnpm run test:update -- --grep " <fixture> "                         # regenerate its snapshots
 pnpm test -- --grep "translator-interop"                             # interop suite (run after base suite passes)
 MARKO_TEST_WRAPPERS=1 pnpm test                                      # also render each fixture inside a host's <if>, <for>, <try>, tag bodies and <define>, which must log alike (~4x slower)
 ```
@@ -107,10 +108,31 @@ Iterate scoped, then run `pnpm test` for everything; it fans across cores and re
 
 `pnpm run fuzz -- [--seed N] [--count N] [--jobs N]` (`src/__tests__/fuzz/`) generates templates from the shapes past bugs combined (state read across branches, loops and tag bodies, updated by clicks and input) and checks each with no expected output: it must compile, render without errors, log alike when resumed and client rendered (or settle alike when async), and log alike in debug and optimize. A seed reproduces its case; each failure is shrunk and written as a fixture directory under `src/__tests__/fuzz/dist/found/` with its `failure.txt`. Run it after a change to analysis, resume or control flow; a real failure becomes a named fixture (or an agent-feedback item when out of scope).
 
+### Fixture areas
+
+A fixture lives in the area of the behavior it pins (what a fix to it would touch), not of every feature it uses; a fixture outside an area fails the run. Compile errors live with the feature they validate; only generic ones (syntax, tag resolution, imports) go to `diagnostics`.
+
+| Area                                                 | Pins                                                                                                                 |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `if`, `for`, `show`                                  | the control flow tags: branches, rows, keyed moves                                                                   |
+| `await`, `try`                                       | async content and streaming; `@catch`/`@placeholder` boundaries and abort                                            |
+| `let`, `const`                                       | state and assignment (incl. controllable `<let>`); derived values                                                    |
+| `script`                                             | `<script>`, `<lifecycle>`, `$signal`, effect order and cleanup, `<log>`/`<debug>`                                    |
+| `custom-tags`, `dynamic-tags`, `attr-tags`, `define` | calling tags: input, body content, params, tag variables, `<return>`; `<${…}>`; `@` attribute tags; `<define>`       |
+| `controllable`                                       | bound native attributes and change handlers (`value:=`, `checked:=`, select/textarea/details/dialog)                 |
+| `native`                                             | native elements: attributes, class/style, events, spread, refs, text and escaping, `html-*` tags, namespaces, `<id>` |
+| `closures`                                           | reactivity across sections: closures, intersections, hoisted reads, pruning and registration                         |
+| `resume`                                             | serialization, resume walks and markers, adoption, inert regions, embedding, `$global`, runtime ids                  |
+| `lazy`                                               | `import … with { load }` and its triggers, order and failures                                                        |
+| `style`                                              | the `<style>` tag                                                                                                    |
+| `diagnostics`                                        | compile errors and warnings not specific to one feature                                                              |
+
+Name a fixture `<subject>-<condition>[-<outcome>]` in the codebase's vocabulary: never `basic-*`, a bare number or a repro nickname; `error-*` exactly when it expects an error.
+
 ### Fixture anatomy
 
 ```
-fixtures/<name>/
+fixtures/<area>/<name>/
   template.marko    # entry (required); custom tags under tags/
   test.ts           # optional: export const config: TestConfig = { ... }
   sizes.json        # generated compiled-size tracking
@@ -128,7 +150,7 @@ Adding or removing a recoverable diagnostic or deprecation therefore fails a `di
 
 `TestConfig` (see `main.test.ts`): `steps` (`[initialInput, ...]` where later steps are input updates, interactions — `click(selector, index?)` / `type(selector, value, index?)` from `utils/steps.ts`, labeled by their call in `render.md`, or a `(document) => {}` function for anything else — or async `Wait`/`Flush`/`Throws` controls), `error_compiler` (expect compile failure), `error_html` / `error_dom` (expect a render failure), `equivalent: false` (separate `render-ssr`/`render-csr` snapshots; unless a step updates input, where the SSR run stops, the `settled` test still requires both runs to end on the same page once pending work lands), `skip_settled` (the resumed page and client render end apart by design; comment why), `skip_wrapped` (logs differently inside a host's content by design; comment why), `embedded`, `load_order` / `reject_load` (lazy-chunk ordering and failure), `fix_guide`, `skip_optimize` / `skip_dom` / `skip_html` / `skip_csr` / `skip_ssr`, `skip_parity` (debug intentionally logs a diagnostic optimize cannot, so it keeps a separate `render.debug.md`), `runtime_id`. Each fixture runs in `debug` and `optimize` modes; CSR only runs in `debug`.
 
-To add a fixture: create the dir + `template.marko` (+ `test.ts` with steps exercising the behavior), run `test:update` scoped to it, then **read the generated snapshots as part of your change** — the mutation log in `render.md` shows update granularity (an unexpected extra `UPDATE:`/re-render is a regression), and the `.bundle.js` diff shows generated-code cost. Name a fixture for the behavior it pins, not the repro that found it; it fails without the change, uses current syntax (never deprecated features), and gets async values from `__tests__/utils/resolve.ts` (`resolveAfter`, `rejectAfter`). The summary names each changed snapshot family and why it changed.
+To add a fixture: create the dir under its area + `template.marko` (+ `test.ts` with steps exercising the behavior), run `test:update` scoped to it, then **read the generated snapshots as part of your change** — the mutation log in `render.md` shows update granularity (an unexpected extra `UPDATE:`/re-render is a regression), and the `.bundle.js` diff shows generated-code cost. Name a fixture for the behavior it pins, not the repro that found it; it fails without the change, uses current syntax (never deprecated features), and gets async values from `__tests__/utils/resolve.ts` (`resolveAfter`, `rejectAfter`). The summary names each changed snapshot family and why it changed.
 
 ## Workflows
 

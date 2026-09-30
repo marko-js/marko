@@ -53,11 +53,11 @@ Repro:
 
 - Translator claims: `pnpm run compile -- -o html|dom -d <file>` and read the output.
 - Runtime claims: write `./*.tmp.mjs` inside the repo (module resolution fails elsewhere), run with `node -r ~ts`, delete after.
-- Scoped tests: `pnpm test -- --grep "runtime-tags/translator <fixture> "`.
+- Scoped tests: `pnpm test -- --grep " <fixture> "`.
 
 Guard tests:
 
-- Fold into existing fixture families under `packages/*/src/__tests__/fixtures*`; no one-off test files.
+- Fold into existing fixture families under `packages/*/src/__tests__/fixtures*` (runtime-tags: `fixtures/<area>/`); no one-off test files.
 - Snapshots: `pnpm run test:update -- --grep "..."` per fixture; `pnpm run test:update` repo-wide.
 - Compile errors: `error_compiler: true` + snapshot. Runtime dev errors: snapshot under `## Console` with `skip_optimize: true`. SSR-only errors: `error_html: true, skip_csr: true`.
 - Debug-only diagnostics (`MARKO_DEBUG` `console.error`) must not change optimized output; match the controllable-select diagnostic pattern.

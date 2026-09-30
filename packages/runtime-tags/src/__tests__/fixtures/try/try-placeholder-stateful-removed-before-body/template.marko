@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../../utils/resolve";
+
+<let/show=true>
+<button onClick() { show = false }>hide</button>
+<if=show>
+  <try>
+    <@placeholder>
+      <lifecycle
+        onMount() { console.log("placeholder mounted") }
+        onDestroy() { console.log("placeholder destroyed") }
+      />
+      loading
+    </@placeholder>
+    <await=resolveAfter("done", 3)>done</await>
+  </try>
+</if>

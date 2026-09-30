@@ -16,7 +16,7 @@ All from repo root. Tests and tooling run directly from TS source (native Node t
 
 ```sh
 pnpm test                                                 # whole suite fanned across CPU cores (~3x faster than serial)
-pnpm test -- --grep "runtime-tags/translator <fixture> "  # scoped test run
+pnpm test -- --grep " <fixture> "                         # scoped test run (fixtures live in fixtures/<area>/<fixture>)
 pnpm run test:serial -- --grep "..."                      # same run in one process: bail at first failure, live output, --inspect-brk
 pnpm test -- <file.test.ts>                               # only the given spec files (dirs and globs work too)
 pnpm run test:update -- --grep "..."                      # regenerate snapshots (review the diff!)

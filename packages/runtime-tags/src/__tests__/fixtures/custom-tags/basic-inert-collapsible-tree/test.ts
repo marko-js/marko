@@ -1,0 +1,31 @@
+import type { TestConfig } from "../../../main.test";
+
+function toggle(id: string) {
+  return (document: Document) => {
+    (document.querySelector(`#c-${id} > button`) as HTMLButtonElement).click();
+  };
+}
+
+export const config: TestConfig = {
+  steps: [
+    {
+      comments: [
+        {
+          text: "Hello World",
+          comments: [
+            {
+              text: "testing 123",
+            },
+          ],
+        },
+        {
+          text: "Goodbye World",
+        },
+      ],
+    },
+    toggle("0"),
+    toggle("0"),
+    toggle("0-0"),
+    toggle("1"),
+  ],
+};

@@ -1,0 +1,20 @@
+import { resolveAfter } from "../../../utils/resolve";
+
+<try>
+  <@placeholder>1 loading</@placeholder>
+  <try>
+    <@placeholder>2 loading</@placeholder>
+    <try>
+      <@placeholder>3 loading</@placeholder>
+      <await|x|=resolveAfter("3", 2)>
+        <span>${x}</span>
+      </await>
+    </try>
+    <await|x|=resolveAfter("2", 3)>
+      <b>${x}</b>
+    </await>
+  </try>
+  <await|x|=resolveAfter("1", 1)>
+    <div>${x}</div>
+  </await>
+</try>

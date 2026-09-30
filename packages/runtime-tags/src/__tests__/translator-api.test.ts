@@ -184,7 +184,7 @@ describe("runtime-tags/translator-api", () => {
     it("compiles load imports eagerly when linkAssets is not configured", () => {
       for (const output of ["html", "dom"] as const) {
         const { code } = compiler.compileFileSync(
-          fixture("lazy-tag/template.marko"),
+          fixture("lazy/lazy-tag/template.marko"),
           {
             ...baseConfig,
             cache: new Map(),
@@ -212,12 +212,15 @@ describe("runtime-tags/translator-api", () => {
     it("requires linkAssets for the entry option", () => {
       assert.throws(
         () =>
-          compiler.compileFileSync(fixture("basic-counter/template.marko"), {
-            ...baseConfig,
-            cache: new Map(),
-            output: "html",
-            entry: "page",
-          } as compiler.Config),
+          compiler.compileFileSync(
+            fixture("let/basic-counter/template.marko"),
+            {
+              ...baseConfig,
+              cache: new Map(),
+              output: "html",
+              entry: "page",
+            } as compiler.Config,
+          ),
         /The "entry" option requires the `linkAssets` compiler option to be configured\./,
       );
     });
