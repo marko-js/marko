@@ -4,6 +4,9 @@ import type { TestConfig } from "../../main.test";
 // too; the next flush's entries carry their creation payload and rebuild it.
 export const config: TestConfig = {
   patches: true,
+  // A patch re-renders a caught `<try>` from the server, which recovers;
+  // a client render keeps its `@catch`.
+  skip_csr: true,
   steps: () => [
     { check: () => "ok", promise: Promise.resolve("v1") },
     {

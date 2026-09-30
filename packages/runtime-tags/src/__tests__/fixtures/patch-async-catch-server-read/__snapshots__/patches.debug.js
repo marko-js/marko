@@ -4,7 +4,7 @@
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-server-read/template.marko_3*content"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-server-read/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-server-read/template.marko_1*content"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-server-read/template.marko_fill0": "second",
-  "PatchCatch:#text/0": [new Error("boom")]
+  "PatchCatch:#text/0": []
 }]
 "BAEB"
 
@@ -14,5 +14,5 @@
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-server-read/template.marko_3*content"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-server-read/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-server-read/template.marko_1*content"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-server-read/template.marko_fill0": "third",
-  "PatchCatch:#text/0": [new Error("bang")]
+  "PatchCatch:#text/0": []
 }

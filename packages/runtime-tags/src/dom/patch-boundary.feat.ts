@@ -12,7 +12,7 @@ import {
 } from "../common/types";
 import { _await_promise } from "./control-flow";
 import { applyDeferred, deferApply } from "./patch";
-import "./patch-loop-item";
+import "./patch-loop-item.feat";
 import "./patch-try.feat";
 import { getContent } from "./patch-shells";
 import { queueEffect, queueRender, rendering } from "./queue";

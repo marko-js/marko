@@ -3,7 +3,7 @@ const $template = "<main><section></section><p> </p></main>";
 const $walks = "D bD m";
 _shells({ "__tests__/template.marko": "__tests__/template.marko;D bD ;<main><section></section><p> </p></main>" });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_mode = _source_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const frag = { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -18,8 +18,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_attr_content("#section/0", $scope0_id, $content);
 	_html(`</section>${_el_resume($scope0_id, "#section/0")}<p>${_patch_text($scope0_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</p></main>`);
 	$scope0_page && _scope($scope0_id, {
-		input_note: $si__input_mode && input.note,
-		frag_content: $si__input_mode && frag?.content,
+		input_note: _source_if($scope0_reason, 2) && input.note,
+		frag_content: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 2)) && frag?.content,
 		"ClosureScopes:input_note/9": $input_note__closures
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],

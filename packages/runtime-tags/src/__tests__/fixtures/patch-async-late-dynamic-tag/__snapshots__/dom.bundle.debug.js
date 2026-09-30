@@ -22,7 +22,7 @@ const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<b> </b>", "D ");
 const $frame_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
-const $frame_content__input_q = /*@__PURE__*/ _closure_get("input_q/9", ($scope) => $frame_content__await_promise($scope, $scope._.input_q), 0, "__tests__/template.marko_2_input_q#0:7/subscribe");
+const $frame_content__input_q = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_q#0:7/init", "input_q/9", ($scope) => $frame_content__await_promise($scope, $scope._.input_q), 0, "__tests__/template.marko_2_input_q#0:7/subscribe");
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_q($scope);
 	$await_content2($scope);

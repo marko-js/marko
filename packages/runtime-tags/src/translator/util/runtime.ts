@@ -40,6 +40,8 @@ const pureDOMFunctions = new Set<string>([
   "_init_for_selector",
   "_init_if_closure",
   "_init_join",
+  "_init_or",
+  "_subscribe_closure_get",
   "_fill_const",
   "_fill_let",
   "_fill_let_change",
@@ -165,6 +167,10 @@ export const domRuntimeFeatures = [
   "dynamic-tag-script",
   "dynamic-tag-var",
   "lazy",
+  "placeholder",
+] as const;
+// Listed only for an app compiled with `patches`.
+export const domPatchRuntimeFeatures = [
   "patch-attr",
   "patch-attrs",
   "patch-boundary",
@@ -179,11 +185,14 @@ export const domRuntimeFeatures = [
   "patch-control-select",
   "patch-dynamic-tag",
   "patch-effect",
+  "patch-effect-signal",
   "patch-global",
   "patch-html",
   "patch-loop",
+  "patch-loop-item",
   "patch-loop-keyed",
   "patch-ready",
+  "patch-show",
   "patch-style",
   "patch-text",
   "patch-text-content",
@@ -191,9 +200,10 @@ export const domRuntimeFeatures = [
   "patch-value",
   "patch-bind",
   "patch-var",
-  "placeholder",
 ] as const;
-export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
+export type DOMRuntimeFeature =
+  | (typeof domRuntimeFeatures)[number]
+  | (typeof domPatchRuntimeFeatures)[number];
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {

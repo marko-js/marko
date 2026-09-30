@@ -17,7 +17,8 @@ var panel_default = _template_patch("b", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "a", input.title, void 0, $scope0_reason, 4)}</em>`);
-					_subscribe(_unfilled_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b2");
+					_client_guard($scope0_reason, 4) && _patch_init($scope2_id, "b2");
+					_subscribe(_unfilled_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b3");
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["b1"], $scope0_reason, 3);
@@ -27,10 +28,10 @@ var panel_default = _template_patch("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_reason, 2);
 	$scope0_page ? _scope($scope0_id, {
-		e: _source_if($scope0_reason, 2) && input.inner,
-		f: _source_if($scope0_reason, 0) && input.title,
-		h: $input_title__closures
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "b3", input.inner), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "b4", input.title));
+		e: _unfilled_if($scope0_reason, 2) && input.inner,
+		f: _unfilled_if($scope0_reason, 0) && input.title,
+		h: _unfilled_if($scope0_reason, 4) && $input_title__closures
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "b4", input.inner), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "b5", input.title));
 }, 0, 0);
 
 // template.marko

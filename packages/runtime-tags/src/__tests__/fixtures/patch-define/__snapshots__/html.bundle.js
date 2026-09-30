@@ -18,8 +18,8 @@ var template_default = _template_patch("a", (input) => {
 	thing.content({ x: input.n });
 	_html(`<div${_patch_attr_class($scope0_id, "b", [input.cls, { on: input.on }], $scope0_reason, 0)}${_patch_attr_style($scope0_id, "b", { color: input.color }, $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "b")}`);
 	$scope0_page && _scope($scope0_id, {
-		g: _source_if($scope0_reason, 4) && input.cls,
-		h: _source_if($scope0_reason, 3) && input.on,
+		g: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.cls,
+		h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.on,
 		k: $input_title__closures,
 		a: _existing_scope($childScope)
 	});

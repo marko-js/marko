@@ -6,6 +6,8 @@ import { resolveAfter, wait } from "../../utils/resolve";
 // on the later hops while each page module is still cold.
 export const config: TestConfig = {
   patches: true,
+  // Renders the whole document, which a client render cannot mount.
+  skip_csr: true,
   equivalent: false,
   steps: () => [
     { page: 0 },

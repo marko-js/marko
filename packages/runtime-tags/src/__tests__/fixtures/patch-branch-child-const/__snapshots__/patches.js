@@ -2,7 +2,9 @@
 [`a0;/E m&;<section><h2> </h2></section>`, {
   ba: [{
     ca: {
-      ta: "fixed"
+      s: {
+        ta: "fixed"
+      }
     }
   }, "a0"]
 }]

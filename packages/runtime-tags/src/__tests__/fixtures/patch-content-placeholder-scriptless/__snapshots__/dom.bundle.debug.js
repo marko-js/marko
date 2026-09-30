@@ -3,13 +3,13 @@ const $template$1 = "<section><!></section>";
 const $walks$1 = "D%l";
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span>done</span>");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
-const $try_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/6", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/tags/card/index.marko_2_input_promise#0:4/subscribe");
+const $try_content__input_promise = /*@__PURE__*/ _subscribe_closure_get("__tests__/tags/card/index.marko_2_input_promise#0:4/init", "input_promise/6", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/tags/card/index.marko_2_input_promise#0:4/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
 const $placeholder_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $placeholder_content__input_content = /*@__PURE__*/ _fill_join_closure("__tests__/tags/card/index.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $placeholder_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/card/index.marko_1_input_content#0:3/subscribe"), 0);
+const $placeholder_content__input_content = /*@__PURE__*/ _fill_join_closure("__tests__/tags/card/index.marko_fill0", "input_content", _closure_get("input_content/5", ($scope) => $placeholder_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/card/index.marko_1_input_content#0:3/subscribe"), 0);
 const $placeholder_content__setup = $placeholder_content__input_content;
 const $placeholder_content = _content("__tests__/tags/card/index.marko_1*content", "<!><!><!>", "b%", $placeholder_content__setup);
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);

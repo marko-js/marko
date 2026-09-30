@@ -1,7 +1,6 @@
 import type { types as t } from "@marko/compiler";
 
 import { getMarkoOpts, isOutputHTML } from "../util/marko-config";
-import { callRuntime } from "../util/runtime";
 import type { TemplateVisitor } from "../util/visitors";
 import * as writer from "../util/writer";
 
@@ -13,7 +12,7 @@ export default {
         if (getMarkoOpts().linkAssets && !isBeforeHtmlOrHead(documentType)) {
           // Assets flushed ahead of the doctype would put the document in
           // quirks mode; here they land in the implicit head.
-          writer.writeTo(documentType)`${callRuntime("_flush_head")}`;
+          writer.writeFlushHead(documentType);
         }
       }
       documentType.remove();

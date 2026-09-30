@@ -78,7 +78,7 @@ const builder = {
     const patches = !!entryFile.markoOpts.patches;
     const init = state.init || patches;
     if (init || state.load) {
-      const isPage = entryFile.path.node.extra.page || patches;
+      const isPage = entryFile.path.node.extra.page;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
       if (init) {
         body.push(

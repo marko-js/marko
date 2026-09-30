@@ -17,7 +17,7 @@ var badge_default = _template_patch("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_label, $sg__input_label, void 0, void 0, ["b0"], $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "a", $sg__input_label)}`);
-	$scope0_page ? _scope($scope0_id, { e: input.note }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.note);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.note }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.note);
 }, 0, 0);
 
 // template.marko

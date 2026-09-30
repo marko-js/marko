@@ -1,9 +1,9 @@
 // template.marko
 _shells({
-	a1: "a1; D ;<button> </button>",
+	a1: "a1 !a5; D ;<button> </button>",
 	a2: "a2;D ;<em> </em>",
 	a3: "a3;D ;<em> </em>",
-	a4: "a4; D ;<button> </button>",
+	a4: "a4 !a5; D ;<button> </button>",
 	a: "a;D%b%;<main><!><!></main>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -24,6 +24,7 @@ var template_default = _template_patch("a", (input) => {
 			onClick: handler
 		}, "a", $scope2_id, "button", void 0, $scope0_reason, 1)}>${_patch_text($scope2_id, "b", second, void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a5");
+		_patch_write($scope2_id, "e", handler, 1);
 		_scope($scope2_id, {
 			d: second,
 			e: _source_if($scope0_reason, 1) && handler

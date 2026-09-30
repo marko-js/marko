@@ -3,7 +3,7 @@ _shells({
 	a0: "a0,done",
 	a1: "a1,done",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !a7; D l%;<button> </button><!><!>",
+	a: "a !a8; D l%;<button> </button><!><!>",
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -23,7 +23,8 @@ var template_default = _template_patch("a", (input) => {
 					_scope_id();
 					_html("done");
 				}, 1, "a0");
-				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a5", 0);
+				_client_guard($scope0_reason, 3) && _patch_init($scope3_id, "a5");
+				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a6", 0);
 				$scope0_page && _resume_branch($scope3_id);
 			}, void 0, (err) => {
 				const $scope2_reason = _scope_reason(), $sg__err_message = _source_guard($scope2_reason, 0);
@@ -31,17 +32,17 @@ var template_default = _template_patch("a", (input) => {
 				_html(`<em>${_text_resume($scope2_id, "a", err.message, $sg__err_message)} ${_text_resume($scope2_id, "b", input.title, $sg__input_title * 2)}</em>`);
 				_subscribe(_source_if($scope0_reason, 2) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a4", $sg__input_title || $sg__err_message);
 				$sg__input_title || $sg__err_message || _resume_branch($scope2_id);
-			}, void 0, "a6", "a2");
+			}, void 0, "a7", "a2", void 0, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "c", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a3"], $scope0_reason, 1);
-	_script($scope0_id, "a7");
+	_script($scope0_id, "a8");
 	$scope0_page ? _scope($scope0_id, {
 		g: input.title,
-		h: _source_if($scope0_reason, 1) && input.promise,
+		h: _unfilled_if($scope0_reason, 1) && input.promise,
 		i: count,
 		j: $input_title__closures,
-		k: $input_promise__closures
-	}) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a8", input.title);
+		k: _unfilled_if($scope0_reason, 3) && $input_promise__closures
+	}) : _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "a9", input.title);
 }, 1, 0);

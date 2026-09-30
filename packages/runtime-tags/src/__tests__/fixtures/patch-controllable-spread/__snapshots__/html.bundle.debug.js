@@ -10,7 +10,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		value = v;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id))}${_patch_bind($scope0_id, "ControlledHandler:#input/0", _resume(function(v) {
 		value = v;
-	}, "__tests__/template.marko_0/valueChange", $scope0_id), 0, 0)}${_patch_attrs_partial(input.attrs, {
+	}, "__tests__/template.marko_0/valueChange", $scope0_id))}${_patch_attrs_partial(input.attrs, {
 		value: 1,
 		valueChange: 1
 	}, "#input/0", $scope0_id, "input", void 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<p>${_text_resume($scope0_id, "#text/1", value)}</p>`);

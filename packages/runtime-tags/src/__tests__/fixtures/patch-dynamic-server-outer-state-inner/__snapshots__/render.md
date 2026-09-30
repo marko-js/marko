@@ -79,9 +79,10 @@ UPDATE: section > article > b::text "0" => "1"
 ```
 INSERT: article
 REMOVE: article + section
+UPDATE: article > b::text " " => "1"
 INSERT: article > b + ::text("three")
 UPDATE: article::text " " => "three"
-UPDATE: article > b::text " " => "1"
+UPDATE: article > b::text "0" => "1"
 ```
 
 # Update
@@ -127,7 +128,8 @@ INSERT: section
 REMOVE: section + article
 UPDATE: section > em::text " " => "-"
 INSERT: section > em + article
+UPDATE: section > article > b::text " " => "2"
 INSERT: section > article > b + ::text("four")
 UPDATE: section > article::text " " => "four"
-UPDATE: section > article > b::text " " => "2"
+UPDATE: section > article > b::text "0" => "2"
 ```

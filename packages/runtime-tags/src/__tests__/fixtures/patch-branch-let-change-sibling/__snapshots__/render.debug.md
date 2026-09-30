@@ -31,7 +31,6 @@
 ```
 UPDATE: main > h1::text "a" => "b"
 INSERT: main > p + :is(span, button)
-UPDATE: main > span::text@5 "" => "0"
 ```
 
 # Update

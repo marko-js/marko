@@ -43,9 +43,11 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					_for_of(input.items, (x) => {
 						const $scope3_id = _scope_id();
 						_html(`<li>${_patch_text($scope3_id, "#text/0", x, void 0, $scope0_reason, 3)}:${_patch_text($scope3_id, "#text/1", input.label, 2, $scope0_reason, 4)}</li>`);
+						_client_guard($scope0_reason, 4) && _patch_init($scope3_id, "__tests__/template.marko_3_input_label#0:6/init");
 						_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:21"));
 					}, 0, $scope2_id, "#ul/0", 1, 1, _source_guard($scope0_reason, 3), void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
 					_html(`</ul>${_el_resume($scope2_id, "#ul/0")}`);
+					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_items#0:5/init");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:4"));
 					return 0;
 				}

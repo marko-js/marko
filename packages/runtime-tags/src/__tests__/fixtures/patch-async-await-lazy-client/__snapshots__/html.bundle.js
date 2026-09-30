@@ -2,7 +2,7 @@
 _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
-	a2: "a2;b%;<!><!><!>",
+	a2: "a2 a8;b%;<!><!><!>",
 	a: "a !a5;E l%b ;<main><h1> </h1><!><button>Next</button></main>"
 });
 var template_default = _template_patch("a", (input) => {

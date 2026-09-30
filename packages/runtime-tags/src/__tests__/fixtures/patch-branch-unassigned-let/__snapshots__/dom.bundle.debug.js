@@ -2,7 +2,7 @@
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if_content__seen = /*@__PURE__*/ _let("seen/1", ($scope) => _text($scope["#text/0"], $scope.seen));
-const $if_content__count = /*@__PURE__*/ _init_if_closure("__tests__/template.marko_1_count#0:5/init", "#text/0", 0, ($scope) => $if_content__seen($scope, $scope._.count + 1));
+const $if_content__count = _init_if_closure("__tests__/template.marko_1_count#0:5/init", "#text/0", 0, ($scope) => $if_content__seen($scope, $scope._.count + 1));
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _let("count/5", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

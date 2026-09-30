@@ -9,7 +9,9 @@ import {
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
+import { getDeclaredBindingExpression } from "../util/get-declared-binding-expression";
 import { isOutputDOM, isPatch } from "../util/marko-config";
+import { getPatchFillKey, isPatchFillBinding } from "../util/patch/refresh";
 import {
   BindingType,
   FORCED,
@@ -18,10 +20,20 @@ import {
   setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
+import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
-import { addSerializeReason } from "../util/serialize-reasons";
+import {
+  ensureReasonGroups,
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getSection,
+} from "../util/sections";
+import { getFilledGuard } from "../util/serialize-guard";
+import {
+  addSerializeReason,
+  getSerializeSourcesForExpr,
+} from "../util/serialize-reasons";
 import {
   addValue,
   initValue,
@@ -138,6 +150,10 @@ export default {
             getAccessorPrefix().TagVariableChange,
           );
         }
+        // The controller's fill is gated on its group (translate).
+        if (isPatch()) {
+          ensureReasonGroups(getSerializeSourcesForExpr(tagExtra));
+        }
       });
     } else {
       // An uncontrolled `<let>` is not reactive to its initial value, though a
@@ -188,6 +204,35 @@ export default {
         translateVar(tag, valueAttr.value, "let");
 
         if (valueChangeAttr) {
+          // A controlled let follows its controller, so a server-owned
+          // controller's value fills a paired scope too.
+          const controller =
+            isPatch() && isPatchFillBinding(binding)
+              ? getSerializeSourcesForExpr(node.extra!)
+              : undefined;
+          if (controller && !controller.state) {
+            const owned = getFilledGuard(controller);
+            tag.insertBefore(
+              t.expressionStatement(
+                t.logicalExpression(
+                  "&&",
+                  owned
+                    ? t.logicalExpression(
+                        "&&",
+                        t.cloneNode(valueChangeAttr.value, true),
+                        owned,
+                      )
+                    : t.cloneNode(valueChangeAttr.value, true),
+                  callRuntime(
+                    "_patch_value",
+                    getScopeIdIdentifier(section),
+                    t.stringLiteral(getPatchFillKey(binding)),
+                    getDeclaredBindingExpression(binding),
+                  ),
+                ),
+              ),
+            );
+          }
           setBindingSerializedValue(
             section,
             binding,

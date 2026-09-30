@@ -3,7 +3,7 @@ _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !a5;D%b D ;<main><!><button> </button></main>"
+	a: "a !a6;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -19,13 +19,14 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<em>${_patch_text($scope2_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope2_id, {});
 		}, 1, "a0", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3", 0);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a3");
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
 		$scope0_page && _resume_branch($scope1_id);
-	}, void 0, () => {}, void 0, "a4", "a2");
+	}, void 0, () => {}, void 0, "a5", "a2");
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a5");
+	_script($scope0_id, "a6");
 	$scope0_page && _scope($scope0_id, {
 		g: n,
-		h: $input_promise__closures
+		h: _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	});
 }, 1, 0);

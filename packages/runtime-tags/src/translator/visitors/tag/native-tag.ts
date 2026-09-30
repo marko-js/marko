@@ -19,6 +19,7 @@ import {
   toDelimitedString,
 } from "../../../common/helpers";
 import { ControlledType, WalkCode } from "../../../common/types";
+import { kRendersContent } from "../../util/binding-prop-tree";
 import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
@@ -86,6 +87,7 @@ import {
   getExprWriteOwnership,
   getPatchWriteOwnership,
   getSerializeGuard,
+  isStableExpr,
 } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
@@ -411,6 +413,14 @@ export default {
           );
 
           spreadExtra.nativeTagSpread = true;
+          if (
+            spreadRendersContent(
+              tag,
+              getUsedAttrs(tagName, node, true).staticContentAttr,
+            )
+          ) {
+            spreadExtra[kRendersContent] = true;
+          }
           // Functions in native tag attrs are only ever invoked (handlers)
           // or stringified from static source, so reads inside can be lazy.
           spreadExtra.invokeOnly = true;
@@ -717,13 +727,18 @@ export default {
                         getWriteSources(groupValueAttr.value.extra),
                     )
                   : valueAttr && getWriteSources(valueAttr.value.extra),
+                // A constant control only seeds a scope the flush creates.
+                getPatchControlExtras(staticControllable).every(
+                  (extra) => !extra || isStableExpr(extra),
+                ),
               ),
             )}`;
         }
 
         let writeAtStartOfBody: t.Expression | undefined;
-
-        if (
+        // With no `<head>` child (cross-template layouts are not detected),
+        // assets flush at the start of `<html>` to land in the implicit head.
+        const flushHeadAtStart =
           tagName === "html" &&
           getMarkoOpts().linkAssets &&
           !tag.node.body.body.some(
@@ -731,12 +746,7 @@ export default {
               child.type === "MarkoTag" &&
               child.name.type === "StringLiteral" &&
               child.name.value === "head",
-          )
-        ) {
-          // With no `<head>` child (cross-template layouts are not detected),
-          // assets flush here to land in the implicit head.
-          writeAtStartOfBody = callRuntime("_flush_head");
-        }
+          );
 
         if (tagName === "select") {
           if (staticControllable) {
@@ -1045,6 +1055,8 @@ export default {
 
         if (writeAtStartOfBody) {
           write`${writeAtStartOfBody}`;
+        } else if (flushHeadAtStart) {
+          writer.writeFlushHead(tag);
         }
       },
       exit(tag) {
@@ -1129,7 +1141,7 @@ export default {
 
         if (!tagExtra[kSkipEndTag] && !isOpenOnly && !selectArgs) {
           if (tagName === "head" && getMarkoOpts().linkAssets) {
-            write`${callRuntime("_flush_head")}`;
+            writer.writeFlushHead(tag);
           }
           write`</${tagName}>`;
         }

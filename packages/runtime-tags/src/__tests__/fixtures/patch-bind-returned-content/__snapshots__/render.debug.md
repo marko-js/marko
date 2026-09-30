@@ -19,10 +19,7 @@
 ```
 ## Change
 ```
-INSERT: em
-REMOVE: em + em
-UPDATE: em::text@0 "" => "two"
-UPDATE: em::text@4 "" => "0"
+UPDATE: em::text@0 "one" => "two"
 ```
 
 # Update

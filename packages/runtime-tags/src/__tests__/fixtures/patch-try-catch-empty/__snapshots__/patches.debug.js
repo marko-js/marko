@@ -5,7 +5,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-empty/template.marko_0_#text#0/catch"]
 }]
 {
-  "PatchCatch:#text/0": [new Error("boom")]
+  "PatchCatch:#text/0": []
 }
 "BAEB"
 

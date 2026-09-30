@@ -1,9 +1,9 @@
 // template.marko
 _shells({
-	a: "a !a6;D%b ;<main><!><button>+</button></main>",
+	a: "a !a7;D%b ;<main><!><button>+</button></main>",
 	a0: "a0;b%;<!><!><!>",
 	a1: "a1;b%;<!><!><!>",
-	a2: "a2 a9 a10;D ;<p> </p>"
+	a2: "a2 a10 a11;D ;<p> </p>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_inner = _source_guard($scope0_reason, 2), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
@@ -27,7 +27,8 @@ var template_default = _template_patch("a", (input) => {
 							_: _scope_with_id($scope2_id)
 						}), "a3"), "a4");
 					}, (item) => item, $scope2_id, "a", 1, 1, _source_guard($scope0_reason, 3), void 0, void 0, "a2", $scope0_reason, 3);
-					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a5");
+					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a5");
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a6");
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_inner, $sg__input_inner, void 0, void 0, ["a1"], $scope0_reason, 2);
@@ -36,14 +37,14 @@ var template_default = _template_patch("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a6");
+	_script($scope0_id, "a7");
 	$scope0_page ? _scope($scope0_id, {
-		f: _source_if($scope0_reason, 1) && input.inner,
+		f: _unfilled_if($scope0_reason, 1) && input.inner,
 		g: _source_if($scope0_reason, 0) && input.items,
 		h: input.suffix,
 		i: count,
 		l: $input_suffix__closures,
 		m: $count__closures,
 		k: $input_items__closures
-	}) : _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "a7", input.suffix);
+	}) : _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "a8", input.suffix);
 }, 1, 0);

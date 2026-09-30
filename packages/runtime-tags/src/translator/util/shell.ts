@@ -18,7 +18,7 @@ import {
   type Section,
   StructureKind,
 } from "./sections";
-import { getResumeRegisterId } from "./signals";
+import { getResumeRegisterId, sectionHasServerEffect } from "./signals";
 import {
   getSectionMeta,
   resolveStructure,
@@ -165,6 +165,16 @@ function buildAwaitBodyShells(
 
 export function getShellId(section: Section) {
   return getResumeRegisterId(section, "shell");
+}
+
+// The id a branch body's shell ships under, if it ships: an effect reading
+// what a patch cannot keep current leaves it shell-less. Translate only:
+// `hasHTMLEffect` exists once translate registers effects.
+export function getShippedShellId(section: Section) {
+  const id = getShellId(section);
+  if (getShells()?.[id] === section && !sectionHasServerEffect(section)) {
+    return id;
+  }
 }
 
 // A branch's shell is its resolved structure (known child templates

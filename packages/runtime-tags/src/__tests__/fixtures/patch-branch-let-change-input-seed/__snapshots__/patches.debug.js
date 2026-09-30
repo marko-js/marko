@@ -1,6 +1,7 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-input-seed/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-input-seed/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>`, {
   "PatchBranch:#text/1": [{
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-input-seed/template.marko_fill0": 5,
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-input-seed/template.marko_fill0": 5
     },
@@ -12,6 +13,7 @@
 // PATCH holding AgE
 {
   "PatchBranch:#text/1": [{
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-input-seed/template.marko_fill0": 7,
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-input-seed/template.marko_fill0": 7
     },

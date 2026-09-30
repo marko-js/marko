@@ -40,7 +40,9 @@ var site_footer_default = _template_patch("d", (input) => {
 	const $scope0_id = _scope_id();
 	let frozen = 0;
 	_html(`<footer>${_patch_text($scope0_id, "a", input.year + frozen, void 0, $scope0_reason, 0)}</footer>`);
-	$scope0_page && _scope($scope0_id, { e: _source_if($scope0_reason, 0) && frozen });
+	_patch_write($scope0_id, "e", frozen, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "d0");
+	$scope0_page && _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 0)) && frozen });
 }, 0, 0);
 
 // template.marko

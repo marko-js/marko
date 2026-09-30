@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content3__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], "z:" + $scope._._._.input_title), ($scope) => $scope._._._, "__tests__/template.marko_3_input_title#0:4/subscribe"), 1);
+const $if_content3__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], "z:" + $scope._._._.input_title), ($scope) => $scope._._._, "__tests__/template.marko_3_input_title#0:4/subscribe"), 1);
 const $if_content3__setup = $if_content3__input_title;
-const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], "y:" + $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0);
+const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], "y:" + $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0);
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_title($scope);
 	$if_content2__open($scope);

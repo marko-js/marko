@@ -37,6 +37,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $childScope = _peek_scope_id();
 		_patch_child($scope1_id, "#childScope/0", $childScope);
 		loader_default({ promise: input.promise });
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
@@ -46,7 +47,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_resume($scope2_id, "#text/0", err.message, $sg__err_message)}</b>`);
 		_source_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "4:6");
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content");
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", void 0, 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, () => [loader_default]);

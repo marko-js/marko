@@ -30,6 +30,7 @@ var heading_default = _template_patch("c", (input) => {
 		_html(`depth ${_patch_text($scope1_id, "a", input.depth, 2, $scope0_reason, 2)}`);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "c1");
 	}, $scope0_id, ($scope) => [{ e: input.depth }]), 0, $sg__input_type, _patch_dynamic_tag($scope0_id, "a", $tag, 0, "c0", 0, $scope0_reason, 1));
+	_patch_write($scope0_id, "e", input.depth, 1);
 	$scope0_page && _scope($scope0_id, {
 		e: _source_if($scope0_reason, 1) && input.depth,
 		f: $input_depth__closures

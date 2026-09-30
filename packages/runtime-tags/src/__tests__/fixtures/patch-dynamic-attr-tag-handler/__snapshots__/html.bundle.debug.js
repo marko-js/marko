@@ -26,7 +26,7 @@ var child_default = _template_patch("__tests__/tags/child.marko", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput#4");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0, { "EventAttributes:#div/0": ["...htmlInput", "2:9"] });
-}, 0, () => [button]);
+}, 0, 1);
 
 // template.marko
 const $template = $template$1;

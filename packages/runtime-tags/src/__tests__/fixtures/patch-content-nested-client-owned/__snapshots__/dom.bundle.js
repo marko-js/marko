@@ -10,7 +10,7 @@ const $input_title = ($scope, input_title) => _text($scope.a, input_title);
 const $input_content = ($scope, input_content) => $input_content$1($scope.b, input_content);
 
 // template.marko
-const $child_content__input_note = /*@__PURE__*/ _fill_join_closure("a3", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "a7"), 0);
+const $child_content__input_note = /*@__PURE__*/ _fill_join_closure("a3", 5, _closure_get(8, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "a6"), 0);
 const $child_content = /*@__PURE__*/ _content$1("a0", "<em> </em>", "D ", $child_content__input_note);
 const $if_content__input_title = /*@__PURE__*/ _fill_join("a2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_title($scope.a, $scope._.e)));
 const $if_content__setup = ($scope) => {

@@ -95,7 +95,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $input_wide__closures = new Set();
 	const $input_note__closures = new Set();
 	const $input_page__closures = new Set();
-	_html(`<html>${_flush_head()}<body>`);
+	_html("<html>");
+	_flush_head_patch();
+	_html("<body>");
 	_if(() => {
 		if (input.page === 0) {
 			const $scope5_id = _scope_id();
@@ -122,6 +124,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 								wide: input.wide,
 								note: input.note
 							});
+							_client_guard($scope0_reason, 5) && _patch_init($scope3_id, "__tests__/template.marko_3_input_wide#0:5/init");
+							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:6/init");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_wide__closures, _scope($scope3_id, {
 								_: _scope_with_id($scope2_id),
 								"#childScope/1": _existing_scope($childScope)
@@ -136,6 +140,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 								wide: input.wide,
 								note: input.note
 							});
+							_client_guard($scope0_reason, 5) && _patch_init($scope4_id, "__tests__/template.marko_4_input_wide#0:5/init");
+							_client_guard($scope0_reason, 6) && _patch_init($scope4_id, "__tests__/template.marko_4_input_note#0:6/init");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_wide__closures, _scope($scope4_id, {
 								_: _scope_with_id($scope2_id),
 								"#childScope/1": _existing_scope($childScope2),
@@ -145,6 +151,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "#text/0", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"], $scope0_reason, 3);
+					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:3/init");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "11:8"));
 					$sg__input_page || $scope0_page && _resume_branch($scope2_id);
 				}, $scope1_id)

@@ -2,7 +2,7 @@
 _shells({
 	a: "a !a4;D%b ;<main><!><button>+</button></main>",
 	a0: "a0;b%;<!><!><!>",
-	a1: "a1 a7 a8 a9;D ;<p> </p>"
+	a1: "a1 a7 a8;D ;<p> </p>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_flag = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
@@ -29,7 +29,7 @@ var template_default = _template_patch("a", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
 	$scope0_page ? _scope($scope0_id, {
-		f: _source_if($scope0_reason, 1) && input.flag,
+		f: _unfilled_if($scope0_reason, 1) && input.flag,
 		g: input.suffix,
 		h: count,
 		j: $input_suffix__closures,

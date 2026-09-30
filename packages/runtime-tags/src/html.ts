@@ -4,7 +4,12 @@ export {
   _el_read_error,
   _hoist_read_error,
 } from "./common/errors";
-export { _flush_head, withLoadAssets, withPageAssets } from "./html/assets";
+export {
+  _flush_head,
+  _flush_head_patch,
+  withLoadAssets,
+  withPageAssets,
+} from "./html/assets";
 export {
   _attr,
   _attr_and,
@@ -67,6 +72,7 @@ export {
   _patch_dynamic_tag,
   _content_withheld,
   _patch_html,
+  _patch_show,
   _patch_style,
   _patch_text,
   _patch_text_content,

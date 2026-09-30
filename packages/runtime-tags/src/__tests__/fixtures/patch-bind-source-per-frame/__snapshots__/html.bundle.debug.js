@@ -2,10 +2,10 @@
 const $template = "<main><!><!><em> </em></main>";
 const $walks = "D%b%bD m";
 _shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content; ;<button>two</button>",
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content; ;<button>one</button>",
-	"__tests__/template.marko_0_#text#0/await": "__tests__/template.marko_0_#text#0/await; ;<button>one</button>",
-	"__tests__/template.marko_0_#text#1/await": "__tests__/template.marko_0_#text#1/await; ;<button>two</button>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !__tests__/template.marko_2_input_title#0:5_handler#0:9; ;<button>two</button>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content !__tests__/template.marko_1_input_title#0:5_handler#0:9; ;<button>one</button>",
+	"__tests__/template.marko_0_#text#0/await": "__tests__/template.marko_0_#text#0/await !__tests__/template.marko_1_input_title#0:5_handler#0:9; ;<button>one</button>",
+	"__tests__/template.marko_0_#text#1/await": "__tests__/template.marko_0_#text#1/await !__tests__/template.marko_2_input_title#0:5_handler#0:9; ;<button>two</button>",
 	"__tests__/template.marko": "__tests__/template.marko;D%b%bD ;<main><!><!><em> </em></main>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
@@ -26,6 +26,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			}
 		}, "#button/0", $scope1_id, "button", void 0, $scope0_reason, 3)}>one</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1_input_title#0:5_handler#0:9");
+		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_title#0:5/init");
+		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_handler#0:9/init");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "5:25"] }), _client_guard($scope0_reason, 3) && "__tests__/template.marko_1_input_title#0:5/subscribe"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_1_handler#0:9/subscribe");
 	}, 1, "__tests__/template.marko_1*content", 1);
 	_await($scope0_id, "#text/1", input.two, () => {
@@ -38,6 +40,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			}
 		}, "#button/0", $scope2_id, "button", void 0, $scope0_reason, 3)}>two</button>${_el_resume($scope2_id, "#button/0")}`);
 		_script($scope2_id, "__tests__/template.marko_2_input_title#0:5_handler#0:9");
+		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_title#0:5/init");
+		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_handler#0:9/init");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_title/10": 1,

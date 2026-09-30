@@ -10,7 +10,7 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = () => {};
-const $await_content__input_value = /*@__PURE__*/ _closure_get("input_value/5", ($scope) => $input_label($scope["#childScope/0"], $scope._._.input_value), ($scope) => $scope._._, "__tests__/template.marko_2_input_value#0:4/subscribe");
+const $await_content__input_value = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_value#0:4/init", "input_value/5", ($scope) => $input_label($scope["#childScope/0"], $scope._._.input_value), ($scope) => $scope._._, "__tests__/template.marko_2_input_value#0:4/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__input_value($scope);
 	_var($scope, "#childScope/0", $await_content__w);

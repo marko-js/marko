@@ -2,10 +2,10 @@
 const $template = "<main><!><!></main>";
 const $walks = "D%b%l";
 _shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content; D ;<button> </button>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !__tests__/template.marko_2_second#3_handler#4; D ;<button> </button>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>",
 	"__tests__/template.marko_0_#text#0/await": "__tests__/template.marko_0_#text#0/await;D ;<em> </em>",
-	"__tests__/template.marko_0_#text#1/await": "__tests__/template.marko_0_#text#1/await; D ;<button> </button>",
+	"__tests__/template.marko_0_#text#1/await": "__tests__/template.marko_0_#text#1/await !__tests__/template.marko_2_second#3_handler#4; D ;<button> </button>",
 	"__tests__/template.marko": "__tests__/template.marko;D%b%;<main><!><!></main>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
@@ -26,6 +26,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			onClick: handler
 		}, "#button/0", $scope2_id, "button", void 0, $scope0_reason, 1)}>${_patch_text($scope2_id, "#text/1", second, void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "#button/0")}`);
 		_script($scope2_id, "__tests__/template.marko_2_second#3_handler#4");
+		_patch_write($scope2_id, "handler", handler, 1);
 		_scope($scope2_id, {
 			second,
 			handler: _source_if($scope0_reason, 1) && handler

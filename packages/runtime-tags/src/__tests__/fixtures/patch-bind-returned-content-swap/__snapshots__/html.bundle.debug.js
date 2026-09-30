@@ -35,7 +35,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!><button> </but
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&0${_w1}&b%b D l`)("", "");
 _shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko !__tests__/template.marko_0;${_w0};${_w1}`)(((_w0, _w1) => `0${_w0}&0${_w1}&b%b D l`)("", ""), ((_w0, _w1) => `<!>${_w0}${_w1}<!><button> </button>`)("", "")) });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_first = _source_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_serialize_reason(0);
@@ -54,8 +54,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {
 		n,
-		a: $si__input_first && a,
-		b: $si__input_first && b,
+		a: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 0)) && a,
+		b: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 0)) && b,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, {

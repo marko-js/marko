@@ -35,6 +35,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_filled_guard(0, 0) && _patch_write($scope1_id, "el", el, 1);
 			_html(`<button id=read>read</button>${_el_resume($scope1_id, "#button/2")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
+			_patch_write($scope1_id, "el", el, 1);
 			_scope($scope1_id, {
 				el,
 				_: _scope_with_id($scope0_id),

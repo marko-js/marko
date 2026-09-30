@@ -26,7 +26,7 @@ _shells({
 	a1: "a1;D ;<em> </em>",
 	a2: "a2;D ;<b> </b>",
 	a3: "a3;b%;<!><!><!>",
-	a: /*@__PURE__*/ ((_w0, _w1) => `a !a6;${_w0};${_w1}`)(((_w0) => `D%b/${_w0}& l`)(" b"), ((_w0) => `<main><!>${_w0}<button>interactive</button></main>`)($template))
+	a: /*@__PURE__*/ ((_w0, _w1) => `a !a7;${_w0};${_w1}`)(((_w0) => `D%b/${_w0}& l`)(" b"), ((_w0) => `<main><!>${_w0}<button>interactive</button></main>`)($template))
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -58,11 +58,12 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<b>${_patch_text($scope4_id, "a", w, void 0, $scope0_reason, 3)}</b>`);
 			_scope($scope4_id, {});
 		}, 1, "a0");
+		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a6");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_q__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		$scope0_page && _resume_branch($scope2_id);
 	}, $scope0_id) });
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "c")}</main>`);
-	_script($scope0_id, "a6");
+	_script($scope0_id, "a7");
 	$scope0_page && _scope($scope0_id, {
 		g: _source_if($scope0_reason, 1) && input.p,
 		i: $input_p__closures,

@@ -13,6 +13,7 @@ export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";
 export const Promise = "Promise:";
+export const SpreadAttrs = "SpreadAttrs:";
 export const TagVariableChange = "TagVariableChange:";
 export const TryBranch = "TryBranch:";
 

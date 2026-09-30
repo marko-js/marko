@@ -47,6 +47,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:6/init");
 			_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 				label,
 				_: _scope_with_id($scope0_id)

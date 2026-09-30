@@ -28,5 +28,5 @@ var template_default = _template_patch("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2", "a3"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_page && _scope($scope0_id, { e: input.promise });
+	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.promise });
 }, 1, 0);

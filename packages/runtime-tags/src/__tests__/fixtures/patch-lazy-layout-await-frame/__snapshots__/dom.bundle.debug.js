@@ -15,10 +15,10 @@ _load_lazy("ready:__tests__/docs.marko", () => import("./docs.mjs").then(() => {
 _load_lazy("ready:__tests__/page-a.marko", () => import("./page-a.mjs").then(() => {}));
 _load_lazy("ready:__tests__/page-b.marko", () => import("./page-b.mjs").then(() => {}));
 const $Docs_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", 0, "<!><!><!>", "b%/&");
-const $Docs_content__input_page = /*@__PURE__*/ _closure_get("input_page/5", ($scope) => $Docs_content__if($scope, $scope._._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._._, "__tests__/template.marko_3_input_page#0:3/subscribe");
+const $Docs_content__input_page = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_page#0:3/init", "input_page/5", ($scope) => $Docs_content__if($scope, $scope._._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._._, "__tests__/template.marko_3_input_page#0:3/subscribe");
 const $Docs_content__setup = $Docs_content__input_page;
 const $Docs_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $Docs_content__setup);
-const $else_content__input_list = /*@__PURE__*/ _closure_get("input_list/6", 0, ($scope) => $scope._._, "__tests__/template.marko_2_input_list#0:4/subscribe");
+const $else_content__input_list = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_list#0:4/init", "input_list/6", 0, ($scope) => $scope._._, "__tests__/template.marko_2_input_list#0:4/subscribe");
 const $else_content__setup = $else_content__input_list;
 const $Root_content__if = /*@__PURE__*/ _if("#text/0", "<p>home</p>", 0, 0, "<!><!><!>", "b%/&", $else_content__setup);
 const $Root_content__input_page = /*@__PURE__*/ _closure_get("input_page/5", ($scope) => $Root_content__if($scope, $scope._.input_page === 0 ? 0 : 1), 0, "__tests__/template.marko_1_input_page#0:3/subscribe");

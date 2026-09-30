@@ -470,7 +470,11 @@ export function registerAccess<T extends WeakKey>(val: T, access: string) {
 export function getRegistered(val: unknown) {
   const registered = REGISTRY.get(val as WeakKey);
   if (registered) {
-    return { id: registered.id, scope: registered.scope };
+    return {
+      id: registered.id,
+      scope: registered.scope,
+      locals: registered.locals,
+    };
   }
 }
 
@@ -2213,6 +2217,7 @@ const accessorPrefixDescriptions: Record<string, string> = {
   KeyedScopes: "the keyed scopes",
   Lifecycle: "the lifecycle handlers",
   Promise: "the pending promise",
+  SpreadAttrs: "the spread attribute names",
   TagVariableChange: "the tag variable change handler",
   TryBranch: "the try branch",
 };

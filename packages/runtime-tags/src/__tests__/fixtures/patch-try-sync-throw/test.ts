@@ -8,6 +8,9 @@ const click = (document: Document) => {
 // document does; the next patch takes the body back.
 export const config: TestConfig = {
   patches: true,
+  // A patch re-renders a caught `<try>` from the server, which recovers;
+  // a client render keeps its `@catch`.
+  skip_csr: true,
   steps: [
     { message: "ok" },
     click,

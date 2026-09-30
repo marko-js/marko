@@ -40,18 +40,19 @@ var template_default = _template_patch("a", (input) => {
 				const $childScope = _peek_scope_id();
 				_patch_child($scope2_id, "b", $childScope);
 				counter_default({});
+				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a4");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					b: _existing_scope($childScope)
-				}), _client_guard($scope0_reason, 2) && "a4");
-			}, void 0, () => {}, void 0, "a5", "a2");
+				}), _client_guard($scope0_reason, 2) && "a5");
+			}, void 0, () => {}, void 0, "a6", "a2");
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a3"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_page && _scope($scope0_id, {
-		e: _source_if($scope0_reason, 1) && input.promise,
-		f: $input_promise__closures
+		e: _unfilled_if($scope0_reason, 1) && input.promise,
+		f: _unfilled_if($scope0_reason, 2) && $input_promise__closures
 	});
 }, 1, () => [counter_default]);

@@ -3,7 +3,7 @@ _shells({
 	a0: "a0;Db%;<p>A:<!></p>",
 	a1: "a1;Db%;<p>A:<!></p>",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !a6; D l%;<button> </button><!><!>"
+	a: "a !a7; D l%;<button> </button><!><!>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -19,7 +19,8 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<p>A:${_patch_text($scope4_id, "a", v, 2, $scope0_reason, 0)}</p>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3", 0);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a3");
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -29,10 +30,10 @@ var template_default = _template_patch("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-a");
-	}, "a4", "a5", "a2");
-	_script($scope0_id, "a6");
+	}, "a5", "a6", "a2");
+	_script($scope0_id, "a7");
 	$scope0_page && _scope($scope0_id, {
 		g: n,
-		h: $input_a__closures
+		h: _unfilled_if($scope0_reason, 0) && $input_a__closures
 	});
 }, 1, 0);

@@ -22,7 +22,11 @@ import {
 } from "./nested-attribute-tags";
 import { forEach, fromIter, type Opt, some, type SortedOpt } from "./optional";
 import { getChildPatchPlan } from "./patch/decisions";
-import { addPatchChildRenderer } from "./patch/intrinsics";
+import {
+  addPassedRenderer,
+  addPatchChildRenderer,
+  getPassedRenderers,
+} from "./patch/intrinsics";
 import {
   inStatefulBranch,
   isPatchRendered,
@@ -283,7 +287,10 @@ export function knownTagTranslateHTML(
   const childScopeWriteReason = getWriteReason(section, childScopeBinding);
   // Every child renderer joins this template's intrinsics union, so a
   // parent's patch-skip decision sees the whole subtree at render time.
-  if (isPatch()) addPatchChildRenderer(tagIdentifier);
+  if (isPatch()) {
+    addPatchChildRenderer(tag, tagIdentifier, true);
+    if (t.isIdentifier(tagIdentifier)) addPassedRenderer(tag, tagIdentifier);
+  }
   // A client-owned instance renders nothing into a patch: the link and the
   // child render skip together, and the absent entry keeps the live child.
   const skipsPatchRender =
@@ -449,7 +456,11 @@ export function knownTagTranslateHTML(
         t.logicalExpression(
           "||",
           scopePageIdentifier(section.program),
-          callRuntime("_must_render", t.cloneNode(tagIdentifier)),
+          callRuntime(
+            "_must_render",
+            t.cloneNode(tagIdentifier),
+            ...getPassedRenderers(tag),
+          ),
         ),
         t.blockStatement(clientOwnedStatements),
       ),

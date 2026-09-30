@@ -5,6 +5,8 @@ import type { TestConfig } from "../../main.test";
 // again on a re-reveal.
 export const config: TestConfig = {
   patches: true,
+  // Renders the whole document, which a client render cannot mount.
+  skip_csr: true,
   equivalent: false,
   // The script leaves state on the page a fresh render lacks.
   skip_fresh_render: true,

@@ -22,6 +22,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "4:6");
 		}, 1, "__tests__/template.marko_3*content", 1);
+		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_promise#0:6/init");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_promise#0:6/subscribe", 0);
 		$scope0_page && _resume_branch($scope2_id);
 	}, void 0, (err) => {
@@ -30,14 +31,14 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "#text/0", input.title, $sg__input_title)} ${_text_resume($scope1_id, "#text/1", err.message, $sg__err_message * 2)}</p>`);
 		_subscribe(_source_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_1_input_title#0:5/subscribe", $sg__input_title || $sg__err_message);
 		$sg__input_title || $sg__err_message || _resume_branch($scope1_id);
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content");
+	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", void 0, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
 		n,
 		"ClosureScopes:input_title/8": $input_title__closures,
-		"ClosureScopes:input_promise/9": $input_promise__closures
+		"ClosureScopes:input_promise/9": _unfilled_if($scope0_reason, 1) && $input_promise__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		n: "1:6"

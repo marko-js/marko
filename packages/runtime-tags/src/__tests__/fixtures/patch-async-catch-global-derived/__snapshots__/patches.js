@@ -5,8 +5,8 @@
   },
   cAa: [{
     pa: "a0"
-  }, "a2", "a6"],
-  va8: "bmce!",
-  ka: [new Error("boom")]
+  }, "a2", "a7"],
+  va9: "bmce!",
+  ka: []
 }]
 "BAEB"

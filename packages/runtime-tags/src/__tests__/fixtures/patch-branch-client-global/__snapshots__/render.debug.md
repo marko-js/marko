@@ -21,7 +21,7 @@ document.querySelector("button").click();
 ```html
 <main>
   <p>
-     
+    bmce
   </p>
   <button>
     +
@@ -31,4 +31,5 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: main > p
+UPDATE: main > p::text " " => "bmce"
 ```

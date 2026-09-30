@@ -6,7 +6,7 @@ const $input_title = /*@__PURE__*/ _const(3, ($scope) => {
 });
 
 // tags/list.marko
-const $for_content__input_suffix__OR__item = /*@__PURE__*/ _fill_join_for("c2", 4, /*@__PURE__*/ _init_join("c4", /*@__PURE__*/ _or(5, ($scope) => $input_title($scope.a, $scope.e + $scope._.e))), 0, 0);
+const $for_content__input_suffix__OR__item = _fill_join_for("c2", 4, /*@__PURE__*/ _init_join("c4", /*@__PURE__*/ _or(5, ($scope) => $input_title($scope.a, $scope.e + $scope._.e))), 0, 0);
 const $for_content__input_suffix = /*@__PURE__*/ _for_closure(0, $for_content__input_suffix__OR__item);
 const $for_content__setup = ($scope) => {
 	$for_content__input_suffix._($scope);

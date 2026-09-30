@@ -7,6 +7,7 @@ import { getWriteSources } from "./patch/decisions";
 import { isBranchPathSection } from "./patch/structure";
 import {
   type Binding,
+  getCanonicalExtra,
   getDebugNames,
   getDebugNamesAsIdentifier,
   isReferencedExtra,
@@ -199,6 +200,53 @@ export function getValueIfSerialized(
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
+// A value a patch fills every client read of: a page ships it for the groups
+// the client feeds, or where its scope renders under unpatched structure.
+export function getUnfilledValueIfSerialized(
+  section: Section,
+  reason: SerializeReason,
+  upstreams: Sources[],
+  expr: t.Expression,
+) {
+  if (!isDynamicSerializeGuard(section, reason)) return;
+  return t.logicalExpression(
+    "&&",
+    getUnfilledGuard(reason.param, upstreams, !!reason.global),
+    expr,
+  );
+}
+
+// Where such a value is still read unfilled: a group the client feeds, or
+// (`unpatched`, a server-only source) a scope under unpatched structure.
+export function getUnfilledGuard(
+  params: Sources["param"],
+  upstreams: Sources[],
+  unpatched: boolean,
+) {
+  let guard: t.Expression | undefined;
+  const add = (part: t.Expression) => {
+    guard = guard ? t.logicalExpression("||", guard, part) : part;
+  };
+  for (const [paramSection, group] of groupParamsBySection(params)) {
+    add(
+      callRuntime(
+        "_unfilled_if",
+        scopeReasonIdentifier(paramSection),
+        withLeadingComment(
+          t.numericLiteral(getParamReasonGroupIndex(paramSection, group)),
+          getDebugNames(group),
+        ),
+      ),
+    );
+  }
+  for (const sources of upstreams) {
+    const args = getPatchWriteOwnership(sources);
+    if (args.length) add(callRuntime("_unfilled_if", ...args));
+  }
+  if (unpatched) add(callRuntime("_unfilled_if"));
+  return guard!;
+}
+
 // The global dimension has no param slots: it is patch-only, where a
 // page render serializes it and a patch re-ships every global instead.
 function getDynamicGuard(
@@ -265,16 +313,33 @@ export function getExprWriteOwnership(extra: t.NodeExtra | undefined) {
 }
 
 // An expression with no bindings behind it (a module constant, a call with
-// no request-derived argument) renders once: a patch never re-fills it.
+// no request-derived argument) renders once: a patch never re-fills it. A
+// `$global` read changes per request.
 export function isStableExpr(extra: t.NodeExtra | undefined) {
-  if (!extra) return false;
+  if (!extra || getWriteSources(extra)?.global) return false;
   let stable = true;
   const check = (binding: Binding) => {
     stable &&= !!binding.stable;
   };
-  if (isReferencedExtra(extra)) forEach(extra.referencedBindings, check);
-  forEach(extra.constantBindings, check);
+  // A merged expression's references live on its canonical extra.
+  const canonical = getCanonicalExtra(extra);
+  if (isReferencedExtra(canonical)) {
+    forEach(canonical.referencedBindings, check);
+  }
+  forEach(canonical.constantBindings, check);
   return stable;
+}
+
+// Whether a call site's client state can own a patch write's value: it
+// reads a root param (`getPatchWriteOwnership` gates on its group).
+export function isClientOwnable(extra: t.NodeExtra | undefined) {
+  if (isStableExpr(extra)) return false;
+  for (const [paramsSection] of groupParamsBySection(
+    getWriteSources(extra)?.param,
+  )) {
+    if (!paramsSection.parent) return true;
+  }
+  return false;
 }
 
 // A patch writer's trailing `[mask, groupIdx]` ownership args, or `[]` when

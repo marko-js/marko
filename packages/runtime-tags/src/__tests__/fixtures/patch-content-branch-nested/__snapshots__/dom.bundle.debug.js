@@ -16,10 +16,10 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = () => {};
-const $widget_content__input_text = /*@__PURE__*/ _closure_get("input_text/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_text), ($scope) => $scope._._._, "__tests__/template.marko_3_input_text#0:6/subscribe");
+const $widget_content__input_text = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_text#0:6/init", "input_text/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_text), ($scope) => $scope._._._, "__tests__/template.marko_3_input_text#0:6/subscribe");
 const $widget_content__setup = $widget_content__input_text;
 const $widget_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<em> </em>", "D ", $widget_content__setup);
-const $if_content2__input_label = /*@__PURE__*/ _closure_get("input_label/8", ($scope) => $input_label$1($scope["#childScope/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe");
+const $if_content2__input_label = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_label#0:5/init", "input_label/8", ($scope) => $input_label$1($scope["#childScope/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe");
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_label($scope);
 	$input_content_direct($scope["#childScope/0"], $widget_content($scope));

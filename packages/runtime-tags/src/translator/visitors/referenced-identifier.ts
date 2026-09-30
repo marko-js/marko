@@ -2,13 +2,17 @@ import { types as t } from "@marko/compiler";
 
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
-import { isOptimize, isOutputHTML } from "../util/marko-config";
+import { isOptimize, isOutputHTML, isPatch } from "../util/marko-config";
 import {
   getCanonicalExtra,
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
-import { callRuntime, importRuntime } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntime,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import { createSectionState } from "../util/state";
@@ -65,6 +69,7 @@ export default {
     } else if (name === "$signal") {
       const section = getOrCreateSection(identifier);
       section.hasAbortSignal = true;
+      if (isPatch()) linkRuntimeFeature("patch-effect-signal");
       setReferencesScope(identifier);
       // Stamped on the raw (not canonical) extra: ids stay one-per-root
       // even if this extra later merges with another expression's.
@@ -72,6 +77,7 @@ export default {
       (identifier.node.extra ??= {}).exprRoot = rootExtra;
       if (rootExtra.abortId === undefined) {
         rootExtra.abortId = section.abortSignalExprs++;
+        (section.abortSignalRoots ??= []).push(rootExtra);
       }
     }
   },

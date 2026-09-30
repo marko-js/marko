@@ -13,6 +13,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			const title = input.title;
 			_html(`<button>read</button>${_el_resume($scope1_id, "#button/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
+			_patch_write($scope1_id, "title", title, 1);
 			_scope($scope1_id, { title }, "__tests__/template.marko", "3:4", { title: "4:12" });
 			return 0;
 		}

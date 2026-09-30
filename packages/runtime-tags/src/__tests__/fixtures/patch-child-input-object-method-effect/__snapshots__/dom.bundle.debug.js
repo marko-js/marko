@@ -6,7 +6,7 @@ function $setup$1($scope) {
 	$seen($scope, "");
 }
 const $input_opts__OR__input_label__script = _script("__tests__/tags/probe.marko_0_input_opts#3_input_label#4", ($scope) => $seen($scope, $scope.input_opts.describe($scope.input_label)));
-const $input_opts__OR__input_label = /*@__PURE__*/ _or(5, $input_opts__OR__input_label__script);
+const $input_opts__OR__input_label = /*@__PURE__*/ _init_or("__tests__/tags/probe.marko_0_input_opts#3_input_label#4/init", 5, $input_opts__OR__input_label__script);
 const $input_opts = /*@__PURE__*/ _const("input_opts", $input_opts__OR__input_label);
 const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_opts__OR__input_label);
 const $input$1 = ($scope, input) => {

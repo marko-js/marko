@@ -14,6 +14,8 @@ export const Init = "PatchInit:";
 export const Loop = "PatchLoop:";
 export const Pending = "PatchPending:";
 export const Setup = "PatchSetup:";
+// A `<show>` over request data: `accessor start? end?`, the display bit.
+export const Show = "PatchShow:";
 export const Style = "PatchStyle:";
 export const Text = "PatchText:";
 export const TextContent = "PatchTextContent:";

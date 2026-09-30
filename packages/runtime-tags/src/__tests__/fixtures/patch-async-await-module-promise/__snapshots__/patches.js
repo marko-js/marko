@@ -3,7 +3,9 @@
   bc: [{
     pa: "a0",
     cAa: {
-      ta: "thing"
+      s: {
+        ta: "thing"
+      }
     }
   }, "a2"]
 }]
@@ -19,7 +21,9 @@
   bc: [{
     pa: "a0",
     cAa: {
-      ta: "thing"
+      s: {
+        ta: "thing"
+      }
     }
   }, "a2"]
 }

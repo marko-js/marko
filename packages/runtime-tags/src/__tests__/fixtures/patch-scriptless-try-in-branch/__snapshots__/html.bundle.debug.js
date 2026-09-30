@@ -24,6 +24,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					_html(`<em>${_patch_text($scope4_id, "#text/0", value, void 0, $scope0_reason, 2)}</em>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "4:8");
 				}, 1, "__tests__/template.marko_4*content");
+				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_promise#0:4/init");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_2_input_promise#0:4/subscribe", 0);
 				$scope0_page && _resume_branch($scope2_id);
 			}, void 0, (err) => {
@@ -31,14 +32,14 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_text_resume($scope3_id, "#text/0", err.message, $sg__err_message)}</p>`);
 				_source_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "7:8");
-			}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
+			}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", void 0, 1);
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
 	$scope0_page && _scope($scope0_id, {
-		input_promise: _source_if($scope0_reason, 1) && input.promise,
-		"ClosureScopes:input_promise/5": $input_promise__closures
+		input_promise: _unfilled_if($scope0_reason, 1) && input.promise,
+		"ClosureScopes:input_promise/5": _unfilled_if($scope0_reason, 2) && $input_promise__closures
 	}, "__tests__/template.marko", 0, { input_promise: ["input.promise"] });
 }, 1, 0);

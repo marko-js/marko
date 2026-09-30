@@ -6,6 +6,9 @@ export const config: TestConfig = {
   // The patched rule names the build-specific custom property.
   skip_parity: true,
   patches: true,
+  // A client render writes dynamic `<style>` values through the CSSOM, a
+  // patch through the rule's text.
+  skip_csr: true,
   steps: [
     { items: [{ id: "a", color: "red" }] },
     {

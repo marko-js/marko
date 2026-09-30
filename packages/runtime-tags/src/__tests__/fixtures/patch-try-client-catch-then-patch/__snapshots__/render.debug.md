@@ -35,9 +35,9 @@ UPDATE: main > b::text " " => "boom"
 # Update `{"message":"b"}`
 ```html
 <main>
-  <em>
-    b
-  </em>
+  <b>
+    boom
+  </b>
   <button>
     1
   </button>
@@ -46,8 +46,11 @@ UPDATE: main > b::text " " => "boom"
 ## Change
 ```
 INSERT: main > em
-REMOVE: main > em + b
-UPDATE: main > em::text "" => "b"
+REMOVE: em + b
+UPDATE: em::text "" => "b"
+INSERT: main > b
+REMOVE: main > b + em
+UPDATE: main > b::text " " => "boom"
 ```
 
 # Update
@@ -56,9 +59,9 @@ document.querySelector("button").click();
 ```
 ```html
 <main>
-  <em>
-    b
-  </em>
+  <b>
+    boom
+  </b>
   <button>
     2
   </button>
@@ -82,5 +85,7 @@ UPDATE: main > button::text "1" => "2"
 ```
 ## Change
 ```
-UPDATE: main > em::text "b" => "c"
+INSERT: main > em
+REMOVE: main > em + b
+UPDATE: main > em::text "" => "c"
 ```

@@ -24,20 +24,22 @@ var template_default = _template_patch("a", (input) => {
 				_html(`<strong>${_patch_text($scope4_id, "a", b, void 0, $scope0_reason, 2)}</strong>`);
 				_scope($scope4_id, {});
 			}, 1, "a0", 1);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a5");
+			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a5");
+			_subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a6");
 		}, 1, "a2", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
+		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a7");
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a8", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, void 0, (err) => {
 		const $scope3_reason = _scope_reason(), $sg__err_message = _source_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
 		_html(`<span>${_text_resume($scope3_id, "a", err.message, $sg__err_message)}</span>`);
 		_source_if($scope3_reason, 0) && _scope($scope3_id, {});
-	}, void 0, "a7", "a4");
+	}, void 0, "a9", "a4", void 0, 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
-		e: _source_if($scope0_reason, 1) && input.b,
-		g: $input_b__closures,
-		f: $input_a__closures
+		e: _unfilled_if($scope0_reason, 1) && input.b,
+		g: _unfilled_if($scope0_reason, 2) && $input_b__closures,
+		f: _unfilled_if($scope0_reason, 1) && $input_a__closures
 	});
 }, 1, 0);

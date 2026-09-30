@@ -13,6 +13,9 @@
       title: "b2",
       onClick: _(["Ab"], "a0")
     },
-    tb: "b2"
+    tb: "b2",
+    s: {
+      de: "a0"
+    }
   }
 }

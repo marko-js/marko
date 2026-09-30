@@ -9,6 +9,9 @@ function click(document: Document) {
 // completes; a patch then keeps the live child's state and handlers.
 export const config: TestConfig = {
   patches: true,
+  // Its `<await>` settles on the server's schedule (`resolveAfter` ticks),
+  // which a client render does not share.
+  skip_csr: true,
   equivalent: false,
   steps: [
     { label: "a" },

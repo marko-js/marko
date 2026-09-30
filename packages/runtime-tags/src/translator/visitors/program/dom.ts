@@ -183,8 +183,8 @@ export default {
                 renderer = t.addComment(renderer, "leading", "@__PURE__");
               }
 
-              // A flush binds registered content by id.
-              if (registerReason && !registerWrapper && isPatch()) {
+              // A flush binds registered content by id (a loop's values ride along).
+              if (registerReason && isPatch()) {
                 importRuntimeFeature("patch-bind");
               }
 

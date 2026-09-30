@@ -12,20 +12,26 @@ export function _global_join<T extends Signal<any>>(
   id: string,
   join: T,
 ): T {
-  return ((globalJoins[key] ??= {})[id] = (scope: Scope, value?: unknown) => {
+  const wrapped = ((globalJoins[key] ??= {})[id] = (
+    scope: Scope,
+    value?: unknown,
+  ) => {
     (join as Signal<unknown>)(scope, value);
     subscribeToScopeSet(
       scope[AccessorProp.Global] as unknown as Scope,
       AccessorPrefix.ClosureScopes + id,
       scope,
     );
-  }) as unknown as T;
+  }) as SignalFn & { _?: SignalFn };
+  // A branch closure's setup render (`._`) stays reachable through the join.
+  wrapped._ = (join as { _?: SignalFn })._;
+  return wrapped as unknown as T;
 }
 
 // Like `_script`, but runs once per run however many triggers reach it.
 export function _global_script(id: string, fn: (scope: Scope) => void) {
   const effect = (_resumed[id] = (scope: Scope) => {
-    const ran = (scope[AccessorProp.PatchChanged] ??= {});
+    const ran = (scope[AccessorProp.GlobalScriptRuns] ??= {});
     if (ran[id] !== runId) {
       ran[id] = runId;
       fn(scope);

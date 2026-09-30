@@ -27,7 +27,6 @@
 ## Change
 ```
 INSERT: section > section > :is(span, button)
-UPDATE: section > section > span::text@5 "" => "0"
 ```
 
 # Update

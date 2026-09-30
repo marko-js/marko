@@ -10,7 +10,7 @@ var tagged_default = /*@__PURE__*/ _template("__tests__/tags/tagged/index.marko"
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
 const $for_content__count__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "item_id", /*@__PURE__*/ _or(6, ($scope) => $input_label($scope["#childScope/0"], `${$scope.item_id}:${$scope._.count}`)));
-const $for_content__count = /*@__PURE__*/ _init_for_closure("__tests__/template.marko_1_count#0:5/init", "#text/0", $for_content__count__OR__item_id);
+const $for_content__count = _init_for_closure("__tests__/template.marko_1_count#0:5/init", "#text/0", $for_content__count__OR__item_id);
 const $for_content__setup = $for_content__count;
 const $for_content__item = ($scope, item) => $for_content__item_id($scope, item?.id);
 const $for_content__item_id = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "item_id", $for_content__count__OR__item_id);

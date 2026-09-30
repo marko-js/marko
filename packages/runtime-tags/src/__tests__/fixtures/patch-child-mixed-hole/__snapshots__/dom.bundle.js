@@ -1,5 +1,5 @@
 // tags/combo/index.marko
-const $input_label__OR__input_qty = /*@__PURE__*/ _or(5, ($scope) => _text($scope.a, $scope.d + $scope.e));
+const $input_label__OR__input_qty = /*@__PURE__*/ _init_or("b0", 5, ($scope) => _text($scope.a, $scope.d + $scope.e));
 const $input_label = /*@__PURE__*/ _const(3, $input_label__OR__input_qty);
 const $input_qty = /*@__PURE__*/ _const(4, $input_label__OR__input_qty);
 

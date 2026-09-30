@@ -2,7 +2,7 @@
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if_content2__if = /*@__PURE__*/ _if("#text/0", "<p>both</p>");
-const $if_content2__input_b = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_b", /*@__PURE__*/ _closure_get("input_b/8", ($scope) => $if_content2__if($scope, $scope._._.input_b ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_b#0:5/subscribe"), 0);
+const $if_content2__input_b = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_b", _closure_get("input_b/8", ($scope) => $if_content2__if($scope, $scope._._.input_b ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_b#0:5/subscribe"), 0);
 const $if_content2__setup = $if_content2__input_b;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content2__setup);
 const $if_content__input_a = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_a ? 0 : 1)));

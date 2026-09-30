@@ -8,5 +8,5 @@ const $setup__script = _script("b0", ($scope) => _on($scope.b, "click", function
 }));
 
 // template.marko
-const $header_content__input_note = /*@__PURE__*/ _fill_join_closure("a2", 3, /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a0"), 0);
+const $header_content__input_note = /*@__PURE__*/ _fill_join_closure("a2", 3, _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "a0"), 0);
 const $header_content = _content("a1", "<em> </em>", "D ", $header_content__input_note);

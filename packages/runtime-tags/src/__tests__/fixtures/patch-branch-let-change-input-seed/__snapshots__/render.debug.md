@@ -24,7 +24,6 @@
 ## Change
 ```
 INSERT: main > p + :is(span, button)
-UPDATE: main > span::text@5 "" => "5"
 ```
 
 # Update
@@ -50,8 +49,42 @@ UPDATE: main > p::text@5 "0" => "6"
 ```
 
 # Update `{"show":true,"start":7}`
+```html
+<main>
+  <p>
+    last 6
+  </p>
+  <span>
+    Seen 7
+  </span>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > span::text@5 "5" => "7"
+```
 
 # Update
 ```js
 document.querySelector("button").click();
+```
+```html
+<main>
+  <p>
+    last 8
+  </p>
+  <span>
+    Seen 7
+  </span>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > p::text@5 "6" => "8"
 ```

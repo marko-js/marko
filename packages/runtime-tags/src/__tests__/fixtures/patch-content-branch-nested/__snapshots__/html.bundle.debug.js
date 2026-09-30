@@ -42,9 +42,11 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 							const $scope3_reason = _scope_reason();
 							const $scope3_id = _scope_id();
 							_html(`<em>${_patch_text($scope3_id, "#text/0", input.text, void 0, $scope0_reason, 6)}</em>`);
+							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_text#0:6/init");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"));
 						}, $scope2_id)
 					});
+					_client_guard($scope0_reason, 5) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:5/init");
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_label__closures, _scope($scope2_id, {
 						_: _scope_with_id($scope1_id),
 						"#childScope/0": _existing_scope($childScope)
@@ -59,7 +61,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $sg__input_a, $sg__input_a, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_a)}`);
 	$scope0_page && _scope($scope0_id, {
-		input_b: _source_if($scope0_reason, 3) && input.b,
+		input_b: _unfilled_if($scope0_reason, 3) && input.b,
 		input_label: $si__input_a__OR__input_b && input.label,
 		input_text: $si__input_a__OR__input_b && input.text,
 		"ClosureScopes:input_text/9": $input_text__closures,

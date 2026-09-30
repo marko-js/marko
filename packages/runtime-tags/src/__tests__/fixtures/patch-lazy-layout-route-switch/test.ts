@@ -5,6 +5,8 @@ import { resolveAfter, wait } from "../../utils/resolve";
 // layout (an await inside, the page's own lazy content as its body).
 export const config: TestConfig = {
   patches: true,
+  // Renders the whole document, which a client render cannot mount.
+  skip_csr: true,
   equivalent: false,
   steps: () => [
     { page: 0 },

@@ -15,12 +15,12 @@ var card_default = /*@__PURE__*/ _template("__tests__/card.marko", $template$1, 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
-const $for_content__input_label = /*@__PURE__*/ _closure_get("input_label/10", ($scope) => _text($scope["#text/1"], $scope._._._.input_label), ($scope) => $scope._._._, "__tests__/template.marko_3_input_label#0:6/subscribe");
+const $for_content__input_label = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_label#0:6/init", "input_label/10", ($scope) => _text($scope["#text/1"], $scope._._._.input_label), ($scope) => $scope._._._, "__tests__/template.marko_3_input_label#0:6/subscribe");
 const $for_content__setup = $for_content__input_label;
 const $for_content__x = ($scope, x) => _text($scope["#text/0"], x);
 const $for_content__$params = ($scope, $params2) => $for_content__x($scope, $params2[0]);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li><!>:<!></li>", "D%c%", $for_content__setup, $for_content__$params);
-const $if_content__input_items = /*@__PURE__*/ _closure_get("input_items/9", ($scope) => $if_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._, "__tests__/template.marko_2_input_items#0:5/subscribe");
+const $if_content__input_items = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_items#0:5/init", "input_items/9", ($scope) => $if_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._, "__tests__/template.marko_2_input_items#0:5/subscribe");
 const $if_content__setup = $if_content__input_items;
 const $Card_content__if = /*@__PURE__*/ _if("#text/0", "<ul></ul>", " ", $if_content__setup);
 const $Card_content__input_on = /*@__PURE__*/ _closure_get("input_on/8", ($scope) => $Card_content__if($scope, $scope._.input_on ? 0 : 1), 0, "__tests__/template.marko_1_input_on#0:4/subscribe");

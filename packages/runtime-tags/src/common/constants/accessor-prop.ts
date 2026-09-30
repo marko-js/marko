@@ -30,6 +30,7 @@ export const TagVariable = "T";
 export const TagVariableChange = "U";
 export const TryBranch = "PT";
 export const PatchChanged = "AA";
+export const GlobalScriptRuns = "AB";
 
 type Self = typeof import("./accessor-prop");
 export type Value = Self[keyof Self];

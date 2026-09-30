@@ -6,7 +6,7 @@ _shells({
 	b2: "b2;D ;<span> </span>"
 });
 var code_block_default = _template_patch("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_text_length = _source_guard($scope0_reason, 3), $scope0_page = _page_render(), $si__input_text = _source_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $sg__input_text_length = _source_guard($scope0_reason, 3), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const highlight = _resume(function(text) {
@@ -27,10 +27,10 @@ var code_block_default = _template_patch("b", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_text_length, $sg__input_text_length, void 0, void 0, ["b1", "b2"], $scope0_reason, 3);
 	_global_subscribe("b3", $scope0_id);
 	$scope0_page ? _scope($scope0_id, {
-		d: $si__input_text && input.cursor,
-		e: ($scope0_page || _source_if($scope0_reason, 1)) && input.text,
-		g: $si__input_text && highlight
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "b4", input.text), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "b5", highlight), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "d", input.cursor));
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.cursor,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && input.text,
+		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && highlight
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "b4", input.text), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "b5", highlight), _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && _patch_write($scope0_id, "d", input.cursor));
 }, 0, 1);
 
 // template.marko

@@ -22,10 +22,11 @@ var template_default = _template_patch("a", (input) => {
 						if (input.html) {
 							const $scope3_id = _scope_id();
 							_html(`<div>${_patch_html($scope3_id, "a", input.html, void 0, $scope0_reason, 2)}</div><div class=y>${_patch_html($scope3_id, "b", input.html, void 0, $scope0_reason, 2)}</div>`);
+							_client_guard($scope0_reason, 2) && _patch_init($scope3_id, "a4");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope3_id, {
 								_: _scope_with_id($scope2_id),
 								Cg: 1
-							}), _client_guard($scope0_reason, 2) && "a4");
+							}), _client_guard($scope0_reason, 2) && "a5");
 							return 0;
 						}
 					}, $scope2_id, "a", 1, $sg__input_html, $sg__input_html, void 0, void 0, ["a2"], $scope0_reason, 2);
@@ -33,14 +34,16 @@ var template_default = _template_patch("a", (input) => {
 						if (input.html) {
 							const $scope4_id = _scope_id();
 							_html(_patch_html($scope4_id, "a", input.html, void 0, $scope0_reason, 2));
+							_client_guard($scope0_reason, 2) && _patch_init($scope4_id, "a6");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope4_id, {
 								_: _scope_with_id($scope2_id),
 								Cg: 2
-							}), _client_guard($scope0_reason, 2) && "a5");
+							}), _client_guard($scope0_reason, 2) && "a7");
 							return 0;
 						}
 					}, $scope2_id, "b", 1, $sg__input_html, $sg__input_html, void 0, void 0, ["a3"], $scope0_reason, 2);
-					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a6", $sg__input_html);
+					_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a8");
+					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a9", $sg__input_html);
 					return 0;
 				}
 			}, $scope1_id, "c", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_reason, 1);
@@ -50,7 +53,7 @@ var template_default = _template_patch("a", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_page && _scope($scope0_id, {
-		e: _source_if($scope0_reason, 1) && input.html,
-		g: $input_html__closures
+		e: _unfilled_if($scope0_reason, 1) && input.html,
+		g: _unfilled_if($scope0_reason, 2) && $input_html__closures
 	});
 }, 1, 0);

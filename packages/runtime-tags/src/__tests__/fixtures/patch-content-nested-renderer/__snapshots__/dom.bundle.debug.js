@@ -12,13 +12,13 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = () => {};
-const $card_content__input_note = /*@__PURE__*/ _closure_get("input_note/6", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe");
+const $card_content__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_note#0:4/init", "input_note/6", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe");
 const $card_content__setup = ($scope) => {
 	$card_content__input_note($scope);
 	$card_content__input_inner($scope);
 };
 const $card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $card_content__input_inner = /*@__PURE__*/ _closure_get("input_inner/7", ($scope) => $card_content__dynamicTag($scope, $scope._._.input_inner), ($scope) => $scope._._, "__tests__/template.marko_2_input_inner#0:5/subscribe");
+const $card_content__input_inner = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_inner#0:5/init", "input_inner/7", ($scope) => $card_content__dynamicTag($scope, $scope._._.input_inner), ($scope) => $scope._._, "__tests__/template.marko_2_input_inner#0:5/subscribe");
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<p> </p><!><!>", "D l%", $card_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $card_content($scope));
 const $if = /*@__PURE__*/ _if("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);

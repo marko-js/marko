@@ -11,7 +11,7 @@ var card_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $inpu
 
 // tags/picker/index.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $input_on__OR__input_label = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d ? card_default : null, () => ({ label: $scope.e })));
+const $input_on__OR__input_label = /*@__PURE__*/ _init_or("c0", 5, ($scope) => $dynamicTag($scope, $scope.d ? card_default : null, () => ({ label: $scope.e })));
 const $input_on = /*@__PURE__*/ _const(3, $input_on__OR__input_label);
 const $input_label$1 = /*@__PURE__*/ _const(4, $input_on__OR__input_label);
 

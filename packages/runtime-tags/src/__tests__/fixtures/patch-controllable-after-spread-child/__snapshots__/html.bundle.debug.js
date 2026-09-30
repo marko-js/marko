@@ -6,12 +6,15 @@ var text_field_default = _template_patch("__tests__/tags/text-field.marko", (inp
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const { value, valueChange, ...attrs } = input;
-	_html(`<input${_attr_input_value($scope0_id, "#input/0", value, valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", valueChange, 0, 0)}${_patch_control($scope0_id, "#input/0", 2, value, $scope0_reason, 0)}${_patch_attrs_partial(attrs, {
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", value, valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", valueChange, $scope0_reason, 0)}${_patch_control($scope0_id, "#input/0", 2, value, $scope0_reason, 0)}${_patch_attrs_partial(attrs, {
 		value: 1,
 		valueChange: 1
 	}, "#input/0", $scope0_id, "input", void 0, $scope0_reason, 2)}>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/text-field.marko_0_attrs#6");
 	_script($scope0_id, "__tests__/tags/text-field.marko_0");
+	_patch_write($scope0_id, "value", value, 1);
+	_patch_write($scope0_id, "valueChange", valueChange, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/text-field.marko_0_value#3_valueChange#4/init");
 	$scope0_page && _scope($scope0_id, {
 		value: _source_if($scope0_reason, 1) && value,
 		valueChange: _source_if($scope0_reason, 0) && valueChange

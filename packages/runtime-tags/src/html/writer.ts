@@ -66,6 +66,14 @@ export function getChunk(): Chunk | undefined {
   return $chunk;
 }
 
+// Leaves a chunk in place for html written later; the render continues in a
+// fresh chunk after it.
+export function reserveChunk() {
+  const chunk = $chunk;
+  $chunk = chunk.fork(chunk.boundary, chunk.next);
+  return (chunk.next = chunk.fork(chunk.boundary, $chunk));
+}
+
 export function withChunk<T>(chunk: Chunk, cb: () => T): T {
   const prev = $chunk;
   $chunk = chunk;
@@ -192,8 +200,11 @@ export function isInResumedBranch() {
 // Set while a patch renders a body a `@catch` can replace: nothing under it
 // is provably live on the client, so boundaries there ship their payload.
 const kCaught = Symbol("Caught");
-function inCaughtTry() {
-  return !!$chunk?.context?.[kCaught];
+
+// Whether a flush may create the scopes rendering here: inside a branch (the
+// client decides by divergence) or a body a `@catch` can replace.
+export function inCreatable() {
+  return isInResumedBranch() || !!$chunk?.context?.[kCaught];
 }
 
 export function withBranchId<T>(branchId: number, cb: () => T): T;
@@ -252,8 +263,8 @@ export function _script(
   const { state } = $chunk.boundary;
   if (
     state.writesPatches &&
-    isInResumedBranch() &&
-    $chunk.context![kBranchId] !== scopeId
+    inCreatable() &&
+    $chunk.context?.[kBranchId] !== scopeId
   ) {
     addSetupId(scopeId, registryId, 1);
   }
@@ -569,7 +580,7 @@ export function _var(
   // A created child gets the same wiring as a resumed one: a seed bound
   // to the parent's registration, so no separate init registers for it.
   const state = getState();
-  if (state.writesPatches && isInResumedBranch()) {
+  if (state.writesPatches && inCreatable()) {
     (
       (patchPartial(state, childScopeId)[PatchKey.Setup] ??= {}) as Record<
         string,
@@ -1255,7 +1266,7 @@ export function _await<T>(
   // only by a rebuild, from its own shell's sites.
   const { boundary } = $chunk;
   const writePending = () => {
-    const elide = alwaysPairs && !isInResumedBranch() && !inCaughtTry();
+    const elide = alwaysPairs && !inCreatable();
     if (!elide) $chunk.boundary.state.shipShell!(patchContent);
     writePatch(scopeId, {
       [PatchKey.Pending + accessor]: (!elide && patchContent) || 1,
@@ -1359,6 +1370,7 @@ export function _try(
   catchId?: string,
   bodyId?: string,
   alwaysPairs?: 1,
+  catchReadsError?: 1,
 ) {
   // The placeholder's branch id precedes the body's so the walker parents it
   // to the try's enclosing branch (a sibling of the try), as CSR does.
@@ -1374,7 +1386,7 @@ export function _try(
   if (writesPatches) {
     // The entry carries the creation payload (body shell, slot ids) unless the
     // try always pairs: no catch, outside divergent branches and caught bodies.
-    const create = !alwaysPairs || isInResumedBranch() || inCaughtTry();
+    const create = !alwaysPairs || inCreatable();
     state.pairBranch!(
       scopeId,
       accessor,
@@ -1410,8 +1422,9 @@ export function _try(
           (err) => {
             // A body that threw before claiming its id keeps it paired.
             if (_peek_scope_id() === branchId) _scope_id();
+            // Only a `@catch` reading its error ships it, as a document does.
             writePatch(scopeId, {
-              [PatchKey.Catch + accessor]: [err],
+              [PatchKey.Catch + accessor]: catchReadsError ? [err] : [],
             });
           },
         )

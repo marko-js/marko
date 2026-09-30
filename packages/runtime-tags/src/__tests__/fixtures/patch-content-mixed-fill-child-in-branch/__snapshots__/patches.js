@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a6;/ D l&;<button class=tick> </button>`, `b0;/0& b/DbD%m&&;<button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section>`, {
+[`a0 a5;/ D l&;<button class=tick> </button>`, `b0;/0& b/DbD%m&&;<button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section>`, {
   ba: [{
     ca: {
       ca: {

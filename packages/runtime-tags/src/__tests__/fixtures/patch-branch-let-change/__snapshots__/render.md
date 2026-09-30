@@ -93,7 +93,6 @@ REMOVE: main > h1 + button
 ## Change
 ```
 INSERT: main > h1 + :is(p, button)
-UPDATE: main > p::text@5 "" => "0"
 ```
 
 # Update

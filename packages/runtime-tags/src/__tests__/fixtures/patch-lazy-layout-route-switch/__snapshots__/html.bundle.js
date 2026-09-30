@@ -61,7 +61,9 @@ var template_default = _template_patch("d", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_page = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = /* @__PURE__ */ new Set();
-	_html(`<html>${_flush_head()}<body>`);
+	_html("<html>");
+	_flush_head_patch();
+	_html("<body>");
 	_if(() => {
 		if (input.page === 0) {
 			const $scope3_id = _scope_id();
@@ -95,6 +97,7 @@ var template_default = _template_patch("d", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "a", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["d3", "d4"], $scope0_reason, 1);
+					_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "d5");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$sg__input_page || $scope0_page && _resume_branch($scope2_id);
 				}, $scope1_id)

@@ -3,11 +3,11 @@ const $template = "<main></main>";
 const $walks = " b";
 const $setup = () => {};
 const $placeholder_content = _content("__tests__/template.marko_4*content", "loading");
-const $await_content__input_value = /*@__PURE__*/ _closure_get("input_value/5", ($scope) => _text($scope["#text/0"], $scope._._._.input_value), ($scope) => $scope._._._, "__tests__/template.marko_3_input_value#0:4/subscribe");
+const $await_content__input_value = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_value#0:4/init", "input_value/5", ($scope) => _text($scope["#text/0"], $scope._._._.input_value), ($scope) => $scope._._._, "__tests__/template.marko_3_input_value#0:4/subscribe");
 const $await_content__setup = $await_content__input_value;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
-const $try_content__input_value = /*@__PURE__*/ _closure_get("input_value/5", ($scope) => $try_content__await_promise($scope, Promise.resolve($scope._._.input_value)), ($scope) => $scope._._, "__tests__/template.marko_2_input_value#0:4/subscribe");
+const $try_content__input_value = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_value#0:4/init", "input_value/5", ($scope) => $try_content__await_promise($scope, Promise.resolve($scope._._.input_value)), ($scope) => $scope._._, "__tests__/template.marko_2_input_value#0:4/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_value($scope);
 	$await_content($scope);

@@ -10,7 +10,7 @@ _resumed.b0 = $_return;
 
 // template.marko
 const $if_content__count = /*@__PURE__*/ _fill_let_change("a3", 2, ($scope) => _text($scope.a, $scope.c));
-const $if_content__store_set = /*@__PURE__*/ _init_if_closure("a5", 4, 0, ($scope) => $if_content__count($scope, 0, $scope._.l));
+const $if_content__store_set = _init_if_closure("a5", 4, 0, ($scope) => $if_content__count($scope, 0, $scope._.l));
 const $if_content__setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$if_content__count($scope, +$scope.c + 1);
 }));

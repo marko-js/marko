@@ -2,8 +2,8 @@
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 _shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<div id=done> </div>",
-	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<div id=done> </div>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_input_label#0:6/init __tests__/template.marko_2_n#0:7/init;D ;<div id=done> </div>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await __tests__/template.marko_2_input_label#0:6/init __tests__/template.marko_2_n#0:7/init;D ;<div id=done> </div>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
@@ -23,6 +23,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_html(`<div id=done>${_text_resume($scope2_id, "#text/0", input.label + n)}</div>`);
 			_subscribe($n__closures, _subscribe(_source_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), "__tests__/template.marko_2_input_label#0:6/subscribe"), "__tests__/template.marko_2_n#0:7/subscribe");
 		}, 1, "__tests__/template.marko_2*content", 1);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:5/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:5/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, () => {
@@ -36,7 +37,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		n,
 		"ClosureScopes:input_label/9": $input_label__closures,
 		"ClosureScopes:n/10": $n__closures,
-		"ClosureScopes:input_promise/8": $input_promise__closures
+		"ClosureScopes:input_promise/8": _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		n: "1:6"

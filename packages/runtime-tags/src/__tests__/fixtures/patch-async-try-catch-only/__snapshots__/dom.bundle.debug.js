@@ -2,7 +2,7 @@
 const $template = "<main><!></main>";
 const $walks = "D%l";
 const $catch_content = _content("__tests__/template.marko_2*content", "<em>bad</em>");
-const $try_content__input_message = /*@__PURE__*/ _closure_get("input_message/4", ($scope) => _text($scope["#text/0"], $scope._.input_message), 0, "__tests__/template.marko_1_input_message#0:3/subscribe");
+const $try_content__input_message = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_message#0:3/init", "input_message/4", ($scope) => _text($scope["#text/0"], $scope._.input_message), 0, "__tests__/template.marko_1_input_message#0:3/subscribe");
 const $try_content__setup = $try_content__input_message;
 const $try = /*@__PURE__*/ _try("#text/0", "<em> </em>", "D ", $try_content__setup, 0, $catch_content);
 function $setup($scope) {

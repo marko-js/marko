@@ -1,0 +1,13 @@
+<div>
+  <h1>a<!--Membedded$1 a--></h1>
+  <button>0<!--Membedded$1 c--></button><!--Membedded$1 b-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("embedded");
+  M.embedded.b = {
+    a: [_ => [1, {
+      g: 0
+    }], "a0 1"]
+  };
+  M.embedded.w()
+</script>

@@ -11,7 +11,7 @@ _shells({
 	b0: "b0;D ;<p> </p>",
 	b1: "b1;D ;<p> </p>",
 	b2: "b2;b%;<!><!><!>",
-	b: "b !b5; b%;<button>go</button><!><!>"
+	b: "b !b6; b%;<button>go</button><!><!>"
 });
 var b_default = _template_patch("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -26,15 +26,16 @@ var b_default = _template_patch("b", (input) => {
 			_html(`<p>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</p>`);
 			_scope($scope3_id, {});
 		}, 1, "b0", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b3", 0);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b3");
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b4", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("Loading");
-	}, void 0, "b4", void 0, "b2", 1);
-	_script($scope0_id, "b5");
-	$scope0_page && _scope($scope0_id, { f: $input_promise__closures });
+	}, void 0, "b5", void 0, "b2", 1);
+	_script($scope0_id, "b6");
+	$scope0_page && _scope($scope0_id, { f: _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 0, 0);
 
 // template.marko

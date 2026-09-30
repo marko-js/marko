@@ -18,7 +18,7 @@ var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", ""
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<main><h1> </h1><p>Last <!></p><!></main>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&E lDb%l%l`)("");
 const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill0", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
-const $if_content__store_set = /*@__PURE__*/ _init_if_closure("__tests__/template.marko_1_store_set#0:11/init", "#text/4", 0, ($scope) => $if_content__count($scope, 0, $scope._.store_set));
+const $if_content__store_set = _init_if_closure("__tests__/template.marko_1_store_set#0:11/init", "#text/4", 0, ($scope) => $if_content__count($scope, 0, $scope._.store_set));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));

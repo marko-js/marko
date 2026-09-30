@@ -9,6 +9,8 @@ function* gen(...items: string[]) {
 // before the serializer writes its yields.
 export const config: TestConfig = {
   patches: true,
+  // Its input generators are single-use, so a client replay cannot reuse them.
+  skip_csr: true,
   steps: () => [
     { title: "one", items: gen("a", "b") },
     navigate(() => ({ title: "two", items: gen("c", "d") })),

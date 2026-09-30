@@ -11,10 +11,10 @@ var box_default = /*@__PURE__*/ _template("__tests__/tags/box/index.marko", $tem
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], "t:" + $scope._._._.input_title), ($scope) => $scope._._._, "__tests__/template.marko_3_input_title#0:5/subscribe"), 0);
+const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_title", _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], "t:" + $scope._._._.input_title), ($scope) => $scope._._._, "__tests__/template.marko_3_input_title#0:5/subscribe"), 0);
 const $if_content2__setup = $if_content2__input_title;
 const $box_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content2__setup);
-const $box_content__input_show = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/7", ($scope) => $box_content__if($scope, $scope._._.input_show ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_show#0:4/subscribe"), 0);
+const $box_content__input_show = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_show", _closure_get("input_show/7", ($scope) => $box_content__if($scope, $scope._._.input_show ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_show#0:4/subscribe"), 0);
 const $box_content__setup = $box_content__input_show;
 const $box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $box_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $box_content($scope));

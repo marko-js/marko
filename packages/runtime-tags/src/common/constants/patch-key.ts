@@ -22,6 +22,8 @@ export const Init = "i";
 export const Loop = "l";
 export const Pending = "p";
 export const Setup = "s";
+// A `<show>` over request data: `accessor start? end?`, the display bit.
+export const Show = "g";
 // A `<style>` interpolation: `accessor name`, the client rewrites the rule.
 export const Style = "y";
 export const Text = "t";

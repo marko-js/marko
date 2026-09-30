@@ -40,18 +40,20 @@ var template_default = _template_patch("a", (input) => {
 					_await($scope3_id, "a", Promise.resolve(input.value), () => {
 						const $scope4_id = _scope_id();
 						_html(`<em>${_patch_text($scope4_id, "a", input.value, void 0, $scope0_reason, 2)}</em>`);
+						_client_guard($scope0_reason, 2) && _patch_init($scope4_id, "a5");
 						_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope4_id, {
 							_: _scope_with_id($scope3_id),
 							Cf: 1
 						}));
 					}, 1, "a0");
+					_client_guard($scope0_reason, 2) && _patch_init($scope3_id, "a6");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 					$scope0_page && _resume_branch($scope3_id);
 				}, () => {
 					_scope_reason();
 					_scope_id();
 					_html("loading");
-				}, void 0, "a5", void 0, "a2");
+				}, void 0, "a7", void 0, "a2");
 				$scope0_page && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, $scope1_id) });
 			_scope($scope1_id, {

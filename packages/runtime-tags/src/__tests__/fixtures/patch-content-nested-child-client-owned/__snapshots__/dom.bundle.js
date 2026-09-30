@@ -8,5 +8,5 @@ const $setup__script = _script("c0", ($scope) => _on($scope.b, "click", function
 }));
 
 // template.marko
-const $child_content__input_note = /*@__PURE__*/ _fill_join_closure("a2", 4, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "a0"), 0);
+const $child_content__input_note = /*@__PURE__*/ _fill_join_closure("a2", 4, _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "a0"), 0);
 const $child_content = _content("a1", "<em> </em>", "D ", $child_content__input_note);

@@ -1,7 +1,7 @@
 // tags/site-footer.marko
 const $template$1 = "<footer> </footer>";
 const $walks$1 = "D l";
-const $input_year__OR__frozen = /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/0"], $scope.input_year + $scope.frozen));
+const $input_year__OR__frozen = /*@__PURE__*/ _init_or("__tests__/tags/site-footer.marko_0_input_year#3_frozen#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_year + $scope.frozen));
 const $frozen = /*@__PURE__*/ _let("frozen/4", $input_year__OR__frozen);
 function $setup$1($scope) {
 	$frozen($scope, 0);

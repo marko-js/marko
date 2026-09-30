@@ -237,9 +237,10 @@ export let _dynamic_tag = (
       if (renderer) {
         try {
           // The child's groups are unknown here: a patch page renders
-          // the tag server-side, elsewhere the client may re-render it.
+          // the tag server-side (a patch writes it even where nothing
+          // resumes), elsewhere the client may re-render it.
           _set_serialize_reason(
-            shouldResume && inputOrArgs !== undefined
+            inputOrArgs !== undefined && (shouldResume || state.writesPatches)
               ? state.patchPage
                 ? SERVER_ALL
                 : CLIENT_ALL
@@ -279,13 +280,9 @@ export let _dynamic_tag = (
   }
 
   if (rendered) {
-    // A patched tag keeps its key so a shell pairs by id alone.
-    if (
-      shouldResume ||
-      (patchPairing &&
-        typeof renderer === "function" &&
-        rawShells[renderer[RendererProp.Id]!])
-    ) {
+    // A patched tag keeps its key so a patch naming the same renderer pairs
+    // by id alone.
+    if (shouldResume || (patchPairing && typeof renderer === "function")) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]: rendererKey(renderer),
       });

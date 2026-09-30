@@ -33,7 +33,12 @@ import {
 } from "../../util/sections";
 import { getScopeReasonStatement } from "../../util/serialize-guard";
 import { getSerializeSourcesForRef } from "../../util/serialize-reasons";
-import { buildShell, getShellId, getShells } from "../../util/shell";
+import {
+  buildShell,
+  getShellId,
+  getShells,
+  getShippedShellId,
+} from "../../util/shell";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -41,7 +46,6 @@ import {
   getResumeRegisterId,
   getSectionEffectRegisterIds,
   patchCreates,
-  sectionHasServerEffect,
   setSerializedValue,
   writeHTMLResumeStatements,
 } from "../../util/signals";
@@ -183,29 +187,24 @@ export default {
         getSectionMeta(section);
         // Branch shells register at server module load so patches can create
         // them without the client bundling conditional content.
-        const active = { ...shells };
-        // The one translate-side blocker: `hasHTMLEffect` only exists once
-        // translate registers effects, so this drop cannot move to analyze.
-        forEachSection((section) => {
-          const id = getShellId(section);
-          if (active[id] && sectionHasServerEffect(section)) delete active[id];
-        });
         const shellProps: t.ObjectProperty[] = [];
-        for (const id in active) {
-          const section = active[id];
+        for (const id in shells) {
+          const section = shells[id];
+          // A branch shell ships where the tags creating it name it.
+          if (id === getShellId(section) && !getShippedShellId(section)) {
+            continue;
+          }
           // The id token carries `inits…!effects…`; a lone `!` marks a shell needing
-          // setup for seeds alone. Roots and content shells carry their own
-          // like a branch shell.
+          // setup for seeds alone. Roots, content and boundary bodies carry
+          // their own like a branch shell.
           let marker = "";
           if (
             id === getShellId(section) ||
             !section.parent ||
-            (section.contentShell === true && patchCreates(section))
+            ((section.contentShell === true || section.isBoundary) &&
+              patchCreates(section))
           ) {
-            forEach(getCreateInitClosures(section), (closure) => {
-              marker +=
-                (marker && " ") + getResumeRegisterId(section, closure, "init");
-            });
+            marker = getCreateInitIds(section);
             // An effect the created scope's own renders queue (an init, seed,
             // or item write cascades into it) is not replayed.
             const effectIds = getSectionEffectRegisterIds(
@@ -441,4 +440,14 @@ function getRegisteredFnExpression(
         getScopeIdIdentifier(extra.section),
     );
   }
+}
+
+// The inits a created scope of the section runs, as the shell grammar's
+// space-joined ids.
+function getCreateInitIds(section: Section) {
+  let ids = "";
+  forEach(getCreateInitClosures(section), (closure) => {
+    ids += (ids && " ") + getResumeRegisterId(section, closure, "init");
+  });
+  return ids;
 }

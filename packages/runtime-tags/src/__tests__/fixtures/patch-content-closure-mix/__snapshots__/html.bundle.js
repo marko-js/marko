@@ -35,6 +35,8 @@ var template_default = _template_patch("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<i>${_patch_text($scope2_id, "a", $global$1.brand)}:${_patch_text($scope2_id, "b", input.prefix, 2, $scope0_reason, 2)}:${_patch_text($scope2_id, "c", item, 2, $scope0_reason, 1)}</i>`);
 			_global_subscribe("a2", $scope2_id);
+			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a3");
+			_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "a4");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item__closures, _subscribe(_unfilled_if() && $global_brand__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }))));
 		}, $scope1_id) });
 		_scope($scope1_id, {

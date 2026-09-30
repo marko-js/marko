@@ -21,6 +21,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html("<div id=done>done</div>");
 		}, 1, "__tests__/template.marko_3*content");
+		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_promise#0:6/init");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_promise#0:6/subscribe", 0);
 		$scope0_page && _resume_branch($scope2_id);
 	}, () => {
@@ -35,7 +36,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		input_msg: input.msg,
 		count,
 		"ClosureScopes:input_msg/8": $input_msg__closures,
-		"ClosureScopes:input_promise/9": $input_promise__closures
+		"ClosureScopes:input_promise/9": _unfilled_if($scope0_reason, 1) && $input_promise__closures
 	}, "__tests__/template.marko", 0, {
 		input_msg: ["input.msg"],
 		count: "1:6"

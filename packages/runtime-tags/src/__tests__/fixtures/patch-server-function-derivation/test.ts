@@ -9,6 +9,8 @@ const click = (sel: string) => (document: Document) => {
 // client bundle only declares) is never recomputed from an arriving fill.
 export const config: TestConfig = {
   patches: true,
+  // Reads a server function the client bundle only declares.
+  skip_csr: true,
   steps: [
     {
       $global: {

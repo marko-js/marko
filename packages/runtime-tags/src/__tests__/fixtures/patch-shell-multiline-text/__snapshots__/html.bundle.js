@@ -18,5 +18,5 @@ line 3</pre><p>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
-	$scope0_page && _scope($scope0_id, { e: input.note });
+	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.note });
 }, 1, 0);

@@ -3,7 +3,9 @@
   "PatchBranch:#main/2": [{
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_2*content",
     "PatchChild:BranchScopes:#text/0": {
-      "PatchText:#text/0": "thing"
+      "PatchSetup:": {
+        "PatchText:#text/0": "thing"
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_1*shell"]
 }]
@@ -19,7 +21,9 @@
   "PatchBranch:#main/2": [{
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_2*content",
     "PatchChild:BranchScopes:#text/0": {
-      "PatchText:#text/0": "thing"
+      "PatchSetup:": {
+        "PatchText:#text/0": "thing"
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_1*shell"]
 }

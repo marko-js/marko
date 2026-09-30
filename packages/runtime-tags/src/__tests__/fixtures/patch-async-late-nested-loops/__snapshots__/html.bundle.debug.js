@@ -27,6 +27,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					_html(`<em>${_patch_text($scope4_id, "#text/0", group.id, void 0, $scope0_reason, 0)}.${_patch_text($scope4_id, "#text/1", v, 2, $scope0_reason, 0)}</em>`);
 					_scope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "6:12");
 				}, 1, "__tests__/template.marko_4*content");
+				_client_guard($scope0_reason, 0) && _patch_init($scope3_id, "__tests__/template.marko_3_item_promise#2:3/init");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_3_item_promise#2:3/subscribe", 0);
 				$scope0_page && _resume_branch($scope3_id);
 			}, void 0, (err) => {
@@ -34,10 +35,10 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`<b>${_text_resume($scope5_id, "#text/0", err.message, $sg__err_message)}</b>`);
 				_source_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "7:12");
-			}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_3*content");
+			}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_3*content", void 0, 1);
 			$scope0_page && _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
-				"ClosureScopes:item_promise/6": $for_content2__item_promise__closures
+				"ClosureScopes:item_promise/6": _unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures
 			}, "__tests__/template.marko", "4:8");
 		}, 0, $scope1_id, "#section/0", 1, 1, $sg__input_groups, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 		_html(`</section>${_el_resume($scope1_id, "#section/0")}`);

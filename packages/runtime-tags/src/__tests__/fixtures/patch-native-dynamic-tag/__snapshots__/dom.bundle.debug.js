@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
+const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
 const $inputonsectionarticle_content__setup = ($scope) => {
 	$inputonsectionarticle_content__input_label($scope);
 	$inputonsectionarticle_content__count($scope);

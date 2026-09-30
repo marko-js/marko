@@ -19,8 +19,8 @@
     cAa: {
       ta: "y",
       cb: {
-        "aa class": "c",
         s: {
+          "aa class": "c",
           i: "!a0"
         },
         ea0: "d e",

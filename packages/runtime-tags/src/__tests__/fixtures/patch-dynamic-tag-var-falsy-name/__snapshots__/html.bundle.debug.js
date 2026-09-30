@@ -41,6 +41,7 @@ var child_default = _template_patch("__tests__/tags/child/index.marko", (input) 
 			_html("content");
 		}, $scope1_id), void 0, void 0, _patch_dynamic_tag($scope1_id, "#text/0", $tag, $input2, "__tests__/tags/child/index.marko_2*content", "__tests__/tags/child/index.marko_1_$btn#2/var", $scope0_reason, 0));
 		_var($scope1_id, "#scopeOffset/1", $inputa11yTextbutton_scope, "__tests__/tags/child/index.marko_1_$btn#2/var");
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/child/index.marko_1_input_a11yText#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			$btn,
 			_: _scope_with_id($scope0_id)

@@ -2,10 +2,14 @@
 [`a0;D%c%;<p><!> <!></p>`, {
   ta: "Store!",
   lb: [{
-    ta: "a",
+    s: {
+      ta: "a"
+    },
     tb: "sale"
   }, {
-    ta: "b",
+    s: {
+      ta: "b"
+    },
     tb: "sale"
   }, "a0"]
 }]

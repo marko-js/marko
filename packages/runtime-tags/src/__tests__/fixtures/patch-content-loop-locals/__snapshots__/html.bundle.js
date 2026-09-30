@@ -19,7 +19,7 @@ var list_default = _template_patch("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0 a6;D l%;<em> </em><!><!>",
-	a: /*@__PURE__*/ ((_w0, _w1) => `a !a3;${_w0};${_w1}`)(((_w0) => `b/${_w0}& D l`)("b%c"), ((_w0) => `<!>${_w0}<button> </button>`)($template)),
+	a: /*@__PURE__*/ ((_w0, _w1) => `a !a4;${_w0};${_w1}`)(((_w0) => `b/${_w0}& D l`)("b%c"), ((_w0) => `<!>${_w0}<button> </button>`)($template)),
 	a1: "a1;D%;<b><!>!</b>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -44,6 +44,7 @@ var template_default = _template_patch("a", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_reason, 2);
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a3");
 			_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 				c: label,
 				_: _scope_with_id($scope0_id)
@@ -54,7 +55,7 @@ var template_default = _template_patch("a", (input) => {
 	_patch_child($scope0_id, "a", $childScope);
 	list_default({ item: $item });
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "a3");
+	_script($scope0_id, "a4");
 	$scope0_page && _scope($scope0_id, {
 		g: _source_if($scope0_reason, 1) && input.show,
 		h: n,

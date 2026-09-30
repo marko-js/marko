@@ -143,11 +143,11 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   onFinalizeReferences(() => {
     // A dynamic style in server-owned structure writes its rule from the
     // flush (a state-fed interpolation recomputes through the signal graph).
+    // A state-fed one still seeds a scope the flush creates: its setup,
+    // which writes the rule's selector, never runs there.
     if (writesPatchIn(section)) {
       for (const extra of valueExtras) ensurePatchWriteGroups(() => extra);
-      if (valueExtras.some((extra) => writesPatchHole(section, extra))) {
-        linkRuntimeFeature("patch-style");
-      }
+      linkRuntimeFeature("patch-style");
     }
   });
 }
@@ -244,14 +244,16 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     writer.writeTo(tag)`${callRuntime(
       "_style_html",
       buildStyleDecls(node, (value, i) =>
-        writesPatchHole(section, value.extra)
+        writesPatchIn(section)
           ? callRuntime(
               "_patch_style",
               getScopeIdIdentifier(section),
               getScopeAccessorLiteral(binding),
               t.stringLiteral(names[i]),
               value,
-              ...getExprWriteOwnership(value.extra),
+              ...(writesPatchHole(section, value.extra)
+                ? getExprWriteOwnership(value.extra)
+                : [t.numericLiteral(0), t.numericLiteral(0)]),
             )
           : callRuntime("_escape_style_value", value),
       ),

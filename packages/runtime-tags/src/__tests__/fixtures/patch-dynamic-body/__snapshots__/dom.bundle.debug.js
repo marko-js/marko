@@ -22,7 +22,7 @@ var box_b_default = /*@__PURE__*/ _template("__tests__/box-b.marko", $template$1
 const $template = "<main><!></main>";
 const $walks = "D%l";
 const $setup = () => {};
-const $inputmodeaboxAboxB_content__input_text = /*@__PURE__*/ _closure_get("input_text/5", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_1_input_text#0:4/subscribe");
+const $inputmodeaboxAboxB_content__input_text = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_text#0:4/init", "input_text/5", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_1_input_text#0:4/subscribe");
 const $inputmodeaboxAboxB_content__setup = $inputmodeaboxAboxB_content__input_text;
 const $inputmodeaboxAboxB_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $inputmodeaboxAboxB_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputmodeaboxAboxB_content);

@@ -20,7 +20,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<html>${_flush_head()}<body>`);
+	_html("<html>");
+	_flush_head_patch();
+	_html("<body>");
 	_if(() => {
 		if ($global$1.meta.headings) {
 			const $scope1_id = _scope_id();

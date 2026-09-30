@@ -7,7 +7,9 @@
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/tags/store.marko_fill0": 0
       }
     },
-    "PatchText:#text/2": "x",
+    "PatchSetup:": {
+      "PatchText:#text/2": "x"
+    },
     "PatchLoop:#text/4": ["y", {
       "PatchBranch:#text/0": 0
     }, "x", {
@@ -30,7 +32,9 @@
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/tags/store.marko_fill0": 0
       }
     },
-    "PatchText:#text/2": "y",
+    "PatchSetup:": {
+      "PatchText:#text/2": "y"
+    },
     "PatchLoop:#text/4": ["y", {
       "PatchBranch:#text/0": [{
         "PatchSetup:": {

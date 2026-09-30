@@ -29,7 +29,7 @@ var template_default = _template_patch("a", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
 	$scope0_page ? _scope($scope0_id, {
-		f: _source_if($scope0_reason, 1) && input.inner,
+		f: _unfilled_if($scope0_reason, 1) && input.inner,
 		g: input.title,
 		h: count,
 		j: $input_title__closures,

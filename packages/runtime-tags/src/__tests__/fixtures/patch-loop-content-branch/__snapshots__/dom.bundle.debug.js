@@ -16,12 +16,12 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = () => {};
-const $else_content__item_n = /*@__PURE__*/ _closure_get("item_n/7", ($scope) => _text($scope["#text/0"], $scope._._.item_n), ($scope) => $scope._._, "__tests__/template.marko_4_item_n#1:5/subscribe");
+const $else_content__item_n = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_4_item_n#1:5/init", "item_n/7", ($scope) => _text($scope["#text/0"], $scope._._.item_n), ($scope) => $scope._._, "__tests__/template.marko_4_item_n#1:5/subscribe");
 const $else_content__setup = $else_content__item_n;
-const $if_content__item_n = /*@__PURE__*/ _closure_get("item_n/7", ($scope) => _text($scope["#text/0"], $scope._._.item_n), ($scope) => $scope._._, "__tests__/template.marko_3_item_n#1:5/subscribe");
+const $if_content__item_n = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_item_n#1:5/init", "item_n/7", ($scope) => _text($scope["#text/0"], $scope._._.item_n), ($scope) => $scope._._, "__tests__/template.marko_3_item_n#1:5/subscribe");
 const $if_content__setup = $if_content__item_n;
 const $card_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content__setup, "<span> </span>", "D ", $else_content__setup);
-const $card_content__item_alt = /*@__PURE__*/ _closure_get("item_alt/6", ($scope) => $card_content__if($scope, $scope._.item_alt ? 0 : 1), 0, "__tests__/template.marko_2_item_alt#1:4/subscribe");
+const $card_content__item_alt = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_item_alt#1:4/init", "item_alt/6", ($scope) => $card_content__if($scope, $scope._.item_alt ? 0 : 1), 0, "__tests__/template.marko_2_item_alt#1:4/subscribe");
 const $card_content__setup = $card_content__item_alt;
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $card_content__setup);
 const $for_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $card_content($scope));

@@ -7,7 +7,7 @@
       }, "a2"]
     }
   },
-  va5: "b"
+  va6: "b"
 }]
 "BgM"
 
@@ -18,7 +18,7 @@
       ba: 0
     }
   },
-  va5: "a"
+  va6: "a"
 }
 
 // PATCH holding BgM
@@ -30,7 +30,7 @@
       }, "a2"]
     }
   },
-  va5: $
+  va6: $
 }
 
 // PATCH holding BgM
@@ -40,6 +40,6 @@
       ba: "a3"
     }
   },
-  va5: "a"
+  va6: "a"
 }]
 "BgMA"

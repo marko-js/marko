@@ -18,8 +18,9 @@ declare module "./resume" {
 }
 
 // A registration bound to the site's scope (its bare id) or to an owner `up`
-// hops away, resolved as the entry applies; its captures refresh by writes.
-type OwnerBound = string | [registerId: string, up: number];
+// hops away, resolved as the entry applies; its captures refresh by writes,
+// and render-only locals (a loop's values) pass to its factory.
+type OwnerBound = string | [registerId: string, up: number, ...locals: Scope[]];
 
 patchers[PatchKey.Bind] = createPatchers[PatchKey.Bind] = (
   scope,
@@ -74,9 +75,10 @@ function resolvedFill(fills: typeof patchers) {
 }
 
 function resolveOwnerBound(scope: Scope, entry: OwnerBound) {
-  const registerId = typeof entry === "string" ? entry : entry[0];
-  for (let up = typeof entry === "string" ? 0 : entry[1]; up--;) {
-    scope = scope[AccessorProp.Owner]!;
-  }
-  return getRegisteredWithScope<(scope: Scope) => unknown>(registerId)(scope);
+  if (typeof entry === "string") entry = [entry, 0];
+  for (let up = entry[1]; up--;) scope = scope[AccessorProp.Owner]!;
+  return getRegisteredWithScope<(...args: Scope[]) => unknown>(entry[0])(
+    scope,
+    ...(entry.slice(2) as Scope[]),
+  );
 }

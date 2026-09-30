@@ -17,7 +17,7 @@ _shells({
 	a1: "a1,<div id=done>done</div>",
 	a2: "a2;b%;<!><!><!>",
 	a3: "a3;b%;<!><!><!>",
-	a: /*@__PURE__*/ ((_w0, _w1) => `a !a5;${_w0};${_w1}`)(((_w0) => ` D l/${_w0}&`)("D%l"), ((_w0) => `<button> </button>${_w0}`)($template))
+	a: /*@__PURE__*/ ((_w0, _w1) => `a !a6;${_w0};${_w1}`)(((_w0) => ` D l/${_w0}&`)("D%l"), ((_w0) => `<button> </button>${_w0}`)($template))
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_msg = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -39,6 +39,7 @@ var template_default = _template_patch("a", (input) => {
 				_scope_id();
 				_html("<div id=done>done</div>");
 			}, 1, "a0");
+			_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "a4");
 			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }));
 			$scope0_page && _resume_branch($scope3_id);
 		}, () => {
@@ -47,15 +48,15 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<em>loading ${_text_resume($scope2_id, "a", input.msg, $sg__input_msg * 2)}</em>`);
 			_subscribe(_source_if($scope0_reason, 0) && $input_msg__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			$sg__input_msg || _resume_branch($scope2_id);
-		}, void 0, "a4", void 0, "a2");
+		}, void 0, "a5", void 0, "a2");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) });
-	_script($scope0_id, "a5");
+	_script($scope0_id, "a6");
 	$scope0_page ? _scope($scope0_id, {
 		f: input.msg,
 		h: count,
 		i: $input_msg__closures,
 		j: $input_promise__closures,
 		c: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a6", input.msg);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a7", input.msg);
 }, 1, () => [wrap_default]);

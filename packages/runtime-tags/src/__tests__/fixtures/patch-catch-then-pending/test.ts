@@ -5,6 +5,9 @@ import { flush, resolveAfter, wait } from "../../utils/resolve";
 // the pending UI replaces the live catch content, then the settle lands.
 export const config: TestConfig = {
   patches: true,
+  // A patch re-renders a caught `<try>` from the server, which recovers;
+  // a client render keeps its `@catch`.
+  skip_csr: true,
   skip_fresh_render: true,
   steps: () => [
     { promise: Promise.resolve(), detail: "a" },

@@ -8,7 +8,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_label($scope, $params2[0]?.label);
 	$for_content__item_sale($scope, $params2[0]?.sale);
 };
-const $if_content2__input_detail = /*@__PURE__*/ _closure_get("input_detail/10", ($scope) => _text($scope["#text/0"], $scope._._.input_detail), ($scope) => $scope._._, "__tests__/template.marko_2_input_detail#0:7/subscribe");
+const $if_content2__input_detail = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_detail#0:7/init", "input_detail/10", ($scope) => _text($scope["#text/0"], $scope._._.input_detail), ($scope) => $scope._._, "__tests__/template.marko_2_input_detail#0:7/subscribe");
 const $if_content2__setup = $if_content2__input_detail;
 const $if_content__input_summary = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_summary));
 const $if_content__setup = ($scope) => {

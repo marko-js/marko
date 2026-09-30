@@ -13,6 +13,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(_patch_text($scope1_id, "a", input.label, void 0, $scope0_reason, 2));
+		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a1");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id), 0, $sg__input_on__OR__input_label, _patch_dynamic_tag($scope0_id, "a", $tag, $input2, "a0", 0, $scope0_reason, 0));
 	$scope0_page && _scope($scope0_id, {

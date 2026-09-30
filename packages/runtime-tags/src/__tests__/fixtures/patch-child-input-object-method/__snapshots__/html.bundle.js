@@ -2,17 +2,20 @@
 const $template = "<div> </div>";
 _shells({ b: "b;D ;<div> </div>" });
 var code_block_default = _template_patch("b", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_text = _source_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const highlight = _resume(function(text) {
 		return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
 	}, "b0", $scope0_id);
 	_html(`<div>${_patch_html($scope0_id, "a", highlight(input.text), void 0, $scope0_reason, 0)}</div>`);
+	_patch_write($scope0_id, "e", input.text, 1);
+	_patch_write($scope0_id, "f", highlight, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b1");
 	$scope0_page ? _scope($scope0_id, {
-		d: $si__input_text && input.cursor,
-		e: _source_if($scope0_reason, 1) && input.text,
-		f: $si__input_text && highlight
-	}) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "d", input.cursor);
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.cursor,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.text,
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && highlight
+	}) : _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && _patch_write($scope0_id, "d", input.cursor);
 }, 0, 0);
 
 // template.marko

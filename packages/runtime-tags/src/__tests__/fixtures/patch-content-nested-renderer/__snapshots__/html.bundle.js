@@ -35,6 +35,8 @@ var template_default = _template_patch("a", (input) => {
 				_html(`<p>${_patch_text($scope2_id, "a", input.note, void 0, $scope0_reason, 2)}</p>`);
 				const $tag = input.inner;
 				_dynamic_tag($scope2_id, "b", $tag, {}, 0, 0, _source_guard($scope0_reason, 3), _patch_dynamic_tag($scope2_id, "b", $tag, 0, 0, 0, $scope0_reason, 3));
+				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a2");
+				_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a3");
 				_subscribe(_unfilled_if($scope0_reason, 3) && $input_inner__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
 			}, $scope1_id) });
 			_scope($scope1_id, {

@@ -3,10 +3,14 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchLoop:#text/0": [{
-        "PatchText:#text/0": "a",
+        "PatchSetup:": {
+          "PatchText:#text/0": "a"
+        },
         "PatchBranch:#text/1": 0
       }, {
-        "PatchText:#text/0": "b",
+        "PatchSetup:": {
+          "PatchText:#text/0": "b"
+        },
         "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_2*shell"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_1*shell"]
     }
@@ -24,10 +28,14 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchLoop:#text/0": [{
-        "PatchText:#text/0": "a",
+        "PatchSetup:": {
+          "PatchText:#text/0": "a"
+        },
         "PatchBranch:#text/1": 0
       }, {
-        "PatchText:#text/0": "b",
+        "PatchSetup:": {
+          "PatchText:#text/0": "b"
+        },
         "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_2*shell"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-static-body/page.marko_1*shell"]
     }

@@ -11,14 +11,14 @@ const $template = "<button class=n> </button><main></main>";
 const $walks = " D l b";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_label.mjs"), "ready:__tests__/child.marko");
-const $if_content__input_label__OR__n = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_label#0:6/init", /*@__PURE__*/ _or(2, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], `${$scope._.input_label}${$scope._.n}`))), 0, "#main/2", 0);
+const $if_content__input_label__OR__n = _fill_join_if("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _init_join("__tests__/template.marko_1_input_label#0:6/init", /*@__PURE__*/ _or(2, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], `${$scope._.input_label}${$scope._.n}`))), 0, "#main/2", 0);
 const $if_content__input_label = /*@__PURE__*/ _if_closure("#main/2", 0, $if_content__input_label__OR__n);
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__n._($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $if_content__n = /*@__PURE__*/ _init_if_closure("__tests__/template.marko_1_n#0:7/init", "#main/2", 0, $if_content__input_label__OR__n);
+const $if_content__n = _init_if_closure("__tests__/template.marko_1_n#0:7/init", "#main/2", 0, $if_content__input_label__OR__n);
 const $n = /*@__PURE__*/ _let("n/7", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$if_content__n($scope);

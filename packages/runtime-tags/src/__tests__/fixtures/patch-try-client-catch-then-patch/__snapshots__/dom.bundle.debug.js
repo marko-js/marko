@@ -7,12 +7,12 @@ function boom() {
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_2*content", "<b> </b>", "D ", 0, $catch_content__$params);
-const $try_content__input_message = /*@__PURE__*/ _closure_get("input_message/7", ($scope) => _text($scope["#text/0"], $scope._.input_message), 0, "__tests__/template.marko_1_input_message#0:5/subscribe");
+const $try_content__input_message = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_message#0:5/init", "input_message/7", ($scope) => _text($scope["#text/0"], $scope._.input_message), 0, "__tests__/template.marko_1_input_message#0:5/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_message($scope);
 	$try_content__count($scope);
 };
-const $try_content__count = /*@__PURE__*/ _closure_get("count/8", ($scope) => _text($scope["#text/1"], $scope._.count === 1 ? boom() : ""), 0, "__tests__/template.marko_1_count#0:6/subscribe");
+const $try_content__count = _init_closure_get("__tests__/template.marko_1_count#0:6/init", "count/8", ($scope) => _text($scope["#text/1"], $scope._.count === 1 ? boom() : ""), 0, "__tests__/template.marko_1_count#0:6/subscribe");
 const $count__closure = /*@__PURE__*/ _closure($try_content__count);
 const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 	_text($scope["#text/2"], $scope.count);

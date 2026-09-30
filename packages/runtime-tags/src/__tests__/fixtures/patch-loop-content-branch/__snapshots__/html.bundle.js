@@ -40,11 +40,13 @@ var template_default = _template_patch("a", (input) => {
 					if (item.alt) {
 						const $scope3_id = _scope_id();
 						_html(`<em>${_patch_text($scope3_id, "a", item.n, void 0, $scope0_reason, 0)}</em>`);
+						_client_guard($scope0_reason, 0) && _patch_init($scope3_id, "a4");
 						_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 						return 0;
 					} else {
 						const $scope4_id = _scope_id();
 						_html(`<span>${_patch_text($scope4_id, "a", item.n, void 0, $scope0_reason, 0)}</span>`);
+						_client_guard($scope0_reason, 0) && _patch_init($scope4_id, "a5");
 						_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope4_id, {
 							_: _scope_with_id($scope2_id),
 							Ch: 1
@@ -52,6 +54,7 @@ var template_default = _template_patch("a", (input) => {
 						return 1;
 					}
 				}, $scope2_id, "a", 1, $sg__input_items, $sg__input_items, void 0, void 0, ["a2", "a3"], $scope0_reason, 0);
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a6");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				$sg__input_items || $scope0_page && _resume_branch($scope2_id);
 			}, $scope1_id)

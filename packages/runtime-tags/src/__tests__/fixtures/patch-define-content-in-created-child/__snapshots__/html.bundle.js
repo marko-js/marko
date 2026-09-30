@@ -25,13 +25,13 @@ _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks), /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template))
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_show = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const Row = { content: _content_resume("a1", ({ label }) => {
 		const $scope2_id = _scope_id();
-		_scope_reason();
-		_html(`<em>${_patch_text($scope2_id, "a", label)}</em>`);
-		_scope($scope2_id, {});
+		const $scope2_reason = _scope_reason(), $sg__label = _source_guard($scope2_reason, 0);
+		_html(`<em>${_text_resume($scope2_id, "a", label, $sg__label)}</em>`);
+		$scope0_page && _scope($scope2_id, {});
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

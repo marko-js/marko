@@ -19,6 +19,7 @@ import {
 } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
+import { waitForPendingModules } from "./utils/import-with-context";
 import {
   type Destroy,
   type Flush,
@@ -114,6 +115,9 @@ export type TestConfig = {
   /** Patch: applies a step's patch while the document is still
    * streaming; by default the remaining flushes land first. */
   patch_while_streaming?: boolean;
+  /** Patch: a known bug, described here, leaves the patched page unlike a
+   * client render of the same steps; the csr test fails once they agree. */
+  csr_divergence?: string;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -215,14 +219,10 @@ function testFixtures(interop?: true) {
           const equivalent = config.equivalent !== false;
           const skipSSR =
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
-          // Patch mode is inherently SSR: the client only resumes and
-          // applies patches, so there is no meaningful CSR mount.
+          // A patch fixture's csr test replays its patch run against a client
+          // render of the same steps (`oracle`), since patches only resume.
           const skipCSR =
-            optimize ||
-            usesPatches ||
-            hasCompilerError ||
-            skipDOM ||
-            config.skip_csr;
+            optimize || hasCompilerError || skipDOM || config.skip_csr;
           const stats: {
             dom?: Record<string, ChunkSizes | Sizes>;
             html?: Sizes;
@@ -256,8 +256,14 @@ function testFixtures(interop?: true) {
               () => {},
             );
             ssrRunner.reset();
+            plainRunner.peek()?.then(
+              (runner) => runner.disposeServer(),
+              () => {},
+            );
+            plainRunner.reset();
             csr.reset();
             ssr.reset();
+            oracle.reset();
           });
           const getModeOpts = once(
             (): compiler.Config => ({
@@ -292,6 +298,16 @@ function testFixtures(interop?: true) {
               { template: "./template.marko" },
               getModeOpts(),
               interop,
+            ),
+          );
+          // The client render a patch fixture's oracle replays: a plain build.
+          const plainRunner = once(() =>
+            createServerRunner(
+              fixtureDir,
+              { template: "./template.marko" },
+              { ...getModeOpts(), cache: new Map(), patches: false },
+              interop,
+              "plain",
             ),
           );
 
@@ -389,7 +405,9 @@ function testFixtures(interop?: true) {
             return { browser, tracker };
           });
 
-          const ssr = once(async () => {
+          const ssr = once(() => runSSR());
+          const oracle = once(() => runSSR(true));
+          const runSSR = async (withClient?: boolean) => {
             resetResolveState();
             const runner = await ssrRunner();
             const abortController = config.abort_ssr
@@ -498,6 +516,11 @@ function testFixtures(interop?: true) {
             await browser.runAsyncScripts(() => tracker.logRender(input));
             const { patch, run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
+            // A client render replaying the steps is ground truth for a patched
+            // page, most of all once a client step leaves the server's view.
+            let client = withClient
+              ? await mountClient((await plainRunner()).clientRunner!, input)
+              : undefined;
             let rejected = false;
             const held: Promise<unknown>[] = [];
 
@@ -557,10 +580,37 @@ function testFixtures(interop?: true) {
                 );
               }
             };
+            const assertPatchedLikeClient = async (step: string) => {
+              browser.flush("raf");
+              client!.browser.flush("raf");
+              await new Promise((resolve) => setImmediate(resolve));
+              await new Promise((resolve) => setImmediate(resolve));
+              const expected = formatClientPage(
+                client!.browser.window.document,
+                config.compare_defaults,
+              );
+              const actual = formatClientPage(
+                browser.window.document,
+                config.compare_defaults,
+              );
+              if (expected !== actual) {
+                throw new Error(
+                  `A patched page left a client render of the same steps after ${step}.\n--- client render\n${expected}\n--- patched page\n${actual}\n`,
+                );
+              }
+            };
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndResume : undefined,
               onStep: () => {
                 diverged = true;
+              },
+              afterStep: async (update) => {
+                // A thrown step's error has no client render to compare.
+                if (isThrows(update)) client = undefined;
+                if (!client) return;
+                await client.apply(update);
+                // A document still streaming is not yet the page to compare.
+                if (!hasFlush) await assertPatchedLikeClient(String(update));
               },
               onInput: usesPatches
                 ? async (input, betweenFlushes) => {
@@ -569,7 +619,8 @@ function testFixtures(interop?: true) {
                     if (hasFlush && !config.patch_while_streaming) {
                       await drainFlushes();
                     }
-                    const freshRenders = !hasFlush && !config.skip_fresh_render;
+                    const freshRenders =
+                      !withClient && !hasFlush && !config.skip_fresh_render;
                     tracker.beginUpdate();
                     let applied = true;
                     const flushes: string[] = [];
@@ -639,10 +690,23 @@ function testFixtures(interop?: true) {
                     }
                     patches.push(flushes.join(""));
                     tracker.logUpdate(input);
+                    // A response the client interleaves with, or one still
+                    // pending or refused, has no client render to replay.
+                    if (held.length || betweenFlushes || !applied) {
+                      client = undefined;
+                    }
                     if (held.length) return applied;
                     if (applied && !betweenFlushes && freshRenders) {
                       if (diverged) await renderFresh(input);
                       else await assertPatchedLikeFresh(input);
+                    }
+                    // A client render keeps the `$global` it mounted with.
+                    if (input.$global) client = undefined;
+                    if (client) {
+                      await client.update(input);
+                      if (!hasFlush) {
+                        await assertPatchedLikeClient(JSON.stringify(input));
+                      }
                     }
                     if (!applied) {
                       if (!config.expect_rejection) {
@@ -680,7 +744,7 @@ function testFixtures(interop?: true) {
               patchHeaders,
               freshDocs,
             };
-          });
+          };
 
           skipHTML || it("html", () => snapCompile("html"));
           skipDOM || it("dom", () => snapCompile("dom"));
@@ -823,13 +887,27 @@ function testFixtures(interop?: true) {
             });
 
           skipCSR ||
-            it("csr", () =>
-              snapMode(
-                async () => stripFixtureDir((await csr()).tracker.getLogs()),
-                equivalent ? "render.md" : "render-csr.md",
-                config.error_dom,
-                "csr",
-              ));
+            (usesPatches && config.error_html) ||
+            it(
+              "csr",
+              usesPatches
+                ? () =>
+                    config.csr_divergence
+                      ? assert.rejects(
+                          oracle(),
+                          /left a client render/,
+                          "The patched page now matches a client render; drop `csr_divergence`.",
+                        )
+                      : oracle()
+                : () =>
+                    snapMode(
+                      async () =>
+                        stripFixtureDir((await csr()).tracker.getLogs()),
+                      equivalent ? "render.md" : "render-csr.md",
+                      config.error_dom,
+                      "csr",
+                    ),
+            );
         });
       }
 
@@ -861,6 +939,9 @@ async function runSteps(
   run: () => void,
   opts: {
     onStep?: () => void;
+    afterStep?: (
+      update: Wait | Flush | ((document: Document) => unknown),
+    ) => Promise<void>;
     onInput?: (
       input: Input,
       betweenFlushes?: (document: Document) => unknown,
@@ -882,6 +963,7 @@ async function runSteps(
       await browser.runAsyncScripts();
       run();
       tracker.logUpdate();
+      await opts.afterStep?.(update);
     } else if (isRelease(update)) {
       await browser.releaseLoads();
       await browser.runAsyncScripts();
@@ -901,6 +983,7 @@ async function runSteps(
         run();
         tracker.logUpdate();
       }
+      await opts.afterStep?.(update);
     } else if (typeof update === "function") {
       opts.onStep?.();
       tracker.beginUpdate();
@@ -913,6 +996,7 @@ async function runSteps(
       } else {
         tracker.logUpdate(update);
       }
+      await opts.afterStep?.(update);
     } else if (opts.onInput) {
       const input = isNavigate(update)
         ? typeof update.navigateInput === "function"
@@ -969,4 +1053,58 @@ function formatPage(document: Document, compareDefaults?: boolean) {
   ]
     .filter(Boolean)
     .join("\n");
+}
+
+// Mounts the csr build and replays each step on it as the patched page takes it.
+async function mountClient(
+  runClient: NonNullable<
+    Awaited<ReturnType<typeof createServerRunner>>["clientRunner"]
+  >,
+  input: Input,
+) {
+  const browser = createBrowser();
+  const { template, run } = await runClient(browser.ctx);
+  const instance = template.mount(
+    input,
+    browser.window.document.body,
+    "afterbegin",
+  );
+  // Lazy modules and awaited values land over several macrotasks; a page
+  // that never stops changing (a timer) settles after a bounded wait.
+  const settle = async () => {
+    for (let i = 20, html = ""; i-- && html !== getHTML();) {
+      html = getHTML();
+      run();
+      await waitForPendingModules(browser.ctx);
+      await new Promise((resolve) => setTimeout(resolve));
+      run();
+    }
+  };
+  const getHTML = () => browser.window.document.body.innerHTML;
+  await settle();
+  return {
+    browser,
+    async update(input: Input) {
+      instance.update(input);
+      await settle();
+    },
+    async apply(update: Wait | Flush | ((document: Document) => unknown)) {
+      if (isFlush(update)) {
+        if (update.flushType !== "stream") {
+          browser.flush(update.flushType as Exclude<FlushType, "stream">);
+        }
+      } else if (!isWait(update)) {
+        await update(browser.window.document);
+      }
+      await settle();
+    },
+  };
+}
+
+// A client render names its `<id>`s apart from the server's (`c` vs `s`).
+function formatClientPage(document: Document, compareDefaults?: boolean) {
+  return formatPage(document, compareDefaults).replace(
+    /\b[cs]M_[0-9a-z]+\b/g,
+    "M_",
+  );
 }

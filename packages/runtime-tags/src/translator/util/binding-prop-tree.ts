@@ -15,9 +15,13 @@ export type BindingPropTree = {
 
 // Set during analyze on a `<${x}/>` that renders content with no input.
 export const kDirectContent = Symbol("direct content");
+// Set during analyze on a read a tag renders as content: a dynamic tag's
+// name and input, or a native tag's spread with no body of its own.
+export const kRendersContent = Symbol("renders content");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kDirectContent]?: true;
+    [kRendersContent]?: true;
   }
 }
 

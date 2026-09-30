@@ -65,7 +65,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_page = _source_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = new Set();
-	_html(`<html>${_flush_head()}<body>`);
+	_html("<html>");
+	_flush_head_patch();
+	_html("<body>");
 	_if(() => {
 		if (input.page === 0) {
 			const $scope3_id = _scope_id();
@@ -99,6 +101,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "#text/0", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["__tests__/template.marko_4*shell", "__tests__/template.marko_5*shell"], $scope0_reason, 1);
+					_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:3/init");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "11:8"));
 					$sg__input_page || $scope0_page && _resume_branch($scope2_id);
 				}, $scope1_id)

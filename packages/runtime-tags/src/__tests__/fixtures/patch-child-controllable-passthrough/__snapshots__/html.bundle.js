@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 _shells({
 	b: "b !;b%;<!><!><!>",
-	b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>"
+	b0: "b0 !b2;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var counter_default = _template_patch("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
@@ -11,9 +11,10 @@ var counter_default = _template_patch("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let count = 0;
+			input.onCount && _filled_guard($scope0_reason, 2) && _patch_value($scope1_id, "b1", count);
 			_html(`<span>Seen ${_text_resume($scope1_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
-			_script($scope1_id, "b1");
-			_patch_value($scope1_id, "b2", count, 1);
+			_script($scope1_id, "b2");
+			_patch_value($scope1_id, "b1", count, 1);
 			_patch_bind($scope1_id, "d", input.onCount || void 0);
 			_scope($scope1_id, {
 				c: count,

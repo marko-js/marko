@@ -50,6 +50,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<em>${_patch_text($scope3_id, "#text/0", input.note, void 0, $scope0_reason, 4)}</em>`);
+					_client_guard($scope0_reason, 4) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:5/init");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_note/8": 1

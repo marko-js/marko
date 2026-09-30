@@ -1,7 +1,7 @@
 // tags/field/index.marko
 const $template$1 = "<input>";
 const $walks$1 = " b";
-const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(5, ($scope) => _attr_input_value($scope, "#input/0", $scope.input_value, $scope.input_valueChange));
+const $input_value__OR__input_valueChange = /*@__PURE__*/ _init_or("__tests__/tags/field/index.marko_0_input_value#3_input_valueChange#4/init", 5, ($scope) => _attr_input_value($scope, "#input/0", $scope.input_value, $scope.input_valueChange));
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__input_valueChange);
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_value__OR__input_valueChange);
 const $setup__script$1 = _script("__tests__/tags/field/index.marko_0", ($scope) => _attr_input_value_script($scope, "#input/0"));

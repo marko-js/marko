@@ -8,7 +8,7 @@ const $await_content__v = ($scope, v) => _text($scope["#text/1"], v);
 const $await_content__$params = ($scope, $params5) => $await_content__v($scope, $params5[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em><!>.<!></em>", "D%c%");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__item_promise = /*@__PURE__*/ _closure_get("item_promise/6", ($scope) => $try_content__await_promise($scope, $scope._.item_promise), 0, "__tests__/template.marko_3_item_promise#2:3/subscribe");
+const $try_content__item_promise = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_item_promise#2:3/init", "item_promise/6", ($scope) => $try_content__await_promise($scope, $scope._.item_promise), 0, "__tests__/template.marko_3_item_promise#2:3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__item_promise($scope);
 	$await_content($scope);

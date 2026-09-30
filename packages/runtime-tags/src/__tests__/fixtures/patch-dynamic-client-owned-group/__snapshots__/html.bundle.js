@@ -18,6 +18,9 @@ var picker_default = _template_patch("c", (input) => {
 	const $tag = input.on ? card_default : null;
 	const $input2 = { label: input.label };
 	_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, $sg__input_on__OR__input_label, _patch_dynamic_tag($scope0_id, "a", $tag, $input2, 0, 0, $scope0_reason, 0));
+	_patch_write($scope0_id, "d", input.on, 1);
+	_patch_write($scope0_id, "e", input.label, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "c0");
 	$scope0_page && _scope($scope0_id, {
 		d: _source_if($scope0_reason, 2) && input.on,
 		e: _source_if($scope0_reason, 1) && input.label

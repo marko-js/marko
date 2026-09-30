@@ -43,6 +43,7 @@ UPDATE: main > button[data-seen] null => "b1"
     a2
   </em>
   <button
+    data-seen="b1"
     title="b2"
   >
     b2
@@ -78,5 +79,5 @@ assert.equal(button.dataset.seen, button.title);
 ```
 ## Change
 ```
-UPDATE: main > button[data-seen] null => "b2"
+UPDATE: main > button[data-seen] "b1" => "b2"
 ```

@@ -18,7 +18,7 @@ var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", ""
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill0", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
-const $if_content__store_set = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_3_store_set#1:8/init", "store_set/10", ($scope) => $if_content__count($scope, 0, $scope._._.store_set), ($scope) => $scope._._);
+const $if_content__store_set = _init_closure_get("__tests__/template.marko_3_store_set#1:8/init", "store_set/10", ($scope) => $if_content__count($scope, 0, $scope._._.store_set), ($scope) => $scope._._);
 const $if_content__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));
@@ -27,7 +27,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $for_content2__if = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
-const $for_content2__input_show = /*@__PURE__*/ _closure_get("input_show/4", ($scope) => $for_content2__if($scope, $scope._._.input_show && $scope["#LoopKey"] === $scope._["#LoopKey"] ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_show#0:3/subscribe");
+const $for_content2__input_show = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_show#0:3/init", "input_show/4", ($scope) => $for_content2__if($scope, $scope._._.input_show && $scope["#LoopKey"] === $scope._["#LoopKey"] ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_show#0:3/subscribe");
 const $for_content2__setup = $for_content2__input_show;
 const $for_content__store = _var_resume("__tests__/template.marko_1_store#6/var", ($scope, store) => {
 	$for_content__store_last($scope, store?.last);

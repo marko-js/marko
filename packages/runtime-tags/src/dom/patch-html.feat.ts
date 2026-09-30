@@ -1,6 +1,6 @@
 import { type Accessor, PatchKey } from "../common/types";
 import { _html } from "./dom";
-import { patchers } from "./resume";
+import { createPatchers, patchers } from "./resume";
 
-patchers[PatchKey.Html] = (scope, key, value) =>
+createPatchers[PatchKey.Html] = patchers[PatchKey.Html] = (scope, key, value) =>
   _html(scope, value, key.slice(PatchKey.Html.length) as Accessor);

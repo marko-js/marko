@@ -1,8 +1,8 @@
 // template.marko
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_label.mjs"), "_a");
-const $if_content__input_label__OR__n = /*@__PURE__*/ _fill_join_if("b2", 6, /*@__PURE__*/ _init_join("b4", /*@__PURE__*/ _or(2, ($scope) => $load_Child_tag_input_label($scope.b, `${$scope._.g}${$scope._.h}`))), 0, 2, 0);
+const $if_content__input_label__OR__n = _fill_join_if("b2", 6, /*@__PURE__*/ _init_join("b4", /*@__PURE__*/ _or(2, ($scope) => $load_Child_tag_input_label($scope.b, `${$scope._.g}${$scope._.h}`))), 0, 2, 0);
 const $if_content__input_label = /*@__PURE__*/ _if_closure(2, 0, $if_content__input_label__OR__n);
-const $if_content__n = /*@__PURE__*/ _init_if_closure("b5", 2, 0, $if_content__input_label__OR__n);
+const $if_content__n = _init_if_closure("b5", 2, 0, $if_content__input_label__OR__n);
 const $n = /*@__PURE__*/ _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$if_content__n($scope);

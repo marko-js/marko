@@ -30,9 +30,16 @@ import {
   type ReferencedExtra,
   type Sources,
   isInParams,
+  type Intersection,
+  intersectionMeta,
   readsValuesOnResume,
 } from "../references";
-import { getChildSectionOf, type Section, someSection } from "../sections";
+import {
+  getChildSectionOf,
+  groupParamsBySection,
+  type Section,
+  someSection,
+} from "../sections";
 import { isStableExpr } from "../serialize-guard";
 import { getSerializeSourcesForRef } from "../serialize-reasons";
 import { createProgramState } from "../state";
@@ -112,8 +119,8 @@ export function isPatchFillBinding(binding: Binding) {
   if (
     isPatch() &&
     ((!binding.section.parent && !isPage()) ||
-      ((binding.section.isBranch || !!binding.upstreamLocal) &&
-        isBranchPathSection(binding.section))) &&
+      isCreatableBody(binding.section) ||
+      (!!binding.upstreamLocal && isBranchPathSection(binding.section))) &&
     // Flushes never create stateful branches, so their
     // state needs no seed fill.
     !isStatefulBranch(binding.section) &&
@@ -130,6 +137,32 @@ export function isPatchFillBinding(binding: Binding) {
     }
   }
   return isPatchRefreshableBinding(binding) && hasStateJoinedRead(binding);
+}
+
+// A branch or boundary body on the branch path: a flush may create its
+// scopes (a boundary's when it settles or rebuilds after a catch).
+export function isCreatableBody(section: Section) {
+  return (
+    (section.isBranch || section.isBoundary) && isBranchPathSection(section)
+  );
+}
+
+// A value a created scope gets from no other channel: its resumed twin reads
+// it from the document, while state, fills, writes and loop params arrive
+// through the client's signals or the structure.
+export function isCreatedScopeSeed(binding: Binding) {
+  const { section } = binding;
+  return (
+    isPatch() &&
+    (isCreatableBody(section) || (!section.parent && !isPage())) &&
+    binding.type !== BindingType.dom &&
+    binding.type !== BindingType.global &&
+    binding.type !== BindingType.constant &&
+    !binding.sources?.state &&
+    !(section.parent && isSectionParam(binding)) &&
+    !isPatchFillBinding(binding) &&
+    !isPatchWriteBinding(binding)
+  );
 }
 
 // The root value an alias chain reads: aliases never fill or write on
@@ -343,6 +376,38 @@ export function isPatchWriteBinding(binding: Binding) {
   );
 }
 
+// A root join's params reach a created scope as seeds, never as arrivals:
+// the flush runs each join whose output the client owns.
+export function getCreatedJoins(section: Section) {
+  let joins: Intersection[] | undefined;
+  forEach(section.bindings, (binding) => {
+    for (const read of binding.reads) {
+      const refs = read.referencedBindings;
+      if (
+        read.section === section &&
+        Array.isArray(refs) &&
+        !joins?.includes(refs) &&
+        intersectionMeta.get(refs)?.id !== undefined &&
+        initsCreatedJoin(section, refs)
+      ) {
+        (joins ||= []).push(refs);
+      }
+    }
+  });
+  return joins;
+}
+
+// State members arrive through their own fills, which run the join.
+export function initsCreatedJoin(section: Section, intersection: Intersection) {
+  const sources = getSerializeSourcesForRef(intersection);
+  if (isPatch() && !section.parent && !isPage() && !sources?.state) {
+    for (const [paramsSection] of groupParamsBySection(sources?.param)) {
+      if (paramsSection === section) return true;
+    }
+  }
+  return false;
+}
+
 // An effect read of a written value re-runs by register id when a patch
 // changes what it saw; ask through `someAlias` (direct aliases only).
 export function hasPatchEffectRead(binding: Binding) {
@@ -366,12 +431,14 @@ export function getCreateInitClosures(section: Section) {
 // A closure a created scope of `section` runs as an init: state (the shell
 // names it), a fill feeding a state join (the flush's `_init_join`), or any
 // other member of such a join, since the join fires once every member
-// arrives and a created scope runs only registered inits.
+// arrives and a created scope runs only registered inits. A constant (a
+// loop key) never subscribes: the reconciler sets it.
 export function closureInitsCreated(closure: Binding, section: Section) {
   return (
-    !!closure.sources?.state ||
-    fillJoinsIn(closure, section) ||
-    joinsStateIn(closure, section)
+    closure.type !== BindingType.constant &&
+    (!!closure.sources?.state ||
+      fillJoinsIn(closure, section) ||
+      joinsStateIn(closure, section))
   );
 }
 
@@ -479,9 +546,8 @@ function patchFills(binding: Binding): boolean {
   return rootFills(getFillRoot(binding));
 }
 const rootFills = createCyclicMemo((root: Binding): boolean => {
-  if (!root.section.parent) {
-    return isPatchFillBinding(root) || isPatchWriteBinding(root);
-  }
+  if (isPatchFillBinding(root) || isPatchWriteBinding(root)) return true;
+  if (!root.section.parent) return false;
   // A branch's own param (a loop item) arrives with the structure.
   if (isSectionParam(root)) return true;
   return every(root.sources?.param, patchFills);

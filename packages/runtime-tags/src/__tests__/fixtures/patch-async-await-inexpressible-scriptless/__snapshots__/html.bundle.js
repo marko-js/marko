@@ -29,10 +29,11 @@ var template_default = _template_patch("a", (input) => {
 				let w = widget_default({ label: input.value });
 				_client_guard($scope0_reason, 2) && _var($scope2_id, "b", $childScope, "a3");
 				_html(`<em>${_patch_text($scope2_id, "c", w, void 0, $scope0_reason, 2)}</em>`);
+				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a4");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
-				}), _client_guard($scope0_reason, 2) && "a4");
+				}), _client_guard($scope0_reason, 2) && "a5");
 			}, 1, "a0");
 			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

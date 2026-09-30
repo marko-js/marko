@@ -20,6 +20,7 @@
 ## Change
 ```
 UPDATE: div[data-v] "one:0" => "two:0"
+UPDATE: div[data-v] "gone" => "two:0"
 ```
 
 # Update
@@ -38,7 +39,6 @@ document.querySelector("button").click();
 ```
 UPDATE: div[data-v] "two:0" => "two:1"
 UPDATE: div[data-v] "gone" => "two:1"
-UPDATE: div[data-v] "gone" => "two:1"
 ```
 
 # Update `{"label":"three","on":false}`
@@ -53,6 +53,7 @@ UPDATE: div[data-v] "gone" => "two:1"
 ## Change
 ```
 UPDATE: div[data-v] "two:1" => "three:1"
+UPDATE: div[data-v] "gone" => "three:1"
 ```
 
 # Update
@@ -71,7 +72,6 @@ document.querySelector("button").click();
 ```
 UPDATE: div[data-v] "three:1" => "three:2"
 UPDATE: div[data-v] "gone" => "three:2"
-UPDATE: div[data-v] "gone" => "three:2"
 ```
 
 # Update `{"label":"four","on":true}`
@@ -86,4 +86,5 @@ UPDATE: div[data-v] "gone" => "three:2"
 ## Change
 ```
 UPDATE: div[data-v] "three:2" => "four:2"
+UPDATE: div[data-v] "gone" => "four:2"
 ```

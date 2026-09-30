@@ -62,6 +62,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_html(`<b>${_patch_text($scope4_id, "#text/0", w, void 0, $scope0_reason, 3)}</b>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "6:6");
 		}, 1, "__tests__/template.marko_4*content");
+		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_q#0:7/init");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_q__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
 		$scope0_page && _resume_branch($scope2_id);
 	}, $scope0_id) });

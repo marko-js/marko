@@ -14,7 +14,7 @@ var list_default = _template_patch("b", (input) => {
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "b0", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
-	$scope0_page ? _scope($scope0_id, { e: _source_if($scope0_reason, 1) && input.suffix }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.suffix);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.suffix }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b1", input.suffix);
 }, 0, 0);
 
 // template.marko

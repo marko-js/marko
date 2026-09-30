@@ -7,7 +7,7 @@ import {
   type Scope,
 } from "../common/types";
 import { queueRender } from "./queue";
-import { patchers } from "./resume";
+import { createPatchers, patchers } from "./resume";
 
 // Kind-keyed control applies (wire key `kind + accessor`), filled by the
 // per-kind feats; queued as a RENDER so freshly created scopes take first-render.
@@ -20,7 +20,11 @@ export const patchControls: {
   ) => void;
 } = {};
 
-patchers[PatchKey.Control] = (scope, key, value) => {
+createPatchers[PatchKey.Control] = patchers[PatchKey.Control] = (
+  scope,
+  key,
+  value,
+) => {
   const type = +key[PatchKey.Control.length] as ControlledType;
   const accessor = key.slice(PatchKey.Control.length + 1) as Accessor;
   queueRender(

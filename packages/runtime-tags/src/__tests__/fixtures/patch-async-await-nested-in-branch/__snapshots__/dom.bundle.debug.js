@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<main><!><button>interactive</button></main>";
 const $walks = "D%b l";
-const $await_content2__outer = /*@__PURE__*/ _closure_get("outer/9", ($scope) => _text($scope["#text/0"], $scope._.outer), 0, "__tests__/template.marko_3_outer#2:2/subscribe");
+const $await_content2__outer = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_outer#2:2/init", "outer/9", ($scope) => _text($scope["#text/0"], $scope._.outer), 0, "__tests__/template.marko_3_outer#2:2/subscribe");
 const $await_content2__setup = $await_content2__outer;
 const $await_content2__inner = ($scope, inner) => _text($scope["#text/1"], inner);
 const $await_content2__$params = ($scope, $params3) => $await_content2__inner($scope, $params3[0]);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<em><!>:<!></em>", "D%c%", $await_content2__setup);
 const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
-const $await_content__input_inner = /*@__PURE__*/ _closure_get("input_inner/8", ($scope) => $await_content__await_promise($scope, $scope._._.input_inner), ($scope) => $scope._._, "__tests__/template.marko_2_input_inner#0:6/subscribe");
+const $await_content__input_inner = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_inner#0:6/init", "input_inner/8", ($scope) => $await_content__await_promise($scope, $scope._._.input_inner), ($scope) => $scope._._, "__tests__/template.marko_2_input_inner#0:6/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__input_inner($scope);
 	$await_content2($scope);

@@ -5,6 +5,9 @@ import type { TestConfig } from "../../main.test";
 // and the resumed prefix stays interactive.
 export const config: TestConfig = {
   patches: true,
+  // Its document stream is cut (`abort_ssr`), which a client render has no
+  // counterpart for.
+  skip_csr: true,
   abort_ssr: true,
   skip_fresh_render: true,
   steps: (signal) => [

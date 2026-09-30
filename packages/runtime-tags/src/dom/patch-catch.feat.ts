@@ -10,7 +10,7 @@ import { patchers } from "./resume";
 
 declare module "./resume" {
   interface PatchValues {
-    [PatchKey.Catch]: [error: unknown];
+    [PatchKey.Catch]: [error?: unknown];
   }
 }
 

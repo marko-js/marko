@@ -50,4 +50,4 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		n,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { n: "1:6" });
-}, 1, () => [child_default, content]);
+}, 1, 1);

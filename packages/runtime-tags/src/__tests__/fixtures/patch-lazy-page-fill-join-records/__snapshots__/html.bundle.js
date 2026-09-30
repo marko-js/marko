@@ -72,7 +72,7 @@ const $template = "<h1>B</h1><!><button> </button>";
 const $walks = "b%b D l";
 _shells({
 	c0: "c0 c6;D%c%c%;<span><!>/<!>/<!></span>",
-	c: "c !c2;b%b D ;<h1>B</h1><!><button> </button>",
+	c: "c !c3;b%b D ;<h1>B</h1><!><button> </button>",
 	c1: /*@__PURE__*/ ((_w0, _w1) => `c1;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });
 var page_b_default = _template_patch("c", (input) => {
@@ -94,6 +94,7 @@ var page_b_default = _template_patch("c", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<span>${_patch_text($scope2_id, "a", p, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "b", count, 2)}/${_patch_text($scope2_id, "c", item, 2, 0, 0)}</span>`);
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "c2");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $p__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
 			}, $scope1_id)
 		});
@@ -103,8 +104,8 @@ var page_b_default = _template_patch("c", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, 1, 0, void 0, void 0, "c1", 0, 0);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "c2");
-	_patch_value($scope0_id, "c3", count, 1);
+	_script($scope0_id, "c3");
+	_patch_value($scope0_id, "c4", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		g: count,
 		i: $count__closures,
@@ -130,7 +131,9 @@ var template_default = _template_patch("d", (input) => {
 	const $input_wide__closures = /* @__PURE__ */ new Set();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_page__closures = /* @__PURE__ */ new Set();
-	_html(`<html>${_flush_head()}<body>`);
+	_html("<html>");
+	_flush_head_patch();
+	_html("<body>");
 	_if(() => {
 		if (input.page === 0) {
 			const $scope5_id = _scope_id();
@@ -157,6 +160,8 @@ var template_default = _template_patch("d", (input) => {
 								wide: input.wide,
 								note: input.note
 							});
+							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "d5");
+							_client_guard($scope0_reason, 7) && _patch_init($scope3_id, "d6");
 							_subscribe(_unfilled_if($scope0_reason, 7) && $input_note__closures, _subscribe(_unfilled_if($scope0_reason, 6) && $input_wide__closures, _scope($scope3_id, {
 								_: _scope_with_id($scope2_id),
 								b: _existing_scope($childScope)
@@ -168,6 +173,7 @@ var template_default = _template_patch("d", (input) => {
 							const $childScope2 = _peek_scope_id();
 							_patch_child($scope4_id, "b", $childScope2);
 							$PageB_withLoadAssets({ note: input.note });
+							_client_guard($scope0_reason, 7) && _patch_init($scope4_id, "d7");
 							_subscribe(_unfilled_if($scope0_reason, 7) && $input_note__closures, _scope($scope4_id, {
 								_: _scope_with_id($scope2_id),
 								b: _existing_scope($childScope2),
@@ -176,6 +182,7 @@ var template_default = _template_patch("d", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "a", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["d2", "d3"], $scope0_reason, 4);
+					_client_guard($scope0_reason, 4) && _patch_init($scope2_id, "d8");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 4) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$sg__input_page || $scope0_page && _resume_branch($scope2_id);
 				}, $scope1_id)

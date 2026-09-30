@@ -20,18 +20,18 @@ var rows_default = _template_patch("__tests__/tags/rows.marko", (input) => {
 		}, 1, "__tests__/tags/rows.marko_2*content");
 		_html("</div>");
 		$scope0_page && _scope($scope1_id, {
-			"#LoopKey": _source_if($scope0_reason, 2) && item?.id,
+			"#LoopKey": _unfilled_if($scope0_reason, 2) && item?.id,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/rows.marko", "1:2", { "#LoopKey": ["item.id", "1:6"] });
 	}, "id", $scope0_id, "#text/0", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/tags/rows.marko_1*shell", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_promise: _source_if($scope0_reason, 1) && input.promise }, "__tests__/tags/rows.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/rows.marko_fill0", input.promise);
+	$scope0_page ? _scope($scope0_id, { input_promise: _unfilled_if($scope0_reason, 1) && input.promise }, "__tests__/tags/rows.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/rows.marko_fill0", input.promise);
 }, 0, 0);
 
 // template.marko
 const $template = "<button>drop</button><!><!>";
 const $walks = " b%c";
 _shells({
-	"__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*content;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)),
+	"__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*content __tests__/template.marko_1_items#0:5/init;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)),
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button>drop</button><!><!>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
@@ -51,6 +51,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			items,
 			promise: input.promise
 		});
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:4/init");
 		_subscribe($items__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)

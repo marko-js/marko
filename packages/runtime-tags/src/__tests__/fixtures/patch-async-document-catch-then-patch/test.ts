@@ -4,6 +4,9 @@ import type { TestConfig } from "../../main.test";
 // the body's place; a patch that resolves it rebuilds the try.
 export const config: TestConfig = {
   patches: true,
+  // A patch re-renders a caught `<try>` from the server, which recovers;
+  // a client render keeps its `@catch`.
+  skip_csr: true,
   steps: () => [
     { promise: Promise.reject(new Error("a")) },
     { promise: Promise.resolve("hi") },

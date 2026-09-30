@@ -173,6 +173,8 @@ export interface Section {
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's `abortId` from this so translates read, never re-derive. */
   abortSignalExprs: number;
+  /** Each `$signal` expression root, in `abortId` order. */
+  abortSignalRoots: t.NodeExtra[] | undefined;
   readsOwner: boolean;
   /** Whether analysis found work keyed by setup in the section, or in a
    * `<define>` body or template it calls in place. */
@@ -273,6 +275,7 @@ export function startSection(
       pruned: !!extra.pruned,
       hasAbortSignal: false,
       abortSignalExprs: 0,
+      abortSignalRoots: undefined,
       readsOwner: false,
       hasSetupWork: false,
       isBranch: false,

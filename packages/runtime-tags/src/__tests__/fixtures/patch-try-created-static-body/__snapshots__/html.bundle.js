@@ -20,7 +20,7 @@ var template_default = _template_patch("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_resume($scope3_id, "a", err.message, $sg__err_message)}</b>`);
 				_source_if($scope3_reason, 0) && _scope($scope3_id, {});
-			}, void 0, "a2", "a0");
+			}, void 0, "a2", "a0", void 0, 1);
 			$scope0_page && _scope($scope1_id, {});
 			return 0;
 		}

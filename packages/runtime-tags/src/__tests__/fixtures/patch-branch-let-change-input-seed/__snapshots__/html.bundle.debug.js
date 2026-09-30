@@ -14,6 +14,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let count = input.start;
+			_resume(function(next) {
+				last = next;
+			}, "__tests__/template.marko_1/valueChange", $scope1_id) && _filled_guard($scope0_reason, 2) && _patch_value($scope1_id, "__tests__/template.marko_fill0", count);
 			_html(`<span>Seen ${_text_resume($scope1_id, "#text/0", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_value($scope1_id, "__tests__/template.marko_fill0", count, 1);

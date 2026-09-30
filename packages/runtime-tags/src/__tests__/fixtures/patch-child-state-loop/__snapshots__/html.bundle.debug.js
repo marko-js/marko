@@ -15,7 +15,7 @@ var list_default = _template_patch("__tests__/tags/list/index.marko", (input) =>
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/list/index.marko", "2:4");
 	}, 0, $scope0_id, "#ul/0", 1, 1, _source_guard($scope0_reason, 1), void 0, void 0, "__tests__/tags/list/index.marko_1*shell", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
-	$scope0_page ? _scope($scope0_id, { input_suffix: _source_if($scope0_reason, 1) && input.suffix }, "__tests__/tags/list/index.marko", 0, { input_suffix: ["input.suffix"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/list/index.marko_fill0", input.suffix);
+	$scope0_page ? _scope($scope0_id, { input_suffix: _unfilled_if($scope0_reason, 1) && input.suffix }, "__tests__/tags/list/index.marko", 0, { input_suffix: ["input.suffix"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/tags/list/index.marko_fill0", input.suffix);
 }, 0, 0);
 
 // template.marko

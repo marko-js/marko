@@ -7,7 +7,7 @@ var template_default = _template_patch("a", (input) => {
 	_html(`<div></div>${_el_resume($scope0_id, "a")}<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
-	_patch_effect($scope0_id, "a1", "e");
+	_patch_effect($scope0_id, "a1", "e!0");
 	$scope0_page ? _scope($scope0_id, {
 		e: input.label,
 		f: count

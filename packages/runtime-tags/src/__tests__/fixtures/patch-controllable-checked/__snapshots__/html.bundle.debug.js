@@ -9,7 +9,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		document.querySelector("main").dataset.agree = String(next);
 	}, "__tests__/template.marko_0/checkedChange"))}${_patch_bind($scope0_id, "ControlledHandler:#input/1", _resume(function(next) {
 		document.querySelector("main").dataset.agree = String(next);
-	}, "__tests__/template.marko_0/checkedChange"), 0, 0)}${_patch_control($scope0_id, "#input/1", 0, input.agree, $scope0_reason, 1)} type=checkbox>${_el_resume($scope0_id, "#input/1")}</main>`);
+	}, "__tests__/template.marko_0/checkedChange"), $scope0_reason, 1)}${_patch_control($scope0_id, "#input/1", 0, input.agree, $scope0_reason, 1)} type=checkbox>${_el_resume($scope0_id, "#input/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/1": ["checkedChange", "3:46"] });
 }, 1, 0);

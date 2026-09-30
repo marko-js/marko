@@ -8,6 +8,7 @@ import {
 } from "../common/helpers";
 import type {
   Accessor,
+  EncodedAccessor,
   RenderedTemplate,
   Template,
   TemplateInput,
@@ -27,13 +28,14 @@ import { quotedShell, rawShells } from "./shells";
 import { _template, type ServerRenderer, startRender } from "./template";
 import {
   _peek_scope_id,
+  _scope as writeScope,
   _scope_id,
   _html_resume,
   _text_resume,
   addSetupId,
   getChunk,
   getState,
-  isInResumedBranch,
+  inCreatable,
   _client_guard,
   getFilteredGlobals,
   inUnpatched,
@@ -79,12 +81,22 @@ export function _template_patch(
 }
 
 // A child renders unless its summary proves the subtree clean; `0` only
-// holds when the walk closed without an unresolved cycle back-edge.
-export function _must_render(child: unknown) {
-  const intrinsics = (child as WithIntrinsics | undefined)?.[kIntrinsics];
-  if (intrinsics === undefined) return true;
-  if (typeof intrinsics !== "function") return !!intrinsics;
-  return mustRenderWalk(child as WithIntrinsics, new Set(), { t: false });
+// holds when the walk closed without an unresolved cycle back-edge. Where
+// the flush may create it, a fresh instance needs its seeds.
+export function _must_render(...children: unknown[]) {
+  if (inCreatable()) return true;
+  for (const child of children) {
+    const intrinsics = (child as WithIntrinsics | undefined)?.[kIntrinsics];
+    if (
+      intrinsics === undefined ||
+      (typeof intrinsics !== "function"
+        ? intrinsics
+        : mustRenderWalk(child as WithIntrinsics, new Set(), { t: false }))
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function mustRenderWalk(
@@ -120,6 +132,13 @@ export function renderPatch(
   input: TemplateInput = {},
   headers?: PatchHeaders,
 ): RenderedTemplate {
+  // Patches answer page navigations only; an embedded render (a micro-frame)
+  // has no page whose shells the token could name.
+  if ((this as ServerRenderer)[RendererProp.Embed]) {
+    throw new Error(
+      "Marko patches only render page templates; this template renders embedded, so request it as a document.",
+    );
+  }
   // The page root is about to allocate the first id: the flush names it
   // as the walk's entry pair, and globals re-ship with every flush
   // (undefined included) so the live page's global object never reads stale.
@@ -414,8 +433,8 @@ class PatchState extends State {
     // A client-owned list, or a stable one (nothing request-derived behind
     // it) outside a branch a flush creates, keeps its rows: the entry ships
     // only for what the rows themselves fill.
-    const rowsKept =
-      _client_guard(owned, group!) || !_filled_guard(owned, group!);
+    const clientRows = _client_guard(owned, group!);
+    const rowsKept = clientRows || !_filled_guard(owned, group!);
     const partials: object[] = [];
     const keys: unknown[] = [];
     let indexKeys = true;
@@ -434,6 +453,19 @@ class PatchState extends State {
       withBranchId(branchId, render);
     });
     if (rowsKept && !partials.some(hasKeys)) return 1;
+    if (clientRows) {
+      // The rows are the client's: each partial patches the row it still
+      // holds under that key, and none is added or removed.
+      const items: unknown[] = [];
+      for (let i = 0; i < partials.length; i++) {
+        if (hasKeys(partials[i])) {
+          items.push(indexKeys ? i : [i, keys[i]], partials[i]);
+        }
+      }
+      if (items.length)
+        writePatch(scopeId, { [PatchKey.LoopItem + accessor]: items });
+      return 1;
+    }
     const sentShellId = partials.length ? shipShell(this, shellId) : undefined;
     // Interleaved `[key, partial, …, shellId?]`: keys drop when every key
     // is its index, and the shell rides as a trailing string.
@@ -458,20 +490,37 @@ export function _unfilled_if(owned?: SerializeReasonValue, group?: number) {
   return fed & 1 || (fed && inUnpatched()) ? 1 : undefined;
 }
 
-// Whether a patch render fills the hole here (the caller then builds the
-// entry); a page render instead needs the walk so a later patch can reach
-// the node.
-export function patchFills(mask: SerializeReasonValue, group: number) {
-  if (getState().writesPatches) return _filled_guard(mask, group);
-  getChunk()!.needsWalk = true;
-  return 0;
+// Where a patch render writes the hole's entry: the scope's partial for a
+// server-owned value, else a created scope's setup, which renders what its
+// resumed twin's document holds. A page render instead needs the walk.
+function patchFillEntries(
+  scopeId: number,
+  mask: SerializeReasonValue,
+  group: number,
+) {
+  const state = getState();
+  if (!state.writesPatches) {
+    getChunk()!.needsWalk = true;
+    return;
+  }
+  const owned = maskGroup(mask, group);
+  if (owned !== 2 && !inCreatable()) return;
+  if (state.patchFlushed) {
+    throw new Error(
+      "A patch cannot write after its flush was written (async patch content is not supported).",
+    );
+  }
+  const partial = patchPartial(state, scopeId);
+  return owned === 2
+    ? partial
+    : ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>);
 }
 
 // On when a patch fills the group here: server-owned, or unfed (`0`, a
 // call-site constant) where a fresh scope may need the seed.
 export function _filled_guard(mask: SerializeReasonValue, group: number) {
   const owned = maskGroup(mask, group);
-  return owned === 2 || (owned === 0 && isInResumedBranch()) ? 1 : 0;
+  return owned === 2 || (owned === 0 && inCreatable()) ? 1 : 0;
 }
 
 // Page-side group guards (a patch serializes no resume data): any
@@ -505,10 +554,9 @@ export function _patch_attr(
 ) {
   // `0` is the removal sentinel: normalized values are always strings and
   // `undefined` entries are dropped entirely.
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, {
-      [PatchKey.Attr + accessor + " " + name]: attrValue(value) ?? 0,
-    });
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) {
+    entries[PatchKey.Attr + accessor + " " + name] = attrValue(value) ?? 0;
   }
   return _attr(name, value);
 }
@@ -572,11 +620,10 @@ export function _patch_child(
   }
 }
 
-// A server-owned local whose param group the client is upstream of is not
-// written: a fresh scope re-derives it by running its upstreams' closure
-// inits (setup).
+// Inits a fresh scope runs (setup) for what the client owns but nothing
+// delivers: a branch local's upstream closures, or a root join.
 export function _patch_init(scopeId: number, initIds: string) {
-  if (getState().writesPatches) {
+  if (getState().writesPatches && inCreatable()) {
     for (const id of initIds.split(" ")) addSetupId(scopeId, id);
   }
   return "";
@@ -593,7 +640,7 @@ export function _patch_value(
   const state = getState();
   if (state.writesPatches) {
     // A seed for a branch no flush creates is dropped before any scan.
-    if (setup && !isInResumedBranch()) return "";
+    if (setup && !inCreatable()) return "";
     const bind = bindEntry(state, scopeId, value);
     const entryKey = (bind ? PatchKey.BindValue : PatchKey.Value) + key;
     if (bind) value = bind;
@@ -625,9 +672,8 @@ export function _patch_control(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, { [PatchKey.Control + type + accessor]: value });
-  }
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) entries[PatchKey.Control + type + accessor] = value;
   return "";
 }
 
@@ -650,7 +696,7 @@ export function _patch_bind(
       // entry lands after a created scope's seeds (which reset the change slot).
       const partial = patchPartial(state, scopeId);
       partial[PatchKey.Write + accessor] = value;
-      if (isInResumedBranch()) {
+      if (inCreatable()) {
         ((partial[PatchKey.Setup] ??= {}) as Record<string, unknown>)[
           PatchKey.Write + accessor
         ] = value;
@@ -667,7 +713,16 @@ function bindEntry(state: State, scopeId: number, value: unknown) {
   const registered = getRegistered(value);
   const bound = registered?.scope as ScopeInternals | undefined;
   const up = bound && findOwnerDepth(state, scopeId, bound[K_SCOPE_ID]);
-  if (up !== undefined) return up ? [registered!.id, up] : registered!.id;
+  if (up !== undefined) {
+    // Render-only locals (a loop's values) ride along, as the document's
+    // call to the registered factory passes them.
+    const locals = registered!.locals?.(state.scope);
+    return locals
+      ? [registered!.id, up, ...locals]
+      : up
+        ? [registered!.id, up]
+        : registered!.id;
+  }
 }
 
 // A patched scope write: setup entries nest under `s` AFTER the seeds, so
@@ -680,7 +735,7 @@ export function _patch_write(
 ) {
   const state = getState();
   if (state.writesPatches) {
-    if (setup && !isInResumedBranch()) return "";
+    if (setup && !inCreatable()) return "";
     // A write of a bound registration resolves by path like a handler slot.
     const bind = bindEntry(state, scopeId, value);
     const entryKey = (bind ? PatchKey.Bind : PatchKey.Write) + accessor;
@@ -827,9 +882,8 @@ export function _patch_text(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, { [PatchKey.Text + accessor]: _to_text(value) });
-  }
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) entries[PatchKey.Text + accessor] = _to_text(value);
   // The patch write doubles as the output writer, so the text rides the
   // same resume marking a plain placeholder gets.
   return _text_resume(scopeId, accessor, value, shouldResume);
@@ -845,9 +899,8 @@ export function _patch_html(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, { [PatchKey.Html + accessor]: _unescaped(value) });
-  }
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) entries[PatchKey.Html + accessor] = _unescaped(value);
   return _html_resume(scopeId, accessor, value, shouldResume);
 }
 
@@ -861,10 +914,30 @@ export function _patch_style(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, { [PatchKey.Style + accessor + " " + name]: value });
-  }
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) entries[PatchKey.Style + accessor + " " + name] = value;
   return _escape_style_value(value);
+}
+
+// A `<show>`'s display: the client moves the body's range in or out, and
+// the encoded accessors let a created scope find the range's markers.
+export function _patch_show(
+  scopeId: number,
+  accessor: Accessor,
+  display: unknown,
+  node: EncodedAccessor,
+  start?: EncodedAccessor,
+  end?: EncodedAccessor,
+  owned?: SerializeReasonValue,
+  group?: number,
+) {
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) {
+    const entry: unknown[] = [display ? 1 : 0, node];
+    if (start !== undefined) entry.push(start);
+    if (end !== undefined) entry.push(end);
+    entries[PatchKey.Show + accessor] = entry;
+  }
 }
 
 export function _patch_text_content(
@@ -875,9 +948,8 @@ export function _patch_text_content(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, { [PatchKey.TextContent + accessor]: value });
-  }
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) entries[PatchKey.TextContent + accessor] = value;
   return escape(value);
 }
 
@@ -892,16 +964,32 @@ export function _patch_attrs(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    // `controllable` marks a spread owning the element's controllable; the
-    // array form carries `skip`/`controllable` without key bytes.
-    writePatch(scopeId, {
-      [PatchKey.Attrs + accessor]: controllable
-        ? [data ?? 0, 0, 1]
-        : (data ?? 0),
-    });
+  const entries = patchFillEntries(scopeId, owned, group!);
+  // `controllable` marks a spread owning the element's controllable; the
+  // array form carries `skip`/`controllable` without key bytes.
+  if (entries) {
+    entries[PatchKey.Attrs + accessor] = controllable
+      ? [data ?? 0, 0, 1]
+      : (data ?? 0);
+  } else {
+    writeSpreadNames(scopeId, accessor, data);
   }
   return _attrs(data, accessor, scopeId, tagName);
+}
+
+// A page's spread names what it wrote, so a patch removes only those.
+function writeSpreadNames(
+  scopeId: number,
+  accessor: Accessor,
+  data: Record<string, unknown>,
+) {
+  if (!getState().writesPatches) {
+    writeScope(scopeId, {
+      [AccessorPrefix.SpreadAttrs + accessor]: data
+        ? Object.keys(data).join(" ")
+        : "",
+    });
+  }
 }
 // The partial form: static attrs after the spread render separately, so
 // the entry names them (`skip`) for the client to leave alone.
@@ -915,12 +1003,13 @@ export function _patch_attrs_partial(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, {
-      [PatchKey.Attrs + accessor]: controllable
-        ? [data ?? 0, skip, 1]
-        : [data ?? 0, skip],
-    });
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) {
+    entries[PatchKey.Attrs + accessor] = controllable
+      ? [data ?? 0, skip, 1]
+      : [data ?? 0, skip];
+  } else {
+    writeSpreadNames(scopeId, accessor, data);
   }
   return _attrs_partial(data, skip, accessor, scopeId, tagName);
 }
@@ -934,10 +1023,9 @@ export function _patch_attr_option_value(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, {
-      [PatchKey.Attr + accessor + " value"]: attrValue(value) ?? 0,
-    });
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) {
+    entries[PatchKey.Attr + accessor + " value"] = attrValue(value) ?? 0;
   }
   return _attr_option_value(value);
 }
@@ -950,10 +1038,9 @@ function patchStringAttr(
   owned?: SerializeReasonValue,
   group?: number,
 ) {
-  if (patchFills(owned, group!)) {
-    writePatch(scopeId, {
-      [PatchKey.Attr + accessor + " " + name]: value || 0,
-    });
+  const entries = patchFillEntries(scopeId, owned, group!);
+  if (entries) {
+    entries[PatchKey.Attr + accessor + " " + name] = value || 0;
   }
   return stringAttr(name, value);
 }

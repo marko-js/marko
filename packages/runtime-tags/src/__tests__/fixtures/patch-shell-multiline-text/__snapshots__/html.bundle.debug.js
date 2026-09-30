@@ -20,5 +20,5 @@ line 3</pre><p>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_
 		}
 	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
-	$scope0_page && _scope($scope0_id, { input_note: input.note }, "__tests__/template.marko", 0, { input_note: ["input.note"] });
+	$scope0_page && _scope($scope0_id, { input_note: _unfilled_if($scope0_reason, 1) && input.note }, "__tests__/template.marko", 0, { input_note: ["input.note"] });
 }, 1, 0);

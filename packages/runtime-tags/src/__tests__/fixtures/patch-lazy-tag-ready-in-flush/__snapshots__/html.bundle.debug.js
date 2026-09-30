@@ -50,6 +50,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_html(`<em>${_patch_text($scope4_id, "#text/0", b, void 0, $scope0_reason, 2)}</em>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "7:4");
 		}, 1, "__tests__/template.marko_4*content", 1);
+		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_a#0:5/init");
+		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_b#0:6/init");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/2": _existing_scope($childScope2)
@@ -61,7 +63,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	$scope0_page && _scope($scope0_id, {
 		"#childScope/1": _existing_scope($childScope),
-		"ClosureScopes:input_a/7": $input_a__closures,
-		"ClosureScopes:input_b/8": $input_b__closures
+		"ClosureScopes:input_a/7": _unfilled_if($scope0_reason, 1) && $input_a__closures,
+		"ClosureScopes:input_b/8": _unfilled_if($scope0_reason, 2) && $input_b__closures
 	}, "__tests__/template.marko", 0);
 }, 1, () => [$Child_withLoadAssets]);

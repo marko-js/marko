@@ -12,7 +12,7 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = () => {};
-const $widget_content__item_text = /*@__PURE__*/ _closure_get("item_text/4", ($scope) => _text($scope["#text/0"], $scope._.item_text), 0, "__tests__/template.marko_2_item_text#1:3/subscribe");
+const $widget_content__item_text = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_item_text#1:3/init", "item_text/4", ($scope) => _text($scope["#text/0"], $scope._.item_text), 0, "__tests__/template.marko_2_item_text#1:3/subscribe");
 const $widget_content__setup = $widget_content__item_text;
 const $widget_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<b> </b>", "D ", $widget_content__setup);
 const $for_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $widget_content($scope));

@@ -3,6 +3,6 @@ const $input_meta = ($scope, input_meta) => _text($scope.a, input_meta ? input_m
 
 // template.marko
 const $count = /*@__PURE__*/ _let(7, ($scope) => $input_meta($scope.a, attrTag({ n: $scope.h })));
-const $setup__script = _script("c3", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script("c5", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.h + 1);
 }));

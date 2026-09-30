@@ -16,7 +16,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				document.querySelector("main").dataset.got = next;
 			}, "__tests__/template.marko_1/valueChange"))}${_patch_bind($scope1_id, "ControlledHandler:#input/0", _resume(function(next) {
 				document.querySelector("main").dataset.got = next;
-			}, "__tests__/template.marko_1/valueChange"), 0, 0)}${_patch_control($scope1_id, "#input/0", 2, input.value, $scope0_reason, 3)}>${_el_resume($scope1_id, "#input/0")}`);
+			}, "__tests__/template.marko_1/valueChange"), $scope0_reason, 3)}${_patch_control($scope1_id, "#input/0", 2, input.value, $scope0_reason, 3)}>${_el_resume($scope1_id, "#input/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4", { "ControlledHandler:#input/0": ["valueChange", "4:30"] });
 			return 0;

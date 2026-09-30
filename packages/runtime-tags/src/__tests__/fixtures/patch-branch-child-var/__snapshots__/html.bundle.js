@@ -33,6 +33,7 @@ var template_default = _template_patch("a", (input) => {
 			_filled_guard(0, 0) && _patch_write($scope1_id, "d", el, 1);
 			_html(`<button id=read>read</button>${_el_resume($scope1_id, "c")}`);
 			_script($scope1_id, "a2");
+			_patch_write($scope1_id, "d", el, 1);
 			_scope($scope1_id, {
 				d: el,
 				_: _scope_with_id($scope0_id),

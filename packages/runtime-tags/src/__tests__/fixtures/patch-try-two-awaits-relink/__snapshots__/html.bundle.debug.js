@@ -29,6 +29,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					_html(`<b>${_patch_text($scope4_id, "#text/0", a, void 0, $scope0_reason, 3)}</b>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "5:10");
 				}, 1, "__tests__/template.marko_4*content");
+				_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_fast#0:5/init");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_fast__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:8"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_fast#0:5/subscribe", 0);
 				return 0;
 			}
@@ -39,6 +40,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_scope($scope5_id, {}, "__tests__/template.marko", "7:8");
 		}, 1, "__tests__/template.marko_5*content", 1);
 		_html("</div>");
+		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:4/init");
+		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_slow#0:6/init");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 4) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_show#0:4/subscribe", $sg__input_show), _client_guard($scope0_reason, 4) && "__tests__/template.marko_1_input_slow#0:6/subscribe", $sg__input_show);
 		$sg__input_show || $scope0_page && _resume_branch($scope1_id);
 	}, () => {
@@ -49,9 +52,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html(`<button>x</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {
-		input_fast: _source_if($scope0_reason, 2) && input.fast,
-		"ClosureScopes:input_fast/8": $input_fast__closures,
-		"ClosureScopes:input_show/7": $input_show__closures,
-		"ClosureScopes:input_slow/9": $input_slow__closures
+		input_fast: _unfilled_if($scope0_reason, 2) && input.fast,
+		"ClosureScopes:input_fast/8": _unfilled_if($scope0_reason, 3) && $input_fast__closures,
+		"ClosureScopes:input_show/7": _unfilled_if($scope0_reason, 2) && $input_show__closures,
+		"ClosureScopes:input_slow/9": _unfilled_if($scope0_reason, 4) && $input_slow__closures
 	}, "__tests__/template.marko", 0, { input_fast: ["input.fast"] });
 }, 1, 0);

@@ -13,11 +13,13 @@
       "ClosureScopes:input_title/10": new Set,
       "ClosureScopes:handler/11": new Set
     }], _ => [2, {
+      "SpreadAttrs:#button/0": "id title onClick",
       "EventAttributes:#button/0": {
         click: _(1).handler
       },
       _: _(1)
     }], _ => [3, {
+      "SpreadAttrs:#button/0": _(2)["SpreadAttrs:#button/0"],
       "EventAttributes:#button/0": {
         click: _.a = _(1).handler
       },

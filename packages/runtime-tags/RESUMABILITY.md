@@ -60,7 +60,7 @@ page. `CONTEXT.md` defines the terms (patch, flush, upstream, fill, shell).
   `getPatchFillKey`). `translator/util/patch/` decides per binding what a
   patch fills, writes or leaves alone (`refresh.ts`, `structure.ts`,
   `decisions.ts`).
-- **Frames.** `html/patch.ts` (`PatchState`) collects a flush's entries into
+- **Flushes.** `html/patch.ts` (`PatchState`) collects a flush's entries into
   one nested partial tree anchored at the page root; scope ids never ride
   the wire, a partial nests under its parent's structural entry. Each flush
   is one line and one expression, which `flushChunk` asserts in debug;
@@ -75,7 +75,8 @@ page. `CONTEXT.md` defines the terms (patch, flush, upstream, fill, shell).
   dynamic tag's content) is created client-side from a shell: the section's
   template and walk plus the register ids a fresh scope runs, built at
   translate time in `translator/util/shell.ts` and registered by the HTML
-  module (`_shells`). A frame ships a shell once per response.
+  module (`_shells`). A flush ships a shell the page's held-shell token
+  lacks, once per response.
 - **Pairing and rejection.** Branches, loops, boundaries and children pair
   on their resume markers; anything a matched build cannot pair throws
   `failPatch` and the caller falls back to a full navigation. Lazy data
@@ -86,11 +87,12 @@ page. `CONTEXT.md` defines the terms (patch, flush, upstream, fill, shell).
   its owners changed; the ownership masks decide what it writes. A caller
   installed from an effect, as `@marko/run`'s router is, never applies one
   while in-order content streams, since that content holds every effect.
-- **Transport.** `template.patch(input)` renders the frames; `@marko/run`
-  negotiates with `accept: text/marko-patch` and the build id, streams
-  frames to `patch($global)`'s apply, and navigates on any failure.
+- **Transport.** `template.patch(input, headers)` renders the flushes;
+  `@marko/run` negotiates with `accept: text/marko-patch` and
+  `x-marko-patch` (the build id and held-shell token), streams flushes to
+  `patch($global)`'s apply, and navigates on any failure.
 
-Frames run through `new Function`, so a page needs `unsafe-eval` in its
+Flushes run through `new Function`, so a page needs `unsafe-eval` in its
 content security policy.
 
 ## Compiler model

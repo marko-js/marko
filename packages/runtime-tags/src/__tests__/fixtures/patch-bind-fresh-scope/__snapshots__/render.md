@@ -15,7 +15,6 @@
 ## Change
 ```
 INSERT: p, span, button
-UPDATE: span::text@5 "" => "0"
 UPDATE: p::text " " => "0"
 ```
 

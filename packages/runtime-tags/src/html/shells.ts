@@ -3,8 +3,14 @@
 export const rawShells: Record<string, string> = {};
 const quotedShells: Record<string, string> = {};
 
+// A module re-evaluated (a dev edit) re-registers under the same ids.
 export function _shells(registered: Record<string, string>) {
-  for (const id in registered) rawShells[id] = registered[id];
+  for (const id in registered) {
+    if (rawShells[id] !== registered[id]) {
+      rawShells[id] = registered[id];
+      delete quotedShells[id];
+    }
+  }
 }
 
 // Flushes ride one per line, so the markup's newlines escape too.

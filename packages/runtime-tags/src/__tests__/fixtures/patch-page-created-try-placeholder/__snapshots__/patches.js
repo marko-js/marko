@@ -1,5 +1,5 @@
 // PATCH
-[`b !b5; b%;<button>go</button><!><!>`, `b2;b%;<!><!><!>`, `b0;D ;<p> </p>`, {
+[`b !b6; b%;<button>go</button><!><!>`, `b2;b%;<!><!><!>`, `b0;D ;<p> </p>`, {
   fa: ["b", {
     promise: (p => p = new Promise((f, r) => _.a = {
       f,
@@ -12,7 +12,7 @@
   cAa: {
     cAb: [{
       pa: "b0"
-    }, "b2", $, "b4"]
+    }, "b2", $, "b5"]
   }
 }]
 [{
@@ -21,7 +21,7 @@
       cAa: {
         ta: "slow"
       }
-    }, "b2", $, "b4"]
+    }, "b2", $, "b5"]
   }
 }, _.a.f("slow")][0]
 "BgEAAQ"

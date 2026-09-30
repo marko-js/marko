@@ -27,7 +27,7 @@ var child_default = _template_patch("b", (input) => {
 // template.marko
 _shells({ a: /*@__PURE__*/ ((_w0, _w1) => `a !a0;${_w0};${_w1}`)(((_w0, _w1) => `0${_w0}&0${_w1}&b%b D l`)("", ""), ((_w0, _w1) => `<!>${_w0}${_w1}<!><button> </button>`)("", "")) });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_first = _source_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_serialize_reason(0);
@@ -46,8 +46,8 @@ var template_default = _template_patch("a", (input) => {
 	_script($scope0_id, "a0");
 	$scope0_page && _scope($scope0_id, {
 		k: n,
-		l: $si__input_first && a,
-		m: $si__input_first && b,
+		l: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 0)) && a,
+		m: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 0)) && b,
 		a: _existing_scope($childScope),
 		c: _existing_scope($childScope2)
 	});

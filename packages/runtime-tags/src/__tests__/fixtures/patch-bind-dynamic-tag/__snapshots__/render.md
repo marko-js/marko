@@ -20,7 +20,6 @@
 ## Change
 ```
 INSERT: p + :is(span, button)
-UPDATE: span::text@5 "" => "0"
 ```
 
 # Update

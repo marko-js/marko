@@ -1,5 +1,5 @@
 // template.marko
-const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _fill_join_closure("a5", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f), 0, "a1"), 0);
+const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _fill_join_closure("a5", 5, _closure_get(8, ($scope) => _text($scope.a, $scope._.f), 0, "a1"), 0);
 const $inputonsectionarticle_content__setup = ($scope) => {
 	$inputonsectionarticle_content__input_label($scope);
 	$inputonsectionarticle_content__count($scope);

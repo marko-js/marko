@@ -13,12 +13,12 @@ const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}`)($template$
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D%l");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div id=done>done</div>");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
-const $try_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/9", ($scope) => $try_content__await_promise($scope, $scope._._.input_promise), ($scope) => $scope._._, "__tests__/template.marko_3_input_promise#0:6/subscribe");
+const $try_content__input_promise = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_promise#0:6/init", "input_promise/9", ($scope) => $try_content__await_promise($scope, $scope._._.input_promise), ($scope) => $scope._._, "__tests__/template.marko_3_input_promise#0:6/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
-const $placeholder_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => _text($scope["#text/0"], $scope._._.input_msg), ($scope) => $scope._._, "__tests__/template.marko_2_input_msg#0:5/subscribe"), 0);
+const $placeholder_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", _closure_get("input_msg/8", ($scope) => _text($scope["#text/0"], $scope._._.input_msg), ($scope) => $scope._._, "__tests__/template.marko_2_input_msg#0:5/subscribe"), 0);
 const $placeholder_content__setup = $placeholder_content__input_msg;
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<em>loading <!></em>", "Db%", $placeholder_content__setup);
 const $wrap_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);

@@ -9,13 +9,13 @@ const $placeholder_content = _content("__tests__/template.marko_2*content", "loa
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__input_related__OR__input_slow = /*@__PURE__*/ _or(1, ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.input_related, $scope._.input_slow ? 1 : 0)));
-const $try_content__input_related = /*@__PURE__*/ _closure_get("input_related/13", $try_content__input_related__OR__input_slow, 0, "__tests__/template.marko_1_input_related#0:8/subscribe");
+const $try_content__input_related = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_related#0:8/init", "input_related/13", $try_content__input_related__OR__input_slow, 0, "__tests__/template.marko_1_input_related#0:8/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_related($scope);
 	$try_content__input_slow($scope);
 	$await_content($scope);
 };
-const $try_content__input_slow = /*@__PURE__*/ _closure_get("input_slow/14", $try_content__input_related__OR__input_slow, 0, "__tests__/template.marko_1_input_slow#0:9/subscribe");
+const $try_content__input_slow = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_slow#0:9/init", "input_slow/14", $try_content__input_related__OR__input_slow, 0, "__tests__/template.marko_1_input_slow#0:9/subscribe");
 const $count = /*@__PURE__*/ _let("count/12", ($scope) => _text($scope["#text/4"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {

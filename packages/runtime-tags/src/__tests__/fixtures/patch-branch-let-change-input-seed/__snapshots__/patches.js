@@ -1,8 +1,9 @@
 // PATCH
-[`a1 !a2;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`a1 !a3;Db%l ;<span>Seen <!></span><button>+</button>`, {
   bb: [{
+    va2: 5,
     s: {
-      va3: 5
+      va2: 5
     },
     dd: "a0"
   }, "a1"]
@@ -12,8 +13,9 @@
 // PATCH holding AgE
 {
   bb: [{
+    va2: 7,
     s: {
-      va3: 7
+      va2: 7
     },
     dd: "a0"
   }, "a1"]

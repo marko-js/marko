@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a: "a;Eb%l%;<main><p>last <!></p><!></main>",
-	a1: "a1 !a2;Db%l ;<span>Seen <!></span><button>+</button>"
+	a1: "a1 !a3;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
@@ -12,9 +12,12 @@ var template_default = _template_patch("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let count = input.start;
+			_resume(function(next) {
+				last = next;
+			}, "a0", $scope1_id) && _filled_guard($scope0_reason, 2) && _patch_value($scope1_id, "a2", count);
 			_html(`<span>Seen ${_text_resume($scope1_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
-			_script($scope1_id, "a2");
-			_patch_value($scope1_id, "a3", count, 1);
+			_script($scope1_id, "a3");
+			_patch_value($scope1_id, "a2", count, 1);
 			_patch_bind($scope1_id, "d", _resume(function(next) {
 				last = next;
 			}, "a0", $scope1_id) || void 0);

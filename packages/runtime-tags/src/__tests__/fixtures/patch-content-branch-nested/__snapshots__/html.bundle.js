@@ -40,13 +40,15 @@ var template_default = _template_patch("a", (input) => {
 							_scope_reason();
 							const $scope3_id = _scope_id();
 							_html(`<em>${_patch_text($scope3_id, "a", input.text, void 0, $scope0_reason, 6)}</em>`);
+							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "a3");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 						}, $scope2_id)
 					});
+					_client_guard($scope0_reason, 5) && _patch_init($scope2_id, "a4");
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_label__closures, _scope($scope2_id, {
 						_: _scope_with_id($scope1_id),
 						a: _existing_scope($childScope)
-					}), _client_guard($scope0_reason, 5) && "a3");
+					}), _client_guard($scope0_reason, 5) && "a5");
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_b, $sg__input_b, void 0, void 0, ["a2"], $scope0_reason, 4);
@@ -57,7 +59,7 @@ var template_default = _template_patch("a", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_a, $sg__input_a, void 0, void 0, ["a1"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_a)}`);
 	$scope0_page && _scope($scope0_id, {
-		e: _source_if($scope0_reason, 3) && input.b,
+		e: _unfilled_if($scope0_reason, 3) && input.b,
 		f: $si__input_a__OR__input_b && input.label,
 		g: $si__input_a__OR__input_b && input.text,
 		j: $input_text__closures,

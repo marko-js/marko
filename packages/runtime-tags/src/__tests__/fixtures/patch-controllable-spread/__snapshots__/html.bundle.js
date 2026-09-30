@@ -8,7 +8,7 @@ var template_default = _template_patch("a", (input) => {
 		value = v;
 	}, "a0", $scope0_id))}${_patch_bind($scope0_id, "Ea", _resume(function(v) {
 		value = v;
-	}, "a0", $scope0_id), 0, 0)}${_patch_attrs_partial(input.attrs, {
+	}, "a0", $scope0_id))}${_patch_attrs_partial(input.attrs, {
 		value: 1,
 		valueChange: 1
 	}, "a", $scope0_id, "input", void 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}<p>${_text_resume($scope0_id, "b", value)}</p>`);

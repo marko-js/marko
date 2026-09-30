@@ -12,6 +12,7 @@ var counter_default = _template_patch("__tests__/tags/counter/index.marko", (inp
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let count = 0;
+			input.onCount && _filled_guard($scope0_reason, 2) && _patch_value($scope1_id, "__tests__/tags/counter/index.marko_fill1", count);
 			_html(`<span>Seen ${_text_resume($scope1_id, "#text/0", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/tags/counter/index.marko_1");
 			_patch_value($scope1_id, "__tests__/tags/counter/index.marko_fill1", count, 1);

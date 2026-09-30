@@ -25,12 +25,12 @@ var rows_default = /*@__PURE__*/ _template("__tests__/tags/rows.marko", $templat
 const $template = "<button>drop</button><!><!>";
 const $walks = " b%c";
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<i>loading</i>");
-const $try_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/6", ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:4/subscribe");
+const $try_content__input_promise = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_promise#0:4/init", "input_promise/6", ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:4/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$try_content__items($scope);
 };
-const $try_content__items = /*@__PURE__*/ _closure_get("items/7", ($scope) => $input_items($scope["#childScope/0"], $scope._.items), 0, "__tests__/template.marko_1_items#0:5/subscribe");
+const $try_content__items = _init_closure_get("__tests__/template.marko_1_items#0:5/init", "items/7", ($scope) => $input_items($scope["#childScope/0"], $scope._.items), 0, "__tests__/template.marko_1_items#0:5/subscribe");
 const $items__closure = /*@__PURE__*/ _closure($try_content__items);
 const $items = /*@__PURE__*/ _let("items/5", $items__closure);
 const $try = /*@__PURE__*/ _try("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $try_content__setup, $placeholder_content);

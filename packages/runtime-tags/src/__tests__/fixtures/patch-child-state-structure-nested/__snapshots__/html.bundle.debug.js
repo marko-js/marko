@@ -18,6 +18,7 @@ var panel_default = _template_patch("__tests__/tags/panel/index.marko", (input) 
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "#text/0", input.title, void 0, $scope0_reason, 4)}</em>`);
+					_client_guard($scope0_reason, 4) && _patch_init($scope2_id, "__tests__/tags/panel/index.marko_2_input_title#0:5/init");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel/index.marko", "3:6"), "__tests__/tags/panel/index.marko_2_input_title#0:5/subscribe");
 					return 0;
 				}
@@ -28,9 +29,9 @@ var panel_default = _template_patch("__tests__/tags/panel/index.marko", (input) 
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/panel/index.marko_1*shell"], $scope0_reason, 2);
 	$scope0_page ? _scope($scope0_id, {
-		input_inner: _source_if($scope0_reason, 2) && input.inner,
-		input_title: _source_if($scope0_reason, 0) && input.title,
-		"ClosureScopes:input_title/7": $input_title__closures
+		input_inner: _unfilled_if($scope0_reason, 2) && input.inner,
+		input_title: _unfilled_if($scope0_reason, 0) && input.title,
+		"ClosureScopes:input_title/7": _unfilled_if($scope0_reason, 4) && $input_title__closures
 	}, "__tests__/tags/panel/index.marko", 0, {
 		input_inner: ["input.inner"],
 		input_title: ["input.title"]

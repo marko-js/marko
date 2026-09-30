@@ -23,6 +23,7 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import { isPatch } from "../util/marko-config";
+import { getWriteSources } from "../util/patch/decisions";
 import {
   isBranchPathSection,
   isStatefulBranch,
@@ -49,6 +50,7 @@ import {
   type Section,
   setSectionParentIsOwner,
   startSection,
+  ensureReasonGroups,
 } from "../util/sections";
 import {
   getExprWriteOwnership,
@@ -61,7 +63,7 @@ import {
   type SerializeReasons,
   sourcesUtil,
 } from "../util/serialize-reasons";
-import { getShellId, getShells } from "../util/shell";
+import { getShippedShellId } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -129,6 +131,8 @@ export const IfTag = {
           ) {
             linkRuntimeFeature("patch-branch");
             recordStructuralParams(getSerializeSourcesForExpr(ifTagExtra));
+            // The chain's entry gates on its tests' ownership group.
+            ensureReasonGroups(getWriteSources(ifTagExtra));
           }
         });
       }
@@ -274,10 +278,8 @@ export const IfTag = {
                   ? t.arrayExpression(
                       branches.map(([, branchBody]) => {
                         // An absent body (a bare `<else>`) ships `0`.
-                        const id = branchBody && getShellId(branchBody);
-                        return id && getShells()?.[id]
-                          ? t.stringLiteral(id)
-                          : t.numericLiteral(0);
+                        const id = branchBody && getShippedShellId(branchBody);
+                        return id ? t.stringLiteral(id) : t.numericLiteral(0);
                       }),
                     )
                   : undefined,

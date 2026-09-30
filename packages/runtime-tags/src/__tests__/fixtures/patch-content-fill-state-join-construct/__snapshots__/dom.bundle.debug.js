@@ -23,14 +23,14 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $card_content__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_2_count#0:6/init", "count/9", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe");
+const $card_content__count = _init_closure_get("__tests__/template.marko_2_count#0:6/init", "count/9", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe");
 const $card_content__setup = ($scope) => {
 	$card_content__count($scope);
 	$card_content__p_name($scope);
 	$card_content__item_id($scope);
 };
-const $card_content__p_name = /*@__PURE__*/ _closure_get("p_name/10", ($scope) => _text($scope["#text/0"], $scope._._.p_name), ($scope) => $scope._._, "__tests__/template.marko_2_p_name#0:8/subscribe");
-const $card_content__item_id = /*@__PURE__*/ _closure_get("item_id/11", ($scope) => _text($scope["#text/2"], $scope._.item_id), 0, "__tests__/template.marko_2_item_id#1:4/subscribe");
+const $card_content__p_name = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_p_name#0:8/init", "p_name/10", ($scope) => _text($scope["#text/0"], $scope._._.p_name), ($scope) => $scope._._, "__tests__/template.marko_2_p_name#0:8/subscribe");
+const $card_content__item_id = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_item_id#1:4/init", "item_id/11", ($scope) => _text($scope["#text/2"], $scope._.item_id), 0, "__tests__/template.marko_2_item_id#1:4/subscribe");
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<span><!>/<!>/<!></span>", "D%c%c%", $card_content__setup);
 const $for_content__setup = ($scope) => $input_content($scope["#childScope/0"], $card_content($scope));
 const $for_content__item_title = ($scope, item_title) => $input_title($scope["#childScope/0"], item_title);

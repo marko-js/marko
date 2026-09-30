@@ -4,6 +4,9 @@ import type { TestConfig } from "../../main.test";
 // carries the try body's payload, and a throw then a recovery round-trip.
 export const config: TestConfig = {
   patches: true,
+  // A patch re-renders a caught `<try>` from the server, which recovers;
+  // a client render keeps its `@catch`.
+  skip_csr: true,
   steps: () => [
     { show: false },
     { show: true, message: "ok" },

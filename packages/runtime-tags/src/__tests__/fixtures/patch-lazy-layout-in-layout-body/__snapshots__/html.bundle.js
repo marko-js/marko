@@ -5,7 +5,9 @@ _shells({ d: "d;EbD%;<html><body><header>site</header><main><!></main></body></h
 var root_default = _template_patch("d", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<html>${_flush_head()}<body><header>site</header><main>`);
+	_html("<html>");
+	_flush_head_patch();
+	_html("<body><header>site</header><main>");
 	const $tag = input.content;
 	_dynamic_tag($scope0_id, "a", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "a", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</main>"), _trailers("</body></html>");
@@ -98,6 +100,7 @@ var template_default = _template_patch("e", (input) => {
 							return 1;
 						}
 					}, $scope3_id, "a", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["e4", "e5"], $scope0_reason, 0);
+					_client_guard($scope0_reason, 0) && _patch_init($scope3_id, "e6");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						Ce: 1

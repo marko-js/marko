@@ -33,6 +33,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<b>${_patch_text($scope2_id, "#text/0", item.text, void 0, $scope0_reason, 0)}</b>`);
+			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_item_text#1:3/init");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:10"));
 		}, $scope1_id) });
 		_html("</li>");

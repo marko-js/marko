@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><div></div><section></section><button> </button></main>";
 const $walks = "D b b D m";
-const $extra_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/11", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:6/subscribe"), 0);
+const $extra_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", _closure_get("input_title/11", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:6/subscribe"), 0);
 const $extra_content__setup = $extra_content__input_title;
 const $extra_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $extra_content__setup);
 const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/3"], $scope.count));

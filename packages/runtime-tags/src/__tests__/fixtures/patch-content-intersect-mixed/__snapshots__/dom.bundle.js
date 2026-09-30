@@ -4,12 +4,12 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content(0);
 
 // template.marko
 const $box_content__input_a__OR__count = /*@__PURE__*/ _or(1, ($scope) => _text($scope.a, $scope._._.i + ":" + $scope._._.g));
-const $box_content__input_a = /*@__PURE__*/ _fill_join_closure("a2", 6, /*@__PURE__*/ _closure_get(9, $box_content__input_a__OR__count, ($scope) => $scope._._, "a6"), 0);
+const $box_content__input_a = /*@__PURE__*/ _fill_join_closure("a2", 6, _closure_get(9, $box_content__input_a__OR__count, ($scope) => $scope._._, "a5"), 0);
 const $box_content__setup = ($scope) => {
 	$box_content__input_a($scope);
 	$box_content__count($scope);
 };
-const $box_content__count = /*@__PURE__*/ _closure_get(10, $box_content__input_a__OR__count, ($scope) => $scope._._, "a7");
+const $box_content__count = /*@__PURE__*/ _closure_get(10, $box_content__input_a__OR__count, ($scope) => $scope._._, "a6");
 const $box_content = /*@__PURE__*/ _content$1("a0", "<p> </p>", "D ", $box_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope.a, $box_content($scope));
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);

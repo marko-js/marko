@@ -42,6 +42,7 @@ var child_default = _template_patch("b", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b1"], $scope0_reason, 2);
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b2");
 			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			$sg__input_show || $scope0_page && _resume_branch($scope1_id);
 		}, $scope0_id) });
@@ -53,7 +54,7 @@ var child_default = _template_patch("b", (input) => {
 		e: _source_if($scope0_reason, 1) && input.show,
 		f: $input_show__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b2", input.show);
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "b3", input.show);
 }, 0, () => [list_default]);
 
 // template.marko

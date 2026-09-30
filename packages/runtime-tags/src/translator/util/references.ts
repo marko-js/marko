@@ -54,6 +54,7 @@ import {
   getFillConditions,
   getRootGlobalReads,
   isPatchFillBinding,
+  isCreatedScopeSeed,
   isPatchWriteBinding,
 } from "./patch/refresh";
 import { getPatchKeyedReasonKeys } from "./patch/structure";
@@ -1525,6 +1526,20 @@ export function finalizeReferences() {
             ensureReasonGroups(getSerializeSourcesForRef(binding));
           }
         });
+        // Created joins run by group, and a page ships a patch-filled join's
+        // members by it.
+        for (const join of intersectionsBySection.get(section) || []) {
+          ensureReasonGroups(getSerializeSourcesForRef(join));
+        }
+        // A created content scope's subscribe init is gated on its group.
+        forEach(section.referencedClosures, (closure) => {
+          if (
+            closure.type !== BindingType.constant &&
+            isDynamicClosure(section, closure)
+          ) {
+            ensureReasonGroups(closure.sources);
+          }
+        });
       }
       finalizeSerializeReason(section);
       finalizeParamSerializeReasonGroups(
@@ -1533,6 +1548,20 @@ export function finalizeReferences() {
       );
     });
   } while (reasonsVersion !== getSerializeReasonsVersion());
+
+  // A created scope's seeds may carry registrations, which bind by id.
+  if (isPatch()) {
+    forEachSection((section) => {
+      forEach(section.bindings, (binding) => {
+        if (
+          isCreatedScopeSeed(binding) &&
+          getSerializeReason(section, binding)
+        ) {
+          linkRuntimeFeature("patch-bind");
+        }
+      });
+    });
+  }
 
   finalizeFunctionRegistry();
 
@@ -2076,7 +2105,7 @@ function resolveDerivedSources(binding: Binding) {
     binding.upstreamIntersection = Array.isArray(refs)
       ? refs
       : refs && getUpstreamIntersection(refs);
-    if (stable) binding.stable = true;
+    if (stable && !binding.sources?.global) binding.stable = true;
   }
 }
 

@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__label = /*@__PURE__*/ _init_for_closure("a4", 2, ($scope) => _text($scope.b, $scope._.j));
+const $for_content__label = _init_for_closure("a4", 2, ($scope) => _text($scope.b, $scope._.j));
 const $label = /*@__PURE__*/ _const(9, ($scope) => {
 	_text($scope.b, $scope.j);
 	$for_content__label($scope);

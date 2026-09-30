@@ -9,9 +9,9 @@ const $_return = ($scope) => function(next) {
 _resumed.c0 = $_return;
 
 // tags/child.marko
-const $if_content__count = /*@__PURE__*/ _fill_let_change("b2", 2, ($scope) => _text($scope.a, $scope.c));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("b1", 2, ($scope) => _text($scope.a, $scope.c));
 const $if_content__input_on = /*@__PURE__*/ _fill_join("b3", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__count($scope, 0, $scope._.e)));
-const $if_content__setup__script = _script("b1", ($scope) => _on($scope.b, "click", function() {
+const $if_content__setup__script = _script("b2", ($scope) => _on($scope.b, "click", function() {
 	$if_content__count($scope, +$scope.c + 1);
 }));
 const $input_on = /*@__PURE__*/ _fill_const("b3", 4, $if_content__input_on);

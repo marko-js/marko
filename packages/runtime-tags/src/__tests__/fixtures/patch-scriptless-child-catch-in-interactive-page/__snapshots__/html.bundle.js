@@ -18,15 +18,16 @@ var card_default = _template_patch("b", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "b0", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b3", 0);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b3");
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b4", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason(), $sg__err_message = _source_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_resume($scope2_id, "a", err.message, $sg__err_message)}</b>`);
 		_source_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "b4", "b2");
-	$scope0_page && _scope($scope0_id, { e: $input_promise__closures });
+	}, void 0, "b5", "b2", void 0, 1);
+	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 0, 0);
 
 // template.marko

@@ -5,10 +5,10 @@ _shells({
 	a2: "a2;D ;<em> </em>",
 	a3: "a3;b%;<!><!><!>",
 	a4: "a4;D ;<span> </span>",
-	a: "a !a8;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
+	a: "a !a10;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template_patch("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $si__input_slow = _source_if($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_related__closures = /* @__PURE__ */ new Set();
 	const $input_slow__closures = /* @__PURE__ */ new Set();
@@ -22,13 +22,15 @@ var template_default = _template_patch("a", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "a", related, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a1", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a5", 0), _client_guard($scope0_reason, 5) && "a6", 0);
+		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "a5");
+		_client_guard($scope0_reason, 5) && _patch_init($scope1_id, "a6");
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a7", 0), _client_guard($scope0_reason, 5) && "a8", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "a7", void 0, "a3", 1);
+	}, void 0, "a9", void 0, "a3", 1);
 	_html("</section><footer>");
 	_await($scope0_id, "c", resolveAfter(input.note, input.slow ? 2 : 0), (note) => {
 		const $scope4_id = _scope_id();
@@ -36,13 +38,13 @@ var template_default = _template_patch("a", (input) => {
 		_scope($scope4_id, {});
 	}, 1, "a0", 1);
 	_html(`</footer><button>Count ${_text_resume($scope0_id, "e", count, 2)}</button>${_el_resume($scope0_id, "d")}</main>`);
-	_script($scope0_id, "a8");
+	_script($scope0_id, "a10");
 	$scope0_page && _scope($scope0_id, {
-		i: $si__input_slow && input.related,
-		j: _source_if($scope0_reason, 1) && input.slow,
-		k: $si__input_slow && input.note,
+		i: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.related,
+		j: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.slow,
+		k: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && input.note,
 		m: count,
-		n: $input_related__closures,
-		o: $input_slow__closures
+		n: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && $input_related__closures,
+		o: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && $input_slow__closures
 	});
 }, 1, 0);

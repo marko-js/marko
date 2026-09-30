@@ -1,0 +1,6 @@
+// PATCH
+{
+  ja: {
+    title: "a"
+  }
+}

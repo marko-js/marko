@@ -7,7 +7,7 @@ var template_default = _template_patch("a", (input) => {
 		document.querySelector("main").dataset.open = String(next);
 	}, "a0"))}${_patch_bind($scope0_id, "Eb", _resume(function(next) {
 		document.querySelector("main").dataset.open = String(next);
-	}, "a0"), 0, 0)}${_patch_control($scope0_id, "b", 4, input.show, $scope0_reason, 1)}><summary>More</summary><p>Body</p></details>${_el_resume($scope0_id, "b")}</main>`);
+	}, "a0"), $scope0_reason, 1)}${_patch_control($scope0_id, "b", 4, input.show, $scope0_reason, 1)}><summary>More</summary><p>Body</p></details>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_page && _scope($scope0_id, {});
 }, 1, 0);

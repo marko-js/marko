@@ -25,7 +25,7 @@ var child_default = _template_patch("b", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b2");
 	$scope0_page && _scope($scope0_id, {});
-}, 0, () => [button]);
+}, 0, 1);
 
 // template.marko
 _shells({

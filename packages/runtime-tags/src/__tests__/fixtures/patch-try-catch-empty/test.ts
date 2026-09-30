@@ -6,6 +6,9 @@ import { navigate, rejectAfter } from "../../utils/resolve";
 // creates its await anew.
 export const config: TestConfig = {
   patches: true,
+  // A patch re-renders a caught `<try>` from the server, which recovers;
+  // a client render keeps its `@catch`.
+  skip_csr: true,
   steps: () => [
     { promise: Promise.resolve("hi") },
     navigate(() => ({ promise: rejectAfter(new Error("boom")) })),

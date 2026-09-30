@@ -3,7 +3,7 @@ const $template = "<p> </p>";
 const $input_text = ($scope, input_text) => _text($scope.a, "n:" + input_text);
 
 // template.marko
-const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("a2", 4, /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, "d:" + $scope._._.e), ($scope) => $scope._._, "a0"), 0);
+const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("a2", 4, _closure_get(6, ($scope) => _text($scope.a, "d:" + $scope._._.e), ($scope) => $scope._._, "a0"), 0);
 const $if_content2__setup = $if_content2__input_title;
 const $if_content__input_title = /*@__PURE__*/ _fill_join("a2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_text($scope.b, $scope._.e)));
 const $if_content__setup = ($scope) => {

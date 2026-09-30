@@ -3,16 +3,16 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko": {
     "PatchLoop:#ul/2": [1, {
       "PatchChild:#childScope/1": {
-        "PatchText:#text/1": "1",
         "PatchSetup:": {
+          "PatchText:#text/1": "1",
           "PatchInit:": _.a = "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_0",
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_fill0": 0
         }
       }
     }, 2, {
       "PatchChild:#childScope/1": {
-        "PatchText:#text/1": "2",
         "PatchSetup:": {
+          "PatchText:#text/1": "2",
           "PatchInit:": _.a,
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_fill0": 0
         }
@@ -27,16 +27,16 @@
   "PatchReady:ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko": {
     "PatchLoop:#ul/2": [2, {
       "PatchChild:#childScope/1": {
-        "PatchText:#text/1": "2",
         "PatchSetup:": {
+          "PatchText:#text/1": "2",
           "PatchInit:": _.a = "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_0",
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_fill0": 0
         }
       }
     }, 3, {
       "PatchChild:#childScope/1": {
-        "PatchText:#text/1": "3",
         "PatchSetup:": {
+          "PatchText:#text/1": "3",
           "PatchInit:": _.a,
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_fill0": 0
         }

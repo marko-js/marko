@@ -3,15 +3,15 @@ const $template = "<main><!><button> </button></main>";
 const $walks = "D%b D m";
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span>ok</span>");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
-const $try_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/9", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_3_input_promise#0:6/subscribe");
+const $try_content__input_promise = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_promise#0:6/init", "input_promise/9", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_3_input_promise#0:6/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
-const $if_content__input_detail = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_detail", /*@__PURE__*/ _closure_get("input_detail/8", ($scope) => _text($scope["#text/0"], $scope._._.input_detail), ($scope) => $scope._._, "__tests__/template.marko_2_input_detail#0:5/subscribe"), 1);
+const $if_content__input_detail = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_detail", _closure_get("input_detail/8", ($scope) => _text($scope["#text/0"], $scope._._.input_detail), ($scope) => $scope._._, "__tests__/template.marko_2_input_detail#0:5/subscribe"), 1);
 const $if_content__setup = $if_content__input_detail;
 const $catch_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $catch_content__input_detail = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_detail", /*@__PURE__*/ _closure_get("input_detail/8", ($scope) => $catch_content__if($scope, $scope._.input_detail ? 0 : 1), 0, "__tests__/template.marko_1_input_detail#0:5/subscribe"), 0);
+const $catch_content__input_detail = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_detail", _closure_get("input_detail/8", ($scope) => $catch_content__if($scope, $scope._.input_detail ? 0 : 1), 0, "__tests__/template.marko_1_input_detail#0:5/subscribe"), 0);
 const $catch_content__setup = $catch_content__input_detail;
 const $catch_content = _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $catch_content__setup);
 const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));

@@ -1,0 +1,65 @@
+<main>
+  <h1>t<!--M_$2 #text/0--></h1><!--M_[-->
+  <p>x<!--M_$3 #text/0--><input></p><!--M_]2 #text/1 3-->
+  <header><!--M_[--><b>x<!--M_$4 #text/0--><input></b><!--M_]2 #text/2 4-->
+  </header>
+  <ul><!--M_[-->
+    <li>
+      1<!--M_$5 #text/0--><!--M_[--><em>x<!--M_$6 #text/0--><input></em><!--M_]5 #text/1 6-->
+    </li><!--M_[5-->
+    <li>
+      2<!--M_$7 #text/0--><!--M_[--><em>x<!--M_$8 #text/0--><input></em><!--M_]7 #text/1 8-->
+    </li><!--M_]2 #ul/3 7-->
+  </ul><!--M_$2 #ul/3-->
+  <ol><!--M_[-->
+    <li>1<!--M_$9 #text/0--><!--M_[-->
+      <p>x<!--M_$10 #text/0--><input></p><!--M_]9 #text/1 10-->
+    </li><!--M_[9-->
+    <li>2<!--M_$11 #text/0--><!--M_[-->
+      <p>x<!--M_$12 #text/0--><input></p><!--M_]11 #text/1 12-->
+    </li><!--M_]2 #ol/4 11-->
+  </ol><!--M_$2 #ol/4-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    input_text: "x",
+    "ClosureScopes:input_text/6": new Set,
+    "#childScope/0": _(2)
+  }, {
+    "ConditionalRenderer:#text/1": _.b =
+      "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/template.marko_3*content 1",
+    "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/template.marko_1*content 1"
+  }, {
+    _: _(1),
+    "ClosureSignalIndex:input_text/6": 2
+  }, {
+    _: _(1)
+  }, {
+    "ConditionalRenderer:#text/1": _.a =
+      "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/template.marko_2*content 1",
+    _: _(2)
+  }, {
+    _: _(1),
+    "ClosureSignalIndex:input_text/6": 1
+  }, {
+    "ConditionalRenderer:#text/1": _.a,
+    _: _(2)
+  }, {
+    _: _(1),
+    "ClosureSignalIndex:input_text/6": 1
+  }, {
+    "ConditionalRenderer:#text/1": _.b,
+    _: _(2)
+  }, {
+    _: _(1),
+    "ClosureSignalIndex:input_text/6": 2
+  }, {
+    "ConditionalRenderer:#text/1": _.b,
+    _: _(2)
+  }, {
+    _: _(1),
+    "ClosureSignalIndex:input_text/6": 2
+  }]];
+  M._.w()
+</script>

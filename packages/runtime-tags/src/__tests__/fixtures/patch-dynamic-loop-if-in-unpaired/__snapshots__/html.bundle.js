@@ -15,7 +15,7 @@ var card_default = _template_patch("b", (input) => {
 // template.marko
 _shells({
 	c0: "c0;b%;<!><!><!>",
-	c: /*@__PURE__*/ ((_w0, _w1) => `c !c3;${_w0};${_w1}`)(((_w0) => `/${_w0}& b`)($walks), ((_w0) => `${_w0}<button>+</button>`)($template)),
+	c: /*@__PURE__*/ ((_w0, _w1) => `c !c5;${_w0};${_w1}`)(((_w0) => `/${_w0}& b`)($walks), ((_w0) => `${_w0}<button>+</button>`)($template)),
 	c1: "c1; ;<ul></ul>",
 	c2: "c2;D%c%;<li><!>:<!></li>"
 });
@@ -41,9 +41,11 @@ var template_default = _template_patch("c", (input) => {
 					_for_of(input.items, (x) => {
 						const $scope3_id = _scope_id();
 						_html(`<li>${_patch_text($scope3_id, "a", x, void 0, $scope0_reason, 3)}:${_patch_text($scope3_id, "b", input.label, 2, $scope0_reason, 4)}</li>`);
+						_client_guard($scope0_reason, 4) && _patch_init($scope3_id, "c3");
 						_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 					}, 0, $scope2_id, "a", 1, 1, _source_guard($scope0_reason, 3), void 0, void 0, "c2", $scope0_reason, 3);
 					_html(`</ul>${_el_resume($scope2_id, "a")}`);
+					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "c4");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					return 0;
 				}
@@ -53,7 +55,7 @@ var template_default = _template_patch("c", (input) => {
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "c3");
+	_script($scope0_id, "c5");
 	$scope0_page && _scope($scope0_id, {
 		f: _source_if($scope0_reason, 2) && input.items,
 		g: _source_if($scope0_reason, 0) && input.label,

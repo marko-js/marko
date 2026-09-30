@@ -5,7 +5,7 @@ const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__input_body);
 const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
 
 // template.marko
-const $body_content__input_title = /*@__PURE__*/ _fill_join_closure("a3", 4, /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, $scope._.e), 0, "a0"), 0);
+const $body_content__input_title = /*@__PURE__*/ _fill_join_closure("a3", 4, _closure_get(6, ($scope) => _text($scope.a, $scope._.e), 0, "a0"), 0);
 const $body_content = _content$1("a1", "<em> </em>", "D ", $body_content__input_title);
 const $count = /*@__PURE__*/ _let(5, ($scope) => $input_open($scope.a, $scope.f % 2 === 0));
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {

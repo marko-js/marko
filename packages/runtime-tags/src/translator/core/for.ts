@@ -24,6 +24,7 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
+import { getWriteSources } from "../util/patch/decisions";
 import {
   isBranchPathSection,
   isStatefulBranch,
@@ -52,9 +53,11 @@ import {
   getSectionForBody,
   setSectionParentIsOwner,
   startSection,
+  ensureReasonGroups,
 } from "../util/sections";
 import {
   getExprWriteOwnership,
+  isClientOwnable,
   scopePageIdentifier,
 } from "../util/serialize-guard";
 import {
@@ -63,7 +66,7 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "../util/serialize-reasons";
-import { getShellId, getShells } from "../util/shell";
+import { getShippedShellId } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -251,6 +254,12 @@ export default {
               : "patch-loop-keyed",
           );
           recordStructuralParams(getSerializeSourcesForExpr(tagExtra));
+          // The loop entry gates on its upstream's ownership group, and rows
+          // a client-owned list keeps patch in place.
+          ensureReasonGroups(getWriteSources(tagExtra));
+          if (isClientOwnable(tagExtra)) {
+            linkRuntimeFeature("patch-loop-item");
+          }
         }
       });
       onFinalizeReferences(() => {
@@ -354,11 +363,9 @@ export default {
 
           if (patchChain) {
             // Item body shell id so patches can create additions.
-            const id = getShellId(bodySection);
+            const id = getShippedShellId(bodySection);
             forTagArgs.push(
-              id && getShells()?.[id]
-                ? t.stringLiteral(id)
-                : t.numericLiteral(0),
+              id ? t.stringLiteral(id) : t.numericLiteral(0),
               // A loop with params upstream yields to the client when the call
               // site has state upstream of its inputs.
               ...getExprWriteOwnership(node.extra!),

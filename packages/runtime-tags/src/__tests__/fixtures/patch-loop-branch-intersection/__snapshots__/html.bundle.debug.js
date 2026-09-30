@@ -4,7 +4,7 @@ const $walks = "D%b l";
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>",
-	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_suffix#0:6/init __tests__/template.marko_2_count#0:7/init __tests__/template.marko_2_item#1:1/init;D ;<p> </p>"
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_suffix#0:6/init __tests__/template.marko_2_count#0:7/init;D ;<p> </p>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_flag = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
@@ -31,7 +31,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page ? _scope($scope0_id, {
-		input_flag: _source_if($scope0_reason, 1) && input.flag,
+		input_flag: _unfilled_if($scope0_reason, 1) && input.flag,
 		input_suffix: input.suffix,
 		count,
 		"ClosureScopes:input_suffix/9": $input_suffix__closures,

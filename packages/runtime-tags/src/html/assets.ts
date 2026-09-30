@@ -6,9 +6,12 @@ import { _template, type ServerRenderer } from "./template";
 import {
   _html,
   $global,
+  Chunk,
   getState,
   patchWait,
   requireMainRuntime,
+  reserveChunk,
+  withChunk,
   writeScript,
   writeWaitReady,
 } from "./writer";
@@ -16,6 +19,7 @@ import {
 const kAssets = Symbol();
 const kBlockIndex = Symbol();
 const kDeferIndex = Symbol();
+const kHead = Symbol();
 export interface VisibleTrigger {
   type: "visible";
   selector: string;
@@ -55,6 +59,8 @@ declare module "../common/types" {
     [kAssets]?: Asset[];
     [kBlockIndex]?: number;
     [kDeferIndex]?: number;
+    // `1` through a page's first pass, the head a patch page reserved, then `0`.
+    [kHead]?: 1 | Chunk | 0;
   }
 }
 
@@ -88,7 +94,7 @@ export function withLoadAssets(
       }
       const g = $global();
       addAsset(g, assetId, triggers, patch);
-      _html(flush(g, ""));
+      flushInline(g);
       return writeWaitReady(assetId, renderer, input);
     },
     renderer,
@@ -130,18 +136,42 @@ export function withPageAssets(
     if (g.__flush__) {
       // Not the actual page entry (nested within another page render): resume
       // data waits for this page's own entry script, as for an embedded render.
-      _html(flush(g, ""));
+      flushInline(g);
       return writeWaitReady(assetId, template, input);
     }
 
     g.__flush__ = flush;
-    return template(input);
+    g[kHead] = 1;
+    const result = template(input);
+    endFirstPass(g);
+    return result;
   }, template);
 }
 
 export function _flush_head(): string {
   const g = $global();
   return g[kAssets] ? flush(g, "") : "";
+}
+
+// A patch page's head waits out the first pass to link what renders after it:
+// navigations replace content but never the head, and a bundler never relinks.
+export function _flush_head_patch() {
+  const g = $global();
+  if (g[kHead] === 1 && !getState().writesPatches) {
+    g[kHead] = reserveChunk();
+  } else {
+    _html(_flush_head());
+  }
+}
+
+function flushInline(g: $Global) {
+  if (!(g[kHead] instanceof Chunk)) _html(flush(g, ""));
+}
+
+function endFirstPass(g: $Global) {
+  const head = g[kHead];
+  g[kHead] = 0;
+  if (head instanceof Chunk) withChunk(head, () => _html(flush(g, "")));
 }
 
 function flush(g: $Global, html: string) {

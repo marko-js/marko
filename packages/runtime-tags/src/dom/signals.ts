@@ -286,6 +286,7 @@ export function _fill_let<T>(
     fillFn,
   );
 }
+// A fill is the controller's value, never an assignment the handler takes.
 export function _fill_let_change<T>(
   key: string,
   id: EncodedAccessor,
@@ -296,7 +297,7 @@ export function _fill_let_change<T>(
     key,
     _let_change<T>(id, fn),
     MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
-    fillFn,
+    fillFn ?? fn ?? 0,
   );
 }
 export function _fill_const<T>(
@@ -331,6 +332,19 @@ export function _or(
       queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
     }
   };
+}
+
+// A created scope's params land as seeds, so no arrival completes its join:
+// the flush runs it by this init, after whatever does arrive.
+export function _init_or(
+  initId: string,
+  id: number,
+  fn: SignalFn,
+  defaultPending?: number,
+  scopeIdAccessor?: EncodedAccessor,
+): Signal<never> {
+  _resumed[initId] = (scope: Scope) => queueRender(scope, fn, id);
+  return _or(id, fn, defaultPending, scopeIdAccessor);
 }
 
 export function _for_closure(
@@ -579,6 +593,36 @@ export function _init_closure_get(
     getOwnerScope,
     resumeId,
   ));
+}
+// A created subscriber a flush names subscribes once the flush's values
+// settle, rendering only what its owner changed, as a resumed one does.
+export function _subscribe_closure_get(
+  initId: string,
+  valueAccessor: EncodedAccessor,
+  fn: SignalFn,
+  getOwnerScope?: (scope: Scope) => Scope,
+  resumeId?: string,
+) {
+  const closureSignal = _closure_get(
+    valueAccessor,
+    fn,
+    getOwnerScope,
+    resumeId,
+  );
+  _resumed[initId] = (scope: Scope) =>
+    queueRender(
+      scope,
+      () => {
+        subscribeToScopeSet(
+          getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!,
+          closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
+          scope,
+        );
+        closureSignal(scope, 1);
+      },
+      -1,
+    );
+  return closureSignal;
 }
 export function _init_if_closure(
   initId: string,

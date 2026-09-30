@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { getScopeIdIdentifier, getSection } from "../util/sections";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPatch } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
@@ -66,6 +66,19 @@ export function flushBefore(path: t.NodePath<any>) {
   const expr = consumeHTML(path);
   if (expr) {
     path.insertBefore(expr)[0].skip();
+  }
+}
+
+// A patch page's head flush is a statement of its own, so it can hold its
+// place in the output until the page's first pass has rendered.
+export function writeFlushHead(path: t.NodePath<any>) {
+  if (isPatch()) {
+    flushBefore(path);
+    path
+      .insertBefore(t.expressionStatement(callRuntime("_flush_head_patch")))[0]
+      .skip();
+  } else {
+    writeTo(path)`${callRuntime("_flush_head")}`;
   }
 }
 

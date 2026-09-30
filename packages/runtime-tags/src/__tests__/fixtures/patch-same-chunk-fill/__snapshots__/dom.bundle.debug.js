@@ -23,7 +23,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__v_name($sc
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<span class=loading>...</span>");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/8", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:6/subscribe");
+const $try_content__input_promise = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_promise#0:6/init", "input_promise/8", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:6/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);

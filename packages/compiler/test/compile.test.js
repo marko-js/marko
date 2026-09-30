@@ -9,6 +9,7 @@ import {
   compileFile,
   compileFileSync,
   compileSync,
+  configure,
   getRuntimeEntryFiles,
   getRuntimeVersion,
 } from "@marko/compiler";
@@ -253,6 +254,17 @@ describe("compiler/compile", () => {
 
     it("is empty for a translator that offers none", () =>
       assert.deepEqual(getRuntimeEntryFiles("html", {}), []));
+
+    it("passes the configured `patches` to the translator", () => {
+      const isPatchEntry = (entry) => entry.includes("/patch-");
+      assert.ok(!getRuntimeEntryFiles("dom").some(isPatchEntry));
+      configure({ patches: true });
+      try {
+        assert.ok(getRuntimeEntryFiles("dom").some(isPatchEntry));
+      } finally {
+        configure({});
+      }
+    });
   });
 
   describe("getRuntimeVersion", () => {

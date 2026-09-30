@@ -1,9 +1,9 @@
 // template.marko
 _shells({
-	a1: "a1; ;<button>two</button>",
-	a2: "a2; ;<button>one</button>",
-	a3: "a3; ;<button>one</button>",
-	a4: "a4; ;<button>two</button>",
+	a1: "a1 !a10; ;<button>two</button>",
+	a2: "a2 !a5; ;<button>one</button>",
+	a3: "a3 !a5; ;<button>one</button>",
+	a4: "a4 !a10; ;<button>two</button>",
 	a: "a;D%b%bD ;<main><!><!><em> </em></main>"
 });
 var template_default = _template_patch("a", (input) => {
@@ -22,7 +22,9 @@ var template_default = _template_patch("a", (input) => {
 			onClick: handler
 		}, "a", $scope1_id, "button", void 0, $scope0_reason, 3)}>one</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a5");
-		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a6"), _client_guard($scope0_reason, 3) && "a7");
+		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a6");
+		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a7");
+		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a8"), _client_guard($scope0_reason, 3) && "a9");
 	}, 1, "a2", 1);
 	_await($scope0_id, "b", input.two, () => {
 		const $scope2_id = _scope_id();
@@ -31,12 +33,14 @@ var template_default = _template_patch("a", (input) => {
 			title: input.title,
 			onClick: handler
 		}, "a", $scope2_id, "button", void 0, $scope0_reason, 3)}>two</button>${_el_resume($scope2_id, "a")}`);
-		_script($scope2_id, "a8");
+		_script($scope2_id, "a10");
+		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a11");
+		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a12");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Ck: 1,
 			Cl: 1
-		}), _client_guard($scope0_reason, 3) && "a9"), _client_guard($scope0_reason, 3) && "a10");
+		}), _client_guard($scope0_reason, 3) && "a13"), _client_guard($scope0_reason, 3) && "a14");
 	}, 1, "a1", 1);
 	_html(`<em>${_patch_text($scope0_id, "c", count)}</em></main>`);
 	$scope0_page ? _scope($scope0_id, {

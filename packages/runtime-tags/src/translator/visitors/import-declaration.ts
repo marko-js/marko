@@ -76,13 +76,14 @@ export function recordCreatedLoadImports(program: t.NodePath<t.Program>) {
     if (
       program.scope.getBinding(local.name)!.referencePaths.every(
         (ref) =>
+          // Only a tag name renders it; a value (an alias, a ternary) is
+          // client code that reads the binding.
+          t.isMarkoTag(ref.parent) &&
+          ref.parentPath!.get("name") === ref &&
           patchCreates(getSection(ref)) &&
           // State upstream of a tag re-renders it on the client.
-          !(
-            t.isMarkoTag(ref.parent) &&
-            getAllTagReferenceNodes(ref.parent).some((node) =>
-              hasStateSource(node.extra),
-            )
+          !getAllTagReferenceNodes(ref.parent).some((node) =>
+            hasStateSource(node.extra),
           ),
       )
     ) {

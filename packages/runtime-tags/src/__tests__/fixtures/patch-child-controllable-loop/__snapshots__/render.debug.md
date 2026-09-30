@@ -78,8 +78,6 @@ REMOVE: main > p:nth-of-type(2) + button
 ```
 INSERT: main > p:nth-of-type(1) + :is(span, button)
 INSERT: main > p:nth-of-type(2) + :is(span, button)
-UPDATE: main > span:nth-of-type(1)::text@5 "" => "0"
-UPDATE: main > span:nth-of-type(2)::text@5 "" => "0"
 ```
 
 # Update

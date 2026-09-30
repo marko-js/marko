@@ -2,16 +2,16 @@
 [`a0;/ D l&;<div id=fixed> </div>`, {
   ba: [{
     ca: {
-      ja: [{
-        class: "x",
-        "data-a": "1"
-      }, {
-        id: 1
-      }],
-      tb: "b",
       s: {
+        ja: [{
+          class: "x",
+          "data-a": "1"
+        }, {
+          id: 1
+        }],
         i: "!b0"
-      }
+      },
+      tb: "b"
     }
   }, "a0"]
 }]
@@ -21,16 +21,16 @@
 {
   ba: [{
     ca: {
-      ja: [{
-        class: "x",
-        "data-a": "1"
-      }, {
-        id: 1
-      }],
-      tb: "c",
       s: {
+        ja: [{
+          class: "x",
+          "data-a": "1"
+        }, {
+          id: 1
+        }],
         i: "!b0"
-      }
+      },
+      tb: "c"
     }
   }, "a0"]
 }

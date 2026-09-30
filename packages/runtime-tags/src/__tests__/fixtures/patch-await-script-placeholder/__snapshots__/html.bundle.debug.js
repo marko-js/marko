@@ -2,8 +2,8 @@
 const $template = "<main><!></main>";
 const $walks = "D%l";
 _shells({
-	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<span id=v> </span>",
-	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<span id=v> </span>",
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content !__tests__/template.marko_3_value#2;D ;<span id=v> </span>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await !__tests__/template.marko_3_value#2;D ;<span id=v> </span>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
@@ -23,6 +23,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_patch_effect($scope3_id, "__tests__/template.marko_3_value#2", "value");
 			_scope($scope3_id, { value }, "__tests__/template.marko", "4:6", { value: "4:12" });
 		}, 1, "__tests__/template.marko_3*content", 1);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:3/init");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {

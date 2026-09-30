@@ -31,7 +31,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		icon_default({ name: item.icon });
 		_html(`<span>${_patch_text($scope1_id, "#text/2", item.label, void 0, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "#a/0")}`);
 		_scope($scope1_id, {
-			item_href: _source_if($scope0_reason, 2) && item?.href,
+			item_href: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.href,
 			_: _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4", { item_href: ["item.href", "2:8"] });
@@ -46,5 +46,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#main/1", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "#main/1", $sg__input_page)}`);
-	$scope0_page && _scope($scope0_id, { input_path: _source_if($scope0_reason, 1) && input.path }, "__tests__/template.marko", 0, { input_path: ["input.path"] });
+	$scope0_page && _scope($scope0_id, { input_path: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path }, "__tests__/template.marko", 0, { input_path: ["input.path"] });
 }, 1, () => [icon_default]);

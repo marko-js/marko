@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $Content_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/tags/child.marko_1_input_label#0:2/subscribe"), 0);
+const $Content_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0", "input_label", _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/tags/child.marko_1_input_label#0:2/subscribe"), 0);
 const $Content_content__setup__script = _script("__tests__/tags/child.marko_1", ($scope) => _on($scope["#em/0"], "click", function() {
 	$count($scope._, +$scope._.count + 1);
 }));
@@ -10,7 +10,7 @@ const $Content_content__setup = ($scope) => {
 	$Content_content__count($scope);
 	$Content_content__setup__script($scope);
 };
-const $Content_content__count = /*@__PURE__*/ _closure_get("count/6", ($scope) => _text($scope["#text/2"], $scope._.count), 0, "__tests__/tags/child.marko_1_count#0:3/subscribe");
+const $Content_content__count = _closure_get("count/6", ($scope) => _text($scope["#text/2"], $scope._.count), 0, "__tests__/tags/child.marko_1_count#0:3/subscribe");
 const $Content_content = _content("__tests__/tags/child.marko_1*content", "<em><!> <!></em>", " D%c%", $Content_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($Content_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill1", "count/3", $count__closure);

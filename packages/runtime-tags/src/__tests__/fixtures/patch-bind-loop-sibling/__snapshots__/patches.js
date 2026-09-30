@@ -1,5 +1,5 @@
 // PATCH
-[`a2 a8!a4;Db%l ;<span>Seen <!></span><button>+</button>`, `a1;b%;<!><!><!>`, `a0;0&D%c%l%c;<p><!>:<!></p><!><!>`, {
+[`a2 a9!a4;Db%l ;<span>Seen <!></span><button>+</button>`, `a1;b%;<!><!><!>`, `a0;0&D%c%l%c;<p><!>:<!></p><!><!>`, {
   la: ["x", {
     ca: {
       s: {
@@ -7,7 +7,9 @@
         vb1: 0
       }
     },
-    tc: "x",
+    s: {
+      tc: "x"
+    },
     le: ["y", {
       ba: 0
     }, "x", {
@@ -30,7 +32,9 @@
         vb1: 0
       }
     },
-    tc: "y",
+    s: {
+      tc: "y"
+    },
     le: ["y", {
       ba: [{
         s: {

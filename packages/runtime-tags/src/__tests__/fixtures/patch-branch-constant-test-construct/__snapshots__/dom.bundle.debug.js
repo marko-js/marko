@@ -13,7 +13,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const ITEMS = ["a", "b"];
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<p>down</p>", 0, 0, "<p>up</p>");
-const $if_content__input_down$1 = /*@__PURE__*/ _closure_get("input_down/4", ($scope) => $if_content__if($scope, $scope._._._.input_down ? 0 : 1), ($scope) => $scope._._._, "__tests__/page.marko_3_input_down#0:3/subscribe");
+const $if_content__input_down$1 = /*@__PURE__*/ _subscribe_closure_get("__tests__/page.marko_3_input_down#0:3/init", "input_down/4", ($scope) => $if_content__if($scope, $scope._._._.input_down ? 0 : 1), ($scope) => $scope._._._, "__tests__/page.marko_3_input_down#0:3/subscribe");
 const $if_content__setup$1 = $if_content__input_down$1;
 const $aside_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup$1);
 const $aside_content__m = /*@__PURE__*/ _closure_get("m/5", ($scope) => {

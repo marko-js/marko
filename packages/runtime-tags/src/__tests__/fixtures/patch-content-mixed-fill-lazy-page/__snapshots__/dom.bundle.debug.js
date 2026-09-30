@@ -57,7 +57,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // page.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}<button class=bonus>bonus</button>${_w1}`)("", $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}& b/${_w1}&`)("", $walks$1);
-const $aside_content__live = /*@__PURE__*/ _init_closure_get("__tests__/page.marko_1_live#0:9/init", "live/10", ($scope) => $input_base$1($scope["#childScope/0"], $scope._.live), 0, "__tests__/page.marko_1_live#0:9/subscribe");
+const $aside_content__live = _init_closure_get("__tests__/page.marko_1_live#0:9/init", "live/10", ($scope) => $input_base$1($scope["#childScope/0"], $scope._.live), 0, "__tests__/page.marko_1_live#0:9/subscribe");
 const $aside_content__setup = ($scope) => {
 	$aside_content__live($scope);
 	$setup$2($scope["#childScope/0"]);

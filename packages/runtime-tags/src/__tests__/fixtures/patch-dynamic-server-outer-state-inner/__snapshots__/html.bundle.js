@@ -28,7 +28,7 @@ var box_default = _template_patch("a", (input) => {
 _shells({
 	c0: "c0; ; ",
 	c1: /*@__PURE__*/ ((_w0, _w1) => `c1 c6;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $template),
-	c: "c !c2;b%b ;<!><!><button>+</button>"
+	c: "c !c3;b%b ;<!><!><button>+</button>"
 });
 var template_default = _template_patch("c", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -49,6 +49,7 @@ var template_default = _template_patch("c", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(_patch_text($scope2_id, "a", input.label, void 0, $scope0_reason, 2));
+				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "c2");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			}, $scope1_id)
 		});
@@ -58,7 +59,7 @@ var template_default = _template_patch("c", (input) => {
 		}));
 	}, $scope0_id), 0, _source_guard($scope0_reason, 1), _patch_dynamic_tag($scope0_id, "a", $tag, 0, "c1", 0, $scope0_reason, 1));
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "c2");
+	_script($scope0_id, "c3");
 	$scope0_page && _scope($scope0_id, {
 		f: _source_if($scope0_reason, 1) && input.label,
 		g: count,

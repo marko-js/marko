@@ -16,7 +16,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/card.marko", $template$1, 
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $inputonCardnull_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
+const $inputonCardnull_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
 const $inputonCardnull_content__setup = $inputonCardnull_content__input_label;
 const $inputonCardnull_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $inputonCardnull_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonCardnull_content);

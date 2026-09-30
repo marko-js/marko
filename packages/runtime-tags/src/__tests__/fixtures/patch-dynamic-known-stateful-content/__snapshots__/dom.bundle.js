@@ -8,5 +8,5 @@ const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $Card_content__input_label = /*@__PURE__*/ _fill_join_closure("b2", 3, /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "b0"), 0);
+const $Card_content__input_label = /*@__PURE__*/ _fill_join_closure("b2", 3, _closure_get(4, ($scope) => _text($scope.a, $scope._.d), 0, "b0"), 0);
 const $Card_content = _content("b1", " ", " ", $Card_content__input_label);

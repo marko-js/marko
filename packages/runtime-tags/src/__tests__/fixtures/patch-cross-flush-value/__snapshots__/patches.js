@@ -6,12 +6,12 @@
 {
   cAa: {
     ca: {
-      "aa id": "a",
-      tb: "y",
       s: {
+        "aa id": "a",
         i: "!b0",
         vb1: 0
       },
+      tb: "y",
       wg: {
         name: "y"
       }
@@ -21,12 +21,12 @@
 {
   cAb: {
     ca: {
-      "aa id": "b",
-      tb: "y",
       s: {
+        "aa id": "b",
         i: "!b0",
         vb1: 0
       },
+      tb: "y",
       wg: _(1).cAa.ca.wg
     }
   }

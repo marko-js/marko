@@ -30,7 +30,8 @@ var template_default = _template_patch("a", (input) => {
 			_for_of([1, 2], (x) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_patch_text($scope3_id, "a", x, void 0, 0, 0)}:${_patch_text($scope3_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
-				_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 1) && "a4");
+				_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "a4");
+				_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 1) && "a5");
 			}, 0, $scope2_id, "a", 1, 1, 0, void 0, void 0, "a2", 0, 0);
 			_html(`</div>${_el_resume($scope2_id, "a")}`);
 			_scope($scope2_id, { _: _scope_with_id($scope0_id) });
@@ -38,7 +39,7 @@ var template_default = _template_patch("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a1"], $scope0_reason, 2);
 	$scope0_page && _scope($scope0_id, {
-		f: _source_if($scope0_reason, 2) && input.note,
-		h: $input_note__closures
+		f: _unfilled_if($scope0_reason, 2) && input.note,
+		h: _unfilled_if($scope0_reason, 1) && $input_note__closures
 	});
 }, 1, 0);

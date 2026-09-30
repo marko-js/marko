@@ -42,4 +42,4 @@ var template_default = _template_patch("a", (input) => {
 		i: n,
 		a: _existing_scope($childScope)
 	});
-}, 1, () => [child_default, content]);
+}, 1, 1);

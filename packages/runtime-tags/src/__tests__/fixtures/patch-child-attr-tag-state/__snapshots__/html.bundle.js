@@ -20,7 +20,8 @@ var tabs_default = _template_patch("b", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $sg__input_tab, $sg__input_tab, void 0, void 0, ["b0", "b1"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, { e: input.tab?.on });
+	_patch_write($scope0_id, "e", input.tab?.on, 1);
+	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.tab?.on });
 }, 0, 0);
 
 // template.marko

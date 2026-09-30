@@ -7,7 +7,7 @@ const $template = "<div class=box><!></div>";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content(0);
 
 // template.marko
-const $card_content__input_title = /*@__PURE__*/ _fill_join_closure("a3", 4, /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, "t:" + $scope._._._.e), ($scope) => $scope._._._, "a8"), 0);
+const $card_content__input_title = /*@__PURE__*/ _fill_join_closure("a3", 4, _closure_get(6, ($scope) => _text($scope.a, "t:" + $scope._._._.e), ($scope) => $scope._._._, "a7"), 0);
 const $card_content = /*@__PURE__*/ _content$1("a0", "<p> </p>", "D ", $card_content__input_title);
 const $box_content__setup = ($scope) => $input_content_direct$1($scope.a, $card_content($scope));
 const $box_content = /*@__PURE__*/ _content$1("a1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $box_content__setup);

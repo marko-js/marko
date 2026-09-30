@@ -1,9 +1,9 @@
 // PATCH
-[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`b0 !b2;Db%l ;<span>Seen <!></span><button>+</button>`, {
   cd: {
     ba: [{
       s: {
-        vb2: 0,
+        vb1: 0,
         wd: _(["a"], "c0")
       },
       wd: _(["a"], "c0")

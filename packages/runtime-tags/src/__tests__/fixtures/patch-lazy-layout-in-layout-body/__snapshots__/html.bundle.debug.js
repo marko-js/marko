@@ -5,7 +5,9 @@ _shells({ "__tests__/root.marko": "__tests__/root.marko;EbD%;<html><body><header
 var root_default = _template_patch("__tests__/root.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<html>${_flush_head()}<body><header>site</header><main>`);
+	_html("<html>");
+	_flush_head_patch();
+	_html("<body><header>site</header><main>");
 	const $tag = input.content;
 	_dynamic_tag($scope0_id, "#text/0", $tag, {}, 0, 0, $sg__input_content, _patch_dynamic_tag($scope0_id, "#text/0", $tag, 0, 0, 0, $scope0_reason, 0));
 	_html("</main>"), _trailers("</body></html>");
@@ -102,6 +104,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 							return 1;
 						}
 					}, $scope3_id, "#text/0", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["__tests__/template.marko_5*shell", "__tests__/template.marko_6*shell"], $scope0_reason, 0);
+					_client_guard($scope0_reason, 0) && _patch_init($scope3_id, "__tests__/template.marko_3_input_page#0:3/init");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_page/4": 1

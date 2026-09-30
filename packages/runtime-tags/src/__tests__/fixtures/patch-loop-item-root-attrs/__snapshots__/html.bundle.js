@@ -28,7 +28,7 @@ var template_default = _template_patch("a", (input) => {
 		icon_default({ name: item.icon });
 		_html(`<span>${_patch_text($scope1_id, "c", item.label, void 0, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "a")}`);
 		_scope($scope1_id, {
-			f: _source_if($scope0_reason, 2) && item?.href,
+			f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.href,
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		});
@@ -43,5 +43,5 @@ var template_default = _template_patch("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, $sg__input_page, $sg__input_page, void 0, void 0, ["a1"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "b", $sg__input_page)}`);
-	$scope0_page && _scope($scope0_id, { f: _source_if($scope0_reason, 1) && input.path });
+	$scope0_page && _scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path });
 }, 1, () => [icon_default]);

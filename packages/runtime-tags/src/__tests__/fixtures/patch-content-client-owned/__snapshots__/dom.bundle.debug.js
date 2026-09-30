@@ -15,7 +15,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $card_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_note", /*@__PURE__*/ _closure_get("input_note/9", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:6/subscribe"), 0);
+const $card_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_note", _closure_get("input_note/9", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:6/subscribe"), 0);
 const $card_content__setup = $card_content__input_note;
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $card_content__setup);
 const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_title$1($scope["#childScope/0"], $scope._.input_title)));

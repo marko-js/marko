@@ -2,7 +2,7 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
-const $input_text__OR__highlight = /*@__PURE__*/ _or(6, ($scope) => _html($scope, $scope.highlight($scope.input_text), "#text/0"));
+const $input_text__OR__highlight = /*@__PURE__*/ _init_or("__tests__/tags/code-block.marko_0_input_text#4_highlight#5/init", 6, ($scope) => _html($scope, $scope.highlight($scope.input_text), "#text/0"));
 const $highlight2 = /*@__PURE__*/ _const("highlight", $input_text__OR__highlight);
 const $input_cursor = /*@__PURE__*/ _const("input_cursor", ($scope) => $highlight2($scope, $highlight($scope)));
 const $input_text$1 = /*@__PURE__*/ _const("input_text", $input_text__OR__highlight);

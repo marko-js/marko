@@ -16,7 +16,7 @@ const $walks = "D%l";
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_2*content", "<b> </b>", "D ", 0, $catch_content__$params);
-const $try_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/4", ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:3/subscribe");
+const $try_content__input_promise = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_promise#0:3/init", "input_promise/4", ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$setup$1($scope["#childScope/0"]);

@@ -2,53 +2,55 @@
 [`a1 !;D%c%l/b%c&b;<p><!> hit <!></p><!><!><!><!>`, {
   ta: "Store!",
   lb: [{
-    ta: "a",
+    s: {
+      ta: "a",
+      va2: 0
+    },
     cc: {
       ba: 0
-    },
-    s: {
-      va2: 0
     }
   }, {
-    ta: "b",
+    s: {
+      ta: "b",
+      va2: 0
+    },
     cc: {
       ba: 0
-    },
-    s: {
-      va2: 0
     }
   }, "a1"]
 }]
 "BAE"
 
 // PATCH holding BAE
-[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`b0 !b2;Db%l ;<span>Seen <!></span><button>+</button>`, {
   ta: "Store!",
   lb: [{
-    ta: "a",
+    s: {
+      ta: "a",
+      va2: 0
+    },
     cc: {
       ba: [{
+        vb1: 0,
         s: {
-          vb2: 0
+          vb1: 0
         },
         dd: ["a0", 2]
       }, "b0"]
-    },
-    s: {
-      va2: 0
     }
   }, {
-    ta: "b",
+    s: {
+      ta: "b",
+      va2: 0
+    },
     cc: {
       ba: [{
+        vb1: 0,
         s: {
-          vb2: 0
+          vb1: 0
         },
         dd: ["a0", 2]
       }, "b0"]
-    },
-    s: {
-      va2: 0
     }
   }, "a1"]
 }]

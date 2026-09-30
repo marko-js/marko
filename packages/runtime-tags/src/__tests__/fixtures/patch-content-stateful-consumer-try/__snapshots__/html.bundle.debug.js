@@ -61,7 +61,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<b>${_text_resume($scope3_id, "#text/0", err.message, $sg__err_message)}</b>`);
 			_source_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "8:6");
-		}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
+		}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", void 0, 1);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, $scope0_id) });
 	$scope0_page ? _scope($scope0_id, {

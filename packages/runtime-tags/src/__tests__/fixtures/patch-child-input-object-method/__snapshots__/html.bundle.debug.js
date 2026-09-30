@@ -3,21 +3,24 @@ const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 _shells({ "__tests__/tags/code-block.marko": "__tests__/tags/code-block.marko;D ;<div> </div>" });
 var code_block_default = _template_patch("__tests__/tags/code-block.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_text = _source_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const highlight = _resume(function(text) {
 		return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
 	}, "__tests__/tags/code-block.marko_0/highlight", $scope0_id);
 	_html(`<div>${_patch_html($scope0_id, "#text/0", highlight(input.text), void 0, $scope0_reason, 0)}</div>`);
+	_patch_write($scope0_id, "input_text", input.text, 1);
+	_patch_write($scope0_id, "highlight", highlight, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/code-block.marko_0_input_text#4_highlight#5/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_cursor: $si__input_text && input.cursor,
-		input_text: _source_if($scope0_reason, 1) && input.text,
-		highlight: $si__input_text && highlight
+		input_cursor: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.cursor,
+		input_text: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.text,
+		highlight: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && highlight
 	}, "__tests__/tags/code-block.marko", 0, {
 		input_cursor: ["input.cursor"],
 		input_text: ["input.text"],
 		highlight: "1:8"
-	}) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "input_cursor", input.cursor);
+	}) : _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && _patch_write($scope0_id, "input_cursor", input.cursor);
 }, 0, 0);
 
 // template.marko

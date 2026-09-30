@@ -24,6 +24,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				_html(`<em>${_patch_text($scope5_id, "#text/0", value, void 0, $scope0_reason, 0)}</em>`);
 				_scope($scope5_id, {}, "__tests__/template.marko", "4:8");
 			}, 1, "__tests__/template.marko_5*content", 1);
+			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_promise#0:3/init");
 			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_promise#0:3/subscribe", 0);
 			$scope0_page && _resume_branch($scope2_id);
 		}, void 0, () => {
@@ -38,5 +39,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		_html("<em>outer</em>");
 	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content");
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $input_promise__closures }, "__tests__/template.marko", 0);
+	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1, 0);

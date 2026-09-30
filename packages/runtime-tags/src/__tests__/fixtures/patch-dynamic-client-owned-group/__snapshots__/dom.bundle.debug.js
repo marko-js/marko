@@ -14,7 +14,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_on__OR__input_label = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_on ? card_default : null, () => ({ label: $scope.input_label })));
+const $input_on__OR__input_label = /*@__PURE__*/ _init_or("__tests__/tags/picker/index.marko_0_input_on#3_input_label#4/init", 5, ($scope) => $dynamicTag($scope, $scope.input_on ? card_default : null, () => ({ label: $scope.input_label })));
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__input_label);
 const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_on__OR__input_label);
 const $input$1 = ($scope, input) => {

@@ -35,6 +35,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 6));
+		_client_guard($scope0_reason, 6) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:8/init");
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 	}, $scope0_id), 0, $sg__input_wrap, _patch_dynamic_tag($scope0_id, "#text/1", $tag2, 0, "__tests__/template.marko_1*content", 0, $scope0_reason, 5));
 	$scope0_page && _scope($scope0_id, {

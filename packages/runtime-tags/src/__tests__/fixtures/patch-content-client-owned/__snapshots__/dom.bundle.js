@@ -5,7 +5,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content(1);
 const $input_title = ($scope, input_title) => _text($scope.a, input_title);
 
 // template.marko
-const $card_content__input_note = /*@__PURE__*/ _fill_join_closure("a3", 6, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._._.g), ($scope) => $scope._._, "a7"), 0);
+const $card_content__input_note = /*@__PURE__*/ _fill_join_closure("a3", 6, _closure_get(9, ($scope) => _text($scope.a, $scope._._.g), ($scope) => $scope._._, "a6"), 0);
 const $card_content = /*@__PURE__*/ _content$1("a0", "<em> </em>", "D ", $card_content__input_note);
 const $if_content__input_title = /*@__PURE__*/ _fill_join("a2", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_title($scope.a, $scope._.f)));
 const $if_content__setup = ($scope) => {

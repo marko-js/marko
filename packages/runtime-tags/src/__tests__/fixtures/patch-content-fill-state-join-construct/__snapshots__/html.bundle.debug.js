@@ -56,6 +56,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<span>${_patch_text($scope2_id, "#text/0", p.name, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "#text/1", count, 2)}/${_patch_text($scope2_id, "#text/2", item.id, 2, $scope0_reason, 1)}</span>`);
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_p_name#0:8/init");
+				_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_item_id#1:4/init");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_id__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $p_name__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"))));
 			}, $scope1_id)
 		});

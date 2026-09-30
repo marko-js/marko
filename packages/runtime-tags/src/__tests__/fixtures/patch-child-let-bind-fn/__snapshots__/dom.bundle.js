@@ -1,10 +1,10 @@
 // tags/picker.marko
 const $for_content__item = ($scope, item) => _text($scope.a, item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $refreshing = /*@__PURE__*/ _fill_let_change("b2", 7);
+const $refreshing = /*@__PURE__*/ _fill_let_change("b1", 7);
 const $for = /*@__PURE__*/ _for_of_unkeyed(1, "<li> </li>", "D ", 0, $for_content__$params);
-const $catalog = /*@__PURE__*/ _fill_let("b3", 9, ($scope) => $for($scope, [$scope.j || []]));
-const $setup__script$1 = _script("b1", ($scope) => _on($scope.a, "click", function() {
+const $catalog = /*@__PURE__*/ _fill_let("b4", 9, ($scope) => $for($scope, [$scope.j || []]));
+const $setup__script$1 = _script("b2", ($scope) => _on($scope.a, "click", function() {
 	$scope.k(true);
 }));
 const $load = ($scope) => async (refresh) => {

@@ -1,32 +1,40 @@
 // PATCH
-[`b0;D%b%;<li><!><!></li>`, {
+{
   ca: {
-    la: [{
+    ra: [0, {
+      s: {
+        ta: "a"
+      },
       tb: "?"
-    }, "b0"],
+    }],
     vb1: "?"
   },
   va1: "?"
-}]
-"AwI"
+}
 
-// PATCH holding AwI
+// PATCH
 {
   ca: {
-    la: [{
+    ra: [0, {
+      s: {
+        ta: "a"
+      },
       tb: "."
-    }, "b0"],
+    }],
     vb1: "."
   },
   va1: "."
 }
 
-// PATCH holding AwI
+// PATCH
 {
   ca: {
-    la: [{
+    ra: [0, {
+      s: {
+        ta: "a"
+      },
       tb: ","
-    }, "b0"],
+    }],
     vb1: ","
   },
   va1: ","

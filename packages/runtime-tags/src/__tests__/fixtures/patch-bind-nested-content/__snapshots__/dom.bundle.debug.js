@@ -28,7 +28,7 @@ var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $templ
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}<p> </p>${_w1}`)("", $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&D l/${_w1}&`)("", "D%l");
 const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill0", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
-const $if_content__store_set = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_3_store_set#0:9/init", "store_set/11", ($scope) => $if_content__count($scope, 0, $scope._._._.store_set), ($scope) => $scope._._._);
+const $if_content__store_set = _init_closure_get("__tests__/template.marko_3_store_set#0:9/init", "store_set/11", ($scope) => $if_content__count($scope, 0, $scope._._._.store_set), ($scope) => $scope._._._);
 const $if_content__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));

@@ -8,7 +8,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__a($scope, 
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<i>loading</i>");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<b> </b>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_fast = /*@__PURE__*/ _closure_get("input_fast/6", ($scope) => $try_content__await_promise($scope, $scope._.input_fast), 0, "__tests__/template.marko_1_input_fast#0:4/subscribe");
+const $try_content__input_fast = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_fast#0:4/init", "input_fast/6", ($scope) => $try_content__await_promise($scope, $scope._.input_fast), 0, "__tests__/template.marko_1_input_fast#0:4/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_fast($scope);
 	$try_content__input_slow($scope);
@@ -17,7 +17,7 @@ const $try_content__setup = ($scope) => {
 };
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<em> </em>", "D ");
 const $try_content__await_promise2 = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
-const $try_content__input_slow = /*@__PURE__*/ _closure_get("input_slow/7", ($scope) => $try_content__await_promise2($scope, $scope._.input_slow), 0, "__tests__/template.marko_1_input_slow#0:5/subscribe");
+const $try_content__input_slow = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_slow#0:5/init", "input_slow/7", ($scope) => $try_content__await_promise2($scope, $scope._.input_slow), 0, "__tests__/template.marko_1_input_slow#0:5/subscribe");
 const $try = /*@__PURE__*/ _try("#text/0", "<div><!><!></div>", "D%b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {}));
 function $setup($scope) {

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><button> </button>";
 const $walks = "b%b D l";
-const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _closure_get("input_label/9", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:6/subscribe");
+const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_label#0:6/init", "input_label/9", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:6/subscribe");
 const $inputonsectionarticle_content__setup = $inputonsectionarticle_content__input_label;
 const $inputonsectionarticle_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $inputonsectionarticle_content__setup);
 const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));

@@ -11,7 +11,7 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D%l");
-const $elseif_content__input_kind = /*@__PURE__*/ _closure_get("input_kind/4", ($scope) => _text($scope["#text/0"], $scope._._.input_kind), ($scope) => $scope._._, "__tests__/template.marko_2_input_kind#0:3/subscribe");
+const $elseif_content__input_kind = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_kind#0:3/init", "input_kind/4", ($scope) => _text($scope["#text/0"], $scope._._.input_kind), ($scope) => $scope._._, "__tests__/template.marko_2_input_kind#0:3/subscribe");
 const $elseif_content__setup = $elseif_content__input_kind;
 const $widget_content__if = /*@__PURE__*/ _if("#text/0", "<b>A</b>", 0, 0, "<i>B:<!></i>", "Db%", $elseif_content__setup);
 const $widget_content__input_kind = /*@__PURE__*/ _closure_get("input_kind/4", ($scope) => $widget_content__if($scope, $scope._.input_kind === "a" ? 0 : $scope._.input_kind === "b" ? 1 : 2), 0, "__tests__/template.marko_1_input_kind#0:3/subscribe");

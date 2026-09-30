@@ -3,9 +3,9 @@
 import type { types as t } from "@marko/compiler";
 
 import type { AccessorPrefix, AccessorProp } from "../../../common/types";
-import { kDirectContent } from "../binding-prop-tree";
+import { kDirectContent, kRendersContent } from "../binding-prop-tree";
 import { createCyclicMemo } from "../cyclic-memo";
-import { isPatch } from "../marko-config";
+import { isPage, isPatch } from "../marko-config";
 import { every, forEach, type Opt, some, toArray } from "../optional";
 import {
   type Binding,
@@ -118,11 +118,13 @@ function someRead(
 }
 
 // A read inside stateful structure renders the content there (directly, or
-// by the child it is upstream of).
+// by the child it is upstream of); a tag rendering it with client state
+// re-renders it on the client wherever it sits.
 function isStatefulLeaf(read: ReferencedExtra) {
   return (
-    !!(read[kDirectContent] || read.downstream) &&
-    inStatefulBranch(read.section)
+    !!(read[kDirectContent] || read[kRendersContent] || read.downstream) &&
+    (inStatefulBranch(read.section) ||
+      (!!read[kRendersContent] && !!getSerializeSourcesForExpr(read)?.state))
   );
 }
 // A tag body is stateful when the prop it is upstream of renders so in the
@@ -297,12 +299,14 @@ export function getPatchKeyedReasonKeys(section: Section) {
   return keys;
 }
 
-// A flush pairs a loop's rows when they hold nodes or sections to pair.
+// A flush pairs a loop's rows when they hold nodes or sections to pair, and
+// builds them wherever it may create the loop (any section but the page's).
 export function patchesLoopRows(body: Section) {
+  const section = body.parent!;
   return (
-    writesPatchIn(body.parent!) &&
+    writesPatchIn(section) &&
     !isStatefulBranch(body) &&
-    hasDomBindingsOrNestedSections(body)
+    (hasDomBindingsOrNestedSections(body) || !!section.parent || !isPage())
   );
 }
 

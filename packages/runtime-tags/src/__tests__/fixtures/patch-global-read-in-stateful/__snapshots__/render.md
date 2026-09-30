@@ -45,10 +45,11 @@ document.querySelector("button").click();
   t
 </button>
 <em>
-   
+  bmce
 </em>
 ```
 ## Change
 ```
 INSERT: button + em
+UPDATE: em::text " " => "bmce"
 ```

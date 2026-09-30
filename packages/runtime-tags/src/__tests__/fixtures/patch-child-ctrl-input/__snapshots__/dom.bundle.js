@@ -1,7 +1,7 @@
 // tags/field/index.marko
 const $template = "<input><em> </em>";
 const $walks = " bD l";
-const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(6, ($scope) => _attr_input_value($scope, "a", $scope.e, $scope.f));
+const $input_value__OR__input_valueChange = /*@__PURE__*/ _init_or("b1", 6, ($scope) => _attr_input_value($scope, "a", $scope.e, $scope.f));
 const $input_value = /*@__PURE__*/ _const(4, ($scope) => {
 	$input_value__OR__input_valueChange($scope);
 	_text($scope.b, $scope.e);

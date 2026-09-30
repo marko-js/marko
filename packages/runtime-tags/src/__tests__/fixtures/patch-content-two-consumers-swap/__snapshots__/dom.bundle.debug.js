@@ -15,7 +15,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)($walks$1);
-const $card_content2__input_note = /*@__PURE__*/ _closure_get("input_note/8", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_3_input_note#0:5/subscribe");
+const $card_content2__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_note#0:5/init", "input_note/8", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_3_input_note#0:5/subscribe");
 const $card_content2__setup = $card_content2__input_note;
 const $card_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<em> </em>", "D ", $card_content2__setup);
 const $if_content__input_t = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_title($scope["#childScope/0"], $scope._.input_t2));

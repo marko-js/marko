@@ -14,7 +14,7 @@ const $setup__script$1 = _script("d0", ($scope) => _on($scope.a, "click", functi
 const $input_base$1 = /*@__PURE__*/ _fill_const("d1", 4, $input_base__OR__tick);
 
 // page.marko
-const $aside_content__live = /*@__PURE__*/ _init_closure_get("a6", 10, ($scope) => $input_base$1($scope.a, $scope._.j), 0, "a7");
+const $aside_content__live = _init_closure_get("a5", 10, ($scope) => $input_base$1($scope.a, $scope._.j), 0, "a7");
 const $live = /*@__PURE__*/ _const(9, /* @__PURE__ */ _closure($aside_content__live));
 const $input_base__OR__bonus = /*@__PURE__*/ _fill_join("a3", 6, /*@__PURE__*/ _or(8, ($scope) => $live($scope, $scope.h ?? $scope.g), 1, 1));
 const $bonus = _var_resume("a1", /*@__PURE__*/ _const(7, $input_base__OR__bonus));

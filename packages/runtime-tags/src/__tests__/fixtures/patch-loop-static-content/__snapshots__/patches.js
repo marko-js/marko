@@ -2,9 +2,13 @@
 [`a0;Db%;<p>item <!></p>`, {
   ta: "Store!",
   lb: [{
-    ta: "a"
+    s: {
+      ta: "a"
+    }
   }, {
-    ta: "b"
+    s: {
+      ta: "b"
+    }
   }, "a0"]
 }]
 "AgE"

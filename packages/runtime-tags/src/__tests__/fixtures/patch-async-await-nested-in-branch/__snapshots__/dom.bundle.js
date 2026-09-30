@@ -1,2 +1,2 @@
 // template.marko
-const $setup__script = _script("a7", ($scope) => _on($scope.b, "click", function() {}));
+const $setup__script = _script("a9", ($scope) => _on($scope.b, "click", function() {}));

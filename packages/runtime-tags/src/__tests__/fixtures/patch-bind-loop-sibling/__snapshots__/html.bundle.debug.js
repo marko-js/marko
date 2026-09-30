@@ -26,7 +26,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_store_set#1:8/init!__tests__/template.marko_3;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $si__input_show = _source_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_show = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	_for_of(["x", "y"], (name) => {
@@ -58,14 +58,15 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope2_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
+			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_show#0:3/init");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
-				"#LoopKey": $si__input_show && other,
+				"#LoopKey": _unfilled_if($scope0_reason, 0) && other,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "4:4", { "#LoopKey": "4:8" }), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_show#0:3/subscribe", $sg__input_show);
 		}, (n) => n, $scope1_id, "#text/4", 1, 1, 0, void 0, void 0, "__tests__/template.marko_2*shell", 0, 0);
 		_scope($scope1_id, {
-			"#LoopKey": $si__input_show && name,
-			store_set: $si__input_show && store?.set,
+			"#LoopKey": _unfilled_if($scope0_reason, 0) && name,
+			store_set: _source_if($scope0_reason, 0) && store?.set,
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope),
 			"ClosureScopes:store_set/10": $for_content__store_set__closures
@@ -74,5 +75,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			store_set: ["store.set", "2:10"]
 		});
 	}, (n) => n, $scope0_id, "#text/0", 1, 1, 0, void 0, void 0, "__tests__/template.marko_1*shell", 0, 0);
-	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_show/4": $input_show__closures }, "__tests__/template.marko", 0);
+	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_show/4": _unfilled_if($scope0_reason, 0) && $input_show__closures }, "__tests__/template.marko", 0);
 }, 1, () => [store_default]);

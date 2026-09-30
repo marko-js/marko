@@ -23,7 +23,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {
-		input_title: _source_if($scope0_reason, 0) && input.title,
+		input_title: _unfilled_if($scope0_reason, 0) && input.title,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

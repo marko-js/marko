@@ -13,7 +13,7 @@ const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
 const $setup = () => {};
 const $inputtag_content = _content("__tests__/template.marko_2*content", "hi");
-const $inputwrapwrapnull_content__input_note = /*@__PURE__*/ _closure_get("input_note/9", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:8/subscribe");
+const $inputwrapwrapnull_content__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_note#0:8/init", "input_note/9", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:8/subscribe");
 const $inputwrapwrapnull_content__setup = $inputwrapwrapnull_content__input_note;
 const $inputwrapwrapnull_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $inputwrapwrapnull_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtag_content);

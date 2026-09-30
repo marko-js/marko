@@ -8,12 +8,12 @@ function boom() {
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_3*content", "<b> </b>", "D ", 0, $catch_content__$params);
-const $try_content__input_message = /*@__PURE__*/ _closure_get("input_message/6", ($scope) => _text($scope["#text/0"], $scope._._.input_message), ($scope) => $scope._._, "__tests__/template.marko_2_input_message#0:4/subscribe");
+const $try_content__input_message = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_message#0:4/init", "input_message/6", ($scope) => _text($scope["#text/0"], $scope._._.input_message), ($scope) => $scope._._, "__tests__/template.marko_2_input_message#0:4/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_message($scope);
 	$try_content__input_boom($scope);
 };
-const $try_content__input_boom = /*@__PURE__*/ _closure_get("input_boom/7", ($scope) => _text($scope["#text/1"], $scope._._.input_boom ? boom() : ""), ($scope) => $scope._._, "__tests__/template.marko_2_input_boom#0:5/subscribe");
+const $try_content__input_boom = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_boom#0:5/init", "input_boom/7", ($scope) => _text($scope["#text/1"], $scope._._.input_boom ? boom() : ""), ($scope) => $scope._._, "__tests__/template.marko_2_input_boom#0:5/subscribe");
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<em><!><!></em>", "D%b%", $try_content__setup, 0, $catch_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if("#main/0", "<!><!><!>", "b%", $if_content__setup);

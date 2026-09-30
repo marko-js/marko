@@ -7,7 +7,7 @@ var template_default = _template_patch("a", (input) => {
 		document.body.dataset.v = next;
 	}, "a0"))}${_patch_bind($scope0_id, "Ea", _resume(function(next) {
 		document.body.dataset.v = next;
-	}, "a0"), 0, 0)}${_patch_control($scope0_id, "a", 2, input.v, $scope0_reason, 1)}${_patch_attrs_partial(input.attrs, {
+	}, "a0"), $scope0_reason, 1)}${_patch_control($scope0_id, "a", 2, input.v, $scope0_reason, 1)}${_patch_attrs_partial(input.attrs, {
 		value: 1,
 		valueChange: 1
 	}, "a", $scope0_id, "input", void 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}`);

@@ -24,6 +24,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 						if (input.html) {
 							const $scope3_id = _scope_id();
 							_html(`<div>${_patch_html($scope3_id, "#text/0", input.html, void 0, $scope0_reason, 2)}</div><div class=y>${_patch_html($scope3_id, "#text/1", input.html, void 0, $scope0_reason, 2)}</div>`);
+							_client_guard($scope0_reason, 2) && _patch_init($scope3_id, "__tests__/template.marko_3_input_html#0:4/init");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope3_id, {
 								_: _scope_with_id($scope2_id),
 								"ClosureSignalIndex:input_html/6": 1
@@ -35,6 +36,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 						if (input.html) {
 							const $scope4_id = _scope_id();
 							_html(_patch_html($scope4_id, "#text/0", input.html, void 0, $scope0_reason, 2));
+							_client_guard($scope0_reason, 2) && _patch_init($scope4_id, "__tests__/template.marko_4_input_html#0:4/init");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope4_id, {
 								_: _scope_with_id($scope2_id),
 								"ClosureSignalIndex:input_html/6": 2
@@ -42,6 +44,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 							return 0;
 						}
 					}, $scope2_id, "#text/1", 1, $sg__input_html, $sg__input_html, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 2);
+					_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_html#0:4/init");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_2_input_html#0:4/subscribe", $sg__input_html);
 					return 0;
 				}
@@ -52,7 +55,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
 	$scope0_page && _scope($scope0_id, {
-		input_html: _source_if($scope0_reason, 1) && input.html,
-		"ClosureScopes:input_html/6": $input_html__closures
+		input_html: _unfilled_if($scope0_reason, 1) && input.html,
+		"ClosureScopes:input_html/6": _unfilled_if($scope0_reason, 2) && $input_html__closures
 	}, "__tests__/template.marko", 0, { input_html: ["input.html"] });
 }, 1, 0);

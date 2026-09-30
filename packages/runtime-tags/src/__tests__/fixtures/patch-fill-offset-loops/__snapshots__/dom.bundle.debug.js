@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<main><h1> </h1><!><button>+</button></main>";
 const $walks = "E l%b l";
-const $for_content2__input_suffix__OR__count = /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _init_join("__tests__/template.marko_2_input_suffix#0:7/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + $scope._._.input_suffix + "@" + $scope._._.count))), 0, "#text/1", "#text/0");
-const $for_content2__input_suffix = /*@__PURE__*/ _closure_get("input_suffix/9", $for_content2__input_suffix__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_input_suffix#0:7/subscribe");
+const $for_content2__input_suffix__OR__count = _fill_join_for("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _init_join("__tests__/template.marko_2_input_suffix#0:7/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + $scope._._.input_suffix + "@" + $scope._._.count))), 0, "#text/1", "#text/0");
+const $for_content2__input_suffix = _closure_get("input_suffix/9", $for_content2__input_suffix__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_input_suffix#0:7/subscribe");
 const $for_content2__setup = ($scope) => {
 	$for_content2__input_suffix($scope);
 	$for_content2__count($scope);
 };
-const $for_content2__count = /*@__PURE__*/ _init_closure_get("__tests__/template.marko_2_count#0:8/init", "count/10", $for_content2__input_suffix__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_count#0:8/subscribe");
+const $for_content2__count = _init_closure_get("__tests__/template.marko_2_count#0:8/init", "count/10", $for_content2__input_suffix__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_count#0:8/subscribe");
 const $for_content__for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", $for_content2__setup);
 const $for_content__row_cells = ($scope, row_cells) => $for_content__for($scope, [row_cells, (cell) => cell]);
 const $for_content__$params = ($scope, $params2) => $for_content__row_cells($scope, $params2[0]?.cells);

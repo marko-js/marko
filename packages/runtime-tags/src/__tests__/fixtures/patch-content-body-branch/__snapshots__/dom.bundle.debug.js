@@ -16,12 +16,12 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = () => {};
-const $else_content__input_note = /*@__PURE__*/ _closure_get("input_note/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_note), ($scope) => $scope._._._, "__tests__/template.marko_4_input_note#0:6/subscribe");
+const $else_content__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_4_input_note#0:6/init", "input_note/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_note), ($scope) => $scope._._._, "__tests__/template.marko_4_input_note#0:6/subscribe");
 const $else_content__setup = $else_content__input_note;
-const $if_content2__input_note = /*@__PURE__*/ _closure_get("input_note/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_note), ($scope) => $scope._._._, "__tests__/template.marko_3_input_note#0:6/subscribe");
+const $if_content2__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_note#0:6/init", "input_note/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_note), ($scope) => $scope._._._, "__tests__/template.marko_3_input_note#0:6/subscribe");
 const $if_content2__setup = $if_content2__input_note;
 const $card_content__if = /*@__PURE__*/ _if("#text/0", "<em>A:<!></em>", "Db%", $if_content2__setup, "<strong>B:<!></strong>", "Db%", $else_content__setup);
-const $card_content__input_alt = /*@__PURE__*/ _closure_get("input_alt/8", ($scope) => $card_content__if($scope, $scope._._.input_alt ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_alt#0:5/subscribe");
+const $card_content__input_alt = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_alt#0:5/init", "input_alt/8", ($scope) => $card_content__if($scope, $scope._._.input_alt ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_alt#0:5/subscribe");
 const $card_content__setup = $card_content__input_alt;
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $card_content__setup);
 const $if_content__input_title = /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_title$1($scope["#childScope/0"], $scope._.input_title));

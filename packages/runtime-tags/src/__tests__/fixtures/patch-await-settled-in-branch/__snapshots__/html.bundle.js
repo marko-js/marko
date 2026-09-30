@@ -23,5 +23,5 @@ var template_default = _template_patch("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a2"], $scope0_reason, 1);
 	_html(`<p>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 3)}</p>`);
-	$scope0_page && _scope($scope0_id, { f: _source_if($scope0_reason, 1) && input.value });
+	$scope0_page && _scope($scope0_id, { f: _unfilled_if($scope0_reason, 1) && input.value });
 }, 1, 0);

@@ -12,12 +12,12 @@ const $await_content2__input_title__OR__handler = /*@__PURE__*/ _or(1, ($scope) 
 	});
 	$await_content2__input_title__OR__handler__script($scope);
 });
-const $await_content2__input_title = /*@__PURE__*/ _closure_get("input_title/10", $await_content2__input_title__OR__handler, 0, "__tests__/template.marko_2_input_title#0:5/subscribe");
+const $await_content2__input_title = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_title#0:5/init", "input_title/10", $await_content2__input_title__OR__handler, 0, "__tests__/template.marko_2_input_title#0:5/subscribe");
 const $await_content2__setup = ($scope) => {
 	$await_content2__input_title($scope);
 	$await_content2__handler($scope);
 };
-const $await_content2__handler = /*@__PURE__*/ _closure_get("handler/11", $await_content2__input_title__OR__handler, 0, "__tests__/template.marko_2_handler#0:9/subscribe");
+const $await_content2__handler = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_handler#0:9/init", "handler/11", $await_content2__input_title__OR__handler, 0, "__tests__/template.marko_2_handler#0:9/subscribe");
 const $await_content__input_title__OR__handler__script = _script("__tests__/template.marko_1_input_title#0:5_handler#0:9", ($scope) => _attrs_script($scope, "#button/0"));
 const $await_content__input_title__OR__handler = /*@__PURE__*/ _or(1, ($scope) => {
 	_attrs($scope, "#button/0", {
@@ -29,12 +29,12 @@ const $await_content__input_title__OR__handler = /*@__PURE__*/ _or(1, ($scope) =
 	});
 	$await_content__input_title__OR__handler__script($scope);
 });
-const $await_content__input_title = /*@__PURE__*/ _closure_get("input_title/10", $await_content__input_title__OR__handler, 0, "__tests__/template.marko_1_input_title#0:5/subscribe");
+const $await_content__input_title = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_title#0:5/init", "input_title/10", $await_content__input_title__OR__handler, 0, "__tests__/template.marko_1_input_title#0:5/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__input_title($scope);
 	$await_content__handler($scope);
 };
-const $await_content__handler = /*@__PURE__*/ _closure_get("handler/11", $await_content__input_title__OR__handler, 0, "__tests__/template.marko_1_handler#0:9/subscribe");
+const $await_content__handler = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_handler#0:9/init", "handler/11", $await_content__input_title__OR__handler, 0, "__tests__/template.marko_1_handler#0:9/subscribe");
 const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));
 function $setup($scope) {
 	$await_content($scope);

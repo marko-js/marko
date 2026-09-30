@@ -52,7 +52,7 @@ var panel_default = _template_patch("e", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)("");
 _shells({
-	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 a9 a10 a11;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $template$2),
+	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 a8 a9 a10;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $template$2),
 	a: /*@__PURE__*/ ((_w0, _w1) => `a !a5;${_w0};${_w1}`)(((_w0) => `0${_w0}& b%c`)(""), ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("")),
 	a1: /*@__PURE__*/ ((_w0, _w1) => `a1 !;${_w0};${_w1}`)(/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $template$1)
 });

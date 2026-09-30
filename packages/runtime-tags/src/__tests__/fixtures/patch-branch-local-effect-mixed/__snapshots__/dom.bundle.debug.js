@@ -4,7 +4,7 @@ const $walks = " b";
 const $setup = () => {};
 const $if_content2__input_suffix__OR__label__script = _script("__tests__/template.marko_2_input_suffix#0:6_label#1:2", ($scope) => document.querySelector("main").dataset.label = $scope._.label + $scope._._.input_suffix);
 const $if_content2__input_suffix__OR__label = /*@__PURE__*/ _or(0, $if_content2__input_suffix__OR__label__script);
-const $if_content2__input_suffix = /*@__PURE__*/ _closure_get("input_suffix/9", $if_content2__input_suffix__OR__label, ($scope) => $scope._._, "__tests__/template.marko_2_input_suffix#0:6/subscribe");
+const $if_content2__input_suffix = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_suffix#0:6/init", "input_suffix/9", $if_content2__input_suffix__OR__label, ($scope) => $scope._._, "__tests__/template.marko_2_input_suffix#0:6/subscribe");
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_suffix($scope);
 	$if_content2__label._($scope);

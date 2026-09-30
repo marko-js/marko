@@ -26,11 +26,14 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 					_html(`<b>${_patch_text($scope4_id, "#text/0", a, void 0, $scope0_reason, 3)}</b>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "4:8");
 				}, 1, "__tests__/template.marko_4*content");
+				_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_a#0:4/init");
 				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_a#0:4/subscribe", 0);
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 		_html(`<span>${_patch_text($scope1_id, "#text/1", input.label, void 0, $scope0_reason, 4)}</span>`);
+		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:3/init");
+		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:5/init");
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_show#0:3/subscribe"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_1_input_label#0:5/subscribe");
 	}, () => {
 		const $scope3_reason = _scope_reason();
@@ -39,9 +42,9 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
-		input_a: _source_if($scope0_reason, 2) && input.a,
-		"ClosureScopes:input_a/7": $input_a__closures,
-		"ClosureScopes:input_show/6": $input_show__closures,
-		"ClosureScopes:input_label/8": $input_label__closures
+		input_a: _unfilled_if($scope0_reason, 2) && input.a,
+		"ClosureScopes:input_a/7": _unfilled_if($scope0_reason, 3) && $input_a__closures,
+		"ClosureScopes:input_show/6": _unfilled_if($scope0_reason, 2) && $input_show__closures,
+		"ClosureScopes:input_label/8": _unfilled_if($scope0_reason, 4) && $input_label__closures
 	}, "__tests__/template.marko", 0, { input_a: ["input.a"] });
 }, 1, 0);

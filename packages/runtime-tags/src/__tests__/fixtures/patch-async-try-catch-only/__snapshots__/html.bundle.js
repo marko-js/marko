@@ -12,12 +12,13 @@ var template_default = _template_patch("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "a", input.message, void 0, $scope0_reason, 0)}</em>`);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a1");
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a2");
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>bad</em>");
-	}, void 0, "a2", "a0");
+	}, void 0, "a3", "a0");
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { e: $input_message__closures });
+	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && $input_message__closures });
 }, 1, 0);

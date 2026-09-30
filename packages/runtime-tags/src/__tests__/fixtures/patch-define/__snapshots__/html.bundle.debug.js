@@ -20,8 +20,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	thing.content({ x: input.n });
 	_html(`<div${_patch_attr_class($scope0_id, "#div/1", [input.cls, { on: input.on }], $scope0_reason, 0)}${_patch_attr_style($scope0_id, "#div/1", { color: input.color }, $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "#div/1")}`);
 	$scope0_page && _scope($scope0_id, {
-		input_cls: _source_if($scope0_reason, 4) && input.cls,
-		input_on: _source_if($scope0_reason, 3) && input.on,
+		input_cls: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.cls,
+		input_on: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.on,
 		"ClosureScopes:input_title/10": $input_title__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

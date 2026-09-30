@@ -8,6 +8,9 @@ const click = (document: Document) => {
 // nothing about them is per render, so patches and constructs read them freely.
 export const config: TestConfig = {
   patches: true,
+  // Renders server module state (a static counter), which a client render
+  // counts on its own.
+  skip_csr: true,
   steps: [
     { title: "hi", show: false },
     click,

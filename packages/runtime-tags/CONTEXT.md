@@ -228,6 +228,30 @@ it whole. The same word as a normal render's flush; the rerender itself is
 the patch.
 _Avoid_: frame
 
+**Shell**:
+A body a patch may create, as its id with setup ids, walks and markup
+(`id inits…!effects…;walks;template`): registered by the server module at
+load and shipped in the first flush that creates from it, so the client
+creates the body without bundling its template.
+_Avoid_: skeleton, template string
+
+**Held-shell token**:
+The request's `x-marko-patch` value after the build id: the shells the page
+already holds, as the last response's closing token named them, so a flush
+ships only new ones. It may forget shells (they ship again), never claim one
+the page lacks.
+_Avoid_: shell cache, shell manifest
+
+**Setup envelope**:
+A partial's `PatchKey.Setup` entries: what a created scope gets in place of
+its renderer's setup (seeds, bindings, init ids). It applies only to a scope
+its flush created; a paired scope ignores it.
+_Avoid_: seed block, init payload
+
+**Held flush**:
+A flush waiting for its lazy modules to register (`patch-ready`); later
+flushes of the response queue behind it, and a rejected one is discarded.
+
 **Upstream of structure**:
 A root param whose reads sit upstream of a branch or loop, in its template or
 in a child it is upstream of: state in the call site's expressions (those at

@@ -25,7 +25,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__a($scope, 
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<i>loading</i>");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<b> </b>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_a = /*@__PURE__*/ _closure_get("input_a/7", ($scope) => $try_content__await_promise($scope, $scope._.input_a), 0, "__tests__/template.marko_1_input_a#0:5/subscribe");
+const $try_content__input_a = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_a#0:5/init", "input_a/7", ($scope) => $try_content__await_promise($scope, $scope._.input_a), 0, "__tests__/template.marko_1_input_a#0:5/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_a($scope);
 	$try_content__input_b($scope);
@@ -36,7 +36,7 @@ const $try_content__setup = ($scope) => {
 };
 const $await_content2 = /*@__PURE__*/ _await_content("#text/3", "<em> </em>", "D ");
 const $try_content__await_promise2 = /*@__PURE__*/ _await_promise("#text/3", $await_content2__$params);
-const $try_content__input_b = /*@__PURE__*/ _closure_get("input_b/8", ($scope) => $try_content__await_promise2($scope, $scope._.input_b), 0, "__tests__/template.marko_1_input_b#0:6/subscribe");
+const $try_content__input_b = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_1_input_b#0:6/init", "input_b/8", ($scope) => $try_content__await_promise2($scope, $scope._.input_b), 0, "__tests__/template.marko_1_input_b#0:6/subscribe");
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!><!><!>", "b%b%/&b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

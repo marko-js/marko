@@ -40,6 +40,7 @@ var child_default = _template_patch("b", (input) => {
 			_html("content");
 		}, $scope1_id), void 0, void 0, _patch_dynamic_tag($scope1_id, "a", $tag, $input2, "b0", "b3", $scope0_reason, 0));
 		_var($scope1_id, "b", $inputa11yTextbutton_scope, "b3");
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b4");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			c: $btn,
 			_: _scope_with_id($scope0_id)

@@ -33,5 +33,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/4", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { label: _source_if($scope0_reason, 1) && label }, "__tests__/template.marko", 0, { label: "3:8" });
+	$scope0_page && _scope($scope0_id, { label: _unfilled_if($scope0_reason, 1) && label }, "__tests__/template.marko", 0, { label: "3:8" });
 }, 1, 0);

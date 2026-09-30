@@ -3,7 +3,7 @@ _shells({
 	a0: "a0,<span>ok</span>",
 	a1: "a1,<span>ok</span>",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !a7;D%b D ;<main><!><button> </button></main>"
+	a: "a !a8;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_detail = _source_guard($scope0_reason, 0), $si__input_detail = _source_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -19,7 +19,8 @@ var template_default = _template_patch("a", (input) => {
 			_scope_id();
 			_html("<span>ok</span>");
 		}, 1, "a0");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0);
+		_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "a5");
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
 		$scope0_page && _resume_branch($scope3_id);
 	}, void 0, () => {
 		_scope_reason();
@@ -37,13 +38,13 @@ var template_default = _template_patch("a", (input) => {
 		}, $scope1_id, "a", $sg__input_detail, $sg__input_detail, $sg__input_detail, 0, 1);
 		_subscribe($si__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4", $sg__input_detail);
 		$sg__input_detail || _resume_branch($scope1_id);
-	}, void 0, "a6", "a2");
+	}, void 0, "a7", "a2");
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a7");
+	_script($scope0_id, "a8");
 	$scope0_page ? _scope($scope0_id, {
 		f: input.detail,
 		h: count,
 		i: $input_detail__closures,
-		j: $input_promise__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a8", input.detail);
+		j: _unfilled_if($scope0_reason, 1) && $input_promise__closures
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a9", input.detail);
 }, 1, 0);

@@ -4,7 +4,7 @@ const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content(0);
 
 // template.marko
 const $for_content__input_title__OR__item = /*@__PURE__*/ _or(3, ($scope) => _text($scope.a, $scope._._._.e + ":" + $scope.c));
-const $for_content__input_title = /*@__PURE__*/ _fill_join_closure("a2", 4, /*@__PURE__*/ _closure_get(6, $for_content__input_title__OR__item, ($scope) => $scope._._._, "a7"), 0);
+const $for_content__input_title = /*@__PURE__*/ _fill_join_closure("a2", 4, _closure_get(6, $for_content__input_title__OR__item, ($scope) => $scope._._._, "a5"), 0);
 const $for_content__setup = $for_content__input_title;
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__input_title__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);

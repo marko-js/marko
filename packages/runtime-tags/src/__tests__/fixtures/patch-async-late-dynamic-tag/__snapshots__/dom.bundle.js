@@ -10,4 +10,4 @@ const $inputas_content__setup = ($scope) => {
 };
 const $inputas_content = _content$1("a4", "<!><!><!>", "b%", $inputas_content__setup);
 _content_resume($inputas_content);
-const $setup__script = _script("a6", ($scope) => _on($scope.c, "click", function() {}));
+const $setup__script = _script("a7", ($scope) => _on($scope.c, "click", function() {}));

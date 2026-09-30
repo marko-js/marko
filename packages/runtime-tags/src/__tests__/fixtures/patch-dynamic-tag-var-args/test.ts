@@ -7,6 +7,8 @@ const click = (document: Document) => {
 // A server-owned dynamic tag with arguments and a tag variable.
 export const config: TestConfig = {
   patches: true,
+  csr_divergence:
+    "Re-applying a paired dynamic tag's args resets the child's `<let>` that a client render keeps.",
   steps: [
     { on: true, start: 1 },
     click,

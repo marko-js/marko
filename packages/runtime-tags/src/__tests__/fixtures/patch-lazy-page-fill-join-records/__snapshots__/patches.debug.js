@@ -10,20 +10,28 @@
             "PatchChild:#childScope/1": {
               "PatchLoop:#text/0": [{
                 "PatchChild:#childScope/0": {
-                  "PatchText:#text/0": "1",
+                  "PatchSetup:": {
+                    "PatchText:#text/0": "1"
+                  },
                   "PatchDynamicTag:#text/1": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content",
                   "PatchChild:BranchScopes:#text/1": {
                     "PatchText:#text/0": "b1",
-                    "PatchText:#text/2": "1"
+                    "PatchSetup:": {
+                      "PatchText:#text/2": "1"
+                    }
                   }
                 }
               }, {
                 "PatchChild:#childScope/0": {
-                  "PatchText:#text/0": "2",
+                  "PatchSetup:": {
+                    "PatchText:#text/0": "2"
+                  },
                   "PatchDynamicTag:#text/1": _.a,
                   "PatchChild:BranchScopes:#text/1": {
                     "PatchText:#text/0": "b1",
-                    "PatchText:#text/2": "2"
+                    "PatchSetup:": {
+                      "PatchText:#text/2": "2"
+                    }
                   }
                 }
               }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell"],
@@ -95,20 +103,28 @@
             "PatchChild:#childScope/1": {
               "PatchLoop:#text/0": [{
                 "PatchChild:#childScope/0": {
-                  "PatchText:#text/0": "1",
+                  "PatchSetup:": {
+                    "PatchText:#text/0": "1"
+                  },
                   "PatchDynamicTag:#text/1": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_2*content",
                   "PatchChild:BranchScopes:#text/1": {
                     "PatchText:#text/0": "b2",
-                    "PatchText:#text/2": "1"
+                    "PatchSetup:": {
+                      "PatchText:#text/2": "1"
+                    }
                   }
                 }
               }, {
                 "PatchChild:#childScope/0": {
-                  "PatchText:#text/0": "2",
+                  "PatchSetup:": {
+                    "PatchText:#text/0": "2"
+                  },
                   "PatchDynamicTag:#text/1": _.a,
                   "PatchChild:BranchScopes:#text/1": {
                     "PatchText:#text/0": "b2",
-                    "PatchText:#text/2": "2"
+                    "PatchSetup:": {
+                      "PatchText:#text/2": "2"
+                    }
                   }
                 }
               }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell"],

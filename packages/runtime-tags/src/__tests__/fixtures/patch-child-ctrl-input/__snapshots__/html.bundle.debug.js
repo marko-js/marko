@@ -5,8 +5,11 @@ _shells({ "__tests__/tags/field/index.marko": "__tests__/tags/field/index.marko 
 var field_default = _template_patch("__tests__/tags/field/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", input.valueChange, 0, 0)}${_patch_control($scope0_id, "#input/0", 2, input.value, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", input.value, void 0, $scope0_reason, 1)}</em>`);
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange)}${_patch_bind($scope0_id, "ControlledHandler:#input/0", input.valueChange, $scope0_reason, 0)}${_patch_control($scope0_id, "#input/0", 2, input.value, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", input.value, void 0, $scope0_reason, 1)}</em>`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
+	_patch_write($scope0_id, "input_value", input.value, 1);
+	_patch_write($scope0_id, "input_valueChange", input.valueChange, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/field/index.marko_0_input_value#4_input_valueChange#5/init");
 	$scope0_page && _scope($scope0_id, {
 		input_value: _source_if($scope0_reason, 2) && input.value,
 		input_valueChange: _source_if($scope0_reason, 0) && input.valueChange

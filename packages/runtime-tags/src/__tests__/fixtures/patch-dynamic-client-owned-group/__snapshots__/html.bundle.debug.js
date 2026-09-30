@@ -21,6 +21,9 @@ var picker_default = _template_patch("__tests__/tags/picker/index.marko", (input
 	const $tag = input.on ? card_default : null;
 	const $input2 = { label: input.label };
 	_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, $sg__input_on__OR__input_label, _patch_dynamic_tag($scope0_id, "#text/0", $tag, $input2, 0, 0, $scope0_reason, 0));
+	_patch_write($scope0_id, "input_on", input.on, 1);
+	_patch_write($scope0_id, "input_label", input.label, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/picker/index.marko_0_input_on#3_input_label#4/init");
 	$scope0_page && _scope($scope0_id, {
 		input_on: _source_if($scope0_reason, 2) && input.on,
 		input_label: _source_if($scope0_reason, 1) && input.label

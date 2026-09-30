@@ -4,5 +4,7 @@ import type { TestConfig } from "../../main.test";
 // collector) is server-owned: each flush ships the branch as rendered.
 export const config: TestConfig = {
   patches: true,
+  // Renders the whole document, which a client render cannot mount.
+  skip_csr: true,
   steps: [{ items: ["a"] }, { items: ["a", "b"] }, { items: [] }],
 };

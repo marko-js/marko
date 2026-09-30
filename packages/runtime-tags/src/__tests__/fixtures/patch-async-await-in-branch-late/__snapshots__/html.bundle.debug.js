@@ -25,5 +25,5 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { input_promise: _source_if($scope0_reason, 1) && input.promise }, "__tests__/template.marko", 0, { input_promise: ["input.promise"] });
+	$scope0_page && _scope($scope0_id, { input_promise: _unfilled_if($scope0_reason, 1) && input.promise }, "__tests__/template.marko", 0, { input_promise: ["input.promise"] });
 }, 1, 0);

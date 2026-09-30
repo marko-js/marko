@@ -16,7 +16,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = () => {};
-const $card_content__input_note = /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:5/subscribe");
+const $card_content__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_note#0:5/init", "input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:5/subscribe");
 const $card_content__setup = $card_content__input_note;
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $card_content__setup);
 const $if_content__input_title = /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_title$1($scope["#childScope/0"], $scope._.input_title));

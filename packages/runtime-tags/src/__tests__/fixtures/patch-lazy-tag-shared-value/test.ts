@@ -13,6 +13,9 @@ const click = (document: Document) => {
 // flush, one tree, so the reference resolves where it is written.
 export const config: TestConfig = {
   patches: true,
+  // Its lazy child loads on a document click trigger, which a client
+  // render (loading on render) does not have.
+  skip_csr: true,
   equivalent: false,
   skip_fresh_render: true,
   steps: [{ label: "a" }, load, { label: "b" }, wait, click],

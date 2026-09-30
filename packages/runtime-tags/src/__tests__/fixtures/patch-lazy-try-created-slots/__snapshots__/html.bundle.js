@@ -18,7 +18,8 @@ var child_default = _template_patch("a", (input) => {
 			_html(`<em>${_patch_text($scope4_id, "a", v, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3", 0);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a3");
+		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -29,8 +30,8 @@ var child_default = _template_patch("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_resume($scope3_id, "a", e.message, $sg__e_message)}</b>`);
 		_source_if($scope3_reason, 0) && _scope($scope3_id, {});
-	}, "a4", "a5", "a2");
-	$scope0_page && _scope($scope0_id, { e: $input_p__closures });
+	}, "a5", "a6", "a2", void 0, 1);
+	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && $input_p__closures });
 }, 0, 0);
 
 // template.marko

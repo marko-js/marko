@@ -18,8 +18,8 @@ var card_default = _template_patch("b", (input) => {
 	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["b0"], $scope0_reason, 2);
 	_html(`</section>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		e: input.title,
-		f: input.note
+		e: _unfilled_if($scope0_reason, 2) && input.title,
+		f: _unfilled_if($scope0_reason, 2) && input.note
 	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "b1", input.title), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "b2", input.note));
 }, 0, 0);
 

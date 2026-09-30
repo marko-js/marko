@@ -16,5 +16,5 @@ var template_default = _template_patch("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["a0"], $scope0_reason, 2);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { g: _source_if($scope0_reason, 2) && input.value });
+	$scope0_page && _scope($scope0_id, { g: _unfilled_if($scope0_reason, 2) && input.value });
 }, 1, 0);

@@ -3,7 +3,8 @@ const $template = "<main></main>";
 const $walks = " b";
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D l%;<p> </p><!><!>"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D l%;<p> </p><!><!>",
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell !__tests__/template.marko_2_label#1:2,<span>inner</span>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_inner = _source_guard($scope0_reason, 4), $sg__input_show = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
@@ -35,7 +36,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $sg__input_show)}`);
 	$scope0_page && _scope($scope0_id, {
 		input_title: input.title,
-		input_inner: input.inner
+		input_inner: _unfilled_if($scope0_reason, 2) && input.inner
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_inner: ["input.inner"]

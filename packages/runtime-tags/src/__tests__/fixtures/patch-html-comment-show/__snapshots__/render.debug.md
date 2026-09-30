@@ -46,16 +46,14 @@ UPDATE: #comment "two 0" => "two 1"
 # Update `{"label":"three","on":false}`
 ```html
 <!--three 1-->
-<p>
-  three
-</p>
 <button>
   +
 </button>
 ```
 ## Change
 ```
-UPDATE: p::text "two" => "three"
+UPDATE: #document-fragment > p::text "two" => "three"
+REMOVE: #comment + p
 UPDATE: #comment "two 1" => "three 1"
 ```
 
@@ -65,9 +63,6 @@ document.querySelector("button").click();
 ```
 ```html
 <!--three 2-->
-<p>
-  three
-</p>
 <button>
   +
 </button>
@@ -89,6 +84,6 @@ UPDATE: #comment "three 1" => "three 2"
 ```
 ## Change
 ```
-UPDATE: p::text "three" => "four"
+INSERT: #comment + p
 UPDATE: #comment "three 2" => "four 2"
 ```

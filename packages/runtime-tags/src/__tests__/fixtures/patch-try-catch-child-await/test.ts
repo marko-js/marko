@@ -5,6 +5,9 @@ import type { TestConfig } from "../../main.test";
 // entries carry their payload and the rebuild after the catch creates it.
 export const config: TestConfig = {
   patches: true,
+  // A patch re-renders a caught `<try>` from the server, which recovers;
+  // a client render keeps its `@catch`.
+  skip_csr: true,
   steps: () => [
     { promise: Promise.resolve("one") },
     { promise: Promise.reject(new Error("boom")) },

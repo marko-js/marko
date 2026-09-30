@@ -7,6 +7,6 @@
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-global-derived/template.marko_3*content"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-global-derived/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-global-derived/template.marko_2*content"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-global-derived/template.marko_fill0": "bmce!",
-  "PatchCatch:#text/0": [new Error("boom")]
+  "PatchCatch:#text/0": []
 }]
 "BAEB"

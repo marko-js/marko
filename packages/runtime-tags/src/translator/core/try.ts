@@ -11,7 +11,7 @@ import { WalkCode } from "../../common/types";
 import { getTagName } from "../util/get-tag-name";
 import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
-import { boundaryAlwaysPairs } from "../util/patch/structure";
+import { boundaryAlwaysPairs, someBindingRead } from "../util/patch/structure";
 import {
   type Binding,
   BindingType,
@@ -192,6 +192,10 @@ export default {
                 isPatch() &&
                   !catchTag &&
                   boundaryAlwaysPairs(bodySection) &&
+                  t.numericLiteral(1),
+                isPatch() &&
+                  !!catchSection?.params &&
+                  someBindingRead(catchSection.params, () => true) &&
                   t.numericLiteral(1),
               ),
             ),

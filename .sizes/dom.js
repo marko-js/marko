@@ -1,4 +1,4 @@
-// size: 29614 (min) 10878 (brotli)
+// size: 29795 (min) 10943 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -727,7 +727,7 @@ function _fill_let(key, id, fn, fillFn) {
   return fill(key, _let(id, fn), id, fillFn);
 }
 function _fill_let_change(key, id, fn, fillFn) {
-  return fill(key, _let_change(id, fn), id, fillFn);
+  return fill(key, _let_change(id, fn), id, fillFn ?? fn ?? 0);
 }
 function _fill_const(key, id, fn, fillFn) {
   return fill(key, _const(id, fn), id, fillFn);
@@ -742,6 +742,12 @@ function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
           : (scope[~id] = defaultPending)
         : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
     }
+  );
+}
+function _init_or(initId, id, fn, defaultPending, scopeIdAccessor) {
+  return (
+    (_resumed[initId] = (scope) => queueRender(scope, fn, id)),
+    _or(id, fn, defaultPending, scopeIdAccessor)
   );
 }
 function _for_closure(ownerLoopNodeAccessor, fn) {
@@ -857,6 +863,25 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
 }
 function _init_closure_get(initId, valueAccessor, fn, getOwnerScope, resumeId) {
   return (_resumed[initId] = _closure_get(valueAccessor, fn, getOwnerScope, resumeId));
+}
+function _subscribe_closure_get(initId, valueAccessor, fn, getOwnerScope, resumeId) {
+  let closureSignal = _closure_get(valueAccessor, fn, getOwnerScope, resumeId);
+  return (
+    (_resumed[initId] = (scope) =>
+      queueRender(
+        scope,
+        () => {
+          (subscribeToScopeSet(
+            getOwnerScope ? getOwnerScope(scope) : scope._,
+            closureSignal.a,
+            scope,
+          ),
+            closureSignal(scope, 1));
+        },
+        -1,
+      )),
+    closureSignal
+  );
 }
 function _init_if_closure(initId, ownerConditionalNodeAccessor, branch, fn) {
   return (_resumed[initId] = _if_closure(ownerConditionalNodeAccessor, branch, fn));
@@ -2222,13 +2247,14 @@ function commitFlush() {
 //#region packages/runtime-tags/dist/dom.mjs
 let globalJoins = {};
 function _global_join(key, id, join) {
-  return ((globalJoins[key] ??= {})[id] = (scope, value) => {
+  let wrapped = ((globalJoins[key] ??= {})[id] = (scope, value) => {
     (join(scope, value), subscribeToScopeSet(scope.$, "B" + id, scope));
   });
+  return ((wrapped._ = join._), wrapped);
 }
 function _global_script(id, fn) {
   let effect = (_resumed[id] = (scope) => {
-    let ran = (scope.AA ??= {});
+    let ran = (scope.AB ??= {});
     ran[id] !== runId && ((ran[id] = runId), fn(scope));
   });
   return (scope) => queueEffect(scope, effect);

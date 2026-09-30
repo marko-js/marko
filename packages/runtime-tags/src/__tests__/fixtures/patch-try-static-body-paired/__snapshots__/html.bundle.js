@@ -26,7 +26,7 @@ var template_default = _template_patch("a", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<s>${_text_resume($scope4_id, "a", e.message, $sg__e_message)}</s>`);
 		_source_if($scope4_reason, 0) && _scope($scope4_id, {});
-	}, void 0, "a3", "a0");
+	}, void 0, "a3", "a0", void 0, 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {});
 }, 1, 0);

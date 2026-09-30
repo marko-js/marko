@@ -30,6 +30,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_scope($scope4_id, {}, "__tests__/template.marko", "5:8");
 		}, 1, "__tests__/template.marko_4*content", 1);
 		_html("</div>");
+		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_fast#0:4/init");
+		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_slow#0:5/init");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_fast#0:4/subscribe", 0), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_slow#0:5/subscribe", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
@@ -40,7 +42,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html(`<button>x</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {
-		"ClosureScopes:input_fast/6": $input_fast__closures,
-		"ClosureScopes:input_slow/7": $input_slow__closures
+		"ClosureScopes:input_fast/6": _unfilled_if($scope0_reason, 1) && $input_fast__closures,
+		"ClosureScopes:input_slow/7": _unfilled_if($scope0_reason, 2) && $input_slow__closures
 	}, "__tests__/template.marko", 0);
 }, 1, 0);

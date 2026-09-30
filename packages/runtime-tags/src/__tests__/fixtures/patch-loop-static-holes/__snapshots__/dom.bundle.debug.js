@@ -3,7 +3,7 @@ const $template = "<ul></ul><ol></ol><!><!>";
 const $walks = " b b%c";
 const $for_content3__x = ($scope, x) => _text($scope["#text/0"], x);
 const $for_content3__$params = ($scope, $params3) => $for_content3__x($scope, $params3[0]);
-const $for_content2__input_note = /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/1"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_3_input_note#0:5/subscribe");
+const $for_content2__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_note#0:5/init", "input_note/7", ($scope) => _text($scope["#text/1"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_3_input_note#0:5/subscribe");
 const $for_content2__setup = $for_content2__input_note;
 const $for_content2__x = ($scope, x) => _text($scope["#text/0"], x);
 const $for_content2__$params = ($scope, $params4) => $for_content2__x($scope, $params4[0]);

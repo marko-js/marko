@@ -19,8 +19,8 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchText:#text/0": "y",
       "PatchChild:#childScope/1": {
-        "PatchAttr:#div/0 class": "c",
         "PatchSetup:": {
+          "PatchAttr:#div/0 class": "c",
           "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-async-shared-value/child.marko_0_input_name#3_input_item#4"
         },
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-async-shared-value/child.marko_0_input_name#3_input_item#4": _.a,

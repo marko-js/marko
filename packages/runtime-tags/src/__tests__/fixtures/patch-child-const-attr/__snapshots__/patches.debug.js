@@ -2,7 +2,9 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-child-const-attr/tags/badge/index.marko_1*shell;D ;<b> </b>`, {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
-      "PatchText:#text/0": "hi"
+      "PatchSetup:": {
+        "PatchText:#text/0": "hi"
+      }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-const-attr/tags/badge/index.marko_1*shell"],
     "PatchText:#text/1": "b"
   }

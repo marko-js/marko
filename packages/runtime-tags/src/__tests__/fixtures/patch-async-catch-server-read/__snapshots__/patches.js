@@ -2,9 +2,9 @@
 [`a2;b%;<!><!><!>`, `a0;D ;<em> </em>`, {
   cAa: [{
     pa: "a0"
-  }, "a2", "a5"],
-  va6: "second",
-  ka: [new Error("boom")]
+  }, "a2", "a6"],
+  va7: "second",
+  ka: []
 }]
 "BAEB"
 
@@ -12,7 +12,7 @@
 {
   cAa: [{
     pa: "a0"
-  }, "a2", "a5"],
-  va6: "third",
-  ka: [new Error("bang")]
+  }, "a2", "a6"],
+  va7: "third",
+  ka: []
 }

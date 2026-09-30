@@ -22,7 +22,8 @@ var tabs_default = _template_patch("__tests__/tags/tabs/index.marko", (input) =>
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $sg__input_tab, $sg__input_tab, void 0, void 0, ["__tests__/tags/tabs/index.marko_1*shell", "__tests__/tags/tabs/index.marko_2*shell"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, { input_tab_on: input.tab?.on }, "__tests__/tags/tabs/index.marko", 0, { input_tab_on: ["input.tab.on"] });
+	_patch_write($scope0_id, "input_tab_on", input.tab?.on, 1);
+	$scope0_page && _scope($scope0_id, { input_tab_on: _unfilled_if($scope0_reason, 0) && input.tab?.on }, "__tests__/tags/tabs/index.marko", 0, { input_tab_on: ["input.tab.on"] });
 }, 0, 0);
 
 // template.marko

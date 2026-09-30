@@ -13,6 +13,8 @@ const click = (document: Document) => {
 // carrying a handler reference that must resolve for the later line.
 export const config: TestConfig = {
   patches: true,
+  csr_divergence:
+    "A patched spread keeps attributes the client set, which a client render's spread removes.",
   steps: () => [
     { first: Promise.resolve("a1"), second: Promise.resolve("b1") },
     click,

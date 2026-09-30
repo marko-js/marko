@@ -5,16 +5,16 @@ const $setup = () => {};
 _load_lazy("ready:__tests__/layout.marko", () => import("./layout.mjs").then(() => {}));
 _load_lazy("ready:__tests__/page-a.marko", () => import("./page-a.mjs").then(() => {}));
 _load_lazy("ready:__tests__/page-b.marko", () => import("./page-b.mjs").then(() => {}));
-const $else_content2__input_note = /*@__PURE__*/ _closure_get("input_note/10", 0, ($scope) => $scope._._._, "__tests__/template.marko_4_input_note#0:6/subscribe");
+const $else_content2__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_4_input_note#0:6/init", "input_note/10", 0, ($scope) => $scope._._._, "__tests__/template.marko_4_input_note#0:6/subscribe");
 const $else_content2__setup = $else_content2__input_note;
-const $if_content__input_wide = /*@__PURE__*/ _closure_get("input_wide/9", 0, ($scope) => $scope._._._, "__tests__/template.marko_3_input_wide#0:5/subscribe");
+const $if_content__input_wide = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_wide#0:5/init", "input_wide/9", 0, ($scope) => $scope._._._, "__tests__/template.marko_3_input_wide#0:5/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_wide($scope);
 	$if_content__input_note($scope);
 };
-const $if_content__input_note = /*@__PURE__*/ _closure_get("input_note/10", 0, ($scope) => $scope._._._, "__tests__/template.marko_3_input_note#0:6/subscribe");
+const $if_content__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_note#0:6/init", "input_note/10", 0, ($scope) => $scope._._._, "__tests__/template.marko_3_input_note#0:6/subscribe");
 const $Layout_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $if_content__setup, "<!><!><!>", "b%/&", $else_content2__setup);
-const $Layout_content__input_page = /*@__PURE__*/ _closure_get("input_page/7", ($scope) => $Layout_content__if($scope, $scope._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_page#0:3/subscribe");
+const $Layout_content__input_page = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_page#0:3/init", "input_page/7", ($scope) => $Layout_content__if($scope, $scope._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_page#0:3/subscribe");
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $Layout_content__setup);
 const $else_content__input_list = /*@__PURE__*/ _if_closure("#text/0", 1);
@@ -96,13 +96,13 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // page-b.marko
 const $template = "<h1>B</h1><!><button> </button>";
 const $walks = "b%b D l";
-const $card_content__count = /*@__PURE__*/ _init_closure_get("__tests__/page-b.marko_2_count#0:6/init", "count/8", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/page-b.marko_2_count#0:6/subscribe");
+const $card_content__count = _init_closure_get("__tests__/page-b.marko_2_count#0:6/init", "count/8", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/page-b.marko_2_count#0:6/subscribe");
 const $card_content__setup = ($scope) => {
 	$card_content__count($scope);
 	$card_content__p($scope);
 	$card_content__item($scope);
 };
-const $card_content__p = /*@__PURE__*/ _closure_get("p/9", ($scope) => _text($scope["#text/0"], $scope._._.p), ($scope) => $scope._._, "__tests__/page-b.marko_2_p#0:7/subscribe");
+const $card_content__p = /*@__PURE__*/ _subscribe_closure_get("__tests__/page-b.marko_2_p#0:7/init", "p/9", ($scope) => _text($scope["#text/0"], $scope._._.p), ($scope) => $scope._._, "__tests__/page-b.marko_2_p#0:7/subscribe");
 const $card_content__item = /*@__PURE__*/ _closure_get("item/10", ($scope) => _text($scope["#text/2"], $scope._.item));
 const $card_content = /*@__PURE__*/ _content("__tests__/page-b.marko_2*content", "<span><!>/<!>/<!></span>", "D%c%c%", $card_content__setup);
 const $for_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $card_content($scope));

@@ -16,13 +16,14 @@
 "BAE"
 
 // PATCH holding BAE
-[`b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>`, {
+[`b0 !b2;Db%l ;<span>Seen <!></span><button>+</button>`, {
   ta: "Store!",
   lc: [{
     ca: {
       ba: [{
+        vb1: 0,
         s: {
-          vb2: 0
+          vb1: 0
         },
         dd: ["a0", 3]
       }, "b0"],
@@ -31,8 +32,9 @@
   }, {
     ca: {
       ba: [{
+        vb1: 0,
         s: {
-          vb2: 0
+          vb1: 0
         },
         dd: ["a0", 3]
       }, "b0"],

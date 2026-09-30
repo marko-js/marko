@@ -1,7 +1,8 @@
 // template.marko
 _shells({
 	a: "a; ;<main></main>",
-	a0: "a0;D l%;<p> </p><!><!>"
+	a0: "a0;D l%;<p> </p><!><!>",
+	a1: "a1 !a2,<span>inner</span>"
 });
 var template_default = _template_patch("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_inner = _source_guard($scope0_reason, 4), $sg__input_show = _source_guard($scope0_reason, 2), $scope0_page = _page_render();
@@ -33,6 +34,6 @@ var template_default = _template_patch("a", (input) => {
 	_html(`</main>${_el_resume($scope0_id, "a", $sg__input_show)}`);
 	$scope0_page && _scope($scope0_id, {
 		e: input.title,
-		f: input.inner
+		f: _unfilled_if($scope0_reason, 2) && input.inner
 	});
 }, 1, 0);

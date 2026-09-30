@@ -77,7 +77,11 @@ export function compileFileSync(filename, config) {
 export function getRuntimeEntryFiles(output, requestedTranslator) {
   const translator = tryLoadTranslator(requestedTranslator);
   if (translator && translator.getRuntimeEntryFiles) {
-    return translator.getRuntimeEntryFiles(output, shouldOptimize());
+    return translator.getRuntimeEntryFiles(
+      output,
+      shouldOptimize(),
+      globalConfig.patches,
+    );
   }
 
   return [];

@@ -6,7 +6,9 @@
         "PatchChild:#childScope/0": {
           "PatchDynamicTag:#text/0": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
-            "PatchText:#text/0": "a",
+            "PatchSetup:": {
+              "PatchText:#text/0": "a"
+            },
             "PatchBranch:#text/1": 0
           }
         }
@@ -14,7 +16,9 @@
         "PatchChild:#childScope/0": {
           "PatchDynamicTag:#text/0": _.a,
           "PatchChild:BranchScopes:#text/0": {
-            "PatchText:#text/0": "b",
+            "PatchSetup:": {
+              "PatchText:#text/0": "b"
+            },
             "PatchBranch:#text/1": [{
               "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell"]
             }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell"]
@@ -34,7 +38,9 @@
         "PatchChild:#childScope/0": {
           "PatchDynamicTag:#text/0": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_2*content",
           "PatchChild:BranchScopes:#text/0": {
-            "PatchText:#text/0": "a",
+            "PatchSetup:": {
+              "PatchText:#text/0": "a"
+            },
             "PatchBranch:#text/1": 0
           }
         }
@@ -42,7 +48,9 @@
         "PatchChild:#childScope/0": {
           "PatchDynamicTag:#text/0": _.a,
           "PatchChild:BranchScopes:#text/0": {
-            "PatchText:#text/0": "b",
+            "PatchSetup:": {
+              "PatchText:#text/0": "b"
+            },
             "PatchBranch:#text/1": [{
               "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_4*shell"
             }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell"]

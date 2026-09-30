@@ -6,9 +6,12 @@ var combo_default = _template_patch("__tests__/tags/combo/index.marko", (input) 
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label + input.qty, void 0, $scope0_reason, 0)}</p>`);
+	_patch_write($scope0_id, "input_label", input.label, 1);
+	_patch_write($scope0_id, "input_qty", input.qty, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/combo/index.marko_0_input_label#3_input_qty#4/init");
 	$scope0_page && _scope($scope0_id, {
-		input_label: _source_if($scope0_reason, 2) && input.label,
-		input_qty: _source_if($scope0_reason, 1) && input.qty
+		input_label: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.label,
+		input_qty: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.qty
 	}, "__tests__/tags/combo/index.marko", 0, {
 		input_label: ["input.label"],
 		input_qty: ["input.qty"]

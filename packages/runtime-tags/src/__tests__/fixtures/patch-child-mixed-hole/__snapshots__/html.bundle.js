@@ -5,9 +5,12 @@ var combo_default = _template_patch("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "a", input.label + input.qty, void 0, $scope0_reason, 0)}</p>`);
+	_patch_write($scope0_id, "d", input.label, 1);
+	_patch_write($scope0_id, "e", input.qty, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b0");
 	$scope0_page && _scope($scope0_id, {
-		d: _source_if($scope0_reason, 2) && input.label,
-		e: _source_if($scope0_reason, 1) && input.qty
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.label,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.qty
 	});
 }, 0, 0);
 

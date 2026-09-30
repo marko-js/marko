@@ -14,6 +14,7 @@
   "PatchText:#text/0": "Store!",
   "PatchChild:#childScope/3": {
     "PatchBranch:#text/0": [{
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_fill1": 0,
       "PatchSetup:": {
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_fill1": 0
       },
@@ -22,6 +23,7 @@
   },
   "PatchChild:#childScope/4": {
     "PatchBranch:#text/0": [{
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_fill1": 0,
       "PatchSetup:": {
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_fill1": 0
       },

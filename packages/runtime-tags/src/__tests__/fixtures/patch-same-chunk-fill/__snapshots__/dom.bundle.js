@@ -8,8 +8,8 @@ const $input_promise__script = _script("b0", ($scope) => {
 });
 
 // template.marko
-const $placeholder_content = _content$1("a4", "<span class=loading>...</span>");
+const $placeholder_content = _content$1("a5", "<span class=loading>...</span>");
 const $count = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
-const $setup__script = _script("a5", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a6", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.h + 1);
 }));

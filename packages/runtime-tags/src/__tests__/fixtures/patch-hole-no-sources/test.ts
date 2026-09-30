@@ -7,6 +7,9 @@ import type { TestConfig } from "../../main.test";
 // paired row from a created one.
 export const config: TestConfig = {
   patches: true,
+  // Renders server module state (a static counter), which a client render
+  // counts on its own.
+  skip_csr: true,
   equivalent: false,
   skip_parity: true,
   skip_fresh_render: true,

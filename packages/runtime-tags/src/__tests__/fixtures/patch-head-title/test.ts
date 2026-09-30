@@ -4,6 +4,8 @@ import type { TestConfig } from "../../main.test";
 // meta's attribute like any element's.
 export const config: TestConfig = {
   patches: true,
+  // Renders the whole document, which a client render cannot mount.
+  skip_csr: true,
   equivalent: false,
   steps: [
     { title: "Cart", description: "your cart", body: "a" },

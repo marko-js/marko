@@ -44,6 +44,7 @@ var child_default = _template_patch("__tests__/tags/child.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $sg__input_show, $sg__input_show, void 0, void 0, ["__tests__/tags/child.marko_2*shell"], $scope0_reason, 0);
+			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_show#0:4/init");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "5:6"));
 			$sg__input_show || _resume_branch($scope1_id);
 		}, $scope0_id) });

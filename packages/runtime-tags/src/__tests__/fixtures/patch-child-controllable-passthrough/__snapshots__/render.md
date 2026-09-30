@@ -54,7 +54,6 @@ REMOVE: main > p + button
 ## Change
 ```
 INSERT: main > p + :is(span, button)
-UPDATE: main > span::text@5 "" => "0"
 ```
 
 # Update

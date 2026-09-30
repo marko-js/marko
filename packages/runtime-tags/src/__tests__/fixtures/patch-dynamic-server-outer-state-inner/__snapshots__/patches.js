@@ -6,6 +6,9 @@
     fb: "^^c1",
     cAb: {
       ca: {
+        s: {
+          ta: "0"
+        },
         fb: "^^c0",
         cAb: {
           ta: "two"
@@ -21,6 +24,9 @@
   fa: [0, 0, "c1"],
   cAa: {
     ca: {
+      s: {
+        ta: "0"
+      },
       fb: "^^c0",
       cAb: {
         ta: "three"
@@ -37,6 +43,9 @@
     fb: "^^c1",
     cAb: {
       ca: {
+        s: {
+          ta: "0"
+        },
         fb: "^^c0",
         cAb: {
           ta: "four"

@@ -15,7 +15,7 @@ var widget_default = _template_patch("b", (input) => {
 _shells({
 	a0: "a0;b%;<!><!><!>",
 	a1: "a1;b%;<!><!><!>",
-	a: /*@__PURE__*/ ((_w0, _w1) => `a !a4;${_w0};${_w1}`)(((_w0) => `D/${_w0}&%b l`)("D%l"), ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($template)),
+	a: /*@__PURE__*/ ((_w0, _w1) => `a !a5;${_w0};${_w1}`)(((_w0) => `D/${_w0}&%b l`)("D%l"), ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($template)),
 	a2: "a2;Db%;<i>B:<!></i>",
 	a3: "a3,<b>A</b>"
 });
@@ -41,6 +41,7 @@ var template_default = _template_patch("a", (input) => {
 			} else if (input.kind === "b") {
 				const $scope2_id = _scope_id();
 				_html(`<i>B:${_patch_text($scope2_id, "a", input.kind, 2, $scope0_reason, 0)}</i>`);
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a4");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_kind__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ci: 1
@@ -81,12 +82,12 @@ var template_default = _template_patch("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
-	_script($scope0_id, "a4");
+	_script($scope0_id, "a5");
 	$scope0_page ? _scope($scope0_id, {
 		g: input.inner,
 		h: open,
 		i: $input_kind__closures,
 		a: _existing_scope($childScope),
 		j: $input_inner__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a5", input.inner);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "a6", input.inner);
 }, 1, () => [widget_default]);

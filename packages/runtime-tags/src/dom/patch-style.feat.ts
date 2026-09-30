@@ -1,8 +1,12 @@
 import { type Accessor, PatchKey } from "../common/types";
 import { _style_rule_item, _style_shell } from "./dom";
-import { patchers } from "./resume";
+import { createPatchers, patchers } from "./resume";
 
-patchers[PatchKey.Style] = (scope, key, value) => {
+createPatchers[PatchKey.Style] = patchers[PatchKey.Style] = (
+  scope,
+  key,
+  value,
+) => {
   const at = key.indexOf(" ");
   const accessor = key.slice(PatchKey.Style.length, at) as Accessor;
   const element = scope[accessor] as HTMLStyleElement;

@@ -9,7 +9,7 @@ var template_default = _template_patch("a", (input) => {
 	const loud = _resume((next) => {
 		document.querySelector("main").dataset.got = next.toUpperCase();
 	}, "a1");
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 1)}</h1><input${_attr_input_value($scope0_id, "b", input.value, input.big ? loud : plain)}${_patch_bind($scope0_id, "Eb", input.big ? loud : plain, 0, 0)}${_patch_control($scope0_id, "b", 2, input.value, $scope0_reason, 0)}>${_el_resume($scope0_id, "b")}</main>`);
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 1)}</h1><input${_attr_input_value($scope0_id, "b", input.value, input.big ? loud : plain)}${_patch_bind($scope0_id, "Eb", input.big ? loud : plain, $scope0_reason, 0)}${_patch_control($scope0_id, "b", 2, input.value, $scope0_reason, 0)}>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
 	$scope0_page && _scope($scope0_id, {
 		f: _source_if($scope0_reason, 2) && input.value,

@@ -39,13 +39,7 @@
 ```
 ## Change
 ```
-INSERT: main > ul > li:nth-of-type(1)::text + em
-REMOVE: main > ul > li:nth-of-type(1) > em + em
-UPDATE: main > ul > li:nth-of-type(1) > em::text " " => "y"
 UPDATE: main > ul > li:nth-of-type(1) > em::text "x" => "y"
-INSERT: main > ul > li:nth-of-type(2)::text + em
-REMOVE: main > ul > li:nth-of-type(2) > em + em
-UPDATE: main > ul > li:nth-of-type(2) > em::text " " => "y"
 UPDATE: main > ul > li:nth-of-type(2) > em::text "x" => "y"
 ```
 

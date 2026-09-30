@@ -14,6 +14,7 @@ import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
 import {
   getBindingPropTree,
   kDirectContent,
+  kRendersContent,
 } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
@@ -34,7 +35,11 @@ import {
   isContentRenderTag,
   isServerOwnedDynamicTag,
 } from "../../util/patch/decisions";
-import { addPatchChildRenderer } from "../../util/patch/intrinsics";
+import {
+  addPassedRenderer,
+  addPatchChildRenderer,
+  isModuleBinding,
+} from "../../util/patch/intrinsics";
 import {
   ensurePatchWriteGroups,
   writesPatchIn,
@@ -181,6 +186,7 @@ export default {
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
       if (inputNodes.length) tagExtra.forceRegister = true;
+      if (!t.isStringLiteral(node.name)) tagExtra[kRendersContent] = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const usesVar = hasVar && isTagVarUsed(tag);
@@ -288,7 +294,13 @@ export default {
         !t.isStringLiteral(tag.node.name) &&
         !isContentRenderTag(tag)
       ) {
-        addPatchChildRenderer(tag.node.name);
+        addPatchChildRenderer(tag, tag.node.name);
+        if (
+          t.isIdentifier(tag.node.name) &&
+          isModuleBinding(tag, tag.node.name)
+        ) {
+          addPassedRenderer(tag, tag.node.name);
+        }
       }
     },
     exit(tag) {

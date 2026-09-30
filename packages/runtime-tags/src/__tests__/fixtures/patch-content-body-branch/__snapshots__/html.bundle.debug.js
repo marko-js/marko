@@ -43,11 +43,13 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 						if (input.alt) {
 							const $scope3_id = _scope_id();
 							_html(`<em>A:${_patch_text($scope3_id, "#text/0", input.note, 2, $scope0_reason, 7)}</em>`);
+							_client_guard($scope0_reason, 7) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:6/init");
 							_subscribe(_unfilled_if($scope0_reason, 7) && $input_note__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
 							return 0;
 						} else {
 							const $scope4_id = _scope_id();
 							_html(`<strong>B:${_patch_text($scope4_id, "#text/0", input.note, 2, $scope0_reason, 7)}</strong>`);
+							_client_guard($scope0_reason, 7) && _patch_init($scope4_id, "__tests__/template.marko_4_input_note#0:6/init");
 							_subscribe(_unfilled_if($scope0_reason, 7) && $input_note__closures, _scope($scope4_id, {
 								_: _scope_with_id($scope2_id),
 								"ClosureSignalIndex:input_note/9": 1
@@ -55,6 +57,7 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "#text/0", 1, $sg__input_alt, $sg__input_alt, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"], $scope0_reason, 6);
+					_client_guard($scope0_reason, 6) && _patch_init($scope2_id, "__tests__/template.marko_2_input_alt#0:5/init");
 					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 6) && $input_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 					$sg__input_alt || $scope0_page && _resume_branch($scope2_id);
 				}, $scope1_id)

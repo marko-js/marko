@@ -20,7 +20,7 @@ var template_default = _template_patch("a", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
 	$scope0_page && _scope($scope0_id, {
-		g: _source_if($scope0_reason, 1) && input.content,
+		g: _unfilled_if($scope0_reason, 1) && input.content,
 		h: count
 	});
 }, 1, 0);

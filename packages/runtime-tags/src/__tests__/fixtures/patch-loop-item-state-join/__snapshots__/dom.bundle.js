@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__n = /*@__PURE__*/ _init_for_closure("a3", 2, ($scope) => _text($scope.b, $scope._.g));
+const $for_content__n = _init_for_closure("a3", 2, ($scope) => _text($scope.b, $scope._.g));
 const $n = /*@__PURE__*/ _let(6, ($scope) => {
 	_text($scope.b, $scope.g);
 	$for_content__n($scope);

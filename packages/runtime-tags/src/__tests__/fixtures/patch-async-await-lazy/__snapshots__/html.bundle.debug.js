@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template_patch("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $si__input_slow = _source_if($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_related__closures = new Set();
 	const $input_slow__closures = new Set();
@@ -24,6 +24,8 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "#text/0", related, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "9:8");
 		}, 1, "__tests__/template.marko_3*content", 1);
+		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_related#0:8/init");
+		_client_guard($scope0_reason, 5) && _patch_init($scope1_id, "__tests__/template.marko_1_input_slow#0:9/init");
 		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_1_input_related#0:8/subscribe", 0), _client_guard($scope0_reason, 5) && "__tests__/template.marko_1_input_slow#0:9/subscribe", 0);
 		$scope0_page && _resume_branch($scope1_id);
 	}, () => {
@@ -40,12 +42,12 @@ var template_default = _template_patch("__tests__/template.marko", (input) => {
 	_html(`</footer><button>Count ${_text_resume($scope0_id, "#text/4", count, 2)}</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {
-		input_related: $si__input_slow && input.related,
-		input_slow: _source_if($scope0_reason, 1) && input.slow,
-		input_note: $si__input_slow && input.note,
+		input_related: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.related,
+		input_slow: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.slow,
+		input_note: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && input.note,
 		count,
-		"ClosureScopes:input_related/13": $input_related__closures,
-		"ClosureScopes:input_slow/14": $input_slow__closures
+		"ClosureScopes:input_related/13": (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && $input_related__closures,
+		"ClosureScopes:input_slow/14": (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && $input_slow__closures
 	}, "__tests__/template.marko", 0, {
 		input_related: ["input.related"],
 		input_slow: ["input.slow"],

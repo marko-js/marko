@@ -5,20 +5,20 @@ const $setup = () => {};
 _load_lazy("ready:__tests__/layout.marko", () => import("./layout.mjs").then(() => {}));
 _load_lazy("ready:__tests__/page-a.marko", () => import("./page-a.mjs").then(() => {}));
 _load_lazy("ready:__tests__/page-b.marko", () => import("./page-b.mjs").then(() => {}));
-const $else_content2__input_wide = /*@__PURE__*/ _closure_get("input_wide/9", 0, ($scope) => $scope._._._, "__tests__/template.marko_4_input_wide#0:5/subscribe");
+const $else_content2__input_wide = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_4_input_wide#0:5/init", "input_wide/9", 0, ($scope) => $scope._._._, "__tests__/template.marko_4_input_wide#0:5/subscribe");
 const $else_content2__setup = ($scope) => {
 	$else_content2__input_wide($scope);
 	$else_content2__input_note($scope);
 };
-const $else_content2__input_note = /*@__PURE__*/ _closure_get("input_note/10", 0, ($scope) => $scope._._._, "__tests__/template.marko_4_input_note#0:6/subscribe");
-const $if_content__input_wide = /*@__PURE__*/ _closure_get("input_wide/9", 0, ($scope) => $scope._._._, "__tests__/template.marko_3_input_wide#0:5/subscribe");
+const $else_content2__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_4_input_note#0:6/init", "input_note/10", 0, ($scope) => $scope._._._, "__tests__/template.marko_4_input_note#0:6/subscribe");
+const $if_content__input_wide = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_wide#0:5/init", "input_wide/9", 0, ($scope) => $scope._._._, "__tests__/template.marko_3_input_wide#0:5/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_wide($scope);
 	$if_content__input_note($scope);
 };
-const $if_content__input_note = /*@__PURE__*/ _closure_get("input_note/10", 0, ($scope) => $scope._._._, "__tests__/template.marko_3_input_note#0:6/subscribe");
+const $if_content__input_note = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_3_input_note#0:6/init", "input_note/10", 0, ($scope) => $scope._._._, "__tests__/template.marko_3_input_note#0:6/subscribe");
 const $Layout_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $if_content__setup, "<!><!><!>", "b%/&", $else_content2__setup);
-const $Layout_content__input_page = /*@__PURE__*/ _closure_get("input_page/7", ($scope) => $Layout_content__if($scope, $scope._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_page#0:3/subscribe");
+const $Layout_content__input_page = /*@__PURE__*/ _subscribe_closure_get("__tests__/template.marko_2_input_page#0:3/init", "input_page/7", ($scope) => $Layout_content__if($scope, $scope._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_page#0:3/subscribe");
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $Layout_content__setup);
 const $else_content__input_list = /*@__PURE__*/ _if_closure("#text/0", 1);
