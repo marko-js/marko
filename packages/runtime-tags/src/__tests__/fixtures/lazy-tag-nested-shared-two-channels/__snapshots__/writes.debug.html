@@ -1,0 +1,43 @@
+<script async type=module src="a.marko.load.mjs"></script><button class=a>a:<!>
+    0<!--M_$2 #text/1--></button><!--M_$2 #button/0-->
+<script async type=module src="b.marko.load.mjs"></script><button class=b>b:<!>
+    0<!--M_$3 #text/1--></button><!--M_$3 #button/0-->
+<script async type=module src="c.marko.load.mjs"></script><button class=c>c:<!>
+    0<!--M_$4 #text/1--></button><!--M_$4 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-two-channels/a.marko": [
+      _ => [2, {
+        objA: {
+          name: "a"
+        },
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-two-channels/a.marko_0 2"
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-two-channels/b.marko"
+    ] = [_ => [3, {
+      objB: {
+        name: "b"
+      },
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-two-channels/b.marko_0 3"
+  ];
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-two-channels/c.marko"
+    ] = [
+    ["ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-two-channels/a.marko",
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-two-channels/b.marko"
+    ], _ => [4, {
+      input_objA: _(2).objA,
+      input_objB: _(3).objB,
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-two-channels/c.marko_0 4"
+  ];
+  M._.w()
+</script>

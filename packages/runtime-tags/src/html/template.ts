@@ -9,6 +9,7 @@ import { _content_resume } from "./dynamic-tag";
 import {
   Boundary,
   Chunk,
+  Flush,
   FlushStatus,
   offTick,
   queueTick,
@@ -305,40 +306,25 @@ class ServerRendered implements RenderedTemplate {
 
   #promise() {
     return (this.#cachedPromise ||= new Promise<string>((resolve, reject) => {
-      let head = this.#head!;
-      this.#head = null;
-
-      if (!head) {
-        return reject(new Error(CONSUMED_RESULT_MESSAGE));
-      }
-
-      const { boundary } = head;
       let html = "";
-      (boundary.onNext = () => {
-        switch (!boundary.count && boundary.flush()) {
-          case FlushStatus.aborted:
-            settle(boundary);
-            reject(boundary.signal.reason);
-            break;
-          case FlushStatus.complete:
-            // Consuming and serializing may abort, re-entering through the
-            // boundary listener, or serialize lazy data that starts async work.
-            head = head.consume();
-            if (boundary.signal.aborted) break;
-            html += head.flushHTML(boundary);
-            if (!(boundary.count || boundary.signal.aborted)) {
-              settle(boundary);
-              resolve(html);
-            }
-        }
-      })();
+      this.#read(
+        (chunk) => {
+          html += chunk;
+        },
+        reject,
+        () => resolve(html),
+        false,
+      );
     }));
   }
 
+  // Writes what is ready on each tick while async work remains, or when `streams`
+  // is false, only once none does.
   #read(
     onWrite: (html: string) => void,
     onAbort: (err: unknown) => void,
     onClose: () => void,
+    streams = true,
   ) {
     let tick = true;
     let flushing = false;
@@ -372,10 +358,12 @@ class ServerRendered implements RenderedTemplate {
         }
 
         if (write || status === FlushStatus.complete) {
-          head = head.consume();
+          const flush = new Flush();
+          head.renderPlaceholders(true);
+          head = head.consume(flush);
           // An abort re-entered above, so the next pass reports it.
           if (boundary.signal.aborted) continue;
-          const html = head.flushHTML(boundary);
+          const html = head.flushHTML(flush);
           if (boundary.signal.aborted) continue;
           if (html) onWrite(html);
           // Serializing lazy data may have started async work.
@@ -386,7 +374,7 @@ class ServerRendered implements RenderedTemplate {
             return;
           }
           if (write) tick = true;
-        } else if (tick) {
+        } else if (streams && tick) {
           tick = false;
           queueTick(onNext);
         }
@@ -403,10 +391,13 @@ class ServerRendered implements RenderedTemplate {
     this.#head = null;
     if (!head) throw new Error(CONSUMED_RESULT_MESSAGE);
     const { boundary } = head;
-    const html =
-      boundary.flush() === FlushStatus.complete
-        ? head.consume().flushHTML(boundary)
-        : "";
+    const flush = new Flush();
+    let html = "";
+    if (boundary.flush() === FlushStatus.complete) {
+      head.renderPlaceholders(true);
+      // Rendering placeholders may abort, as one throws.
+      if (!boundary.signal.aborted) html = head.consume(flush).flushHTML(flush);
+    }
     if (boundary.count) {
       boundary.abort(
         new Error("Cannot consume asynchronous render with 'toString'"),

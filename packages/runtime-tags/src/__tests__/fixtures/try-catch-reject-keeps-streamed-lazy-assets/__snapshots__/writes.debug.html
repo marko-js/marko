@@ -1,0 +1,40 @@
+<!--M_[--><!--M_!^b-->
+<script async type=module src="child.marko.load.mjs"></script><span>body</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-reject-keeps-streamed-lazy-assets/child.marko": [
+      _ => [3, {
+        "#ClosestBranchId": 2,
+        input_value: "body"
+      }]
+    ]
+  };
+  M._.r = [_ => [2, {
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-catch-reject-keeps-streamed-lazy-assets/template.marko_2*content"
+      ]
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!b--><span>catch</span> caught ERROR!<!--M_]1 #text/0 2-->
+<script async type=module src="template.marko.page.mjs"></script>
+<script async type=module src="child.marko.load.mjs"></script>
+<t hidden M_=b></t>
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-reject-keeps-streamed-lazy-assets/child.marko"
+    ].push(_ => [5, {
+      input_value: "catch"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/try-catch-reject-keeps-streamed-lazy-assets/child.marko_0_input_value#3 5"
+    );
+  REORDER_RUNTIME(M._);
+  M._.r.push(_ => [2, {
+    "#CatchContent": 0
+  }]);
+  M._.w()
+</script>

@@ -403,13 +403,16 @@ export class Serializer {
     boundary: Boundary,
     channel?: SerializeChannel,
   ) {
+    // The whole render shares one serializer, so the values it waits on and a failed
+    // write, which no `@catch` can recover from, belong to its root boundary.
+    while (boundary.parent) boundary = boundary.parent;
     try {
       this.#state.boundary = boundary;
       this.#state.channel = channel;
       return writeScopesRoot(this.#state, flushes);
     } catch (err) {
       // Flushes run from async callbacks, where a throw would strand the render.
-      abortRender(boundary, err);
+      boundary.abort(err);
       return "";
     } finally {
       this.#state.flushId++;
@@ -2100,7 +2103,7 @@ function throwUnserializable(
     // The stack would only show the serializer's flush; the message already
     // names the template file and the value's path.
     err.stack = undefined;
-    abortRender(state.boundary, err);
+    state.boundary.abort(err);
   }
 }
 
@@ -2180,14 +2183,7 @@ function abortUnreachableChannel(state: State, val: unknown) {
     { cause: val },
   );
   err.stack = undefined;
-  abortRender(state.boundary, err);
-}
-
-// The whole render shares one serializer, which a failed write leaves holding
-// references the browser never received, so no `@catch` can recover from it.
-function abortRender(boundary: Boundary, err: unknown) {
-  while (boundary.parent) boundary = boundary.parent;
-  boundary.abort(err);
+  state.boundary.abort(err);
 }
 
 function isCircular(

@@ -166,11 +166,20 @@ A compact program that locates nodes and ranges while cloning a fresh branch.
 
 **Chunk**:
 A node in the HTML writer's tree of buffered output, not a bundle chunk or Node
-stream buffer.
+stream buffer. Its status is _open_ while it renders or holds unsent output,
+_pending_ while an `<await>` renders into it once settled, and _streamed_ once
+sent. A pending chunk a reorder reaches is _requeued_ behind a marker, streaming
+as a reorder of its own once settled. A caught `<try>`'s start marker is _gated_
+while the in-order stream waits there for its body to have something to send.
 
 **Boundary**:
 The render coordinator that tracks async work, flushes chunks, and carries the
 abort signal. Not an error boundary.
+
+**Flush**:
+What one pass of the HTML writer sends: in-order content, reordered content,
+their scripts, ready batches, and the main stream's resume batches.
+`State.encode` orders them into the pass's script.
 
 **Resume**:
 Filling scopes, adopting server-rendered nodes, creating branches, and running

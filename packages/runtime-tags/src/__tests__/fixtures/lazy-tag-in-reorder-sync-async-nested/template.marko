@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+import AsyncChild from "./async-child.marko" with { load: "render" }
+
+<const/shared={ n: 1 }/>
+<Child label="main" shared=shared/>
+<try>
+  <@placeholder>loading</@placeholder>
+  <await|v| = resolveAfter("reordered", 1)>
+    <Child label=v shared=shared/>
+    <AsyncChild label=`${v}-async` shared=shared/>
+  </await>
+</try>
+<await|v| = resolveAfter("streamed", 3)>
+  <Child label=v shared=shared/>
+</await>

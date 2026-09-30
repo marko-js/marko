@@ -1,0 +1,9 @@
+export interface Input {
+  label: string;
+  shared: { n: number };
+}
+
+<let/count=0/>
+<button class=input.label onClick() { count += input.shared.n }>
+  ${input.label}:${count}
+</button>

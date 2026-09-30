@@ -1,0 +1,32 @@
+<div id=log></div><!--M_[--><!--M_!^b-->
+<script async type=module src="child.marko.load.mjs"></script><span>child</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-async-drops-own-lazy-effects/child.marko": [
+      _ => [3, {
+        "#ClosestBranchId": 2
+      }]
+    ]
+  };
+  M._.r = [_ => [2, {
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-catch-async-drops-own-lazy-effects/template.marko_2*content"
+      ]
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!b-->ERROR!<!--M_]1 #text/0 2-->
+<script async type=module src="template.marko.page.mjs"></script>
+<script async type=module src="child.marko.load.mjs"></script>
+<t hidden M_=b></t>
+<script>
+  REORDER_RUNTIME(M._);
+  M._.r.push(_ => [2, {
+    "#CatchContent": 0
+  }]);
+  M._.w()
+</script>

@@ -1,0 +1,66 @@
+<div id=log></div>
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script>
+<script async type=module src="awaiter.marko.load.mjs"></script>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/child.marko": [
+      _ => [4, {
+        input_id: "child"
+      }, 2, {
+        input_id: "child-after"
+      }]
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/grand-child.marko"
+    ] = [_ => [6, {
+    input_id: "grand-child"
+  }]];
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/awaiter.marko"
+    ] = [_ => [10, {
+    input_id: "before-await"
+  }, {
+    input_id: "after-await"
+  }]];
+  M._.r = [_ => [2, {
+    input_id: "page"
+  }, 5, {
+    input_id: "page-after"
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_]9 #text/1-->
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/tags/log-effect.marko_0_input_id#2 4 7"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/grand-child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/tags/log-effect.marko_0_input_id#2 6"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/awaiter.marko"
+    ].push(_ => [13, {
+      input_id: "in-await"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/tags/log-effect.marko_0_input_id#2 10 13"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/awaiter.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/tags/log-effect.marko_0_input_id#2 11"
+    );
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-held-effects-release-in-order/tags/log-effect.marko_0_input_id#2 2 8"
+    );
+  M._.w()
+</script>

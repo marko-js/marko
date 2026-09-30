@@ -1,0 +1,21 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=5>
+<button onClick() { count++ }>count ${count}</button>
+<try>
+  <@placeholder>loading</@placeholder>
+  <try>
+    <await|outer|=resolveAfter("outer", 1)>
+      <try>
+        <@placeholder>
+          <let/count=0/>
+          <button onClick() { count++ }>placeholder ${count}</button>
+        </@placeholder>
+        <await|inner|=resolveAfter("inner", 3)>${inner}</await>
+      </try>
+      ${(() => { throw new Error("ERROR!") })()}
+    </await>
+    <@catch|err|>caught ${err.message}</@catch>
+  </try>
+</try>
+<await|done|=resolveAfter("done", 2)>${done}</await>

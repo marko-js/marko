@@ -1,0 +1,16 @@
+import { rejectAfter } from "../../utils/resolve";
+
+<let/show=true/>
+<try>
+  <if=show>
+    <span>before</span>
+    <await|value|=rejectAfter(new Error("nope"), 1)>
+      ${value}
+    </await>
+  </if>
+  <@catch|err|>
+    <let/n=0/>
+    <button onClick() { n++ }>${err.message} ${n}</button>
+  </@catch>
+</try>
+<button.toggle onClick() { show = !show }>${show}</button>

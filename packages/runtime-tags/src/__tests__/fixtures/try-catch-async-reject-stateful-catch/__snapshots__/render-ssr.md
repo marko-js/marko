@@ -8,9 +8,9 @@
 ```
 ## Change
 ```
+INSERT: button
 INSERT: button::text("nope ")
 INSERT: button::text@0 + ::text("0")
-INSERT: button
 ```
 
 # Update

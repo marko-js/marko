@@ -1,0 +1,13 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<for|i| until=55>
+  <try>
+    <await|v|=(i === 54 ? rejectAfter(new Error("ERROR!"), 1) : resolveAfter(i, 1))>
+      ${v}
+    </await>
+    <@catch|err|>
+      <let/clicks=0/>
+      <button onClick() { clicks++ }>${err.message} ${clicks}</button>
+    </@catch>
+  </try>
+</for>

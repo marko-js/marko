@@ -1,0 +1,15 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+export interface Input {
+  label: string;
+  shared: { n: number };
+}
+
+<let/count=0/>
+<button class=input.label onClick() { count += input.shared.n }>
+  ${input.label}:${count}
+</button>
+<await|v| = resolveAfter("nested", 2)>
+  <Child label=`${input.label}-${v}` shared=input.shared/>
+</await>

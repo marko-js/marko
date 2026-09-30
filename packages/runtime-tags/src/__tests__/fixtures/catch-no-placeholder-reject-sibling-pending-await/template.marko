@@ -1,0 +1,17 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+// The second promise rejects (tick 1) before the first resolves (tick 2).
+// Without a @placeholder neither try block has a loading state to show, so
+// the catch content should stream in document order without JS reordering.
+<try>
+  <@catch|error|>Caught: ${error.message}</@catch>
+  <await|msg|=resolveAfter("Success", 2)>
+    ${msg}
+  </await>
+</try>
+<try>
+  <@catch|error|>Caught: ${error.message}</@catch>
+  <await|msg|=rejectAfter(new Error("Failure"), 1)>
+    ${msg}
+  </await>
+</try>

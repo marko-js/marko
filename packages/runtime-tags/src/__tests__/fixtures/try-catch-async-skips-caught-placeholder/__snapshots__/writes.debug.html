@@ -1,0 +1,29 @@
+<button>count <!>
+    5<!--M_$1 #text/1--></button><!--M_$1 #button/0--><!--M_[--><!--M_!^3-->loading<!--M_!3--><!--M_]1 #text/2 3-->
+<t hidden M_=3><!--M_[--><!--M_!^b--><!--M_#c--><!--M_!b--><!--M_]3 #text/0 4-->
+</t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [1, {
+    count: 5
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>caught ERROR!</t>
+<t hidden M_=c></t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+done<script>
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/try-catch-async-skips-caught-placeholder/template.marko_0 1"
+    );
+  M._.w()
+</script>

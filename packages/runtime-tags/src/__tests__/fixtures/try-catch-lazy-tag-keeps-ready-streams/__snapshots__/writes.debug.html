@@ -37,9 +37,14 @@
 
 <!-- FLUSH -->
 
+<script async type=module src="child.marko.load.mjs"></script>
 <t hidden M_=c></t>
 <t hidden M_=b>caught</t>
 <script>
+  M._.r.push(_ => [4, {
+    "#CatchContent": 0,
+    "#PlaceholderContent": 0
+  }]);
   M._.w()
 </script>
 
@@ -51,11 +56,6 @@
     "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/other.marko"
     ].push(
     "packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/other.marko_0 2"
-    );
-  M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/child.marko"
-    ].push(
-    "packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/child.marko_0 5"
     );
   M._.w()
 </script>

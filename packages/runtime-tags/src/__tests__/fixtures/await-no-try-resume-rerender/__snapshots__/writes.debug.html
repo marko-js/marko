@@ -4,11 +4,11 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
       n: 0,
-      "ClosureScopes:n/3": new Set
-    }], _ => [2, {
+      "ClosureScopes:n/3": new Set([_(2)])
+    }, {
       _: _(1)
     }],
-    "packages/runtime-tags/src/__tests__/fixtures/await-no-try-resume-rerender/template.marko_1_n#0:2/subscribe 2 packages/runtime-tags/src/__tests__/fixtures/await-no-try-resume-rerender/template.marko_0 1"
+    "packages/runtime-tags/src/__tests__/fixtures/await-no-try-resume-rerender/template.marko_0 1"
   ];
   M._.w()
 </script>

@@ -1,0 +1,72 @@
+<script async type=module src="child.marko.load.mjs"></script><button
+  class=main>main:<!>
+    0<!--M_$2 c--></button><!--M_$2 a--><!--M_[--><!--M_!^4-->loading<!--M_!4--><!--M_]1 c 4-->
+<t hidden M_=4><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _b: [_ => [2, {
+      h: 1,
+      i: 0
+    }]]
+  };
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><button class=reordered>reordered:<!>
+      0<!--M_$7 c--></button><!--M_$7 a-->
+  <script async type=module src="async-child.marko.load.mjs"></script><button
+    class=reordered-async>reordered-async:<!>
+      0<!--M_$8 c--></button><!--M_$8 a--><!--M_#c-->
+</t>
+<script>
+  M._.b._b.push(1);
+  M._.b._a = [2];
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [7, {
+      h: 1,
+      i: 0
+    }]))(M._.b._b);
+    (b => b.splice(b.indexOf(2), 1, _ => [8, {
+      i: 1,
+      j: 0
+    }]))(M._.b._a)
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><button class=reordered-async-nested>reordered-async-nested:<!>
+      0<!--M_$10 c--></button><!--M_$10 a--></t>
+<script>
+  M._.r = [_ => [4, {
+    Q: _._.c0
+  }]];
+  M._.b._b.push(3);
+  M._.j.c = _ => {
+    (b => b.splice(b.indexOf(3), 1, _ => [10, {
+      h: 1,
+      i: 0
+    }]))(M._.b._b)
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<button class=streamed>streamed:<!>0<!--M_$12 c--></button><!--M_$12 a-->
+<script>
+  M._.b._b.push("b0 2");
+  M._.b._b.push("b0 7");
+  M._.b._a.push("a2 8");
+  M._.b._b.push("b0 10");
+  M._.b._b.push(_ => [12, {
+    h: 1,
+    i: 0
+  }], "b0 12");
+  M._.w()
+</script>

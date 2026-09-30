@@ -1,0 +1,42 @@
+<div id=log></div>
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script>
+<script async type=module src="awaiter.marko.load.mjs"></script>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _b: [_ => [4, {
+      c: "child"
+    }, 2, {
+      c: "child-after"
+    }]]
+  };
+  M._.b._c = [_ => [6, {
+    c: "grand-child"
+  }]];
+  M._.b._a = [_ => [10, {
+    c: "before-await"
+  }, {
+    c: "after-await"
+  }]];
+  M._.r = [_ => [2, {
+    c: "page"
+  }, 5, {
+    c: "page-after"
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_]9 b-->
+<script>
+  M._.b._b.push("e0 4 7");
+  M._.b._c.push("e0 6");
+  M._.b._a.push(_ => [13, {
+    c: "in-await"
+  }], "e0 10 13");
+  M._.b._a.push("e0 11");
+  M._.r.push("e0 2 8");
+  M._.w()
+</script>

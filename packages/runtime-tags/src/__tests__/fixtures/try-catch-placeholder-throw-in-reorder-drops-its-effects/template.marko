@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<div id="log"/>
+<log-effect id="before"/>
+<try>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <log-effect id="caught"/>
+    <try>
+      <@placeholder>${(() => { throw new Error("inner placeholder"); })()}</@placeholder>
+      <await|v| = resolveAfter("x", 1)>${v}</await>
+    </try>
+    <await|v| = resolveAfter("y", 2)>${v}</await>
+  </try>
+  <await|v| = resolveAfter("z", 3)>${v}</await>
+  <@catch|err|>caught ${err.message}</@catch>
+</try>
+<log-effect id="after"/>

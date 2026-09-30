@@ -1,0 +1,109 @@
+<script async type=module src="child.marko.load.mjs"></script><button
+  class=main>main:<!>
+    0<!--M_$2 #text/2--></button><!--M_$2 #button/0--><!--M_[--><!--M_!^4-->loading<!--M_!4--><!--M_]1 #text/2 4-->
+<t hidden M_=4><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko": [
+      _ => [2, {
+        input_shared_n: 1,
+        count: 0
+      }]
+    ]
+  };
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><button class=reordered>reordered:<!>
+      0<!--M_$7 #text/2--></button><!--M_$7 #button/0-->
+  <script async type=module src="async-child.marko.load.mjs"></script><button
+    class=reordered-async>reordered-async:<!>
+      0<!--M_$8 #text/2--></button><!--M_$8 #button/0--><!--M_#c-->
+</t>
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko"
+    ].push(1);
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/async-child.marko"
+    ] = [2];
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [7, {
+      input_shared_n: 1,
+      count: 0
+    }]))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko"
+      ]);
+    (b => b.splice(b.indexOf(2), 1, _ => [8, {
+      input_shared_n: 1,
+      count: 0
+    }]))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/async-child.marko"
+      ])
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><button class=reordered-async-nested>reordered-async-nested:<!>
+      0<!--M_$10 #text/2--></button><!--M_$10 #button/0--></t>
+<script>
+  M._.r = [_ => [4, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/template.marko_4*content"
+      ]
+  }]];
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko"
+    ].push(3);
+  M._.j.c = _ => {
+    (b => b.splice(b.indexOf(3), 1, _ => [10, {
+      input_shared_n: 1,
+      count: 0
+    }]))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko"
+      ])
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<button class=streamed>streamed:<!>
+    0<!--M_$12 #text/2--></button><!--M_$12 #button/0-->
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko_0 2"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko_0 7"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/async-child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/async-child.marko_0 8"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko_0 10"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko"
+    ].push(_ => [12, {
+      input_shared_n: 1,
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-in-reorder-sync-async-nested/child.marko_0 12"
+    );
+  M._.w()
+</script>

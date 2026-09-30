@@ -1,0 +1,6 @@
+import B from "./b.marko" with { load: "render" }
+
+<const/objA={ name: "a" }/>
+<let/count=0/>
+<button.a onClick() { count += Object.keys(objA).length }>a:${count}</button>
+<B objA=objA/>

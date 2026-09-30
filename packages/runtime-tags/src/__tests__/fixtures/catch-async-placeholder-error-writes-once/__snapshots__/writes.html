@@ -1,16 +1,10 @@
-<!--M_[--><!--M_!^b--><!--M_!b--><!--M_]1 a 3-->
-<t hidden M_=b>caught An @placeholder cannot contain async content.<script async
-    type=module src="child.marko.load.mjs"></script>
-  <div id=ref>0</div>
-</t>
+<!--M_[-->caught An @placeholder cannot contain async content.<script async
+  type=module src="child.marko.load.mjs"></script>
+<div id=ref>0</div><!--M_]1 a 3-->
 <script>
   WALKER_RUNTIME("M")("_");
-  REORDER_RUNTIME(M._);
   M._.b = {
-    _a: [1]
-  };
-  M._.j.b = _ => {
-    (b => b.splice(b.indexOf(1), 1, _ => [6, {
+    _a: [_ => [6, {
       a: (p => p = new Promise((f, r) => _.a = {
         f,
         r(e) {
@@ -18,7 +12,7 @@
           r(e)
         }
       }))()
-    }], "a0 6"))(M._.b._a)
+    }], "a0 6"]
   };
   M._.w()
 </script>

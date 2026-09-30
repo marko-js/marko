@@ -6,7 +6,7 @@
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
       attempt: 1,
-      "ClosureScopes:attempt/2": new Set([_(3)])
+      "ClosureScopes:attempt/2": new Set([_(3), _(4)])
     }, 1, {
       _: _(1),
       "ClosureSignalIndex:attempt/2": 1,
@@ -15,14 +15,12 @@
         ],
       "#PlaceholderContent": _._[
         "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_1*content"
-        ]
-    }],
-    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_1 4 packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_1_attempt#0:1/subscribe 4",
-    _ => [3, {
+        ],
       "#PlaceholderBranch": _(2)
     }, {
       _: _(1)
-    }]
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-catch-before-body/template.marko_1 4"
   ];
   M._.j[3] = _ => {
     _.push("_placeholderDismiss 3")

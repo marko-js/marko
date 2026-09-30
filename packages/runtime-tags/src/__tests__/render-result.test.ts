@@ -43,6 +43,7 @@ const iterate = (result: RenderedTemplate) =>
 describe("runtime-tags/html render result", () => {
   let sync: Template;
   let async: Template;
+  let asyncEmpty: Template;
   let serializeThrows: Template;
   let serializeThrowsPage: Template;
   let lazyPromise: Template;
@@ -59,6 +60,7 @@ describe("runtime-tags/html render result", () => {
       {
         sync: "./sync.marko",
         async: "./async.marko",
+        asyncEmpty: "./async-empty.marko",
         serializeThrows: "./serialize-throws.marko",
         serializeThrowsPage: "./serialize-throws-page.marko",
         lazyPromise: "./lazy-promise.marko",
@@ -77,6 +79,7 @@ describe("runtime-tags/html render result", () => {
     ({
       sync,
       async,
+      asyncEmpty,
       serializeThrows,
       serializeThrowsPage,
       lazyPromise,
@@ -432,23 +435,26 @@ describe("runtime-tags/html render result", () => {
     });
 
     it("reports done when the consumer returns early", async () => {
-      const result = renderAsync(Promise.resolve("a"));
+      const result = renderAsync(new Promise<string>(() => {}));
       const iterator = iterate(result);
       await iterator.next();
       assert.deepEqual(await iterator.return("stopped"), {
         value: "stopped",
         done: true,
       });
+      await assert.rejects(() => iterator.next(), /returned before consumed/);
     });
 
     it("aborts the render when the consumer throws in", async () => {
-      const result = renderAsync(Promise.resolve("a"));
+      const result = renderAsync(new Promise<string>(() => {}));
       const iterator = iterate(result);
       await iterator.next();
-      assert.deepEqual(await iterator.throw(new Error("boom")), {
+      const reason = new Error("boom");
+      assert.deepEqual(await iterator.throw(reason), {
         value: "",
         done: true,
       });
+      await assert.rejects(() => iterator.next(), reason);
     });
 
     it("rejects when the result has already been consumed", async () => {
@@ -456,6 +462,47 @@ describe("runtime-tags/html render result", () => {
       result.toString();
       const iterator = iterate(result);
       await assert.rejects(() => iterator.next(), CONSUMED);
+    });
+
+    it("ends a pending read when the render completes without more html", async () => {
+      let resolve!: (value: string) => void;
+      const iterator = iterate(
+        asyncEmpty.render({
+          value: new Promise<string>((r) => (resolve = r)),
+        }) as ServerResult,
+      );
+      assert.equal((await iterator.next()).done, false);
+      const pending = iterator.next();
+      resolve("hidden");
+      assert.deepEqual(await pending, { value: "", done: true });
+    });
+
+    it("leaves a finished render alone when the consumer throws in or returns", async () => {
+      const iterator = iterate(renderSync());
+      await iterator.next();
+      assert.deepEqual(await iterator.next(), { value: "", done: true });
+      assert.deepEqual(await iterator.throw(new Error("late")), {
+        value: "",
+        done: true,
+      });
+      assert.deepEqual(await iterator.return("late"), {
+        value: "late",
+        done: true,
+      });
+    });
+
+    it("leaves an aborted render alone when the consumer throws in or returns", async () => {
+      const reason = new Error("boom");
+      const iterator = iterate(renderAsync(Promise.reject(reason)));
+      await assert.rejects(() => iterator.next(), reason);
+      assert.deepEqual(await iterator.throw(new Error("late")), {
+        value: "",
+        done: true,
+      });
+      assert.deepEqual(await iterator.return("late"), {
+        value: "late",
+        done: true,
+      });
     });
   });
 });

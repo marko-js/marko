@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+import Thrower from "./thrower.marko" with { load: "render" }
+
+<try>
+  <await|b| = resolveAfter("b", 1)>
+    <Thrower/>
+    <await|c| = resolveAfter("c", 4)>
+      ${c}
+    </await>
+  </await>
+  <@catch|err|>
+    caught ${err.message}
+  </@catch>
+</try>
+<await|d| = resolveAfter("d", 2)>
+  ${d}
+</await>
+<p>after</p>

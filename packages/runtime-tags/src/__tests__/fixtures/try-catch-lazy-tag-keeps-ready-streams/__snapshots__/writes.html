@@ -27,9 +27,14 @@
 
 <!-- FLUSH -->
 
+<script async type=module src="child.marko.load.mjs"></script>
 <t hidden M_=c></t>
 <t hidden M_=b>caught</t>
 <script>
+  M._.r.push(_ => [4, {
+    E: 0,
+    Q: 0
+  }]);
   M._.w()
 </script>
 
@@ -38,6 +43,5 @@
 <p>done</p>
 <script>
   M._.b._b.push("b0 2");
-  M._.b._a.push("a0 5");
   M._.w()
 </script>

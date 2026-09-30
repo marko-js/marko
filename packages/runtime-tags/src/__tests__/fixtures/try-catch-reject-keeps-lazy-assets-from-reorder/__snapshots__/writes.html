@@ -1,0 +1,25 @@
+<!--M_[--><!--M_!^b--><!--M_!^3-->loading<!--M_!3--><!--M_!b--><!--M_]1 a 3-->
+<t hidden M_=3><!--M_#c--><!--M_#d--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<script async type=module src="child.marko.load.mjs"></script>
+<t hidden M_=c></t>
+<t hidden M_=d></t>
+<t hidden M_=b><span>catch</span> caught ERROR!</t>
+<script>
+  M._.b = {
+    _a: [1]
+  };
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [8, {
+      d: "catch"
+    }], "a0 8"))(M._.b._a)
+  };
+  M._.w()
+</script>

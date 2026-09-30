@@ -1,0 +1,9 @@
+<try>
+  <try>
+    <@placeholder>loading</@placeholder>
+    ${(() => { throw new Error("ERROR!") })()}
+  </try>
+  <@catch|err|>
+    caught ${err.message}
+  </@catch>
+</try>

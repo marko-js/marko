@@ -1,5 +1,6 @@
 import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
+import { concat } from "../common/opt";
 import { RendererProp, type Scope } from "../common/types";
 import { patchDynamicTag } from "./dynamic-tag";
 import { getRegistered, register } from "./serializer";
@@ -16,6 +17,7 @@ import {
   $global,
   Boundary,
   Chunk,
+  Flush,
   FlushStatus,
   getChunk,
   getScopeId,
@@ -60,11 +62,16 @@ export const compat = {
   isTagsAPI(fn: any) {
     return !!fn[RendererProp.Id];
   },
-  onFlush(fn: (chunk: Chunk) => void) {
+  onFlush(fn: (chunk: Chunk, flush: Flush) => void) {
     const { flushHTML } = Chunk.prototype;
-    Chunk.prototype.flushHTML = function (boundary) {
-      fn(this);
-      return flushHTML.call(this, boundary);
+    Chunk.prototype.flushHTML = function (flush) {
+      const { state } = this.boundary;
+      // The class content this flushes first leaves the page's reorders to its own
+      // flush, which holds their effects while in-order content streams.
+      const reorders = swapReorders(state, null);
+      fn(this, flush);
+      swapReorders(state, reorders);
+      return flushHTML.call(this, flush);
     };
   },
   patchDynamicTag,
@@ -98,21 +105,36 @@ export const compat = {
     const state = this.ensureState($global);
     return new Chunk(new Boundary(state), null, null, state);
   },
-  flushScript($global: any, chunk?: Chunk) {
-    chunk ||= this.createChunk($global);
-
+  // Flushes as `Chunk.flushHTML` does, with the reorders whose markers the class
+  // html streams, but leaves the `html` (reorders) and `scripts` for the caller.
+  flushChunk(chunk: Chunk, reorders?: Chunk[]) {
     const { boundary } = chunk;
-    const scripts =
-      boundary.flush() === FlushStatus.complete
-        ? chunk.flushScript(boundary).scripts
-        : "";
+    const { state } = boundary;
+    const flush = new Flush();
+    chunk.reorders = concat(chunk.reorders, reorders);
+    if (boundary.flush() === FlushStatus.complete) {
+      chunk.renderPlaceholders(true);
+      chunk.consume(flush).flushScript(flush);
+    }
     if (boundary.signal.aborted) throw boundary.signal.reason;
     if (boundary.count) {
       throw new Error(
         "Cannot serialize promise across tags/class compat layer.",
       );
     }
-    return scripts;
+    return { html: flush.html + flush.reorders, scripts: state.encode(flush) };
+  },
+  // Parks the reorders a class render's html carries on the chunk it streams
+  // in, so they queue once that html streams.
+  deferReorders(reorders: Chunk[]) {
+    const chunk = getChunk()!;
+    chunk.reorders = concat(chunk.reorders, reorders);
+  },
+  // Joins the tags content a class render's html carries to the chunk it streams
+  // in, so its effects wait for and drop with the content around it.
+  appendChunks(chunks: Chunk[]) {
+    const chunk = getChunk()!;
+    for (const part of chunks) chunk.append(part);
   },
   render(
     renderer: ServerRenderer,
@@ -120,11 +142,20 @@ export const compat = {
     classAPIOut: any,
     component: any,
     input: any,
-    completeChunks: Chunk[],
+    bindings: Chunk[],
     registerChildScope?: boolean,
+    parentChunk?: Chunk,
   ) {
+    // Class content settling after a tags `@catch` around it fired is cut with what
+    // the catch replaced, so none of its tags content renders.
+    if (parentChunk?.boundary.signal.aborted) return;
     const state = this.ensureState(classAPIOut.global);
-    const boundary = new Boundary(state);
+    // Part of the tags content around the class component, it aborts with it.
+    const boundary = new Boundary(
+      state,
+      parentChunk?.boundary.signal,
+      parentChunk?.boundary,
+    );
     // Inherit the enclosing chunk's context so a Class under an async/lazy
     // Tags region keeps its branch association (`_resume_branch`/ClosestBranchId).
     const context = getChunk()?.context ?? null;
@@ -144,7 +175,10 @@ export const compat = {
       }
     }
 
-    head.render(() => {
+    // Scopes the class runtime binds components to as it inits, which flush ahead of
+    // that init code, apart from the content's effects.
+    const bound = new Chunk(boundary, null, context, state);
+    bound.render(() => {
       // Handlers bind to a scope of their own: sharing the boundary scope would
       // pull whatever input the child was given through the serializer with them.
       if (this.hasPendingClassFunctions(classAPIOut.global)) {
@@ -161,7 +195,9 @@ export const compat = {
         _scope(scopeId, { m5c: component.id });
         _script(scopeId, SET_SCOPE_REGISTER_ID);
       }
+    });
 
+    head.render(() => {
       _set_serialize_reason(willRerender ? CLIENT_ALL : 0);
       try {
         renderer(normalizedInput);
@@ -173,16 +209,31 @@ export const compat = {
       classAPIOut.onLast((next: any) => {
         (boundary.onNext = () => {
           if (boundary.signal.aborted) {
-            asyncOut.error(boundary.signal.reason);
             boundary.onNext = NOOP;
+            if (parentChunk?.boundary.signal.aborted) {
+              // Cut with the tags content around it, the class output is discarded.
+              asyncOut.end();
+              next();
+            } else {
+              asyncOut.error(boundary.signal.reason);
+            }
           } else if (!boundary.count) {
             boundary.onNext = NOOP;
-            head = head.consume();
-            asyncOut.write(head.html);
-            asyncOut.script(head.scripts);
+            // The reorders this pass queues travel with the html holding their
+            // markers, which the class API may hold behind content still pending.
+            const flush = new Flush();
+            const queued = swapReorders(state, null);
+            head.renderPlaceholders(false);
+            head = head.consume(flush);
+            // The render's lazy content flushes with the class output it streams in.
+            head.lazyContent = flush.lazy;
+            const reorders = swapReorders(state, queued);
+            if (reorders) asyncOut.writer.get("reorders").push(...reorders);
+            asyncOut.writer.get("chunks").push(head);
+            asyncOut.write(flush.html);
+            asyncOut.script(flush.scripts);
             asyncOut.end();
-            head.html = head.scripts = "";
-            completeChunks.push(head);
+            bindings.push(bound);
             next();
           }
         })();
@@ -242,6 +293,12 @@ function drainClassFunctions(
     register(id, fn, (scopeByHost[hostId] ||= writeScope(hostId)));
   }
   pending.length = 0;
+}
+
+function swapReorders(state: State, reorders: Chunk[] | null) {
+  const { writeReorders } = state;
+  state.writeReorders = reorders;
+  return writeReorders;
 }
 
 function NOOP() {}

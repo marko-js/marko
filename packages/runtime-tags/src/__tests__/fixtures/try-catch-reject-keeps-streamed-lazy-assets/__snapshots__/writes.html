@@ -1,0 +1,32 @@
+<!--M_[--><!--M_!^b-->
+<script async type=module src="child.marko.load.mjs"></script><span>body</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [3, {
+      G: 2,
+      d: "body"
+    }]]
+  };
+  M._.r = [_ => [2, {
+    E: _._.b0
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!b--><span>catch</span> caught ERROR!<!--M_]1 a 2-->
+<script async type=module src="template.marko.page.mjs"></script>
+<script async type=module src="child.marko.load.mjs"></script>
+<t hidden M_=b></t>
+<script>
+  M._.b._a.push(_ => [5, {
+    d: "catch"
+  }], "a0 5");
+  REORDER_RUNTIME(M._);
+  M._.r.push(_ => [2, {
+    E: 0
+  }]);
+  M._.w()
+</script>

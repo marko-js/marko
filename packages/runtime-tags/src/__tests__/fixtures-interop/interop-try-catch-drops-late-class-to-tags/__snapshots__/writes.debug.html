@@ -1,0 +1,40 @@
+<!--M_[-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-try-catch-drops-late-class-to-tags/template.marko_2*content"
+      ]
+  }, {
+    m5c: "_0",
+    m5i: {
+      value: (p => p = new Promise((f, r) => _.a = {
+        f,
+        r(e) {
+          p.catch(_ => 0);
+          r(e)
+        }
+      }))()
+    }
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+caught ERROR!<!--M_]1 #text/0 2-->
+<script>
+  M._.r.push(_ => [2, {
+    "#CatchContent": 0
+  }])
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.r.push(_ => (_.a.f("class"), 0));
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+done

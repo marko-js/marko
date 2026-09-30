@@ -3,7 +3,12 @@ import type { $Global, Template } from "../common/types";
 import { _escape_script } from "./content";
 import { toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
-import { _html, $global, writeScript, writeWaitReady } from "./writer";
+import {
+  $global,
+  writeAssets,
+  writeAssetScript,
+  writeWaitReady,
+} from "./writer";
 
 const kAssets = Symbol();
 const kBlockIndex = Symbol();
@@ -66,7 +71,7 @@ export function withLoadAssets(
   return Object.assign((input: unknown) => {
     const g = $global();
     addAsset(g, assetId, triggers);
-    _html(flush(g, ""));
+    writeAssets(flush(g, ""));
     return writeWaitReady(assetId, renderer, input);
   }, renderer);
 }
@@ -105,7 +110,7 @@ export function withPageAssets(
     if (g.__flush__) {
       // Not the actual page entry (nested within another page render): resume
       // data waits for this page's own entry script, as for an embedded render.
-      _html(flush(g, ""));
+      writeAssets(flush(g, ""));
       return writeWaitReady(assetId, template, input);
     }
 
@@ -191,7 +196,7 @@ function writeTriggerScript(id: string, html: string, triggers: Trigger[]) {
         return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(${querySelectorOrLoad(trigger.selector!)})`;
     }
   });
-  writeScript(
+  writeAssetScript(
     `((p,h,d,l=$=>{d||${insert}})=>${
       exprs.length > 1 ? `{${exprs.join(";")}}` : exprs[0]
     })(document.currentScript,${htmlStr})`,

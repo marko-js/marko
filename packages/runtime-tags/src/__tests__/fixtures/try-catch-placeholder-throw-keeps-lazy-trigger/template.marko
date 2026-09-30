@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "on-click body" }
+
+<try>
+  <Child value=1/>
+  <try>
+    <await|v| = resolveAfter("x", 1)>${v}</await>
+    <@placeholder>${(() => { throw new Error("P"); })()}</@placeholder>
+  </try>
+  <await|v| = resolveAfter("y", 2)>${v}</await>
+  <@catch|err|>caught ${err.message}</@catch>
+</try>
+<Child value=2/>
