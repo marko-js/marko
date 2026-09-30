@@ -1,0 +1,11 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<await(resolveAfter("resolved", 1)) client-reorder>
+  <@placeholder>
+    <parent value="placeholder"/>
+  </@placeholder>
+  <@then|value|>
+    <parent value=value/>
+  </@then>
+</await>
+<init-components/>

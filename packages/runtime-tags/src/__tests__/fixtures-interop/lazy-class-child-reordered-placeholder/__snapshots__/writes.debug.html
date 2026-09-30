@@ -1,0 +1,59 @@
+<span id=afph0><!--M#s0-1-->
+  <script async type=module src="child.marko.load.mjs"></script>
+  <!--M^s0-1-0 s0-1 0--><span class=child>placeholder</span><!--M/--><!--M/-->
+</span>
+<script>
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0-1", 0, {
+        "value": "placeholder"
+      }],
+      ["s0-1-0", 1, {
+        "value": "placeholder"
+      }, {
+        "f": 1
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/lazy-class-child-reordered-placeholder/components/parent/index.marko",
+      "packages/runtime-tags/src/__tests__/fixtures-interop/lazy-class-child-reordered-placeholder/components/child.marko"
+    ]
+  })
+</script>
+
+<!-- FLUSH -->
+
+<div id=af0 style=display:none><!--M#s0-2--><!--M^s0-2-0 s0-2 0--><span
+    class=child>resolved</span><!--M/--><!--M/--></div>
+<script>
+  function $af(d, a, e, l, g, h, k, b, f, c) {
+    c = $af;
+    if (a && !c[a])(c[a += "$"] || (c[a] = [])).push(d);
+    else {
+      e = document;
+      l = e.getElementById("af" + d);
+      g = e.getElementById("afph" + d);
+      h = e.createDocumentFragment();
+      k = l.childNodes;
+      b = 0;
+      for (f = k.length; b < f; b++) h.appendChild(k.item(0));
+      g && g.parentNode.replaceChild(h, g);
+      c[d] = 1;
+      if (a = c[d + "$"])
+        for (b = 0, f = a.length; b < f; b++) c(a[b])
+    }
+  };
+  $af(0);
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0-2", 0, {
+        "value": "resolved"
+      }],
+      ["s0-2-0", 1, {
+        "value": "resolved"
+      }, {
+        "f": 1
+      }]
+    ]
+  })
+</script>
