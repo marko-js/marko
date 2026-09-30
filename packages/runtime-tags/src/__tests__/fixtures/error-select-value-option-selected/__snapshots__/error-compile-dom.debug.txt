@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-select-value-option-selected/template.marko:3:21
+    at __tests__/template.marko:3:21
       1 | <select value="b">
       2 |   <option value="a">A</option>
     > 3 |   <option value="b" selected>B</option>

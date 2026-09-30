@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-let-duplicate-value/template.marko:1:16
+    at __tests__/template.marko:1:16
     > 1 | <let/x=input.a value=input.b/>
         |                ^^^^^^^^^^^^^ Invalid duplicate value attribute.
       2 | <div>${x}</div>

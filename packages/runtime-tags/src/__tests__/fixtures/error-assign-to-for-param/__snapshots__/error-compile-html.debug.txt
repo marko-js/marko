@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-for-param/template.marko:2:23
+    at __tests__/template.marko:2:23
       1 | <for|item| of=input.list>
     > 2 |   <button onClick() { item = "changed" }>${item}</button>
         |                       ^^^^ `item` is a tag parameter and cannot be assigned to.

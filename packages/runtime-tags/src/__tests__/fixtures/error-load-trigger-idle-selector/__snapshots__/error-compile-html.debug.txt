@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-load-trigger-idle-selector/template.marko:1:48
+    at __tests__/template.marko:1:48
     > 1 | import Child from "./child.marko" with { load: "idle.foo" }
         |                                                ^^^^^^^^^^ Selector is not supported for the "idle" trigger.
       2 |

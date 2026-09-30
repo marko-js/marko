@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-await-param/template.marko:2:23
+    at __tests__/template.marko:2:23
       1 | <await|data|=input.promise>
     > 2 |   <button onClick() { data = 1 }>${data}</button>
         |                       ^^^^ `data` is a tag parameter and cannot be assigned to.

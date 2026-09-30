@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-bind-dynamic-key/template.marko:3:17
+    at __tests__/template.marko:3:17
       1 | static const key = "a";
       2 | <define/Wrap|{ [key]: val }|>
     > 3 |   <input value:=val/>

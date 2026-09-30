@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/self-reference-function-error/template.marko:1:17
+    at __tests__/template.marko:1:17
     > 1 | <const/f=(() => f())()>
         |                 ^ `f` is the [tag variable](https://markojs.com/docs/reference/language#tag-variables) this tag declares, so its own attributes cannot read it.
       2 |

@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-agent-fix-guide/template.marko:2:16
+    at __tests__/template.marko:2:16
       1 | <let/count=0>
     > 2 | Welcome aboard ${count}
         |                ^^^^^^^^ Invalid attribute name.

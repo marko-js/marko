@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-style-nested-selector-pseudo/template.marko:3:13
+    at __tests__/template.marko:3:13
       1 | <style>
       2 |   .menu {
     > 3 |     &:hover ${input.color} {

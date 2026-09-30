@@ -4,7 +4,7 @@
 <script>
   WALKER_RUNTIME("M")("_");
   M._.b = {
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko": [
+    "ready:__tests__/child.marko": [
       _ => [2, {
         count: 1,
         "ClosureScopes:count/7": new Set
@@ -22,13 +22,13 @@
       1<!--M_$4 #text/2--></button><!--M_$4 #button/0-->
 <script>
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko"
+    "ready:__tests__/child.marko"
     ].push(_ => [3, {
     _: _(2),
     "#childScope/2": _(4)
   }]);
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/grand-child.marko"
+    "ready:__tests__/grand-child.marko"
     ] = [_ => [4, {
     n: 1
   }]];
@@ -41,19 +41,19 @@
 <div id=after>after</div>
 <script>
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/grand-child.marko"
+    "ready:__tests__/grand-child.marko"
     ].push(
-    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/grand-child.marko_0 4"
+    "__tests__/grand-child.marko_0 4"
     );
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko"
+    "ready:__tests__/child.marko"
     ].push(
-    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko_1_count#0:6/subscribe 3"
+    "__tests__/child.marko_1_count#0:6/subscribe 3"
     );
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko"
+    "ready:__tests__/child.marko"
     ].push(
-    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-async/child.marko_0 2"
+    "__tests__/child.marko_0 2"
     );
   M._.w()
 </script>

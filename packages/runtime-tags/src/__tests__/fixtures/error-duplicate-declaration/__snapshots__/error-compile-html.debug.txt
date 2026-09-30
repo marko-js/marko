@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-duplicate-declaration/template.marko:2:10
+    at __tests__/template.marko:2:10
       1 | <define/Foo|bar|>
     > 2 |   <const/bar = 1>
         |          ^^^ Duplicate declaration of `bar`.

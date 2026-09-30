@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-export-multiple-statements/template.marko:1:21
+    at __tests__/template.marko:1:21
     > 1 | export const p = 1; export const q = 2
         |                     ^^^^^^^^^^^^^^^^^^ The `<export>` tag takes a single export statement.
       2 | <div>${p}${q}</div>

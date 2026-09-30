@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-if-else-wrong-attr/template.marko:3:6
+    at __tests__/template.marko:3:6
       1 | if=false
       2 |   -- A
     > 3 | else of=true

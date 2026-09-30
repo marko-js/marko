@@ -15,5 +15,5 @@ setTimeout(() => document.body.click());
 # Update
 ## Console
 ```
-ERROR "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-load-script-error/child.marko\" failed to load; its server-rendered content cannot become interactive."
+ERROR "The lazy module for \"ready:__tests__/child.marko\" failed to load; its server-rendered content cannot become interactive."
 ```

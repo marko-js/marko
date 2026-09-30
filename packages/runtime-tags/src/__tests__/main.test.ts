@@ -140,7 +140,6 @@ function testFixtures(interop?: true) {
     describe(entry, () => {
       const fixtureDir = path.join(fixturesDir, entry);
       const resolve = (file: string) => path.join(fixtureDir, file);
-      const relativeFixtureDir = path.relative(process.cwd(), fixtureDir);
       const templateFile = resolve("template.marko");
       const testFile = resolve("test.ts");
       // A present-but-broken `test.ts` must fail loudly; only an absent file is
@@ -153,8 +152,6 @@ function testFixtures(interop?: true) {
       const renderLogs = new Map<string, Map<string, string>>();
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
-      const stripFixtureDir = async (str: string | Promise<string>) =>
-        (await str).replaceAll(relativeFixtureDir, "__tests__");
 
       // The optimize sizes gate never runs for these fixtures, so a leftover
       // `sizes.json` would otherwise go stale silently.
@@ -313,7 +310,7 @@ function testFixtures(interop?: true) {
               const runner = await ssrRunner();
               const { snapshot, sizes } = await runner[`${output}Bundle`]();
               if (optimize && sizes) stats.dom = sizes;
-              return stripFixtureDir(snapshot);
+              return snapshot;
             }, `${output}.bundle.js`);
           };
 
@@ -545,7 +542,7 @@ function testFixtures(interop?: true) {
           skipCSR ||
             it("csr", () =>
               snapMode(
-                async () => stripFixtureDir((await csr()).tracker.getLogs()),
+                async () => (await csr()).tracker.getLogs(),
                 equivalent ? "render.md" : "render-csr.md",
                 config.error_dom,
                 "csr",

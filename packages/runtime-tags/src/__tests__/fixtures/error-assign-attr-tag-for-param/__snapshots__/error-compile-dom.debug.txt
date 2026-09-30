@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-assign-attr-tag-for-param/template.marko:4:27
+    at __tests__/template.marko:4:27
       2 |   <for|item| of=["a", "b"]>
       3 |     <@row>
     > 4 |       <button onClick() { item = "z" }>${item}</button>

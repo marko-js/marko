@@ -7,7 +7,7 @@
 <script>
   WALKER_RUNTIME("M")("_");
   M._.b = {
-    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/other.marko": [
+    "ready:__tests__/other.marko": [
       _ => [2, {
         count: 0
       }]
@@ -16,20 +16,20 @@
   REORDER_RUNTIME(M._);
   M._.r = [_ => [4, {
     "#CatchContent": _._[
-      "packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/template.marko_3*content"
+      "__tests__/template.marko_3*content"
       ],
     "#PlaceholderContent": _._[
-      "packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/template.marko_2*content"
+      "__tests__/template.marko_2*content"
       ]
   }]];
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/child.marko"
+    "ready:__tests__/child.marko"
     ] = [1];
   M._.j[4] = _ => {
     (b => b.splice(b.indexOf(1), 1, _ => [5, {
       count: 0
     }]))(M._.b[
-      "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/child.marko"
+      "ready:__tests__/child.marko"
       ])
   };
   M._.w()
@@ -48,14 +48,14 @@
 <p>done</p>
 <script>
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/other.marko"
+    "ready:__tests__/other.marko"
     ].push(
-    "packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/other.marko_0 2"
+    "__tests__/other.marko_0 2"
     );
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/child.marko"
+    "ready:__tests__/child.marko"
     ].push(
-    "packages/runtime-tags/src/__tests__/fixtures/try-catch-lazy-tag-keeps-ready-streams/child.marko_0 5"
+    "__tests__/child.marko_0 5"
     );
   M._.w()
 </script>

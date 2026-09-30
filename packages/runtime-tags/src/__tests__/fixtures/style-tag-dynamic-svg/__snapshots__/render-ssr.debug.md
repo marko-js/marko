@@ -4,7 +4,7 @@
   <style
     class="sM_1"
   >
-    .sM_1~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19svg-1btemplate-1amarko_0:red;}
+    .sM_1~*{--M___tests__-1btemplate-1amarko_0:red;}
   </style>
   <circle
     cx="5"
@@ -26,7 +26,7 @@ document.querySelector("button").click();
   <style
     class="sM_1"
   >
-    .sM_1~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19svg-1btemplate-1amarko_0:blue;}
+    .sM_1~*{--M___tests__-1btemplate-1amarko_0:blue;}
   </style>
   <circle
     cx="5"
@@ -40,6 +40,6 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: .sM_1::text(".sM_1~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19svg-1btemplate-1amarko_0:red;}")
-INSERT: .sM_1::text(".sM_1~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19svg-1btemplate-1amarko_0:blue;}")
+REMOVE: .sM_1::text(".sM_1~*{--M___tests__-1btemplate-1amarko_0:red;}")
+INSERT: .sM_1::text(".sM_1~*{--M___tests__-1btemplate-1amarko_0:blue;}")
 ```

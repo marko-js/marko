@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-style-string/template.marko:3:15
+    at __tests__/template.marko:3:15
       1 | <style>
       2 |   .box::before {
     > 3 |     content: "${input.msg}";

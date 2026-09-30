@@ -3,7 +3,7 @@
 <script>
   WALKER_RUNTIME("M")("_");
   M._.b = {
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-in-child/child.marko": [
+    "ready:__tests__/child.marko": [
       _ => [2, {
         count: 1,
         "ClosureScopes:count/5": new Set
@@ -19,11 +19,11 @@
 <div id=after>after</div>
 <script>
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-in-child/child.marko"
+    "ready:__tests__/child.marko"
     ].push(_ => [3, {
       _: _(2)
     }],
-    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-in-child/child.marko_1 3 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-in-child/child.marko_1_count#0:4/subscribe 3"
+    "__tests__/child.marko_1 3 __tests__/child.marko_1_count#0:4/subscribe 3"
     );
   M._.w()
 </script>

@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-script-placeholder/template.marko:2:3
+    at __tests__/template.marko:2:3
       1 | <script>
     > 2 |   ${"Hello <b> </script>"}
         |   ^^^^^^^^^^^^^^^^^^^^^^^^ Unexpected content in [`<script>` tag](https://markojs.com/docs/reference/core-tag#script). Only javascript and typescript is supported. For a native html [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.

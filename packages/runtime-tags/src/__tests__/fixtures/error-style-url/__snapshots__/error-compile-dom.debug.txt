@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-style-url/template.marko:4:21
+    at __tests__/template.marko:4:21
       2 | <style>
       3 |   .box {
     > 4 |     background: url(${x});

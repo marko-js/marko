@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-select-value-option-no-value/template.marko:4:3
+    at __tests__/template.marko:4:3
       2 |
       3 | <select value=color valueChange(v) { color = v }>
     > 4 |   <option>red</option>

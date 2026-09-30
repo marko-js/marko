@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-for-by-param/template.marko:2:33
+    at __tests__/template.marko:2:33
       1 | <ul>
     > 2 |   <for|city| of=input.cities by=city>
         |                                 ^^^^ The `by=` attribute is evaluated before the loop runs, so `city` is not in scope. Key with a property name string (`by="id"`) or a function (`by=(city) => key`).

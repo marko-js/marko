@@ -3,7 +3,7 @@
   ((p, h, d, l = $ => {
     d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
       "script").forEach(s => s.onerror = () => console.error(
-      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger-fallback/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      "The lazy module for \"ready:__tests__/child.marko\" failed to load; its server-rendered content cannot become interactive."
       )), p.after(d))
   }) => {
     (e => e?.addEventListener("click", l, {
@@ -20,8 +20,8 @@
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger-fallback/child.marko": [
-      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger-fallback/child.marko_0 2"
+    "ready:__tests__/child.marko": [
+      "__tests__/child.marko_0 2"
     ]
   };
   M._.w()

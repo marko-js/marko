@@ -5,8 +5,8 @@ function $setup($scope) {
 	_style_shell($scope, "#style/0");
 	_style_shell($scope, "#style/1");
 }
-const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => _style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19two-19tags-1btemplate-1amarko_0", $scope.input_a));
-const $input_b = /*@__PURE__*/ _const("input_b", ($scope) => _style_rule_item($scope["#style/1"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19two-19tags-1btemplate-1amarko_1", $scope.input_b));
+const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => _style_rule_item($scope["#style/0"], "--M___tests__-1btemplate-1amarko_0", $scope.input_a));
+const $input_b = /*@__PURE__*/ _const("input_b", ($scope) => _style_rule_item($scope["#style/1"], "--M___tests__-1btemplate-1amarko_1", $scope.input_b));
 const $input = ($scope, input) => {
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
@@ -14,7 +14,7 @@ const $input = ($scope, input) => {
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // v:template.marko.css
-var v_template_marko_default = "\n  .a { color: var(--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19two-19tags-1btemplate-1amarko_0); }\n";
+var v_template_marko_default = "\n  .a { color: var(--M___tests__-1btemplate-1amarko_0); }\n";
 
 // v:template.marko.1.css
-var v_template_marko_1_default = "\n  .b { color: var(--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19two-19tags-1btemplate-1amarko_1); }\n";
+var v_template_marko_1_default = "\n  .b { color: var(--M___tests__-1btemplate-1amarko_1); }\n";

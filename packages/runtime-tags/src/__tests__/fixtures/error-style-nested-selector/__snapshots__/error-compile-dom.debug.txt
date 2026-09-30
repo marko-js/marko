@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-style-nested-selector/template.marko:3:11
+    at __tests__/template.marko:3:11
       1 | <style>
       2 |   @media (min-width: 600px) {
     > 3 |     .card-${input.variant}:hover {

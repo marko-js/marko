@@ -1,9 +1,9 @@
 Cannot mix Tags API and Class API features in the same file:
 
-Template file within a tags directory at packages/runtime-tags/src/__tests__/fixtures-interop/error-class-tags-dir/tags/hello.marko:
+Template file within a tags directory at __tests__/tags/hello.marko:
 
 
-<class> tag at packages/runtime-tags/src/__tests__/fixtures-interop/error-class-tags-dir/tags/hello.marko(1,1):
+<class> tag at __tests__/tags/hello.marko(1,1):
 > 1 | class {}
     | ^^^^^
   2 |

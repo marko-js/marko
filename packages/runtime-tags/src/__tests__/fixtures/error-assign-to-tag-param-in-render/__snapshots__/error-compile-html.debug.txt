@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-tag-param-in-render/template.marko:2:10
+    at __tests__/template.marko:2:10
       1 | <define/Tag|{ x }|>
     > 2 |   <div>${x++}</>
         |          ^ `x` is a tag parameter and can only be assigned within a script or function.

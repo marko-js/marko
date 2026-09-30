@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-style-property/template.marko:3:5
+    at __tests__/template.marko:3:5
       1 | <style>
       2 |   .box {
     > 3 |     ${input.prop}: red;

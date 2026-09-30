@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-return-if-else/template.marko:2:4
+    at __tests__/template.marko:2:4
       1 | <if=input.show>
     > 2 |   <return=1/>
         |    ^^^^^^ The [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) can not be used under the `<"if">` tag.
@@ -7,7 +7,7 @@
       4 | <else>
       5 |   <return=2/>
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-return-if-else/template.marko:5:4
+    at __tests__/template.marko:5:4
       3 | </if>
       4 | <else>
     > 5 |   <return=2/>

@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-style-glued-unit/template.marko:3:12
+    at __tests__/template.marko:3:12
       1 | <style>
       2 |   .box {
     > 3 |     width: ${input.size}px;

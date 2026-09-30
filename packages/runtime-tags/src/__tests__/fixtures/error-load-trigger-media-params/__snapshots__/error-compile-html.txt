@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-load-trigger-media-params/template.marko:1:48
+    at __tests__/template.marko:1:48
     > 1 | import Child from "./child.marko" with { load: "media(max-width: 100px)?foo=1" }
         |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Params are not supported for the "media" trigger.
       2 |

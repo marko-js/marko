@@ -40,6 +40,12 @@ export async function snap(
   } else {
     actual = "" + (await fn());
   }
+  // Debug ids, dynamic style names and error locations name the fixture's own
+  // files by path, which would tie every snapshot to where the fixture lives.
+  const location = path.relative(CWD, dir) + path.sep;
+  actual = actual
+    .replaceAll(location, "__tests__/")
+    .replaceAll(toStyleName(location), toStyleName("__tests__/"));
 
   let expected: string;
   try {
@@ -115,6 +121,14 @@ if (UPDATE) {
       }
     }
   });
+}
+
+// Mirrors the translator's encoding of a template id into a style name.
+function toStyleName(id: string) {
+  return id.replace(
+    /[^a-zA-Z0-9_]/g,
+    (c) => "-" + c.charCodeAt(0).toString(36),
+  );
 }
 
 export function allTestsPassed(suite: Mocha.Suite): boolean {

@@ -5,25 +5,25 @@
 <script>
   WALKER_RUNTIME("M")("_");
   M._.b = {
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-reversed/child.marko": [
+    "ready:__tests__/child.marko": [
       _ => [2, {
         obj: {
           name: "shared"
         },
         "#childScope/3": _(3)
       }],
-      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-reversed/child.marko_0 2"
+      "__tests__/child.marko_0 2"
     ]
   };
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-reversed/grand-child.marko"
+    "ready:__tests__/grand-child.marko"
     ] = [
     [
-      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-reversed/child.marko"],
+      "ready:__tests__/child.marko"],
     _ => [3, {
       copy: _(2).obj
     }],
-    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-shared-reversed/grand-child.marko_0 3"
+    "__tests__/grand-child.marko_0 3"
   ];
   M._.w()
 </script>

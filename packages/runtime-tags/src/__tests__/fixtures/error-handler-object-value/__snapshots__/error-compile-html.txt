@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-handler-object-value/template.marko:3:17
+    at __tests__/template.marko:3:17
       1 | static function handleClick() {}
       2 |
     > 3 | <button onClick={handleClick}>Click</button>

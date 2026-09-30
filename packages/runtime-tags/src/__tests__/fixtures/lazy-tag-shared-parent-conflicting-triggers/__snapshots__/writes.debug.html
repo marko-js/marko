@@ -3,7 +3,7 @@
   ((p, h, d, l = $ => {
     d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
       "script").forEach(s => s.onerror = () => console.error(
-      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent-conflicting-triggers/tags/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      "The lazy module for \"ready:__tests__/tags/child.marko\" failed to load; its server-rendered content cannot become interactive."
       )), p.after(d))
   }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
     .isIntersecting) && i.disconnect() + l()).observe(e))(document
@@ -13,14 +13,14 @@
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent-conflicting-triggers/tags/child.marko": [
-      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent-conflicting-triggers/tags/child.marko_0 3"
+    "ready:__tests__/tags/child.marko": [
+      "__tests__/tags/child.marko_0 3"
     ]
   };
   M._.b[
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent-conflicting-triggers/tags/child.marko"
+    "ready:__tests__/tags/child.marko"
     ].push(
-    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent-conflicting-triggers/tags/child.marko_0 5"
+    "__tests__/tags/child.marko_0 5"
     );
   M._.w()
 </script>

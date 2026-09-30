@@ -1,5 +1,5 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-style-prefix-glue/template.marko:3:14
+    at __tests__/template.marko:3:14
       1 | <style>
       2 |   .box {
     > 3 |     width: 10${input.unit};
