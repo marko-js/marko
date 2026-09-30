@@ -15,6 +15,7 @@ INSERT: t > div::text@0 + ::text("0")
 
 # Update
 ```html
+caught: ERROR!
 <div>
   changes: 0
 </div>
@@ -23,6 +24,7 @@ INSERT: t > div::text@0 + ::text("0")
 ```
 REMOVE: ::text("loading outer...")
 INSERT: div
+INSERT: ::text("caught: ERROR!")
 ```
 
 # Update
@@ -33,6 +35,7 @@ const window = div.ownerDocument.defaultView;
 div.dispatchEvent(new window.Event("change", { bubbles: true }));
 ```
 ```html
+caught: ERROR!
 <div>
   changes: 1
 </div>

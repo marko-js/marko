@@ -1118,6 +1118,7 @@ function tryBoundary(
   // Shares the parent's signal so a disconnected render strands pending body
   // work; the outer-aborted check in onNext keeps that from firing the catch.
   const catchBoundary = new Boundary(state, boundary.signal, boundary);
+  catchBoundary.reorders = !!placeholderContent || boundary.reorders;
   const body = chunk.fork(catchBoundary, null);
   const bodyEnd = body.render(() => withBranchId(branchId, content));
 
@@ -1146,12 +1147,11 @@ function tryBoundary(
   chunk.next = body;
   boundary.startAsync();
 
-  // With a catch+placeholder, markers let catch take the body's place in the
-  // stream via the client-side reorder mechanism. Without a placeholder there
-  // is no loading state to show, so catch content can be emitted in document
-  // order without any client-side JS.
+  // With a catch, markers let it take the body's place in the stream when a
+  // placeholder here or in an ancestor can reorder the body. Otherwise nothing
+  // streams ahead of the body, so catch content is emitted in document order.
   const reorderId =
-    catchContent && placeholderContent ? state.nextReorderId() : "";
+    catchContent && catchBoundary.reorders ? state.nextReorderId() : "";
   const endMarker = reorderId && state.mark(Mark.PlaceholderEnd, reorderId);
   if (reorderId) {
     chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
@@ -1435,6 +1435,8 @@ export class Boundary extends AbortController {
   public resumeWrites = 0;
   public state: State;
   public parent?: Boundary;
+  // Whether a placeholder here or in an ancestor `<try>` can reorder its chunks.
+  public reorders = false;
   constructor(state: State, signal?: AbortSignal, parent?: Boundary) {
     super();
     this.state = state;
