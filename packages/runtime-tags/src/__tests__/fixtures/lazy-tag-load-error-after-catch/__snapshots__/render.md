@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 
 # Update
 ```html
@@ -57,7 +54,4 @@ REMOVE: ::text@8 + ::text("loading")
 UPDATE: ::text@8 "" => "rejected"
 ```
 
-# Update
-```js
-document.querySelector("#load").click();
-```
+# Update `click("#load")`

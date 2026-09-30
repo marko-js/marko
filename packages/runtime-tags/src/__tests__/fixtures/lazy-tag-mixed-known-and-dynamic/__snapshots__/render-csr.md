@@ -57,10 +57,7 @@ INSERT: .inc + span
 INSERT: .inc + span
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="toggle"
@@ -85,10 +82,7 @@ UPDATE: span:nth-of-type(1)::text "0" => "1"
 UPDATE: span:nth-of-type(2)::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"

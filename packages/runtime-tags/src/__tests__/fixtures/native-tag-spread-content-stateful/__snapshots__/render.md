@@ -17,10 +17,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <div
   class="x"
@@ -43,10 +40,7 @@ document.querySelector("button.inc").click();
 UPDATE: .count::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <div
   class="x"

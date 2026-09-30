@@ -1,5 +1,6 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 // A lazy loaded child that consumes `input` as a whole — `input.report`
 // referenced dynamically inside an event handler alongside
@@ -14,10 +15,6 @@ import { wait } from "../../utils/resolve";
 // (a closure from main) compares the child's deserialized `data` against
 // main's `shared`, rendering "child:true".
 export const config: TestConfig = {
-  steps: [{}, wait, wait, clickChild],
+  steps: [{}, wait, wait, click(".child")],
   equivalent: false,
 };
-
-function clickChild(document: Document) {
-  document.querySelector<HTMLButtonElement>(".child")!.click();
-}

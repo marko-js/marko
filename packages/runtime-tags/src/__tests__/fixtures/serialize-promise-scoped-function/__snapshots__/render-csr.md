@@ -27,10 +27,7 @@ REMOVE: #ref::text("0")
 INSERT: #ref::text("1")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   inc:2

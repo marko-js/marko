@@ -14,13 +14,7 @@
 />
 ```
 
-# Update
-```js
-const input = document.querySelector("input");
-const window = input.ownerDocument.defaultView;
-input.value = value;
-input.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("input", "typed")`
 ```html
 <button>
   typed
@@ -43,10 +37,7 @@ input.dispatchEvent(new window.Event("input", { bubbles: true }));
 UPDATE: button::text "start" => "typed"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   typed!

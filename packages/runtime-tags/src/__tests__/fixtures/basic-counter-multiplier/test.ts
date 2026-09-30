@@ -1,13 +1,11 @@
 import type { TestConfig } from "../../main.test";
-
-function count(document: Document) {
-  document.querySelector<HTMLButtonElement>("button#count")!.click();
-}
-
-function multiplier(document: Document) {
-  document.querySelector<HTMLButtonElement>("button#multiplier")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, count, count, multiplier],
+  steps: [
+    {},
+    click("button#count"),
+    click("button#count"),
+    click("button#multiplier"),
+  ],
 };

@@ -1,17 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-function addTwo(document: Document) {
-  document.querySelector<HTMLButtonElement>("#addTwo")!.click();
-}
-
-function triple(document: Document) {
-  document.querySelector<HTMLButtonElement>("#triple")!.click();
-}
-
-function cube(document: Document) {
-  document.querySelector<HTMLButtonElement>("#cube")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, addTwo, triple, cube],
+  steps: [{}, click("#addTwo"), click("#triple"), click("#cube")],
 };

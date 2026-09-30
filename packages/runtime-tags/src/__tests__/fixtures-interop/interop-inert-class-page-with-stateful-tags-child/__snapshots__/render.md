@@ -9,10 +9,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#counter")).click();
-```
+# Update `click("#counter")`
 ```html
 <div>
   <button

@@ -32,10 +32,7 @@ REMOVE: button + button
 LOG "placeholder destroyed"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   loaded 1

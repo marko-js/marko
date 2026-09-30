@@ -10,10 +10,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div
   class="selected"
@@ -31,10 +28,7 @@ document.querySelector("button").click();
 UPDATE: .selected[class] null => "selected"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div
   class=""
@@ -52,10 +46,7 @@ document.querySelector("button").click();
 UPDATE: div[class] "selected" => ""
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div
   class="selected"

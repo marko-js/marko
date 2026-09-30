@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 
 # Update
 ```html
@@ -30,10 +27,7 @@ document.querySelector("#inc").click();
 INSERT: #inc + #toggle
 ```
 
-# Update
-```js
-document.querySelector("#toggle")?.click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="inc"

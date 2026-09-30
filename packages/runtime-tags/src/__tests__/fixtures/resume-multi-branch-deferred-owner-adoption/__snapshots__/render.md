@@ -15,10 +15,7 @@
 <div />
 ```
 
-# Update
-```js
-document.querySelector("button#show").click();
-```
+# Update `click("button#show")`
 ```html
 <button
   id="show"
@@ -50,10 +47,7 @@ UPDATE: div:nth-of-type(2) > span::text " " => "first"
 UPDATE: div:nth-of-type(3) > span::text " " => "second"
 ```
 
-# Update
-```js
-document.querySelector("button#clear").click();
-```
+# Update `click("button#clear")`
 ```html
 <button
   id="show"

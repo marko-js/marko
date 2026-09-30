@@ -1,20 +1,16 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   steps: [
     {},
     // reveal the body
-    (document: Document) =>
-      document.querySelector<HTMLButtonElement>("#toggle")!.click(),
+    click("#toggle"),
     // interact with state inside the body
-    (document: Document) =>
-      document.querySelector<HTMLButtonElement>("#inc")!.click(),
-    (document: Document) =>
-      document.querySelector<HTMLButtonElement>("#inc")!.click(),
+    click("#inc"),
+    click("#inc"),
     // hide, then show again -- inner count must persist
-    (document: Document) =>
-      document.querySelector<HTMLButtonElement>("#toggle")!.click(),
-    (document: Document) =>
-      document.querySelector<HTMLButtonElement>("#toggle")!.click(),
+    click("#toggle"),
+    click("#toggle"),
   ],
 };

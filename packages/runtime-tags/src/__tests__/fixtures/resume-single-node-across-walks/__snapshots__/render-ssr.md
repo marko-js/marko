@@ -45,10 +45,7 @@ INSERT: span
 INSERT: button:nth-of-type(2)::text@0 + ::text("2")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span>
   done

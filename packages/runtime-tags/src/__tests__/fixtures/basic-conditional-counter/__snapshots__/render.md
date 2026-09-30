@@ -11,10 +11,7 @@
 </span>
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"
@@ -31,10 +28,7 @@ document.querySelector("button.inc").click();
 UPDATE: span::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button.toggle").click();
-```
+# Update `click("button.toggle")`
 ```html
 <button
   class="inc"
@@ -48,15 +42,9 @@ document.querySelector("button.toggle").click();
 REMOVE: .toggle + span
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 
-# Update
-```js
-document.querySelector("button.toggle").click();
-```
+# Update `click("button.toggle")`
 ```html
 <button
   class="inc"
@@ -74,10 +62,7 @@ INSERT: .toggle + span
 UPDATE: span::text " " => "2"
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"

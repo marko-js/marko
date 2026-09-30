@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#addTwo").click();
-```
+# Update `click("#addTwo")`
 ```html
 <button
   id="addTwo"
@@ -45,10 +42,7 @@ UPDATE: #triple::text "0" => "2"
 UPDATE: #cube::text "0" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#triple").click();
-```
+# Update `click("#triple")`
 ```html
 <button
   id="addTwo"
@@ -73,10 +67,7 @@ UPDATE: #triple::text "2" => "6"
 UPDATE: #cube::text "2" => "6"
 ```
 
-# Update
-```js
-document.querySelector("#cube").click();
-```
+# Update `click("#cube")`
 ```html
 <button
   id="addTwo"

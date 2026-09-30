@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#class-child")).click();
-```
+# Update `click("#class-child")`
 ```html
 <div
   id="class-parent"
@@ -33,10 +30,7 @@
 UPDATE: #class-parent::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#class-child")).click();
-```
+# Update `click("#class-child")`
 ```html
 <div
   id="class-parent"

@@ -116,10 +116,7 @@ INSERT: .catch::text("e")
 INSERT: .await + .catch
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <p>

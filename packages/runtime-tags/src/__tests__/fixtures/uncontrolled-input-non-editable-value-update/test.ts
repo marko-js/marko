@@ -1,10 +1,7 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
-
-function update(document: Document) {
-  document.querySelectorAll("button")[0].click();
-}
+import { click } from "../../utils/steps";
 
 function assertUpdated(document: Document) {
   for (const input of document.querySelectorAll<HTMLInputElement>("input")) {
@@ -19,10 +16,6 @@ function assertUpdated(document: Document) {
   assert.equal(data.get("dynamic"), "b");
   assert.equal(data.get("hidden"), "b");
   assert.equal(data.get("radio"), "b");
-}
-
-function remove(document: Document) {
-  document.querySelectorAll("button")[1].click();
 }
 
 function assertRemoved(document: Document) {
@@ -44,5 +37,11 @@ function assertRemoved(document: Document) {
 }
 
 export const config: TestConfig = {
-  steps: [{}, update, assertUpdated, remove, assertRemoved],
+  steps: [
+    {},
+    click("button"),
+    assertUpdated,
+    click("button", 1),
+    assertRemoved,
+  ],
 };

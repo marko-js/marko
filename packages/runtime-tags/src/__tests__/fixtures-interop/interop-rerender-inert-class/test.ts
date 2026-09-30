@@ -1,8 +1,5 @@
 import type { TestConfig } from "../../main.test";
-
-function clickTags(document: Document) {
-  (document.querySelector("#tags") as HTMLButtonElement).click();
-}
+import { click } from "../../utils/steps";
 
 // Regression: a Tags API parent re-rendering an inert (no component file)
 // Class API child must not crash. The reactive `value` input makes the parent
@@ -10,5 +7,5 @@ function clickTags(document: Document) {
 // SSR resumes and morphs it, so their mutation logs differ (equivalent: false).
 export const config: TestConfig = {
   equivalent: false,
-  steps: [{}, clickTags, clickTags],
+  steps: [{}, click("#tags"), click("#tags")],
 };

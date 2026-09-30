@@ -12,10 +12,7 @@
 </main>
 ```
 
-# Update
-```js
-(document.querySelector(".counter")).click();
-```
+# Update `click(".counter")`
 ```html
 <main>
   <h1>

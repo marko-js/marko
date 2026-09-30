@@ -16,10 +16,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[1].click();
-```
+# Update `click("button", 1)`
 ```html
 <button>
   show
@@ -41,10 +38,7 @@ document.querySelectorAll("button")[1].click();
 UPDATE: .message::text "hello" => "hello!"
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[1].click();
-```
+# Update `click("button", 1)`
 ```html
 <button>
   show
@@ -66,10 +60,7 @@ document.querySelectorAll("button")[1].click();
 UPDATE: .message::text "hello!" => "hello!!"
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[0].click();
-```
+# Update `click("button")`
 ```html
 <button>
   show

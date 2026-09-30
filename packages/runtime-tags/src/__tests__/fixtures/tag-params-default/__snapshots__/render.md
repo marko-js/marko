@@ -13,10 +13,7 @@
 </p>
 ```
 
-# Update
-```js
-document.querySelector("#change").click();
-```
+# Update `click("#change")`
 ```html
 <button
   id="change"

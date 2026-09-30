@@ -11,10 +11,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle
@@ -26,10 +23,7 @@ REMOVE: button + div
 REMOVE: button + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle

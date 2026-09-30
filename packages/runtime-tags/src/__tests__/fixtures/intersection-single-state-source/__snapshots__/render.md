@@ -8,10 +8,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   increment
@@ -28,10 +25,7 @@ UPDATE: div::text@13 "3" => "6"
 UPDATE: div::text@18 "5" => "10"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   increment

@@ -1,13 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-function clickFirst(document: Document) {
-  document.querySelectorAll("button")[0].click();
-}
-
-function clickSecond(document: Document) {
-  document.querySelectorAll("button")[1].click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, clickFirst, clickSecond],
+  steps: [{}, click("button"), click("button", 1)],
 };

@@ -10,10 +10,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"
@@ -30,10 +27,7 @@ UPDATE: .inc::text "0" => "1"
 UPDATE: div::text "Marko 1" => "Marko 2"
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"
@@ -50,10 +44,7 @@ UPDATE: .inc::text "1" => "2"
 UPDATE: div::text "Marko 2" => "Marko 3"
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"

@@ -6,10 +6,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 = 1
 <button>
@@ -21,10 +18,7 @@ document.querySelector("button").click();
 UPDATE: ::text@2 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 = 2
 <button>

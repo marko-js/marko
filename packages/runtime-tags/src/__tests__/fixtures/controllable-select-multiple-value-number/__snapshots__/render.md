@@ -92,10 +92,7 @@ selectIndex(document, 2);
 UPDATE: span::text "0,1" => "0,1,2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <select
   multiple=""

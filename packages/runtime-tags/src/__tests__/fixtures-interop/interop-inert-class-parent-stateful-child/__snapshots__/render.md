@@ -16,10 +16,7 @@
 </section>
 ```
 
-# Update
-```js
-(document.querySelector("#class")).click();
-```
+# Update `click("#class")`
 ```html
 <section
   id="wrapper"
@@ -41,10 +38,7 @@
 UPDATE: #class::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#class")).click();
-```
+# Update `click("#class")`
 ```html
 <section
   id="wrapper"

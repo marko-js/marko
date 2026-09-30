@@ -4,10 +4,7 @@ Hello
 <button />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   A 1
@@ -21,10 +18,7 @@ REMOVE: div + ::text("Hello")
 UPDATE: div::text@2 "" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 Hello
 <button />

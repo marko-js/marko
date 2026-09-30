@@ -26,10 +26,7 @@ INSERT: #inc + #child
 INSERT: #child::text("0")
 ```
 
-# Update
-```js
-(document.querySelector("#inc")).click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"

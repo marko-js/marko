@@ -71,10 +71,7 @@ INSERT: .y + :is(i, b)
 REMOVE: div > b + ::text("loading")
 ```
 
-# Update
-```js
-document.querySelector("button.x").click();
-```
+# Update `click("button.x")`
 ```html
 <button
   class="x"

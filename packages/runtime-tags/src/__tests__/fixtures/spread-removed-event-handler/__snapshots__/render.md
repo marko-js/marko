@@ -5,10 +5,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("div").click();
-```
+# Update `click("div")`
 ```html
 <div>
   1:
@@ -26,10 +23,7 @@ const win = document.defaultView;
 div.dispatchEvent(new win.MouseEvent("mouseover", { bubbles: true }));
 ```
 
-# Update
-```js
-document.querySelector("div").click();
-```
+# Update `click("div")`
 ```html
 <div>
   0:

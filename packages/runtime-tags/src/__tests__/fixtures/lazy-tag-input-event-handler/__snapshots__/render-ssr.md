@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".child").click();
-```
+# Update `click(".child")`
 ```html
 <button
   class="main"

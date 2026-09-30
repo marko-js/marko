@@ -20,10 +20,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector(".bump").click();
-```
+# Update `click(".bump")`
 ```html
 <button
   class="bump"
@@ -49,10 +46,7 @@ document.querySelector(".bump").click();
 UPDATE: .n::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".snap").click();
-```
+# Update `click(".snap")`
 ```html
 <button
   class="bump"
@@ -80,10 +74,7 @@ document.querySelector(".snap").click();
 UPDATE: .log::text "" => "[1:1]"
 ```
 
-# Update
-```js
-document.querySelector(".bump").click();
-```
+# Update `click(".bump")`
 ```html
 <button
   class="bump"
@@ -111,10 +102,7 @@ document.querySelector(".bump").click();
 UPDATE: .n::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector(".snap").click();
-```
+# Update `click(".snap")`
 ```html
 <button
   class="bump"

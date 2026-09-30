@@ -28,10 +28,7 @@
 </span>
 ```
 
-# Update
-```js
-document.querySelectorAll("input")[0].click();
-```
+# Update `click("input")`
 ```html
 <form>
   <input
@@ -66,10 +63,7 @@ document.querySelectorAll("input")[0].click();
 UPDATE: span::text@2 "b" => "a"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html

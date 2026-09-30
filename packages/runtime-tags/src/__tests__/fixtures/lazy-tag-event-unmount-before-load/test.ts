@@ -1,19 +1,17 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, toggle, clickLoad, wait, toggle, clickLoad, wait, incClick],
+  steps: [
+    {},
+    click("#toggle"),
+    click("#load"),
+    wait,
+    click("#toggle"),
+    click("#load"),
+    wait,
+    click("#inc"),
+  ],
   equivalent: false,
 };
-
-function toggle(document: Document) {
-  document.querySelector<HTMLElement>("#toggle")!.click();
-}
-
-function clickLoad(document: Document) {
-  document.querySelector<HTMLElement>("#load")!.click();
-}
-
-function incClick(document: Document) {
-  document.querySelector<HTMLElement>("#inc")!.click();
-}

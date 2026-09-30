@@ -1,10 +1,7 @@
 import type { TestConfig } from "../../main.test";
-
-function clickSecond(document: Document) {
-  (document.querySelectorAll("#list button")[1] as HTMLButtonElement).click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   skip_optimize: true,
-  steps: [{}, clickSecond],
+  steps: [{}, click("#list button", 1)],
 };

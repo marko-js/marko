@@ -13,10 +13,7 @@
 idle
 ```
 
-# Update
-```js
-document.querySelector("#first").click();
-```
+# Update `click("#first")`
 
 # Update
 ```html
@@ -58,10 +55,7 @@ INSERT: #third + ::text("second")
 REMOVE: ::text + ::text("LOADING")
 ```
 
-# Update
-```js
-document.querySelector("#third").click();
-```
+# Update `click("#third")`
 
 # Update
 ```html

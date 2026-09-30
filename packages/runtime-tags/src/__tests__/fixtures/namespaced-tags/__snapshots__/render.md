@@ -44,10 +44,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector(".toggle-parent")).click();
-```
+# Update `click(".toggle-parent")`
 ```html
 <div>
   <svg>
@@ -100,10 +97,7 @@ INSERT: div > svg:nth-of-type(2) > a
 UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
 
-# Update
-```js
-(document.querySelector(".toggle-parent")).click();
-```
+# Update `click(".toggle-parent")`
 ```html
 <div>
   <svg>
@@ -156,10 +150,7 @@ INSERT: div > div > a
 UPDATE: div > div > a[ns] null => "http://www.w3.org/1999/xhtml"
 ```
 
-# Update
-```js
-(document.querySelector(".toggle-parent")).click();
-```
+# Update `click(".toggle-parent")`
 ```html
 <div>
   <svg>
@@ -212,10 +203,7 @@ INSERT: div > svg:nth-of-type(2) > a
 UPDATE: div > svg:nth-of-type(2) > a[ns] null => "http://www.w3.org/2000/svg"
 ```
 
-# Update
-```js
-(document.querySelector(".toggle-child")).click();
-```
+# Update `click(".toggle-child")`
 ```html
 <div>
   <svg>
@@ -258,10 +246,7 @@ INSERT: div > math > a + ::text("Hi")
 REMOVE: div > math::text + a
 ```
 
-# Update
-```js
-(document.querySelector(".toggle-child")).click();
-```
+# Update `click(".toggle-child")`
 ```html
 <div>
   <svg>
@@ -320,10 +305,7 @@ UPDATE: div > svg:nth-of-type(1) > a:nth-of-type(2)[ns] null => "http://www.w3.o
 UPDATE: div > math > a:nth-of-type(2)[ns] null => "http://www.w3.org/1998/Math/MathML"
 ```
 
-# Update
-```js
-(document.querySelector(".toggle-child")).click();
-```
+# Update `click(".toggle-child")`
 ```html
 <div>
   <svg>

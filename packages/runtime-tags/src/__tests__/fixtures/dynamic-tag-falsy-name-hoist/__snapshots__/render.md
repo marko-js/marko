@@ -10,10 +10,7 @@
 <output />
 ```
 
-# Update
-```js
-document.querySelector(".check").click();
-```
+# Update `click(".check")`
 ```html
 <input />
 <button
@@ -31,10 +28,7 @@ document.querySelector(".check").click();
 UPDATE: output::text "" => "true/1"
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <div>
   <input />
@@ -56,15 +50,9 @@ REMOVE: div + input
 INSERT: div > input
 ```
 
-# Update
-```js
-document.querySelector(".check").click();
-```
+# Update `click(".check")`
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <input />
 <button
@@ -83,7 +71,4 @@ INSERT: input
 REMOVE: input + div
 ```
 
-# Update
-```js
-document.querySelector(".check").click();
-```
+# Update `click(".check")`

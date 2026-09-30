@@ -14,15 +14,9 @@
 />
 ```
 
-# Update
-```js
-document.querySelector(".same-length").click();
-```
+# Update `click(".same-length")`
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <p>
   1,2

@@ -21,10 +21,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(`input[value=b]`).click();
-```
+# Update `click("input[value=b]")`
 ```html
 <input
   default-checked=""
@@ -52,10 +49,7 @@ document.querySelector(`input[value=b]`).click();
 UPDATE: span::text "a" => "b"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <input
   default-checked=""
@@ -78,10 +72,7 @@ document.querySelector("button").click();
 REMOVE: input:nth-of-type(1) + input
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <input
   default-checked=""
@@ -111,10 +102,7 @@ UPDATE: input:nth-of-type(2)[value] null => "b"
 UPDATE: input:nth-of-type(2)[checked] null => ""
 ```
 
-# Update
-```js
-document.querySelector(`input[value=a]`).click();
-```
+# Update `click("input[value=a]")`
 ```html
 <input
   checked=""

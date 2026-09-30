@@ -11,10 +11,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <input
   type="text"
@@ -32,10 +29,4 @@ UPDATE: input[value] "init" => null
 UPDATE: input[type] null => "text"
 ```
 
-# Update
-```js
-const input = document.querySelector("input");
-const window = input.ownerDocument.defaultView;
-input.value = value;
-input.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("input", "hello")`

@@ -26,10 +26,7 @@ INSERT: span + .hide
 INSERT: .hide::text("hide")
 ```
 
-# Update
-```js
-document.querySelector(".hide").click();
-```
+# Update `click(".hide")`
 ```html
 <button
   class="inc"
@@ -47,10 +44,7 @@ document.querySelector(".hide").click();
 REMOVE: .inc + span
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="inc"

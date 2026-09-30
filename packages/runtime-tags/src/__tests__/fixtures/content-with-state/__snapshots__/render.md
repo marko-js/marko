@@ -13,10 +13,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#increment").click();
-```
+# Update `click("#increment")`
 ```html
 <button>
   click
@@ -35,10 +32,7 @@ document.querySelector("#increment").click();
 UPDATE: span::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#increment").click();
-```
+# Update `click("#increment")`
 ```html
 <button>
   click
@@ -57,10 +51,7 @@ document.querySelector("#increment").click();
 UPDATE: span::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#increment").click();
-```
+# Update `click("#increment")`
 ```html
 <button>
   click

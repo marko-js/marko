@@ -218,6 +218,7 @@ function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
 function getUpdateString(update: unknown) {
   switch (typeof update) {
     case "function":
+      if ("label" in update) return ` \`${update.label}\``;
       return `\n\`\`\`js\n${getFunctionBody(update.toString()).replace(/^ {4}/gm, "")}\n\`\`\``;
     case "string":
       return ` ${update}`;

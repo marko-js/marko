@@ -20,10 +20,7 @@
 </p>
 ```
 
-# Update
-```js
-document.querySelector("#a").click();
-```
+# Update `click("#a")`
 ```html
 <div
   id="ref"
@@ -53,10 +50,7 @@ INSERT: p:nth-of-type(1) + p
 UPDATE: p:nth-of-type(2)::text@5 "" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#o").click();
-```
+# Update `click("#o")`
 ```html
 <div
   id="ref"

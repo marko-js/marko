@@ -38,10 +38,7 @@ INSERT: span:nth-of-type(2) + .hide
 INSERT: .hide::text("hide")
 ```
 
-# Update
-```js
-document.querySelector(".hide").click();
-```
+# Update `click(".hide")`
 ```html
 <button
   class="inc"

@@ -20,10 +20,7 @@
 assertBodies(document, 1);
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   inc

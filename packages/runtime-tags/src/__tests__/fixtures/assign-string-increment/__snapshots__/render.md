@@ -20,10 +20,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("#post").click();
-```
+# Update `click("#post")`
 ```html
 <button
   id="post"
@@ -50,10 +47,7 @@ UPDATE: div::text@0 "5" => "6"
 UPDATE: div::text@2 "" => "5"
 ```
 
-# Update
-```js
-document.querySelector("#pre").click();
-```
+# Update `click("#pre")`
 ```html
 <button
   id="post"
@@ -80,10 +74,7 @@ UPDATE: div::text@0 "6" => "7"
 UPDATE: div::text@2 "5" => "7"
 ```
 
-# Update
-```js
-document.querySelector("#dec").click();
-```
+# Update `click("#dec")`
 ```html
 <button
   id="post"

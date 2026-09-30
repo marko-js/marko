@@ -55,10 +55,7 @@ INSERT: p:nth-of-type(3)::text@5 + ::text("6")
 UPDATE: p:nth-of-type(3)::text@8 " " => "6"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   increment

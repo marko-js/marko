@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".mount").click();
-```
+# Update `click(".mount")`
 ```html
 <button
   class="mount"
@@ -38,10 +35,7 @@ document.querySelector(".mount").click();
 INSERT: .inc + .focus
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="mount"
@@ -70,10 +64,7 @@ document.querySelector(".inc").click();
 INSERT: .inc + :is(p, span)
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="mount"
@@ -102,10 +93,7 @@ document.querySelector(".inc").click();
 UPDATE: span::text "x1" => "x2"
 ```
 
-# Update
-```js
-document.querySelector(".focus").click();
-```
+# Update `click(".focus")`
 ```html
 <button
   class="mount"

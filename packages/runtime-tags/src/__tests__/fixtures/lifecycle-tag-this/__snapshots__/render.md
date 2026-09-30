@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#increment")?.click();
-```
+# Update `click("#increment")`
 ```html
 <div
   id="ref"
@@ -34,10 +31,7 @@ REMOVE: #ref::text("x=0, was=undefined")
 INSERT: #ref::text("x=1, was=0")
 ```
 
-# Update
-```js
-document.querySelector("#increment")?.click();
-```
+# Update `click("#increment")`
 ```html
 <div
   id="ref"

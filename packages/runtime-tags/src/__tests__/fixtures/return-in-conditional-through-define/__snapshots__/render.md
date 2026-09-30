@@ -5,10 +5,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle
@@ -23,10 +20,7 @@ INSERT: button + div
 UPDATE: div::text@7 "" => "foo"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle
@@ -37,10 +31,7 @@ document.querySelector("button").click();
 REMOVE: button + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle

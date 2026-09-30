@@ -16,10 +16,7 @@ REMOVE: ::text("loading button")
 INSERT: button
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html
@@ -41,10 +38,7 @@ LOG "button effect"
 LOG "effect 0"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   1

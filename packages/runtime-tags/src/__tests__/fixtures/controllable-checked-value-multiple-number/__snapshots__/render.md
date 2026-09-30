@@ -21,10 +21,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelectorAll(`input`)[0].click();
-```
+# Update `click("input")`
 ```html
 <input
   checked=""
@@ -52,10 +49,7 @@ document.querySelectorAll(`input`)[0].click();
 UPDATE: span::text "1" => "1,0"
 ```
 
-# Update
-```js
-document.querySelectorAll(`input`)[1].click();
-```
+# Update `click("input", 1)`
 ```html
 <input
   checked=""
@@ -83,10 +77,7 @@ document.querySelectorAll(`input`)[1].click();
 UPDATE: span::text "1,0" => "0"
 ```
 
-# Update
-```js
-document.querySelectorAll(`input`)[2].click();
-```
+# Update `click("input", 2)`
 ```html
 <input
   checked=""
@@ -115,10 +106,7 @@ document.querySelectorAll(`input`)[2].click();
 UPDATE: span::text "0" => "0,2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <input
   type="checkbox"

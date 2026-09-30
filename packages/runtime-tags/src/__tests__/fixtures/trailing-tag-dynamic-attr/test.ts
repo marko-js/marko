@@ -1,10 +1,7 @@
 import type { TestConfig } from "../../main.test";
-
-function click(document: Document) {
-  document.querySelector("button")?.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   skip_csr: true,
-  steps: [{}, click, click],
+  steps: [{}, click("button"), click("button")],
 };

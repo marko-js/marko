@@ -12,10 +12,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <section
   id="h"

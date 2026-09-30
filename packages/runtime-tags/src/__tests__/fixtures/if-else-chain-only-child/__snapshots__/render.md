@@ -10,10 +10,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   1
@@ -31,10 +28,7 @@ REMOVE: div > p
 INSERT: div > i
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2
@@ -52,10 +46,7 @@ REMOVE: div > i
 INSERT: div > b
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   3

@@ -19,10 +19,7 @@
 </span>
 ```
 
-# Update
-```js
-document.querySelectorAll(`input`)[1].click();
-```
+# Update `click("input", 1)`
 ```html
 <input
   checked=""
@@ -47,10 +44,7 @@ document.querySelectorAll(`input`)[1].click();
 UPDATE: span::text "a,b" => "a"
 ```
 
-# Update
-```js
-document.querySelectorAll(`input`)[2].click();
-```
+# Update `click("input", 2)`
 ```html
 <input
   checked=""
@@ -76,10 +70,7 @@ document.querySelectorAll(`input`)[2].click();
 UPDATE: span::text "a" => "a,c"
 ```
 
-# Update
-```js
-document.querySelectorAll(`input`)[0].click();
-```
+# Update `click("input")`
 ```html
 <input
   default-checked=""

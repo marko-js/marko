@@ -53,10 +53,7 @@ LOG 0
 LOG 0
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div />
 <span>

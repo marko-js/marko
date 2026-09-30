@@ -6,10 +6,7 @@
 loading
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   b
@@ -21,10 +18,7 @@ loading
 UPDATE: button::text "a" => "b"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 loading

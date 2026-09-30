@@ -1,15 +1,16 @@
 import type { TestConfig } from "../../main.test";
 import { flush, wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{ value: 1 }, wait, flush, wait, clickSync, clickAsync, wait],
+  steps: [
+    { value: 1 },
+    wait,
+    flush,
+    wait,
+    click("#sync"),
+    click("#async"),
+    wait,
+  ],
   equivalent: false,
 };
-
-function clickSync(document: Document) {
-  document.querySelector<HTMLButtonElement>("#sync")!.click();
-}
-
-function clickAsync(document: Document) {
-  document.querySelector<HTMLButtonElement>("#async")!.click();
-}

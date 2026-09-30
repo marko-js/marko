@@ -10,10 +10,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div
   title="set"
@@ -29,10 +26,7 @@ document.querySelector("button").click();
 UPDATE: div[title] "" => "set"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div
   title=""

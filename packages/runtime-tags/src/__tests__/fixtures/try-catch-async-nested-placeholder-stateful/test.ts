@@ -1,8 +1,6 @@
 import type { TestConfig } from "../../main.test";
 import { flush, wait } from "../../utils/resolve";
-
-const click = (document: Document) =>
-  document.querySelector<HTMLButtonElement>("button")!.click();
+import { click } from "../../utils/steps";
 
 // The outer body writes nothing before going async and the stateful content
 // sits in an inner placeholder body that is reordered out of the outer chunk
@@ -10,5 +8,5 @@ const click = (document: Document) =>
 // slot arrives at settle (see the html snapshot) and the body resumes.
 export const config: TestConfig = {
   equivalent: false,
-  steps: [{}, flush, wait, flush, wait, click],
+  steps: [{}, flush, wait, flush, wait, click("button")],
 };

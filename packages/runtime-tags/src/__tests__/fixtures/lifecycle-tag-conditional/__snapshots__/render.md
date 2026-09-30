@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#increment")?.click();
-```
+# Update `click("#increment")`
 ```html
 <div
   id="ref"
@@ -44,10 +41,7 @@ REMOVE: #ref::text("Mount 0")
 INSERT: #ref::text("Update 1")
 ```
 
-# Update
-```js
-document.querySelector("#toggle")?.click();
-```
+# Update `click("#toggle")`
 ```html
 <div
   id="ref"
@@ -71,15 +65,9 @@ REMOVE: #ref::text("Update 1")
 INSERT: #ref::text("Destroy")
 ```
 
-# Update
-```js
-document.querySelector("#increment")?.click();
-```
+# Update `click("#increment")`
 
-# Update
-```js
-document.querySelector("#toggle")?.click();
-```
+# Update `click("#toggle")`
 ```html
 <div
   id="ref"

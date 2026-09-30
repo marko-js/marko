@@ -15,10 +15,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#toggle")).click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -36,10 +33,7 @@
 REMOVE: #toggle + span
 ```
 
-# Update
-```js
-(document.querySelector("#toggle")).click();
-```
+# Update `click("#toggle")`
 
 # Update
 ```html
@@ -66,10 +60,7 @@ INSERT: #toggle + span
 LOG "loaded"
 ```
 
-# Update
-```js
-(document.querySelector("#inc")).click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="toggle"

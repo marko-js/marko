@@ -1,11 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { flushRAF, wait } from "../../utils/resolve";
-
-function inc(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{ value: 1 }, flushRAF, wait, inc],
+  steps: [{ value: 1 }, flushRAF, wait, click("button")],
   equivalent: false,
 };

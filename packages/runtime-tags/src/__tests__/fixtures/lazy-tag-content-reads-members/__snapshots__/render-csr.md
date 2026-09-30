@@ -20,10 +20,7 @@ INSERT: button + section
 UPDATE: section::text " " => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   inc

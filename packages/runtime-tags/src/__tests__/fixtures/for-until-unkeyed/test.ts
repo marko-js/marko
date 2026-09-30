@@ -1,13 +1,6 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, more, none, more],
+  steps: [{}, click(".more"), click(".none"), click(".more")],
 };
-
-function more(document: Document) {
-  document.querySelector<HTMLButtonElement>(".more")!.click();
-}
-
-function none(document: Document) {
-  document.querySelector<HTMLButtonElement>(".none")!.click();
-}

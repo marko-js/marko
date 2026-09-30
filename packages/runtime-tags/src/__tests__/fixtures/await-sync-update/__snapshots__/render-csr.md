@@ -6,10 +6,7 @@ Got: v0
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 Got: v1
 <button>
@@ -21,10 +18,7 @@ Got: v1
 UPDATE: ::text@5 "v0" => "v1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 Got: v2
 <button>

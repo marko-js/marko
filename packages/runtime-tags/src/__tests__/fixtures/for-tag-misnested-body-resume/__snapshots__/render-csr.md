@@ -20,10 +20,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".count").click();
-```
+# Update `click(".count")`
 ```html
 <table>
   <div>

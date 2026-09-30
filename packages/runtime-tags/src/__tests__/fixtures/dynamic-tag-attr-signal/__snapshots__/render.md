@@ -8,10 +8,7 @@
 <button />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <p
   class="B"
@@ -25,10 +22,7 @@ document.querySelector("button").click();
 UPDATE: .B[class] "A" => "B"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <p
   class="A"

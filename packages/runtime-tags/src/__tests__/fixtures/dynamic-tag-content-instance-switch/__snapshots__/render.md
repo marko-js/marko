@@ -20,10 +20,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   class="bump"
@@ -51,10 +48,7 @@ REMOVE: div + div
 UPDATE: div::text@6 "" => "2"
 ```
 
-# Update
-```js
-document.querySelectorAll(".bump")[1].click();
-```
+# Update `click(".bump", 1)`
 ```html
 <button
   class="bump"
@@ -80,10 +74,7 @@ document.querySelectorAll(".bump")[1].click();
 UPDATE: div::text@6 "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   class="bump"

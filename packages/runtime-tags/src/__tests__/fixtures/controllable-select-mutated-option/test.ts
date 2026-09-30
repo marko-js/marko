@@ -1,21 +1,14 @@
 import type { TestConfig } from "../../main.test";
-
-function clickAdd(document: Document) {
-  document.querySelector<HTMLButtonElement>(".add")!.click();
-}
-
-function clickRemove(document: Document) {
-  document.querySelector<HTMLButtonElement>(".remove")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   steps: [
     {},
-    clickRemove,
-    clickRemove,
-    clickRemove,
-    clickAdd,
-    clickAdd,
-    clickAdd,
+    click(".remove"),
+    click(".remove"),
+    click(".remove"),
+    click(".add"),
+    click(".add"),
+    click(".add"),
   ],
 };

@@ -36,10 +36,7 @@ INSERT: button + div
 UPDATE: div::text " " => "0"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   1

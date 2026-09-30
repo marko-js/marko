@@ -8,10 +8,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   inc
@@ -25,10 +22,7 @@ document.querySelector("button").click();
 UPDATE: div::text "8" => "28"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   inc

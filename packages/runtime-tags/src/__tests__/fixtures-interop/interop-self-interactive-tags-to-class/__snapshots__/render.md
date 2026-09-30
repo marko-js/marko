@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#class-api")).click();
-```
+# Update `click("#class-api")`
 ```html
 <div
   id="tags-api"
@@ -33,10 +30,7 @@
 UPDATE: #class-api::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#class-api")).click();
-```
+# Update `click("#class-api")`
 ```html
 <div
   id="tags-api"

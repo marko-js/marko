@@ -1,14 +1,7 @@
 import type { TestConfig } from "../../main.test";
-
-function clickInner(document: Document) {
-  (document.querySelector("#inner") as HTMLElement).click();
-}
-
-function clickTags(document: Document) {
-  (document.querySelector("#tags") as HTMLButtonElement).click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   skip_optimize: true,
-  steps: [{}, clickInner, clickTags],
+  steps: [{}, click("#inner"), click("#tags")],
 };

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 // Tracks observers still attached, so replacing one reads the same as never
 // attaching a second.
@@ -19,9 +20,6 @@ const trackObservers = (document: Document) => {
     }
   };
 };
-
-const bump = (document: Document) =>
-  document.querySelector<HTMLButtonElement>("button")!.click();
 
 const assertNoExtraObservers = (document: Document) => {
   const attached = (document.defaultView as any).__attached;
@@ -44,8 +42,8 @@ export const config: TestConfig = {
   steps: [
     {},
     trackObservers,
-    bump,
-    bump,
+    click("button"),
+    click("button"),
     assertNoExtraObservers,
     toggle,
     toggle,

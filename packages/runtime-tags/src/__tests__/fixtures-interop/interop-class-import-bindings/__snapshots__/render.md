@@ -38,10 +38,7 @@ Namespace: namespace
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#named-tags")).click();
-```
+# Update `click("#named-tags")`
 ```html
 <button
   id="class"
@@ -85,10 +82,7 @@ Namespace: namespace
 UPDATE: #named-tags::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#class")).click();
-```
+# Update `click("#class")`
 ```html
 <button
   id="class"
@@ -134,10 +128,7 @@ UPDATE: #named-tags[data-parent] "0" => "1"
 UPDATE: #class::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#direct")).click();
-```
+# Update `click("#direct")`
 ```html
 <button
   id="class"
@@ -181,10 +172,7 @@ Namespace: namespace
 UPDATE: #direct::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#named-tags")).click();
-```
+# Update `click("#named-tags")`
 ```html
 <button
   id="class"
@@ -228,10 +216,7 @@ Namespace: namespace
 UPDATE: #named-tags::text "1" => "2"
 ```
 
-# Update
-```js
-(document.querySelector("#class")).click();
-```
+# Update `click("#class")`
 ```html
 <button
   id="class"

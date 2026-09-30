@@ -1,9 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-function deeper(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, deeper, deeper],
+  steps: [{}, click("button"), click("button")],
 };

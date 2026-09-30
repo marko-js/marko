@@ -20,10 +20,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle
@@ -50,10 +47,7 @@ UPDATE: #bar[id] "cM_0" => "bar"
 UPDATE: #cM_1[id] "baz" => "cM_1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle

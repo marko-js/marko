@@ -6,10 +6,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 369
 <button>
@@ -24,10 +21,7 @@ UPDATE: ::text@1 "4" => "6"
 UPDATE: ::text@2 "6" => "9"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 4812
 <button>
@@ -42,10 +36,7 @@ UPDATE: ::text@1 "6" => "8"
 UPDATE: ::text@2 "9" => "12"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 51015
 <button>

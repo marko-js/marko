@@ -6,10 +6,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <div
@@ -23,10 +20,7 @@ REMOVE: #dynamic + div
 UPDATE: #dynamic[id] null => "dynamic"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <div>

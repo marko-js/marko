@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 
 # Update
 ```html

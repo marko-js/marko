@@ -5,26 +5,8 @@
 </textarea>
 ```
 
-# Update
-```js
-const textarea = document.querySelector("textarea");
-const window = textarea.ownerDocument.defaultView;
-textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("textarea", "w")`
 
-# Update
-```js
-const textarea = document.querySelector("textarea");
-const window = textarea.ownerDocument.defaultView;
-textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("textarea", "wor")`
 
-# Update
-```js
-const textarea = document.querySelector("textarea");
-const window = textarea.ownerDocument.defaultView;
-textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("textarea", "world")`

@@ -1,8 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-const pickB = (document: Document) =>
-  document.querySelectorAll("button")[1].click();
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, pickB],
+  steps: [{}, click("button", 1)],
 };

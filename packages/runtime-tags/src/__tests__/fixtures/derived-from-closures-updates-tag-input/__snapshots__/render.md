@@ -11,10 +11,7 @@
 </a>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   a:shut
@@ -32,10 +29,7 @@ UPDATE: button::text "a:open" => "a:shut"
 UPDATE: .odd[class] "even" => "odd"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   a:open
@@ -53,10 +47,7 @@ UPDATE: button::text "a:shut" => "a:open"
 UPDATE: .even[class] "odd" => "even"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   a:shut

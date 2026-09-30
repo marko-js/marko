@@ -15,10 +15,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -40,10 +37,7 @@ UPDATE: #tags::text "0" => "1"
 UPDATE: div::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -65,10 +59,7 @@ UPDATE: #tags::text "1" => "2"
 UPDATE: div::text "1" => "2"
 ```
 
-# Update
-```js
-(document.querySelector("#toggle")).click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="tags"

@@ -1,24 +1,17 @@
 import type { TestConfig } from "../../main.test";
 import { flushRAF, wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   steps: [
     {},
     wait,
-    clickParent,
+    click(".parent"),
     flushRAF,
-    clickParent,
+    click(".parent"),
     wait,
     flushRAF,
-    clickChild,
+    click(".child"),
   ],
   equivalent: false,
 };
-
-function clickParent(document: Document) {
-  document.querySelector<HTMLButtonElement>(".parent")!.click();
-}
-
-function clickChild(document: Document) {
-  document.querySelector<HTMLButtonElement>(".child")!.click();
-}

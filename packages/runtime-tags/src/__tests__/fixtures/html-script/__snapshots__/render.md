@@ -16,12 +16,7 @@
 </div>
 ```
 
-# Update
-```js
-document
-.querySelector(`script[type="importmap"]`) 
-.click();
-```
+# Update `click("script[type=\"importmap\"]")`
 ```html
 <script
   type="importmap"
@@ -45,12 +40,7 @@ INSERT: script::text("\n  {\n    \"imports\": {\n      \"1\": \"https://markojs.
 UPDATE: div::text "0" => "1"
 ```
 
-# Update
-```js
-document
-.querySelector(`script[type="importmap"]`) 
-.click();
-```
+# Update `click("script[type=\"importmap\"]")`
 ```html
 <script
   type="importmap"
@@ -74,12 +64,7 @@ INSERT: script::text("\n  {\n    \"imports\": {\n      \"2\": \"https://markojs.
 UPDATE: div::text "1" => "2"
 ```
 
-# Update
-```js
-document
-.querySelector(`script[type="importmap"]`) 
-.click();
-```
+# Update `click("script[type=\"importmap\"]")`
 ```html
 <script
   type="importmap"

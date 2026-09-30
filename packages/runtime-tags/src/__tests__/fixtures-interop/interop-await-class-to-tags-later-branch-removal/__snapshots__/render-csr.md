@@ -32,10 +32,7 @@ INSERT: .inc
 UPDATE: .inc::text " " => "0"
 ```
 
-# Update
-```js
-document.querySelector(".hide").click();
-```
+# Update `click(".hide")`
 ```html
 <button
   class="inc"
@@ -53,10 +50,7 @@ document.querySelector(".hide").click();
 REMOVE: .inc + span
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="inc"

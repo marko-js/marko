@@ -1,15 +1,14 @@
 import type { TestConfig } from "../../main.test";
-
-function toggle(document: Document) {
-  document.querySelector<HTMLButtonElement>("button#toggle")!.click();
-}
-
-function cleanup(document: Document) {
-  document.querySelector<HTMLButtonElement>("button#cleanup")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   embedded: true,
   skip_csr: true,
-  steps: [{}, toggle, toggle, toggle, cleanup],
+  steps: [
+    {},
+    click("button#toggle"),
+    click("button#toggle"),
+    click("button#toggle"),
+    click("button#cleanup"),
+  ],
 };

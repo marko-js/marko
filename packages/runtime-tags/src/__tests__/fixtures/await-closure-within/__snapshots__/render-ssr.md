@@ -20,10 +20,7 @@ REMOVE: ::text("loading...")
 INSERT: button, span
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2
@@ -38,10 +35,7 @@ UPDATE: button::text "1" => "2"
 UPDATE: span::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   3

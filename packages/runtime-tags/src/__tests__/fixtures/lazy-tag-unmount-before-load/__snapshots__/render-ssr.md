@@ -6,10 +6,7 @@
 loading
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle
@@ -31,10 +28,7 @@ REMOVE: button + ::text("loading")
 INSERT: t > span::text("1")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html

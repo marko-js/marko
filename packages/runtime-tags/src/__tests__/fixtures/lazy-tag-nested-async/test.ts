@@ -1,5 +1,6 @@
 import type { TestConfig } from "../../main.test";
 import { flush, wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   steps: [
@@ -9,18 +10,10 @@ export const config: TestConfig = {
     wait,
     flush,
     wait,
-    clickChild,
+    click("#child"),
     wait,
-    clickGrand,
+    click("#grand"),
     wait,
   ],
   equivalent: false,
 };
-
-function clickChild(document: Document) {
-  document.querySelector<HTMLButtonElement>("#child")!.click();
-}
-
-function clickGrand(document: Document) {
-  document.querySelector<HTMLButtonElement>("#grand")!.click();
-}

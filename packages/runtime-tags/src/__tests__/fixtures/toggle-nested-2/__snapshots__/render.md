@@ -15,10 +15,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("#count").click();
-```
+# Update `click("#count")`
 ```html
 <div>
   <button
@@ -39,10 +36,7 @@ document.querySelector("#count").click();
 UPDATE: #count::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#count").click();
-```
+# Update `click("#count")`
 ```html
 <div>
   <button
@@ -63,10 +57,7 @@ document.querySelector("#count").click();
 UPDATE: #count::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#inner").click();
-```
+# Update `click("#inner")`
 ```html
 <div>
   <button
@@ -82,10 +73,7 @@ document.querySelector("#inner").click();
 REMOVE: #inner + #count
 ```
 
-# Update
-```js
-document.querySelector("#inner").click();
-```
+# Update `click("#inner")`
 ```html
 <div>
   <button
@@ -107,10 +95,7 @@ INSERT: #inner + #count
 UPDATE: #count::text " " => "2"
 ```
 
-# Update
-```js
-document.querySelector("#count").click();
-```
+# Update `click("#count")`
 ```html
 <div>
   <button
@@ -131,10 +116,7 @@ document.querySelector("#count").click();
 UPDATE: #count::text "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("#outer").click();
-```
+# Update `click("#outer")`
 ```html
 <div>
   <button
@@ -148,10 +130,7 @@ REMOVE: #outer + #inner
 REMOVE: #outer + #count
 ```
 
-# Update
-```js
-document.querySelector("#outer").click();
-```
+# Update `click("#outer")`
 ```html
 <div>
   <button
@@ -174,10 +153,7 @@ INSERT: #inner + #count
 UPDATE: #count::text " " => "3"
 ```
 
-# Update
-```js
-document.querySelector("#count").click();
-```
+# Update `click("#count")`
 ```html
 <div>
   <button

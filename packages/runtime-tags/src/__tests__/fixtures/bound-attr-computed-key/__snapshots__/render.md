@@ -8,13 +8,7 @@
 />
 ```
 
-# Update
-```js
-const input = document.querySelector("input");
-const window = input.ownerDocument.defaultView;
-input.value = value;
-input.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("input", "z")`
 ```html
 <div>
   v=z|wrong=

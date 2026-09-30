@@ -19,10 +19,7 @@
 INSERT: button + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc
@@ -33,10 +30,7 @@ document.querySelector("button").click();
 REMOVE: button + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc
@@ -50,10 +44,7 @@ document.querySelector("button").click();
 INSERT: button + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc
@@ -64,10 +55,7 @@ document.querySelector("button").click();
 REMOVE: button + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc

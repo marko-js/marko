@@ -1,13 +1,10 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 // Two independent load tags load concurrently; both should render correctly
 // and keep in sync with the shared reactive value after load.
 export const config: TestConfig = {
-  steps: [{}, wait, click],
+  steps: [{}, wait, click("button")],
   equivalent: false,
 };

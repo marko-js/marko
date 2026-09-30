@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span>
   first 2 2
@@ -47,10 +44,7 @@ UPDATE: span:nth-of-type(3)::text@6 "" => "2"
 UPDATE: span:nth-of-type(4)::text@7 "" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span>
   first 3 3

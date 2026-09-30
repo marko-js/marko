@@ -21,10 +21,7 @@ INSERT: button::text("0")
 INSERT: button::text@0 + ::text(":10")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   before

@@ -16,10 +16,7 @@ UPDATE: p::text " " => "hello"
 UPDATE: button::text " " => "0"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <p>
   hello

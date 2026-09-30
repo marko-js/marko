@@ -3,10 +3,7 @@
 <button />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 hi
@@ -16,10 +13,7 @@ hi
 INSERT: button + ::text("hi")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 ```
@@ -28,10 +22,7 @@ document.querySelector("button").click();
 REMOVE: button + ::text("hi")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 hi

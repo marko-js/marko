@@ -8,10 +8,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   a
@@ -36,10 +33,7 @@ INSERT: div:nth-of-type(1) + div
 INSERT: div:nth-of-type(3) + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   a

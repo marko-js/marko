@@ -14,10 +14,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#increment")?.click();
-```
+# Update `click("#increment")`
 ```html
 <div>
   x=
@@ -38,10 +35,7 @@ UPDATE: div > span::text "0" => "1"
 UPDATE: div::text@8 "" => "0"
 ```
 
-# Update
-```js
-document.querySelector("#increment")?.click();
-```
+# Update `click("#increment")`
 ```html
 <div>
   x=

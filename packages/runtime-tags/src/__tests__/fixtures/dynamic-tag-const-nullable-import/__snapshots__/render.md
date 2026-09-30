@@ -6,10 +6,7 @@ Fallback Body
 />
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <div
   class="custom"
@@ -27,10 +24,7 @@ REMOVE: .custom + ::text("Fallback Body")
 UPDATE: .custom::text@7 "" => "with"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 Fallback Body
 <button

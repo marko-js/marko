@@ -23,10 +23,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#toggle")).click();
-```
+# Update `click("#toggle")`
 ```html
 <ul
   hidden=""
@@ -57,10 +54,7 @@
 UPDATE: ul[hidden] null => ""
 ```
 
-# Update
-```js
-(document.querySelector("#toggle")).click();
-```
+# Update `click("#toggle")`
 ```html
 <ul>
   <li>
@@ -89,10 +83,7 @@ UPDATE: ul[hidden] null => ""
 UPDATE: ul[hidden] "" => null
 ```
 
-# Update
-```js
-(document.querySelector("#reverse")).click();
-```
+# Update `click("#reverse")`
 ```html
 <ul>
   <li>

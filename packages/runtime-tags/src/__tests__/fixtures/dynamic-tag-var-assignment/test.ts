@@ -1,13 +1,12 @@
 import type { TestConfig } from "../../main.test";
-
-const increment = (document: Document) => {
-  document.querySelector<HTMLButtonElement>("button.inc")!.click();
-};
-
-const reset = (document: Document) => {
-  document.querySelector<HTMLButtonElement>("button.reset")!.click();
-};
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, increment, increment, reset, increment],
+  steps: [
+    {},
+    click("button.inc"),
+    click("button.inc"),
+    click("button.reset"),
+    click("button.inc"),
+  ],
 };

@@ -40,10 +40,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".remove").click();
-```
+# Update `click(".remove")`
 ```html
 <form>
   <select>
@@ -85,10 +82,7 @@ REMOVE: form > select > option
 UPDATE: div::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector(".remove").click();
-```
+# Update `click(".remove")`
 ```html
 <form>
   <select>
@@ -125,10 +119,7 @@ REMOVE: form > select > option
 UPDATE: div::text "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector(".remove").click();
-```
+# Update `click(".remove")`
 ```html
 <form>
   <select />
@@ -156,10 +147,7 @@ REMOVE: form > select > option
 UPDATE: div::text "3" => ""
 ```
 
-# Update
-```js
-document.querySelector(".add").click();
-```
+# Update `click(".add")`
 ```html
 <form>
   <select>
@@ -198,10 +186,7 @@ UPDATE: form > select > option::text " " => "3"
 UPDATE: div::text "" => "3"
 ```
 
-# Update
-```js
-document.querySelector(".add").click();
-```
+# Update `click(".add")`
 ```html
 <form>
   <select>
@@ -244,10 +229,7 @@ UPDATE: form > select > option:nth-of-type(1)[value] null => "2"
 UPDATE: form > select > option:nth-of-type(1)::text " " => "2"
 ```
 
-# Update
-```js
-document.querySelector(".add").click();
-```
+# Update `click(".add")`
 ```html
 <form>
   <select>

@@ -4,10 +4,7 @@
 <button />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   [onClick(hello)]
@@ -19,10 +16,7 @@ document.querySelector("button").click();
 INSERT: div::text("[onClick(hello)]")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   [onClick(hello)][onClick(hello)]
@@ -35,10 +29,7 @@ REMOVE: div::text("[onClick(hello)]")
 INSERT: div::text("[onClick(hello)][onClick(hello)]")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   [onClick(hello)][onClick(hello)][onClick(hello)]

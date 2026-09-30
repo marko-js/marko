@@ -14,10 +14,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -37,10 +34,7 @@
 UPDATE: #tags::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#class")).click();
-```
+# Update `click("#class")`
 ```html
 <button
   id="tags"
@@ -62,10 +56,7 @@ INSERT: div > #class
 INSERT: #class::text("1")
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -85,10 +76,7 @@ INSERT: #class::text("1")
 UPDATE: #tags::text "1" => "2"
 ```
 
-# Update
-```js
-(document.querySelector("#class")).click();
-```
+# Update `click("#class")`
 ```html
 <button
   id="tags"
@@ -110,10 +98,7 @@ INSERT: div > #class
 INSERT: #class::text("2")
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"

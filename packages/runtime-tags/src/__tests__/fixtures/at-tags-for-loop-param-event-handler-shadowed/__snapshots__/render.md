@@ -11,10 +11,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[0].click();
-```
+# Update `click("button")`
 ```html
 <button>
   a
@@ -32,10 +29,7 @@ REMOVE: button:nth-of-type(1)::text("a")
 INSERT: button:nth-of-type(1)::text("a")
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[1].click();
-```
+# Update `click("button", 1)`
 ```html
 <button>
   a

@@ -8,10 +8,7 @@
 <button />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div
   class="A"
@@ -28,10 +25,7 @@ INSERT: .A::text("body content")
 UPDATE: .A[class] null => "A"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span
   class="A"

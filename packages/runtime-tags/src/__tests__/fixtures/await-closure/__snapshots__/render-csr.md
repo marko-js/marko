@@ -17,10 +17,7 @@ loading...
 INSERT: button + ::text("loading...")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2
@@ -32,10 +29,7 @@ loading...
 UPDATE: button::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   3
@@ -62,10 +56,7 @@ INSERT: button + span
 REMOVE: span + ::text("loading...")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   4

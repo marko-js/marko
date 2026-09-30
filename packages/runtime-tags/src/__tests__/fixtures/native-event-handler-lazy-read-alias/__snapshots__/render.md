@@ -20,10 +20,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector(".bump").click();
-```
+# Update `click(".bump")`
 ```html
 <button
   class="bump"
@@ -49,10 +46,7 @@ document.querySelector(".bump").click();
 UPDATE: .n::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".show").click();
-```
+# Update `click(".show")`
 ```html
 <button
   class="bump"

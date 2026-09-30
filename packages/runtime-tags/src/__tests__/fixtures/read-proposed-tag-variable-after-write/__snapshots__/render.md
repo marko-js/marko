@@ -9,10 +9,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <button>
@@ -33,10 +30,7 @@ INSERT: div > div:nth-of-type(2)::text("1")
 UPDATE: div > button::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <button>
@@ -59,10 +53,7 @@ INSERT: div > div:nth-of-type(2)::text("2")
 UPDATE: div > button::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <button>

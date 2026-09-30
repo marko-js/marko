@@ -13,10 +13,7 @@
 </ul>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <ul
@@ -38,10 +35,7 @@ document.querySelector("button").click();
 INSERT: .attached > li:nth-of-type(2) + li
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <ul
@@ -66,10 +60,7 @@ document.querySelector("button").click();
 INSERT: .attached > li:nth-of-type(3) + li
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <ul

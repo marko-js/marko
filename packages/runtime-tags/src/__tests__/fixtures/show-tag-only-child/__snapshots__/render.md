@@ -18,10 +18,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle
@@ -45,10 +42,7 @@ REMOVE: #a > span
 INSERT: #b > :is(::text("fallback "), b)
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle

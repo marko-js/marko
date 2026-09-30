@@ -5,10 +5,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Clicked 1 times
@@ -19,10 +16,7 @@ document.querySelector("button").click();
 UPDATE: button::text@8 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Clicked 2 times
@@ -33,10 +27,7 @@ document.querySelector("button").click();
 UPDATE: button::text@8 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Clicked 3 times
@@ -47,7 +38,4 @@ document.querySelector("button").click();
 UPDATE: button::text@8 "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`

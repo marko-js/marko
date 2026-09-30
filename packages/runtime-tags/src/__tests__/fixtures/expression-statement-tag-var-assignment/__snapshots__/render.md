@@ -17,20 +17,11 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".change").click();
-```
+# Update `click(".change")`
 
-# Update
-```js
-document.querySelector(".up").click();
-```
+# Update `click(".up")`
 
-# Update
-```js
-document.querySelector(".change").click();
-```
+# Update `click(".change")`
 ```html
 <button
   class="up"
@@ -53,10 +44,7 @@ document.querySelector(".change").click();
 UPDATE: .change::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector(".change").click();
-```
+# Update `click(".change")`
 ```html
 <button
   class="up"
@@ -79,15 +67,9 @@ document.querySelector(".change").click();
 UPDATE: .change::text "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector(".down").click();
-```
+# Update `click(".down")`
 
-# Update
-```js
-document.querySelector(".change").click();
-```
+# Update `click(".change")`
 ```html
 <button
   class="up"
@@ -110,10 +92,7 @@ document.querySelector(".change").click();
 UPDATE: .change::text "3" => "2"
 ```
 
-# Update
-```js
-document.querySelector(".change").click();
-```
+# Update `click(".change")`
 ```html
 <button
   class="up"

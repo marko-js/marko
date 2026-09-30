@@ -11,10 +11,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle
@@ -30,10 +27,7 @@ REMOVE: div::text("mounted")
 INSERT: div::text("destroyed")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle
@@ -52,10 +46,7 @@ REMOVE: div:nth-of-type(1)::text("destroyed")
 INSERT: div:nth-of-type(1)::text("mounted")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle

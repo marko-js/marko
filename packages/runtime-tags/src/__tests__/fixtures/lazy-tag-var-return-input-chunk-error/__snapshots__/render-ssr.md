@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".mount").click();
-```
+# Update `click(".mount")`
 ```html
 <button
   class="mount"

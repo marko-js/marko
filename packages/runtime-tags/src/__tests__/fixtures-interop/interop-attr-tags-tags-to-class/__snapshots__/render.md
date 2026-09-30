@@ -27,10 +27,7 @@
 </ul>
 ```
 
-# Update
-```js
-(document.querySelectorAll("#list button")[1]).click();
-```
+# Update `click("#list button", 1)`
 ```html
 <button
   id="tags"

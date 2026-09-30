@@ -9,10 +9,7 @@
 The count is 0
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"
@@ -27,10 +24,7 @@ The count is 1
 UPDATE: ::text@13 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button.toggle").click();
-```
+# Update `click("button.toggle")`
 ```html
 <button
   class="inc"
@@ -45,15 +39,9 @@ REMOVE: .toggle + ::text("The count is ")
 REMOVE: .toggle + ::text("1")
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 
-# Update
-```js
-document.querySelector("button.toggle").click();
-```
+# Update `click("button.toggle")`
 ```html
 <button
   class="inc"
@@ -69,10 +57,7 @@ INSERT: .toggle + :is(::text("The count is "), ::text("2"))
 UPDATE: ::text@13 "" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"

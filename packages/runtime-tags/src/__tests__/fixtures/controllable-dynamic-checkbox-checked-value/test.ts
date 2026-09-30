@@ -1,17 +1,12 @@
 import type { TestConfig } from "../../main.test";
-
-function clickA(document: Document) {
-  document.querySelector<HTMLInputElement>(`input[value=a]`)!.click();
-}
-
-function clickB(document: Document) {
-  document.querySelector<HTMLInputElement>(`input[value=b]`)!.click();
-}
-
-function toggleB(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, clickB, toggleB, toggleB, clickA],
+  steps: [
+    {},
+    click("input[value=b]"),
+    click("button"),
+    click("button"),
+    click("input[value=a]"),
+  ],
 };

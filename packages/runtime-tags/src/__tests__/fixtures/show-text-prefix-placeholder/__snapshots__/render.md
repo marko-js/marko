@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <strong>
   + 8
@@ -47,10 +44,7 @@ UPDATE: b::text@2 "3" => "8"
 REMOVE: em::text + ::text("8")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <strong>
   + 13

@@ -10,10 +10,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#increment")?.click();
-```
+# Update `click("#increment")`
 ```html
 <div
   id="ref"

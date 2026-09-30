@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"
@@ -34,10 +31,7 @@ UPDATE: #inc::text@0 "1" => "3"
 UPDATE: #inc::text@2 "1" => "3"
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"
@@ -56,15 +50,9 @@ UPDATE: #inc::text@0 "3" => "5"
 UPDATE: #inc::text@2 "3" => "5"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"
@@ -82,10 +70,7 @@ document.querySelector("#inc").click();
 UPDATE: #inc::text@2 "5" => "6"
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"

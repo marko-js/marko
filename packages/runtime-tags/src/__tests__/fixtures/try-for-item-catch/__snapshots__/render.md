@@ -9,10 +9,7 @@
 -- --
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   1
@@ -28,10 +25,7 @@ REMOVE: div::text("0")
 INSERT: div::text("1")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   1

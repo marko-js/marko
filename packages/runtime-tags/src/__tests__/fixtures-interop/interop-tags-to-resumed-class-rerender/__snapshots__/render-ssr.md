@@ -15,10 +15,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -42,10 +39,7 @@ INSERT: div::text("1")
 REMOVE: div + div
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -67,10 +61,7 @@ UPDATE: #tags::text "1" => "2"
 UPDATE: div::text "1" => "2"
 ```
 
-# Update
-```js
-(document.querySelector("#toggle")).click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="tags"

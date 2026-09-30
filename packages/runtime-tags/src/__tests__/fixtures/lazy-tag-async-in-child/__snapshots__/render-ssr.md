@@ -32,10 +32,7 @@ INSERT: button + #after
 INSERT: #after::text("after")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div
   id="before"

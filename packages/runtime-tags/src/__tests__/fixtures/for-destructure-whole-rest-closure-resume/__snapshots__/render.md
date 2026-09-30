@@ -19,10 +19,7 @@
 </u>
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -38,10 +35,7 @@ REMOVE: #toggle + u
 REMOVE: #toggle + u
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"

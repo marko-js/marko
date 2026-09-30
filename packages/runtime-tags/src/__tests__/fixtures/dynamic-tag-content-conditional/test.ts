@@ -1,9 +1,6 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [
-    {},
-    (document: Document) =>
-      document.querySelector<HTMLButtonElement>("#toggle")!.click(),
-  ],
+  steps: [{}, click("#toggle")],
 };

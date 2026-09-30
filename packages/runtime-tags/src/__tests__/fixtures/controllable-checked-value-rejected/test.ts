@@ -1,10 +1,7 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
-
-function clickB(document: Document) {
-  document.querySelectorAll(`input`)[1]!.click();
-}
+import { click } from "../../utils/steps";
 
 function assertGroupReverted(document: Document) {
   assert.deepEqual(
@@ -16,5 +13,5 @@ function assertGroupReverted(document: Document) {
 }
 
 export const config: TestConfig = {
-  steps: [{}, clickB, assertGroupReverted],
+  steps: [{}, click("input", 1), assertGroupReverted],
 };

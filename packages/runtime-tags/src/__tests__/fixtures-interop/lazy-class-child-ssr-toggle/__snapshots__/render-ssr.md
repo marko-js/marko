@@ -12,10 +12,7 @@
 </span>
 ```
 
-# Update
-```js
-(document.querySelector("#toggle")).click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -28,10 +25,7 @@
 REMOVE: #toggle + #child
 ```
 
-# Update
-```js
-(document.querySelector("#toggle")).click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"

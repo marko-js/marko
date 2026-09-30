@@ -6,10 +6,7 @@
 2 4
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Increment
@@ -33,10 +30,7 @@ UPDATE: ::text@2 "4" => "5"
 UPDATE: ::text@0 "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Increment

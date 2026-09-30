@@ -68,10 +68,7 @@ INSERT: button
 UPDATE: button:nth-of-type(1)::text " " => "0"
 ```
 
-# Update
-```js
-document.querySelector(".hide").click();
-```
+# Update `click(".hide")`
 ```html
 <button
   class="inc"

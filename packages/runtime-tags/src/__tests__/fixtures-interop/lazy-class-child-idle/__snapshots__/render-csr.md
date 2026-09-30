@@ -30,10 +30,7 @@ INSERT: #child::text("0")
 LOG "loaded"
 ```
 
-# Update
-```js
-(document.querySelector("#inc")).click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"

@@ -1,11 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { flushIdle, wait } from "../../utils/resolve";
-
-function click(document: Document) {
-  (document.querySelector("#inc") as HTMLButtonElement).click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{ value: 1 }, flushIdle, wait, click],
+  steps: [{ value: 1 }, flushIdle, wait, click("#inc")],
   equivalent: false,
 };

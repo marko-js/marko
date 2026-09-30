@@ -13,10 +13,7 @@ UPDATE: button::text@0 "" => "ready"
 UPDATE: button::text@6 "" => "0"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 caught bang
 ```

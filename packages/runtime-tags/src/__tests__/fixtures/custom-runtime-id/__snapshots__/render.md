@@ -7,10 +7,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <button>
@@ -23,10 +20,7 @@ document.querySelector("button").click();
 UPDATE: div > button::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <button>

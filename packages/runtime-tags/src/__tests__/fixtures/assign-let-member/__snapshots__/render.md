@@ -32,15 +32,9 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".mutate").click();
-```
+# Update `click(".mutate")`
 
-# Update
-```js
-document.querySelector(".apply").click();
-```
+# Update `click(".apply")`
 ```html
 <ul>
   <li>

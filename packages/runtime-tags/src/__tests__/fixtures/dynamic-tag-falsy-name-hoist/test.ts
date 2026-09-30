@@ -1,13 +1,13 @@
 import type { TestConfig } from "../../main.test";
-
-function check(document: Document) {
-  document.querySelector<HTMLButtonElement>(".check")!.click();
-}
-
-function toggle(document: Document) {
-  document.querySelector<HTMLButtonElement>(".toggle")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{ tag: null }, check, toggle, check, toggle, check],
+  steps: [
+    { tag: null },
+    click(".check"),
+    click(".toggle"),
+    click(".check"),
+    click(".toggle"),
+    click(".check"),
+  ],
 };

@@ -12,10 +12,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -33,10 +30,7 @@
 UPDATE: #display::text "hi" => "hi!"
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"

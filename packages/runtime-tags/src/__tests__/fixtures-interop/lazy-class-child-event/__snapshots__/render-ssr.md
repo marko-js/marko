@@ -12,10 +12,7 @@
 </span>
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 
 # Update
 ```js
@@ -43,10 +40,7 @@ UPDATE: #child::text "0" => "1"
 LOG "loaded"
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"

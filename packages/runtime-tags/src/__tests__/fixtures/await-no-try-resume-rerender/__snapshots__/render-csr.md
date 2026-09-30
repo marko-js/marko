@@ -26,10 +26,7 @@ INSERT: #a + #out
 UPDATE: #out::text@5 "" => "0"
 ```
 
-# Update
-```js
-document.querySelector("#a").click();
-```
+# Update `click("#a")`
 
 # Update
 ```html

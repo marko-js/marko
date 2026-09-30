@@ -1,21 +1,18 @@
 import type { TestConfig } from "../../main.test";
 import { after, flush } from "../../utils/resolve";
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   equivalent: false,
   steps: [
     {},
     after(1),
-    click,
+    click("button"),
     after(2),
-    click,
+    click("button"),
     after(3),
     flush,
     after(5),
-    click,
+    click("button"),
   ],
 };

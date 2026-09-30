@@ -11,10 +11,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("button")).click();
-```
+# Update `click("button")`
 ```html
 <div>
   2
@@ -33,12 +30,6 @@ UPDATE: div:nth-of-type(1)::text "0" => "2"
 UPDATE: button::text "0,1" => "2,2"
 ```
 
-# Update
-```js
-(document.querySelector("button")).click();
-```
+# Update `click("button")`
 
-# Update
-```js
-(document.querySelector("button")).click();
-```
+# Update `click("button")`

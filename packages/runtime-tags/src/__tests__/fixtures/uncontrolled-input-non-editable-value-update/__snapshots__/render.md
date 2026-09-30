@@ -50,10 +50,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[0].click();
-```
+# Update `click("button")`
 ```html
 <form>
   <input
@@ -131,10 +128,7 @@ assert.equal(input.value, "b", `${input.type} value`);
 }
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[1].click();
-```
+# Update `click("button", 1)`
 ```html
 <form>
   <input

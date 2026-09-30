@@ -13,10 +13,7 @@ UPDATE: button::text@0 "" => "nope"
 UPDATE: button::text@5 "" => "0"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   nope 1

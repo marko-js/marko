@@ -6,10 +6,7 @@
 LOADING...
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html

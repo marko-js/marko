@@ -5,10 +5,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button")?.click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle
@@ -19,10 +16,7 @@ document.querySelector("button")?.click();
 UPDATE: body[data-toggle] null => ""
 ```
 
-# Update
-```js
-document.querySelector("button")?.click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle

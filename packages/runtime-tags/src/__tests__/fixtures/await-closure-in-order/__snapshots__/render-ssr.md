@@ -5,15 +5,9 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html
@@ -35,10 +29,7 @@ INSERT: span:nth-of-type(1) + span
 INSERT: span:nth-of-type(2)::text("1")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2

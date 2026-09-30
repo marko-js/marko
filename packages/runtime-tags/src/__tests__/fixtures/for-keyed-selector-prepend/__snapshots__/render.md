@@ -17,10 +17,7 @@
 </ul>
 ```
 
-# Update
-```js
-(document.querySelector("button.add")).click();
-```
+# Update `click("button.add")`
 ```html
 <button
   class="add"
@@ -48,10 +45,7 @@ UPDATE: .danger[class] null => "danger"
 UPDATE: ul > li:nth-of-type(2)[class] "danger" => null
 ```
 
-# Update
-```js
-(document.querySelector("button.add")).click();
-```
+# Update `click("button.add")`
 ```html
 <button
   class="add"

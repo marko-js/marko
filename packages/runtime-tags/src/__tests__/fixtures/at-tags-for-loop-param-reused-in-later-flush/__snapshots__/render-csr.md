@@ -27,10 +27,7 @@
 INSERT: #open + #pick
 ```
 
-# Update
-```js
-document.querySelector("#pick").click();
-```
+# Update `click("#pick")`
 ```html
 <button
   id="open"

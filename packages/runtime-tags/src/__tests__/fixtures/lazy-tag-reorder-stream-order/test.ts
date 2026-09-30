@@ -1,5 +1,6 @@
 import type { TestConfig } from "../../main.test";
 import { flush, wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 // Two instances of the same lazy module share one ready stream. The first
 // renders inside a reordered (out of order) <try> section that flushes
@@ -11,14 +12,14 @@ import { flush, wait } from "../../utils/resolve";
 // processed ahead of it, even though the fill itself only executes once
 // the reordered content arrives in the browser.
 export const config: TestConfig = {
-  steps: [{}, flush, flush, wait, clickReordered, clickStreamed, wait],
+  steps: [
+    {},
+    flush,
+    flush,
+    wait,
+    click(".reordered"),
+    click(".streamed"),
+    wait,
+  ],
   equivalent: false,
 };
-
-function clickReordered(document: Document) {
-  document.querySelector<HTMLButtonElement>(".reordered")!.click();
-}
-
-function clickStreamed(document: Document) {
-  document.querySelector<HTMLButtonElement>(".streamed")!.click();
-}

@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".s").click();
-```
+# Update `click(".s")`
 ```html
 <button
   class="main"
@@ -43,10 +40,7 @@ document.querySelector(".s").click();
 UPDATE: .s::text@2 "?" => "true"
 ```
 
-# Update
-```js
-document.querySelector(".b").click();
-```
+# Update `click(".b")`
 ```html
 <button
   class="main"

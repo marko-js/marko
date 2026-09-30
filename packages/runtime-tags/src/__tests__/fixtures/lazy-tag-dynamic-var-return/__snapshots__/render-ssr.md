@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".mount").click();
-```
+# Update `click(".mount")`
 ```html
 <button
   class="mount"
@@ -52,10 +49,7 @@ INSERT: .mount + .focus
 INSERT: .mount + :is(p, span)
 ```
 
-# Update
-```js
-document.querySelector(".focus").click();
-```
+# Update `click(".focus")`
 ```html
 <button
   class="mount"

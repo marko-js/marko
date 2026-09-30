@@ -5,10 +5,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   0
@@ -23,10 +20,7 @@ INSERT: button:nth-of-type(1) + button
 UPDATE: button:nth-of-type(2)::text " " => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   0
@@ -44,10 +38,7 @@ INSERT: button:nth-of-type(2) + button
 UPDATE: button:nth-of-type(3)::text " " => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   0
@@ -68,10 +59,7 @@ INSERT: button:nth-of-type(3) + button
 UPDATE: button:nth-of-type(4)::text " " => "3"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   0
@@ -95,10 +83,7 @@ INSERT: button:nth-of-type(4) + button
 UPDATE: button:nth-of-type(5)::text " " => "4"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   0

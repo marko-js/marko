@@ -109,10 +109,7 @@ selectIndex(document, 2);
 UPDATE: span::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <select>
   <option

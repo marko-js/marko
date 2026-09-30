@@ -1,8 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-const clickAdd = (document: Document) =>
-  (document.querySelector("button.add") as HTMLButtonElement).click();
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, clickAdd, clickAdd],
+  steps: [{}, click("button.add"), click("button.add")],
 };

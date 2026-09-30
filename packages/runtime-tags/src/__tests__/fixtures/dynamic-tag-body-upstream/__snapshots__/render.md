@@ -15,10 +15,7 @@
 </button>
 ```
 
-# Update
-```js
-container.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <em>

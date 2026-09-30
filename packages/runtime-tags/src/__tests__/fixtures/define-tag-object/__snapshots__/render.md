@@ -8,10 +8,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   {"foo":1,"bar":3}
@@ -26,10 +23,7 @@ UPDATE: button::text "1" => "2"
 UPDATE: div::text "{\"foo\":1,\"bar\":2}" => "{\"foo\":1,\"bar\":3}"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   {"foo":1,"bar":4}
@@ -44,10 +38,7 @@ UPDATE: button::text "2" => "3"
 UPDATE: div::text "{\"foo\":1,\"bar\":3}" => "{\"foo\":1,\"bar\":4}"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   {"foo":1,"bar":5}

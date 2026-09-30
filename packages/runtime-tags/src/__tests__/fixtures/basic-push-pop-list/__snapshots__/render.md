@@ -14,10 +14,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#add")).click();
-```
+# Update `click("#add")`
 ```html
 <div>
   1
@@ -38,10 +35,7 @@
 INSERT: div::text("1")
 ```
 
-# Update
-```js
-(document.querySelector("#add")).click();
-```
+# Update `click("#add")`
 ```html
 <div>
   12
@@ -62,10 +56,7 @@ INSERT: div::text("1")
 INSERT: div::text@0 + ::text("2")
 ```
 
-# Update
-```js
-(document.querySelector("#remove")).click();
-```
+# Update `click("#remove")`
 ```html
 <div>
   1
@@ -86,10 +77,7 @@ INSERT: div::text@0 + ::text("2")
 REMOVE: div::text + ::text("2")
 ```
 
-# Update
-```js
-(document.querySelector("#add")).click();
-```
+# Update `click("#add")`
 ```html
 <div>
   13

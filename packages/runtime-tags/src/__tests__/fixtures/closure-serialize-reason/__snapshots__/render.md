@@ -6,10 +6,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <span>
@@ -27,10 +24,7 @@ INSERT: div > span
 UPDATE: div > span::text " " => "hello"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <span>

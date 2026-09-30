@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".link").click();
-```
+# Update `click(".link")`
 ```html
 <button
   class="link"
@@ -49,10 +46,7 @@ INSERT: .btn > :is(::text("Label "), ::text("0"))
 UPDATE: .btn::text@6 "" => "0"
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="link"
@@ -76,10 +70,7 @@ document.querySelector(".inc").click();
 UPDATE: .btn::text@6 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".link").click();
-```
+# Update `click(".link")`
 ```html
 <button
   class="link"
@@ -106,10 +97,7 @@ INSERT: .btn > :is(::text("Label "), ::text("1"))
 UPDATE: .btn::text@6 "" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="link"

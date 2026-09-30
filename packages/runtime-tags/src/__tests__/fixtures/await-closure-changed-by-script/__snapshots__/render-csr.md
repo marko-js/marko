@@ -27,10 +27,7 @@ REMOVE: span + ::text("loading")
 LOG "e5"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <p>

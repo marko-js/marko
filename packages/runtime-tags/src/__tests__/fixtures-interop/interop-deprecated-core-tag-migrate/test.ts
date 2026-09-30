@@ -1,9 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-function inc(document: Document) {
-  (document.querySelector("#inc") as HTMLButtonElement).click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{ greeting: "hi" }, inc],
+  steps: [{ greeting: "hi" }, click("#inc")],
 };

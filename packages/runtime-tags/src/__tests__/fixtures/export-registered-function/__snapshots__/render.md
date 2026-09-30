@@ -11,10 +11,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[0].click();
-```
+# Update `click("button")`
 ```html
 <button>
   up
@@ -31,10 +28,7 @@ document.querySelectorAll("button")[0].click();
 UPDATE: div::text "Hello" => "HELLO!"
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[1].click();
-```
+# Update `click("button", 1)`
 ```html
 <button>
   up

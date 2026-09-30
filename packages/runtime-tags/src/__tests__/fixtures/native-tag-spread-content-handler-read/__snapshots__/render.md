@@ -18,10 +18,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button.cap").click();
-```
+# Update `click("button.cap")`
 ```html
 <div
   class="x"

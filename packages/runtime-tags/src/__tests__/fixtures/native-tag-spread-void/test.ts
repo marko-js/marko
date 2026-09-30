@@ -1,12 +1,9 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 // Void element pure spread: the whole input is dropped from serialization and
 // re-applied from the parent on update. Toggling a reactive attr must still
 // update the element after resume.
-function toggle(document: Document) {
-  document.querySelector<HTMLButtonElement>("button")!.click();
-}
-
 export const config: TestConfig = {
-  steps: [{}, toggle, toggle],
+  steps: [{}, click("button"), click("button")],
 };

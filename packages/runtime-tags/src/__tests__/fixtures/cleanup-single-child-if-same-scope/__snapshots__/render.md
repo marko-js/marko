@@ -12,10 +12,7 @@ mounted
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle
@@ -33,10 +30,7 @@ REMOVE: pre::text("\nmounted")
 INSERT: pre::text("\nmounted\ndestroyed")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle
@@ -58,10 +52,7 @@ REMOVE: pre::text("\nmounted\ndestroyed")
 INSERT: pre::text("\nmounted\ndestroyed\nmounted")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Toggle

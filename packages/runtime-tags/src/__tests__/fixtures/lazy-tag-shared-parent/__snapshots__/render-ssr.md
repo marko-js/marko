@@ -16,10 +16,7 @@ LOG "loaded"
 LOG "loaded"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc

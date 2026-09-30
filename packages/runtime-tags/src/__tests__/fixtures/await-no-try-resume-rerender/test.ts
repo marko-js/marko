@@ -1,9 +1,7 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
-function clickA(document: Document) {
-  document.querySelector<HTMLButtonElement>("#a")!.click();
-}
+import { click } from "../../utils/steps";
 export const config: TestConfig = {
   equivalent: false,
-  steps: [{}, wait, clickA, wait],
+  steps: [{}, wait, click("#a"), wait],
 };

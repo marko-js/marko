@@ -1,13 +1,6 @@
 import type { TestConfig } from "../../main.test";
 import { flushIdle, wait } from "../../utils/resolve";
-
-function toggle(document: Document) {
-  (document.querySelector("#toggle") as HTMLElement).click();
-}
-
-function incClick(document: Document) {
-  (document.querySelector("#inc") as HTMLElement).click();
-}
+import { click } from "../../utils/steps";
 
 // Child has an idle trigger. toggle unmounts the child (scope destroyed, idle
 // callback cancelled via AbortSignal). flushIdle(1) must not trigger a load —
@@ -15,6 +8,15 @@ function incClick(document: Document) {
 // toggle(2). After the clean re-mount, flushIdle(2)+wait loads the child;
 // incClick verifies reactive updates reach it after load.
 export const config: TestConfig = {
-  steps: [{}, toggle, flushIdle, wait, toggle, flushIdle, wait, incClick],
+  steps: [
+    {},
+    click("#toggle"),
+    flushIdle,
+    wait,
+    click("#toggle"),
+    flushIdle,
+    wait,
+    click("#inc"),
+  ],
   equivalent: false,
 };

@@ -15,10 +15,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector(".box").click();
-```
+# Update `click(".box")`
 ```html
 <button
   id="toggle"
@@ -39,10 +36,7 @@ document.querySelector(".box").click();
 UPDATE: .box::text@0 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -95,10 +89,7 @@ boxes[boxes.length - 1].click();
 UPDATE: button:nth-of-type(3)::text@0 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".box").click();
-```
+# Update `click(".box")`
 ```html
 <button
   id="toggle"
@@ -121,10 +112,7 @@ document.querySelector(".box").click();
 UPDATE: button:nth-of-type(2)::text@0 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"

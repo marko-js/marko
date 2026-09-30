@@ -25,10 +25,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector(".bump").click();
-```
+# Update `click(".bump")`
 ```html
 <button
   class="toggle"
@@ -59,10 +56,7 @@ document.querySelector(".bump").click();
 UPDATE: .state::text@5 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".act").click();
-```
+# Update `click(".act")`
 ```html
 <button
   class="toggle"
@@ -95,10 +89,7 @@ document.querySelector(".act").click();
 UPDATE: .log::text "" => "(1)"
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -131,15 +122,9 @@ document.querySelector(".toggle").click();
 UPDATE: .state::text "true" => ""
 ```
 
-# Update
-```js
-document.querySelector(".act").click();
-```
+# Update `click(".act")`
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -172,10 +157,7 @@ document.querySelector(".toggle").click();
 UPDATE: .state::text@0 "" => "true"
 ```
 
-# Update
-```js
-document.querySelector(".act").click();
-```
+# Update `click(".act")`
 ```html
 <button
   class="toggle"

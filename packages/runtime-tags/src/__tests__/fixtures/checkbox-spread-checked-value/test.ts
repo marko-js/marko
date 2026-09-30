@@ -1,8 +1,5 @@
 import type { TestConfig } from "../../main.test";
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 function probe(document: Document) {
   const input = document.querySelector("input")!;
@@ -11,5 +8,5 @@ function probe(document: Document) {
 }
 
 export const config: TestConfig = {
-  steps: [{}, probe, click, probe],
+  steps: [{}, probe, click("button"), probe],
 };

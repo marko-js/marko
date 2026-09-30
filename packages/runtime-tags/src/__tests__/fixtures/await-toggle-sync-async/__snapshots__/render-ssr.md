@@ -6,10 +6,7 @@ Got: SYNC
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html
@@ -35,10 +32,7 @@ Got: ASYNC
 INSERT: ::text("Got: "), ::text("ASYNC")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 Got: SYNC
 <button>

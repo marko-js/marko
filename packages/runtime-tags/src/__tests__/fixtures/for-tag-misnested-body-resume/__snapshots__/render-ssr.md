@@ -19,10 +19,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".count").click();
-```
+# Update `click(".count")`
 ```html
 <div>
   1

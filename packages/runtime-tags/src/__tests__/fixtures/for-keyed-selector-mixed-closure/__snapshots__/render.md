@@ -20,10 +20,7 @@
 </ul>
 ```
 
-# Update
-```js
-(document.querySelector("button.flip")).click();
-```
+# Update `click("button.flip")`
 ```html
 <button
   class="flip"
@@ -47,10 +44,7 @@
 UPDATE: ul > li:nth-of-type(2)[class] "danger" => null
 ```
 
-# Update
-```js
-(document.querySelector("button.flip")).click();
-```
+# Update `click("button.flip")`
 ```html
 <button
   class="flip"

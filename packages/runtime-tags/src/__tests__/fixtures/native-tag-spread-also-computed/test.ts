@@ -1,8 +1,6 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [
-    { attrs: { class: "x" } },
-    (document: Document) => document.querySelector("button")!.click(),
-  ],
+  steps: [{ attrs: { class: "x" } }, click("button")],
 };

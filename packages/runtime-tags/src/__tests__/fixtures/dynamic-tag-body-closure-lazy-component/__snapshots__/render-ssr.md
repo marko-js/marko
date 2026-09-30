@@ -12,15 +12,9 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 
-# Update
-```js
-document.querySelector("#toggle")?.click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="inc"

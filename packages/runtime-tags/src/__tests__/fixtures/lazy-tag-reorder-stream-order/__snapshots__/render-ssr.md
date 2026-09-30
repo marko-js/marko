@@ -39,10 +39,7 @@ INSERT: .streamed::text("streamed:")
 INSERT: .streamed::text@0 + ::text("0")
 ```
 
-# Update
-```js
-document.querySelector(".reordered").click();
-```
+# Update `click(".reordered")`
 ```html
 <button
   class="reordered"
@@ -60,10 +57,7 @@ document.querySelector(".reordered").click();
 UPDATE: .reordered::text@10 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".streamed").click();
-```
+# Update `click(".streamed")`
 ```html
 <button
   class="reordered"

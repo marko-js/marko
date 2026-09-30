@@ -8,10 +8,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <input />
 <button>
@@ -24,10 +21,7 @@ UPDATE: input[disabled] "" => null
 UPDATE: button::text "enable" => "disable"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <input
   disabled=""
@@ -42,10 +36,7 @@ UPDATE: input[disabled] null => ""
 UPDATE: button::text "disable" => "enable"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <input />
 <button>

@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <div
   id="class"
@@ -35,10 +32,7 @@ INSERT: #class::text("ping:1")
 UPDATE: #tags::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <div
   id="class"

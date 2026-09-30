@@ -1,7 +1,5 @@
 import type { TestConfig } from "../../main.test";
-
-const clickFlip = (document: Document) =>
-  (document.querySelector("button.flip") as HTMLButtonElement).click();
+import { click } from "../../utils/steps";
 
 const rows = [
   { id: 1, label: "a" },
@@ -13,8 +11,8 @@ export const config: TestConfig = {
   equivalent: false,
   steps: [
     { rows, selected: 2 },
-    clickFlip,
-    clickFlip,
+    click("button.flip"),
+    click("button.flip"),
     { rows, selected: 3 },
     { rows: [{ id: 4, label: "d" }, ...rows], selected: 4 },
   ],

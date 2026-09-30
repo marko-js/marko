@@ -1,13 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-function toggle(document: Document) {
-  (document.querySelector("#toggle") as HTMLButtonElement).click();
-}
-
-function reverse(document: Document) {
-  (document.querySelector("#reverse") as HTMLButtonElement).click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, toggle, toggle, reverse],
+  steps: [{}, click("#toggle"), click("#toggle"), click("#reverse")],
 };

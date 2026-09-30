@@ -33,10 +33,7 @@
 INSERT: .inc + div
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="toggle"
@@ -57,10 +54,7 @@ document.querySelector(".inc").click();
 UPDATE: div::text@3 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -78,10 +72,7 @@ document.querySelector(".toggle").click();
 REMOVE: .inc + div
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -104,10 +95,7 @@ UPDATE: div::text@0 "" => "x"
 UPDATE: div::text@3 "" => "2"
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="toggle"

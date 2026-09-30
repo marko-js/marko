@@ -1,10 +1,7 @@
 import type { TestConfig } from "../../main.test";
-
-function clickEagerShared(document: Document) {
-  (document.querySelector("section .shared") as HTMLButtonElement)?.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, clickEagerShared],
+  steps: [{}, click("section .shared")],
   equivalent: false,
 };

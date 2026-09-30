@@ -11,10 +11,7 @@
 WARN "A lazy load trigger could not find an element matching \"#load\". The module was loaded immediately."
 ```
 
-# Update
-```js
-document.querySelector("#load").click();
-```
+# Update `click("#load")`
 
 # Update
 ```html

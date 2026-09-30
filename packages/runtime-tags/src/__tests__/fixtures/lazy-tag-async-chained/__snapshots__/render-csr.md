@@ -31,10 +31,7 @@ INSERT: #sync
 INSERT: #sync + #async
 ```
 
-# Update
-```js
-document.querySelector("#sync").click();
-```
+# Update `click("#sync")`
 ```html
 <button
   id="sync"
@@ -52,10 +49,7 @@ document.querySelector("#sync").click();
 UPDATE: #sync::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#async").click();
-```
+# Update `click("#async")`
 ```html
 <button
   id="sync"

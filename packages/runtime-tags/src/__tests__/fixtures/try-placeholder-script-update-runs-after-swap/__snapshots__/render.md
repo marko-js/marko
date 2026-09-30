@@ -20,10 +20,7 @@ value 0
 LOG "script n=0 connected=true"
 ```
 
-# Update
-```js
-document.querySelector("#load").click();
-```
+# Update `click("#load")`
 
 # Update
 ```html
@@ -47,10 +44,7 @@ REMOVE: ::text + ::text("value ")
 REMOVE: ::text + ::text("0")
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 
 # Update
 ```html

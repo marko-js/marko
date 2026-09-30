@@ -14,10 +14,7 @@
 <output />
 ```
 
-# Update
-```js
-(document.querySelector("#read")).click();
-```
+# Update `click("#read")`
 ```html
 <div />
 <button
@@ -39,10 +36,7 @@
 UPDATE: output::text "" => "DIV"
 ```
 
-# Update
-```js
-(document.querySelector("#swap")).click();
-```
+# Update `click("#swap")`
 ```html
 <span />
 <button
@@ -65,10 +59,7 @@ INSERT: span
 REMOVE: span + div
 ```
 
-# Update
-```js
-(document.querySelector("#read")).click();
-```
+# Update `click("#read")`
 ```html
 <span />
 <button

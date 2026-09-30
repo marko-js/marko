@@ -30,10 +30,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector(".bump").click();
-```
+# Update `click(".bump")`
 ```html
 <button
   class="toggle"
@@ -69,10 +66,7 @@ document.querySelector(".bump").click();
 UPDATE: .state::text@5 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".a").click();
-```
+# Update `click(".a")`
 ```html
 <button
   class="toggle"
@@ -110,10 +104,7 @@ document.querySelector(".a").click();
 UPDATE: .log::text "" => "a(1)"
 ```
 
-# Update
-```js
-document.querySelector(".b").click();
-```
+# Update `click(".b")`
 ```html
 <button
   class="toggle"
@@ -151,10 +142,7 @@ document.querySelector(".b").click();
 UPDATE: .log::text "a(1)" => "a(1)b(1)"
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -192,20 +180,11 @@ document.querySelector(".toggle").click();
 UPDATE: .state::text "true" => ""
 ```
 
-# Update
-```js
-document.querySelector(".a").click();
-```
+# Update `click(".a")`
 
-# Update
-```js
-document.querySelector(".b").click();
-```
+# Update `click(".b")`
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -243,10 +222,7 @@ document.querySelector(".toggle").click();
 UPDATE: .state::text@0 "" => "true"
 ```
 
-# Update
-```js
-document.querySelector(".bump").click();
-```
+# Update `click(".bump")`
 ```html
 <button
   class="toggle"
@@ -284,10 +260,7 @@ document.querySelector(".bump").click();
 UPDATE: .state::text@5 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector(".a").click();
-```
+# Update `click(".a")`
 ```html
 <button
   class="toggle"
@@ -325,10 +298,7 @@ document.querySelector(".a").click();
 UPDATE: .log::text "a(1)b(1)" => "a(1)b(1)a(2)"
 ```
 
-# Update
-```js
-document.querySelector(".b").click();
-```
+# Update `click(".b")`
 ```html
 <button
   class="toggle"

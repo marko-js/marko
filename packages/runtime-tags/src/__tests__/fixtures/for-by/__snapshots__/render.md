@@ -32,10 +32,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("button")).click();
-```
+# Update `click("button")`
 ```html
 <div>
   <div
@@ -83,10 +80,7 @@ UPDATE: .by-unknown-missing::text@6 "second" => "third"
 UPDATE: .by-unknown-missing::text@11 "third" => "first"
 ```
 
-# Update
-```js
-(document.querySelector("button")).click();
-```
+# Update `click("button")`
 ```html
 <div>
   <div
@@ -134,10 +128,7 @@ UPDATE: .by-unknown-missing::text@5 "third" => "first"
 UPDATE: .by-unknown-missing::text@10 "first" => "second"
 ```
 
-# Update
-```js
-(document.querySelector("button")).click();
-```
+# Update `click("button")`
 ```html
 <div>
   <div

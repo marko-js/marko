@@ -8,10 +8,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <table>
   <tbody>
@@ -31,10 +28,7 @@ document.querySelector("button").click();
 INSERT: table > tbody > tr
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <table>
   <tbody />
@@ -48,10 +42,7 @@ document.querySelector("button").click();
 REMOVE: table > tbody > tr
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <table>
   <tbody>

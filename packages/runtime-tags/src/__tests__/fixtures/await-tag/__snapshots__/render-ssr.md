@@ -24,10 +24,7 @@ INSERT: div::text@23 + button
 INSERT: div > button::text("Inc")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   Got: a 1Got: b 1Got: c 1
@@ -43,10 +40,7 @@ UPDATE: div::text@23 "0" => "1"
 UPDATE: div::text@15 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   Got: a 2Got: b 2Got: c 2
@@ -62,10 +56,7 @@ UPDATE: div::text@23 "1" => "2"
 UPDATE: div::text@15 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   Got: a 3Got: b 3Got: c 3

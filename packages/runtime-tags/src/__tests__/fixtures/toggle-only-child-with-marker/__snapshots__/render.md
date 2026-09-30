@@ -9,10 +9,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   <span
@@ -28,10 +25,7 @@ REMOVE: #count::text("0")
 INSERT: #count::text("1")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   <span

@@ -13,10 +13,7 @@
 </h1>
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -38,10 +35,7 @@ REMOVE: h2 + h1
 INSERT: h2::text("state driven string: not registered")
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"

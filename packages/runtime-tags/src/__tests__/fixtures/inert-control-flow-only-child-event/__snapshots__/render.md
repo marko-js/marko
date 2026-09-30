@@ -17,10 +17,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("#target").click();
-```
+# Update `click("#target")`
 ```html
 <div
   id="target"
@@ -44,10 +41,7 @@ UPDATE: #target > span:nth-of-type(1)[data-selected] "" => null
 UPDATE: #target > span:nth-of-type(2)[data-selected] null => ""
 ```
 
-# Update
-```js
-document.querySelector("#target").click();
-```
+# Update `click("#target")`
 ```html
 <div
   id="target"

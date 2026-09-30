@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#a").click();
-```
+# Update `click("#a")`
 ```html
 <button
   id="a"
@@ -33,10 +30,7 @@ document.querySelector("#a").click();
 UPDATE: #a::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#b").click();
-```
+# Update `click("#b")`
 ```html
 <button
   id="a"

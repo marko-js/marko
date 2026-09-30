@@ -35,10 +35,7 @@ REMOVE: ::text("loading...")
 INSERT: #two + ::text("1")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <div

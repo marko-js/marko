@@ -14,10 +14,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <div
   id="class"
@@ -38,10 +35,7 @@ UPDATE: #tags::text "0" => "1"
 UPDATE: #class::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <div
   id="class"

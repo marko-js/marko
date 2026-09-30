@@ -52,10 +52,7 @@ REMOVE: #ref::text("0")
 INSERT: #ref::text("hello")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   1

@@ -38,10 +38,7 @@ LOG "destroyed" "outer placeholder"
 LOG "mounted" "inner placeholder"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   clicks 1
@@ -84,10 +81,7 @@ LOG "destroyed" "inner placeholder"
 LOG "mounted" "inner 0"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   clicks 2

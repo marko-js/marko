@@ -88,10 +88,7 @@ LOG "mounted" "inner 0"
 LOG "destroyed" "inner placeholder"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   clicks 1
@@ -110,10 +107,7 @@ UPDATE: p::text@6 "0" => "1"
 UPDATE: span::text "inner 0" => "inner 1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   clicks 2

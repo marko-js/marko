@@ -6,10 +6,7 @@
 <button />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   Child 2 has 3
@@ -23,10 +20,7 @@ REMOVE: div + div
 UPDATE: div::text@12 "" => "3"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   Child 1 has 3

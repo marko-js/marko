@@ -8,10 +8,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <div
@@ -25,10 +22,7 @@ document.querySelector("button").click();
 UPDATE: div[style] "border:1px solid black" => "border: 1px solid black; display: none;"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <div
@@ -42,10 +36,7 @@ document.querySelector("button").click();
 UPDATE: div[style] "border: 1px solid black; display: none;" => "border: 1px solid black;"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <div

@@ -4,10 +4,7 @@ Body Content
 <button />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   Body Content
@@ -21,10 +18,7 @@ REMOVE: div + ::text("Body Content")
 INSERT: div::text("Body Content")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 Body Content
 <button />

@@ -18,10 +18,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"
@@ -46,10 +43,7 @@ UPDATE: #tags::text "0" => "1"
 UPDATE: #class[data-parent] "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#class")).click();
-```
+# Update `click("#class")`
 ```html
 <button
   id="tags"
@@ -73,10 +67,7 @@ UPDATE: #class[data-parent] "0" => "1"
 UPDATE: #class::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <button
   id="tags"

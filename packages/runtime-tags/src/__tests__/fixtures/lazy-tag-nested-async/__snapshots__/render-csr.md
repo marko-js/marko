@@ -136,10 +136,7 @@ INSERT: #grand + #grand-await
 UPDATE: #grand-await::text " " => "20"
 ```
 
-# Update
-```js
-document.querySelector("#child").click();
-```
+# Update `click("#child")`
 ```html
 <div
   id="before"
@@ -178,10 +175,7 @@ UPDATE: #child::text@6 "1" => "2"
 UPDATE: #grand::text@8 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#grand").click();
-```
+# Update `click("#grand")`
 ```html
 <div
   id="before"

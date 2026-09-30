@@ -7,10 +7,7 @@
 </main>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <main>
   <b>
@@ -26,10 +23,7 @@ document.querySelector("button").click();
 INSERT: main > b
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <main>
   <button>
@@ -42,10 +36,7 @@ document.querySelector("button").click();
 REMOVE: main > b
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <main>
   <b>

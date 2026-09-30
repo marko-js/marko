@@ -1,10 +1,11 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   steps: [
     { label: "x" },
-    (document: Document) => document.querySelectorAll("button")[0].click(),
-    (document: Document) => document.querySelectorAll("button")[1].click(),
-    (document: Document) => document.querySelectorAll("button")[2].click(),
+    click("button"),
+    click("button", 1),
+    click("button", 2),
   ],
 };

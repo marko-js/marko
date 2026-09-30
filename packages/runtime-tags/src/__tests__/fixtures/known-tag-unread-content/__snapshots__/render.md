@@ -22,7 +22,4 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`

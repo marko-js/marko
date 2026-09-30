@@ -15,15 +15,9 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -41,10 +35,7 @@ document.querySelector(".toggle").click();
 REMOVE: .inc + div
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 
 # Update
 ```html
@@ -67,10 +58,7 @@ document.querySelector(".toggle").click();
 INSERT: .inc + div
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="toggle"

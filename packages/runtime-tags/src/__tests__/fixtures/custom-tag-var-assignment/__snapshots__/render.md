@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button.inc-child").click();
-```
+# Update `click("button.inc-child")`
 ```html
 <button
   class="inc-child"
@@ -44,10 +41,7 @@ UPDATE: .inc-child::text "1" => "2"
 UPDATE: .inc-parent::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button.inc-parent").click();
-```
+# Update `click("button.inc-parent")`
 ```html
 <button
   class="inc-child"
@@ -71,10 +65,7 @@ UPDATE: .inc-child::text "2" => "3"
 UPDATE: .inc-parent::text "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("button.reset").click();
-```
+# Update `click("button.reset")`
 ```html
 <button
   class="inc-child"

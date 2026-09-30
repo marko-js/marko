@@ -24,10 +24,7 @@
 </section>
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <section>
   <button
@@ -59,10 +56,7 @@ UPDATE: section > span:nth-of-type(1)::text "0" => "1"
 UPDATE: section > span:nth-of-type(2)::text "0" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <section>
   <button
@@ -83,10 +77,7 @@ REMOVE: #inc + span
 REMOVE: #inc + span
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <section>
   <button
@@ -106,10 +97,7 @@ document.querySelector("#inc").click();
 UPDATE: #inc::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <section>
   <button

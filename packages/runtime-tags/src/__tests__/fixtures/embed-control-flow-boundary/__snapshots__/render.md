@@ -15,10 +15,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button#toggle").click();
-```
+# Update `click("button#toggle")`
 ```html
 <button
   id="toggle"
@@ -36,10 +33,7 @@ document.querySelector("button#toggle").click();
 REMOVE: #cleanup + div
 ```
 
-# Update
-```js
-document.querySelector("button#toggle").click();
-```
+# Update `click("button#toggle")`
 ```html
 <button
   id="toggle"
@@ -60,10 +54,7 @@ document.querySelector("button#toggle").click();
 INSERT: #cleanup + div
 ```
 
-# Update
-```js
-document.querySelector("button#toggle").click();
-```
+# Update `click("button#toggle")`
 ```html
 <button
   id="toggle"
@@ -81,10 +72,7 @@ document.querySelector("button#toggle").click();
 REMOVE: #cleanup + div
 ```
 
-# Update
-```js
-document.querySelector("button#cleanup").click();
-```
+# Update `click("button#cleanup")`
 ## Change
 ```
 REMOVE: #toggle, #cleanup

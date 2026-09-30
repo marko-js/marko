@@ -54,10 +54,7 @@ Inner mounted
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button#inner").click();
-```
+# Update `click("button#inner")`
 ```html
 <button
   id="outer"
@@ -113,10 +110,7 @@ REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed")
 ```
 
-# Update
-```js
-document.querySelector("button#middle").click();
-```
+# Update `click("button#middle")`
 ```html
 <button
   id="outer"
@@ -160,10 +154,7 @@ REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroy
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed")
 ```
 
-# Update
-```js
-document.querySelector("button#outer").click();
-```
+# Update `click("button#outer")`
 ```html
 <button
   id="outer"
@@ -197,20 +188,11 @@ REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroy
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed")
 ```
 
-# Update
-```js
-document.querySelector("button#inner").click();
-```
+# Update `click("button#inner")`
 
-# Update
-```js
-document.querySelector("button#middle").click();
-```
+# Update `click("button#middle")`
 
-# Update
-```js
-document.querySelector("button#outer").click();
-```
+# Update `click("button#outer")`
 ```html
 <button
   id="outer"
@@ -293,10 +275,7 @@ REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroy
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted\nMiddle mounted\nInner mounted")
 ```
 
-# Update
-```js
-document.querySelector("button#outer").click();
-```
+# Update `click("button#outer")`
 ```html
 <button
   id="outer"

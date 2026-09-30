@@ -1,13 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-function count(document: Document) {
-  document.querySelector<HTMLButtonElement>("#count")!.click();
-}
-
-function changeTag(document: Document) {
-  document.querySelector<HTMLButtonElement>("#changeTag")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, count, changeTag, count],
+  steps: [{}, click("#count"), click("#changeTag"), click("#count")],
 };

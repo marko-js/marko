@@ -21,10 +21,7 @@ UPDATE: button::text@2 "" => "10"
 UPDATE: button::text@0 "" => "0"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   before

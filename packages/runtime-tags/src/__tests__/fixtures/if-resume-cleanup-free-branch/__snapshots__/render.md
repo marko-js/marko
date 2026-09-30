@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#n").click();
-```
+# Update `click("#n")`
 ```html
 <button
   id="o"
@@ -37,10 +34,7 @@ INSERT: #n + div
 UPDATE: div::text@5 "" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#o").click();
-```
+# Update `click("#o")`
 ```html
 <button
   id="o"
@@ -58,7 +52,4 @@ document.querySelector("#o").click();
 REMOVE: #n + div
 ```
 
-# Update
-```js
-document.querySelector("#n").click();
-```
+# Update `click("#n")`

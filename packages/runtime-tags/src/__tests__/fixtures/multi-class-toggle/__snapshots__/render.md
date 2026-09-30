@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button
   class="a b c d e f"
@@ -24,10 +21,7 @@ UPDATE: .a.b.c.d.e.f[class] "a b c" => "a b c d e f"
 UPDATE: .a.b.c.d.e.f::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button
   class="a b c"
@@ -41,10 +35,7 @@ UPDATE: .a.b.c[class] "a b c d e f" => "a b c"
 UPDATE: .a.b.c::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button
   class="a b c d e f"

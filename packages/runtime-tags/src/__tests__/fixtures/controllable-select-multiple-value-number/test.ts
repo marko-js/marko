@@ -1,4 +1,5 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 function select0(document: Document) {
   selectIndex(document, 0);
@@ -12,10 +13,6 @@ function select2(document: Document) {
   selectIndex(document, 2);
 }
 
-function reset(document: Document) {
-  document.querySelector<HTMLButtonElement>("button")!.click();
-}
-
 function selectIndex(document: Document, index: number) {
   const select = document.querySelector<HTMLSelectElement>(`select`)!;
   select.options[index].selected = true;
@@ -25,5 +22,5 @@ function selectIndex(document: Document, index: number) {
 }
 
 export const config: TestConfig = {
-  steps: [{}, select0, select1, select2, reset],
+  steps: [{}, select0, select1, select2, click("button")],
 };

@@ -1,5 +1,6 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 // A scope-bound registered value serialized at a root position — here as
 // the resolution value of a serialized promise — must still invoke the
@@ -8,10 +9,6 @@ import { wait } from "../../utils/resolve";
 // promise then resolves to the bound `getCount` and renders "1", matching
 // the client-side render.
 export const config: TestConfig = {
-  steps: [{}, wait, wait, click],
+  steps: [{}, wait, wait, click("button")],
   equivalent: false,
 };
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}

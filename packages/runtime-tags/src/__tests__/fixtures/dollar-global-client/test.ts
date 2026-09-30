@@ -1,9 +1,11 @@
 import type { TestConfig } from "../../main.test";
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{ $global: { x: 1, serializedGlobals: ["x"] } }, click, click, click],
+  steps: [
+    { $global: { x: 1, serializedGlobals: ["x"] } },
+    click("button"),
+    click("button"),
+    click("button"),
+  ],
 };

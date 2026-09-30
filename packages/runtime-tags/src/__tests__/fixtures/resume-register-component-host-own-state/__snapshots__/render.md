@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -24,10 +21,7 @@ component host: registered
 INSERT: #toggle + ::text("component host: registered")
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"

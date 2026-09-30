@@ -31,10 +31,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button.inner").click();
-```
+# Update `click("button.inner")`
 ```html
 <button
   class="outer"
@@ -72,10 +69,7 @@ UPDATE: div > div:nth-of-type(1) > b::text "1" => "2"
 UPDATE: div > div:nth-of-type(2) > s::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button.outer").click();
-```
+# Update `click("button.outer")`
 ```html
 <button
   class="outer"

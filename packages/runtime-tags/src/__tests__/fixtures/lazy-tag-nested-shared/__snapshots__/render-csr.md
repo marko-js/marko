@@ -32,10 +32,7 @@ UPDATE: .child::text@6 "" => "shared"
 INSERT: .child + .grand
 ```
 
-# Update
-```js
-document.querySelector(".child").click();
-```
+# Update `click(".child")`
 ```html
 <button
   class="child"
@@ -53,10 +50,7 @@ document.querySelector(".child").click();
 UPDATE: .child::text@6 "shared" => "shared!"
 ```
 
-# Update
-```js
-document.querySelector(".grand").click();
-```
+# Update `click(".grand")`
 ```html
 <button
   class="child"

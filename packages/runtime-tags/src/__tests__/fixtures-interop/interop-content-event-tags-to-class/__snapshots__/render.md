@@ -20,10 +20,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#inner")).click();
-```
+# Update `click("#inner")`
 ```html
 <div
   id="outer"
@@ -50,10 +47,7 @@ UPDATE: #tags::text "0" => "1"
 UPDATE: #inner::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#tags")).click();
-```
+# Update `click("#tags")`
 ```html
 <div
   id="outer"

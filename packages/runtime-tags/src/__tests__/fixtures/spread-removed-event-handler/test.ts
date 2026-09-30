@@ -1,4 +1,5 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 // When attributes come from a spread (`<div ...attrs>`), a delegated event
 // handler that was applied on a previous render but is absent now must be
@@ -14,12 +15,8 @@ import type { TestConfig } from "../../main.test";
 //   mouseover -> fires again: onMouseOver re-added, appends "M"
 export const config: TestConfig = {
   skip_ssr: true, // event-listener lifecycle is a client-only (CSR) concern
-  steps: [{}, click, mouseover, click, mouseover],
+  steps: [{}, click("div"), mouseover, click("div"), mouseover],
 };
-
-function click(document: Document) {
-  document.querySelector("div")!.click();
-}
 
 function mouseover(document: Document) {
   const div = document.querySelector("div")!;

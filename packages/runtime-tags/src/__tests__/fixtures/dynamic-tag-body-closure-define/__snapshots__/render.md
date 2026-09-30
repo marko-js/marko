@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#open").click();
-```
+# Update `click("#open")`
 ```html
 <button
   id="open"

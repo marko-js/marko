@@ -11,10 +11,7 @@
 </p>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <div>
@@ -31,10 +28,7 @@ document.querySelector("button").click();
 UPDATE: div > span::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button />
 <div>

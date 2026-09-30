@@ -21,10 +21,7 @@
 </li>
 ```
 
-# Update
-```js
-document.querySelector("#c").click();
-```
+# Update `click("#c")`
 ```html
 <button
   id="o"
@@ -55,10 +52,7 @@ INSERT: li:nth-of-type(3) + li
 UPDATE: li:nth-of-type(4)::text@5 "" => "3"
 ```
 
-# Update
-```js
-document.querySelector("#o").click();
-```
+# Update `click("#o")`
 ```html
 <button
   id="o"
@@ -79,7 +73,4 @@ REMOVE: #c + li
 REMOVE: #c + li
 ```
 
-# Update
-```js
-document.querySelector("#c").click();
-```
+# Update `click("#c")`

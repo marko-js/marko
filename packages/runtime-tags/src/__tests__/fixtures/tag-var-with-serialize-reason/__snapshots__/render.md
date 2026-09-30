@@ -6,10 +6,7 @@
 <span />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2
@@ -21,10 +18,7 @@ document.querySelector("button").click();
 UPDATE: button::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   3
@@ -36,10 +30,7 @@ document.querySelector("button").click();
 UPDATE: button::text "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   4

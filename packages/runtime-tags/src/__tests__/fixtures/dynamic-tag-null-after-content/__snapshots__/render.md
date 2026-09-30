@@ -8,10 +8,7 @@
 </b>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   1
@@ -23,10 +20,7 @@ UPDATE: button::text "0" => "1"
 REMOVE: button + b
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2

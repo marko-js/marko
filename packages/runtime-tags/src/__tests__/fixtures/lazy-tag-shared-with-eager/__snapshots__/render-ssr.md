@@ -18,10 +18,7 @@
 </section>
 ```
 
-# Update
-```js
-(document.querySelector("section .shared"))?.click();
-```
+# Update `click("section .shared")`
 ```html
 <div
   class="lazy"

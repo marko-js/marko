@@ -19,10 +19,7 @@
 </b>
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -38,10 +35,7 @@ REMOVE: #toggle + b
 REMOVE: #toggle + b
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"

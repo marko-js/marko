@@ -17,10 +17,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#add")).click();
-```
+# Update `click("#add")`
 ```html
 <div>
   <div>
@@ -46,10 +43,7 @@
 INSERT: div > div:nth-of-type(1) + div
 ```
 
-# Update
-```js
-(document.querySelector("#remove")).click();
-```
+# Update `click("#remove")`
 ```html
 <div>
   <div>
@@ -72,10 +66,7 @@ INSERT: div > div:nth-of-type(1) + div
 REMOVE: div > div + div
 ```
 
-# Update
-```js
-(document.querySelector("#remove")).click();
-```
+# Update `click("#remove")`
 ```html
 <div>
   <button
@@ -95,10 +86,7 @@ REMOVE: div > div + div
 REMOVE: div > div
 ```
 
-# Update
-```js
-(document.querySelector("#add")).click();
-```
+# Update `click("#add")`
 ```html
 <div>
   <div>

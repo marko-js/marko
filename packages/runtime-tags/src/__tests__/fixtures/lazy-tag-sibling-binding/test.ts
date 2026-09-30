@@ -1,5 +1,6 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 // The main stream serializes `shared` (and `shared.inner` nested within
 // it) inline without bindings. Child S references the `shared` object, so
@@ -20,14 +21,6 @@ import { wait } from "../../utils/resolve";
 // `shared.inner` directly would make main bind `inner` itself, removing
 // the sibling-claimed parent this fixture exists to exercise.)
 export const config: TestConfig = {
-  steps: [{}, wait, wait, clickS, clickB],
+  steps: [{}, wait, wait, click(".s"), click(".b")],
   equivalent: false,
 };
-
-function clickS(document: Document) {
-  document.querySelector<HTMLButtonElement>(".s")!.click();
-}
-
-function clickB(document: Document) {
-  document.querySelector<HTMLButtonElement>(".b")!.click();
-}

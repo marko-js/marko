@@ -10,10 +10,7 @@
 </main>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <main>
   <em>
@@ -29,10 +26,7 @@ document.querySelector("button").click();
 UPDATE: main > em::text@1 "a" => "a!"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <main>
   <em>

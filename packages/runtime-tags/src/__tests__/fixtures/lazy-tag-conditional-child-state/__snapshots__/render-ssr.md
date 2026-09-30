@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".parent").click();
-```
+# Update `click(".parent")`
 ```html
 <button
   class="parent"
@@ -28,10 +25,7 @@ document.querySelector(".parent").click();
 REMOVE: .parent + button
 ```
 
-# Update
-```js
-document.querySelector(".parent").click();
-```
+# Update `click(".parent")`
 
 # Update
 ```html
@@ -51,10 +45,7 @@ document.querySelector(".parent").click();
 INSERT: .parent + .child
 ```
 
-# Update
-```js
-document.querySelector(".child").click();
-```
+# Update `click(".child")`
 ```html
 <button
   class="parent"

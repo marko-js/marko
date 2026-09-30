@@ -12,10 +12,7 @@
 </div>
 ```
 
-# Update
-```js
-(document.querySelector("#class-api")).click();
-```
+# Update `click("#class-api")`
 ```html
 <button
   id="class-api"

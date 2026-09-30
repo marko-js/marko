@@ -15,10 +15,7 @@ INSERT: ::text@5 + button
 INSERT: button::text("toggle")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 Got: SYNC
 <button>

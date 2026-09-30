@@ -8,10 +8,7 @@
 </span>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   deeper
@@ -30,10 +27,7 @@ UPDATE: span:nth-of-type(2)::text@4 "" => "2"
 UPDATE: span:nth-of-type(2)::text@0 "" => "node"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   deeper

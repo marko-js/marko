@@ -14,10 +14,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#controlled").click();
-```
+# Update `click("#controlled")`
 ```html
 <button
   data-internal="1"
@@ -39,10 +36,7 @@ UPDATE: #controlled::text "0" => "1"
 UPDATE: #uncontrolled::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#uncontrolled").click();
-```
+# Update `click("#uncontrolled")`
 ```html
 <button
   data-internal="1"
@@ -62,10 +56,7 @@ document.querySelector("#uncontrolled").click();
 UPDATE: #uncontrolled[data-internal] "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#controlled").click();
-```
+# Update `click("#controlled")`
 ```html
 <button
   data-internal="2"
@@ -87,10 +78,7 @@ UPDATE: #controlled::text "1" => "2"
 UPDATE: #uncontrolled::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#uncontrolled").click();
-```
+# Update `click("#uncontrolled")`
 ```html
 <button
   data-internal="2"
@@ -110,10 +98,7 @@ document.querySelector("#uncontrolled").click();
 UPDATE: #uncontrolled[data-internal] "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#controlled").click();
-```
+# Update `click("#controlled")`
 ```html
 <button
   data-internal="3"
@@ -135,10 +120,7 @@ UPDATE: #controlled::text "2" => "3"
 UPDATE: #uncontrolled::text "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("#uncontrolled").click();
-```
+# Update `click("#uncontrolled")`
 ```html
 <button
   data-internal="3"

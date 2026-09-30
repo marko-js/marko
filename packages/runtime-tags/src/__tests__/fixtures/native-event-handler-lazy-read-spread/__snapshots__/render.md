@@ -15,20 +15,11 @@
 />
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 
-# Update
-```js
-document.querySelector(".act").click();
-```
+# Update `click(".act")`
 ```html
 <button
   class="inc"

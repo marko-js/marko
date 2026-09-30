@@ -61,10 +61,7 @@ INSERT: button:nth-of-type(2)::text@1 + ::text("2")
 UPDATE: button:nth-of-type(2)::text@2 " " => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span>
   done

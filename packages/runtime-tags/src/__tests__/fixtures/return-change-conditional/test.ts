@@ -1,9 +1,6 @@
 import type { TestConfig } from "../../main.test";
 import { throws } from "../../utils/resolve";
-
-function clickToggle(document: Document) {
-  document.querySelector<HTMLButtonElement>("#toggle")!.click();
-}
+import { click } from "../../utils/steps";
 
 function clickAssign(document: Document) {
   document.querySelector<HTMLButtonElement>("#assign")!.click();
@@ -14,7 +11,7 @@ export const config: TestConfig = {
   steps: [
     {},
     clickAssign,
-    clickToggle,
+    click("#toggle"),
     throws((document: Document) => clickAssign(document)),
   ],
 };

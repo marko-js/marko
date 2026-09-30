@@ -16,10 +16,7 @@
 </ul>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle
@@ -33,10 +30,7 @@ REMOVE: ul > li
 REMOVE: ul > li
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle

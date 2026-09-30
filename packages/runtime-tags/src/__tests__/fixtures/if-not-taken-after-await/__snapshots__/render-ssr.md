@@ -26,10 +26,7 @@ INSERT: b + i
 INSERT: i::text("A")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   1
@@ -42,10 +39,7 @@ REMOVE: button + b
 REMOVE: button + i
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2

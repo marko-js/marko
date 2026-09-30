@@ -18,10 +18,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button#clear").click();
-```
+# Update `click("button#clear")`
 ```html
 <button
   id="clear"

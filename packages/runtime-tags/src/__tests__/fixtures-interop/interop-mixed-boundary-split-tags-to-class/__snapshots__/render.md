@@ -19,10 +19,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#bump")).click();
-```
+# Update `click("#bump")`
 ```html
 <button
   id="bump"

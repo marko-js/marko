@@ -1,10 +1,7 @@
 import type { TestConfig } from "../../main.test";
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   skip_html: true, // TODO: it is broken.
-  steps: [{}, click, click, click],
+  steps: [{}, click("button"), click("button"), click("button")],
 };

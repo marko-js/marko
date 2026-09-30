@@ -1,12 +1,5 @@
 import type { TestConfig } from "../../main.test";
-
-function toggle(document: Document) {
-  document.querySelector<HTMLButtonElement>("#toggle")!.click();
-}
-
-function clickFirstBox(document: Document) {
-  document.querySelector<HTMLButtonElement>(".box")!.click();
-}
+import { click } from "../../utils/steps";
 
 function clickLastBox(document: Document) {
   const boxes = document.querySelectorAll<HTMLButtonElement>(".box");
@@ -14,5 +7,12 @@ function clickLastBox(document: Document) {
 }
 
 export const config: TestConfig = {
-  steps: [{}, clickFirstBox, toggle, clickLastBox, clickFirstBox, toggle],
+  steps: [
+    {},
+    click(".box"),
+    click("#toggle"),
+    clickLastBox,
+    click(".box"),
+    click("#toggle"),
+  ],
 };

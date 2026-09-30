@@ -23,10 +23,7 @@
 INSERT: #inc + span
 ```
 
-# Update
-```js
-(document.querySelector("#inc")).click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"

@@ -16,10 +16,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button.a").click();
-```
+# Update `click("button.a")`
 ```html
 <div>
   <button
@@ -42,10 +39,7 @@ UPDATE: .a::text "0" => "10"
 UPDATE: div::text@6 "0" => "10"
 ```
 
-# Update
-```js
-document.querySelector("button.b").click();
-```
+# Update `click("button.b")`
 ```html
 <div>
   <button

@@ -9,13 +9,7 @@
 </span>
 ```
 
-# Update
-```js
-const input = document.querySelector("input");
-const window = input.ownerDocument.defaultView;
-input.value = value;
-input.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("input", "w")`
 ```html
 <input
   default-value="hello"
@@ -31,13 +25,7 @@ input.dispatchEvent(new window.Event("input", { bubbles: true }));
 UPDATE: span::text "hello" => "w"
 ```
 
-# Update
-```js
-const input = document.querySelector("input");
-const window = input.ownerDocument.defaultView;
-input.value = value;
-input.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("input", "wor")`
 ```html
 <input
   default-value="hello"
@@ -53,13 +41,7 @@ input.dispatchEvent(new window.Event("input", { bubbles: true }));
 UPDATE: span::text "w" => "wor"
 ```
 
-# Update
-```js
-const input = document.querySelector("input");
-const window = input.ownerDocument.defaultView;
-input.value = value;
-input.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("input", "world")`
 ```html
 <input
   default-value="hello"

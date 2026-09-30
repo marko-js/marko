@@ -10,10 +10,7 @@
 </p>
 ```
 
-# Update
-```js
-(document.querySelector("#class")).click();
-```
+# Update `click("#class")`
 ```html
 <button
   id="class"

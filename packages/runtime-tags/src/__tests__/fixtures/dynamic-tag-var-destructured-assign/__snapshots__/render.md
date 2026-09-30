@@ -8,10 +8,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span>
   a:2
@@ -26,10 +23,7 @@ UPDATE: button::text "1" => "2"
 UPDATE: span::text@2 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span>
   a:3

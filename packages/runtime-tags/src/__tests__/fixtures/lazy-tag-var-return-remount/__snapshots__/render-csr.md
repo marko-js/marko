@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -28,10 +25,7 @@ document.querySelector(".toggle").click();
 INSERT: .toggle + .focus
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -44,10 +38,7 @@ document.querySelector(".toggle").click();
 REMOVE: .toggle + button
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -72,10 +63,7 @@ INSERT: .toggle + .focus
 INSERT: .toggle + :is(p, span)
 ```
 
-# Update
-```js
-document.querySelector(".focus").click();
-```
+# Update `click(".focus")`
 ```html
 <button
   class="toggle"
@@ -99,10 +87,7 @@ document.querySelector(".focus").click();
 UPDATE: p::text@8 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -117,10 +102,7 @@ REMOVE: .toggle + span
 REMOVE: .toggle + button
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -145,10 +127,7 @@ INSERT: .toggle + .focus
 INSERT: .toggle + :is(p, span)
 ```
 
-# Update
-```js
-document.querySelector(".focus").click();
-```
+# Update `click(".focus")`
 ```html
 <button
   class="toggle"

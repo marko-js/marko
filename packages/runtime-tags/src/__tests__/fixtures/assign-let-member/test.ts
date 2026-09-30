@@ -1,13 +1,6 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, mutate, apply],
+  steps: [{}, click(".mutate"), click(".apply")],
 };
-
-function mutate(document: Document) {
-  document.querySelector<HTMLButtonElement>(".mutate")!.click();
-}
-
-function apply(document: Document) {
-  document.querySelector<HTMLButtonElement>(".apply")!.click();
-}

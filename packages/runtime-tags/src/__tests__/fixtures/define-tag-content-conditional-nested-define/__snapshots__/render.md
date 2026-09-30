@@ -5,10 +5,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle
@@ -23,10 +20,7 @@ INSERT: ::text@8 + :is(::text("label: "), ::text("hi"))
 UPDATE: ::text@17 "" => "hi"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle

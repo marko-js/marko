@@ -8,10 +8,7 @@
 </span>
 ```
 
-# Update
-```js
-document.querySelector("input").click();
-```
+# Update `click("input")`
 ```html
 <input
   checked=""
@@ -26,10 +23,7 @@ document.querySelector("input").click();
 UPDATE: span::text "false" => "true"
 ```
 
-# Update
-```js
-document.querySelector("input").click();
-```
+# Update `click("input")`
 ```html
 <input
   type="checkbox"
@@ -43,10 +37,7 @@ document.querySelector("input").click();
 UPDATE: span::text "true" => "false"
 ```
 
-# Update
-```js
-document.querySelector("input").click();
-```
+# Update `click("input")`
 ```html
 <input
   checked=""

@@ -20,10 +20,7 @@ document.body.append(document.createElement("aside"));
 INSERT: button + aside
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <aside />
 ```

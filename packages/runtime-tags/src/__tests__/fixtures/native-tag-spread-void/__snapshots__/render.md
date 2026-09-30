@@ -10,10 +10,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle
@@ -29,10 +26,7 @@ document.querySelector("button").click();
 UPDATE: .b[class] "a" => "b"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   toggle

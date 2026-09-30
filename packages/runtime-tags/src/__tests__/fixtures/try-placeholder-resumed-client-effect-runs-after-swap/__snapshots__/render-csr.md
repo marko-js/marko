@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#show").click();
-```
+# Update `click("#show")`
 ```html
 <button
   id="show"
@@ -65,10 +62,7 @@ INSERT: #show + :is(#inner, div)
 REMOVE: div + ::text("loading")
 ```
 
-# Update
-```js
-document.querySelector("#inner").click();
-```
+# Update `click("#inner")`
 ## Console
 ```
 LOG "inner clicked"

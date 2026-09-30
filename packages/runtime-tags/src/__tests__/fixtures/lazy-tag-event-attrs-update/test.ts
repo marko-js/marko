@@ -1,14 +1,18 @@
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, click, click, mouseoverBody, wait, click],
+  steps: [
+    {},
+    click("button"),
+    click("button"),
+    mouseoverBody,
+    wait,
+    click("button"),
+  ],
   equivalent: false,
 };
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}
 
 function mouseoverBody(document: Document) {
   document.body.dispatchEvent(

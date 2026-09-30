@@ -16,10 +16,7 @@
 LOG "loaded"
 ```
 
-# Update
-```js
-(document.querySelector("#inc")).click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"
@@ -37,10 +34,7 @@ LOG "loaded"
 UPDATE: #child::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#inc")).click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"

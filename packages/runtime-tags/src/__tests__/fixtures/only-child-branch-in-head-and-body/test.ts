@@ -1,4 +1,5 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 // A full-document template cannot client-mount into a body.
 export const config: TestConfig = {
@@ -8,7 +9,6 @@ export const config: TestConfig = {
     (document: Document) => {
       document.body.append(document.createElement("aside"));
     },
-    (document: Document) =>
-      document.querySelector<HTMLButtonElement>("button")!.click(),
+    click("button"),
   ],
 };

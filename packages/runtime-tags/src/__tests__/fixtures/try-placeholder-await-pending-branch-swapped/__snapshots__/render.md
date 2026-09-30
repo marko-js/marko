@@ -6,10 +6,7 @@
 ready
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html
@@ -24,10 +21,7 @@ INSERT: button + ::text("LOADING")
 REMOVE: ::text + ::text("ready")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html

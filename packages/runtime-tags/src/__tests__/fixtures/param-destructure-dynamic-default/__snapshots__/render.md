@@ -41,10 +41,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button")?.click();
-```
+# Update `click("button")`
 ```html
 <div
   class="a"
@@ -94,10 +91,7 @@ UPDATE: #e::text@0 "1" => "2"
 UPDATE: #f::text@0 "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("button")?.click();
-```
+# Update `click("button")`
 ```html
 <div
   class="a"

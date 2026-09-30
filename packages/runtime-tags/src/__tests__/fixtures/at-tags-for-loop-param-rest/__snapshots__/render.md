@@ -19,10 +19,7 @@
 </b>
 ```
 
-# Update
-```js
-document.querySelector("#rename").click();
-```
+# Update `click("#rename")`
 ```html
 <button
   id="rename"

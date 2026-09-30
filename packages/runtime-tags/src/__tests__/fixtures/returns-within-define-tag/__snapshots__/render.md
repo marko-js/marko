@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button.once").click();
-```
+# Update `click("button.once")`
 ```html
 <button
   class="once"
@@ -33,15 +30,9 @@ document.querySelector("button.once").click();
 UPDATE: .once::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button.once").click();
-```
+# Update `click("button.once")`
 
-# Update
-```js
-document.querySelector("button.twice").click();
-```
+# Update `click("button.twice")`
 ```html
 <button
   class="once"
@@ -59,10 +50,7 @@ document.querySelector("button.twice").click();
 UPDATE: .twice::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button.twice").click();
-```
+# Update `click("button.twice")`
 ```html
 <button
   class="once"
@@ -80,7 +68,4 @@ document.querySelector("button.twice").click();
 UPDATE: .twice::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button.twice").click();
-```
+# Update `click("button.twice")`

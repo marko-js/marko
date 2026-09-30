@@ -10,10 +10,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#load").click();
-```
+# Update `click("#load")`
 ## Console
 ```
 LOG "loaded"

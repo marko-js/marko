@@ -1,14 +1,7 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   equivalent: false,
-  steps: [{}, sameLength, toggle],
+  steps: [{}, click(".same-length"), click(".toggle")],
 };
-
-function sameLength(document: Document) {
-  document.querySelector<HTMLButtonElement>(".same-length")!.click();
-}
-
-function toggle(document: Document) {
-  document.querySelector<HTMLButtonElement>(".toggle")!.click();
-}

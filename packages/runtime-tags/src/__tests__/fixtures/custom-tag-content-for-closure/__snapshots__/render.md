@@ -14,10 +14,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   expand
@@ -31,10 +28,7 @@ REMOVE: button + div
 REMOVE: button + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   collapse
@@ -57,10 +51,7 @@ INSERT: div:nth-of-type(1) + div
 INSERT: div:nth-of-type(2) + div
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   expand

@@ -8,13 +8,7 @@
 </span>
 ```
 
-# Update
-```js
-const textarea = document.querySelector("textarea");
-const window = textarea.ownerDocument.defaultView;
-textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("textarea", "w")`
 ```html
 <textarea
   default-value="hello"
@@ -30,13 +24,7 @@ textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
 UPDATE: span::text "hello" => "w"
 ```
 
-# Update
-```js
-const textarea = document.querySelector("textarea");
-const window = textarea.ownerDocument.defaultView;
-textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("textarea", "wor")`
 ```html
 <textarea
   default-value="hello"
@@ -52,13 +40,7 @@ textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
 UPDATE: span::text "w" => "wor"
 ```
 
-# Update
-```js
-const textarea = document.querySelector("textarea");
-const window = textarea.ownerDocument.defaultView;
-textarea.value = value;
-textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("textarea", "world")`
 ```html
 <textarea
   default-value="hello"

@@ -20,10 +20,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button.add").click();
-```
+# Update `click("button.add")`
 ```html
 <div>
   <span>
@@ -55,10 +52,7 @@ document.querySelector("button.add").click();
 INSERT: div > span:nth-of-type(1) + :is(b, i)
 ```
 
-# Update
-```js
-document.querySelector("button.add").click();
-```
+# Update `click("button.add")`
 ```html
 <div>
   <span>
@@ -99,10 +93,7 @@ REMOVE: div > i:nth-of-type(1) + i
 INSERT: div > i:nth-of-type(1) + :is(b, i)
 ```
 
-# Update
-```js
-document.querySelector("button.clear").click();
-```
+# Update `click("button.clear")`
 ```html
 <div>
   <span>

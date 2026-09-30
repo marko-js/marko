@@ -12,10 +12,7 @@ INSERT: button
 UPDATE: button::text@7 "" => "0"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   count: 2
@@ -26,10 +23,7 @@ document.querySelector("button").click();
 UPDATE: button::text@7 "0" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   count: 4

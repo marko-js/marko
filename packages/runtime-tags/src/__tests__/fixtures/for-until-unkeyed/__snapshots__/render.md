@@ -23,10 +23,7 @@
 </span>
 ```
 
-# Update
-```js
-document.querySelector(".more").click();
-```
+# Update `click(".more")`
 ```html
 <button
   class="more"
@@ -64,10 +61,7 @@ UPDATE: ul > li:nth-of-type(3)::text " " => "2"
 UPDATE: span:nth-of-type(2)::text " " => "2"
 ```
 
-# Update
-```js
-document.querySelector(".none").click();
-```
+# Update `click(".none")`
 ```html
 <button
   class="more"
@@ -88,10 +82,7 @@ REMOVE: ul + span
 REMOVE: ul + span
 ```
 
-# Update
-```js
-document.querySelector(".more").click();
-```
+# Update `click(".more")`
 ```html
 <button
   class="more"

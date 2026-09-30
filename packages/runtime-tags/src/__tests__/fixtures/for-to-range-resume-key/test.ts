@@ -1,4 +1,5 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 // A `<for to/from/step>` range loop without an explicit `by` is keyed by its
 // iteration *value*, but the HTML writer computed `sameAsIndex` against the
@@ -9,9 +10,5 @@ import type { TestConfig } from "../../main.test";
 //   click -> end 4->5; an `n=5` item is appended while n=2..4 keep identity.
 // With the fix SSR and CSR reconcile identically (`equivalent: true`).
 export const config: TestConfig = {
-  steps: [{}, click],
+  steps: [{}, click("button")],
 };
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}

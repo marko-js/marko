@@ -16,10 +16,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector("button.toggle").click();
-```
+# Update `click("button.toggle")`
 ```html
 <div
   class="x"

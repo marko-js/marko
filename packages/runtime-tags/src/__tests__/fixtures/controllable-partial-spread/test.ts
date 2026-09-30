@@ -1,8 +1,5 @@
 import type { TestConfig } from "../../main.test";
-
-function click(document: Document) {
-  document.querySelector("button")!.click();
-}
+import { click } from "../../utils/steps";
 
 function typeBound(document: Document) {
   const input = document.querySelectorAll("input")[2]!;
@@ -12,5 +9,5 @@ function typeBound(document: Document) {
 }
 
 export const config: TestConfig = {
-  steps: [{}, click, typeBound],
+  steps: [{}, click("button"), typeBound],
 };

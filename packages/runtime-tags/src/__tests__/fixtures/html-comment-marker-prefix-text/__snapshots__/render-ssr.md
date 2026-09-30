@@ -7,10 +7,7 @@
 <!--&#77;_$1 b-->
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   1
@@ -23,10 +20,7 @@ document.querySelector("button").click();
 UPDATE: button::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2

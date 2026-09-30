@@ -11,10 +11,7 @@ A
 </p>
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -30,10 +27,7 @@ document.querySelector("#toggle").click();
 REMOVE: #toggle + ::text("A")
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"

@@ -41,10 +41,7 @@ REMOVE: .reordered + ::text("loading")
 INSERT: .reordered + .streamed
 ```
 
-# Update
-```js
-document.querySelector(".reordered").click();
-```
+# Update `click(".reordered")`
 ```html
 <button
   class="reordered"
@@ -62,10 +59,7 @@ document.querySelector(".reordered").click();
 UPDATE: .reordered::text@10 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector(".streamed").click();
-```
+# Update `click(".streamed")`
 ```html
 <button
   class="reordered"

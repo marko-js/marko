@@ -1,25 +1,18 @@
 import type { TestConfig } from "../../main.test";
 import { flushRAF, wait } from "../../utils/resolve";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
   steps: [
     {},
     flushRAF,
     wait,
-    incClick,
+    click(".inc"),
     wait,
-    toggleClick,
+    click(".toggle"),
     wait,
-    toggleClick,
+    click(".toggle"),
     wait,
   ],
   equivalent: false,
 };
-
-function toggleClick(document: Document) {
-  (document.querySelector(".toggle") as HTMLElement).click();
-}
-
-function incClick(document: Document) {
-  (document.querySelector(".inc") as HTMLElement).click();
-}

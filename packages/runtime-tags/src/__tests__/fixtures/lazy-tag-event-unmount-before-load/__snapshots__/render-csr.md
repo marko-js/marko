@@ -21,20 +21,11 @@
 WARN "A lazy load trigger could not find an element matching \"#load\". The module was loaded immediately."
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 
-# Update
-```js
-document.querySelector("#load").click();
-```
+# Update `click("#load")`
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -64,15 +55,9 @@ INSERT: #toggle + span
 LOG "loaded"
 ```
 
-# Update
-```js
-document.querySelector("#load").click();
-```
+# Update `click("#load")`
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="toggle"

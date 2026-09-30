@@ -12,10 +12,7 @@
 />
 ```
 
-# Update
-```js
-document.querySelector("#count").click();
-```
+# Update `click("#count")`
 ```html
 <div>
   <button
@@ -33,10 +30,7 @@ document.querySelector("#count").click();
 UPDATE: #count::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#changeTag").click();
-```
+# Update `click("#changeTag")`
 ```html
 <span>
   <button
@@ -57,10 +51,7 @@ INSERT: span > #count
 UPDATE: #count::text " " => "0"
 ```
 
-# Update
-```js
-document.querySelector("#count").click();
-```
+# Update `click("#count")`
 ```html
 <span>
   <button

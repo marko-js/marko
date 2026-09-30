@@ -12,13 +12,7 @@
 </div>
 ```
 
-# Update
-```js
-const input = document.querySelector("input");
-const window = input.ownerDocument.defaultView;
-input.value = value;
-input.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("input", "one")`
 ```html
 <button>
   respread
@@ -37,10 +31,7 @@ input.dispatchEvent(new window.Event("input", { bubbles: true }));
 UPDATE: div::text "a" => "one"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   respread
@@ -59,13 +50,7 @@ document.querySelector("button").click();
 UPDATE: input[placeholder] "p" => "q"
 ```
 
-# Update
-```js
-const input = document.querySelector("input");
-const window = input.ownerDocument.defaultView;
-input.value = value;
-input.dispatchEvent(new window.Event("input", { bubbles: true }));
-```
+# Update `type("input", "two")`
 ```html
 <button>
   respread

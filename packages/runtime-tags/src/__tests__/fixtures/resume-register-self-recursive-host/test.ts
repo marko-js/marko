@@ -1,9 +1,6 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [
-    { depth: 1 },
-    (document: Document) =>
-      document.querySelector<HTMLButtonElement>("#inc")!.click(),
-  ],
+  steps: [{ depth: 1 }, click("#inc")],
 };

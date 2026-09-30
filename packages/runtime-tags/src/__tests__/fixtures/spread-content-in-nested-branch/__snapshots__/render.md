@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -38,10 +35,7 @@ document.querySelector(".toggle").click();
 REMOVE: .toggle + div
 ```
 
-# Update
-```js
-document.querySelector(".toggle").click();
-```
+# Update `click(".toggle")`
 ```html
 <button
   class="toggle"
@@ -67,10 +61,7 @@ INSERT: .a > :is(::text("One "), ::text("0"))
 UPDATE: .a::text@4 "" => "0"
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="toggle"

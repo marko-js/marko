@@ -38,10 +38,7 @@ REMOVE: div::text("a")
 INSERT: div::text("checked:true")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```js

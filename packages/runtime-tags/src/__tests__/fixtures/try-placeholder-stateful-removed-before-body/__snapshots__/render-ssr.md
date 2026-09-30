@@ -10,10 +10,7 @@ loading
 LOG "placeholder mounted"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   hide

@@ -12,10 +12,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <span>
@@ -33,10 +30,7 @@ REMOVE: div > span + span
 UPDATE: div > span::text " " => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <span
@@ -56,10 +50,7 @@ INSERT: div > .hidden
 UPDATE: .hidden::text " " => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   <span>

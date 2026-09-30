@@ -36,10 +36,7 @@ REMOVE: ::text@7 + ::text("LOADING...")
 INSERT: div::text("0")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html
@@ -76,10 +73,7 @@ REMOVE: div::text("0")
 INSERT: div::text("1")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html

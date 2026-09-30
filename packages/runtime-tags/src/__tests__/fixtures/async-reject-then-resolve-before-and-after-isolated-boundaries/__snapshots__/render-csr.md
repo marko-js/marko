@@ -30,10 +30,7 @@ INSERT: ::text + :is(div, button)
 UPDATE: div:nth-of-type(2)::text@12 "" => "C Value"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   Resolved A: A Value

@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 
 # Update
 ```js
@@ -41,10 +38,7 @@ INSERT: #child::text("1")
 LOG "loaded"
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="inc"

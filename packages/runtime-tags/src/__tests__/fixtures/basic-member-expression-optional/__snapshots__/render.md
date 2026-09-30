@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   0
@@ -28,10 +25,7 @@ UPDATE: div:nth-of-type(1)::text "" => "0"
 UPDATE: div:nth-of-type(2)::text "" => "Dylan"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   1
@@ -49,10 +43,7 @@ UPDATE: div:nth-of-type(1)::text "0" => "1"
 UPDATE: div:nth-of-type(2)::text "Dylan" => "Michael"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   2
@@ -70,10 +61,7 @@ UPDATE: div:nth-of-type(1)::text "1" => "2"
 UPDATE: div:nth-of-type(2)::text "Michael" => "Ryan"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   3
@@ -91,10 +79,7 @@ UPDATE: div:nth-of-type(1)::text "2" => "3"
 UPDATE: div:nth-of-type(2)::text "Ryan" => "Luke"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div />
 <div />

@@ -5,10 +5,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[0].click();
-```
+# Update `click("button")`
 ```html
 <button>
   2
@@ -26,10 +23,7 @@ UPDATE: button:nth-of-type(2)::text " " => "1"
 UPDATE: ::text@5 "" => "x"
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[1].click();
-```
+# Update `click("button", 1)`
 ```html
 <button>
   2
@@ -53,10 +47,7 @@ INSERT: ::text@7 + :is(::text("leaf "), ::text("x"))
 UPDATE: ::text@14 "" => "x"
 ```
 
-# Update
-```js
-document.querySelectorAll("button")[2].click();
-```
+# Update `click("button", 2)`
 ```html
 <button>
   2

@@ -16,10 +16,7 @@
 </span>
 ```
 
-# Update
-```js
-document.querySelectorAll(`input`)[1].click();
-```
+# Update `click("input", 1)`
 
 # Update
 ```js

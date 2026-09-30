@@ -21,10 +21,7 @@ INSERT: button
 REMOVE: button + ::text("loading")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   inner 1

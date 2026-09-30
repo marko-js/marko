@@ -13,10 +13,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <span>
   child:2
@@ -36,10 +33,7 @@ UPDATE: div::text "1" => "2"
 UPDATE: span::text@6 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <span>
   child:3

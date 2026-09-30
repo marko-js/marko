@@ -6,10 +6,7 @@
 <button />
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span>
   B 1
@@ -23,10 +20,7 @@ REMOVE: span + div
 UPDATE: span::text@2 "" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   A 1

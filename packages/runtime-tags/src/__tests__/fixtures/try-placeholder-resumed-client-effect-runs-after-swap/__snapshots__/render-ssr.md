@@ -8,10 +8,7 @@
 loading
 ```
 
-# Update
-```js
-document.querySelector("#show").click();
-```
+# Update `click("#show")`
 
 # Update
 ```html
@@ -36,10 +33,7 @@ REMOVE: ::text("loading")
 INSERT: #show + :is(#inner, div)
 ```
 
-# Update
-```js
-document.querySelector("#inner").click();
-```
+# Update `click("#inner")`
 ## Console
 ```
 LOG "inner clicked"

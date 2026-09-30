@@ -24,10 +24,7 @@ INSERT: button::text("Before")
 INSERT: div:nth-of-type(1) + ::text("Rejected B")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <div>
   Resolved A: A Value

@@ -12,10 +12,7 @@
 LOG "loaded"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc
@@ -29,10 +26,7 @@ document.querySelector("button").click();
 UPDATE: span::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc
@@ -46,10 +40,7 @@ document.querySelector("button").click();
 UPDATE: span::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc

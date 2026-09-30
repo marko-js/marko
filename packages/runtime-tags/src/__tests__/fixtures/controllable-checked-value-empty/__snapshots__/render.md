@@ -10,10 +10,7 @@
 </output>
 ```
 
-# Update
-```js
-document.querySelector("input").click();
-```
+# Update `click("input")`
 ```html
 <input
   checked=""
@@ -29,7 +26,4 @@ document.querySelector("input").click();
 UPDATE: output::text "null" => "undefined"
 ```
 
-# Update
-```js
-document.querySelector("input").click();
-```
+# Update `click("input")`

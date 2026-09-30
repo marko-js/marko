@@ -6,10 +6,7 @@
 loading...
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html
@@ -31,10 +28,7 @@ INSERT: button + :is(span, b)
 UPDATE: b::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   inc

@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"
@@ -33,10 +30,7 @@ document.querySelector("button.inc").click();
 UPDATE: .inc::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"
@@ -54,10 +48,7 @@ document.querySelector("button.inc").click();
 UPDATE: .inc::text "2" => "3"
 ```
 
-# Update
-```js
-document.querySelector("button.reset").click();
-```
+# Update `click("button.reset")`
 ```html
 <button
   class="inc"
@@ -75,10 +66,7 @@ document.querySelector("button.reset").click();
 UPDATE: .inc::text "3" => "0"
 ```
 
-# Update
-```js
-document.querySelector("button.inc").click();
-```
+# Update `click("button.inc")`
 ```html
 <button
   class="inc"

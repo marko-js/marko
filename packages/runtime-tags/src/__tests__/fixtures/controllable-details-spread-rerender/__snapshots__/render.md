@@ -33,10 +33,7 @@ super.disconnect();
 }
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   bump
@@ -59,10 +56,7 @@ UPDATE: output::text@7 "0" => "1"
 UPDATE: details[data-n] "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   bump

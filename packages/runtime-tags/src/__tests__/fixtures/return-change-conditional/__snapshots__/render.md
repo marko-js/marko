@@ -39,10 +39,7 @@ document.querySelector("#assign").click();
 UPDATE: div::text "a" => "a!"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 
 # Update
 ```js

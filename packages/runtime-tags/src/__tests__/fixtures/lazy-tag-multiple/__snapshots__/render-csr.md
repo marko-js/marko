@@ -32,10 +32,7 @@ LOG "loaded a"
 LOG "loaded b"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   Inc

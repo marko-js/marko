@@ -7,10 +7,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -28,10 +25,7 @@ document.querySelector("#toggle").click();
 INSERT: #toggle + #inc
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="toggle"
@@ -49,10 +43,7 @@ document.querySelector("#inc").click();
 UPDATE: #inc::text@6 "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("#inc").click();
-```
+# Update `click("#inc")`
 ```html
 <button
   id="toggle"
@@ -70,10 +61,7 @@ document.querySelector("#inc").click();
 UPDATE: #inc::text@6 "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"
@@ -86,10 +74,7 @@ document.querySelector("#toggle").click();
 REMOVE: #toggle + #inc
 ```
 
-# Update
-```js
-document.querySelector("#toggle").click();
-```
+# Update `click("#toggle")`
 ```html
 <button
   id="toggle"

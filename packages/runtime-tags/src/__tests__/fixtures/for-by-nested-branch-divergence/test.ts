@@ -1,4 +1,5 @@
 import type { TestConfig } from "../../main.test";
+import { click } from "../../utils/steps";
 
 // Regression: a keyed `<for|item| of=list by="id">` whose body is a multi-node
 // `<if>/<else>` reconciled a reorder differently after SSR-resume than on a
@@ -11,9 +12,5 @@ import type { TestConfig } from "../../main.test";
 // the fix the resumed and CSR mutation logs match again, so `equivalent: true`
 // guards the regression.
 export const config: TestConfig = {
-  steps: [{}, rot, rot],
+  steps: [{}, click("button"), click("button")],
 };
-
-function rot(document: Document) {
-  document.querySelector("button")!.click();
-}

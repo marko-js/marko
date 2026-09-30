@@ -8,10 +8,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   +
@@ -28,10 +25,7 @@ REMOVE: div::text("Count is 0")
 INSERT: div::text("Count is 1")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   +
@@ -48,10 +42,7 @@ REMOVE: div::text("Count is 1")
 INSERT: div::text("Count is 2")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   +

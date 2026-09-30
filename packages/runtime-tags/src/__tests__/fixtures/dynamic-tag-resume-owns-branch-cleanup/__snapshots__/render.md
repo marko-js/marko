@@ -17,10 +17,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector("#s").click();
-```
+# Update `click("#s")`
 ```html
 <div
   id="ref"
@@ -46,10 +43,7 @@ REMOVE: #ref::text("init")
 INSERT: #ref::text("dyn destroyed")
 ```
 
-# Update
-```js
-document.querySelector("#o").click();
-```
+# Update `click("#o")`
 ```html
 <div
   id="ref"

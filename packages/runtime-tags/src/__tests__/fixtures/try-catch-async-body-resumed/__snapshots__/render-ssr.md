@@ -13,10 +13,7 @@ INSERT: button::text("ready ")
 INSERT: button::text@0 + ::text("0")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 caught bang
 ```

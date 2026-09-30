@@ -30,10 +30,7 @@ INSERT: button + ::text("0")
 REMOVE: ::text + ::text("LOADING...")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html
@@ -61,10 +58,7 @@ INSERT: button + ::text("1")
 REMOVE: ::text + ::text("LOADING...")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 
 # Update
 ```html

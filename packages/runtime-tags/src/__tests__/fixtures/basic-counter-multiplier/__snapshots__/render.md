@@ -15,10 +15,7 @@
 </div>
 ```
 
-# Update
-```js
-document.querySelector("button#count").click();
-```
+# Update `click("button#count")`
 ```html
 <button
   id="multiplier"
@@ -39,10 +36,7 @@ document.querySelector("button#count").click();
 UPDATE: div::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button#count").click();
-```
+# Update `click("button#count")`
 ```html
 <button
   id="multiplier"
@@ -63,10 +57,7 @@ document.querySelector("button#count").click();
 UPDATE: div::text "1" => "2"
 ```
 
-# Update
-```js
-document.querySelector("button#multiplier").click();
-```
+# Update `click("button#multiplier")`
 ```html
 <button
   id="multiplier"

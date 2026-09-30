@@ -6,10 +6,7 @@
 loading
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   1
@@ -38,10 +35,7 @@ INSERT: button + div
 UPDATE: div::text "0" => "1"
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <button>
   2

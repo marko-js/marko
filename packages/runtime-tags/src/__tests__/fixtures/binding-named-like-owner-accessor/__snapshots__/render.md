@@ -15,10 +15,7 @@
 </button>
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="inc"
@@ -40,10 +37,7 @@ UPDATE: .inc::text "1" => "2"
 UPDATE: span::text "2" => "4"
 ```
 
-# Update
-```js
-document.querySelector(".mul").click();
-```
+# Update `click(".mul")`
 ```html
 <button
   class="inc"
@@ -64,10 +58,7 @@ document.querySelector(".mul").click();
 UPDATE: .mul::text "1" => "10"
 ```
 
-# Update
-```js
-document.querySelector(".inc").click();
-```
+# Update `click(".inc")`
 ```html
 <button
   class="inc"

@@ -23,10 +23,7 @@ REMOVE: .foo::text("default")
 INSERT: .foo::text("Div")
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
+# Update `click("button")`
 ```html
 <span
   class="foo"

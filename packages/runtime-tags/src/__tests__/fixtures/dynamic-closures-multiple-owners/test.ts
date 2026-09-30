@@ -1,13 +1,6 @@
 import type { TestConfig } from "../../main.test";
-
-function incrementInner(document: Document) {
-  document.querySelector<HTMLButtonElement>("button.inner")!.click();
-}
-
-function incrementOuter(document: Document) {
-  document.querySelector<HTMLButtonElement>("button.outer")!.click();
-}
+import { click } from "../../utils/steps";
 
 export const config: TestConfig = {
-  steps: [{}, incrementInner, incrementOuter],
+  steps: [{}, click("button.inner"), click("button.outer")],
 };

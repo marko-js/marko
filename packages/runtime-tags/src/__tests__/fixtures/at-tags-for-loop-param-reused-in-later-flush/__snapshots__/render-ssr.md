@@ -28,10 +28,7 @@ INSERT: #pick::text("pick")
 INSERT: #pick + div
 ```
 
-# Update
-```js
-document.querySelector("#pick").click();
-```
+# Update `click("#pick")`
 ```html
 <button
   id="open"

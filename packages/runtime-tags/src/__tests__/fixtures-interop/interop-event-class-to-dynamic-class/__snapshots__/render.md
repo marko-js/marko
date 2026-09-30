@@ -12,10 +12,7 @@
 </button>
 ```
 
-# Update
-```js
-(document.querySelector("#child")).click();
-```
+# Update `click("#child")`
 ```html
 <div
   id="count"
@@ -33,10 +30,7 @@
 UPDATE: #count::text "0" => "1"
 ```
 
-# Update
-```js
-(document.querySelector("#child")).click();
-```
+# Update `click("#child")`
 ```html
 <div
   id="count"
