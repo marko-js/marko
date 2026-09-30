@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:12
-    > 1 | <let/count ...{ value: 1, valueChange() {} }/>
-        |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The [`<let>`](https://markojs.com/docs/reference/core-tag#let) tag does not support `...spread` attributes.
-      2 |

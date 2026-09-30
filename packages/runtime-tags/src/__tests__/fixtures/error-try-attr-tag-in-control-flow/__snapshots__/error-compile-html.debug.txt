@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:1:2
-    > 1 | <try>
-        |  ^^^ The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) needs its `<@catch>` written directly inside it, not within control flow such as `<if>` or `<for>`.
-      2 |   <for|label| of=["a"]>
-      3 |     <@catch>caught ${label}</@catch>
-      4 |   </for>

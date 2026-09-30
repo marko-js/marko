@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:1:2
-    > 1 | <await|value|=Promise.resolve(1) foo=2>
-        |  ^^^^^ The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).
-      2 |   ${value}
-      3 | </await>
-      4 |

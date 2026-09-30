@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:19
-    > 1 | <let/count=0>Hello</let>
-        |                   ^^^^^^ The closing "let" tag was not expected
-      2 |

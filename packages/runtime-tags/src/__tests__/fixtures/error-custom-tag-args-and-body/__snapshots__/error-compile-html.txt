@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:9
-    > 1 | <my-tag("a")>hi</my-tag>
-        |         ^^^ Tag does not support arguments when attributes or body present.
-      2 |

@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:11
-    > 1 | <return=3 y=5/>
-        |           ^^^ Tag does not support the `y` attribute.
-      2 |

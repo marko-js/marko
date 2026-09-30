@@ -1,6 +1,0 @@
-
-    at __tests__/template.marko:2:7
-      1 | <if=false>Skipped</if>
-    > 2 | <else/x>Hello World</else>
-        |       ^ Tag does not support a variable.
-      3 |

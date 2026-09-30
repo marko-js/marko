@@ -1,6 +1,0 @@
-
-    at __tests__/template.marko:2:7
-      1 | <if=false>Skipped</if>
-    > 2 | <else if=input.show y=2>Hello World</else>
-        |       ^^^^^^^^^^^^^^^^^ The [`else` tag](https://markojs.com/docs/reference/core-tag#if--else) only supports an `if=` attribute.
-      3 |

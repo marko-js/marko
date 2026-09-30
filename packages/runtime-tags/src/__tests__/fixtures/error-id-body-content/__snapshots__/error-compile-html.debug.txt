@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:22
-    > 1 | <id/firstNameId>Hello</id>
-        |                      ^^^^^ The closing "id" tag was not expected
-      2 |

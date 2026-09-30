@@ -1,4 +1,0 @@
-
-    at __tests__/template.marko:1:2
-    > 1 | <lifecycle />
-        |  ^^^^^^^^^ The [`<lifecycle>` tag](https://markojs.com/docs/reference/core-tag#lifecycle) requires at least one attribute.

@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:9
-    > 1 | <return(x)=3/>
-        |         ^ Tag does not support arguments.
-      2 |

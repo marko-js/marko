@@ -1,9 +1,0 @@
-
-    at __tests__/template.marko:4:27
-      2 |   <for|item| of=["a", "b"]>
-      3 |     <@row>
-    > 4 |       <button onClick() { item = "z" }>${item}</button>
-        |                           ^^^^ `item` is a tag parameter and cannot be assigned to.
-      5 |     </@row>
-      6 |   </for>
-      7 | </my-list>

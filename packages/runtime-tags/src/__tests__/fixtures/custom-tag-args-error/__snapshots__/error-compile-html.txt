@@ -1,4 +1,0 @@
-
-    at __tests__/template.marko:1:15
-    > 1 | <custom-tag(1,2) />
-        |               ^ Tag does not support multiple arguments.

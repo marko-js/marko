@@ -1,6 +1,0 @@
-
-    at __tests__/template.marko:2:8
-      1 | <let/x=1>
-    > 2 | <div>${x++}</>
-        |        ^ `x` is a tag variable and can only be assigned within a script or function.
-      3 |

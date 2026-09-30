@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:14
-    > 1 | <let/count=0 y=3/>
-        |              ^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler.
-      2 |

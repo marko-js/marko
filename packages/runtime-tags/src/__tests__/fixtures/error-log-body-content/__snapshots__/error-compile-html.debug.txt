@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:19
-    > 1 | <log="Hello">Hello</log>
-        |                   ^^^^^^ The closing "log" tag was not expected
-      2 |

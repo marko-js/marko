@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:1:8
-    > 1 | <const/input=1>
-        |        ^^^^^ Duplicate declaration of `input`.
-      2 | <script>
-      3 |   console.log(input)
-      4 | </>

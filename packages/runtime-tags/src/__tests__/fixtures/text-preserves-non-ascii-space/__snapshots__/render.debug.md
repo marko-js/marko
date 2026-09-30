@@ -1,9 +1,0 @@
-# Render
-```html
-<div>
-  indented text kept together
-</div>
-<p>
-  line sep para﻿bom
-</p>
-```

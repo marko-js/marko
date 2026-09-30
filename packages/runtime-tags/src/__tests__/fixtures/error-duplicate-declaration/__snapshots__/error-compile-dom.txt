@@ -1,8 +1,0 @@
-
-    at __tests__/template.marko:2:10
-      1 | <define/Foo|bar|>
-    > 2 |   <const/bar = 1>
-        |          ^^^ Duplicate declaration of `bar`.
-      3 |   <script>
-      4 |     console.log(bar)
-      5 |   </>

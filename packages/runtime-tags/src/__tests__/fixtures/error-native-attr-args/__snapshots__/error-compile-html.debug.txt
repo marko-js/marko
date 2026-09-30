@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:6
-    > 1 | <div foo(1)="bar"/>
-        |      ^^^^^^^^^^^^ Unsupported arguments on the `foo` attribute.
-      2 |

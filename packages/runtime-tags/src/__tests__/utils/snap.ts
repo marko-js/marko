@@ -69,7 +69,7 @@ export async function snap(
     const previousWrite = writtenFiles.get(expectedFile);
     if (previousWrite !== undefined && previousWrite !== actual) {
       throw new Error(
-        `Snapshot conflict: "${file}" was written with different content by two tests.`,
+        `Snapshot conflict: "${file}" was written with different content by two tests; a shared snapshot must not depend on the mode or output.`,
       );
     }
 

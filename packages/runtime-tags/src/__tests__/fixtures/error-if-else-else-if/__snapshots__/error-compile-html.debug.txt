@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:5:1
-      3 | else
-      4 |   -- B
-    > 5 | else if=true
-        | ^ The [`<else>` tag](https://markojs.com/docs/reference/core-tag#if--else) must have a preceding `<if=cond>` or `<else if=cond>`.
-      6 |   -- C

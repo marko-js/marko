@@ -1,6 +1,0 @@
-
-    at __tests__/template.marko:1:29
-    > 1 | import { a } from "./a.js"; import { b } from "./b.js"
-        |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^ The [`<import>` tag](https://markojs.com/docs/reference/language#import) takes a single import statement.
-      2 | <div>${a}${b}</div>
-      3 |

@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:1:6
-    > 1 | <div title={ key: "value" }>
-        |      ^^^^^^^^^^^^^^^^^^^^^^ The `title` attribute cannot be a plain object (it would render as `[object Object]`).
-      2 |   Hello
-      3 | </div>
-      4 |

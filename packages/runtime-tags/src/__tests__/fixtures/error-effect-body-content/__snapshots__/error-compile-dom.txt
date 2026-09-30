@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:2
-    > 1 | <effect=(() => {})>Hello</effect>
-        |  ^^^^^^ The `<effect>` tag has been replaced by [`<script>`](https://markojs.com/docs/reference/core-tag#script), which runs its body as code. Rename it to `<script>`.
-      2 |

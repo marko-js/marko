@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:18
-    > 1 | <button onClick={() => input.onPress()}>Click</button>
-        |                  ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.
-      2 |

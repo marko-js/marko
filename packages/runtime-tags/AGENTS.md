@@ -114,16 +114,16 @@ fixtures/<name>/
   __snapshots__/    # generated + auto-pruned by test:update; never edit or delete by hand
     dom.bundle[.debug].js       # compiled CSR output
     html.bundle[.debug].js      # compiled SSR output
-    render[.debug].md           # per-step rendered HTML + granular mutation log + `## Console` output
+    render.md                   # per-step rendered HTML + granular mutation log + `## Console` output, shared by both modes
     writes[.debug].html         # SSR stream chunks (joined by <!-- FLUSH -->)
-    diagnostics[.debug].md      # debug-only meta.diagnostics (warnings/deprecations)
-    error-compile-{html,dom}[.debug].txt   # expected compile failure (error_compiler)
-    {ssr,csr}.error[.debug].txt            # expected render failure (error_html/error_dom)
+    diagnostics.md              # debug-only meta.diagnostics (warnings/deprecations)
+    error-compile.txt           # expected compile failure (error_compiler), shared by both outputs and modes
+    {ssr,csr}.error[.debug].txt # expected render failure (error_html/error_dom)
 ```
 
 Adding or removing a recoverable diagnostic or deprecation therefore fails a `diagnostics.md` snapshot in every fixture that carries one.
 
-`TestConfig` (see `main.test.ts`): `steps` (`[initialInput, ...]` where later steps are input updates, `(container) => {}` interactions, or async `Wait`/`Flush`/`Throws` controls), `error_compiler` (expect compile failure), `error_html` / `error_dom` (expect a render failure), `equivalent: false` (separate `render-ssr`/`render-csr` snapshots), `embedded`, `load_order` / `reject_load` (lazy-chunk ordering and failure), `fix_guide`, `skip_optimize` / `skip_dom` / `skip_html` / `skip_csr` / `skip_ssr`, `skip_parity` (debug intentionally logs a diagnostic optimize cannot), `runtime_id`. Each fixture runs in `debug` and `optimize` modes; CSR only runs in `debug`.
+`TestConfig` (see `main.test.ts`): `steps` (`[initialInput, ...]` where later steps are input updates, `(container) => {}` interactions, or async `Wait`/`Flush`/`Throws` controls), `error_compiler` (expect compile failure), `error_html` / `error_dom` (expect a render failure), `equivalent: false` (separate `render-ssr`/`render-csr` snapshots), `embedded`, `load_order` / `reject_load` (lazy-chunk ordering and failure), `fix_guide`, `skip_optimize` / `skip_dom` / `skip_html` / `skip_csr` / `skip_ssr`, `skip_parity` (debug intentionally logs a diagnostic optimize cannot, so it keeps a separate `render.debug.md`), `runtime_id`. Each fixture runs in `debug` and `optimize` modes; CSR only runs in `debug`.
 
 To add a fixture: create the dir + `template.marko` (+ `test.ts` with steps exercising the behavior), run `test:update` scoped to it, then **read the generated snapshots as part of your change** — the mutation log in `render.md` shows update granularity (an unexpected extra `UPDATE:`/re-render is a regression), and the `.bundle.js` diff shows generated-code cost. Name a fixture for the behavior it pins, not the repro that found it; it fails without the change, uses current syntax (never deprecated features), and gets async values from `__tests__/utils/resolve.ts` (`resolveAfter`, `rejectAfter`). The summary names each changed snapshot family and why it changed.
 

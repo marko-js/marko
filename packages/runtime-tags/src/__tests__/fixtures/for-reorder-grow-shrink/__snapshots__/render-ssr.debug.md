@@ -1,4 +1,0 @@
-# Render `{"children":[]}`
-```html
-<div />
-```

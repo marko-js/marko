@@ -1,9 +1,0 @@
-
-    at __tests__/template.marko:4:10
-      2 |   return message.toUpperCase();
-      3 | }
-    > 4 | export { shout as default };
-        |          ^^^^^^^^^^^^^^^^ A template is already its own default export. Use a named export instead.
-      5 |
-      6 | <div>hello</div>
-      7 |

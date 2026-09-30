@@ -1,4 +1,0 @@
-
-    at __tests__/template.marko:1:13
-    > 1 | <custom-tag(1) x=2 />
-        |             ^ Tag does not support arguments when attributes or body present.

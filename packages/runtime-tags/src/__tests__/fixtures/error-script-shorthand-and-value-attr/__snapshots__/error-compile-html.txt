@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:13
-    > 1 | <script="a" value="b"/>
-        |             ^^^^^^^^^ Invalid duplicate value attribute.
-      2 |

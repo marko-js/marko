@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:2
-    > 1 | <const/x=1 y=2/>
-        |  ^^^^^ The [`<const>` tag](https://markojs.com/docs/reference/core-tag#const) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).
-      2 |

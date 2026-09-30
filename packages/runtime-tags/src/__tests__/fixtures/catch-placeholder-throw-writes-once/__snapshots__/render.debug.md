@@ -1,4 +1,0 @@
-# Render
-```html
-caught bang
-```

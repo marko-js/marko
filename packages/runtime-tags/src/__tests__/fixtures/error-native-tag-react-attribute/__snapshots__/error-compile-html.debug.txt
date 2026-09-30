@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:1:6
-    > 1 | <div className="container">
-        |      ^^^^^^^^^ `className` is not a valid attribute, did you mean `class`?
-      2 |   Hello
-      3 | </div>
-      4 |

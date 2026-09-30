@@ -73,7 +73,8 @@ export type TestConfig = {
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
-  /** Debug intentionally logs a dev-only diagnostic the optimized build cannot. */
+  /** Debug intentionally logs a dev-only diagnostic the optimized build
+   * cannot, so each mode keeps its own render log. */
   skip_parity?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
@@ -102,6 +103,8 @@ const slots = process.env.MARKO_TEST_SLOTS
 function inShard(index: number) {
   return slots === null || slots.has(index % slotTotal);
 }
+
+const modeIndependentRe = /^(?:render|error-compile)/;
 
 function noop() {}
 
@@ -148,8 +151,6 @@ function testFixtures(interop?: true) {
         ? (require(testFile).config ?? {})
         : {};
       const hasCompilerError = !!config.error_compiler;
-      // Render logs by file, then mode, for the parity check below.
-      const renderLogs = new Map<string, Map<string, string>>();
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
 
@@ -249,7 +250,9 @@ function testFixtures(interop?: true) {
             ),
           );
 
-          const snapMode = async (
+          // Render logs and compile errors are one snapshot for both modes, so
+          // tree shaking or a debug-only assertion cannot change them unseen.
+          const snapMode = (
             fn: () => unknown,
             file: string,
             expectErr?: boolean,
@@ -257,23 +260,16 @@ function testFixtures(interop?: true) {
           ) => {
             const resolvedFile =
               expectErr && actualFile ? `${actualFile}.error.txt` : file;
-            const actual = await snap(
+            return snap(
               fn,
               fixtureDir,
-              optimize
+              optimize ||
+                (!config.skip_parity && modeIndependentRe.test(resolvedFile))
                 ? resolvedFile
                 : resolvedFile.replace(/(\.[^.]+)$/, ".debug$1"),
               expectErr,
-              actualFile &&
-                (optimize
-                  ? actualFile
-                  : actualFile.replace(/(\.[^.]+)$/, ".debug$1")),
+              actualFile && (optimize ? actualFile : `${actualFile}.debug`),
             );
-            if (resolvedFile.startsWith("render")) {
-              let logs = renderLogs.get(resolvedFile);
-              if (!logs) renderLogs.set(resolvedFile, (logs = new Map()));
-              logs.set(mode, actual);
-            }
           };
 
           const snapCompile = async (output: "html" | "dom") => {
@@ -300,7 +296,7 @@ function testFixtures(interop?: true) {
                     restore();
                   }
                 },
-                `error-compile-${output}.txt`,
+                "error-compile.txt",
                 true,
               );
               return;
@@ -547,24 +543,6 @@ function testFixtures(interop?: true) {
                 config.error_dom,
                 "csr",
               ));
-        });
-      }
-
-      // A diverging render log means tree shaking or debug-only assertions
-      // changed behavior (silently, since each mode snapshots separately).
-      if (!config.skip_optimize && !config.skip_parity) {
-        after(function parity() {
-          for (const [file, logs] of renderLogs) {
-            const debug = logs.get("debug");
-            const optimize = logs.get("optimize");
-            if (debug !== undefined && optimize !== undefined) {
-              assert.strictEqual(
-                optimize,
-                debug,
-                `${file} diverges between optimize and debug`,
-              );
-            }
-          }
         });
       }
     });

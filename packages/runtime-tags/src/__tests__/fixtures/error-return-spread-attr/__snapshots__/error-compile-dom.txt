@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:9
-    > 1 | <return ...{ value: 2 }/>
-        |         ^^^^^^^^^^^^^^^ Tag does not support spread attributes.
-      2 |

@@ -1,5 +1,0 @@
-
-    at __tests__/template.marko:1:15
-    > 1 | <html-comment/{ a }>Hello</html-comment>
-        |               ^^^^^ The [`<html-comment>` tag](https://markojs.com/docs/reference/core-tag#html-comment) tag variable cannot be destructured.
-      2 |

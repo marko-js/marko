@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:1:6
-    > 1 | <let/{ a } = { a: 1 }/>
-        |      ^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) variable cannot be destructured.
-      2 |
-      3 | <div>${a}</div>
-      4 |

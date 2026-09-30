@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:2:11
-      1 | static const KEY = "count";
-    > 2 | <const/{ [KEY]: count } = input/>
-        |           ^^^ Only identifier and string literal keys are supported when destructuring.
-      3 | <div>${count}</div>
-      4 |

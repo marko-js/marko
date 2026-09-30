@@ -1,7 +1,0 @@
-
-    at __tests__/template.marko:1:48
-    > 1 | import Child from "./child.marko" with { load: "visible" }
-        |                                                ^^^^^^^^^ A selector is required for the "visible" trigger. (e.g. "visible.my-element")
-      2 |
-      3 | <Child/>
-      4 |

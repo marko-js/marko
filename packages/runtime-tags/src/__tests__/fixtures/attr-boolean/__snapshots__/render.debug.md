@@ -1,6 +1,0 @@
-# Render
-```html
-<input
-  checked=""
-/>
-```
