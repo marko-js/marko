@@ -1,3 +1,8 @@
+import fs from "fs";
+import path from "path";
+
+import type * as compiler from "@marko/compiler";
+
 import type { Input } from "../../common/types";
 import type { TestConfig } from "../main.test";
 import { createServerRunner } from "./bundle";
@@ -40,6 +45,90 @@ export interface Render {
   browsers: Browser[];
   /** Drain pending work after the steps and print the settled page. */
   settle: boolean;
+  /** The page is a host holding the fixture's input, so input updates go
+   * through it and apply after resume too. */
+  hosted?: boolean;
+}
+
+export interface Wrapper {
+  name: string;
+  wrap(content: string): string;
+}
+
+// Content a host renders the fixture in, which must not change what it logs.
+export const wrappers: Wrapper[] = [
+  { name: "<if>", wrap: (content) => `<if=current>\n${content}\n</if>` },
+  {
+    name: "<for>",
+    wrap: (content) => `<for|_| of=[current]>\n${content}\n</for>`,
+  },
+  {
+    name: "<try>",
+    wrap: (content) =>
+      `<try>\n${content}\n<@catch|error|>\n\${String(error)}\n</@catch>\n</try>`,
+  },
+  {
+    name: "a tag body",
+    wrap: (content) => `<wrap-body>\n${content}\n</wrap-body>`,
+  },
+  {
+    name: "a dynamic tag body",
+    wrap: (content) =>
+      `import WrapBody from "./tags/wrap-body.marko";\n<\${current && WrapBody}>\n${content}\n</>`,
+  },
+  {
+    name: "<define>",
+    wrap: (content) => `<define/Content>\n${content}\n</define>\n<Content/>`,
+  },
+];
+
+// A host renders the fixture as a child whose input it holds in a `<let>`,
+// so the fixture's input can change after resume.
+export function createHostRunner(
+  fixtureDir: string,
+  opts: compiler.Config,
+  interop?: boolean,
+  wrapper?: Wrapper,
+): Promise<ServerRunner> {
+  const hostDir = path.join(
+    fixtureDir,
+    "dist",
+    wrapper ? `host-${wrappers.indexOf(wrapper)}` : "host",
+  );
+  const hostFile = path.join(hostDir, "template.marko");
+  const content = "<Template ...current/>";
+  fs.mkdirSync(path.join(hostDir, "tags"), { recursive: true });
+  fs.writeFileSync(
+    hostFile,
+    `import Template from "../../template.marko";
+<let/current=input/>
+<script>
+  globalThis.updateTestInput = (next) => { current = next; };
+</script>
+${wrapper ? wrapper.wrap(content) : content}
+`,
+  );
+  fs.writeFileSync(
+    path.join(hostDir, "tags", "wrap-body.marko"),
+    "<${input.content}/>\n",
+  );
+  return createServerRunner(
+    hostDir,
+    { template: "./template.marko" },
+    {
+      ...opts,
+      cache: new Map(),
+      optimizeKnownTemplates: opts.optimizeKnownTemplates && [
+        ...opts.optimizeKnownTemplates,
+        hostFile,
+      ],
+    },
+    interop,
+  );
+}
+
+interface HostContext {
+  updateTestInput(input: Input): void;
 }
 
 export async function renderCSR(render: Render) {
@@ -56,10 +145,12 @@ export async function renderCSR(render: Render) {
   tracker.logRender(input);
 
   await runSteps(steps, tracker, browser, run, {
-    onInput(input) {
-      instance.update(input);
-      tracker.logUpdate(input);
-    },
+    onInput: render.hosted
+      ? (next) => updateHost(browser, tracker, run, next)
+      : (next) => {
+          instance.update(next);
+          tracker.logUpdate(next);
+        },
     onDestroy() {
       instance.destroy();
     },
@@ -153,6 +244,9 @@ export async function renderSSR(render: Render) {
 
   await runSteps(steps, tracker, browser, run, {
     onFlush: hasFlush ? flushAndResume : undefined,
+    onInput: render.hosted
+      ? (next) => updateHost(browser, tracker, run, next)
+      : undefined,
   });
 
   while (hasFlush) {
@@ -165,6 +259,20 @@ export async function renderSSR(render: Render) {
   tracker.cleanup();
   const settled = await settle(render, browser, run);
   return { browser, tracker, chunks, settled };
+}
+
+async function updateHost(
+  browser: Browser,
+  tracker: ReturnType<typeof createMutationTracker>,
+  run: () => void,
+  input: Input,
+) {
+  tracker.beginUpdate();
+  (browser.ctx as HostContext).updateTestInput(input);
+  run();
+  await browser.runAsyncScripts();
+  run();
+  tracker.logUpdate(input);
 }
 
 // Pending async work lands before the settled check compares.
@@ -182,7 +290,7 @@ async function runSteps(
   browser: Browser,
   run: () => void,
   opts: {
-    onInput?: (input: Input) => void;
+    onInput?: (input: Input) => unknown;
     onFlush?: () => Promise<void>;
     onDestroy?: () => void;
   },
@@ -225,7 +333,7 @@ async function runSteps(
         tracker.logUpdate(update);
       }
     } else if (opts.onInput) {
-      opts.onInput(update);
+      await opts.onInput(update);
     } else {
       // A resumed page's input is fixed, so its run ends at an input update.
       break;

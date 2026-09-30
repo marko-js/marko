@@ -17,10 +17,13 @@ import {
 } from "./utils/bundle";
 import {
   type Browser,
+  createHostRunner,
   type Render,
   renderCSR,
   renderSSR,
+  type ServerRunner,
   type Steps,
+  wrappers,
 } from "./utils/render";
 import { allTestsPassed, snap } from "./utils/snap";
 import {
@@ -29,6 +32,7 @@ import {
 } from "./utils/strip-inline-runtime";
 
 const require = createRequire(import.meta.url);
+const sweepWrappers = process.env.MARKO_TEST_WRAPPERS ? wrappers : [];
 
 export type TestConfig = {
   steps?: Steps | ((signal?: AbortSignal) => Steps | Promise<Steps>);
@@ -59,6 +63,9 @@ export type TestConfig = {
    * (server and client ids, server-only content, a load the steps never
    * trigger), so the settled check does not compare them. */
   skip_settled?: boolean;
+  /** Rendered inside a host's `<if>`, `<for>` and other content, the fixture
+   * logs differently by design, so the `MARKO_TEST_WRAPPERS` sweep skips it. */
+  skip_wrapped?: boolean;
   /** Debug intentionally logs a dev-only diagnostic the optimized build
    * cannot, so each mode keeps its own render log. */
   skip_parity?: boolean;
@@ -201,13 +208,16 @@ function testFixtures(interop?: true) {
             getModeOpts.reset();
             // The runner can survive in mocha's suite graph, so the fixture's
             // server module is dropped explicitly.
-            ssrRunner.peek()?.then(
-              (runner) => runner.disposeServer(),
-              () => {},
-            );
-            ssrRunner.reset();
+            for (const runner of [ssrRunner, hostRunner, ...wrappedRunners]) {
+              runner.peek()?.then(
+                (built) => built.disposeServer(),
+                () => {},
+              );
+              runner.reset();
+            }
             csr.reset();
             ssr.reset();
+            unwrapped.reset();
           });
           const getModeOpts = once(
             (): compiler.Config => ({
@@ -229,7 +239,11 @@ function testFixtures(interop?: true) {
                       recursive: true,
                     }) as string[]
                   )
-                    .filter((f) => f.endsWith(".marko"))
+                    .filter(
+                      (f) =>
+                        f.endsWith(".marko") &&
+                        !f.startsWith(`dist${path.sep}`),
+                    )
                     .map((f) => path.join(fixtureDir, f))
                 : undefined,
             }),
@@ -241,6 +255,14 @@ function testFixtures(interop?: true) {
               { template: "./template.marko" },
               getModeOpts(),
               interop,
+            ),
+          );
+          const hostRunner = once(() =>
+            createHostRunner(fixtureDir, getModeOpts(), interop),
+          );
+          const wrappedRunners = sweepWrappers.map((wrapper) =>
+            once(() =>
+              createHostRunner(fixtureDir, getModeOpts(), interop, wrapper),
             ),
           );
 
@@ -415,6 +437,46 @@ function testFixtures(interop?: true) {
                 config.error_dom,
                 "csr",
               ));
+
+          // Rendered inside any content of a host, the fixture must log what
+          // it logs under the plain host; `MARKO_TEST_WRAPPERS=1` opts in.
+          const hosted = (runner: () => Promise<ServerRunner>): Render => ({
+            config,
+            page: runner,
+            browsers,
+            settle: false,
+            hosted: true,
+          });
+          const unwrapped = once(async () => ({
+            ssr: (await renderSSR(hosted(hostRunner))).tracker.getLogs(),
+            csr: (await renderCSR(hosted(hostRunner))).tracker.getLogs(),
+          }));
+          interop ||
+            optimize ||
+            skipSSR ||
+            skipCSR ||
+            config.error_html ||
+            config.error_dom ||
+            config.skip_wrapped ||
+            sweepWrappers.forEach((wrapper, i) =>
+              it(`wrapped in ${wrapper.name}`, async () => {
+                const expected = await unwrapped();
+                assert.strictEqual(
+                  (
+                    await renderSSR(hosted(wrappedRunners[i]))
+                  ).tracker.getLogs(),
+                  expected.ssr,
+                  "the resumed page logs differently when wrapped",
+                );
+                assert.strictEqual(
+                  (
+                    await renderCSR(hosted(wrappedRunners[i]))
+                  ).tracker.getLogs(),
+                  expected.csr,
+                  "the client render logs differently when wrapped",
+                );
+              }),
+            );
 
           // Streaming and load timing may render different steps, but once
           // every step ran the resumed page and the client render must agree.

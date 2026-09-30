@@ -22,7 +22,7 @@ const $for_content__open = /*@__PURE__*/ _let(12, ($scope) => {
   _attr($scope.a, "hidden", !$scope.m);
   _text($scope.d, $scope.m ? "[-]" : "[+]");
 });
-const $for_content__setup__script = _script("a0", ($scope) =>
+const $for_content__setup__script = _script("o0", ($scope) =>
   _on($scope.c, "click", function () {
     $for_content__open($scope, !$scope.m);
   }),
@@ -68,5 +68,5 @@ const $input = ($scope, input) => {
 };
 //#endregion
 //#region entry
-/* @__PURE__ */ _template("b", $template, $walks, 0, $input).mount();
+/* @__PURE__ */ _template("p", $template, $walks, 0, $input).mount();
 //#endregion
