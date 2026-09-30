@@ -1057,6 +1057,7 @@ export function _try(
     catchContent,
     branchId,
     renderers,
+    placeholderContent,
   );
 
   // Custom and dynamic tags hide from analysis whether the body resumes, so its
@@ -1109,6 +1110,7 @@ function tryBoundary(
   catchContent: ServerRenderer | undefined,
   branchId: number,
   renderers: () => void,
+  placeholderContent: ServerRenderer | undefined,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -1144,8 +1146,12 @@ function tryBoundary(
   chunk.next = body;
   boundary.startAsync();
 
-  // With a catch, markers let it take the body's place in the stream.
-  const reorderId = catchContent ? state.nextReorderId() : "";
+  // With a catch+placeholder, markers let catch take the body's place in the
+  // stream via the client-side reorder mechanism. Without a placeholder there
+  // is no loading state to show, so catch content can be emitted in document
+  // order without any client-side JS.
+  const reorderId =
+    catchContent && placeholderContent ? state.nextReorderId() : "";
   const endMarker = reorderId && state.mark(Mark.PlaceholderEnd, reorderId);
   if (reorderId) {
     chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
@@ -1157,8 +1163,55 @@ function tryBoundary(
   catchBoundary.onNext = () => {
     if (boundary.signal.aborted) return;
     if (catchBoundary.signal.aborted) {
-      if (!reorderId) {
+      if (!catchContent) {
         boundary.abort(catchBoundary.signal.reason);
+        return;
+      }
+
+      if (!reorderId) {
+        // Catch without placeholder: deliver catch content in document order.
+        // The body hasn't promised anything to the browser yet (no loading
+        // state), so we can splice the catch content directly in its place
+        // without needing JS reordering.
+        if (!bodyEnd.consumed) {
+          let cur: Chunk = body;
+          let replaced = false;
+
+          do {
+            const next = cur.next!;
+
+            if (cur.boundary !== catchBoundary) {
+              cur.boundary.abort(catchBoundary.signal.reason);
+            }
+
+            if (!replaced && !cur.consumed) {
+              replaced = true;
+              cur.async = false;
+              cur.html = "";
+              cur.scripts = cur.effects = cur.lastEffect = "";
+              cur.placeholder =
+                cur.reorderId =
+                cur.deferredReady =
+                cur.deferredReorder =
+                  null;
+
+              // Render catch content into a fresh chunk and link it back to
+              // the continuation so the stream flows in document order.
+              const inOrderCatchChunk = cur.fork(boundary, null);
+              const catchEnd = inOrderCatchChunk.render(
+                catchContent,
+                catchBoundary.signal.reason,
+              );
+              catchEnd.next = bodyNext;
+              cur.next = inOrderCatchChunk;
+            }
+
+            cur = next;
+          } while (cur !== bodyNext);
+        }
+        // If bodyEnd is already consumed (success content already streamed),
+        // the catch fired too late to deliver in-order
+        boundary.endAsync();
         return;
       }
 

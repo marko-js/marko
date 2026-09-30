@@ -5,10 +5,9 @@ ab
 
 # Update
 ```html
-ad
+abd
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("d")
-REMOVE: ::text("b")
+INSERT: ::text@1 + ::text("d")
 ```

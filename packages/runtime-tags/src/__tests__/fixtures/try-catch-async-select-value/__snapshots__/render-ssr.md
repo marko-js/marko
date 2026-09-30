@@ -28,6 +28,6 @@
 ```
 ## Change
 ```
-INSERT: select > option:nth-of-type(2)::text("catch b")
 INSERT: select > option:nth-of-type(1) + option
+INSERT: select > option:nth-of-type(2)::text("catch b")
 ```

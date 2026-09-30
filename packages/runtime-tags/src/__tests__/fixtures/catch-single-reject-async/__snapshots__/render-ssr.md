@@ -5,11 +5,10 @@ ab
 
 # Update
 ```html
-aERROR!def
+abERROR!def
 ```
 ## Change
 ```
-INSERT: ::text@1 + ::text("def")
-REMOVE: ::text("b")
-INSERT: ::text@0 + ::text("ERROR!")
+INSERT: ::text@1 + ::text("ERROR!")
+INSERT: ::text@2 + ::text("def")
 ```
