@@ -21,7 +21,7 @@
 ```
 INSERT: #slow
 INSERT: #slow::text("slow")
-INSERT: #class
+INSERT: #slow + #class
 INSERT: #class > #caught
 INSERT: #caught::text("caught")
 ```
