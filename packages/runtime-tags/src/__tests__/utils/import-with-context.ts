@@ -5,6 +5,13 @@ import vm from "node:vm";
 
 import { type ResolveOptions, resolveSync } from "resolve-sync";
 
+declare module "node:vm" {
+  // Node has shipped it since v13.7, but @types/node does not declare it.
+  interface SourceTextModule {
+    createCachedData(): Buffer;
+  }
+}
+
 /** Imports an ESM file into the *current* realm through vm modules, so its
  * namespace is collectable once the caller drops it — Node's ESM loader cache
  * (`ModuleLoader.loadCache`) retains ordinary dynamic imports for the life of
@@ -19,16 +26,16 @@ export async function importEvictable<T>(entry: string): Promise<T> {
   function load(url: string): Promise<vm.Module> {
     let cached = cache.get(url);
     if (!cached) {
-      const mod = new vm.SourceTextModule(
-        readFileSync(fileURLToPath(url), "utf8"),
-        {
-          identifier: url,
-          initializeImportMeta(meta) {
-            meta.url = url;
-          },
-          importModuleDynamically: link,
+      const source = readFileSync(fileURLToPath(url), "utf8");
+      const mod = new vm.SourceTextModule(source, {
+        identifier: url,
+        cachedData: cachedCode(url, source),
+        initializeImportMeta(meta) {
+          meta.url = url;
         },
-      );
+        importModuleDynamically: link,
+      });
+      cacheCode(url, source, mod);
       cache.set(
         url,
         (cached = mod
@@ -90,12 +97,15 @@ export async function importWithContext<T>(
   function load(id: string): Promise<vm.Module> {
     let cached = state.cache.get(id);
     if (!cached) {
-      const mod = new vm.SourceTextModule(readFileSync(id, "utf8"), {
+      const source = readFileSync(id, "utf8");
+      const mod = new vm.SourceTextModule(source, {
         context,
         identifier: id,
+        cachedData: cachedCode(id, source),
         importModuleDynamically,
       });
 
+      cacheCode(id, source, mod);
       state.pending++;
       state.cache.set(
         id,
@@ -148,6 +158,21 @@ export function waitForPendingModules(context: vm.Context) {
     state?.pending &&
     (state.promise ||= new Promise((r) => (state.resolve = r)))
   );
+}
+
+// Every browser and server context links the same prebuilt runtime, and a
+// fixture's chunks load in each of its runs, so compiled code is reused.
+const codeCache = new Map<string, { source: string; data: Buffer }>();
+
+function cachedCode(id: string, source: string) {
+  const cached = codeCache.get(id);
+  return cached?.source === source ? cached.data : undefined;
+}
+
+function cacheCode(id: string, source: string, mod: vm.SourceTextModule) {
+  if (codeCache.get(id)?.source !== source) {
+    codeCache.set(id, { source, data: mod.createCachedData() });
+  }
 }
 
 function tick() {

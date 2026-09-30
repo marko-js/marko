@@ -8,9 +8,13 @@ require("complain").silence = true;
 // compilation cache never hits but pins each context (jsdom windows, bundles).
 require("v8").setFlagsFromString("--no-compilation-cache");
 
-const { registerHooks } = require("module");
+const { enableCompileCache, registerHooks } = require("module");
 const { fileURLToPath, pathToFileURL } = require("url");
 const { resolveSync } = require("resolve-sync");
+
+// Test workers and scripts load the same compiler and translator sources on
+// every start; the on-disk cache skips recompiling them.
+enableCompileCache();
 
 registerHooks({
   resolve(specifier, context, nextResolve) {
