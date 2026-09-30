@@ -28,7 +28,7 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
-import { addSetupWork } from "../util/setup-work";
+import { addSetupExpr } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
 import { findSlot, getSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
@@ -101,7 +101,7 @@ export default {
         mergeReferences(tagSection, tag.node, [display]);
       } else {
         // A statically hidden `<show>` still writes its display in setup.
-        addSetupWork(tagSection);
+        addSetupExpr(tagSection);
       }
     },
     exit(tag) {

@@ -23,7 +23,7 @@ import {
   getSectionForBody,
   startSection,
 } from "../util/sections";
-import { addSetupWork } from "../util/setup-work";
+import { addSetupExpr } from "../util/setup-work";
 import {
   addStatement,
   addValue,
@@ -117,7 +117,7 @@ export default {
     });
 
     // The content renderer is initialized unconditionally in setup.
-    addSetupWork(section);
+    addSetupExpr(section);
 
     structure.visit(tag, WalkCode.Replace);
     structure.enterShallow(tag);

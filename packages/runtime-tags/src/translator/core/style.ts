@@ -33,7 +33,7 @@ import {
   getOrCreateSection,
   getSection,
 } from "../util/sections";
-import { addSetupWork } from "../util/setup-work";
+import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { findSlot, getSlot } from "../util/slots";
 import * as structure from "../util/structure";
@@ -89,7 +89,7 @@ export default {
     if (names) {
       analyzeDynamicStyle(tag, names);
       // Dynamic styles write their shell statement in setup.
-      addSetupWork(getOrCreateSection(tag));
+      addSetupExpr(getOrCreateSection(tag));
       structure.visit(tag, WalkCode.Get);
       structure.enterShallow(tag);
       structure.writeTo(tag)`<style></style>`;

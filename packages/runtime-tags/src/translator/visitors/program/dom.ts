@@ -104,10 +104,9 @@ export default {
           const walks = trimTrailingExits(getSectionMeta(childSection).walks);
           const written = writeSignals(childSection);
           const setup = getSetup(childSection);
-          // A direct call skips the body's setup when analysis found none.
-          if (childSection.callSections) {
-            assertSetupWorkFound(program, childSection, written);
-          }
+          // Of child sections only a `<define>` body's setup is ever skipped,
+          // which `<define>` checks itself, so this check is debug only.
+          if (MARKO_DEBUG) assertSetupWorkFound(program, childSection, written);
           const setupIdentifier =
             setup && written.has(setup) ? setup.identifier : undefined;
 
@@ -255,6 +254,8 @@ export default {
   },
 } satisfies TemplateVisitor<t.Program>;
 
+// Callers skip a setup analysis found no work for, so translate writing one
+// means analysis missed work.
 function assertSetupWorkFound(
   program: t.NodePath<t.Program>,
   section: Section,
