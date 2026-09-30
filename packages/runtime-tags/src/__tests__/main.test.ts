@@ -8,7 +8,6 @@ import jsBeautify from "js-beautify";
 
 const { html_beautify } = jsBeautify;
 
-import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
   type ChunkSizes,
@@ -16,39 +15,21 @@ import {
   getSizes,
   type Sizes,
 } from "./utils/bundle";
-import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
-import createBrowser from "./utils/create-browser";
 import {
-  type Destroy,
-  type Flush,
-  type FlushType,
-  isDestroy,
-  isFlush,
-  isThrows,
-  isWait,
-  resetResolveState,
-  resolveAfter,
-  type Throws,
-  type Wait,
-  wait,
-} from "./utils/resolve";
+  type Browser,
+  type Render,
+  renderCSR,
+  renderSSR,
+  type Steps,
+} from "./utils/render";
 import { allTestsPassed, snap } from "./utils/snap";
 import {
   stripDebugRuntime,
   stripOptimizeRuntime,
 } from "./utils/strip-inline-runtime";
-import createMutationTracker, { formatBody } from "./utils/track-mutations";
 
 const require = createRequire(import.meta.url);
 
-type Step =
-  | Input
-  | Wait
-  | Flush
-  | Destroy
-  | Throws
-  | ((document: Document) => unknown);
-type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | ((signal?: AbortSignal) => Steps | Promise<Steps>);
   embedded?: true;
@@ -207,10 +188,7 @@ function testFixtures(interop?: true) {
             dom?: Record<string, ChunkSizes | Sizes>;
             html?: Sizes;
           } = {};
-          const browsers: ReturnType<typeof createBrowser>[] = [];
-          const rejectLoad =
-            config.reject_load &&
-            ((id: string) => config.reject_load!.some((s) => id.includes(s)));
+          const browsers: Browser[] = [];
 
           // Mocha retains suite closures for the entire run, so the cached
           // browsers/bundles are released once the fixture finishes to keep
@@ -326,153 +304,14 @@ function testFixtures(interop?: true) {
             }, `${output}.bundle.js`);
           };
 
-          const csr = once(async () => {
-            resetResolveState();
-            const browser = createBrowser();
-            browsers.push(browser);
-            const runClient = (await ssrRunner()).clientRunner!;
-            const { document } = browser.window;
-            const { input, steps } = await getSteps(config);
-            const tracker = createMutationTracker(browser);
-            const { template, run } = await runClient(
-              browser.ctx,
-              rejectLoad || undefined,
-            );
-            const instance = template.mount(input, document.body, "afterbegin");
-            tracker.logRender(input);
-
-            await runSteps(steps, tracker, browser, run, {
-              onInput(input) {
-                instance.update(input);
-                tracker.logUpdate(input);
-              },
-              onDestroy() {
-                instance.destroy();
-              },
-            });
-
-            tracker.cleanup();
-            return { browser, tracker, settled: await settle(browser, run) };
-          });
-
-          // Pending async work lands before the settled check compares.
-          const settle = async (
-            browser: ReturnType<typeof createBrowser>,
-            run: () => void,
-          ) => {
-            if (!settles) return "";
-            await wait();
-            await browser.runAsyncScripts();
-            run();
-            return formatBody(browser.window.document.body);
+          const render: Render = {
+            config,
+            page: ssrRunner,
+            browsers,
+            settle: settles,
           };
-
-          const ssr = once(async () => {
-            resetResolveState();
-            const runner = await ssrRunner();
-            const abortController = config.abort_ssr
-              ? new AbortController()
-              : undefined;
-            const { input, steps } = await getSteps(
-              config,
-              abortController?.signal,
-            );
-            const chunks: string[] = [];
-            const logs: ConsoleRecord[][] = [];
-            const capture = captureConsole();
-
-            try {
-              const { template } = await runner.runServer();
-              if (abortController) {
-                input.$global = {
-                  ...(input.$global as any),
-                  signal: abortController.signal,
-                };
-              }
-              let aborted = false;
-              try {
-                for await (const data of template.render(
-                  config.embedded
-                    ? {
-                        ...input,
-                        $global: {
-                          ...(input.$global as any),
-                          renderId: "embedded",
-                        },
-                      }
-                    : input,
-                )) {
-                  chunks.push(data);
-                  logs.push(capture.records());
-                  if (abortController && !aborted) {
-                    aborted = true;
-                    // The abort rejects the pending read, ending the stream.
-                    abortController.abort();
-                  }
-                }
-              } catch (err) {
-                // The disconnect is the point; anything else still throws.
-                if (!aborted || (err as Error).name !== "AbortError") throw err;
-              }
-              if (abortController) {
-                // Hold the capture open past the inputs' settlement so late
-                // renders from a stranded body reach the snapshot.
-                await new Promise((resolve) => setTimeout(resolve, 1100));
-                logs.push(capture.records());
-              }
-            } finally {
-              resetResolveState();
-              capture.cleanup();
-            }
-
-            const browser = createBrowser(
-              runner.assets,
-              config.load_order,
-              rejectLoad || undefined,
-            );
-            browsers.push(browser);
-            const { window } = browser;
-            const flushNext = browser.stream(chunks);
-            // As in a browser, a resumed chunk's work schedules its own flush; a
-            // missing one leaves it pending.
-            const flushAndResume = async () => {
-              hasFlush = flushNext();
-              await browser.runAsyncScripts();
-            };
-            // Attach the tracker's error listener before the first flush so
-            // errors thrown by inline resume scripts in it aren't swallowed.
-            const tracker = createMutationTracker(browser);
-            let hasFlush = flushNext();
-            for (let i = config.entry_delay || 0; i && hasFlush; i--) {
-              hasFlush = flushNext();
-            }
-
-            for (const group of logs) {
-              for (const { type, args } of group) {
-                window.console[type](...args);
-              }
-            }
-
-            await browser.runAsyncScripts(() => tracker.logRender(input));
-            const { run } =
-              browser.ctx as typeof import("@marko/runtime-tags/dom");
-
-            await runSteps(steps, tracker, browser, run, {
-              onFlush: hasFlush ? flushAndResume : undefined,
-            });
-
-            while (hasFlush) {
-              await resolveAfter(0, 1);
-              tracker.beginUpdate();
-              await flushAndResume();
-              tracker.logUpdate();
-            }
-
-            tracker.cleanup();
-            const settled = await settle(browser, run);
-
-            return { browser, tracker, chunks, settled };
-          });
+          const csr = once(() => renderCSR(render));
+          const ssr = once(() => renderSSR(render));
 
           skipHTML || it("html", () => snapCompile("html"));
           skipDOM || it("dom", () => snapCompile("dom"));
@@ -591,72 +430,6 @@ function testFixtures(interop?: true) {
       }
     });
   }
-}
-
-async function runSteps(
-  steps: Step[],
-  tracker: ReturnType<typeof createMutationTracker>,
-  browser: ReturnType<typeof createBrowser>,
-  run: () => void,
-  opts: {
-    onInput?: (input: Input) => void;
-    onFlush?: () => Promise<void>;
-    onDestroy?: () => void;
-  },
-) {
-  for (const update of steps) {
-    if (isDestroy(update)) {
-      // only the client tests have an instance to destroy
-      if (!opts.onDestroy) break;
-      tracker.beginUpdate();
-      opts.onDestroy();
-      run();
-      tracker.logUpdate("Destroy");
-    } else if (isWait(update)) {
-      await update();
-      await browser.runAsyncScripts();
-      run();
-      tracker.logUpdate();
-    } else if (isFlush(update)) {
-      if (update.flushType === "stream") {
-        if (opts.onFlush) {
-          tracker.beginUpdate();
-          await opts.onFlush();
-          tracker.logUpdate();
-        }
-      } else {
-        tracker.beginUpdate();
-        browser.flush(update.flushType as Exclude<FlushType, "stream">);
-        run();
-        tracker.logUpdate();
-      }
-    } else if (typeof update === "function") {
-      tracker.beginUpdate();
-      await update(browser.window.document);
-      run();
-      await browser.runAsyncScripts();
-      run();
-      if (isThrows(update)) {
-        tracker.logErrors(update);
-      } else {
-        tracker.logUpdate(update);
-      }
-    } else if (opts.onInput) {
-      opts.onInput(update);
-    } else {
-      // if new input is detected, stop testing
-      // this will be covered by the client tests
-      break;
-    }
-  }
-}
-
-async function getSteps(config: TestConfig, signal?: AbortSignal) {
-  const [input = {} as Input, ...steps] =
-    typeof config.steps === "function"
-      ? await config.steps(signal)
-      : (config.steps ?? []);
-  return { input, steps };
 }
 
 function stripDefaultScript(html: string) {
