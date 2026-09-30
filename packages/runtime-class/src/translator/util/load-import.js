@@ -47,7 +47,8 @@ export function analyzeLoadImport(importDecl, tagEntry) {
   // `_` slot, recursing on render (see load-tag-browser.js). Without `linkAssets`
   // there is no asset orchestration for lazy loading either. Both cases drop the
   // attribute so the import compiles as a normal eager tag import.
-  const { markoOpts } = importDecl.hub.file;
+  const { file } = importDecl.hub;
+  const { markoOpts } = file;
   if (markoOpts.hot || !markoOpts.linkAssets) {
     loadAttrPath.remove();
     return;
@@ -60,6 +61,9 @@ export function analyzeLoadImport(importDecl, tagEntry) {
   }
 
   (importDecl.node.extra ??= {}).loadImport = loadImport;
+  // The page entry links eager templates only; a lazy one arrives through
+  // its own load entry.
+  ((file.path.node.extra ??= {}).loadImports ??= new Set()).add(tagEntry);
 }
 
 export function translateLoadTag(path, tagName, relativePath) {
