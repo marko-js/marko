@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   importDefault,
   importNamed,
+  loadFileForImport,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
@@ -58,6 +59,14 @@ export function analyzeLoadImport(importDecl, tagEntry) {
     throw importDecl.buildCodeFrameError(
       "Unable to resolve marko file for load import.",
     );
+  }
+
+  // A Tags template renders through the compat tag, which loads it eagerly.
+  if (
+    loadFileForImport(file, tagEntry)?.ast.program.extra?.featureType === "tags"
+  ) {
+    loadAttrPath.remove();
+    return;
   }
 
   (importDecl.node.extra ??= {}).loadImport = loadImport;
