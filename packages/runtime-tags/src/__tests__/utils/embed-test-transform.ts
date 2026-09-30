@@ -11,9 +11,7 @@ export default {
   Program(program) {
     const filename = program.hub.file.opts.filename;
 
-    if (
-      /\/__tests__\/fixtures(-interop)?\/[^/]+\/template\.marko$/.test(filename)
-    ) {
+    if (/[\\/]__tests__[\\/].+[\\/]template\.marko$/.test(filename)) {
       const config: TestConfig = (() => {
         try {
           return (

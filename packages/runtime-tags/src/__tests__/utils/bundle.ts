@@ -71,8 +71,10 @@ export async function createServerRunner<T extends Record<string, string>>(
     htmlOut,
     domOut,
   );
-  const domResult = await builds.domBuilt;
-  const htmlResult = await builds.htmlBuilt;
+  const [domResult, htmlResult] = await Promise.all([
+    builds.domBuilt,
+    builds.htmlBuilt,
+  ]);
   builds.clearRefs();
 
   const csrFileName =

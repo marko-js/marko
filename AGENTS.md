@@ -22,6 +22,7 @@ pnpm test -- <file.test.ts>                               # only the given spec 
 pnpm run test:update -- --grep "..."                      # regenerate snapshots (review the diff!)
 pnpm run compile -- -o dom -d foo.marko                   # print compiled output (-o html for SSR; omit -d for optimized)
 pnpm run digest -- origin/main...HEAD                     # snapshot diff, each hunk repeated across fixtures printed once (default: HEAD)
+pnpm run fuzz -- --seed 1 --count 500                     # generated templates checked without snapshots; failures shrunk into fixture dirs
 pnpm run build                                            # all packages -> dist/ + .d.ts
 pnpm run build:sizes                                      # bundle-size table; diffs vs .sizes.json
 pnpm run lint                                             # oxlint + oxfmt check

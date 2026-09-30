@@ -87,12 +87,19 @@ export function getNodeName(node: Node): string {
   );
 }
 
+const cssIdentRe = /^-?[_a-zA-Z][\w-]*$/;
+
 function getUniqueName(el: HTMLElement) {
   if (el.id) {
     return `#${el.id}`;
   }
 
-  if (el.classList.length && el.ownerDocument) {
+  // A class that is not a plain identifier would need escaping to select by.
+  if (
+    el.classList.length &&
+    el.ownerDocument &&
+    [...el.classList].every((name) => cssIdentRe.test(name))
+  ) {
     const selector = `.${[...el.classList].join(".")}`;
     if (el.ownerDocument.querySelectorAll(selector).length === 1) {
       return selector;

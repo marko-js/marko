@@ -17,6 +17,7 @@
     "compile": "node -r ~ts scripts/inspect-compiled-output.mts",
     "digest": "node -r ~ts scripts/digest-snapshots.mts",
     "format": "oxlint --fix; oxfmt --with-node-modules .",
+    "fuzz": "node --experimental-vm-modules --no-warnings -r ~ts packages/runtime-tags/src/__tests__/fuzz/cli.ts",
     "lint": "oxlint && oxfmt --check --with-node-modules .",
     "prepare": "husky && pnpm --filter @marko/compiler run build-babel-types",
     "report": "zcov report -r html && node -p \"require('node:url').pathToFileURL('coverage/index.html').href\"",

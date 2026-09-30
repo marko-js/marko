@@ -105,6 +105,8 @@ MARKO_TEST_WRAPPERS=1 pnpm test                                      # also rend
 
 Iterate scoped, then run `pnpm test` for everything; it fans across cores and reports every failure. Repeating a grep as `pnpm run test:serial -- --grep "..."` runs it in one process, with `bail: true` and live output, for a debugger or a clean stack trace.
 
+`pnpm run fuzz -- [--seed N] [--count N] [--jobs N]` (`src/__tests__/fuzz/`) generates templates from the shapes past bugs combined (state read across branches, loops and tag bodies, updated by clicks and input) and checks each with no expected output: it must compile, render without errors, log alike when resumed and client rendered (or settle alike when async), and log alike in debug and optimize. A seed reproduces its case; each failure is shrunk and written as a fixture directory under `src/__tests__/fuzz/dist/found/` with its `failure.txt`. Run it after a change to analysis, resume or control flow; a real failure becomes a named fixture (or an agent-feedback item when out of scope).
+
 ### Fixture anatomy
 
 ```
