@@ -67,7 +67,7 @@ import {
   getSection,
   type StructureVisit,
 } from "../../util/sections";
-import { addSetupExpr, addSetupWork } from "../../util/setup-work";
+import { addSetupExpr } from "../../util/setup-work";
 import {
   addHTMLEffectCall,
   addStatement,
@@ -420,12 +420,12 @@ export default {
 
         if (nonceUnset && !spread) {
           // A nonce statement with no references is written in setup.
-          addSetupWork(tagSection);
+          addSetupExpr(tagSection);
         }
 
         if (controllable?.attrs[1] !== undefined) {
           // Controllable change handlers register an effect in setup.
-          addSetupWork(tagSection);
+          addSetupExpr(tagSection);
         }
 
         if (hasEventHandlers || isTagVarUsed(tag)) {

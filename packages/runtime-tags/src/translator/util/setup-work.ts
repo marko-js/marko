@@ -1,24 +1,21 @@
 import type { types as t } from "@marko/compiler";
 
+import { callsOtherTemplateSetup } from "./known-tag";
 import { forEach } from "./optional";
 import { forEachSection, type Section } from "./sections";
 import { createSectionState } from "./state";
 
-/**
- * Tracks during analyze whether a section has work keyed by setup, so callers
- * of a template or `<define>` body can skip calling a noop setup.
- */
+// Client work keyed by nothing, or by an expression reading no binding, runs in
+// the section's setup, which callers skip when analysis found none.
 
 const [getSetupInfo] = createSectionState("setupWork", () => ({
   always: false,
   exprs: new Set<t.NodeExtra>(),
 }));
 
-export function addSetupWork(section: Section) {
-  getSetupInfo(section).always = true;
-}
-
-export function addSetupExpr(section: Section, node: t.Node | undefined) {
+// Client work the section runs when what `node` references changes, or in
+// setup without a node.
+export function addSetupExpr(section: Section, node?: t.Node) {
   if (node) {
     getSetupInfo(section).exprs.add((node.extra ??= {}));
   } else {
@@ -53,8 +50,15 @@ function setCallSectionsSetup(body: Section) {
 
 function hasOwnSetupWork(section: Section) {
   const info = getSetupInfo(section);
-  // Setup subscribes the section to the closures it reads.
-  if (info.always || section.referencedClosures) return true;
+  // Setup subscribes the section to the closures it reads, and sets up another
+  // template it renders.
+  if (
+    info.always ||
+    section.referencedClosures ||
+    callsOtherTemplateSetup(section)
+  ) {
+    return true;
+  }
   for (let extra of info.exprs) {
     while (extra.merged) extra = extra.merged;
     if (!extra.pruned && !extra.referencedBindings) {

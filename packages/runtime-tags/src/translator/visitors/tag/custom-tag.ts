@@ -43,7 +43,6 @@ import {
   removePrunedContent,
   StructureKind,
 } from "../../util/sections";
-import { addSetupWork } from "../../util/setup-work";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
@@ -113,15 +112,6 @@ export default {
           BindingType.dom,
           getOrCreateSection(tag),
         );
-      }
-
-      if (
-        tagExtra.tagNameLoad ||
-        (childSection !== programSection && childSection.hasSetupWork)
-      ) {
-        // Add the child's setup call unless it proved its setup export a noop;
-        // load tags always wire it up, and a self call follows `callSections`.
-        addSetupWork(getOrCreateSection(tag));
       }
 
       knownTagAnalyze(

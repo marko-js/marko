@@ -63,7 +63,7 @@ import {
   setReadsOwner,
 } from "./sections";
 import { finalizeTagDerivations } from "./set-tag-derived-from";
-import { addSetupWork } from "./setup-work";
+import { addSetupExpr } from "./setup-work";
 import { findSlot, getSectionSlot, getSlot, SlotKind } from "./slots";
 import {
   addAlwaysRead,
@@ -162,7 +162,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
         // lands in its section's setup signal.
-        addSetupWork(expr.section);
+        addSetupExpr(expr.section);
       }
       forEach(exprBindings.lazyBindings, markLazyRead);
       if (exprBindings.hoistedBindings) {

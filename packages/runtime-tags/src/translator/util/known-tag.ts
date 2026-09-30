@@ -69,7 +69,7 @@ import {
   startSection,
 } from "./sections";
 import { setTagDerivedFrom } from "./set-tag-derived-from";
-import { addSetupExpr, addSetupWork } from "./setup-work";
+import { addSetupExpr } from "./setup-work";
 import {
   addStatement,
   getResumeRegisterId,
@@ -157,7 +157,7 @@ export function knownTagAnalyze(
 
   if (varBinding) {
     // Tag variables emit a `_var` statement in the parent's setup.
-    addSetupWork(section);
+    addSetupExpr(section);
     const mutatesTagVar = !!(
       tag.node.var!.type === "Identifier" &&
       tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
@@ -390,6 +390,21 @@ export function finalizeKnownTags(section: Section) {
       }
     }
   }
+}
+
+// A known tag rendering another template calls its setup in the section's
+// setup: a load tag always, any other when that template has setup work.
+export function callsOtherTemplateSetup(section: Section) {
+  for (const tagExtra of getKnownTags(section)) {
+    const childSection = tagExtra[kContentSection]!;
+    if (
+      tagExtra.tagNameLoad ||
+      (childSection.program !== section.program && childSection.hasSetupWork)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // Each group's serialize guard is its bit; groups sharing a guard still shift it
@@ -681,7 +696,7 @@ function analyzeAttrs(
         remaining.delete("content");
         known.content = { value: undefined }; // TODO: update when supporting default params
         // The content signal call is applied unconditionally in setup.
-        addSetupWork(section);
+        addSetupExpr(section);
       }
     }
   }
@@ -788,7 +803,7 @@ function analyzeAttrs(
 
     if (remaining.size) {
       // Unset props are applied with no value (and no references) in setup.
-      addSetupWork(section);
+      addSetupExpr(section);
     }
 
     if (propTree.rest && !propTree.rest.props) {
