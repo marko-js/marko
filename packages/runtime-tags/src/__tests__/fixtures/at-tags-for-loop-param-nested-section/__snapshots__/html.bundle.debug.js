@@ -6,7 +6,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", item.content, {}, 0, 0, $wg__input_item);
 		$wi__input_item && _scope($scope1_id, {}, "__tests__/tags/list.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, $wg__input_item);
+	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item);
 	$wi__input_item && _scope($scope0_id, {}, "__tests__/tags/list.marko", 0);
 });
 
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope($scope3_id, {}, "__tests__/template.marko", "12:8");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
+			}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 			_dynamic_tag($scope1_id, "#text/1", show ? "b" : "i", {}, _content("__tests__/template.marko_4*content", () => {
 				const $scope4_id = _scope_id();
 				_scope_reason();
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope($scope6_id, {}, "__tests__/template.marko", "21:13");
 					return 0;
 				}
-			}, $scope2_id, "#text/0", 1, 1, 1, 0, 1);
+			}, $scope2_id, "#text/0", 1, 1, 0, 0, 1);
 			_subscribe($show__closures, _scope($scope2_id, {
 				item_text: item?.text,
 				_: _scope_with_id($scope0_id),

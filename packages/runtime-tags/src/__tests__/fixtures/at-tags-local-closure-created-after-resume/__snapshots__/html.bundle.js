@@ -22,7 +22,7 @@ var grid_row_default = _template("b", (input) => {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "a", cell.content, {}, 0, 0, $wg__input_row_cell);
 				_write_if($scope0_reason, 0) && _scope($scope2_id, {});
-			}, 0, $scope1_id, "a", $wg__input_row_cell, $wg__input_row_cell, $wg__input_row_cell);
+			}, 0, $scope1_id, "a", $wg__input_row_cell, $wg__input_row_cell);
 			_scope($scope1_id, {});
 			return 0;
 		}
@@ -47,7 +47,7 @@ var grid_default = _template("c", (input) => {
 			index
 		});
 		$wi__input_row && _scope($scope1_id, { a: _existing_scope($childScope) });
-	}, 0, $scope0_id, "a", $wg__input_row, $wg__input_row, $wg__input_row);
+	}, 0, $scope0_id, "a", $wg__input_row, $wg__input_row);
 	$wi__input_row && _scope($scope0_id, {});
 });
 

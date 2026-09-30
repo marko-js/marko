@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<span>${_escape(i)}</span>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "9:2");
-	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
+	}, 0, $scope0_id, "#text/3", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

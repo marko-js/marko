@@ -24,7 +24,7 @@ var cyc_a_default = _template("__tests__/tags/cyc-a.marko", (input) => {
 			}, "__tests__/tags/cyc-a.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "#text/1", $wg__input_depth, $wg__input_depth);
 	$wi__input_depth && _scope($scope0_id, {}, "__tests__/tags/cyc-a.marko", 0);
 });
 

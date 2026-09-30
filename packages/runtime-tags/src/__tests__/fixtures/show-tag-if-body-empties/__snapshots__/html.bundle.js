@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "d", 1, 1, 1, 0, 1);
+	}, $scope0_id, "d", 1, 1, 0, 0, 1);
 	_show_end($scope0_id, "f", visible);
 	_html(" y</div>");
 	_script($scope0_id, "a0");

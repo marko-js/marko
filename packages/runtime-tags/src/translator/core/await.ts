@@ -6,7 +6,6 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
@@ -119,7 +118,7 @@ export default {
     // The content renderer is initialized unconditionally in setup.
     addSetupExpr(section);
 
-    structure.visit(tag, WalkCode.Replace);
+    structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
   },
   translate: translateByTarget({

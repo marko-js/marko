@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "a", $wg__input, 0, 0, 0, 1);
 		$wi__input && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input, $wg__input, $wg__input);
+	}, 0, $scope0_id, "a", $wg__input, $wg__input);
 	$wi__input && _scope($scope0_id, {});
 });
 

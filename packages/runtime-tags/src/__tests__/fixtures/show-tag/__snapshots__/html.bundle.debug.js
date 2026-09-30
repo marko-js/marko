@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_show_start(show);
 	_html("<div>Hello!</div>");
-	_show_end($scope0_id, "#text/2", show, 1, 1, 0, 1);
+	_show_end($scope0_id, "#text/2", show, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
 }, 1);

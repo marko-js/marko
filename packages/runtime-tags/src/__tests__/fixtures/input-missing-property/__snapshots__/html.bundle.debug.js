@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				$wi__input_count__OR__input_name && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_count, $wg__input_count, $wg__input_count);
+		}, $scope1_id, "#text/0", $wg__input_count, $wg__input_count);
 		$wi__input_count__OR__input_name && _scope($scope1_id, {
 			input_name: _write_if($scope1_reason, 1) && input.name,
 			"ClosureScopes:input_name/5": $wi__input_name && $Child_content__input_name__closures

@@ -19,7 +19,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 			$wi__input_show && _scope($scope1_id, {}, "__tests__/tags/wrapper.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", $wg__input_show, $wg__input_show, $wg__input_show, 0, 1);
+	}, $scope0_id, "#text/0", $wg__input_show, $wg__input_show, 0, 0, 1);
 	$wi__input_show && _scope($scope0_id, {}, "__tests__/tags/wrapper.marko", 0);
 });
 

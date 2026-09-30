@@ -17,7 +17,7 @@ const $content = (input) => {
 			}, "__tests__/tags/rec.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "#text/0", $wg__input_depth, $wg__input_depth);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	const $return = n;
 	_script($scope0_id, "__tests__/tags/rec.marko_0");

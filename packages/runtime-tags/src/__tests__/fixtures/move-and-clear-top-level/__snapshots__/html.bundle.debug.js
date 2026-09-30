@@ -8,6 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wi__input_children && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, function(c) {
 		return c.id;
-	}, $scope0_id, "#text/0", $wg__input_children, $wg__input_children, $wg__input_children);
+	}, $scope0_id, "#text/0", $wg__input_children, $wg__input_children);
 	$wi__input_children && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

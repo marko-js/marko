@@ -43,7 +43,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "#text/0", 1, $wg__input_show);
 	_scope($scope0_id, {
 		input_type: _write_if($scope0_reason, 2) && input.type,
 		input_depth: _write_if($scope0_reason, 0) && input.depth,

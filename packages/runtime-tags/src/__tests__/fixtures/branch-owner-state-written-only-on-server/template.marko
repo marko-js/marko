@@ -1,0 +1,14 @@
+<let/count=1/>
+<const/inc=() => count++/>
+<div class=`c${count}`>
+  <if=count>
+    <button id="own" onClick() { document.title = "own " + count }>${count}</button>
+  </if>
+</div>
+<section class=`c${count}`>
+  <if=input.show>
+    <button id="param" onClick() { document.title = "param " + count }>${count}</button>
+  </if>
+</section>
+<for|x| until=count>${x}</for>
+<span>${typeof inc}</span>

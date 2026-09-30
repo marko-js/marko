@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope3_id, {}, "__tests__/template.marko", "12:4");
 				return 1;
 			}
-		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
+		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 		_scope($scope1_id, {
 			count,
 			"#LoopKey": i

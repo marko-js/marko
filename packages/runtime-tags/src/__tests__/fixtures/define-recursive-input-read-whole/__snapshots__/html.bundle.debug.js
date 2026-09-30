@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "2:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_depth__OR__input_label, $wg__input_depth, $wg__input_depth);
+		}, $scope1_id, "#text/0", $wg__input_depth__OR__input_label, $wg__input_depth);
 		_html(`<span>${_text_resume($scope1_id, "#text/1", input.label, $wg__input_label)}</span>`);
 		$wi__input_depth__OR__input_label && _scope($scope1_id, {
 			input_depth: _write_if($scope1_reason, 2) && input.depth,

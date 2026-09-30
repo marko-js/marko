@@ -18,7 +18,6 @@ import {
   stringifyClassObject,
   toDelimitedString,
 } from "../../../common/helpers";
-import { WalkCode } from "../../../common/types";
 import { BindingType, createBinding } from "../../util/bindings";
 import {
   bodyToRawTextLiteral,
@@ -65,7 +64,7 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
-  type StructureVisit,
+  type StructureNode,
 } from "../../util/sections";
 import { addSetupExpr } from "../../util/setup-work";
 import {
@@ -89,7 +88,7 @@ import { getWriteGuard } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
-const kVisitOp = Symbol("native tag structure visit");
+const kNodeOp = Symbol("native tag structure node");
 const kNativeAttrs = Symbol("native tag attrs");
 
 // Tags whose body html translate replaced with a content attribute write.
@@ -104,7 +103,7 @@ const htmlSelectArgs = new WeakMap<
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    [kVisitOp]?: StructureVisit;
+    [kNodeOp]?: StructureNode;
     [kNativeAttrs]?: NativeAttrs;
   }
 }
@@ -438,9 +437,9 @@ export default {
       }
 
       const write = structure.writeTo(tag);
-      // Unclaimed until exit: a child control flow tag may still bind this tag
-      // through the only-child optimization.
-      tagExtra[kVisitOp] = structure.visit(tag, WalkCode.Get, false);
+      // Addressed once exit settles it: a child control flow tag may still
+      // bind this tag through the only-child optimization.
+      tagExtra[kNodeOp] = structure.node(tag);
 
       write`<${tagName}`;
 
@@ -478,8 +477,8 @@ export default {
     exit(tag) {
       const tagName = getCanonicalTagName(tag);
       const tagExtra = tag.node.extra!;
-      const visitOp = tagExtra[kVisitOp];
-      if (visitOp) visitOp.claimed = !!tagExtra.nodeBinding;
+      const nodeOp = tagExtra[kNodeOp];
+      if (nodeOp) nodeOp.binding = tagExtra.nodeBinding;
 
       if (!getTagDef(tag)?.parseOptions?.openTagOnly) {
         const write = structure.writeTo(tag);

@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 					_write_if($scope0_reason, 0) && _subscribe($wi__input_value && $value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0", $wg__input_value);
 					return 0;
 				}
-			}, $scope1_id, "a", $wg__input_value, $wg__input_value, $wg__input_value, 0, 1);
+			}, $scope1_id, "a", $wg__input_value, $wg__input_value, 0, 0, 1);
 			_if(() => {
 				if (value2) {
 					const $scope3_id = _scope_id();
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 					_write_if($scope0_reason, 1) && _subscribe($wi__input_value2 && $value2__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__input_value2);
 					return 0;
 				}
-			}, $scope1_id, "b", $wg__input_value2, $wg__input_value2, $wg__input_value2, 0, 1);
+			}, $scope1_id, "b", $wg__input_value2, $wg__input_value2, 0, 0, 1);
 			$wi__input_show__OR__input_value1__OR__input_value && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

@@ -13,6 +13,7 @@ import {
   getBindingPropTree,
 } from "../../util/binding-prop-tree";
 import { type Binding, BindingType } from "../../util/bindings";
+import { hasClientChangedBranch } from "../../util/branch-tag";
 import entryBuilder from "../../util/entry-builder";
 import { finalizeReferences } from "../../util/finalize-references";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
@@ -49,6 +50,9 @@ declare module "@marko/compiler/dist/types" {
     /** Client code reads something of its own after resume (a section, or a
      * renderer it registers), so a page bundles it. */
     hasResumes?: boolean;
+    /** A branch's condition reads state that a resumed effect or registered
+     * function writes, so client code changes it. */
+    hasClientChangedBranch?: boolean;
     /** What the template reads of its params (its input is the first), the
      * contract its callers keep. */
     paramsTree?: BindingPropTree;
@@ -124,6 +128,8 @@ export default {
       // Anything revived or unconditionally registered against this module
       // has to reach the client on its own.
       forEachSection((childSection) => {
+        programExtra.hasClientChangedBranch ||=
+          hasClientChangedBranch(childSection);
         programExtra.hasResumes ||= !!(
           isUnconditionalReason(childSection.reason) ||
           (childSection !== section &&

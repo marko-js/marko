@@ -34,7 +34,7 @@ var heading_default = _template("c", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "a", 1, $wg__input_show);
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 2) && input.type,
 		f: _write_if($scope0_reason, 0) && input.depth,

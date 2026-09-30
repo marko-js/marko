@@ -12,7 +12,7 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 			$wi__input_test && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/custom-tag.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", $wg__input_test, $wg__input_test, $wg__input_test, 0, 1);
+	}, $scope0_id, "#text/1", $wg__input_test, $wg__input_test, 0, 0, 1);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		input_test_class: $wi__input_test && input.test?.class,
 		input_test_content: $wi__input_test && input.test?.content

@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_html("before ");
 	_show_start(inner);
 	_html("<em>nested</em>");
-	_show_end($scope0_id, "e", inner, 1, 1, 0, 1);
+	_show_end($scope0_id, "e", inner, 1, 0, 0, 1);
 	_html(" after");
 	_show_end($scope0_id, "g", outer);
 	_script($scope0_id, "a0");

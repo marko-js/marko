@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getProgram, loadFileForTag } from "@marko/compiler/babel-utils";
 
-import type { WalkCode } from "../../common/types";
 import {
   type Binding,
   bindingUtil,
@@ -74,9 +73,9 @@ export interface StructureExportRef {
 // traversal order; each output resolves what it needs from it.
 export type StructureOp =
   | string // static markup
-  | Step.Value // walk enter/exit step
+  | Step.Value // enter/exit a node
   | StructureText
-  | StructureVisit
+  | StructureNode
   | StructureChild;
 
 // Static text written into the markup; distinguished from markup strings so
@@ -86,22 +85,20 @@ export interface StructureText {
   value: string;
 }
 
-export interface StructureVisit {
-  kind: typeof StructureKind.Visit;
-  // A non-`Get` visit implies a `<!>` marker node in the markup.
-  code:
-    | typeof WalkCode.Get
-    | typeof WalkCode.Replace
-    | typeof WalkCode.DynamicTagWithVar;
-  // A visit may start unclaimed until its tag's analyze exit settles the
-  // only-child decision; unclaimed visits drop, letting steps collapse.
-  claimed: boolean;
+// A node client code addresses, held in its dom binding: one the markup
+// renders, or a `<!>` marker that what renders in its place replaces.
+export interface StructureNode {
+  kind: typeof StructureKind.Node;
+  // Set at an element's exit, once only-child control flow may have bound it;
+  // still unset there, the element is not addressed and the op drops.
+  binding: Binding | undefined;
+  marker: boolean;
 }
 
 export interface StructureChild {
   kind: typeof StructureKind.Child;
   name: string;
-  hasVar: boolean;
+  binding: Binding;
   renderer?: StructureRef;
 }
 

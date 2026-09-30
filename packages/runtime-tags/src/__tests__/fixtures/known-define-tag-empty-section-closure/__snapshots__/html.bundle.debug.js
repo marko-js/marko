@@ -13,7 +13,7 @@ var test_default = _template("__tests__/tags/test.marko", (input) => {
 				$wi__input_x && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/test.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_x, $wg__input_x, $wg__input_x, 0, 1);
+		}, $scope1_id, "#text/0", $wg__input_x, $wg__input_x, 0, 0, 1);
 		$wi__input_x && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/test.marko", "2:2");
 	}, $scope0_id) };
 	Tag.content({ x: 1 });

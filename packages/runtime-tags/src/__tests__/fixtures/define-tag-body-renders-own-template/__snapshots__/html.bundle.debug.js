@@ -23,7 +23,7 @@ const $content$1 = (input) => {
 			}, "__tests__/tags/countdown.marko", "6:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "#text/0", $wg__input_depth, $wg__input_depth);
 	$wi__input_depth && _scope($scope0_id, {}, "__tests__/tags/countdown.marko", 0);
 };
 var countdown_default = _template("__tests__/tags/countdown.marko", $content$1);
@@ -53,7 +53,7 @@ const $content = (input) => {
 			}, "__tests__/tags/countdown-buttons.marko", "6:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "#text/2", $wg__input_depth, $wg__input_depth);
 	_script($scope0_id, "__tests__/tags/countdown-buttons.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/countdown-buttons.marko", 0);
 };

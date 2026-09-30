@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_if(() => {}, $scope1_id, "a", 1, 1, 1, 0, 1);
+		_if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_await($scope1_id, "b", resolveAfter("server", 1), (v) => {
 			_scope_id();
 			_html(`<div>${_escape(v)}</div>`);

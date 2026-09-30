@@ -34,11 +34,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_assert_hoist(setHtml);
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, $wg__input_show, $wg__input_show);
+			}, $scope1_id, "#text/0", 1, $wg__input_show);
 			_scope($scope1_id, { _: $wi__input_show && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "#text/0", 1, $wg__input_show);
 	thing_default({ value: $setHtml_getter });
 	_if(() => {
 		if (true) {
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_assert_hoist(setHtml2);
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, 0, 0);
+	}, $scope0_id, "#text/2", 1, 0);
 	_if(() => {
 		if (true) {
 			const $scope4_id = _scope_id();
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_assert_hoist(setHtml3);
 			return 0;
 		}
-	}, $scope0_id, "#text/3", 1, 0, 0);
+	}, $scope0_id, "#text/3", 1, 0);
 	if (true) {
 		const $scope5_id = _scope_id();
 		_script($scope5_id, "__tests__/template.marko_5", 0);

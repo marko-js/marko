@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, {}, "__tests__/template.marko", "9:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_await($scope0_id, "#text/2", resolveAfter(1, 1), () => {
 		const $scope4_id = _scope_id();
 		counter_default({});
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope5_id, {}, "__tests__/template.marko", "15:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/3", 1, 1, 0, 0, 1);
 	_html(`<button class=hide>hide</button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);

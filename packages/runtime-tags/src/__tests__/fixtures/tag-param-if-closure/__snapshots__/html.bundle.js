@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 					return 0;
 				}
-			}, $scope1_id, "a", $wg__v, $wg__v, $wg__v);
+			}, $scope1_id, "a", $wg__v, $wg__v);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 		}, $scope0_id)
 	});

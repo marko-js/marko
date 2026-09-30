@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_escape(key)}:${_text_resume($scope1_id, "b", value, 2)}</p>`);
 		_scope($scope1_id, {});
-	}, (key) => key, $scope0_id, "a", 1, 1, 1, 0, 1);
+	}, (key) => key, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>Change</button>${_el_resume($scope0_id, "b")}</div>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {});

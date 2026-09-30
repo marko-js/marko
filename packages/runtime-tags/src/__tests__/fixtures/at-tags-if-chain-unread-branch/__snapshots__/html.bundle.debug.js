@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", it.content, {}, 0, 0, $wg__input_item);
 		$wi__input_item && _scope($scope1_id, {}, "__tests__/tags/child.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, $wg__input_item);
+	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item);
 	$wi__input_item && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

@@ -20,7 +20,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "5:2", { "EventAttributes:#div/0": ["...rest", "7:11"] });
 			return 1;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 1) || $wg__input_show, $wg__input_show, $wg__input_show, 0, 1);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 1) || $wg__input_show, $wg__input_show, 0, 0, 1);
 	$wi__input_show && _scope($scope0_id, {
 		a11yText: button?.a11yText,
 		rest

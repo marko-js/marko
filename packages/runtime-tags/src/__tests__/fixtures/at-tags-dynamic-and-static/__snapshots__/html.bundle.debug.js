@@ -6,7 +6,7 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", item.content, {}, 0, 0, $wg__input_item);
 		_write_if($scope0_reason, 1) && _scope($scope1_id, {}, "__tests__/tags/hello/index.marko", "1:1");
-	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, $wg__input_item);
+	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item);
 	_dynamic_tag($scope0_id, "#text/1", input.other, {}, 0, 0, $wg__input_other);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });

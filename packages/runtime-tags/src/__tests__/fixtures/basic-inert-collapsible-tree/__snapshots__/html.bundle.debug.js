@@ -23,7 +23,7 @@ const $content = (input) => {
 				}, "__tests__/tags/comments.marko", "10:8");
 				return 0;
 			}
-		}, $scope1_id, "#text/4", $wg__input_comments__OR__input_path, $wg__input_comments, $wg__input_comments, 0, 1);
+		}, $scope1_id, "#text/4", $wg__input_comments__OR__input_path, $wg__input_comments, 0, 0, 1);
 		_html(`</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/comments.marko_1");
 		_scope($scope1_id, {

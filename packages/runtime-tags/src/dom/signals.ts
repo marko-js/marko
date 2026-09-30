@@ -10,6 +10,7 @@ import {
   ClosureSignalProp,
   type EncodedAccessor,
   KeyedScopesProp,
+  ReservedId,
   type Scope,
 } from "../common/types";
 import { trackCleanup } from "./abort-signal";
@@ -69,10 +70,9 @@ export function _let_change<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueAccessor = MARKO_DEBUG
     ? (id as string).slice(0, (id as string).lastIndexOf("/"))
     : decodeAccessor(id as number);
-  // The change handler owns the id after the value's.
   const valueChangeAccessor = MARKO_DEBUG
     ? AccessorPrefix.TagVariableChange + valueAccessor
-    : decodeAccessor((id as number) + 1);
+    : decodeAccessor((id as number) + ReservedId.ChangeHandler);
   const base = _let<T>(id, fn);
 
   return (scope: Scope, value: T, valueChange?: (v: T) => void) => {

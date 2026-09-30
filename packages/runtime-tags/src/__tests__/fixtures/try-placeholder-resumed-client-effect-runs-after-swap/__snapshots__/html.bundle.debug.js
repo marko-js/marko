@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope3_id, {}, "__tests__/template.marko", "7:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
+		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 		_await($scope1_id, "#text/1", resolveAfter("server", 1), (v) => {
 			const $scope4_id = _scope_id();
 			_html(`<div>${_escape(v)}</div>`);

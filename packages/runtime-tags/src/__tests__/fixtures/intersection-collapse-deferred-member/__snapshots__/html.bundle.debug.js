@@ -27,7 +27,7 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 			$wi__input_inc && _scope($scope1_id, {}, "__tests__/tags/row.marko", "11:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/3", $wg__input_inc, $wg__input_inc, $wg__input_inc, 0, 1);
+	}, $scope0_id, "#text/3", $wg__input_inc, $wg__input_inc, 0, 0, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_inc)}`);
 	$wi__input_inc && _scope($scope0_id, {
 		input_inc_pending: input.inc?.pending,

@@ -12,7 +12,7 @@ var custom_tag_default = _template("b", (input) => {
 			$wi__input_test && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", $wg__input_test, $wg__input_test, $wg__input_test, 0, 1);
+	}, $scope0_id, "b", $wg__input_test, $wg__input_test, 0, 0, 1);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		g: $wi__input_test && input.test?.class,
 		h: $wi__input_test && input.test?.content

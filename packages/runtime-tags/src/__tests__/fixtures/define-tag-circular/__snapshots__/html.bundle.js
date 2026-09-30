@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 				$wi__show && _scope($scope2_id, {});
 				return 0;
 			}
-		}, $scope1_id, "a", $wg__show, $wg__show, $wg__show);
+		}, $scope1_id, "a", $wg__show, $wg__show);
 		_html(" foo");
 		$wi__show && _scope($scope1_id, {});
 	}, $scope0_id) };

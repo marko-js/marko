@@ -146,7 +146,7 @@ payloads with trailing assignments apply the fill through the context and end in
 
 DOM association has two encodings:
 
-- DOM **walk strings** (`translator/util/walks.ts`, `dom/walker.ts`) locate nodes
+- DOM **walk strings** (`translator/util/structure.ts`, `dom/walker.ts`) locate nodes
   when cloning new client branches.
 - SSR **resume comments** (`html/writer.ts`, `dom/resume.ts`) attach existing
   nodes/ranges to scopes and reconstruct owners, branches, keys, and await state.
@@ -155,6 +155,16 @@ Unread static DOM needs neither accessor nor marker. Single-node/only-child
 proofs reuse existing nodes/parents; `<!>` separates otherwise ambiguous dynamic
 text/ranges. Resume applies available fills, resolves registered values, visits
 comments, reconstructs branches, and runs effects with `isResuming = 1`.
+
+Resume visits branch markers only in a bundle that enables branches: any
+retained `_if`, `_for`, `_show` or dynamic tag (`withBranches`) does. The
+translator counts on that only when a branch's condition reads state the client
+writes (`ProgramExtra.hasClientChangedBranch`), since that branch's own runtime
+is then bundled; elsewhere another template may enable branches unseen, which
+only costs bytes. In such a bundle an unconditionally written branch's owner
+links from its branch marker instead of the payload, and an only child's branch
+ends in one branch marker that links its element, branches and owner, in place
+of a node marker plus the owner's branch list.
 
 ## In-order content and effects
 

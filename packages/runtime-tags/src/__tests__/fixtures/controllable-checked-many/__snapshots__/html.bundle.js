@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				states = newStates;
 			}, "a0", $scope1_id) || void 0
 		});
-	}, 0, $scope0_id, "a", 1, 1, 1, 0, 1);
+	}, 0, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<div>${_text_resume($scope0_id, "b", states.join(","))}</div>`);
 	_scope($scope0_id, { c: states });
 }, 1);

@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+		}, $scope1_id, "#text/0", $wg__input_depth, $wg__input_depth);
 		_html(`<button>${_text_resume($scope1_id, "#text/2", n)}</button>${_el_resume($scope1_id, "#button/1")}`);
 		const $return = n;
 		_script($scope1_id, "__tests__/template.marko_1");

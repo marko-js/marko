@@ -11,9 +11,9 @@ var sections_default = _template("__tests__/tags/sections.marko", (input) => {
 				$wi__input_section && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/sections.marko", "2:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_section, $wg__input_section, $wg__input_section);
+		}, $scope1_id, "#text/0", $wg__input_section, $wg__input_section);
 		$wi__input_section && _scope($scope1_id, {}, "__tests__/tags/sections.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_section, $wg__input_section, $wg__input_section);
+	}, 0, $scope0_id, "#text/0", $wg__input_section, $wg__input_section);
 	$wi__input_section && _scope($scope0_id, {}, "__tests__/tags/sections.marko", 0);
 });
 

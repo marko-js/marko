@@ -9,7 +9,7 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 		_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
 		_script($scope1_id, "__tests__/tags/hello/index.marko_1_attrs#5");
 		_scope($scope1_id, {}, "__tests__/tags/hello/index.marko", "1:1", { "EventAttributes:#div/0": ["...attrs", "2:15"] });
-	}, 0, $scope0_id, "#text/0", $wg__input_list_item, $wg__input_list_item, $wg__input_list_item, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_list_item, $wg__input_list_item, 0, 0, 1);
 	_for_of(input.col, ({ content, row, ...attrs }) => {
 		const $scope2_id = _scope_id();
 		_html("<div class=col");
@@ -22,10 +22,10 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 			_html(`</div>${_el_resume($scope3_id, "#div/0")}`);
 			_script($scope3_id, "__tests__/tags/hello/index.marko_3_attrs#5");
 			_scope($scope3_id, {}, "__tests__/tags/hello/index.marko", "7:3", { "EventAttributes:#div/0": ["...attrs", "8:16"] });
-		}, 0, $scope2_id, "#text/1", $wg__input_col, $wg__input_col, $wg__input_col, 0, 1);
+		}, 0, $scope2_id, "#text/1", $wg__input_col, $wg__input_col, 0, 0, 1);
 		_script($scope2_id, "__tests__/tags/hello/index.marko_2_attrs#5");
 		_scope($scope2_id, {}, "__tests__/tags/hello/index.marko", "5:1", { "EventAttributes:#div/0": ["...attrs", "6:14"] });
-	}, 0, $scope0_id, "#text/1", $wg__input_col, $wg__input_col, $wg__input_col);
+	}, 0, $scope0_id, "#text/1", $wg__input_col, $wg__input_col);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });
 

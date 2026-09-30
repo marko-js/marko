@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", $wg__input_show, $wg__input_show, $wg__input_show, 0, 1);
+	}, $scope0_id, "a", $wg__input_show, $wg__input_show, 0, 0, 1);
 	_scope($scope0_id, {
 		e: $wi__input_show && selected,
 		f: $wi__input_show && rows,

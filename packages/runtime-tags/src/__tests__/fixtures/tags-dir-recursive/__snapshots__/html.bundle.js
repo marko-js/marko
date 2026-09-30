@@ -15,7 +15,7 @@ const $content = (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", $wg__input_depth, $wg__input_depth, $wg__input_depth, 0, 1);
+	}, $scope0_id, "b", $wg__input_depth, $wg__input_depth, 0, 0, 1);
 	_html("</div>");
 	$wi__input_depth && _scope($scope0_id, {});
 };

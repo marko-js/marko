@@ -11,7 +11,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "#text/0", item.content, {}, 0, 0, $wg__input_item);
 				_write_if($scope0_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/list.marko", "4:4");
-			}, 0, $scope1_id, "#text/0", $wg__input_item, $wg__input_item, $wg__input_item);
+			}, 0, $scope1_id, "#text/0", $wg__input_item, $wg__input_item);
 			_scope($scope1_id, {}, "__tests__/tags/list.marko", "3:2");
 			return 0;
 		}
@@ -33,7 +33,7 @@ var grid_row_default = _template("__tests__/tags/grid-row.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "#text/0", cell.content, {}, 0, 0, $wg__input_row_cell);
 				_write_if($scope0_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/grid-row.marko", "4:4");
-			}, 0, $scope1_id, "#text/0", $wg__input_row_cell, $wg__input_row_cell, $wg__input_row_cell);
+			}, 0, $scope1_id, "#text/0", $wg__input_row_cell, $wg__input_row_cell);
 			_scope($scope1_id, {}, "__tests__/tags/grid-row.marko", "3:2");
 			return 0;
 		}
@@ -61,7 +61,7 @@ var grid_default = _template("__tests__/tags/grid.marko", (input) => {
 			index
 		});
 		$wi__input_row && _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/grid.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_row, $wg__input_row, $wg__input_row);
+	}, 0, $scope0_id, "#text/0", $wg__input_row, $wg__input_row);
 	$wi__input_row && _scope($scope0_id, {}, "__tests__/tags/grid.marko", 0);
 });
 

@@ -17,7 +17,7 @@ const $content = (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "a", $wg__input_depth, $wg__input_depth);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}`);
 	const $return = n;
 	_script($scope0_id, "b1");

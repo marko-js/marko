@@ -20,7 +20,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 1;
 		}
-	}, $scope0_id, "a", _write_guard($scope0_reason, 1) || $wg__input_show, $wg__input_show, $wg__input_show, 0, 1);
+	}, $scope0_id, "a", _write_guard($scope0_reason, 1) || $wg__input_show, $wg__input_show, 0, 0, 1);
 	$wi__input_show && _scope($scope0_id, {
 		f: button?.a11yText,
 		g: rest

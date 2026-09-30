@@ -8,7 +8,7 @@ var box_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", content, {}, 0, 0, $wg__input_item);
 		_html("</div>");
 		$wi__input_item && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, $wg__input_item, 0, 1);
+	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, 0, 0, 1);
 	$wi__input_item && _scope($scope0_id, {});
 });
 
