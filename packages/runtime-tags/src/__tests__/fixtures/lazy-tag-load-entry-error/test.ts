@@ -10,6 +10,9 @@ const load = (document: Document) => {
 // server-rendered content stays visible but inert. (CSR rejects through
 // the runtime-managed path instead, which drives `@catch`.)
 export const config: TestConfig = {
+  // A failed lazy load leaves server content inert, while the client render
+  // shows the catch.
+  skip_settled: true,
   // Debug intentionally logs the load-failure diagnostic optimize cannot.
   skip_parity: true,
   equivalent: false,

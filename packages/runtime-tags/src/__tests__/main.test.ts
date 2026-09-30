@@ -30,13 +30,14 @@ import {
   resolveAfter,
   type Throws,
   type Wait,
+  wait,
 } from "./utils/resolve";
 import { allTestsPassed, snap } from "./utils/snap";
 import {
   stripDebugRuntime,
   stripOptimizeRuntime,
 } from "./utils/strip-inline-runtime";
-import createMutationTracker from "./utils/track-mutations";
+import createMutationTracker, { formatBody } from "./utils/track-mutations";
 
 const require = createRequire(import.meta.url);
 
@@ -73,6 +74,10 @@ export type TestConfig = {
   error_dom?: boolean;
   error_html?: boolean;
   skip_optimize?: boolean;
+  /** The resumed page and the client render end differently by design
+   * (server and client ids, server-only content, a load the steps never
+   * trigger), so the settled check does not compare them. */
+  skip_settled?: boolean;
   /** Debug intentionally logs a dev-only diagnostic the optimized build
    * cannot, so each mode keeps its own render log. */
   skip_parity?: boolean;
@@ -187,6 +192,17 @@ function testFixtures(interop?: true) {
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
           const skipCSR =
             optimize || hasCompilerError || skipDOM || config.skip_csr;
+          // A resumed page's input is fixed, so the SSR run stops at an input
+          // update; only a run through every step can settle like the client's.
+          const settles =
+            !equivalent &&
+            !skipSSR &&
+            !skipCSR &&
+            !config.error_html &&
+            !config.error_dom &&
+            !config.skip_settled &&
+            Array.isArray(config.steps) &&
+            config.steps.slice(1).every((step) => typeof step === "function");
           const stats: {
             dom?: Record<string, ChunkSizes | Sizes>;
             html?: Sizes;
@@ -336,8 +352,20 @@ function testFixtures(interop?: true) {
             });
 
             tracker.cleanup();
-            return { browser, tracker };
+            return { browser, tracker, settled: await settle(browser, run) };
           });
+
+          // Pending async work lands before the settled check compares.
+          const settle = async (
+            browser: ReturnType<typeof createBrowser>,
+            run: () => void,
+          ) => {
+            if (!settles) return "";
+            await wait();
+            await browser.runAsyncScripts();
+            run();
+            return formatBody(browser.window.document.body);
+          };
 
           const ssr = once(async () => {
             resetResolveState();
@@ -441,8 +469,9 @@ function testFixtures(interop?: true) {
             }
 
             tracker.cleanup();
+            const settled = await settle(browser, run);
 
-            return { browser, tracker, chunks };
+            return { browser, tracker, chunks, settled };
           });
 
           skipHTML || it("html", () => snapCompile("html"));
@@ -547,6 +576,17 @@ function testFixtures(interop?: true) {
                 config.error_dom,
                 "csr",
               ));
+
+          // Streaming and load timing may render different steps, but once
+          // every step ran the resumed page and the client render must agree.
+          settles &&
+            it("settled", async () => {
+              assert.strictEqual(
+                (await ssr()).settled,
+                (await csr()).settled,
+                "the resumed page and the client render settle differently",
+              );
+            });
         });
       }
     });

@@ -129,6 +129,17 @@ export default function createMutationTracker(browser: {
   }
 }
 
+// The body as the render log prints it (markers, scripts and whitespace
+// dropped): two documents that print alike render alike.
+export function formatBody(body: Document["body"]) {
+  return Array.from(cloneAndSanitize(body).childNodes, (node) =>
+    format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
+  )
+    .filter(Boolean)
+    .join("\n")
+    .trim();
+}
+
 function cloneAndSanitize(body: Document["body"]) {
   const clone = body.cloneNode(true) as ParentNode;
   const ignoredNodes: ChildNode[] = [];
@@ -245,14 +256,7 @@ function getStatusString(
     .filter(Boolean)
     .join("\n");
   const formattedHTML =
-    !body || (hasRendered && !formattedMutations)
-      ? ""
-      : Array.from(cloneAndSanitize(body).childNodes, (node) =>
-          format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
-        )
-          .filter(Boolean)
-          .join("\n")
-          .trim();
+    !body || (hasRendered && !formattedMutations) ? "" : formatBody(body);
 
   if (
     hasRendered &&
