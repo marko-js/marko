@@ -15,6 +15,7 @@
     "build:types": "tsc -b tsconfig.build.json",
     "change": "changeset add",
     "compile": "node -r ~ts scripts/inspect-compiled-output.mts",
+    "digest": "node -r ~ts scripts/digest-snapshots.mts",
     "format": "oxlint --fix; oxfmt --with-node-modules .",
     "lint": "oxlint && oxfmt --check --with-node-modules .",
     "prepare": "husky && pnpm --filter @marko/compiler run build-babel-types",

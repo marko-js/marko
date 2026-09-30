@@ -21,6 +21,7 @@ pnpm run test:serial -- --grep "..."                      # same run in one proc
 pnpm test -- <file.test.ts>                               # only the given spec files (dirs and globs work too)
 pnpm run test:update -- --grep "..."                      # regenerate snapshots (review the diff!)
 pnpm run compile -- -o dom -d foo.marko                   # print compiled output (-o html for SSR; omit -d for optimized)
+pnpm run digest -- origin/main...HEAD                     # snapshot diff, each hunk repeated across fixtures printed once (default: HEAD)
 pnpm run build                                            # all packages -> dist/ + .d.ts
 pnpm run build:sizes                                      # bundle-size table; diffs vs .sizes.json
 pnpm run lint                                             # oxlint + oxfmt check
