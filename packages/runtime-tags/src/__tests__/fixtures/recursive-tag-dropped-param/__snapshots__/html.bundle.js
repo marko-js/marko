@@ -7,24 +7,24 @@ var leaf_default = _template("b", (input) => {
 
 // tags/tree.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_depth = _serialize_guard($scope0_reason, 0), $si__input_depth = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 0), $wi__input_depth = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.depth, $sg__input_depth)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.depth, $wg__input_depth)}</div>`);
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason($sg__input_depth << 1);
+			_set_scope_reason($wg__input_depth << 1);
 			const $childScope = _peek_scope_id();
 			$content({ depth: input.depth - 1 });
-			$si__input_depth && _scope($scope1_id, {
+			$wi__input_depth && _scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", $sg__input_depth, $sg__input_depth, $sg__input_depth);
+	}, $scope0_id, "b", $wg__input_depth, $wg__input_depth, $wg__input_depth);
 	leaf_default({});
-	$si__input_depth && _scope($scope0_id, {});
+	$wi__input_depth && _scope($scope0_id, {});
 };
 var tree_default = _template("c", $content);
 

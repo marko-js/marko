@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_rest#3_checked#4");
 	_scope($scope0_id, {
 		input_rest: input.rest,
-		checked: _serialize_if($scope0_reason, 0) && checked
+		checked: _write_if($scope0_reason, 0) && checked
 	}, "__tests__/template.marko", 0, {
 		input_rest: ["input.rest"],
 		checked: "1:6",

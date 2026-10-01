@@ -1,9 +1,9 @@
 // hello.marko
 var hello_default = _template("__tests__/hello.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`Hello ${_text_resume($scope0_id, "#text/0", input.name, $sg__input_name * 2)}!`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/hello.marko", 0);
+	_html(`Hello ${_text_resume($scope0_id, "#text/0", input.name, $wg__input_name * 2)}!`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/hello.marko", 0);
 });
 
 // template.marko

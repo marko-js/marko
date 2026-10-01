@@ -1,19 +1,19 @@
 // tags/a.marko
 var a_default = _template("__tests__/tags/a.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_x = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>A ${_text_resume($scope0_id, "#text/0", input.x, $sg__input_x * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/a.marko", 0);
+	_html(`<div>A ${_text_resume($scope0_id, "#text/0", input.x, $wg__input_x * 2)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/a.marko", 0);
 });
 
 // tags/b.marko
 var b_default = _template("__tests__/tags/b.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<span>B ");
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
 	_html("</span>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/b.marko", 0);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/b.marko", 0);
 });
 
 // template.marko

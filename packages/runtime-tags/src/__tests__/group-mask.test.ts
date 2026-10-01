@@ -2,8 +2,8 @@ import * as assert from "assert/strict";
 
 import type { types as t } from "@marko/compiler";
 
-import { _serialize_guard } from "../html/writer";
-import { buildGroupMask } from "../translator/util/serialize-guard";
+import { _write_guard } from "../html/writer";
+import { buildGroupMask } from "../translator/util/write-guard";
 
 // A call site's reason as the translator encodes it, read back per group as
 // the html runtime reads it.
@@ -15,14 +15,14 @@ const cases: Record<string, (number | undefined)[]> = {
   "a fed group past fifteen": [...Array(15).fill(0), 1, 0],
 };
 
-describe("runtime-tags/serialize reason mask", () => {
+describe("runtime-tags/group mask", () => {
   for (const [name, values] of Object.entries(cases)) {
     it(name, () => {
       const reason = evaluate(
         buildGroupMask(values.map((value) => ({ value, names: "" }))),
       );
       assert.deepEqual(
-        values.map((_, group) => _serialize_guard(reason, group)),
+        values.map((_, group) => _write_guard(reason, group)),
         values.map((value) => (value ? 1 : 0)),
       );
     });

@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		id: "b",
 		value: input.value * 10
 	});
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		"#childScope/1": _existing_scope($childScope),
 		"#childScope/3": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0);

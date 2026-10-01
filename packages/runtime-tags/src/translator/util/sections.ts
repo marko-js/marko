@@ -6,7 +6,6 @@ import {
   type Binding,
   bindingUtil,
   compareReferences,
-  getDebugNames,
   type InputBinding,
   type Intersection,
   type IntersectionMeta,
@@ -27,33 +26,29 @@ import {
   type Opt,
   Sorted,
   type SortedOpt,
+  forEach,
   reduce,
 } from "./optional";
-import { type KnownExprs } from "./references";
-import { getAllSerializeReasonsForBinding } from "./serialize-propagation";
 import {
-  hasSerializeReasons,
-  isReasonDynamic,
+  hasReason,
+  isConditionalReason,
   mapParamReason,
-  mergeSerializeReasons,
-  type SerializeKey,
-  type SerializeReason,
-  type SerializeReasons,
+  mergeReasons,
+  type Reason,
   setParamReasonGroups,
-} from "./serialize-reasons";
+} from "./reasons";
+import { type KnownExprs } from "./references";
+import { type Slot } from "./slots";
+import { getReasonForBinding } from "./solve-reasons";
 import { type Sources } from "./sources";
 import { createSectionState } from "./state";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
-export interface ParamSerializeReasonGroup {
-  id: symbol;
+export interface ParamReasonGroup {
   reason: NonNullable<Sources["param"]>;
 }
-export type ParamSerializeReasonGroups = [
-  ParamSerializeReasonGroup,
-  ...ParamSerializeReasonGroup[],
-];
+export type ParamReasonGroups = [ParamReasonGroup, ...ParamReasonGroup[]];
 
 type ContentType = ContentType.Value;
 export { ContentType, StructureKind };
@@ -128,22 +123,17 @@ export interface Section {
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
+  /** The closures its `<for>` rows read only by comparing them to the row's
+   * key, which a row selector updates. */
+  selector: { key: Binding; closures: Set<Binding> } | undefined;
   /** The canonical intersections its work waits on, once ids allocate. */
   intersections: Map<Intersection, IntersectionMeta> | undefined;
-  serializeReason: undefined | SerializeReason;
-  serializeReasons: Map<symbol, SerializeReason>;
-  /** Reasons any of the section's dom nodes resumes, as the analyzed reasons
-   * (not merged) so each one's guard stays buildable. */
-  domSerializeReasons: undefined | SerializeReasons;
-  /** Pending serialize exprs, resolved into the reasons once references
-   * finalize. */
-  serializeExprs: Opt<t.NodeExtra>;
-  propSerializeExprs: Map<SerializeKey, OneMany<t.NodeExtra>> | undefined;
-  /** Interned per-prop reason keys for string/symbol props. */
-  serializePropKeys: Map<string | symbol, SerializeKey> | undefined;
-  paramReasonGroups: ParamSerializeReasonGroups | undefined;
+  /** The slots of its scope, its own and its bindings'. */
+  slots: SortedOpt<Slot>;
+  /** Why anything in its scope serializes: its slots' reasons merged. */
+  reason: undefined | Reason;
+  paramReasonGroups: ParamReasonGroups | undefined;
   returnValueExpr: t.NodeExtra | undefined;
-  returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
   /** For a `<define>` body or a template rendering itself, the sections whose
@@ -237,17 +227,13 @@ export function startSection(
       referencedHoists: undefined,
       bindings: undefined,
       hoisted: undefined,
+      selector: undefined,
       intersections: undefined,
       isHoistThrough: undefined,
-      serializeReason: undefined,
-      serializeReasons: new Map(),
-      domSerializeReasons: undefined,
-      serializeExprs: undefined,
-      propSerializeExprs: undefined,
-      serializePropKeys: undefined,
+      slots: undefined,
+      reason: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
-      returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
       callSections: undefined,
@@ -446,7 +432,7 @@ export function getNodeContentType(
   return ContentType.Dynamic;
 }
 
-export function getSectionRegisterReasons(section: Section) {
+export function getRendererReason(section: Section) {
   if (isResumedBranch(section)) return false; // Branches handle whether to register their section/renderer.
 
   // Only a component receives a dynamic tag's body as a value; SSR otherwise
@@ -460,14 +446,12 @@ export function getSectionRegisterReasons(section: Section) {
   if (downstream) {
     const downstreamReasons = reduce(
       downstream.binding,
-      (reasons: SerializeReason | undefined, binding) => {
-        const reason = getAllSerializeReasonsForBinding(
-          binding,
-          downstream.properties,
-        );
+      (reasons: Reason | undefined, binding) => {
+        const reason = getReasonForBinding(binding, downstream.properties);
         // A known call site resolves the callee's own params (a same-file
-        // `<define>` included); without one only cross-file params are forced.
-        return mergeSerializeReasons(
+        // `<define>` included); without one only cross-file params are read
+        // always.
+        return mergeReasons(
           reasons,
           reason &&
             (downstream.exprs
@@ -484,9 +468,9 @@ export function getSectionRegisterReasons(section: Section) {
     if (!downstreamReasons) return false;
     // Params can only change content whose scope, or its caller's, resumes.
     if (
-      isReasonDynamic(downstreamReasons) &&
-      !hasSerializeReasons(section) &&
-      !hasSerializeReasons(section.parent)
+      isConditionalReason(downstreamReasons) &&
+      !hasReason(section) &&
+      !hasReason(section.parent)
     ) {
       return false;
     }
@@ -567,16 +551,18 @@ export function getCommonSection(section: Section, other: Section) {
   throw new Error("No common section");
 }
 
-export function finalizeParamSerializeReasonGroups(section: Section) {
-  ensureReasonGroups(section.serializeReason);
+export function finalizeParamReasonGroups(section: Section) {
+  ensureReasonGroups(section.reason);
 
-  for (const reason of section.serializeReasons.values()) {
-    ensureReasonGroups(reason);
-  }
+  forEach(section.slots, ensureSlotReasonGroups);
 }
 
-export function ensureReasonGroups(reason: Section["serializeReason"]) {
-  if (isReasonDynamic(reason)) {
+function ensureSlotReasonGroups(slot: Slot) {
+  ensureReasonGroups(slot.reason);
+}
+
+export function ensureReasonGroups(reason: Section["reason"]) {
+  if (isConditionalReason(reason)) {
     for (const [paramSection, params] of groupParamsBySection(reason.param)) {
       ensureParamReasonGroup(paramSection, params);
     }
@@ -585,7 +571,7 @@ export function ensureReasonGroups(reason: Section["serializeReason"]) {
 
 function ensureParamReasonGroup(
   section: Section,
-  reason: ParamSerializeReasonGroup["reason"],
+  reason: ParamReasonGroup["reason"],
 ) {
   const { paramReasonGroups } = section;
   if (paramReasonGroups) {
@@ -593,10 +579,7 @@ function ensureParamReasonGroup(
     if (found) return found;
   }
 
-  const group: ParamSerializeReasonGroup = {
-    id: Symbol(getDebugNames(reason)),
-    reason,
-  };
+  const group: ParamReasonGroup = { reason };
   setParamReasonGroups(
     section,
     paramReasonGroups
@@ -607,14 +590,14 @@ function ensureParamReasonGroup(
 
 export function getParamReasonGroupIndex(
   section: Section,
-  reason: ParamSerializeReasonGroup["reason"],
+  reason: ParamReasonGroup["reason"],
 ) {
   const index =
     section.paramReasonGroups &&
     findIndexSorted(compareParamGroups, section.paramReasonGroups, { reason });
   if (index === undefined || index === -1) {
     throw new Error(
-      "Invalid compiler state, cannot ask for a serialize reason group that was not analyzed.",
+      "Invalid compiler state, cannot ask for a reason group that was not analyzed.",
     );
   }
   return index;
@@ -628,9 +611,9 @@ function bindingToSection(binding: Binding) {
   return binding.section;
 }
 
-function compareParamGroups(
-  a: Pick<ParamSerializeReasonGroup, "reason">,
-  b: Pick<ParamSerializeReasonGroup, "reason">,
+export function compareParamGroups(
+  a: Pick<ParamReasonGroup, "reason">,
+  b: Pick<ParamReasonGroup, "reason">,
 ) {
   return compareReferences(a.reason, b.reason);
 }

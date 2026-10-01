@@ -8,8 +8,8 @@ var setter_default = _template("b", (input) => {
 	const $return = (input.value, setter);
 	_scope($scope0_id, {
 		c: input.valueChange,
-		d: _serialize_if($scope0_reason, 0) && input.value,
-		e: _serialize_if($scope0_reason, 1) && setter
+		d: _write_if($scope0_reason, 0) && input.value,
+		e: _write_if($scope0_reason, 1) && setter
 	});
 	return $return;
 });
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_set_serialize_reason(8);
+	_set_scope_reason(8);
 	const $childScope = _peek_scope_id();
 	let setCount = setter_default({
 		value: count,

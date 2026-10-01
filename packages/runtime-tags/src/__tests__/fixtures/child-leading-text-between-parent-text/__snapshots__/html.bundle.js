@@ -1,9 +1,9 @@
 // tags/child/index.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_class = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_class = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`X<span${_attr_class(input.class)}></span>${_el_resume($scope0_id, "a", $sg__input_class)}`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_html(`X<span${_attr_class(input.class)}></span>${_el_resume($scope0_id, "a", $wg__input_class)}`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko

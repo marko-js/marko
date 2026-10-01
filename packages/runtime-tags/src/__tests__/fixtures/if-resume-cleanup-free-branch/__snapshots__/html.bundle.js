@@ -1,17 +1,17 @@
 // tags/leaf.marko
 var leaf_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_n = _serialize_guard($scope0_reason, 0), $si__input_n = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_n = _write_guard($scope0_reason, 0), $wi__input_n = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { n } = input;
 	_if(() => {
 		if (n) {
 			const $scope1_id = _scope_id();
-			_html(`<div>n is ${_text_resume($scope1_id, "a", n, $sg__input_n * 2)}</div>`);
-			$si__input_n && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_html(`<div>n is ${_text_resume($scope1_id, "a", n, $wg__input_n * 2)}</div>`);
+			$wi__input_n && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", $sg__input_n, $sg__input_n, $sg__input_n, 0, 1);
-	$si__input_n && _scope($scope0_id, {});
+	}, $scope0_id, "a", $wg__input_n, $wg__input_n, $wg__input_n, 0, 1);
+	$wi__input_n && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(2);
+			_set_scope_reason(2);
 			const $childScope = _peek_scope_id();
 			leaf_default({ n });
 			_scope($scope1_id, { a: _existing_scope($childScope) });

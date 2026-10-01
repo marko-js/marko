@@ -87,7 +87,8 @@ function buildTextLiteral(
     }
     templateQuasis.push(templateElement(currentQuasi, true));
     const literal = t.templateLiteral(templateQuasis, templateExpressions);
-    literal.extra = placeholderExtra;
+    // Several placeholders render as one, through the group they merged into.
+    literal.extra = placeholderExtra?.merged || placeholderExtra;
     return literal;
   }
   return t.stringLiteral(currentQuasi);

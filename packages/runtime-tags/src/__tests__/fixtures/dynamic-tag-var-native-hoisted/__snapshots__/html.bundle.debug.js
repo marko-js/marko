@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_itemType = _serialize_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_itemType = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $item_getter = _hoist($scope0_id, "__tests__/template.marko_0_$item#2:3/hoist");
 	_if(() => {
@@ -15,12 +15,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_var($scope1_id, "#scopeOffset/1", $inputtype_scope, "__tests__/template.marko_1_$el#2/var");
 			_scope($scope1_id, {
 				$el,
-				_: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id)
+				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "3:2", { $el: "4:18" });
 			_assert_hoist($el);
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show);
 	_for_until(2, 0, 1, (i) => {
 		const $scope2_id = _scope_id();
 		const $inputitemType_scope = _peek_scope_id();
@@ -28,20 +28,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_id = _scope_id();
 			const $scope4_reason = _scope_reason();
 			_html(`item ${_escape(i)}`);
-			$si__input_itemType && _scope($scope4_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:6");
-			$si__input_itemType && _resume_branch($scope4_id);
+			$wi__input_itemType && _scope($scope4_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:6");
+			$wi__input_itemType && _resume_branch($scope4_id);
 		}, $scope2_id, ($scope) => [{ "#LoopKey": i }]));
 		_var($scope2_id, "#scopeOffset/1", $inputitemType_scope, "__tests__/template.marko_2_$item#3/var");
 		_scope($scope2_id, {
-			"#LoopKey": $si__input_itemType && i,
+			"#LoopKey": $wi__input_itemType && i,
 			$item,
-			_: $si__input_itemType && _scope_with_id($scope0_id)
+			_: $wi__input_itemType && _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "8:2", {
 			"#LoopKey": "8:6",
 			$item: "9:22"
 		});
 		_assert_hoist($item);
 	}, 0, $scope0_id, "#text/1", 1, 0, 0);
-	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { input_type: input.type }, "__tests__/template.marko", 0, { input_type: ["input.type"] });
+	_script($scope0_id, "__tests__/template.marko_0", $wg__input_show);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { input_type: input.type }, "__tests__/template.marko", 0, { input_type: ["input.type"] });
 }, 1);

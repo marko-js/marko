@@ -1,6 +1,6 @@
 // tags/recurse.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_level = _serialize_guard($scope0_reason, 0), $si__input_level = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_level = _write_guard($scope0_reason, 0), $wi__input_level = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_level__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -12,27 +12,27 @@ const $content = (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "a", resolveAfter(0), () => {
 					const $scope3_id = _scope_id();
-					_set_serialize_reason($sg__input_level << 1);
+					_set_scope_reason($wg__input_level << 1);
 					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
-					$si__input_level && _subscribe($input_level__closures, _scope($scope3_id, {
+					$wi__input_level && _subscribe($input_level__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						a: _existing_scope($childScope)
-					}), "b0", $sg__input_level);
-					$sg__input_level || $si__input_level && _resume_branch($scope3_id);
-				}, $sg__input_level);
-				$si__input_level && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+					}), "b0", $wg__input_level);
+					$wg__input_level || $wi__input_level && _resume_branch($scope3_id);
+				}, $wg__input_level);
+				$wi__input_level && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, () => {
 				_scope_reason();
 				_scope_id();
 				_html("LOADING...");
 			}, void 0, "b1");
-			_html(`</div>${_el_resume($scope1_id, "a", $sg__input_level)}`);
-			$si__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_html(`</div>${_el_resume($scope1_id, "a", $wg__input_level)}`);
+			$wi__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", $sg__input_level, $sg__input_level, $sg__input_level, 0, 1);
-	$si__input_level && _scope($scope0_id, { e: $input_level__closures });
+	}, $scope0_id, "a", $wg__input_level, $wg__input_level, $wg__input_level, 0, 1);
+	$wi__input_level && _scope($scope0_id, { e: $input_level__closures });
 };
 var recurse_default = _template("b", $content);
 

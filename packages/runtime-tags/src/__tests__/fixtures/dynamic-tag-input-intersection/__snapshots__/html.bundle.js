@@ -19,7 +19,7 @@ var my_tag_default = _template("b", (input) => {
 		e: inputClass,
 		f: inputContent,
 		g: htmlInput,
-		i: _serialize_if($scope0_reason, 0) && content
+		i: _write_if($scope0_reason, 0) && content
 	});
 });
 

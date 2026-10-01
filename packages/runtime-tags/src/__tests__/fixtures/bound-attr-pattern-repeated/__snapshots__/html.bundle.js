@@ -9,13 +9,13 @@ var template_default = _template("a", (input) => {
 		_html(`<input${_attr_input_value($scope1_id, "a", a, $valueChange)}>${_el_resume($scope1_id, "a")}<input${_attr_input_value($scope1_id, "b", a, $valueChange)}>${_el_resume($scope1_id, "b")}<input${_attr_input_value($scope1_id, "c", a, $valueChange)}>${_el_resume($scope1_id, "c")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, {
-			f: _serialize_if($scope1_reason, 0) && $aChange,
-			g: _serialize_if($scope1_reason, 1) && a
+			f: _write_if($scope1_reason, 0) && $aChange,
+			g: _write_if($scope1_reason, 1) && a
 		});
 	}, $scope0_id) };
 	let n = 1;
 	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(10);
+	_set_scope_reason(10);
 	const $childScope = _peek_scope_id();
 	Wrap.content({ a: "z1" });
 	_script($scope0_id, "a2");

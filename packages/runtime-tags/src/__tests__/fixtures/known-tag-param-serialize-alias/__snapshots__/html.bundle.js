@@ -4,18 +4,18 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Child = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__input_a = _serialize_guard($scope1_reason, 0), $sg__b = _serialize_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__input_a = _write_guard($scope1_reason, 0), $wg__b = _write_guard($scope1_reason, 1);
 		const { a, b } = input;
-		_html(`<div>${_text_resume($scope1_id, "a", a, $sg__input_a)}</div><div>${_text_resume($scope1_id, "b", b, $sg__b)}</div>`);
-		_script($scope1_id, "a1", $sg__input_a || $sg__b);
-		_script($scope1_id, "a2", $sg__input_a || $sg__b);
+		_html(`<div>${_text_resume($scope1_id, "a", a, $wg__input_a)}</div><div>${_text_resume($scope1_id, "b", b, $wg__b)}</div>`);
+		_script($scope1_id, "a1", $wg__input_a || $wg__b);
+		_script($scope1_id, "a2", $wg__input_a || $wg__b);
 		_scope($scope1_id, { e: input.a });
 	}, $scope0_id) };
-	_set_serialize_reason(_serialize_guard($scope0_reason, 1) << 1 | _serialize_guard($scope0_reason, 2) << 3);
+	_set_scope_reason(_write_guard($scope0_reason, 1) << 1 | _write_guard($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id();
 	Child.content({
 		a: input.a,
 		b: input.b
 	});
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

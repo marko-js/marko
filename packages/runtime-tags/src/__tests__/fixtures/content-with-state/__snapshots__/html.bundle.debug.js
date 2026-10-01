@@ -1,25 +1,25 @@
 // tags/inner.marko
 var inner_default = _template("__tests__/tags/inner.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/inner.marko", 0);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/inner.marko", 0);
 });
 
 // tags/outer.marko
 var outer_default = _template("__tests__/tags/outer.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_content = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_content = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	inner_default({ content: _content("__tests__/tags/outer.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<button>click</button>${_el_resume($scope1_id, "#button/0")}`);
-		_dynamic_tag($scope1_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+		_dynamic_tag($scope1_id, "#text/1", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 		_script($scope1_id, "__tests__/tags/outer.marko_1");
-		_subscribe($si__input_content && $input_content__closures, _scope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }, "__tests__/tags/outer.marko", "1:2"), "__tests__/tags/outer.marko_1_input_content#0:3/subscribe");
+		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: $wi__input_content && _scope_with_id($scope0_id) }, "__tests__/tags/outer.marko", "1:2"), "__tests__/tags/outer.marko_1_input_content#0:3/subscribe");
 	}, $scope0_id) });
-	$si__input_content && _scope($scope0_id, { "ClosureScopes:input_content/4": $input_content__closures }, "__tests__/tags/outer.marko", 0);
+	$wi__input_content && _scope($scope0_id, { "ClosureScopes:input_content/4": $input_content__closures }, "__tests__/tags/outer.marko", 0);
 });
 
 // template.marko

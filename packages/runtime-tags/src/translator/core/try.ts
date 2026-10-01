@@ -25,7 +25,6 @@ import {
   type Section,
   startSection,
 } from "../util/sections";
-import { getScopeReasonStatement } from "../util/serialize-guard";
 import {
   addValue,
   getResumeRegisterId,
@@ -35,6 +34,7 @@ import {
 } from "../util/signals";
 import * as structure from "../util/structure";
 import { translateByTarget } from "../util/visitors";
+import { getScopeReasonStatement } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 export default {

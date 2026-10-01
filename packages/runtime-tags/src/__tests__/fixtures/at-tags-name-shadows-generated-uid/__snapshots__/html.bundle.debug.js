@@ -1,13 +1,13 @@
 // tags/child/index.marko
 var child_default = _template("__tests__/tags/child/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_scope = _serialize_guard($scope0_reason, 0), $si__input_scope = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_scope = _write_guard($scope0_reason, 0), $wi__input_scope = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.scope, (s) => {
 		const $scope1_id = _scope_id();
-		_html(_text_resume($scope1_id, "#text/0", s.a, $sg__input_scope));
-		$si__input_scope && _scope($scope1_id, {}, "__tests__/tags/child/index.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $sg__input_scope, $sg__input_scope, $sg__input_scope);
-	$si__input_scope && _scope($scope0_id, {}, "__tests__/tags/child/index.marko", 0);
+		_html(_text_resume($scope1_id, "#text/0", s.a, $wg__input_scope));
+		$wi__input_scope && _scope($scope1_id, {}, "__tests__/tags/child/index.marko", "1:2");
+	}, 0, $scope0_id, "#text/0", $wg__input_scope, $wg__input_scope, $wg__input_scope);
+	$wi__input_scope && _scope($scope0_id, {}, "__tests__/tags/child/index.marko", 0);
 });
 
 // template.marko
@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let cond = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	let $scope;
 	if (cond) {
 		$scope = attrTag({ a: 1 });

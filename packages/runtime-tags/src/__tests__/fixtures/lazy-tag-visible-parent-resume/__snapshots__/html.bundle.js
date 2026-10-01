@@ -24,6 +24,6 @@ var template_default = _template("b", (input) => {
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
 		h: count,
-		d: _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
+		d: _write_if($scope0_reason, 0) && _existing_scope($childScope)
 	});
 }, 1);

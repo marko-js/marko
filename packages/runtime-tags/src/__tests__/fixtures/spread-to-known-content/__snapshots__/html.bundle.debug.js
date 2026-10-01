@@ -1,25 +1,25 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_class = _serialize_guard($scope0_reason, 1), $sg__input_content = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_class = _write_guard($scope0_reason, 1), $wg__input_content = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<p${_attr_class(input.class)}>`);
-	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $sg__input_content);
-	_html(`</p>${_el_resume($scope0_id, "#p/0", $sg__input_class)}`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
+	_html(`</p>${_el_resume($scope0_id, "#p/0", $wg__input_class)}`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // tags/wrap.marko
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_class__OR__rest_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_class__OR__rest_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { class: _class, ...rest } = input;
-	_set_serialize_reason($sg__input_class__OR__rest_content << 1 | _serialize_guard($scope0_reason, 1) << 3 | _serialize_guard($scope0_reason, 2) << 5);
+	_set_scope_reason($wg__input_class__OR__rest_content << 1 | _write_guard($scope0_reason, 1) << 3 | _write_guard($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id();
 	child_default({
 		class: _class,
 		...rest
 	});
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/wrap.marko", 0);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/wrap.marko", 0);
 });
 
 // template.marko

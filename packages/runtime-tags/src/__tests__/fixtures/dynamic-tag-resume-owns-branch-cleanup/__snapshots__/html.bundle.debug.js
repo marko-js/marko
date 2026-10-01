@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { show } = input;
 	_dynamic_tag($scope0_id, "#text/0", show ? "div" : null, {}, _content("__tests__/tags/child.marko_1*content", () => {
@@ -8,8 +8,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_scope_reason();
 		_script($scope1_id, "__tests__/tags/child.marko_1", 0);
 		_resume_branch($scope1_id);
-	}, $scope0_id), 0, $sg__input_show);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	}, $scope0_id), 0, $wg__input_show);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // template.marko
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(2);
+			_set_scope_reason(2);
 			const $childScope = _peek_scope_id();
 			child_default({ show });
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "6:2");

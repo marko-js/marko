@@ -1,14 +1,14 @@
 // tags/list.marko
 var list_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_count = _serialize_guard($scope0_reason, 0), $si__input_count = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_count = _write_guard($scope0_reason, 0), $wi__input_count = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { count } = input;
 	_for_to(count, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>item ${_escape(i)}</li>`);
-		$si__input_count && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $sg__input_count, $sg__input_count, $sg__input_count, 0, 1);
-	$si__input_count && _scope($scope0_id, {});
+		$wi__input_count && _scope($scope1_id, {});
+	}, 0, $scope0_id, "a", $wg__input_count, $wg__input_count, $wg__input_count, 0, 1);
+	$wi__input_count && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(2);
+			_set_scope_reason(2);
 			const $childScope = _peek_scope_id();
 			list_default({ count });
 			_scope($scope1_id, { a: _existing_scope($childScope) });

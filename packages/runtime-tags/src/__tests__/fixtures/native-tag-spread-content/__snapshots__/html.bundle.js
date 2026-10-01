@@ -29,7 +29,7 @@ var my_div_default = _template("b", (input) => {
 	_html("</em>");
 	_script($scope0_id, "b1");
 	_script($scope0_id, "b2");
-	_scope($scope0_id, { k: _serialize_if($scope0_reason, 0) && CustomContent?.content });
+	_scope($scope0_id, { k: _write_if($scope0_reason, 0) && CustomContent?.content });
 });
 
 // template.marko

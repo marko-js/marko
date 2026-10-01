@@ -5,7 +5,7 @@ var my_button_default = _template("b", (input) => {
 	const attrs = input;
 	const { text } = input;
 	const { onClick } = attrs;
-	_html(`<button>${_text_resume($scope0_id, "b", text, _serialize_guard($scope0_reason, 0))}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", text, _write_guard($scope0_reason, 0))}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { f: onClick });
 });
@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	my_button_default({
 		text: clickCount,

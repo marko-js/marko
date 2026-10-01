@@ -13,6 +13,7 @@ import {
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
 import { isOutputHTML } from "../util/marko-config";
+import { addReasonExprs, addReason, getWriteReason } from "../util/reasons";
 import {
   mergeReferences,
   trackDomVarReferences,
@@ -22,13 +23,9 @@ import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { createScopeReadExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
-import {
-  addSerializeExpr,
-  addSerializeReason,
-  getSerializeReason,
-} from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
-import { FORCED } from "../util/sources";
+import { findSlot, getSlot } from "../util/slots";
+import { ALWAYS } from "../util/sources";
 import * as structure from "../util/structure";
 import * as writer from "../util/writer";
 
@@ -82,9 +79,8 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      if (isTagVarRead(tag))
-        addSerializeReason(tagSection, FORCED, nodeBinding);
-      addSerializeExpr(tagSection, tagExtra, nodeBinding);
+      if (isTagVarRead(tag)) addReason(getSlot(nodeBinding), ALWAYS);
+      addReasonExprs(getSlot(nodeBinding), tagExtra);
     }
 
     // The whole client template records here (children are skipped); the html
@@ -161,7 +157,7 @@ export default {
         writer.markNode(
           tag,
           nodeBinding,
-          getSerializeReason(tagSection, nodeBinding),
+          getWriteReason(findSlot(nodeBinding)),
         );
       }
 

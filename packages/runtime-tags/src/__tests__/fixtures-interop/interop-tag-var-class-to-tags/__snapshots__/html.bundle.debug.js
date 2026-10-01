@@ -10,13 +10,13 @@ var tags_return_default = _template("__tests__/components/tags-return.marko", (i
 
 // components/tags-child.marko
 var tags_child_default = _template("__tests__/components/tags-child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_x = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let v = tags_return_default({ x: input.x });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/components/tags-child.marko_0_v#6/var");
-	_html(`<p>${_text_resume($scope0_id, "#text/2", v, $sg__input_x)}</p>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/components/tags-child.marko", 0);
+	_html(`<p>${_text_resume($scope0_id, "#text/2", v, $wg__input_x)}</p>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/components/tags-child.marko", 0);
 });
 
 // template.marko

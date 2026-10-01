@@ -5,12 +5,12 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	const { "countChange": $countChange, count } = input;
 	let x = count;
 	_html(`<button${_attr("id", input.id)}${_attr("data-internal", x)}>`);
-	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_scope($scope0_id, {
-		$countChange: _serialize_if($scope0_reason, 2) && $countChange,
-		count: _serialize_if($scope0_reason, 1) && count,
+		$countChange: _write_if($scope0_reason, 2) && $countChange,
+		count: _write_if($scope0_reason, 1) && count,
 		x,
 		"TagVariableChange:x": $countChange || void 0
 	}, "__tests__/tags/counter.marko", 0, {
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $x__closures = new Set();
 	let x = 0;
-	_set_serialize_reason(32);
+	_set_scope_reason(32);
 	const $childScope = _peek_scope_id();
 	counter_default({
 		count: x,
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), "__tests__/template.marko_1_x#0:2/subscribe");
 		}, $scope0_id)
 	});
-	_set_serialize_reason(32);
+	_set_scope_reason(32);
 	const $childScope2 = _peek_scope_id();
 	counter_default({
 		count: x,

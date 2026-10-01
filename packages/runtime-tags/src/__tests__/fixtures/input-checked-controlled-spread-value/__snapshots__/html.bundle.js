@@ -15,6 +15,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: input.rest,
-		e: _serialize_if($scope0_reason, 0) && checked
+		e: _write_if($scope0_reason, 0) && checked
 	});
 }, 1);

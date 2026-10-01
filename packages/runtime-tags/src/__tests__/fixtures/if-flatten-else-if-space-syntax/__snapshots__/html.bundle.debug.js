@@ -1,11 +1,11 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_a__OR__input_b = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_a__OR__input_b = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a ? "A" : input.b ? "B" : "C", $sg__input_a__OR__input_b)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
-		input_a: _serialize_if($scope0_reason, 2) && input.a,
-		input_b: _serialize_if($scope0_reason, 1) && input.b
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a ? "A" : input.b ? "B" : "C", $wg__input_a__OR__input_b)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
+		input_a: _write_if($scope0_reason, 2) && input.a,
+		input_b: _write_if($scope0_reason, 1) && input.b
 	}, "__tests__/template.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]

@@ -1,11 +1,11 @@
 // tags/note.marko
 var note_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.label, $sg__input_label)}</span>`);
-	_script($scope0_id, "b0", $sg__input_label);
+	_html(`<span>${_text_resume($scope0_id, "a", input.label, $wg__input_label)}</span>`);
+	_script($scope0_id, "b0", $wg__input_label);
 	_scope($scope0_id, { d: input.label });
-	$sg__input_label || _resume_branch($scope0_id);
+	$wg__input_label || _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_await($scope3_id, "a", resolveAfter("inner", 4), (inner) => {
 					const $scope4_id = _scope_id();
-					_set_serialize_reason(2);
+					_set_scope_reason(2);
 					const $childScope = _peek_scope_id();
 					note_default({ label: `${inner} ${clicks}` });
 					_subscribe($clicks__closures, _scope($scope4_id, {

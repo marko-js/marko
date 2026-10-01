@@ -16,7 +16,7 @@ template modules, payload, and markers transitively.
    per-section ids.
 4. `signals.ts` groups work by its exact binding set and emits the smallest
    executable **signal**.
-5. `serialize-reasons.ts` propagates why each scope property, marker, section,
+5. `reasons.ts` propagates why each scope property, marker, section,
    or registered value must exist in the browser.
 6. DOM output supplies mostly pure, tree-shakable signals/renderers. HTML output
    writes only the state and markers required by retained client work.
@@ -52,7 +52,7 @@ Terms live in [CONTEXT.md](./CONTEXT.md); start here:
 | Area                 | Primary code                                                                                          |
 | -------------------- | ----------------------------------------------------------------------------------------------------- |
 | Compiler graph       | `translator/util/sections.ts`, `bindings.ts`, `references.ts`, `finalize-references.ts`, `signals.ts` |
-| Serialization policy | `translator/util/serialize-reasons.ts`, `serialize-guard.ts`                                          |
+| Serialization policy | `translator/util/slots.ts`, `reasons.ts`, `write-guard.ts`                                            |
 | DOM scopes/ranges    | `dom/scope.ts`, `dom/renderer.ts`, `dom/control-flow.ts`                                              |
 | Streaming/resume     | `html/writer.ts`, `html/serializer.ts`, `dom/resume.ts`                                               |
 | Lazy entries         | `translator/util/entry-builder.ts`, `html/writer.ts`                                                  |
@@ -72,20 +72,24 @@ canonical bindings, separates constant/live/hoisted/lazy reads, prunes unused
 property paths, computes transitive `Sources`, propagates owner/closure/branch/
 effect/registry requirements, collapses eligible intersections, and finalizes
 known-tag contracts. Safe invoke-only reads avoid subscriptions but set
-`forcePersist`: the current scope slot must still survive for later invocation.
+`hasLazyReads`: the current scope slot must still survive for later invocation.
 
-### Serialize reasons
+### Reasons
 
-`SerializeReason = Sources`; absence means omit. Reasons stay lossless: a
-forced reason keeps the sources it reads, and consumers decide what to drop.
+A reason is the `Sources` whose changes lead client code to read something after
+resume (`Reason = Sources`); absence means omit. Reasons stay lossless: an
+`always` reason keeps the sources it reads, and consumers decide what to drop.
 
-- `forced` (`FORCED` alone for a value serialized for its own sake): unconditional.
+- `always` (`ALWAYS` alone for a value read for its own sake): unconditional.
 - Contains state: unconditional for SSR; client-changeable state requires its
   resume path for every instance.
 - Parameter-only: guarded per call site by the reason passed from the parent.
 
-Reasons exist per section and per scope property. Property reasons contribute to
-the section reason but keep independent guards. They originate at
+Reasons live only on slots (`slots.ts`): a place in a scope (a property, a
+marker) or a decision a guard makes, owned by a binding or a section. A scope is
+written when any slot in it is, so a section's reason is the join of the reasons
+of the slots in its scope, derived and never set directly, while each slot is
+still written under its own reason's guard. Reasons originate at
 client-observable roots—state, effects, handlers/registered functions, closures,
 hoists, control-flow identity, DOM getters, tag variables, and stateful
 downstreams—and propagate backward through aliases/reads and upward through
@@ -95,13 +99,13 @@ closures through registered content, registered functions, known-tag param
 groups) are solved together, repeating until none moves; every write merges, so
 reasons only grow and cycles settle.
 
-Across known tags, `finalizeParamSerializeReasonGroups()` groups child parameter
-dependencies. The parent calls `_set_serialize_reason(...)`; the child consumes
+Across known tags, `finalizeParamReasonGroups()` groups child parameter
+dependencies. The parent calls `_set_scope_reason(...)`; the child consumes
 and clears it with `_scope_reason()`. HTML runtime encoding is two bits per
 group at `1 + 2 * group` (the low bit says the group serializes; a dynamic
 guard shifts into its place), a keyed object of group values past fifteen
-groups, or none. `serialize-guard.ts` emits/hoists `_serialize_if` and
-`_serialize_guard` calls.
+groups, or none. `write-guard.ts` emits/hoists `_write_if` and
+`_write_guard` calls.
 
 ### Signal lowering
 
@@ -162,7 +166,7 @@ changed; an `<await>` value deferred until its branch exists
 (`_await_promise`) and a late closure subscriber's resume effect (`_subscribe`)
 cover it. That subscriber renders only for a change its owner notified meanwhile
 (`_closure` marks the owner's subscriber set), never for a value merely serialized,
-so it reads exactly what a live update would, which serialize reasons provide.
+so it reads exactly what a live update would, which reasons provide.
 
 ## Lazy entries and ready streams
 
@@ -201,8 +205,8 @@ Testing commands and fixture anatomy live in `AGENTS.md`. High-value examples:
 - `title-counter`: bindings → signals → scope/markers → resumed update/effect.
 - `lazy-tag-nested-shared`: ready dependencies and cross-channel identity.
 
-Routing: serialization questions start in `serialize-propagation.ts` →
-`serialize-reasons.ts` → `serialize-guard.ts`; bundle retention in compiler
+Routing: serialization questions start in `solve-reasons.ts` →
+`reasons.ts` → `write-guard.ts`; bundle retention in compiler
 `signals.ts`, `runtime.ts`, program DOM output, and Rolldown output; wire format in
 `html/writer.ts`/`serializer.ts`; adoption in `dom/resume.ts`/`walker.ts`;
 update ordering in compiler/runtime `signals.ts` and `dom/queue.ts`.

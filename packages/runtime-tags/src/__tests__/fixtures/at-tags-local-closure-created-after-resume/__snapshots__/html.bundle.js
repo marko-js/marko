@@ -1,7 +1,7 @@
 // tags/list.marko
 var list_default = _template("e", (input) => {
 	const $scope0_reason = _scope_reason();
-	_serialize_guard($scope0_reason, 0);
+	_write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<button id=open>open</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");
@@ -11,7 +11,7 @@ var list_default = _template("e", (input) => {
 
 // tags/grid-row.marko
 var grid_row_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_row_cell = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_row_cell = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button${_attr("id", `toggle-${input.index}`)}>toggle</button>${_el_resume($scope0_id, "a")}`);
@@ -20,9 +20,9 @@ var grid_row_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_for_of(input.row.cell, (cell) => {
 				const $scope2_id = _scope_id();
-				_dynamic_tag($scope2_id, "a", cell.content, {}, 0, 0, $sg__input_row_cell);
-				_serialize_if($scope0_reason, 0) && _scope($scope2_id, {});
-			}, 0, $scope1_id, "a", $sg__input_row_cell, $sg__input_row_cell, $sg__input_row_cell);
+				_dynamic_tag($scope2_id, "a", cell.content, {}, 0, 0, $wg__input_row_cell);
+				_write_if($scope0_reason, 0) && _scope($scope2_id, {});
+			}, 0, $scope1_id, "a", $wg__input_row_cell, $wg__input_row_cell, $wg__input_row_cell);
 			_scope($scope1_id, {});
 			return 0;
 		}
@@ -36,19 +36,19 @@ var grid_row_default = _template("b", (input) => {
 
 // tags/grid.marko
 var grid_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_row = _serialize_guard($scope0_reason, 0), $si__input_row = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_row = _write_guard($scope0_reason, 0), $wi__input_row = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.row, (row, index) => {
 		const $scope1_id = _scope_id();
-		_set_serialize_reason($sg__input_row << 1);
+		_set_scope_reason($wg__input_row << 1);
 		const $childScope = _peek_scope_id();
 		grid_row_default({
 			row,
 			index
 		});
-		$si__input_row && _scope($scope1_id, { a: _existing_scope($childScope) });
-	}, 0, $scope0_id, "a", $sg__input_row, $sg__input_row, $sg__input_row);
-	$si__input_row && _scope($scope0_id, {});
+		$wi__input_row && _scope($scope1_id, { a: _existing_scope($childScope) });
+	}, 0, $scope0_id, "a", $wg__input_row, $wg__input_row, $wg__input_row);
+	$wi__input_row && _scope($scope0_id, {});
 });
 
 // tags/last.marko

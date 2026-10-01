@@ -1,6 +1,6 @@
 // tags/menu.marko
 var menu_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0), $si__input_content = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	let open = true;
@@ -11,11 +11,11 @@ var menu_default = _template("b", (input) => {
 			_if(() => {
 				if (input.content) {
 					const $scope2_id = _scope_id();
-					_dynamic_tag($scope2_id, "a", input.content, {}, 0, 0, $sg__input_content);
-					_subscribe($si__input_content && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b0", $sg__input_content);
+					_dynamic_tag($scope2_id, "a", input.content, {}, 0, 0, $wg__input_content);
+					_subscribe($wi__input_content && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b0", $wg__input_content);
 					return 0;
 				}
-			}, $scope1_id, "a", $sg__input_content, $sg__input_content, $sg__input_content);
+			}, $scope1_id, "a", $wg__input_content, $wg__input_content, $wg__input_content);
 			_scope($scope1_id, {});
 			return 0;
 		}
@@ -24,7 +24,7 @@ var menu_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		f: input.content,
 		g: open,
-		h: $si__input_content && $input_content__closures
+		h: $wi__input_content && $input_content__closures
 	});
 });
 

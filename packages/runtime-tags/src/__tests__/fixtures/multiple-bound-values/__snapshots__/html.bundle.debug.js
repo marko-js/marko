@@ -7,10 +7,10 @@ var _2counters_default = _template("__tests__/tags/2counters.marko", (input) => 
 	_html(`<button>${_text_resume($scope0_id, "#text/1", count1)}</button>${_el_resume($scope0_id, "#button/0")}<button>${_text_resume($scope0_id, "#text/3", count2)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/2counters.marko_0");
 	_scope($scope0_id, {
-		input_count1: _serialize_if($scope0_reason, 1) && input.count1,
-		input_count1Change: _serialize_if($scope0_reason, 0) && input.count1Change,
-		input_count2: _serialize_if($scope0_reason, 3) && input.count2,
-		input_count2Change: _serialize_if($scope0_reason, 2) && input.count2Change,
+		input_count1: _write_if($scope0_reason, 1) && input.count1,
+		input_count1Change: _write_if($scope0_reason, 0) && input.count1Change,
+		input_count2: _write_if($scope0_reason, 3) && input.count2,
+		input_count2Change: _write_if($scope0_reason, 2) && input.count2Change,
 		count1,
 		count2,
 		"TagVariableChange:count1": input.count1Change || void 0,
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count1 = 0;
 	let count2 = 0;
-	_set_serialize_reason(34);
+	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	_2counters_default({
 		count1,

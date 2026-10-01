@@ -1,10 +1,10 @@
 // tags/my-button.marko
 var my_button_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value_text = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value_text = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { onClick, value: { text } } = input;
 	const { value: { text: textAlias } } = input;
-	_html(`<button>${_text_resume($scope0_id, "b", text, $sg__input_value_text)} ${_text_resume($scope0_id, "c", textAlias, $sg__input_value_text * 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", text, $wg__input_value_text)} ${_text_resume($scope0_id, "c", textAlias, $wg__input_value_text * 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { f: onClick });
 });
@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	my_button_default({
 		value: { text: clickCount },
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			clickCount++;
 		}, "a0", $scope0_id)
 	});
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope2 = _peek_scope_id();
 	my_button_default({
 		onClick: _resume(function() {

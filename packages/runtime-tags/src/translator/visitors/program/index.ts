@@ -23,6 +23,7 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
+import { isOwnResumeReason } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
 import {
   dynamicImport,
@@ -31,10 +32,9 @@ import {
 } from "../../util/runtime";
 import {
   forEachSection,
-  getSectionRegisterReasons,
+  getRendererReason,
   startSection,
 } from "../../util/sections";
-import { isOwnResumeReason } from "../../util/serialize-reasons";
 import { finalizeSetupWork } from "../../util/setup-work";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -47,12 +47,14 @@ export let localsIdentifier: t.Identifier;
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     hasResumes?: boolean;
-    domExports?: {
+    /** What the template reads of its params (its input is the first), the
+     * contract its callers keep. */
+    paramsTree?: BindingPropTree;
+    /** The names every compile of the template exports its parts under. */
+    exportNames?: {
       template: string;
       walks: string;
       setup: string;
-      setupEmpty?: true;
-      params: BindingPropTree | undefined;
     };
     styleFile?: string;
   }
@@ -82,11 +84,10 @@ export default {
       }
 
       // TODO: make any exports undefined if they are noops/empty
-      programExtra.domExports = {
+      programExtra.exportNames = {
         template: generateUid("template"),
         walks: generateUid("walks"),
         setup: generateUid("setup"),
-        params: undefined,
       };
 
       // Resolve any colocated style file (eg `template.style.css`) once so the
@@ -106,7 +107,7 @@ export default {
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
-        programExtra.domExports!.params = getBindingPropTree(paramsBinding);
+        programExtra.paramsTree = getBindingPropTree(paramsBinding);
       }
 
       const section = programExtra.section!;
@@ -115,19 +116,16 @@ export default {
       // has to reach the client on its own.
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
-          isOwnResumeReason(childSection.serializeReason) ||
+          isOwnResumeReason(childSection.reason) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
-            getSectionRegisterReasons(childSection))
+            getRendererReason(childSection))
         );
       });
 
+      // A template with no setup work lets its callers skip its setup export
+      // (checked when this template translates).
       finalizeSetupWork();
-      if (!section.hasSetupWork) {
-        // The setup export will be a noop, letting parent templates skip
-        // importing and calling it (checked when this template translates).
-        programExtra.domExports!.setupEmpty = true;
-      }
     },
   },
   translate: {

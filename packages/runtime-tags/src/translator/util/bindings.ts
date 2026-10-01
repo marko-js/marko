@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 
-import { type AccessorPrefix } from "../../common/accessor.debug";
 import { toAccess } from "../../html/serializer";
 import * as BindingType from "./constants/binding-type";
 import {
@@ -14,7 +13,6 @@ import {
 } from "./optional";
 import { type AssignedBindingExtra, type ReferencedExtra } from "./references";
 import { type Section } from "./sections";
-import { type SerializeKey } from "./serialize-reasons";
 import { type Sources } from "./sources";
 import { createProgramState } from "./state";
 
@@ -56,7 +54,12 @@ export interface Binding {
   /** The value these `<for>` params iterate, by `of` or `in`. */
   iterates: { expr: t.NodeExtra; type: "of" | "in" } | undefined;
   restOffset: number | undefined;
-  scopeOffset: Binding | undefined;
+  /** For a tag variable a child's `<return>` writes, the node binding of the
+   * tag rendering that child. */
+  returnedBy: Binding | undefined;
+  /** Scope ids it holds right after its own: a controllable `<let>`'s change
+   * handler, or the scope offset of a tag whose variable a child returns. */
+  reserveSize: number;
   scopeAccessor: string | undefined;
   export: string | undefined;
   directContentExport: string | undefined;
@@ -73,14 +76,8 @@ export interface Binding {
   /** Settled only once `finalizeReferences` runs at program analyze exit. */
   pruned: boolean | undefined;
   exposed: boolean;
-  forcePersist: boolean;
-  /** Binding-side counterpart of `Section.serializePropKeys`, keyed by
-   * accessor prefix (`undefined` is the plain binding key). */
-  serializePropKeys:
-    | Map<AccessorPrefix | symbol | undefined, SerializeKey>
-    | undefined;
-  // Extra ids reserved after `id` for derived accessors (eg TagVariableChange).
-  reserveSize: number;
+  /** Read on invocation from its own scope slot, which must persist. */
+  hasLazyReads: boolean;
 }
 
 export interface InputBinding extends Binding {
@@ -96,10 +93,10 @@ export type ReferencedBindings = SortedOpt<Binding>;
 export type Intersection = SortedMany<Binding>;
 
 /** Every member computed from one local source in the same pass, or the
- * intersection's own render id and scope offset. */
+ * intersection's own render id and the tag whose scope offset it renders after. */
 export type IntersectionMeta =
-  | { source: Binding; id?: undefined; scopeOffset?: undefined }
-  | { source: undefined; id: number; scopeOffset: Binding | undefined };
+  | { source: Binding; id?: undefined; returnedBy?: undefined }
+  | { source: undefined; id: number; returnedBy: Binding | undefined };
 
 export interface Getter {
   hoisted: Section | false;
@@ -152,16 +149,15 @@ export function createBinding(
     upstreamLocal: undefined,
     localClosures: undefined,
     restOffset: undefined,
-    scopeOffset: undefined,
+    returnedBy: undefined,
+    reserveSize: 0,
     scopeAccessor: undefined,
     export: undefined,
     directContentExport: undefined,
     nullable: !sameSection || excludeProperties === undefined,
     pruned: undefined,
     exposed: false,
-    forcePersist: false,
-    serializePropKeys: undefined,
-    reserveSize: 0,
+    hasLazyReads: false,
   };
 
   if (property) {

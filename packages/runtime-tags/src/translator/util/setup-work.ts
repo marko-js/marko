@@ -10,19 +10,19 @@ import { createSectionState } from "./state";
  */
 
 const [getSetupInfo] = createSectionState("setupWork", () => ({
-  forced: false,
+  always: false,
   exprs: new Set<t.NodeExtra>(),
 }));
 
 export function addSetupWork(section: Section) {
-  getSetupInfo(section).forced = true;
+  getSetupInfo(section).always = true;
 }
 
 export function addSetupExpr(section: Section, node: t.Node | undefined) {
   if (node) {
     getSetupInfo(section).exprs.add((node.extra ??= {}));
   } else {
-    getSetupInfo(section).forced = true;
+    getSetupInfo(section).always = true;
   }
 }
 
@@ -54,7 +54,7 @@ function setCallSectionsSetup(body: Section) {
 function hasOwnSetupWork(section: Section) {
   const info = getSetupInfo(section);
   // Setup subscribes the section to the closures it reads.
-  if (info.forced || section.referencedClosures) return true;
+  if (info.always || section.referencedClosures) return true;
   for (let extra of info.exprs) {
     while (extra.merged) extra = extra.merged;
     if (!extra.pruned && !extra.referencedBindings) {

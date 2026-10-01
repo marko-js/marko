@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_button = _serialize_guard($scope0_reason, 0), $si__input_button = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_button = _write_guard($scope0_reason, 0), $wi__input_button = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { button: buttons, ...htmlInput } = input;
 	_html(`<div${_attrs(htmlInput, "a", $scope0_id, "div")}>`);
@@ -9,13 +9,13 @@ var child_default = _template("b", (input) => {
 		_if(() => {
 			if (button) {
 				const $scope2_id = _scope_id();
-				_dynamic_tag($scope2_id, "a", button, {}, 0, 0, $sg__input_button);
-				$si__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+				_dynamic_tag($scope2_id, "a", button, {}, 0, 0, $wg__input_button);
+				$wi__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", $sg__input_button, $sg__input_button, $sg__input_button);
-		$si__input_button && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $sg__input_button, 1, $sg__input_button, "</div>");
+		}, $scope1_id, "a", $wg__input_button, $wg__input_button, $wg__input_button);
+		$wi__input_button && _scope($scope1_id, {});
+	}, 0, $scope0_id, "a", $wg__input_button, 1, $wg__input_button, "</div>");
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });

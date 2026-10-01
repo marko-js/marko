@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope2_id, {
 			error_message: error?.message,
 			message,
-			clicked: _serialize_if($scope2_reason, 0) && clicked
+			clicked: _write_if($scope2_reason, 0) && clicked
 		}, "__tests__/template.marko", "7:4", {
 			error_message: ["error.message", "7:11"],
 			message: "8:12",

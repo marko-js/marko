@@ -25,12 +25,12 @@ import { getScopeAccessor } from "./scope-accessor";
 import {
   getScopeIdIdentifier,
   getSection,
-  getSectionRegisterReasons,
+  getRendererReason,
   type Section,
 } from "./sections";
-import { getScopeReasonStatement } from "./serialize-guard";
 import { getContentClosureValues, getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
+import { getScopeReasonStatement } from "./write-guard";
 
 const contentProps = new WeakSet<t.Node>();
 type ContentKey = "renderBody" | "content";
@@ -413,7 +413,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
     if (isOutputHTML()) {
-      const serialized = getSectionRegisterReasons(bodySection);
+      const serialized = getRendererReason(bodySection);
       body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
 
       return callRuntime(

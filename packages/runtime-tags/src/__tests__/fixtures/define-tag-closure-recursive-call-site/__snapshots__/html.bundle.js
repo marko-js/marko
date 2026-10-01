@@ -7,15 +7,15 @@ var template_default = _template("a", (input) => {
 	const label = "node";
 	const Tree = { content: _content("a0", ({ level }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__level = _serialize_guard($scope1_reason, 0);
-		_html(`<span>${_escape(label)}${_text_resume($scope1_id, "b", level, $sg__level * 2)}</span>`);
+		const $scope1_reason = _scope_reason(), $wg__level = _write_guard($scope1_reason, 0);
+		_html(`<span>${_escape(label)}${_text_resume($scope1_id, "b", level, $wg__level * 2)}</span>`);
 		_if(() => {
 			if (level < depth) {
 				const $scope2_id = _scope_id();
-				_set_serialize_reason($sg__level << 1);
+				_set_scope_reason($wg__level << 1);
 				const $childScope = _peek_scope_id();
 				Tree.content({ level: level + 1 });
-				_scope($scope2_id, { a: _serialize_if($scope1_reason, 0) && _existing_scope($childScope) });
+				_scope($scope2_id, { a: _write_if($scope1_reason, 0) && _existing_scope($childScope) });
 				return 0;
 			}
 		}, $scope1_id, "c");

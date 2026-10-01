@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=child>${_text_resume($scope0_id, "#text/1", input.value, _serialize_guard($scope0_reason, 0))}</span>${_el_resume($scope0_id, "#span/0")}`);
+	_html(`<span class=child>${_text_resume($scope0_id, "#text/1", input.value, _write_guard($scope0_reason, 0))}</span>${_el_resume($scope0_id, "#span/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_scope($scope0_id, {}, "__tests__/child.marko", 0);
 });

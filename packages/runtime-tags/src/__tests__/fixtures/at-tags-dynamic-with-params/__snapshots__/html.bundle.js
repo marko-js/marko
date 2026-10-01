@@ -1,9 +1,9 @@
 // tags/hello/index.marko
 var hello_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.item, [1], 0, 1, $sg__input_item);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_dynamic_tag($scope0_id, "a", input.item, [1], 0, 1, $wg__input_item);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -11,13 +11,13 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = true;
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	let $item;
 	$item = attrTag({ content: _content("a0", (y) => {
-		const $scope1_reason = _scope_reason(), $sg__y = _serialize_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__y = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
-		_html(`y: ${_text_resume($scope1_id, "a", y, $sg__y * 2)}`);
-		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
+		_html(`y: ${_text_resume($scope1_id, "a", y, $wg__y * 2)}`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) });
 	const $childScope = _peek_scope_id();
 	hello_default({ item: $item });

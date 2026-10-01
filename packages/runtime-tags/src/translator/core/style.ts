@@ -23,6 +23,7 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
+import { addReasonExprs, getWriteReason } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -32,12 +33,9 @@ import {
   getOrCreateSection,
   getSection,
 } from "../util/sections";
-import {
-  addSerializeExpr,
-  getSerializeReason,
-} from "../util/serialize-reasons";
 import { addSetupWork } from "../util/setup-work";
 import { addStatement } from "../util/signals";
+import { findSlot, getSlot } from "../util/slots";
 import * as structure from "../util/structure";
 import {
   checkStyleInterpolations,
@@ -126,7 +124,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
     exprExtras = push(exprExtras, (value.extra ??= {}));
   }
 
-  addSerializeExpr(section, exprExtras, binding);
+  addReasonExprs(getSlot(binding), exprExtras);
 }
 
 function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
@@ -216,9 +214,8 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const binding = node.extra?.nodeBinding;
 
   if (binding) {
-    const section = getSection(tag);
     writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
-    writer.markNode(tag, binding, getSerializeReason(section, binding));
+    writer.markNode(tag, binding, getWriteReason(findSlot(binding)));
   }
 
   emitStyleImport(tag);

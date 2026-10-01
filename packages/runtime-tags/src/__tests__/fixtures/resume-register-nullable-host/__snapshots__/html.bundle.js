@@ -1,11 +1,11 @@
 // tags/card.marko
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div class=card>");
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $sg__input_content);
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content);
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko

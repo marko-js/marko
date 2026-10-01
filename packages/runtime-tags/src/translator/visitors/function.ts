@@ -15,17 +15,12 @@ import {
   getMarkoRoot,
   type MarkoExprRootPath,
 } from "../util/get-root";
-import { isCoreTagName } from "../util/is-core-tag";
 import isInvokedFunction from "../util/is-invoked-function";
+import { mergeReasons, type Reason } from "../util/reasons";
 import { getCanonicalExtra, type RegisteredFnExtra } from "../util/references";
 import { getSection } from "../util/sections";
-import { getRegisterReasonForExtra } from "../util/serialize-propagation";
-import {
-  mergeSerializeReasons,
-  type SerializeReason,
-} from "../util/serialize-reasons";
+import { getValueReason } from "../util/solve-reasons";
 import { createProgramState } from "../util/state";
-import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { traverseFindAwait } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
 
@@ -131,27 +126,24 @@ export default {
 
 // What each function serializes for; reasons may still grow, so this only
 // widens them and registration waits until they settle.
-export function resolveFunctionRegisterReasons() {
+export function resolveFunctionReason() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
-    const reason = resolveSerializeReason(exprExtras);
+    const reason = resolveReason(exprExtras);
     if (reason) {
-      fnExtra.registerReason = mergeSerializeReasons(
-        fnExtra.registerReason,
-        reason,
-      );
+      fnExtra.reason = mergeReasons(fnExtra.reason, reason);
     }
   }
 }
 
 export function finalizeFunctionRegistry() {
   for (const fnExtra of getReferencesByFn().keys()) {
-    if (fnExtra.registerReason) {
+    if (fnExtra.reason) {
       registerFunction(fnExtra);
     }
   }
 
   for (const [importedFn, exprExtras] of getReferencesByImportedFn()) {
-    if (resolveSerializeReason(exprExtras)) {
+    if (resolveReason(exprExtras)) {
       registerImportedFn(importedFn);
     }
   }
@@ -235,13 +227,13 @@ export function resolveRegisteredExport(
   }
 }
 
-function resolveSerializeReason(exprExtras: Set<t.NodeExtra>) {
-  let reason: undefined | SerializeReason;
+function resolveReason(exprExtras: Set<t.NodeExtra>) {
+  let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
-    reason = mergeSerializeReasons(
-      reason,
-      getRegisterReasonForExtra(getCanonicalExtra(exprExtra)),
-    );
+    const extra = getCanonicalExtra(exprExtra);
+    if (!exprExtra.consumed || extra.retained) {
+      reason = mergeReasons(reason, getValueReason(extra));
+    }
   }
 
   return reason;
@@ -358,15 +350,7 @@ function canIgnoreRegister(
     (markoRoot.isMarkoScriptlet() &&
       (!markoRoot.node.static || markoRoot.node.target === "server")) ||
     // bail within the tag name
-    (markoRoot.isMarkoTag() && markoRoot.node.name == exprRoot.node) ||
-    (isMarkoAttribute(markoRoot) &&
-      ((analyzeTagNameType(markoRoot.parentPath) === TagNameType.NativeTag &&
-        // TODO: all native tag functions should avoid registration but right now change handlers require it.
-        /^on[A-Z-]/.test(markoRoot.node.name) &&
-        !hasSpreadAttributeAfter(markoRoot)) ||
-        isCoreTagName(markoRoot.parentPath, "script") ||
-        isCoreTagName(markoRoot.parentPath, "lifecycle") ||
-        isCoreTagName(markoRoot.parentPath, "for")))
+    (markoRoot.isMarkoTag() && markoRoot.node.name == exprRoot.node)
   );
 }
 
@@ -408,15 +392,6 @@ function addBindingRefs(
       refs.add((exprRoot.node.extra ??= {}));
     }
   }
-}
-
-function hasSpreadAttributeAfter(attr: t.NodePath<t.MarkoAttribute>) {
-  const attrs = (attr.parent as t.MarkoTag).attributes;
-  for (let i = (attr.key as number) + 1; i < attrs.length; i++) {
-    if (attrs[i].type === "MarkoSpreadAttribute") return true;
-  }
-
-  return false;
 }
 
 function registerFunction(fnExtra: RegisteredFnExtra) {

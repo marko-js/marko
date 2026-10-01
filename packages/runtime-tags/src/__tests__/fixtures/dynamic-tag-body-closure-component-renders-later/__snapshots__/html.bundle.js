@@ -1,7 +1,7 @@
 // tags/card.marko
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
-	_serialize_guard($scope0_reason, 0);
+	_write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
@@ -15,19 +15,19 @@ var card_default = _template("b", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_depth = _serialize_guard($scope0_reason, 2), $si__input_type__OR__input_depth = _serialize_if($scope0_reason, 0), $sg__input_type = _serialize_guard($scope0_reason, 1), $si__input_depth = _serialize_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 2), $wi__input_type__OR__input_depth = _write_if($scope0_reason, 0), $wg__input_type = _write_guard($scope0_reason, 1), $wi__input_depth = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.type, {}, _content_resume("c0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`depth ${_text_resume($scope1_id, "a", input.depth, $sg__input_depth * 2)}`);
-		$si__input_type__OR__input_depth && _subscribe($si__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c1", $sg__input_depth);
-		$sg__input_depth || $si__input_type__OR__input_depth && _resume_branch($scope1_id);
-	}, $scope0_id, ($scope) => [{ e: input.depth }]), 0, $sg__input_type);
-	$si__input_type__OR__input_depth && _scope($scope0_id, {
-		e: _serialize_if($scope0_reason, 1) && input.depth,
-		f: $si__input_depth && $input_depth__closures
+		_html(`depth ${_text_resume($scope1_id, "a", input.depth, $wg__input_depth * 2)}`);
+		$wi__input_type__OR__input_depth && _subscribe($wi__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c1", $wg__input_depth);
+		$wg__input_depth || $wi__input_type__OR__input_depth && _resume_branch($scope1_id);
+	}, $scope0_id, ($scope) => [{ e: input.depth }]), 0, $wg__input_type);
+	$wi__input_type__OR__input_depth && _scope($scope0_id, {
+		e: _write_if($scope0_reason, 1) && input.depth,
+		f: $wi__input_depth && $input_depth__closures
 	});
 });
 

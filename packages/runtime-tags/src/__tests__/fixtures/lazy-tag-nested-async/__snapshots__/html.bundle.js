@@ -3,7 +3,7 @@ var grand_child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.value;
-	_html(`<button id=grand>grand:${_text_resume($scope0_id, "b", n, 2)}:${_text_resume($scope0_id, "c", input.value, _serialize_guard($scope0_reason, 0) * 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=grand>grand:${_text_resume($scope0_id, "b", n, 2)}:${_text_resume($scope0_id, "c", input.value, _write_guard($scope0_reason, 0) * 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_await($scope0_id, "d", resolveAfter(20, 2), (v) => {
 		_scope_id();
 		_html(`<span id=grand-await>${_escape(v)}</span>`);
@@ -23,7 +23,7 @@ var child_default = _template("a", (input) => {
 	_await($scope0_id, "c", resolveAfter(10, 1), (value) => {
 		const $scope1_id = _scope_id();
 		_html(`<span id=child-await>${_escape(value)}</span>`);
-		_set_serialize_reason(2);
+		_set_scope_reason(2);
 		const $childScope = _peek_scope_id();
 		$GrandChild_withLoadAssets({ value: count });
 		_subscribe($count__closures, _scope($scope1_id, {
@@ -47,5 +47,5 @@ var template_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_html("<div id=after>after</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

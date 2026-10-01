@@ -23,6 +23,7 @@ import {
   getOnlyChildParentTagName,
 } from "../util/is-only-child-in-parent";
 import { fromIter } from "../util/optional";
+import { addReasonExprs, getWriteReason } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
@@ -41,11 +42,6 @@ import {
   getSectionForBody,
   startSection,
 } from "../util/sections";
-import { kBranchSerializeReason } from "../util/serialize-reasons";
-import {
-  addSerializeExpr,
-  getSerializeReason,
-} from "../util/serialize-reasons";
 import {
   addValue,
   getSignal,
@@ -53,13 +49,13 @@ import {
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { findSectionSlot, getSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
 type ForType = "in" | "of" | "to" | "until";
-const kStatefulReason = Symbol("<for> stateful reason");
 
 export default {
   analyze(tag) {
@@ -149,6 +145,7 @@ export default {
     }
 
     const byAttr = getKnownAttrValues(tag.node).by;
+    if (byAttr) (byAttr.extra ??= {}).consumed = true;
 
     // Only `<for of>` accepts a string `by` (property-name shorthand); `in`/`to`/`until`
     // invoke `by` as a function, so reject a string at compile time rather than at render.
@@ -197,7 +194,7 @@ export default {
       getAllTagReferenceNodes(tag.node),
     );
 
-    addSerializeExpr(tagSection, tagExtra, kStatefulReason);
+    addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
 
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, tagExtra);
@@ -255,17 +252,11 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        const branchSerializeReason = getSerializeReason(
-          bodySection,
-          kBranchSerializeReason,
+        const branchReason = getWriteReason(
+          findSectionSlot(bodySection, SlotKind.Branch),
         );
 
-        resumeOwnerByMarkerWhenStatic(
-          tagSection,
-          bodySection,
-          nodeBinding,
-          kStatefulReason,
-        );
+        resumeOwnerByMarkerWhenStatic(bodySection, nodeBinding);
 
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
@@ -274,14 +265,14 @@ export default {
           | t.Expression
           | undefined
         )[];
-        const forTagHTMLRuntime = branchSerializeReason
+        const forTagHTMLRuntime = branchReason
           ? forTypeToBranchRuntime(forType)
           : forTypeToRuntime(forType);
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
         );
 
-        if (branchSerializeReason) {
+        if (branchReason) {
           forTagArgs.push(
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
@@ -289,8 +280,7 @@ export default {
             ...getBranchResumeArgs(
               tagSection,
               nodeBinding,
-              branchSerializeReason,
-              kStatefulReason,
+              branchReason,
               onlyChildParentTagName,
               isSingleNodeBranch(bodySection),
             ),

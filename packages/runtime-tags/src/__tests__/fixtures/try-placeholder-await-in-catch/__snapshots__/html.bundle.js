@@ -13,16 +13,16 @@ var template_default = _template("a", (input) => {
 				_html(`<p>${_escape(v)}</p>`);
 			}, 0);
 		}, void 0, (err) => {
-			const $scope4_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope4_reason, 0), $si__err_message = _serialize_if($scope4_reason, 0);
+			const $scope4_reason = _scope_reason(), $wg__err_message = _write_guard($scope4_reason, 0), $wi__err_message = _write_if($scope4_reason, 0);
 			const $scope4_id = _scope_id();
 			const $catch_content__err_message__closures = /* @__PURE__ */ new Set();
 			_await($scope4_id, "a", resolveAfter("retried", 2), (retry) => {
 				const $scope5_id = _scope_id();
-				_html(`<p>caught ${_text_resume($scope5_id, "a", err.message, $sg__err_message * 2)}, ${_escape(retry)}</p>`);
-				$si__err_message && _subscribe($catch_content__err_message__closures, _scope($scope5_id, { _: _scope_with_id($scope4_id) }), "a0", $sg__err_message);
-				$sg__err_message || $si__err_message && _resume_branch($scope5_id);
-			}, $sg__err_message);
-			$si__err_message && _scope($scope4_id, { e: $catch_content__err_message__closures });
+				_html(`<p>caught ${_text_resume($scope5_id, "a", err.message, $wg__err_message * 2)}, ${_escape(retry)}</p>`);
+				$wi__err_message && _subscribe($catch_content__err_message__closures, _scope($scope5_id, { _: _scope_with_id($scope4_id) }), "a0", $wg__err_message);
+				$wg__err_message || $wi__err_message && _resume_branch($scope5_id);
+			}, $wg__err_message);
+			$wi__err_message && _scope($scope4_id, { e: $catch_content__err_message__closures });
 		}, void 0, "a1");
 	}, () => {
 		_scope_reason();

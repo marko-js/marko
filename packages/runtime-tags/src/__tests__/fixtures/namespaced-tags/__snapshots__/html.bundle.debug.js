@@ -1,17 +1,17 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0), $si__input_value = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0), $wi__input_value = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_value__closures = new Set();
 	let Parent = "div";
 	let Child = "a";
-	_html(`<div><svg>${_html_resume($scope0_id, "#text/1", input.value, $sg__input_value)}`);
+	_html(`<div><svg>${_html_resume($scope0_id, "#text/1", input.value, $wg__input_value)}`);
 	_dynamic_tag($scope0_id, "#text/2", Child, { href: "#bar" }, _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html("Hi");
 	}, $scope0_id));
-	_html(`</svg><math>${_html_resume($scope0_id, "#text/3", input.value, $sg__input_value)}`);
+	_html(`</svg><math>${_html_resume($scope0_id, "#text/3", input.value, $wg__input_value)}`);
 	_dynamic_tag($scope0_id, "#text/4", Child, { href: "#bar" }, _content_resume("__tests__/template.marko_3*content", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
@@ -21,9 +21,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/5", Parent, {}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(_html_resume($scope1_id, "#text/0", input.value, $sg__input_value));
-		_subscribe($si__input_value && $input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:3"), "__tests__/template.marko_1_input_value#0:10/subscribe", $sg__input_value);
-		$sg__input_value || _resume_branch($scope1_id);
+		_html(_html_resume($scope1_id, "#text/0", input.value, $wg__input_value));
+		_subscribe($wi__input_value && $input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:3"), "__tests__/template.marko_1_input_value#0:10/subscribe", $wg__input_value);
+		$wg__input_value || _resume_branch($scope1_id);
 	}, $scope0_id));
 	_html(`<button class=toggle-parent>Toggle Parent</button>${_el_resume($scope0_id, "#button/6")}<button class=toggle-child>Toggle Child</button>${_el_resume($scope0_id, "#button/7")}</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_Parent#11_Child#12");
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_value: input.value,
 		Parent,
 		Child,
-		"ClosureScopes:input_value/14": $si__input_value && $input_value__closures
+		"ClosureScopes:input_value/14": $wi__input_value && $input_value__closures
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		Parent: "1:5",

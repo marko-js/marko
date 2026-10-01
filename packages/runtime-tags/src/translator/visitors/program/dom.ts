@@ -15,8 +15,9 @@ import {
   forEachSectionReverse,
   getContentClosures,
   getSectionForBody,
-  getSectionRegisterReasons,
+  getRendererReason,
   isDynamicClosure,
+  type Section,
   setBranchRendererArgs,
 } from "../../util/sections";
 import {
@@ -27,6 +28,7 @@ import {
   getSignalFn,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
+  type Signal,
   signalHasStatements,
   writeRegisteredFns,
   writeSignals,
@@ -71,10 +73,10 @@ export default {
       forEachSectionReverse(getSectionMeta);
 
       const section = getSectionForBody(program)!;
-      const domExports = program.node.extra.domExports!;
-      const templateIdentifier = t.identifier(domExports.template);
-      const walksIdentifier = t.identifier(domExports.walks);
-      const setupIdentifier = t.identifier(domExports.setup);
+      const exportNames = program.node.extra.exportNames!;
+      const templateIdentifier = t.identifier(exportNames.template);
+      const walksIdentifier = t.identifier(exportNames.walks);
+      const setupIdentifier = t.identifier(exportNames.setup);
       const inputBinding = program.node.params![0].extra?.binding;
       const programInputSignal =
         inputBinding && !inputBinding.pruned
@@ -102,6 +104,10 @@ export default {
           const walks = trimTrailingExits(getSectionMeta(childSection).walks);
           const written = writeSignals(childSection);
           const setup = getSetup(childSection);
+          // A direct call skips the body's setup when analysis found none.
+          if (childSection.callSections) {
+            assertSetupWorkFound(program, childSection, written);
+          }
           const setupIdentifier =
             setup && written.has(setup) ? setup.identifier : undefined;
 
@@ -114,7 +120,7 @@ export default {
                 tagParamsIdentifier,
               ]);
             } else {
-              const registerReason = getSectionRegisterReasons(childSection);
+              const registerReason = getRendererReason(childSection);
               const registerId = getResumeRegisterId(childSection, "content");
               const objProps: t.ObjectExpression["properties"] = [];
               forEach(childSection.localClosures, (closure) => {
@@ -212,13 +218,8 @@ export default {
 
       const setup = getSetup(section);
       const setupWritten = !!setup && written.has(setup);
-      if (domExports.setupEmpty && setupWritten) {
-        // Parents skip calling this setup export because analyze proved it a noop;
-        // a non-noop setup here means that proof was wrong, so fail loudly.
-        throw program.buildCodeFrameError(
-          "Marko internal error: analysis marked this template's setup export as empty but translation produced statements for it. Please open an issue with a reproduction.",
-        );
-      }
+      // Parents skip calling this setup export when analysis found no setup work.
+      assertSetupWorkFound(program, section, written);
 
       if (!setupWritten) {
         program.node.body.unshift(
@@ -244,7 +245,7 @@ export default {
             ...replaceNullishAndEmptyFunctionsWith0([
               templateIdentifier,
               walksIdentifier,
-              domExports.setupEmpty ? undefined : setupIdentifier,
+              section.hasSetupWork ? setupIdentifier : undefined,
               programInputSignal?.identifier,
             ]),
           ),
@@ -253,3 +254,16 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+function assertSetupWorkFound(
+  program: t.NodePath<t.Program>,
+  section: Section,
+  written: Set<Signal>,
+) {
+  const setup = getSetup(section);
+  if (!section.hasSetupWork && setup && written.has(setup)) {
+    throw program.buildCodeFrameError(
+      "Marko internal error: analysis found no setup work for a section whose translation produced setup statements. Please open an issue with a reproduction.",
+    );
+  }
+}

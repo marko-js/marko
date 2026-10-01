@@ -3,10 +3,10 @@ function shout(message) {
 	return message.toUpperCase() + "!";
 }
 var handlers_default = _template("__tests__/tags/handlers.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_message = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_message = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.message, $sg__input_message)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/handlers.marko", 0);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.message, $wg__input_message)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/handlers.marko", 0);
 });
 
 // template.marko

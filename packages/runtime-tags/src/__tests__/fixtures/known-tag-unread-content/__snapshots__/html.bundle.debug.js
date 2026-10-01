@@ -7,10 +7,10 @@ var static_child_default = _template("__tests__/tags/static-child.marko", (input
 
 // tags/label-child.marko
 var label_child_default = _template("__tests__/tags/label-child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item_label = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_item_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.item.label, $sg__input_item_label)}</span>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/label-child.marko", 0);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.item.label, $wg__input_item_label)}</span>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/label-child.marko", 0);
 });
 
 // template.marko
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let m = 1;
 	static_child_default({});
 	label_child_default({ item: attrTag({ label: "item" }) });
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	let $item;
 	if (n) {
 		$item = attrTag({ label: "if" });

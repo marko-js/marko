@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		let n = 0;
-		_html(`<button>${_text_resume($scope2_id, "b", err.message, _serialize_guard($scope2_reason, 0))} ${_text_resume($scope2_id, "c", n, 2)}</button>${_el_resume($scope2_id, "a")}`);
+		_html(`<button>${_text_resume($scope2_id, "b", err.message, _write_guard($scope2_reason, 0))} ${_text_resume($scope2_id, "c", n, 2)}</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a0");
 		_scope($scope2_id, { g: n });
 	}, void 0, "a1");

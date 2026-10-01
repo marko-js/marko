@@ -18,6 +18,7 @@ import {
   analyzeNodeBinding,
   getOnlyChildParentTagName,
 } from "../util/is-only-child-in-parent";
+import { addReasonExprs, getWriteReason } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -27,20 +28,16 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
-import {
-  addSerializeExpr,
-  getSerializeReason,
-} from "../util/serialize-reasons";
 import { addSetupWork } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
+import { findSlot, getSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getTagFacts } from "../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
+import { getWriteGuard } from "../util/write-guard";
 import * as writer from "../util/writer";
 
-const kStatefulReason = Symbol("<show> stateful reason");
 const kStartBinding = Symbol("<show> range start binding");
 const kEndBinding = Symbol("<show> range end binding");
 const kStaticDisplay = Symbol("<show> static display");
@@ -102,7 +99,6 @@ export default {
 
       if (tagExtra[kStaticDisplay] === undefined) {
         mergeReferences(tagSection, tag.node, [display]);
-        addSerializeExpr(tagSection, tagExtra, kStatefulReason);
       } else {
         // A statically hidden `<show>` still writes its display in setup.
         addSetupWork(tagSection);
@@ -136,8 +132,10 @@ export default {
 
       const nodeBinding = tagExtra.nodeBinding!;
 
+      // The node binding settles here, where a range gets its markers.
       if (tagExtra[kStaticDisplay] === undefined) {
-        addSerializeExpr(tagSection, tagExtra, nodeBinding);
+        addReasonExprs(getSlot(nodeBinding), tagExtra);
+        addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
       }
     },
   },
@@ -192,31 +190,26 @@ export default {
         const nodeBinding = tagExtra.nodeBinding!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const singleNode = tagExtra[kSingleNodeBody];
-        const statefulReason = getSerializeReason(tagSection, kStatefulReason);
-        const markerSerializeReason = getSerializeReason(
-          tagSection,
-          nodeBinding,
-        );
+        const markerReason = getWriteReason(findSlot(nodeBinding));
         const endArgs = getBranchEndArgs(
           tagSection,
           nodeBinding,
-          statefulReason,
           onlyChildParentTagName,
           singleNode,
         );
 
         let startMark: t.Expression | undefined;
         if (!singleNode) {
-          startMark = getSerializeGuard(
-            tagSection,
-            markerSerializeReason,
-            false,
-          );
-          if (onlyChildParentTagName && markerSerializeReason) {
+          startMark = getWriteGuard(tagSection, markerReason, false);
+          if (onlyChildParentTagName && markerReason) {
             startMark = t.logicalExpression(
               "&&",
               startMark!,
-              getSerializeGuard(tagSection, statefulReason, false)!,
+              getWriteGuard(
+                tagSection,
+                getWriteReason(findSlot(nodeBinding, SlotKind.BranchExpr)),
+                false,
+              )!,
             );
           }
         }

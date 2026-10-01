@@ -1,18 +1,18 @@
 // tags/custom-tag/index.marko
 var custom_tag_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_x_value = _serialize_guard($scope0_reason, 1), $sg__input_y_value = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_x_value = _write_guard($scope0_reason, 1), $wg__input_y_value = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { x, y } = input;
-	_html(`<div>x: ${_text_resume($scope0_id, "a", x?.value, $sg__input_x_value * 2)} y: ${_text_resume($scope0_id, "b", y?.value, $sg__input_y_value * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_html(`<div>x: ${_text_resume($scope0_id, "a", x?.value, $wg__input_x_value * 2)} y: ${_text_resume($scope0_id, "b", y?.value, $wg__input_y_value * 2)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_cond = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_cond = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { cond } = input;
-	_set_serialize_reason($sg__input_cond << 1 | $sg__input_cond << 3 | $sg__input_cond << 5);
+	_set_scope_reason($wg__input_cond << 1 | $wg__input_cond << 3 | $wg__input_cond << 5);
 	let $x;
 	let $y;
 	if (cond) {
@@ -24,5 +24,5 @@ var template_default = _template("a", (input) => {
 		x: $x,
 		y: $y
 	});
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

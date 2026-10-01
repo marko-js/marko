@@ -3,10 +3,10 @@ function shout(message) {
 	return message.toUpperCase() + "!";
 }
 var greeting_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_message = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_message = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.message, $sg__input_message)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_html(`<div>${_text_resume($scope0_id, "a", input.message, $wg__input_message)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/panel.marko
@@ -17,7 +17,7 @@ var panel_default = _template("c", (input) => {
 	let format = shout;
 	let message = "panel";
 	_html(`<button>panel</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	greeting_default({ message });
 	_script($scope0_id, "c0");
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	let format = shout;
 	let message = "page";
 	_html(`<button>page</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	greeting_default({ message });
 	panel_default({});

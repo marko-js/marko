@@ -82,7 +82,9 @@ export default {
         seenValueAttr = true;
         // A function without statements, such as a body of only comments, runs nothing.
         if (!isEmptyFunction(attr.value)) {
-          (attr.value.extra ??= {}).isEffect = true;
+          const valueExtra = (attr.value.extra ??= {});
+          valueExtra.isEffect = true;
+          valueExtra.consumed = true;
           addSetupExpr(getOrCreateSection(tag), attr.value);
           getProgram().node.extra.isInteractive = true;
         }

@@ -7,10 +7,10 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
-import { BindingType } from "../util/bindings";
+import { BindingType, getDebugScopeAccess } from "../util/bindings";
 import evaluate from "../util/evaluate";
-import { getAccessorPrefix } from "../util/get-accessor-enums";
-import { isOutputDOM } from "../util/marko-config";
+import { isOptimize, isOutputDOM } from "../util/marko-config";
+import { addReason } from "../util/reasons";
 import {
   mergeReferences,
   onFinalizeReferences,
@@ -20,14 +20,15 @@ import {
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { addSerializeReason } from "../util/serialize-reasons";
 import {
   addValue,
   initValue,
-  setBindingSerializedValue,
+  setSectionDebugVar,
+  setScopeProperty,
   signalHasStatements,
 } from "../util/signals";
-import { FORCED } from "../util/sources";
+import { findSlot, getSlot, SlotKind } from "../util/slots";
+import { ALWAYS } from "../util/sources";
 import translateVar from "../util/translate-var";
 
 declare module "@marko/compiler/dist/types" {
@@ -124,19 +125,14 @@ export default {
     setBindingDownstream(binding, tagExtra);
 
     if (valueChangeAttr) {
-      // Reserves the TagVariableChange accessor at `id + 1`.
+      const changeSlot = getSlot(binding, SlotKind.ChangeHandler);
       binding.reserveSize = 1;
-      tagExtra.forceRegister = true;
+      tagExtra.retained = true;
       // The serialized change handler is only invoked by an assignment to the
       // tag variable, so it does not resume when nothing assigns.
       onFinalizeReferences(() => {
         if (binding.assignments) {
-          addSerializeReason(
-            tagSection,
-            FORCED,
-            binding,
-            getAccessorPrefix().TagVariableChange,
-          );
+          addReason(changeSlot, ALWAYS);
         }
       });
     } else {
@@ -188,16 +184,25 @@ export default {
         translateVar(tag, valueAttr.value, "let");
 
         if (valueChangeAttr) {
-          setBindingSerializedValue(
-            section,
-            binding,
+          const accessor = setScopeProperty(
+            findSlot(binding, SlotKind.ChangeHandler),
             t.logicalExpression(
               "||",
               valueChangeAttr.value,
               t.unaryExpression("void", t.numericLiteral(0)),
             ),
-            getAccessorPrefix().TagVariableChange,
           );
+          // Named after the author's binding; other slots are described
+          // generically by the serializer instead.
+          if (accessor && !isOptimize()) {
+            const { root, access } = getDebugScopeAccess(binding);
+            setSectionDebugVar(
+              section,
+              accessor,
+              `${root.name + access}Change`,
+              root.loc,
+            );
+          }
         }
       }
 

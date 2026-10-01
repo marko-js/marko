@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let size = 1;
 	const Child = { content: _content("a1", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__input_item = _write_guard($scope1_reason, 0);
 		_for_of(input.item, (item) => {
 			const $scope2_id = _scope_id();
 			_html("<div");
@@ -13,10 +13,10 @@ var template_default = _template("a", (input) => {
 			_html(`</div>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
 			_scope($scope2_id, {});
-		}, 0, $scope1_id, "a", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
-		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
+		}, 0, $scope1_id, "a", $wg__input_item, $wg__input_item, $wg__input_item, 0, 1);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	let $item;
 	forUntil(size, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("a2", () => {

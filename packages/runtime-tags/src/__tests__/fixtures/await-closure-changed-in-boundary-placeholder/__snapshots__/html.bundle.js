@@ -1,20 +1,20 @@
 // tags/boundary.marko
 var boundary_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0), $si__input_content = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $sg__input_content);
-		$si__input_content && _subscribe($input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $sg__input_content);
-		$sg__input_content || $si__input_content && _resume_branch($scope1_id);
+		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $wg__input_content);
+		$wi__input_content && _subscribe($input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $wg__input_content);
+		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading...");
 	}, void 0, "b1");
-	$si__input_content && _scope($scope0_id, { e: $input_content__closures });
+	$wi__input_content && _scope($scope0_id, { e: $input_content__closures });
 });
 
 // template.marko

@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_scope_reason();
 		_html("<stop offset=0%></stop>");
-	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
+	}, $scope0_id), 0, _write_guard($scope0_reason, 0));
 	_html(`</svg><div>${_text_resume($scope0_id, "b", n)}</div>`);
-	_scope($scope0_id, { g: _serialize_if($scope0_reason, 0) && attrs });
+	_scope($scope0_id, { g: _write_if($scope0_reason, 0) && attrs });
 }, 1);

@@ -13,9 +13,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(_el_resume($scope0_id, "#select/0"));
 	_script($scope0_id, "__tests__/template.marko_0_input_value#3_input_valueChange#4_input_attrs#5");
 	_scope($scope0_id, {
-		input_value: _serialize_if($scope0_reason, 2) && input.value,
-		input_valueChange: _serialize_if($scope0_reason, 1) && input.valueChange,
-		input_attrs: _serialize_if($scope0_reason, 0) && input.attrs
+		input_value: _write_if($scope0_reason, 2) && input.value,
+		input_valueChange: _write_if($scope0_reason, 1) && input.valueChange,
+		input_attrs: _write_if($scope0_reason, 0) && input.attrs
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		input_valueChange: ["input.valueChange"],

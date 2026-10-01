@@ -1,19 +1,19 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope0_reason, 2), $sg__input_show = _serialize_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "#text/0", input.item, $sg__input_item)}</span>`);
-			_script($scope1_id, "__tests__/tags/child.marko_1_input#0:2", $sg__input_item);
+			_html(`<span>${_text_resume($scope1_id, "#text/0", input.item, $wg__input_item)}</span>`);
+			_script($scope1_id, "__tests__/tags/child.marko_1_input#0:2", $wg__input_item);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, 0, 1);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show, $wg__input_show, 0, 1);
 	_scope($scope0_id, {
 		input,
-		input_item: _serialize_if($scope0_reason, 1) && input.item
+		input_item: _write_if($scope0_reason, 1) && input.item
 	}, "__tests__/tags/child.marko", 0, {
 		input: 0,
 		input_item: ["input.item"]
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		_set_serialize_reason(42);
+		_set_scope_reason(42);
 		const $childScope = _peek_scope_id();
 		child_default({
 			item,

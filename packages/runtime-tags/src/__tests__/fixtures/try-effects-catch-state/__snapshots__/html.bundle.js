@@ -13,10 +13,10 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a1");
 		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2");
 	}, void 0, (err) => {
-		const $scope2_reason = _scope_reason(), $sg__err = _serialize_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason(), $wg__err = _write_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(_text_resume($scope2_id, "a", err, $sg__err));
-		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
+		_html(_text_resume($scope2_id, "a", err, $wg__err));
+		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, void 0, "a3");
 	_scope($scope0_id, {
 		c: clickCount,

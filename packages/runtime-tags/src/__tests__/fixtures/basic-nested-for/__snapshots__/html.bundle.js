@@ -1,10 +1,10 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { name } = input;
-	_html(`<div>${_text_resume($scope0_id, "a", name, $sg__input_name)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_html(`<div>${_text_resume($scope0_id, "a", name, $wg__input_name)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(items, (inner) => {
 			const $scope2_id = _scope_id();
-			_set_serialize_reason(2);
+			_set_scope_reason(2);
 			const $childScope = _peek_scope_id();
 			child_default({ name: `${outer}.${inner}` });
 			_scope($scope2_id, { a: _existing_scope($childScope) });

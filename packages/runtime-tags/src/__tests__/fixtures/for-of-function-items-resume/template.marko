@@ -1,0 +1,5 @@
+<let/last="none"/>
+<for|fn| of=[() => "a", () => "b"]>
+  <button onClick() { last = fn() }>x</button>
+</for>
+<span>${last}</span>

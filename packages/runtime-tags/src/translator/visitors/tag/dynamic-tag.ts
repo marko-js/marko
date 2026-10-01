@@ -9,6 +9,7 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
+import { isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
 import {
@@ -31,6 +32,7 @@ import {
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
+import { addReasonExprs, addReason, getWriteReason } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
   mergeReferences,
@@ -47,6 +49,7 @@ import {
 import {
   getScopeAccessor,
   getScopeAccessorLiteral,
+  getScopeOffsetAccessorLiteral,
 } from "../../util/scope-accessor";
 import {
   createScopeReadExpression,
@@ -63,12 +66,6 @@ import {
   startSection,
   StructureKind,
 } from "../../util/sections";
-import { getSerializeGuard } from "../../util/serialize-guard";
-import {
-  addSerializeExpr,
-  addSerializeReason,
-  getSerializeReason,
-} from "../../util/serialize-reasons";
 import { setTagDownstream } from "../../util/set-tag-sections-downstream";
 import {
   addStatement,
@@ -79,7 +76,8 @@ import {
   type Signal,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import { FORCED } from "../../util/sources";
+import { findSlot, getSlot } from "../../util/slots";
+import { ALWAYS } from "../../util/sources";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -91,6 +89,7 @@ import {
 } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
+import { getWriteGuard } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath, tagNotFoundError } from "./custom-tag";
@@ -172,33 +171,32 @@ export default {
       ]);
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
-      if (inputNodes.length) tagExtra.forceRegister = true;
+      if (inputNodes.length) tagExtra.retained = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const usesVar = hasVar && isTagVarUsed(tag);
+      let isInteractive = usesVar;
+      for (const attr of node.attributes) {
+        if (t.isMarkoSpreadAttribute(attr)) {
+          isInteractive = true;
+        } else if (isEventOrChangeHandler(attr.name)) {
+          isInteractive = true;
+          // It may resolve to an element, which retains a change handler.
+          if (!isEventHandler(attr.name)) {
+            (attr.value.extra ??= {}).retained = true;
+          }
+        }
+      }
+      if (isInteractive) getProgram().node.extra.isInteractive = true;
       const nodeBinding = (tagExtra.nodeBinding = createBinding(
         "#text",
         BindingType.dom,
         tagSection,
       ));
 
-      if (
-        usesVar ||
-        tag.node.attributes.some(
-          (attr) =>
-            t.isMarkoSpreadAttribute(attr) || isEventOrChangeHandler(attr.name),
-        )
-      ) {
-        getProgram().node.extra.isInteractive = true;
-      }
-
       if (hasVar) {
-        trackVarReferences(tag, BindingType.derived);
-        tag.node.var!.extra!.binding!.scopeOffset = createBinding(
-          "#scopeOffset",
-          BindingType.dom,
-          tagSection,
-        );
+        trackVarReferences(tag, BindingType.derived)!.returnedBy = nodeBinding;
+        nodeBinding.reserveSize = 1;
       }
 
       const bodySection = startSection(tagBody);
@@ -219,8 +217,8 @@ export default {
         }
       }
       trackParamsReferences(tagBody, BindingType.param);
-      if (usesVar) addSerializeReason(tagSection, FORCED, nodeBinding);
-      addSerializeExpr(tagSection, tagExtra, nodeBinding);
+      if (usesVar) addReason(getSlot(nodeBinding), ALWAYS);
+      addReasonExprs(getSlot(nodeBinding), tagExtra);
 
       if (
         !hasVar &&
@@ -327,8 +325,7 @@ export default {
       const tagExtra = node.extra!;
       const nodeBinding = tagExtra.nodeBinding!;
       const isClassAPI = tagExtra.featureType === "class";
-      const tagsSerializeReason = getSerializeReason(tagSection, nodeBinding);
-      const serializeReason = tagsSerializeReason;
+      const markerReason = getWriteReason(findSlot(nodeBinding));
       let tagExpression = node.name;
 
       if (isClassAPI) {
@@ -342,7 +339,7 @@ export default {
           !isOutputHTML() &&
           isOptimize() &&
           classTagTemplate &&
-          !tagsSerializeReason &&
+          !markerReason &&
           !classHydration
         ) {
           tag.remove();
@@ -366,7 +363,7 @@ export default {
           // The `"preserve"` mode below is matched by beginComponent
           // (`___forceBoundary === "preserve"`) to emit a split component.
           const preserveBoundary =
-            !tagsSerializeReason &&
+            !markerReason &&
             (classHydration === ClassHydration.Descendant ||
               (classHydration === ClassHydration.Self &&
                 !!classFile?.metadata.marko.hasComponentBrowser));
@@ -381,9 +378,7 @@ export default {
                 ],
               )
             : undefined;
-          if (
-            isOutputHTML() ? serializeReason || classHydration : serializeReason
-          ) {
+          if (isOutputHTML() ? markerReason || classHydration : markerReason) {
             const pushed = pushCompatRegistration(
               classId,
               registration
@@ -465,11 +460,7 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-        const serializeArg = getSerializeGuard(
-          tagSection,
-          serializeReason,
-          true,
-        );
+        const markerGuard = getWriteGuard(tagSection, markerReason, true);
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -481,7 +472,7 @@ export default {
               // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
-              serializeArg,
+              markerGuard,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -489,9 +480,9 @@ export default {
               getScopeAccessorLiteral(nodeBinding),
               tagExpression,
               args[0],
-              args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
-              serializeArg ? t.numericLiteral(0) : undefined,
-              serializeArg,
+              args[1] || (markerGuard ? t.numericLiteral(0) : undefined),
+              markerGuard ? t.numericLiteral(0) : undefined,
+              markerGuard,
             );
 
         if (node.var && isTagVarResumed(tag)) {
@@ -513,7 +504,7 @@ export default {
               callRuntime(
                 "_var",
                 getScopeIdIdentifier(tagSection),
-                getScopeAccessorLiteral(node.var.extra!.binding!.scopeOffset!),
+                getScopeOffsetAccessorLiteral(nodeBinding),
                 dynamicScopeIdentifier,
                 t.stringLiteral(
                   getResumeRegisterId(
@@ -702,7 +693,7 @@ function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
   let inputBindings: Opt<Binding>;
   for (const childExtra of tagExtra.tagNameTemplates || []) {
     if (childExtra.featureType === "class") return;
-    const inputBinding = childExtra.domExports?.params?.props?.[0]?.binding;
+    const inputBinding = childExtra.paramsTree?.props?.[0]?.binding;
     if (inputBinding) inputBindings = concat(inputBindings, inputBinding);
   }
   return inputBindings;

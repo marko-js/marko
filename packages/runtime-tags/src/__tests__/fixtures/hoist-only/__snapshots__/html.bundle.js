@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_value = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_value = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $hoist1_getter = _hoist($scope0_id, "a2");
 	const $input_value__closures = /* @__PURE__ */ new Set();
@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 					const z = _hoist($scope2_id, "a3");
 					const hoist3 = _resume(() => input.value, "a1", $scope2_id);
 					_script($scope2_id, "a4", 0);
-					_subscribe($si__input_value && $input_value__closures, _scope($scope2_id, {
+					_subscribe($wi__input_value && $input_value__closures, _scope($scope2_id, {
 						a: z,
 						c: hoist3,
 						_: _scope_with_id($scope1_id)
@@ -31,6 +31,6 @@ var template_default = _template("a", (input) => {
 		d: input.value,
 		e: x,
 		f: hoist1,
-		g: $si__input_value && $input_value__closures
+		g: $wi__input_value && $input_value__closures
 	});
 }, 1);

@@ -1,7 +1,7 @@
 // tags/card.marko
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
-	_serialize_guard($scope0_reason, 0);
+	_write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
@@ -15,7 +15,7 @@ var card_default = _template("b", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_type = _serialize_guard($scope0_reason, 1), $sg__input_text = _serialize_guard($scope0_reason, 2), $si__input_type__OR__input_text = _serialize_if($scope0_reason, 0), $si__input_text = _serialize_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $wg__input_text = _write_guard($scope0_reason, 2), $wi__input_type__OR__input_text = _write_if($scope0_reason, 0), $wi__input_text = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = /* @__PURE__ */ new Set();
 	let $item;
@@ -23,15 +23,15 @@ var heading_default = _template("c", (input) => {
 		$item = attrTags($item, { content: _content_resume("c1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`item ${_text_resume($scope1_id, "a", i, $sg__input_type * 2)} ${_text_resume($scope1_id, "b", input.text, $sg__input_text * 2)}`);
-			$si__input_type__OR__input_text && _subscribe($si__input_text && $input_text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c0", $sg__input_type || $sg__input_text);
-			$sg__input_type || $sg__input_text || $si__input_type__OR__input_text && _resume_branch($scope1_id);
+			_html(`item ${_text_resume($scope1_id, "a", i, $wg__input_type * 2)} ${_text_resume($scope1_id, "b", input.text, $wg__input_text * 2)}`);
+			$wi__input_type__OR__input_text && _subscribe($wi__input_text && $input_text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c0", $wg__input_type || $wg__input_text);
+			$wg__input_type || $wg__input_text || $wi__input_type__OR__input_text && _resume_branch($scope1_id);
 		}, $scope0_id, ($scope) => [{ 2: i }, { e: input.text }]) });
 	});
-	_dynamic_tag($scope0_id, "a", input.type, { item: $item }, 0, 0, $sg__input_type);
-	$si__input_type__OR__input_text && _scope($scope0_id, {
-		e: _serialize_if($scope0_reason, 1) && input.text,
-		f: $si__input_text && $input_text__closures
+	_dynamic_tag($scope0_id, "a", input.type, { item: $item }, 0, 0, $wg__input_type);
+	$wi__input_type__OR__input_text && _scope($scope0_id, {
+		e: _write_if($scope0_reason, 1) && input.text,
+		f: $wi__input_text && $input_text__closures
 	});
 });
 

@@ -5,8 +5,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange)}>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_scope($scope0_id, {
-		input_value: _serialize_if($scope0_reason, 1) && input.value,
-		input_valueChange: _serialize_if($scope0_reason, 0) && input.valueChange
+		input_value: _write_if($scope0_reason, 1) && input.value,
+		input_valueChange: _write_if($scope0_reason, 0) && input.valueChange
 	}, "__tests__/tags/child.marko", 0, {
 		input_value: ["input.value"],
 		input_valueChange: ["input.valueChange"],

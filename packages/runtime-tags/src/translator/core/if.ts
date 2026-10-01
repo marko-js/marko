@@ -21,6 +21,12 @@ import {
   analyzeNodeBinding,
   getOnlyChildParentTagName,
 } from "../util/is-only-child-in-parent";
+import {
+  addReasonExprs,
+  getWriteReason,
+  type Reasons,
+  sourcesUtil,
+} from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -33,13 +39,6 @@ import {
   type Section,
   startSection,
 } from "../util/sections";
-import { kBranchSerializeReason } from "../util/serialize-reasons";
-import {
-  addSerializeExpr,
-  getSerializeReason,
-  type SerializeReasons,
-  sourcesUtil,
-} from "../util/serialize-reasons";
 import {
   addValue,
   getSignal,
@@ -47,13 +46,13 @@ import {
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { findSectionSlot, getSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
-const kStatefulReason = Symbol("<if> stateful reason");
 const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
   [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][]
@@ -97,7 +96,7 @@ export const IfTag = {
       }
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
-      addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
+      addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), ifTagExtra);
     }
   },
   translate: translateByTarget({
@@ -115,12 +114,9 @@ export const IfTag = {
         if (bodySection) {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
-          const ifTagSection = getSection(ifTag);
           resumeOwnerByMarkerWhenStatic(
-            ifTagSection,
             bodySection,
             ifTag.node.extra!.nodeBinding!,
-            kStatefulReason,
           );
           writer.flushInto(tag);
           writeHTMLResumeStatements(tagBody);
@@ -136,22 +132,18 @@ export const IfTag = {
             branches.length,
           );
           const nextTag = tag.getNextSibling();
-          let branchSerializeReasons: SerializeReasons | undefined;
+          let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
 
           for (let i = branches.length; i--;) {
             const [branchTag, branchBodySection] = branches[i];
             const bodyStatements = branchTag.node.body.body;
             if (branchBodySection) {
-              const branchSerializeReason = getSerializeReason(
-                branchBodySection,
-                kBranchSerializeReason,
+              const branchReason = getWriteReason(
+                findSectionSlot(branchBodySection, SlotKind.Branch),
               );
-              if (branchSerializeReason) {
-                branchSerializeReasons = sourcesUtil.add(
-                  branchSerializeReasons,
-                  branchSerializeReason,
-                );
+              if (branchReason) {
+                branchReasons = sourcesUtil.add(branchReasons, branchReason);
                 bodyStatements.push(
                   t.returnStatement(t.numericLiteral(i)) as any,
                 );
@@ -174,7 +166,7 @@ export const IfTag = {
             branchTag.remove();
           }
 
-          if (branchSerializeReasons) {
+          if (branchReasons) {
             const cbNode = t.arrowFunctionExpression(
               [],
               t.blockStatement([statement!]),
@@ -189,8 +181,7 @@ export const IfTag = {
                 ...getBranchResumeArgs(
                   ifTagSection,
                   nodeBinding,
-                  branchSerializeReasons,
-                  kStatefulReason,
+                  branchReasons,
                   onlyChildParentTagName,
                   branches.every(([, branchBody]) =>
                     isSingleNodeBranch(branchBody),

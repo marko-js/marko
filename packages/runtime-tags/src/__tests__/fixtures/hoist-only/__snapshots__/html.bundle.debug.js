@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_value = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_value = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $hoist1_getter = _hoist($scope0_id, "__tests__/template.marko_0_hoist1#5/hoist");
 	const $input_value__closures = new Set();
@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const z = $if_content2__hoist3_getter;
 					const hoist3 = _resume(() => input.value, "__tests__/template.marko_2/hoist2", $scope2_id);
 					_script($scope2_id, "__tests__/template.marko_2_x#0:4_z#0", 0);
-					_subscribe($si__input_value && $input_value__closures, _scope($scope2_id, {
+					_subscribe($wi__input_value && $input_value__closures, _scope($scope2_id, {
 						z,
 						hoist3,
 						_: _scope_with_id($scope1_id)
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_value: input.value,
 		x,
 		hoist1,
-		"ClosureScopes:input_value/6": $si__input_value && $input_value__closures
+		"ClosureScopes:input_value/6": $wi__input_value && $input_value__closures
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		x: "1:8",

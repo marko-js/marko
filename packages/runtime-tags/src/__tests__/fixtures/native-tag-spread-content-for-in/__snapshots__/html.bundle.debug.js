@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input = _serialize_if($scope0_reason, 0), $sg__input = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input = _write_if($scope0_reason, 0), $wg__input = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_in(input, (name, tag) => {
 		const $scope1_id = _scope_id();
@@ -14,13 +14,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				}, "#div/0", $scope2_id, "div");
 				_html(`</div>${_el_resume($scope2_id, "#div/0")}`);
 				_script($scope2_id, "__tests__/tags/child.marko_2_tag#1:3");
-				_scope($scope2_id, { _: $si__input && _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "2:4", { "EventAttributes:#div/0": ["...tag", "2:49"] });
+				_scope($scope2_id, { _: $wi__input && _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "2:4", { "EventAttributes:#div/0": ["...tag", "2:49"] });
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $sg__input, 0, 0, 0, 1);
-		$si__input && _scope($scope1_id, {}, "__tests__/tags/child.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $sg__input, $sg__input, $sg__input);
-	$si__input && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+		}, $scope1_id, "#text/0", $wg__input, 0, 0, 0, 1);
+		$wi__input && _scope($scope1_id, {}, "__tests__/tags/child.marko", "1:2");
+	}, 0, $scope0_id, "#text/0", $wg__input, $wg__input, $wg__input);
+	$wi__input && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // template.marko
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	child_default({
 		a: attrTag({

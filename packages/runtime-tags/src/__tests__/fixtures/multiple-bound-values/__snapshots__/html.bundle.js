@@ -7,10 +7,10 @@ var _2counters_default = _template("b", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "b", count1)}</button>${_el_resume($scope0_id, "a")}<button>${_text_resume($scope0_id, "d", count2)}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
-		g: _serialize_if($scope0_reason, 1) && input.count1,
-		h: _serialize_if($scope0_reason, 0) && input.count1Change,
-		j: _serialize_if($scope0_reason, 3) && input.count2,
-		k: _serialize_if($scope0_reason, 2) && input.count2Change,
+		g: _write_if($scope0_reason, 1) && input.count1,
+		h: _write_if($scope0_reason, 0) && input.count1Change,
+		j: _write_if($scope0_reason, 3) && input.count2,
+		k: _write_if($scope0_reason, 2) && input.count2Change,
 		m: count1,
 		o: count2,
 		n: input.count1Change || void 0,
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count1 = 0;
 	let count2 = 0;
-	_set_serialize_reason(34);
+	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	_2counters_default({
 		count1,

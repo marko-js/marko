@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_option = _serialize_guard($scope0_reason, 1), $sg__input_class__OR__input_option = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_option = _write_guard($scope0_reason, 1), $wg__input_class__OR__input_option = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<select${_attr_class(input.class)}>`);
 	_for_of(input.option, (option) => {
@@ -10,22 +10,22 @@ var child_default = _template("b", (input) => {
 		_html(`</option>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $sg__input_option, $sg__input_class__OR__input_option, $sg__input_option, "</select>", 1);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	}, 0, $scope0_id, "a", $wg__input_option, $wg__input_class__OR__input_option, $wg__input_option, "</select>", 1);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/wrap.marko
 var wrap_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_class__OR__rest_option = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_class__OR__rest_option = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { class: _class, ...rest } = input;
-	_set_serialize_reason($sg__input_class__OR__rest_option << 1 | _serialize_guard($scope0_reason, 1) << 3);
+	_set_scope_reason($wg__input_class__OR__rest_option << 1 | _write_guard($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id();
 	child_default({
 		class: _class,
 		...rest
 	});
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 });
 
 // template.marko

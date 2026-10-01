@@ -23,10 +23,10 @@ var template_default = _template("a", (input) => {
 	custom_tag_default({
 		name: "hello",
 		content: _content_resume("a0", ({ count, name }) => {
-			const $scope1_reason = _scope_reason(), $sg__count = _serialize_guard($scope1_reason, 1), $sg__name = _serialize_guard($scope1_reason, 2);
+			const $scope1_reason = _scope_reason(), $wg__count = _write_guard($scope1_reason, 1), $wg__name = _write_guard($scope1_reason, 2);
 			const $scope1_id = _scope_id();
-			_html(`<div>Count (${_text_resume($scope1_id, "a", name, $sg__name * 2)}): ${_text_resume($scope1_id, "b", count, $sg__count * 2)}</div>`);
-			_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
+			_html(`<div>Count (${_text_resume($scope1_id, "a", name, $wg__name * 2)}): ${_text_resume($scope1_id, "b", count, $wg__count * 2)}</div>`);
+			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 		}, $scope0_id)
 	});
 }, 1);

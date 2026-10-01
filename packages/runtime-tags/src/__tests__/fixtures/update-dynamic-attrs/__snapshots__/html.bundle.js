@@ -15,5 +15,5 @@ var template_default = _template("a", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
-	_scope($scope0_id, { g: _serialize_if($scope0_reason, 0) && a });
+	_scope($scope0_id, { g: _write_if($scope0_reason, 0) && a });
 }, 1);

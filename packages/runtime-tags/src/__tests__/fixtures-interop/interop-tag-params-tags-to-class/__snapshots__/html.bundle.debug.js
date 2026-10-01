@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", _marko_template, {}, _content_resume("__tests__/template.marko_1*content", (baseCount, message) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<h1>${_text_resume($scope1_id, "#text/0", message, _serialize_guard($scope1_reason, 1))}</h1><button id=tags>${_text_resume($scope1_id, "#text/2", multiplier)} * ${_text_resume($scope1_id, "#text/3", baseCount, _serialize_guard($scope1_reason, 0) * 2)} = ${_text_resume($scope1_id, "#text/4", multiplier * baseCount, 2)}</button>${_el_resume($scope1_id, "#button/1")}`);
+		_html(`<h1>${_text_resume($scope1_id, "#text/0", message, _write_guard($scope1_reason, 1))}</h1><button id=tags>${_text_resume($scope1_id, "#text/2", multiplier)} * ${_text_resume($scope1_id, "#text/3", baseCount, _write_guard($scope1_reason, 0) * 2)} = ${_text_resume($scope1_id, "#text/4", multiplier * baseCount, 2)}</button>${_el_resume($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($multiplier__closures, _scope($scope1_id, {
 			baseCount,

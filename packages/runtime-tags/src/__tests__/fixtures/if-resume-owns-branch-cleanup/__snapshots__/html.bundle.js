@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { show } = input;
 	_if(() => {
@@ -8,11 +8,11 @@ var child_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>inner</p>");
 			_script($scope1_id, "b0", 0);
-			$si__input_show && _scope($scope1_id, {});
+			$wi__input_show && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", $sg__input_show, $sg__input_show, $sg__input_show, 0, 1);
-	$si__input_show && _scope($scope0_id, {});
+	}, $scope0_id, "a", $wg__input_show, $wg__input_show, $wg__input_show, 0, 1);
+	$wi__input_show && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(2);
+			_set_scope_reason(2);
 			const $childScope = _peek_scope_id();
 			child_default({ show });
 			_scope($scope1_id, { a: _existing_scope($childScope) });

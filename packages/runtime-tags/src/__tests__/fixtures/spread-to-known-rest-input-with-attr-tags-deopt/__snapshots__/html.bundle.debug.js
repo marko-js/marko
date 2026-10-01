@@ -1,22 +1,22 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_foo = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_foo = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { foo } = input;
 	_for_of(foo, ({ desc, ...item }) => {
 		const $scope1_id = _scope_id();
 		_html(`<span${_attrs(item, "#span/0", $scope1_id, "span")}>`);
-		_dynamic_tag($scope1_id, "#text/1", desc, {}, 0, 0, $sg__input_foo);
+		_dynamic_tag($scope1_id, "#text/1", desc, {}, 0, 0, $wg__input_foo);
 		_html(`</span>${_el_resume($scope1_id, "#span/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item#5");
 		_scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2", { "EventAttributes:#span/0": ["...item", "3:12"] });
-	}, 0, $scope0_id, "#text/0", $sg__input_foo, $sg__input_foo, $sg__input_foo, 0, 1);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	}, 0, $scope0_id, "#text/0", $wg__input_foo, $wg__input_foo, $wg__input_foo, 0, 1);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // tags/wrap.marko
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_foo = _serialize_guard($scope0_reason, 2), $si__input_foo = _serialize_if($scope0_reason, 2), $si__input_foo__OR__input_class__OR__rest = _serialize_if($scope0_reason, 1), $sg__input_class__OR__rest = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_foo = _write_guard($scope0_reason, 2), $wi__input_foo = _write_if($scope0_reason, 2), $wi__input_foo__OR__input_class__OR__rest = _write_if($scope0_reason, 1), $wg__input_class__OR__rest = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_foo__closures = new Set();
 	const { class: _class, foo, ...rest } = input;
@@ -27,20 +27,20 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	}, _content("__tests__/tags/wrap.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_set_serialize_reason($sg__input_foo << 1);
+		_set_scope_reason($wg__input_foo << 1);
 		const $childScope = _peek_scope_id();
 		child_default({ foo: input.foo });
-		$si__input_foo__OR__input_class__OR__rest && _subscribe($si__input_foo && $input_foo__closures, _scope($scope1_id, {
+		$wi__input_foo__OR__input_class__OR__rest && _subscribe($wi__input_foo && $input_foo__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
-			"#childScope/0": $si__input_foo && _existing_scope($childScope)
-		}, "__tests__/tags/wrap.marko", "2:4"), "__tests__/tags/wrap.marko_1_input_foo#0:3/subscribe", $sg__input_foo);
-		$sg__input_foo || $si__input_foo__OR__input_class__OR__rest && _resume_branch($scope1_id);
-	}, $scope0_id), 0, $sg__input_class__OR__rest);
-	$si__input_foo__OR__input_class__OR__rest && _scope($scope0_id, {
-		input_foo: _serialize_if($scope0_reason, 0) && input.foo,
-		_class: _serialize_if($scope0_reason, 4) && _class,
-		rest: _serialize_if($scope0_reason, 3) && rest,
-		"ClosureScopes:input_foo/7": $si__input_foo && $input_foo__closures
+			"#childScope/0": $wi__input_foo && _existing_scope($childScope)
+		}, "__tests__/tags/wrap.marko", "2:4"), "__tests__/tags/wrap.marko_1_input_foo#0:3/subscribe", $wg__input_foo);
+		$wg__input_foo || $wi__input_foo__OR__input_class__OR__rest && _resume_branch($scope1_id);
+	}, $scope0_id), 0, $wg__input_class__OR__rest);
+	$wi__input_foo__OR__input_class__OR__rest && _scope($scope0_id, {
+		input_foo: _write_if($scope0_reason, 0) && input.foo,
+		_class: _write_if($scope0_reason, 4) && _class,
+		rest: _write_if($scope0_reason, 3) && rest,
+		"ClosureScopes:input_foo/7": $wi__input_foo && $input_foo__closures
 	}, "__tests__/tags/wrap.marko", 0, {
 		input_foo: ["input.foo"],
 		_class: "1:17",
@@ -50,9 +50,9 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason($sg__input << 1 | $sg__input << 3 | $sg__input << 7 | $sg__input << 9);
+	_set_scope_reason($wg__input << 1 | $wg__input << 3 | $wg__input << 7 | $wg__input << 9);
 	const $childScope = _peek_scope_id();
 	wrap_default({
 		"data-one": 2,
@@ -74,5 +74,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope0_id) })
 		})
 	});
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
-import { getProgram, isNativeTag } from "@marko/compiler/babel-utils";
+import { getProgram } from "@marko/compiler/babel-utils";
 
-import { isEventHandler } from "../../common/helpers";
 import {
   type Binding,
   BindingType,
@@ -31,6 +30,7 @@ import {
   push,
   some,
 } from "./optional";
+import { addOwnerReason, type Reason } from "./reasons";
 import {
   getCommonSection,
   getOrCreateSection,
@@ -38,11 +38,7 @@ import {
   type Section,
   setReadsOwner,
 } from "./sections";
-import {
-  addOwnerSerializeReason,
-  type SerializeReason,
-} from "./serialize-reasons";
-import { FORCED } from "./sources";
+import { ALWAYS } from "./sources";
 import { createProgramState } from "./state";
 import { getMemberExpressionPropString } from "./to-property-name";
 
@@ -55,7 +51,7 @@ export interface Read {
   getter: Getter | undefined;
   comparedTo: t.Node | undefined;
   deferred: boolean;
-  serializedValue?: true;
+  inFunction: boolean;
 }
 
 export interface ExtraRead {
@@ -97,9 +93,14 @@ declare module "@marko/compiler/dist/types" {
     /** The expression this node sits in: dropped or merged as one. */
     exprRoot?: NodeExtra;
     isEffect?: true;
-    /** A value here may reach the client as written (a change handler, a
-     * native spread, a dynamic tag's input), so a function in it registers. */
-    forceRegister?: true;
+    /** Retained past render (a change handler, a native spread, a dynamic tag's
+     * input), so a value here may reach the client and a function registers. */
+    retained?: true;
+    /** Consumed where it is written (a handler its tag attaches, an
+     * effect's callback, a key function), so it reaches no client as is. */
+    consumed?: true;
+    /** Any function it holds is only ever invoked, never read as a value, so
+     * the reads inside resolve when it runs. */
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
     /** `$global` bindings this expression reads: the root means an opaque
@@ -107,7 +108,9 @@ declare module "@marko/compiler/dist/types" {
     globalBindings?: ReferencedBindings;
     /** The bindings this expression reads only by spreading them as is. */
     spreadFrom?: SortedOpt<Binding>;
-    nativeTagSpread?: true;
+    /** A `content` it spreads is rendered (as the element's body, or as a
+     * `<meta>`'s attribute), so its effect never reads it. */
+    rendersContent?: true;
     merged?: NodeExtra;
   }
 
@@ -118,7 +121,7 @@ declare module "@marko/compiler/dist/types" {
     constantBindingsInFunction?: ReferencedBindings;
     name?: string;
     registerId?: string;
-    registerReason?: SerializeReason;
+    reason?: Reason;
     // Reserved for a function reachable through an export: importing templates
     // resolve it to register the function without this template registering it.
     exportRegisterId?: string;
@@ -207,7 +210,7 @@ export function trackDomVarReferences(
 
     if (refSection !== binding.section) {
       setReadsOwner(refSection, section);
-      addOwnerSerializeReason(refSection, section, FORCED);
+      addOwnerReason(refSection, section, ALWAYS);
     }
   }
 
@@ -788,22 +791,39 @@ export function mergeReferences<T extends t.Node>(
   target: T,
   nodes: (t.Node | undefined)[],
 ): NonNullable<T["extra"]> & ReferencedExtra {
-  const targetExtra = (target.extra ??= {}) as ReferencedExtra;
+  return mergeInto(section, (target.extra ??= {}), nodes) as NonNullable<
+    T["extra"]
+  > &
+    ReferencedExtra;
+}
+
+// Expressions a tag reads as one, with no node of their own to hold the group,
+// so what is true of the group stays off each member.
+export function mergeReferenceGroup(
+  section: Section,
+  nodes: (t.Node | undefined)[],
+) {
+  return mergeInto(section, {}, nodes);
+}
+
+function mergeInto(
+  section: Section,
+  extra: t.NodeExtra,
+  nodes: (t.Node | undefined)[],
+) {
+  const targetExtra = extra as ReferencedExtra;
   const readsByExpression = getReadsByExpression();
   const fnReadsByExpression = getFunctionReadsByExpression();
   let reads = readsByExpression.get(targetExtra);
   let exprFnReads = fnReadsByExpression.get(targetExtra);
-  let { isEffect, forceRegister } = targetExtra;
+  let { isEffect, retained } = targetExtra;
 
   for (const node of nodes) {
     if (!node) continue;
     const extra = (node.extra ??= {});
-    // The target can appear in its own node list; merging it into itself would
-    // create a `merged` cycle and double its reads.
-    if (extra === targetExtra) continue;
     extra.merged = targetExtra;
     // A literal has no reads but still lands in the position.
-    forceRegister ||= extra.forceRegister;
+    retained ||= extra.retained;
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
@@ -838,11 +858,11 @@ export function mergeReferences<T extends t.Node>(
 
   readsByExpression.set(targetExtra, reads);
   targetExtra.isEffect = isEffect;
-  targetExtra.forceRegister = forceRegister;
+  targetExtra.retained = retained;
   targetExtra.spreadFrom = getSpreadOnlyBindings(reads);
   targetExtra.section = section;
 
-  return targetExtra as NonNullable<T["extra"]> & ReferencedExtra;
+  return targetExtra;
 }
 
 function getSpreadOnlyBindings(reads: Opt<Read>) {
@@ -931,6 +951,7 @@ export function addRead(
     ownVar: false,
     comparedTo: undefined,
     deferred: false,
+    inFunction: false,
   };
   // Content no output renders keeps no binding alive: reads recorded before it
   // was dropped are untracked by `dropContent`, and later ones stop here.
@@ -1024,28 +1045,6 @@ function dropChildren(
   }
 }
 
-// A controllable change handler on a native tag (or a dynamic tag, which can
-// resolve to one at runtime) that is not an inline function captures a foreign
-// value into the scope's ControlledHandler slot, so reads inside it must
-// serialize alongside it.
-function isSerializedChangeHandlerRead(exprRoot: t.NodePath) {
-  const markoRoot = getMarkoRoot(exprRoot);
-  if (!markoRoot?.isMarkoAttribute()) return false;
-  const attr = markoRoot.node;
-  if (
-    !isEventOrChangeHandler(attr.name) ||
-    isEventHandler(attr.name) ||
-    t.isFunction(attr.value)
-  ) {
-    return false;
-  }
-  const tag = markoRoot.parentPath;
-  return (
-    tag.isMarkoTag() &&
-    (tag.node.name.type !== "StringLiteral" || isNativeTag(tag))
-  );
-}
-
 function addReadToExpression(
   root:
     | t.NodePath<t.Identifier>
@@ -1068,10 +1067,6 @@ function addReadToExpression(
   const extra = (node.extra ??= {});
   extra.exprRoot = rootExtra;
   const read = addRead(exprExtra, extra, binding, section, getter);
-
-  if (!fnRoot && isSerializedChangeHandlerRead(exprRoot)) {
-    read.serializedValue = true;
-  }
 
   const { parent } = root;
   if (
@@ -1096,6 +1091,7 @@ function addReadToExpression(
   if (fnRoot) {
     // Accessor bodies run when the property is observed, not when a function
     // is invoked.
+    read.inFunction = true;
     read.deferred =
       fnRoot.node.type !== "ObjectMethod" || fnRoot.node.kind === "method";
     const fnReadsByExpr = getFunctionReadsByExpression();
@@ -1205,7 +1201,7 @@ export function isAssignedBindingExtra(
 export interface RegisteredFnExtra extends ReferencedExtra, t.FunctionExtra {
   name: string;
   registerId: string;
-  registerReason: SerializeReason;
+  reason: Reason;
 }
 
 export function isRegisteredFnExtra(

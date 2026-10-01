@@ -19,7 +19,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	let focus = inner_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/child.marko_0_focus#6/var");
-	_html(`<span>${_text_resume($scope0_id, "#text/2", input.label, _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/2", input.label, _write_guard($scope0_reason, 0))}</span>`);
 	const $return = focus;
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/child.marko", 0);
 	return $return;
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (mounted) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(2);
+			_set_scope_reason(2);
 			const $childScope = _peek_scope_id();
 			let focusChild = $Child_withLoadAssets({ label: `x${n}` });
 			_var($scope1_id, "#scopeOffset/2", $childScope, "__tests__/template.marko_1_focusChild#4/var");

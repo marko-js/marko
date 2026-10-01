@@ -13,16 +13,16 @@ export interface Sources {
   param: SortedOpt<InputBinding | ParamBinding>;
   global: true | undefined;
   /** Serialized unconditionally; the sources still say what it reads. */
-  forced: true | undefined;
+  always: true | undefined;
 }
 
-// The reason of a value serialized for its own sake: forced, and the
+// The reason of a value read for its own sake: always, and the
 // sources the other terms add to it survive the merge.
-export const FORCED: Sources = {
+export const ALWAYS: Sources = {
   state: undefined,
   param: undefined,
   global: undefined,
-  forced: true,
+  always: true,
 };
 
 // `$global` is request identity: sources carry one bit (granularity lives
@@ -31,7 +31,7 @@ export const globalSources: Sources = {
   state: undefined,
   param: undefined,
   global: true,
-  forced: undefined,
+  always: undefined,
 };
 
 export function sharesSources(a: Binding, b: Binding) {
@@ -47,16 +47,16 @@ export function createSources(
   state: Sources["state"],
   param: Sources["param"],
   global?: Sources["global"],
-  forced?: Sources["forced"],
+  always?: Sources["always"],
 ): Sources {
   /* v8 ignore next 6 -- every caller passes at least one source */
-  if (!(state || param || global || forced)) {
+  if (!(state || param || global || always)) {
     throw new Error(
-      "Cannot create a serialize reason that does not reference state, a param, or $global.",
+      "Cannot create a reason that does not reference state, a param, or $global.",
     );
   }
 
-  return { state, param, global, forced };
+  return { state, param, global, always };
 }
 
 // `sources` with other state and params, keeping everything else it says;
@@ -66,15 +66,15 @@ export function withSources(
   state: Sources["state"],
   param: Sources["param"],
 ): Sources | undefined {
-  return state || param || sources.global || sources.forced
-    ? createSources(state, param, sources.global, sources.forced)
+  return state || param || sources.global || sources.always
+    ? createSources(state, param, sources.global, sources.always)
     : undefined;
 }
 
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;
 
-  if (a.forced !== b.forced) return a.forced ? 1 : -1;
+  if (a.always !== b.always) return a.always ? 1 : -1;
   if (a.global !== b.global) return a.global ? 1 : -1;
 
   if (a.param) {
@@ -101,7 +101,7 @@ export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
     a.state === b.state &&
     a.param === b.param &&
     a.global === b.global &&
-    a.forced === b.forced
+    a.always === b.always
   ) {
     return a;
   }
@@ -109,7 +109,7 @@ export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
     bindingUtil.union(a.state, b.state),
     unionParamSources(a.param, b.param),
     a.global || b.global,
-    a.forced || b.forced,
+    a.always || b.always,
   );
 }
 

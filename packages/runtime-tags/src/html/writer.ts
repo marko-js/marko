@@ -214,10 +214,10 @@ export function writeScript(script: string) {
 export function _script(
   scopeId: number,
   registryId: string,
-  serializeMarker?: number,
+  markerGuard?: number,
 ) {
   if (
-    serializeMarker === 0 &&
+    markerGuard === 0 &&
     ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync])
   ) {
     _resume_branch(scopeId);
@@ -341,9 +341,9 @@ export function _attr_content(
   nodeAccessor: Accessor,
   scopeId: number,
   content: unknown,
-  serializeReason?: number,
+  markerGuard?: number,
 ) {
-  const shouldResume = serializeReason !== 0;
+  const shouldResume = markerGuard !== 0;
   const render = normalizeServerRender(content);
   const branchId = _peek_scope_id();
   if (render) {
@@ -427,8 +427,8 @@ export function _show_end(
   scopeId: number,
   accessor: Accessor,
   display: unknown,
-  serializeMarker?: number,
-  serializeStateful?: number,
+  markerGuard?: number,
+  branchExprGuard?: number,
   parentEndTag?: string | 0,
   singleNode?: 1 | 0,
 ) {
@@ -441,8 +441,8 @@ export function _show_end(
   writeBranchEnd(
     scopeId,
     accessor,
-    serializeStateful,
-    serializeMarker,
+    branchExprGuard,
+    markerGuard,
     parentEndTag,
     wrap || singleNode ? 1 : undefined,
     " " + branchId,
@@ -455,9 +455,9 @@ export function _for_of(
   by: Falsy | ((item: unknown, index: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: number,
-  serializeMarker?: number,
-  serializeStateful?: number,
+  branchGuard?: number,
+  markerGuard?: number,
+  branchExprGuard?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -472,9 +472,9 @@ export function _for_of(
         : forOf(list, cb),
     scopeId,
     accessor,
-    serializeBranch,
-    serializeMarker,
-    serializeStateful,
+    branchGuard,
+    markerGuard,
+    branchExprGuard,
     parentEndTag,
     singleNode,
   );
@@ -486,9 +486,9 @@ export function _for_in(
   by: Falsy | ((key: string, v: unknown) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: number,
-  serializeMarker?: number,
-  serializeStateful?: number,
+  branchGuard?: number,
+  markerGuard?: number,
+  branchExprGuard?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -504,9 +504,9 @@ export function _for_in(
         : forIn(obj, cb),
     scopeId,
     accessor,
-    serializeBranch,
-    serializeMarker,
-    serializeStateful,
+    branchGuard,
+    markerGuard,
+    branchExprGuard,
     parentEndTag,
     singleNode,
   );
@@ -520,9 +520,9 @@ export function _for_to(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: number,
-  serializeMarker?: number,
-  serializeStateful?: number,
+  branchGuard?: number,
+  markerGuard?: number,
+  branchExprGuard?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -539,9 +539,9 @@ export function _for_to(
     },
     scopeId,
     accessor,
-    serializeBranch,
-    serializeMarker,
-    serializeStateful,
+    branchGuard,
+    markerGuard,
+    branchExprGuard,
     parentEndTag,
     singleNode,
   );
@@ -555,9 +555,9 @@ export function _for_until(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: number,
-  serializeMarker?: number,
-  serializeStateful?: number,
+  branchGuard?: number,
+  markerGuard?: number,
+  branchExprGuard?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -574,9 +574,9 @@ export function _for_until(
     },
     scopeId,
     accessor,
-    serializeBranch,
-    serializeMarker,
-    serializeStateful,
+    branchGuard,
+    markerGuard,
+    branchExprGuard,
     parentEndTag,
     singleNode,
   );
@@ -592,9 +592,9 @@ function forBranches(
   ) => void,
   scopeId: number,
   accessor: Accessor,
-  serializeBranch: undefined | number,
-  serializeMarker: undefined | number,
-  serializeStateful: undefined | number,
+  branchGuard: undefined | number,
+  markerGuard: undefined | number,
+  branchExprGuard: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
 ) {
@@ -609,13 +609,13 @@ function forBranches(
       });
   }
 
-  if (serializeBranch === 0) {
+  if (branchGuard === 0) {
     iterate(0);
     writeBranchEnd(
       scopeId,
       accessor,
-      serializeStateful,
-      serializeMarker,
+      branchExprGuard,
+      markerGuard,
       parentEndTag,
       singleNode,
       "",
@@ -624,8 +624,8 @@ function forBranches(
   }
 
   const { state } = $chunk.boundary;
-  const resumeKeys = serializeMarker !== 0;
-  const resumeMarker = resumeKeys && (!parentEndTag || serializeStateful !== 0);
+  const resumeKeys = markerGuard !== 0;
+  const resumeMarker = resumeKeys && (!parentEndTag || branchExprGuard !== 0);
   let flushBranchIds = "";
   let loopScopes: Opt<ScopeInternals>;
 
@@ -663,8 +663,8 @@ function forBranches(
   writeBranchEnd(
     scopeId,
     accessor,
-    serializeStateful,
-    serializeMarker,
+    branchExprGuard,
+    markerGuard,
     parentEndTag,
     singleNode,
     singleNode ? flushBranchIds : flushBranchIds ? " " + flushBranchIds : "",
@@ -675,15 +675,15 @@ export function _if(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: number,
-  serializeMarker?: number,
-  serializeStateful?: number,
+  branchGuard?: number,
+  markerGuard?: number,
+  branchExprGuard?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ) {
-  const resumeBranch = serializeBranch !== 0;
+  const resumeBranch = branchGuard !== 0;
   const resumeMarker =
-    serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
+    markerGuard !== 0 && (!parentEndTag || branchExprGuard !== 0);
   const branchId = _peek_scope_id();
   const chunk = $chunk;
   const beforeBranch =
@@ -712,8 +712,8 @@ export function _if(
   writeBranchEnd(
     scopeId,
     accessor,
-    serializeStateful,
-    serializeMarker,
+    branchExprGuard,
+    markerGuard,
     parentEndTag,
     singleNode,
     shouldWriteBranch ? " " + branchId : "",
@@ -745,15 +745,15 @@ export function applyBranchStart(
 function writeBranchEnd(
   scopeId: number,
   accessor: Accessor,
-  serializeStateful: undefined | number,
-  serializeMarker: undefined | number,
+  branchExprGuard: undefined | number,
+  markerGuard: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
   branchIds?: string,
 ) {
   const endTag = parentEndTag || "";
-  if (serializeMarker !== 0) {
-    if (!parentEndTag || serializeStateful !== 0) {
+  if (markerGuard !== 0) {
+    if (!parentEndTag || branchExprGuard !== 0) {
       const { state } = $chunk.boundary;
       const mark = singleNode
         ? state.mark(
@@ -843,7 +843,7 @@ export function _subscribe(
   subscribers: Set<ScopeInternals> | undefined,
   scope: ScopeInternals,
   resumeId?: string,
-  serializeMarker?: number,
+  markerGuard?: number,
 ) {
   if (subscribers) {
     const { serializer } = $chunk.boundary.state;
@@ -853,7 +853,7 @@ export function _subscribe(
     } else if (resumeId) {
       // Its owner resumes first and the client may change the closure before
       // this arrives, so the subscriber applies that and subscribes on resume.
-      _script(scope[K_SCOPE_ID]!, resumeId, serializeMarker);
+      _script(scope[K_SCOPE_ID]!, resumeId, markerGuard);
     } else {
       // Flushed or lazy sets add subscribers through their gated channel.
       serializer.writeCall(scope, subscribers, "add", $chunk.serializeState);
@@ -864,10 +864,7 @@ export function _subscribe(
 
 // A reason: two bits per param-reason group at `1 + 2 * group` (the low
 // bit says the group serializes), a keyed object of group values, or none.
-export type SerializeReasonValue =
-  | undefined
-  | number
-  | Partial<Record<string, number>>;
+export type GroupMask = undefined | number | Partial<Record<string, number>>;
 
 // Every group serializes: for a child whose groups the caller cannot see.
 // Bit 0 is never a group's, so no encoded mask equals it.
@@ -875,7 +872,7 @@ export const CLIENT_ALL = 0x2aaaaaab;
 
 // A group's 2-bit value. A number packs groups 0-14 (a later group makes the
 // reason keyed), except the all sentinel, which covers every group.
-export function maskGroup(mask: SerializeReasonValue, group: number) {
+export function maskGroup(mask: GroupMask, group: number) {
   return mask === CLIENT_ALL
     ? 1
     : typeof mask === "number"
@@ -885,22 +882,22 @@ export function maskGroup(mask: SerializeReasonValue, group: number) {
       : ((mask as Partial<Record<number, number>>)[group] ?? 0);
 }
 
-export function _set_serialize_reason(reason: SerializeReasonValue) {
-  $chunk.boundary.state.serializeReason = reason;
+export function _set_scope_reason(reason: GroupMask) {
+  $chunk.boundary.state.scopeReason = reason;
 }
 
 export function _scope_reason() {
-  const reason = $chunk.boundary.state.serializeReason;
-  $chunk.boundary.state.serializeReason = undefined;
+  const reason = $chunk.boundary.state.scopeReason;
+  $chunk.boundary.state.scopeReason = undefined;
   return reason;
 }
 
-export function _serialize_if(condition: SerializeReasonValue, key: number) {
+export function _write_if(condition: GroupMask, key: number) {
   return condition && maskGroup(condition, key) ? 1 : undefined;
 }
 
-export function _serialize_guard(condition: SerializeReasonValue, key: number) {
-  return _serialize_if(condition, key) || 0;
+export function _write_guard(condition: GroupMask, key: number) {
+  return _write_if(condition, key) || 0;
 }
 
 export function writeWaitReady(
@@ -936,9 +933,9 @@ export function _await<T>(
   accessor: Accessor,
   promise: Promise<T> | T,
   content: (value: T) => void,
-  serializeMarker?: number,
+  markerGuard?: number,
 ) {
-  const resumeMarker = serializeMarker !== 0;
+  const resumeMarker = markerGuard !== 0;
 
   if (!isPromise(promise)) {
     if (resumeMarker) {
@@ -1271,7 +1268,7 @@ export class State implements SerializeState {
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
-  public serializeReason: SerializeReasonValue;
+  public scopeReason: GroupMask;
   public $global: $Global & { renderId: string; runtimeId: string };
   constructor($global: $Global & { renderId: string; runtimeId: string }) {
     this.$global = $global;

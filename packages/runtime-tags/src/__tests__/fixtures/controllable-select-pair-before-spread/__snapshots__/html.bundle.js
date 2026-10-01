@@ -13,8 +13,8 @@ var template_default = _template("a", (input) => {
 	_html(_el_resume($scope0_id, "a"));
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
-		d: _serialize_if($scope0_reason, 2) && input.value,
-		e: _serialize_if($scope0_reason, 1) && input.valueChange,
-		f: _serialize_if($scope0_reason, 0) && input.attrs
+		d: _write_if($scope0_reason, 2) && input.value,
+		e: _write_if($scope0_reason, 1) && input.valueChange,
+		f: _write_if($scope0_reason, 0) && input.attrs
 	});
 }, 1);

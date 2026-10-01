@@ -1,10 +1,10 @@
 // tags/my-button.marko
 var my_button_default = _template("__tests__/tags/my-button.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_text = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_text = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { onClick, text } = input;
 	const { text: textAlias } = input;
-	_html(`<button>${_text_resume($scope0_id, "#text/1", text, $sg__input_text)} ${_text_resume($scope0_id, "#text/2", textAlias, $sg__input_text * 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", text, $wg__input_text)} ${_text_resume($scope0_id, "#text/2", textAlias, $wg__input_text * 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/my-button.marko_0_onClick#5");
 	_scope($scope0_id, { onClick }, "__tests__/tags/my-button.marko", 0, { onClick: "1:10" });
 });
@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let clickCount = 0;
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	my_button_default({
 		text: clickCount,

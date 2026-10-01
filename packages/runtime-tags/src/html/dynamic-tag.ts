@@ -22,7 +22,7 @@ import {
   _scope,
   _scope_id,
   _script,
-  _set_serialize_reason,
+  _set_scope_reason,
   CLIENT_ALL,
   applyBranchStart,
   deferBranchStart,
@@ -47,9 +47,9 @@ export let _dynamic_tag = (
   inputOrArgs: unknown,
   content?: (() => void) | 0,
   inputIsArgs?: 1,
-  serializeReason?: 1 | 0,
+  markerGuard?: 1 | 0,
 ) => {
-  const shouldResume = serializeReason !== 0;
+  const shouldResume = markerGuard !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
@@ -116,7 +116,7 @@ export let _dynamic_tag = (
                       undefined,
                       0,
                       undefined,
-                      serializeReason,
+                      markerGuard,
                     )
                 : undefined,
               1,
@@ -129,7 +129,7 @@ export let _dynamic_tag = (
               undefined,
               0,
               undefined,
-              serializeReason,
+              markerGuard,
             );
           }
         }
@@ -183,7 +183,7 @@ export let _dynamic_tag = (
     const render = () => {
       if (renderer) {
         try {
-          _set_serialize_reason(
+          _set_scope_reason(
             shouldResume && inputOrArgs !== undefined ? CLIENT_ALL : 0,
           );
           return inputIsArgs
@@ -194,7 +194,7 @@ export let _dynamic_tag = (
                   : inputOrArgs,
               );
         } finally {
-          _set_serialize_reason(undefined);
+          _set_scope_reason(undefined);
         }
       } else if (content) {
         // A falsy name renders only its body; `content=` is input for a named tag.

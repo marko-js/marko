@@ -7,17 +7,17 @@ var template_default = _template("a", (input) => {
 	const Heading = { content: _content("a2", (input) => {
 		const $scope1_id = _scope_id();
 		const $Heading_content__input_content__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope1_reason, 2), $si__input_type__OR__input_content = _serialize_if($scope1_reason, 0), $sg__input_type = _serialize_guard($scope1_reason, 1), $si__input_content = _serialize_if($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $wg__input_content = _write_guard($scope1_reason, 2), $wi__input_type__OR__input_content = _write_if($scope1_reason, 0), $wg__input_type = _write_guard($scope1_reason, 1), $wi__input_content = _write_if($scope1_reason, 2);
 		_dynamic_tag($scope1_id, "a", input.type, {}, _content_resume("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
-			_dynamic_tag($scope2_id, "a", input.content, {}, 0, 0, $sg__input_content);
-			$si__input_type__OR__input_content && _subscribe($si__input_content && $Heading_content__input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $sg__input_content);
-			$sg__input_content || $si__input_type__OR__input_content && _resume_branch($scope2_id);
-		}, $scope1_id, ($scope) => [{ e: input.content }]), 0, $sg__input_type);
-		$si__input_type__OR__input_content && _scope($scope1_id, {
-			e: _serialize_if($scope1_reason, 1) && input.content,
-			f: $si__input_content && $Heading_content__input_content__closures
+			_dynamic_tag($scope2_id, "a", input.content, {}, 0, 0, $wg__input_content);
+			$wi__input_type__OR__input_content && _subscribe($wi__input_content && $Heading_content__input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__input_content);
+			$wg__input_content || $wi__input_type__OR__input_content && _resume_branch($scope2_id);
+		}, $scope1_id, ($scope) => [{ e: input.content }]), 0, $wg__input_type);
+		$wi__input_type__OR__input_content && _scope($scope1_id, {
+			e: _write_if($scope1_reason, 1) && input.content,
+			f: $wi__input_content && $Heading_content__input_content__closures
 		});
 	}, $scope0_id) };
 	Heading.content({

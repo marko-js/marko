@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope2_id, {
 			e: error?.message,
 			f: message,
-			g: _serialize_if($scope2_reason, 0) && clicked
+			g: _write_if($scope2_reason, 0) && clicked
 		});
 	}, void 0, "a1");
 }, 1);

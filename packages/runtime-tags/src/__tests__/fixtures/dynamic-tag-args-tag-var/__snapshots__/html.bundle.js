@@ -1,10 +1,10 @@
 // tags/custom-tag.marko
 var custom_tag_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>Child: ${_text_resume($scope0_id, "a", input, $sg__input * 2)}</div>`);
+	_html(`<div>Child: ${_text_resume($scope0_id, "a", input, $wg__input * 2)}</div>`);
 	const $return = input;
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 	return $return;
 });
 

@@ -7,15 +7,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const label = "node";
 	const Tree = { content: _content("__tests__/template.marko_1*content", ({ level }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__level = _serialize_guard($scope1_reason, 0);
-		_html(`<span>${_escape(label)}${_text_resume($scope1_id, "#text/1", level, $sg__level * 2)}</span>`);
+		const $scope1_reason = _scope_reason(), $wg__level = _write_guard($scope1_reason, 0);
+		_html(`<span>${_escape(label)}${_text_resume($scope1_id, "#text/1", level, $wg__level * 2)}</span>`);
 		_if(() => {
 			if (level < depth) {
 				const $scope2_id = _scope_id();
-				_set_serialize_reason($sg__level << 1);
+				_set_scope_reason($wg__level << 1);
 				const $childScope = _peek_scope_id();
 				Tree.content({ level: level + 1 });
-				_scope($scope2_id, { "#childScope/0": _serialize_if($scope1_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "5:4");
+				_scope($scope2_id, { "#childScope/0": _write_if($scope1_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "5:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/2");
