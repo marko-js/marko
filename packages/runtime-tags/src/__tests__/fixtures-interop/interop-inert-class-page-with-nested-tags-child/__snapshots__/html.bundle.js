@@ -1,9 +1,9 @@
 // tags/tags-label.marko
 var tags_label_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_text = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_text = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.text, $sg__input_text)}</span>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_html(`<span>${_text_resume($scope0_id, "a", input.text, $wg__input_text)}</span>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/tags-counter.marko

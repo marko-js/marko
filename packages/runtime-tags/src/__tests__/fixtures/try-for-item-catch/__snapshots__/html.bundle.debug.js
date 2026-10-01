@@ -23,10 +23,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), "__tests__/template.marko_1_clickCount#0:2/subscribe");
 	}, void 0, (err) => {
-		const $scope3_reason = _scope_reason(), $sg__err = _serialize_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason(), $wg__err = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
-		_html(_text_resume($scope3_id, "#text/0", err, $sg__err));
-		_serialize_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "14:4");
+		_html(_text_resume($scope3_id, "#text/0", err, $wg__err));
+		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "14:4");
 	}, void 0, "__tests__/template.marko_3*content");
 	_scope($scope0_id, {
 		clickCount,

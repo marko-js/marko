@@ -213,7 +213,7 @@ function resolveRef(ref: StructureRef, part: "template" | "walks") {
       part === "template" ? "writes" : "walks"
     ];
   }
-  const name = ref.program.domExports![part];
+  const name = ref.program.exportNames![part];
   // Sections survive the per-compile AST clone; the extra objects do not.
   return ref.program.section === getProgram().node.extra.section
     ? t.identifier(name)
@@ -252,13 +252,13 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
 // hoisted for referenced sections. Every needed section meta must exist first.
 export function writeStructureExports(program: t.NodePath<t.Program>) {
   const { walks, writes } = getSectionMeta(getSectionForBody(program)!);
-  const domExports = program.node.extra.domExports!;
+  const exportNames = program.node.extra.exportNames!;
   const decls = getMetaDecls();
   program.node.body.unshift(
     t.exportNamedDeclaration(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          t.identifier(domExports.template),
+          t.identifier(exportNames.template),
           writes || t.stringLiteral(""),
         ),
       ]),
@@ -266,7 +266,7 @@ export function writeStructureExports(program: t.NodePath<t.Program>) {
     t.exportNamedDeclaration(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          t.identifier(domExports.walks),
+          t.identifier(exportNames.walks),
           walks || t.stringLiteral(""),
         ),
       ]),

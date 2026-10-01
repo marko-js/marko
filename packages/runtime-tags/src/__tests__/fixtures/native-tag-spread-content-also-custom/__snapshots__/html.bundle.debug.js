@@ -1,11 +1,11 @@
 // tags/echo.marko
 var echo_default = _template("__tests__/tags/echo.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div class=echo>");
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/echo.marko", 0);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/echo.marko", 0);
 });
 
 // tags/my-box.marko
@@ -15,11 +15,11 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_html("<div");
 	_attrs_content(input, "#div/0", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
-	_set_serialize_reason(_serialize_guard($scope0_reason, 0) << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id();
 	echo_default(input);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input#3");
-	_scope($scope0_id, { "#childScope/1": _serialize_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/tags/my-box.marko", 0, { "EventAttributes:#div/0": ["...input", "1:9"] });
+	_scope($scope0_id, { "#childScope/1": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/tags/my-box.marko", 0, { "EventAttributes:#div/0": ["...input", "1:9"] });
 });
 
 // template.marko

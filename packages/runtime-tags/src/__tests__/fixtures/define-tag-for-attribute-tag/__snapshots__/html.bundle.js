@@ -1,11 +1,11 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_thing_selected = _serialize_guard($scope0_reason, 1), $sg__input_thing_content = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_thing_selected = _write_guard($scope0_reason, 1), $wg__input_thing_content = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class({ "selected": input.thing.selected })}>`);
-	_dynamic_tag($scope0_id, "b", input.thing.content, {}, 0, 0, $sg__input_thing_content);
-	_html(`</div>${_el_resume($scope0_id, "a", $sg__input_thing_selected)}`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_dynamic_tag($scope0_id, "b", input.thing.content, {}, 0, 0, $wg__input_thing_content);
+	_html(`</div>${_el_resume($scope0_id, "a", $wg__input_thing_selected)}`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 			_html("<span>The thing</span>");
 		}, $scope0_id)
 	};
-	_set_serialize_reason(42);
+	_set_scope_reason(42);
 	const $childScope = _peek_scope_id();
 	child_default({ thing: myThing });
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "b")}`);

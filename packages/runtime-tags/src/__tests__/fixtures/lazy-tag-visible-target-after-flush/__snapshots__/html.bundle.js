@@ -1,10 +1,10 @@
 // child.marko
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { value } = input;
-	_html(`<div>child ${_text_resume($scope0_id, "a", value, $sg__input_value * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_html(`<div>child ${_text_resume($scope0_id, "a", value, $wg__input_value * 2)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -13,9 +13,9 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "_a", [{
 	selector: "#footer"
 }]);
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_serialize_reason($sg__input_value << 1);
+	_set_scope_reason($wg__input_value << 1);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_try($scope0_id, "c", () => {
@@ -30,5 +30,5 @@ var template_default = _template("b", (input) => {
 		_scope_id();
 		_html("loading...");
 	}, void 0, "b0");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

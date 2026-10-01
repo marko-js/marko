@@ -6,9 +6,60 @@ import {
 } from "../../common/accessor.debug";
 import { decodeAccessor } from "../../common/helpers";
 import { type Binding, BindingType, getCanonicalBinding } from "./bindings";
-import { getAccessorPrefix } from "./get-accessor-enums";
+import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { isOptimize } from "./marko-config";
 import { isResumedBranch, type Section } from "./sections";
+import { type PlaceSlot, SlotKind } from "./slots";
+
+// Where the server writes a slot in its scope.
+export function getSlotAccessor(slot: PlaceSlot) {
+  switch (slot.kind) {
+    case SlotKind.Value:
+      return getScopeAccessor(slot.owner);
+    case SlotKind.ChangeHandler:
+      return getPrefixedScopeAccessor(
+        slot.owner,
+        getAccessorPrefix().TagVariableChange,
+      );
+    case SlotKind.ClosureScopes:
+      return getPrefixedScopeAccessor(
+        slot.owner,
+        getAccessorPrefix().ClosureScopes,
+      );
+    case SlotKind.ClosureSignalIndex:
+      return getPrefixedScopeAccessor(
+        slot.owner,
+        getAccessorPrefix().ClosureSignalIndex,
+      );
+    case SlotKind.Owner:
+      return getAccessorProp().Owner;
+    case SlotKind.ReturnChangeHandler:
+      return getAccessorProp().TagVariableChange;
+    case SlotKind.Instances:
+      return getSectionInstancesAccessor(slot.owner);
+  }
+}
+
+// The walker holds a tag's scope offset in the id its node reserves.
+export function getScopeOffsetAccessorLiteral(
+  nodeBinding: Binding,
+  encoded?: boolean,
+) {
+  return encoded && isOptimize()
+    ? t.numericLiteral(getReservedId(nodeBinding))
+    : t.stringLiteral(getScopeOffsetAccessor(nodeBinding));
+}
+
+function getScopeOffsetAccessor(nodeBinding: Binding) {
+  const id = getReservedId(nodeBinding);
+  return isOptimize() ? decodeAccessor(id) : `#scopeOffset/${id}`;
+}
+
+// The id a binding reserves after its own (`reserveSize`), for a place that
+// sits beside it: a change handler, or a tag's scope offset.
+function getReservedId(binding: Binding) {
+  return getCanonicalBinding(binding).id + 1;
+}
 
 export function getScopeAccessorLiteral(
   binding: Binding,
@@ -65,7 +116,7 @@ export function getPrefixedScopeAccessor(
   if (isOptimize()) {
     switch (prefix) {
       case getAccessorPrefix().TagVariableChange:
-        return decodeAccessor(canonicalBinding.id + 1);
+        return decodeAccessor(getReservedId(canonicalBinding));
       case getAccessorPrefix().ClosureScopes:
         return decodeAccessor(getClosureAccessorId(canonicalBinding));
       case getAccessorPrefix().ClosureSignalIndex:

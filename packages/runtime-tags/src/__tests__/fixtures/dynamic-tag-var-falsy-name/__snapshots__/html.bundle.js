@@ -1,16 +1,16 @@
 // tags/wrapper/index.marko
 var wrapper_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div>");
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $sg__input_content);
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content);
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/child/index.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_a11yText = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_a11yText = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $btn_getter = _hoist($scope0_id, "b0");
 	const $wrapper_content__subscribers = /* @__PURE__ */ new Set();
@@ -25,15 +25,15 @@ var child_default = _template("b", (input) => {
 			_html("content");
 		}, $scope1_id));
 		_var($scope1_id, "b", $inputa11yTextbutton_scope, "b2");
-		_subscribe($si__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
+		_subscribe($wi__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			c: $btn,
-			_: $si__input_a11yText && _scope_with_id($scope0_id)
+			_: $wi__input_a11yText && _scope_with_id($scope0_id)
 		})), "b3");
 	}, $scope0_id) });
 	const $return = { btn: $btn_getter };
 	_scope($scope0_id, {
 		B1: $wrapper_content__subscribers,
-		e: $si__input_a11yText && $input_a11yText__closures
+		e: $wi__input_a11yText && $input_a11yText__closures
 	});
 	return $return;
 });

@@ -1,20 +1,20 @@
 // tags/sections.marko
 var sections_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_section = _serialize_guard($scope0_reason, 0), $si__input_section = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_section = _write_guard($scope0_reason, 0), $wi__input_section = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.section, ({ content }) => {
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (content) {
 				const $scope2_id = _scope_id();
-				_dynamic_tag($scope2_id, "a", content, {}, 0, 0, $sg__input_section);
-				$si__input_section && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+				_dynamic_tag($scope2_id, "a", content, {}, 0, 0, $wg__input_section);
+				$wi__input_section && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
-		$si__input_section && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
-	$si__input_section && _scope($scope0_id, {});
+		}, $scope1_id, "a", $wg__input_section, $wg__input_section, $wg__input_section);
+		$wi__input_section && _scope($scope1_id, {});
+	}, 0, $scope0_id, "a", $wg__input_section, $wg__input_section, $wg__input_section);
+	$wi__input_section && _scope($scope0_id, {});
 });
 
 // template.marko

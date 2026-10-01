@@ -2,7 +2,7 @@
 var my_input_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attrs(input, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}<span>${_text_resume($scope0_id, "b", input.value, _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<input${_attrs(input, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}<span>${_text_resume($scope0_id, "b", input.value, _write_guard($scope0_reason, 0))}</span>`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });
@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let value = "hi";
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	my_input_default({
 		value,

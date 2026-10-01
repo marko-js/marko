@@ -1,21 +1,21 @@
 // tags/custom-tag.marko
 var custom_tag_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_test_class = _serialize_guard($scope0_reason, 4), $sg__input_test_content = _serialize_guard($scope0_reason, 5), $sg__input_test = _serialize_guard($scope0_reason, 3), $sg__input_class = _serialize_guard($scope0_reason, 2), $si__input_test = _serialize_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_test_class = _write_guard($scope0_reason, 4), $wg__input_test_content = _write_guard($scope0_reason, 5), $wg__input_test = _write_guard($scope0_reason, 3), $wg__input_class = _write_guard($scope0_reason, 2), $wi__input_test = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(input.class)}></div>${_el_resume($scope0_id, "a", $sg__input_class)}`);
+	_html(`<div${_attr_class(input.class)}></div>${_el_resume($scope0_id, "a", $wg__input_class)}`);
 	_if(() => {
 		if (input.test) {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attr_class(input.test.class)} id=test>`);
-			_dynamic_tag($scope1_id, "b", input.test.content, {}, 0, 0, $sg__input_test_content);
-			_html(`</div>${_el_resume($scope1_id, "a", $sg__input_test_class)}`);
-			$si__input_test && _scope($scope1_id, { _: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
+			_dynamic_tag($scope1_id, "b", input.test.content, {}, 0, 0, $wg__input_test_content);
+			_html(`</div>${_el_resume($scope1_id, "a", $wg__input_test_class)}`);
+			$wi__input_test && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", $sg__input_test, $sg__input_test, $sg__input_test, 0, 1);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
-		g: $si__input_test && input.test?.class,
-		h: $si__input_test && input.test?.content
+	}, $scope0_id, "b", $wg__input_test, $wg__input_test, $wg__input_test, 0, 1);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
+		g: $wi__input_test && input.test?.class,
+		h: $wi__input_test && input.test?.content
 	});
 });
 
@@ -28,11 +28,11 @@ const $class = [
 	"\"a b d\""
 ];
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_c__OR__input_d = _serialize_guard($scope0_reason, 0), $sg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h = _serialize_guard($scope0_reason, 7), $sg__input_c = _serialize_guard($scope0_reason, 8);
+	const $scope0_reason = _scope_reason(), $wg__input_c__OR__input_d = _write_guard($scope0_reason, 0), $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h = _write_guard($scope0_reason, 7), $wg__input_c = _write_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
 	const { c, d, e, f, g, h } = input;
-	_html(`<div class=${$class[(c ? 1 : 0) + (d ? 2 : 0)]}></div>${_el_resume($scope0_id, "a", $sg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${c ? " class=active" : ""}></div>${_el_resume($scope0_id, "b", $sg__input_c)}<div${_attr_class("base" + (c ? " c" : "") + (d ? " d" : "") + (e ? " e" : "") + (f ? " f" : "") + (g ? " g" : "") + (h ? " h" : ""))}></div>${_el_resume($scope0_id, "c", $sg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
-	_set_serialize_reason($sg__input_c__OR__input_d << 1 | $sg__input_c__OR__input_d << 5);
+	_html(`<div class=${$class[(c ? 1 : 0) + (d ? 2 : 0)]}></div>${_el_resume($scope0_id, "a", $wg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${c ? " class=active" : ""}></div>${_el_resume($scope0_id, "b", $wg__input_c)}<div${_attr_class("base" + (c ? " c" : "") + (d ? " d" : "") + (e ? " e" : "") + (f ? " f" : "") + (g ? " g" : "") + (h ? " h" : ""))}></div>${_el_resume($scope0_id, "c", $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
+	_set_scope_reason($wg__input_c__OR__input_d << 1 | $wg__input_c__OR__input_d << 5);
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ class: ["a", {
 		b: c,
@@ -59,14 +59,14 @@ var template_default = _template("a", (input) => {
 				_html("Hello");
 			}, $scope0_id)
 		})
-	}, 0, 0, $sg__input_c__OR__input_d);
-	_serialize_if($scope0_reason, 7) && _scope($scope0_id, {
-		i: _serialize_if($scope0_reason, 6) && c,
-		j: _serialize_if($scope0_reason, 5) && d,
-		l: _serialize_if($scope0_reason, 4) && e,
-		m: _serialize_if($scope0_reason, 3) && f,
-		n: _serialize_if($scope0_reason, 2) && g,
-		o: _serialize_if($scope0_reason, 1) && h,
-		d: _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
+	}, 0, 0, $wg__input_c__OR__input_d);
+	_write_if($scope0_reason, 7) && _scope($scope0_id, {
+		i: _write_if($scope0_reason, 6) && c,
+		j: _write_if($scope0_reason, 5) && d,
+		l: _write_if($scope0_reason, 4) && e,
+		m: _write_if($scope0_reason, 3) && f,
+		n: _write_if($scope0_reason, 2) && g,
+		o: _write_if($scope0_reason, 1) && h,
+		d: _write_if($scope0_reason, 0) && _existing_scope($childScope)
 	});
 }, 1);

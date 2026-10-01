@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<button>${_text_resume($scope0_id, "b", input.label, _serialize_guard($scope0_reason, 1))}</button>${_el_resume($scope0_id, "a")}<a${_attr("href", input.hrefFor("x"))} class=${input.count % 2 ? "odd" : "even"}>x</a>${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 0))}`);
+	_html(`<button>${_text_resume($scope0_id, "b", input.label, _write_guard($scope0_reason, 1))}</button>${_el_resume($scope0_id, "a")}<a${_attr("href", input.hrefFor("x"))} class=${input.count % 2 ? "odd" : "even"}>x</a>${_el_resume($scope0_id, "c", _write_guard($scope0_reason, 0))}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { f: input.onToggle });
 });
@@ -18,7 +18,7 @@ var parent_default = _template("c", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			const label = shut ? `${prefix}:shut` : `${prefix}:open`;
-			_set_serialize_reason(10);
+			_set_scope_reason(10);
 			const $childScope = _peek_scope_id();
 			child_default({
 				label,
@@ -30,7 +30,7 @@ var parent_default = _template("c", (input) => {
 				}, "c1", $scope1_id)
 			});
 			_scope($scope1_id, {
-				c: _serialize_if($scope0_reason, 0) && label,
+				c: _write_if($scope0_reason, 0) && label,
 				_: _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	parent_default({
 		count,

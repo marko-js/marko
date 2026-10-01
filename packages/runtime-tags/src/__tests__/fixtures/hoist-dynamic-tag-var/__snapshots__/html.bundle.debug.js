@@ -18,7 +18,7 @@ var thing_default = _template("__tests__/tags/thing.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml#2:2/hoist");
 	_if(() => {
@@ -34,11 +34,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_assert_hoist(setHtml);
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, $sg__input_show, $sg__input_show);
-			_scope($scope1_id, { _: $si__input_show && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
+			}, $scope1_id, "#text/0", 1, $wg__input_show, $wg__input_show);
+			_scope($scope1_id, { _: $wi__input_show && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show);
 	thing_default({ value: $setHtml_getter });
 	_if(() => {
 		if (true) {
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_assert_hoist(setHtml2);
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, 0, $sg__input_show);
+	}, $scope0_id, "#text/2", 1, 0, 0);
 	_if(() => {
 		if (true) {
 			const $scope4_id = _scope_id();
@@ -61,12 +61,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_assert_hoist(setHtml3);
 			return 0;
 		}
-	}, $scope0_id, "#text/3", 1, 0, $sg__input_show);
+	}, $scope0_id, "#text/3", 1, 0, 0);
 	if (true) {
 		const $scope5_id = _scope_id();
 		_script($scope5_id, "__tests__/template.marko_5", 0);
 		_scope($scope5_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "28:2");
 	}
-	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
-	$si__input_show && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_script($scope0_id, "__tests__/template.marko_0", $wg__input_show);
+	$wi__input_show && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

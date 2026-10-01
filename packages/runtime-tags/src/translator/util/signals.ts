@@ -5,7 +5,6 @@ import {
   getTemplateId,
 } from "@marko/compiler/babel-utils";
 
-import { type AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import {
@@ -25,11 +24,19 @@ import {
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
-import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
+import { getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { filter, forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
+import {
+  getNodeReasons,
+  getWriteReason,
+  isConditionalReason,
+  isSameReason,
+  isUnconditionalReason,
+  type Reason,
+} from "./reasons";
 import {
   type AssignedBindingExtra,
   hasResumableWriter,
@@ -40,10 +47,11 @@ import { callRuntime, registerRuntimeValue } from "./runtime";
 import {
   getClosureAccessorLiteral,
   getLocalsScopeAccessor,
-  getPrefixedScopeAccessor,
   getScopeAccessor,
   getScopeAccessorLiteral,
+  getScopeOffsetAccessorLiteral,
   getSectionInstancesAccessorLiteral,
+  getSlotAccessor,
 } from "./scope-accessor";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
@@ -58,19 +66,8 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import {
-  getExprIfSerialized,
-  getSerializeGuardForAny,
-} from "./serialize-guard";
-import {
-  getSerializeReason,
-  isReasonDynamic,
-  isSameReason,
-  isStaticSerializeReason,
-  type SerializeReason,
-} from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
-import { FORCED } from "./sources";
+import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
 import { createSectionState } from "./state";
 import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
 import {
@@ -80,6 +77,7 @@ import {
 } from "./to-property-name";
 import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
+import { getExprIfWritten, getWriteGuardForAny } from "./write-guard";
 
 export interface Signal {
   identifier: t.Identifier;
@@ -145,7 +143,7 @@ export function setSectionOwnerResumedByMarker(section: Section) {
 export function getContentClosureValues(bodySection: Section) {
   const contentClosures = filter(
     getContentClosures(bodySection),
-    isConditionallySerialized,
+    isConditionallyWritten,
   );
   if (!contentClosures) return;
   const scope = generateUidIdentifier("scope");
@@ -181,51 +179,25 @@ export function getContentClosureValues(bodySection: Section) {
   return { scope, levels: levels.reverse() };
 }
 
-function isConditionallySerialized(closure: Binding) {
-  return !isStaticSerializeReason(getSerializeReason(closure.section, closure));
+function isConditionallyWritten(closure: Binding) {
+  return !isUnconditionalReason(getWriteReason(findSlot(closure)));
 }
 
-const [getSerializedAccessors] = createSectionState<
-  Map<string, { expression: t.Expression; reason: SerializeReason }>
->("serializedScopeProperties", () => new Map());
-export function setSectionSerializedValue(
-  section: Section,
-  prop: AccessorProp,
+const [getScopeProperties] = createSectionState<
+  Map<string, { expression: t.Expression; reason: Reason }>
+>("scopeProperties", () => new Map());
+export function setScopeProperty(
+  found: PlaceSlot | undefined,
   expression: t.Expression,
 ) {
-  const reason = getSerializeReason(section, prop);
+  const reason = getWriteReason(found);
   if (reason) {
-    getSerializedAccessors(section).set(prop, { expression, reason });
-  }
-}
-export function setBindingSerializedValue(
-  section: Section,
-  binding: Binding,
-  expression: t.Expression,
-  prefix?: AccessorPrefix,
-) {
-  const reason = getSerializeReason(section, binding, prefix);
-  if (reason) {
-    if (prefix === undefined) {
-      getSerializedAccessors(section).set(getScopeAccessor(binding), {
-        expression,
-        reason,
-      });
-    } else {
-      const accessor = getPrefixedScopeAccessor(binding, prefix);
-      getSerializedAccessors(section).set(accessor, { expression, reason });
-      // Name the change handler slot after the author's binding; structural
-      // prefixed slots are described generically by the serializer instead.
-      if (!isOptimize() && prefix === getAccessorPrefix().TagVariableChange) {
-        const { root, access } = getDebugScopeAccess(binding);
-        setSectionDebugVar(
-          section,
-          accessor,
-          `${root.name + access}Change`,
-          root.loc,
-        );
-      }
-    }
+    const accessor = getSlotAccessor(found!);
+    getScopeProperties(found!.section).set(accessor, {
+      expression,
+      reason,
+    });
+    return accessor;
   }
 }
 
@@ -248,15 +220,6 @@ export function setSectionDebugVar(
   }
 }
 
-const nonAnalyzedForceSerializedSection = new WeakSet<Section>();
-export function setSerializedValue(
-  section: Section,
-  key: string,
-  expression: t.Expression,
-) {
-  nonAnalyzedForceSerializedSection.add(section);
-  getSerializedAccessors(section).set(key, { expression, reason: FORCED });
-}
 const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
   createSectionState<undefined | ((expr: t.Expression) => t.Expression)>(
     "sectionWriteScopeBuilder",
@@ -335,7 +298,7 @@ export function getSignal(
       ? !Array.isArray(referencedBindings) &&
         referencedBindings.section === section &&
         referencedBindings.export
-      : !section.parent && getProgram().node.extra.domExports?.setup;
+      : !section.parent && getProgram().node.extra.exportNames!.setup;
 
     signals.set(
       referencedBindings,
@@ -452,7 +415,7 @@ export function initValue(binding: Binding, isLet = false) {
   const section = binding.section;
   const signal = getSignal(section, binding);
   // Keep persisting the scope slot for lazy reads.
-  if (binding.forcePersist) signal.forcePersist = true;
+  if (binding.hasLazyReads) signal.forcePersist = true;
   signal.build = () => {
     if (isPureMemberForwarder(binding)) {
       return undefined;
@@ -529,7 +492,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.aliases.size ||
     binding.assignments ||
     isForSelectorValue(binding) ||
-    getSerializeReason(binding.section, binding) ||
+    getWriteReason(findSlot(binding)) ||
     getSignal(binding.section, binding).hasSideEffect
   ) {
     return false;
@@ -580,16 +543,16 @@ function buildIntersection(
   intersection: Intersection,
   fn: t.Expression,
 ) {
-  const { source, id, scopeOffset } = section.intersections!.get(intersection)!;
+  const { source, id, returnedBy } = section.intersections!.get(intersection)!;
   if (source) return fn;
   return callRuntime(
     "_or",
     t.numericLiteral(id),
     fn,
-    scopeOffset || intersection.length > 2
+    returnedBy || intersection.length > 2
       ? t.numericLiteral(intersection.length - 1)
       : undefined,
-    scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
+    returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true),
   );
 }
 
@@ -780,7 +743,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     );
   }
 
-  if (isValue && getSerializeReason(section, binding)) {
+  if (isValue && getWriteReason(findSlot(binding))) {
     signal.hasSideEffect = true;
   }
 
@@ -1285,14 +1248,12 @@ export function writeHTMLResumeStatements(
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   // Whether any node of the section writes a marker, as the same argument
   // shape `_if` and `_await` take: absent when always, `0` when never.
-  const markerSerializeArg = getSerializeGuardForAny(
+  const markerGuard = getWriteGuardForAny(
     section,
-    section.domSerializeReasons,
+    getNodeReasons(section),
     true,
   );
-  const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
-    ? FORCED
-    : section.serializeReason;
+  const sectionReason = section.reason;
   forEach(section.referencedClosures, (closure) => {
     // A constant never changes, so nothing subscribes to it.
     if (closure.sources && closure.type !== BindingType.constant) {
@@ -1316,37 +1277,27 @@ export function writeHTMLResumeStatements(
               ),
             ]),
           );
-          setBindingSerializedValue(
-            closure.section,
-            closure,
+          setScopeProperty(
+            findSlot(closure, SlotKind.ClosureScopes),
             identifier,
-            getAccessorPrefix().ClosureScopes,
           );
         }
 
         const closureIndex = getDynamicClosureIndex(closure, section);
         if (closureIndex) {
-          setBindingSerializedValue(
-            section,
-            closure,
+          setScopeProperty(
+            findSlot(closure, SlotKind.ClosureSignalIndex, section),
             t.numericLiteral(closureIndex),
-            getAccessorPrefix().ClosureSignalIndex,
           );
         }
 
-        const closureScopesReason = getSerializeReason(
-          closure.section,
-          closure,
-          getAccessorPrefix().ClosureScopes,
+        const closureScopesReason = getWriteReason(
+          findSlot(closure, SlotKind.ClosureScopes),
         );
         const subscribeArg =
-          isReasonDynamic(closureScopesReason) &&
-          !isSameReason(closureScopesReason, sectionSerializeReason)
-            ? getExprIfSerialized(
-                closure.section,
-                closureScopesReason,
-                identifier,
-              )
+          isConditionalReason(closureScopesReason) &&
+          !isSameReason(closureScopesReason, sectionReason)
+            ? getExprIfWritten(closure.section, closureScopesReason, identifier)
             : identifier;
         const changeable = isChangeableDynamicClosure(section, closure);
         addWriteScopeBuilder(section, (expr) =>
@@ -1359,7 +1310,7 @@ export function writeHTMLResumeStatements(
                   getResumeRegisterId(section, closure, "subscribe"),
                 )
               : undefined,
-            changeable ? markerSerializeArg : undefined,
+            changeable ? markerGuard : undefined,
           ),
         );
       }
@@ -1377,7 +1328,7 @@ export function writeHTMLResumeStatements(
             "_script",
             scopeIdIdentifier,
             t.stringLiteral(getResumeRegisterId(section, signalRefs)),
-            markerSerializeArg,
+            markerGuard,
           ),
         ),
       );
@@ -1386,23 +1337,23 @@ export function writeHTMLResumeStatements(
 
   const debug = !isOptimize();
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
-  const serializedLookup = getSerializedAccessors(section);
-  const serializedProperties: t.ObjectProperty[] = [];
-  const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
-    if (isSameReason(sectionSerializeReason, reason)) return expr;
-    return getExprIfSerialized(section, reason, expr);
+  const pendingProperties = getScopeProperties(section);
+  const scopeProperties: t.ObjectProperty[] = [];
+  const ifWritten = (reason: Reason, expr: t.Expression) => {
+    if (isSameReason(sectionReason, reason)) return expr;
+    return getExprIfWritten(section, reason, expr);
   };
 
   let debugVars: t.ObjectProperty[] | undefined;
-  const writeSerializedBinding = (binding: Binding) => {
-    const reason = getSerializeReason(section, binding);
+  const writeBinding = (binding: Binding) => {
+    const reason = getWriteReason(findSlot(binding));
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
-    serializedLookup.delete(accessor);
-    serializedProperties.push(
+    pendingProperties.delete(accessor);
+    scopeProperties.push(
       toObjectProperty(
         accessor,
-        ifSerialized(reason, getDeclaredBindingExpression(binding)),
+        ifWritten(reason, getDeclaredBindingExpression(binding)),
       ),
     );
 
@@ -1428,20 +1379,22 @@ export function writeHTMLResumeStatements(
 
   forEach(section.bindings, (binding) => {
     if (binding.type !== BindingType.dom) {
-      writeSerializedBinding(binding);
+      writeBinding(binding);
     }
   });
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;
-    const ownerReason = getSerializeReason(section, ownerAccessor);
+    const ownerReason = getWriteReason(
+      findSectionSlot(section, SlotKind.Owner),
+    );
     if (ownerReason) {
-      serializedLookup.delete(ownerAccessor);
+      pendingProperties.delete(ownerAccessor);
       if (!getOwnerResumedByMarker(section)) {
-        serializedProperties.push(
+        scopeProperties.push(
           toObjectProperty(
             ownerAccessor,
-            ifSerialized(
+            ifWritten(
               ownerReason,
               callRuntime(
                 "_scope_with_id",
@@ -1454,14 +1407,12 @@ export function writeHTMLResumeStatements(
     }
   }
 
-  for (const [key, { expression, reason }] of serializedLookup) {
-    serializedProperties.push(
-      toObjectProperty(key, ifSerialized(reason, expression)),
-    );
+  for (const [key, { expression, reason }] of pendingProperties) {
+    scopeProperties.push(toObjectProperty(key, ifWritten(reason, expression)));
   }
 
-  if (sectionSerializeReason) {
-    for (const prop of serializedProperties) {
+  if (sectionReason) {
+    for (const prop of scopeProperties) {
       if (
         prop.key.type === "Identifier" &&
         prop.value.type === "Identifier" &&
@@ -1473,7 +1424,7 @@ export function writeHTMLResumeStatements(
 
     const writeScopeArgs: t.Expression[] = [
       scopeIdIdentifier,
-      t.objectExpression(serializedProperties),
+      t.objectExpression(scopeProperties),
     ];
 
     if (debug) {
@@ -1499,9 +1450,9 @@ export function writeHTMLResumeStatements(
 
     body.push(
       t.expressionStatement(
-        getExprIfSerialized(
+        getExprIfWritten(
           section,
-          sectionSerializeReason,
+          sectionReason,
           writeScopeBuilder
             ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
             : callRuntime("_scope", ...writeScopeArgs),
@@ -1514,23 +1465,23 @@ export function writeHTMLResumeStatements(
     !isResumedBranch(section) &&
     (section.hasAbortSignal ||
       !!section.referencedClosures ||
-      (sectionSerializeReason && some(section.bindings, isLetBinding)));
+      (sectionReason && some(section.bindings, isLetBinding)));
 
   // The walker places a scope whose marker it visits, so a section that always
   // writes one needs no link; a dynamic marker guards it, none writes it plain.
-  if (resumeClosestBranch && markerSerializeArg) {
+  if (resumeClosestBranch && markerGuard) {
     // An abort signal's effect always ships; a closure subscription only with
     // the scope write, so the link borrows that guard.
     const call = callRuntime("_resume_branch", scopeIdIdentifier);
     const link = section.hasAbortSignal
       ? call
-      : getExprIfSerialized(section, sectionSerializeReason, call);
+      : getExprIfWritten(section, sectionReason, call);
     if (link) {
       body.push(
         t.expressionStatement(
-          markerSerializeArg.type === "NumericLiteral"
+          markerGuard.type === "NumericLiteral"
             ? link
-            : t.logicalExpression("||", markerSerializeArg, link),
+            : t.logicalExpression("||", markerGuard, link),
         ),
       );
     }

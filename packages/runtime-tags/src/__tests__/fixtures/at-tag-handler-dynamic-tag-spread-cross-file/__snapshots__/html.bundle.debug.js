@@ -1,11 +1,11 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_tag__OR__input_button = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_tag__OR__input_button = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.tag, input.button, 0, 0, $sg__input_tag__OR__input_button);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
-		input_tag: _serialize_if($scope0_reason, 2) && input.tag,
-		input_button: _serialize_if($scope0_reason, 1) && input.button
+	_dynamic_tag($scope0_id, "#text/0", input.tag, input.button, 0, 0, $wg__input_tag__OR__input_button);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
+		input_tag: _write_if($scope0_reason, 2) && input.tag,
+		input_button: _write_if($scope0_reason, 1) && input.button
 	}, "__tests__/tags/child.marko", 0, {
 		input_tag: ["input.tag"],
 		input_button: ["input.button"]
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
-	_set_serialize_reason(34);
+	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	child_default({
 		tag: "button",

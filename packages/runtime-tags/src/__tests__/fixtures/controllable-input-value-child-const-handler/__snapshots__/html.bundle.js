@@ -5,8 +5,8 @@ var child_default = _template("b", (input) => {
 	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange)}>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
-		d: _serialize_if($scope0_reason, 1) && input.value,
-		e: _serialize_if($scope0_reason, 0) && input.valueChange
+		d: _write_if($scope0_reason, 1) && input.value,
+		e: _write_if($scope0_reason, 0) && input.valueChange
 	});
 });
 

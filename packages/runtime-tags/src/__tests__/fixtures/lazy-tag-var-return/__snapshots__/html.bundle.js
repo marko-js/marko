@@ -19,7 +19,7 @@ var child_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let focus = inner_default({});
 	_var($scope0_id, "b", $childScope, "a0");
-	_html(`<span>${_text_resume($scope0_id, "c", input.label, _serialize_guard($scope0_reason, 0))}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "c", input.label, _write_guard($scope0_reason, 0))}</span>`);
 	const $return = focus;
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 	return $return;

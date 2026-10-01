@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Foo = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id(), $scope1_reason = _scope_reason();
-		_serialize_guard($scope1_reason, 0);
+		_write_guard($scope1_reason, 0);
 		_html(`<button id=open>open</button>${_el_resume($scope1_id, "a")}`);
 		_if(() => {}, $scope1_id, "b");
 		_script($scope1_id, "a1");

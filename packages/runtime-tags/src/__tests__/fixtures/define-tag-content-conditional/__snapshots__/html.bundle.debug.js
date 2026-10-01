@@ -5,11 +5,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let show = false;
 	const Layout = { content: _content("__tests__/template.marko_1*content", ({ content }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__content = _serialize_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__content = _write_guard($scope1_reason, 0);
 		_html("<section>");
-		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, $sg__content);
+		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, $wg__content);
 		_html("</section>");
-		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {

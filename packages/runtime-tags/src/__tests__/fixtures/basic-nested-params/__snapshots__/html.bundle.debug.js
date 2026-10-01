@@ -1,14 +1,14 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content__OR__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { content, value } = input;
 	_html("<div>");
-	_dynamic_tag($scope0_id, "#text/0", content, [value], 0, 1, $sg__input_content__OR__input_value);
+	_dynamic_tag($scope0_id, "#text/0", content, [value], 0, 1, $wg__input_content__OR__input_value);
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
-		content: _serialize_if($scope0_reason, 2) && content,
-		value: _serialize_if($scope0_reason, 1) && value
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
+		content: _write_if($scope0_reason, 2) && content,
+		value: _write_if($scope0_reason, 1) && value
 	}, "__tests__/tags/child.marko", 0, {
 		content: "1:9",
 		value: "1:18"
@@ -22,27 +22,27 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = 1;
 	let y = 2;
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(34);
+	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: x,
 		content: _content_resume("__tests__/template.marko_1*content", (outer) => {
-			const $scope1_reason = _scope_reason(), $sg__outer = _serialize_guard($scope1_reason, 0), $si__outer = _serialize_if($scope1_reason, 0);
+			const $scope1_reason = _scope_reason(), $wg__outer = _write_guard($scope1_reason, 0), $wi__outer = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $child_content__outer__closures = new Set();
 			child_default({
 				value: y,
 				content: _content("__tests__/template.marko_2*content", (inner) => {
-					const $scope2_reason = _scope_reason(), $sg__inner = _serialize_guard($scope2_reason, 0), $si__inner = _serialize_if($scope2_reason, 0);
+					const $scope2_reason = _scope_reason(), $wg__inner = _write_guard($scope2_reason, 0), $wi__inner = _write_if($scope2_reason, 0);
 					const $scope2_id = _scope_id();
-					_html(`<div>${_text_resume($scope2_id, "#text/0", outer, $sg__outer)}.${_text_resume($scope2_id, "#text/1", inner, $sg__inner * 2)}</div>`);
-					($si__outer || $si__inner) && _subscribe($si__outer && $child_content__outer__closures, _scope($scope2_id, { _: $si__outer && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_2_outer#1:2/subscribe", $sg__outer || $sg__inner);
-					$sg__outer || $sg__inner || ($si__outer || $si__inner) && _resume_branch($scope2_id);
+					_html(`<div>${_text_resume($scope2_id, "#text/0", outer, $wg__outer)}.${_text_resume($scope2_id, "#text/1", inner, $wg__inner * 2)}</div>`);
+					($wi__outer || $wi__inner) && _subscribe($wi__outer && $child_content__outer__closures, _scope($scope2_id, { _: $wi__outer && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_2_outer#1:2/subscribe", $wg__outer || $wg__inner);
+					$wg__outer || $wg__inner || ($wi__outer || $wi__inner) && _resume_branch($scope2_id);
 				}, $scope1_id)
 			});
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
-				"ClosureScopes:outer/5": $si__outer && $child_content__outer__closures
+				"ClosureScopes:outer/5": $wi__outer && $child_content__outer__closures
 			}, "__tests__/template.marko", "6:2");
 			_resume_branch($scope1_id);
 		}, $scope0_id)

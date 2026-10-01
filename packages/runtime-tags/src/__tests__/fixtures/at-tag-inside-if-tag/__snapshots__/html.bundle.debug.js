@@ -1,19 +1,19 @@
 // tags/custom-tag/index.marko
 var custom_tag_default = _template("__tests__/tags/custom-tag/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_thing_x = _serialize_guard($scope0_reason, 1), $sg__input_thing_content = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_thing_x = _write_guard($scope0_reason, 1), $wg__input_thing_content = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { thing: { x, content } } = input;
-	_dynamic_tag($scope0_id, "#text/0", content, {}, 0, 0, $sg__input_thing_content);
-	_html(`<div>${_text_resume($scope0_id, "#text/1", x, $sg__input_thing_x)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/custom-tag/index.marko", 0);
+	_dynamic_tag($scope0_id, "#text/0", content, {}, 0, 0, $wg__input_thing_content);
+	_html(`<div>${_text_resume($scope0_id, "#text/1", x, $wg__input_thing_x)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/custom-tag/index.marko", 0);
 });
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_x = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { x } = input;
-	_set_serialize_reason($sg__input_x << 1 | $sg__input_x << 3 | $sg__input_x << 5);
+	_set_scope_reason($wg__input_x << 1 | $wg__input_x << 3 | $wg__input_x << 5);
 	let $thing;
 	if (x) {
 		$thing = attrTag({
@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ thing: $thing });
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

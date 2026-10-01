@@ -4,16 +4,16 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Wrap = { content: _content("a0", ([$a, b]) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__$a = _serialize_guard($scope1_reason, 1), $sg__b = _serialize_guard($scope1_reason, 2);
-		_html(`<div>${_text_resume($scope1_id, "a", void 0 !== $a ? $a : 1, $sg__$a)}|${_text_resume($scope1_id, "b", b, $sg__b * 2)}</div>`);
-		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
+		const $scope1_reason = _scope_reason(), $wg__$a = _write_guard($scope1_reason, 1), $wg__b = _write_guard($scope1_reason, 2);
+		_html(`<div>${_text_resume($scope1_id, "a", void 0 !== $a ? $a : 1, $wg__$a)}|${_text_resume($scope1_id, "b", b, $wg__b * 2)}</div>`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	let n = 2;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(42);
+	_set_scope_reason(42);
 	const $childScope = _peek_scope_id();
 	Wrap.content([void 0, n]);
-	_set_serialize_reason(42);
+	_set_scope_reason(42);
 	const $childScope2 = _peek_scope_id();
 	Wrap.content([n, 10]);
 	_script($scope0_id, "a1");

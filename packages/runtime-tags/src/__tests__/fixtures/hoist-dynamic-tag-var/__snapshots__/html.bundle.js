@@ -18,7 +18,7 @@ var thing_default = _template("c", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $setHtml_getter = _hoist($scope0_id, "a0");
 	_if(() => {
@@ -33,11 +33,11 @@ var template_default = _template("a", (input) => {
 					_scope($scope2_id, { c: setHtml });
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $sg__input_show, $sg__input_show);
-			_scope($scope1_id, { _: $si__input_show && _scope_with_id($scope0_id) });
+			}, $scope1_id, "a", 1, $wg__input_show, $wg__input_show);
+			_scope($scope1_id, { _: $wi__input_show && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show);
+	}, $scope0_id, "a", 1, $wg__input_show, $wg__input_show);
 	thing_default({ value: $setHtml_getter });
 	_if(() => {
 		{
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, { c: setHtml2 });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, 0, $sg__input_show);
+	}, $scope0_id, "c", 1, 0, 0);
 	_if(() => {
 		{
 			const $scope4_id = _scope_id();
@@ -58,12 +58,12 @@ var template_default = _template("a", (input) => {
 			_scope($scope4_id, { c: setHtml3 });
 			return 0;
 		}
-	}, $scope0_id, "d", 1, 0, $sg__input_show);
+	}, $scope0_id, "d", 1, 0, 0);
 	{
 		const $scope5_id = _scope_id();
 		_script($scope5_id, "a4", 0);
 		_scope($scope5_id, { _: _scope_with_id($scope0_id) });
 	}
-	_script($scope0_id, "a5", $sg__input_show);
-	$si__input_show && _scope($scope0_id, {});
+	_script($scope0_id, "a5", $wg__input_show);
+	$wi__input_show && _scope($scope0_id, {});
 }, 1);

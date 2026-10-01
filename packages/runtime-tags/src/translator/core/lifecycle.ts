@@ -29,6 +29,9 @@ export default {
 
     const { node } = tag;
     const section = getOrCreateSection(tag);
+    for (const attr of node.attributes) {
+      (attr.value.extra ??= {}).consumed = true;
+    }
     const tagExtra = mergeReferences(
       section,
       tag.node,

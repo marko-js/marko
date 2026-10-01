@@ -6,28 +6,25 @@ import {
   getCanonicalBinding,
   getPropertyAlias,
 } from "./bindings";
-import { forEach } from "./optional";
+import { forEach, some } from "./optional";
 import { getExpressionReads } from "./references";
 import { isDirectClosure, type Section } from "./sections";
-
-const forSelectorsBySection = new WeakMap<
-  Section,
-  { keyBinding: Binding; closures: Set<Binding> }
->();
-const forSelectorValues = new WeakSet<Binding>();
 
 export function getForSelectorKey(
   bodySection: Section,
   closure: Binding,
 ): Binding | undefined {
-  const selectors = forSelectorsBySection.get(bodySection);
-  if (selectors?.closures.has(getCanonicalBinding(closure))) {
-    return selectors.keyBinding;
+  const { selector } = bodySection;
+  if (selector?.closures.has(getCanonicalBinding(closure))) {
+    return selector.key;
   }
 }
 
 export function isForSelectorValue(binding: Binding): boolean {
-  return forSelectorValues.has(binding);
+  return some(
+    binding.closureSections,
+    (section) => !!section.selector?.closures.has(binding),
+  );
 }
 
 export function detectForSelector(
@@ -46,12 +43,11 @@ export function detectForSelector(
         onlyComparesKey(closure, canonical, bodySection, keyBinding)
       ) {
         (closures ||= new Set()).add(canonical);
-        forSelectorValues.add(closure);
       }
     });
   }
   if (closures) {
-    forSelectorsBySection.set(bodySection, { keyBinding, closures });
+    bodySection.selector = { key: keyBinding, closures };
   }
 }
 

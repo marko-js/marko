@@ -10,7 +10,7 @@ var tags_child_default = _template("__tests__/tags/tags-child.marko", (input) =>
 	_scope($scope0_id, {
 		input_value: input.value,
 		n,
-		doubled: _serialize_if($scope0_reason, 0) && doubled
+		doubled: _write_if($scope0_reason, 0) && doubled
 	}, "__tests__/tags/tags-child.marko", 0, {
 		input_value: ["input.value"],
 		n: "1:6",

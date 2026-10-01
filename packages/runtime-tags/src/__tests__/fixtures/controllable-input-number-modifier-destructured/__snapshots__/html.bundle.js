@@ -12,7 +12,7 @@ var my_input_default = _template("b", (input) => {
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {
 		d: $countChange,
-		e: _serialize_if($scope0_reason, 0) && count
+		e: _write_if($scope0_reason, 0) && count
 	});
 });
 

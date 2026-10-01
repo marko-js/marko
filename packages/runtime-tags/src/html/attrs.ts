@@ -429,10 +429,10 @@ export function _attrs_content(
   nodeAccessor: Accessor,
   scopeId: number,
   tagName: string,
-  serializeReason?: 1 | 0,
+  markerGuard?: 1 | 0,
 ) {
   _html(`${_attrs(data, nodeAccessor, scopeId, tagName)}>`);
-  _attr_content(nodeAccessor, scopeId, data?.content, serializeReason);
+  _attr_content(nodeAccessor, scopeId, data?.content, markerGuard);
 }
 
 export function _attrs_partial(
@@ -461,10 +461,10 @@ export function _attrs_partial_content(
   nodeAccessor: Accessor,
   scopeId: number,
   tagName: string,
-  serializeReason?: 1 | 0,
+  markerGuard?: 1 | 0,
 ) {
   _html(`${_attrs_partial(data, skip, nodeAccessor, scopeId, tagName)}>`);
-  _attr_content(nodeAccessor, scopeId, data?.content, serializeReason);
+  _attr_content(nodeAccessor, scopeId, data?.content, markerGuard);
 }
 
 function writeControlledScope(

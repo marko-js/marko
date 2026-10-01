@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		let count = 0;
 		_html(`<button class=box>${_text_resume($scope1_id, "#text/1", count)} `);
-		_dynamic_tag($scope1_id, "#text/2", input.content, {}, 0, 0, _serialize_guard($scope1_reason, 0));
+		_dynamic_tag($scope1_id, "#text/2", input.content, {}, 0, 0, _write_guard($scope1_reason, 0));
 		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, { count }, "__tests__/template.marko", "4:2", { count: "5:8" });

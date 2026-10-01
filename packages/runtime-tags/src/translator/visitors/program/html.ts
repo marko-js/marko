@@ -15,10 +15,7 @@ import { forEach } from "../../util/optional";
 import { getReadReplacement } from "../../util/read-replacement";
 import { isRegisteredFnExtra } from "../../util/references";
 import { callRuntime, importRuntime } from "../../util/runtime";
-import {
-  getLocalsScopeAccessor,
-  getSectionInstancesAccessor,
-} from "../../util/scope-accessor";
+import { getLocalsScopeAccessor } from "../../util/scope-accessor";
 import {
   forEachSection,
   getScopeIdIdentifier,
@@ -26,19 +23,20 @@ import {
   isResumedBranch,
   type Section,
 } from "../../util/sections";
-import { getScopeReasonStatement } from "../../util/serialize-guard";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegisterId,
-  setSerializedValue,
+  setScopeProperty,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
+import { findSectionSlot, SlotKind } from "../../util/slots";
 import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
+import { getScopeReasonStatement } from "../../util/write-guard";
 import { flushInto } from "../../util/writer";
 
 export function getTemplateContentName() {
@@ -118,9 +116,12 @@ export default {
               addWriteScopeBuilder(currentSection, (expr) =>
                 callRuntime("_subscribe", subscribersIdentifier, expr),
               );
-              setSerializedValue(
-                parentSection,
-                getSectionInstancesAccessor(currentSection)!,
+              setScopeProperty(
+                findSectionSlot(
+                  currentSection,
+                  SlotKind.Instances,
+                  parentSection,
+                ),
                 subscribersIdentifier,
               );
             }

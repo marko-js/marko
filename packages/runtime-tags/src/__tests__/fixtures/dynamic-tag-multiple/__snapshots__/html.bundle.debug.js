@@ -1,16 +1,16 @@
 // tags/wrapper.marko
 var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_as__OR__htmlInput = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_as__OR__htmlInput = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { as: inputAs, ...htmlInput } = input;
 	_dynamic_tag($scope0_id, "#text/0", inputAs || "div", htmlInput, _content_resume("__tests__/tags/wrapper.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("hi");
-	}, $scope0_id), 0, $sg__input_as__OR__htmlInput);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
-		inputAs: _serialize_if($scope0_reason, 2) && inputAs,
-		htmlInput: _serialize_if($scope0_reason, 1) && htmlInput
+	}, $scope0_id), 0, $wg__input_as__OR__htmlInput);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
+		inputAs: _write_if($scope0_reason, 2) && inputAs,
+		htmlInput: _write_if($scope0_reason, 1) && htmlInput
 	}, "__tests__/tags/wrapper.marko", 0, {
 		inputAs: "1:13",
 		htmlInput: "1:25"

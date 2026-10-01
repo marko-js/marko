@@ -37,6 +37,6 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		g: input.tag,
 		h: n,
-		j: _serialize_if($scope0_reason, 0) && attrs
+		j: _write_if($scope0_reason, 0) && attrs
 	});
 }, 1);

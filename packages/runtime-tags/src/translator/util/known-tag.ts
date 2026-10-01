@@ -33,6 +33,13 @@ import {
 } from "./nested-attribute-tags";
 import { forEach, fromIter, type Opt, type SortedOpt } from "./optional";
 import {
+  addReasonExprs,
+  addReason,
+  getWriteReason,
+  getSourcesForExpr,
+  getSourcesForExprs,
+} from "./reasons";
+import {
   addRead,
   dropContent,
   dropNodes,
@@ -47,7 +54,10 @@ import {
   trackVarReferences,
 } from "./references";
 import { callRuntime, importRuntime } from "./runtime";
-import { getScopeAccessorLiteral } from "./scope-accessor";
+import {
+  getScopeAccessorLiteral,
+  getScopeOffsetAccessorLiteral,
+} from "./scope-accessor";
 import { createScopeReadExpression } from "./scope-read";
 import {
   getOrCreateSection,
@@ -55,28 +65,22 @@ import {
   getSection,
   getSectionForBody,
   isSameOrChildSection,
-  type ParamSerializeReasonGroups,
+  type ParamReasonGroups,
   type Section,
   sectionUtil,
   startSection,
 } from "./sections";
-import { buildGroupMask, getSerializeGuard } from "./serialize-guard";
-import {
-  addSerializeExpr,
-  addSerializeReason,
-  getSerializeReason,
-  getSerializeSourcesForExprs,
-} from "./serialize-reasons";
 import { setTagDownstream } from "./set-tag-sections-downstream";
 import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
   addStatement,
   getResumeRegisterId,
   initValue,
-  setBindingSerializedValue,
+  setScopeProperty,
   writeHTMLResumeStatements,
 } from "./signals";
-import { FORCED } from "./sources";
+import { findSlot, getSlot, SlotKind } from "./slots";
+import { ALWAYS } from "./sources";
 import { createSectionState } from "./state";
 import {
   toMemberExpression,
@@ -89,6 +93,7 @@ import {
   translateAttrs,
 } from "./translate-attrs";
 import translateVar from "./translate-var";
+import { buildGroupMask, getWriteGuard } from "./write-guard";
 import * as writer from "./writer";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -159,33 +164,40 @@ export function knownTagAnalyze(
       tag.node.var!.type === "Identifier" &&
       tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
     );
-    // A recursive call's return is taken as forced: the content's `<return>`
+    // A recursive call's return is taken as always: the content's `<return>`
     // is unsettled here and is not mapped through the call's inputs.
     const varExpr =
       isSameOrChildSection(contentSection, section) ||
       (tagExtra.defineBodySection
         ? contentSection.returnValueExpr
-        : mapParamReasonToExpr(
-            exprs,
-            contentSection.returnSerializeReason &&
-              (contentSection.returnSerializeReason.forced ||
-                !!contentSection.returnSerializeReason.state ||
-                (contentSection.returnSerializeReason
-                  .param as Opt<InputBinding>)),
-          ));
-    varBinding.scopeOffset = createBinding(
-      "#scopeOffset",
-      BindingType.dom,
-      section,
-    );
+        : mapParamReasonToExpr(exprs, getReturnInputs(contentSection)));
+    varBinding.returnedBy = childScopeBinding;
+    childScopeBinding.reserveSize = 1;
     setBindingDownstream(varBinding, varExpr);
     if (mutatesTagVar || varExpr === true) {
-      addSerializeReason(section, FORCED, childScopeBinding);
+      addReason(getSlot(childScopeBinding), ALWAYS);
     }
-    if (varExpr !== true) addSerializeExpr(section, varExpr, childScopeBinding);
+    if (varExpr !== true) addReasonExprs(getSlot(childScopeBinding), varExpr);
   }
 
-  addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
+  addReasonExprs(getSlot(childScopeBinding), fromIter(attrExprs));
+}
+
+// The inputs another template's return value is computed from, or `true` when
+// it also reads state.
+function getReturnInputs(section: Section) {
+  const sources =
+    section.returnValueExpr && getSourcesForExpr(section.returnValueExpr);
+  return (
+    sources &&
+    (sources.always || !!sources.state || (sources.param as Opt<InputBinding>))
+  );
+}
+
+// The child's scope resumes, and with it any tag variable, which HTML wires
+// with `_var` and DOM registers for.
+function isChildScopeResumed(tagExtra: t.MarkoTagExtra) {
+  return !!getWriteReason(findSlot(tagExtra.nodeBinding!));
 }
 
 // Arguments a child reads none of are dropped, so the render call passes
@@ -233,13 +245,9 @@ export function knownTagTranslateHTML(
         };
 
   const childScopeBinding = tagExtra.nodeBinding!;
-  const childScopeSerializeReason = getSerializeReason(
-    section,
-    childScopeBinding,
-  );
 
   let varStatement: t.Statement | undefined;
-  if (childScopeSerializeReason) {
+  if (isChildScopeResumed(tagExtra)) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
@@ -249,9 +257,8 @@ export function knownTagTranslateHTML(
       ]),
     );
 
-    setBindingSerializedValue(
-      section,
-      childScopeBinding,
+    setScopeProperty(
+      findSlot(childScopeBinding),
       callRuntime("_existing_scope", peekScopeId),
     );
 
@@ -262,7 +269,7 @@ export function knownTagTranslateHTML(
         callRuntime(
           "_var",
           getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(tagVar.extra!.binding!.scopeOffset!),
+          getScopeOffsetAccessorLiteral(childScopeBinding),
           peekScopeId,
           t.stringLiteral(
             getResumeRegisterId(section, tagVar.extra?.binding, "var"),
@@ -273,17 +280,15 @@ export function knownTagTranslateHTML(
   }
 
   if (contentSection.paramReasonGroups) {
-    const childSerializeReasonExpr = buildChildSerializeReason(
+    const childGroupMask = buildChildGroupMask(
       section,
       childScopeBinding,
       contentSection.paramReasonGroups,
     );
 
-    if (childSerializeReasonExpr) {
+    if (childGroupMask) {
       tag.insertBefore(
-        t.expressionStatement(
-          callRuntime("_set_serialize_reason", childSerializeReasonExpr),
-        ),
+        t.expressionStatement(callRuntime("_set_scope_reason", childGroupMask)),
       );
     }
   }
@@ -337,9 +342,8 @@ export function knownTagTranslateDOM(
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
     const source = initValue(varBinding);
-    // Register for resume only when the child scope serializes (mirrors the
-    // HTML `_var` gate); the `_var` setup call below references the signal.
-    source.register = !!getSerializeReason(tagSection, childScopeBinding);
+    // The `_var` setup call below references the signal.
+    source.register = isChildScopeResumed(extra);
     source.referenced = true;
     source.buildAssignment = (valueSection, value) => {
       const changeArgs = [
@@ -384,13 +388,9 @@ export function finalizeKnownTags(section: Section) {
     const contentSection = tagExtra[kContentSection]!;
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
       for (const group of contentSection.paramReasonGroups) {
-        addSerializeReason(
-          section,
-          getSerializeSourcesForExprs(
-            mapParamReasonToExpr(knownExprs, group.reason),
-          ),
-          scopeBinding,
-          group.id,
+        addReason(
+          getSlot(scopeBinding, SlotKind.ParamGroup, section, group),
+          getSourcesForExprs(mapParamReasonToExpr(knownExprs, group.reason)),
         );
       }
     }
@@ -399,15 +399,17 @@ export function finalizeKnownTags(section: Section) {
 
 // Each group's serialize guard is its bit; groups sharing a guard still shift it
 // once each, since folding them into one term would only save server bytes.
-function buildChildSerializeReason(
+function buildChildGroupMask(
   section: Section,
   childScopeBinding: Binding,
-  reasonGroups: ParamSerializeReasonGroups,
+  reasonGroups: ParamReasonGroups,
 ) {
   return buildGroupMask(
     reasonGroups.map((group) => {
-      const reason = getSerializeReason(section, childScopeBinding, group.id);
-      const guard = reason && getSerializeGuard(section, reason, false)!;
+      const reason = getWriteReason(
+        findSlot(childScopeBinding, SlotKind.ParamGroup, section, group),
+      );
+      const guard = reason && getWriteGuard(section, reason, false)!;
       return {
         value: !guard
           ? undefined

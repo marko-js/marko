@@ -1,19 +1,19 @@
 // child-a.marko
 var child_a_default = _template("__tests__/child-a.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span class=a>${_text_resume($scope0_id, "#text/0", input.value, $sg__input_value)}</span>`);
-	_script($scope0_id, "__tests__/child-a.marko_0", $sg__input_value);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child-a.marko", 0);
+	_html(`<span class=a>${_text_resume($scope0_id, "#text/0", input.value, $wg__input_value)}</span>`);
+	_script($scope0_id, "__tests__/child-a.marko_0", $wg__input_value);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child-a.marko", 0);
 });
 
 // child-b.marko
 var child_b_default = _template("__tests__/child-b.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span class=b>${_text_resume($scope0_id, "#text/0", input.value * 2, $sg__input_value)}</span>`);
-	_script($scope0_id, "__tests__/child-b.marko_0", $sg__input_value);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child-b.marko", 0);
+	_html(`<span class=b>${_text_resume($scope0_id, "#text/0", input.value * 2, $wg__input_value)}</span>`);
+	_script($scope0_id, "__tests__/child-b.marko_0", $wg__input_value);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child-b.marko", 0);
 });
 
 // template.marko
@@ -24,10 +24,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let value = 0;
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	$ChildA_withLoadAssets({ value });
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope2 = _peek_scope_id();
 	$ChildB_withLoadAssets({ value });
 	_script($scope0_id, "__tests__/template.marko_0");

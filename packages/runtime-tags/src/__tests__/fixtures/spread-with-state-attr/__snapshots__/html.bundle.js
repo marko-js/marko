@@ -13,6 +13,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		e: input.attrs,
-		f: _serialize_if($scope0_reason, 0) && title
+		f: _write_if($scope0_reason, 0) && title
 	});
 }, 1);

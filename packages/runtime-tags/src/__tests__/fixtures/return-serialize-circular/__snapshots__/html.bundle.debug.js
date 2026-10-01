@@ -8,8 +8,8 @@ var setter_default = _template("__tests__/tags/setter.marko", (input) => {
 	const $return = (input.value, setter);
 	_scope($scope0_id, {
 		input_valueChange: input.valueChange,
-		input_value: _serialize_if($scope0_reason, 0) && input.value,
-		setter: _serialize_if($scope0_reason, 1) && setter
+		input_value: _write_if($scope0_reason, 0) && input.value,
+		setter: _write_if($scope0_reason, 1) && setter
 	}, "__tests__/tags/setter.marko", 0, {
 		input_valueChange: ["input.valueChange"],
 		input_value: ["input.value"],
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_set_serialize_reason(8);
+	_set_scope_reason(8);
 	const $childScope = _peek_scope_id();
 	let setCount = setter_default({
 		value: count,

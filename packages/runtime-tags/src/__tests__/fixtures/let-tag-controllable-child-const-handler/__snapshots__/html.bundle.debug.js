@@ -6,8 +6,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "#text/1", x)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_scope($scope0_id, {
-		input_value: _serialize_if($scope0_reason, 1) && input.value,
-		input_valueChange: _serialize_if($scope0_reason, 0) && input.valueChange,
+		input_value: _write_if($scope0_reason, 1) && input.value,
+		input_valueChange: _write_if($scope0_reason, 0) && input.valueChange,
 		"TagVariableChange:x": input.valueChange || void 0
 	}, "__tests__/tags/child.marko", 0, {
 		input_value: ["input.value"],

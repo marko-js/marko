@@ -9,8 +9,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<input${_attr_input_value($scope1_id, "#input/0", a, $valueChange)}>${_el_resume($scope1_id, "#input/0")}<input${_attr_input_value($scope1_id, "#input/1", a, $valueChange)}>${_el_resume($scope1_id, "#input/1")}<input${_attr_input_value($scope1_id, "#input/2", a, $valueChange)}>${_el_resume($scope1_id, "#input/2")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
-			$aChange: _serialize_if($scope1_reason, 0) && $aChange,
-			a: _serialize_if($scope1_reason, 1) && a
+			$aChange: _write_if($scope1_reason, 0) && $aChange,
+			a: _write_if($scope1_reason, 1) && a
 		}, "__tests__/template.marko", "1:2", {
 			$aChange: 0,
 			a: "1:16",
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	let n = 1;
 	_html(`<button>inc ${_text_resume($scope0_id, "#text/1", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_set_serialize_reason(10);
+	_set_scope_reason(10);
 	const $childScope = _peek_scope_id();
 	Wrap.content({ a: "z" + n });
 	_script($scope0_id, "__tests__/template.marko_0");

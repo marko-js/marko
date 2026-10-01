@@ -3,6 +3,12 @@ import { types as t } from "@marko/compiler";
 import { getDebugNames, getDebugNamesAsIdentifier } from "./bindings";
 import { generateUid, getSharedUid } from "./generate-uid";
 import { some } from "./optional";
+import {
+  getWriteReason,
+  isConditionalReason,
+  type Reason,
+  type Reasons,
+} from "./reasons";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
@@ -10,35 +16,31 @@ import {
   isSameOrChildSection,
   type Section,
 } from "./sections";
-import {
-  isReasonDynamic,
-  type SerializeReason,
-  type SerializeReasons,
-} from "./serialize-reasons";
+import { type Slot } from "./slots";
 import { type Sources } from "./sources";
 import { createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
-type DynamicSerializeReason = Sources & { state: undefined };
+type ConditionalReason = Sources & { state: undefined };
 
-interface SectionReasonState {
-  if: TypeState;
-  guard: TypeState;
+interface SectionGuards {
+  if: GuardHoists;
+  guard: GuardHoists;
   declarators: t.VariableDeclarator[];
 }
 
 // Keyed by param reason group: a section's guard for a set of params is
 // that group's check, whatever else the reason reads.
-interface TypeState {
+interface GuardHoists {
   names: Map<number, string>;
   pending: Map<number, t.ParenthesizedExpression>;
 }
 
-const [getSectionReasonState] = createSectionState<SectionReasonState>(
-  "serializeReasonState",
+const [getSectionGuards] = createSectionState<SectionGuards>(
+  "sectionGuards",
   (section) => ({
-    if: createTypeState(),
-    guard: createTypeState(),
+    if: createGuardHoists(),
+    guard: createGuardHoists(),
     declarators: [
       t.variableDeclarator(
         scopeReasonIdentifier(section),
@@ -99,42 +101,42 @@ export function buildGroupMask(
 // Every section body consumes (and clears) its caller's reason; it binds it,
 // with its hoisted guards, only when a guard is dynamic.
 export function getScopeReasonStatement(section: Section): t.Statement {
-  return hasDynamicSerializeReason(section)
-    ? t.variableDeclaration("const", getSectionReasonState(section).declarators)
+  return hasConditionalReason(section)
+    ? t.variableDeclaration("const", getSectionGuards(section).declarators)
     : t.expressionStatement(callRuntime("_scope_reason"));
 }
 
-export function getSerializeGuard(
+export function getWriteGuard(
   section: Section,
-  reason: undefined | SerializeReason,
+  reason: undefined | Reason,
   optional: boolean,
 ) {
-  if (!isDynamicSerializeGuard(section, reason)) {
+  if (!isDynamicWriteGuard(section, reason)) {
     if (!reason) return t.numericLiteral(0);
 
     return optional
       ? undefined
       : withLeadingComment(
           t.numericLiteral(1),
-          getDebugNames(reason.forced ? undefined : reason.state),
+          getDebugNames(reason.always ? undefined : reason.state),
         );
   }
 
   return getOrHoist(reason, true);
 }
 
-export function getSerializeGuardForAny(
+export function getWriteGuardForAny(
   section: Section,
-  reasons: undefined | SerializeReasons,
+  reasons: undefined | Reasons,
   optional: boolean,
 ) {
   if (!Array.isArray(reasons)) {
-    return getSerializeGuard(section, reasons, optional);
+    return getWriteGuard(section, reasons, optional);
   }
 
   // A static member decides before any dynamic guard is built (and hoisted).
   for (const reason of reasons) {
-    if (!isReasonDynamic(reason)) {
+    if (!isConditionalReason(reason)) {
       return optional
         ? undefined
         : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
@@ -143,18 +145,18 @@ export function getSerializeGuardForAny(
 
   let expr!: t.Expression;
   for (const reason of reasons) {
-    const guard = getSerializeGuard(section, reason, false)!;
+    const guard = getWriteGuard(section, reason, false)!;
     expr = expr ? t.logicalExpression("||", expr, guard) : guard;
   }
 
   return expr;
 }
 
-export function getExprIfSerialized<
-  T extends undefined | SerializeReason,
+export function getExprIfWritten<
+  T extends undefined | Reason,
   R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
-  if (!isDynamicSerializeGuard(section, reason)) {
+  if (!isDynamicWriteGuard(section, reason)) {
     return (reason && expr) as R;
   }
 
@@ -163,7 +165,7 @@ export function getExprIfSerialized<
 }
 
 function getOrHoist(
-  reason: DynamicSerializeReason,
+  reason: ConditionalReason,
   isGuard: boolean,
 ): t.Expression | undefined {
   let expr: t.Expression | undefined;
@@ -183,16 +185,14 @@ function getOrHoistSectionGuard(
 ): t.Expression {
   if (!section.paramReasonGroups) return scopeReasonIdentifier(section);
 
-  const state = getSectionReasonState(section);
+  const state = getSectionGuards(section);
   const tracking = isGuard ? state.guard : state.if;
   const index = getParamReasonGroupIndex(section, params);
   const name = tracking.names.get(index);
   if (name) return t.identifier(name);
 
   const guard = callRuntime(
-    (isGuard
-      ? "_serialize_guard"
-      : "_serialize_if") satisfies HTMLRuntimeHelpers,
+    (isGuard ? "_write_guard" : "_write_if") satisfies HTMLRuntimeHelpers,
     scopeReasonIdentifier(section),
     withLeadingComment(t.numericLiteral(index), getDebugNames(params)),
   );
@@ -204,7 +204,7 @@ function getOrHoistSectionGuard(
   }
 
   const hoisted = generateUid(
-    `${isGuard ? "sg" : "si"}__${getDebugNamesAsIdentifier(params)}`,
+    `${isGuard ? "wg" : "wi"}__${getDebugNamesAsIdentifier(params)}`,
   );
   tracking.names.set(index, hoisted);
   tracking.pending.delete(index);
@@ -214,11 +214,11 @@ function getOrHoistSectionGuard(
 }
 
 // Whether the guard for a reason is a runtime mask rather than a constant.
-function isDynamicSerializeGuard(
+function isDynamicWriteGuard(
   section: Section,
-  reason: undefined | SerializeReason,
-): reason is DynamicSerializeReason {
-  return isReasonDynamic(reason) && !isCrossSection(section, reason);
+  reason: undefined | Reason,
+): reason is ConditionalReason {
+  return isConditionalReason(reason) && !isCrossSection(section, reason);
 }
 
 function isCrossSection(section: Section, reason: Sources) {
@@ -228,21 +228,22 @@ function isCrossSection(section: Section, reason: Sources) {
   );
 }
 
-function createTypeState(): TypeState {
+function createGuardHoists(): GuardHoists {
   return {
     names: new Map(),
     pending: new Map(),
   };
 }
 
-function hasDynamicSerializeReason(section: Section) {
-  if (section.paramReasonGroups || isReasonDynamic(section.serializeReason)) {
+function hasConditionalReason(section: Section) {
+  if (section.paramReasonGroups || isConditionalReason(section.reason)) {
     return true;
   }
-  for (const reason of section.serializeReasons.values()) {
-    if (isReasonDynamic(reason)) return true;
-  }
-  return false;
+  return some(section.slots, isConditionalSlot);
+}
+
+function isConditionalSlot(slot: Slot) {
+  return isConditionalReason(getWriteReason(slot));
 }
 
 function scopeReasonIdentifier(section: Section) {

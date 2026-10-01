@@ -1,10 +1,10 @@
 // tags/thing.marko
 var thing_default = _template("__tests__/tags/thing.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
-	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $sg__input_content);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/thing.marko", 0);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/thing.marko", 0);
 });
 
 // tags/child.marko
@@ -19,7 +19,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $setHtml_getter = _hoist($scope0_id, "__tests__/template.marko_0_setHtml#1:2/hoist");
 	const $thing_content__subscribers = new Set();
@@ -44,15 +44,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_assert_hoist(setHtml2);
 		}, $scope2_id) });
 		_subscribe($inputshowThingnull_content__subscribers, _scope($scope2_id, { "ClosureScopes:3": $thing_content2__subscribers }, "__tests__/template.marko", "15:4"));
-	}, $scope0_id), 0, $sg__input_show);
+	}, $scope0_id), 0, $wg__input_show);
 	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		let setHtml3 = child_default({});
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, { setHtml3 }, "__tests__/template.marko", "26:4", { setHtml3: "27:10" }));
 		_assert_hoist(setHtml3);
-	}, $scope0_id), 0, $sg__input_show);
-	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
+	}, $scope0_id), 0, $wg__input_show);
+	_script($scope0_id, "__tests__/template.marko_0", $wg__input_show);
 	_scope($scope0_id, {
 		"ClosureScopes:1": $thing_content__subscribers,
 		"ClosureScopes:2": $inputshowThingnull_content__subscribers,

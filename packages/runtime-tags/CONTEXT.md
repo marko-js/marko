@@ -95,11 +95,21 @@ handler attachment, and controllable setup. Resumable effects register and
 queue per scope through `_script`.
 _Avoid_: lifecycle hook, arbitrary JavaScript side effect
 
-**Serialize reason**:
-Why a section, scope property, marker, or registration must reach the browser.
-Forced and state-backed `Sources` are unconditional; parameter-only sources
-produce per-call guards; absence means omit.
-_Avoid_: serialization flag, serialized value
+**Reason**:
+Why a section, scope property, marker, or registration must reach the browser:
+the `Sources` whose changes lead client code to read it after resume. `always`
+and state-backed reasons are unconditional; parameter-only ones produce per-call
+guards; absence means omit.
+_Avoid_: serialize reason, serialization flag, serialized value
+
+**Slot**:
+What analysis records, with its reason, for one thing client code may read
+after resume: either a place in a scope the server writes at an _accessor_ (a
+value, a change handler, an owner link), or a fact a guard decides on (a
+control-flow tag's condition changing, a branch or the scope itself resuming, a
+known tag's param group). Owned by a binding or a section, found by owner and
+kind.
+_Avoid_: serialize key, prop key
 
 ## DOM runtime
 

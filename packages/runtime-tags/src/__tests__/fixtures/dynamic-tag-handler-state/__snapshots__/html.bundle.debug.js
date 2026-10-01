@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_tag: input.tag,
 		n,
-		attrs: _serialize_if($scope0_reason, 0) && attrs
+		attrs: _write_if($scope0_reason, 0) && attrs
 	}, "__tests__/template.marko", 0, {
 		input_tag: ["input.tag"],
 		n: "1:6",

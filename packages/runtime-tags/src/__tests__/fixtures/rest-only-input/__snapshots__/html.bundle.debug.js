@@ -1,10 +1,10 @@
 // tags/echo/index.marko
 var echo_default = _template("__tests__/tags/echo/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { ...rest } = input;
-	_html(`<em>${_text_resume($scope0_id, "#text/0", rest.label, $sg__input_label)}</em>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/echo/index.marko", 0);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", rest.label, $wg__input_label)}</em>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/echo/index.marko", 0);
 });
 
 // template.marko
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let label = "a";
 	_html("<main>");
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	echo_default({ label });
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);

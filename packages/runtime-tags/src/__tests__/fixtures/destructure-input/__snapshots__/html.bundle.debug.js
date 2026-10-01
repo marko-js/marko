@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { content, ...rest } = input;
 	_html(`<div${_attrs(rest, "#div/0", $scope0_id, "div")}>`);
-	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_rest#5");
 	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0, { "EventAttributes:#div/0": ["...rest", "2:9"] });

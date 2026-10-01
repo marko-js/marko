@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $selected__closures = new Set();
 	let selected = 1;
@@ -28,14 +28,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", $sg__input_show, $sg__input_show, $sg__input_show, 0, 1);
+	}, $scope0_id, "#text/0", $wg__input_show, $wg__input_show, $wg__input_show, 0, 1);
 	_scope($scope0_id, {
-		selected: $si__input_show && selected,
-		rows: $si__input_show && rows,
+		selected: $wi__input_show && selected,
+		rows: $wi__input_show && rows,
 		"ClosureScopes:selected/6": $selected__closures
 	}, "__tests__/template.marko", 0, {
 		selected: "1:6",
 		rows: "2:6"
 	});
-	$sg__input_show || _resume_branch($scope0_id);
+	$wg__input_show || _resume_branch($scope0_id);
 }, 1);

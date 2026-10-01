@@ -1,19 +1,19 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope0_reason, 2), $sg__input_show = _serialize_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "a", input.item, $sg__input_item)}</span>`);
-			_script($scope1_id, "b0", $sg__input_item);
+			_html(`<span>${_text_resume($scope1_id, "a", input.item, $wg__input_item)}</span>`);
+			_script($scope1_id, "b0", $wg__input_item);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", _serialize_guard($scope0_reason, 0), $sg__input_show, $sg__input_show, 0, 1);
+	}, $scope0_id, "a", _write_guard($scope0_reason, 0), $wg__input_show, $wg__input_show, 0, 1);
 	_scope($scope0_id, {
 		c: input,
-		e: _serialize_if($scope0_reason, 1) && input.item
+		e: _write_if($scope0_reason, 1) && input.item
 	});
 });
 
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		_set_serialize_reason(42);
+		_set_scope_reason(42);
 		const $childScope = _peek_scope_id();
 		child_default({
 			item,

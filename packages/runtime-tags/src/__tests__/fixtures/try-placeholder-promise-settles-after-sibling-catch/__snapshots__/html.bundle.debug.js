@@ -25,9 +25,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>${_escape(v)}</p>`);
 		}, 0);
 	}, void 0, (err) => {
-		const $scope5_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope5_reason, 0);
+		const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
 		const $scope5_id = _scope_id();
-		_html(_text_resume($scope5_id, "#text/0", err.message, $sg__err_message));
-		_serialize_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "19:4");
+		_html(_text_resume($scope5_id, "#text/0", err.message, $wg__err_message));
+		_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "19:4");
 	}, void 0, "__tests__/template.marko_5*content");
 }, 1);

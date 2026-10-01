@@ -12,7 +12,7 @@ var my_input_default = _template("__tests__/tags/my-input.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/my-input.marko_0");
 	_scope($scope0_id, {
 		$countChange,
-		count: _serialize_if($scope0_reason, 0) && count
+		count: _write_if($scope0_reason, 0) && count
 	}, "__tests__/tags/my-input.marko", 0, {
 		$countChange: 0,
 		count: "4:10",

@@ -117,7 +117,7 @@ export default {
 
       if (
         tagExtra.tagNameLoad ||
-        (childSection !== programSection && !childExtra.domExports?.setupEmpty)
+        (childSection !== programSection && childSection.hasSetupWork)
       ) {
         // Add the child's setup call unless it proved its setup export a noop;
         // load tags always wire it up, and a self call follows `callSections`.
@@ -129,7 +129,7 @@ export default {
         childSection,
         programSection === childSection
           ? programSection.params && getBindingPropTree(programSection.params)
-          : childExtra.domExports?.params,
+          : childExtra.paramsTree,
       );
 
       const tagName = getStaticTagName(tag.node);
@@ -186,7 +186,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const programSection = getProgram().node.extra.section!;
   const childFile = loadFileForTag(tag)!;
   const childExtra = childFile.ast.program.extra;
-  const childExports = childExtra.domExports!;
+  const childExports = childExtra.exportNames!;
   const childSection = childExtra.section!;
   const loadConfig = node.extra?.tagNameLoad;
   const isLoad = !!loadConfig;
@@ -300,9 +300,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       tag,
       (binding, preferredName) =>
         getSignal(programSection, binding, preferredName).identifier,
-      childExports.setupEmpty
-        ? undefined
-        : (section, childBinding) => {
+      childSection.hasSetupWork
+        ? (section, childBinding) => {
             addStatement(
               "render",
               section,
@@ -313,7 +312,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 ]),
               ),
             );
-          },
+          }
+        : undefined,
     );
   } else {
     knownTagTranslateDOM(
@@ -325,9 +325,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           (directContent && binding.directContentExport) || binding.export!,
           preferredName,
         ),
-      childExports.setupEmpty
-        ? undefined
-        : (section, childBinding) => {
+      childSection.hasSetupWork
+        ? (section, childBinding) => {
             addStatement(
               "render",
               section,
@@ -344,7 +343,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 ),
               ),
             );
-          },
+          }
+        : undefined,
     );
 
     // Registered here only so imports land in document order; structure

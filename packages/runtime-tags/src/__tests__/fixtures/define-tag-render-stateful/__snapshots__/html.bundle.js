@@ -6,11 +6,11 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	const MyTag = { content: _content("a0", ({ name, count }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__name = _serialize_guard($scope1_reason, 1), $sg__count = _serialize_guard($scope1_reason, 2);
-		_html(`<div>Hello ${_text_resume($scope1_id, "a", name, $sg__name * 2)} ${_text_resume($scope1_id, "b", count, $sg__count * 2)}</div>`);
-		_serialize_if($scope1_reason, 0) && _scope($scope1_id, {});
+		const $scope1_reason = _scope_reason(), $wg__name = _write_guard($scope1_reason, 1), $wg__count = _write_guard($scope1_reason, 2);
+		_html(`<div>Hello ${_text_resume($scope1_id, "a", name, $wg__name * 2)} ${_text_resume($scope1_id, "b", count, $wg__count * 2)}</div>`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
-	_set_serialize_reason(34);
+	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	MyTag.content({
 		name: "Ryan",

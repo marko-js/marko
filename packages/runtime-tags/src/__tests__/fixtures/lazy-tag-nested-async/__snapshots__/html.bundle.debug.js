@@ -3,7 +3,7 @@ var grand_child_default = _template("__tests__/grand-child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.value;
-	_html(`<button id=grand>grand:${_text_resume($scope0_id, "#text/1", n, 2)}:${_text_resume($scope0_id, "#text/2", input.value, _serialize_guard($scope0_reason, 0) * 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=grand>grand:${_text_resume($scope0_id, "#text/1", n, 2)}:${_text_resume($scope0_id, "#text/2", input.value, _write_guard($scope0_reason, 0) * 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_await($scope0_id, "#text/3", resolveAfter(20, 2), (v) => {
 		const $scope1_id = _scope_id();
 		_html(`<span id=grand-await>${_escape(v)}</span>`);
@@ -23,7 +23,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_await($scope0_id, "#text/2", resolveAfter(10, 1), (value) => {
 		const $scope1_id = _scope_id();
 		_html(`<span id=child-await>${_escape(value)}</span>`);
-		_set_serialize_reason(2);
+		_set_scope_reason(2);
 		const $childScope = _peek_scope_id();
 		$GrandChild_withLoadAssets({ value: count });
 		_subscribe($count__closures, _scope($scope1_id, {
@@ -47,5 +47,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_html("<div id=after>after</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

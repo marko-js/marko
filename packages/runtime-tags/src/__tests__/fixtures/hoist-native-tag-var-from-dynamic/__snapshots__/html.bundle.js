@@ -1,15 +1,15 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $sg__input_content);
-	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $sg__input_content);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $wg__input_content);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_hoist($scope0_id, "a0");
 	const $child_content__subscribers = /* @__PURE__ */ new Set();
@@ -38,14 +38,14 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			B3: $child_content2__subscribers
 		}));
-	}, $scope0_id), 0, $sg__input_show);
+	}, $scope0_id), 0, $wg__input_show);
 	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content("a7", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		_html(`<p></p>${_el_resume($scope4_id, "a")}`);
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, {}));
-	}, $scope0_id), 0, $sg__input_show);
-	_script($scope0_id, "a8", $sg__input_show);
+	}, $scope0_id), 0, $wg__input_show);
+	_script($scope0_id, "a8", $wg__input_show);
 	_scope($scope0_id, {
 		B1: $child_content__subscribers,
 		B2: $inputshowChildnull_content__subscribers,

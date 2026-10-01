@@ -1,18 +1,17 @@
 import { types as t } from "@marko/compiler";
 
 import { type Binding } from "./bindings";
-import { ContentType, type Section } from "./sections";
-import { getSerializeGuard, getSerializeGuardForAny } from "./serialize-guard";
-import { kBranchSerializeReason } from "./serialize-reasons";
 import {
-  getSerializeReason,
-  isStateSerializeReason,
-  isStaticSerializeReason,
-  type SerializeReason,
-  type SerializeReasons,
-} from "./serialize-reasons";
+  getWriteReason,
+  isStateReason,
+  isUnconditionalReason,
+  type Reasons,
+} from "./reasons";
+import { ContentType, type Section } from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
+import { findSectionSlot, findSlot, SlotKind } from "./slots";
 import { createProgramState } from "./state";
+import { getWriteGuard, getWriteGuardForAny } from "./write-guard";
 
 // Shared wiring for control flow branches (and `<show>`'s end args), so the
 // tags cannot drift apart one copy at a time.
@@ -29,17 +28,15 @@ export function initBranchSection(
 // upstream keeps the branch-visiting signal, so the owner links at
 // resume instead of serializing.
 export function resumeOwnerByMarkerWhenStatic(
-  tagSection: Section,
   bodySection: Section,
   nodeBinding: Binding,
-  statefulReasonKey: symbol,
 ) {
   if (
-    isStateSerializeReason(getSerializeReason(tagSection, statefulReasonKey)) &&
-    isStaticSerializeReason(
-      getSerializeReason(bodySection, kBranchSerializeReason),
+    isStateReason(getWriteReason(findSlot(nodeBinding, SlotKind.BranchExpr))) &&
+    isUnconditionalReason(
+      getWriteReason(findSectionSlot(bodySection, SlotKind.Branch)),
     ) &&
-    isStaticSerializeReason(getSerializeReason(tagSection, nodeBinding))
+    isUnconditionalReason(getWriteReason(findSlot(nodeBinding)))
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
@@ -48,21 +45,19 @@ export function resumeOwnerByMarkerWhenStatic(
 export function getBranchResumeArgs(
   tagSection: Section,
   nodeBinding: Binding,
-  branchReasons: SerializeReasons,
-  statefulReasonKey: symbol,
+  branchReasons: Reasons,
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean,
 ) {
   const endArgs = getBranchEndArgs(
     tagSection,
     nodeBinding,
-    getSerializeReason(tagSection, statefulReasonKey),
     onlyChildParentTagName,
     singleNode,
   );
-  const [serializeMarker] = endArgs;
+  const [markerGuard] = endArgs;
   return [
-    getSerializeGuardForAny(tagSection, branchReasons, !serializeMarker),
+    getWriteGuardForAny(tagSection, branchReasons, !markerGuard),
     ...endArgs,
   ];
 }
@@ -70,29 +65,27 @@ export function getBranchResumeArgs(
 export function getBranchEndArgs(
   tagSection: Section,
   nodeBinding: Binding,
-  statefulReason: SerializeReason | undefined,
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean | undefined,
 ) {
-  const markerSerializeReason = getSerializeReason(tagSection, nodeBinding);
-  const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
+  const branchExprReason = getWriteReason(
+    findSlot(nodeBinding, SlotKind.BranchExpr),
+  );
+  const markerReason = getWriteReason(findSlot(nodeBinding));
+  const skipParentEnd = onlyChildParentTagName && markerReason;
   if (skipParentEnd) {
     getBranchEndTags().add(nodeBinding);
   }
 
-  const serializeStateful = getSerializeGuard(
+  const branchExprGuard = getWriteGuard(
     tagSection,
-    statefulReason,
+    branchExprReason,
     !(skipParentEnd || singleNode),
   );
-  const serializeMarker = getSerializeGuard(
-    tagSection,
-    markerSerializeReason,
-    !serializeStateful,
-  );
+  const markerGuard = getWriteGuard(tagSection, markerReason, !branchExprGuard);
   return [
-    serializeMarker,
-    serializeStateful,
+    markerGuard,
+    branchExprGuard,
     skipParentEnd
       ? t.stringLiteral(`</${onlyChildParentTagName}>`)
       : singleNode

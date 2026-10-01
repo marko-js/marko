@@ -1,0 +1,12 @@
+<let/open=false/>
+<button onClick() { open = !open }>toggle</button>
+<div>
+  <if=input.show><span>if input</span></if>
+</div>
+<div>
+  <if=open><span>if state</span></if>
+</div>
+<for|item| of=input.items><p>${item}</p></for>
+<for|item| of=open ? ["x", "y"] : ["x"]><p>${item}</p></for>
+<show=input.show><span>show input</span></show>
+<show=open><span>show state</span></show>

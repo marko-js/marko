@@ -11,7 +11,7 @@ import {
   _scope,
   _scope_id,
   _script,
-  _set_serialize_reason,
+  _set_scope_reason,
   CLIENT_ALL,
   $global,
   Boundary,
@@ -162,11 +162,11 @@ export const compat = {
         _script(scopeId, SET_SCOPE_REGISTER_ID);
       }
 
-      _set_serialize_reason(willRerender ? CLIENT_ALL : 0);
+      _set_scope_reason(willRerender ? CLIENT_ALL : 0);
       try {
         renderer(normalizedInput);
       } finally {
-        _set_serialize_reason(undefined);
+        _set_scope_reason(undefined);
       }
 
       const asyncOut = classAPIOut.beginAsync({ last: true, timeout: -1 });

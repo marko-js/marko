@@ -19,7 +19,7 @@ var my_tag_default = _template("b", (input) => {
 		e: inputClass,
 		f: inputContent,
 		g: htmlInput,
-		i: _serialize_if($scope0_reason, 0) && content
+		i: _write_if($scope0_reason, 0) && content
 	});
 });
 
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let as = "div";
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	my_tag_default({
 		as,

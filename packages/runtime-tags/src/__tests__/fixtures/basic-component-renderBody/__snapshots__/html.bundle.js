@@ -4,7 +4,7 @@ var my_button_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { onClick, content } = input;
 	_html("<button>");
-	_dynamic_tag($scope0_id, "b", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
+	_dynamic_tag($scope0_id, "b", content, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { e: onClick });

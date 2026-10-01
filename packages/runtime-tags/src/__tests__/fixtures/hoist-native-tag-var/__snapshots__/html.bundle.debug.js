@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $el_getter = _hoist($scope0_id, "__tests__/template.marko_0_#div#2:0/hoist");
 	_if(() => {
@@ -24,11 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope($scope2_id, {}, "__tests__/template.marko", "2:4");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, $sg__input_show, $sg__input_show, 0, 1);
-			_scope($scope1_id, { _: $si__input_show && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
+			}, $scope1_id, "#text/0", 1, $wg__input_show, $wg__input_show, 0, 1);
+			_scope($scope1_id, { _: $wi__input_show && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show);
 	child_default({ value: $el_getter });
 	_html("<hr>");
 	_if(() => {
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, {}, "__tests__/template.marko", "19:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, 0, $sg__input_show, 0, 1);
-	_script($scope0_id, "__tests__/template.marko_0", $sg__input_show);
-	$si__input_show && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	}, $scope0_id, "#text/2", 1, 0, 0, 0, 1);
+	_script($scope0_id, "__tests__/template.marko_0", $wg__input_show);
+	$wi__input_show && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

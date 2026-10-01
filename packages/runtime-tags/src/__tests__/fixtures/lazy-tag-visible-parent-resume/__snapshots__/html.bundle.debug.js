@@ -24,6 +24,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		"#childScope/3": _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
+		"#childScope/3": _write_if($scope0_reason, 0) && _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "3:6" });
 }, 1);

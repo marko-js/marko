@@ -28,10 +28,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(_escape(value));
 		}, 0);
 	}, (err) => {
-		const $scope4_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope4_reason, 0);
+		const $scope4_reason = _scope_reason(), $wg__err_message = _write_guard($scope4_reason, 0);
 		const $scope4_id = _scope_id();
-		_html(`caught ${_text_resume($scope4_id, "#text/0", err.message, $sg__err_message * 2)}`);
+		_html(`caught ${_text_resume($scope4_id, "#text/0", err.message, $wg__err_message * 2)}`);
 		$Child_withLoadAssets({});
-		_serialize_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "13:4");
+		_write_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "13:4");
 	}, "__tests__/template.marko_2*content", "__tests__/template.marko_4*content");
 }, 1);

@@ -1,9 +1,9 @@
 // child.marko
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span id=child>${_text_resume($scope0_id, "a", input.value, $sg__input_value)}</span>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_html(`<span id=child>${_text_resume($scope0_id, "a", input.value, $wg__input_value)}</span>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -23,10 +23,10 @@ var template_default = _template("b", (input) => {
 		_scope_id();
 		_html("<div id=loading>loading</div>");
 	}, (err) => {
-		const $scope3_reason = _scope_reason(), $sg__err_message = _serialize_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
-		_html(`<div id=error>${_text_resume($scope3_id, "a", err.message, $sg__err_message)}</div>`);
-		_serialize_if($scope3_reason, 0) && _scope($scope3_id, {});
+		_html(`<div id=error>${_text_resume($scope3_id, "a", err.message, $wg__err_message)}</div>`);
+		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, "b1", "b2");
 	_script($scope0_id, "b3");
 	_scope($scope0_id, { d: $show__closures });

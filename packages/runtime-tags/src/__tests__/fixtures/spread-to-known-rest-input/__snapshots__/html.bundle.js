@@ -11,22 +11,22 @@ var child_default = _template("b", (input) => {
 	_html(`</span>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
-		d: _serialize_if($scope0_reason, 1) && _class,
-		e: _serialize_if($scope0_reason, 0) && rest
+		d: _write_if($scope0_reason, 1) && _class,
+		e: _write_if($scope0_reason, 0) && rest
 	});
 });
 
 // template.marko
 const Child = child_default;
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div id=known>");
-	_set_serialize_reason($sg__input << 1 | $sg__input << 3);
+	_set_scope_reason($wg__input << 1 | $wg__input << 3);
 	const $childScope = _peek_scope_id();
 	child_default(input);
 	_html("</div><div id=dynamic>");
-	_dynamic_tag($scope0_id, "b", Child, input, 0, 0, $sg__input);
+	_dynamic_tag($scope0_id, "b", Child, input, 0, 0, $wg__input);
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

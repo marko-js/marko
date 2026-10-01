@@ -6,11 +6,11 @@ import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
+import type { Reason } from "./reasons";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
-import { getSerializeGuard } from "./serialize-guard";
-import type { SerializeReason } from "./serialize-reasons";
 import { createSectionState } from "./state";
+import { getWriteGuard } from "./write-guard";
 
 type Write = string | t.Expression | (() => undefined | string | t.Expression);
 const [getWrites] = createSectionState<Write[]>("writes", () => [""]);
@@ -81,7 +81,7 @@ export function flushInto(
 export function markNode(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
   nodeBinding: Binding,
-  reason: undefined | false | SerializeReason,
+  reason: undefined | false | Reason,
   deferred?: boolean,
 ) {
   if (nodeBinding.type !== BindingType.dom) {
@@ -99,7 +99,7 @@ export function markNode(
         "_el_resume",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
-        getSerializeGuard(section, reason, true),
+        getWriteGuard(section, reason, true),
       )}`;
     }
   }

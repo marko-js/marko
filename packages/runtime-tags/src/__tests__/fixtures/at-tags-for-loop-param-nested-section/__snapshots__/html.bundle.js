@@ -1,13 +1,13 @@
 // tags/list.marko
 var list_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item = _serialize_guard($scope0_reason, 0), $si__input_item = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0), $wi__input_item = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
-		_dynamic_tag($scope1_id, "a", item.content, {}, 0, 0, $sg__input_item);
-		$si__input_item && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $sg__input_item, $sg__input_item, $sg__input_item);
-	$si__input_item && _scope($scope0_id, {});
+		_dynamic_tag($scope1_id, "a", item.content, {}, 0, 0, $wg__input_item);
+		$wi__input_item && _scope($scope1_id, {});
+	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, $wg__input_item);
+	$wi__input_item && _scope($scope0_id, {});
 });
 
 // template.marko
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	let show = true;
 	let items = [{ text: "a" }, { text: "b" }];
 	_html(`<button id=add>add</button>${_el_resume($scope0_id, "a")}<button id=toggle>toggle</button>${_el_resume($scope0_id, "b")}<button id=rename>rename</button>${_el_resume($scope0_id, "c")}`);
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	let $item;
 	forUntil(count, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("a3", () => {
@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 	});
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	let $item2;
 	forOf(items, (item) => {
 		$item2 = attrTags($item2, { content: _content("a5", () => {

@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#4_title#5");
 	_scope($scope0_id, {
 		input_attrs: input.attrs,
-		title: _serialize_if($scope0_reason, 0) && title
+		title: _write_if($scope0_reason, 0) && title
 	}, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],
 		title: "1:6",

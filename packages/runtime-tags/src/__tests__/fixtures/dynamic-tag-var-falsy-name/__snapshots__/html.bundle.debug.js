@@ -1,16 +1,16 @@
 // tags/wrapper/index.marko
 var wrapper_default = _template("__tests__/tags/wrapper/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div>");
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/wrapper/index.marko", 0);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/wrapper/index.marko", 0);
 });
 
 // tags/child/index.marko
 var child_default = _template("__tests__/tags/child/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_a11yText = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_a11yText = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $btn_getter = _hoist($scope0_id, "__tests__/tags/child/index.marko_0_$btn#1:2/hoist");
 	const $wrapper_content__subscribers = new Set();
@@ -25,16 +25,16 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 			_html("content");
 		}, $scope1_id));
 		_var($scope1_id, "#scopeOffset/1", $inputa11yTextbutton_scope, "__tests__/tags/child/index.marko_1_$btn#2/var");
-		_subscribe($si__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
+		_subscribe($wi__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			$btn,
-			_: $si__input_a11yText && _scope_with_id($scope0_id)
+			_: $wi__input_a11yText && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child/index.marko", "1:2", { $btn: "2:36" })), "__tests__/tags/child/index.marko_1_input_a11yText#0:3/subscribe");
 		_assert_hoist($btn);
 	}, $scope0_id) });
 	const $return = { btn: $btn_getter };
 	_scope($scope0_id, {
 		"ClosureScopes:1": $wrapper_content__subscribers,
-		"ClosureScopes:input_a11yText/4": $si__input_a11yText && $input_a11yText__closures
+		"ClosureScopes:input_a11yText/4": $wi__input_a11yText && $input_a11yText__closures
 	}, "__tests__/tags/child/index.marko", 0);
 	return $return;
 });

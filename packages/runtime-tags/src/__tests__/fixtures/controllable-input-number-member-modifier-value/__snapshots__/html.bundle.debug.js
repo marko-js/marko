@@ -7,7 +7,7 @@ var custom_input_default = _template("__tests__/tags/custom-input.marko", (input
 	}, "__tests__/tags/custom-input.marko_0/valueChange", $scope0_id))} type=number>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/custom-input.marko_0");
 	_scope($scope0_id, {
-		input_value: _serialize_if($scope0_reason, 0) && input.value,
+		input_value: _write_if($scope0_reason, 0) && input.value,
 		input_valueChange: input.valueChange
 	}, "__tests__/tags/custom-input.marko", 0, {
 		input_value: ["input.value"],

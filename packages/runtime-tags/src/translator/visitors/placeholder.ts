@@ -6,6 +6,7 @@ import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
+import { addReasonExprs, getWriteReason } from "../util/reasons";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -16,17 +17,14 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
-import {
-  addSerializeExpr,
-  getSerializeReason,
-} from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
+import { findSlot, getSlot } from "../util/slots";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
 import { getTagFacts, isNonHTMLText } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
+import { getWriteGuard } from "../util/write-guard";
 import * as writer from "../util/writer";
 import * as SiblingText from "./constants/sibling-text";
 import { scopeIdentifier } from "./program";
@@ -65,7 +63,7 @@ export default {
         ));
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
-        addSerializeExpr(section, valueExtra, nodeBinding);
+        addReasonExprs(getSlot(nodeBinding), valueExtra);
       }
     },
     exit(placeholder) {
@@ -156,14 +154,13 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   } else {
     const section = getSection(placeholder);
     const siblingText = extra[kSiblingText]!;
-    const markerSerializeReason =
-      nodeBinding && getSerializeReason(section, nodeBinding);
+    const markerReason = nodeBinding && getWriteReason(findSlot(nodeBinding));
 
     if (isHTML) {
-      if (markerSerializeReason) {
+      if (markerReason) {
         // `2` (or a guard scaled to 0/2) also asks the runtime to write a
         // `<!>` between non-empty text and the mergeable text before it.
-        const guard = getSerializeGuard(section, markerSerializeReason, true);
+        const guard = getWriteGuard(section, markerReason, true);
         write`${callRuntime(
           node.escape ? "_text_resume" : "_html_resume",
           getScopeIdIdentifier(section),

@@ -20,7 +20,7 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 		inputClass,
 		inputContent,
 		htmlInput,
-		content: _serialize_if($scope0_reason, 0) && content
+		content: _write_if($scope0_reason, 0) && content
 	}, "__tests__/tags/my-tag.marko", 0, {
 		inputAs: "1:13",
 		inputClass: "1:29",
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let as = "div";
-	_set_serialize_reason(2);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	my_tag_default({
 		as,

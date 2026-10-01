@@ -1,15 +1,15 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { name, write } = input;
-	_html(`<div>${_text_resume($scope0_id, "a", name, $sg__input_name)}</div>`);
-	_script($scope0_id, "b0", $sg__input_name);
+	_html(`<div>${_text_resume($scope0_id, "a", name, $wg__input_name)}</div>`);
+	_script($scope0_id, "b0", $wg__input_name);
 	_scope($scope0_id, {
 		d: name,
 		e: write
 	});
-	$sg__input_name || _resume_branch($scope0_id);
+	$wg__input_name || _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "a")}<div></div>${_el_resume($scope0_id, "b")}`);
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_set_serialize_reason(2);
+		_set_scope_reason(2);
 		const $childScope = _peek_scope_id();
 		child_default({
 			write,

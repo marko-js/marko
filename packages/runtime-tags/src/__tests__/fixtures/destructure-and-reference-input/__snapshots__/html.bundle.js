@@ -4,8 +4,8 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const { content, ...rest } = input;
 	_html(`<div${_attrs(rest, "a", $scope0_id, "div")}>`);
-	_dynamic_tag($scope0_id, "b", content, {}, 0, 0, _serialize_guard($scope0_reason, 1));
-	_html(`</div>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "c", Object.keys(input), _serialize_guard($scope0_reason, 0))}</div>`);
+	_dynamic_tag($scope0_id, "b", content, {}, 0, 0, _write_guard($scope0_reason, 1));
+	_html(`</div>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "c", Object.keys(input), _write_guard($scope0_reason, 0))}</div>`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });

@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let value = 0;
 	_if(() => {
@@ -10,8 +10,8 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show);
+	}, $scope0_id, "a", 1, $wg__input_show, $wg__input_show);
 	_html(`<button>Update</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	_scope($scope0_id, { f: _serialize_if($scope0_reason, 0) && value });
+	_scope($scope0_id, { f: _write_if($scope0_reason, 0) && value });
 }, 1);

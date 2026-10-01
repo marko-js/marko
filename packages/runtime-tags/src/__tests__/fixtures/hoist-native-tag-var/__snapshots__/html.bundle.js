@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $el_getter = _hoist($scope0_id, "a0");
 	_if(() => {
@@ -23,11 +23,11 @@ var template_default = _template("a", (input) => {
 					_scope($scope2_id, {});
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $sg__input_show, $sg__input_show, 0, 1);
-			_scope($scope1_id, { _: $si__input_show && _scope_with_id($scope0_id) });
+			}, $scope1_id, "a", 1, $wg__input_show, $wg__input_show, 0, 1);
+			_scope($scope1_id, { _: $wi__input_show && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show);
+	}, $scope0_id, "a", 1, $wg__input_show, $wg__input_show);
 	child_default({ value: $el_getter });
 	_html("<hr>");
 	_if(() => {
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, {});
 			return 0;
 		}
-	}, $scope0_id, "c", 1, 0, $sg__input_show, 0, 1);
-	_script($scope0_id, "a2", $sg__input_show);
-	$si__input_show && _scope($scope0_id, {});
+	}, $scope0_id, "c", 1, 0, 0, 0, 1);
+	_script($scope0_id, "a2", $wg__input_show);
+	$wi__input_show && _scope($scope0_id, {});
 }, 1);

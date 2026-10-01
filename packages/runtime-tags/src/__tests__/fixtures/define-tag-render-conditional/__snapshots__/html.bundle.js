@@ -5,14 +5,14 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	const MyTag = { content: _content("a0", ({ value }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $sg__value = _serialize_guard($scope2_reason, 0);
-		_html(`<div>Hello ${_text_resume($scope2_id, "a", value, $sg__value * 2)}</div>`);
-		_serialize_if($scope2_reason, 0) && _scope($scope2_id, {});
+		const $scope2_reason = _scope_reason(), $wg__value = _write_guard($scope2_reason, 0);
+		_html(`<div>Hello ${_text_resume($scope2_id, "a", value, $wg__value * 2)}</div>`);
+		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) };
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(2);
+			_set_scope_reason(2);
 			const $childScope = _peek_scope_id();
 			MyTag.content({ value: x });
 			_scope($scope1_id, { a: _existing_scope($childScope) });

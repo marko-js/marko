@@ -30,8 +30,16 @@ import {
   type Opt,
   type SortedOneMany,
   push,
+  reduce,
   some,
 } from "./optional";
+import {
+  addOwnerReason,
+  addReasonExprs,
+  addReason,
+  applyReasonExprs,
+  getSourcesForRef,
+} from "./reasons";
 import {
   type AssignedBindingExtra,
   type ExtraRead,
@@ -55,24 +63,16 @@ import {
   sectionUtil,
   setReadsOwner,
 } from "./sections";
-import {
-  forceSerialize,
-  readsValuesOnResume,
-  solveSerializeReasons,
-} from "./serialize-propagation";
-import {
-  addOwnerSerializeReason,
-  addSerializeExpr,
-  addSerializeReason,
-  applySerializeExprs,
-  getSerializeSourcesForExpr,
-  getSerializeSourcesForRef,
-  kBranchSerializeReason,
-} from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
 import { addSetupWork } from "./setup-work";
+import { findSlot, getSectionSlot, getSlot, SlotKind } from "./slots";
 import {
-  FORCED,
+  addAlwaysRead,
+  readsValuesOnResume,
+  solveReasons,
+} from "./solve-reasons";
+import {
+  ALWAYS,
   type Sources,
   createSources,
   globalSources,
@@ -88,15 +88,14 @@ export function finalizeReferences() {
   resolveReads(intersectionsBySection);
   forEachSection(finalizeTagDownstreams);
   resolveBindings();
-  forEachSection(addSectionSerializeReasons);
+  forEachSection(addSectionReasons);
   for (const finalize of getReferenceFinalizers()) {
     finalize();
   }
-  forEachSection(applySerializeExprs);
-  solveSerializeReasons(intersectionsBySection);
+  forEachSection(applyReasonExprs);
+  solveReasons(intersectionsBySection);
   finalizeFunctionRegistry();
   allocateIds(intersectionsBySection);
-  finalizeReturnSerializeReason();
   getReadsByExpression().clear();
   getFunctionReadsByExpression().clear();
 }
@@ -166,9 +165,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         // lands in its section's setup signal.
         addSetupWork(expr.section);
       }
-      forEach(exprBindings.lazyBindings, (binding) => {
-        binding.forcePersist = true;
-      });
+      forEach(exprBindings.lazyBindings, markLazyRead);
       if (exprBindings.hoistedBindings) {
         expr.section.referencedHoists = bindingUtil.union(
           expr.section.referencedHoists,
@@ -178,14 +175,16 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
 
       if (expr.isEffect) {
         if (readsValuesOnResume(expr)) {
-          forEach(exprBindings.referencedBindings, forceSerialize);
-          forEach(exprBindings.constantBindings, forceSerialize);
+          forEach(exprBindings.referencedBindings, addAlwaysRead);
+          forEach(exprBindings.constantBindings, addAlwaysRead);
         }
-        forEach(exprBindings.lazyBindings, forceSerialize);
+        forEach(exprBindings.lazyBindings, addAlwaysRead);
       } else {
+        // A value retained as written keeps what it reads outside a function,
+        // so those reads serialize with it.
         forEach(reads, (read) => {
-          if (read.serializedValue) {
-            addSerializeExpr(read.binding.section, expr, read.binding);
+          if (!read.inFunction && read.extra.exprRoot?.retained) {
+            addReasonExprs(getSlot(read.binding), expr);
           }
         });
       }
@@ -236,7 +235,7 @@ function resolveBindings() {
       forEach(binding.assignments, ({ section: assignedSection }) => {
         setReadsOwner(assignedSection, section);
         // Deliberately `true`, not `binding.sources`: narrowing is a 0-byte no-op until a state-dropping pass exists.
-        addOwnerSerializeReason(assignedSection, section, FORCED);
+        addOwnerReason(assignedSection, section, ALWAYS);
       });
 
       let bindingNames = bindingNamesBySection.get(section);
@@ -260,7 +259,7 @@ function resolveBindings() {
           highestHoistSection = hoistSection;
         }
 
-        forceSerialize(binding);
+        addAlwaysRead(binding);
       });
 
       binding.section.hoisted = bindingUtil.add(
@@ -272,6 +271,21 @@ function resolveBindings() {
       while (currentSection && currentSection !== highestHoistSection) {
         currentSection.isHoistThrough = true;
         currentSection = currentSection.parent;
+      }
+
+      // Each owner up to the hoist holds its child's scopes, which a
+      // resumed branch's own scopes already are.
+      for (
+        let section = binding.section;
+        section !== highestHoistSection;
+        section = section.parent!
+      ) {
+        if (!isResumedBranch(section)) {
+          addReason(
+            getSectionSlot(section, SlotKind.Instances, section.parent!),
+            ALWAYS,
+          );
+        }
       }
     }
 
@@ -301,11 +315,11 @@ function resolveBindings() {
           }
 
           setReadsOwner(section, closure.section);
-          addOwnerSerializeReason(
+          addOwnerReason(
             section,
             closure.section,
             readsValuesOnResume(exprExtra)
-              ? mergeSources(FORCED, closure.sources)
+              ? mergeSources(ALWAYS, closure.sources)
               : closure.sources,
           );
         }
@@ -314,36 +328,29 @@ function resolveBindings() {
   }
 }
 
-function addSectionSerializeReasons(section: Section) {
+function addSectionReasons(section: Section) {
   if (section.isHoistThrough) {
-    addSerializeReason(section, FORCED);
+    addReason(getSectionSlot(section, SlotKind.Scope), ALWAYS);
   }
 
   forEach(section.referencedHoists, (hoistedBinding) => {
     setReadsOwner(section, hoistedBinding.section);
-    addOwnerSerializeReason(section, hoistedBinding.section, FORCED);
+    addOwnerReason(section, hoistedBinding.section, ALWAYS);
   });
 
   if (isResumedBranch(section)) {
-    const closureSources = getSerializeSourcesForRef(
-      getDirectClosures(section),
-    );
-    addSerializeReason(
-      section,
+    const closureSources = getSourcesForRef(getDirectClosures(section));
+    const branchSlot = getSectionSlot(section, SlotKind.Branch);
+    addReason(
+      branchSlot,
       section.isHoistThrough || section.hoisted
-        ? mergeSources(FORCED, closureSources)
+        ? mergeSources(ALWAYS, closureSources)
         : closureSources,
-      kBranchSerializeReason,
     );
-    addSerializeExpr(
-      section,
+    addReasonExprs(branchSlot, section.upstreamExpression);
+    addReasonExprs(
+      getSlot(section.branch.nodeBinding),
       section.upstreamExpression,
-      kBranchSerializeReason,
-    );
-    addSerializeExpr(
-      section.parent!,
-      section.upstreamExpression,
-      section.branch.nodeBinding,
     );
   }
 }
@@ -402,7 +409,7 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
       intersectionMeta.set(intersection, {
         source: undefined,
         id: nextId++,
-        scopeOffset: getMaxOwnSourceOffset(intersection, section),
+        returnedBy: getLastOwnSourceReturn(intersection, section),
       });
     };
     forEach(ownedBindings, (binding) => {
@@ -418,9 +425,16 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
         }
       }
       binding.id = nextId++;
-      // Reserved ids follow the binding's own; dom bindings never reserve
-      // since their ids are the walker's dense indexes.
       nextId += binding.reserveSize;
+      if (
+        MARKO_DEBUG &&
+        !binding.reserveSize &&
+        findSlot(binding, SlotKind.ChangeHandler)
+      ) {
+        throw new Error(
+          `Marko internal error: "${binding.name}" holds a change handler without reserving its id.`,
+        );
+      }
       while (
         intersectionIndex < intersections.length &&
         anchors!.get((intersection = intersections[intersectionIndex])) ===
@@ -450,15 +464,6 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
   });
 }
 
-function finalizeReturnSerializeReason() {
-  const programSection = getProgram().node.extra.section!;
-  if (programSection.returnValueExpr) {
-    programSection.returnSerializeReason = getSerializeSourcesForExpr(
-      programSection.returnValueExpr,
-    );
-  }
-}
-
 // The bindings a binding's value is computed from.
 export function getValueInputs(binding: Binding): ReferencedBindings {
   if (binding.upstreamAlias) return binding.upstreamAlias;
@@ -481,25 +486,23 @@ function getValueReferences(exprs: Opt<t.NodeExtra>) {
   return refs;
 }
 
-function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
-  let scopeOffset: Binding | undefined;
-
-  const trackScopeOffset = (source: Binding) => {
-    if (
-      source.scopeOffset &&
-      (!scopeOffset || scopeOffset.id < source.scopeOffset.id)
-    ) {
-      scopeOffset = source.scopeOffset;
-    }
-  };
+// The last tag whose child returns one of the intersection's own sources, whose
+// scope offset the intersection renders after.
+function getLastOwnSourceReturn(intersection: Intersection, section: Section) {
+  let returnedBy: Binding | undefined;
   for (const binding of intersection) {
     if (binding.section === section && binding.sources) {
-      forEach(binding.sources.state, trackScopeOffset);
-      forEach(binding.sources.param, trackScopeOffset);
+      returnedBy = reduce(binding.sources.state, lastReturnedBy, returnedBy);
+      returnedBy = reduce(binding.sources.param, lastReturnedBy, returnedBy);
     }
   }
 
-  return scopeOffset;
+  return returnedBy;
+}
+
+function lastReturnedBy(last: Binding | undefined, source: Binding) {
+  const { returnedBy } = source;
+  return returnedBy && (!last || last.id < returnedBy.id) ? returnedBy : last;
 }
 
 function getIntersectionSource(
@@ -545,7 +548,7 @@ function resolveIntersectionSource(
   return source &&
     !Array.isArray(source) &&
     source.section === section &&
-    !source.scopeOffset
+    !source.returnedBy
     ? source
     : undefined;
 }
@@ -682,9 +685,8 @@ function pruneBinding(binding: Binding): boolean {
     }
   }
 
-  // A let binding with reserveSize > 0 reserves adjacent scope slots (e.g.
-  // TagVariableChange at id+1). Even when its reads are covered by an alias,
-  // the slot reservation must survive so translate can emit the correct ids.
+  // What it reserves takes the ids after its own, so it keeps its id even when
+  // an alias covers its reads.
   let shouldPrune = !binding.reads.size && !binding.reserveSize;
 
   for (const alias of binding.aliases) {
@@ -805,6 +807,10 @@ function getRootBindings(reads: Many<Read>): SortedOneMany<Binding> {
   }
 
   return rootRefs;
+}
+
+function markLazyRead(binding: Binding) {
+  binding.hasLazyReads = true;
 }
 
 function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {

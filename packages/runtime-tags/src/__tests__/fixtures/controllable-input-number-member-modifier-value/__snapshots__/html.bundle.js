@@ -7,7 +7,7 @@ var custom_input_default = _template("b", (input) => {
 	}, "b0", $scope0_id))} type=number>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {
-		d: _serialize_if($scope0_reason, 0) && input.value,
+		d: _write_if($scope0_reason, 0) && input.value,
 		e: input.valueChange
 	});
 });

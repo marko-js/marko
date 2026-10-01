@@ -1,26 +1,26 @@
 // tags/cell/index.marko
 var cell_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span class=cell>${_text_resume($scope0_id, "a", input.value, $sg__input_value)}</span>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_html(`<span class=cell>${_text_resume($scope0_id, "a", input.value, $wg__input_value)}</span>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/row/index.marko
 var row_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 1), $sg__input_quantity = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 1), $wg__input_quantity = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<div class=row>");
-	_set_serialize_reason($sg__input_name << 1);
+	_set_scope_reason($wg__input_name << 1);
 	const $childScope = _peek_scope_id();
 	cell_default({ value: input.name });
-	_set_serialize_reason($sg__input_quantity << 1);
+	_set_scope_reason($wg__input_quantity << 1);
 	const $childScope2 = _peek_scope_id();
 	cell_default({ value: input.quantity });
 	_html("</div>");
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
-		a: _serialize_if($scope0_reason, 1) && _existing_scope($childScope),
-		b: _serialize_if($scope0_reason, 2) && _existing_scope($childScope2)
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
+		a: _write_if($scope0_reason, 1) && _existing_scope($childScope),
+		b: _write_if($scope0_reason, 2) && _existing_scope($childScope2)
 	});
 });
 
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let quantity = 2;
 	_html(`<button>add</button>${_el_resume($scope0_id, "a")}`);
-	_set_serialize_reason(34);
+	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	row_default({
 		name: "Widget",

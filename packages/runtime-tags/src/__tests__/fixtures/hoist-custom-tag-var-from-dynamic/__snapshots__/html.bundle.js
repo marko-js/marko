@@ -1,10 +1,10 @@
 // tags/thing.marko
 var thing_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $sg__input_content);
-	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $sg__input_content);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {});
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $wg__input_content);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
 // tags/child.marko
@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_hoist($scope0_id, "a0");
 	const $thing_content__subscribers = /* @__PURE__ */ new Set();
@@ -42,14 +42,14 @@ var template_default = _template("a", (input) => {
 			_subscribe($thing_content2__subscribers, _scope($scope3_id, { c: setHtml2 }));
 		}, $scope2_id) });
 		_subscribe($inputshowThingnull_content__subscribers, _scope($scope2_id, { B3: $thing_content2__subscribers }));
-	}, $scope0_id), 0, $sg__input_show);
+	}, $scope0_id), 0, $wg__input_show);
 	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content("a4", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		let setHtml3 = child_default({});
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, { c: setHtml3 }));
-	}, $scope0_id), 0, $sg__input_show);
-	_script($scope0_id, "a5", $sg__input_show);
+	}, $scope0_id), 0, $wg__input_show);
+	_script($scope0_id, "a5", $wg__input_show);
 	_scope($scope0_id, {
 		B1: $thing_content__subscribers,
 		B2: $inputshowThingnull_content__subscribers,

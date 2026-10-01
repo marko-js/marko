@@ -10,7 +10,7 @@ var tags_child_default = _template("c", (input) => {
 	_scope($scope0_id, {
 		e: input.value,
 		f: n,
-		g: _serialize_if($scope0_reason, 0) && doubled
+		g: _write_if($scope0_reason, 0) && doubled
 	});
 });
 

@@ -40,8 +40,11 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
+import { addReasonExprs, addReason, getWriteReason } from "../../util/reasons";
 import {
   dropNodes,
+  getCanonicalExtra,
+  mergeReferenceGroup,
   mergeReferences,
   trackDomVarReferences,
   isTagVarRead,
@@ -64,19 +67,14 @@ import {
   getSection,
   type StructureVisit,
 } from "../../util/sections";
-import { getSerializeGuard } from "../../util/serialize-guard";
-import {
-  addSerializeExpr,
-  addSerializeReason,
-  getSerializeReason,
-} from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupWork } from "../../util/setup-work";
 import {
   addHTMLEffectCall,
   addStatement,
   setSectionDebugVar,
 } from "../../util/signals";
-import { FORCED } from "../../util/sources";
+import { findSlot, getSlot } from "../../util/slots";
+import { ALWAYS } from "../../util/sources";
 import * as structure from "../../util/structure";
 import { getTagFacts } from "../../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -87,6 +85,7 @@ import {
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
+import { getWriteGuard } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
@@ -114,9 +113,9 @@ declare module "@marko/compiler/dist/types" {
 // analysis settles what each one is and both outputs write from it.
 interface NativeAttrs {
   /** Attributes written on their own, apart from the controllable pair. */
-  own: number[];
+  own: number[] | undefined;
   /** Event handlers the element attaches on its own, in source order. */
-  handlers: number[];
+  handlers: number[] | undefined;
   /** The `content` attribute rendering in place of a body. */
   content: number | undefined;
   /** Attributes controlling an element state, its change handler second. */
@@ -183,7 +182,7 @@ export default {
         if (t.isMarkoSpreadAttribute(attr)) {
           const valueExtra = (attr.value.extra ??= {});
           valueExtra.isEffect = true;
-          valueExtra.forceRegister = true;
+          valueExtra.retained = true;
           hasEventHandlers = true;
           hasDynamicAttributes = true;
           if (!spread) {
@@ -233,13 +232,14 @@ export default {
 
           if (isEventHandlerAttr) {
             valueExtra.isEffect = true;
+            valueExtra.consumed = true;
             // Attached once and only invoked, so reads inside can be lazy.
             valueExtra.invokeOnly = true;
             hasEventHandlers = true;
             addSetupExpr(tagSection, attr.value);
           } else {
             assertValidNativeEventHandlerAttr(tag, attr);
-            if (isChangeHandlerAttr) valueExtra.forceRegister = true;
+            if (isChangeHandlerAttr) valueExtra.retained = true;
             if (!evaluate(attr.value).confident) {
               hasDynamicAttributes = true;
               addSetupExpr(tagSection, attr.value);
@@ -380,7 +380,7 @@ export default {
             spread.map((index) => attributes[index].value),
           );
 
-          spreadExtra.nativeTagSpread = true;
+          spreadExtra.rendersContent = true;
           // Functions in native tag attrs are only ever invoked (handlers)
           // or stringified from static source, so reads inside can be lazy.
           spreadExtra.invokeOnly = true;
@@ -391,18 +391,18 @@ export default {
           const values = controllable.attrs.map((index) =>
             index === undefined ? undefined : attributes[index].value,
           );
-          exprExtras = mergeReferences(
-            tagSection,
-            values.find(Boolean)!,
-            values,
-          );
+          exprExtras = mergeReferenceGroup(tagSection, values);
         }
 
-        for (const index of own || noAttrs) {
-          exprExtras = push(exprExtras, attributes[index].value.extra!);
+        if (own) {
+          for (const index of own) {
+            exprExtras = push(exprExtras, attributes[index].value.extra!);
+          }
         }
-        for (const index of handlers || noAttrs) {
-          exprExtras = push(exprExtras, attributes[index].value.extra!);
+        if (handlers) {
+          for (const index of handlers) {
+            exprExtras = push(exprExtras, attributes[index].value.extra!);
+          }
         }
         if (content !== undefined) {
           exprExtras = push(exprExtras, attributes[content].value.extra!);
@@ -413,11 +413,7 @@ export default {
             exprExtras,
             textPlaceholders.length === 1
               ? (textPlaceholders[0].extra ??= {})
-              : mergeReferences(
-                  tagSection,
-                  textPlaceholders[0],
-                  textPlaceholders.slice(1),
-                ),
+              : mergeReferenceGroup(tagSection, textPlaceholders),
           );
           addSetupExpr(tagSection, textPlaceholders[0]);
         }
@@ -433,12 +429,12 @@ export default {
         }
 
         if (hasEventHandlers || isTagVarRead(tag)) {
-          addSerializeReason(tagSection, FORCED, nodeBinding);
+          addReason(getSlot(nodeBinding), ALWAYS);
         }
 
         trackDomVarReferences(tag, nodeBinding);
 
-        addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
+        addReasonExprs(getSlot(nodeBinding), push(exprExtras, tagExtra));
       }
 
       const write = structure.writeTo(tag);
@@ -448,20 +444,22 @@ export default {
 
       write`<${tagName}`;
 
-      for (const index of own || noAttrs) {
-        const { name, value } = attributes[index] as t.MarkoAttribute;
-        const { confident, computed } = value.extra || {};
-        if (confident) {
-          write`${getStaticAttrMarkup(name, computed)}`;
-        } else if (name === "class" || name === "style") {
-          const meta: DelimitedAttrMeta = {
-            staticItems: undefined,
-            dynamicItems: undefined,
-            dynamicValues: undefined,
-          };
-          trackDelimitedAttrValue(value, meta);
-          if (!meta.dynamicItems && meta.staticItems) {
-            write`${getStaticAttrMarkup(name, meta.staticItems)}`;
+      if (own) {
+        for (const index of own) {
+          const { name, value } = attributes[index] as t.MarkoAttribute;
+          const { confident, computed } = value.extra || {};
+          if (confident) {
+            write`${getStaticAttrMarkup(name, computed)}`;
+          } else if (name === "class" || name === "style") {
+            const meta: DelimitedAttrMeta = {
+              staticItems: undefined,
+              dynamicItems: undefined,
+              dynamicValues: undefined,
+            };
+            trackDelimitedAttrValue(value, meta);
+            if (!meta.dynamicItems && meta.staticItems) {
+              write`${getStaticAttrMarkup(name, meta.staticItems)}`;
+            }
           }
         }
       }
@@ -469,8 +467,8 @@ export default {
       write`>`;
       structure.enter(tag);
       tagExtra[kNativeAttrs] = {
-        own: own || noAttrs,
-        handlers: handlers || noAttrs,
+        own,
+        handlers,
         content,
         controllable,
         spread,
@@ -672,27 +670,31 @@ export default {
           }
         }
 
-        for (const index of own) {
-          const { name, value } = attributes[index] as t.MarkoAttribute;
-          const { confident, computed } = value.extra || {};
+        if (own) {
+          for (const index of own) {
+            const { name, value } = attributes[index] as t.MarkoAttribute;
+            const { confident, computed } = value.extra || {};
 
-          if (tagName === "option" && name === "value") {
-            write`${callRuntime("_attr_option_value", value)}`;
-            continue;
+            if (tagName === "option" && name === "value") {
+              write`${callRuntime("_attr_option_value", value)}`;
+              continue;
+            }
+
+            write`${
+              confident
+                ? getStaticAttrMarkup(name, computed)
+                : factorAttrConditional(buildAttrExpression(name, value))
+            }`;
           }
-
-          write`${
-            confident
-              ? getStaticAttrMarkup(name, computed)
-              : factorAttrConditional(buildAttrExpression(name, value))
-          }`;
         }
 
-        for (const index of handlers) {
-          addHTMLEffectCall(
-            tagSection,
-            attributes[index].value.extra?.referencedBindings,
-          );
+        if (handlers) {
+          for (const index of handlers) {
+            addHTMLEffectCall(
+              tagSection,
+              attributes[index].value.extra?.referencedBindings,
+            );
+          }
         }
 
         const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
@@ -738,18 +740,18 @@ export default {
                 visitAccessor,
                 getScopeIdIdentifier(tagSection),
                 contentAttr.value,
-                getSerializeGuard(
+                getWriteGuard(
                   tagSection,
-                  nodeBinding && getSerializeReason(tagSection, nodeBinding),
+                  nodeBinding && getWriteReason(findSlot(nodeBinding)),
                   true,
                 ),
               ),
             ),
           ];
         } else if (spreadContent) {
-          const serializeReason = getSerializeGuard(
+          const markerGuard = getWriteGuard(
             tagSection,
-            nodeBinding && getSerializeReason(tagSection, nodeBinding),
+            nodeBinding && getWriteReason(findSlot(nodeBinding)),
             true,
           );
           htmlContentAttrTags.add(tag.node);
@@ -763,7 +765,7 @@ export default {
                     visitAccessor,
                     getScopeIdIdentifier(tagSection),
                     t.stringLiteral(tagName),
-                    serializeReason,
+                    markerGuard,
                   ),
                 )
               : t.expressionStatement(
@@ -773,7 +775,7 @@ export default {
                     visitAccessor,
                     getScopeIdIdentifier(tagSection),
                     t.stringLiteral(tagName),
-                    serializeReason,
+                    markerGuard,
                   ),
                 ),
           ];
@@ -794,15 +796,13 @@ export default {
         const tagName = getCanonicalTagName(tag);
         const tagSection = getSection(tag);
         const skipEndTag = isEndTagWrittenByBranch(nodeBinding);
-        const markerSerializeReason =
-          !skipEndTag &&
-          nodeBinding &&
-          getSerializeReason(tagSection, nodeBinding);
+        const markerReason =
+          !skipEndTag && nodeBinding && getWriteReason(findSlot(nodeBinding));
         const write = writer.writeTo(
           tag,
           // `</html>` defers even when marked (its `#html/0` marker resolves to
           // the root); `</body>` can't — its marker resolves positionally.
-          tagName === "html" || (!markerSerializeReason && tagName === "body"),
+          tagName === "html" || (!markerReason && tagName === "body"),
         );
 
         if (htmlContentAttrTags.has(tag.node)) {
@@ -861,13 +861,8 @@ export default {
           write`</${tagName}>`;
         }
 
-        if (markerSerializeReason) {
-          writer.markNode(
-            tag,
-            nodeBinding,
-            markerSerializeReason,
-            tagName === "html",
-          );
+        if (markerReason) {
+          writer.markNode(tag, nodeBinding, markerReason, tagName === "html");
         }
 
         tag.remove();
@@ -916,10 +911,10 @@ export default {
             helper,
             controllable,
           );
-          const referencedBindings = attrAt(
-            attributes,
-            controllable.attrs.find(isDefined),
-          )!.value.extra?.referencedBindings;
+          const { referencedBindings } = getCanonicalExtra(
+            attrAt(attributes, controllable.attrs.find(isDefined))!.value
+              .extra!,
+          );
           const values = (
             hasChangeHandler
               ? controllable.attrs
@@ -955,116 +950,120 @@ export default {
           }
         }
 
-        for (const index of own) {
-          const { name, value } = attributes[index] as t.MarkoAttribute;
-          const { confident } = value.extra || {};
-          const valueReferences = value.extra?.referencedBindings;
+        if (own) {
+          for (const index of own) {
+            const { name, value } = attributes[index] as t.MarkoAttribute;
+            const { confident } = value.extra || {};
+            const valueReferences = value.extra?.referencedBindings;
 
-          switch (name) {
-            case "class":
-            case "style": {
-              const helper = `_attr_${name}` as const;
-              if (!confident) {
-                const nodeExpr = createScopeReadExpression(nodeBinding);
-                const meta: DelimitedAttrMeta = {
-                  staticItems: undefined,
-                  dynamicItems: undefined,
-                  dynamicValues: undefined,
-                };
-                let stmt: undefined | t.Statement;
-                trackDelimitedAttrValue(value, meta);
+            switch (name) {
+              case "class":
+              case "style": {
+                const helper = `_attr_${name}` as const;
+                if (!confident) {
+                  const nodeExpr = createScopeReadExpression(nodeBinding);
+                  const meta: DelimitedAttrMeta = {
+                    staticItems: undefined,
+                    dynamicItems: undefined,
+                    dynamicValues: undefined,
+                  };
+                  let stmt: undefined | t.Statement;
+                  trackDelimitedAttrValue(value, meta);
 
-                if (meta.dynamicItems) {
-                  stmt = t.expressionStatement(
-                    callRuntime(helper, nodeExpr, value),
-                  );
-                } else {
-                  if (meta.dynamicValues) {
-                    const keys = Object.keys(meta.dynamicValues);
+                  if (meta.dynamicItems) {
+                    stmt = t.expressionStatement(
+                      callRuntime(helper, nodeExpr, value),
+                    );
+                  } else {
+                    if (meta.dynamicValues) {
+                      const keys = Object.keys(meta.dynamicValues);
 
-                    if (keys.length === 1) {
-                      const [key] = keys;
-                      const value = meta.dynamicValues[key];
-                      stmt = t.expressionStatement(
-                        callRuntime(
-                          `_attr_${name}_item`,
-                          nodeExpr,
-                          t.stringLiteral(key),
-                          value,
-                        ),
-                      );
-                    } else {
-                      const props: t.ObjectExpression["properties"] = [];
-                      for (const key of keys) {
+                      if (keys.length === 1) {
+                        const [key] = keys;
                         const value = meta.dynamicValues[key];
-                        props.push(
-                          t.objectProperty(toPropertyName(key), value),
+                        stmt = t.expressionStatement(
+                          callRuntime(
+                            `_attr_${name}_item`,
+                            nodeExpr,
+                            t.stringLiteral(key),
+                            value,
+                          ),
+                        );
+                      } else {
+                        const props: t.ObjectExpression["properties"] = [];
+                        for (const key of keys) {
+                          const value = meta.dynamicValues[key];
+                          props.push(
+                            t.objectProperty(toPropertyName(key), value),
+                          );
+                        }
+
+                        stmt = t.expressionStatement(
+                          callRuntime(
+                            `_attr_${name}_items`,
+                            nodeExpr,
+                            t.objectExpression(props),
+                          ),
                         );
                       }
-
-                      stmt = t.expressionStatement(
-                        callRuntime(
-                          `_attr_${name}_items`,
-                          nodeExpr,
-                          t.objectExpression(props),
-                        ),
-                      );
                     }
                   }
-                }
 
-                if (stmt) {
+                  if (stmt) {
+                    addStatement(
+                      "render",
+                      tagSection,
+                      valueReferences,
+                      stmt,
+                      true,
+                    );
+                  }
+                }
+                break;
+              }
+              default:
+                // Confident values are recorded into the template at analyze.
+                if (confident) {
+                  break;
+                } else {
                   addStatement(
                     "render",
                     tagSection,
                     valueReferences,
-                    stmt,
+                    t.expressionStatement(
+                      callRuntime(
+                        "_attr",
+                        createScopeReadExpression(nodeBinding),
+                        t.stringLiteral(name),
+                        value,
+                      ),
+                    ),
                     true,
                   );
                 }
-              }
-              break;
-            }
-            default:
-              // Confident values are recorded into the template at analyze.
-              if (confident) {
-                break;
-              } else {
-                addStatement(
-                  "render",
-                  tagSection,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "_attr",
-                      createScopeReadExpression(nodeBinding),
-                      t.stringLiteral(name),
-                      value,
-                    ),
-                  ),
-                  true,
-                );
-              }
 
-              break;
+                break;
+            }
           }
         }
 
-        for (const index of handlers) {
-          const { name, value } = attributes[index] as HandlerAttr;
-          addStatement(
-            "effect",
-            tagSection,
-            value.extra?.referencedBindings,
-            t.expressionStatement(
-              callRuntime(
-                "_on",
-                createScopeReadExpression(nodeBinding),
-                t.stringLiteral(getEventHandlerName(name)),
-                value,
+        if (handlers) {
+          for (const index of handlers) {
+            const { name, value } = attributes[index] as HandlerAttr;
+            addStatement(
+              "effect",
+              tagSection,
+              value.extra?.referencedBindings,
+              t.expressionStatement(
+                callRuntime(
+                  "_on",
+                  createScopeReadExpression(nodeBinding),
+                  t.stringLiteral(getEventHandlerName(name)),
+                  value,
+                ),
               ),
-            ),
-          );
+            );
+          }
         }
 
         if (spreadExpression) {
@@ -1263,9 +1262,6 @@ function getRelatedControllable(
   }
 }
 
-// Shared by every element with no attribute of a kind; nothing writes it.
-const noAttrs: number[] = [];
-
 // The attributes an element's controllable pair may take.
 const controllableAttrNames = new Map([
   [
@@ -1411,15 +1407,19 @@ function buildSkipExpression(
     }
   }
 
-  for (const index of own) {
-    // Names match the DOM only as the types spell them (lowercase HTML, canonical SVG and
-    // MathML camelCase); one authored in another case is removed beside a spread.
-    skipProps.add((attributes[index] as t.MarkoAttribute).name);
+  if (own) {
+    for (const index of own) {
+      // Names match the DOM only as the types spell them (lowercase HTML, canonical SVG and
+      // MathML camelCase); one authored in another case is removed beside a spread.
+      skipProps.add((attributes[index] as t.MarkoAttribute).name);
+    }
   }
 
-  for (const index of handlers) {
-    const { name } = attributes[index] as HandlerAttr;
-    skipProps.add(`on-${getEventHandlerName(name)}`);
+  if (handlers) {
+    for (const index of handlers) {
+      const { name } = attributes[index] as HandlerAttr;
+      skipProps.add(`on-${getEventHandlerName(name)}`);
+    }
   }
 
   if (skipProps.size) {

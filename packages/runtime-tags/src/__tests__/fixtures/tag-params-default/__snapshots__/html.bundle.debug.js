@@ -1,10 +1,10 @@
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_dynamic_tag($scope0_id, "#text/0", input.content, [undefined], 0, 1, $sg__input_content);
-	_dynamic_tag($scope0_id, "#text/1", input.content, ["given"], 0, 1, $sg__input_content);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	_dynamic_tag($scope0_id, "#text/0", input.content, [undefined], 0, 1, $wg__input_content);
+	_dynamic_tag($scope0_id, "#text/1", input.content, ["given"], 0, 1, $wg__input_content);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // template.marko

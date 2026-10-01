@@ -10,15 +10,15 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { generateUidIdentifier } from "../util/generate-uid";
-import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
+import { addReason } from "../util/reasons";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { addSerializeReason } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-work";
-import { addStatement, setSectionSerializedValue } from "../util/signals";
-import { FORCED } from "../util/sources";
+import { addStatement, setScopeProperty } from "../util/signals";
+import { findSectionSlot, getSectionSlot, SlotKind } from "../util/slots";
+import { ALWAYS } from "../util/sources";
 import { createSectionState } from "../util/state";
 import { getTagFacts } from "../util/tag-facts";
 import { translateByTarget } from "../util/visitors";
@@ -100,7 +100,7 @@ export default {
       (attrs.valueChange.extra ??= {}).isEffect = true;
       addSetupExpr(section, attrs.valueChange);
       // TODO: this should be based on the parent actually mutating the tag variable.
-      addSerializeReason(section, FORCED, getAccessorProp().TagVariableChange);
+      addReason(getSectionSlot(section, SlotKind.ReturnChangeHandler), ALWAYS);
     }
 
     addSetupExpr(section, attrs.value);
@@ -114,9 +114,8 @@ export default {
         writer.flushBefore(tag);
 
         if (attrs.valueChange) {
-          setSectionSerializedValue(
-            section,
-            getAccessorProp().TagVariableChange,
+          setScopeProperty(
+            findSectionSlot(section, SlotKind.ReturnChangeHandler),
             t.logicalExpression(
               "||",
               attrs.valueChange,

@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $selected__closures = /* @__PURE__ */ new Set();
 	let selected = 1;
@@ -28,11 +28,11 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", $sg__input_show, $sg__input_show, $sg__input_show, 0, 1);
+	}, $scope0_id, "a", $wg__input_show, $wg__input_show, $wg__input_show, 0, 1);
 	_scope($scope0_id, {
-		e: $si__input_show && selected,
-		f: $si__input_show && rows,
+		e: $wi__input_show && selected,
+		f: $wi__input_show && rows,
 		g: $selected__closures
 	});
-	$sg__input_show || _resume_branch($scope0_id);
+	$wg__input_show || _resume_branch($scope0_id);
 }, 1);

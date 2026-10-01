@@ -26,7 +26,6 @@ import {
   getSectionForBody,
   startSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
 import { addSetupWork } from "../util/setup-work";
 import {
   addStatement,
@@ -38,6 +37,7 @@ import {
 import * as structure from "../util/structure";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
 import { translateByTarget } from "../util/visitors";
+import { getWriteGuard } from "../util/write-guard";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
@@ -153,7 +153,7 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(section, bodySection?.serializeReason, true),
+                getWriteGuard(section, bodySection?.reason, true),
               ),
             ),
           )[0]

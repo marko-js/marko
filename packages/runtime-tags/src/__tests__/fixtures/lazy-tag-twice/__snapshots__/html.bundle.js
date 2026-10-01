@@ -23,7 +23,7 @@ var template_default = _template("b", (input) => {
 		id: "b",
 		value: input.value * 10
 	});
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		b: _existing_scope($childScope),
 		d: _existing_scope($childScope2)
 	});

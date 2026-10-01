@@ -1,9 +1,9 @@
 // child.marko
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _serialize_guard($scope0_reason, 1), $sg__input_value = _serialize_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $wg__input_value = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.label, $sg__input_label)}: ${_text_resume($scope0_id, "#text/1", input.value, $sg__input_value * 2)}</div>`);
-	_serialize_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child.marko", 0);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.label, $wg__input_label)}: ${_text_resume($scope0_id, "#text/1", input.value, $wg__input_value * 2)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 
 // template.marko
@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (count % 2 === 0) {
 			const $scope1_id = _scope_id();
-			_set_serialize_reason(34);
+			_set_scope_reason(34);
 			const $childScope = _peek_scope_id();
 			$Child_withLoadAssets({
 				label: "x",
