@@ -31,9 +31,7 @@ import { filter, forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
 import {
   getNodeReasons,
-  getWriteReason,
   isConditionalReason,
-  isSameReason,
   isUnconditionalReason,
   type Reason,
 } from "./reasons";
@@ -77,7 +75,11 @@ import {
 } from "./to-property-name";
 import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
-import { getExprIfWritten, getWriteGuardForAny } from "./write-guard";
+import {
+  getExprIfWritten,
+  getWriteGuardForAny,
+  isSameReason,
+} from "./write-guard";
 
 export interface Signal {
   identifier: t.Identifier;
@@ -180,7 +182,7 @@ export function getContentClosureValues(bodySection: Section) {
 }
 
 function isConditionallyWritten(closure: Binding) {
-  return !isUnconditionalReason(getWriteReason(findSlot(closure)));
+  return !isUnconditionalReason(findSlot(closure)?.reason);
 }
 
 const [getScopeProperties] = createSectionState<
@@ -190,7 +192,7 @@ export function setScopeProperty(
   found: PlaceSlot | undefined,
   expression: t.Expression,
 ) {
-  const reason = getWriteReason(found);
+  const reason = found?.reason;
   if (reason) {
     const accessor = getSlotAccessor(found!);
     getScopeProperties(found!.section).set(accessor, {
@@ -297,7 +299,7 @@ export function getSignal(
     const exportName = referencedBindings
       ? !Array.isArray(referencedBindings) &&
         referencedBindings.section === section &&
-        referencedBindings.export
+        getProgram().node.extra.exportNames!.params.get(referencedBindings)
       : !section.parent && getProgram().node.extra.exportNames!.setup;
 
     signals.set(
@@ -506,7 +508,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.aliases.size ||
     binding.assignments ||
     isForSelectorValue(binding) ||
-    getWriteReason(findSlot(binding)) ||
+    findSlot(binding)?.reason ||
     getSignal(binding.section, binding).hasSideEffect
   ) {
     return false;
@@ -757,7 +759,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     );
   }
 
-  if (isValue && getWriteReason(findSlot(binding))) {
+  if (isValue && findSlot(binding)?.reason) {
     signal.hasSideEffect = true;
   }
 
@@ -1305,9 +1307,10 @@ export function writeHTMLResumeStatements(
           );
         }
 
-        const closureScopesReason = getWriteReason(
-          findSlot(closure, SlotKind.ClosureScopes),
-        );
+        const closureScopesReason = findSlot(
+          closure,
+          SlotKind.ClosureScopes,
+        )?.reason;
         const subscribeArg =
           isConditionalReason(closureScopesReason) &&
           !isSameReason(closureScopesReason, sectionReason)
@@ -1360,7 +1363,7 @@ export function writeHTMLResumeStatements(
 
   let debugVars: t.ObjectProperty[] | undefined;
   const writeBinding = (binding: Binding) => {
-    const reason = getWriteReason(findSlot(binding));
+    const reason = findSlot(binding)?.reason;
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
     pendingProperties.delete(accessor);
@@ -1399,9 +1402,7 @@ export function writeHTMLResumeStatements(
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;
-    const ownerReason = getWriteReason(
-      findSectionSlot(section, SlotKind.Owner),
-    );
+    const ownerReason = findSectionSlot(section, SlotKind.Owner)?.reason;
     if (ownerReason) {
       pendingProperties.delete(ownerAccessor);
       if (!getOwnerResumedByMarker(section)) {

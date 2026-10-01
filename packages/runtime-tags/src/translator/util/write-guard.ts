@@ -3,12 +3,7 @@ import { types as t } from "@marko/compiler";
 import { getDebugNames, getDebugNamesAsIdentifier } from "./bindings";
 import { generateUid, getSharedUid } from "./generate-uid";
 import { some } from "./optional";
-import {
-  getWriteReason,
-  isConditionalReason,
-  type Reason,
-  type Reasons,
-} from "./reasons";
+import { isConditionalReason, type Reason, type Reasons } from "./reasons";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
@@ -17,11 +12,19 @@ import {
   type Section,
 } from "./sections";
 import { type Slot } from "./slots";
-import { type Sources } from "./sources";
+import { compareSources, type Sources } from "./sources";
 import { createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
 type ConditionalReason = Sources & { state: undefined };
+
+export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
+  // Reasons read always match whatever their sources: both guard as `1`.
+  return (
+    a === b ||
+    (a && b ? (a.always && b.always) || compareSources(a, b) === 0 : false)
+  );
+}
 
 interface SectionGuards {
   if: GuardHoists;
@@ -243,7 +246,7 @@ function hasConditionalReason(section: Section) {
 }
 
 function isConditionalSlot(slot: Slot) {
-  return isConditionalReason(getWriteReason(slot));
+  return isConditionalReason(slot.reason);
 }
 
 function scopeReasonIdentifier(section: Section) {

@@ -23,7 +23,7 @@ import {
   getOnlyChildParentTagName,
 } from "../util/is-only-child-in-parent";
 import { fromIter } from "../util/optional";
-import { addReasonExprs, getWriteReason } from "../util/reasons";
+import { addReasonExprs } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
@@ -252,9 +252,10 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        const branchReason = getWriteReason(
-          findSectionSlot(bodySection, SlotKind.Branch),
-        );
+        const branchReason = findSectionSlot(
+          bodySection,
+          SlotKind.Branch,
+        )?.reason;
 
         resumeOwnerByMarkerWhenStatic(bodySection, nodeBinding);
 

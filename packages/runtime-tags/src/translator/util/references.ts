@@ -5,7 +5,6 @@ import {
   type Binding,
   BindingType,
   type Getter,
-  type InputBinding,
   type ParamBinding,
   type ReferencedBindings,
   bindingUtil,
@@ -94,7 +93,7 @@ declare module "@marko/compiler/dist/types" {
     exprRoot?: NodeExtra;
     isEffect?: true;
     /** Retained past render (a change handler, a native spread, a dynamic tag's
-     * input), so a value here may reach the client and a function registers. */
+     * input), so client code may read a value here as it is, a function too. */
     retained?: true;
     /** Consumed where it is written (a handler its tag attaches, an
      * effect's callback, a key function), so it reaches no client as is. */
@@ -121,6 +120,7 @@ declare module "@marko/compiler/dist/types" {
     constantBindingsInFunction?: ReferencedBindings;
     name?: string;
     registerId?: string;
+    /** When client code reads the function itself, which registers it. */
     reason?: Reason;
     // Reserved for a function reachable through an export: importing templates
     // resolve it to register the function without this template registering it.
@@ -939,7 +939,7 @@ export const [getReferenceFinalizers] = createProgramState<(() => void)[]>(
 );
 
 // Runs once reads, assignments, pruning and sources settle, before reasons
-// propagate: a finalizer may add reasons, but reads no reason or fact built on one.
+// propagate: a finalizer may add them, but reads none, nor facts on them.
 export function onFinalizeReferences(finalize: () => void) {
   getReferenceFinalizers().push(finalize);
 }
@@ -1248,8 +1248,8 @@ function addNumericPropertiesUntil(props: SortedOpt<string>, len: number) {
   return result;
 }
 
-// The call site expressions a child template's input derives from, keyed the way
-// the child destructures it; `value` is the whole-value expression.
+// The call site expressions a child template's params derive from, keyed the
+// way the child destructures them; `value` is the whole-value expression.
 export interface KnownExprs {
   known?: Record<string, KnownExprs>;
   value?: t.NodeExtra;
@@ -1257,7 +1257,7 @@ export interface KnownExprs {
 
 export function mapParamReasonToExpr(
   exprs: KnownExprs,
-  reason: boolean | Opt<InputBinding | ParamBinding>,
+  reason: boolean | Opt<ParamBinding>,
 ) {
   if (reason) {
     if (reason === true) return true;
@@ -1273,7 +1273,7 @@ export function mapParamReasonToExpr(
 
 export function mapParamBindingToExpr(
   exprs: KnownExprs,
-  binding: InputBinding | ParamBinding,
+  binding: ParamBinding,
 ): Opt<t.NodeExtra> {
   // Property-less with an aliased binding covers every whole-value link: pure
   // rests (which carry no excludeProperties), rest grains, and aliases.

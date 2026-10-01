@@ -1,16 +1,16 @@
 import { types as t } from "@marko/compiler";
 import { getFile } from "@marko/compiler/babel-utils";
 
-import { type Binding, getCanonicalBinding } from "./bindings";
+import {
+  type Binding,
+  compareReferences,
+  getCanonicalBinding,
+} from "./bindings";
 import * as SlotKind from "./constants/slot-kind";
 import { isAnalyzing } from "./get-compile-stage";
 import { type Opt, Sorted, type SortedOpt } from "./optional";
 import { type Reason } from "./reasons";
-import {
-  compareParamGroups,
-  type ParamReasonGroup,
-  type Section,
-} from "./sections";
+import { type ParamReasonGroup, type Section } from "./sections";
 
 type SlotKind = SlotKind.Value;
 export { SlotKind };
@@ -184,7 +184,7 @@ function compareSlotTo(
   return (
     getOwnerOrder(slot.owner) - order ||
     slot.kind - kind ||
-    (group ? compareParamGroups(slot.group!, group) : 0)
+    (group ? compareReferences(slot.group!, group) : 0)
   );
 }
 

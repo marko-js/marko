@@ -124,8 +124,8 @@ export default {
   },
 } satisfies TemplateVisitor<t.Function>;
 
-// What each function serializes for; reasons may still grow, so this only
-// widens them and registration waits until they settle.
+// When client code reads each function; reasons may still grow, so
+// this only widens them and registration waits until they settle.
 export function resolveFunctionReason() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
     const reason = resolveReason(exprExtras);
@@ -151,8 +151,8 @@ export function finalizeFunctionRegistry() {
 
 /**
  * Tracks a function imported from another template that reserved a register id.
- * The importing template registers it (under the reserved id) when its own
- * references reach something serialized.
+ * The importing template registers it (under the reserved id) when client
+ * code reads its own references.
  */
 export function trackImportedFn(
   importDecl: t.NodePath<t.ImportDeclaration>,

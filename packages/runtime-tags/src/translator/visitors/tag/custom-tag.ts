@@ -212,7 +212,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     knownTagTranslateDOM(
       tag,
       (binding) => {
-        const signalKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}\0${binding.export!}`;
+        const signalKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}\0${childExports.params.get(binding)!}`;
         let signalIdent = signals.get(signalKey);
         if (!signalIdent) {
           signalIdent = generateUidIdentifier(
@@ -225,7 +225,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               buildLoadSignalVirtualModule(
                 file,
                 childFileName,
-                binding.export!,
+                childExports.params.get(binding)!,
                 binding.name,
               )!,
             ),
@@ -322,7 +322,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         importOrSelfReferenceName(
           getFile(),
           relativePath,
-          (directContent && binding.directContentExport) || binding.export!,
+          (directContent && childExports.directContent.get(binding)) ||
+            childExports.params.get(binding)!,
           preferredName,
         ),
       childSection.hasSetupWork

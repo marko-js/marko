@@ -132,8 +132,8 @@ export default {
       tagExtra.pure =
         (!valueAttr || evaluate(valueAttr.value).pure) &&
         evaluate(valueChangeAttr.value).pure;
-      // The serialized change handler is only invoked by an assignment to the
-      // tag variable, so it does not resume when nothing assigns.
+      // Only an assignment to the tag variable calls the change handler, so
+      // nothing reads it when nothing assigns.
       onFinalizeReferences(() => {
         if (binding.assignments) {
           addReason(changeSlot, ALWAYS);

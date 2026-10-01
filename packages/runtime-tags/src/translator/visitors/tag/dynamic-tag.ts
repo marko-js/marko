@@ -32,7 +32,7 @@ import {
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
-import { addReasonExprs, addReason, getWriteReason } from "../../util/reasons";
+import { addReasonExprs, addReason } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
   isTagVarUsed,
@@ -271,13 +271,18 @@ export default {
             t.memberExpression(tag.node.name, t.identifier("content")),
           );
         } else {
+          const directContentNames =
+            getProgram().node.extra.exportNames!.directContent;
           knownTagTranslateDOM(
             tag,
-            (binding, preferredName, directContent) =>
-              directContent && binding.directContentExport
-                ? t.identifier(binding.directContentExport)
+            (binding, preferredName, directContent) => {
+              const directName =
+                directContent && directContentNames.get(binding);
+              return directName
+                ? t.identifier(directName)
                 : getSignal(definedBodySection, binding, preferredName)
-                    .identifier,
+                    .identifier;
+            },
             (section, childBinding) => {
               if (definedBodySection.hasSetupWork) {
                 addStatement(
@@ -326,7 +331,7 @@ export default {
       const tagExtra = node.extra!;
       const nodeBinding = tagExtra.nodeBinding!;
       const isClassAPI = tagExtra.featureType === "class";
-      const markerReason = getWriteReason(findSlot(nodeBinding));
+      const markerReason = findSlot(nodeBinding)?.reason;
       let tagExpression = node.name;
 
       if (isClassAPI) {
@@ -573,16 +578,16 @@ export default {
         // Additional optimized export a known parent calls instead of the
         // general `_dynamic_tag` signal above.
         const directBinding = tagExtra.referencedBindings;
-        if (
+        const directName =
           directBinding &&
           !Array.isArray(directBinding) &&
-          directBinding.directContentExport
-        ) {
+          getProgram().node.extra.exportNames!.directContent.get(directBinding);
+        if (directName) {
           getProgram().node.body.push(
             t.exportNamedDeclaration(
               t.variableDeclaration("const", [
                 t.variableDeclarator(
-                  t.identifier(directBinding.directContentExport),
+                  t.identifier(directName),
                   callRuntime(
                     "_dynamic_tag_content",
                     getScopeAccessorLiteral(nodeBinding, true),
