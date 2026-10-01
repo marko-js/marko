@@ -6,7 +6,6 @@ import {
   type Binding,
   BindingType,
   type Getter,
-  type InputBinding,
   type Intersection,
   type ParamBinding,
   type ReferencedBindings,
@@ -181,7 +180,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         forEach(exprBindings.lazyBindings, addAlwaysRead);
       } else {
         // A value retained as written keeps what it reads outside a function,
-        // so those reads serialize with it.
+        // so client code reads those with it.
         forEach(reads, (read) => {
           if (!read.inFunction && read.extra.exprRoot?.retained) {
             addReasonExprs(getSlot(read.binding), expr);
@@ -234,7 +233,7 @@ function resolveBindings() {
 
       forEach(binding.assignments, ({ section: assignedSection }) => {
         setReadsOwner(assignedSection, section);
-        // Deliberately `true`, not `binding.sources`: narrowing is a 0-byte no-op until a state-dropping pass exists.
+        // Deliberately `ALWAYS`, not `binding.sources`: narrowing is a 0-byte no-op until a state-dropping pass exists.
         addOwnerReason(assignedSection, section, ALWAYS);
       });
 
@@ -567,12 +566,6 @@ function resolveBindingSources(binding: Binding) {
       }
       return;
     }
-    case BindingType.input:
-      binding.sources = createSources(
-        undefined,
-        getCanonicalBinding(binding) as InputBinding,
-      );
-      return;
     case BindingType.param:
       binding.sources = createSources(
         undefined,

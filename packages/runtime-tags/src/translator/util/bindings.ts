@@ -67,8 +67,6 @@ export interface Binding {
    * handler, or the scope offset of a tag whose variable a child returns. */
   reserveSize: number;
   scopeAccessor: string | undefined;
-  export: string | undefined;
-  directContentExport: string | undefined;
   /** A name declared for this value, or all of it but its `excludeProperties`
    * (a rest element), even once pruned. */
   declaredAlias: Binding | undefined;
@@ -81,15 +79,14 @@ export interface Binding {
   nullable: boolean;
   /** Settled only once `finalizeReferences` runs at program analyze exit. */
   pruned: boolean | undefined;
+  /** In a template's or `<define>`'s params tree, which known call sites set
+   * directly. */
   exposed: boolean;
   /** Read on invocation from its own scope slot, which must persist. */
   hasLazyReads: boolean;
 }
 
-export interface InputBinding extends Binding {
-  type: typeof BindingType.input;
-}
-
+/** A param of a template or of a tag body, which its caller supplies. */
 export interface ParamBinding extends Binding {
   type: typeof BindingType.param;
 }
@@ -158,8 +155,6 @@ export function createBinding(
     returnedBy: undefined,
     reserveSize: 0,
     scopeAccessor: undefined,
-    export: undefined,
-    directContentExport: undefined,
     nullable: !sameSection || excludeProperties === undefined,
     pruned: undefined,
     exposed: false,
@@ -367,8 +362,14 @@ export function getDebugScopeAccess(binding: Binding) {
   };
 }
 
+// A template's params live in its program section, and its callers may be
+// other modules.
+export function isTemplateParam(binding: Binding) {
+  return binding.type === BindingType.param && !binding.section.parent;
+}
+
 export function getDebugName(binding: Binding) {
-  if (binding.type === BindingType.input) {
+  if (isTemplateParam(binding)) {
     let root = binding;
     let access = "";
     while (
@@ -378,7 +379,7 @@ export function getDebugName(binding: Binding) {
       if (root.property !== undefined) {
         access = toAccess(root.property) + access;
       }
-      root = root.aliasOf as InputBinding;
+      root = root.aliasOf as ParamBinding;
     }
 
     return root.name + access;
@@ -400,7 +401,7 @@ function getDebugNameAsIdentifier(binding: Binding) {
   let root = binding;
   let access = "";
 
-  if (binding.type === BindingType.input) {
+  if (isTemplateParam(binding)) {
     while (
       root.aliasOf !== root.section.params &&
       root.excludeProperties === undefined
@@ -408,7 +409,7 @@ function getDebugNameAsIdentifier(binding: Binding) {
       if (root.property !== undefined) {
         access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
       }
-      root = root.aliasOf as InputBinding;
+      root = root.aliasOf as ParamBinding;
     }
   } else {
     while (

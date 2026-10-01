@@ -36,8 +36,8 @@ _Avoid_: refs, dependencies
 
 **Sources**:
 The transitive roots that can make a binding browser-relevant, split into
-non-parameter `state` and input/body-parameter `param` roots. `state` does not
-mean only `<let>` values.
+non-parameter `state` and template- or body-parameter `param` roots. `state`
+does not mean only `<let>` values.
 _Avoid_: dependencies, referenced bindings, provenance
 
 **Derives from**:
@@ -100,11 +100,19 @@ queue per scope through `_script`.
 _Avoid_: lifecycle hook, arbitrary JavaScript side effect
 
 **Reason**:
-Why a section, scope property, marker, or registration must reach the browser:
-the `Sources` whose changes lead client code to read it after resume. `always`
-and state-backed reasons are unconditional; parameter-only ones produce per-call
-guards; absence means omit.
-_Avoid_: serialize reason, serialization flag, serialized value
+The `Sources` whose changes lead client code that runs after resume to read a
+section's scope, a scope property, a marker, or a registered value: `always`
+for reads on resume (effects, handlers), state for reads a client change
+starts, params for reads only a caller's change starts. Unset means nothing
+reads it. Analysis records reasons; translate concludes from them.
+_Avoid_: serialization flag, demand
+
+**Write reason**:
+Translate's conclusion from a slot's reason (`getWriteGuard`): whether
+and under which guard the server writes it.
+`always` and state reasons write unconditionally; param-only ones produce
+per-call guards.
+_Avoid_: serialization flag, serialized value
 
 **Slot**:
 What analysis records, with its reason, for one thing client code may read
@@ -126,7 +134,7 @@ _Avoid_: component state, context
 A scope property's key; the property itself is a _scope slot_. Debug builds use
 readable strings and optimized builds use compact encodings from the lockstep
 `src/common/constants/*[.debug].ts` pairs.
-_Avoid_: slot, value
+_Avoid_: slot (the property it names), value
 
 **Generation**:
 `Scope[AccessorProp.Gen]`, the run a scope belongs to, compared against the

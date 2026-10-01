@@ -23,7 +23,7 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
-import { addReasonExprs, getWriteReason } from "../util/reasons";
+import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -215,7 +215,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
   if (binding) {
     writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
-    writer.markNode(tag, binding, getWriteReason(findSlot(binding)));
+    writer.markNode(tag, binding, findSlot(binding)?.reason);
   }
 
   emitStyleImport(tag);

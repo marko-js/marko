@@ -40,7 +40,7 @@ import {
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
-import { addReasonExprs, addReason, getWriteReason } from "../../util/reasons";
+import { addReasonExprs, addReason } from "../../util/reasons";
 import {
   dropNodes,
   getCanonicalExtra,
@@ -742,7 +742,7 @@ export default {
                 contentAttr.value,
                 getWriteGuard(
                   tagSection,
-                  nodeBinding && getWriteReason(findSlot(nodeBinding)),
+                  nodeBinding && findSlot(nodeBinding)?.reason,
                   true,
                 ),
               ),
@@ -751,7 +751,7 @@ export default {
         } else if (spreadContent) {
           const markerGuard = getWriteGuard(
             tagSection,
-            nodeBinding && getWriteReason(findSlot(nodeBinding)),
+            nodeBinding && findSlot(nodeBinding)?.reason,
             true,
           );
           htmlContentAttrTags.add(tag.node);
@@ -797,7 +797,7 @@ export default {
         const tagSection = getSection(tag);
         const skipEndTag = isEndTagWrittenByBranch(nodeBinding);
         const markerReason =
-          !skipEndTag && nodeBinding && getWriteReason(findSlot(nodeBinding));
+          !skipEndTag && nodeBinding && findSlot(nodeBinding)?.reason;
         const write = writer.writeTo(
           tag,
           // `</html>` defers even when marked (its `#html/0` marker resolves to

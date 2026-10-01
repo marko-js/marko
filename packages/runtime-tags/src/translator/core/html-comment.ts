@@ -13,7 +13,7 @@ import {
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
 import { isOutputHTML } from "../util/marko-config";
-import { addReasonExprs, addReason, getWriteReason } from "../util/reasons";
+import { addReasonExprs, addReason } from "../util/reasons";
 import {
   mergeReferences,
   trackDomVarReferences,
@@ -154,11 +154,7 @@ export default {
       }
 
       if (nodeBinding) {
-        writer.markNode(
-          tag,
-          nodeBinding,
-          getWriteReason(findSlot(nodeBinding)),
-        );
+        writer.markNode(tag, nodeBinding, findSlot(nodeBinding)?.reason);
       }
 
       tag.remove();

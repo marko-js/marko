@@ -17,7 +17,6 @@ import {
   createBinding,
   getDebugNames,
   getOrCreatePropertyAlias,
-  type InputBinding,
   isInvokeOnlyBinding,
   propsUtil,
 } from "./bindings";
@@ -31,11 +30,10 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, type Opt, type SortedOpt } from "./optional";
+import { forEach, fromIter, type SortedOpt } from "./optional";
 import {
   addReasonExprs,
   addReason,
-  getWriteReason,
   getSourcesForExpr,
   getSourcesForExprs,
 } from "./reasons";
@@ -110,7 +108,7 @@ const kKnownExprs = Symbol("known tag exprs");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kContentSection]?: Section;
-    /** The child input the call site was analyzed against. */
+    /** The child's params tree the call site was analyzed against. */
     [kPropTree]?: BindingPropTree;
     [kKnownExprs]?: KnownExprs;
   }
@@ -165,12 +163,12 @@ export function knownTagAnalyze(
       tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
     );
     // A recursive call's return is taken as always: the content's `<return>`
-    // is unsettled here and is not mapped through the call's inputs.
+    // is unsettled here and is not mapped through the call's params.
     const varExpr =
       isSameOrChildSection(contentSection, section) ||
       (tagExtra.defineBodySection
         ? contentSection.returnValueExpr
-        : mapParamReasonToExpr(exprs, getReturnInputs(contentSection)));
+        : mapParamReasonToExpr(exprs, getReturnParams(contentSection)));
     varBinding.returnedBy = childScopeBinding;
     childScopeBinding.reserveSize = 1;
     setDerivedFrom(varBinding, varExpr);
@@ -183,21 +181,18 @@ export function knownTagAnalyze(
   addReasonExprs(getSlot(childScopeBinding), fromIter(attrExprs));
 }
 
-// The inputs another template's return value is computed from, or `true` when
+// The params another template's return value is computed from, or `true` when
 // it also reads state.
-function getReturnInputs(section: Section) {
+function getReturnParams(section: Section) {
   const sources =
     section.returnValueExpr && getSourcesForExpr(section.returnValueExpr);
-  return (
-    sources &&
-    (sources.always || !!sources.state || (sources.param as Opt<InputBinding>))
-  );
+  return sources && (sources.always || !!sources.state || sources.param);
 }
 
 // The child's scope resumes, and with it any tag variable, which HTML wires
 // with `_var` and DOM registers for.
 function isChildScopeResumed(tagExtra: t.MarkoTagExtra) {
-  return !!getWriteReason(findSlot(tagExtra.nodeBinding!));
+  return !!findSlot(tagExtra.nodeBinding!)?.reason;
 }
 
 // Arguments a child reads none of are dropped, so the render call passes
@@ -390,7 +385,7 @@ export function finalizeKnownTags(section: Section) {
       for (const group of contentSection.paramReasonGroups) {
         addReason(
           getSlot(scopeBinding, SlotKind.ParamGroup, section, group),
-          getSourcesForExprs(mapParamReasonToExpr(knownExprs, group.reason)),
+          getSourcesForExprs(mapParamReasonToExpr(knownExprs, group)),
         );
       }
     }
@@ -406,9 +401,12 @@ function buildChildGroupMask(
 ) {
   return buildGroupMask(
     reasonGroups.map((group) => {
-      const reason = getWriteReason(
-        findSlot(childScopeBinding, SlotKind.ParamGroup, section, group),
-      );
+      const reason = findSlot(
+        childScopeBinding,
+        SlotKind.ParamGroup,
+        section,
+        group,
+      )?.reason;
       const guard = reason && getWriteGuard(section, reason, false)!;
       return {
         value: !guard
@@ -416,7 +414,7 @@ function buildChildGroupMask(
           : guard.type === "NumericLiteral"
             ? guard.value
             : guard,
-        names: getDebugNames(group.reason),
+        names: getDebugNames(group),
       };
     }),
   );
@@ -429,10 +427,10 @@ function analyzeParams(
   propTree: BindingPropTree | undefined,
   rootAttrExprs: Set<t.NodeExtra>,
 ): KnownExprs {
-  const inputExpr: KnownExprs = {};
+  const paramsExpr: KnownExprs = {};
   if (!propTree) {
     dropAllTagNodes(tag.node);
-    return inputExpr;
+    return paramsExpr;
   }
 
   if (
@@ -440,17 +438,17 @@ function analyzeParams(
     propTree.rest ||
     tag.node.arguments?.some((node) => t.isSpreadElement(node))
   ) {
-    const extra = (inputExpr.value = mergeReferences(
+    const extra = (paramsExpr.value = mergeReferences(
       section,
       tag.node,
       getAllTagReferenceNodes(tag.node),
     ));
 
-    setDerivedFrom(propTree.binding, extra, inputExpr);
-    return inputExpr;
+    setDerivedFrom(propTree.binding, extra, paramsExpr);
+    return paramsExpr;
   }
 
-  const known: NonNullable<KnownExprs["known"]> = (inputExpr.known = {});
+  const known: NonNullable<KnownExprs["known"]> = (paramsExpr.known = {});
 
   let i = 0;
   if (tag.node.arguments) {
@@ -461,7 +459,7 @@ function analyzeParams(
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
-        setDerivedFrom(argExport.binding, argValueExtra, inputExpr);
+        setDerivedFrom(argExport.binding, argValueExtra, paramsExpr);
       } else {
         dropNodes(arg);
       }
@@ -478,7 +476,7 @@ function analyzeParams(
       tag,
       attrPropsTree,
       rootAttrExprs,
-      inputExpr,
+      paramsExpr,
     );
   } else {
     const args = tag.node.arguments;
@@ -487,7 +485,7 @@ function analyzeParams(
     tag.node.arguments = args;
   }
 
-  return inputExpr;
+  return paramsExpr;
 }
 
 function analyzeAttrs(

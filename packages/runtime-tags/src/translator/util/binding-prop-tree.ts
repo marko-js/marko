@@ -1,4 +1,6 @@
-import { type Binding, BindingType, propsUtil } from "./bindings";
+import { getProgram } from "@marko/compiler/babel-utils";
+
+import { type Binding, isTemplateParam, propsUtil } from "./bindings";
 import { generateUid } from "./generate-uid";
 import { forEach, type SortedOpt } from "./optional";
 
@@ -51,10 +53,6 @@ export function getBindingPropTree(
           [prop: string]: BindingPropTree;
         };
 
-        if (restAlias.type === BindingType.input) {
-          restAlias.export ??= generateUid(restAlias.name);
-        }
-
         forEach(restAlias.excludeProperties, (property) => {
           const propAlias = binding.propertyAliases.get(property);
           if (propAlias) {
@@ -68,12 +66,19 @@ export function getBindingPropTree(
     }
   }
 
-  if (binding.type === BindingType.input) {
-    binding.export ??= generateUid(binding.name);
+  const exportNames = getProgram().node.extra.exportNames!;
+  if (isTemplateParam(binding) && !exportNames.params.has(binding)) {
+    exportNames.params.set(binding, generateUid(binding.name));
   }
 
-  if (isDirectContentBinding(binding)) {
-    binding.directContentExport ??= generateUid(`${binding.name}_direct`);
+  if (
+    isDirectContentBinding(binding) &&
+    !exportNames.directContent.has(binding)
+  ) {
+    exportNames.directContent.set(
+      binding,
+      generateUid(`${binding.name}_direct`),
+    );
   }
 
   return props;

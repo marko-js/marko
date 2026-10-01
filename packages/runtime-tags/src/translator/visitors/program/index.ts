@@ -12,7 +12,7 @@ import {
   type BindingPropTree,
   getBindingPropTree,
 } from "../../util/binding-prop-tree";
-import { BindingType } from "../../util/bindings";
+import { type Binding, BindingType } from "../../util/bindings";
 import entryBuilder from "../../util/entry-builder";
 import { finalizeReferences } from "../../util/finalize-references";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
@@ -23,7 +23,7 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
-import { isOwnResumeReason } from "../../util/reasons";
+import { isUnconditionalReason } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
 import {
   dynamicImport,
@@ -46,6 +46,8 @@ export let localsIdentifier: t.Identifier;
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
+    /** Client code reads something of its own after resume (a section, or a
+     * renderer it registers), so a page bundles it. */
     hasResumes?: boolean;
     /** What the template reads of its params (its input is the first), the
      * contract its callers keep. */
@@ -55,6 +57,11 @@ declare module "@marko/compiler/dist/types" {
       template: string;
       walks: string;
       setup: string;
+      /** The signal of each of the template's param bindings, a property of
+       * one included. */
+      params: Map<Binding, string>;
+      /** Each content passthrough's `_dynamic_tag_content` signal. */
+      directContent: Map<Binding, string>;
     };
     styleFile?: string;
   }
@@ -75,7 +82,7 @@ export default {
   analyze: {
     enter(program) {
       startSection(program);
-      trackParamsReferences(program, BindingType.input);
+      trackParamsReferences(program, BindingType.param);
 
       const programExtra = (program.node.extra ??= {});
       const inputBinding = program.node.params![0].extra?.binding;
@@ -88,6 +95,8 @@ export default {
         template: generateUid("template"),
         walks: generateUid("walks"),
         setup: generateUid("setup"),
+        params: new Map(),
+        directContent: new Map(),
       };
 
       // Resolve any colocated style file (eg `template.style.css`) once so the
@@ -116,7 +125,7 @@ export default {
       // has to reach the client on its own.
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
-          isOwnResumeReason(childSection.reason) ||
+          isUnconditionalReason(childSection.reason) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
             getRendererReason(childSection))

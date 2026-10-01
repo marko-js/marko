@@ -16,8 +16,9 @@ template modules, payload, and markers transitively.
    per-section ids.
 4. `signals.ts` groups work by its exact binding set and emits the smallest
    executable **signal**.
-5. `reasons.ts` propagates why each scope property, marker, section,
-   or registered value must exist in the browser.
+5. `reasons.ts` and `solve-reasons.ts` work out when client code
+   reads each scope property, marker, section, or registered value after
+   resume; `write-guard.ts` turns that into what the server writes.
 6. DOM output supplies mostly pure, tree-shakable signals/renderers. HTML output
    writes only the state and markers required by retained client work.
 7. SSR serializes registered ids instead of function source. Resume fills scopes,
@@ -74,30 +75,32 @@ effect/registry requirements, collapses eligible intersections, and finalizes
 known-tag contracts. Safe invoke-only reads avoid subscriptions but set
 `hasLazyReads`: the current scope slot must still survive for later invocation.
 
-### Reasons
+### Reasons and write reasons
 
-A reason is the `Sources` whose changes lead client code to read something after
-resume (`Reason = Sources`); absence means omit. Reasons stay lossless: an
-`always` reason keeps the sources it reads, and consumers decide what to drop.
+Analysis records **reasons**: the `Sources` whose changes lead client code
+that runs after resume to read something; absence means nothing does. They
+stay lossless: `always` reasons keep what they read, and consumers decide what
+to drop. Translate reads a slot's reason as its **write reason**, what the
+server writes:
 
 - `always` (`ALWAYS` alone for a value read for its own sake): unconditional.
 - Contains state: unconditional for SSR; client-changeable state requires its
   resume path for every instance.
-- Parameter-only: guarded per call site by the reason passed from the parent.
+- Parameter-only: guarded per call site by the guard passed from the parent.
 
-Reasons live only on slots (`slots.ts`): a place in a scope (a property, a
-marker) or a decision a guard makes, owned by a binding or a section. A scope is
-written when any slot in it is, so a section's reason is the join of the reasons
-of the slots in its scope, derived and never set directly, while each slot is
-still written under its own reason's guard. Reasons originate at
-client-observable roots—state, effects, handlers/registered functions, closures,
-hoists, control-flow identity, DOM getters, tag variables, and stateful
-downstreams—and propagate backward through aliases/reads and upward through
-owners. Intersections cross-propagate because all members must exist when their
-combined work becomes relevant. Reasons that follow other reasons (intersections,
-closures through registered content, registered functions, known-tag param
-groups) are solved together, repeating until none moves; every write merges, so
-reasons only grow and cycles settle.
+Reasons live on slots (`slots.ts`), and a registered function keeps its own on
+its extra. A slot is a place in a scope (a property, a marker) or a decision a
+guard makes, owned by a binding or a section. A scope is written when any slot
+in it is, so a section's reason is the join of the slots' in its scope, derived
+and never set directly, while each slot is still written under its own guard.
+They originate at client-observable roots—state, effects, handlers/registered
+functions, closures, hoists, control-flow identity, DOM getters, tag variables,
+and stateful derived bindings—and propagate backward through aliases/reads and upward
+through owners. Intersections cross-propagate because all members must exist
+when their combined work becomes relevant. Reasons that follow others
+(intersections, closures through registered content, registered functions,
+known-tag param groups) are solved together, repeating until none moves; every
+write merges, so they only grow and cycles settle.
 
 Across known tags, `finalizeParamReasonGroups()` groups child parameter
 dependencies. The parent calls `_set_scope_reason(...)`; the child consumes

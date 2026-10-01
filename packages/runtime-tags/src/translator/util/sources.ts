@@ -1,6 +1,5 @@
 import {
   type Binding,
-  type InputBinding,
   type ParamBinding,
   bindingUtil,
   compareReferences,
@@ -10,14 +9,15 @@ import { type SortedOpt } from "./optional";
 
 export interface Sources {
   state: SortedOpt<Binding>;
-  param: SortedOpt<InputBinding | ParamBinding>;
+  param: SortedOpt<ParamBinding>;
   global: true | undefined;
-  /** Serialized unconditionally; the sources still say what it reads. */
+  /** Read whatever changes, as an effect or handler reads on resume; the
+   * other fields still say what it reads. */
   always: true | undefined;
 }
 
-// The reason of a value read for its own sake: always, and the
-// sources the other terms add to it survive the merge.
+// The reason of something read for its own sake: what a merge adds to it
+// survives.
 export const ALWAYS: Sources = {
   state: undefined,
   param: undefined,
@@ -52,7 +52,7 @@ export function createSources(
   /* v8 ignore next 6 -- every caller passes at least one source */
   if (!(state || param || global || always)) {
     throw new Error(
-      "Cannot create a reason that does not reference state, a param, or $global.",
+      "Cannot create sources that reference no state, param or $global.",
     );
   }
 
@@ -94,6 +94,12 @@ export function compareSources(a: Sources, b: Sources) {
   return 0;
 }
 
+export function mergeSources(a: Sources, b: undefined | Sources): Sources;
+export function mergeSources(a: undefined | Sources, b: Sources): Sources;
+export function mergeSources(
+  a: undefined | Sources,
+  b: undefined | Sources,
+): Sources | undefined;
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;

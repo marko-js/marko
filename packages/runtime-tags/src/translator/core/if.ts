@@ -21,12 +21,7 @@ import {
   analyzeNodeBinding,
   getOnlyChildParentTagName,
 } from "../util/is-only-child-in-parent";
-import {
-  addReasonExprs,
-  getWriteReason,
-  type Reasons,
-  sourcesUtil,
-} from "../util/reasons";
+import { addReasonExprs, type Reasons, sourcesUtil } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -132,9 +127,10 @@ export const IfTag = {
             const [branchTag, branchBodySection] = branches[i];
             const bodyStatements = branchTag.node.body.body;
             if (branchBodySection) {
-              const branchReason = getWriteReason(
-                findSectionSlot(branchBodySection, SlotKind.Branch),
-              );
+              const branchReason = findSectionSlot(
+                branchBodySection,
+                SlotKind.Branch,
+              )?.reason;
               if (branchReason) {
                 branchReasons = sourcesUtil.add(branchReasons, branchReason);
                 bodyStatements.push(

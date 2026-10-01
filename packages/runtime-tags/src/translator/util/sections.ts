@@ -6,7 +6,6 @@ import {
   type Binding,
   bindingUtil,
   compareReferences,
-  type InputBinding,
   type Intersection,
   type IntersectionMeta,
   type ParamBinding,
@@ -30,7 +29,6 @@ import {
   reduce,
 } from "./optional";
 import {
-  hasReason,
   isConditionalReason,
   mapParamReason,
   mergeReasons,
@@ -45,9 +43,9 @@ import { createSectionState } from "./state";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
-export interface ParamReasonGroup {
-  reason: NonNullable<Sources["param"]>;
-}
+// A set of the section's params that reasons wait on together; each
+// call site passes whether the group changed.
+export type ParamReasonGroup = NonNullable<Sources["param"]>;
 export type ParamReasonGroups = [ParamReasonGroup, ...ParamReasonGroup[]];
 
 type ContentType = ContentType.Value;
@@ -115,7 +113,7 @@ export interface Section {
   parent: Section | undefined;
   children: Section[];
   program: Section;
-  params: undefined | ParamBinding | InputBinding;
+  params: undefined | ParamBinding;
   /** The attribute tag `<for>` params this content reads, held as its own
    * bindings that the loop binds as it creates it. */
   localClosures: ReferencedBindings;
@@ -130,7 +128,7 @@ export interface Section {
   intersections: Map<Intersection, IntersectionMeta> | undefined;
   /** The slots of its scope, its own and its bindings'. */
   slots: SortedOpt<Slot>;
-  /** Why anything in its scope serializes: its slots' reasons merged. */
+  /** When client code reads anything in its scope: its slots' reasons merged. */
   reason: undefined | Reason;
   paramReasonGroups: ParamReasonGroups | undefined;
   returnValueExpr: t.NodeExtra | undefined;
@@ -433,7 +431,8 @@ export function getNodeContentType(
 }
 
 export function getRendererReason(section: Section) {
-  if (isResumedBranch(section)) return false; // Branches handle whether to register their section/renderer.
+  // A branch's tag reads its renderer.
+  if (isResumedBranch(section)) return false;
 
   // Only a component receives a dynamic tag's body as a value; SSR otherwise
   // writes just its id, to compare against the client's renderer.
@@ -444,7 +443,7 @@ export function getRendererReason(section: Section) {
   const { derives } = section;
 
   if (derives) {
-    const downstreamReasons = reduce(
+    const derivedReasons = reduce(
       derives.binding,
       (reasons: Reason | undefined, binding) => {
         const reason = getReasonForBinding(binding, derives.properties);
@@ -465,16 +464,7 @@ export function getRendererReason(section: Section) {
         );
       },
     );
-    if (!downstreamReasons) return false;
-    // Params can only change content whose scope, or its caller's, resumes.
-    if (
-      isConditionalReason(downstreamReasons) &&
-      !hasReason(section) &&
-      !hasReason(section.parent)
-    ) {
-      return false;
-    }
-    return downstreamReasons;
+    return derivedReasons || false;
   }
 
   return true;
@@ -569,35 +559,28 @@ export function ensureReasonGroups(reason: Section["reason"]) {
   }
 }
 
-function ensureParamReasonGroup(
-  section: Section,
-  reason: ParamReasonGroup["reason"],
-) {
+function ensureParamReasonGroup(section: Section, group: ParamReasonGroup) {
   const { paramReasonGroups } = section;
-  if (paramReasonGroups) {
-    const found = findSorted(compareParamGroups, paramReasonGroups, { reason });
-    if (found) return found;
+  if (!paramReasonGroups) {
+    setParamReasonGroups(section, [group]);
+  } else if (!findSorted(compareReferences, paramReasonGroups, group)) {
+    setParamReasonGroups(
+      section,
+      addSorted(compareReferences, paramReasonGroups, group),
+    );
   }
-
-  const group: ParamReasonGroup = { reason };
-  setParamReasonGroups(
-    section,
-    paramReasonGroups
-      ? addSorted(compareParamGroups, paramReasonGroups, group)
-      : [group],
-  );
 }
 
 export function getParamReasonGroupIndex(
   section: Section,
-  reason: ParamReasonGroup["reason"],
+  group: ParamReasonGroup,
 ) {
   const index =
     section.paramReasonGroups &&
-    findIndexSorted(compareParamGroups, section.paramReasonGroups, { reason });
+    findIndexSorted(compareReferences, section.paramReasonGroups, group);
   if (index === undefined || index === -1) {
     throw new Error(
-      "Invalid compiler state, cannot ask for a reason group that was not analyzed.",
+      "Invalid compiler state, cannot ask for a param reason group that was not analyzed.",
     );
   }
   return index;
@@ -609,13 +592,6 @@ export function groupParamsBySection(params: Sources["param"]) {
 
 function bindingToSection(binding: Binding) {
   return binding.section;
-}
-
-export function compareParamGroups(
-  a: Pick<ParamReasonGroup, "reason">,
-  b: Pick<ParamReasonGroup, "reason">,
-) {
-  return compareReferences(a.reason, b.reason);
 }
 
 export function setReadsOwner(from: Section, to: Section) {

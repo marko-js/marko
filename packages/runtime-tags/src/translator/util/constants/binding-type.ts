@@ -3,14 +3,13 @@ export const dom = 0;
 // exported under the name call sites already use.
 const let_ = 1;
 export { let_ as let };
-export const input = 2;
-export const param = 3;
-export const local = 4;
-export const derived = 5;
-export const constant = 6;
+export const param = 2;
+export const local = 3;
+export const derived = 4;
+export const constant = 5;
 // `$global` and its property aliases: tracked as sources, inert in
 // the signal graph (no slot, no subscription, no closure, no ordinal).
-export const global = 7;
+export const global = 6;
 
 type Self = typeof import("./binding-type");
 export type Value = Self[keyof Self];

@@ -5,7 +5,6 @@ import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { toArray } from "./optional";
-import { getWriteReason } from "./reasons";
 import { getOrCreateSection } from "./sections";
 import { findSlot } from "./slots";
 import { toPropertyName } from "./to-property-name";
@@ -57,7 +56,7 @@ export default function translateVar(
     if (
       binding.section !== tagSection &&
       binding.excludeProperties !== undefined &&
-      getWriteReason(findSlot(binding))
+      findSlot(binding)?.reason
     ) {
       // hoist rest aliases which are in a different section to be in the owner section so that it can be serialized.
       const restPath = id.parentPath as t.NodePath<t.RestElement>;

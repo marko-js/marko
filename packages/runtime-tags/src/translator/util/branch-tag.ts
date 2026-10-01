@@ -1,12 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { type Binding } from "./bindings";
-import {
-  getWriteReason,
-  isStateReason,
-  isUnconditionalReason,
-  type Reasons,
-} from "./reasons";
+import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
 import { ContentType, type Section } from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
 import { findSectionSlot, findSlot, SlotKind } from "./slots";
@@ -32,11 +27,11 @@ export function resumeOwnerByMarkerWhenStatic(
   nodeBinding: Binding,
 ) {
   if (
-    isStateReason(getWriteReason(findSlot(nodeBinding, SlotKind.BranchExpr))) &&
+    isStateReason(findSlot(nodeBinding, SlotKind.BranchExpr)?.reason) &&
     isUnconditionalReason(
-      getWriteReason(findSectionSlot(bodySection, SlotKind.Branch)),
+      findSectionSlot(bodySection, SlotKind.Branch)?.reason,
     ) &&
-    isUnconditionalReason(getWriteReason(findSlot(nodeBinding)))
+    isUnconditionalReason(findSlot(nodeBinding)?.reason)
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
@@ -68,10 +63,8 @@ export function getBranchEndArgs(
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean | undefined,
 ) {
-  const branchExprReason = getWriteReason(
-    findSlot(nodeBinding, SlotKind.BranchExpr),
-  );
-  const markerReason = getWriteReason(findSlot(nodeBinding));
+  const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
+  const markerReason = findSlot(nodeBinding)?.reason;
   const skipParentEnd = onlyChildParentTagName && markerReason;
   if (skipParentEnd) {
     getBranchEndTags().add(nodeBinding);

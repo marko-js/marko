@@ -18,7 +18,7 @@ import {
   analyzeNodeBinding,
   getOnlyChildParentTagName,
 } from "../util/is-only-child-in-parent";
-import { addReasonExprs, getWriteReason } from "../util/reasons";
+import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -190,7 +190,7 @@ export default {
         const nodeBinding = tagExtra.nodeBinding!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const singleNode = tagExtra[kSingleNodeBody];
-        const markerReason = getWriteReason(findSlot(nodeBinding));
+        const markerReason = findSlot(nodeBinding)?.reason;
         const endArgs = getBranchEndArgs(
           tagSection,
           nodeBinding,
@@ -207,7 +207,7 @@ export default {
               startMark!,
               getWriteGuard(
                 tagSection,
-                getWriteReason(findSlot(nodeBinding, SlotKind.BranchExpr)),
+                findSlot(nodeBinding, SlotKind.BranchExpr)?.reason,
                 false,
               )!,
             );
