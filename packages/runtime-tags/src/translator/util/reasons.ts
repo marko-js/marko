@@ -23,6 +23,7 @@ import {
   type KnownExprs,
   mapParamBindingToExpr,
   getCanonicalExtra,
+  getReferencedBindings,
 } from "./references";
 import {
   forEachAncestorSection,
@@ -97,7 +98,7 @@ export function isStateReason(reason: undefined | Reason): reason is Sources {
 export function getSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExtra(expr);
   return isReferencedExtra(root)
-    ? getSourcesForRef(root.referencedBindings)
+    ? getSourcesForRef(getReferencedBindings(root))
     : undefined;
 }
 

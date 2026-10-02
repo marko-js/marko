@@ -37,6 +37,7 @@ import {
 } from "./reasons";
 import {
   type AssignedBindingExtra,
+  getReferencedBindingsInFunction,
   hasResumableWriter,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
@@ -945,7 +946,9 @@ export function addValue(
   });
 
   if (
-    (value?.extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction
+    t.isFunction(value) &&
+    value.extra &&
+    getReferencedBindingsInFunction(value.extra)
   ) {
     parentSignal.hasSideEffect = true;
   }
@@ -1817,7 +1820,7 @@ function getRegisteredFnExpression(node: t.Function) {
   if (isRegisteredFnExtra(extra)) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
-    const referencedBindings = extra.referencedBindingsInFunction;
+    const referencedBindings = getReferencedBindingsInFunction(extra);
     const referencedLocals = extra.referencedLocalBindingsInFunction;
     let registeredFns = registeredFnsForProgram.get(getProgram().node);
     if (!registeredFns) {

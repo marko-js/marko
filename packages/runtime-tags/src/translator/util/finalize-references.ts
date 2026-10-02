@@ -17,6 +17,7 @@ import {
   getPropertyPath,
   isDirectAlias,
   propsUtil,
+  someAliased,
 } from "./bindings";
 import { generateUid } from "./generate-uid";
 import {
@@ -25,7 +26,7 @@ import {
   filter,
   findSorted,
   forEach,
-  type Many,
+  type SortedOpt,
   type Opt,
   type SortedOneMany,
   push,
@@ -53,6 +54,10 @@ import {
   getReadsByExpression,
   getReferenceFinalizers,
   isReferencedExtra,
+  getLazyBindings,
+  getReferencedBindings,
+  setResolvedFunctionReads,
+  setResolvedReads,
 } from "./references";
 import {
   forEachSection,
@@ -158,9 +163,15 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         reads,
         intersectionsBySection,
       );
-      expr.referencedBindings = exprBindings.referencedBindings;
-      expr.lazyBindings = exprBindings.lazyBindings;
-      expr.globalBindings = exprBindings.globalBindings;
+      setResolvedReads(
+        expr,
+        exprBindings.referencedBindings,
+        exprBindings.lazyBindings,
+        exprBindings.globalBindings,
+      );
+      if (exprBindings.globalBindings) {
+        getProgram().node.extra.hasGlobalRead = true;
+      }
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
         // lands in its section's setup signal.
@@ -202,14 +213,16 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
                     fnReads,
                   );
             // The function itself still reads lazy bindings when invoked.
-            fn.referencedBindingsInFunction =
+            setResolvedFunctionReads(
+              fn,
               fn === expr
                 ? bindingUtil.union(
                     fnBindings.referencedBindings,
                     exprBindings.lazyBindings,
                   )
-                : fnBindings.referencedBindings;
-            fn.constantBindingsInFunction = fnBindings.constantBindings;
+                : fnBindings.referencedBindings,
+              fnBindings.constantBindings,
+            );
           }
         }
       }
@@ -226,7 +239,6 @@ function resolveBindings() {
     // would burn a UID and shift later generated names), no section
     // membership, no closures — reads compile verbatim.
     if (binding.type === BindingType.global) {
-      getProgram().node.extra.hasGlobalRead = true;
       resolveBindingSources(binding);
       continue;
     }
@@ -301,7 +313,7 @@ function resolveBindings() {
           const closure =
             getConstantRoot(binding) ?? getCanonicalBinding(binding);
           // Lazy-only reads need the owner scope chain but no closure signal.
-          if (!bindingUtil.has(exprExtra.lazyBindings, binding)) {
+          if (!bindingUtil.has(getLazyBindings(exprExtra), binding)) {
             closure.closureSections = sectionUtil.add(
               closure.closureSections,
               section,
@@ -472,16 +484,15 @@ export function getValueInputs(binding: Binding): ReferencedBindings {
 
 // The bindings value expressions read, apart from an initial value (which a
 // change never recomputes).
-function getValueReferences(exprs: Opt<t.NodeExtra>) {
-  let refs: ReferencedBindings;
-  forEach(exprs, (expr) => {
-    // An attribute tag's expression is read through the group it merged into.
-    const canonical = getCanonicalExtra(expr);
-    if (isReferencedExtra(canonical) && !expr.initialValue) {
-      refs = bindingUtil.union(refs, canonical.referencedBindings);
-    }
-  });
-  return refs;
+function getValueReferences(exprs: Opt<t.NodeExtra>): ReferencedBindings {
+  return reduce(exprs, addValueReferences);
+}
+
+function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {
+  // An attribute tag's expression is read through the group it merged into.
+  return isReferencedExtra(getCanonicalExtra(expr)) && !expr.initialValue
+    ? bindingUtil.union(refs, getReferencedBindings(expr))
+    : refs;
 }
 
 // The last tag whose child returns one of the intersection's own sources, whose
@@ -614,14 +625,16 @@ function resolveDerivedSources(binding: Binding) {
     binding.sources = createSources(binding, undefined);
   } else if (exprs) {
     const refs = getValueReferences(exprs);
-    forEach(refs, (ref) => {
-      resolveBindingSources(ref);
-      binding.sources = mergeSources(binding.sources, ref.sources);
-    });
+    binding.sources = reduce(refs, mergeResolvedSources, binding.sources);
     binding.intersection = Array.isArray(refs)
       ? refs
       : refs && getRootIntersection(refs);
   }
+}
+
+function mergeResolvedSources(sources: Sources | undefined, ref: Binding) {
+  resolveBindingSources(ref);
+  return mergeSources(sources, ref.sources);
 }
 
 function getRootIntersection(binding: Binding) {
@@ -795,27 +808,21 @@ function findAliased(from: Binding, to: Binding) {
   } while ((closest = closest.aliasOf));
 }
 
-function getRootBindings(reads: Many<Read>): SortedOneMany<Binding> {
-  let rootRefs!: SortedOneMany<Binding>;
-  let allBindings!: SortedOneMany<Binding>;
+// The read bindings that alias no other read binding.
+function getRootBindings(reads: Opt<Read>): SortedOpt<Binding> {
+  const bindings = reduce(reads, addReadBinding);
+  return bindingUtil.filter(
+    bindings,
+    (binding) => !someAliased(binding.aliasOf, isInBindings, bindings),
+  );
+}
 
-  for (const { binding } of reads) {
-    allBindings = bindingUtil.add(allBindings, binding);
-  }
+function addReadBinding(bindings: SortedOpt<Binding>, { binding }: Read) {
+  return bindingUtil.add(bindings, binding);
+}
 
-  for (const { binding } of reads) {
-    let alias = binding.aliasOf;
-    while (alias) {
-      if (bindingUtil.has(allBindings, alias)) break;
-      alias = alias.aliasOf;
-    }
-
-    if (!alias) {
-      rootRefs = bindingUtil.add(rootRefs, binding);
-    }
-  }
-
-  return rootRefs;
+function isInBindings(binding: Binding, bindings: SortedOpt<Binding>) {
+  return bindingUtil.has(bindings, binding);
 }
 
 function markLazyRead(binding: Binding) {
@@ -870,81 +877,48 @@ function resolveReferencedBindings(
   let lazyBindings: ReferencedBindings;
   let globalBindings: ReferencedBindings;
 
-  if (Array.isArray(reads)) {
-    const rootBindings = getRootBindings(reads);
-    for (const read of reads) {
-      let { binding } = read;
-      const { extra, getter } = read;
-
-      if (getter) {
-        extra.section = expr.section;
-        extra.read = createGetterRead(binding, undefined, getter);
-        addBindingGetter(binding, getter);
-        if (getter.hoisted) {
-          binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
-          hoistedBindings = bindingUtil.add(hoistedBindings, binding);
-        }
-      } else {
-        const isChangeHandlerRead = extra.assignmentTo === binding;
-        if (isChangeHandlerRead) {
-          const aliasRoot =
-            binding.aliasOf &&
-            findClosestReference(binding.aliasOf, rootBindings);
-          if (aliasRoot) {
-            binding = aliasRoot;
-          }
-        } else if (binding.type !== BindingType.global) {
-          extra.section = expr.section;
-          ({ binding } = extra.read ??=
-            resolveConstantReference(binding) ??
-            resolveExpressionReference(rootBindings, read));
-        }
-        if (binding.type === BindingType.global) {
-          // `$global` reads stay verbatim member chains: no read slot,
-          // no signal, no register-id participation.
-          globalBindings = bindingUtil.add(globalBindings, binding);
-        } else if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
-          lazyBindings = bindingUtil.add(lazyBindings, binding);
-        } else if (binding.type === BindingType.constant) {
-          constantBindings = bindingUtil.add(constantBindings, binding);
-        } else if (binding.type !== BindingType.dom) {
-          referencedBindings = bindingUtil.add(referencedBindings, binding);
-        }
-      }
-      allBindings = bindingUtil.add(allBindings, binding);
-    }
-  } else if (reads) {
-    const { extra, getter, ownVar } = reads;
-    let { binding } = reads;
+  const rootBindings = getRootBindings(reads);
+  forEach(reads, (read) => {
+    let { binding } = read;
+    const { extra, getter } = read;
 
     if (getter) {
+      extra.section = expr.section;
       extra.read = createGetterRead(binding, undefined, getter);
       addBindingGetter(binding, getter);
       if (getter.hoisted) {
         binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
         hoistedBindings = bindingUtil.add(hoistedBindings, binding);
       }
-    } else if (binding.type === BindingType.global) {
-      // `$global` reads stay verbatim member chains: no read slot,
-      // no signal, no register-id participation.
-      globalBindings = binding;
     } else {
-      extra.read =
-        resolveConstantReference(binding) ??
-        createRead(binding, undefined, ownVar && isChildReturnVar(binding));
-      binding = extra.read.binding;
-      if (isLazyRead(expr, reads, binding, extra.assignmentTo === binding)) {
-        lazyBindings = binding;
+      const isChangeHandlerRead = extra.assignmentTo === binding;
+      if (isChangeHandlerRead) {
+        const aliasRoot =
+          binding.aliasOf &&
+          findClosestReference(binding.aliasOf, rootBindings!);
+        if (aliasRoot) {
+          binding = aliasRoot;
+        }
+      } else if (binding.type !== BindingType.global) {
+        extra.section = expr.section;
+        ({ binding } = extra.read =
+          resolveConstantReference(binding) ??
+          resolveExpressionReference(rootBindings!, read));
+      }
+      if (binding.type === BindingType.global) {
+        // `$global` reads stay verbatim member chains: no read slot,
+        // no signal, no register-id participation.
+        globalBindings = bindingUtil.add(globalBindings, binding);
+      } else if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
+        lazyBindings = bindingUtil.add(lazyBindings, binding);
       } else if (binding.type === BindingType.constant) {
-        constantBindings = binding;
+        constantBindings = bindingUtil.add(constantBindings, binding);
       } else if (binding.type !== BindingType.dom) {
-        referencedBindings = binding;
+        referencedBindings = bindingUtil.add(referencedBindings, binding);
       }
     }
-
-    extra.section = expr.section;
-    allBindings = binding;
-  }
+    allBindings = bindingUtil.add(allBindings, binding);
+  });
 
   // A binding also read live by this expression stays subscribed.
   lazyBindings = bindingUtil.difference(lazyBindings, referencedBindings);

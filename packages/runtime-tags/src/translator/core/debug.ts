@@ -8,6 +8,7 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
+import { getReferencedBindings } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
@@ -41,7 +42,7 @@ export default {
     exit(tag) {
       const section = getSection(tag);
       const [valueAttr] = tag.node.attributes;
-      const referencedBindings = valueAttr?.value.extra?.referencedBindings;
+      const referencedBindings = getReferencedBindings(valueAttr?.value.extra);
 
       const statement = withPreviousLocation(t.debuggerStatement(), tag.node);
 

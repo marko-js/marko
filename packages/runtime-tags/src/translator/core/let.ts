@@ -18,6 +18,7 @@ import {
   onFinalizeReferences,
   setDerivedFrom,
   trackVarReferences,
+  getReferencedBindings,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
@@ -166,7 +167,7 @@ export default {
       const unused = binding.pruned && !isNamedOrAssigned(binding);
 
       if (isOutputDOM()) {
-        const referencedBindings = tag.node.extra!.referencedBindings;
+        const referencedBindings = getReferencedBindings(tag.node.extra);
         if (unused) {
           // Its impure values run only for what they do, inline as an unread
           // `<const>`'s.

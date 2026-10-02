@@ -6,6 +6,7 @@ import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { addReasonExprs } from "../util/reasons";
+import { getReferencedBindings } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -182,7 +183,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       addStatement(
         "render",
         section,
-        value.extra!.referencedBindings,
+        getReferencedBindings(value.extra),
         t.expressionStatement(
           method === "_text"
             ? callRuntime(

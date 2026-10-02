@@ -62,10 +62,17 @@ export interface ExtraRead {
   localFn?: ReferencedFunctionExtra;
 }
 
+// What finalize resolves an expression or function to read, set only then
+// and read through the accessors below.
+const kReferencedBindings = Symbol("referenced bindings");
+const kLazyBindings = Symbol("lazy bindings");
+const kGlobalBindings = Symbol("global bindings");
+const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
+const kConstantBindingsInFunction = Symbol("constant bindings in function");
+
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    /** The template emits a `$global` read, so HTML output declares a const
-     * for it. */
+    /** An expression reads `$global`, so HTML output declares a const for it. */
     hasGlobalRead?: true;
   }
 
@@ -82,7 +89,9 @@ declare module "@marko/compiler/dist/types" {
 
   export interface NodeExtra {
     section?: Section;
-    referencedBindings?: ReferencedBindings;
+    [kReferencedBindings]?: ReferencedBindings;
+    [kLazyBindings]?: ReferencedBindings;
+    [kGlobalBindings]?: ReferencedBindings;
     /** The bindings it feeds, in the order it feeds them: a call site's
      * values feed the child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
@@ -112,10 +121,6 @@ declare module "@marko/compiler/dist/types" {
     /** Any function it holds is only ever invoked, never read as a value, so
      * the reads inside resolve when it runs. */
     invokeOnly?: true;
-    lazyBindings?: ReferencedBindings;
-    /** `$global` bindings this expression reads: the root means an opaque
-     * (dynamic/aliased) read, a property alias names the key. */
-    globalBindings?: ReferencedBindings;
     /** The bindings this expression reads only by spreading them as is. */
     spreadFrom?: SortedOpt<Binding>;
     /** A `content` it spreads is rendered (as the element's body, or as a
@@ -126,9 +131,9 @@ declare module "@marko/compiler/dist/types" {
 
   export interface FunctionExtra {
     referencesScope?: boolean;
-    referencedBindingsInFunction?: ReferencedBindings;
+    [kReferencedBindingsInFunction]?: ReferencedBindings;
     referencedLocalBindingsInFunction?: SortedOpt<Binding>;
-    constantBindingsInFunction?: ReferencedBindings;
+    [kConstantBindingsInFunction]?: ReferencedBindings;
     name?: string;
     registerId?: string;
     /** When client code reads the function itself, which registers it. */
@@ -1241,6 +1246,51 @@ export function isRegisteredFnExtra(
     isReferencedExtra(extra) &&
     (extra as RegisteredFnExtra).registerId !== undefined
   );
+}
+
+// An expression's reads resolve on the extra it merges into, so these read
+// that one whichever extra they are given.
+export function getReferencedBindings(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExtra(extra)[kReferencedBindings];
+}
+
+export function getLazyBindings(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExtra(extra)[kLazyBindings];
+}
+
+// The `$global` bindings it reads, which compile verbatim rather than as
+// references: the root for an opaque read, a property alias for a keyed one.
+export function getGlobalBindings(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExtra(extra)[kGlobalBindings];
+}
+
+// What a function's body reads when invoked, resolved with its expression.
+export function getReferencedBindingsInFunction(extra: t.FunctionExtra) {
+  return extra[kReferencedBindingsInFunction];
+}
+
+export function getConstantBindingsInFunction(extra: t.FunctionExtra) {
+  return extra[kConstantBindingsInFunction];
+}
+
+export function setResolvedFunctionReads(
+  extra: t.FunctionExtra,
+  referencedBindings: ReferencedBindings,
+  constantBindings: ReferencedBindings,
+) {
+  extra[kReferencedBindingsInFunction] = referencedBindings;
+  extra[kConstantBindingsInFunction] = constantBindings;
+}
+
+export function setResolvedReads(
+  extra: ReferencedExtra,
+  referencedBindings: ReferencedBindings,
+  lazyBindings: ReferencedBindings,
+  globalBindings: ReferencedBindings,
+) {
+  extra[kReferencedBindings] = referencedBindings;
+  extra[kLazyBindings] = lazyBindings;
+  extra[kGlobalBindings] = globalBindings;
 }
 
 export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
