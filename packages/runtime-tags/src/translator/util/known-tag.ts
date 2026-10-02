@@ -49,7 +49,7 @@ import {
   mapParamReasonToExpr,
   mergeReferences,
   type ReferencedExtra,
-  setBindingDownstream,
+  setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
 } from "./references";
@@ -70,7 +70,7 @@ import {
   sectionUtil,
   startSection,
 } from "./sections";
-import { setTagDownstream } from "./set-tag-sections-downstream";
+import { setTagDerivedFrom } from "./set-tag-derived-from";
 import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
   addStatement,
@@ -155,7 +155,7 @@ export function knownTagAnalyze(
     propTree,
     attrExprs,
   ));
-  setTagDownstream(tag, propTree?.props?.[0]?.binding, exprs);
+  setTagDerivedFrom(tag, propTree?.props?.[0]?.binding, exprs);
 
   if (varBinding) {
     // Tag variables emit a `_var` statement in the parent's setup.
@@ -173,7 +173,7 @@ export function knownTagAnalyze(
         : mapParamReasonToExpr(exprs, getReturnInputs(contentSection)));
     varBinding.returnedBy = childScopeBinding;
     childScopeBinding.reserveSize = 1;
-    setBindingDownstream(varBinding, varExpr);
+    setDerivedFrom(varBinding, varExpr);
     if (mutatesTagVar || varExpr === true) {
       addReason(getSlot(childScopeBinding), ALWAYS);
     }
@@ -446,7 +446,7 @@ function analyzeParams(
       getAllTagReferenceNodes(tag.node),
     ));
 
-    setBindingDownstream(propTree.binding, extra, inputExpr);
+    setDerivedFrom(propTree.binding, extra, inputExpr);
     return inputExpr;
   }
 
@@ -461,7 +461,7 @@ function analyzeParams(
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
-        setBindingDownstream(argExport.binding, argValueExtra, inputExpr);
+        setDerivedFrom(argExport.binding, argValueExtra, inputExpr);
       } else {
         dropNodes(arg);
       }
@@ -506,7 +506,7 @@ function analyzeAttrs(
       getAllTagReferenceNodes(tag.node),
     ));
 
-    setBindingDownstream(propTree.binding, extra, rootExprs);
+    setDerivedFrom(propTree.binding, extra, rootExprs);
     return inputExpr;
   }
 
@@ -640,7 +640,7 @@ function analyzeAttrs(
         // A chain can mix rest members with known ones, which read the same
         // statement as the rest.
         forEach(bindings, (binding) => {
-          setBindingDownstream(binding, rootTagExtra, rootExprs);
+          setDerivedFrom(binding, rootTagExtra, rootExprs);
         });
         for (const [attrTagMeta, read] of reads) {
           if (read !== true) remaining.delete(attrTagMeta.name);
@@ -658,7 +658,7 @@ function analyzeAttrs(
       rootAttrExprs.add(groupExtra);
 
       forEach(bindings, (binding) => {
-        setBindingDownstream(binding, groupExtra, rootExprs);
+        setDerivedFrom(binding, groupExtra, rootExprs);
       });
 
       for (const name of group) {
@@ -714,7 +714,7 @@ function analyzeAttrs(
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
-        setBindingDownstream(templateExportAttr.binding, attrExtra, rootExprs);
+        setDerivedFrom(templateExportAttr.binding, attrExtra, rootExprs);
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
         if (
@@ -759,7 +759,7 @@ function analyzeAttrs(
       known[prop] = { value: propExtra };
       rootAttrExprs.add(propExtra);
       addRead(propExtra, propExtra, propBinding, section, undefined);
-      setBindingDownstream(
+      setDerivedFrom(
         templateExportAttr === true
           ? propTree.rest!.binding
           : templateExportAttr.binding,
@@ -774,7 +774,7 @@ function analyzeAttrs(
         tag.node,
         spreadReferenceNodes,
       );
-      setBindingDownstream(
+      setDerivedFrom(
         propTree.rest?.binding || propTree.binding,
         inputExpr.value,
         rootExprs,
@@ -785,7 +785,7 @@ function analyzeAttrs(
   } else {
     if (restReferenceNodes) {
       inputExpr.value = mergeReferences(section, tag.node, restReferenceNodes);
-      setBindingDownstream(propTree.rest!.binding, inputExpr.value, rootExprs);
+      setDerivedFrom(propTree.rest!.binding, inputExpr.value, rootExprs);
     }
 
     if (remaining.size) {

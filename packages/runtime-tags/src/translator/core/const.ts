@@ -11,7 +11,7 @@ import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
   untrackNode,
-  setBindingDownstream,
+  setDerivedFrom,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -69,24 +69,24 @@ export default {
     }
 
     const valueExtra = evaluate(valueAttr.value);
-    const upstreamAlias = t.isIdentifier(valueAttr.value)
+    const aliased = t.isIdentifier(valueAttr.value)
       ? tag.scope.getBinding(valueAttr.value.name)?.identifier.extra?.binding
       : undefined;
 
-    if (upstreamAlias) {
+    if (aliased) {
       // The alias reads through its upstream; the value itself stays as is.
       untrackNode(valueAttr.value);
     }
 
-    const binding = trackVarReferences(tag, BindingType.derived, upstreamAlias);
+    const binding = trackVarReferences(tag, BindingType.derived, aliased);
 
     if (binding) {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
-      if (!upstreamAlias) {
+      if (!aliased) {
         // Keep unread initializers because their expressions may have side effects;
         // downstream minification can discard proven-pure values.
-        setBindingDownstream(binding, valueExtra);
+        setDerivedFrom(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);
       }
     }
@@ -103,7 +103,7 @@ export default {
         const section = getSection(tag);
 
         // An unread pure value was dropped, so there is nothing to derive.
-        if (varBinding && !varBinding.upstreamAlias && !value.extra?.pruned) {
+        if (varBinding && !varBinding.aliasOf && !value.extra?.pruned) {
           const derivation = initValue(varBinding)!;
           addValue(section, value.extra?.referencedBindings, derivation, value);
         }

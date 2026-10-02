@@ -14,7 +14,7 @@ import { addReason } from "../util/reasons";
 import {
   mergeReferences,
   onFinalizeReferences,
-  setBindingDownstream,
+  setDerivedFrom,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -122,7 +122,7 @@ export default {
       valueChangeAttr?.value,
     ]);
 
-    setBindingDownstream(binding, tagExtra);
+    setDerivedFrom(binding, tagExtra);
 
     if (valueChangeAttr) {
       const changeSlot = getSlot(binding, SlotKind.ChangeHandler);

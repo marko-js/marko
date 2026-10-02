@@ -10,7 +10,7 @@ template modules, payload, and markers transitively.
 
 1. `sections.ts` divides the template into independently rendered **sections**.
 2. `bindings.ts` models values as **bindings**; `references.ts` tracks reads, writes,
-   aliases, properties, closures, hoists, and downstream consumers.
+   aliases, properties, closures, hoists, and what derives from them.
 3. `finalizeReferences()` (`finalize-references.ts`) resolves sources, prunes unused bindings, propagates
    serialization requirements, canonicalizes intersections, and allocates dense
    per-section ids.

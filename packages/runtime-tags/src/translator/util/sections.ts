@@ -135,13 +135,13 @@ export interface Section {
   paramReasonGroups: ParamReasonGroups | undefined;
   returnValueExpr: t.NodeExtra | undefined;
   isHoistThrough: true | undefined;
-  upstreamExpression: t.NodeExtra | undefined;
+  branchExpr: t.NodeExtra | undefined;
   /** For a `<define>` body or a template rendering itself, the sections whose
    * direct calls render it. */
   callSections: SortedOpt<Section>;
   /** The content's rendering tag (its extra), and each child binding the
    * content feeds, at `properties`. */
-  downstream:
+  derives:
     | {
         tag: t.MarkoTagExtra;
         binding: OneMany<Binding>;
@@ -160,7 +160,7 @@ export interface Section {
    * `<define>` body or template it calls in place. */
   hasSetupWork: boolean;
   /** Its tag, which renders it in place into branch scopes at the tag's node
-   * binding, and whether its upstream's value can leave it unrendered. */
+   * binding, and whether its branch expression's value can leave it unrendered. */
   branch: { nodeBinding: Binding; optional: boolean } | undefined;
   content: null | {
     startType: ContentType;
@@ -235,9 +235,9 @@ export function startSection(
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
       content: getContentInfo(path),
-      upstreamExpression: undefined,
+      branchExpr: undefined,
       callSections: undefined,
-      downstream: undefined,
+      derives: undefined,
       pruned: !!extra.pruned,
       hasAbortSignal: false,
       abortSignalExprs: 0,
@@ -320,7 +320,7 @@ export function forEachSection(fn: (section: Section) => void) {
 // For content a tag the analysis cannot resolve receives, which code it cannot
 // see may render later, the closures read in it from outside it.
 export function getContentClosures(section: Section) {
-  if (section.upstreamExpression?.tagNameType === TagNameType.DynamicTag) {
+  if (section.branchExpr?.tagNameType === TagNameType.DynamicTag) {
     return getClosuresFromAbove(section, section.depth);
   }
 }
@@ -437,28 +437,28 @@ export function getRendererReason(section: Section) {
 
   // Only a component receives a dynamic tag's body as a value; SSR otherwise
   // writes just its id, to compare against the client's renderer.
-  if (section.upstreamExpression?.tagNameType === TagNameType.NativeTag) {
+  if (section.branchExpr?.tagNameType === TagNameType.NativeTag) {
     return false;
   }
 
-  const { downstream } = section;
+  const { derives } = section;
 
-  if (downstream) {
+  if (derives) {
     const downstreamReasons = reduce(
-      downstream.binding,
+      derives.binding,
       (reasons: Reason | undefined, binding) => {
-        const reason = getReasonForBinding(binding, downstream.properties);
+        const reason = getReasonForBinding(binding, derives.properties);
         // A known call site resolves the callee's own params (a same-file
         // `<define>` included); without one only cross-file params are read
         // always.
         return mergeReasons(
           reasons,
           reason &&
-            (downstream.exprs
+            (derives.exprs
               ? mapParamReason(
                   binding.section.program,
                   reason,
-                  downstream.exprs,
+                  derives.exprs,
                   true,
                 )
               : mapParamReason(section.program, reason, undefined, false)),

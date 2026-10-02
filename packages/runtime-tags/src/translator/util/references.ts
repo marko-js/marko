@@ -78,13 +78,13 @@ declare module "@marko/compiler/dist/types" {
     referencedBindings?: ReferencedBindings;
     /** The bindings it feeds, in the order it feeds them: a call site's
      * values feed the child template's, so no one template's order sorts them. */
-    downstream?: Opt<Binding>;
+    derives?: Opt<Binding>;
     /** The initial value of the binding it feeds, which keeps it rather than
      * following it, so the binding derives no sources from it. */
     initialValue?: true;
     /** The tag-root `KnownExprs` of the call site that linked this expression
-     * to a downstream template's binding, for dereferencing its reasons. */
-    downstreamExprs?: KnownExprs;
+     * to a derives template's binding, for dereferencing its reasons. */
+    callSiteExprs?: KnownExprs;
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
@@ -147,7 +147,7 @@ function getOrCreateLocalClosure(local: Binding, section: Section) {
       undefined,
       local.loc,
     );
-    closure.upstreamLocal = local;
+    closure.localOf = local;
     (local.localClosures ??= new Map()).set(section, closure);
   }
   return closure;
@@ -220,29 +220,28 @@ export function trackDomVarReferences(
 export function trackVarReferences(
   tag: t.NodePath<t.MarkoTag>,
   type: BindingType,
-  upstreamAlias?: Binding["upstreamAlias"],
+  aliased?: Binding["aliasOf"],
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
     const section = getOrCreateSection(tag);
-    let canonicalUpstreamAlias =
-      upstreamAlias && getCanonicalBinding(upstreamAlias);
-    if (canonicalUpstreamAlias) {
-      const { excludeProperties, restOffset } = canonicalUpstreamAlias;
+    let target = aliased && getCanonicalBinding(aliased);
+    if (target) {
+      const { excludeProperties, restOffset } = target;
       if (excludeProperties !== undefined) {
-        canonicalUpstreamAlias = canonicalUpstreamAlias.upstreamAlias!;
+        target = target.aliasOf!;
       }
       createBindingsAndTrackReferences(
         tagVar,
-        canonicalUpstreamAlias.type,
+        target.type,
         tag.scope,
         section,
-        canonicalUpstreamAlias,
+        target,
         undefined,
         excludeProperties,
         restOffset,
       );
-      return canonicalUpstreamAlias;
+      return target;
     }
 
     createBindingsAndTrackReferences(
@@ -497,10 +496,10 @@ function trackAssignment(
         fnExtra.exprRoot = idExtra.exprRoot;
       }
 
-      if (binding.upstreamAlias && binding.property !== undefined) {
+      if (binding.aliasOf && binding.property !== undefined) {
         // A positional parameter (`<for|item|>`) has no object that could
         // carry a change handler, so the assignment can never write back.
-        if (binding.upstreamAlias === binding.section.params) {
+        if (binding.aliasOf === binding.section.params) {
           throw assignment.buildCodeFrameError(
             `\`${binding.name}\` is a tag parameter and cannot be assigned to.`,
           );
@@ -508,12 +507,12 @@ function trackAssignment(
 
         const changePropName = binding.property + "Change";
         const changeBinding =
-          binding.upstreamAlias.propertyAliases.get(changePropName) ||
+          binding.aliasOf.propertyAliases.get(changePropName) ||
           createBinding(
             generateUid(changePropName),
             binding.type,
             binding.section,
-            binding.upstreamAlias,
+            binding.aliasOf,
             changePropName,
             undefined,
             id.node.loc,
@@ -553,7 +552,7 @@ function createBindingsAndTrackReferences(
   type: BindingType,
   scope: t.Scope,
   section: Section,
-  upstreamAlias: Binding["upstreamAlias"] | undefined,
+  aliased: Binding["aliasOf"] | undefined,
   property: string | undefined,
   excludeProperties: SortedOpt<string>,
   restOffset?: number,
@@ -565,7 +564,7 @@ function createBindingsAndTrackReferences(
         type,
         scope,
         section,
-        upstreamAlias,
+        aliased,
         property,
         excludeProperties,
         restOffset,
@@ -576,7 +575,7 @@ function createBindingsAndTrackReferences(
         lVal.name,
         type,
         section,
-        upstreamAlias,
+        aliased,
         property,
         excludeProperties,
         lVal.loc,
@@ -588,14 +587,12 @@ function createBindingsAndTrackReferences(
     }
     case "ObjectPattern": {
       const patternBinding =
-        (property
-          ? upstreamAlias!.propertyAliases.get(property)
-          : upstreamAlias) ||
+        (property ? aliased!.propertyAliases.get(property) : aliased) ||
         ((lVal.extra ??= {}).binding = createBinding(
           generateUid(property || "pattern"),
           type,
           section,
-          upstreamAlias,
+          aliased,
           property,
           excludeProperties,
           lVal.loc,
@@ -649,14 +646,12 @@ function createBindingsAndTrackReferences(
     }
     case "ArrayPattern": {
       const patternBinding =
-        (property
-          ? upstreamAlias!.propertyAliases.get(property)
-          : upstreamAlias) ||
+        (property ? aliased!.propertyAliases.get(property) : aliased) ||
         ((lVal.extra ??= {}).binding = createBinding(
           generateUid(property || "pattern"),
           type,
           section,
-          upstreamAlias,
+          aliased,
           property,
           excludeProperties,
           lVal.loc,
@@ -725,16 +720,16 @@ function trackReference(
     let prop = getMemberExpressionPropString(parent);
     if (prop === undefined) break;
 
-    if (reference.upstreamAlias && reference.excludeProperties !== undefined) {
+    if (reference.aliasOf && reference.excludeProperties !== undefined) {
       if (reference.restOffset) {
         // A shifted array rest only mirrors the source at offset indices;
         // anything else (length, methods) belongs to the rest array itself.
         if (isIndexProperty(prop)) {
           prop = `${+prop + reference.restOffset}`;
-          reference = reference.upstreamAlias;
+          reference = reference.aliasOf;
         }
       } else if (!propsUtil.has(reference.excludeProperties, prop)) {
-        reference = reference.upstreamAlias;
+        reference = reference.aliasOf;
       }
     }
 
@@ -885,15 +880,15 @@ function isSpreadRead(read: Read) {
 
 // A binding's value expressions, its sources and what pruning drops unread
 // when pure; a child template's binding settled, so a call site only links it.
-export function setBindingDownstream(
+export function setDerivedFrom(
   binding: Binding,
   expr: boolean | Opt<t.NodeExtra>,
   exprs?: KnownExprs,
 ) {
   if (binding.section.program === getProgram().node.extra.section) {
     // Each call site of a same template body feeds its params.
-    const prev = binding.upstreamExpression;
-    binding.upstreamExpression =
+    const prev = binding.derivedFrom;
+    binding.derivedFrom =
       expr === true
         ? undefined
         : prev
@@ -904,8 +899,8 @@ export function setBindingDownstream(
   }
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
-      expr.downstream = push(expr.downstream, binding);
-      if (exprs) expr.downstreamExprs = exprs;
+      expr.derives = push(expr.derives, binding);
+      if (exprs) expr.callSiteExprs = exprs;
     });
   }
 }
@@ -1229,7 +1224,7 @@ function addNumericPropertiesUntil(props: SortedOpt<string>, len: number) {
   return result;
 }
 
-// The call site expressions upstream of a child template's input, keyed the way
+// The call site expressions a child template's input derives from, keyed the way
 // the child destructures it; `value` is the whole-value expression.
 export interface KnownExprs {
   known?: Record<string, KnownExprs>;
@@ -1256,13 +1251,13 @@ export function mapParamBindingToExpr(
   exprs: KnownExprs,
   binding: InputBinding | ParamBinding,
 ): Opt<t.NodeExtra> {
-  // Property-less with an upstream covers every whole-value link: pure
+  // Property-less with an aliased binding covers every whole-value link: pure
   // rests (which carry no excludeProperties), rest grains, and aliases.
   const isWholeAlias =
-    binding.property === undefined && binding.upstreamAlias !== undefined;
+    binding.property === undefined && binding.aliasOf !== undefined;
   const curExpr = getKnownExprsAt(
     exprs,
-    isWholeAlias ? binding.upstreamAlias! : binding,
+    isWholeAlias ? binding.aliasOf! : binding,
   );
 
   if (isWholeAlias) {
@@ -1283,9 +1278,9 @@ export function mapParamBindingToExpr(
 // The call site's known expressions at `binding`, passing through property-less
 // links; past the props it lists, only the value expression holding it.
 function getKnownExprsAt(exprs: KnownExprs, binding: Binding): KnownExprs {
-  const upstream = binding.upstreamAlias;
-  if (!upstream) return exprs;
-  const known = getKnownExprsAt(exprs, upstream);
+  const aliased = binding.aliasOf;
+  if (!aliased) return exprs;
+  const known = getKnownExprsAt(exprs, aliased);
   return binding.property === undefined || !known.known
     ? known
     : (known.known[binding.property] ?? { value: known.value });

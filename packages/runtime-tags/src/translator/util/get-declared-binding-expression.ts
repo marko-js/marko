@@ -8,13 +8,13 @@ export function getDeclaredBindingExpression(
 ): t.Identifier | t.MemberExpression | t.OptionalMemberExpression {
   const canonicalBinding = getCanonicalBinding(binding)!;
   // Content the loop creates is written within it, where the local is in scope.
-  if (canonicalBinding.upstreamLocal) {
-    return getDeclaredBindingExpression(canonicalBinding.upstreamLocal);
+  if (canonicalBinding.localOf) {
+    return getDeclaredBindingExpression(canonicalBinding.localOf);
   }
-  const { upstreamAlias, property, declaredAlias } = canonicalBinding;
+  const { aliasOf: aliased, property, declaredAlias } = canonicalBinding;
   if (
     canonicalBinding.declared ||
-    !upstreamAlias ||
+    !aliased ||
     canonicalBinding.excludeProperties !== undefined
   ) {
     return t.identifier(canonicalBinding.name);
@@ -26,7 +26,7 @@ export function getDeclaredBindingExpression(
   }
 
   if (property !== undefined) {
-    const alias = !upstreamAlias.declared && upstreamAlias.declaredAlias;
+    const alias = !aliased.declared && aliased.declaredAlias;
     if (alias && !propsUtil.has(alias.excludeProperties, property)) {
       return toMemberExpression(
         t.identifier(alias.name),
@@ -35,11 +35,11 @@ export function getDeclaredBindingExpression(
       );
     }
     return toMemberExpression(
-      getDeclaredBindingExpression(upstreamAlias),
+      getDeclaredBindingExpression(aliased),
       property,
-      upstreamAlias.nullable,
+      aliased.nullable,
     );
   }
 
-  return getDeclaredBindingExpression(upstreamAlias);
+  return getDeclaredBindingExpression(aliased);
 }

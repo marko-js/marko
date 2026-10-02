@@ -40,18 +40,22 @@ non-parameter `state` and input/body-parameter `param` roots. `state` does not
 mean only `<let>` values.
 _Avoid_: dependencies, referenced bindings, provenance
 
-**Upstream**:
-What an expression or binding derives from: the expressions it reads and the
-bindings those read (`upstreamAlias`, `upstreamExpression`), summarized by kind
-as its _sources_. Structure has one too: an `<if>` condition, a `<for>`
-collection, or a dynamic tag's renderer is a branch section's
-`upstreamExpression`. A tag or read is _downstream_ of what it reads.
-_Avoid_: feed, feeder, selection (a keyed `<for>` row selector aside)
+**Derives from**:
+What a binding's value is computed from: the expressions it reads
+(`derivedFrom`, whose reverse is an expression's `derives`) and, for an
+alias, the binding it aliases (`aliasOf`), summarized by kind as its
+_sources_.
+_Avoid_: upstream, downstream, feed, feeder
+
+**Branch expression**:
+The expression a branch section is rendered by: an `<if>` condition, a
+`<for>` collection, or a dynamic tag's renderer (`branchExpr`).
+_Avoid_: upstream, selection (a keyed `<for>` row selector aside)
 
 **Optional branch**:
-A branch section its upstream's value can leave unrendered: an `<if>` body, or
+A branch section its branch expression's value can leave unrendered: an `<if>` body, or
 a `<for>` body (rendered once per item). An `<await>` or `<try>` body renders
-for every value its upstream takes; an error renders the catch content instead.
+for every value its branch expression takes; an error renders the catch content instead.
 _Avoid_: reselected, conditional branch
 
 **Closure**:

@@ -9,8 +9,8 @@ import { type KnownExprs } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
 
-const [getTagDownstreams] = createSectionState(
-  "tag-downstreams",
+const [getTagDerivations] = createSectionState(
+  "tag-derivations",
   () =>
     new Map<
       t.NodePath<t.MarkoTag>,
@@ -18,25 +18,25 @@ const [getTagDownstreams] = createSectionState(
     >(),
 );
 
-export function setTagDownstream(
+export function setTagDerivedFrom(
   tag: t.NodePath<t.MarkoTag>,
   binding: Opt<Binding>,
   exprs?: KnownExprs,
 ) {
   if (binding) {
-    getTagDownstreams(getSection(tag)).set(tag, { binding, exprs });
+    getTagDerivations(getSection(tag)).set(tag, { binding, exprs });
   }
 }
 
-export function finalizeTagDownstreams(section: Section) {
-  for (const [tag, { binding, exprs }] of getTagDownstreams(section)) {
-    crawlSectionsAndSetBinding(tag, tag.node.extra!, binding, exprs);
+export function finalizeTagDerivations(section: Section) {
+  for (const [tag, { binding, exprs }] of getTagDerivations(section)) {
+    setContentDerives(tag, tag.node.extra!, binding, exprs);
   }
 }
 
-function crawlSectionsAndSetBinding(
+function setContentDerives(
   tag: t.NodePath<t.MarkoTag>,
-  downstreamTag: t.MarkoTagExtra,
+  tagExtra: t.MarkoTagExtra,
   binding: OneMany<Binding>,
   exprs: KnownExprs | undefined,
   properties?: Opt<string>,
@@ -45,8 +45,8 @@ function crawlSectionsAndSetBinding(
   if (!skip) {
     const contentSection = getSectionForBody(tag.get("body"));
     if (contentSection) {
-      contentSection.downstream = {
-        tag: downstreamTag,
+      contentSection.derives = {
+        tag: tagExtra,
         binding,
         properties: concat(properties, "content"),
         exprs,
@@ -64,22 +64,15 @@ function crawlSectionsAndSetBinding(
     if (child.isMarkoTag()) {
       if (isAttributeTag(child)) {
         const attrTagMeta = attrTagLookup[getTagName(child)];
-        crawlSectionsAndSetBinding(
+        setContentDerives(
           child,
-          downstreamTag,
+          tagExtra,
           binding,
           exprs,
           concat(properties, attrTagMeta.name),
         );
       } else {
-        crawlSectionsAndSetBinding(
-          child,
-          downstreamTag,
-          binding,
-          exprs,
-          properties,
-          true,
-        );
+        setContentDerives(child, tagExtra, binding, exprs, properties, true);
       }
     }
   }

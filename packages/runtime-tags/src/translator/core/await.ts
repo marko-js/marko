@@ -11,10 +11,7 @@ import { assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
-import {
-  setBindingDownstream,
-  trackParamsReferences,
-} from "../util/references";
+import { setDerivedFrom, trackParamsReferences } from "../util/references";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -111,7 +108,7 @@ export default {
     if (paramsBinding) {
       // The content waits on the promise even when nothing reads its result.
       valueExtra.pure = false;
-      setBindingDownstream(paramsBinding, valueExtra);
+      setDerivedFrom(paramsBinding, valueExtra);
     }
 
     initBranchSection(bodySection, valueExtra, {

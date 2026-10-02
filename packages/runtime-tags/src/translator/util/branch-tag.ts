@@ -17,10 +17,10 @@ import { getWriteGuard, getWriteGuardForAny } from "./write-guard";
 // tags cannot drift apart one copy at a time.
 export function initBranchSection(
   bodySection: Section,
-  upstreamExpression: Section["upstreamExpression"],
+  branchExpr: Section["branchExpr"],
   branch: NonNullable<Section["branch"]>,
 ) {
-  bodySection.upstreamExpression = upstreamExpression;
+  bodySection.branchExpr = branchExpr;
   bodySection.branch = branch;
 }
 

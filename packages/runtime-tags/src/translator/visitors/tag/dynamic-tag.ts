@@ -66,7 +66,7 @@ import {
   startSection,
   StructureKind,
 } from "../../util/sections";
-import { setTagDownstream } from "../../util/set-tag-sections-downstream";
+import { setTagDerivedFrom } from "../../util/set-tag-derived-from";
 import {
   addStatement,
   addValue,
@@ -202,7 +202,7 @@ export default {
       const bodySection = startSection(tagBody);
       // The body depends on the whole tag, as a branch body on its condition.
       if (bodySection) {
-        bodySection.upstreamExpression = tagExtra;
+        bodySection.branchExpr = tagExtra;
         // Known templates receive the body as `input.content`, as from a known
         // tag; arguments call them positionally, so the body never reaches them.
         if (
@@ -211,7 +211,7 @@ export default {
         ) {
           // Every attribute merged into the tag's expression, so the tag is
           // the value any prop those templates read.
-          setTagDownstream(tag, getDynamicTagInputBindings(tagExtra), {
+          setTagDerivedFrom(tag, getDynamicTagInputBindings(tagExtra), {
             value: tagExtra,
           });
         }

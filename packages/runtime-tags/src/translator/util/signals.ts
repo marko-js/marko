@@ -326,7 +326,7 @@ export function getSignal(
             referencedBindings.section !== section ||
             referencedBindings.closureSections ||
             referencedBindings.hoists ||
-            referencedBindings.upstreamLocal)
+            referencedBindings.localOf)
         ),
         forcePersist: false,
         inline: undefined,
@@ -349,7 +349,7 @@ export function getSignal(
           const memberSignal = getSignal(section, member);
           const inline =
             member.type === BindingType.derived &&
-            !member.upstreamAlias &&
+            !member.aliasOf &&
             !member.propertyAliases.size &&
             member.reads.size === 1 &&
             sourceSignal.values.find((v) => v.signal === memberSignal);
@@ -842,8 +842,7 @@ function subscribe(references: ReferencedBindings, subscriber: Signal) {
   if (references) {
     forEach(references, (binding) => {
       if (binding.type !== BindingType.constant) {
-        const source =
-          (isDirectAlias(binding) && binding.upstreamAlias) || binding;
+        const source = (isDirectAlias(binding) && binding.aliasOf) || binding;
         const providerSignal = getSignal(subscriber.section, source);
         providerSignal.hasSideEffect = true;
         providerSignal.intersection = push(
@@ -1714,11 +1713,9 @@ function getChangeHandlerRead(
   binding: Binding,
   section: Section,
 ): t.Expression {
-  return binding.pruned &&
-    binding.property !== undefined &&
-    binding.upstreamAlias
+  return binding.pruned && binding.property !== undefined && binding.aliasOf
     ? toMemberExpression(
-        getChangeHandlerRead(binding.upstreamAlias, section),
+        getChangeHandlerRead(binding.aliasOf, section),
         binding.property,
         false,
       )

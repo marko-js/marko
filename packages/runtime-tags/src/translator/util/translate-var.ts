@@ -33,12 +33,11 @@ export default function translateVar(
     if (!idExtra) return;
 
     const binding = idExtra.binding;
-    if (!binding?.upstreamAlias) return;
+    if (!binding?.aliasOf) return;
 
     if (binding.assignments && binding.property !== undefined) {
       const changeName = binding.property + "Change";
-      const changeBinding =
-        binding.upstreamAlias.propertyAliases.get(changeName);
+      const changeBinding = binding.aliasOf.propertyAliases.get(changeName);
       if (changeBinding && changeName !== changeBinding.name) {
         // add a new property to the destructure list when a change handler is implicitly added
         // eg by assigning to a destructured property.
@@ -72,9 +71,7 @@ export default function translateVar(
       let prevPath: t.NodePath = tag;
       while (curPath) {
         if (curPath.node.extra?.section === binding.section) {
-          const canonicalUpstreamAlias = getCanonicalBinding(
-            binding.upstreamAlias,
-          );
+          const aliased = getCanonicalBinding(binding.aliasOf);
           const props: t.ObjectPattern["properties"] = toArray(
             binding.excludeProperties,
             (name) =>
@@ -89,13 +86,13 @@ export default function translateVar(
             t.variableDeclaration(kind, [
               t.variableDeclarator(
                 t.objectPattern(props),
-                canonicalUpstreamAlias.nullable
+                aliased.nullable
                   ? t.logicalExpression(
                       "||",
-                      getDeclaredBindingExpression(canonicalUpstreamAlias),
+                      getDeclaredBindingExpression(aliased),
                       t.objectExpression([]),
                     )
-                  : getDeclaredBindingExpression(canonicalUpstreamAlias),
+                  : getDeclaredBindingExpression(aliased),
               ),
             ]),
           );

@@ -4,7 +4,7 @@ import {
   type ParamBinding,
   bindingUtil,
   compareReferences,
-  someUpstream,
+  someAliased,
 } from "./bindings";
 import { type SortedOpt } from "./optional";
 
@@ -120,7 +120,7 @@ function unionParamSources(a: Sources["param"], b: Sources["param"]) {
     // when `input` is present); params otherwise treat properties as discrete sources.
     return bindingUtil.filter(
       merged,
-      (binding) => !someUpstream(binding.upstreamAlias, isInParams, merged),
+      (binding) => !someAliased(binding.aliasOf, isInParams, merged),
     );
   }
 

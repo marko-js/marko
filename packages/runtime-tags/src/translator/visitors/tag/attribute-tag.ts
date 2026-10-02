@@ -38,7 +38,7 @@ export default {
         analyzeTagNameType(parentTag) === TagNameType.DynamicTag &&
         !parentTag.node.extra!.defineBodySection
       ) {
-        bodySection.upstreamExpression = parentTag.node.extra;
+        bodySection.branchExpr = parentTag.node.extra;
       }
     },
   },
