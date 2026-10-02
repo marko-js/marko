@@ -1,0 +1,19 @@
+import { resolveAfter } from "../../utils/resolve";
+
+static const never = new Promise(() => {});
+
+<try>
+  <@placeholder>loading</@placeholder>
+  <await=resolveAfter("outer", 1)>
+    <try>
+      <await=never>never</await>
+      <await=resolveAfter("inner", 2)>
+        <try>
+          <@placeholder>${(() => { throw new Error("ERROR!") })()}</@placeholder>
+          <await=resolveAfter("body", 3)>body</await>
+        </try>
+      </await>
+      <@catch|err|>caught ${err.message}</@catch>
+    </try>
+  </await>
+</try>

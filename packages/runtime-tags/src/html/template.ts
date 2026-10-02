@@ -372,7 +372,7 @@ class ServerRendered implements RenderedTemplate {
         }
 
         if (write || status === FlushStatus.complete) {
-          head = head.consume();
+          head = head.consume(boundary);
           // An abort re-entered above, so the next pass reports it.
           if (boundary.aborted) continue;
           const html = head.flushHTML(boundary);
