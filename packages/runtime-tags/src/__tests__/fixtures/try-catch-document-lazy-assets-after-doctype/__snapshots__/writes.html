@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>T</title>
+</head>
+
+<body>
+  <link rel=stylesheet href="child.marko.load.css">
+  <script async type=module src="child.marko.load.mjs"></script><span
+    class=child>1</span>
+  <script>
+    document.head.insertAdjacentHTML("beforeend",
+      "<link rel=stylesheet href=\"child.marko.load.css\">")
+  </script>
+</body>
+
+</html>

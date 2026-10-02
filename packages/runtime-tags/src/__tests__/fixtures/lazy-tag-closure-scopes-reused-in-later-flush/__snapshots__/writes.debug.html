@@ -2,16 +2,16 @@
 <section><!--M_[--><span>x</span><!--M_$4 #span/0--><!--M_)2 #section/1 3-->
 </section>
 <script>
-  ((p, h, d, l = $ => {
+  ((h, d, l = $ => {
     d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
       "script").forEach(s => s.onerror = () => console.error(
       "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-closure-scopes-reused-in-later-flush/child.marko\" failed to load; its server-rendered content cannot become interactive."
-      )), p.after(d))
+      )), document.head.append(d))
   }) => (e => e?.addEventListener("click", l, {
     once: 1
   }))(document.querySelector("body") || (console.warn(
     "A lazy load trigger could not find an element matching \"body\". The module was loaded immediately."
-    ), l())))(document.currentScript,
+    ), l())))(
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {

@@ -1,0 +1,11 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<await|t| = resolveAfter("try", 1)>
+  <try>
+    <@placeholder>
+      <Child value="loading"/>
+    </@placeholder>
+    <await|v| = resolveAfter("body", 2)>${t} ${v}</await>
+  </try>
+</await>

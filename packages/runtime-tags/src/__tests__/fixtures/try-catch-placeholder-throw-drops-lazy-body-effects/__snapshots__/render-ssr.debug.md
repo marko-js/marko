@@ -2,6 +2,8 @@
 ```html
 <div
   id="log"
-/>
+>
+  [z]
+</div>
 caught P
 ```

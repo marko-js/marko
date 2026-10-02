@@ -1,0 +1,10 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<try>
+  <await|v| = resolveAfter("body", 1)>
+    <Child value=v/>
+  </await>
+  <await|v| = rejectAfter(new Error("ERROR!"), 2)>${v}</await>
+  <@catch|err|>caught ${err.message}</@catch>
+</try>

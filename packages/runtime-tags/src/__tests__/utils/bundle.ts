@@ -158,6 +158,7 @@ function createBuilds(
   };
 
   const domBuiltBox: { promise?: Promise<RolldownOutput> } = {};
+  const styledLoads = new Set<string>();
   const domBuilt = build({
     cwd,
     ...(csrEntryId ? { input: { csr: csrEntryId } } : {}),
@@ -169,6 +170,7 @@ function createBuilds(
     plugins: [
       virtual.plugin,
       domEntry.plugin,
+      styledLoadsPlugin(styledLoads),
       !optimize && externalRuntimePlugin(false),
       optimize && remapDebugPlugin(),
       optimize && interop && remapDistPlugin(),
@@ -313,6 +315,10 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
               Object.values(chunk.modules).some((m) => m.renderedLength > 0)
             )
               manifest[id] = {
+                // A lazy entry's styles block rendering, as an integration links them.
+                block: styledLoads.has(chunk.facadeModuleId)
+                  ? `<link rel=stylesheet href="${chunk.fileName.replace(/\.mjs$/, ".css")}">`
+                  : undefined,
                 defer: `<script async type=module src="${chunk.fileName}"></script>`,
               };
           }
@@ -652,6 +658,31 @@ function entryPlugin(): {
           this.error("No entries added");
         },
       },
+    },
+  };
+}
+
+// Collects the lazy entries whose template imports a stylesheet, directly or
+// through its static imports; lazy tags it loads in turn bring their own.
+function styledLoadsPlugin(styledLoads: Set<string>): Plugin {
+  return {
+    name: "styled-loads",
+    buildEnd() {
+      for (const entry of this.getModuleIds()) {
+        if (!entry.endsWith(loadExt)) continue;
+        const seen = new Set<string>();
+        const pending = [entry.slice(0, -loadExt.length)];
+        for (let id; (id = pending.pop());) {
+          if (seen.has(id)) continue;
+          seen.add(id);
+          if (id.endsWith(".css")) {
+            styledLoads.add(entry);
+            break;
+          }
+          const info = this.getModuleInfo(id);
+          if (info) pending.push(...info.importedIds);
+        }
+      }
     },
   };
 }

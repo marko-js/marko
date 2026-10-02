@@ -1,0 +1,13 @@
+// use tags
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+import Lazy from "./tags/lazy-child.marko" with { load: "render" }
+
+<try>
+  <await|v|=resolveAfter("first", 2)>${v}</await>
+  <class-wrap/>
+  <await|v|=rejectAfter(new Error("x"), 1)>${v}</await>
+  <@catch|err|>
+    <Lazy value="catch"/>
+    caught ${err.message}
+  </@catch>
+</try>

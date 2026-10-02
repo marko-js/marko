@@ -1,0 +1,45 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<!--M_[--><!--M_!^d--><!--M_[--><!--M_!^c--><!--M_[--><!--M_!^b-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-catch-reject-in-nested-pending-body-keeps-lazy-assets-once/template.marko_2*content"
+      ]
+  }, {
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-catch-reject-in-nested-pending-body-keeps-lazy-assets-once/template.marko_4*content"
+      ]
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!c-->caught inner<!--M_]2 #text/0 3-->
+<t hidden M_=c></t>
+<script>
+  REORDER_RUNTIME(M._);
+  M._.r.push(_ => [3, {
+    "#CatchContent": 0
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!d--><span>catch</span> caught outer<!--M_]1 #text/0 2-->
+<t hidden M_=d></t>
+<script>
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/try-catch-reject-in-nested-pending-body-keeps-lazy-assets-once/child.marko": [
+      _ => [8, {
+        input_value: "catch"
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/try-catch-reject-in-nested-pending-body-keeps-lazy-assets-once/child.marko_0_input_value#3 8"
+    ]
+  };
+  M._.r.push(_ => [2, {
+    "#CatchContent": 0
+  }]);
+  M._.w()
+</script>

@@ -2,17 +2,17 @@
     1<!--M_$1 #text/1--></button><!--M_$1 #button/0--><button class=child>child
   <!>1<!--M_$2 #text/1--></button><!--M_$2 #button/0-->
 <script>
-  ((p, h, d, l = $ => {
+  ((h, d, l = $ => {
     d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
       "script").forEach(s => s.onerror = () => console.error(
       "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-parent-resume/child.marko\" failed to load; its server-rendered content cannot become interactive."
-      )), p.after(d))
+      )), document.head.append(d))
   }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
     .isIntersecting) && i.disconnect() + l(), {
     rootMargin: "100px"
   }).observe(e))(document.querySelector("body") || (console.warn(
     "A lazy load trigger could not find an element matching \"body\". The module was loaded immediately."
-    ), l())))(document.currentScript,
+    ), l())))(
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {

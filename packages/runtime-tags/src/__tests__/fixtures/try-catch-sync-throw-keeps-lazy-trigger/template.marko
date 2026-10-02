@@ -1,0 +1,8 @@
+import Child from "./child.marko" with { load: "on-click body" }
+
+<try>
+  <Child value=1/>
+  ${(() => { throw new Error("S"); })()}
+  <@catch|err|>caught ${err.message}</@catch>
+</try>
+<Child value=2/>

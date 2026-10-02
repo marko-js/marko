@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Branch</title>
+</head>
+
+<body>
+
+  <!-- FLUSH -->
+
+  <!--M_[--><button></button><!--M_$2 a--><!--M_[-->
+  <link rel=stylesheet href="child.marko.load.css">
+  <script async type=module src="child.marko.load.mjs"></script><span
+    class=child>x</span><!--M_]2 b 3--><!--M_]1 a 2-->
+  <script>
+    document.head.insertAdjacentHTML("beforeend",
+      "<link rel=stylesheet href=\"child.marko.load.css\">");
+    WALKER_RUNTIME("M")("_");
+    M._.r = [_ => [2, {
+      d: "x",
+      e: !0
+    }], "b0 2"];
+    M._.w()
+  </script>
+</body>
+
+</html>

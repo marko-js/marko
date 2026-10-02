@@ -3,16 +3,16 @@
 <section><button class=shared>shared:<!>
       0<!--M_$6 #text/1--></button><!--M_$6 #button/0--></section>
 <script>
-  ((p, h, d, l = $ => {
+  ((h, d, l = $ => {
     d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
       "script").forEach(s => s.onerror = () => console.error(
       "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-with-eager/lazy-part.marko\" failed to load; its server-rendered content cannot become interactive."
-      )), p.after(d))
+      )), document.head.append(d))
   }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
     .isIntersecting) && i.disconnect() + l()).observe(e))(document
     .querySelector("body") || (console.warn(
       "A lazy load trigger could not find an element matching \"body\". The module was loaded immediately."
-      ), l())))(document.currentScript,
+      ), l())))(
     "\x3Cscript async type=module src=\"lazy-part.marko.load.mjs\">\x3C/script>"
     );
   WALKER_RUNTIME("M")("_");
