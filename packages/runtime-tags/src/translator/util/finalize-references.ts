@@ -886,7 +886,7 @@ function resolveReferencedBindings(
           extra.section = expr.section;
           ({ binding } = extra.read ??=
             resolveConstantReference(binding) ??
-            resolveExpressionReference(rootBindings, binding));
+            resolveExpressionReference(rootBindings, read));
         }
         if (binding.type === BindingType.global) {
           // `$global` reads stay verbatim member chains: no read slot,
@@ -920,7 +920,7 @@ function resolveReferencedBindings(
     } else {
       extra.read =
         resolveConstantReference(binding) ??
-        createRead(binding, undefined, ownVar);
+        createRead(binding, undefined, ownVar && isChildReturnVar(binding));
       binding = extra.read.binding;
       if (isLazyRead(expr, reads, binding, extra.assignmentTo === binding)) {
         lazyBindings = binding;
@@ -1005,12 +1005,16 @@ function getConstantRoot(binding: Binding): Binding | undefined {
 
 function resolveExpressionReference(
   rootBindings: SortedOneMany<Binding>,
-  readBinding: Binding,
+  { binding, ownVar }: Read,
 ) {
   const aliasRoot =
-    readBinding.aliasOf &&
-    findClosestReference(readBinding.aliasOf, rootBindings);
+    binding.aliasOf && findClosestReference(binding.aliasOf, rootBindings);
   return aliasRoot
-    ? createRead(aliasRoot, getPropertyPath(readBinding, aliasRoot))
-    : createRead(readBinding, undefined);
+    ? createRead(aliasRoot, getPropertyPath(binding, aliasRoot))
+    : createRead(binding, undefined, ownVar && isChildReturnVar(binding));
+}
+
+// Only a child's `<return>` sets a tag variable after its body may render.
+function isChildReturnVar(binding: Binding) {
+  return !!(getAliasRoot(binding) || binding).returnedBy;
 }

@@ -1,0 +1,8 @@
+<define/Foo|input|>
+  <if=input.depth>
+    <${0 || Foo} message="done"/>
+  </if>
+  <else>${input.message}</else>
+</define>
+
+<Foo depth=1/>
