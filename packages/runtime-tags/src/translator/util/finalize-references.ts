@@ -54,7 +54,6 @@ import {
   getReadsByExpression,
   getReferenceFinalizers,
   isReferencedExtra,
-  getLazyBindings,
   getReferencedBindings,
   setResolvedFunctionReads,
   setResolvedReads,
@@ -178,11 +177,21 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         addSetupExpr(expr.section);
       }
       forEach(exprBindings.lazyBindings, markLazyRead);
-      if (exprBindings.hoistedBindings) {
-        expr.section.referencedHoists = bindingUtil.union(
-          expr.section.referencedHoists,
-          exprBindings.hoistedBindings,
+      if (exprBindings.closureBindings) {
+        expr.section.referencedClosures = bindingUtil.union(
+          expr.section.referencedClosures,
+          exprBindings.closureBindings,
         );
+      }
+      if (exprBindings.closureSection) {
+        setReadsOwner(expr.section, exprBindings.closureSection);
+        if (readsValuesOnResume(expr)) {
+          addOwnerReason(expr.section, exprBindings.closureSection, ALWAYS);
+        }
+      }
+      if (exprBindings.hoistedSection) {
+        setReadsOwner(expr.section, exprBindings.hoistedSection);
+        addOwnerReason(expr.section, exprBindings.hoistedSection, ALWAYS);
       }
 
       if (expr.isEffect) {
@@ -305,36 +314,6 @@ function resolveBindings() {
     if (binding.localOf) {
       section.localClosures = bindingUtil.add(section.localClosures, binding);
     }
-
-    for (const exprExtra of binding.reads) {
-      const { section } = exprExtra;
-      if (section.depth > binding.section.depth) {
-        if (binding.type !== BindingType.dom) {
-          const closure =
-            getConstantRoot(binding) ?? getCanonicalBinding(binding);
-          // Lazy-only reads need the owner scope chain but no closure signal.
-          if (!bindingUtil.has(getLazyBindings(exprExtra), binding)) {
-            closure.closureSections = sectionUtil.add(
-              closure.closureSections,
-              section,
-            );
-            section.referencedClosures = bindingUtil.add(
-              section.referencedClosures,
-              closure,
-            );
-          }
-
-          setReadsOwner(section, closure.section);
-          addOwnerReason(
-            section,
-            closure.section,
-            readsValuesOnResume(exprExtra)
-              ? mergeSources(ALWAYS, closure.sources)
-              : closure.sources,
-          );
-        }
-      }
-    }
   }
 }
 
@@ -343,9 +322,10 @@ function addSectionReasons(section: Section) {
     addReason(getSectionSlot(section, SlotKind.Scope), ALWAYS);
   }
 
-  forEach(section.referencedHoists, (hoistedBinding) => {
-    setReadsOwner(section, hoistedBinding.section);
-    addOwnerReason(section, hoistedBinding.section, ALWAYS);
+  // A closure's changes reach the section through its owner chain.
+  forEach(section.referencedClosures, (closure) => {
+    closure.closureSections = sectionUtil.add(closure.closureSections, section);
+    addOwnerReason(section, closure.section, closure.sources);
   });
 
   if (isResumedBranch(section)) {
@@ -848,7 +828,6 @@ function isLazyRead(
     // Roots and section params own a live slot; other aliases forward to their
     // aliased binding with no own slot, so reading them live would go stale on resume.
     (!binding.aliasOf || isParamBinding(binding)) &&
-    binding.type !== BindingType.dom &&
     binding.type !== BindingType.constant
   );
 }
@@ -865,10 +844,12 @@ function resolveReferencedBindings(
 ) {
   let referencedBindings: ReferencedBindings;
   let constantBindings: ReferencedBindings;
-  let hoistedBindings: ReferencedBindings;
   let allBindings: ReferencedBindings;
   let lazyBindings: ReferencedBindings;
   let globalBindings: ReferencedBindings;
+  let closureBindings: ReferencedBindings;
+  let closureSection: Section | undefined;
+  let hoistedSection: Section | undefined;
 
   const rootBindings = getRootBindings(reads);
   forEach(reads, (read) => {
@@ -879,9 +860,12 @@ function resolveReferencedBindings(
       extra.section = expr.section;
       extra.read = createGetterRead(binding, undefined, getter);
       addBindingGetter(binding, getter);
+      // A hoisted read calls the getter from the section the getter is in.
       if (getter.hoisted) {
         binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
-        hoistedBindings = bindingUtil.add(hoistedBindings, binding);
+        if (!hoistedSection || getter.hoisted.depth < hoistedSection.depth) {
+          hoistedSection = getter.hoisted;
+        }
       }
     } else {
       const isChangeHandlerRead = extra.assignmentTo === binding;
@@ -902,12 +886,27 @@ function resolveReferencedBindings(
         // `$global` reads stay verbatim member chains: no read slot,
         // no signal, no register-id participation.
         globalBindings = bindingUtil.add(globalBindings, binding);
-      } else if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
-        lazyBindings = bindingUtil.add(lazyBindings, binding);
-      } else if (binding.type === BindingType.constant) {
-        constantBindings = bindingUtil.add(constantBindings, binding);
       } else if (binding.type !== BindingType.dom) {
-        referencedBindings = bindingUtil.add(referencedBindings, binding);
+        const isLazy = isLazyRead(expr, read, binding, isChangeHandlerRead);
+        if (isLazy) {
+          lazyBindings = bindingUtil.add(lazyBindings, binding);
+        } else if (binding.type === BindingType.constant) {
+          constantBindings = bindingUtil.add(constantBindings, binding);
+        } else {
+          referencedBindings = bindingUtil.add(referencedBindings, binding);
+        }
+        // A read outside a getter is from this section or an enclosing one; the
+        // outermost bounds the owner chain, and a lazy read subscribes to nothing.
+        if (binding.section !== expr.section) {
+          const closure =
+            getConstantRoot(binding) ?? getCanonicalBinding(binding);
+          if (!isLazy) {
+            closureBindings = bindingUtil.add(closureBindings, closure);
+          }
+          if (!closureSection || closure.section.depth < closureSection.depth) {
+            closureSection = closure.section;
+          }
+        }
       }
     }
     allBindings = bindingUtil.add(allBindings, binding);
@@ -959,10 +958,12 @@ function resolveReferencedBindings(
   return {
     referencedBindings,
     constantBindings,
-    hoistedBindings,
     allBindings,
     lazyBindings,
     globalBindings,
+    closureBindings,
+    closureSection,
+    hoistedSection,
   };
 }
 

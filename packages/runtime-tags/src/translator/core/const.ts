@@ -12,6 +12,7 @@ import { isOutputDOM } from "../util/marko-config";
 import {
   dropNodes,
   getReferencedBindings,
+  isReferenceHoisted,
   setDerivedFrom,
   trackVarReferences,
 } from "../util/references";
@@ -71,9 +72,18 @@ export default {
 
     const valueExtra = (valueAttr.value.extra ??= {});
     valueExtra.pure = evaluate(valueAttr.value).pure;
-    const aliased = t.isIdentifier(valueAttr.value)
-      ? tag.scope.getBinding(valueAttr.value.name)?.identifier.extra?.binding
+    const valueBinding = t.isIdentifier(valueAttr.value)
+      ? tag.scope.getBinding(valueAttr.value.name)
       : undefined;
+    // A hoisted read is the variable's getter, a value of its own.
+    const aliased =
+      valueBinding?.identifier.extra?.binding &&
+      !isReferenceHoisted(
+        valueBinding.path,
+        tag.get("attributes")[0].get("value"),
+      )
+        ? valueBinding.identifier.extra.binding
+        : undefined;
 
     const binding = trackVarReferences(tag, BindingType.derived, aliased);
 

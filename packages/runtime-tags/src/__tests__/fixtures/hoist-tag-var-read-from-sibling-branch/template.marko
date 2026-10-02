@@ -1,0 +1,10 @@
+<if=input.a>
+  <const/getLabel=() => "a"/>
+</if>
+<else>
+  <let/count=0/>
+  <button onClick() { count++ }>${count}</button>
+  <${input.dyn} count=count>
+    <if=getLabel>y</if>
+  </>
+</else>

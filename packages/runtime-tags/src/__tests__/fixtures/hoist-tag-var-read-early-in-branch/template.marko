@@ -1,0 +1,6 @@
+<let/out=""/>
+<if=true>
+  <button onClick() { out = String(read()) }>${out}</button>
+</if>
+<const/read=() => input.x/>
+<div>${read()}</div>

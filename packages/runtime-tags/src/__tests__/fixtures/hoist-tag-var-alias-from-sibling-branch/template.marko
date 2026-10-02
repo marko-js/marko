@@ -1,0 +1,10 @@
+<if=input.a>
+  <const/getX=() => 1/>
+</if>
+<if=!input.a>
+  <const/y=getX/>
+  <let/result="none"/>
+  <if=input.b>
+    <button onClick() { result = String(y()) }>${result}</button>
+  </if>
+</if>
