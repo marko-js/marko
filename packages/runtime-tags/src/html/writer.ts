@@ -209,6 +209,26 @@ export function writeScript(script: string) {
   $chunk.writeScript(script);
 }
 
+// The boundary whose `@catch` may drop what renders now before it streams.
+export function catchableBoundary() {
+  const { boundary } = $chunk;
+  return boundary.withinCatch ? boundary : null;
+}
+
+// Whether something written under `written` may not reach the client while what
+// renders now does: a boundary only it is in was caught, or still can be.
+export function mayDrop(written: Boundary) {
+  const { boundary } = $chunk;
+  for (
+    let cur: Boundary | undefined = written;
+    cur && !isWithin(boundary, cur);
+    cur = cur.parent
+  ) {
+    if (cur.aborted || cur.count) return true;
+  }
+  return false;
+}
+
 // Content that resumes apart from its enclosing branch's walk (lazy, async)
 // links the scope, unless the section writes a marker the walker places it by.
 export function _script(

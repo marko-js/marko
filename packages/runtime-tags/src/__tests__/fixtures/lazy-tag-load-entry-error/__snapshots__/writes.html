@@ -1,11 +1,11 @@
 <main><!--M_[--><button>a:<!>0<!--M_$3 c--></button><!--M_$3 a--><!--M_]1 a 2-->
 </main>
 <script>
-  ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+  ((h, d, l = $ => {
+    d || document.head.append(new Range().createContextualFragment(d = h))
   }) => (e => e?.addEventListener("click", l, {
     once: 1
-  }))(document.querySelector("body") || l()))(document.currentScript,
+  }))(document.querySelector("body") || l()))(
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {

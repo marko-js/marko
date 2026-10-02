@@ -1,0 +1,9 @@
+import Child from "./child.marko" with { load: "render" }
+
+<div id="log"/>
+<try>
+  <Child/>
+  ${(() => { throw new Error("S"); })()}
+  <@catch|err|>caught ${err.message}</@catch>
+</try>
+<log-effect id="z"/>

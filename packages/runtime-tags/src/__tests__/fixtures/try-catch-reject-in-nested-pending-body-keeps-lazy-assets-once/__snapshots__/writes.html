@@ -1,0 +1,38 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<!--M_[--><!--M_!^d--><!--M_[--><!--M_!^c--><!--M_[--><!--M_!^b-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    E: _._.b2
+  }, {
+    E: _._.b1
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!c-->caught inner<!--M_]2 a 3-->
+<t hidden M_=c></t>
+<script>
+  REORDER_RUNTIME(M._);
+  M._.r.push(_ => [3, {
+    E: 0
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!d--><span>catch</span> caught outer<!--M_]1 a 2-->
+<t hidden M_=d></t>
+<script>
+  M._.b = {
+    _a: [_ => [8, {
+      d: "catch"
+    }], "a0 8"]
+  };
+  M._.r.push(_ => [2, {
+    E: 0
+  }]);
+  M._.w()
+</script>

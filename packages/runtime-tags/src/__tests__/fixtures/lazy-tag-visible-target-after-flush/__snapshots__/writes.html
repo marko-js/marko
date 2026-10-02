@@ -1,11 +1,11 @@
 <div>child 1</div><!--M_[--><!--M_!^4-->loading...<!--M_!4--><!--M_]1 c 4-->
 <t hidden M_=4><!--M_#b--></t>
 <script>
-  ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+  ((h, d, l = $ => {
+    d || document.head.append(new Range().createContextualFragment(d = h))
   }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
     .isIntersecting) && i.disconnect() + l()).observe(e))(document
-    .querySelector("#footer") || l()))(document.currentScript,
+    .querySelector("#footer") || l()))(
     "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);

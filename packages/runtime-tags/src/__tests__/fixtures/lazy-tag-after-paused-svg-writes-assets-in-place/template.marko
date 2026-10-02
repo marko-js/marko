@@ -1,0 +1,7 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<svg>
+  <await|v| = resolveAfter("rr", 2)><rect width=v.length height="1"/></await>
+</svg>
+<await|v| = resolveAfter("x", 1)><Child value=v/></await>

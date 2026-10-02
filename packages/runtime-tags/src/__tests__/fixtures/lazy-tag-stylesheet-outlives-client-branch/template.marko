@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Branch</title>
+</head>
+<body>
+  <await|v| = resolveAfter("x", 1)>
+    <let/show=true/>
+    <button onClick() { show = !show }/>
+    <if=show>
+      <Child value=v/>
+    </if>
+  </await>
+</body>
+</html>

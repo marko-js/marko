@@ -3,11 +3,19 @@ import type { $Global, Template } from "../common/types";
 import { _escape_script } from "./content";
 import { toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
-import { _html, $global, writeScript, writeWaitReady } from "./writer";
+import {
+  _html,
+  $global,
+  type Boundary,
+  catchableBoundary,
+  isInResumedBranch,
+  mayDrop,
+  writeScript,
+  writeWaitReady,
+} from "./writer";
 
 const kAssets = Symbol();
-const kBlockIndex = Symbol();
-const kDeferIndex = Symbol();
+const kHead = Symbol();
 export interface VisibleTrigger {
   type: "visible";
   selector: string;
@@ -36,14 +44,21 @@ export type LoadTrigger =
 type Trigger = LoadTrigger;
 interface Asset {
   id: string;
-  triggers?: Trigger[];
+  triggers: Trigger[] | undefined;
+  // Kept to write again: a resolver may write each url only once per render.
+  block: string | undefined;
+  defer: string | undefined;
+  script: string | undefined;
+  // Where its html and its trigger script were written: unset until then, null
+  // where nothing drops them, else the boundary whose `@catch` may.
+  htmlAt: Boundary | null | undefined;
+  scriptAt: Boundary | null | undefined;
 }
 
 declare module "../common/types" {
   interface $Global {
     [kAssets]?: Asset[];
-    [kBlockIndex]?: number;
-    [kDeferIndex]?: number;
+    [kHead]?: true;
   }
 }
 
@@ -65,8 +80,7 @@ export function withLoadAssets(
 ): ServerRenderer {
   return Object.assign((input: unknown) => {
     const g = $global();
-    addAsset(g, assetId, triggers);
-    _html(flush(g, ""));
+    writeAsset(g, addAsset(g, assetId, triggers));
     return writeWaitReady(assetId, renderer, input);
   }, renderer);
 }
@@ -99,72 +113,116 @@ export function withPageAssets(
         );
       }
     }
-    addAsset(g, assetId);
+    const asset = addAsset(g, assetId);
     // A page entry rendered after the first flush cleared `__flush__` takes the
     // top-level branch on purpose: co-rendered pages batch assets and flushes.
     if (g.__flush__) {
       // Not the actual page entry (nested within another page render): resume
       // data waits for this page's own entry script, as for an embedded render.
-      _html(flush(g, ""));
+      writeAsset(g, asset);
       return writeWaitReady(assetId, template, input);
     }
 
-    g.__flush__ = flush;
+    g.__flush__ = flushPage;
     return template(input);
   }, template);
 }
 
+// The head takes the assets found until it renders.
 export function _flush_head(): string {
   const g = $global();
-  return g[kAssets] ? flush(g, "") : "";
+  if (!g[kAssets]) return "";
+  g[kHead] = true;
+  return takeAssets(g, catchableBoundary());
 }
 
-function flush(g: $Global, html: string) {
-  let result = "";
-  const assets = g[kAssets]!;
-  const { length } = assets;
-  let bi = g[kBlockIndex]!;
-  let di = g[kDeferIndex]!;
+// The first flush writes the assets no head took ahead of its html.
+function flushPage(g: $Global, html: string) {
+  return takeAssets(g, null) + html;
+}
 
-  for (; bi < length; bi++) {
-    result += assetFlush(g, "block", assets[bi].id);
-  }
-
-  for (; di < length; di++) {
-    const { id, triggers } = assets[di];
-    const deferHTML = assetFlush(g, "defer", id);
-    if (triggers) {
-      if (deferHTML) writeTriggerScript(id, deferHTML, triggers);
-    } else {
-      result += deferHTML;
+// The html of the assets not yet written: stylesheets, then scripts.
+function takeAssets(g: $Global, at: Boundary | null) {
+  let block = "";
+  let defer = "";
+  for (const asset of g[kAssets]!) {
+    if (asset.htmlAt === undefined) {
+      asset.htmlAt = at;
+      block += blockHTML(g, asset);
+      if (!asset.triggers) defer += deferHTML(g, asset);
     }
   }
+  return block + defer;
+}
 
-  g[kBlockIndex] = bi;
-  g[kDeferIndex] = di;
-  return result + html;
+// Its asset waits for the head or the page's first flush, else goes where the tag
+// renders with its trigger script; each again wherever a `@catch` may have dropped it.
+function writeAsset(g: $Global, asset: Asset) {
+  if (needsWrite(asset.htmlAt)) {
+    asset.htmlAt = undefined;
+    if (g[kHead] || g.__flush__ !== flushPage) {
+      const block = blockHTML(g, asset);
+      _html(block + (asset.triggers ? "" : deferHTML(g, asset)));
+      if (block && isInResumedBranch()) {
+        // Its stylesheets also go in the head, which outlives the branch.
+        writeScript(
+          `document.head.insertAdjacentHTML("beforeend",${_escape_script(JSON.stringify(block))})`,
+        );
+      }
+      asset.htmlAt = catchableBoundary();
+    }
+  }
+  if (asset.triggers && needsWrite(asset.scriptAt)) {
+    const defer = deferHTML(g, asset);
+    if (defer) {
+      writeScript(
+        (asset.script ||= triggerScript(asset.id, defer, asset.triggers)),
+      );
+    }
+    asset.scriptAt = catchableBoundary();
+  }
+}
+
+function needsWrite(at: Boundary | null | undefined) {
+  return at === undefined || (at !== null && mayDrop(at));
+}
+
+function blockHTML(g: $Global, asset: Asset) {
+  return (asset.block ??= assetFlush(g, "block", asset.id));
+}
+
+function deferHTML(g: $Global, asset: Asset) {
+  return (asset.defer ??= assetFlush(g, "defer", asset.id));
 }
 
 function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
-  const assets = g[kAssets];
-  if (!assets) {
-    g[kAssets] = [{ id, triggers }];
-    g[kBlockIndex] = g[kDeferIndex] = 0;
-  } else if (!assets.find((a) => a.id === id)) {
-    assets.push({ id, triggers });
+  const assets = (g[kAssets] ||= []);
+  let asset = assets.find((a) => a.id === id);
+  if (!asset) {
+    assets.push(
+      (asset = {
+        id,
+        triggers,
+        block: undefined,
+        defer: undefined,
+        script: undefined,
+        htmlAt: undefined,
+        scriptAt: undefined,
+      }),
+    );
   } else if (MARKO_DEBUG) {
-    // Invariant: an asset streams one trigger script, so it must be requested
-    // with a single consistent `load` trigger; only the first one applies.
-    const existing = assets.find((a) => a.id === id)!;
-    if (JSON.stringify(existing.triggers) !== JSON.stringify(triggers)) {
+    // Invariant: an asset has one trigger script, written wherever it is
+    // needed, so it must be requested with a single consistent `load` trigger.
+    if (JSON.stringify(asset.triggers) !== JSON.stringify(triggers)) {
       console.error(
         `The lazy asset "${id}" is imported with different \`load\` triggers; an asset must use one consistent trigger.`,
       );
     }
   }
+  return asset;
 }
 
-function writeTriggerScript(id: string, html: string, triggers: Trigger[]) {
+function triggerScript(id: string, html: string, triggers: Trigger[]) {
   const htmlStr = _escape_script(JSON.stringify(html));
   // A loader script that fails at the network level never evaluates, so the
   // debug build reports from the script's own error event; matches the
@@ -174,8 +232,8 @@ function writeTriggerScript(id: string, html: string, triggers: Trigger[]) {
         JSON.stringify(
           `The lazy module for "${id}" failed to load; its server-rendered content cannot become interactive.`,
         ),
-      )})),p.after(d))`
-    : `p.after(new Range().createContextualFragment(d=h))`;
+      )})),document.head.append(d))`
+    : `document.head.append(new Range().createContextualFragment(d=h))`;
   const exprs = triggers.map((trigger) => {
     const options = trigger.options && toObjectExpression(trigger.options);
     switch (trigger.type) {
@@ -191,11 +249,10 @@ function writeTriggerScript(id: string, html: string, triggers: Trigger[]) {
         return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(${querySelectorOrLoad(trigger.selector!)})`;
     }
   });
-  writeScript(
-    `((p,h,d,l=$=>{d||${insert}})=>${
-      exprs.length > 1 ? `{${exprs.join(";")}}` : exprs[0]
-    })(document.currentScript,${htmlStr})`,
-  );
+  // The head takes the module: a `@catch` may remove the range around this script.
+  return `((h,d,l=$=>{d||${insert}})=>${
+    exprs.length > 1 ? `{${exprs.join(";")}}` : exprs[0]
+  })(${htmlStr})`;
 }
 
 // A trigger script flushes with the chunk that requested the asset, so a target

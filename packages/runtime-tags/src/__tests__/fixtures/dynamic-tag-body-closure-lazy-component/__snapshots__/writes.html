@@ -1,9 +1,9 @@
 <button id=inc>inc</button><!--M_$1 a--><button
   id=toggle>toggle</button><!--M_$3 a--><!--M_]3 b-->
 <script>
-  ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
-  }) => (self.requestIdleCallback || l)(l))(document.currentScript,
+  ((h, d, l = $ => {
+    d || document.head.append(new Range().createContextualFragment(d = h))
+  }) => (self.requestIdleCallback || l)(l))(
     "\x3Cscript async type=module src=\"card.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {

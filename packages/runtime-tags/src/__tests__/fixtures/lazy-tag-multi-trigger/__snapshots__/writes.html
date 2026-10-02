@@ -1,7 +1,7 @@
 <span>1</span>
 <script>
-  ((p, h, d, l = $ => {
-    d || p.after(new Range().createContextualFragment(d = h))
+  ((h, d, l = $ => {
+    d || document.head.append(new Range().createContextualFragment(d = h))
   }) => {
     (e => e && new IntersectionObserver((e, i) => e.some(e => e
       .isIntersecting) && i.disconnect() + l()).observe(e))(document
@@ -9,8 +9,7 @@
     (self.requestIdleCallback || l)(l, {
       timeout: 100
     })
-  })(document.currentScript,
-    "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  })("\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {
     _a: ["a0 2"]

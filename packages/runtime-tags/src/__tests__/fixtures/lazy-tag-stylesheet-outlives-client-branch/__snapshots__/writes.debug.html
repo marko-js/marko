@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Branch</title>
+</head>
+
+<body>
+
+  <!-- FLUSH -->
+
+  <!--M_[--><button></button><!--M_$2 #button/0--><!--M_[-->
+  <link rel=stylesheet href="child.marko.load.css">
+  <script async type=module src="child.marko.load.mjs"></script><span
+    class=child>x</span><!--M_]2 #text/1 3--><!--M_]1 #text/0 2-->
+  <script>
+    document.head.insertAdjacentHTML("beforeend",
+      "<link rel=stylesheet href=\"child.marko.load.css\">");
+    WALKER_RUNTIME("M")("_");
+    M._.r = [_ => [2, {
+        v: "x",
+        show: !0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-stylesheet-outlives-client-branch/template.marko_1 2"
+    ];
+    M._.w()
+  </script>
+</body>
+
+</html>
