@@ -1,0 +1,11 @@
+import { resolveAfter } from "../../utils/resolve";
+import Nested from "./nested.marko" with { load: "render" }
+
+<await|v| = resolveAfter("parent", 1)>
+  <const/shared={ n: 1 }/>
+  <let/count=0/>
+  <button.parent onClick() { count += Object.keys(shared).length }>
+    ${v}:${count}
+  </button>
+  <Nested shared=shared/>
+</await>

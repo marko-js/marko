@@ -1,0 +1,44 @@
+<!--M_[--><!--M_!^3--><!--M_[-->
+<script async type=module src="child.marko.load.mjs"></script><button
+  class=child>0<!--M_$5 #text/1--></button><!--M_$5 #button/0--><button
+  class=placeholder>0<!--M_$4 #text/3--></button><!--M_$4 #button/2--><!--M_]1 #PlaceholderBranch3 2--><!--M_!3--><!--M_]1 #text/0 3-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/try-placeholder-shares-value-with-lazy-tag/child.marko": [
+      _ => [5, {
+        input_shared: _(4).shared,
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-shares-value-with-lazy-tag/child.marko_0 5"
+    ]
+  };
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [3, {
+      "#PlaceholderBranch": _(2)
+    }, {
+      shared: {
+        n: 1
+      },
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-shares-value-with-lazy-tag/template.marko_2 4"
+  ];
+  M._.j[3] = _ => {
+    _.push("_placeholderDismiss 3")
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>done</t>
+<script>
+  M._.r.push(_ => [3, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-shares-value-with-lazy-tag/template.marko_2*content"
+      ]
+  }]);
+  M._.w()
+</script>

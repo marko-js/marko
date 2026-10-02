@@ -1,0 +1,8 @@
+export interface Input {
+  shared: { n: number };
+}
+
+<let/count=0/>
+<button.nested onClick() { count += Object.keys(input.shared).length }>
+  nested:${count}
+</button>

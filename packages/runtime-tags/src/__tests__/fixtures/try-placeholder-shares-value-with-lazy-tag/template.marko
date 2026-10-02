@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<try>
+  <@placeholder>
+    <const/shared={ n: 1 }/>
+    <Child shared=shared/>
+    <let/count=0/>
+    <button.placeholder onClick() { count += Object.keys(shared).length }>
+      ${count}
+    </button>
+  </@placeholder>
+  <await|v| = resolveAfter("done", 1)>${v}</await>
+</try>

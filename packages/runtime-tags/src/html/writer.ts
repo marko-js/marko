@@ -1920,6 +1920,9 @@ export class Chunk {
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) state.walkOnNextFlush = false;
 
+    // Main-stream scopes the pass wrote (its placeholders) serialize before the
+    // ready channels, so a value they share belongs to main, which all may read.
+    flushSerializer(boundary, state);
     // Lazy content's effects wait on in-order content like the rest.
     let readyResumeScripts = this.flushReadyScripts(
       boundary,
@@ -2089,8 +2092,6 @@ export class Chunk {
       state.writeReorders = null;
     }
 
-    // Placeholders render during this pass; their scopes go out with it.
-    flushSerializer(boundary, state);
     // A reordered chunk's script pushes its effects into the resume array,
     // so one opens even with nothing to resume yet.
     if (state.resumes || (needsResumeArray && !state.hasWrittenResume)) {
