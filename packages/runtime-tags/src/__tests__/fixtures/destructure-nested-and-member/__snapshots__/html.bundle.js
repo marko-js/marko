@@ -6,8 +6,7 @@ var template_default = _template("a", (input) => {
 		a: { b: 1 },
 		c: 2
 	};
-	const { a: { b } } = obj;
-	_html(`<div>${_text_resume($scope0_id, "a", b)} ${_text_resume($scope0_id, "b", obj.c, 2)}</div><button>update</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<div>${_text_resume($scope0_id, "a", obj.a.b)} ${_text_resume($scope0_id, "b", obj.c, 2)}</div><button>update</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {});
 }, 1);

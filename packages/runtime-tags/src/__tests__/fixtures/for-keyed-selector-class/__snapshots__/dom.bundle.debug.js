@@ -19,7 +19,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 		$rows($scope, $scope.rows.filter((row) => row.id !== $scope.selected));
 	});
 	_on($scope["#button/2"], "click", function() {
-		$rows($scope, [...$scope.rows.slice(1), $scope.rows?.[0]]);
+		$rows($scope, [...$scope.rows.slice(1), $scope.rows[0]]);
 	});
 	_on($scope["#button/3"], "click", function() {
 		$selected($scope, undefined);

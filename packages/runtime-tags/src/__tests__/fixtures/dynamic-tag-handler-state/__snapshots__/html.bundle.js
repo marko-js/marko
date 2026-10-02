@@ -6,7 +6,6 @@ var template_default = _template("a", (input) => {
 	const attrs = { onClick: _resume(function() {
 		n++;
 	}, "a0", $scope0_id) };
-	const aliased = attrs;
 	_dynamic_tag($scope0_id, "a", input.tag, {
 		...attrs,
 		id: "spread"
@@ -26,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_html("inline");
 	}, $scope0_id));
 	_dynamic_tag($scope0_id, "c", input.tag, {
-		...aliased,
+		...attrs,
 		id: "aliased"
 	}, _content_resume("a4", () => {
 		_scope_id();

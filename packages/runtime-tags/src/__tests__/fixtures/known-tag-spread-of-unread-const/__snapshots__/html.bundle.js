@@ -10,8 +10,5 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();
-	child_default({
-		a: 1,
-		a: 2
-	});
+	child_default({ a: 2 });
 }, 1);

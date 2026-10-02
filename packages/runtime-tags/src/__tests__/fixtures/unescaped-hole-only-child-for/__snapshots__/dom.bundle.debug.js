@@ -7,7 +7,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!>", "%", 0, $for_conten
 const $list = /*@__PURE__*/ _let("list/3", ($scope) => $for($scope, [$scope.list]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
-		$list($scope, [`<b>${$scope.list?.length}</b><i>${$scope.list?.length}</i>`, ...$scope.list]);
+		$list($scope, [`<b>${$scope.list.length}</b><i>${$scope.list.length}</i>`, ...$scope.list]);
 	});
 	_on($scope["#button/2"], "click", function() {
 		$list($scope, []);

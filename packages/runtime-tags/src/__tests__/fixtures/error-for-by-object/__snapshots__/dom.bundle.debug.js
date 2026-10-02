@@ -6,7 +6,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 	$items($scope._, []);
 }));
 const $for_content__setup = ($scope) => {
-	_text($scope["#text/1"], $scope["#LoopKey"]?.id);
+	_text($scope["#text/1"], $scope["#LoopKey"].id);
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_of("#text/0", "<button> </button>", " D ", $for_content__setup);

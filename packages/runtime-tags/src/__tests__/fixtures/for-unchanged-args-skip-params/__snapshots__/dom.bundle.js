@@ -10,7 +10,7 @@ const $for = /*@__PURE__*/ _for_of(0, "<li><!>:<!>=<!></li>", "D%c%c%", $for_con
 const $items = /*@__PURE__*/ _let(4, ($scope) => $for($scope, [$scope.e, "id"]));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.b, "click", function() {
-		$items($scope, [...$scope.e.slice(1), $scope.e?.[0]]);
+		$items($scope, [...$scope.e.slice(1), $scope.e[0]]);
 	});
 	_on($scope.c, "click", function() {
 		$items($scope, $scope.e.map((item) => item.id === "b" ? {

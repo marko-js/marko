@@ -16,9 +16,5 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 function $setup($scope) {
 	$input_class($scope["#childScope/0"], "c");
 	$input_value($scope["#childScope/0"], "d");
-	({
-		class: "a",
-		value: "b"
-	});
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

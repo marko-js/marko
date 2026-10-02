@@ -27,7 +27,7 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => $button($scope, input.button);
 const $button = ($scope, button) => {
-	(({ label, ...rest }) => $rest($scope, rest))(button || {});
+	$rest($scope, (({ label, ...rest }) => rest)(button || {}));
 	$label($scope, button?.label);
 };
 const $rest__closure = /*@__PURE__*/ _closure($wrapper_content__rest);

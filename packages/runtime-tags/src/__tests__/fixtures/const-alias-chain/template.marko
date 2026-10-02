@@ -1,0 +1,6 @@
+<let/obj={ a: { b: 1 }, c: 2 }/>
+<const/{ a }=obj/>
+<const/{ b }=a/>
+<const/z=b/>
+<div>${z} ${a.b} ${obj.c}</div>
+<button onClick() { obj = { a: { b: 3 }, c: 4 } }/>

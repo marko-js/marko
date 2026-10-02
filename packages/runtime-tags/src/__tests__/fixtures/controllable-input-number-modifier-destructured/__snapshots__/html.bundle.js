@@ -5,14 +5,13 @@ function num(v) {
 var my_input_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const { "countChange": $countChange, count } = input;
-	_html(`<input${_attr_input_value($scope0_id, "a", count, $countChange && _resume(($next) => {
-		$countChange(num($next));
+	_html(`<input${_attr_input_value($scope0_id, "a", input.count, input.countChange && _resume(($next) => {
+		input.countChange(num($next));
 	}, "b0", $scope0_id))} type=number>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {
-		d: $countChange,
-		e: _write_if($scope0_reason, 0) && count
+		d: input.countChange,
+		e: _write_if($scope0_reason, 0) && input.count
 	});
 });
 

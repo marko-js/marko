@@ -14,7 +14,7 @@ const $if_content__rest = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 });
 const $if = /*@__PURE__*/ _if("#text/0", " -- <!><span></span>", "b%b ", $if_content__setup);
 const $value = ($scope, value) => {
-	(({ foo, ...rest }) => $rest($scope, rest))(value || {});
+	$rest($scope, (({ foo, ...rest }) => rest)(value || {}));
 	$input_value_foo($scope, value?.foo);
 	$if($scope, value ? 0 : 1);
 };

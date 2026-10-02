@@ -51,7 +51,7 @@ const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 });
 const $write2 = /*@__PURE__*/ _const("write");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$items($scope, $scope.items?.length ? $scope.items.slice(0, -1) : [
+	$items($scope, $scope.items.length ? $scope.items.slice(0, -1) : [
 		1,
 		2,
 		3

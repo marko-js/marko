@@ -2,12 +2,11 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_initial__OR__input_onValue = _write_guard($scope0_reason, 0), $wi__input_initial__OR__input_onValue = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { initial, onValue } = input;
-	let value = initial;
+	let value = input.initial;
 	_html(`<span>${_text_resume($scope0_id, "#text/0", value, $wg__input_initial__OR__input_onValue)}</span>`);
 	$wi__input_initial__OR__input_onValue && _scope($scope0_id, {
-		initial: _write_if($scope0_reason, 2) && initial,
-		onValue: _write_if($scope0_reason, 1) && onValue
+		initial: _write_if($scope0_reason, 2) && input.initial,
+		onValue: _write_if($scope0_reason, 1) && input.onValue
 	}, "__tests__/tags/child.marko", 0, {
 		initial: "1:10",
 		onValue: "1:19"

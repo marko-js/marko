@@ -19,7 +19,7 @@ const $setup$1 = () => {};
 const $_class = ($scope, _class) => $input_class($scope["#childScope/0"], _class);
 const $rest_content = ($scope, rest_content) => $input_content($scope["#childScope/0"], rest_content);
 const $input = ($scope, input) => {
-	(({ class: $class, ...rest }) => $rest($scope, rest))(input);
+	$rest($scope, (({ class: $class, ...rest }) => rest)(input));
 	$_class($scope, input.class);
 };
 const $rest = ($scope, rest) => $rest_content($scope, rest.content);

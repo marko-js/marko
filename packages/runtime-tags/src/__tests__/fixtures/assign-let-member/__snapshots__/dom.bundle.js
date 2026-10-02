@@ -29,18 +29,18 @@ const $settings_copy_w = /*@__PURE__*/ _const(27, ($scope) => _text($scope.l, $s
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.m, "click", function() {
 		$scope.o.theme = "light";
-		$scope.o.count += $scope.o?.step;
+		$scope.o.count += $scope.o.step;
 		$scope.o.count++;
 		delete $scope.o.removed;
-		$scope.o.kind = typeof $scope.o?.step;
-		[$scope.o.first] = $scope.o?.tags;
-		({w: $scope.o.width} = $scope.o?.size);
-		({[$scope.o?.key]: $scope.o.picked} = $scope.o?.size);
-		[, ...$scope.o.rest] = $scope.o?.tags;
-		[$scope.o.fallback = $scope.o?.step] = [];
-		for ($scope.o.lastKey in $scope.o?.size);
-		for ($scope.o.lastTag of $scope.o?.tags);
-		$scope.o.copy = { w: ($scope.o?.size).w };
+		$scope.o.kind = typeof $scope.o.step;
+		[$scope.o.first] = $scope.o.tags;
+		({w: $scope.o.width} = $scope.o.size);
+		({[$scope.o.key]: $scope.o.picked} = $scope.o.size);
+		[, ...$scope.o.rest] = $scope.o.tags;
+		[$scope.o.fallback = $scope.o.step] = [];
+		for ($scope.o.lastKey in $scope.o.size);
+		for ($scope.o.lastTag of $scope.o.tags);
+		$scope.o.copy = { w: $scope.o.size.w };
 	});
 	_on($scope.n, "click", function() {
 		$settings($scope, { ...$scope.o });

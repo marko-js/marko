@@ -33,7 +33,7 @@ const $await_content__setup__script = _script("__tests__/template.marko_1", ($sc
 const $await_content__setup = $await_content__setup__script;
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content__v = /*@__PURE__*/ _const("v");
-const $picked = /*@__PURE__*/ _let("picked/7", ($scope) => _text($scope["#text/2"], $scope.picked && $scope.picked?.text));
+const $picked = /*@__PURE__*/ _let("picked/7", ($scope) => _text($scope["#text/2"], $scope.picked && $scope.picked.text));
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$await_content($scope);

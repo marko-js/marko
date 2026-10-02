@@ -8,7 +8,7 @@ const $obj_name = /*@__PURE__*/ _const(5, ($scope) => _text($scope.b, $scope.f))
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$obj($scope, {
 		...$scope.e,
-		name: $scope.e?.name + "!"
+		name: $scope.e.name + "!"
 	});
 }));
 
@@ -19,6 +19,6 @@ const $input_obj = $copy;
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$copy($scope, {
 		...$scope.f,
-		name: $scope.f?.name + "?"
+		name: $scope.f.name + "?"
 	});
 }));

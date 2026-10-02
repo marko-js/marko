@@ -10,7 +10,7 @@ const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	$rest__script($scope);
 });
 const $input = ($scope, input) => {
-	(({ value, valueChange, ...rest }) => $rest($scope, rest))(input);
+	$rest($scope, (({ value, valueChange, ...rest }) => rest)(input));
 	$valueChange2($scope, input.valueChange);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, " b", 0, $input);

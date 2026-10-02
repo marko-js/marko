@@ -28,7 +28,7 @@ const $child_content__$params4_ = ($scope, $params4_1) => _text($scope["#text/1"
 const $child_content__$params4_2 = ($scope, $params4_2) => _text($scope["#text/2"], $params4_2);
 const $child_content__others_length = ($scope, others_length) => _text($scope["#text/3"], others_length);
 const $child_content__$params = ($scope, $params4) => {
-	(([, ...others]) => $child_content__others($scope, others))($params4);
+	$child_content__others($scope, (([, ...others]) => others)($params4));
 	$child_content__first($scope, $params4[0]);
 	$child_content__$params4_($scope, $params4[1]);
 	$child_content__$params4_2($scope, $params4[2]);
@@ -42,7 +42,7 @@ const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__setup = ($scope) => _text($scope["#text/1"], $scope["#LoopKey"]);
 const $for_content__meta_length = ($scope, meta_length) => _text($scope["#text/2"], meta_length);
 const $for_content__$params = ($scope, $params2) => {
-	(([, ...meta]) => $for_content__meta($scope, meta))($params2);
+	$for_content__meta($scope, (([, ...meta]) => meta)($params2));
 	$for_content__item($scope, $params2[0]);
 };
 const $for_content__meta = ($scope, meta) => $for_content__meta_length($scope, meta.length);

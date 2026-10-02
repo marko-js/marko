@@ -2,9 +2,9 @@
 const $template = "<div class=abc><!> <!> <!></div><div class=rest> </div><div class=rest2> </div><div class=rest3> </div>";
 const $walks = "D%c%c%lD lD lD l";
 const $pattern2 = ($scope, $pattern) => {
-	(({ a, ...rest }) => $rest($scope, rest))($pattern);
-	(({ a, b, ...rest2 }) => $rest2($scope, rest2))($pattern);
-	(({ a, b, c, ...rest3 }) => $rest3($scope, rest3))($pattern);
+	$rest($scope, (({ a, ...rest }) => rest)($pattern));
+	$rest2($scope, (({ a, b, ...rest2 }) => rest2)($pattern));
+	$rest3($scope, (({ a, b, c, ...rest3 }) => rest3)($pattern));
 	$a($scope, $pattern.a);
 	$b($scope, $pattern.b);
 	$c($scope, $pattern.c);

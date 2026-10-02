@@ -25,7 +25,7 @@ const $setup$1 = () => {};
 const $title = ($scope, title) => _text($scope["#text/0"], title);
 const $rest = ($scope, rest) => $input_stuff($scope["#childScope/1"], rest);
 const $input = ($scope, input) => {
-	(({ title, ...rest }) => $rest($scope, rest))(input);
+	$rest($scope, (({ title, ...rest }) => rest)(input));
 	$title($scope, input.title);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, 0, $input);

@@ -1,0 +1,4 @@
+<let/x={ n: 1 }/>
+<const/{ n }=x/>
+<wrap><let/x=10/><span>${n}-${x}</span><button onClick() { x++ }/></wrap>
+<button.outer onClick() { x = { n: x.n + 1 } }/>

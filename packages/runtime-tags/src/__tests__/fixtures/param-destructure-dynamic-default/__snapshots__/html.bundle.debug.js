@@ -27,12 +27,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const ChildB = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		const { foo, foo: $foo2 } = input;
-		const { bar: $bar2 } = void 0 !== $foo2 ? $foo2 : { bar: count + 2 };
+		const { bar: $bar2 } = void 0 !== input.foo ? input.foo : { bar: count + 2 };
 		const bar = void 0 !== $bar2 ? $bar2 : count + 1;
-		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "#text/1", bar)} ${_text_resume($scope2_id, "#text/2", typeof foo, _write_guard($scope2_reason, 1) * 2)}</div>${_el_resume($scope2_id, "#div/0", _write_guard($scope2_reason, 0))}`);
+		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "#text/1", bar)} ${_text_resume($scope2_id, "#text/2", typeof input.foo, _write_guard($scope2_reason, 1) * 2)}</div>${_el_resume($scope2_id, "#div/0", _write_guard($scope2_reason, 0))}`);
 		_subscribe($count__closures, _scope($scope2_id, {
-			foo,
+			foo: input.foo,
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:count/8": 1
 		}, "__tests__/template.marko", "9:1", { foo: "10:11" }), "__tests__/template.marko_2_count#0:7/subscribe");

@@ -2,17 +2,16 @@
 var counter_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const { "countChange": $countChange, count } = input;
-	let x = count;
+	let x = input.count;
 	_html(`<button${_attr("id", input.id)}${_attr("data-internal", x)}>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
-		g: _write_if($scope0_reason, 2) && $countChange,
-		h: _write_if($scope0_reason, 1) && count,
+		g: _write_if($scope0_reason, 2) && input.countChange,
+		h: _write_if($scope0_reason, 1) && input.count,
 		j: x,
-		k: $countChange || void 0
+		k: input.countChange || void 0
 	});
 });
 

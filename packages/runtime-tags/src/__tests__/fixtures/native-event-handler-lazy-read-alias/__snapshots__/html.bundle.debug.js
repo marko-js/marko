@@ -6,9 +6,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		n: 0,
 		tag: "x"
 	};
-	const { n } = state;
 	let log = "";
-	_html(`<button class=bump>bump</button>${_el_resume($scope0_id, "#button/0")}<button class=show>show</button>${_el_resume($scope0_id, "#button/1")}<div class=n>${_text_resume($scope0_id, "#text/2", n)}</div><div class=log>${_text_resume($scope0_id, "#text/3", log)}</div>`);
+	_html(`<button class=bump>bump</button>${_el_resume($scope0_id, "#button/0")}<button class=show>show</button>${_el_resume($scope0_id, "#button/1")}<div class=n>${_text_resume($scope0_id, "#text/2", state.n)}</div><div class=log>${_text_resume($scope0_id, "#text/3", log)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_state_tag#6_n#5");
 	_script($scope0_id, "__tests__/template.marko_0_state_n#5_state_tag#6");
 	_scope($scope0_id, {

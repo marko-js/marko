@@ -30,13 +30,12 @@ const $class = [
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_c__OR__input_d = _write_guard($scope0_reason, 0), $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h = _write_guard($scope0_reason, 7), $wg__input_c = _write_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
-	const { c, d, e, f, g, h } = input;
-	_html(`<div class=${$class[(c ? 1 : 0) + (d ? 2 : 0)]}></div>${_el_resume($scope0_id, "a", $wg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${c ? " class=active" : ""}></div>${_el_resume($scope0_id, "b", $wg__input_c)}<div${_attr_class("base" + (c ? " c" : "") + (d ? " d" : "") + (e ? " e" : "") + (f ? " f" : "") + (g ? " g" : "") + (h ? " h" : ""))}></div>${_el_resume($scope0_id, "c", $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
+	_html(`<div class=${$class[(input.c ? 1 : 0) + (input.d ? 2 : 0)]}></div>${_el_resume($scope0_id, "a", $wg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${input.c ? " class=active" : ""}></div>${_el_resume($scope0_id, "b", $wg__input_c)}<div${_attr_class("base" + (input.c ? " c" : "") + (input.d ? " d" : "") + (input.e ? " e" : "") + (input.f ? " f" : "") + (input.g ? " g" : "") + (input.h ? " h" : ""))}></div>${_el_resume($scope0_id, "c", $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
 	_set_scope_reason($wg__input_c__OR__input_d << 1 | $wg__input_c__OR__input_d << 5);
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ class: ["a", {
-		b: c,
-		d
+		b: input.c,
+		d: input.d
 	}] });
 	custom_tag_default({ class: [
 		"a",
@@ -45,13 +44,13 @@ var template_default = _template("a", (input) => {
 	] });
 	_dynamic_tag($scope0_id, "f", TestTag, {
 		class: ["a", {
-			b: c,
-			d
+			b: input.c,
+			d: input.d
 		}],
 		test: attrTag({
 			class: ["a", {
-				b: c,
-				d
+				b: input.c,
+				d: input.d
 			}],
 			content: _content_resume("a0", () => {
 				_scope_reason();
@@ -61,12 +60,12 @@ var template_default = _template("a", (input) => {
 		})
 	}, 0, 0, $wg__input_c__OR__input_d);
 	_write_if($scope0_reason, 7) && _scope($scope0_id, {
-		i: _write_if($scope0_reason, 6) && c,
-		j: _write_if($scope0_reason, 5) && d,
-		l: _write_if($scope0_reason, 4) && e,
-		m: _write_if($scope0_reason, 3) && f,
-		n: _write_if($scope0_reason, 2) && g,
-		o: _write_if($scope0_reason, 1) && h,
+		i: _write_if($scope0_reason, 6) && input.c,
+		j: _write_if($scope0_reason, 5) && input.d,
+		l: _write_if($scope0_reason, 4) && input.e,
+		m: _write_if($scope0_reason, 3) && input.f,
+		n: _write_if($scope0_reason, 2) && input.g,
+		o: _write_if($scope0_reason, 1) && input.h,
 		d: _write_if($scope0_reason, 0) && _existing_scope($childScope)
 	});
 }, 1);

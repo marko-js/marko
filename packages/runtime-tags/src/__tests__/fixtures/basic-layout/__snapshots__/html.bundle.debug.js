@@ -2,9 +2,8 @@
 var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { content } = input;
 	_html("<body>");
-	_dynamic_tag($scope0_id, "#text/0", content, {}, 0, 0, $wg__input_content);
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
 	_trailers("</body>");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
 }, 1);
@@ -14,11 +13,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0), $wi__input_name = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $name__closures = new Set();
-	const { name } = input;
 	layout_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<h1>Hello ${_text_resume($scope1_id, "#text/0", name, $wg__input_name * 2)}</h1>`);
+		_html(`<h1>Hello ${_text_resume($scope1_id, "#text/0", input.name, $wg__input_name * 2)}</h1>`);
 		$wi__input_name && _subscribe($name__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_name#0:3/subscribe", $wg__input_name);
 		$wg__input_name || $wi__input_name && _resume_branch($scope1_id);
 	}, $scope0_id) });

@@ -11,7 +11,7 @@ const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $for_content__desc = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
 const $for_content__$temp = ($scope, $temp) => {
-	(({ desc, ...item }) => $for_content__item($scope, item))($temp);
+	$for_content__item($scope, (({ desc, ...item }) => item)($temp));
 	$for_content__desc($scope, $temp.desc);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<span><!></span>", " D%", 0, $for_content__$params);
@@ -34,7 +34,7 @@ const $input_class__OR__rest = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($sco
 const $_class = /*@__PURE__*/ _const("_class", $input_class__OR__rest);
 const $rest = /*@__PURE__*/ _const("rest", $input_class__OR__rest);
 const $input$1 = ($scope, input) => {
-	(({ class: $class, foo, ...rest }) => $rest($scope, rest))(input);
+	$rest($scope, (({ class: $class, foo, ...rest }) => rest)(input));
 	$input_foo($scope, input.foo);
 	$_class($scope, input.class);
 };

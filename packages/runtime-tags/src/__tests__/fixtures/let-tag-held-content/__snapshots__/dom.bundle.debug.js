@@ -19,7 +19,7 @@ const $htmlInput = /*@__PURE__*/ _const("htmlInput", $input_as__OR__input_class_
 const $inputContent__script = _script("__tests__/tags/my-tag.marko_0_inputContent#5", ($scope) => $content($scope, $scope.inputContent));
 const $inputContent = /*@__PURE__*/ _const("inputContent", $inputContent__script);
 const $input = ($scope, input) => {
-	(({ as, class: $class, content, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);
+	$htmlInput($scope, (({ as, class: $class, content, ...htmlInput }) => htmlInput)(input));
 	$inputAs($scope, input.as);
 	$inputClass($scope, input.class);
 	$inputContent($scope, input.content);

@@ -1,0 +1,3 @@
+<let/list=[{ id: 1, n: "a" }]/>
+<for|item| of=list by="id"><const/{ n }=item/><span>${n}</span></for>
+<button onClick() { list = [{ id: 1, n: "b" }, { id: 2, n: "c" }] }/>

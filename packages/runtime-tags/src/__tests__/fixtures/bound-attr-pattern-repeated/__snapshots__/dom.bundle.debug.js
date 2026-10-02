@@ -3,13 +3,13 @@ const $Wrap_content__walks = " b b b";
 const $Wrap_content__template = "<input><input><input>";
 const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}<!>`)($Wrap_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&b`)($Wrap_content__walks);
-const $Wrap_content__a__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
+const $Wrap_content__a__OR__$aChange = /*@__PURE__*/ _or(7, ($scope) => {
 	_attr_input_value($scope, "#input/0", $scope.a, $scope.$aChange);
 	_attr_input_value($scope, "#input/1", $scope.a, $scope.$aChange);
 	_attr_input_value($scope, "#input/2", $scope.a, $scope.$aChange);
 });
-const $Wrap_content__a = /*@__PURE__*/ _const("a", $Wrap_content__a__OR__$valueChange);
-const $Wrap_content__$aChange = /*@__PURE__*/ _const("$aChange", $Wrap_content__a__OR__$valueChange);
+const $Wrap_content__a = /*@__PURE__*/ _const("a", $Wrap_content__a__OR__$aChange);
+const $Wrap_content__$aChange = /*@__PURE__*/ _const("$aChange", $Wrap_content__a__OR__$aChange);
 const $Wrap_content__setup__script = _script("__tests__/template.marko_1", ($scope) => {
 	_attr_input_value_script($scope, "#input/0");
 	_attr_input_value_script($scope, "#input/1");

@@ -6,7 +6,7 @@ const $for_content__$temp_2 = ($scope, $temp_2) => _text($scope.d, $temp_2);
 const $for_content__rest_length = ($scope, rest_length) => _text($scope.e, rest_length);
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
 const $for_content__$temp = ($scope, $temp) => {
-	(([, ...rest]) => $for_content__rest($scope, rest))($temp);
+	$for_content__rest($scope, (([, ...rest]) => rest)($temp));
 	$for_content__first($scope, $temp[0]);
 	$for_content__$temp_($scope, $temp[1]);
 	$for_content__$temp_2($scope, $temp[2]);

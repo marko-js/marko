@@ -3,7 +3,7 @@ const $template = "<div class=obj> </div><div class=partialObj> </div><div class
 const $walks = "D lD lD lD lD l b";
 const $obj = /*@__PURE__*/ _let("obj/6", ($scope) => {
 	_text($scope["#text/0"], JSON.stringify($scope.obj));
-	(({ a, ...partialObj }) => $partialObj($scope, partialObj))($scope.obj);
+	$partialObj($scope, (({ a, ...partialObj }) => partialObj)($scope.obj));
 	$a($scope, $scope.obj.a);
 	$obj_b($scope, $scope.obj.b);
 });

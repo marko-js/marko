@@ -2,12 +2,11 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { name, write } = input;
-	_html(`<div>${_text_resume($scope0_id, "a", name, $wg__input_name)} a</div><span>${_text_resume($scope0_id, "b", name, $wg__input_name)} a</span><p>${_text_resume($scope0_id, "c", name, $wg__input_name)} a</p>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.name, $wg__input_name)} a</div><span>${_text_resume($scope0_id, "b", input.name, $wg__input_name)} a</span><p>${_text_resume($scope0_id, "c", input.name, $wg__input_name)} a</p>`);
 	_script($scope0_id, "b0", $wg__input_name);
 	_scope($scope0_id, {
-		f: name,
-		g: write
+		f: input.name,
+		g: input.write
 	});
 	$wg__input_name || _resume_branch($scope0_id);
 });

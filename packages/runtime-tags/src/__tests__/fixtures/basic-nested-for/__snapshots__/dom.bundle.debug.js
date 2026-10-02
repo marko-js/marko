@@ -25,7 +25,7 @@ const $items = /*@__PURE__*/ _let("items/2", ($scope) => {
 	$for_content__items($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$items($scope, [...$scope.items, $scope.items?.length]);
+	$items($scope, [...$scope.items, $scope.items.length]);
 }));
 function $setup($scope) {
 	$items($scope, [0, 1]);

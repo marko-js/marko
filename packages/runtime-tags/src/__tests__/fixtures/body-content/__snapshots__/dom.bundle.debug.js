@@ -11,7 +11,7 @@ const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $content = $dynamicTag;
 const $input = ($scope, input) => {
-	(({ content, ...attrs }) => $attrs($scope, attrs))(input);
+	$attrs($scope, (({ content, ...attrs }) => attrs)(input));
 	$content($scope, input.content);
 };
 var FancyButton_default = /*@__PURE__*/ _template("__tests__/tags/FancyButton.marko", $template$1, $walks$1, 0, $input);

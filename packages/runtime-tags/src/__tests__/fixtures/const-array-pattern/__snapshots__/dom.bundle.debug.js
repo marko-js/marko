@@ -2,7 +2,7 @@
 const $template = "<button>inc <!></button><div><!>|<!>|<!></div>";
 const $walks = " Db%lD%c%c%l";
 const $pattern2 = ($scope, $pattern) => {
-	(([, , ...others]) => $others($scope, others))($pattern);
+	$others($scope, (([, , ...others]) => others)($pattern));
 	$first($scope, $pattern[0]);
 	$second2($scope, $pattern[1]);
 };

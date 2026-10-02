@@ -18,8 +18,8 @@ import {
   createBinding,
   getDebugNames,
   getOrCreatePropertyAlias,
+  getPropertyAlias,
   isInvokeOnlyBinding,
-  propsUtil,
   type ReferencedBindings,
   reserveId,
 } from "./bindings";
@@ -53,7 +53,6 @@ import {
   setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
-  untrackNode,
 } from "./references";
 import { callRuntime, importRuntime } from "./runtime";
 import {
@@ -93,6 +92,7 @@ import {
   addDynamicAttrTagStatements,
   propsToExpression,
   translateAttrs,
+  getSingleKnownSpread,
 } from "./translate-attrs";
 import translateVar from "./translate-var";
 import { buildGroupMask, getWriteGuard } from "./write-guard";
@@ -741,16 +741,6 @@ function analyzeAttrs(
         ) {
           attrExtra.invokeOnly = true;
         }
-        if (
-          knownSpread &&
-          !propsUtil.has(knownSpread.binding.excludeProperties, attr.name)
-        ) {
-          const propBinding = getOrCreatePropertyAlias(
-            knownSpread.binding,
-            attr.name,
-          );
-          addRead(attrExtra, {}, propBinding, section, undefined);
-        }
       }
     } else if (spreadReferenceNodes) {
       spreadReferenceNodes.push(attr.value);
@@ -760,7 +750,8 @@ function analyzeAttrs(
         : undefined;
 
       if (knownSpread) {
-        untrackNode(attr.value);
+        // Read prop by prop, so it is written as what those props read.
+        dropNodes(attr.value);
       } else {
         (spreadReferenceNodes = restReferenceNodes || []).push(attr.value);
       }
@@ -769,7 +760,7 @@ function analyzeAttrs(
 
   if (knownSpread) {
     for (const prop of remaining) {
-      const propBinding = getOrCreatePropertyAlias(knownSpread.binding, prop);
+      const propBinding = getOrCreatePropertyAlias(knownSpread, prop);
       const propExtra: ReferencedExtra = { section };
       const templateExportAttr = getKnownFromPropTree(propTree, prop)!;
 
@@ -819,29 +810,6 @@ function analyzeAttrs(
   dropNodes(dropReferenceNodes);
 
   return inputExpr;
-}
-
-function getSingleKnownSpread(
-  attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
-) {
-  let binding: Binding | undefined;
-  let extra: t.NodeExtra | undefined;
-  for (let i = attributes.length; i--;) {
-    const attr = attributes[i];
-    if (attr.type === "MarkoSpreadAttribute") {
-      const spreadFrom = (extra = attr.value.extra)?.spreadFrom;
-      if (binding || !spreadFrom || Array.isArray(spreadFrom)) return;
-      binding = spreadFrom;
-    } else if (
-      binding &&
-      !propsUtil.has(binding.excludeProperties, attr.name)
-    ) {
-      return;
-    }
-  }
-  if (binding) {
-    return { extra, binding };
-  }
 }
 
 // A child reading no attribute of a tag leaves every expression, attribute tag
@@ -1422,7 +1390,7 @@ function writeAttrsToSignals(
         childAttrExports.binding,
         `${importAlias}_${prop}`,
       );
-      const propBinding = knownSpread.binding.propertyAliases.get(prop)!;
+      const propBinding = getPropertyAlias(knownSpread, prop)!;
       addStatement(
         "render",
         info.tagSection,

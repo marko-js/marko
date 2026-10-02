@@ -6,7 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& D l`)($MyTag_content__walks);
 const $MyTag_content__a = ($scope, a) => _text($scope["#text/0"], a);
 const $MyTag_content__rest = ($scope, rest) => _text($scope["#text/1"], JSON.stringify(rest));
 const $MyTag_content__tag_params = ($scope, $params2) => {
-	(([, ...rest]) => $MyTag_content__rest($scope, rest))($params2);
+	$MyTag_content__rest($scope, (([, ...rest]) => rest)($params2));
 	$MyTag_content__a($scope, $params2[0]);
 };
 const $x = /*@__PURE__*/ _let("x/3", ($scope) => {

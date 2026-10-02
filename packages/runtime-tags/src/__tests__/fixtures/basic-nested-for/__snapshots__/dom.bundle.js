@@ -19,5 +19,5 @@ const $items = /*@__PURE__*/ _let(2, ($scope) => {
 	$for_content__items($scope);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$items($scope, [...$scope.c, $scope.c?.length]);
+	$items($scope, [...$scope.c, $scope.c.length]);
 }));

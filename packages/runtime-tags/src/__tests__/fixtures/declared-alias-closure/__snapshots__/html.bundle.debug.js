@@ -17,8 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		if (value) {
 			const $scope2_id = _scope_id();
-			const { text } = value;
-			_html(`<span${_attr_class(value.class)}>${_escape(text)}</span>`);
+			_html(`<span${_attr_class(value.class)}>${_escape(value.text)}</span>`);
 		}
 	}, $scope0_id) });
 }, 1);

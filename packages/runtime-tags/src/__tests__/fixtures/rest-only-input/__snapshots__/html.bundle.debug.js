@@ -2,8 +2,7 @@
 var echo_default = _template("__tests__/tags/echo/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { ...rest } = input;
-	_html(`<em>${_text_resume($scope0_id, "#text/0", rest.label, $wg__input_label)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", input.label, $wg__input_label)}</em>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/echo/index.marko", 0);
 });
 

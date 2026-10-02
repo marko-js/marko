@@ -6,6 +6,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x: 1,
 		y: 2
 	};
-	const { x, y } = z;
-	_html(`<div>${_escape(x)}</div>${_escape(y)}`);
+	_html(`<div>${_escape(z.x)}</div>${_escape(z.y)}`);
 }, 1);

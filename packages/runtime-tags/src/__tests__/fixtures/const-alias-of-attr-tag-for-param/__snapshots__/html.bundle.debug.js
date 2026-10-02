@@ -20,8 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$row = attrTags($row, { content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			const x = item;
-			_html(`<span>${_text_resume($scope1_id, "#text/0", x, $wg__input_items)}</span>`);
+			_html(`<span>${_text_resume($scope1_id, "#text/0", item, $wg__input_items)}</span>`);
 			$wi__input_items && _scope($scope1_id, {}, "__tests__/template.marko", "3:6");
 		}, $scope0_id) });
 	});

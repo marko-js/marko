@@ -8,7 +8,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/1", "<li> </li>", "D ", 0, $for_
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => $for($scope, [$scope.items]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$items($scope, [...$scope.items, $scope.items?.length]);
+		$items($scope, [...$scope.items, $scope.items.length]);
 	});
 	{
 		const getter = $ul_getter($scope);

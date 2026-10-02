@@ -19,7 +19,7 @@ const $input = ($scope, input) => {
 	$group2($scope, input.group);
 };
 const $group2 = ($scope, $group) => {
-	(({ keep, ...rest }) => $rest($scope, rest))($group);
+	$rest($scope, (({ keep, ...rest }) => rest)($group));
 	$keep($scope, $group.keep);
 };
 var mid_default = /*@__PURE__*/ _template("__tests__/tags/mid.marko", $template$1, $walks$1, 0, $input);

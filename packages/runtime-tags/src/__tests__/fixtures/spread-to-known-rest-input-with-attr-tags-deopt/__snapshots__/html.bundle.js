@@ -2,8 +2,7 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_foo = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { foo } = input;
-	_for_of(foo, ({ desc, ...item }) => {
+	_for_of(input.foo, ({ desc, ...item }) => {
 		const $scope1_id = _scope_id();
 		_html(`<span${_attrs(item, "a", $scope1_id, "span")}>`);
 		_dynamic_tag($scope1_id, "b", desc, {}, 0, 0, $wg__input_foo);

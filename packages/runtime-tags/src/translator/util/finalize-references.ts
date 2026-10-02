@@ -681,10 +681,8 @@ function pruneBinding(binding: Binding): boolean {
       forEach(read.derives, pruneBinding);
     }
   }
-  // Likewise an assignment from such a value, or code naming it.
+  // Likewise an assignment from such a value.
   forEach(binding.assignments, pruneWriter);
-  forEach(binding.untrackedReads, pruneDerived);
-  forEach(binding.referencedBy, pruneDerived);
 
   for (const read of binding.reads) {
     let aliased = binding.aliasOf;
@@ -718,7 +716,7 @@ function pruneBinding(binding: Binding): boolean {
   }
 
   binding.pruned = shouldPrune;
-  if (shouldPrune && !isNamedOrAssigned(binding)) {
+  if (shouldPrune && !hasEmittedAssignment(binding)) {
     // Its value is never emitted unless something else observes it, and the
     // reads and assignments inside the value go with it.
     if (binding.derivedFrom) {
@@ -729,14 +727,9 @@ function pruneBinding(binding: Binding): boolean {
   return shouldPrune;
 }
 
-// Emitted code names it or assigns it, so its value stays though nothing reads
-// it.
-export function isNamedOrAssigned(binding: Binding) {
-  return (
-    some(binding.untrackedReads, isEmitted) ||
-    some(binding.referencedBy, isEmitted) ||
-    some(binding.assignments, inEmittedExpr)
-  );
+// An emitted assignment writes it, so its value stays though nothing reads it.
+export function hasEmittedAssignment(binding: Binding) {
+  return some(binding.assignments, inEmittedExpr);
 }
 
 function pruneWriter({ exprRoot }: AssignedBindingExtra) {

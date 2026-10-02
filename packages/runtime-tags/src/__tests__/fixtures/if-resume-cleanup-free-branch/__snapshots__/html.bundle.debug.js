@@ -2,11 +2,10 @@
 var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_n = _write_guard($scope0_reason, 0), $wi__input_n = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { n } = input;
 	_if(() => {
-		if (n) {
+		if (input.n) {
 			const $scope1_id = _scope_id();
-			_html(`<div>n is ${_text_resume($scope1_id, "#text/0", n, $wg__input_n * 2)}</div>`);
+			_html(`<div>n is ${_text_resume($scope1_id, "#text/0", input.n, $wg__input_n * 2)}</div>`);
 			$wi__input_n && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/leaf.marko", "2:2");
 			return 0;
 		}

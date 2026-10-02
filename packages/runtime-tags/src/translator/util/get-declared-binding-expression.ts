@@ -1,45 +1,65 @@
 import { types as t } from "@marko/compiler";
 
-import { type Binding, getCanonicalBinding, propsUtil } from "./bindings";
+import {
+  type Binding,
+  getCanonicalBinding,
+  getNearestDeclared,
+  propsUtil,
+} from "./bindings";
 import { toMemberExpression } from "./to-property-name";
 
+// A read in place keeps the author's access; one written elsewhere reads each
+// property of a value that may be nullish with `?.`.
 export function getDeclaredBindingExpression(
   binding: Binding,
+  inPlace = false,
 ): t.Identifier | t.MemberExpression | t.OptionalMemberExpression {
   const canonicalBinding = getCanonicalBinding(binding)!;
   // Content the loop creates is written within it, where the local is in scope.
   if (canonicalBinding.localOf) {
-    return getDeclaredBindingExpression(canonicalBinding.localOf);
+    return getDeclaredBindingExpression(canonicalBinding.localOf, inPlace);
   }
   const { aliasOf: aliased, property, declaredAlias } = canonicalBinding;
+  if (binding.declared) {
+    return t.identifier(binding.name);
+  }
+
   if (
     canonicalBinding.declared ||
-    !aliased ||
     canonicalBinding.excludeProperties !== undefined
   ) {
     return t.identifier(canonicalBinding.name);
   }
 
-  // A destructured pattern is only in scope through the names it declares.
-  if (declaredAlias && declaredAlias.excludeProperties === undefined) {
+  // A destructured value no declared name reaches is only in scope through
+  // the names its pattern declares; a named one may be read before those.
+  if (
+    declaredAlias &&
+    declaredAlias.excludeProperties === undefined &&
+    !getNearestDeclared(canonicalBinding)
+  ) {
     return t.identifier(declaredAlias.name);
   }
 
+  if (!aliased) {
+    return t.identifier(canonicalBinding.name);
+  }
+
   if (property !== undefined) {
-    const alias = !aliased.declared && aliased.declaredAlias;
+    const alias = !getNearestDeclared(aliased) && aliased.declaredAlias;
     if (alias && !propsUtil.has(alias.excludeProperties, property)) {
       return toMemberExpression(
         t.identifier(alias.name),
         alias.restOffset ? `${+property - alias.restOffset}` : property,
-        alias.nullable,
+        !inPlace && alias.nullable,
       );
     }
     return toMemberExpression(
-      getDeclaredBindingExpression(aliased),
+      getDeclaredBindingExpression(aliased, inPlace),
       property,
-      aliased.nullable,
+      !inPlace && aliased.nullable,
     );
   }
 
-  return getDeclaredBindingExpression(aliased);
+  return getDeclaredBindingExpression(aliased, inPlace);
 }

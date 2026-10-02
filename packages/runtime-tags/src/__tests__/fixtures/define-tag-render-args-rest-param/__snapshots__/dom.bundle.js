@@ -2,7 +2,7 @@
 const $MyTag_content__a = ($scope, a) => _text($scope.a, a);
 const $MyTag_content__rest = ($scope, rest) => _text($scope.b, JSON.stringify(rest));
 const $MyTag_content__tag_params = ($scope, $params2) => {
-	(([, ...rest]) => $MyTag_content__rest($scope, rest))($params2);
+	$MyTag_content__rest($scope, (([, ...rest]) => rest)($params2));
 	$MyTag_content__a($scope, $params2[0]);
 };
 const $x = /*@__PURE__*/ _let(3, ($scope) => {

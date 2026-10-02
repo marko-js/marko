@@ -7,8 +7,9 @@ import { getSectionRendererIdentifier } from "./binding-has-prop";
 import {
   type BindingPropTree,
   getKnownFromPropTree,
+  hasAllKnownProps,
 } from "./binding-prop-tree";
-import { propsUtil } from "./bindings";
+import { type Binding, getCanonicalBinding, propsUtil } from "./bindings";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
@@ -146,12 +147,25 @@ export function translateAttrs(
 
   const { attributes } = tag.node;
   const attrProperties: t.ObjectExpression["properties"] = [];
+  const knownSpread =
+    propTree !== true && hasAllKnownProps(propTree)
+      ? getSingleKnownSpread(attributes)
+      : undefined;
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
-      // Analysis drops a spread the child reads nothing from.
-      if (!value.extra?.pruned) attrProperties.push(t.spreadElement(value));
+      if (knownSpread) {
+        // Analysis reads it prop by prop, so it spreads what those props read.
+        if (!getCanonicalBinding(knownSpread).pruned) {
+          attrProperties.push(
+            t.spreadElement(getDeclaredBindingExpression(knownSpread, true)),
+          );
+        }
+      } else if (!value.extra?.pruned) {
+        // Analysis drops a spread the child reads nothing from.
+        attrProperties.push(t.spreadElement(value));
+      }
     } else if (
       !seen.has(attr.name) &&
       getKnownFromPropTree(propTree, attr.name)
@@ -474,4 +488,24 @@ function getLocalClosureValues(bodySection: Section) {
       ),
     );
   }
+}
+
+export function getSingleKnownSpread(
+  attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
+) {
+  let binding: Binding | undefined;
+  for (let i = attributes.length; i--;) {
+    const attr = attributes[i];
+    if (attr.type === "MarkoSpreadAttribute") {
+      const spreadFrom = attr.value.extra?.spreadFrom;
+      if (binding || !spreadFrom || Array.isArray(spreadFrom)) return;
+      binding = spreadFrom;
+    } else if (
+      binding &&
+      !propsUtil.has(binding.excludeProperties, attr.name)
+    ) {
+      return;
+    }
+  }
+  return binding;
 }

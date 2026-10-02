@@ -10,8 +10,8 @@ var leaf_default = _template("b", (input) => {
 var mid_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_first = _write_guard($scope0_reason, 1), $wg__input_group_keep = _write_guard($scope0_reason, 2), $wg__rest = _write_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	const { first, group: { keep, ...rest } } = input;
-	_html(`<p>${_text_resume($scope0_id, "a", first, $wg__input_first)} ${_text_resume($scope0_id, "b", keep, $wg__input_group_keep * 2)}</p>`);
+	const { group: { keep, ...rest } } = input;
+	_html(`<p>${_text_resume($scope0_id, "a", input.first, $wg__input_first)} ${_text_resume($scope0_id, "b", keep, $wg__input_group_keep * 2)}</p>`);
 	_set_scope_reason($wg__rest << 1);
 	const $childScope = _peek_scope_id();
 	leaf_default({ data: rest });

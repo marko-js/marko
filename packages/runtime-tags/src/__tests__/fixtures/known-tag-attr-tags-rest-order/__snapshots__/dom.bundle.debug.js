@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $first = ($scope, first) => _text($scope["#text/0"], first);
 const $rest = ($scope, rest) => _text($scope["#text/1"], Object.keys(rest).join(","));
 const $input$1 = ($scope, input) => {
-	(({ first, ...rest }) => $rest($scope, rest))(input);
+	$rest($scope, (({ first, ...rest }) => rest)(input));
 	$first($scope, input.first);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, 0, $input$1);

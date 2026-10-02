@@ -1,10 +1,10 @@
 // template.marko
 const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);
-const $ChildB_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildB_content__$pattern($scope, void 0 !== $scope.g ? $scope.g : { bar: $scope._.h + 2 }));
+const $ChildB_content__count__OR__foo = /*@__PURE__*/ _or(10, ($scope) => $ChildB_content__$pattern($scope, void 0 !== $scope.g ? $scope.g : { bar: $scope._.h + 2 }));
 const $ChildB_content__bar = ($scope, bar) => _text($scope.b, bar);
 const $ChildB_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildB_content__bar($scope, void 0 !== $scope.i ? $scope.i : $scope._.h + 1));
 const $ChildB_content__count = /*@__PURE__*/ _closure_get(8, ($scope) => {
-	$ChildB_content__count__OR__$foo($scope);
+	$ChildB_content__count__OR__foo($scope);
 	$ChildB_content__count__OR__$bar($scope);
 }, 0, "a3");
 const $ChildB_content__$bar = /*@__PURE__*/ _const(8, $ChildB_content__count__OR__$bar);

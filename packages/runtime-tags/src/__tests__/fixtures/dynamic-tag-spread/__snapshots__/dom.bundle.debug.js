@@ -24,7 +24,7 @@ const $inputAs = /*@__PURE__*/ _const("inputAs", $input_as__OR__input_foo__OR__h
 const $foo = /*@__PURE__*/ _const("foo", $input_as__OR__input_foo__OR__htmlInput);
 const $htmlInput = /*@__PURE__*/ _const("htmlInput", $input_as__OR__input_foo__OR__htmlInput);
 const $input = ($scope, input) => {
-	(({ as, foo, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);
+	$htmlInput($scope, (({ as, foo, ...htmlInput }) => htmlInput)(input));
 	$inputAs($scope, input.as);
 	$foo($scope, input.foo);
 };
