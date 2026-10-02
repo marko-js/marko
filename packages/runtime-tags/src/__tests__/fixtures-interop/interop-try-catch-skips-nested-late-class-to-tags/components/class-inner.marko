@@ -1,0 +1,9 @@
+// use class
+import { resolveAfter } from "../../../utils/resolve";
+
+<await(resolveAfter("inner", 2))>
+  <@then|value|>
+    <div id="inner">${value}</div>
+    <tags-leaf/>
+  </@then>
+</await>

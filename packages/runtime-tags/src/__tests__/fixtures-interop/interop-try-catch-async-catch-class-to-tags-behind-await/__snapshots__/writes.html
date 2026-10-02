@@ -1,0 +1,20 @@
+<!-- FLUSH -->
+
+<script>
+  WALKER_RUNTIME("M")("s")
+</script>
+
+<!-- FLUSH -->
+
+<div id=first>first</div>
+
+<!-- FLUSH -->
+
+<div id=slow>slow</div><!--Ms[--><!--Ms!^b--><!--Ms!b--><!--Ms]1 a 2-->
+<t hidden Ms=b>
+  <div id=caught>CAUGHT</div>
+</t>
+<script>
+  REORDER_RUNTIME(M.s);
+  M.s.w()
+</script>

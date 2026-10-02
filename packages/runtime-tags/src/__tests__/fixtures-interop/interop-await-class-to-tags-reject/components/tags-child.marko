@@ -1,0 +1,6 @@
+// use tags
+import { rejectAfter } from "../../../utils/resolve";
+
+<await|value|=rejectAfter(new Error("ERROR!"), 1)>
+  <div id="tags">${value}</div>
+</await>

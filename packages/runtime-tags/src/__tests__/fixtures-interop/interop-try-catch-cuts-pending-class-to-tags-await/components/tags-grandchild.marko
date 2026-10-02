@@ -1,0 +1,9 @@
+// use tags
+import { resolveAfter } from "../../../utils/resolve";
+
+<await|v|=resolveAfter("child", 2)>
+  <log="child rendered"/>
+  <let/value=v/>
+  <button onClick() { value += "!" }>${value}</button>
+  <script>console.log("child init effect")</script>
+</await>

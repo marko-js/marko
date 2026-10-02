@@ -27,6 +27,12 @@ exports.p = function (htmlCompat) {
     htmlCompat.write(writer._content);
     htmlCompat.writeScript(writer._scripts);
     writer._content = writer._scripts = "";
+    if (writer._data?.reorders) {
+      htmlCompat.deferReorders(writer._data.reorders);
+    }
+    if (writer._data?.chunks) {
+      htmlCompat.appendChunks(writer._data.chunks);
+    }
 
     if (out.___components) {
       let writers = writersByGlobal.get(out.global);
@@ -39,27 +45,28 @@ exports.p = function (htmlCompat) {
       ___addComponentsFromContext(out.___components, writers.classAPI);
     }
   };
-  const flushScripts = ($global, flushDefs) => {
+  // Returns the html of the reorders the flush streams, for the caller to write
+  // ahead of the scripts that move them into place.
+  const flushScripts = ($global, flushDefs, chunks, reorders) => {
+    let html = "";
+    let scripts = "";
     const writers = writersByGlobal.get($global);
-    if (!writers) return "";
+    if (!writers) return { html, scripts };
 
     const { classAPI, tagsAPI } = writers;
-    let scripts = "";
     let componentDefs = flushDefs;
-    let chunk;
 
     if (classAPI.length) {
       componentDefs = flushDefs ? flushDefs.concat(classAPI) : classAPI;
       writers.classAPI = [];
     }
 
-    if (tagsAPI.length) {
-      chunk = tagsAPI[0];
-      for (let i = 1; i < tagsAPI.length; i++) {
-        chunk.append(tagsAPI[i]);
-      }
-      writers.tagsAPI = [];
-    }
+    // Component scopes, then the tags content in the class html this flush writes.
+    let chunk = htmlCompat.joinChunks(
+      chunks ? tagsAPI.concat(chunks) : tagsAPI,
+    );
+    // Emptied in place: a render still pending holds this list to add to it.
+    tagsAPI.length = 0;
 
     if (componentDefs?.length) {
       // Serializing a bridged handler registers a tags scope, so it needs a chunk:
@@ -71,28 +78,26 @@ exports.p = function (htmlCompat) {
       );
       if (scripts) {
         htmlCompat.ensureState($global).walkOnNextFlush = true;
-
-        if (!chunk) {
-          scripts = concatScripts(
-            live
-              ? htmlCompat.flushScript($global)
-              : htmlCompat.flushScript($global, target),
-            scripts,
-          );
-        }
+        chunk ||= live ? htmlCompat.createChunk($global) : target;
       }
     }
 
-    if (chunk) {
-      scripts = concatScripts(htmlCompat.flushScript($global, chunk), scripts);
+    if (reorders) {
+      chunk ||= htmlCompat.createChunk($global);
     }
 
-    return scripts;
+    if (chunk) {
+      const flushed = htmlCompat.flushScript(chunk, reorders);
+      html = flushed.html;
+      scripts = concatScripts(flushed.scripts, scripts);
+    }
+
+    return { html, scripts };
   };
 
   htmlCompat.onFlush((chunk) => {
     chunk.render(() => {
-      chunk.writeScript(flushScripts(chunk.boundary.state.$global));
+      chunk.writeScript(flushScripts(chunk.boundary.state.$global).scripts);
     });
   });
 
@@ -128,11 +133,17 @@ exports.p = function (htmlCompat) {
       if (!writers) {
         writersByGlobal.set($global, (writers = { classAPI: [], tagsAPI: [] }));
         out.prependListener("___toString", (writer) => {
-          const defs = writer._data?.componentDefs;
-          const scripts = flushScripts($global, defs);
-          if (scripts) {
+          const data = writer._data;
+          const defs = data?.componentDefs;
+          const chunks = data?.chunks;
+          // Reorders queue with the html carrying the markers they replace.
+          const reorders = data?.reorders;
+          if (data) data.chunks = data.reorders = undefined;
+          const flushed = flushScripts($global, defs, chunks, reorders);
+          writer.write(flushed.html);
+          if (flushed.scripts) {
             if (defs) writer._data.componentDefs = undefined;
-            writer.script(scripts);
+            writer.script(flushed.scripts);
           }
         });
       }
@@ -154,6 +165,7 @@ exports.p = function (htmlCompat) {
         !willRerender &&
           (hasBridgedClassEvent(input) ||
             htmlCompat.hasPendingClassFunctions(out.global)),
+        out._state.___tagsChunk,
       );
       out.ef();
     },
@@ -191,6 +203,8 @@ exports.p = function (htmlCompat) {
       const $global = htmlCompat.$global();
       htmlCompat.ensureState($global);
       const out = defaultCreateOut($global);
+      // Class content settling later still renders within this tags content.
+      out._state.___tagsChunk = htmlCompat.getChunk();
       const branchId = htmlCompat.nextScopeId();
       let forceBoundary = boundaryModeByRenderer.get(tag);
 
