@@ -1,0 +1,15 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/show=true/>
+<button.toggle onClick() { show = !show }>toggle</button>
+<try>
+  <@placeholder>loading</@placeholder>
+  <await=Promise.resolve(1)>
+    <await=resolveAfter(1, 1)>
+      <counter/>
+    </await>
+  </await>
+  <if=show>
+    <span>shown</span>
+  </if>
+</try>

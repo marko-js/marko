@@ -1567,84 +1567,129 @@ export class Chunk {
       this.deferredReady = concat<Chunk>(deferred, this.deferredReady);
     }
   }
-  flushPlaceholder() {
-    const { placeholder } = this;
-    if (placeholder) {
-      this.placeholder = null;
-      // The body is left for the pass that streams it, after the markers written
-      // here, so reorders nested in it queue behind its own.
-      const { body } = placeholder;
-      let end = body;
-      while (end.next && !end.async) end = end.next;
-
-      if (end.async) {
-        const { state } = this.boundary;
-        const { branchId, scopeId, placeholderBranchId } = placeholder;
-        const reorderId = (body.reorderId = branchId
-          ? branchId + ""
-          : state.nextReorderId());
-        this.writeHTML(state.mark(Mark.Placeholder, reorderId));
-        const { effects } = this;
-        const beforeBranch = deferBranchStart(this);
-        if (
-          this.render(() =>
-            withBranchId(placeholderBranchId, placeholder.render),
-          ) !== this
-        ) {
-          // TODO: eventually this should be allowed.
-          // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
-          this.boundary.abort(
-            new Error("An @placeholder cannot contain async content."),
-          );
+  // Renders the `@placeholder`s the coming pass streams, in stream order, before
+  // it folds anything; a `@catch` one fires cuts the chain, so the pass restarts.
+  renderPlaceholders(boundary: Boundary) {
+    const { state } = boundary;
+    restart: for (;;) {
+      let reorders: Chunk[] | null | false = null;
+      for (let cur: Chunk = this; cur.next && !cur.async; cur = cur.next) {
+        if (cur.renderPlaceholder(state)) {
+          if (boundary.aborted) return;
+          continue restart;
         }
-        // An abort here fires the `@catch` that takes this chunk's place, or
-        // ends the render.
-        if (!this.boundary.aborted) {
-          // A placeholder with effects is a branch like the body: live while
-          // the body streams, destroyed when the reorder swaps it in.
-          const stateful = this.effects !== effects;
-          applyBranchStart(this, beforeBranch, stateful);
-          if (stateful) {
-            this.render(() =>
-              writeScope(branchId, {
-                [AccessorProp.PlaceholderBranch]: scopeWithId(
-                  state,
-                  placeholderBranchId,
-                ),
-              }),
-            );
-            this.writeHTML(
-              state.mark(
-                ResumeSymbol.BranchEnd,
-                scopeId +
-                  " " +
-                  (AccessorProp.PlaceholderBranch + branchId) +
-                  " " +
-                  placeholderBranchId,
-              ),
-            );
-            // The body's flush ends the placeholder's life on the client.
-            end.writeEffect(branchId, PLACEHOLDER_DISMISS_REGISTER_ID);
-          }
-          this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
-          state.reorder(body);
-        }
-      } else {
-        end.next = this.next;
-        this.next = body;
+        if (cur.deferredReorder) (reorders ||= []).push(cur.deferredReorder);
       }
+
+      // Then the reorders the walk streams, in the order it takes them.
+      if (state.writeReorders) {
+        for (const reorder of state.writeReorders) {
+          if (
+            (reorders = renderReorderPlaceholders(reorder, reorders)) === false
+          ) {
+            if (boundary.aborted) return;
+            continue restart;
+          }
+        }
+      }
+      for (let i = 0; reorders && i < reorders.length; i++) {
+        if (
+          (reorders = renderReorderPlaceholders(reorders[i], reorders)) ===
+          false
+        ) {
+          if (boundary.aborted) return;
+          continue restart;
+        }
+      }
+      return;
+    }
+  }
+
+  // Renders a pending body's `@placeholder`, or splices a settled body in its
+  // place; returns whether the render aborted.
+  renderPlaceholder(state: State) {
+    const { placeholder } = this;
+    if (!placeholder) return false;
+    this.placeholder = null;
+    // Nothing of a caught body streams.
+    if (this.boundary.aborted) return false;
+    // The body is left for the pass that streams it, after the markers written
+    // here, so reorders nested in it queue behind its own.
+    const { body } = placeholder;
+    let end = body;
+    while (end.next && !end.async) end = end.next;
+
+    if (!end.async) {
+      end.next = this.next;
+      this.next = body;
+      return false;
     }
 
-    // Queued after the placeholder, whose abort can make this chunk carry a
-    // catch's end marker.
+    const { branchId, scopeId, placeholderBranchId } = placeholder;
+    const reorderId = (body.reorderId = branchId
+      ? branchId + ""
+      : state.nextReorderId());
+    this.writeHTML(state.mark(Mark.Placeholder, reorderId));
+    const { effects } = this;
+    const beforeBranch = deferBranchStart(this);
+    if (
+      this.render(() =>
+        withBranchId(placeholderBranchId, placeholder.render),
+      ) !== this
+    ) {
+      // TODO: eventually this should be allowed.
+      // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
+      this.boundary.abort(
+        new Error("An @placeholder cannot contain async content."),
+      );
+    }
+    // An abort here fires the `@catch` that takes this chunk's place, or ends
+    // the render.
+    if (this.boundary.aborted) return true;
+    // A placeholder with effects is a branch like the body: live while the body
+    // streams, destroyed when the reorder swaps it in.
+    const stateful = this.effects !== effects;
+    applyBranchStart(this, beforeBranch, stateful);
+    if (stateful) {
+      this.render(() =>
+        writeScope(branchId, {
+          [AccessorProp.PlaceholderBranch]: scopeWithId(
+            state,
+            placeholderBranchId,
+          ),
+        }),
+      );
+      this.writeHTML(
+        state.mark(
+          ResumeSymbol.BranchEnd,
+          scopeId +
+            " " +
+            (AccessorProp.PlaceholderBranch + branchId) +
+            " " +
+            placeholderBranchId,
+        ),
+      );
+      // The body's flush ends the placeholder's life on the client.
+      end.writeEffect(branchId, PLACEHOLDER_DISMISS_REGISTER_ID);
+    }
+    this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
+    this.deferredReorder = body;
+    return false;
+  }
+
+  flushMarks() {
     const { deferredReorder } = this;
+    // Queued once the markers it replaces stream.
     if (deferredReorder) {
       this.deferredReorder = null;
       deferredReorder.boundary.state.reorder(deferredReorder);
     }
   }
 
-  consume() {
+  // Takes the render's root boundary, as `flushScript` does; a compat render's
+  // head is its own root.
+  consume(boundary = this.boundary) {
+    this.renderPlaceholders(boundary);
     let cur: Chunk = this;
     let html = "";
     let effects = "";
@@ -1653,7 +1698,7 @@ export class Chunk {
     let deferredReady: Opt<Chunk>;
 
     while (cur.next && !cur.async) {
-      cur.flushPlaceholder();
+      cur.flushMarks();
       html += cur.html;
       if (cur.serializeState.readyId) {
         deferredReady = push(deferredReady, cur);
@@ -1840,7 +1885,7 @@ export class Chunk {
         reorderedChunk.reorderId = null;
 
         while (cur) {
-          cur.flushPlaceholder();
+          cur.flushMarks();
           cur.deferOwnReady();
           const { next } = cur;
           // Reorder-ready batches fill slots reserved by the main stream.
@@ -1947,6 +1992,21 @@ export class Chunk {
     this.html = this.scripts = "";
     return state.flushChunk(html, scripts, boundary.count);
   }
+}
+
+// Renders the placeholders of a settled reorder the coming pass streams,
+// collecting the reorders it queues in turn; `false` once a render aborted.
+function renderReorderPlaceholders(
+  reorder: Chunk,
+  reorders: Chunk[] | null,
+): Chunk[] | null | false {
+  if (!reorder.boundary.aborted) {
+    for (let cur: Chunk | null = reorder; cur; cur = cur.next) {
+      if (cur.renderPlaceholder(reorder.boundary.state)) return false;
+      if (cur.deferredReorder) (reorders ||= []).push(cur.deferredReorder);
+    }
+  }
+  return reorders;
 }
 
 function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
