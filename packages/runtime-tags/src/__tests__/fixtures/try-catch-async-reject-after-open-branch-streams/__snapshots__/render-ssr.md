@@ -51,7 +51,7 @@ document.querySelector(".toggle").click();
 ```
 ```html
 <button>
-  Cannot read properties of undefined (reading 'nodeType') 0
+  nope 1
 </button>
 <button
   class="toggle"
@@ -60,8 +60,4 @@ document.querySelector(".toggle").click();
 ## Change
 ```
 UPDATE: .toggle::text "true" => ""
-INSERT: button
-REMOVE: button:nth-of-type(1) + button
-UPDATE: button:nth-of-type(1)::text@0 "" => "Cannot read properties of undefined (reading 'nodeType')"
-UPDATE: button:nth-of-type(1)::text@57 "" => "0"
 ```

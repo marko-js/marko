@@ -30,9 +30,9 @@ REMOVE: span
 document.querySelector("button:not(.toggle)").click();
 ```
 ```html
-<button>
-  from catch
-</button>
+<p>
+  outer caught from catch
+</p>
 <button
   class="toggle"
 >
@@ -41,7 +41,7 @@ document.querySelector("button:not(.toggle)").click();
 ```
 ## Change
 ```
-INSERT: button
-REMOVE: button:nth-of-type(1) + button
-UPDATE: button:nth-of-type(1)::text " " => "from catch"
+INSERT: p
+REMOVE: p + button
+UPDATE: p::text@13 "" => "from catch"
 ```

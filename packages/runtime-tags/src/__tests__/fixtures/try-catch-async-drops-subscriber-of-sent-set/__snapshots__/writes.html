@@ -1,0 +1,29 @@
+<span>x</span><!--M_$2 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    B1: new Set([_(2)])
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.r.push(_ => ((_.a = _(1).B1).add(_(5)), 0));
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.r.push(_ => (_.a.delete(_(5)), 0));
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+a<!--M_[-->caught ERROR!<!--M_]1 c 3-->
+<script>
+  M._.r.push("a3 1");
+  M._.w()
+</script>

@@ -1,0 +1,20 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<let/show=true/>
+<pre id="log"/>
+<try>
+  <await|v| = resolveAfter(1, 1)>
+    <try>
+      <script>
+        document.getElementById("log").textContent += "[" + show + "]";
+      </script>
+      <try>
+        <await|x| = rejectAfter(new Error("nope"), 2)>${x}</await>
+        <@placeholder>inner loading</@placeholder>
+      </try>
+      <@catch|err|>caught ${err.message}</@catch>
+    </try>
+  </await>
+  <@placeholder>loading</@placeholder>
+</try>
+<button.toggle onClick() { show = !show }>${show}</button>

@@ -1,0 +1,11 @@
+<let/show=true/>
+<try>
+  <if=true>
+    <span>${show}</span>
+  </if>
+  ${(() => { throw new Error("nope") })()}
+  <@catch|err|>
+    <p>${err.message}</p>
+  </@catch>
+</try>
+<button.toggle onClick() { show = !show }>${show}</button>
