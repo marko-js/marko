@@ -7,7 +7,6 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { WalkCode } from "../../common/types";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
@@ -114,7 +113,7 @@ export default {
       nodeBinding,
       optional: false,
     });
-    structure.visit(tag, WalkCode.Replace);
+    structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
   },
   translate: translateByTarget({

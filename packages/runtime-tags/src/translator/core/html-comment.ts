@@ -6,7 +6,6 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { WalkCode } from "../../common/types";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import {
   bodyToRawTextLiteral,
@@ -87,7 +86,7 @@ export default {
     // output stream writes its own markers during translate.
     const write = structure.writeTo(tag);
     if (nodeBinding) {
-      structure.visit(tag, WalkCode.Get);
+      structure.node(tag, nodeBinding);
     }
     structure.enter(tag);
     write`<!--`;

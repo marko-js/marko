@@ -6,8 +6,9 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import { ReservedId } from "../../common/types";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
-import { BindingType, getDebugScopeAccess } from "../util/bindings";
+import { BindingType, getDebugScopeAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { isNamedOrAssigned } from "../util/finalize-references";
 import { isOptimize, isOutputDOM } from "../util/marko-config";
@@ -127,7 +128,8 @@ export default {
 
     if (valueChangeAttr) {
       const changeSlot = getSlot(binding, SlotKind.ChangeHandler);
-      binding.reserveSize = 1;
+      // The runtime reads the change handler at the value's reserved id.
+      reserveId(binding, ReservedId.ChangeHandler);
       tagExtra.retained = true;
       tagExtra.pure =
         (!valueAttr || evaluate(valueAttr.value).pure) &&

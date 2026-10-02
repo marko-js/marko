@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { ReservedId } from "../../common/types";
 import { toAccess } from "../../html/serializer";
 import * as BindingType from "./constants/binding-type";
 import {
@@ -63,8 +64,8 @@ export interface Binding {
   /** For a tag variable a child's `<return>` writes, the node binding of the
    * tag rendering that child. */
   returnedBy: Binding | undefined;
-  /** Scope ids it holds right after its own: a controllable `<let>`'s change
-   * handler, or the scope offset of a tag whose variable a child returns. */
+  /** Scope ids it holds right after its own, up to its highest `ReservedId`:
+   * a controllable `<let>`'s change handler, or a tag's scope offset. */
   reserveSize: number;
   scopeAccessor: string | undefined;
   /** A name declared for this value, or all of it but its `excludeProperties`
@@ -183,8 +184,14 @@ export function createBinding(
   return binding;
 }
 
+// Holds the scope id at `offset` past its own for what the runtime keeps there.
+export function reserveId(binding: Binding, offset: ReservedId) {
+  binding.reserveSize = Math.max(binding.reserveSize, offset);
+}
+
 // A property of a direct alias is the root's property: one binding, one
 // read, however many local names the value passes through.
+
 export function getOrCreatePropertyAlias(binding: Binding, property: string) {
   while (isDirectAlias(binding)) binding = binding.aliasOf!;
   return (
@@ -273,8 +280,8 @@ export const bindingUtil = new Sorted(function compareBindings(
   a: Binding,
   b: Binding,
 ) {
-  // Creation order, dom bindings first as the walker indexes them; ids are
-  // allocated in this order, so sets sorted before and after agree.
+  // Creation order, dom bindings first as the walk numbers them first; other
+  // ids are allocated in this order, so sets sorted before and after agree.
   if (MARKO_DEBUG && a.section.program !== b.section.program) {
     throw new Error("A sorted binding set holds one template's bindings.");
   }
