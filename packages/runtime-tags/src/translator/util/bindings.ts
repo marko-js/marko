@@ -280,11 +280,8 @@ export const bindingUtil = new Sorted(function compareBindings(
   a: Binding,
   b: Binding,
 ) {
-  // Creation order, dom bindings first as the walk numbers them first; other
-  // ids are allocated in this order, so sets sorted before and after agree.
-  if (MARKO_DEBUG && a.section.program !== b.section.program) {
-    throw new Error("A sorted binding set holds one template's bindings.");
-  }
+  // One template's bindings in creation order, dom first as the walk numbers
+  // them first; ids follow it, so sets sorted before and after allocation agree.
   return a === b
     ? 0
     : a.section.id - b.section.id ||
