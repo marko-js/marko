@@ -991,7 +991,8 @@ export function _await<T>(
       if (chunk.async) {
         chunk.async = false;
 
-        if (!boundary.signal.aborted) {
+        if (!boundary.aborted) {
+          const { state } = boundary;
           chunk.render(() => {
             if (resumeMarker) {
               const branchId = _peek_scope_id();
@@ -1024,6 +1025,11 @@ export function _await<T>(
               async.end = $chunk;
             }
           });
+          // Part of a reorder whose marker streamed, it streams once settled,
+          // unless what rendered in it awaits again or aborted and queued it.
+          if (!chunk.async && boundary.pendingReorders?.delete(chunk)) {
+            state.reorder(chunk);
+          }
           boundary.endAsync();
         }
       }
@@ -1131,19 +1137,19 @@ function tryBoundary(
   const chunk = $chunk;
   const { boundary } = chunk;
   const { state } = boundary;
-  // Shares the parent's signal so a disconnected render strands pending body
-  // work; the outer-aborted check in onNext keeps that from firing the catch.
-  const catchBoundary = new Boundary(state, boundary.signal, boundary);
+  // Aborts with its parent so a disconnected render strands pending body work;
+  // the outer-aborted check in onNext keeps that from firing the catch.
+  const catchBoundary = new Boundary(state, undefined, boundary);
   const body = chunk.fork(catchBoundary, null);
   const bodyEnd = body.render(() => withBranchId(branchId, content));
 
-  if (catchBoundary.signal.aborted) {
+  if (catchBoundary.aborted) {
     // Sync error. The body's already-written scopes stay in the resume payload
     // as dead fills; a `@catch` firing is rare enough not to warrant dropping them.
     if (catchContent) {
-      catchContent(catchBoundary.signal.reason);
+      catchContent(catchBoundary.reason);
     } else {
-      boundary.abort(catchBoundary.signal.reason);
+      boundary.abort(catchBoundary.reason);
     }
     // A rendered `@catch` is not a try, as on the client: it gets no renderers.
     return true;
@@ -1173,10 +1179,10 @@ function tryBoundary(
   }
 
   catchBoundary.onNext = () => {
-    if (boundary.signal.aborted) return;
-    if (catchBoundary.signal.aborted) {
+    if (boundary.aborted) return;
+    if (catchBoundary.aborted) {
       if (!reorderId) {
-        boundary.abort(catchBoundary.signal.reason);
+        boundary.abort(catchBoundary.reason);
         return;
       }
 
@@ -1192,10 +1198,6 @@ function tryBoundary(
         do {
           const next = cur.next!;
 
-          if (cur.boundary !== catchBoundary) {
-            cur.boundary.abort(catchBoundary.signal.reason);
-          }
-
           if (writeMarker && !cur.consumed) {
             writeMarker = false;
             cur.async = false;
@@ -1210,7 +1212,7 @@ function tryBoundary(
         } while (cur !== bodyNext);
       }
 
-      catchChunk.render(catchContent!, catchBoundary.signal.reason);
+      catchChunk.render(catchContent!, catchBoundary.reason);
       boundary.endAsync();
     } else if (!catchBoundary.count) {
       if (renderersAtSettle && catchBoundary.resumeWrites) {
@@ -1392,7 +1394,7 @@ export class State implements SerializeState {
 type FlushStatus = FlushStatus.Value;
 export { FlushStatus };
 
-export class Boundary extends AbortController {
+export class Boundary {
   public onNext = NOOP;
   public count = 0;
   // Scope and effect writes under it, so a `<try>` can tell whether anything
@@ -1400,17 +1402,23 @@ export class Boundary extends AbortController {
   public resumeWrites = 0;
   public state: State;
   public parent?: Boundary;
+  public aborted = false;
+  public reason: unknown;
+  // Its reorders whose markers streamed, each queued to stream once settled,
+  // or all once it aborts so the reorder around them completes.
+  public pendingReorders?: Set<Chunk>;
+  // Boundaries nested in it, which abort with it.
+  public children?: Boundary[];
   constructor(state: State, signal?: AbortSignal, parent?: Boundary) {
-    super();
     this.state = state;
     this.parent = parent;
-    this.signal.addEventListener("abort", () => {
-      this.count = 0;
-      this.state = new State(this.state.$global);
-      this.onNext();
-    });
-
-    if (signal) {
+    if (parent) {
+      if (parent.aborted) {
+        this.abort(parent.reason);
+      } else {
+        (parent.children ||= []).push(this);
+      }
+    } else if (signal) {
       if (signal.aborted) {
         this.abort(signal.reason);
       } else {
@@ -1419,31 +1427,51 @@ export class Boundary extends AbortController {
     }
   }
 
+  abort(reason: unknown) {
+    if (this.aborted) return;
+    const { state } = this;
+    this.aborted = true;
+    this.reason = reason;
+    if (this.pendingReorders) {
+      for (const reorder of this.pendingReorders) state.reorder(reorder);
+      this.pendingReorders = undefined;
+    }
+    this.count = 0;
+    // Content under it is told apart by this throwaway State from here on.
+    this.state = new State(state.$global);
+    // Nested boundaries abort first, so what is pending under them is queued
+    // and told apart before handling this abort can flush.
+    if (this.children) {
+      for (const child of this.children) child.abort(reason);
+    }
+    this.onNext();
+  }
+
   // Listens on the signal it was created with, so a settled render can detach.
   handleEvent(event: Event) {
     this.abort((event.target as AbortSignal).reason);
   }
 
   flush() {
-    if (!this.signal.aborted) {
+    if (!this.aborted) {
       flushSerializer(this, this.state);
     }
 
     return this.count
       ? FlushStatus.continue
-      : this.signal.aborted
+      : this.aborted
         ? FlushStatus.aborted
         : FlushStatus.complete;
   }
 
   startAsync() {
-    if (!this.signal.aborted) {
+    if (!this.aborted) {
       this.count++;
     }
   }
 
   endAsync() {
-    if (!this.signal.aborted) {
+    if (!this.aborted) {
       if (MARKO_DEBUG && !this.count) {
         throw new Error("A boundary ended more async work than it started.");
       }
@@ -1570,7 +1598,7 @@ export class Chunk {
         }
         // An abort here fires the `@catch` that takes this chunk's place, or
         // ends the render.
-        if (!this.boundary.signal.aborted) {
+        if (!this.boundary.aborted) {
           // A placeholder with effects is a branch like the body: live while
           // the body streams, destroyed when the reorder swaps it in.
           const stateful = this.effects !== effects;
@@ -1738,8 +1766,7 @@ export class Chunk {
     // A channel that fails to serialize aborts and stays pending.
     for (
       let channel;
-      !boundary.signal.aborted &&
-      (channel = state.serializer.pendingReadyChannel());
+      !boundary.aborted && (channel = state.serializer.pendingReadyChannel());
     ) {
       const resumes = state.serializer.stringifyScopes([], boundary, channel);
       const deps = state.serializer.takeChannelDeps();
@@ -1789,25 +1816,7 @@ export class Chunk {
     let needsResumeArray = false;
 
     if (state.writeReorders) {
-      let carried: Chunk[] | null = null;
-
       for (const reorderedChunk of state.writeReorders) {
-        // A chunk requeued when its reorder marker streamed emits once
-        // settled, or as an empty reorder once an aborted boundary strands it.
-        if (reorderedChunk.async && reorderedChunk.consumed) {
-          let aborted: Boundary | undefined = reorderedChunk.boundary;
-          while (aborted && !aborted.signal.aborted) {
-            aborted = aborted.parent;
-          }
-
-          if (!aborted) {
-            (carried ||= []).push(reorderedChunk);
-            continue;
-          }
-
-          reorderedChunk.async = false;
-        }
-
         needsWalk = true;
 
         if (!state.hasReorderRuntime) {
@@ -1823,10 +1832,13 @@ export class Chunk {
         let reorderHTML = "";
         let reorderEffects = "";
         let reorderScripts = "";
-        let cur = reorderedChunk;
+        // A caught one streams empty, so the reorder around it still completes.
+        let cur: Chunk | null = reorderedChunk.boundary.aborted
+          ? null
+          : reorderedChunk;
         reorderedChunk.reorderId = null;
 
-        for (;;) {
+        while (cur) {
           cur.flushPlaceholder();
           cur.deferOwnReady();
           const { next } = cur;
@@ -1853,16 +1865,13 @@ export class Chunk {
               Mark.ReorderMarker,
               (cur.reorderId = state.nextReorderId()),
             );
-            state.reorder(cur);
+            // It queues itself once settled, or once its boundary aborts.
+            (cur.boundary.pendingReorders ||= new Set()).add(cur);
             cur.html = cur.effects = cur.scripts = cur.lastEffect = "";
             cur.next = null;
           }
 
-          if (next) {
-            cur = next;
-          } else {
-            break;
-          }
+          cur = next;
         }
 
         if (reorderEffects) {
@@ -1905,7 +1914,7 @@ export class Chunk {
           "</t>";
       }
 
-      state.writeReorders = carried;
+      state.writeReorders = null;
     }
 
     // Placeholders render during this pass; their scopes go out with it.

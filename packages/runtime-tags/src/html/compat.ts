@@ -106,7 +106,7 @@ export const compat = {
       boundary.flush() === FlushStatus.complete
         ? chunk.flushScript(boundary).scripts
         : "";
-    if (boundary.signal.aborted) throw boundary.signal.reason;
+    if (boundary.aborted) throw boundary.reason;
     if (boundary.count) {
       throw new Error(
         "Cannot serialize promise across tags/class compat layer.",
@@ -172,8 +172,8 @@ export const compat = {
       const asyncOut = classAPIOut.beginAsync({ last: true, timeout: -1 });
       classAPIOut.onLast((next: any) => {
         (boundary.onNext = () => {
-          if (boundary.signal.aborted) {
-            asyncOut.error(boundary.signal.reason);
+          if (boundary.aborted) {
+            asyncOut.error(boundary.reason);
             boundary.onNext = NOOP;
           } else if (!boundary.count) {
             boundary.onNext = NOOP;

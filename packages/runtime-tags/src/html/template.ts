@@ -318,15 +318,15 @@ class ServerRendered implements RenderedTemplate {
         switch (!boundary.count && boundary.flush()) {
           case FlushStatus.aborted:
             settle(boundary);
-            reject(boundary.signal.reason);
+            reject(boundary.reason);
             break;
           case FlushStatus.complete:
             // Consuming and serializing may abort, re-entering through the
             // boundary listener, or serialize lazy data that starts async work.
             head = head.consume();
-            if (boundary.signal.aborted) break;
+            if (boundary.aborted) break;
             html += head.flushHTML(boundary);
-            if (!(boundary.count || boundary.signal.aborted)) {
+            if (!(boundary.count || boundary.aborted)) {
               settle(boundary);
               resolve(html);
             }
@@ -367,16 +367,16 @@ class ServerRendered implements RenderedTemplate {
         if (status === FlushStatus.aborted) {
           if (!tick) offTick(onNext);
           settle(boundary);
-          onAbort(boundary.signal.reason);
+          onAbort(boundary.reason);
           return;
         }
 
         if (write || status === FlushStatus.complete) {
           head = head.consume();
           // An abort re-entered above, so the next pass reports it.
-          if (boundary.signal.aborted) continue;
+          if (boundary.aborted) continue;
           const html = head.flushHTML(boundary);
-          if (boundary.signal.aborted) continue;
+          if (boundary.aborted) continue;
           if (html) onWrite(html);
           // Serializing lazy data may have started async work.
           if (!boundary.count) {
@@ -413,7 +413,7 @@ class ServerRendered implements RenderedTemplate {
       );
     }
     settle(boundary);
-    if (boundary.signal.aborted) throw boundary.signal.reason;
+    if (boundary.aborted) throw boundary.reason;
     return html;
   }
 }

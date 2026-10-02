@@ -1,0 +1,17 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<try>
+  <@placeholder>loading</@placeholder>
+  <try>
+    <await|a|=resolveAfter("a", 1)>
+      <script>console.log("caught body effect")</script>
+      <p>${a}</p>
+      <try>
+        <@placeholder>inner loading</@placeholder>
+        <await|b|=rejectAfter(new Error("ERROR!"), 1)>${b}</await>
+      </try>
+    </await>
+    <@catch|err|>caught ${err.message}</@catch>
+  </try>
+</try>
+<await|done|=resolveAfter("done", 2)>${done}</await>
