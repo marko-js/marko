@@ -112,8 +112,8 @@ INSERT: .await::text("a")
 ```
 ## Change
 ```
+INSERT: .catch
 INSERT: .catch::text("e")
-INSERT: .await + .catch
 ```
 
 # Update

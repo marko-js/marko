@@ -11,7 +11,7 @@ import {
 } from "../common/helpers";
 import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { concat, forEach, type Opt, push } from "../common/opt";
+import { concat, type Opt, push } from "../common/opt";
 import {
   type $Global,
   type Accessor,
@@ -1169,12 +1169,11 @@ function tryBoundary(
   chunk.next = body;
   boundary.startAsync();
 
-  // With a catch, markers let it take the body's place in the stream.
+  // With a catch, markers let it take the body's place once the stream reaches
+  // it pending (`markCatchRange`); a body settled or caught first needs none.
   const reorderId = catchContent ? state.nextReorderId() : "";
-  const endMarker = reorderId && state.mark(Mark.PlaceholderEnd, reorderId);
   if (reorderId) {
-    chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
-    bodyEnd.writeHTML(endMarker);
+    chunk.catchRange = { id: reorderId, end: bodyEnd };
     // The catch renders later, forked from this chunk.
     captureContext(chunk);
   }
@@ -1187,38 +1186,53 @@ function tryBoundary(
         return;
       }
 
+      const streamed = !chunk.catchRange;
       const catchChunk = chunk.fork(boundary, null);
-      catchChunk.reorderId = reorderId;
+      chunk.catchRange = null;
+      // Sync, the catch streams in order where the body was; with content of
+      // its own to wait on, it streams as a reorder so nothing after it waits.
+      const inOrder =
+        catchChunk === catchChunk.render(catchContent!, catchBoundary.reason);
+      // A throw in the catch reached the enclosing `<try>`, whose catch cut this one.
+      if (boundary.aborted) return;
 
       if (bodyEnd.consumed) {
+        catchChunk.reorderId = reorderId;
         state.reorder(catchChunk);
       } else {
-        let cur: Chunk = body;
-        let writeMarker = true;
+        // Once the start marker streamed, a reorder removes what streamed of
+        // the body: the catch's own, or an empty one ahead of an in-order catch.
+        let reorder: Chunk | null = null;
+        if (!inOrder) {
+          reorder = catchChunk;
+        } else if (streamed) {
+          reorder = chunk.fork(boundary, null);
+        }
+        if (reorder) reorder.reorderId = reorderId;
+        const endMarker = state.mark(Mark.PlaceholderEnd, reorderId);
 
-        do {
-          const next = cur.next!;
-
-          if (writeMarker && !cur.consumed) {
-            writeMarker = false;
-            cur.async = false;
-            cur.next = bodyNext;
-            cur.html = endMarker;
-            cur.scripts = cur.effects = cur.lastEffect = "";
-            cur.placeholder = cur.reorderId = cur.deferredReady = null;
-            cur.deferredReorder = catchChunk;
-          }
-
-          cur = next;
-        } while (cur !== bodyNext);
+        // The body's end is still to stream, so the cut is at it or before.
+        let cut = body;
+        while (cut.consumed) cut = cut.next!;
+        cut.async = false;
+        cut.next = inOrder ? catchChunk : bodyNext;
+        cut.html = streamed
+          ? endMarker
+          : inOrder
+            ? ""
+            : state.mark(Mark.Placeholder, reorderId) + endMarker;
+        cut.scripts = cut.effects = cut.lastEffect = "";
+        cut.placeholder = cut.reorderId = cut.catchRange = null;
+        cut.deferredReorder = reorder;
+        if (inOrder) catchChunk.next = bodyNext;
       }
 
-      catchChunk.render(catchContent!, catchBoundary.reason);
       boundary.endAsync();
     } else if (!catchBoundary.count) {
       if (renderersAtSettle && catchBoundary.resumeWrites) {
         bodyEnd.render(renderers);
       }
+      chunk.catchRange = null;
       boundary.endAsync();
     } else {
       boundary.onNext();
@@ -1494,6 +1508,9 @@ export class Chunk {
   // A reorder whose end marker this chunk writes, queued once the marker streams
   // so the client always walks the marker before the reorder that replaces it.
   public deferredReorder: Chunk | null = null;
+  // The pending `<try>` body after this chunk, which its `@catch` may replace,
+  // until the stream reaches it and writes the markers around it.
+  public catchRange: { id: string; end: Chunk } | null = null;
   public placeholder: {
     body: Chunk;
     render: () => void;
@@ -1677,6 +1694,18 @@ export class Chunk {
     return false;
   }
 
+  // Writes the markers its `@catch` replaces around the pending body after it,
+  // once the stream reaches it.
+  markCatchRange() {
+    const { catchRange } = this;
+    if (catchRange) {
+      const { state } = this.boundary;
+      this.catchRange = null;
+      this.writeHTML(state.mark(Mark.Placeholder, catchRange.id));
+      catchRange.end.writeHTML(state.mark(Mark.PlaceholderEnd, catchRange.id));
+    }
+  }
+
   // Queued once the markers it replaces stream.
   queueDeferredReorder() {
     const { deferredReorder } = this;
@@ -1698,6 +1727,7 @@ export class Chunk {
     let deferredReady: Opt<Chunk>;
 
     while (cur.next && !cur.async) {
+      cur.markCatchRange();
       cur.queueDeferredReorder();
       html += cur.html;
       if (cur.serializeState.readyId) {
@@ -1745,16 +1775,21 @@ export class Chunk {
     const { serializeState } = this;
     const { readyId } = serializeState;
     let scripts = "";
-    forEach(this.takeDeferredReady(), (chunk) => {
-      scripts = concatScripts(
-        scripts,
-        chunk.flushReadyScripts(boundary, reservations, holdEffects),
-      );
-      // Effects held for in-order content flush with a later pass.
-      if (chunk.effects || chunk.deferredReady) {
-        this.deferredReady = push(this.deferredReady, chunk);
+    const held = this.takeDeferredReady();
+    if (held) {
+      for (const chunk of Array.isArray(held) ? held : [held]) {
+        // A caught body's lazy content writes nothing.
+        if (chunk.boundary.aborted) continue;
+        scripts = concatScripts(
+          scripts,
+          chunk.flushReadyScripts(boundary, reservations, holdEffects),
+        );
+        // Effects held for in-order content flush with a later pass.
+        if (chunk.effects || chunk.deferredReady) {
+          this.deferredReady = push(this.deferredReady, chunk);
+        }
       }
-    });
+    }
 
     if (readyId && !this.async) {
       const { state } = boundary;
@@ -1885,6 +1920,7 @@ export class Chunk {
         reorderedChunk.reorderId = null;
 
         while (cur) {
+          cur.markCatchRange();
           cur.queueDeferredReorder();
           cur.deferOwnReady();
           const { next } = cur;

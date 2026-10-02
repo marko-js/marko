@@ -18,7 +18,7 @@ caught
 ```
 ## Change
 ```
-INSERT: #ref + ::text("caught")
+INSERT: ::text("caught")
 ```
 
 # Update

@@ -9,9 +9,9 @@ outerloading innercaught ERROR!
 ```
 ## Change
 ```
+INSERT: ::text("caught ERROR!")
 REMOVE: ::text("loading outer")
 INSERT: ::text("outer"), ::text("loading inner")
-INSERT: ::text@5 + ::text("caught ERROR!")
 ```
 
 # Update
