@@ -1,0 +1,67 @@
+// counter.marko
+const $template = "<button> </button>";
+const $walks = " D l";
+const $count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $setup__script = _script("__tests__/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, +$scope.count + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	$setup__script($scope);
+}
+var counter_default = /*@__PURE__*/ _template("__tests__/counter.marko", $template, $walks, $setup);
+
+// template.marko
+const $template = "<!><!><!><!>";
+const $walks = "b%b%c";
+let $load_Thrower_setup = /*@__PURE__*/ _load_setup(() => import("./v:thrower.marko.setup.mjs"));
+let $load_Counter_setup = /*@__PURE__*/ _load_setup(() => import("./v:counter.marko.setup.mjs"));
+const $await_content2__d = ($scope, d) => _text($scope["#text/0"], d);
+const $await_content2__$params = ($scope, $params4) => $await_content2__d($scope, $params4[0]);
+const $await_content__setup = ($scope) => {
+	$load_Thrower_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
+	$load_Counter_setup($scope, $scope["#childScope/3"], $scope["#text/2"]);
+};
+const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
+const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content = _content("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!><!>", "b%/&b%/&", $await_content__setup);
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
+const $try_content__setup = ($scope) => {
+	$await_content($scope);
+	$try_content__await_promise($scope, resolveAfter("b", 1));
+};
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
+const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<p> </p>", "D ");
+const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
+function $setup($scope) {
+	$await_content2($scope);
+	$try($scope);
+	$await_promise($scope, resolveAfter("d", 2));
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
+
+// thrower.marko
+const $template = "<!><!><!>";
+const $walks = "b%c";
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
+function $setup($scope) {
+	$dynamicTag($scope, (() => {
+		throw new Error("ERROR!");
+	})());
+}
+var thrower_default = /*@__PURE__*/ _template("__tests__/thrower.marko", $template, "b%c", $setup);
+
+// v:counter.marko.setup.js
+const _ = [
+	$template,
+	$walks,
+	$setup
+];
+
+// v:thrower.marko.setup.js
+const _ = [
+	$template,
+	"b%c",
+	$setup
+];

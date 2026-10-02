@@ -1,0 +1,17 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <await|b| = resolveAfter("b", 1)>
+    <try>
+      <@placeholder>loading</@placeholder>
+      ${(() => { throw new Error("ERROR!") })()}
+    </try>
+    <p>dead</p>
+  </await>
+  <@catch|err|>
+    caught ${err.message}
+  </@catch>
+</try>
+<await|d| = resolveAfter("d", 2)>
+  <p>${d}</p>
+</await>
