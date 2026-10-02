@@ -1,0 +1,18 @@
+// use class
+import { resolveAfter } from "../../utils/resolve";
+
+<await(resolveAfter("first", 3))>
+  <@then|value|>
+    <div id="first">${value}</div>
+  </@then>
+</await>
+<await(resolveAfter("slow", 5))>
+  <@then|value|>
+    <div id="slow">${value}</div>
+  </@then>
+</await>
+<await(resolveAfter("fast", 1))>
+  <@then>
+    <tags-child/>
+  </@then>
+</await>

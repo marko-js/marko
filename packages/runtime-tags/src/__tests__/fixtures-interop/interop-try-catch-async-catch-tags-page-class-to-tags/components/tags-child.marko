@@ -1,0 +1,13 @@
+// use tags
+import { rejectAfter, resolveAfter } from "../../../utils/resolve";
+
+<try>
+  <@catch>
+    <await|v|=resolveAfter("caught", 2)>
+      <div id="caught">CAUGHT</div>
+    </await>
+  </@catch>
+  <await|value|=rejectAfter(new Error("x"), 1)>
+    <div id="tags">${value}</div>
+  </await>
+</try>

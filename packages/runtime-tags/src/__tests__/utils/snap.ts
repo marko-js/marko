@@ -36,6 +36,8 @@ export async function snap(
     )
       // eslint-disable-next-line no-control-regex
       .replace(/\x1B\[[0-9;]*m/g, "")
+      // A Class async error appends its caller's stack, which moves with every runtime edit.
+      .replace(/(\nRendered by[^\n]*):(?:\n +at [^\n]*)+/g, "$1")
       .replaceAll(CWD, ".");
   } else {
     actual = "" + (await fn());
