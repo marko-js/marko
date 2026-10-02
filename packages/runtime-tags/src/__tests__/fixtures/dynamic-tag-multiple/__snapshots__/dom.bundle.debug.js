@@ -23,7 +23,7 @@ const $input_as__OR__htmlInput = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($s
 const $inputAs = /*@__PURE__*/ _const("inputAs", $input_as__OR__htmlInput);
 const $htmlInput = /*@__PURE__*/ _const("htmlInput", $input_as__OR__htmlInput);
 const $input = ($scope, input) => {
-	(({ as, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);
+	$htmlInput($scope, (({ as, ...htmlInput }) => htmlInput)(input));
 	$inputAs($scope, input.as);
 };
 var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template, "b%c", 0, $input);

@@ -35,13 +35,6 @@ export interface Binding {
   closureId: number | undefined;
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
-  /** Expressions whose emitted code reads it though the graph stopped tracking
-   * the read: pruning keeps its value while any of them is emitted. */
-  untrackedReads?: Opt<t.NodeExtra>;
-  /** Expressions referencing it by name whose reads land elsewhere (an
-   * alias's references, and an alias's own declaration of what it aliases):
-   * pruning keeps its value while any of them is emitted. */
-  referencedBy?: Opt<t.NodeExtra>;
   sources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one it derives
    * from. Set on alias roots only. */
@@ -76,6 +69,8 @@ export interface Binding {
   /** An attribute tag `<for>` param's local closure in each content the loop
    * creates that reads it. */
   localClosures: Map<Section, Binding> | undefined;
+  /** Declared by its own name in its own section; an alias only in a pattern
+   * holding a rest or where what it reads from is hidden from a read of it. */
   declared: boolean;
   nullable: boolean;
   /** Settled only once `finalizeReferences` runs at program analyze exit. */
@@ -163,7 +158,6 @@ export function createBinding(
   };
 
   if (property) {
-    if (declared) aliased!.nullable = false;
     // TODO: should prefer declared properties as alias roots.
     const propBinding = aliased!.propertyAliases.get(property);
     if (propBinding) {
@@ -338,6 +332,13 @@ export function someAliased<A>(
 }
 
 // Aliases the whole of another value: no property, no rest exclusions.
+// The nearest binding declared by name that it is, or is read from.
+export function getNearestDeclared(binding: Binding) {
+  for (let cur: Binding | undefined = binding; cur; cur = cur.aliasOf) {
+    if (cur.declared) return cur;
+  }
+}
+
 export function isDirectAlias(binding: Binding) {
   return (
     binding.aliasOf !== undefined &&

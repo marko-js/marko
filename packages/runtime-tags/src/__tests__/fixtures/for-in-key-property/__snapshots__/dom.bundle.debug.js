@@ -9,7 +9,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 }));
 const $for_content__setup = ($scope) => {
 	_text($scope["#text/1"], $scope["#LoopKey"]);
-	_text($scope["#text/2"], $scope["#LoopKey"]?.length);
+	_text($scope["#text/2"], $scope["#LoopKey"].length);
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_in("#text/0", "<button><!>:<!></button>", " D%c%", $for_content__setup);

@@ -2,13 +2,12 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { content, value } = input;
 	_html("<div>");
-	_dynamic_tag($scope0_id, "a", content, [value], 0, 1, $wg__input_content__OR__input_value);
+	_dynamic_tag($scope0_id, "a", input.content, [input.value], 0, 1, $wg__input_content__OR__input_value);
 	_html("</div>");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
-		d: _write_if($scope0_reason, 2) && content,
-		e: _write_if($scope0_reason, 1) && value
+		d: _write_if($scope0_reason, 2) && input.content,
+		e: _write_if($scope0_reason, 1) && input.value
 	});
 });
 

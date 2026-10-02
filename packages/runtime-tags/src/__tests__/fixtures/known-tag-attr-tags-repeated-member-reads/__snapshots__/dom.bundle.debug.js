@@ -22,7 +22,7 @@ const $foo = ($scope, foo) => _text($scope["#text/0"], foo);
 const $rest = ($scope, rest) => _text($scope["#text/1"], JSON.stringify(rest));
 const $input$1 = ($scope, input) => $item2($scope, input.item);
 const $item2 = ($scope, $item) => {
-	(({ foo, ...rest }) => $rest($scope, rest))($item);
+	$rest($scope, (({ foo, ...rest }) => rest)($item));
 	$foo($scope, $item.foo);
 };
 var child_rest_default = /*@__PURE__*/ _template("__tests__/tags/child-rest/index.marko", $template$2, $walks$2, 0, $input$1);

@@ -210,18 +210,7 @@ function replaceBindingReadNode(node: t.Node) {
     case "Identifier":
     case "MemberExpression":
     case "OptionalMemberExpression": {
-      const { extra } = node;
-      if (
-        extra &&
-        !(
-          (extra.read && !extra.read.binding.declared) ||
-          (extra.binding && !extra.binding.declared)
-        )
-      ) {
-        // An undeclared alias stays the member chain its root identifier names.
-        return getReadReplacement(node);
-      }
-      break;
+      return getReadReplacement(node);
     }
     case "CallExpression":
     case "OptionalCallExpression": {

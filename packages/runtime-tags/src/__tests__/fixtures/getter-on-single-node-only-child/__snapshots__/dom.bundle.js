@@ -6,7 +6,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(1, "<li> </li>", "D ", 0, $for_conten
 const $items = /*@__PURE__*/ _let(2, ($scope) => $for($scope, [$scope.c]));
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.a, "click", function() {
-		$items($scope, [...$scope.c, $scope.c?.length]);
+		$items($scope, [...$scope.c, $scope.c.length]);
 	});
 	$ul_getter($scope)().classList.add("attached");
 });

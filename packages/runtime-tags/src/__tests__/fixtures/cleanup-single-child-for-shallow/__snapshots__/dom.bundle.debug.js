@@ -34,7 +34,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", $template$1, /*@__PURE__*/
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => $for($scope, [$scope.items]));
 const $write2 = /*@__PURE__*/ _const("write");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$items($scope, $scope.items?.length ? $scope.items.slice(0, -1) : [
+	$items($scope, $scope.items.length ? $scope.items.slice(0, -1) : [
 		1,
 		2,
 		3

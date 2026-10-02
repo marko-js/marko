@@ -17,7 +17,7 @@ const $setup__script = _script("a1", ($scope) => {
 		$rows($scope, $scope.f.filter((row) => row.id !== $scope.e));
 	});
 	_on($scope.c, "click", function() {
-		$rows($scope, [...$scope.f.slice(1), $scope.f?.[0]]);
+		$rows($scope, [...$scope.f.slice(1), $scope.f[0]]);
 	});
 	_on($scope.d, "click", function() {
 		$selected($scope, void 0);

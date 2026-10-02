@@ -13,7 +13,7 @@ const $input_class__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 const $_class = /*@__PURE__*/ _const("_class", $input_class__OR__rest);
 const $rest = /*@__PURE__*/ _const("rest", $input_class__OR__rest);
 const $input$1 = ($scope, input) => {
-	(({ class: $class, ...rest }) => $rest($scope, rest))(input);
+	$rest($scope, (({ class: $class, ...rest }) => rest)(input));
 	$_class($scope, input.class);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b b", 0, $input$1);

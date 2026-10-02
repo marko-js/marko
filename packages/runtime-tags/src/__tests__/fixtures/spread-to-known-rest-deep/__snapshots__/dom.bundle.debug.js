@@ -17,7 +17,7 @@ const $setup$2 = () => {};
 const $value = ($scope, value) => $input_value($scope["#childScope/0"], value);
 const $rest_class$1 = ($scope, rest_class) => $input_class($scope["#childScope/0"], rest_class);
 const $input$1 = ($scope, input) => {
-	(({ value, ...rest }) => $rest$1($scope, rest))(input);
+	$rest$1($scope, (({ value, ...rest }) => rest)(input));
 	$value($scope, input.value);
 };
 const $rest$1 = ($scope, rest) => $rest_class$1($scope, rest.class);
@@ -30,7 +30,7 @@ function $setup$1($scope) {
 	$value($scope["#childScope/0"], "abcd");
 }
 const $rest_class = ($scope, rest_class) => $rest_class$1($scope["#childScope/0"], rest_class);
-const $input = ($scope, input) => (({ value, ...rest }) => $rest($scope, rest))(input);
+const $input = ($scope, input) => $rest($scope, (({ value, ...rest }) => rest)(input));
 const $rest = ($scope, rest) => $rest_class($scope, rest.class);
 var wrap_outer_default = /*@__PURE__*/ _template("__tests__/tags/wrap-outer.marko", $template$1, $walks$1, $setup$1, $input);
 

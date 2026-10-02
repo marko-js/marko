@@ -10,13 +10,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const x = {
-		class: "a",
-		value: "b"
-	};
-	const y = x;
 	child_default({
-		...y,
 		class: "c",
 		value: "d"
 	});

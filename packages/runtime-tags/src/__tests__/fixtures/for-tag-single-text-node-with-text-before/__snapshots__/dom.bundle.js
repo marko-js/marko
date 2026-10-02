@@ -1,7 +1,7 @@
 // template.marko
 const $for = /*@__PURE__*/ _for_of_unkeyed(1, "Child");
 const $children__script = _script("a0", ($scope) => {
-	if ($scope.c?.length === 1) $children($scope, [...$scope.c, 2]);
+	if ($scope.c.length === 1) $children($scope, [...$scope.c, 2]);
 });
 const $children = /*@__PURE__*/ _let(2, ($scope) => {
 	$children_length($scope, $scope.c?.length);

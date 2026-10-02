@@ -1,0 +1,3 @@
+<let/obj=undefined/>
+<if=obj><const/{ a }=obj/><button.read onClick() { document.body.dataset.a = String(a) }>${a}</button></if>
+<button.set onClick() { obj = { a: 1 } }/>

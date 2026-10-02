@@ -32,7 +32,7 @@ const $htmlInput = /*@__PURE__*/ _const("htmlInput", ($scope) => {
 const $for = /*@__PURE__*/ _for_of_unkeyed("#div/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $buttons = ($scope, buttons) => $for($scope, [buttons]);
 const $input = ($scope, input) => {
-	(({ button, ...htmlInput }) => $htmlInput($scope, htmlInput))(input);
+	$htmlInput($scope, (({ button, ...htmlInput }) => htmlInput)(input));
 	$buttons($scope, input.button);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, " b", 0, $input);

@@ -13,6 +13,7 @@ import {
   getOrCreatePropertyAlias,
   isIndexProperty,
   propsUtil,
+  getNearestDeclared,
 } from "./bindings";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
@@ -251,6 +252,8 @@ export function trackVarReferences(
       if (excludeProperties !== undefined) {
         target = target.aliasOf!;
       }
+      // An alias is read as what it aliases, so declares only a pattern holding
+      // a rest.
       createBindingsAndTrackReferences(
         tagVar,
         target.type,
@@ -260,6 +263,7 @@ export function trackVarReferences(
         undefined,
         excludeProperties,
         restOffset,
+        false,
       );
       return target;
     }
@@ -400,10 +404,14 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   for (const ref of referencePaths as t.NodePath<t.Identifier>[]) {
     const refSection = getOrCreateSection(ref);
     const markoRoot = getMarkoRoot(ref);
-    // Emitted code names an alias wherever it is referenced, though its reads
-    // land on what it aliases.
-    if (binding.aliasOf) {
-      addReferencedBy(binding, (getExprRoot(ref).node.extra ??= {}));
+    // HTML writes a read of an undeclared binding through what it reads from,
+    // so where that name is hidden the binding is declared and read by its own.
+    if (!binding.declared && binding.excludeProperties === undefined) {
+      const root = getNearestDeclared(binding);
+      binding.declared =
+        !!root &&
+        ref.scope.getBinding(root.name) !==
+          babelBinding.scope.getBinding(root.name);
     }
     const isOwnAttribute =
       markoRoot?.type === "MarkoAttribute" &&
@@ -543,7 +551,8 @@ function trackAssignment(
             changePropName,
             undefined,
             id.node.loc,
-            true,
+            // Declared beside its property, in the same pattern.
+            binding.declared,
           );
         idExtra.assignmentTo = changeBinding;
         addReadToExpression(id, changeBinding, undefined);
@@ -583,6 +592,7 @@ function createBindingsAndTrackReferences(
   property: string | undefined,
   excludeProperties: SortedOpt<string>,
   restOffset?: number,
+  declared = true,
 ) {
   switch (lVal.type) {
     case "AssignmentPattern":
@@ -595,6 +605,7 @@ function createBindingsAndTrackReferences(
         property,
         excludeProperties,
         restOffset,
+        declared,
       );
       break;
     case "Identifier": {
@@ -606,7 +617,7 @@ function createBindingsAndTrackReferences(
         property,
         excludeProperties,
         lVal.loc,
-        true,
+        declared,
       ));
       if (restOffset) binding.restOffset = restOffset;
       trackReferencesForBinding(scope.getBinding(lVal.name)!, binding);
@@ -628,8 +639,13 @@ function createBindingsAndTrackReferences(
       // value a pattern destructures never is one.
       if (patternBinding.section === section) patternBinding.nullable = false;
 
+      const { properties } = lVal;
       const hasRest =
-        lVal.properties[lVal.properties.length - 1]?.type === "RestElement";
+        properties.length > 0 &&
+        properties[properties.length - 1].type === "RestElement";
+      // A rest is a new object no read expresses, so its pattern is declared as
+      // written, and the parts beside it are read by the names it declares.
+      const declaresPattern = declared || hasRest;
       for (const prop of lVal.properties) {
         if (prop.type === "RestElement") {
           createBindingsAndTrackReferences(
@@ -640,6 +656,8 @@ function createBindingsAndTrackReferences(
             patternBinding,
             undefined,
             excludeProperties,
+            undefined,
+            declaresPattern,
           );
         } else {
           let key: string;
@@ -668,6 +686,8 @@ function createBindingsAndTrackReferences(
               patternBinding,
               key,
               undefined,
+              undefined,
+              declaresPattern,
             );
           }
         }
@@ -689,6 +709,13 @@ function createBindingsAndTrackReferences(
       // Destructuring throws on a nullish value, so in its own section the
       // value a pattern destructures never is one.
       if (patternBinding.section === section) patternBinding.nullable = false;
+
+      const { elements } = lVal;
+      // A trailing hole (`[a, ,]`) is a null element.
+      const declaresPattern =
+        declared ||
+        (elements.length > 0 &&
+          elements[elements.length - 1]?.type === "RestElement");
 
       // A pattern that is itself a rest argument mirrors the source at
       // shifted indices, so its elements index from the inherited offset.
@@ -712,6 +739,7 @@ function createBindingsAndTrackReferences(
               undefined,
               excludeProperties,
               index,
+              declaresPattern,
             );
           } else if (t.isLVal(element)) {
             createBindingsAndTrackReferences(
@@ -722,6 +750,8 @@ function createBindingsAndTrackReferences(
               patternBinding,
               `${index}`,
               undefined,
+              undefined,
+              declaresPattern,
             );
           }
         }
@@ -777,24 +807,14 @@ function trackReference(
     reference = getOrCreatePropertyAlias(reference, prop);
   }
 
-  // The chain is read as a whole, and its root names the binding it renames.
-  if (root !== referencePath) {
-    (referencePath.node.extra ??= {}).binding = binding;
-  }
-
   if (reference.type === BindingType.local) {
     reference = getOrCreateLocalClosure(reference, getOrCreateSection(root));
   }
 
+  // The read may resolve elsewhere, but HTML writes one rooted at a declared
+  // name as authored.
+  (referencePath.node.extra ??= {}).binding = binding;
   addReadToExpression(root, reference, undefined);
-}
-
-function addUntrackedRead(binding: Binding, expr: t.NodeExtra) {
-  binding.untrackedReads = push(binding.untrackedReads, expr);
-}
-
-export function addReferencedBy(binding: Binding, expr: t.NodeExtra) {
-  binding.referencedBy = push(binding.referencedBy, expr);
 }
 
 // Writing a member (`obj.x = 1`, `obj.x++`, `delete obj.x`, a destructuring
@@ -1013,19 +1033,14 @@ export function dropNodes(node: t.Node | t.Node[]) {
   }
 }
 
-// Still emitted, so the code names what it read past the graph.
-export function untrackNode(node: t.Node) {
-  const exprExtra = (node.extra ??= {}) as ReferencedExtra;
-  const reads = untrackExtra(exprExtra);
-  if (reads && !exprExtra.pruned && !exprExtra.section!.pruned) {
-    forEach(reads, (read) => addUntrackedRead(read.binding, exprExtra));
+function untrackNodes(node: t.Node | t.Node[]) {
+  if (Array.isArray(node)) {
+    for (const item of node) {
+      untrackExtra((item.extra ??= {}) as ReferencedExtra);
+    }
+  } else {
+    untrackExtra((node.extra ??= {}) as ReferencedExtra);
   }
-}
-
-// An alias's value reaches its aliased binding through the alias, so it keeps no
-// read of its own and is emitted only while the alias is.
-export function untrackAliasValue(node: t.Node) {
-  untrackExtra((node.extra ??= {}) as ReferencedExtra);
 }
 
 export function dropExtra(exprExtra: ReferencedExtra) {
@@ -1048,7 +1063,6 @@ function untrackExtra(exprExtra: ReferencedExtra) {
     getFunctionReadsByExpression().delete(exprExtra);
     forEach(reads, (read) => read.binding.reads.delete(exprExtra));
   }
-  return reads;
 }
 
 // Content no output renders: the expressions in it are untracked, and each body
@@ -1057,7 +1071,7 @@ export function dropContent(body: t.MarkoTagBody) {
   const bodyExtra = (body.extra ??= {});
   bodyExtra.pruned = true;
   if (bodyExtra.section) bodyExtra.section.pruned = true;
-  for (const param of body.params) untrackNode(param);
+  untrackNodes(body.params);
   dropChildren(body.body);
 }
 
@@ -1069,20 +1083,18 @@ function dropChildren(
   for (const child of children) {
     switch (child.type) {
       case "MarkoTag":
-        untrackNode(child.name);
-        if (child.arguments) {
-          for (const arg of child.arguments) untrackNode(arg);
-        }
-        if (child.var) untrackNode(child.var);
-        for (const attr of child.attributes) untrackNode(attr.value);
+        untrackNodes(child.name);
+        if (child.arguments) untrackNodes(child.arguments);
+        if (child.var) untrackNodes(child.var);
+        for (const attr of child.attributes) untrackNodes(attr.value);
         dropChildren(child.attributeTags);
         dropContent(child.body);
         break;
       case "MarkoPlaceholder":
-        untrackNode(child.value);
+        untrackNodes(child.value);
         break;
       case "MarkoScriptlet":
-        for (const statement of child.body) untrackNode(statement);
+        untrackNodes(child.body);
         break;
     }
   }

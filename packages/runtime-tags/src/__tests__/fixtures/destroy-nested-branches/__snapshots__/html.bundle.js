@@ -2,10 +2,9 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { name } = input;
-	_html(`<p>${_text_resume($scope0_id, "a", name, $wg__input_name)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", input.name, $wg__input_name)}</p>`);
 	_script($scope0_id, "b0", $wg__input_name);
-	_scope($scope0_id, { d: name });
+	_scope($scope0_id, { d: input.name });
 	$wg__input_name || _resume_branch($scope0_id);
 });
 

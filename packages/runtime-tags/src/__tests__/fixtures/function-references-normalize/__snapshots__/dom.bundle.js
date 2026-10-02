@@ -1,4 +1,4 @@
 // template.marko
 const $baz2__script = _script("a1", ($scope) => $scope.a.textContent = $scope.c.bar());
-const $baz = ($scope) => () => $scope.b?.bar;
+const $baz = ($scope) => () => $scope.b.bar;
 _resumed.a0 = $baz;

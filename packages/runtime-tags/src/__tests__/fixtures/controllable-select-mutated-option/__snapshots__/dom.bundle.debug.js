@@ -23,7 +23,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 		$options($scope, $scope.options.slice(1));
 	});
 	_on($scope["#button/3"], "click", function() {
-		$options($scope, [$scope.options?.length ? $scope.options?.[0] - 1 : 3, ...$scope.options]);
+		$options($scope, [$scope.options.length ? $scope.options[0] - 1 : 3, ...$scope.options]);
 	});
 });
 function $setup($scope) {

@@ -27,12 +27,11 @@ var template_default = _template("a", (input) => {
 	const ChildB = { content: _content("a2", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		const { foo, foo: $foo2 } = input;
-		const { bar: $bar2 } = void 0 !== $foo2 ? $foo2 : { bar: 2 };
+		const { bar: $bar2 } = void 0 !== input.foo ? input.foo : { bar: 2 };
 		const bar = void 0 !== $bar2 ? $bar2 : 1;
-		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "b", bar)} ${_text_resume($scope2_id, "c", typeof foo, _write_guard($scope2_reason, 1) * 2)}</div>${_el_resume($scope2_id, "a", _write_guard($scope2_reason, 0))}`);
+		_html(`<div${_attr("id", input.id)} class=b>${_text_resume($scope2_id, "b", bar)} ${_text_resume($scope2_id, "c", typeof input.foo, _write_guard($scope2_reason, 1) * 2)}</div>${_el_resume($scope2_id, "a", _write_guard($scope2_reason, 0))}`);
 		_subscribe($count__closures, _scope($scope2_id, {
-			g: foo,
+			g: input.foo,
 			_: _scope_with_id($scope0_id),
 			Ci: 1
 		}), "a3");

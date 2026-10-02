@@ -9,7 +9,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for
 const $item = ($scope, item) => $for($scope, [item]);
 const $rest = ($scope, rest) => _text($scope["#text/1"], Object.keys(rest).join());
 const $input = ($scope, input) => {
-	(({ item, ...rest }) => $rest($scope, rest))(input);
+	$rest($scope, (({ item, ...rest }) => rest)(input));
 	$item($scope, input.item);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input);

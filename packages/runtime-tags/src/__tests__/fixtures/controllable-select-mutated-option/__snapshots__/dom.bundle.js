@@ -21,7 +21,7 @@ const $setup__script = _script("a1", ($scope) => {
 		$options($scope, $scope.e.slice(1));
 	});
 	_on($scope.d, "click", function() {
-		$options($scope, [$scope.e?.length ? $scope.e?.[0] - 1 : 3, ...$scope.e]);
+		$options($scope, [$scope.e.length ? $scope.e[0] - 1 : 3, ...$scope.e]);
 	});
 });
 const $valueChange = ($scope) => (_new_value) => {

@@ -36,7 +36,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<button id=add>add</button>${_w0}<!>`
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($walks$1);
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => $input_items($scope["#childScope/1"], $scope.items));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$items($scope, [...$scope.items, $scope.items?.length + 1]);
+	$items($scope, [...$scope.items, $scope.items.length + 1]);
 }));
 function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);

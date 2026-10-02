@@ -2,8 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	const { button } = input;
-	const { a11yText: $a11yText2, ...rest } = button || {};
+	const { a11yText: $a11yText2, ...rest } = input.button || {};
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
@@ -12,8 +11,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();
-			const { a11yText } = button;
-			_html(`<div${_attr("aria-label", a11yText)}`);
+			_html(`<div${_attr("aria-label", input.button.a11yText)}`);
 			_attrs_partial_content(rest, { "aria-label": 1 }, "#div/0", $scope1_id, "div");
 			_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
 			_script($scope1_id, "__tests__/tags/child.marko_1_rest#0:6");
@@ -22,7 +20,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 1) || $wg__input_show, $wg__input_show, 0, 0, 1);
 	$wi__input_show && _scope($scope0_id, {
-		a11yText: button?.a11yText,
+		a11yText: input.button?.a11yText,
 		rest
 	}, "__tests__/tags/child.marko", 0, {
 		a11yText: "6:12",

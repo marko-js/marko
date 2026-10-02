@@ -10,8 +10,8 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_first = _write_guard($scope0_reason, 1), $wg__input_group_keep = _write_guard($scope0_reason, 2), $wg__rest = _write_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	const { first, group: { keep, ...rest } } = input;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", first, $wg__input_first)} ${_text_resume($scope0_id, "#text/1", keep, $wg__input_group_keep * 2)}</p>`);
+	const { group: { keep, ...rest } } = input;
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.first, $wg__input_first)} ${_text_resume($scope0_id, "#text/1", keep, $wg__input_group_keep * 2)}</p>`);
 	_set_scope_reason($wg__rest << 1);
 	const $childScope = _peek_scope_id();
 	leaf_default({ data: rest });

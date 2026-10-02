@@ -33,7 +33,7 @@ const $items = /*@__PURE__*/ _let("items/6", ($scope) => {
 	$for5($scope, [$scope.items, getMissingBy()]);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/5"], "click", function() {
-	$items($scope, [...$scope.items.slice(1), $scope.items?.[0]]);
+	$items($scope, [...$scope.items.slice(1), $scope.items[0]]);
 }));
 function $setup($scope) {
 	$items($scope, [

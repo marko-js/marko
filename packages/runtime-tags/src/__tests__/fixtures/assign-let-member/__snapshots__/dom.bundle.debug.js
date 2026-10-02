@@ -31,18 +31,18 @@ const $settings_copy_w = /*@__PURE__*/ _const("settings_copy_w", ($scope) => _te
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/12"], "click", function() {
 		$scope.settings.theme = "light";
-		$scope.settings.count += $scope.settings?.step;
+		$scope.settings.count += $scope.settings.step;
 		$scope.settings.count++;
 		delete $scope.settings.removed;
-		$scope.settings.kind = typeof $scope.settings?.step;
-		[$scope.settings.first] = $scope.settings?.tags;
-		({w: $scope.settings.width} = $scope.settings?.size);
-		({[$scope.settings?.key]: $scope.settings.picked} = $scope.settings?.size);
-		[, ...$scope.settings.rest] = $scope.settings?.tags;
-		[$scope.settings.fallback = $scope.settings?.step] = [];
-		for ($scope.settings.lastKey in $scope.settings?.size) {}
-		for ($scope.settings.lastTag of $scope.settings?.tags) {}
-		$scope.settings.copy = { w: ($scope.settings?.size).w };
+		$scope.settings.kind = typeof $scope.settings.step;
+		[$scope.settings.first] = $scope.settings.tags;
+		({w: $scope.settings.width} = $scope.settings.size);
+		({[$scope.settings.key]: $scope.settings.picked} = $scope.settings.size);
+		[, ...$scope.settings.rest] = $scope.settings.tags;
+		[$scope.settings.fallback = $scope.settings.step] = [];
+		for ($scope.settings.lastKey in $scope.settings.size) {}
+		for ($scope.settings.lastTag of $scope.settings.tags) {}
+		$scope.settings.copy = { w: $scope.settings.size.w };
 	});
 	_on($scope["#button/13"], "click", function() {
 		$settings($scope, { ...$scope.settings });

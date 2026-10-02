@@ -6,7 +6,7 @@ const $input_data = ($scope, input_data) => $input_data_val($scope, input_data?.
 const $keep = ($scope, keep) => _text($scope.b, keep);
 const $rest = ($scope, rest) => $input_data($scope.c, rest);
 const $group2 = ($scope, $group) => {
-	(({ keep, ...rest }) => $rest($scope, rest))($group);
+	$rest($scope, (({ keep, ...rest }) => rest)($group));
 	$keep($scope, $group.keep);
 };
 

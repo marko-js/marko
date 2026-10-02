@@ -10,12 +10,10 @@ import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
-  addReferencedBy,
+  dropNodes,
   getReferencedBindings,
   setDerivedFrom,
   trackVarReferences,
-  untrackAliasValue,
-  untrackNode,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
@@ -83,17 +81,10 @@ export default {
       assertNoTagVarMutation(tag);
       if (!evaluate(valueAttr.value).nullable) binding.nullable = false;
       if (aliased) {
-        const aliasBinding = tag.node.var!.extra?.binding;
-        if (aliasBinding) {
-          untrackAliasValue(valueAttr.value);
-          // Linked so its value expression drops with it: a reference there
-          // then stops keeping the aliased binding declared.
-          setDerivedFrom(aliasBinding, valueExtra);
-          addReferencedBy(aliased, valueExtra);
-        } else {
-          // A pattern's parts are its aliased binding's, read through it as is.
-          untrackNode(valueAttr.value);
-        }
+        // Never read as written: its parts read through the aliased binding, and
+        // a pattern holding a rest is declared from it.
+        dropNodes(valueAttr.value);
+        valueExtra.binding = aliased;
       } else {
         setDerivedFrom(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);

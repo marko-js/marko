@@ -10,7 +10,7 @@ import { ReservedId } from "../../common/types";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, getDebugScopeAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
-import { isNamedOrAssigned } from "../util/finalize-references";
+import { hasEmittedAssignment } from "../util/finalize-references";
 import { isOptimize, isOutputDOM } from "../util/marko-config";
 import { addReason } from "../util/reasons";
 import {
@@ -163,8 +163,8 @@ export default {
       const section = getSection(tag);
       const binding = tagVar.extra!.binding!;
 
-      // Nothing reads, names or assigns it, so it holds no slot.
-      const unused = binding.pruned && !isNamedOrAssigned(binding);
+      // Nothing reads or assigns it, so it holds no slot.
+      const unused = binding.pruned && !hasEmittedAssignment(binding);
 
       if (isOutputDOM()) {
         const referencedBindings = getReferencedBindings(tag.node.extra);

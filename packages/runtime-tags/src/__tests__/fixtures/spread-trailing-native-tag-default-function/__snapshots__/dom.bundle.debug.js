@@ -10,7 +10,7 @@ const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	});
 	$rest__script($scope);
 });
-const $input = ($scope, input) => (({ onClick, ...rest }) => $rest($scope, rest))(input);
+const $input = ($scope, input) => $rest($scope, (({ onClick, ...rest }) => rest)(input));
 function $onClick(_, el) {
 	el.textContent = "clicked";
 }

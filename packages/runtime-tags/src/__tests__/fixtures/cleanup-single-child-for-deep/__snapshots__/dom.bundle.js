@@ -41,7 +41,7 @@ const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	$for_content__items($scope);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$items($scope, $scope.d?.length ? $scope.d.slice(0, -1) : [
+	$items($scope, $scope.d.length ? $scope.d.slice(0, -1) : [
 		1,
 		2,
 		3

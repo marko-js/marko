@@ -1,0 +1,7 @@
+<const/{ button }=input/>
+<div>${button.id}</div>
+<if=button.id>
+  <b/>
+</if>
+<const/{ label, ...rest }=button/>
+<span ...rest>${label}</span>

@@ -6,7 +6,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const attrs = { onClick: _resume(function() {
 		n++;
 	}, "__tests__/template.marko_0/attrs", $scope0_id) };
-	const aliased = attrs;
 	_dynamic_tag($scope0_id, "#text/0", input.tag, {
 		...attrs,
 		id: "spread"
@@ -26,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("inline");
 	}, $scope0_id));
 	_dynamic_tag($scope0_id, "#text/2", input.tag, {
-		...aliased,
+		...attrs,
 		id: "aliased"
 	}, _content_resume("__tests__/template.marko_3*content", () => {
 		const $scope3_id = _scope_id();

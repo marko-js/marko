@@ -7,7 +7,7 @@ const $input_item_sub = ($scope, input_item_sub) => $input_item_sub_x($scope, in
 const $foo = ($scope, foo) => _text($scope.a, foo);
 const $rest = ($scope, rest) => _text($scope.b, JSON.stringify(rest));
 const $item2 = ($scope, $item) => {
-	(({ foo, ...rest }) => $rest($scope, rest))($item);
+	$rest($scope, (({ foo, ...rest }) => rest)($item));
 	$foo($scope, $item.foo);
 };
 

@@ -1,11 +1,11 @@
 // template.marko
-const $Wrap_content__a__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
+const $Wrap_content__a__OR__$aChange = /*@__PURE__*/ _or(7, ($scope) => {
 	_attr_input_value($scope, "a", $scope.g, $scope.f);
 	_attr_input_value($scope, "b", $scope.g, $scope.f);
 	_attr_input_value($scope, "c", $scope.g, $scope.f);
 });
-const $Wrap_content__a = /*@__PURE__*/ _const(6, $Wrap_content__a__OR__$valueChange);
-const $Wrap_content__$aChange = /*@__PURE__*/ _const(5, $Wrap_content__a__OR__$valueChange);
+const $Wrap_content__a = /*@__PURE__*/ _const(6, $Wrap_content__a__OR__$aChange);
+const $Wrap_content__$aChange = /*@__PURE__*/ _const(5, $Wrap_content__a__OR__$aChange);
 const $Wrap_content__setup__script = _script("a1", ($scope) => {
 	_attr_input_value_script($scope, "a");
 	_attr_input_value_script($scope, "b");

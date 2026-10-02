@@ -5,16 +5,15 @@ function num(v) {
 var my_input_default = _template("__tests__/tags/my-input.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const { "countChange": $countChange, count } = input;
-	_html(`<input${_attr_input_value($scope0_id, "#input/0", count, $countChange && _resume(($next) => {
-		$countChange(num($next));
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.count, input.countChange && _resume(($next) => {
+		input.countChange(num($next));
 	}, "__tests__/tags/my-input.marko_0/valueChange", $scope0_id))} type=number>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/my-input.marko_0");
 	_scope($scope0_id, {
-		$countChange,
-		count: _write_if($scope0_reason, 0) && count
+		$countChange: input.countChange,
+		count: _write_if($scope0_reason, 0) && input.count
 	}, "__tests__/tags/my-input.marko", 0, {
-		$countChange: 0,
+		$countChange: ["input.countChange"],
 		count: "4:10",
 		"ControlledHandler:#input/0": ["valueChange"]
 	});

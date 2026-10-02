@@ -6,8 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		if (true) {
 			const $scope2_id = _scope_id();
-			const baz = foo;
-			_html(_escape(baz));
+			_html(_escape(foo));
 		}
 	});
 }, 1);

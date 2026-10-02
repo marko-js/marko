@@ -2,12 +2,9 @@
 var my_button_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const attrs = input;
-	const { text } = input;
-	const { onClick } = attrs;
-	_html(`<button>${_text_resume($scope0_id, "b", text, _write_guard($scope0_reason, 0))}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", input.text, _write_guard($scope0_reason, 0))}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_scope($scope0_id, { f: onClick });
+	_scope($scope0_id, { f: input.onClick });
 });
 
 // template.marko

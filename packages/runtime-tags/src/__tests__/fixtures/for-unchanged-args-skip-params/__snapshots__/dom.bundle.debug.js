@@ -12,7 +12,7 @@ const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!>:<!>=<!></li>", "D%c%c%", $f
 const $items = /*@__PURE__*/ _let("items/4", ($scope) => $for($scope, [$scope.items, "id"]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
-		$items($scope, [...$scope.items.slice(1), $scope.items?.[0]]);
+		$items($scope, [...$scope.items.slice(1), $scope.items[0]]);
 	});
 	_on($scope["#button/2"], "click", function() {
 		$items($scope, $scope.items.map((item) => item.id === "b" ? {

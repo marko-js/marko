@@ -1,7 +1,7 @@
 // template.marko
 const $list = /*@__PURE__*/ _let(9, ($scope) => {
-	(([, ...rest]) => $rest($scope, rest))($scope.j);
-	(([, ...copy]) => $copy($scope, copy))($scope.j);
+	$rest($scope, (([, ...rest]) => rest)($scope.j));
+	$copy($scope, (([, ...copy]) => copy)($scope.j));
 	$first($scope, $scope.j[0]);
 	$list_($scope, $scope.j[1]);
 	$list_2($scope, $scope.j[2]);

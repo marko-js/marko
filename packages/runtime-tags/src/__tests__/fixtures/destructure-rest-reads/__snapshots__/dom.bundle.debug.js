@@ -2,8 +2,8 @@
 const $template = "<div><!>|<!>|<!>|<!></div><div><!>|<!></div><div><!>|<!></div><button>update</button>";
 const $walks = "D%c%c%c%lD%c%lD%c%l b";
 const $list = /*@__PURE__*/ _let("list/9", ($scope) => {
-	(([, ...rest]) => $rest($scope, rest))($scope.list);
-	(([, ...copy]) => $copy($scope, copy))($scope.list);
+	$rest($scope, (([, ...rest]) => rest)($scope.list));
+	$copy($scope, (([, ...copy]) => copy)($scope.list));
 	$first($scope, $scope.list[0]);
 	$list_($scope, $scope.list[1]);
 	$list_2($scope, $scope.list[2]);

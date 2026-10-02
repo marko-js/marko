@@ -2,13 +2,12 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { content, value } = input;
 	_html("<div>");
-	_dynamic_tag($scope0_id, "#text/0", content, [value], 0, 1, $wg__input_content__OR__input_value);
+	_dynamic_tag($scope0_id, "#text/0", input.content, [input.value], 0, 1, $wg__input_content__OR__input_value);
 	_html("</div>");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
-		content: _write_if($scope0_reason, 2) && content,
-		value: _write_if($scope0_reason, 1) && value
+		content: _write_if($scope0_reason, 2) && input.content,
+		value: _write_if($scope0_reason, 1) && input.value
 	}, "__tests__/tags/child.marko", 0, {
 		content: "1:9",
 		value: "1:18"

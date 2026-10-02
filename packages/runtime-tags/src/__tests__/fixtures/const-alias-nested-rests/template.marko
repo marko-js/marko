@@ -1,0 +1,7 @@
+<let/obj={ a: { b: 1, c: 2 }, d: 3 }/>
+<const/{ a: { b, ...inner }, ...outer }=obj/>
+<const/[first, ...tail]=[obj.d, 4, 5, 6]/>
+<const/[second, ...last]=tail/>
+<div>${b} ${JSON.stringify(inner)} ${JSON.stringify(outer)}</div>
+<div>${first} ${second} ${last.join("+")}</div>
+<button onClick() { obj = { a: { b: 4, c: 5 }, d: 6 } }>update</button>

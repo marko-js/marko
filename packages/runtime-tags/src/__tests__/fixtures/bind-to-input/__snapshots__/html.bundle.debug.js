@@ -2,19 +2,18 @@
 var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const { "countChange": $countChange, count } = input;
-	let x = count;
+	let x = input.count;
 	_html(`<button${_attr("id", input.id)}${_attr("data-internal", x)}>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_scope($scope0_id, {
-		$countChange: _write_if($scope0_reason, 2) && $countChange,
-		count: _write_if($scope0_reason, 1) && count,
+		$countChange: _write_if($scope0_reason, 2) && input.countChange,
+		count: _write_if($scope0_reason, 1) && input.count,
 		x,
-		"TagVariableChange:x": $countChange || void 0
+		"TagVariableChange:x": input.countChange || void 0
 	}, "__tests__/tags/counter.marko", 0, {
-		$countChange: 0,
+		$countChange: ["input.countChange"],
 		count: "1:10",
 		x: "3:6",
 		"TagVariableChange:x": ["xChange", "3:6"]

@@ -1,7 +1,7 @@
 // template.marko
 const $obj = /*@__PURE__*/ _let(6, ($scope) => {
 	_text($scope.a, JSON.stringify($scope.g));
-	(({ a, ...partialObj }) => $partialObj($scope, partialObj))($scope.g);
+	$partialObj($scope, (({ a, ...partialObj }) => partialObj)($scope.g));
 	$a($scope, $scope.g.a);
 	$obj_b($scope, $scope.g.b);
 });

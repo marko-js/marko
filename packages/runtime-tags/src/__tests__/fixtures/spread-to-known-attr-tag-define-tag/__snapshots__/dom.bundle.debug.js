@@ -18,7 +18,7 @@ const $Wrap_content___class = ($scope, _class) => $Child_content__input_class($s
 const $Wrap_content__rest_option = ($scope, rest_option) => $Child_content__input_option($scope["#childScope/0"], rest_option);
 const $Wrap_content__$params = ($scope, $params4) => $Wrap_content__$temp($scope, $params4[0]);
 const $Wrap_content__$temp = ($scope, $temp) => {
-	(({ class: $class, ...rest }) => $Wrap_content__rest($scope, rest))($temp);
+	$Wrap_content__rest($scope, (({ class: $class, ...rest }) => rest)($temp));
 	$Wrap_content___class($scope, $temp.class);
 };
 const $Wrap_content__rest = ($scope, rest) => $Wrap_content__rest_option($scope, rest.option);

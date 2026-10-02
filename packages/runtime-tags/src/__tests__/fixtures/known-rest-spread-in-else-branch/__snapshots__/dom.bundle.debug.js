@@ -32,7 +32,7 @@ const $input = ($scope, input) => {
 	$button($scope, input.button);
 };
 const $button = ($scope, button) => {
-	(({ a11yText, ...rest }) => $rest($scope, rest))(button || {});
+	$rest($scope, (({ a11yText, ...rest }) => rest)(button || {}));
 	$a11yText($scope, button?.a11yText);
 };
 const $rest = /*@__PURE__*/ _const("rest", $else_content__rest);

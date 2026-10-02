@@ -28,5 +28,5 @@ const $items = /*@__PURE__*/ _let(6, ($scope) => {
 	$for5($scope, [$scope.g, void 0]);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.f, "click", function() {
-	$items($scope, [...$scope.g.slice(1), $scope.g?.[0]]);
+	$items($scope, [...$scope.g.slice(1), $scope.g[0]]);
 }));

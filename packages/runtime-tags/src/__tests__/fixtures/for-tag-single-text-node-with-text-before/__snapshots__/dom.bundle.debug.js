@@ -3,7 +3,7 @@ const $template = "<div>Before <!></div>";
 const $walks = " Db%l";
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "Child");
 const $children__script = _script("__tests__/template.marko_0_children#2", ($scope) => {
-	if ($scope.children?.length === 1) {
+	if ($scope.children.length === 1) {
 		$children($scope, [...$scope.children, 2]);
 	}
 });

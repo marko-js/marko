@@ -1,16 +1,18 @@
 import { types as t } from "@marko/compiler";
 
 import { localsIdentifier, scopeIdentifier } from "../visitors/program";
-import { type Binding, BindingType } from "./bindings";
+import { BindingType } from "./bindings";
+import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputDOM } from "./marko-config";
-import { at, size } from "./optional";
-import { isRegisteredFnExtra } from "./references";
+import { reduce, size } from "./optional";
+import { type ExtraRead, isRegisteredFnExtra } from "./references";
 import { callRuntime } from "./runtime";
 import {
   getLocalsScopeAccessor,
   getScopeAccessorLiteral,
 } from "./scope-accessor";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
+import type { Section } from "./sections";
 import {
   getBindingGetterIdentifier,
   getSignals,
@@ -31,154 +33,153 @@ export function getReadReplacement(
   if (!extra || extra.assignment) return;
   const { read, binding } = extra;
 
-  if (read) {
-    const readBinding = read.binding;
-    let replacement: t.Expression | undefined;
-
-    if (read.props === undefined) {
-      if (read.getter?.invoked) {
-        return;
-      }
-
-      if (isOutputDOM()) {
-        if (read.localFn) {
-          // A registered function receives its serialized locals scope; an
-          // inline one keeps the lexical reference (following renames).
-          if (isRegisteredFnExtra(read.localFn)) {
-            return toMemberExpression(
-              localsIdentifier,
-              getLocalsScopeAccessor(readBinding),
-            );
-          }
-          if (node.type === "Identifier" && node.name !== readBinding.name) {
-            node.name = readBinding.name;
-          }
-          return;
-        }
-        const inlined = getSignals(extra.section!).get(readBinding)?.inline
-          ?.value;
-        if (inlined) {
-          replacement = t.cloneNode(inlined, true);
-        } else if (
-          signal?.referencedBindings === readBinding &&
-          !signal.hasSideEffect
-        ) {
-          replacement = getSignalValueIdentifier(signal);
-        } else if (read.getter?.hoisted) {
-          // Alias getters are never declared on section.bindings.
-          replacement = readBinding.aliasOf
-            ? callRuntime("_hoist_read_error")
-            : t.callExpression(
-                getBindingGetterIdentifier(readBinding, read.getter.hoisted),
-                [getScopeExpression(extra.section!, read.getter.hoisted)],
-              );
-        } else if (readBinding.type === BindingType.dom) {
-          if (read.getter) {
-            replacement = t.callExpression(
-              getBindingGetterIdentifier(readBinding, readBinding.section),
-              [getScopeExpression(extra.section!, readBinding.section)],
-            );
-          }
-        } else if (!isOptimize() && read.ownVar) {
-          replacement = callRuntime(
-            "_assert_init",
-            extra.section
-              ? getScopeExpression(extra.section, readBinding.section)
-              : scopeIdentifier,
-            getScopeAccessorLiteral(readBinding),
-          );
-        } else {
-          replacement = createScopeReadExpression(readBinding, extra.section);
-        }
-      } else {
-        if (node.type !== "Identifier") {
-          replacement = t.identifier(readBinding.name);
-        } else if (read.getter?.hoisted) {
-          replacement = readBinding.aliasOf
-            ? callRuntime("_hoist_read_error")
-            : getBindingGetterIdentifier(readBinding, read.getter.hoisted);
-        } else if (readBinding.type === BindingType.dom) {
-          if (readBinding.getters.has(readBinding.section)) {
-            replacement = getBindingGetterIdentifier(
-              readBinding,
-              readBinding.section,
-            );
-          }
-        } else if (readBinding.name !== node.name) {
-          node.name = readBinding.name;
-        }
-      }
-    } else {
-      const { props } = read;
-      let remaining = size(props);
-      let curNode = node;
-      let curBinding: Binding | undefined = readBinding;
-      let replaceMember:
-        | t.MemberExpression
-        | t.OptionalMemberExpression
-        | undefined;
-      if (isOutputDOM()) {
-        if (
-          signal?.referencedBindings === readBinding &&
-          !signal.hasSideEffect
-        ) {
-          replacement = getSignalValueIdentifier(signal);
-        } else {
-          replacement = createScopeReadExpression(readBinding, extra.section);
-        }
-      } else {
-        replacement = t.identifier(readBinding.name);
-      }
-
-      while (
-        remaining &&
-        (curNode.type === "MemberExpression" ||
-          curNode.type === "OptionalMemberExpression")
-      ) {
-        const prop = at(props, --remaining);
-        const memberProp = getMemberExpressionPropString(curNode);
-        if (memberProp !== prop) break;
-        replaceMember = curNode;
-        curNode = curNode.object as
-          | t.Identifier
-          | t.MemberExpression
-          | t.OptionalMemberExpression;
-      }
-
-      for (let i = 0; i < remaining; i++) {
-        const prop = at(props, i)!;
-        if (curBinding) {
-          curBinding = curBinding.propertyAliases.get(prop);
-        }
-        replacement = toMemberExpression(
-          replacement,
-          prop,
-          !!curBinding?.nullable,
-        );
-      }
-
-      if (replaceMember) {
-        if (
-          readBinding.nullable &&
-          replaceMember.object.type !== replacement.type
-        ) {
-          replaceMember.type = "OptionalMemberExpression";
-          replaceMember.optional = true;
-        }
-        replaceMember.object = withPreviousLocation(
-          replacement,
-          replaceMember.object,
-        );
-        replacement = undefined;
-      }
+  if (!read) {
+    if (binding && node.type === "Identifier" && node.name !== binding.name) {
+      node.name = binding.name;
     }
-
-    return replacement && withPreviousLocation(replacement, node);
-  } else if (
-    binding &&
-    node.type == "Identifier" &&
-    node.name !== binding.name
-  ) {
-    node.name = binding.name;
+    return;
   }
+
+  if (read.getter?.invoked) return;
+  const base = isOutputDOM()
+    ? getDOMReadBase(read, extra.section, signal)
+    : getHTMLReadBase(node, read);
+  if (!base) return;
+
+  const expr = reduce(read.props, addMember, base);
+  if (node.type === "Identifier" && expr.type === "Identifier") {
+    node.name = expr.name;
+    return;
+  }
+
+  // HTML's base mirrors the author's chain, so any member of it may match; a
+  // DOM base is a scope slot, so only the props read through it can.
+  return getChainReplacement(
+    node,
+    expr,
+    isOutputDOM() ? size(read.props) : Infinity,
+  );
+}
+
+// What a DOM read stands for before its props: a value from its scope.
+function getDOMReadBase(
+  read: ExtraRead,
+  section: Section | undefined,
+  signal: Signal | undefined,
+) {
+  const { binding, props, getter } = read;
+  if (read.localFn) {
+    // A registered function receives its serialized locals scope; an inline
+    // one keeps the lexical reference (following renames).
+    return isRegisteredFnExtra(read.localFn)
+      ? toMemberExpression(localsIdentifier, getLocalsScopeAccessor(binding))
+      : t.identifier(binding.name);
+  }
+
+  if (props === undefined) {
+    const inlined = getSignals(section!).get(binding)?.inline?.value;
+    if (inlined) return t.cloneNode(inlined, true);
+  }
+
+  if (signal?.referencedBindings === binding && !signal.hasSideEffect) {
+    return getSignalValueIdentifier(signal);
+  }
+
+  if (getter?.hoisted) {
+    // Alias getters are never declared on section.bindings.
+    return binding.aliasOf
+      ? callRuntime("_hoist_read_error")
+      : t.callExpression(getBindingGetterIdentifier(binding, getter.hoisted), [
+          getScopeExpression(section!, getter.hoisted),
+        ]);
+  }
+
+  if (props === undefined && binding.type === BindingType.dom) {
+    return (
+      getter &&
+      t.callExpression(getBindingGetterIdentifier(binding, binding.section), [
+        getScopeExpression(section!, binding.section),
+      ])
+    );
+  }
+
+  if (!isOptimize() && read.ownVar) {
+    return callRuntime(
+      "_assert_init",
+      section ? getScopeExpression(section, binding.section) : scopeIdentifier,
+      getScopeAccessorLiteral(binding),
+    );
+  }
+
+  return createScopeReadExpression(binding, section);
+}
+
+// What an HTML read stands for before its props: the expression its binding
+// is declared as. HTML runs the author's code in order, so a read rooted at a
+// name declared in scope reads as written.
+function getHTMLReadBase(
+  node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
+  { binding, getter }: ExtraRead,
+) {
+  if (getter?.hoisted) {
+    return binding.aliasOf
+      ? callRuntime("_hoist_read_error")
+      : getBindingGetterIdentifier(binding, getter.hoisted);
+  }
+
+  if (binding.type === BindingType.dom) {
+    return binding.getters.has(binding.section)
+      ? getBindingGetterIdentifier(binding, binding.section)
+      : undefined;
+  }
+
+  let root: t.Node = node;
+  while (
+    root.type === "MemberExpression" ||
+    root.type === "OptionalMemberExpression"
+  ) {
+    root = root.object;
+  }
+  const rootBinding = root.extra?.binding;
+  if (rootBinding?.declared && !rootBinding.pruned) {
+    (root as t.Identifier).name = rootBinding.name;
+    return;
+  }
+
+  return getDeclaredBindingExpression(binding, true);
+}
+
+// A read in place runs only where the author's code would, so it keeps up to
+// `depth` outer members as written; one continuing a replaced `?.` stays one.
+function getChainReplacement(
+  node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
+  expr: t.Expression,
+  depth: number,
+) {
+  let replaceMember:
+    | t.MemberExpression
+    | t.OptionalMemberExpression
+    | undefined;
+  let cur: t.Node = node;
+  while (
+    depth-- > 0 &&
+    (cur.type === "MemberExpression" ||
+      cur.type === "OptionalMemberExpression") &&
+    (expr.type === "MemberExpression" ||
+      expr.type === "OptionalMemberExpression") &&
+    getMemberExpressionPropString(cur) === getMemberExpressionPropString(expr)
+  ) {
+    replaceMember = cur;
+    cur = cur.object;
+    expr = expr.object as t.Expression;
+  }
+
+  if (!replaceMember) return withPreviousLocation(expr, node);
+  if (replaceMember.type === "OptionalMemberExpression")
+    replaceMember.optional = true;
+  replaceMember.object = withPreviousLocation(expr, replaceMember.object);
+}
+
+function addMember(expr: t.Expression, prop: string) {
+  return toMemberExpression(expr, prop);
 }

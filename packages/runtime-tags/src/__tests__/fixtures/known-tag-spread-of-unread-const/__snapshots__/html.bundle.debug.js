@@ -10,9 +10,5 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const extras = { a: 1 };
-	child_default({
-		...extras,
-		a: 2
-	});
+	child_default({ a: 2 });
 }, 1);

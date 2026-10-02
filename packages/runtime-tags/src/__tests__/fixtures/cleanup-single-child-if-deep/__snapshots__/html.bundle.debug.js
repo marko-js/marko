@@ -2,12 +2,11 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { name, write } = input;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", name, $wg__input_name)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.name, $wg__input_name)}</p>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_name#3_write#4", $wg__input_name);
 	_scope($scope0_id, {
-		name,
-		write
+		name: input.name,
+		write: input.write
 	}, "__tests__/tags/child.marko", 0, {
 		name: "1:9",
 		write: "1:15"

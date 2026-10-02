@@ -13,7 +13,7 @@ const $input_class__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 const $input_class = /*@__PURE__*/ _const("input_class", $input_class__OR__rest);
 const $rest$1 = /*@__PURE__*/ _const("rest", $input_class__OR__rest);
 const $input$1 = ($scope, input) => {
-	(({ class: $class, ...rest }) => $rest$1($scope, rest))(input);
+	$rest$1($scope, (({ class: $class, ...rest }) => rest)(input));
 	$input_class($scope, input.class);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, " b", 0, $input$1);
@@ -25,7 +25,7 @@ const $setup$1 = () => {};
 const $_class = ($scope, _class) => $input_class($scope["#childScope/0"], _class);
 const $rest = ($scope, rest) => $rest$1($scope["#childScope/0"], (({ class: $class, ...rest }) => rest)(rest));
 const $input = ($scope, input) => {
-	(({ class: $class2, ...rest }) => $rest($scope, rest))(input);
+	$rest($scope, (({ class: $class2, ...rest }) => rest)(input));
 	$_class($scope, input.class);
 };
 var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, $walks$1, 0, $input);

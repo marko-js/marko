@@ -20,7 +20,7 @@ const $obj_name = /*@__PURE__*/ _const("obj_name", ($scope) => _text($scope["#te
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$obj($scope, {
 		...$scope.obj,
-		name: $scope.obj?.name + "!"
+		name: $scope.obj.name + "!"
 	});
 }));
 function $setup($scope) {
@@ -39,7 +39,7 @@ const $input_obj = $copy;
 const $setup__script = _script("__tests__/grand-child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$copy($scope, {
 		...$scope.copy,
-		name: $scope.copy?.name + "?"
+		name: $scope.copy.name + "?"
 	});
 }));
 const $setup = $setup__script;
