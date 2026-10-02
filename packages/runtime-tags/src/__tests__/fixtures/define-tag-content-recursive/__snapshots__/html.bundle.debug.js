@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						}, "__tests__/template.marko", "6:6"), "__tests__/template.marko_4_input_depth#2:5/subscribe", $wg__input_depth);
 						return 0;
 					}
-				}, $scope3_id, "#text/1", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+				}, $scope3_id, "#text/1", $wg__input_depth, $wg__input_depth);
 				_scope($scope3_id, {}, "__tests__/template.marko", "4:4");
 				return 0;
 			}

@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item#2");
 		_scope($scope1_id, {}, "__tests__/tags/child.marko", "1:2", { "EventAttributes:#button/0": ["...item", "1:37"] });
-	}, 0, $scope0_id, "#text/0", $wg__input_list, $wg__input_list, $wg__input_list, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_list, $wg__input_list, 0, 0, 1);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

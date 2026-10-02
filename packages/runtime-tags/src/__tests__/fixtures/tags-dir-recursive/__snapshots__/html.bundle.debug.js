@@ -15,7 +15,7 @@ const $content = (input) => {
 			}, "__tests__/tags/tree/index.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", $wg__input_depth, $wg__input_depth, $wg__input_depth, 0, 1);
+	}, $scope0_id, "#text/1", $wg__input_depth, $wg__input_depth, 0, 0, 1);
 	_html("</div>");
 	$wi__input_depth && _scope($scope0_id, {}, "__tests__/tags/tree/index.marko", 0);
 };

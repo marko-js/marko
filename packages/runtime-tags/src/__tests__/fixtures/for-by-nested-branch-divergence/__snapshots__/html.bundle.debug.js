@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope3_id, {}, "__tests__/template.marko", "9:6");
 				return 1;
 			}
-		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
+		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 		_scope($scope1_id, {}, "__tests__/template.marko", "5:4");
 	}, "id", $scope0_id, "#div/0", 1, 1, 1, "</div>");
 	_html(`<button>rot</button>${_el_resume($scope0_id, "#button/1")}`);

@@ -410,10 +410,16 @@ function writeScopePassive(scopeId: number, partialScope: PartialScope) {
 }
 
 // `<show>` always renders; hidden ranges use `<t>` so the walker reaches them.
-export function _show_start(display: unknown, mark?: unknown) {
+// The start takes its end's guards, as a range resumes by its marker or not.
+export function _show_start(
+  display: unknown,
+  markerGuard?: number,
+  branchExprGuard?: number,
+  parentEndTag?: string | 0,
+) {
   if (display) {
     // The wrapper itself is the range's single node.
-    if (mark) {
+    if (resumesMarker(markerGuard, branchExprGuard, parentEndTag)) {
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
       );
@@ -625,7 +631,11 @@ function forBranches(
 
   const { state } = $chunk.boundary;
   const resumeKeys = markerGuard !== 0;
-  const resumeMarker = resumeKeys && (!parentEndTag || branchExprGuard !== 0);
+  const resumeMarker = resumesMarker(
+    markerGuard,
+    branchExprGuard,
+    parentEndTag,
+  );
   let flushBranchIds = "";
   let loopScopes: Opt<ScopeInternals>;
 
@@ -682,8 +692,11 @@ export function _if(
   singleNode?: 1,
 ) {
   const resumeBranch = branchGuard !== 0;
-  const resumeMarker =
-    markerGuard !== 0 && (!parentEndTag || branchExprGuard !== 0);
+  const resumeMarker = resumesMarker(
+    markerGuard,
+    branchExprGuard,
+    parentEndTag,
+  );
   const branchId = _peek_scope_id();
   const chunk = $chunk;
   const beforeBranch =
@@ -742,6 +755,16 @@ export function applyBranchStart(
     chunk.html;
 }
 
+// A branch resumes by its marker unless guarded off; an element's only child
+// does only while its branch expression is guarded on too.
+function resumesMarker(
+  markerGuard: undefined | number,
+  branchExprGuard: undefined | number,
+  parentEndTag: string | undefined | 0,
+) {
+  return markerGuard !== 0 && (!parentEndTag || branchExprGuard !== 0);
+}
+
 function writeBranchEnd(
   scopeId: number,
   accessor: Accessor,
@@ -752,26 +775,24 @@ function writeBranchEnd(
   branchIds?: string,
 ) {
   const endTag = parentEndTag || "";
-  if (markerGuard !== 0) {
-    if (!parentEndTag || branchExprGuard !== 0) {
-      const { state } = $chunk.boundary;
-      const mark = singleNode
-        ? state.mark(
-            parentEndTag
-              ? ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
-              : ResumeSymbol.BranchEndSingleNode,
-            scopeId + " " + accessor + (branchIds || ""),
-          )
-        : state.mark(
-            parentEndTag
-              ? ResumeSymbol.BranchEndOnlyChildInParent
-              : ResumeSymbol.BranchEnd,
-            scopeId + " " + accessor + (branchIds || ""),
-          );
-      $chunk.writeHTML(mark + endTag);
-    } else {
-      $chunk.writeHTML(endTag + _el_resume(scopeId, accessor));
-    }
+  if (resumesMarker(markerGuard, branchExprGuard, parentEndTag)) {
+    const { state } = $chunk.boundary;
+    const mark = singleNode
+      ? state.mark(
+          parentEndTag
+            ? ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
+            : ResumeSymbol.BranchEndSingleNode,
+          scopeId + " " + accessor + (branchIds || ""),
+        )
+      : state.mark(
+          parentEndTag
+            ? ResumeSymbol.BranchEndOnlyChildInParent
+            : ResumeSymbol.BranchEnd,
+          scopeId + " " + accessor + (branchIds || ""),
+        );
+    $chunk.writeHTML(mark + endTag);
+  } else if (markerGuard !== 0) {
+    $chunk.writeHTML(endTag + _el_resume(scopeId, accessor));
   } else {
     $chunk.writeHTML(endTag);
   }

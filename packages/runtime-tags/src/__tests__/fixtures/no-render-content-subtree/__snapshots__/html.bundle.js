@@ -36,6 +36,6 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", $wg__input_show, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "b", $wg__input_show, $wg__input_show);
 	_scope($scope0_id, {});
 }, 1);

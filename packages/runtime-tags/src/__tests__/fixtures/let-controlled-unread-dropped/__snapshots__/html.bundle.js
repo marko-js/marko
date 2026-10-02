@@ -9,6 +9,6 @@ var template_default = _template("a", (input) => {
 		item.make();
 		_html(`<span>${_text_resume($scope1_id, "a", item.name, $wg__input_items)}</span>`);
 		_write_if($scope0_reason, 2) && _scope($scope1_id, {});
-	}, 0, $scope0_id, "b", $wg__input_items, $wg__input_items, $wg__input_items, 0, 1);
+	}, 0, $scope0_id, "b", $wg__input_items, $wg__input_items, 0, 0, 1);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 }, 1);

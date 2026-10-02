@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_html("</strong><span>");
 	_html(_text_resume($scope0_id, "b", count));
 	_html(" dmg</span><em>+ ");
-	_show_start(vis, 1);
+	_show_start(vis);
 	_html(_text_resume($scope0_id, "d", count, 2));
 	_show_end($scope0_id, "f", vis);
 	_html("</em><b>+ ");

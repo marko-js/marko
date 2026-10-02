@@ -31,7 +31,7 @@ const $content = (input) => {
 			$wi__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", $wg__input_level, $wg__input_level, $wg__input_level, 0, 1);
+	}, $scope0_id, "a", $wg__input_level, $wg__input_level, 0, 0, 1);
 	$wi__input_level && _scope($scope0_id, { e: $input_level__closures });
 };
 var recurse_default = _template("b", $content);

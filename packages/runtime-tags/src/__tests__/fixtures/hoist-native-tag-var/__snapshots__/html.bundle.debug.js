@@ -24,11 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope($scope2_id, {}, "__tests__/template.marko", "2:4");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, $wg__input_show, $wg__input_show, 0, 1);
+			}, $scope1_id, "#text/0", 1, $wg__input_show, 0, 0, 1);
 			_scope($scope1_id, { _: $wi__input_show && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "#text/0", 1, $wg__input_show);
 	child_default({ value: $el_getter });
 	_html("<hr>");
 	_if(() => {

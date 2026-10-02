@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope3_id, {}, "__tests__/template.marko", "4:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
+		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 		_scope($scope1_id, {
 			id,
 			$temp_extra: rest.extra,
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			id: "3:8",
 			$temp_extra: ["$temp.extra", "3:6"]
 		});
-	}, 0, $scope0_id, "#text/1", 1, $wg__input_items, $wg__input_items);
+	}, 0, $scope0_id, "#text/1", 1, $wg__input_items);
 	_for_of(input.lists, ([first, ...others]) => {
 		const $scope2_id = _scope_id();
 		_if(() => {
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope4_id, {}, "__tests__/template.marko", "7:4");
 				return 0;
 			}
-		}, $scope2_id, "#text/0", 1, 1, 1, 0, 1);
+		}, $scope2_id, "#text/0", 1, 1, 0, 0, 1);
 		_scope($scope2_id, {
 			first,
 			$temp2_1: others[0],
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			first: "6:7",
 			$temp2_1: ["$temp2[1]", "6:6"]
 		});
-	}, 0, $scope0_id, "#text/2", 1, $wg__input_lists, $wg__input_lists);
+	}, 0, $scope0_id, "#text/2", 1, $wg__input_lists);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
 }, 1);

@@ -15,7 +15,7 @@ var child_default = _template("b", (input) => {
 		_html(`</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, $wg__input_item, 0, 1);
+	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, 0, 0, 1);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

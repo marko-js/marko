@@ -15,7 +15,7 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 					_subscribe($wi__input_content && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/menu.marko", "6:4"), "__tests__/tags/menu.marko_2_input_content#0:5/subscribe", $wg__input_content);
 					return 0;
 				}
-			}, $scope1_id, "#text/0", $wg__input_content, $wg__input_content, $wg__input_content);
+			}, $scope1_id, "#text/0", $wg__input_content, $wg__input_content);
 			_scope($scope1_id, {}, "__tests__/tags/menu.marko", "5:2");
 			return 0;
 		}

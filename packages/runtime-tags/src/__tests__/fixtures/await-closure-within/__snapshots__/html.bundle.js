@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 					_scope($scope4_id, {});
 					return 0;
 				}
-			}, $scope3_id, "c", 1, 1, 1, 0, 1);
+			}, $scope3_id, "c", 1, 1, 0, 0, 1);
 			_script($scope3_id, "a0");
 			_scope($scope3_id, { d: value });
 		});

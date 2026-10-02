@@ -17,14 +17,14 @@ var template_default = _template("a", (input) => {
 					$wi__input_c__OR__input_a__OR__input_b && _subscribe($wi__input_c && $bar2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__input_c);
 					return 0;
 				}
-			}, $scope1_id, "a", $wg__input_b, $wg__input_b, $wg__input_b, 0, 1);
+			}, $scope1_id, "a", $wg__input_b, $wg__input_b, 0, 0, 1);
 			$wi__input_c__OR__input_a__OR__input_b && _scope($scope1_id, {
 				b: _write_if($scope0_reason, 0) && foo,
 				_: _scope_with_id($scope0_id)
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", _write_guard($scope0_reason, 1), $wg__input_a, $wg__input_a);
+	}, $scope0_id, "a", _write_guard($scope0_reason, 1), $wg__input_a);
 	$wi__input_c__OR__input_a__OR__input_b && _scope($scope0_id, {
 		d: $wi__input_a__OR__input_b && input.c,
 		f: _write_if($scope0_reason, 4) && input.b,

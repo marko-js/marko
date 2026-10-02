@@ -156,6 +156,14 @@ proofs reuse existing nodes/parents; `<!>` separates otherwise ambiguous dynamic
 text/ranges. Resume applies available fills, resolves registered values, visits
 comments, reconstructs branches, and runs effects with `isResuming = 1`.
 
+Resume visits branch markers only in a bundle that enables branches, which any
+retained `_if`, `_for`, `_show` or dynamic tag runtime does (`withBranches`).
+An unconditionally written branch whose condition reads state with a resumable
+writer (a resumed effect or registered function assigns it) keeps its own
+runtime, so its owner links from its branch marker; any other branch's owner
+comes from the payload, as no template can see whether another one enables
+branches.
+
 ## In-order content and effects
 
 In-order content holds every effect written before it, including those of

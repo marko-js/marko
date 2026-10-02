@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				$wi__input_count__OR__input_name && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", $wg__input_count, $wg__input_count, $wg__input_count);
+		}, $scope1_id, "a", $wg__input_count, $wg__input_count);
 		$wi__input_count__OR__input_name && _scope($scope1_id, {
 			e: _write_if($scope1_reason, 1) && input.name,
 			f: $wi__input_name && $Child_content__input_name__closures

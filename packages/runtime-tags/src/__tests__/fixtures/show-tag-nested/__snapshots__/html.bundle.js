@@ -5,11 +5,11 @@ var template_default = _template("a", (input) => {
 	let outer = true;
 	let inner = false;
 	_html(`<button id=o>outer</button>${_el_resume($scope0_id, "a")}<button id=i>inner</button>${_el_resume($scope0_id, "b")}`);
-	_show_start(outer, 1);
+	_show_start(outer);
 	_html("before ");
-	_show_start(inner);
+	_show_start(inner, 0);
 	_html("<em>nested</em>");
-	_show_end($scope0_id, "e", inner, 1, 1, 0, 1);
+	_show_end($scope0_id, "e", inner, 1, 0, 0, 1);
 	_html(" after");
 	_show_end($scope0_id, "g", outer);
 	_script($scope0_id, "a0");

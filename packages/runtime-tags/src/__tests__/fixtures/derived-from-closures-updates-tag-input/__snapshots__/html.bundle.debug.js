@@ -36,7 +36,7 @@ var parent_default = _template("__tests__/tags/parent.marko", (input) => {
 			}, "__tests__/tags/parent.marko", "12:2", { label: "13:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, 0, 0);
+	}, $scope0_id, "#text/0", 1, 0);
 	_scope($scope0_id, {
 		input_count: input.count,
 		input_onToggle: input.onToggle,

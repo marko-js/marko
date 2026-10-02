@@ -33,11 +33,11 @@ var template_default = _template("a", (input) => {
 					_scope($scope2_id, { c: setHtml });
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $wg__input_show, $wg__input_show);
+			}, $scope1_id, "a", 1, $wg__input_show);
 			_scope($scope1_id, { _: $wi__input_show && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "a", 1, $wg__input_show);
 	thing_default({ value: $setHtml_getter });
 	_if(() => {
 		{
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, { c: setHtml2 });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, 0, 0);
+	}, $scope0_id, "c", 1, 0);
 	_if(() => {
 		{
 			const $scope4_id = _scope_id();
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope4_id, { c: setHtml3 });
 			return 0;
 		}
-	}, $scope0_id, "d", 1, 0, 0);
+	}, $scope0_id, "d", 1, 0);
 	{
 		const $scope5_id = _scope_id();
 		_script($scope5_id, "a4", 0);

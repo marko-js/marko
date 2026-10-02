@@ -6,7 +6,7 @@ var list_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", item.content, {}, 0, 0, $wg__input_item);
 		$wi__input_item && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, $wg__input_item);
+	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item);
 	$wi__input_item && _scope($scope0_id, {});
 });
 
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 					$wi__input_show && _scope($scope2_id, {});
 					return 0;
 				}
-			}, $scope1_id, "a", $wg__input_show, $wg__input_show, $wg__input_show, 0, 1);
+			}, $scope1_id, "a", $wg__input_show, $wg__input_show, 0, 0, 1);
 			$wi__input_show && _subscribe($input_show__closures, _scope($scope1_id, {
 				b: item,
 				_: _scope_with_id($scope0_id)

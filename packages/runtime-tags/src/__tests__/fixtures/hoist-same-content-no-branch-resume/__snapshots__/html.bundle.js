@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", _write_guard($scope0_reason, 0), $wg__input_show, $wg__input_show, 0, 1);
+	}, $scope0_id, "a", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && input.inner,
 		f: input.label,

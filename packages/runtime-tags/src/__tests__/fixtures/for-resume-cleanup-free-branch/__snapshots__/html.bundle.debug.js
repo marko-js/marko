@@ -7,7 +7,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>item ${_escape(i)}</li>`);
 		$wi__input_count && _scope($scope1_id, {}, "__tests__/tags/list.marko", "2:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_count, $wg__input_count, $wg__input_count, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_count, $wg__input_count, 0, 0, 1);
 	$wi__input_count && _scope($scope0_id, {}, "__tests__/tags/list.marko", 0);
 });
 

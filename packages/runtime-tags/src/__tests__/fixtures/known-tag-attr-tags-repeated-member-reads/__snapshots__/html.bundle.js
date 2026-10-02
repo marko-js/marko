@@ -23,7 +23,7 @@ var child_for_default = _template("c", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span>${_text_resume($scope1_id, "a", item.foo, $wg__input_item)} ${_text_resume($scope1_id, "b", item.sub?.x, $wg__input_item * 2)}</span>`);
 		$wi__input_item && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, $wg__input_item, 0, 1);
+	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, 0, 0, 1);
 	$wi__input_item && _scope($scope0_id, {});
 });
 

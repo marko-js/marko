@@ -11,7 +11,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "#text/0", item.content, {}, 0, 0, $wg__input_item);
 				_write_if($scope0_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/list.marko", "4:4");
-			}, 0, $scope1_id, "#text/0", $wg__input_item, $wg__input_item, $wg__input_item);
+			}, 0, $scope1_id, "#text/0", $wg__input_item, $wg__input_item);
 			_scope($scope1_id, {}, "__tests__/tags/list.marko", "3:2");
 			return 0;
 		}

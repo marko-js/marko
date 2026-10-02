@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2", { "EventAttributes:#span/1": ["...rest", "6:12"] });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", $wg__input_value, $wg__input_value, $wg__input_value);
+	}, $scope0_id, "#text/0", $wg__input_value, $wg__input_value);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {
 		foo: value?.foo,
 		rest

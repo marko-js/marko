@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "a", s.a, $wg__input_scope));
 		$wi__input_scope && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input_scope, $wg__input_scope, $wg__input_scope);
+	}, 0, $scope0_id, "a", $wg__input_scope, $wg__input_scope);
 	$wi__input_scope && _scope($scope0_id, {});
 });
 

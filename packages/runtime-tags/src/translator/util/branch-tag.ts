@@ -1,7 +1,9 @@
 import { types as t } from "@marko/compiler";
 
 import { type Binding } from "./bindings";
+import { some } from "./optional";
 import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
+import { hasResumableWriter } from "./references";
 import { ContentType, type Section } from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
 import { findSectionSlot, findSlot, SlotKind } from "./slots";
@@ -19,15 +21,17 @@ export function initBranchSection(
   bodySection.branch = branch;
 }
 
-// The branch id rides the always-rendered resume marker and a state-fed
-// upstream keeps the branch-visiting signal, so the owner links at
-// resume instead of serializing.
+// The branch id rides the always-rendered resume marker, which resume decodes
+// in a bundle with branches: a branch whose state has a resumable writer keeps
+// its runtime there.
 export function resumeOwnerByMarkerWhenStatic(
   bodySection: Section,
   nodeBinding: Binding,
 ) {
+  const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
   if (
-    isStateReason(findSlot(nodeBinding, SlotKind.BranchExpr)?.reason) &&
+    isStateReason(branchExprReason) &&
+    some(branchExprReason.state, hasResumableWriter) &&
     isUnconditionalReason(
       findSectionSlot(bodySection, SlotKind.Branch)?.reason,
     ) &&
@@ -63,18 +67,23 @@ export function getBranchEndArgs(
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean | undefined,
 ) {
-  const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
   const markerReason = findSlot(nodeBinding)?.reason;
-  const skipParentEnd = onlyChildParentTagName && markerReason;
+  const skipParentEnd = !!onlyChildParentTagName && !!markerReason;
   if (skipParentEnd) {
     getBranchEndTags().add(nodeBinding);
   }
 
-  const branchExprGuard = getWriteGuard(
-    tagSection,
-    branchExprReason,
-    !(skipParentEnd || singleNode),
-  );
+  // Only an element's only child reads it: otherwise the end always writes
+  // its branch marker when it writes one at all.
+  const branchExprGuard = skipParentEnd
+    ? getWriteGuard(
+        tagSection,
+        findSlot(nodeBinding, SlotKind.BranchExpr)?.reason,
+        false,
+      )
+    : singleNode
+      ? t.numericLiteral(0)
+      : undefined;
   const markerGuard = getWriteGuard(tagSection, markerReason, !branchExprGuard);
   return [
     markerGuard,

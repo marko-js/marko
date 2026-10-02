@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope3_id, {});
 				return 1;
 			}
-		}, $scope1_id, "a", 1, 1, 1, 0, 1);
+		}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_subscribe($on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 	}, $scope0_id) });
 	_script($scope0_id, "a2");

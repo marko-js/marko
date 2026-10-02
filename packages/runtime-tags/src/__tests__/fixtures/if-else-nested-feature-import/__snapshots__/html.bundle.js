@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			$wi__input_show && _scope($scope2_id, {});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "a", 1, $wg__input_show);
 	_script($scope0_id, "a2", $wg__input_show);
 	$wi__input_show && _scope($scope0_id, { e: input.type });
 }, 1);

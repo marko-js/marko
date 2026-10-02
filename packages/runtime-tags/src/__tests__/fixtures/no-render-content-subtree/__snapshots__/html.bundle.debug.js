@@ -40,6 +40,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:1");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", $wg__input_show, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "#text/1", $wg__input_show, $wg__input_show);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, {}, "__tests__/template.marko", "20:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { hide }, "__tests__/template.marko", 0, { hide: "7:6" });
 });

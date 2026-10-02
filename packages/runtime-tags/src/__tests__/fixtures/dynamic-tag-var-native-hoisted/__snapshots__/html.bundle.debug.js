@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_itemType = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_itemType = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $item_getter = _hoist($scope0_id, "__tests__/template.marko_0_$item#2:3/hoist");
 	_if(() => {
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_assert_hoist($el);
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "#text/0", 1, $wg__input_show);
 	_for_until(2, 0, 1, (i) => {
 		const $scope2_id = _scope_id();
 		const $inputitemType_scope = _peek_scope_id();
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$item: "9:22"
 		});
 		_assert_hoist($item);
-	}, 0, $scope0_id, "#text/1", 1, 0, 0);
+	}, 0, $scope0_id, "#text/1", 1, 0);
 	_script($scope0_id, "__tests__/template.marko_0", $wg__input_show);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { input_type: input.type }, "__tests__/template.marko", 0, { input_type: ["input.type"] });
 }, 1);

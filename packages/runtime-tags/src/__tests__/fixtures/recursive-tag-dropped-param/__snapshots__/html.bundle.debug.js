@@ -22,7 +22,7 @@ const $content = (input) => {
 			}, "__tests__/tags/tree.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "#text/1", $wg__input_depth, $wg__input_depth);
 	leaf_default({});
 	$wi__input_depth && _scope($scope0_id, {}, "__tests__/tags/tree.marko", 0);
 };

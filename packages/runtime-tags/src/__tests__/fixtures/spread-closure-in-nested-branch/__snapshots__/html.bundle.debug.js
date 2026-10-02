@@ -22,12 +22,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope2_id, {}, "__tests__/template.marko", "4:4", { "EventAttributes:#div/0": ["...item", "5:13"] });
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
+		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 		_scope($scope1_id, {
 			item,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "3:2", { item: "3:6" });
-	}, 0, $scope0_id, "#text/1", 1, 0, 0);
+	}, 0, $scope0_id, "#text/1", 1, 0);
 	const attrs = { class: "z" };
 	_if(() => {
 		if (show) {
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, {}, "__tests__/template.marko", "9:2", { "EventAttributes:#span/0": ["...attrs", "10:12"] });
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		show,

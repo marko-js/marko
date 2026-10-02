@@ -9,7 +9,7 @@ var child_default = _template("b", (input) => {
 			$wi__input_value && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", $wg__input_value, $wg__input_value, $wg__input_value, 0, 1);
+	}, $scope0_id, "a", $wg__input_value, $wg__input_value, 0, 0, 1);
 	const $return = 1;
 	$wi__input_value && _scope($scope0_id, {});
 	return $return;

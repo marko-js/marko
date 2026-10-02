@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				$wi__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "4:8");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_button, $wg__input_button, $wg__input_button);
+		}, $scope1_id, "#text/0", $wg__input_button, $wg__input_button);
 		$wi__input_button && _scope($scope1_id, {}, "__tests__/tags/child.marko", "3:4");
 	}, 0, $scope0_id, "#div/0", $wg__input_button, 1, $wg__input_button, "</div>");
 	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput#4");

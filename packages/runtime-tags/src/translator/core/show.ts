@@ -26,12 +26,11 @@ import {
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
-import { findSlot, getSlot, SlotKind } from "../util/slots";
+import { getSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getTagFacts } from "../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
-import { getWriteGuard } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const kStartBinding = Symbol("<show> range start binding");
@@ -183,36 +182,35 @@ export default {
         const nodeBinding = tagExtra.nodeBinding!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const singleNode = tagExtra[kSingleNodeBody];
-        const markerReason = findSlot(nodeBinding)?.reason;
         const endArgs = getBranchEndArgs(
           tagSection,
           nodeBinding,
           onlyChildParentTagName,
           singleNode,
         );
-
-        let startMark: t.Expression | undefined;
-        if (!singleNode) {
-          startMark = getWriteGuard(tagSection, markerReason, false);
-          if (onlyChildParentTagName && markerReason) {
-            startMark = t.logicalExpression(
-              "&&",
-              startMark!,
-              getWriteGuard(
+        // A single node range has no start marker; any other asks for its end's
+        // guards again, so the start counts as a use of each.
+        const showStart = singleNode
+          ? callRuntime(
+              "_show_start",
+              t.cloneNode(display, true),
+              t.numericLiteral(0),
+            )
+          : callRuntime(
+              "_show_start",
+              t.cloneNode(display, true),
+              ...getBranchEndArgs(
                 tagSection,
-                findSlot(nodeBinding, SlotKind.BranchExpr)?.reason,
-                false,
-              )!,
+                nodeBinding,
+                onlyChildParentTagName,
+                singleNode,
+              ),
             );
-          }
-        }
 
         // The runtime calls bracket the body's statements (rather than taking a
         // callback) so declarations in them stay readable by later statements.
         for (const replacement of tag.replaceWithMultiple([
-          t.expressionStatement(
-            callRuntime("_show_start", t.cloneNode(display, true), startMark),
-          ),
+          t.expressionStatement(showStart),
           ...bodyStatements,
           t.expressionStatement(
             callRuntime(

@@ -9,7 +9,7 @@ var my_for_default = _template("b", (input) => {
 			b: _write_if($scope0_reason, 2) && args,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", $wg__input_to__OR__input_content, $wg__input_to, $wg__input_to);
+	}, 0, $scope0_id, "a", $wg__input_to__OR__input_content, $wg__input_to);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, { e: input.content });
 });
 

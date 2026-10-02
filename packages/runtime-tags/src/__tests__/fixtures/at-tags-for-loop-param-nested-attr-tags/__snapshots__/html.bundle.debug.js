@@ -8,7 +8,7 @@ var inner_default = _template("__tests__/tags/inner.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", cell.content, {}, 0, 0, $wg__input_cell);
 		_html("</span>");
 		$wi__input_cell && _scope($scope1_id, {}, "__tests__/tags/inner.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_cell, $wg__input_cell, $wg__input_cell, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_cell, $wg__input_cell, 0, 0, 1);
 	$wi__input_cell && _scope($scope0_id, {}, "__tests__/tags/inner.marko", 0);
 });
 
@@ -22,7 +22,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", row.content, {}, 0, 0, $wg__input_row);
 		_html("</div>");
 		$wi__input_row && _scope($scope1_id, {}, "__tests__/tags/outer.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_row, $wg__input_row, $wg__input_row, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_row, $wg__input_row, 0, 0, 1);
 	$wi__input_row && _scope($scope0_id, {}, "__tests__/tags/outer.marko", 0);
 });
 

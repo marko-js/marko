@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				});
 				return 0;
 			}
-		}, $scope1_id, "a", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+		}, $scope1_id, "a", $wg__input_depth, $wg__input_depth);
 		_html(`<button>${_text_resume($scope1_id, "c", n)}</button>${_el_resume($scope1_id, "b")}`);
 		const $return = n;
 		_script($scope1_id, "a2");

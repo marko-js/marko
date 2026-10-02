@@ -21,7 +21,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			class: "item"
 		});
 		$wi__input_item && _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/child.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, $wg__input_item, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, 0, 0, 1);
 	$wi__input_item && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

@@ -11,9 +11,9 @@ var sections_default = _template("b", (input) => {
 				$wi__input_section && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", $wg__input_section, $wg__input_section, $wg__input_section);
+		}, $scope1_id, "a", $wg__input_section, $wg__input_section);
 		$wi__input_section && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input_section, $wg__input_section, $wg__input_section);
+	}, 0, $scope0_id, "a", $wg__input_section, $wg__input_section);
 	$wi__input_section && _scope($scope0_id, {});
 });
 

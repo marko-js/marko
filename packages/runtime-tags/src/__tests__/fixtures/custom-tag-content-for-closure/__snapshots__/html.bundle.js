@@ -15,7 +15,7 @@ var menu_default = _template("b", (input) => {
 					_subscribe($wi__input_content && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b0", $wg__input_content);
 					return 0;
 				}
-			}, $scope1_id, "a", $wg__input_content, $wg__input_content, $wg__input_content);
+			}, $scope1_id, "a", $wg__input_content, $wg__input_content);
 			_scope($scope1_id, {});
 			return 0;
 		}

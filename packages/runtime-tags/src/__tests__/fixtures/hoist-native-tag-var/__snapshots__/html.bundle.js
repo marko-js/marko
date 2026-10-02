@@ -23,11 +23,11 @@ var template_default = _template("a", (input) => {
 					_scope($scope2_id, {});
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $wg__input_show, $wg__input_show, 0, 1);
+			}, $scope1_id, "a", 1, $wg__input_show, 0, 0, 1);
 			_scope($scope1_id, { _: $wi__input_show && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "a", 1, $wg__input_show);
 	child_default({ value: $el_getter });
 	_html("<hr>");
 	_if(() => {

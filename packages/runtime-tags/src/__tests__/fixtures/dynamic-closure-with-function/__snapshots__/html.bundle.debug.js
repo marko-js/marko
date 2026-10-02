@@ -17,14 +17,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					$wi__input_c__OR__input_a__OR__input_b && _subscribe($wi__input_c && $bar2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:3"), "__tests__/template.marko_2_bar#0:6/subscribe", $wg__input_c);
 					return 0;
 				}
-			}, $scope1_id, "#text/0", $wg__input_b, $wg__input_b, $wg__input_b, 0, 1);
+			}, $scope1_id, "#text/0", $wg__input_b, $wg__input_b, 0, 0, 1);
 			$wi__input_c__OR__input_a__OR__input_b && _scope($scope1_id, {
 				foo: _write_if($scope0_reason, 0) && foo,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "3:1", { foo: "4:9" });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 1), $wg__input_a, $wg__input_a);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 1), $wg__input_a);
 	$wi__input_c__OR__input_a__OR__input_b && _scope($scope0_id, {
 		input_c: $wi__input_a__OR__input_b && input.c,
 		input_b: _write_if($scope0_reason, 4) && input.b,

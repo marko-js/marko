@@ -20,7 +20,7 @@ var labeled_list_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", item.content, {}, 0, 0, $wg__input_item);
 		_write_if($scope0_reason, 2) && _scope($scope1_id, {});
-	}, 0, $scope0_id, "b", $wg__input_item, $wg__input_item, $wg__input_item);
+	}, 0, $scope0_id, "b", $wg__input_item, $wg__input_item);
 	_html("</div>");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });

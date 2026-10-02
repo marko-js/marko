@@ -18,6 +18,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, {}, "__tests__/template.marko", "15:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_scope($scope0_id, { messages }, "__tests__/template.marko", 0, { messages: "1:6" });
 }, 1);

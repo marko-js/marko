@@ -20,7 +20,7 @@ var my_btn_default = _template("b", (input) => {
 			_scope($scope2_id, { _: $wi__input && _scope_with_id($scope0_id) });
 			return 1;
 		}
-	}, $scope0_id, "a", _write_guard($scope0_reason, 0), $wg__input_href, $wg__input_href, 0, 1);
+	}, $scope0_id, "a", _write_guard($scope0_reason, 0), $wg__input_href, 0, 0, 1);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {});
 });
 

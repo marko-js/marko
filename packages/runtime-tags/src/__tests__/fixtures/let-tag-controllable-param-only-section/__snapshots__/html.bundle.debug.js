@@ -11,7 +11,7 @@ var ctl_default = _template("__tests__/tags/ctl.marko", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/ctl.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show, 0, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 0, 0, 1);
 	_scope($scope0_id, {
 		count: _write_if($scope0_reason, 0) && count,
 		"TagVariableChange:count": input.countChange || void 0

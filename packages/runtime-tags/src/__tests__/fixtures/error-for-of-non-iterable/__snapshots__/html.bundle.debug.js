@@ -6,6 +6,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "#text/0", item, $wg__input_value)}</li>`);
 		$wi__input_value && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_value, $wg__input_value, $wg__input_value, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_value, $wg__input_value, 0, 0, 1);
 	$wi__input_value && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);
