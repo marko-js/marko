@@ -1787,7 +1787,7 @@ function writeReadableStream(
   const onFulfilled = ({ value, done }: ReadableStreamReadResult<unknown>) => {
     if (done) {
       writeAsyncCall(state, boundary, handle, "r", value, channel);
-    } else if (!boundary.signal.aborted) {
+    } else if (!boundary.aborted) {
       reader.read().then(onFulfilled, onRejected);
       boundary.startAsync();
       writeAsyncCall(state, boundary, handle, "f", value, channel);
@@ -1913,7 +1913,7 @@ function writeAsyncGenerator(
   const onFulfilled = ({ value, done }: IteratorResult<unknown>) => {
     if (done) {
       writeAsyncCall(state, boundary, handle, "r", value, channel);
-    } else if (!boundary.signal.aborted) {
+    } else if (!boundary.aborted) {
       iter.next().then(onFulfilled, onRejected);
       boundary.startAsync();
       writeAsyncCall(state, boundary, handle, "f", value, channel);
@@ -2020,7 +2020,7 @@ function writeAsyncCall(
   channel: SerializeChannel | undefined,
   valueId: string | null = null,
 ) {
-  if (boundary.signal.aborted) return;
+  if (boundary.aborted) return;
 
   state.mutated.push({
     value,

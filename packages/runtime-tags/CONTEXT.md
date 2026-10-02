@@ -191,8 +191,8 @@ A node in the HTML writer's tree of buffered output, not a bundle chunk or Node
 stream buffer.
 
 **Boundary**:
-The render coordinator that tracks async work, flushes chunks, and carries the
-abort signal. Not an error boundary.
+The writer's coordinator for a render and for each `<try>` body in it: it
+tracks async work, flushes chunks, and aborts with the boundary it is in.
 
 **Resume**:
 Filling scopes, adopting server-rendered nodes, creating branches, and running

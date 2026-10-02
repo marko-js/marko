@@ -1166,7 +1166,7 @@ describe("serializer", () => {
       const tz = "America/Los_Angeles";
       const { scopes, apply } = createSerializeContext({});
       const boundary = {
-        signal: { aborted: false },
+        aborted: false,
         abort() {},
       } as any as Boundary;
       const ser = new Serializer();
@@ -1189,7 +1189,7 @@ describe("serializer", () => {
         ({ locale: "en", pluralCategories: categories }) as any;
       const { scopes, apply } = createSerializeContext({});
       const boundary = {
-        signal: { aborted: false },
+        aborted: false,
         abort() {},
       } as any as Boundary;
       const ser = new Serializer();
@@ -1463,7 +1463,7 @@ describe("serializer", () => {
       const serializer = new Serializer();
       let aborted: unknown;
       const boundary = {
-        signal: { aborted: false },
+        aborted: false,
         abort(err: unknown) {
           aborted = err;
         },
@@ -1948,7 +1948,7 @@ describe("serializer", () => {
       const { scopes, apply } = createSerializeContext({ _: { fn: builder } });
       const serializer = new Serializer();
       const boundary = {
-        signal: { aborted: false },
+        aborted: false,
         abort() {},
       } as any as Boundary;
       const first = serializer.stringifyScopes(
@@ -2171,7 +2171,7 @@ describe("serializer", () => {
       const { scopes, apply } = createSerializeContext();
       const serializer = new Serializer();
       const boundary = {
-        signal: { aborted: false },
+        aborted: false,
         abort() {},
       } as any as Boundary;
       const msg = "this string is long enough to dedup";
@@ -2201,7 +2201,7 @@ describe("serializer", () => {
       const { scopes, apply } = createSerializeContext();
       const serializer = new Serializer();
       const boundary = {
-        signal: { aborted: false },
+        aborted: false,
         abort() {},
       } as any as Boundary;
       const settings = { msg: 1 };
@@ -2225,7 +2225,7 @@ describe("serializer", () => {
       const { scopes, apply } = createSerializeContext();
       const serializer = new Serializer();
       const boundary = {
-        signal: { aborted: false },
+        aborted: false,
         abort() {},
       } as any as Boundary;
       const settings = { msg: 1 };
@@ -2328,7 +2328,7 @@ describe("serializer", () => {
       });
     });
     it("stops following the iterator once the boundary aborts", async () => {
-      const { boundary, signal } = abortingBoundary();
+      const { boundary } = abortingBoundary();
       const serializer = new Serializer();
       let release!: () => void;
       const gate = new Promise<void>((resolve) => (release = resolve));
@@ -2342,7 +2342,7 @@ describe("serializer", () => {
       await tick();
       assert.equal(serializer.stringifyScopes([], boundary), `_=>(_.a.f(1),0)`);
 
-      signal.aborted = true;
+      boundary.aborted = true;
       release();
       await tick();
       assert.equal(serializer.stringifyScopes([], boundary), "");
@@ -2484,7 +2484,7 @@ describe("serializer", () => {
 
   describe("aborted boundary", () => {
     it("stops reading a ReadableStream", async () => {
-      const { boundary, signal } = abortingBoundary();
+      const { boundary } = abortingBoundary();
       const serializer = new Serializer();
       let ctrl!: ReadableStreamDefaultController<Uint8Array>;
       const stream = new ReadableStream<Uint8Array>({
@@ -2499,7 +2499,7 @@ describe("serializer", () => {
         `_=>(_.a.f(_.b=new Uint8Array([1])),0)`,
       );
 
-      signal.aborted = true;
+      boundary.aborted = true;
       ctrl.enqueue(new Uint8Array([2]));
       await tick();
       assert.equal(serializer.stringifyScopes([], boundary), "");
@@ -2793,7 +2793,7 @@ describe("serializer", () => {
   it("skips the payload entirely when every scope is empty", () => {
     const serializer = new Serializer();
     const boundary = {
-      signal: { aborted: false },
+      aborted: false,
       abort() {},
     } as any as Boundary;
     assert.equal(serializer.stringifyScopes([[1, {}, {}]], boundary), "");
@@ -2802,7 +2802,7 @@ describe("serializer", () => {
   it("handles very large scope flushes within call argument limits", () => {
     const serializer = new Serializer();
     const boundary = {
-      signal: { aborted: false },
+      aborted: false,
       abort() {},
     } as any as Boundary;
     const flushes: [number, object, object][] = [];
@@ -2826,7 +2826,7 @@ describe("serializer", () => {
     const serializer = new Serializer();
     const { scopes, apply } = createSerializeContext();
     const boundary = {
-      signal: { aborted: false },
+      aborted: false,
       abort() {},
     } as any as Boundary;
     let payload = "";
@@ -2955,9 +2955,7 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
       let promiseIndex = 0;
       const promises: ReturnType<typeof createDeferred>[] = [];
       const boundary = {
-        signal: {
-          aborted: false,
-        },
+        aborted: false,
         startAsync() {
           promises.push(createDeferred());
         },
@@ -3006,7 +3004,7 @@ function assertStringify(
 
 function serialize(val: unknown) {
   const boundary = {
-    signal: { aborted: false },
+    aborted: false,
     abort() {},
   } as any as Boundary;
   return normalizePayload(
@@ -3017,7 +3015,7 @@ function serialize(val: unknown) {
 function deserialize<T>(val: T): T {
   const { scopes, apply } = createSerializeContext({});
   const boundary = {
-    signal: { aborted: false },
+    aborted: false,
     abort() {},
   } as any as Boundary;
   apply(new Serializer().stringifyScopes([[1, {}, { value: val }]], boundary));
@@ -3032,7 +3030,7 @@ function assertStringifyScopes(
   const { scopes, apply } = createSerializeContext(ctx);
   const serializer = new Serializer();
   const boundary = {
-    signal: { aborted: false },
+    aborted: false,
     state: {},
     abort() {},
   } as any as Boundary;
@@ -3263,12 +3261,10 @@ function tick() {
 
 function abortingBoundary() {
   const aborted: unknown[] = [];
-  const signal = { aborted: false };
   return {
     aborted,
-    signal,
     boundary: {
-      signal,
+      aborted: false,
       abort(err: unknown) {
         aborted.push(err);
       },
@@ -3282,7 +3278,7 @@ function abortedStringifying(scopes: ScopeFlush[]) {
   const serializer = new Serializer();
   let aborted: unknown;
   const boundary = {
-    signal: { aborted: false },
+    aborted: false,
     abort(err: unknown) {
       aborted = err;
     },
