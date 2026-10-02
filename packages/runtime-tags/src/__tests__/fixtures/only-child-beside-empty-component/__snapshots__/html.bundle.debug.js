@@ -27,23 +27,23 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, {}, "__tests__/template.marko", "5:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
+	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
 	const $childScope2 = _peek_scope_id();
 	noop_default({ v: !open });
-	_html("</div><ul>");
+	_html("<ul>");
 	const $childScope3 = _peek_scope_id();
 	Nothing.content({ v: open });
 	_for_of(open ? [1, 2] : [1], (item) => {
 		const $scope3_id = _scope_id();
 		_html(`<li>${_text_resume($scope3_id, "#text/0", item)}</li>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "10:4");
-	}, 0, $scope0_id, "#text/4", 1, 1, 0, 0, 1);
-	_html(`</ul><button>toggle</button>${_el_resume($scope0_id, "#button/5")}`);
+	}, 0, $scope0_id, "#ul/3", 1, 1, 1, "</ul>", 1);
+	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/5")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		open,
-		"#childScope/0": _existing_scope($childScope),
+		"#childScope/1": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2),
-		"#childScope/3": _existing_scope($childScope3)
+		"#childScope/4": _existing_scope($childScope3)
 	}, "__tests__/template.marko", 0, { open: "1:6" });
 }, 1);

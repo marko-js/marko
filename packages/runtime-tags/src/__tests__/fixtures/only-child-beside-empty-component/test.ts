@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// A child component rendering nothing still holds a scope, so a branch beside
-// it keeps a marker of its own.
+// A child component rendering nothing leaves its element to a branch beside it,
+// which the element addresses instead of a marker of its own.
 export const config: TestConfig = {
   steps: [
     {},

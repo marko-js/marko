@@ -20,23 +20,23 @@ var template_default = _template("a", (input) => {
 	_html("<div>");
 	const $childScope = _peek_scope_id();
 	noop_default({ v: open });
-	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
+	_if(() => {}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
 	const $childScope2 = _peek_scope_id();
 	noop_default({ v: true });
-	_html("</div><ul>");
+	_html("<ul>");
 	const $childScope3 = _peek_scope_id();
 	Nothing.content({ v: open });
 	_for_of([1], (item) => {
 		const $scope3_id = _scope_id();
 		_html(`<li>${_text_resume($scope3_id, "a", item)}</li>`);
 		_scope($scope3_id, {});
-	}, 0, $scope0_id, "e", 1, 1, 0, 0, 1);
-	_html(`</ul><button>toggle</button>${_el_resume($scope0_id, "f")}`);
+	}, 0, $scope0_id, "d", 1, 1, 1, "</ul>", 1);
+	_html(`<button>toggle</button>${_el_resume($scope0_id, "f")}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		g: open,
-		a: _existing_scope($childScope),
+		b: _existing_scope($childScope),
 		c: _existing_scope($childScope2),
-		d: _existing_scope($childScope3)
+		e: _existing_scope($childScope3)
 	});
 }, 1);
