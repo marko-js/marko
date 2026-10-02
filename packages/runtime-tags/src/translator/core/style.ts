@@ -23,7 +23,7 @@ import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
 import { addReasonExprs } from "../util/reasons";
-import { mergeReferences } from "../util/references";
+import { getReferencedBindings, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -247,7 +247,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     );
 
     dynamicStyleValues(node).forEach((value, i) => {
-      const valueRef = value.extra?.referencedBindings;
+      const valueRef = getReferencedBindings(value.extra);
       addStatement(
         "render",
         section,

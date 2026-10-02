@@ -13,6 +13,7 @@ import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { addReason } from "../util/reasons";
+import { getReferencedBindings } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
@@ -146,7 +147,7 @@ export default {
           addStatement(
             "render",
             section,
-            attrs.value.extra?.referencedBindings,
+            getReferencedBindings(attrs.value.extra),
             t.expressionStatement(
               callRuntime("_return", scopeIdentifier, attrs.value),
             ),
@@ -157,7 +158,7 @@ export default {
           addStatement(
             "render",
             section,
-            attrs.valueChange.extra?.referencedBindings,
+            getReferencedBindings(attrs.valueChange.extra),
             t.expressionStatement(
               callRuntime("_return_change", scopeIdentifier, attrs.valueChange),
             ),

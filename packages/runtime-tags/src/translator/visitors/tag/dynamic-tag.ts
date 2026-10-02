@@ -41,6 +41,7 @@ import {
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
+  getReferencedBindings,
 } from "../../util/references";
 import {
   callRuntime,
@@ -579,7 +580,7 @@ export default {
 
         // Additional optimized export a known parent calls instead of the
         // general `_dynamic_tag` signal above.
-        const directBinding = tagExtra.referencedBindings;
+        const directBinding = getReferencedBindings(tagExtra);
         const directName =
           directBinding &&
           !Array.isArray(directBinding) &&
@@ -626,7 +627,12 @@ export default {
           enableDynamicTagVar(tag);
           enableDynamicTagControllables(tag);
         }
-        addValue(section, tagExtra.referencedBindings, signal, tagExpression);
+        addValue(
+          section,
+          getReferencedBindings(tagExtra),
+          signal,
+          tagExpression,
+        );
         tag.remove();
       }
     },

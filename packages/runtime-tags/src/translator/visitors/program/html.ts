@@ -13,7 +13,10 @@ import { getMarkoOpts } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import { getReadReplacement } from "../../util/read-replacement";
-import { isRegisteredFnExtra } from "../../util/references";
+import {
+  isRegisteredFnExtra,
+  getReferencedBindingsInFunction,
+} from "../../util/references";
 import { callRuntime, importRuntime } from "../../util/runtime";
 import { getLocalsScopeAccessor } from "../../util/scope-accessor";
 import {
@@ -332,7 +335,7 @@ function getRegisteredFnExpression(
           | t.ArrowFunctionExpression,
         t.stringLiteral(extra.registerId),
         t.objectExpression(localProperties),
-        (extra.referencedBindingsInFunction || extra.referencesScope) &&
+        (getReferencedBindingsInFunction(extra) || extra.referencesScope) &&
           getScopeIdIdentifier(extra.section),
       );
     }
@@ -343,7 +346,7 @@ function getRegisteredFnExpression(
         | t.FunctionExpression
         | t.ArrowFunctionExpression,
       t.stringLiteral(extra.registerId),
-      (extra.referencedBindingsInFunction || extra.referencesScope) &&
+      (getReferencedBindingsInFunction(extra) || extra.referencesScope) &&
         getScopeIdIdentifier(extra.section),
     );
   }

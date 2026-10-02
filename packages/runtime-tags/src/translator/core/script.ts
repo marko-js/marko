@@ -12,7 +12,11 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { dropNodes, getAllTagReferenceNodes } from "../util/references";
+import {
+  dropNodes,
+  getAllTagReferenceNodes,
+  getReferencedBindings,
+} from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
@@ -112,7 +116,7 @@ export default {
 
       const section = getSection(tag);
       const { value } = valueAttr;
-      const referencedBindings = value.extra?.referencedBindings;
+      const referencedBindings = getReferencedBindings(value.extra);
 
       // The React `useEffect` habit: a returned cleanup function is discarded,
       // so the effect leaks with no signal at compile or run time.

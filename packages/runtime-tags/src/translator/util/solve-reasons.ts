@@ -36,6 +36,8 @@ import {
   type ReferencedExtra,
   getFunctionReadsByExpression,
   isReferencedExtra,
+  getConstantBindingsInFunction,
+  getReferencedBindingsInFunction,
 } from "./references";
 import {
   finalizeParamReasonGroups,
@@ -256,8 +258,8 @@ function addRegisteredFnReasons(
             addOwnerReason(fn.section, binding.section, reason);
           }
         };
-        forEach(fn.referencedBindingsInFunction, addRead);
-        forEach(fn.constantBindingsInFunction, addRead);
+        forEach(getReferencedBindingsInFunction(fn), addRead);
+        forEach(getConstantBindingsInFunction(fn), addRead);
       }
     }
   }

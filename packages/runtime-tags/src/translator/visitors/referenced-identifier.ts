@@ -5,6 +5,7 @@ import { getExprRoot } from "../util/get-root";
 import { isOptimize, isOutputHTML } from "../util/marko-config";
 import {
   getCanonicalExtra,
+  getReferencedBindings,
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
@@ -131,7 +132,7 @@ export default {
             addStatement(
               "render",
               section,
-              canonicalExtra.referencedBindings,
+              getReferencedBindings(canonicalExtra),
               t.expressionStatement(
                 t.callExpression(importRuntime("$signalReset"), [
                   scopeIdentifier,
@@ -174,8 +175,7 @@ function getSignalGlobalKey(identifier: t.NodePath<t.Identifier>) {
 
   const { name } = parent.property;
   if (name === "runtimeId" || name === "renderId") return;
-  return getCanonicalExtra(getExprRoot(identifier).node.extra!)
-    .referencedBindings
+  return getReferencedBindings(getExprRoot(identifier).node.extra)
     ? name
     : undefined;
 }

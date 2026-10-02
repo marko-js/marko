@@ -23,6 +23,7 @@ import { addReasonExprs } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
+  getReferencedBindings,
   mergeReferences,
   onFinalizeReferences,
   setDerivedFrom,
@@ -287,7 +288,7 @@ export default {
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
         const tagExtra = node.extra!;
-        const { referencedBindings } = tagExtra;
+        const referencedBindings = getReferencedBindings(tagExtra);
         const nodeBinding = tagExtra.nodeBinding!;
         setClosureSignalBuilder(tag, (closure, render) => {
           const selectorKeyBinding = getForSelectorKey(bodySection, closure);

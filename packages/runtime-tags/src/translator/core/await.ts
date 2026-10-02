@@ -9,7 +9,11 @@ import {
 import { assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
-import { setDerivedFrom, trackParamsReferences } from "../util/references";
+import {
+  getReferencedBindings,
+  setDerivedFrom,
+  trackParamsReferences,
+} from "../util/references";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -199,7 +203,7 @@ export default {
 
         addValue(
           section,
-          valueExpr.extra?.referencedBindings,
+          getReferencedBindings(valueExpr.extra),
           signal,
           valueExpr,
         );

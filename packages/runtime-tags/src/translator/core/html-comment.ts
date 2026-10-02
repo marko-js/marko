@@ -14,9 +14,10 @@ import {
 import { isOutputHTML } from "../util/marko-config";
 import { addReasonExprs, addReason } from "../util/reasons";
 import {
+  getReferencedBindings,
+  isTagVarUsed,
   mergeReferences,
   trackDomVarReferences,
-  isTagVarUsed,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -140,7 +141,7 @@ export default {
           addStatement(
             "render",
             tagSection,
-            tagExtra.referencedBindings,
+            getReferencedBindings(tagExtra),
             t.expressionStatement(
               callRuntime(
                 "_text",
