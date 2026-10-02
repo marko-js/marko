@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<define/Item>
+  <span/el>x</span>
+</define>
+<Item/>
+<await|v| = resolveAfter(1, 1)>
+  <try>
+    <Item/>
+    ${(() => { throw new Error("ERROR!") })()}
+    <@catch|err|>caught ${err.message}</@catch>
+  </try>
+</await>
+<script>
+  for (const e of el) e.textContent = "y";
+</script>

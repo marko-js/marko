@@ -1,0 +1,31 @@
+<span>x</span><!--M_$2 #span/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    "ClosureScopes:1": new Set([_(2)])
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.r.push(_ => ((_.a = _(1)["ClosureScopes:1"]).add(_(5)), 0));
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.r.push(_ => (_.a.delete(_(5)), 0));
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+a<!--M_[-->caught ERROR!<!--M_]1 #text/2 3-->
+<script>
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/try-catch-async-drops-subscriber-of-sent-set/template.marko_0 1"
+    );
+  M._.w()
+</script>

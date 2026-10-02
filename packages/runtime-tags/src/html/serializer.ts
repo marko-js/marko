@@ -437,6 +437,22 @@ export class Serializer {
       channel,
     });
   }
+  // Drops a call still to be written; returns whether there was one.
+  dropCall(value: unknown, object: unknown, property: string) {
+    const { mutated } = this.#state;
+    for (let i = 0; i < mutated.length; i++) {
+      const mutation = mutated[i];
+      if (
+        mutation.value === value &&
+        mutation.object === object &&
+        mutation.property === property
+      ) {
+        mutated.splice(i, 1);
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 export function register<T extends WeakKey>(

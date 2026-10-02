@@ -867,8 +867,9 @@ export function _subscribe(
   markerGuard?: number,
 ) {
   if (subscribers) {
-    const { serializer } = $chunk.boundary.state;
-    if (!$chunk.serializeState.readyId && !serializer.written(subscribers)) {
+    const { boundary, serializeState } = $chunk;
+    const { serializer } = boundary.state;
+    if (!serializeState.readyId && !serializer.written(subscribers)) {
       // An unflushed set carries its subscriber in the same payload.
       subscribers.add(scope);
     } else if (resumeId) {
@@ -877,7 +878,11 @@ export function _subscribe(
       _script(scope[K_SCOPE_ID]!, resumeId, markerGuard);
     } else {
       // Flushed or lazy sets add subscribers through their gated channel.
-      serializer.writeCall(scope, subscribers, "add", $chunk.serializeState);
+      serializer.writeCall(scope, subscribers, "add", serializeState);
+    }
+    // Content a `@catch` may drop takes its subscriptions with it.
+    if (boundary.withinCatch) {
+      (boundary.subscribed ||= []).push(subscribers, scope, serializeState);
     }
   }
   return scope;
@@ -1143,6 +1148,7 @@ function tryBoundary(
   // Aborts with its parent so a disconnected render strands pending body work;
   // the outer-aborted check in onNext keeps that from firing the catch.
   const catchBoundary = new Boundary(state, undefined, boundary);
+  if (catchContent) catchBoundary.withinCatch = true;
   const body = chunk.fork(catchBoundary, null);
   const bodyEnd = body.render(() => withBranchId(branchId, content));
 
@@ -1189,6 +1195,7 @@ function tryBoundary(
       const streamed = !chunk.catchRange;
       const catchChunk = chunk.fork(boundary, null);
       chunk.catchRange = null;
+      if (!renderersAtSettle) catchChunk.render(clearTryRenderers, branchId);
       // Sync, the catch streams in order where the body was; with content of
       // its own to wait on, it streams as a reorder so nothing after it waits.
       const inOrder =
@@ -1239,6 +1246,35 @@ function tryBoundary(
     }
   };
   return renderersAtSettle;
+}
+
+// The sections of a caught body are gone, so their closures no longer notify
+// them: from a set still to flush directly, else through the set's channel.
+function unsubscribe(subscribed: unknown[], serializer: Serializer) {
+  for (let i = 0; i < subscribed.length; i += 3) {
+    const subscribers = subscribed[i] as Set<ScopeInternals>;
+    const scope = subscribed[i + 1] as ScopeInternals;
+    if (!serializer.written(subscribers)) {
+      subscribers.delete(scope);
+    } else if (!serializer.dropCall(scope, subscribers, "add")) {
+      serializer.writeCall(
+        scope,
+        subscribers,
+        "delete",
+        subscribed[i + 2] as SerializeState,
+      );
+    }
+  }
+}
+
+// A rendered `@catch` is not a try, as on the client, so renderers the try
+// streamed before it fired are cleared.
+function clearTryRenderers(branchId: number) {
+  writeScope(branchId, {
+    [AccessorProp.CatchContent]: 0,
+    [AccessorProp.PlaceholderContent]:
+      _scope_with_id(branchId)[AccessorProp.PlaceholderContent] && 0,
+  });
 }
 
 function writeTryRenderers(
@@ -1419,15 +1455,21 @@ export class Boundary {
   public parent?: Boundary;
   public aborted = false;
   public reason: unknown;
+  // Closure subscriptions made under it, as set, scope and channel: the only
+  // references live scopes hold into its content, undone once it aborts.
+  public subscribed?: unknown[];
   // Its reorders whose markers streamed, each queued to stream once settled,
   // or all once it aborts so the reorder around them completes.
   public pendingReorders?: Set<Chunk>;
   // Boundaries nested in it, which abort with it.
   public children?: Boundary[];
+  // In a `<try>` body with a `@catch`, which may remove what streamed of it.
+  public withinCatch = false;
   constructor(state: State, signal?: AbortSignal, parent?: Boundary) {
     this.state = state;
     this.parent = parent;
     if (parent) {
+      this.withinCatch = parent.withinCatch;
       if (parent.aborted) {
         this.abort(parent.reason);
       } else {
@@ -1447,6 +1489,7 @@ export class Boundary {
     const { state } = this;
     this.aborted = true;
     this.reason = reason;
+    if (this.subscribed) unsubscribe(this.subscribed, state.serializer);
     if (this.pendingReorders) {
       for (const reorder of this.pendingReorders) state.reorder(reorder);
       this.pendingReorders = undefined;
