@@ -10,7 +10,7 @@ const $for_content__content = /*@__PURE__*/ _const("content", ($scope) => {
 	$for_content__if($scope, $scope.content ? 0 : 1);
 	$if_content__content($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__content($scope, ($params2?.[0]).content);
+const $for_content__$params = ($scope, $params2) => $for_content__content($scope, $params2[0].content);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_section = ($scope, input_section) => $for($scope, [input_section]);
 const $input = ($scope, input) => $input_section($scope, input.section);

@@ -21,7 +21,7 @@ const $Tree_content__level = /*@__PURE__*/ _const("level", ($scope) => {
 	$Tree_content__depth__OR__level($scope);
 	$if_content__level($scope);
 });
-const $Tree_content__$params = ($scope, $params2) => $Tree_content__$temp($scope, $params2?.[0]);
+const $Tree_content__$params = ($scope, $params2) => $Tree_content__$temp($scope, $params2[0]);
 const $Tree_content__$temp = ($scope, $temp) => $Tree_content__level($scope, $temp.level);
 const $depth__closure = /*@__PURE__*/ _closure($Tree_content__depth);
 const $depth = /*@__PURE__*/ _let("depth/2", $depth__closure);

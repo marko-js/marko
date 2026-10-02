@@ -14,7 +14,7 @@ const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);
 const $Nothing_content__v__script = _script("__tests__/template.marko_1_v#2", ($scope) => void $scope.v);
 const $Nothing_content__v = /*@__PURE__*/ _const("v", $Nothing_content__v__script);
-const $Nothing_content__$params = ($scope, $params2) => $Nothing_content__$temp($scope, $params2?.[0]);
+const $Nothing_content__$params = ($scope, $params2) => $Nothing_content__$temp($scope, $params2[0]);
 const $Nothing_content__$temp = ($scope, $temp) => $Nothing_content__v($scope, $temp.v);
 const $if = /*@__PURE__*/ _if("#text/1", "<span>on</span>");
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/4", "<li> </li>", "D ", 0, $for_content__$params);

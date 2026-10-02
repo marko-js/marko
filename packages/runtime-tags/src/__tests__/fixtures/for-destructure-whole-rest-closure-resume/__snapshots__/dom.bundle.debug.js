@@ -8,12 +8,12 @@ const $if_content__setup = $if_content__$temp;
 const $for_content2__if = /*@__PURE__*/ _if("#text/0", "<u> </u>", "D ", $if_content2__setup);
 const $for_content2__show = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content2__if($scope, $scope._.show ? 0 : 1));
 const $for_content2__setup = $for_content2__show;
-const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3?.[0]);
+const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3[0]);
 const $for_content2__$temp = /*@__PURE__*/ _const("$temp2", $if_content2__$temp);
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<i> </i>", "D ", $if_content__setup);
 const $for_content__show = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.show ? 0 : 1));
 const $for_content__setup = $for_content__show;
-const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
+const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
 const $for_content__$temp = /*@__PURE__*/ _const("$temp", $if_content__$temp);
 const $show = /*@__PURE__*/ _let("show/7", ($scope) => {
 	$for_content__show($scope);

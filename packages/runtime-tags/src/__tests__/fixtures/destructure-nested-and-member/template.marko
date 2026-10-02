@@ -1,0 +1,4 @@
+<let/obj={ a: { b: 1 }, c: 2 }/>
+<const/{ a: { b } }=obj/>
+<div>${b} ${obj.c}</div>
+<button onClick() { obj = { a: { b: 3 }, c: 4 } }>update</button>

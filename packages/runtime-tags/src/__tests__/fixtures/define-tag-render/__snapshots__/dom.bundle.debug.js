@@ -15,7 +15,7 @@ const $MyTag_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
 	$MyTag_content__setup__script($scope);
 });
 const $MyTag_content__name = ($scope, name) => _text($scope["#text/0"], name);
-const $MyTag_content__$params = ($scope, $params2) => $MyTag_content__$temp($scope, $params2?.[0]);
+const $MyTag_content__$params = ($scope, $params2) => $MyTag_content__$temp($scope, $params2[0]);
 const $MyTag_content__$temp = ($scope, $temp) => $MyTag_content__name($scope, $temp.name);
 function $setup($scope) {
 	$MyTag_content__setup._($scope["#childScope/0"], $scope);

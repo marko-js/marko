@@ -24,7 +24,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `<div>${_w0}<
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `/${_w0}&bD lD/${_w1}&/${_w2}&cD lD /${_w3}&mDc/${_w4}&D lD /${_w5}&mDbD lD /&mDbD lD m b`)("", "c", "", "", "c", "");
 const $Foo_content__n__script = _script("__tests__/template.marko_1_n#2", ($scope) => console.log($scope.n));
 const $Foo_content__n = /*@__PURE__*/ _const("n", $Foo_content__n__script);
-const $Foo_content__$params = ($scope, $params2) => $Foo_content__$temp($scope, $params2?.[0]);
+const $Foo_content__$params = ($scope, $params2) => $Foo_content__$temp($scope, $params2[0]);
 const $Foo_content__$temp = ($scope, $temp) => $Foo_content__n($scope, $temp.n);
 const $n = /*@__PURE__*/ _let("n/17", ($scope) => {
 	$input_n($scope["#childScope/0"], $scope.n);
