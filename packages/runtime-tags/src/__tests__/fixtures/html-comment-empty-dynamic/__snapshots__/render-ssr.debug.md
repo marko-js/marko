@@ -3,7 +3,6 @@
 <!-- -->
 <!-- -->
 <!-- -->
-<!-- -->
 <button>
   reveal
 </button>
@@ -17,7 +16,6 @@ document.querySelector("button").click();
 <!--shown-->
 <!--raw-->
 <!--shownraw-->
-<!-- -->
 <button>
   reveal
 </button>

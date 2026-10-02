@@ -1,0 +1,7 @@
+<let/obj={ a: 1 }/>
+<const/o=obj/>
+<const/p=o/>
+<const/{ user }=input/>
+<const/u=user/>
+<div>${o.a} ${JSON.stringify(p)} ${u.name}</div>
+<button onClick() { obj = { a: obj.a + 1 } }>inc</button>

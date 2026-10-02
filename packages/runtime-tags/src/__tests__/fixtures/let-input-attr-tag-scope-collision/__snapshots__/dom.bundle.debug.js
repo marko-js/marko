@@ -11,23 +11,17 @@ var child_tag_default = /*@__PURE__*/ _template("__tests__/tags/child-tag/index.
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-const $footer_content__input_submitLabel = /*@__PURE__*/ _closure_get("input_submitLabel/10", ($scope) => _text($scope["#text/0"], $scope._.input_submitLabel || "OK"), 0, "__tests__/template.marko_1_input_submitLabel#0:6/subscribe");
+const $footer_content__input_submitLabel = /*@__PURE__*/ _closure_get("input_submitLabel/5", ($scope) => _text($scope["#text/0"], $scope._.input_submitLabel || "OK"), 0, "__tests__/template.marko_1_input_submitLabel#0:3/subscribe");
 const $footer_content__setup = ($scope) => {
 	$footer_content__input_submitLabel($scope);
 	$footer_content__input_label($scope);
 };
-const $footer_content__input_label = /*@__PURE__*/ _closure_get("input_label/11", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:7/subscribe");
+const $footer_content__input_label = /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe");
 const $footer_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button> </button><span> </span>", "D lD ", $footer_content__setup);
-const $open = /*@__PURE__*/ _let_change("open/8");
-const $input_open__OR__input_openChange = /*@__PURE__*/ _or(5, ($scope) => $open($scope, $scope.input_open, $scope.input_openChange));
-const $input_open = /*@__PURE__*/ _const("input_open", $input_open__OR__input_openChange);
-const $input_openChange = /*@__PURE__*/ _const("input_openChange", $input_open__OR__input_openChange);
 function $setup($scope) {
 	$input_footer($scope["#childScope/0"], attrTag({ content: $footer_content($scope) }));
 }
 const $input = ($scope, input) => {
-	$input_open($scope, input.open);
-	$input_openChange($scope, input.openChange);
 	$input_submitLabel($scope, input.submitLabel);
 	$input_label($scope, input.label);
 };

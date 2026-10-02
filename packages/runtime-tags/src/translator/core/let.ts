@@ -9,6 +9,7 @@ import {
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, getDebugScopeAccess } from "../util/bindings";
 import evaluate from "../util/evaluate";
+import { isNamedOrAssigned } from "../util/finalize-references";
 import { isOptimize, isOutputDOM } from "../util/marko-config";
 import { addReason } from "../util/reasons";
 import {
@@ -128,6 +129,9 @@ export default {
       const changeSlot = getSlot(binding, SlotKind.ChangeHandler);
       binding.reserveSize = 1;
       tagExtra.retained = true;
+      tagExtra.pure =
+        (!valueAttr || evaluate(valueAttr.value).pure) &&
+        evaluate(valueChangeAttr.value).pure;
       // The serialized change handler is only invoked by an assignment to the
       // tag variable, so it does not resume when nothing assigns.
       onFinalizeReferences(() => {
@@ -162,9 +166,29 @@ export default {
       const section = getSection(tag);
       const binding = tagVar.extra!.binding!;
 
+      // Nothing reads, names or assigns it, so it holds no slot.
+      const unused = binding.pruned && !isNamedOrAssigned(binding);
+
       if (isOutputDOM()) {
-        const signal = initValue(binding, true);
         const referencedBindings = tag.node.extra!.referencedBindings;
+        if (unused) {
+          // Its impure values run only for what they do, inline as an unread
+          // `<const>`'s.
+          for (const attr of [valueAttr, valueChangeAttr]) {
+            if (attr && !evaluate(attr.value).pure) {
+              addValue(
+                section,
+                referencedBindings,
+                initValue(binding)!,
+                attr.value,
+              );
+            }
+          }
+          tag.remove();
+          return;
+        }
+
+        const signal = initValue(binding, true);
 
         addValue(section, referencedBindings, signal, valueAttr.value);
 
@@ -183,7 +207,11 @@ export default {
       } else {
         translateVar(tag, valueAttr.value, "let");
 
-        if (valueChangeAttr) {
+        if (unused) {
+          if (valueChangeAttr && !evaluate(valueChangeAttr.value).pure) {
+            tag.insertBefore(t.expressionStatement(valueChangeAttr.value));
+          }
+        } else if (valueChangeAttr) {
           const accessor = setScopeProperty(
             findSlot(binding, SlotKind.ChangeHandler),
             t.logicalExpression(

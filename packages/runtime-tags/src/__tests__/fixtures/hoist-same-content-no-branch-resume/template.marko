@@ -1,0 +1,9 @@
+<if=input.show>
+  <div>
+    <if=input.inner>
+      <span/el/>
+      <script>el().textContent = read()</script>
+      <const/read=() => input.label/>
+    </if>
+  </div>
+</if>

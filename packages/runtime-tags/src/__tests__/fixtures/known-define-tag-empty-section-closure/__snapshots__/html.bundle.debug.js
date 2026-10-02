@@ -33,8 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/0");
-	_html("</div>");
+	}, $scope0_id, "#div/0", 1, 1, 1, "</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

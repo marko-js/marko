@@ -1,0 +1,12 @@
+<let/x=input.x valueChange=input.xChange/>
+<let/y=input.y valueChange=makeHandler()/>
+<let/z=input.z valueChange=input.zChange/>
+<const/setZ=() => { z = 1 }/>
+<span>${input.label}</span>
+<for|item| of=input.items>
+  <let/made=item.make()/>
+  <span>${item.name}</span>
+</for>
+static function makeHandler() {
+  return () => {};
+}

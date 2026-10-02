@@ -10,9 +10,11 @@ import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
-  untrackNode,
+  addReferencedBy,
   setDerivedFrom,
   trackVarReferences,
+  untrackAliasValue,
+  untrackNode,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
@@ -73,19 +75,24 @@ export default {
       ? tag.scope.getBinding(valueAttr.value.name)?.identifier.extra?.binding
       : undefined;
 
-    if (aliased) {
-      // The alias reads through its upstream; the value itself stays as is.
-      untrackNode(valueAttr.value);
-    }
-
     const binding = trackVarReferences(tag, BindingType.derived, aliased);
 
     if (binding) {
       assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
-      if (!aliased) {
-        // Keep unread initializers because their expressions may have side effects;
-        // downstream minification can discard proven-pure values.
+      if (aliased) {
+        const aliasBinding = tag.node.var!.extra?.binding;
+        if (aliasBinding) {
+          untrackAliasValue(valueAttr.value);
+          // Linked so its value expression drops with it: a reference there
+          // then stops keeping the aliased binding declared.
+          setDerivedFrom(aliasBinding, valueExtra);
+          addReferencedBy(aliased, valueExtra);
+        } else {
+          // A pattern's parts are its aliased binding's, read through it as is.
+          untrackNode(valueAttr.value);
+        }
+      } else {
         setDerivedFrom(binding, valueExtra);
         addSetupExpr(getOrCreateSection(tag), valueAttr.value);
       }

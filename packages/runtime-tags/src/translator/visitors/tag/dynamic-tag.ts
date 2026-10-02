@@ -35,6 +35,7 @@ import { concat, type Opt } from "../../util/optional";
 import { addReasonExprs, addReason, getWriteReason } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
+  isTagVarUsed,
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
@@ -697,17 +698,6 @@ function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
     if (inputBinding) inputBindings = concat(inputBindings, inputBinding);
   }
   return inputBindings;
-}
-
-// Nothing reads or assigns the variable, so the tag need not resume for it.
-function isTagVarUsed(tag: t.NodePath<t.MarkoTag>) {
-  for (const name in t.getBindingIdentifiers(tag.node.var!)) {
-    const binding = tag.scope.getBinding(name);
-    if (binding?.referencePaths.length || binding?.constantViolations.length) {
-      return true;
-    }
-  }
-  return false;
 }
 
 // Whether the child's variable is wired back to this tag on resume: only once

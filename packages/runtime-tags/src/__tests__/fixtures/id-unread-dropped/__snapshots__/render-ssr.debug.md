@@ -1,0 +1,11 @@
+# Render
+```html
+<label
+  for="sM_1"
+>
+  name
+</label>
+<input
+  id="sM_1"
+/>
+```

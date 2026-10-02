@@ -47,7 +47,7 @@ import {
   mergeReferenceGroup,
   mergeReferences,
   trackDomVarReferences,
-  isTagVarRead,
+  isTagVarUsed,
 } from "../../util/references";
 import {
   callRuntime,
@@ -350,7 +350,7 @@ export default {
       }
 
       if (
-        node.var ||
+        (node.var && isTagVarUsed(tag)) ||
         hasDynamicAttributes ||
         hasEventHandlers ||
         textPlaceholders ||
@@ -428,7 +428,7 @@ export default {
           addSetupWork(tagSection);
         }
 
-        if (hasEventHandlers || isTagVarRead(tag)) {
+        if (hasEventHandlers || isTagVarUsed(tag)) {
           addReason(getSlot(nodeBinding), ALWAYS);
         }
 

@@ -6,32 +6,29 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_value__closures = new Set();
 	const x = $hoist1_getter;
 	const hoist1 = _resume(() => input.value, "__tests__/template.marko_0/hoist", $scope0_id);
-	_if(() => {
-		if (1) {
-			const $scope1_id = _scope_id();
-			_if(() => {
-				if (1) {
-					const $scope2_id = _scope_id();
-					const $if_content2__hoist3_getter = _hoist($scope2_id, "__tests__/template.marko_2_hoist3#2/hoist");
-					const z = $if_content2__hoist3_getter;
-					const hoist3 = _resume(() => input.value, "__tests__/template.marko_2/hoist2", $scope2_id);
-					_script($scope2_id, "__tests__/template.marko_2_x#0:4_z#0", 0);
-					_subscribe($wi__input_value && $input_value__closures, _scope($scope2_id, {
-						z,
-						hoist3,
-						_: _scope_with_id($scope1_id)
-					}, "__tests__/template.marko", "8:4", {
-						z: "9:12",
-						hoist3: "10:12"
-					}), "__tests__/template.marko_2_input_value#0:3/subscribe", 0);
-					_assert_hoist(hoist3);
-					return 0;
-				}
-			}, $scope1_id, "#text/0", 1, 0, 0);
-			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
-			return 0;
-		}
-	}, $scope0_id, "#text/0", 1, 0, 0);
+	if (1) {
+		const $scope1_id = _scope_id();
+		_if(() => {
+			if (1) {
+				const $scope2_id = _scope_id();
+				const $if_content2__hoist3_getter = _hoist($scope2_id, "__tests__/template.marko_2_hoist3#2/hoist");
+				const z = $if_content2__hoist3_getter;
+				const hoist3 = _resume(() => input.value, "__tests__/template.marko_2/hoist2", $scope2_id);
+				_script($scope2_id, "__tests__/template.marko_2_x#0:4_z#0", 0);
+				_subscribe($wi__input_value && $input_value__closures, _scope($scope2_id, {
+					z,
+					hoist3,
+					_: _scope_with_id($scope1_id)
+				}, "__tests__/template.marko", "8:4", {
+					z: "9:12",
+					hoist3: "10:12"
+				}), "__tests__/template.marko_2_input_value#0:3/subscribe", 0);
+				_assert_hoist(hoist3);
+				return 0;
+			}
+		}, $scope1_id, "#text/0", 1, 0, 0);
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
+	}
 	_scope($scope0_id, {
 		input_value: input.value,
 		x,

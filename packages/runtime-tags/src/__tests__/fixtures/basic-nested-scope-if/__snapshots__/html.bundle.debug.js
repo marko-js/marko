@@ -17,7 +17,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, {}, "__tests__/template.marko", "8:4");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
-	_html("</div>");
+	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
 	_scope($scope0_id, { clickCount }, "__tests__/template.marko", 0, { clickCount: "2:8" });
 }, 1);

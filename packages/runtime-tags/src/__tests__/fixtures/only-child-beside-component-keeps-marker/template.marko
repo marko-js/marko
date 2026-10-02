@@ -1,0 +1,12 @@
+<let/open=false/>
+<define/Nothing|{ v }|><script>void v</script></define>
+<div>
+  <noop v=open/>
+  <if=open><span>on</span></if>
+  <noop v=!open/>
+</div>
+<ul>
+  <Nothing v=open/>
+  <for|item| of=open ? [1, 2] : [1]><li>${item}</li></for>
+</ul>
+<button onClick() { open = !open }>toggle</button>

@@ -17,7 +17,7 @@ import { addReasonExprs, addReason, getWriteReason } from "../util/reasons";
 import {
   mergeReferences,
   trackDomVarReferences,
-  isTagVarRead,
+  isTagVarUsed,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -48,7 +48,7 @@ export default {
             "The [`<html-comment>` tag](https://markojs.com/docs/reference/core-tag#html-comment) tag variable cannot be destructured.",
           );
       }
-      needsBinding = true;
+      needsBinding = isTagVarUsed(tag);
     }
 
     let nodeBinding: Binding | undefined;
@@ -79,7 +79,7 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      if (isTagVarRead(tag)) addReason(getSlot(nodeBinding), ALWAYS);
+      if (isTagVarUsed(tag)) addReason(getSlot(nodeBinding), ALWAYS);
       addReasonExprs(getSlot(nodeBinding), tagExtra);
     }
 

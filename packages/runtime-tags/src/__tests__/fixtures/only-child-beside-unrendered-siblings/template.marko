@@ -1,0 +1,9 @@
+<let/open=true/>
+<div>
+  <const/label="shown"/>
+  <if=open>
+    <b>${label}</b>
+  </if>
+  <const/unused=1/>
+</div>
+<button onClick() { open = !open }>toggle</button>
