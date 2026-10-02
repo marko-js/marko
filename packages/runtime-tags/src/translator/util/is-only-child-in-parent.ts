@@ -8,7 +8,7 @@ import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 const kOnlyChildInParent = Symbol("only child in parent");
 declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
+  export interface MarkoTagExtra {
     [kOnlyChildInParent]?: false | string;
   }
 }

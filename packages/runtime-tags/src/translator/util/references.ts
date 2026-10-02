@@ -69,11 +69,19 @@ declare module "@marko/compiler/dist/types" {
     hasGlobalRead?: true;
   }
 
+  export interface MarkoTagExtra {
+    /** The dom binding the tag is addressed by: its node, marker or child
+     * scope; an only child control flow tag shares its parent's. */
+    nodeBinding?: Binding;
+  }
+
+  export interface MarkoPlaceholderExtra {
+    /** The dom binding the placeholder's text node is held in. */
+    nodeBinding?: Binding;
+  }
+
   export interface NodeExtra {
     section?: Section;
-    /** The dom binding a tag or placeholder is addressed by: its node, marker
-     * or child scope; an only child control flow tag shares its parent's. */
-    nodeBinding?: Binding;
     referencedBindings?: ReferencedBindings;
     /** The bindings it feeds, in the order it feeds them: a call site's
      * values feed the child template's, so no one template's order sorts them. */
@@ -81,6 +89,9 @@ declare module "@marko/compiler/dist/types" {
     /** The initial value of the binding it feeds, which keeps it rather than
      * following it, so the binding derives no sources from it. */
     initialValue?: true;
+    /** Its value has no side effect to evaluate, so an unread one can go: an
+     * expression's from `evaluate`, a tag's from its value attributes. */
+    pure?: boolean;
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a derives template's binding, for dereferencing its reasons. */
     callSiteExprs?: KnownExprs;

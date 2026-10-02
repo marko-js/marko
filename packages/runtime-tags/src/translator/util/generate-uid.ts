@@ -5,9 +5,10 @@ import { isTranslate } from "./get-compile-stage";
 import type { Section } from "./sections";
 import { traverse } from "./traverse";
 
+const kUidCounts = Symbol("uid counts");
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    uidCounts?: Map<string, number>;
+    [kUidCounts]?: Map<string, number>;
   }
 }
 
@@ -19,7 +20,8 @@ export function generateUid(name = "") {
   if (!counts) {
     // Counts live on the analyzed program so a re-analysis starts over, and
     // each translate continues a copy so dom and html do not affect each other.
-    counts = (file.path.node.extra ??= {}).uidCounts ??= getInitialCounts(file);
+    counts = (file.path.node.extra ??= {})[kUidCounts] ??=
+      getInitialCounts(file);
     if (isTranslate()) counts = new Map(counts);
     countsForFile.set(file, counts);
   }

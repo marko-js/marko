@@ -40,7 +40,7 @@ const kSingleNodeBody = Symbol("<show> single node body");
 const htmlDisplayRefs = new WeakMap<t.MarkoTag, t.Identifier>();
 
 declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
+  export interface MarkoTagExtra {
     [kStartBinding]?: Binding;
     [kEndBinding]?: Binding;
     [kStaticDisplay]?: boolean;

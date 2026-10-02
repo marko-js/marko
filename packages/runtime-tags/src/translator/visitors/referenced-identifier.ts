@@ -15,11 +15,12 @@ import { createSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
 import { scopeIdentifier } from "./program";
 
+const kAbortId = Symbol("abort id");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     /** `$signal` abort id for this expression root, allocated in analyze
      * (see below) so every translate reads the same id. */
-    abortId?: number;
+    [kAbortId]?: number;
   }
 }
 
@@ -70,8 +71,8 @@ export default {
       // even if this extra later merges with another expression's.
       const rootExtra = (getExprRoot(identifier).node.extra ??= { section });
       (identifier.node.extra ??= {}).exprRoot = rootExtra;
-      if (rootExtra.abortId === undefined) {
-        rootExtra.abortId = section.abortSignalExprs++;
+      if (rootExtra[kAbortId] === undefined) {
+        rootExtra[kAbortId] = section.abortSignalExprs++;
       }
     }
   },
@@ -122,7 +123,7 @@ export default {
           if (canonicalExtra.pruned) break;
 
           const section = getSection(identifier);
-          const exprId = exprRoot.abortId!;
+          const exprId = exprRoot[kAbortId]!;
           const resetEmitted = getAbortResetEmitted(section);
 
           if (!resetEmitted.has(exprRoot)) {

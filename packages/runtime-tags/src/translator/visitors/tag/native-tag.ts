@@ -102,7 +102,7 @@ const htmlSelectArgs = new WeakMap<
 >();
 
 declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
+  export interface MarkoTagExtra {
     [kNodeOp]?: StructureNode;
     [kNativeAttrs]?: NativeAttrs;
   }
@@ -446,7 +446,7 @@ export default {
       if (own) {
         for (const index of own) {
           const { name, value } = attributes[index] as t.MarkoAttribute;
-          const { confident, computed } = value.extra || {};
+          const { confident, computed } = evaluate(value);
           if (confident) {
             write`${getStaticAttrMarkup(name, computed)}`;
           } else if (name === "class" || name === "style") {
@@ -672,7 +672,7 @@ export default {
         if (own) {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
-            const { confident, computed } = value.extra || {};
+            const { confident, computed } = evaluate(value);
 
             if (tagName === "option" && name === "value") {
               write`${callRuntime("_attr_option_value", value)}`;
@@ -952,7 +952,7 @@ export default {
         if (own) {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
-            const { confident } = value.extra || {};
+            const { confident } = evaluate(value);
             const valueReferences = value.extra?.referencedBindings;
 
             switch (name) {

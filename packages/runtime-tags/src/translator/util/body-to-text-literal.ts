@@ -6,10 +6,9 @@ import { callRuntime } from "./runtime";
 
 // Marks a flattened `<if>` whose value still holds raw interpolations
 // concatenated with static text, so translate runs `injectTextCoercion`.
-export const kRawText = Symbol("raw text placeholder");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
-    [kRawText]?: true;
+    rawText?: true;
   }
 }
 

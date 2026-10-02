@@ -31,7 +31,7 @@ declare module "@marko/compiler/dist/types" {
     /** Absolute filenames of templates this one imports with `load`. */
     loadImports?: Set<string>;
   }
-  export interface NodeExtra {
+  export interface ImportDeclarationExtra {
     tagImport?: string;
     loadImport?: LoadImportConfig;
     registeredImportedFns?: (ResolvedExport & { local: string })[];

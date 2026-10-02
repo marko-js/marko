@@ -20,7 +20,8 @@ export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
   const seen = new Set<string>();
 
   for (const child of program.node.body) {
-    const registeredImportedFns = child.extra?.registeredImportedFns;
+    const registeredImportedFns =
+      t.isImportDeclaration(child) && child.extra?.registeredImportedFns;
     if (registeredImportedFns) {
       for (const importedFn of registeredImportedFns) {
         if (seen.has(importedFn.registerId)) continue;

@@ -7,7 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoSpreadAttrs } from "../util/assert";
-import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
+import { bodyToRawTextLiteral } from "../util/body-to-text-literal";
 import {
   getBranchResumeArgs,
   initBranchSection,
@@ -366,7 +366,7 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   }
   const placeholder = t.markoPlaceholder(expr, true);
   if (rawText) {
-    (placeholder.extra ??= {})[kRawText] = true;
+    (placeholder.extra ??= {}).rawText = true;
   }
   rootTag.replaceWith(placeholder);
 }

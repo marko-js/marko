@@ -62,14 +62,14 @@ export default {
     // Minting is unobservable, so a tag without a value is itself the pure
     // value its variable takes, dropped with it when unread.
     const valueNode = valueAttr ? valueAttr.value : tag.node;
-    if (!valueAttr) (tag.node.extra ??= {}).pure = true;
+    const valueExtra = valueAttr
+      ? (valueAttr.value.extra ??= {})
+      : (tag.node.extra ??= {});
+    valueExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
       assertNoTagVarMutation(tag);
-      setDerivedFrom(
-        binding,
-        valueAttr ? evaluate(valueAttr.value) : tag.node.extra!,
-      );
+      setDerivedFrom(binding, valueExtra);
     }
 
     // The id is initialized in setup unless keyed by the value's references.

@@ -148,7 +148,7 @@ export interface Section {
   pruned: boolean;
   hasAbortSignal: boolean;
   /** Count of distinct `$signal` expression roots; analyze allocates each
-   * root's `abortId` from this so translates read, never re-derive. */
+   * root's abort id from this so translates read, never re-derive. */
   abortSignalExprs: number;
   readsOwner: boolean;
   /** Whether analysis found work keyed by setup in the section, or in a
