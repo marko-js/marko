@@ -936,6 +936,9 @@ export function writeWaitReady(
     flushScopes: false,
   });
   const bodyEnd = body.render(renderer, input);
+  // A throw in the body ends the render around it too, instead of letting it
+  // go on past dead content.
+  if (boundary.aborted) throw boundary.reason;
 
   if (body === bodyEnd) {
     chunk.writeHTML(body.html);
@@ -1144,13 +1147,11 @@ function tryBoundary(
   const bodyEnd = body.render(() => withBranchId(branchId, content));
 
   if (catchBoundary.aborted) {
+    // Without a `@catch` the error ends the enclosing render, like any throw in it.
+    if (!catchContent) throw catchBoundary.reason;
     // Sync error. The body's already-written scopes stay in the resume payload
     // as dead fills; a `@catch` firing is rare enough not to warrant dropping them.
-    if (catchContent) {
-      catchContent(catchBoundary.reason);
-    } else {
-      boundary.abort(catchBoundary.reason);
-    }
+    catchContent(catchBoundary.reason);
     // A rendered `@catch` is not a try, as on the client: it gets no renderers.
     return true;
   }
