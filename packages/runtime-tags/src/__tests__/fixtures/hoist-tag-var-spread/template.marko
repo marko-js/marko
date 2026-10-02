@@ -1,0 +1,10 @@
+<if=input.a>
+  <const/x=() => 1/>
+</if>
+<if=!input.a>
+  <if=input.b>
+    <child ...x/>
+  </if>
+</if>
+<child ...y/>
+<const/y=() => 2/>

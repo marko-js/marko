@@ -115,7 +115,6 @@ export interface Section {
    * bindings that the loop binds as it creates it. */
   localClosures: ReferencedBindings;
   referencedClosures: ReferencedBindings;
-  referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
   /** The closures its `<for>` rows read only by comparing them to the row's
@@ -219,7 +218,6 @@ export function startSection(
       params: undefined,
       localClosures: undefined,
       referencedClosures: undefined,
-      referencedHoists: undefined,
       bindings: undefined,
       hoisted: undefined,
       selector: undefined,

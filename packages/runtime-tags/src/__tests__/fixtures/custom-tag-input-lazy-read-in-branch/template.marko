@@ -1,0 +1,11 @@
+// The handler in the branch reads `count` lazily from the root, so the branch
+// scope keeps its owner for when the child invokes it.
+<let/count=0/>
+<let/log=""/>
+
+<button.inc onClick() { count++; }>inc</button>
+<if=input.show>
+  <press-button onPress() { log = `${log}[${count}]`; }/>
+</if>
+
+<div.log>${log}</div>

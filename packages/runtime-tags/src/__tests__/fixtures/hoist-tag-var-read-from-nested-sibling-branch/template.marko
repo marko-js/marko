@@ -1,0 +1,9 @@
+<if=input.show>
+  <if=input.a>
+    <const/getLabel=() => "a"/>
+  </if>
+  <if=!input.a>
+    <let/label="none"/>
+    <button onClick() { label = String(getLabel()) }>${label}</button>
+  </if>
+</if>

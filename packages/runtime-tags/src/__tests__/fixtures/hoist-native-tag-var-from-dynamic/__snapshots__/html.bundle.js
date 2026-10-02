@@ -34,10 +34,7 @@ var template_default = _template("a", (input) => {
 			_subscribe($child_content2__subscribers, _scope($scope3_id, {}));
 		}, $scope2_id) });
 		_script($scope2_id, "a6", 0);
-		_subscribe($inputshowChildnull_content__subscribers, _scope($scope2_id, {
-			_: _scope_with_id($scope0_id),
-			B3: $child_content2__subscribers
-		}));
+		_subscribe($inputshowChildnull_content__subscribers, _scope($scope2_id, { B3: $child_content2__subscribers }));
 	}, $scope0_id), 0, $wg__input_show);
 	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content("a7", () => {
 		const $scope4_id = _scope_id();

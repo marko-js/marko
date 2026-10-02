@@ -217,19 +217,15 @@ export function trackDomVarReferences(
       ? getCommonSection(refSection, binding.section)
       : false;
 
-    setReferencesScope(ref);
-    addReadToExpression(
-      ref,
-      binding,
+    const getter: Getter | undefined =
       !invoked || (hoisted && hoisted !== binding.section)
-        ? {
-            hoisted,
-            invoked,
-          }
-        : undefined,
-    );
+        ? { hoisted, invoked }
+        : undefined;
+    setReferencesScope(ref);
+    addReadToExpression(ref, binding, getter);
 
-    if (refSection !== binding.section) {
+    // Finalize gives a read through a hoisted getter its owner chain.
+    if (!getter?.hoisted && refSection !== section) {
       setReadsOwner(refSection, section);
       addOwnerReason(refSection, section, ALWAYS);
     }
@@ -422,6 +418,8 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
         `\`${ref.node.name}\` is the [tag variable](https://markojs.com/docs/reference/language#tag-variables) this tag declares, so its own attributes cannot read it.`,
       );
     } else if (isReferenceHoisted(babelBinding.path, ref)) {
+      // A hoisted tag variable is its getter wherever it is referenced; calling
+      // it while rendering throws at runtime (`_hoist_read_error`).
       const invoked = isInvokedFunction(ref);
       if (invoked) {
         setReferencesScope(ref);
@@ -1139,7 +1137,8 @@ function addReadToExpression(
       isReferenceInOwnBody(babelBinding.path, root);
   }
 
-  if (root.parent.type === "MarkoSpreadAttribute") {
+  // A hoisted read spreads the getter, not the variable's properties.
+  if (!getter && root.parent.type === "MarkoSpreadAttribute") {
     extra.spreadFrom = binding;
   }
 

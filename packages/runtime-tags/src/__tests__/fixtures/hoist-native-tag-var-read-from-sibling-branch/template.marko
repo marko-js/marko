@@ -1,0 +1,9 @@
+<let/out=""/>
+<if=input.a>
+  <div/el>a</div>
+</if>
+<else>
+  <if=true>
+    <button onClick() { out = String(el()) }>${out}</button>
+  </if>
+</else>

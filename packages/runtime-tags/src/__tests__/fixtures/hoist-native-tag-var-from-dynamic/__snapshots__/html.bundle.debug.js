@@ -34,10 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($child_content2__subscribers, _scope($scope3_id, {}, "__tests__/template.marko", "16:4"));
 		}, $scope2_id) });
 		_script($scope2_id, "__tests__/template.marko_2", 0);
-		_subscribe($inputshowChildnull_content__subscribers, _scope($scope2_id, {
-			_: _scope_with_id($scope0_id),
-			"ClosureScopes:3": $child_content2__subscribers
-		}, "__tests__/template.marko", "15:4"));
+		_subscribe($inputshowChildnull_content__subscribers, _scope($scope2_id, { "ClosureScopes:3": $child_content2__subscribers }, "__tests__/template.marko", "15:4"));
 	}, $scope0_id), 0, $wg__input_show);
 	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
