@@ -15,14 +15,14 @@ export function getSectionRendererIdentifier(section: Section) {
 export function isSectionRendererElided(section: Section) {
   return (
     section.pruned ||
-    (!!section.downstream &&
+    (!!section.derives &&
       // A falsy dynamic tag name renders its body in place.
       !(
-        section.downstream.tag.tagNameNullable &&
-        section.downstream.properties === "content"
+        section.derives.tag.tagNameNullable &&
+        section.derives.properties === "content"
       ) &&
-      !some(section.downstream.binding, (binding) =>
-        bindingHasProperty(binding, section.downstream!.properties),
+      !some(section.derives.binding, (binding) =>
+        bindingHasProperty(binding, section.derives!.properties),
       ))
   );
 }

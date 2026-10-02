@@ -37,11 +37,12 @@ export interface Binding {
   /** Emitted code the graph stopped tracking still names it. */
   untracked?: true;
   sources: undefined | Sources;
-  /** The intersection whose work computes it, or the nearest one upstream. Set on alias roots only. */
-  upstreamIntersection: Intersection | undefined;
+  /** The intersection whose work computes it, or the nearest one it derives
+   * from. Set on alias roots only. */
+  intersection: Intersection | undefined;
   /** The expressions its value is computed from, `false` for none; unset when
    * analysis cannot see them, which makes it its own source. */
-  upstreamExpression: Opt<t.NodeExtra> | false;
+  derivedFrom: Opt<t.NodeExtra> | false;
   /** Complete only once `finalizeReferences` runs at program analyze exit. */
   reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
@@ -50,7 +51,7 @@ export interface Binding {
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
   excludeProperties: SortedOpt<string>;
-  upstreamAlias: Binding | undefined;
+  aliasOf: Binding | undefined;
   /** The value these `<for>` params iterate, by `of` or `in`. */
   iterates: { expr: t.NodeExtra; type: "of" | "in" } | undefined;
   restOffset: number | undefined;
@@ -67,7 +68,7 @@ export interface Binding {
    * (a rest element), even once pruned. */
   declaredAlias: Binding | undefined;
   /** The attribute tag `<for>` param a local closure holds in its section. */
-  upstreamLocal: Binding | undefined;
+  localOf: Binding | undefined;
   /** An attribute tag `<for>` param's local closure in each content the loop
    * creates that reads it. */
   localClosures: Map<Section, Binding> | undefined;
@@ -111,14 +112,14 @@ export function createBinding(
   name: string,
   type: Binding["type"],
   refSection: Section,
-  upstreamAlias?: Binding["upstreamAlias"],
+  aliased?: Binding["aliasOf"],
   property?: string,
   excludeProperties?: SortedOpt<string>,
   loc: t.SourceLocation | null = null,
   refDeclared = false,
 ): Binding {
   const id = getNextBindingId();
-  const section = upstreamAlias ? upstreamAlias.section : refSection;
+  const section = aliased ? aliased.section : refSection;
   const sameSection = refSection === section;
   const declared = sameSection && refDeclared;
   const binding: Binding = {
@@ -136,17 +137,17 @@ export function createBinding(
     assignments: undefined,
     excludeProperties,
     sources: undefined,
-    upstreamIntersection: undefined,
-    upstreamExpression: undefined,
+    intersection: undefined,
+    derivedFrom: undefined,
     reads: new Set(),
     aliases: new Set(),
     hoists: undefined,
     getters: new Map(),
     propertyAliases: new Map(),
-    upstreamAlias,
+    aliasOf: aliased,
     iterates: undefined,
     declaredAlias: undefined,
-    upstreamLocal: undefined,
+    localOf: undefined,
     localClosures: undefined,
     restOffset: undefined,
     returnedBy: undefined,
@@ -161,20 +162,20 @@ export function createBinding(
   };
 
   if (property) {
-    if (declared) upstreamAlias!.nullable = false;
+    if (declared) aliased!.nullable = false;
     // TODO: should prefer declared properties as alias roots.
-    const propBinding = upstreamAlias!.propertyAliases.get(property);
+    const propBinding = aliased!.propertyAliases.get(property);
     if (propBinding) {
       binding.property = undefined;
-      binding.upstreamAlias = propBinding;
+      binding.aliasOf = propBinding;
       propBinding.aliases.add(binding);
     } else {
       // TODO: check if default is used, if so an intermediate binding is needed
-      upstreamAlias!.propertyAliases.set(property, binding);
+      aliased!.propertyAliases.set(property, binding);
     }
-  } else if (upstreamAlias) {
-    upstreamAlias.aliases.add(binding);
-    if (declared) upstreamAlias.declaredAlias ??= binding;
+  } else if (aliased) {
+    aliased.aliases.add(binding);
+    if (declared) aliased.declaredAlias ??= binding;
   }
 
   setNextBindingId(id + 1);
@@ -185,7 +186,7 @@ export function createBinding(
 // A property of a direct alias is the root's property: one binding, one
 // read, however many local names the value passes through.
 export function getOrCreatePropertyAlias(binding: Binding, property: string) {
-  while (isDirectAlias(binding)) binding = binding.upstreamAlias!;
+  while (isDirectAlias(binding)) binding = binding.aliasOf!;
   return (
     binding.propertyAliases.get(property) ||
     createBinding(
@@ -212,7 +213,7 @@ function getExistingPropertyAlias(
 ) {
   while (binding) {
     if (!isDirectAlias(binding)) return binding.propertyAliases.get(property);
-    binding = binding.upstreamAlias;
+    binding = binding.aliasOf;
   }
 }
 
@@ -259,10 +260,10 @@ export function compareIntersections(a: Intersection, b: Intersection) {
 }
 
 export function getAliasRoot(binding: Binding) {
-  let alias = binding.upstreamAlias;
+  let alias = binding.aliasOf;
   while (alias) {
-    if (!alias.upstreamAlias) return alias;
-    alias = alias.upstreamAlias;
+    if (!alias.aliasOf) return alias;
+    alias = alias.aliasOf;
   }
 
   return alias;
@@ -292,7 +293,7 @@ export const propsUtil = new Sorted(function compareProps(
 });
 
 export function getCanonicalBinding(binding: Binding) {
-  const alias = binding.upstreamAlias;
+  const alias = binding.aliasOf;
   if (alias && isDirectAlias(binding)) {
     return alias;
   }
@@ -321,12 +322,12 @@ export function someAlias<A>(
 }
 
 // Whether the binding, or a value it aliases (transitively), passes `test`.
-export function someUpstream<A>(
+export function someAliased<A>(
   binding: Binding | undefined,
   test: (binding: Binding, arg: A) => boolean,
   arg: A,
 ): boolean {
-  for (let cur: Binding | undefined = binding; cur; cur = cur.upstreamAlias) {
+  for (let cur: Binding | undefined = binding; cur; cur = cur.aliasOf) {
     if (test(cur, arg)) return true;
   }
   return false;
@@ -335,7 +336,7 @@ export function someUpstream<A>(
 // Aliases the whole of another value: no property, no rest exclusions.
 export function isDirectAlias(binding: Binding) {
   return (
-    binding.upstreamAlias !== undefined &&
+    binding.aliasOf !== undefined &&
     binding.property === undefined &&
     binding.excludeProperties === undefined
   );
@@ -346,13 +347,13 @@ export function getDebugScopeAccess(binding: Binding) {
   let access = "";
   while (
     !(root.loc || root.declared) &&
-    root.upstreamAlias &&
+    root.aliasOf &&
     root.excludeProperties === undefined
   ) {
     if (root.property !== undefined) {
       access = toAccess(root.property) + access;
     }
-    root = root.upstreamAlias;
+    root = root.aliasOf;
   }
 
   return {
@@ -366,13 +367,13 @@ export function getDebugName(binding: Binding) {
     let root = binding;
     let access = "";
     while (
-      root.upstreamAlias !== root.section.params &&
+      root.aliasOf !== root.section.params &&
       root.excludeProperties === undefined
     ) {
       if (root.property !== undefined) {
         access = toAccess(root.property) + access;
       }
-      root = root.upstreamAlias as InputBinding;
+      root = root.aliasOf as InputBinding;
     }
 
     return root.name + access;
@@ -396,24 +397,24 @@ function getDebugNameAsIdentifier(binding: Binding) {
 
   if (binding.type === BindingType.input) {
     while (
-      root.upstreamAlias !== root.section.params &&
+      root.aliasOf !== root.section.params &&
       root.excludeProperties === undefined
     ) {
       if (root.property !== undefined) {
         access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
       }
-      root = root.upstreamAlias as InputBinding;
+      root = root.aliasOf as InputBinding;
     }
   } else {
     while (
       !(root.loc || root.declared) &&
-      root.upstreamAlias &&
+      root.aliasOf &&
       root.excludeProperties === undefined
     ) {
       if (root.property !== undefined) {
         access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
       }
-      root = root.upstreamAlias;
+      root = root.aliasOf;
     }
   }
 
@@ -457,7 +458,7 @@ export function getPropertyPath(
   ancestor: Binding,
 ): Opt<string> {
   if (binding === ancestor) return;
-  const path = getPropertyPath(binding.upstreamAlias!, ancestor);
+  const path = getPropertyPath(binding.aliasOf!, ancestor);
   return binding.property === undefined ? path : push(path, binding.property);
 }
 

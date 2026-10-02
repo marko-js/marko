@@ -10,7 +10,7 @@ import {
   getAllTagReferenceNodes,
   isReferenceHoisted,
   mergeReferences,
-  setBindingDownstream,
+  setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
 } from "../util/references";
@@ -22,7 +22,7 @@ import {
   getSectionForBody,
   startSection,
 } from "../util/sections";
-import { setTagDownstream } from "../util/set-tag-sections-downstream";
+import { setTagDerivedFrom } from "../util/set-tag-derived-from";
 import {
   addStatement,
   addValue,
@@ -59,7 +59,7 @@ export default {
     assertNoTagVarMutation(tag);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
-    setTagDownstream(tag, varBinding);
+    setTagDerivedFrom(tag, varBinding);
 
     if (bodySection) {
       // TODO: support destructure
@@ -102,7 +102,7 @@ export default {
       getAllTagReferenceNodes(tag.node),
     );
 
-    setBindingDownstream(varBinding, tagExtra);
+    setDerivedFrom(varBinding, tagExtra);
   },
   translate: {
     enter(tag) {

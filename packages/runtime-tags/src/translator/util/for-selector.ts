@@ -58,11 +58,7 @@ function onlyComparesKey(
   keyBinding: Binding,
 ): boolean {
   let found = false;
-  for (
-    let chain: Binding | undefined = closure;
-    chain;
-    chain = chain.upstreamAlias
-  ) {
+  for (let chain: Binding | undefined = closure; chain; chain = chain.aliasOf) {
     for (const expr of chain.reads) {
       if (expr.section !== bodySection) continue;
       let other = false;

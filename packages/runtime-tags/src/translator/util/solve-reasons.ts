@@ -12,7 +12,7 @@ import {
   isDirectAlias,
   isIndexProperty,
   propsUtil,
-  someUpstream,
+  someAliased,
 } from "./bindings";
 import {
   createCyclicMemo,
@@ -27,7 +27,7 @@ import {
   addReason,
   finalizeReason,
   getReasonsVersion,
-  getSourcesForDownstream,
+  getSourcesForDerived,
   getSourcesForExpr,
   mapParamReason,
   type Reason,
@@ -163,28 +163,25 @@ function withoutOwnSources(closure: Binding, sources: Sources | undefined) {
   const state = bindingUtil.difference(sources.state, own.state);
   const param = bindingUtil.filter(
     sources.param,
-    (binding) => !someUpstream(binding, isInParams, own.param),
+    (binding) => !someAliased(binding, isInParams, own.param),
   );
   return withSources(sources, state, param);
 }
 
 // What creates a section anew on the client: a branch's expression, or for
 // content given to a tag, what registers it and the expression passing it.
-function getSectionUpstreamReason(section: Section) {
-  const { downstream, upstreamExpression } = section;
-  if (downstream) {
+function getBranchExprReason(section: Section) {
+  const { derives, branchExpr } = section;
+  if (derives) {
     const registerReason = getRendererReason(section) || undefined;
     if (registerReason === true) return true;
-    let reason = mergeSources(
-      registerReason,
-      getSourcesForDownstream(downstream),
-    );
+    let reason = mergeSources(registerReason, getSourcesForDerived(derives));
     // A direct call renders the body in place, so what creates a section from
     // the call up to the define (or the body, for a recursive call) creates it.
     forEach(section.callSections, (callSection) => {
       reason = mergeSources(
         reason,
-        getUpstreamReasonUntil(
+        getBranchExprReasonUntil(
           callSection,
           isSameOrChildSection(section, callSection)
             ? section
@@ -194,17 +191,20 @@ function getSectionUpstreamReason(section: Section) {
     });
     return reason;
   }
-  return !upstreamExpression || getSourcesForExpr(upstreamExpression);
+  return !branchExpr || getSourcesForExpr(branchExpr);
 }
 
 // What creates `section`, or a section between it and `ancestor`, anew on the
 // client (always, still with its sources, when anything can).
-function getUpstreamReasonUntil(section: Section, ancestor: Section) {
+function getBranchExprReasonUntil(section: Section, ancestor: Section) {
   let reason: Sources | undefined;
   for (let cur = section; cur !== ancestor; cur = cur.parent!) {
-    const upstream = getSectionUpstreamReason(cur);
-    if (upstream) {
-      reason = mergeSources(reason, upstream === true ? ALWAYS : upstream);
+    const branchExprReason = getBranchExprReason(cur);
+    if (branchExprReason) {
+      reason = mergeSources(
+        reason,
+        branchExprReason === true ? ALWAYS : branchExprReason,
+      );
     }
   }
   return reason;
@@ -216,7 +216,7 @@ function addClosureReasons(section: Section) {
   forEach(section.referencedClosures, (closure) => {
     // mark bindings that need to be serialized due to being closed over by stateful sections
     const sourceSection = closure.section;
-    const branchesReason = getUpstreamReasonUntil(section, sourceSection);
+    const branchesReason = getBranchExprReasonUntil(section, sourceSection);
     addReason(
       getSlot(closure),
       branchesReason?.always
@@ -263,7 +263,7 @@ function addRegisteredFnReasons(
   }
 }
 
-// How a value serializes, through its aliases and downstream links (a
+// How a value serializes, through its aliases and derives links (a
 // cyclic graph): the reason its scope values serialize, and the reads it
 // lands in, each recording its position (an effect, a dynamic tag's input).
 interface Readers {
@@ -335,13 +335,13 @@ function readersOfBinding(
 }
 
 function computeExtraReaders(extra: t.NodeExtra): Readers {
-  return readersOfDownstreams(extra, undefined);
+  return readersOfDerives(extra, undefined);
 }
 
 // What an expression serializes for: the template's return, or what the
 // bindings it feeds serialize for, except `part`'s own destructured parts
 // (they answer for their own path).
-function readersOfDownstreams(
+function readersOfDerives(
   extra: t.NodeExtra,
   part: Binding | undefined,
   properties?: Opt<string> | true,
@@ -350,19 +350,19 @@ function readersOfDownstreams(
     return ALWAYS_READ;
   }
   let serialization = UNREAD;
-  forEach(extra.downstream, (binding) => {
+  forEach(extra.derives, (binding) => {
     if (!isPartOf(binding, part)) {
       serialization = mergeReaders(
         serialization,
-        readersOfDownstream(extra, binding, part, properties),
+        readersOfDerived(extra, binding, part, properties),
       );
     }
   });
   return serialization;
 }
 
-// What a downstream binding serializes for, in this program's terms.
-function readersOfDownstream(
+// What a derives binding serializes for, in this program's terms.
+function readersOfDerived(
   extra: t.NodeExtra,
   binding: Binding,
   part: Binding | undefined,
@@ -372,7 +372,7 @@ function readersOfDownstream(
     binding,
     getDownstreamPath(extra, binding, part, properties),
   );
-  const exprs = extra.downstreamExprs;
+  const exprs = extra.callSiteExprs;
   return linked.reason && exprs
     ? {
         reason: mapParamReason(
@@ -386,7 +386,7 @@ function readersOfDownstream(
     : linked;
 }
 
-// Where a path into `part` lands in a downstream `binding`: the same path when
+// Where a path into `part` lands in a derives `binding`: the same path when
 // it is `part` or spreads it as is, an item's path when iterating it, or whole.
 function getDownstreamPath(
   extra: t.NodeExtra,
@@ -423,7 +423,7 @@ function isReferenceTo(extra: t.NodeExtra, binding: Binding) {
 
 // A destructured property or rest of the value (a direct alias is not).
 function isPartOf(binding: Binding, value: Binding | undefined) {
-  return !!value && binding.upstreamAlias === value && !isDirectAlias(binding);
+  return !!value && binding.aliasOf === value && !isDirectAlias(binding);
 }
 
 // An effect runs on resume with the values it references, unless it reads back
@@ -447,12 +447,12 @@ function computeBindingReaders(
   const reason = findSlot(binding)?.reason;
   let serialization: Readers = reason ? { reason, reads: undefined } : UNREAD;
   // A property serializes with the value it is read from.
-  const upstream = binding.upstreamAlias;
-  if (properties !== true && upstream) {
+  const aliased = binding.aliasOf;
+  if (properties !== true && aliased) {
     serialization = mergeReaders(
       serialization,
       readersOfBinding(
-        upstream,
+        aliased,
         properties === undefined
           ? binding.property
           : concat(binding.property, properties as Opt<string>),
@@ -478,7 +478,7 @@ function computeBindingReaders(
     }
     serialization = mergeReaders(
       serialization,
-      readersOfDownstreams(expr, binding, properties),
+      readersOfDerives(expr, binding, properties),
     );
   }
   for (const alias of binding.aliases) {

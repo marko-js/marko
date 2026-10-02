@@ -11,7 +11,7 @@ import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOutputHTML } from "../util/marko-config";
-import { setBindingDownstream, trackVarReferences } from "../util/references";
+import { setDerivedFrom, trackVarReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getPrefixedScopeAccessor } from "../util/scope-accessor";
@@ -62,7 +62,7 @@ export default {
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
       assertNoTagVarMutation(tag);
-      setBindingDownstream(binding, !!valueAttr && evaluate(valueAttr.value));
+      setDerivedFrom(binding, !!valueAttr && evaluate(valueAttr.value));
     }
 
     // The id is initialized in setup unless keyed by the value's references.

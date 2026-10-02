@@ -63,7 +63,7 @@ import {
   sectionUtil,
   setReadsOwner,
 } from "./sections";
-import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
+import { finalizeTagDerivations } from "./set-tag-derived-from";
 import { addSetupWork } from "./setup-work";
 import { findSlot, getSectionSlot, getSlot, SlotKind } from "./slots";
 import {
@@ -86,7 +86,7 @@ export function finalizeReferences() {
   pruneBindings();
   dropPrunedAssignments();
   resolveReads(intersectionsBySection);
-  forEachSection(finalizeTagDownstreams);
+  forEachSection(finalizeTagDerivations);
   resolveBindings();
   forEachSection(addSectionReasons);
   for (const finalize of getReferenceFinalizers()) {
@@ -130,13 +130,13 @@ function dropPrunedAssignments() {
       binding.assignments = filter(binding.assignments, inEmittedExpr);
     } else if (
       !excluded.has(binding) &&
-      binding.upstreamAlias &&
+      binding.aliasOf &&
       binding.property !== undefined
     ) {
       excluded.add(binding);
       // Translate pulls an assigned property's change handler out of its
       // pattern, so the rest of that same pattern no longer holds it.
-      for (const alias of binding.upstreamAlias.aliases) {
+      for (const alias of binding.aliasOf.aliases) {
         if (propsUtil.has(alias.excludeProperties, binding.property)) {
           alias.excludeProperties = propsUtil.add(
             alias.excludeProperties,
@@ -292,7 +292,7 @@ function resolveBindings() {
     const canonicalBinding = getCanonicalBinding(binding);
     section.bindings = bindingUtil.add(section.bindings, canonicalBinding);
     bindingNamesBySection.get(section)?.add(canonicalBinding.name);
-    if (binding.upstreamLocal) {
+    if (binding.localOf) {
       section.localClosures = bindingUtil.add(section.localClosures, binding);
     }
 
@@ -347,11 +347,8 @@ function addSectionReasons(section: Section) {
         ? mergeSources(ALWAYS, closureSources)
         : closureSources,
     );
-    addReasonExprs(branchSlot, section.upstreamExpression);
-    addReasonExprs(
-      getSlot(section.branch.nodeBinding),
-      section.upstreamExpression,
-    );
+    addReasonExprs(branchSlot, section.branchExpr);
+    addReasonExprs(getSlot(section.branch.nodeBinding), section.branchExpr);
   }
 }
 
@@ -388,7 +385,7 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
       }
 
       // Renders run in id order, so a closure-only intersection must come
-      // before the owned derived binding it may be upstream of.
+      // before the owned derived binding that may derive from it.
       intersections.sort((a, b) => {
         const aAnchor = sectionAnchors.get(a);
         const bAnchor = sectionAnchors.get(b);
@@ -466,9 +463,9 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
 
 // The bindings a binding's value is computed from.
 export function getValueInputs(binding: Binding): ReferencedBindings {
-  if (binding.upstreamAlias) return binding.upstreamAlias;
-  if (binding.upstreamExpression) {
-    return getValueReferences(binding.upstreamExpression);
+  if (binding.aliasOf) return binding.aliasOf;
+  if (binding.derivedFrom) {
+    return getValueReferences(binding.derivedFrom);
   }
 }
 
@@ -529,11 +526,11 @@ function resolveIntersectionSource(
   for (const member of intersection) {
     if (!member.sources) return undefined;
     if (member.section !== section || isDirectAlias(member)) return undefined;
-    const upstream = getUpstreamIntersection(member);
+    const rootIntersection = getRootIntersection(member);
     if (
-      upstream &&
-      upstream !== intersection &&
-      !getIntersectionSource(upstream, section, resolved)
+      rootIntersection &&
+      rootIntersection !== intersection &&
+      !getIntersectionSource(rootIntersection, section, resolved)
     ) {
       return undefined;
     }
@@ -590,9 +587,9 @@ function resolveBindingSources(binding: Binding) {
       return;
   }
 
-  if (binding.upstreamLocal) {
-    resolveBindingSources(binding.upstreamLocal);
-    binding.sources = binding.upstreamLocal.sources;
+  if (binding.localOf) {
+    resolveBindingSources(binding.localOf);
+    binding.sources = binding.localOf.sources;
     return;
   }
 
@@ -610,7 +607,7 @@ function resolveBindingSources(binding: Binding) {
 }
 
 function resolveDerivedSources(binding: Binding) {
-  const exprs = binding.upstreamExpression;
+  const exprs = binding.derivedFrom;
 
   if (exprs === undefined) {
     binding.sources = createSources(binding, undefined);
@@ -620,14 +617,14 @@ function resolveDerivedSources(binding: Binding) {
       resolveBindingSources(ref);
       binding.sources = mergeSources(binding.sources, ref.sources);
     });
-    binding.upstreamIntersection = Array.isArray(refs)
+    binding.intersection = Array.isArray(refs)
       ? refs
-      : refs && getUpstreamIntersection(refs);
+      : refs && getRootIntersection(refs);
   }
 }
 
-function getUpstreamIntersection(binding: Binding) {
-  return (getAliasRoot(binding) || binding).upstreamIntersection;
+function getRootIntersection(binding: Binding) {
+  return (getAliasRoot(binding) || binding).intersection;
 }
 
 // Whether an expression (or the one a node's extra sits in) is emitted.
@@ -642,15 +639,13 @@ function inEmittedExpr({ exprRoot, section }: AssignedBindingExtra) {
 // A value with no side effects, or a call site's value, which only the child
 // bindings it feeds observe.
 function isDroppableValue(expr: t.NodeExtra) {
-  return (
-    (!!expr.pure || !!expr.downstreamExprs) && !expr.merged && !expr.pruned
-  );
+  return (!!expr.pure || !!expr.callSiteExprs) && !expr.merged && !expr.pruned;
 }
 
 // A value feeding another binding too (one call site's attribute expression
 // feeds each child that reads it) stays while any of them is read.
 function dropUnreadValue(expr: t.NodeExtra) {
-  if (isDroppableValue(expr) && every(expr.downstream, isPrunedBinding)) {
+  if (isDroppableValue(expr) && every(expr.derives, isPrunedBinding)) {
     dropExtra(expr as ReferencedExtra);
   }
 }
@@ -669,18 +664,18 @@ function pruneBinding(binding: Binding): boolean {
   binding.pruned = false;
   for (const read of binding.reads) {
     if (isDroppableValue(read)) {
-      forEach(read.downstream, pruneBinding);
+      forEach(read.derives, pruneBinding);
     }
   }
   // Likewise an assignment from such a value.
   forEach(binding.assignments, pruneWriter);
 
   for (const read of binding.reads) {
-    let upstream = binding.upstreamAlias;
-    while (upstream && !upstream.reads.has(read)) {
-      upstream = upstream.upstreamAlias;
+    let aliased = binding.aliasOf;
+    while (aliased && !aliased.reads.has(read)) {
+      aliased = aliased.aliasOf;
     }
-    if (upstream) {
+    if (aliased) {
       binding.reads.delete(read);
     }
   }
@@ -713,8 +708,8 @@ function pruneBinding(binding: Binding): boolean {
   ) {
     // Its value is never emitted unless something else observes it, and the
     // reads and assignments inside the value go with it.
-    if (binding.upstreamExpression) {
-      forEach(binding.upstreamExpression, dropUnreadValue);
+    if (binding.derivedFrom) {
+      forEach(binding.derivedFrom, dropUnreadValue);
     }
   }
 
@@ -723,7 +718,7 @@ function pruneBinding(binding: Binding): boolean {
 
 function pruneWriter({ exprRoot }: AssignedBindingExtra) {
   if (isDroppableValue(exprRoot)) {
-    forEach(exprRoot.downstream, pruneBinding);
+    forEach(exprRoot.derives, pruneBinding);
   }
 }
 
@@ -768,22 +763,22 @@ function findClosestReference(
     }
 
     for (const ref of refs) {
-      const closest = findClosestUpstream(from, ref);
+      const closest = findAliased(from, ref);
       if (closest) return closest;
     }
   } else {
-    const closest = findClosestUpstream(from, refs);
+    const closest = findAliased(from, refs);
     if (closest) return closest;
   }
 }
 
-function findClosestUpstream(from: Binding, to: Binding) {
+function findAliased(from: Binding, to: Binding) {
   let closest: Binding | undefined = from;
   do {
     if (closest === to) {
       return closest;
     }
-  } while ((closest = closest.upstreamAlias));
+  } while ((closest = closest.aliasOf));
 }
 
 function getRootBindings(reads: Many<Read>): SortedOneMany<Binding> {
@@ -795,10 +790,10 @@ function getRootBindings(reads: Many<Read>): SortedOneMany<Binding> {
   }
 
   for (const { binding } of reads) {
-    let alias = binding.upstreamAlias;
+    let alias = binding.aliasOf;
     while (alias) {
       if (bindingUtil.has(allBindings, alias)) break;
-      alias = alias.upstreamAlias;
+      alias = alias.aliasOf;
     }
 
     if (!alias) {
@@ -837,8 +832,8 @@ function isLazyRead(
     read.deferred &&
     !isChangeHandlerRead &&
     // Roots and section params own a live slot; other aliases forward to their
-    // upstream with no own slot, so reading them live would go stale on resume.
-    (!binding.upstreamAlias || isParamBinding(binding)) &&
+    // aliased binding with no own slot, so reading them live would go stale on resume.
+    (!binding.aliasOf || isParamBinding(binding)) &&
     binding.type !== BindingType.dom &&
     binding.type !== BindingType.constant
   );
@@ -878,11 +873,11 @@ function resolveReferencedBindings(
       } else {
         const isChangeHandlerRead = extra.assignmentTo === binding;
         if (isChangeHandlerRead) {
-          const upstreamRoot =
-            binding.upstreamAlias &&
-            findClosestReference(binding.upstreamAlias, rootBindings);
-          if (upstreamRoot) {
-            binding = upstreamRoot;
+          const aliasRoot =
+            binding.aliasOf &&
+            findClosestReference(binding.aliasOf, rootBindings);
+          if (aliasRoot) {
+            binding = aliasRoot;
           }
         } else if (binding.type !== BindingType.global) {
           extra.section = expr.section;
@@ -997,10 +992,10 @@ function resolveConstantReference(binding: Binding): ExtraRead | undefined {
 
 // A property of a constant is constant, so it reads through the constant.
 function getConstantRoot(binding: Binding): Binding | undefined {
-  for (let cur = binding; cur.upstreamAlias; cur = cur.upstreamAlias) {
+  for (let cur = binding; cur.aliasOf; cur = cur.aliasOf) {
     if (cur.property === undefined && !isDirectAlias(cur)) return;
-    if (cur.upstreamAlias.type === BindingType.constant) {
-      return cur.upstreamAlias;
+    if (cur.aliasOf.type === BindingType.constant) {
+      return cur.aliasOf;
     }
   }
 }
@@ -1009,10 +1004,10 @@ function resolveExpressionReference(
   rootBindings: SortedOneMany<Binding>,
   readBinding: Binding,
 ) {
-  const upstreamRoot =
-    readBinding.upstreamAlias &&
-    findClosestReference(readBinding.upstreamAlias, rootBindings);
-  return upstreamRoot
-    ? createRead(upstreamRoot, getPropertyPath(readBinding, upstreamRoot))
+  const aliasRoot =
+    readBinding.aliasOf &&
+    findClosestReference(readBinding.aliasOf, rootBindings);
+  return aliasRoot
+    ? createRead(aliasRoot, getPropertyPath(readBinding, aliasRoot))
     : createRead(readBinding, undefined);
 }

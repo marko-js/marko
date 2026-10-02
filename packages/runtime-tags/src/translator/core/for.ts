@@ -29,7 +29,7 @@ import {
   getAllTagReferenceNodes,
   mergeReferences,
   onFinalizeReferences,
-  setBindingDownstream,
+  setDerivedFrom,
   trackParamsReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -134,7 +134,7 @@ export default {
       // The loop runs as its attribute tags are built, so its params change
       // only with its attributes, as a sectioned loop's params do.
       if (paramsBinding) {
-        setBindingDownstream(
+        setDerivedFrom(
           paramsBinding,
           fromIter(
             tag.node.attributes.map((attr) => (attr.value.extra ??= {})),
@@ -197,7 +197,7 @@ export default {
     addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
 
     if (paramsBinding) {
-      setBindingDownstream(paramsBinding, tagExtra);
+      setDerivedFrom(paramsBinding, tagExtra);
       if (forType === "of" || forType === "in") {
         paramsBinding.iterates = {
           expr: (getKnownAttrValues(tag.node)[forType]!.extra ??= {}),

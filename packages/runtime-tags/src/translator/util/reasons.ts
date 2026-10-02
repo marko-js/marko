@@ -140,11 +140,11 @@ export function getSourcesForRef(ref: ReferencedBindings) {
 
 // What reruns the call site expressions passing content to the bindings it
 // feeds, down the property path it lands at.
-export function getSourcesForDownstream({
+export function getSourcesForDerived({
   binding,
   exprs,
   properties,
-}: NonNullable<Section["downstream"]>) {
+}: NonNullable<Section["derives"]>) {
   if (exprs) {
     return reduce(binding, (sources: Sources | undefined, binding) =>
       mergeSources(
