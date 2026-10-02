@@ -6,7 +6,7 @@
     }
   },
   "html": {
-    "min": 831,
-    "brotli": 525
+    "min": 49,
+    "brotli": 53
   }
 }

@@ -1,0 +1,21 @@
+import { rejectAfter } from "../../utils/resolve";
+
+<let/show=true/>
+<try>
+  <@catch|outer|>
+    <p>outer caught ${outer.message}</p>
+  </@catch>
+  <try>
+    <if=show>
+      <span>before</span>
+      <await|value|=rejectAfter(new Error("nope"), 1)>
+        ${value}
+      </await>
+    </if>
+    <@catch|err|>
+      <let/n=0/>
+      <button onClick() { n++ }>${n ? (() => { throw new Error("from catch") })() : err.message}</button>
+    </@catch>
+  </try>
+</try>
+<button.toggle onClick() { show = !show }>${show}</button>

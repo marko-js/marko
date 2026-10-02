@@ -9,7 +9,7 @@ aERROR!def
 ```
 ## Change
 ```
+INSERT: ::text("ERROR!")
 INSERT: ::text@1 + ::text("def")
 REMOVE: ::text("b")
-INSERT: ::text@0 + ::text("ERROR!")
 ```

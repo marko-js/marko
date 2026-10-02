@@ -17,11 +17,11 @@ Rejected B
 ```
 INSERT: div
 INSERT: div:nth-of-type(1)::text("Resolved A: A Value")
+INSERT: div:nth-of-type(1) + ::text("Rejected B")
 INSERT: ::text + div
 INSERT: div:nth-of-type(2)::text("Resolved C: C Value")
 INSERT: div:nth-of-type(2) + button
 INSERT: button::text("Before")
-INSERT: div:nth-of-type(1) + ::text("Rejected B")
 ```
 
 # Update

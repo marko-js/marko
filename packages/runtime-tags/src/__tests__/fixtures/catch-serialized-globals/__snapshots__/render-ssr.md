@@ -8,8 +8,8 @@
 ```
 ## Change
 ```
-INSERT: button::text("ERROR!")
 INSERT: button
+INSERT: button::text("ERROR!")
 ```
 
 # Update

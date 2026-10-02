@@ -1,0 +1,10 @@
+import { rejectAfter } from "../../../utils/resolve";
+
+<try>
+  <@catch>
+    <div id="caught">caught</div>
+  </@catch>
+  <await|value|=rejectAfter(new Error("x"), 1)>
+    <div id="tags">${value}</div>
+  </await>
+</try>

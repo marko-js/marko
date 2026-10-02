@@ -1,0 +1,7 @@
+// use tags
+import { resolveAfter } from "../../utils/resolve";
+
+<await|value|=resolveAfter("slow", 3)>
+  <div id="slow">${value}</div>
+</await>
+<class-wrap/>
