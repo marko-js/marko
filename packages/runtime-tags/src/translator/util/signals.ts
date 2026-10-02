@@ -425,7 +425,7 @@ export function initValue(binding: Binding, isLet = false) {
     if (
       !signal.forcePersist &&
       (isDirectAlias(binding) ||
-        !signal.hasSideEffect ||
+        (!signal.hasSideEffect && !hasAliasSideEffect(binding)) ||
         !signalHasStatements(signal))
     ) {
       return fn;
@@ -451,6 +451,20 @@ export function initValue(binding: Binding, isLet = false) {
   }
 
   return signal;
+}
+
+// A direct alias's work reads the slot of the binding it aliases.
+function hasAliasSideEffect(binding: Binding): boolean {
+  for (const alias of binding.aliases) {
+    if (
+      isDirectAlias(alias) &&
+      (getSignal(alias.section, alias).hasSideEffect ||
+        hasAliasSideEffect(alias))
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function signalHasStatements(signal: Signal): boolean {
@@ -1015,10 +1029,11 @@ export function writeSignals(section: Section) {
     let signalDeclaration: t.Statement | undefined;
     if (signal.build) {
       let value = signal.build();
-      // Eagerness is judged BEFORE wrappers (`_var_resume`/fill wraps keep
-      // their argument eager): a built bare identifier references its
-      // forward target at module evaluation.
-      const buildsEagerForward = t.isIdentifier(value);
+      // A built bare identifier, or one a `_const`/`_let` store takes as its
+      // fn, references its forward target when the module evaluates.
+      const buildsEagerForward =
+        t.isIdentifier(value) ||
+        (t.isCallExpression(value) && t.isIdentifier(value.arguments.at(-1)));
 
       if (
         !value ||

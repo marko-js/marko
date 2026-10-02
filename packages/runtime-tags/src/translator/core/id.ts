@@ -59,22 +59,29 @@ export default {
         );
     }
 
+    // Minting is unobservable, so a tag without a value is itself the pure
+    // value its variable takes, dropped with it when unread.
+    const valueNode = valueAttr ? valueAttr.value : tag.node;
+    if (!valueAttr) (tag.node.extra ??= {}).pure = true;
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
       assertNoTagVarMutation(tag);
-      setDerivedFrom(binding, !!valueAttr && evaluate(valueAttr.value));
+      setDerivedFrom(
+        binding,
+        valueAttr ? evaluate(valueAttr.value) : tag.node.extra!,
+      );
     }
 
     // The id is initialized in setup unless keyed by the value's references.
-    addSetupExpr(getOrCreateSection(tag), valueAttr?.value);
+    addSetupExpr(getOrCreateSection(tag), valueNode);
   },
   translate: {
     exit(tag) {
       const { node } = tag;
       const [valueAttr] = node.attributes;
 
-      // An unread pure value was dropped, so there is no id to mint.
-      if (valueAttr?.value.extra?.pruned) {
+      // Nothing reads it and its value was dropped, so there is no id to mint.
+      if ((valueAttr ? valueAttr.value : node).extra?.pruned) {
         tag.remove();
         return;
       }

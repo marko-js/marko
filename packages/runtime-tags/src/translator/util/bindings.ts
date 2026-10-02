@@ -34,8 +34,13 @@ export interface Binding {
   closureId: number | undefined;
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
-  /** Emitted code the graph stopped tracking still names it. */
-  untracked?: true;
+  /** Expressions whose emitted code reads it though the graph stopped tracking
+   * the read: pruning keeps its value while any of them is emitted. */
+  untrackedReads?: Opt<t.NodeExtra>;
+  /** Expressions referencing it by name whose reads land elsewhere (an
+   * alias's references, and an alias's own declaration of what it aliases):
+   * pruning keeps its value while any of them is emitted. */
+  referencedBy?: Opt<t.NodeExtra>;
   sources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one it derives
    * from. Set on alias roots only. */

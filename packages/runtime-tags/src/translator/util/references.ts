@@ -153,11 +153,15 @@ function getOrCreateLocalClosure(local: Binding, section: Section) {
   return closure;
 }
 
-// Whether anything reads a native tag's variable (an element reference);
-// an unread one leaves nothing for the client to resolve.
-export function isTagVarRead(tag: t.NodePath<t.MarkoTag>) {
-  const tagVar = tag.node.var as t.Identifier | undefined;
-  return !!tagVar && !!tag.scope.getBinding(tagVar.name)?.referencePaths.length;
+// Whether anything reads or assigns a tag's variable.
+export function isTagVarUsed(tag: t.NodePath<t.MarkoTag>) {
+  for (const name in t.getBindingIdentifiers(tag.node.var!)) {
+    const binding = tag.scope.getBinding(name);
+    if (binding?.referencePaths.length || binding?.constantViolations.length) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function trackDomVarReferences(
@@ -378,6 +382,11 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   for (const ref of referencePaths as t.NodePath<t.Identifier>[]) {
     const refSection = getOrCreateSection(ref);
     const markoRoot = getMarkoRoot(ref);
+    // Emitted code names an alias wherever it is referenced, though its reads
+    // land on what it aliases.
+    if (binding.aliasOf) {
+      addReferencedBy(binding, (getExprRoot(ref).node.extra ??= {}));
+    }
     const isOwnAttribute =
       markoRoot?.type === "MarkoAttribute" &&
       markoRoot.parentPath === babelBinding.path;
@@ -756,6 +765,14 @@ function trackReference(
   addReadToExpression(root, reference, undefined);
 }
 
+function addUntrackedRead(binding: Binding, expr: t.NodeExtra) {
+  binding.untrackedReads = push(binding.untrackedReads, expr);
+}
+
+export function addReferencedBy(binding: Binding, expr: t.NodeExtra) {
+  binding.referencedBy = push(binding.referencedBy, expr);
+}
+
 // Writing a member (`obj.x = 1`, `obj.x++`, `delete obj.x`, a destructuring
 // target) mutates its object, so the read must stop at that object.
 function isWrittenMember(member: t.NodePath) {
@@ -972,7 +989,18 @@ export function dropNodes(node: t.Node | t.Node[]) {
   }
 }
 
+// Still emitted, so the code names what it read past the graph.
 export function untrackNode(node: t.Node) {
+  const exprExtra = (node.extra ??= {}) as ReferencedExtra;
+  const reads = untrackExtra(exprExtra);
+  if (reads && !exprExtra.pruned && !exprExtra.section!.pruned) {
+    forEach(reads, (read) => addUntrackedRead(read.binding, exprExtra));
+  }
+}
+
+// An alias's value reaches its aliased binding through the alias, so it keeps no
+// read of its own and is emitted only while the alias is.
+export function untrackAliasValue(node: t.Node) {
   untrackExtra((node.extra ??= {}) as ReferencedExtra);
 }
 
@@ -994,13 +1022,9 @@ function untrackExtra(exprExtra: ReferencedExtra) {
   if (reads) {
     readsByExpr.delete(exprExtra);
     getFunctionReadsByExpression().delete(exprExtra);
-    forEach(reads, (read) => {
-      read.binding.reads.delete(exprExtra);
-      if (!exprExtra.pruned && !exprExtra.section.pruned) {
-        read.binding.untracked = true;
-      }
-    });
+    forEach(reads, (read) => read.binding.reads.delete(exprExtra));
   }
+  return reads;
 }
 
 // Content no output renders: the expressions in it are untracked, and each body

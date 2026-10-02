@@ -2,7 +2,8 @@ import { types as t } from "@marko/compiler";
 
 import { BindingType, createBinding } from "./bindings";
 import { getParentTag } from "./get-parent-tag";
-import type { Section } from "./sections";
+import { isCoreTag } from "./is-core-tag";
+import { getNodeContentType, type Section } from "./sections";
 import { getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -13,10 +14,7 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export function getOnlyChildParentTagName(
-  tag: t.NodePath<t.MarkoTag>,
-  branchSize = 1,
-) {
+export function getOnlyChildParentTagName(tag: t.NodePath<t.MarkoTag>) {
   const extra = tag.node.extra!;
   if (extra[kOnlyChildInParent] !== undefined) {
     return extra[kOnlyChildInParent];
@@ -29,11 +27,26 @@ export function getOnlyChildParentTagName(
     parentTag.node.name.type === "StringLiteral" &&
     // Marko does not own every child of a page element.
     !getTagFacts(parentTag).pageElement &&
-    (tag.parent as t.MarkoTagBody).body.filter(
-      (node) => node.type !== "MarkoComment",
-    ).length === branchSize
+    isOnlyChild(tag)
       ? parentTag.node.name.value
       : false);
+}
+
+// Siblings rendering nothing (a `<let>`, the rest of an `<if>` chain) leave the
+// element to the tag; a child component's scope is still addressed before it.
+function isOnlyChild(tag: t.NodePath<t.MarkoTag>) {
+  for (const sibling of (tag.parentPath as t.NodePath<t.MarkoTagBody>).get(
+    "body",
+  )) {
+    if (
+      sibling.node !== tag.node &&
+      ((sibling.isMarkoTag() && !isCoreTag(sibling)) ||
+        getNodeContentType(sibling, "startType") !== null)
+    ) {
+      return false;
+    }
+  }
+  return true;
 }
 
 // A control flow tag that is its element's only child is addressed by that
@@ -41,10 +54,9 @@ export function getOnlyChildParentTagName(
 export function analyzeNodeBinding(
   tag: t.NodePath<t.MarkoTag>,
   section: Section,
-  branchSize = 1,
 ) {
   const extra = (tag.node.extra ??= {});
-  if (getOnlyChildParentTagName(tag, branchSize)) {
+  if (getOnlyChildParentTagName(tag)) {
     const parentTag = getParentTag(tag)!.node;
     const parentTagName = (parentTag.name as t.StringLiteral).value;
     return (extra.nodeBinding = (parentTag.extra ??= {}).nodeBinding ??=

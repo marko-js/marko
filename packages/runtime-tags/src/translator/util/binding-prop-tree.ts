@@ -90,10 +90,10 @@ function isDirectContentBinding(binding: Binding) {
   return read[kDirectContent] && read.section === binding.section;
 }
 
-// Pruning keeps an alias of an analyzed body only if something reads it, names
-// it, or reads an alias of it.
+// Pruning keeps an alias of an analyzed body only if something reads it (tracked
+// or not) or reads an alias of it; a reference to an alias reads what it aliases.
 function isPossiblyRead(alias: Binding): boolean {
-  if (alias.reads.size || alias.untracked) return true;
+  if (alias.reads.size || alias.untrackedReads) return true;
   for (const nested of alias.aliases) {
     if (isPossiblyRead(nested)) return true;
   }

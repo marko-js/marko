@@ -267,12 +267,6 @@ function resolveBindings() {
         binding,
       );
 
-      let currentSection = binding.section.parent;
-      while (currentSection && currentSection !== highestHoistSection) {
-        currentSection.isHoistThrough = true;
-        currentSection = currentSection.parent;
-      }
-
       // Each owner up to the hoist holds its child's scopes, which a
       // resumed branch's own scopes already are.
       for (
@@ -285,6 +279,9 @@ function resolveBindings() {
             getSectionSlot(section, SlotKind.Instances, section.parent!),
             ALWAYS,
           );
+        }
+        if (section.parent !== highestHoistSection) {
+          section.parent!.isHoistThrough = true;
         }
       }
     }
@@ -667,8 +664,10 @@ function pruneBinding(binding: Binding): boolean {
       forEach(read.derives, pruneBinding);
     }
   }
-  // Likewise an assignment from such a value.
+  // Likewise an assignment from such a value, or code naming it.
   forEach(binding.assignments, pruneWriter);
+  forEach(binding.untrackedReads, pruneDerived);
+  forEach(binding.referencedBy, pruneDerived);
 
   for (const read of binding.reads) {
     let aliased = binding.aliasOf;
@@ -680,9 +679,10 @@ function pruneBinding(binding: Binding): boolean {
     }
   }
 
-  // What it reserves takes the ids after its own, so it keeps its id even when
-  // an alias covers its reads.
-  let shouldPrune = !binding.reads.size && !binding.reserveSize;
+  // An emitted assignment calls the change handler in the id it reserves.
+  let shouldPrune =
+    !binding.reads.size &&
+    !(binding.reserveSize && some(binding.assignments, inEmittedExpr));
 
   for (const alias of binding.aliases) {
     if (pruneBinding(alias)) {
@@ -701,11 +701,7 @@ function pruneBinding(binding: Binding): boolean {
   }
 
   binding.pruned = shouldPrune;
-  if (
-    shouldPrune &&
-    !binding.untracked &&
-    !some(binding.assignments, inEmittedExpr)
-  ) {
+  if (shouldPrune && !isNamedOrAssigned(binding)) {
     // Its value is never emitted unless something else observes it, and the
     // reads and assignments inside the value go with it.
     if (binding.derivedFrom) {
@@ -716,9 +712,23 @@ function pruneBinding(binding: Binding): boolean {
   return shouldPrune;
 }
 
+// Emitted code names it or assigns it, so its value stays though nothing reads
+// it.
+export function isNamedOrAssigned(binding: Binding) {
+  return (
+    some(binding.untrackedReads, isEmitted) ||
+    some(binding.referencedBy, isEmitted) ||
+    some(binding.assignments, inEmittedExpr)
+  );
+}
+
 function pruneWriter({ exprRoot }: AssignedBindingExtra) {
-  if (isDroppableValue(exprRoot)) {
-    forEach(exprRoot.derives, pruneBinding);
+  pruneDerived(exprRoot);
+}
+
+function pruneDerived(expr: t.NodeExtra) {
+  if (isDroppableValue(expr)) {
+    forEach(expr.derives, pruneBinding);
   }
 }
 

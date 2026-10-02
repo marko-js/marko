@@ -52,7 +52,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
+REMOVE: div > button
 INSERT: div > span
-REMOVE: div > span + button
 UPDATE: div > span::text@23 "" => "3"
 ```

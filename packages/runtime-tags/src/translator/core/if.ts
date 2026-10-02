@@ -69,17 +69,13 @@ export const IfTag = {
       const ifTagSection = getOrCreateSection(ifTag);
       const ifTagExtra = (ifTag.node.extra ??= {});
       const mergeReferenceNodes: t.Node[] = [];
-      // Recorded at the last branch so the only-child check sees the full
-      // branch count; nothing records to this section between the branches.
-      if (!getOnlyChildParentTagName(ifTag, branches.length)) {
+      // Recorded at the last branch, once every branch's body exists; nothing
+      // records to this section between the branches.
+      if (!getOnlyChildParentTagName(ifTag)) {
         structure.visit(ifTag, WalkCode.Replace);
         structure.enterShallow(ifTag);
       }
-      const nodeBinding = analyzeNodeBinding(
-        ifTag,
-        ifTagSection,
-        branches.length,
-      );
+      const nodeBinding = analyzeNodeBinding(ifTag, ifTagSection);
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {
@@ -127,10 +123,7 @@ export const IfTag = {
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
           const nodeBinding = ifTag.node.extra!.nodeBinding!;
-          const onlyChildParentTagName = getOnlyChildParentTagName(
-            ifTag,
-            branches.length,
-          );
+          const onlyChildParentTagName = getOnlyChildParentTagName(ifTag);
           const nextTag = tag.getNextSibling();
           let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
