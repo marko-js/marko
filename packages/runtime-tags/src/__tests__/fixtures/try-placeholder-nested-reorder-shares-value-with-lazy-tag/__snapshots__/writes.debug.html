@@ -1,0 +1,68 @@
+<!--M_[--><!--M_!^3-->outer<!--M_!3--><!--M_]1 #text/0 3-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>a<!--M_[-->b<!--M_[--><!--M_!^10--><!--M_[-->
+  <script async type=module src="child.marko.load.mjs"></script><button
+    class=child>0<!--M_$12 #text/1--></button><!--M_$12 #button/0--><button
+    class=placeholder>0<!--M_$11 #text/3--></button><!--M_$11 #button/2--><!--M_]8 #PlaceholderBranch10 9--><!--M_!10--><!--M_]8 #text/1 10--><!--M_]5 #text/1 7-->
+</t>
+<t hidden M_=10><!--M_#c--></t>
+<script>
+  M._.r = [_ => [10, {
+    "#PlaceholderBranch": _(9)
+  }, {
+    shared: {
+      n: 1
+    },
+    count: 0
+  }]];
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-reorder-shares-value-with-lazy-tag/child.marko": [
+      1
+    ]
+  };
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [12, {
+        input_shared: _(11).shared,
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-reorder-shares-value-with-lazy-tag/child.marko_0 12"
+      ))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-reorder-shares-value-with-lazy-tag/child.marko"
+      ]);
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-reorder-shares-value-with-lazy-tag/template.marko_8 11"
+      )
+  };
+  M._.j[10] = _ => {
+    _.push("_placeholderDismiss 10")
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c>c</t>
+<script>
+  M._.r.push(_ => [3, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-reorder-shares-value-with-lazy-tag/template.marko_2*content"
+      ]
+  }, 3, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-reorder-shares-value-with-lazy-tag/template.marko_5*content"
+      ]
+  }, 2, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-nested-reorder-shares-value-with-lazy-tag/template.marko_8*content"
+      ]
+  }]);
+  M._.w()
+</script>
