@@ -1,5 +1,4 @@
 import { types as t } from "@marko/compiler";
-import { getFile } from "@marko/compiler/babel-utils";
 
 import {
   type Binding,
@@ -7,7 +6,6 @@ import {
   getCanonicalBinding,
 } from "./bindings";
 import * as SlotKind from "./constants/slot-kind";
-import { isAnalyzing } from "./get-compile-stage";
 import { type Opt, Sorted, type SortedOpt } from "./optional";
 import { type Reason } from "./reasons";
 import { type ParamReasonGroup, type Section } from "./sections";
@@ -123,17 +121,13 @@ export function findSectionSlot(
   return findIn(section.slots, getOwnerOrder(owner), kind, undefined);
 }
 
-// A slot made later would shift the ids analysis already allocated. Made only
-// here, every slot has one shape.
+// Made only here, so every slot has one shape.
 function addSlot(
   kind: SlotKind,
   section: Section,
   owner: Binding | Section,
   group: ParamReasonGroup | undefined,
 ) {
-  if (MARKO_DEBUG && !isAnalyzing(getFile())) {
-    throw new Error("Slots are made while analyzing; translate finds them.");
-  }
   const slot = {
     kind,
     section,

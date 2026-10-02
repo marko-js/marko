@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/compiler/babel-utils";
 
+import type coreTags from "../core";
 import * as ContentType from "./constants/content-type";
 import { isCoreTag } from "./is-core-tag";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -28,8 +29,13 @@ export interface TagFacts {
 
 const noContentFacts: TagFacts = { content: null };
 
+// A core tag's name, from the registry the taglib is built from.
+type CoreTagName = {
+  [K in keyof typeof coreTags]: K extends `<${infer Name}>` ? Name : never;
+}[keyof typeof coreTags];
+
 // Every core tag, so a new one decides what it renders.
-const coreTagFacts: Record<string, TagFacts> = {
+const coreTagFacts: Record<CoreTagName, TagFacts> = {
   attrs: noContentFacts,
   class: noContentFacts,
   client: noContentFacts,
@@ -103,11 +109,7 @@ const nativeElementFacts = new Map<string, TagFacts>([
 
 export function getTagFacts(tag: t.NodePath<t.MarkoTag>): TagFacts {
   if (isCoreTag(tag)) {
-    const facts = coreTagFacts[tag.node.name.value];
-    if (MARKO_DEBUG && !facts) {
-      throw new Error(`Core tag <${tag.node.name.value}> has no tag facts.`);
-    }
-    return facts;
+    return coreTagFacts[tag.node.name.value as CoreTagName];
   }
 
   switch (analyzeTagNameType(tag)) {

@@ -104,9 +104,6 @@ export default {
           const walks = trimTrailingExits(getSectionMeta(childSection).walks);
           const written = writeSignals(childSection);
           const setup = getSetup(childSection);
-          // Of child sections only a `<define>` body's setup is ever skipped,
-          // which `<define>` checks itself, so this check is debug only.
-          if (MARKO_DEBUG) assertSetupWorkFound(program, childSection, written);
           const setupIdentifier =
             setup && written.has(setup) ? setup.identifier : undefined;
 
