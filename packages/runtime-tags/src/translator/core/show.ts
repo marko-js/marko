@@ -6,7 +6,6 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { getBranchEndArgs } from "../util/branch-tag";
@@ -14,10 +13,7 @@ import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
-import {
-  analyzeNodeBinding,
-  getOnlyChildParentTagName,
-} from "../util/is-only-child-in-parent";
+import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -83,17 +79,17 @@ export default {
 
       const tagSection = getOrCreateSection(tag);
 
-      // Bindings are created in walk order: the only-child parent, or the body
-      // range's start marker, precedes the body and so is created here.
+      // The only-child parent, or the body range's start marker, precedes the
+      // body, so it is recorded here.
       if (getOnlyChildParentTagName(tag)) {
-        analyzeNodeBinding(tag, tagSection);
+        structure.controlFlowNode(tag, tagSection);
       } else {
         tagExtra[kStartBinding] = createBinding(
           "#text",
           BindingType.dom,
           tagSection,
         );
-        structure.visit(tag, WalkCode.Replace);
+        structure.marker(tag, tagExtra[kStartBinding]);
         structure.enterShallow(tag);
       }
 
@@ -119,15 +115,12 @@ export default {
             BindingType.dom,
             tagSection,
           );
-          structure.visit(tag, WalkCode.Replace);
+          structure.marker(tag, tagExtra[kEndBinding]);
           structure.enterShallow(tag);
         }
 
-        // The reference node the display signal anchors to, after the markers
-        // to keep bindings in walk order.
-        analyzeNodeBinding(tag, tagSection);
-        structure.visit(tag, WalkCode.Replace);
-        structure.enterShallow(tag);
+        // The reference node the display signal anchors to, after the markers.
+        structure.controlFlowNode(tag, tagSection);
       }
 
       const nodeBinding = tagExtra.nodeBinding!;

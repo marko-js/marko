@@ -1,0 +1,5 @@
+{
+  "<legacy-greeting>": {
+    "renderer": "./legacy-greeting.js"
+  }
+}

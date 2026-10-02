@@ -16,7 +16,6 @@ import {
 } from "@marko/compiler/babel-utils";
 import MagicString, { type SourceMap } from "magic-string";
 
-import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";
 import { BindingType, createBinding } from "../util/bindings";
 import { isCoreTagName } from "../util/is-core-tag";
@@ -90,7 +89,7 @@ export default {
       analyzeDynamicStyle(tag, names);
       // Dynamic styles write their shell statement in setup.
       addSetupExpr(getOrCreateSection(tag));
-      structure.visit(tag, WalkCode.Get);
+      structure.node(tag, tag.node.extra!.nodeBinding);
       structure.enterShallow(tag);
       structure.writeTo(tag)`<style></style>`;
     }

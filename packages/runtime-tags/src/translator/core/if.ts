@@ -6,7 +6,6 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
 import {
@@ -17,10 +16,7 @@ import {
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
-import {
-  analyzeNodeBinding,
-  getOnlyChildParentTagName,
-} from "../util/is-only-child-in-parent";
+import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { addReasonExprs, type Reasons, sourcesUtil } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
@@ -66,11 +62,7 @@ export const IfTag = {
       const mergeReferenceNodes: t.Node[] = [];
       // Recorded at the last branch, once every branch's body exists; nothing
       // records to this section between the branches.
-      if (!getOnlyChildParentTagName(ifTag)) {
-        structure.visit(ifTag, WalkCode.Replace);
-        structure.enterShallow(ifTag);
-      }
-      const nodeBinding = analyzeNodeBinding(ifTag, ifTagSection);
+      const nodeBinding = structure.controlFlowNode(ifTag, ifTagSection);
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {

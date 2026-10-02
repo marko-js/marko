@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 
-import { WalkCode } from "../../common/types";
 import { BindingType, createBinding } from "../util/bindings";
 import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
@@ -81,6 +80,7 @@ export default {
         structure.writeTextTo(placeholder, staticText!);
       } else {
         const siblingText = extra[kSiblingText]!;
+        const nodeBinding = extra.nodeBinding!;
         const { content } = getSection(placeholder);
         if (
           siblingText === SiblingText.Before ||
@@ -90,10 +90,10 @@ export default {
             content!.singleChild &&
             content!.startType === ContentType.Placeholder)
         ) {
-          structure.visit(placeholder, WalkCode.Replace);
+          structure.marker(placeholder, nodeBinding);
         } else {
           structure.writeTextTo(placeholder, " ");
-          structure.visit(placeholder, WalkCode.Get);
+          structure.node(placeholder, nodeBinding);
         }
       }
 

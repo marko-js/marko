@@ -6,7 +6,6 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { type Binding, BindingType } from "../util/bindings";
 import {
@@ -18,10 +17,7 @@ import {
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
-import {
-  analyzeNodeBinding,
-  getOnlyChildParentTagName,
-} from "../util/is-only-child-in-parent";
+import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { fromIter } from "../util/optional";
 import { addReasonExprs } from "../util/reasons";
 import {
@@ -167,7 +163,7 @@ export default {
       return;
     }
 
-    const nodeBinding = analyzeNodeBinding(tag, tagSection);
+    const nodeBinding = structure.controlFlowNode(tag, tagSection);
     const tagExtra = mergeReferences(
       tagSection,
       tag.node,
@@ -197,11 +193,6 @@ export default {
       nodeBinding,
       optional: true,
     });
-
-    if (!isAttrTag && !getOnlyChildParentTagName(tag)) {
-      structure.visit(tag, WalkCode.Replace);
-      structure.enterShallow(tag);
-    }
   },
   translate: translateByTarget({
     html: {

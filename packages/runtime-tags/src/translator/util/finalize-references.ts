@@ -61,10 +61,12 @@ import {
   type Section,
   sectionUtil,
   setReadsOwner,
+  StructureKind,
+  type StructureOp,
 } from "./sections";
 import { finalizeTagDerivations } from "./set-tag-derived-from";
 import { addSetupExpr } from "./setup-work";
-import { findSlot, getSectionSlot, getSlot, SlotKind } from "./slots";
+import { getSectionSlot, getSlot, SlotKind } from "./slots";
 import {
   addAlwaysRead,
   readsValuesOnResume,
@@ -397,6 +399,17 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
 
     let intersectionIndex = 0;
     let nextId = 0;
+    // The walker stores each node it reaches at the next scope index, so the
+    // walk numbers the section's dom bindings.
+    const walked = new Set<Binding>();
+    for (const op of section.structure || []) {
+      const binding = getWalkedBinding(op);
+      if (binding) {
+        walked.add(binding);
+        binding.id = nextId++;
+        nextId += binding.reserveSize;
+      }
+    }
     let intersection: Intersection;
     const assignIntersectionId = (intersection: Intersection) => {
       intersectionMeta.set(intersection, {
@@ -406,8 +419,9 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
       });
     };
     forEach(ownedBindings, (binding) => {
-      // Dom ids are the walker's dense indexes; unanchored intersections
-      // slot in right after them, ahead of every other owned binding.
+      if (walked.has(binding)) return;
+      // Unanchored intersections slot in right after the dom ids, ahead of
+      // every other owned binding.
       if (binding.type !== BindingType.dom) {
         while (
           intersectionIndex < intersections.length &&
@@ -419,15 +433,6 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
       }
       binding.id = nextId++;
       nextId += binding.reserveSize;
-      if (
-        MARKO_DEBUG &&
-        !binding.reserveSize &&
-        findSlot(binding, SlotKind.ChangeHandler)
-      ) {
-        throw new Error(
-          `Marko internal error: "${binding.name}" holds a change handler without reserving its id.`,
-        );
-      }
       while (
         intersectionIndex < intersections.length &&
         anchors!.get((intersection = intersections[intersectionIndex])) ===
@@ -481,6 +486,12 @@ function getValueReferences(exprs: Opt<t.NodeExtra>) {
 
 // The last tag whose child returns one of the intersection's own sources, whose
 // scope offset the intersection renders after.
+function getWalkedBinding(op: StructureOp) {
+  return typeof op === "object" && op.kind !== StructureKind.Text
+    ? op.binding
+    : undefined;
+}
+
 function getLastOwnSourceReturn(intersection: Intersection, section: Section) {
   let returnedBy: Binding | undefined;
   for (const binding of intersection) {

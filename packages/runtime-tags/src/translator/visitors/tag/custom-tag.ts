@@ -15,7 +15,6 @@ import {
 } from "@marko/compiler/babel-utils";
 import { distance } from "fastest-levenshtein";
 
-import { WalkCode } from "../../../common/types";
 import type { LoadTrigger } from "../../../html/assets";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { type Binding } from "../../util/bindings";
@@ -124,7 +123,7 @@ export default {
 
       const tagName = getStaticTagName(tag.node);
       if (tagExtra.tagNameLoad) {
-        structure.visit(tag, WalkCode.Replace);
+        structure.marker(tag, tagExtra[kLoadTagBinding]!);
         structure.child(tag, tagName);
         structure.enterShallow(tag);
       } else {

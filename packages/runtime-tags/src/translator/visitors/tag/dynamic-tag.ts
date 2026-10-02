@@ -10,13 +10,18 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { isEventHandler } from "../../../common/helpers";
-import { WalkCode } from "../../../common/types";
+import { ReservedId } from "../../../common/types";
 import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
 import {
   getBindingPropTree,
   kDirectContent,
 } from "../../util/binding-prop-tree";
-import { type Binding, BindingType, createBinding } from "../../util/bindings";
+import {
+  type Binding,
+  BindingType,
+  createBinding,
+  reserveId,
+} from "../../util/bindings";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
   getAccessorPrefix,
@@ -197,7 +202,7 @@ export default {
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived)!.returnedBy = nodeBinding;
-        nodeBinding.reserveSize = 1;
+        reserveId(nodeBinding, ReservedId.ScopeOffset);
       }
 
       const bodySection = startSection(tagBody);
@@ -230,15 +235,15 @@ export default {
         tagExtra[kDirectContent] = true;
       }
 
+      structure.marker(tag, nodeBinding);
+      structure.enterShallow(tag);
       // A class API tag without a tags template renders only through the
-      // interop: dom output removes it, so it and its body record nothing.
-      if (tagExtra.featureType !== "class" || getTagTemplate(tag)) {
-        structure.visit(
-          tag,
-          hasVar ? WalkCode.DynamicTagWithVar : WalkCode.Replace,
-        );
-        structure.enterShallow(tag);
-      } else if (bodySection) {
+      // interop: dom output renders nothing at its marker, nor its body.
+      if (
+        bodySection &&
+        tagExtra.featureType === "class" &&
+        !getTagTemplate(tag)
+      ) {
         bodySection.structure = null;
       }
     },

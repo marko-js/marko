@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
+import { ReservedId } from "../../common/types";
 import { scopeIdentifier } from "../visitors/program";
 import { getSectionRendererIdentifier } from "./binding-has-prop";
 import {
@@ -19,6 +20,7 @@ import {
   getOrCreatePropertyAlias,
   isInvokeOnlyBinding,
   propsUtil,
+  reserveId,
 } from "./bindings";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
@@ -170,7 +172,7 @@ export function knownTagAnalyze(
         ? contentSection.returnValueExpr
         : mapParamReasonToExpr(exprs, getReturnParams(contentSection)));
     varBinding.returnedBy = childScopeBinding;
-    childScopeBinding.reserveSize = 1;
+    reserveId(childScopeBinding, ReservedId.ScopeOffset);
     setDerivedFrom(varBinding, varExpr);
     if (mutatesTagVar || varExpr === true) {
       addReason(getSlot(childScopeBinding), ALWAYS);

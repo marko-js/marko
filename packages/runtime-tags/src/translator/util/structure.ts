@@ -1,10 +1,13 @@
 import { types as t } from "@marko/compiler";
 import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
-import { WalkCode, WalkRangeSize } from "../../common/types";
+import { ReservedId, WalkCode, WalkRangeSize } from "../../common/types";
+import { type Binding, BindingType, createBinding } from "./bindings";
 import * as Step from "./constants/step";
 import { generateUidIdentifier } from "./generate-uid";
+import { getParentTag } from "./get-parent-tag";
 import { importOrSelfReferenceName } from "./import-reference";
+import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
@@ -15,8 +18,8 @@ import {
   type Section,
   StructureKind,
   type StructureOp,
+  type StructureNode,
   type StructureRef,
-  type StructureVisit,
 } from "./sections";
 import { createProgramState, createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
@@ -58,7 +61,7 @@ export function child(
   getSection(tag).structure?.push({
     kind: StructureKind.Child,
     name,
-    hasVar: !!tag.node.var,
+    binding: tag.node.extra!.nodeBinding!,
     renderer,
   });
 }
@@ -94,14 +97,59 @@ function pushMarkup(structure: StructureOp[], str: string) {
   }
 }
 
-export function visit(
-  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder | t.Program>,
-  code: StructureVisit["code"],
-  claimed = true,
+// A node the markup renders, held in `binding` (set later while unknown).
+export function node(
+  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  binding?: Binding,
+) {
+  return addNode(path, binding, false);
+}
+
+// A `<!>` marker that what renders in its place replaces.
+export function marker(
+  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  binding: Binding,
+) {
+  addNode(path, binding, true);
+}
+
+// A control flow tag that is its element's only child is addressed by that
+// element, else by a marker of its own.
+export function controlFlowNode(tag: t.NodePath<t.MarkoTag>, section: Section) {
+  const extra = (tag.node.extra ??= {});
+  if (getOnlyChildParentTagName(tag)) {
+    const parentTag = getParentTag(tag)!.node;
+    const parentTagName = (parentTag.name as t.StringLiteral).value;
+    return (extra.nodeBinding = (parentTag.extra ??= {}).nodeBinding ??=
+      createBinding(
+        "#" + parentTagName.toLowerCase(),
+        BindingType.dom,
+        section,
+      ));
+  }
+
+  const binding = (extra.nodeBinding = createBinding(
+    "#text",
+    BindingType.dom,
+    section,
+  ));
+  marker(tag, binding);
+  enterShallow(tag);
+  return binding;
+}
+
+function addNode(
+  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  binding: Binding | undefined,
+  marker: boolean,
 ) {
   const { structure } = getSection(path);
   if (!structure) return;
-  const op: StructureVisit = { kind: StructureKind.Visit, code, claimed };
+  const op: StructureNode = {
+    kind: StructureKind.Node,
+    binding,
+    marker,
+  };
   structure.push(op);
   return op;
 }
@@ -141,17 +189,25 @@ export function resolveStructure(section: Section) {
           appendLiteral(resolved.writes, op.value);
           textEdge = "own";
           break;
-        case StructureKind.Visit:
-          if (!op.claimed) continue;
+        case StructureKind.Node: {
+          if (!op.binding) continue;
+          const withVar = hasScopeOffset(op.binding);
+          const code = op.marker
+            ? withVar
+              ? WalkCode.DynamicTagWithVar
+              : WalkCode.Replace
+            : WalkCode.Get;
           flushSteps(resolved);
-          resolved.walkComment.push(walkCodeToName[op.code]);
-          appendLiteral(resolved.walks, String.fromCharCode(op.code));
-          if (op.code !== WalkCode.Get) {
+          resolved.walkComment.push(walkCodeToName[code]);
+          appendLiteral(resolved.walks, String.fromCharCode(code));
+          if (op.marker) {
             appendLiteral(resolved.writes, "<!>");
             textEdge = undefined;
           }
           break;
+        }
         case StructureKind.Child: {
+          const withVar = hasScopeOffset(op.binding);
           const content = refContent(op.renderer);
           // A child with no content has no node for the walker to reach.
           if (content) {
@@ -166,11 +222,11 @@ export function resolveStructure(section: Section) {
           if (template) {
             resolved.writes.push(template, "");
           }
-          resolved.walkComment.push(`<${op.name}${op.hasVar ? "/var" : ""}>`);
+          resolved.walkComment.push(`<${op.name}${withVar ? "/var" : ""}>`);
           appendLiteral(
             resolved.walks,
             String.fromCharCode(
-              op.hasVar ? WalkCode.BeginChildWithVar : WalkCode.BeginChild,
+              withVar ? WalkCode.BeginChildWithVar : WalkCode.BeginChild,
             ),
           );
           const walks = op.renderer && resolveRef(op.renderer, "walks");
@@ -191,6 +247,12 @@ export function resolveStructure(section: Section) {
 
   flushSteps(resolved);
   return resolved;
+}
+
+// A dom binding reserves only its scope offset, which the walker holds right
+// after the node.
+function hasScopeOffset(nodeBinding: Binding) {
+  return nodeBinding.reserveSize >= ReservedId.ScopeOffset;
 }
 
 function separate(resolved: ResolvedStructure) {

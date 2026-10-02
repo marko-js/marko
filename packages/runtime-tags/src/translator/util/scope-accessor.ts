@@ -5,6 +5,7 @@ import {
   AccessorProp as DebugAccessorProp,
 } from "../../common/accessor.debug";
 import { decodeAccessor } from "../../common/helpers";
+import { ReservedId } from "../../common/types";
 import { type Binding, BindingType, getCanonicalBinding } from "./bindings";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { isOptimize } from "./marko-config";
@@ -46,19 +47,18 @@ export function getScopeOffsetAccessorLiteral(
   encoded?: boolean,
 ) {
   return encoded && isOptimize()
-    ? t.numericLiteral(getReservedId(nodeBinding))
+    ? t.numericLiteral(getReservedId(nodeBinding, ReservedId.ScopeOffset))
     : t.stringLiteral(getScopeOffsetAccessor(nodeBinding));
 }
 
 function getScopeOffsetAccessor(nodeBinding: Binding) {
-  const id = getReservedId(nodeBinding);
+  const id = getReservedId(nodeBinding, ReservedId.ScopeOffset);
   return isOptimize() ? decodeAccessor(id) : `#scopeOffset/${id}`;
 }
 
-// The id a binding reserves after its own (`reserveSize`), for a place that
-// sits beside it: a change handler, or a tag's scope offset.
-function getReservedId(binding: Binding) {
-  return getCanonicalBinding(binding).id + 1;
+// The scope id a binding holds at `offset` past its own (see `reserveId`).
+function getReservedId(binding: Binding, offset: ReservedId) {
+  return getCanonicalBinding(binding).id + offset;
 }
 
 export function getScopeAccessorLiteral(
@@ -116,7 +116,9 @@ export function getPrefixedScopeAccessor(
   if (isOptimize()) {
     switch (prefix) {
       case getAccessorPrefix().TagVariableChange:
-        return decodeAccessor(getReservedId(canonicalBinding));
+        return decodeAccessor(
+          getReservedId(canonicalBinding, ReservedId.ChangeHandler),
+        );
       case getAccessorPrefix().ClosureScopes:
         return decodeAccessor(getClosureAccessorId(canonicalBinding));
       case getAccessorPrefix().ClosureSignalIndex:

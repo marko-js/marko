@@ -4,6 +4,7 @@ import type { SignalFn } from "../dom/signals";
 import type { AccessorProp } from "./accessor.debug";
 import * as ControlledType from "./constants/controlled-type";
 import * as NodeType from "./constants/node-type";
+import * as ReservedId from "./constants/reserved-id";
 import * as ResumeSymbol from "./constants/resume-symbol";
 import * as WalkCode from "./constants/walk-code";
 import * as WalkRangeSize from "./constants/walk-range-size";
@@ -70,6 +71,9 @@ export { WalkCode };
 
 type WalkRangeSize = WalkRangeSize.Value;
 export { WalkRangeSize };
+
+type ReservedId = ReservedId.Value;
+export { ReservedId };
 
 export type Accessor = string;
 

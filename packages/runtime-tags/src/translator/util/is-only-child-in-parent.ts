@@ -1,9 +1,8 @@
 import { types as t } from "@marko/compiler";
 
-import { BindingType, createBinding } from "./bindings";
 import { getParentTag } from "./get-parent-tag";
 import { isCoreTag } from "./is-core-tag";
-import { getNodeContentType, type Section } from "./sections";
+import { getNodeContentType } from "./sections";
 import { getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -47,25 +46,4 @@ function isOnlyChild(tag: t.NodePath<t.MarkoTag>) {
     }
   }
   return true;
-}
-
-// A control flow tag that is its element's only child is addressed by that
-// element, else by a marker of its own.
-export function analyzeNodeBinding(
-  tag: t.NodePath<t.MarkoTag>,
-  section: Section,
-) {
-  const extra = (tag.node.extra ??= {});
-  if (getOnlyChildParentTagName(tag)) {
-    const parentTag = getParentTag(tag)!.node;
-    const parentTagName = (parentTag.name as t.StringLiteral).value;
-    return (extra.nodeBinding = (parentTag.extra ??= {}).nodeBinding ??=
-      createBinding(
-        "#" + parentTagName.toLowerCase(),
-        BindingType.dom,
-        section,
-      ));
-  }
-
-  return (extra.nodeBinding = createBinding("#text", BindingType.dom, section));
 }
