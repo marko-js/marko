@@ -10,7 +10,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show, $wg__input_show, 0, 1);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
 	_scope($scope0_id, {
 		input,
 		input_item: _write_if($scope0_reason, 1) && input.item
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			item,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "7:2", { item: "7:6" });
-	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
+	}, 0, $scope0_id, "#text/3", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "2:6" });
 }, 1);

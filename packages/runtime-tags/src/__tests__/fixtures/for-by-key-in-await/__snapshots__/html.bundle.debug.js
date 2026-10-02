@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_html("</div>");
 		_scope($scope1_id, { "#LoopKey": _write_if($scope0_reason, 0) && item?.id }, "__tests__/template.marko", "3:2", { "#LoopKey": ["item.id", "3:6"] });
-	}, "id", $scope0_id, "#text/1", 1, 1, 1, 0, 1);
+	}, "id", $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_value: input.value,

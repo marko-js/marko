@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope2_id, {});
 				return 0;
 			}
-		}, $scope1_id, "a", 1, 1, 1, 0, 1);
+		}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_html(`<button class=select>${_escape(row.label)}</button>${_el_resume($scope1_id, "b")}</li>`);
 		_script($scope1_id, "a0");
 		_scope($scope1_id, {

@@ -13,7 +13,7 @@ var child_default = _template("b", (input) => {
 				$wi__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", $wg__input_button, $wg__input_button, $wg__input_button);
+		}, $scope1_id, "a", $wg__input_button, $wg__input_button);
 		$wi__input_button && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_button, 1, $wg__input_button, "</div>");
 	_script($scope0_id, "b0");

@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<link rel=stylesheet${_attr("href", href)}>${_el_resume($scope2_id, "a", $wg__input_styles)}`);
 		_write_if($scope0_reason, 0) && _scope($scope2_id, {});
-	}, 0, $scope0_id, "a", $wg__input_styles, $wg__input_styles, $wg__input_styles, 0, 1);
+	}, 0, $scope0_id, "a", $wg__input_styles, $wg__input_styles, 0, 0, 1);
 	_html(`${_flush_head()}</head><body>`);
 	_if(() => {
 		{
@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, 1, 1, 0, 1);
+	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_trailers("</body></html>");
 	_scope($scope0_id, {});
 }, 1);

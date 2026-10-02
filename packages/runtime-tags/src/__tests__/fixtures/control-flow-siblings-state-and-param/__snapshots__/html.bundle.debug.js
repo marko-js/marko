@@ -25,19 +25,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<p>${_text_resume($scope3_id, "#text/0", item, $wg__input_items)}</p>`);
 		_write_if($scope0_reason, 1) && _scope($scope3_id, {}, "__tests__/template.marko", "9:2");
-	}, 0, $scope0_id, "#text/3", $wg__input_items, $wg__input_items, $wg__input_items, 0, 1);
+	}, 0, $scope0_id, "#text/3", $wg__input_items, $wg__input_items, 0, 0, 1);
 	_for_of(open ? ["x", "y"] : ["x"], (item) => {
 		const $scope4_id = _scope_id();
 		_html(`<p>${_text_resume($scope4_id, "#text/0", item)}</p>`);
 		_scope($scope4_id, {}, "__tests__/template.marko", "10:2");
-	}, 0, $scope0_id, "#text/4", 1, 1, 1, 0, 1);
+	}, 0, $scope0_id, "#text/4", 1, 1, 0, 0, 1);
 	const $show = input.show;
-	_show_start($show);
+	_show_start($show, 0);
 	_html("<span>show input</span>");
-	_show_end($scope0_id, "#text/6", $show, $wg__input_show, $wg__input_show, 0, 1);
-	_show_start(open);
+	_show_end($scope0_id, "#text/6", $show, $wg__input_show, 0, 0, 1);
+	_show_start(open, 0);
 	_html("<span>show state</span>");
-	_show_end($scope0_id, "#text/8", open, 1, 1, 0, 1);
+	_show_end($scope0_id, "#text/8", open, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "1:6" });
 }, 1);

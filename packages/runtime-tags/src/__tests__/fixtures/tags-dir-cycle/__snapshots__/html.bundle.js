@@ -24,7 +24,7 @@ var cyc_a_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "b", $wg__input_depth, $wg__input_depth);
 	$wi__input_depth && _scope($scope0_id, {});
 });
 

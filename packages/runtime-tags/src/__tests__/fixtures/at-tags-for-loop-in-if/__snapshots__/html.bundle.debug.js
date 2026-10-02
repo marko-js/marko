@@ -20,7 +20,7 @@ var labeled_list_default = _template("__tests__/tags/labeled-list.marko", (input
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", item.content, {}, 0, 0, $wg__input_item);
 		_write_if($scope0_reason, 2) && _scope($scope1_id, {}, "__tests__/tags/labeled-list.marko", "3:4");
-	}, 0, $scope0_id, "#text/1", $wg__input_item, $wg__input_item, $wg__input_item);
+	}, 0, $scope0_id, "#text/1", $wg__input_item, $wg__input_item);
 	_html("</div>");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/labeled-list.marko", 0);
 });

@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`${_escape(index)}-${_text_resume($scope1_id, "b", count, 2)}`);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "a", 1, 0, 0);
+	}, 0, $scope0_id, "a", 1, 0);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { d: count });

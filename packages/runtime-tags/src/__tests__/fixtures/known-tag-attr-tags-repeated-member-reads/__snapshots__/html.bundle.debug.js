@@ -23,7 +23,7 @@ var child_for_default = _template("__tests__/tags/child-for/index.marko", (input
 		const $scope1_id = _scope_id();
 		_html(`<span>${_text_resume($scope1_id, "#text/0", item.foo, $wg__input_item)} ${_text_resume($scope1_id, "#text/1", item.sub?.x, $wg__input_item * 2)}</span>`);
 		$wi__input_item && _scope($scope1_id, {}, "__tests__/tags/child-for/index.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, $wg__input_item, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, 0, 0, 1);
 	$wi__input_item && _scope($scope0_id, {}, "__tests__/tags/child-for/index.marko", 0);
 });
 

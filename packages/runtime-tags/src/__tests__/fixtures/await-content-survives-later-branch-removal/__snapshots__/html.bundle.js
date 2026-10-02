@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, 1, 1, 0, 1);
+	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_await($scope0_id, "c", resolveAfter(1, 1), () => {
 		_scope_id();
 		counter_default({});
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope5_id, {});
 			return 0;
 		}
-	}, $scope0_id, "d", 1, 1, 1, 0, 1);
+	}, $scope0_id, "d", 1, 1, 0, 0, 1);
 	_html(`<button class=hide>hide</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {});

@@ -27,7 +27,7 @@ var row_default = _template("b", (input) => {
 			$wi__input_inc && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "d", $wg__input_inc, $wg__input_inc, $wg__input_inc, 0, 1);
+	}, $scope0_id, "d", $wg__input_inc, $wg__input_inc, 0, 0, 1);
 	_html(`</div>${_el_resume($scope0_id, "a", $wg__input_inc)}`);
 	$wi__input_inc && _scope($scope0_id, {
 		h: input.inc?.pending,

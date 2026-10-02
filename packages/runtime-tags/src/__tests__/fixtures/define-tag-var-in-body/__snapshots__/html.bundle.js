@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 				_write_if($scope1_reason, 0) && _scope($scope3_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) });
 				return 1;
 			}
-		}, $scope1_id, "a", _write_guard($scope1_reason, 0) || $wg__input_depth, $wg__input_depth, $wg__input_depth);
+		}, $scope1_id, "a", _write_guard($scope1_reason, 0) || $wg__input_depth, $wg__input_depth);
 		$wi__input_depth && _scope($scope1_id, {
 			e: input?.message,
 			_: _scope_with_id($scope0_id)

@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, {}, "__tests__/template.marko", "5:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	const $childScope2 = _peek_scope_id();
 	noop_default({ v: !open });
 	_html("</div><ul>");
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<li>${_text_resume($scope3_id, "#text/0", item)}</li>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "10:4");
-	}, 0, $scope0_id, "#text/4", 1, 1, 1, 0, 1);
+	}, 0, $scope0_id, "#text/4", 1, 1, 0, 0, 1);
 	_html(`</ul><button>toggle</button>${_el_resume($scope0_id, "#button/5")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

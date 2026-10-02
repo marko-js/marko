@@ -23,7 +23,7 @@ const $content$1 = (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "a", $wg__input_depth, $wg__input_depth);
 	$wi__input_depth && _scope($scope0_id, {});
 };
 var countdown_default = _template("c", $content$1);
@@ -53,7 +53,7 @@ const $content = (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "c", $wg__input_depth, $wg__input_depth, $wg__input_depth);
+	}, $scope0_id, "c", $wg__input_depth, $wg__input_depth);
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {});
 };

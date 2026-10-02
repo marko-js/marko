@@ -31,7 +31,7 @@ const $content = (input) => {
 			$wi__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/recurse.marko", "3:1");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", $wg__input_level, $wg__input_level, $wg__input_level, 0, 1);
+	}, $scope0_id, "#text/0", $wg__input_level, $wg__input_level, 0, 0, 1);
 	$wi__input_level && _scope($scope0_id, { "ClosureScopes:input_level/4": $input_level__closures }, "__tests__/tags/recurse.marko", 0);
 };
 var recurse_default = _template("__tests__/tags/recurse.marko", $content);

@@ -13,13 +13,13 @@ var template_default = _template("a", (input) => {
 				_scope($scope3_id, {});
 				return 0;
 			}
-		}, $scope1_id, "a", 1, 1, 1, 0, 1);
+		}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_scope($scope1_id, {
 			d: id,
 			e: rest.extra,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "b", 1, $wg__input_items, $wg__input_items);
+	}, 0, $scope0_id, "b", 1, $wg__input_items);
 	_for_of(input.lists, ([first, ...others]) => {
 		const $scope2_id = _scope_id();
 		_if(() => {
@@ -29,13 +29,13 @@ var template_default = _template("a", (input) => {
 				_scope($scope4_id, {});
 				return 0;
 			}
-		}, $scope2_id, "a", 1, 1, 1, 0, 1);
+		}, $scope2_id, "a", 1, 1, 0, 0, 1);
 		_scope($scope2_id, {
 			d: first,
 			e: others[0],
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "c", 1, $wg__input_lists, $wg__input_lists);
+	}, 0, $scope0_id, "c", 1, $wg__input_lists);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { h: show });
 }, 1);

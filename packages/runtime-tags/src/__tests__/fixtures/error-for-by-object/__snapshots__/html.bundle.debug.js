@@ -8,6 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button>${_escape(item.id)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
-	}, (item) => item, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
+	}, (item) => item, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

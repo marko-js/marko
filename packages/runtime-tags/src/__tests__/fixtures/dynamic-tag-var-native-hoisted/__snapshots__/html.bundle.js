@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_itemType = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_itemType = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_hoist($scope0_id, "a0");
 	_if(() => {
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "a", 1, $wg__input_show);
 	_for_until(2, 0, 1, (i) => {
 		const $scope2_id = _scope_id();
 		const $inputitemType_scope = _peek_scope_id();
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			d: $item,
 			_: $wi__input_itemType && _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "b", 1, 0, 0);
+	}, 0, $scope0_id, "b", 1, 0);
 	_script($scope0_id, "a5", $wg__input_show);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { f: input.type });
 }, 1);

@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:2", { "ControlledHandler:#input/0": ["checkedValueChange"] });
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_html(`<input${_attr_input_checkedValue($scope0_id, "#input/2", checkedValue, $checkedValueChange, "c")} type=radio>${_el_resume($scope0_id, "#input/2")}<span>${_text_resume($scope0_id, "#text/3", checkedValue)}</span><button>Toggle</button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

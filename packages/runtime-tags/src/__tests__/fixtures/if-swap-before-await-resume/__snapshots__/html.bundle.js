@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope4_id, {});
 			return 1;
 		}
-	}, $scope0_id, "d", 1, 1, 1, 0, 1);
+	}, $scope0_id, "d", 1, 1, 0, 0, 1);
 	_html("</div></header>");
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

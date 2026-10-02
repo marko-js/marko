@@ -20,7 +20,7 @@ var my_btn_default = _template("__tests__/tags/my-btn.marko", (input) => {
 			_scope($scope2_id, { _: $wi__input && _scope_with_id($scope0_id) }, "__tests__/tags/my-btn.marko", "4:2", { "EventAttributes:#button/0": ["...input", "5:14"] });
 			return 1;
 		}
-	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_href, $wg__input_href, 0, 1);
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_href, 0, 0, 1);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {}, "__tests__/tags/my-btn.marko", 0);
 });
 

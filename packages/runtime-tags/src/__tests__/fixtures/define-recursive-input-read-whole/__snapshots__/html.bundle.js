@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				});
 				return 0;
 			}
-		}, $scope1_id, "a", $wg__input_depth__OR__input_label, $wg__input_depth, $wg__input_depth);
+		}, $scope1_id, "a", $wg__input_depth__OR__input_label, $wg__input_depth);
 		_html(`<span>${_text_resume($scope1_id, "b", input.label, $wg__input_label)}</span>`);
 		$wi__input_depth__OR__input_label && _scope($scope1_id, {
 			e: _write_if($scope1_reason, 2) && input.depth,

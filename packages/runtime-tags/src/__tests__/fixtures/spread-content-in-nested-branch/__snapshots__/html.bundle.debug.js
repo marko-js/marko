@@ -1,6 +1,6 @@
 // tags/list.marko
 var list_default = _template("__tests__/tags/list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let show = true;
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
@@ -16,12 +16,12 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 				_scope($scope2_id, {}, "__tests__/tags/list.marko", "4:4", { "EventAttributes:#div/0": ["...item", "5:13"] });
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
+		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 		_scope($scope1_id, {
 			item,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/list.marko", "3:2", { item: "3:6" });
-	}, 0, $scope0_id, "#text/1", 1, $wg__input_item, $wg__input_item);
+	}, 0, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0));
 	_script($scope0_id, "__tests__/tags/list.marko_0");
 	_scope($scope0_id, { show }, "__tests__/tags/list.marko", 0, { show: "1:6" });
 });

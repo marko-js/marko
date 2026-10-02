@@ -10,7 +10,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_html(`</span>${_el_resume($scope1_id, "#span/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item#5");
 		_scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2", { "EventAttributes:#span/0": ["...item", "3:12"] });
-	}, 0, $scope0_id, "#text/0", $wg__input_foo, $wg__input_foo, $wg__input_foo, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_foo, $wg__input_foo, 0, 0, 1);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

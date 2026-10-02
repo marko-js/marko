@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let visible = true;
 	let inner = true;
 	_html(`<button id=t>t</button>${_el_resume($scope0_id, "#button/0")}<button id=i>i</button>${_el_resume($scope0_id, "#button/1")}<div id=c>x `);
-	_show_start(visible, 1);
+	_show_start(visible);
 	_if(() => {
 		if (inner) {
 			const $scope1_id = _scope_id();
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:30");
 			return 0;
 		}
-	}, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/3", 1, 1, 0, 0, 1);
 	_show_end($scope0_id, "#text/5", visible);
 	_html(" y</div>");
 	_script($scope0_id, "__tests__/template.marko_0");

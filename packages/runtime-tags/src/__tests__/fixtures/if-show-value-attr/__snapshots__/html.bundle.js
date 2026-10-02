@@ -11,11 +11,11 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, 1, 1, 0, 1);
+	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	const $show = false;
-	_show_start($show);
+	_show_start($show, 0);
 	_html("<span>shown</span>");
-	_show_end($scope0_id, "d", $show, 1, 1, 0, 1);
+	_show_end($scope0_id, "d", $show, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { e: n });
 }, 1);

@@ -19,7 +19,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", $wg__input, 0, 0, 0, 1);
 		$wi__input && _scope($scope1_id, {}, "__tests__/tags/child.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input, $wg__input, $wg__input);
+	}, 0, $scope0_id, "#text/0", $wg__input, $wg__input);
 	$wi__input && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 				_subscribe($count__closures, _scope($scope2_id, {}), "a0");
 				return 0;
 			}
-		}, $scope1_id, "c", 1, 1, 1, 0, 1);
+		}, $scope1_id, "c", 1, 1, 0, 0, 1);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a");
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, { c: _ });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, 1, 1, 0, 1);
+	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_scope($scope0_id, {
 		c: count,
 		d: $count__closures

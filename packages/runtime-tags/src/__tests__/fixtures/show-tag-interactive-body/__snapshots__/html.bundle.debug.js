@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let visible = false;
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	_show_start(visible, 1);
+	_show_start(visible);
 	let count = 0;
 	_html(`<button id=inc>count ${_text_resume($scope0_id, "#text/3", count, 2)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_show_end($scope0_id, "#text/5", visible);

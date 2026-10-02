@@ -23,7 +23,7 @@ const $content = (input) => {
 				});
 				return 0;
 			}
-		}, $scope1_id, "e", $wg__input_comments__OR__input_path, $wg__input_comments, $wg__input_comments, 0, 1);
+		}, $scope1_id, "e", $wg__input_comments__OR__input_path, $wg__input_comments, 0, 0, 1);
 		_html(`</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			_html(`</div>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
 			_scope($scope2_id, {});
-		}, 0, $scope1_id, "a", $wg__input_item, $wg__input_item, $wg__input_item, 0, 1);
+		}, 0, $scope1_id, "a", $wg__input_item, $wg__input_item, 0, 0, 1);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(2);

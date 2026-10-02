@@ -36,7 +36,7 @@ var parent_default = _template("c", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, 0, 0);
+	}, $scope0_id, "a", 1, 0);
 	_scope($scope0_id, {
 		d: input.count,
 		e: input.onToggle,

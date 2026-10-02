@@ -30,7 +30,7 @@ var tags_if_default = _template("d", (input) => {
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, 1, 1, 0, 1);
+	}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button class=hide>hide</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "d0");
 	_scope($scope0_id, {});

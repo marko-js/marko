@@ -6,7 +6,7 @@ var list_default = _template("__tests__/tags/list/index.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", row, {}, 0, 0, $wg__input_row);
 		$wi__input_row && _scope($scope1_id, {}, "__tests__/tags/list/index.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_row, $wg__input_row, $wg__input_row);
+	}, 0, $scope0_id, "#text/0", $wg__input_row, $wg__input_row);
 	$wi__input_row && _scope($scope0_id, {}, "__tests__/tags/list/index.marko", 0);
 });
 

@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</strong><span>");
 	_html(_text_resume($scope0_id, "#text/1", count));
 	_html(" dmg</span><em>+ ");
-	_show_start(vis, 1);
+	_show_start(vis);
 	_html(_text_resume($scope0_id, "#text/3", count, 2));
 	_show_end($scope0_id, "#text/5", vis);
 	_html("</em><b>+ ");

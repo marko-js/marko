@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let visible = true;
 	_html(`<button id=t>t</button>${_el_resume($scope0_id, "#button/0")}<div id=c>x `);
-	_show_start(visible, 1);
+	_show_start(visible);
 	if (true) {
 		const $scope1_id = _scope_id();
 		_html("<b>B</b>");

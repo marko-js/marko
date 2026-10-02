@@ -31,7 +31,7 @@ var tags_if_default = _template("__tests__/components/tags-if.marko", (input) =>
 			_scope($scope1_id, {}, "__tests__/components/tags-if.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button class=hide>hide</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/components/tags-if.marko_0");
 	_scope($scope0_id, {}, "__tests__/components/tags-if.marko", 0);

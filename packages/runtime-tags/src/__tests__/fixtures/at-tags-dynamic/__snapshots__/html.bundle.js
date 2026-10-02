@@ -9,7 +9,7 @@ var hello_default = _template("b", (input) => {
 		_html(`</div>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {});
-	}, 0, $scope0_id, "a", $wg__input_list_item, $wg__input_list_item, $wg__input_list_item, 0, 1);
+	}, 0, $scope0_id, "a", $wg__input_list_item, $wg__input_list_item, 0, 0, 1);
 	_for_of(input.col, ({ content, row, ...attrs }) => {
 		const $scope2_id = _scope_id();
 		_html("<div class=col");
@@ -22,10 +22,10 @@ var hello_default = _template("b", (input) => {
 			_html(`</div>${_el_resume($scope3_id, "a")}`);
 			_script($scope3_id, "b1");
 			_scope($scope3_id, {});
-		}, 0, $scope2_id, "b", $wg__input_col, $wg__input_col, $wg__input_col, 0, 1);
+		}, 0, $scope2_id, "b", $wg__input_col, $wg__input_col, 0, 0, 1);
 		_script($scope2_id, "b2");
 		_scope($scope2_id, {});
-	}, 0, $scope0_id, "b", $wg__input_col, $wg__input_col, $wg__input_col);
+	}, 0, $scope0_id, "b", $wg__input_col, $wg__input_col);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

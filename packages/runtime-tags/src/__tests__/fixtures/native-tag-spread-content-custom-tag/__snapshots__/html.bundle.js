@@ -21,7 +21,7 @@ var child_default = _template("c", (input) => {
 			class: "item"
 		});
 		$wi__input_item && _scope($scope1_id, { a: _existing_scope($childScope) });
-	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, $wg__input_item, 0, 1);
+	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, 0, 0, 1);
 	$wi__input_item && _scope($scope0_id, {});
 });
 

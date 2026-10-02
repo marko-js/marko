@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$wi__input_show && _scope($scope2_id, {}, "__tests__/template.marko", "6:2");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, $wg__input_show);
+	}, $scope0_id, "#text/0", 1, $wg__input_show);
 	_script($scope0_id, "__tests__/template.marko_0", $wg__input_show);
 	$wi__input_show && _scope($scope0_id, { input_type: input.type }, "__tests__/template.marko", 0, { input_type: ["input.type"] });
 }, 1);

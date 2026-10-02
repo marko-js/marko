@@ -6,7 +6,7 @@ var inner_default = _template("__tests__/tags/inner/index.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<div>row ${_text_resume($scope1_id, "#text/0", row.x, $wg__input_stuff_row * 2)}</div>`);
 		_write_if($scope0_reason, 1) && _scope($scope1_id, {}, "__tests__/tags/inner/index.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_stuff_row, $wg__input_stuff_row, $wg__input_stuff_row, 0, 1);
+	}, 0, $scope0_id, "#text/0", $wg__input_stuff_row, $wg__input_stuff_row, 0, 0, 1);
 	_html(`<div>other ${_text_resume($scope0_id, "#text/1", input.stuff.other.y, $wg__input_stuff_other_y * 2)}</div><div>cond ${_text_resume($scope0_id, "#text/2", input.stuff.cond.a, $wg__input_stuff_cond_a * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/inner/index.marko", 0);
 });
