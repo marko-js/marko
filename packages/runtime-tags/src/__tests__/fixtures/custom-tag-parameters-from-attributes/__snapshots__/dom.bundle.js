@@ -16,7 +16,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 const $customtag_content__name = ($scope, name) => _text($scope.a, name);
 const $customtag_content__count = ($scope, count) => _text($scope.b, count);
 const $customtag_content__$params = ($scope, $params2) => {
-	$customtag_content__count($scope, ($params2?.[0]).count);
-	$customtag_content__name($scope, ($params2?.[0]).name);
+	$customtag_content__count($scope, $params2[0].count);
+	$customtag_content__name($scope, $params2[0].name);
 };
 const $customtag_content = _content("a0", "<div>Count (<!>): <!></div>", "Db%c%", 0, $customtag_content__$params);

@@ -40,7 +40,7 @@ const $ChildA_content__foo = /*@__PURE__*/ _const("foo", ($scope) => {
 	$ChildA_content__count__OR__$foo($scope);
 });
 const $ChildA_content__id = ($scope, id) => _attr($scope["#div/0"], "id", id);
-const $ChildA_content__$params = ($scope, $params2) => $ChildA_content__$temp($scope, $params2?.[0]);
+const $ChildA_content__$params = ($scope, $params2) => $ChildA_content__$temp($scope, $params2[0]);
 const $ChildA_content__$temp = ($scope, $temp) => {
 	$ChildA_content__id($scope, $temp.id);
 	$ChildA_content__foo($scope, $temp.foo);

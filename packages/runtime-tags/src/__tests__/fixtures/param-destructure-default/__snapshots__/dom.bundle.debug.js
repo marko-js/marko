@@ -23,7 +23,7 @@ const $ChildA_content__foo = ($scope, foo) => {
 	_text($scope["#text/1"], typeof foo);
 	$ChildA_content__$foo($scope, foo);
 };
-const $ChildA_content__$params = ($scope, $params2) => $ChildA_content__$temp($scope, $params2?.[0]);
+const $ChildA_content__$params = ($scope, $params2) => $ChildA_content__$temp($scope, $params2[0]);
 const $ChildA_content__$temp = ($scope, $temp) => $ChildA_content__foo($scope, $temp.foo);
 function $setup($scope) {
 	$ChildA_content__foo($scope["#childScope/0"], { bar: 0 });

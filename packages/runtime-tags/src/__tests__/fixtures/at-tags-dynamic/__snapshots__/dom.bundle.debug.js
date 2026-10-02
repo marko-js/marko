@@ -63,7 +63,7 @@ const $for_content3__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 });
 const $for_content3__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $for_content3__content = $for_content3__dynamicTag;
-const $for_content3__$params = ($scope, $params4) => $for_content3__$temp($scope, $params4?.[0]);
+const $for_content3__$params = ($scope, $params4) => $for_content3__$temp($scope, $params4[0]);
 const $for_content3__$temp = ($scope, $temp3) => {
 	(({ content, ...attrs }) => $for_content3__attrs($scope, attrs))($temp3);
 	$for_content3__content($scope, $temp3.content);
@@ -75,7 +75,7 @@ const $for_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 });
 const $for_content2__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<div class=row><!></div>", " D%", 0, $for_content3__$params);
 const $for_content2__row = ($scope, row) => $for_content2__for($scope, [row]);
-const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3?.[0]);
+const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3[0]);
 const $for_content2__$temp = ($scope, $temp2) => {
 	(({ content, row, ...attrs }) => $for_content2__attrs($scope, attrs))($temp2);
 	$for_content2__row($scope, $temp2.row);
@@ -87,7 +87,7 @@ const $for_content__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 });
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $for_content__content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
+const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
 const $for_content__$temp = ($scope, $temp) => {
 	(({ content, ...attrs }) => $for_content__attrs($scope, attrs))($temp);
 	$for_content__content($scope, $temp.content);

@@ -293,6 +293,8 @@ export function trackParamsReferences(
       undefined,
       params[0].loc,
     ));
+    // Content is always rendered with an array of params.
+    paramsBinding.nullable = false;
 
     const bodySection = getSectionForBody(body);
     if (bodySection) {
@@ -622,6 +624,9 @@ function createBindingsAndTrackReferences(
           excludeProperties,
           lVal.loc,
         ));
+      // Destructuring throws on a nullish value, so in its own section the
+      // value a pattern destructures never is one.
+      if (patternBinding.section === section) patternBinding.nullable = false;
 
       const hasRest =
         lVal.properties[lVal.properties.length - 1]?.type === "RestElement";
@@ -681,6 +686,9 @@ function createBindingsAndTrackReferences(
           excludeProperties,
           lVal.loc,
         ));
+      // Destructuring throws on a nullish value, so in its own section the
+      // value a pattern destructures never is one.
+      if (patternBinding.section === section) patternBinding.nullable = false;
 
       // A pattern that is itself a rest argument mirrors the source at
       // shifted indices, so its elements index from the inherited offset.

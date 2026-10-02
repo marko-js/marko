@@ -18,7 +18,7 @@ const $Item_content__tag_input_depth = /*@__PURE__*/ _const("depth", ($scope) =>
 	$Item_content__if($scope, $scope.depth ? 0 : 1);
 	$if_content__depth($scope);
 });
-const $Item_content__$params = ($scope, $params2) => $Item_content__$temp($scope, $params2?.[0]);
+const $Item_content__$params = ($scope, $params2) => $Item_content__$temp($scope, $params2[0]);
 const $Item_content__$temp = ($scope, $temp) => $Item_content__tag_input_depth($scope, $temp.depth);
 function $setup($scope) {
 	$Item_content__setup._($scope["#childScope/0"], $scope);

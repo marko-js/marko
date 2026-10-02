@@ -33,7 +33,7 @@ const $if_content__setup = ($scope) => {
 	$input_title($scope["#childScope/0"], "over");
 };
 const $Row_content__text = ($scope, text) => _text($scope["#text/0"], text);
-const $Row_content__$params = ($scope, $params2) => $Row_content__$temp($scope, $params2?.[0]);
+const $Row_content__$params = ($scope, $params2) => $Row_content__$temp($scope, $params2[0]);
 const $Row_content__$temp = ($scope, $temp) => $Row_content__text($scope, $temp.text);
 const $item_content__if = /*@__PURE__*/ _if("#text/2", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $if_content__setup);
 const $item_content__show = /*@__PURE__*/ _closure_get("show/4", ($scope) => $item_content__if($scope, $scope._.show ? 0 : 1));

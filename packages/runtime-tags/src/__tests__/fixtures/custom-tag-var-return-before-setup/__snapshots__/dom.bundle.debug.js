@@ -57,12 +57,12 @@ const $wrap_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $wrap_content__v);
 };
 const $wrap_content__value = ($scope, value) => $input_x$1($scope["#childScope/0"], value);
-const $wrap_content__$params = ($scope, $params4) => $wrap_content__value($scope, ($params4?.[0]).value);
+const $wrap_content__$params = ($scope, $params4) => $wrap_content__value($scope, $params4[0].value);
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `${_w0}<p class=wrap> </p>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $wrap_content__setup, $wrap_content__$params);
 const $Count_content__v = _var_resume("__tests__/template.marko_2_v#6/var", ($scope, v) => _text($scope["#text/2"], v));
 const $Count_content__setup = /*@__PURE__*/ _child_setup(($scope) => _var($scope, "#childScope/0", $Count_content__v));
 const $Count_content__x = ($scope, x) => $input_x$1($scope["#childScope/0"], x);
-const $Count_content__$params = ($scope, $params3) => $Count_content__$temp($scope, $params3?.[0]);
+const $Count_content__$params = ($scope, $params3) => $Count_content__$temp($scope, $params3[0]);
 const $Count_content__$temp = ($scope, $temp) => $Count_content__x($scope, $temp.x);
 const $for_content__v = _var_resume("__tests__/template.marko_1_v#6/var", ($scope, v) => _text($scope["#text/2"], v));
 const $for_content__setup = ($scope) => {

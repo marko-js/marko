@@ -10,7 +10,7 @@ const $Wrap_content__tag_param_ = ($scope, $temp) => {
 	$Wrap_content__$a($scope, $temp[0]);
 	$Wrap_content__b($scope, $temp[1]);
 };
-const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__tag_param_($scope, $params2?.[0]);
+const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__tag_param_($scope, $params2[0]);
 const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
 	$Wrap_content__tag_param_($scope["#childScope/1"], [undefined, $scope.n]);
 	$Wrap_content__tag_param_($scope["#childScope/2"], [$scope.n, 10]);

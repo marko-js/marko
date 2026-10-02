@@ -26,7 +26,7 @@ const $Wrap_content__as__OR__onClick__OR__content = /*@__PURE__*/ _or(6, ($scope
 const $Wrap_content__as = /*@__PURE__*/ _const("as", $Wrap_content__as__OR__onClick__OR__content);
 const $Wrap_content__onClick = /*@__PURE__*/ _const("onClick", $Wrap_content__as__OR__onClick__OR__content);
 const $Wrap_content__content = /*@__PURE__*/ _const("content", $Wrap_content__as__OR__onClick__OR__content);
-const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__$temp($scope, $params2?.[0]);
+const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__$temp($scope, $params2[0]);
 const $Wrap_content__$temp = ($scope, $temp) => {
 	$Wrap_content__as($scope, $temp.as);
 	$Wrap_content__onClick($scope, $temp.onClick);
