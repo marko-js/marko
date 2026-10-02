@@ -12,10 +12,7 @@ import {
 import { isEventHandler } from "../../../common/helpers";
 import { ReservedId } from "../../../common/types";
 import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
-import {
-  getBindingPropTree,
-  kDirectContent,
-} from "../../util/binding-prop-tree";
+import { getBindingPropTree } from "../../util/binding-prop-tree";
 import {
   type Binding,
   BindingType,
@@ -232,7 +229,7 @@ export default {
         !node.attributes.length &&
         !node.body.body.length
       ) {
-        tagExtra[kDirectContent] = true;
+        tagExtra.directContent = true;
       }
 
       structure.marker(tag, nodeBinding);

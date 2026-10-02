@@ -31,9 +31,9 @@ describe("runtime-tags/translator evaluate", () => {
 
     it("reuses the answer it already recorded", () => {
       const node = parseExpression("1 + 1") as any;
-      assert.equal(evaluate(node).computed, 2);
-      node.extra.computed = "kept";
-      assert.equal(evaluate(node).computed, "kept");
+      const answer = evaluate(node);
+      assert.equal(answer.computed, 2);
+      assert.equal(evaluate(node), answer);
     });
   });
 

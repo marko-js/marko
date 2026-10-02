@@ -33,12 +33,6 @@ import { findSlot, getSlot, SlotKind } from "../util/slots";
 import { ALWAYS } from "../util/sources";
 import translateVar from "../util/translate-var";
 
-declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
-    static?: boolean;
-  }
-}
-
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
     const { node } = tag;

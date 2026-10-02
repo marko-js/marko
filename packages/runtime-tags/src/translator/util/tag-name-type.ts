@@ -16,15 +16,20 @@ import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
 import { isCoreTag } from "./is-core-tag";
 
+const kTagNameDynamic = Symbol("tag name dynamic");
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     featureType?: "class" | "tags";
     /** Set by the Class API translator when Tags content resumes below here. */
     hydratesTags?: boolean;
   }
-  // Written by `analyzeExpressionTagName`, on the tag whose name it types.
+  // A tag's extra is the expression root its attributes merge into, so what
+  // reads that root (a read, a section's branch expression) reads this.
   export interface NodeExtra {
     tagNameType?: TagNameType;
+  }
+  // Written by `analyzeExpressionTagName`, on the tag whose name it types.
+  export interface MarkoTagExtra {
     // Incomplete when `tagNameType` is `DynamicTag`, since that ends the
     // analysis early.
     tagNameNullable?: boolean;
@@ -35,7 +40,7 @@ declare module "@marko/compiler/dist/types" {
     tagNameLoad?: LoadImportConfig;
   }
   export interface MarkoTagExtra {
-    tagNameDynamic?: boolean;
+    [kTagNameDynamic]?: boolean;
     tagNameUnresolved?: boolean;
     featureType?: ProgramExtra["featureType"];
   }
@@ -63,20 +68,20 @@ export default function analyzeTagNameType(
           : isNativeTag(tag)
             ? TagNameType.NativeTag
             : TagNameType.CustomTag;
-      extra.tagNameNullable = extra.tagNameDynamic = false;
+      extra.tagNameNullable = extra[kTagNameDynamic] = false;
     } else if (name.isTemplateLiteral() && name.node.quasis.length === 1) {
       extra.tagNameType = TagNameType.NativeTag;
-      extra.tagNameNullable = extra.tagNameDynamic = false;
+      extra.tagNameNullable = extra[kTagNameDynamic] = false;
     } else if (name.isIdentifier()) {
       analyzeExpressionTagName(name, extra);
-      extra.tagNameDynamic = !extra.tagNameImported;
+      extra[kTagNameDynamic] = !extra.tagNameImported;
     } else {
       analyzeExpressionTagName(name, extra);
-      extra.tagNameDynamic = true;
+      extra[kTagNameDynamic] = true;
     }
 
     if (
-      !extra.tagNameDynamic &&
+      !extra[kTagNameDynamic] &&
       extra.tagNameType === TagNameType.CustomTag &&
       !isCoreTag(tag)
     ) {
@@ -86,7 +91,7 @@ export default function analyzeTagNameType(
         childFile?.ast.program.extra!.featureType === "class"
       ) {
         extra.tagNameType = TagNameType.DynamicTag;
-        extra.tagNameDynamic = true;
+        extra[kTagNameDynamic] = true;
         extra.featureType = "class";
         // The interop rebuilds this boundary before its Tags descendants can
         // resume, which is client work of this template's own.
@@ -95,7 +100,7 @@ export default function analyzeTagNameType(
         }
       } else if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
-        extra.tagNameDynamic = true;
+        extra[kTagNameDynamic] = true;
         // A PascalCase name with a binding is a local tag reference, so only
         // the rest is unresolvable. `DynamicTag.analyze` reports it: at
         // translate the scope its hint reads is already rewritten, and the
@@ -108,19 +113,19 @@ export default function analyzeTagNameType(
         // Closing a cross-file cycle: the child's analysis is incomplete, so
         // the runtime path renders it rather than composing its template.
         extra.tagNameType = TagNameType.DynamicTag;
-        extra.tagNameDynamic = true;
+        extra[kTagNameDynamic] = true;
       }
     }
   }
 
-  return !allowDynamic && extra.tagNameDynamic
+  return !allowDynamic && extra[kTagNameDynamic]
     ? TagNameType.DynamicTag
     : extra.tagNameType!;
 }
 
 function analyzeExpressionTagName(
   name: t.NodePath<t.Expression>,
-  extra: t.NodeExtra,
+  extra: t.MarkoTagExtra,
 ) {
   const pending = [name] as t.NodePath<t.Expression>[];
   const seen = new Set<t.Node>();

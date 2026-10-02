@@ -3,43 +3,41 @@ import { computeNode } from "@marko/compiler/babel-utils";
 
 import { skip, traverseContains } from "./traverse";
 
+interface Evaluated {
+  confident: boolean;
+  computed: unknown;
+  nullable: boolean;
+  /** Evaluating it has no side effects. */
+  pure: boolean;
+}
+
+const kEvaluated = Symbol("evaluated");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    confident?: boolean;
-    computed?: unknown;
-    nullable?: boolean;
-    /** Evaluating it has no side effects, so an unread value can go. */
-    pure?: boolean;
+    [kEvaluated]?: Evaluated;
   }
 }
 
-export default function evaluate<T extends t.Expression>(value: T) {
-  let { extra } = value;
+// What the expression computes to at compile time, computed on first use.
+export default function evaluate(value: t.Expression): Evaluated {
+  return ((value.extra ??= {})[kEvaluated] ??= computeEvaluated(value));
+}
 
-  if (!extra) {
-    extra = value.extra = {};
-  }
-
-  if (extra.confident === undefined) {
-    const computed = computeNode(value);
-    if (computed) {
-      extra.computed = computed.value;
-      extra.confident = true;
-      extra.nullable = computed.value == null;
-      extra.pure = true;
-    } else {
-      extra.computed = undefined;
-      extra.confident = false;
-      extra.nullable = isNullableExpr(value);
-      extra.pure = !traverseContains(value, isImpure);
-    }
-  }
-
-  return extra as T["extra"] & {
-    confident: boolean;
-    nullable: boolean;
-    computed: unknown;
-  };
+function computeEvaluated(value: t.Expression): Evaluated {
+  const computed = computeNode(value);
+  return computed
+    ? {
+        confident: true,
+        computed: computed.value,
+        nullable: computed.value == null,
+        pure: true,
+      }
+    : {
+        confident: false,
+        computed: undefined,
+        nullable: isNullableExpr(value),
+        pure: !traverseContains(value, isImpure),
+      };
 }
 
 // Marko expressions treat reads (member access included) as pure, so only

@@ -116,4 +116,16 @@ declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholder {
     extra?: MarkoPlaceholderExtra & NodeExtra;
   }
+
+  export interface ImportDeclaration {
+    extra?: ImportDeclarationExtra & NodeExtra;
+  }
+
+  export interface ExportNamedDeclaration {
+    extra?: ExportNamedDeclarationExtra & NodeExtra;
+  }
+
+  export interface ExportAllDeclaration {
+    extra?: ExportAllDeclarationExtra & NodeExtra;
+  }
 }

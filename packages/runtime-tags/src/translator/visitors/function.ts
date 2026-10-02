@@ -24,10 +24,11 @@ import { createProgramState } from "../util/state";
 import { traverseFindAwait } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
 
+const kRegisteredExports = Symbol("registered exports");
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     // Every name an export is reachable by -> its reserved registration.
-    registeredExports?: Map<string, ReservedExport>;
+    [kRegisteredExports]?: Map<string, ReservedExport>;
   }
 }
 
@@ -186,7 +187,8 @@ export function resolveRegisteredExport(
   if (seen.has(key)) return;
   seen.add(key);
 
-  const reserved = file.ast.program.extra?.registeredExports?.get(exportName);
+  const reserved =
+    file.ast.program.extra?.[kRegisteredExports]?.get(exportName);
   if (reserved) return { ...reserved, filename };
 
   for (const child of file.ast.program.body) {
@@ -273,9 +275,9 @@ function reserveExportRegisterId(
   );
 
   fnExtra.exportRegisterId = registerId;
-  programExtra.registeredExports ??= new Map();
+  programExtra[kRegisteredExports] ??= new Map();
   for (const name of exportNames!) {
-    programExtra.registeredExports.set(name, { registerId, exportName });
+    programExtra[kRegisteredExports].set(name, { registerId, exportName });
   }
 }
 

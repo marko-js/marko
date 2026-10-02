@@ -3,6 +3,16 @@ import { getFile, resolveTagImport } from "@marko/compiler/babel-utils";
 
 import type { TemplateVisitor } from "../util/visitors";
 
+const kTagImport = Symbol("tag import");
+declare module "@marko/compiler/dist/types" {
+  export interface ExportNamedDeclarationExtra {
+    [kTagImport]?: string;
+  }
+  export interface ExportAllDeclarationExtra {
+    [kTagImport]?: string;
+  }
+}
+
 export default {
   analyze(exportDecl) {
     const { node } = exportDecl;
@@ -10,7 +20,7 @@ export default {
     if (source) {
       const tagImport = resolveTagImport(exportDecl, source.value);
       if (tagImport) {
-        (node.extra ??= {}).tagImport = tagImport;
+        (node.extra ??= {})[kTagImport] = tagImport;
         const tags = getFile().metadata.marko.tags!;
         if (!tags.includes(tagImport)) {
           tags.push(tagImport);
@@ -21,7 +31,7 @@ export default {
   translate: {
     exit(exportDecl) {
       const { node } = exportDecl;
-      const tagImport = node.extra?.tagImport;
+      const tagImport = node.extra?.[kTagImport];
       if (tagImport) {
         node.source!.value = tagImport;
       }

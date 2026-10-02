@@ -70,7 +70,8 @@ export default {
         );
     }
 
-    const valueExtra = evaluate(valueAttr.value);
+    const valueExtra = (valueAttr.value.extra ??= {});
+    valueExtra.pure = evaluate(valueAttr.value).pure;
     const aliased = t.isIdentifier(valueAttr.value)
       ? tag.scope.getBinding(valueAttr.value.name)?.identifier.extra?.binding
       : undefined;
@@ -79,7 +80,7 @@ export default {
 
     if (binding) {
       assertNoTagVarMutation(tag);
-      if (!valueExtra.nullable) binding.nullable = false;
+      if (!evaluate(valueAttr.value).nullable) binding.nullable = false;
       if (aliased) {
         const aliasBinding = tag.node.var!.extra?.binding;
         if (aliasBinding) {

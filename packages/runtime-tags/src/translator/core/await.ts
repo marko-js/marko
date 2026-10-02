@@ -9,7 +9,6 @@ import {
 import { assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
-import evaluate from "../util/evaluate";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -100,7 +99,7 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
-    const valueExtra = evaluate(valueAttr.value);
+    const valueExtra = (valueAttr.value.extra ??= {});
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
 
