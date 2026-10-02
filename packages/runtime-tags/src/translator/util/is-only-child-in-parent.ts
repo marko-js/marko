@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 
 import { getParentTag } from "./get-parent-tag";
-import { isCoreTag } from "./is-core-tag";
 import { getNodeContentType } from "./sections";
 import { getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -31,16 +30,15 @@ export function getOnlyChildParentTagName(tag: t.NodePath<t.MarkoTag>) {
       : false);
 }
 
-// Siblings rendering nothing (a `<let>`, the rest of an `<if>` chain) leave the
-// element to the tag; a child component's scope is still addressed before it.
+// Siblings rendering nothing (a `<let>`, the rest of an `<if>` chain, a
+// component whose template renders nothing) leave the element to the tag.
 function isOnlyChild(tag: t.NodePath<t.MarkoTag>) {
   for (const sibling of (tag.parentPath as t.NodePath<t.MarkoTagBody>).get(
     "body",
   )) {
     if (
       sibling.node !== tag.node &&
-      ((sibling.isMarkoTag() && !isCoreTag(sibling)) ||
-        getNodeContentType(sibling, "startType") !== null)
+      getNodeContentType(sibling, "startType") !== null
     ) {
       return false;
     }
