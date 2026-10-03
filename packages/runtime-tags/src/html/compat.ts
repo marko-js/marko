@@ -177,7 +177,7 @@ export const compat = {
             boundary.onNext = NOOP;
           } else if (!boundary.count) {
             boundary.onNext = NOOP;
-            head = head.consume();
+            head = head.consume(boundary);
             asyncOut.write(head.html);
             asyncOut.script(head.scripts);
             asyncOut.end();

@@ -1686,9 +1686,9 @@ export class Chunk {
     }
   }
 
-  // Takes the render's root boundary, as `flushScript` does; a compat render's
-  // head is its own root.
-  consume(boundary = this.boundary) {
+  // Takes the render's root boundary, as `flushScript` does: the head may be in a
+  // `<try>` body, whose boundary a `@catch` leaves with a throwaway State.
+  consume(boundary: Boundary) {
     this.renderPlaceholders(boundary);
     let cur: Chunk = this;
     let html = "";

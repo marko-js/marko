@@ -323,7 +323,7 @@ class ServerRendered implements RenderedTemplate {
           case FlushStatus.complete:
             // Consuming and serializing may abort, re-entering through the
             // boundary listener, or serialize lazy data that starts async work.
-            head = head.consume();
+            head = head.consume(boundary);
             if (boundary.aborted) break;
             html += head.flushHTML(boundary);
             if (!(boundary.count || boundary.aborted)) {
@@ -405,7 +405,7 @@ class ServerRendered implements RenderedTemplate {
     const { boundary } = head;
     const html =
       boundary.flush() === FlushStatus.complete
-        ? head.consume().flushHTML(boundary)
+        ? head.consume(boundary).flushHTML(boundary)
         : "";
     if (boundary.count) {
       boundary.abort(
