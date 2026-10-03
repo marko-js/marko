@@ -1,0 +1,12 @@
+let/bar=0
+const/obj={
+  foo: 1,
+  fooChange(v) {
+    bar = v;
+  }
+}
+const/{ foo }=obj
+const/{ foo: renamed }=obj
+
+button onClick() { renamed = bar + 1 }
+  -- ${foo}:${renamed}:${bar}

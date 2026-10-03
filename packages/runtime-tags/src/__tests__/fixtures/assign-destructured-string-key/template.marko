@@ -1,0 +1,10 @@
+let/bar=0
+const/{ "my-key": value }={
+  "my-key": 1,
+  "my-keyChange"(v) {
+    bar = v;
+  }
+}
+
+button onClick() { value = bar + 1 }
+  -- ${value}:${bar}

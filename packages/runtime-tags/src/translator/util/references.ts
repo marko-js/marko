@@ -521,6 +521,10 @@ function trackAssignment(
     );
   }
 
+  // A name for a value another declares (`b` of `{ a: b }` beside `{ a }`) is
+  // read as that one, so assigning it assigns that one.
+  let assigned = binding;
+  while (isDirectAlias(assigned)) assigned = assigned.aliasOf!;
   const fnRoot = getFnRoot(fnParent);
   const fnExtra =
     fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
@@ -529,7 +533,7 @@ function trackAssignment(
   forEachIdentifierPath(assignment, (id) => {
     if (id.node.name === binding.name) {
       const idExtra = (id.node.extra ??= {}) as AssignedBindingExtra;
-      idExtra.assignment = binding;
+      idExtra.assignment = assigned;
       idExtra.section = section;
       idExtra.exprRoot = getExprRoot(fnRoot || assignment).node.extra ??= {};
       idExtra.fnRoot = fnExtra;
@@ -540,28 +544,28 @@ function trackAssignment(
         fnExtra.exprRoot = idExtra.exprRoot;
       }
 
-      if (binding.aliasOf && binding.property !== undefined) {
+      if (assigned.aliasOf && assigned.property !== undefined) {
         // A positional parameter (`<for|item|>`) has no object that could
         // carry a change handler, so the assignment can never write back.
-        if (binding.aliasOf === binding.section.params) {
+        if (assigned.aliasOf === assigned.section.params) {
           throw assignment.buildCodeFrameError(
             `\`${binding.name}\` is a tag parameter and cannot be assigned to.`,
           );
         }
 
-        const changePropName = binding.property + "Change";
+        const changePropName = assigned.property + "Change";
         const changeBinding =
-          binding.aliasOf.propertyAliases.get(changePropName) ||
+          assigned.aliasOf.propertyAliases.get(changePropName) ||
           createBinding(
             generateUid(changePropName),
-            binding.type,
-            binding.section,
-            binding.aliasOf,
+            assigned.type,
+            assigned.section,
+            assigned.aliasOf,
             changePropName,
             undefined,
             id.node.loc,
             // Declared beside its property, in the same pattern.
-            binding.declared,
+            assigned.declared,
           );
         idExtra.assignmentTo = changeBinding;
         addReadToExpression(id, changeBinding, undefined);
