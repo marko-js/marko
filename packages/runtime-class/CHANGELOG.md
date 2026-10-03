@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.45
+
+### Patch Changes
+
+- [#4402](https://github.com/marko-js/marko/pull/4402) [`b6486e9`](https://github.com/marko-js/marko/commit/b6486e9aa5631de5d27f32f98bc902f456f137d3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix Tags API `<try>` content rendered with Class API components on the server. Tags API content inside a Class API component now stops rendering when a `<try>` around it catches, at any depth and even when it was still awaiting, instead of sending its data and effects for content that never arrived, and its effects wait for in-order content still streaming and drop with a `@catch`, like any content around them. A Class API component's init code no longer takes the page's out-of-order content with it, which lost a `@catch` sent after its body streamed and ran its effects early. On a Class API page, a Tags API `@catch` that waits on content of its own now shows, streamed after the markers it replaces even while a pending Class API `<await>` holds them back.
+
+- Updated dependencies [[`9411bbe`](https://github.com/marko-js/marko/commit/9411bbed5198f9b13460428993bbf29f392bae50), [`6bba1bc`](https://github.com/marko-js/marko/commit/6bba1bc31bfb8edb987203acd680ea4e9acd423a), [`b6486e9`](https://github.com/marko-js/marko/commit/b6486e9aa5631de5d27f32f98bc902f456f137d3), [`2166e2a`](https://github.com/marko-js/marko/commit/2166e2a51a368b5420b55d2872077ebe1deecb98), [`7f17150`](https://github.com/marko-js/marko/commit/7f17150c5f54da83c82d366e93301ccca12e557b), [`7a7c6ac`](https://github.com/marko-js/marko/commit/7a7c6ac5450daffe9c96ea656c53dc927e4b62e6), [`eeabb88`](https://github.com/marko-js/marko/commit/eeabb8816c2bac87aefc793ce07aa670845bb6f1), [`7a7c6ac`](https://github.com/marko-js/marko/commit/7a7c6ac5450daffe9c96ea656c53dc927e4b62e6), [`0e118c3`](https://github.com/marko-js/marko/commit/0e118c3ce592bf9c3109c0275ff7b315743f6e18), [`f9d4412`](https://github.com/marko-js/marko/commit/f9d44124985fa93b387ef4c5a6d0c1d61bdad2d0)]:
+  - @marko/runtime-tags@6.4.2
+
 ## 5.39.44
 
 ### Patch Changes
