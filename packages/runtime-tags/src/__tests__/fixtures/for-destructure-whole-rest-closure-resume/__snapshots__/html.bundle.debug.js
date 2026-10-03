@@ -30,9 +30,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/0", 1, 1, 0, 0, 1);
 		_scope($scope2_id, {
-			$temp2: list,
+			list,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "6:2", { $temp2: "6:6" });
+		}, "__tests__/template.marko", "6:2", { list: "6:10" });
 	}, 0, $scope0_id, "#text/2", 1, $wg__input_lists);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });

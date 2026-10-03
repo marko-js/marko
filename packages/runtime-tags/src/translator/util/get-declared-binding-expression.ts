@@ -4,6 +4,7 @@ import {
   type Binding,
   getCanonicalBinding,
   getNearestDeclared,
+  isRest,
   propsUtil,
 } from "./bindings";
 import { toMemberExpression } from "./to-property-name";
@@ -24,10 +25,7 @@ export function getDeclaredBindingExpression(
     return t.identifier(binding.name);
   }
 
-  if (
-    canonicalBinding.declared ||
-    canonicalBinding.excludeProperties !== undefined
-  ) {
+  if (canonicalBinding.declared || isRest(canonicalBinding)) {
     return t.identifier(canonicalBinding.name);
   }
 
@@ -35,7 +33,7 @@ export function getDeclaredBindingExpression(
   // the names its pattern declares; a named one may be read before those.
   if (
     declaredAlias &&
-    declaredAlias.excludeProperties === undefined &&
+    !isRest(declaredAlias) &&
     !getNearestDeclared(canonicalBinding)
   ) {
     return t.identifier(declaredAlias.name);

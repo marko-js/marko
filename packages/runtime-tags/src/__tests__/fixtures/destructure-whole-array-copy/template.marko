@@ -1,2 +1,7 @@
 <const/[...all]=input.list/>
 <div>${all.join("+")}</div>
+<const/[...chars]=input.text/>
+<div>${chars.join("-")}</div>
+<if=input.text>
+  <span>${chars[0]}${chars.join("")}</span>
+</if>

@@ -19,6 +19,7 @@ import {
   hasNonConstantPropertyAlias,
   type Intersection,
   isDirectAlias,
+  isRest,
   type ReferencedBindings,
 } from "./bindings";
 import { forEachIdentifier } from "./for-each-identifier";
@@ -583,7 +584,7 @@ export function getSignalFn(signal: Signal): t.Expression {
       const aliasSignal = getSignal(alias.section, alias);
       if (signalHasStatements(aliasSignal)) {
         signal.forwards = push(signal.forwards, aliasSignal);
-        if (alias.excludeProperties !== undefined) {
+        if (isRest(alias)) {
           const aliasId = t.identifier(alias.name);
           signal.render.push(
             t.expressionStatement(
