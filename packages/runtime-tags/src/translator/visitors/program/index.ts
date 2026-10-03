@@ -17,6 +17,7 @@ import entryBuilder from "../../util/entry-builder";
 import { finalizeReferences } from "../../util/finalize-references";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import getStyleFile from "../../util/get-style-file";
+import { analyzeRecursiveTags } from "../../util/known-tag";
 import {
   getMarkoOpts,
   getReadyId,
@@ -112,6 +113,7 @@ export default {
       // Analyze failures were already reported as diagnostics and their tags
       // skipped, so skip finalization work that assumes an error-free template.
       if (hasAnalyzeErrors()) return;
+      analyzeRecursiveTags();
       finalizeReferences();
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;

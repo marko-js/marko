@@ -12,7 +12,6 @@ import {
 import { isEventHandler } from "../../../common/helpers";
 import { ReservedId } from "../../../common/types";
 import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
-import { getBindingPropTree } from "../../util/binding-prop-tree";
 import {
   type Binding,
   BindingType,
@@ -64,7 +63,6 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  isSameOrChildSection,
   removePrunedContent,
   type Section,
   startSection,
@@ -142,20 +140,7 @@ export default {
       const { node } = tag;
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
-        knownTagAnalyze(
-          tag,
-          definedBodySection,
-          definedBodySection.params &&
-            getBindingPropTree(
-              definedBodySection.params,
-              // `<define>` rejects hoisted calls, so a call outside its body
-              // follows the whole body.
-              !isSameOrChildSection(
-                definedBodySection,
-                getOrCreateSection(tag),
-              ),
-            ),
-        );
+        knownTagAnalyze(tag, definedBodySection);
 
         structure.child(tag, getStaticTagName(tag.node), {
           kind: StructureKind.SectionRef,

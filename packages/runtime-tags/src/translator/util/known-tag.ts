@@ -7,6 +7,7 @@ import { getSectionRendererIdentifier } from "./binding-has-prop";
 import {
   type BindingPropTree,
   getAllKnownPropNames,
+  getBindingPropTree,
   getKnownFromPropTree,
   getSettledPropTree,
   hasAllKnownProps,
@@ -82,7 +83,7 @@ import {
 } from "./signals";
 import { findSlot, getSlot, SlotKind } from "./slots";
 import { ALWAYS } from "./sources";
-import { createSectionState } from "./state";
+import { createProgramState, createSectionState } from "./state";
 import {
   toMemberExpression,
   toObjectProperty,
@@ -118,27 +119,31 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
+// A recursive tag (a `<define>` or template rendering itself) waits for its
+// body's analysis, as a call after a `<define>` does by position.
+const [getRecursiveTags] = createProgramState(
+  () => [] as t.NodePath<t.MarkoTag>[],
+);
+
+// `childParamsTree` is another template's settled params tree.
 export function knownTagAnalyze(
   tag: t.NodePath<t.MarkoTag>,
   contentSection: Section,
-  propTree: BindingPropTree | undefined,
+  childParamsTree?: BindingPropTree,
 ) {
   analyzeAttributeTags(tag);
 
   const section = getOrCreateSection(tag);
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {});
-  const childScopeBinding = (tagExtra.nodeBinding = createBinding(
-    "#childScope",
-    BindingType.dom,
-    section,
-  ));
-  const attrExprs = new Set([tagExtra]);
+  tagExtra.nodeBinding = createBinding("#childScope", BindingType.dom, section);
   startSection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
   tagExtra[kContentSection] = contentSection;
-  tagExtra[kPropTree] = propTree;
+  const varBinding = trackVarReferences(tag, BindingType.derived);
+  const recursive = isSameOrChildSection(contentSection, section);
+  let exprs: KnownExprs | undefined;
   // A `<define>` body, or the template rendering itself, renders in place of
   // this call.
   if (contentSection.program === section.program) {
@@ -146,18 +151,14 @@ export function knownTagAnalyze(
       contentSection.callSections,
       section,
     );
+    if (recursive) {
+      getRecursiveTags().push(tag);
+    } else {
+      exprs = analyzeKnownTagParams(tag, getParamsTree(contentSection));
+    }
+  } else {
+    exprs = analyzeKnownTagParams(tag, childParamsTree);
   }
-
-  const varBinding = trackVarReferences(tag, BindingType.derived);
-
-  const exprs = (tagExtra[kKnownExprs] = analyzeParams(
-    tagExtra,
-    section,
-    tag,
-    propTree,
-    attrExprs,
-  ));
-  setTagDerivedFrom(tag, propTree?.props?.[0]?.binding, exprs);
 
   if (varBinding) {
     // Tag variables emit a `_var` statement in the parent's setup.
@@ -169,10 +170,11 @@ export function knownTagAnalyze(
     // A recursive call's return is taken as always: the content's `<return>`
     // is unsettled here and is not mapped through the call's params.
     const varExpr =
-      isSameOrChildSection(contentSection, section) ||
+      recursive ||
       (tagExtra.defineBodySection
         ? contentSection.returnValueExpr
-        : mapParamReasonToExpr(exprs, getReturnParams(contentSection)));
+        : mapParamReasonToExpr(exprs!, getReturnParams(contentSection)));
+    const childScopeBinding = tagExtra.nodeBinding;
     varBinding.returnedBy = childScopeBinding;
     reserveId(childScopeBinding, ReservedId.ScopeOffset);
     setDerivedFrom(varBinding, varExpr);
@@ -181,8 +183,43 @@ export function knownTagAnalyze(
     }
     if (varExpr !== true) addReasonExprs(getSlot(childScopeBinding), varExpr);
   }
+}
 
-  addReasonExprs(getSlot(childScopeBinding), fromIter(attrExprs));
+// Every body is analyzed now, so each recursive tag takes its callee's tree.
+export function analyzeRecursiveTags() {
+  for (const tag of getRecursiveTags()) {
+    analyzeKnownTagParams(
+      tag,
+      getParamsTree(tag.node.extra![kContentSection]!),
+    );
+  }
+}
+
+// A body in this template is analyzed when its tree is taken: `<define>`
+// rejects hoisted calls, and a recursive tag waits for program exit.
+function getParamsTree(contentSection: Section) {
+  return (
+    contentSection.params && getBindingPropTree(contentSection.params, true)
+  );
+}
+
+function analyzeKnownTagParams(
+  tag: t.NodePath<t.MarkoTag>,
+  propTree: BindingPropTree | undefined,
+) {
+  const tagExtra = tag.node.extra!;
+  const attrExprs = new Set([tagExtra]);
+  tagExtra[kPropTree] = propTree;
+  const exprs = (tagExtra[kKnownExprs] = analyzeParams(
+    tagExtra,
+    getSection(tag),
+    tag,
+    propTree,
+    attrExprs,
+  ));
+  setTagDerivedFrom(tag, propTree?.props?.[0]?.binding, exprs);
+  addReasonExprs(getSlot(tagExtra.nodeBinding!), fromIter(attrExprs));
+  return exprs;
 }
 
 // The params another template's return value is computed from, or `true` when
