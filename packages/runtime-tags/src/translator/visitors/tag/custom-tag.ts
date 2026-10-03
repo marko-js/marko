@@ -16,7 +16,6 @@ import {
 import { distance } from "fastest-levenshtein";
 
 import type { LoadTrigger } from "../../../html/assets";
-import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { type Binding } from "../../util/bindings";
 import { BindingType, createBinding } from "../../util/bindings";
 import { generateUidIdentifier } from "../../util/generate-uid";
@@ -113,13 +112,7 @@ export default {
         );
       }
 
-      knownTagAnalyze(
-        tag,
-        childSection,
-        programSection === childSection
-          ? programSection.params && getBindingPropTree(programSection.params)
-          : childExtra.paramsTree,
-      );
+      knownTagAnalyze(tag, childSection, childExtra.paramsTree);
 
       const tagName = getStaticTagName(tag.node);
       if (tagExtra.tagNameLoad) {

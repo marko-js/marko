@@ -1,0 +1,10 @@
+<define/Tree|input|>
+  <if=input.depth>
+    <Tree depth=input.depth - 1 label=input.label/>
+  </if>
+  <const/all=input/>
+  <span>${input.label}:${Object.keys(all).join(",")}</span>
+</define>
+<let/depth=1/>
+<Tree depth=depth label="x"/>
+<button onClick() { depth++ }>deeper</button>
