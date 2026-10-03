@@ -160,6 +160,10 @@ export default {
         assertOptionInSelectWithValue(tag);
       }
 
+      if (tagFacts.detachedBody) {
+        assertStaticMarkup(tag.get("body"), tagName);
+      }
+
       const isTextOnly = tagFacts.textBody;
       const { attributes } = tag.node;
       const tagSection = getOrCreateSection(tag);
@@ -2060,4 +2064,39 @@ export function controllableFeatureFor(tagName: string | undefined) {
 
 export function enableControllable(feature: DOMRuntimeFeature | undefined) {
   if (feature) importRuntimeFeature(feature);
+}
+
+// The parser moves a detached body into a fragment of its own, which client
+// code never walks, so it must be markup the template writes as is.
+function assertStaticMarkup(body: t.NodePath<t.MarkoTagBody>, tagName: string) {
+  for (const child of body.get("body")) {
+    if (
+      child.isMarkoText() ||
+      child.isMarkoComment() ||
+      (child.isMarkoPlaceholder() && evaluate(child.node.value).confident)
+    ) {
+      continue;
+    }
+
+    if (child.isMarkoTag() && isStaticNativeTag(child)) {
+      assertStaticMarkup(child.get("body"), tagName);
+      continue;
+    }
+
+    throw child.buildCodeFrameError(
+      `Content inside a native \`<${tagName}>\` must be static: the parser moves it into the element's \`content\` fragment, where Marko's client code cannot reach it. Move this outside the \`<${tagName}>\`.`,
+    );
+  }
+}
+
+function isStaticNativeTag(tag: t.NodePath<t.MarkoTag>) {
+  const { node } = tag;
+  return (
+    analyzeTagNameType(tag) === TagNameType.NativeTag &&
+    !node.var &&
+    !node.body.attributeTags &&
+    node.attributes.every(
+      (attr) => t.isMarkoAttribute(attr) && evaluate(attr.value).confident,
+    )
+  );
 }

@@ -25,6 +25,9 @@ export interface TagFacts {
   /** Its insertion mode drops an unknown element but keeps its children, so a
    * wrapper around content inside it is discarded. */
   discardsWrapperChildren?: true;
+  /** The parser moves its body into a fragment of its own (a `<template>`'s
+   * `content`), which resume never walks. */
+  detachedBody?: true;
 }
 
 const noContentFacts: TagFacts = { content: null };
@@ -93,7 +96,13 @@ const discardsWrapperChildrenFacts: TagFacts = {
   inlineBody: true,
   discardsWrapperChildren: true,
 };
+const detachedBodyFacts: TagFacts = {
+  content: ContentType.Tag,
+  inlineBody: true,
+  detachedBody: true,
+};
 const nativeElementFacts = new Map<string, TagFacts>([
+  ["template", detachedBodyFacts],
   ["html", pageElementFacts],
   ["head", pageElementFacts],
   ["body", pageElementFacts],

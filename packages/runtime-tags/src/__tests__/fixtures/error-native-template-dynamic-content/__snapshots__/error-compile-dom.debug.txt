@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-template-dynamic-content/template.marko:2:11
+      1 | <let/show=true/>
+    > 2 | <template><if=show><span>a</span></if></template>
+        |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Content inside a native `<template>` must be static: the parser moves it into the element's `content` fragment, where Marko's client code cannot reach it. Move this outside the `<template>`.
+      3 | <button onClick() { show = !show }>toggle</button>
+      4 |
