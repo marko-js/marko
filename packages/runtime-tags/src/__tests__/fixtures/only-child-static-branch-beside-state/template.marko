@@ -1,0 +1,12 @@
+<let/count=0/>
+<div class=`c${count}`>
+  <if=input.show><span>${count}</span></if>
+</div>
+<ul class=`c${count}`>
+  <for|item| of=input.items><li>${item}:${count}</li></for>
+</ul>
+<p class=`c${count}`>
+  <show=input.show><b>${count}</b></show>
+</p>
+<for|x| until=count>x</for>
+<button onClick() { count++ }>inc</button>

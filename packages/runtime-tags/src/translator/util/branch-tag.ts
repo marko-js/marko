@@ -4,9 +4,9 @@ import { type Binding } from "./bindings";
 import { some } from "./optional";
 import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
 import { hasResumableWriter } from "./references";
-import { ContentType, type Section } from "./sections";
+import { ContentType, forEachSection, type Section } from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
-import { findSectionSlot, findSlot, SlotKind } from "./slots";
+import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
 import { createProgramState } from "./state";
 import { getWriteGuard, getWriteGuardForAny } from "./write-guard";
 
@@ -21,17 +21,38 @@ export function initBranchSection(
   bodySection.branch = branch;
 }
 
-// The branch id rides the always-rendered resume marker, which resume decodes
-// in a bundle with branches: a branch whose state has a resumable writer keeps
-// its runtime there.
+// Resume decodes branch markers only in a bundle with branches, which this
+// template's module brings when state a resumed instance writes feeds a branch.
+const [getVisitsBranches, setVisitsBranches] = createProgramState<
+  boolean | undefined
+>(() => undefined);
+function visitsBranches() {
+  let visits = getVisitsBranches();
+  if (visits === undefined) {
+    visits = false;
+    forEachSection((section) => {
+      visits ||= some(section.slots, isClientWrittenBranchExpr);
+    });
+    setVisitsBranches(visits);
+  }
+  return visits;
+}
+
+function isClientWrittenBranchExpr({ kind, reason }: Slot) {
+  return (
+    kind === SlotKind.BranchExpr &&
+    isStateReason(reason) &&
+    some(reason.state, hasResumableWriter)
+  );
+}
+
+// The branch id rides the always-rendered resume marker.
 export function resumeOwnerByMarkerWhenStatic(
   bodySection: Section,
   nodeBinding: Binding,
 ) {
-  const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
   if (
-    isStateReason(branchExprReason) &&
-    some(branchExprReason.state, hasResumableWriter) &&
+    visitsBranches() &&
     isUnconditionalReason(
       findSectionSlot(bodySection, SlotKind.Branch)?.reason,
     ) &&
@@ -76,11 +97,13 @@ export function getBranchEndArgs(
   // Only an element's only child reads it: otherwise the end always writes
   // its branch marker when it writes one at all.
   const branchExprGuard = skipParentEnd
-    ? getWriteGuard(
-        tagSection,
-        findSlot(nodeBinding, SlotKind.BranchExpr)?.reason,
-        false,
-      )
+    ? visitsBranches()
+      ? t.numericLiteral(1)
+      : getWriteGuard(
+          tagSection,
+          findSlot(nodeBinding, SlotKind.BranchExpr)?.reason,
+          false,
+        )
     : singleNode
       ? t.numericLiteral(0)
       : undefined;

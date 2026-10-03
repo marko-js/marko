@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
-	}, $scope0_id, "#div/1", $wg__input_show, $wg__input_show, $wg__input_show, "</div>", 1);
+	}, $scope0_id, "#div/1", $wg__input_show, $wg__input_show, 1, "</div>", 1);
 	_html("<div>");
 	_if(() => {
 		if (open) {
