@@ -460,10 +460,13 @@ export function _el_read<T>(value: T): T {
 
 type Hoistable<T> = (...args: unknown[]) => T;
 type Hoisted<T> = Hoistable<T> & Iterable<T>;
+// An `<if>` branch: the slot its chain's scope is in, the slot naming which
+// branch renders, and its own index.
+type HoistStep = Accessor | [Accessor, Accessor, number];
 
 function* traverse<T>(
   scope: Scope,
-  path: Accessor[],
+  path: HoistStep[],
   args: unknown[],
   i: number = path.length - 1,
 ): IterableIterator<T> {
@@ -479,7 +482,10 @@ function* traverse<T>(
         }
       }
     } else {
-      const item = scope[path[i]];
+      const step = path[i];
+      const item = Array.isArray(step)
+        ? (scope[step[1]] || 0) === step[2] && scope[step[0]]
+        : scope[step];
       if (i) {
         yield* traverse(item, path, args, i - 1);
       } else {
@@ -491,9 +497,9 @@ function* traverse<T>(
   }
 }
 
-export function _hoist<T>(...path: Accessor[]) {
+export function _hoist<T>(...path: HoistStep[]) {
   if (!MARKO_DEBUG)
-    path = path.map((p) => (typeof p === "string" ? p : decodeAccessor(p)));
+    path = path.map((p) => (typeof p === "number" ? decodeAccessor(p) : p));
   return (scope: Scope) => {
     // Single reads intentionally share the iterable traversal: a dedicated
     // fast path costs more runtime bytes than its latency savings justify.
@@ -504,6 +510,6 @@ export function _hoist<T>(...path: Accessor[]) {
   };
 }
 
-export function _hoist_resume<T>(id: string, ...path: Accessor[]) {
+export function _hoist_resume<T>(id: string, ...path: HoistStep[]) {
   return (_resumed[id] = _hoist<T>(...path));
 }

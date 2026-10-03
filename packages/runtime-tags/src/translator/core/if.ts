@@ -65,11 +65,13 @@ export const IfTag = {
       const nodeBinding = structure.controlFlowNode(ifTag, ifTagSection);
       // TODO: remove all branches if none have body content.
 
-      for (const [branchTag, branchBodySection] of branches) {
+      for (let index = 0; index < branches.length; index++) {
+        const [branchTag, branchBodySection] = branches[index];
         if (branchBodySection) {
           initBranchSection(branchBodySection, ifTagExtra, {
             nodeBinding,
             optional: true,
+            index,
           });
         }
 

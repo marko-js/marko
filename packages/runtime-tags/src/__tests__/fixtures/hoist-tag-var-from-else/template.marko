@@ -1,0 +1,12 @@
+<let/a=false/>
+<button.toggle onClick() { a = !a }>toggle</button>
+<if=a>
+  <span>a</span>
+</if>
+<else>
+  <const/getLabel=() => "b"/>
+</else>
+<let/label="none"/>
+<button.read onClick() { label = `${getLabel()}:${[...getLabel].length}` }>
+  ${label}
+</button>

@@ -1,4 +1,4 @@
-// size: 27385 (min) 10176 (brotli)
+// size: 27435 (min) 10192 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -813,7 +813,10 @@ function* traverse(scope, path, args, i = path.length - 1) {
       for (let childScope of scope.values())
         childScope.H !== 0 && (yield* traverse(childScope, path, args, i));
     else {
-      let item = scope[path[i]];
+      let step = path[i],
+        item = Array.isArray(step)
+          ? (scope[step[1]] || 0) === step[2] && scope[step[0]]
+          : scope[step];
       i
         ? yield* traverse(item, path, args, i - 1)
         : yield typeof item == "function" ? item(...args) : item;
@@ -822,7 +825,7 @@ function* traverse(scope, path, args, i = path.length - 1) {
 }
 function _hoist(...path) {
   return (
-    (path = path.map((p) => (typeof p == "string" ? p : decodeAccessor(p)))),
+    (path = path.map((p) => (typeof p == "number" ? decodeAccessor(p) : p))),
     (scope) => {
       let fn = (...args) => traverse(scope, path, args).next().value;
       return ((fn[Symbol.iterator] = () => traverse(scope, path, [])), fn);

@@ -155,7 +155,14 @@ export interface Section {
   hasSetupWork: boolean;
   /** Its tag, which renders it in place into branch scopes at the tag's node
    * binding, and whether its branch expression's value can leave it unrendered. */
-  branch: { nodeBinding: Binding; optional: boolean } | undefined;
+  branch:
+    | {
+        nodeBinding: Binding;
+        optional: boolean;
+        /** An `<if>` branch's place in its chain, the renderer index it renders as. */
+        index?: number;
+      }
+    | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;

@@ -1,7 +1,11 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $el_getter = /*@__PURE__*/ _hoist("#div/0", "BranchScopes:#text/0");
+const $el_getter = /*@__PURE__*/ _hoist("#div/0", [
+	"BranchScopes:#text/0",
+	"ConditionalRenderer:#text/0",
+	0
+]);
 const $if_content__out = /*@__PURE__*/ _closure_get("out/5", ($scope) => _text($scope["#text/1"], $scope._._.out), ($scope) => $scope._._, "__tests__/template.marko_2_out#0:4/subscribe");
 const $if_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$out($scope._._, String($el_getter($scope._._)()));

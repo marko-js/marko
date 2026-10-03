@@ -24,7 +24,7 @@ import {
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
-import { getAccessorProp } from "./get-accessor-enums";
+import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { filter, forEach, type Opt, push, reduce, some } from "./optional";
@@ -1114,7 +1114,25 @@ function writeGetters(section: Section) {
 }
 
 function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
-  accessors.push(getSectionInstancesAccessorLiteral(section));
+  const instancesAccessor = getSectionInstancesAccessorLiteral(section);
+  const { branch } = section;
+  // The branches of an `<if>` chain share one slot, so the read checks which renders.
+  accessors.push(
+    branch?.index !== undefined &&
+      section.parent!.children.some(
+        (child) =>
+          child !== section && child.branch?.nodeBinding === branch.nodeBinding,
+      )
+      ? t.arrayExpression([
+          instancesAccessor,
+          t.stringLiteral(
+            getAccessorPrefix().ConditionalRenderer +
+              getScopeAccessor(branch.nodeBinding),
+          ),
+          t.numericLiteral(branch.index),
+        ])
+      : instancesAccessor,
+  );
 }
 
 export function writeRegisteredFns() {
