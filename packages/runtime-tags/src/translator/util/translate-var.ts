@@ -78,7 +78,7 @@ export default function translateVar(
           pattern.unshiftContainer(
             "properties",
             t.objectProperty(
-              t.identifier(changeName),
+              toPropertyName(changeName),
               t.identifier(changeBinding.name),
             ),
           );
