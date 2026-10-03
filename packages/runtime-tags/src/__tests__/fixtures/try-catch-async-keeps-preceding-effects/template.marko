@@ -1,0 +1,17 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<counter/>
+<try>
+  <await|v| = resolveAfter("done", 1)>
+    <counter/>
+  </await>
+  <@placeholder>loading</@placeholder>
+</try>
+<try>
+  <await|v| = rejectAfter(new Error("ERROR!"), 2)>
+    ${v}
+  </await>
+  <@catch|err|>
+    ${err.message}
+  </@catch>
+</try>

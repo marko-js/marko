@@ -17,6 +17,21 @@ export function forEach<T>(opt: Opt<T>, cb: (item: T) => void) {
   }
 }
 
+export function reduce<T, R>(
+  opt: Opt<T>,
+  cb: (acc: R, item: T) => R,
+  acc: R,
+): R {
+  if (opt) {
+    if (Array.isArray(opt)) {
+      for (const item of opt) acc = cb(acc, item);
+    } else {
+      acc = cb(acc, opt);
+    }
+  }
+  return acc;
+}
+
 export function push<T>(opt: Opt<T>, item: T): OneMany<T>;
 export function push<T>(oneMany: OneMany<T>, item: T): T[];
 export function push<T>(opt: Opt<T>, item: T): OneMany<T> {

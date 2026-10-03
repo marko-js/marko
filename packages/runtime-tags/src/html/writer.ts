@@ -11,7 +11,7 @@ import {
 } from "../common/helpers";
 import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { concat, type Opt, push } from "../common/opt";
+import { concat, type Opt, push, reduce } from "../common/opt";
 import {
   type $Global,
   type Accessor,
@@ -1505,6 +1505,9 @@ export class Chunk {
   public consumed = false;
   public reorderId: string | null = null;
   public deferredReady: Opt<Chunk> = null;
+  // Effects held for the in-order content this chunk heads, in stream order, on
+  // chunks of the boundary each came from, so a `@catch` drops only its own.
+  public heldEffects: Opt<Chunk> = null;
   // A reorder whose end marker this chunk writes, queued once the marker streams
   // so the client always walks the marker before the reorder that replaces it.
   public deferredReorder: Chunk | null = null;
@@ -1546,7 +1549,7 @@ export class Chunk {
   writeEffect(scopeId: number, registryId: string) {
     countResumeWrite(this);
     if (this.lastEffect === registryId) {
-      this.effects += " " + scopeId;
+      this.effects = concatEffects(this.effects, scopeId + "");
     } else {
       this.lastEffect = registryId;
       this.effects = concatEffects(this.effects, registryId + " " + scopeId);
@@ -1563,6 +1566,12 @@ export class Chunk {
     this.scripts = concatScripts(this.scripts, chunk.scripts);
     this.lastEffect = chunk.lastEffect || this.lastEffect;
     this.deferredReady = concat(this.deferredReady, chunk.takeDeferredReady());
+  }
+
+  takeHeldEffects() {
+    const { heldEffects } = this;
+    this.heldEffects = null;
+    return heldEffects;
   }
 
   takeDeferredReady() {
@@ -1687,7 +1696,10 @@ export class Chunk {
         ),
       );
       // The body's flush ends the placeholder's life on the client.
-      end.writeEffect(branchId, PLACEHOLDER_DISMISS_REGISTER_ID);
+      dismissChunk(end, body).writeEffect(
+        branchId,
+        PLACEHOLDER_DISMISS_REGISTER_ID,
+      );
     }
     this.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
     this.deferredReorder = body;
@@ -1723,8 +1735,14 @@ export class Chunk {
     let html = "";
     let effects = "";
     let scripts = "";
-    let lastEffect = "";
+    // The chunk ending the effects of one boundary that `effects` holds.
+    let effectsEnd: Chunk | undefined;
+    let heldEffects = this.heldEffects;
     let deferredReady: Opt<Chunk>;
+    this.heldEffects = null;
+    // Lazy content heading the stream, pending again or not, held its earlier
+    // effects apart; its own data still goes ahead of the content nested in it.
+    if (this.serializeState.readyId && this.effects) followHeldEffects(this);
 
     while (cur.next && !cur.async) {
       cur.markCatchRange();
@@ -1733,9 +1751,15 @@ export class Chunk {
       if (cur.serializeState.readyId) {
         deferredReady = push(deferredReady, cur);
       } else {
-        effects = concatEffects(effects, cur.effects);
+        if (cur.effects) {
+          if (effectsEnd && effectsEnd.boundary !== cur.boundary) {
+            heldEffects = holdEffectsOn(heldEffects, effectsEnd, effects);
+            effects = "";
+          }
+          effectsEnd = cur;
+          effects = concatEffects(effects, cur.effects);
+        }
         scripts = concatScripts(scripts, cur.scripts);
-        lastEffect = cur.lastEffect || lastEffect;
       }
       deferredReady = concat(deferredReady, cur.takeDeferredReady());
       cur.consumed = true;
@@ -1743,11 +1767,26 @@ export class Chunk {
     }
 
     cur.deferOwnReady();
+    if (effects) {
+      if (cur.serializeState.readyId) {
+        // Lazy content never takes the page's effects.
+        heldEffects = holdEffectsOn(heldEffects, effectsEnd!, effects);
+      } else if (effectsEnd!.boundary !== cur.boundary) {
+        // A `@catch` that cuts this chunk keeps what came before its body. Ids
+        // compress across them only into a body that drops with them.
+        heldEffects = holdEffectsOn(heldEffects, effectsEnd!, effects);
+        if (isWithin(cur.boundary, effectsEnd!.boundary)) {
+          cur.lastEffect ||= effectsEnd!.lastEffect;
+        }
+      } else {
+        cur.effects = concatEffects(effects, cur.effects);
+        cur.lastEffect ||= effectsEnd!.lastEffect;
+      }
+    }
+    cur.heldEffects = heldEffects;
     cur.deferredReady = concat(deferredReady, cur.deferredReady);
     cur.html = html + cur.html;
-    cur.effects = concatEffects(effects, cur.effects);
     cur.scripts = concatScripts(scripts, cur.scripts);
-    cur.lastEffect ||= lastEffect;
     return cur;
   }
 
@@ -1867,7 +1906,9 @@ export class Chunk {
 
     // In-order content holds every effect until it completes: its nodes aren't
     // live yet, so nothing on the client may change while it streams.
-    const effects = this.async ? "" : this.effects;
+    const effects = this.async
+      ? ""
+      : joinHeldEffects(this.takeHeldEffects(), this.effects);
     let { html, scripts } = this;
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
@@ -1912,6 +1953,8 @@ export class Chunk {
         const readyReservations: string[] = [];
         let reorderHTML = "";
         let reorderEffects = "";
+        // While in-order content holds them, one boundary's effects at a time.
+        let effectsBoundary = reorderedChunk.boundary;
         let reorderScripts = "";
         // A caught one streams empty, so the reorder around it still completes.
         let cur: Chunk | null = reorderedChunk.boundary.aborted
@@ -1936,6 +1979,13 @@ export class Chunk {
           );
           cur.consumed = true;
           reorderHTML += cur.html;
+          if (this.async && cur.effects && cur.boundary !== effectsBoundary) {
+            if (reorderEffects) {
+              holdReorderEffects(this, effectsBoundary, reorderEffects);
+              reorderEffects = "";
+            }
+            effectsBoundary = cur.boundary;
+          }
           reorderEffects = concatEffects(reorderEffects, cur.effects);
           reorderScripts = concatScripts(
             reorderScripts,
@@ -1958,10 +2008,7 @@ export class Chunk {
 
         if (reorderEffects) {
           if (this.async) {
-            // Content reordered in while in-order content still streams waits
-            // with the effects that content holds.
-            this.effects = concatEffects(this.effects, reorderEffects);
-            this.lastEffect = "";
+            holdReorderEffects(this, effectsBoundary, reorderEffects);
           } else {
             needsResumeArray = true;
             reorderScripts = concatScripts(
@@ -2043,6 +2090,73 @@ function renderReorderPlaceholders(
     }
   }
   return reorders;
+}
+
+// The body's first pending chunk, or its last when that one sits in a nested
+// boundary, whose catch would drop the effect with it.
+function dismissChunk(end: Chunk, body: Chunk) {
+  if (end.boundary !== body.boundary) while (end.next) end = end.next;
+  return end;
+}
+
+// Moves a lazy chunk's effects after those it held of its own content, onto
+// a chunk that drops only with it.
+function followHeldEffects(chunk: Chunk) {
+  const held = reduce(chunk.deferredReady, lastHeldOf, chunk);
+  if (held !== chunk) {
+    held.effects = concatEffects(held.effects, chunk.effects);
+    chunk.effects = "";
+  }
+}
+
+// The later chunk when it is of the same lazy content and boundary.
+function lastHeldOf(held: Chunk, cur: Chunk) {
+  return cur.serializeState === held.serializeState &&
+    cur.boundary === held.boundary
+    ? cur
+    : held;
+}
+
+// Holds one boundary's effects on the chunk ending them, after those before.
+function holdEffectsOn(heldEffects: Opt<Chunk>, chunk: Chunk, effects: string) {
+  chunk.effects = effects;
+  return push(heldEffects, chunk);
+}
+
+// Whether a boundary is the other or nested in it.
+function isWithin(boundary: Boundary | undefined, outer: Boundary) {
+  while (boundary && boundary !== outer) boundary = boundary.parent;
+  return !!boundary;
+}
+
+// Content reordered in while in-order content still streams waits with the
+// effects that content holds, after the head's own, by boundary.
+function holdReorderEffects(head: Chunk, boundary: Boundary, effects: string) {
+  if (!head.serializeState.readyId) {
+    if (head.effects) {
+      head.heldEffects = holdEffectsOn(
+        head.heldEffects,
+        head.fork(head.boundary, null),
+        head.effects,
+      );
+    }
+    // The head's later ids can't continue effects held before these.
+    head.effects = head.lastEffect = "";
+  }
+  head.heldEffects = holdEffectsOn(
+    head.heldEffects,
+    head.fork(boundary, null),
+    effects,
+  );
+}
+
+// The held effects in stream order, without those of caught bodies.
+export function joinHeldEffects(heldEffects: Opt<Chunk>, effects: string) {
+  return concatEffects(reduce(heldEffects, joinUncaught, ""), effects);
+}
+
+function joinUncaught(joined: string, held: Chunk) {
+  return held.boundary.aborted ? joined : concatEffects(joined, held.effects);
 }
 
 function flushSerializer(boundary: Boundary, serializeState: SerializeState) {

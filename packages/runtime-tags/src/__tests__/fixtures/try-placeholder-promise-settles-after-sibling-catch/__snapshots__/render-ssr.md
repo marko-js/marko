@@ -23,6 +23,21 @@ INSERT: ::text("caught")
 
 # Update
 ```html
+<div
+  id="ref"
+>
+  hello
+</div>
+caught
+```
+## Change
+```
+REMOVE: #ref::text("0")
+INSERT: #ref::text("hello")
+```
+
+# Update
+```html
 <span>
   done
 </span>

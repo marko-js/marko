@@ -1,0 +1,12 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<try>
+  <log-effect id="a"/>
+  <await|first| = resolveAfter("b", 1)>
+    <log-effect id=first/>
+    <await|second| = resolveAfter("c", 2)>
+      <log-effect id=second/>
+    </await>
+  </await>
+  <@catch|err|>${err.message}</@catch>
+</try>

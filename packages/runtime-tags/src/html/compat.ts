@@ -20,6 +20,7 @@ import {
   getChunk,
   getScopeId,
   isInResumedBranch,
+  joinHeldEffects,
   State,
   withChunk,
   writeScript,
@@ -178,6 +179,13 @@ export const compat = {
           } else if (!boundary.count) {
             boundary.onNext = NOOP;
             head = head.consume(boundary);
+            const heldEffects = head.takeHeldEffects();
+            if (heldEffects) {
+              // Settled whole, it joins what it holds to its own effects, which travel
+              // with its html; ids restart after them.
+              head.effects = joinHeldEffects(heldEffects, head.effects);
+              head.lastEffect = "";
+            }
             asyncOut.write(head.html);
             asyncOut.script(head.scripts);
             asyncOut.end();

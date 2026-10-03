@@ -1,0 +1,42 @@
+<!--M_[--><!--M_!^3--><!--M_[--><span>placeholder</span><!--M_]1 P3 2--><!--M_!3--><!--M_]1 a 3-->
+<t hidden M_=3>
+  <!--M_[--><!--M_!^b--><!--M_#c--><!--M_#d--><!--M_!b--><!--M_]3 a 4--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [3, {
+    P: _(2)
+  }, 2, {
+    d: "placeholder",
+    G: 2
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c>
+  <p>a</p>
+</t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d></t>
+<t hidden M_=b><b>nope</b></t>
+<script>
+  M._.r.push(_ => [3, {
+    Q: _._.a1
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<p>after</p>
+<script>
+  M._.r.push("b0 6 _f 3");
+  M._.w()
+</script>

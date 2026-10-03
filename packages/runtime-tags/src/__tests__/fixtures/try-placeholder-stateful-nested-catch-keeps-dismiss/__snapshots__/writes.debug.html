@@ -1,0 +1,47 @@
+<!--M_[--><!--M_!^3--><!--M_[--><span>placeholder</span><!--M_]1 #PlaceholderBranch3 2--><!--M_!3--><!--M_]1 #text/0 3-->
+<t hidden M_=3>
+  <!--M_[--><!--M_!^b--><!--M_#c--><!--M_#d--><!--M_!b--><!--M_]3 #text/0 4-->
+</t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [3, {
+    "#PlaceholderBranch": _(2)
+  }, 2, {
+    input_label: "placeholder",
+    "#ClosestBranchId": 2
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c>
+  <p>a</p>
+</t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d></t>
+<t hidden M_=b><b>nope</b></t>
+<script>
+  M._.r.push(_ => [3, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested-catch-keeps-dismiss/template.marko_2*content"
+      ]
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<p>after</p>
+<script>
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/try-placeholder-stateful-nested-catch-keeps-dismiss/tags/note.marko_0_input_label#3 6 _placeholderDismiss 3"
+    );
+  M._.w()
+</script>
