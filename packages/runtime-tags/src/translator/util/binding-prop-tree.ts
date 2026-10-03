@@ -91,7 +91,7 @@ function isDirectContentBinding(binding: Binding) {
     return false;
   }
 
-  const [read] = binding.reads;
+  const [read] = binding.reads.keys();
   return read.directContent && read.section === binding.section;
 }
 

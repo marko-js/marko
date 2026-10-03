@@ -899,8 +899,12 @@ function mergeInto(
       isEffect ||= extra.isEffect;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
-          read.binding.reads.delete(extra);
-          read.binding.reads.add(targetExtra);
+          const bindingReads = read.binding.reads;
+          bindingReads.delete(extra);
+          bindingReads.set(
+            targetExtra,
+            push(bindingReads.get(targetExtra), read),
+          );
         });
 
         reads = concat(reads, additionalReads);
@@ -1001,10 +1005,6 @@ export function onFinalizeReferences(finalize: () => void) {
   getReferenceFinalizers().push(finalize);
 }
 
-export function getExpressionReads(exprExtra: ReferencedExtra) {
-  return getReadsByExpression().get(exprExtra);
-}
-
 export function addRead(
   exprExtra: ReferencedExtra,
   extra: t.NodeExtra,
@@ -1025,7 +1025,7 @@ export function addRead(
   // Content no output renders keeps no binding alive: reads recorded before it
   // was dropped are untracked by `dropContent`, and later ones stop here.
   if (section.pruned) return read;
-  binding.reads.add(exprExtra);
+  binding.reads.set(exprExtra, push(binding.reads.get(exprExtra), read));
   exprExtra.section = section;
   readsByExpression.set(
     exprExtra,

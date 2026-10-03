@@ -452,7 +452,7 @@ function computeBindingReaders(
       ),
     );
   }
-  for (const expr of binding.reads) {
+  for (const expr of binding.reads.keys()) {
     if (expr.isEffect) {
       if (
         !(
