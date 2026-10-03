@@ -12,7 +12,11 @@ import {
   Sorted,
   reduce,
 } from "./optional";
-import { type AssignedBindingExtra, type ReferencedExtra } from "./references";
+import {
+  type AssignedBindingExtra,
+  type Read,
+  type ReferencedExtra,
+} from "./references";
 import { type Section } from "./sections";
 import { type Sources } from "./sources";
 import { createProgramState } from "./state";
@@ -43,7 +47,9 @@ export interface Binding {
    * analysis cannot see them, which makes it its own source. */
   derivedFrom: Opt<t.NodeExtra> | false;
   /** Complete only once `finalizeReferences` runs at program analyze exit. */
-  reads: Set<ReferencedExtra>;
+  /** Its reads, by the expression each is in; pruning hands an expression's reads
+   * to the nearest ancestor it also reads, which they then resolve to. */
+  reads: Map<ReferencedExtra, Opt<Read>>;
   aliases: Set<Binding>;
   hoists: SortedOpt<Section>;
   getters: Map<Getter["hoisted"], boolean>;
@@ -137,7 +143,7 @@ export function createBinding(
     sources: undefined,
     intersection: undefined,
     derivedFrom: undefined,
-    reads: new Set(),
+    reads: new Map(),
     aliases: new Set(),
     hoists: undefined,
     getters: new Map(),
@@ -448,7 +454,7 @@ function isReadBeyondInvoking(binding: Binding) {
   ) {
     return true;
   }
-  for (const expr of binding.reads) {
+  for (const expr of binding.reads.keys()) {
     if (!expr.invokeOnly) return true;
   }
   return false;

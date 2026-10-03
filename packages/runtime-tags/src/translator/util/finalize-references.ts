@@ -17,16 +17,15 @@ import {
   getPropertyPath,
   isDirectAlias,
   propsUtil,
-  someAliased,
 } from "./bindings";
 import { generateUid } from "./generate-uid";
 import {
   addSorted,
   every,
+  concat,
   filter,
   findSorted,
   forEach,
-  type SortedOpt,
   type Opt,
   type SortedOneMany,
   push,
@@ -218,6 +217,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
               fn === expr
                 ? exprBindings
                 : resolveReferencedBindingsInFunction(
+                    expr,
                     exprBindings.allBindings,
                     fnReads,
                   );
@@ -656,7 +656,7 @@ function pruneBinding(binding: Binding): boolean {
   // A read from an unread binding's droppable value is no read: judge those
   // bindings first (one met again mid way counts as read).
   binding.pruned = false;
-  for (const read of binding.reads) {
+  for (const read of binding.reads.keys()) {
     if (isDroppableValue(read)) {
       forEach(read.derives, pruneBinding);
     }
@@ -664,13 +664,12 @@ function pruneBinding(binding: Binding): boolean {
   // Likewise an assignment from such a value.
   forEach(binding.assignments, pruneWriter);
 
-  for (const read of binding.reads) {
-    let aliased = binding.aliasOf;
-    while (aliased && !aliased.reads.has(read)) {
-      aliased = aliased.aliasOf;
-    }
-    if (aliased) {
-      binding.reads.delete(read);
+  // An expression that also reads an ancestor reads this through it.
+  for (const [expr, reads] of binding.reads) {
+    const owner = getReadOwner(binding.aliasOf, expr);
+    if (owner) {
+      owner.reads.set(expr, concat(owner.reads.get(expr), reads));
+      binding.reads.delete(expr);
     }
   }
 
@@ -723,6 +722,7 @@ function pruneDerived(expr: t.NodeExtra) {
 }
 
 function resolveReferencedBindingsInFunction(
+  expr: ReferencedExtra,
   refs: SortedOneMany<Binding>,
   reads: Opt<Read>,
 ) {
@@ -742,8 +742,7 @@ function resolveReferencedBindingsInFunction(
       binding.type !== BindingType.dom &&
       binding.type !== BindingType.global
     ) {
-      const ref = findClosestReference(binding, refs);
-      if (ref) closest.add(ref);
+      closest.add(getReadOwner(binding, expr)!);
     }
   });
   if (closest.size) {
@@ -753,49 +752,12 @@ function resolveReferencedBindingsInFunction(
   return { referencedBindings, constantBindings };
 }
 
-function findClosestReference(
-  from: Binding,
-  refs: SortedOneMany<Binding>,
-): undefined | Binding {
-  if (Array.isArray(refs)) {
-    if (bindingUtil.has(refs, from)) {
-      return from;
-    }
-
-    for (const ref of refs) {
-      const closest = findAliased(from, ref);
-      if (closest) return closest;
-    }
-  } else {
-    const closest = findAliased(from, refs);
-    if (closest) return closest;
-  }
-}
-
-function findAliased(from: Binding, to: Binding) {
-  let closest: Binding | undefined = from;
-  do {
-    if (closest === to) {
-      return closest;
-    }
-  } while ((closest = closest.aliasOf));
-}
-
 // The read bindings that alias no other read binding.
-function getRootBindings(reads: Opt<Read>): SortedOpt<Binding> {
-  const bindings = reduce(reads, addReadBinding);
-  return bindingUtil.filter(
-    bindings,
-    (binding) => !someAliased(binding.aliasOf, isInBindings, bindings),
-  );
-}
-
-function addReadBinding(bindings: SortedOpt<Binding>, { binding }: Read) {
-  return bindingUtil.add(bindings, binding);
-}
-
-function isInBindings(binding: Binding, bindings: SortedOpt<Binding>) {
-  return bindingUtil.has(bindings, binding);
+// The nearest of a binding and its ancestors that holds the expression's
+// reads of it, once pruning has given each read to the binding it resolves to.
+function getReadOwner(binding: Binding | undefined, expr: ReferencedExtra) {
+  while (binding && !binding.reads.has(expr)) binding = binding.aliasOf;
+  return binding;
 }
 
 function markLazyRead(binding: Binding) {
@@ -838,7 +800,7 @@ function isParamBinding(binding: Binding) {
 }
 
 function resolveReferencedBindings(
-  expr: { section: Section; isEffect?: boolean; invokeOnly?: true },
+  expr: ReferencedExtra,
   reads: Opt<Read>,
   intersectionsBySection: Map<Section, Intersection[]>,
 ) {
@@ -851,7 +813,6 @@ function resolveReferencedBindings(
   let closureSection: Section | undefined;
   let hoistedSection: Section | undefined;
 
-  const rootBindings = getRootBindings(reads);
   forEach(reads, (read) => {
     let { binding } = read;
     const { extra, getter } = read;
@@ -870,9 +831,7 @@ function resolveReferencedBindings(
     } else {
       const isChangeHandlerRead = extra.assignmentTo === binding;
       if (isChangeHandlerRead) {
-        const aliasRoot =
-          binding.aliasOf &&
-          findClosestReference(binding.aliasOf, rootBindings!);
+        const aliasRoot = getReadOwner(binding.aliasOf, expr);
         if (aliasRoot) {
           binding = aliasRoot;
         }
@@ -880,7 +839,7 @@ function resolveReferencedBindings(
         extra.section = expr.section;
         ({ binding } = extra.read =
           resolveConstantReference(binding) ??
-          resolveExpressionReference(rootBindings!, read));
+          resolveExpressionReference(expr, read));
       }
       if (binding.type === BindingType.global) {
         // `$global` reads stay verbatim member chains: no read slot,
@@ -983,11 +942,10 @@ function getConstantRoot(binding: Binding): Binding | undefined {
 }
 
 function resolveExpressionReference(
-  rootBindings: SortedOneMany<Binding>,
+  expr: ReferencedExtra,
   { binding, ownVar }: Read,
 ) {
-  const aliasRoot =
-    binding.aliasOf && findClosestReference(binding.aliasOf, rootBindings);
+  const aliasRoot = getReadOwner(binding.aliasOf, expr);
   return aliasRoot
     ? createRead(aliasRoot, getPropertyPath(binding, aliasRoot))
     : createRead(binding, undefined, ownVar && isChildReturnVar(binding));

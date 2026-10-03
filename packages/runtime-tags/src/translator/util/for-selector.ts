@@ -7,7 +7,7 @@ import {
   getPropertyAlias,
 } from "./bindings";
 import { forEach, some } from "./optional";
-import { getExpressionReads, getReferencedBindings } from "./references";
+import { getReferencedBindings } from "./references";
 import { isDirectClosure, type Section } from "./sections";
 
 export function getForSelectorKey(
@@ -32,7 +32,7 @@ export function detectForSelector(
   keyBinding: Binding,
 ): void {
   let closures: Set<Binding> | undefined;
-  for (const expr of keyBinding.reads) {
+  for (const expr of keyBinding.reads.keys()) {
     if (expr.section !== bodySection) continue;
     forEach(getReferencedBindings(expr), (closure) => {
       const canonical = getCanonicalBinding(closure);
@@ -59,10 +59,10 @@ function onlyComparesKey(
 ): boolean {
   let found = false;
   for (let chain: Binding | undefined = closure; chain; chain = chain.aliasOf) {
-    for (const expr of chain.reads) {
+    for (const [expr, reads] of chain.reads) {
       if (expr.section !== bodySection) continue;
       let other = false;
-      forEach(getExpressionReads(expr), (read) => {
+      forEach(reads, (read) => {
         const resolved = read.extra.read;
         const at = resolved && resolvesTo(resolved, canonical);
         if (!at) return;
