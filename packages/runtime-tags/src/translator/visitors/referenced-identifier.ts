@@ -4,6 +4,7 @@ import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
 import { isOptimize, isOutputHTML } from "../util/marko-config";
 import {
+  assertReferencedInRender,
   getCanonicalExtra,
   getReferencedBindings,
   setReferencesScope,
@@ -62,9 +63,11 @@ export default {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     if (name === "$global") {
+      assertReferencedInRender(identifier, name);
       setReferencesScope(identifier);
       trackGlobalReference(identifier);
     } else if (name === "$signal") {
+      assertReferencedInRender(identifier, name);
       const section = getOrCreateSection(identifier);
       section.hasAbortSignal = true;
       setReferencesScope(identifier);

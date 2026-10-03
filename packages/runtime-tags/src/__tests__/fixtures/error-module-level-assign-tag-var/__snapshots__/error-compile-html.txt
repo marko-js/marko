@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-module-level-assign-tag-var/template.marko:3:3
+      1 | <let/count=0/>
+      2 | static function reset() {
+    > 3 |   count = 0;
+        |   ^^^^^^^^^ `count` exists only while the template renders, so module level code ([`static`, `server` and `client`](https://markojs.com/docs/reference/language#static) and [`export`](https://markojs.com/docs/reference/language#export) statements), which runs once as the template loads, cannot reference it. Reference it in the template instead, passing it to module level functions as an argument.
+      4 | }
+      5 | <button onClick=reset>${count}</button>
+      6 |

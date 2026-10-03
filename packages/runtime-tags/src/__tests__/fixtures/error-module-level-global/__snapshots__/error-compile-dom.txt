@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-module-level-global/template.marko:1:23
+    > 1 | static const locale = $global.locale;
+        |                       ^^^^^^^ `$global` exists only while the template renders, so module level code ([`static`, `server` and `client`](https://markojs.com/docs/reference/language#static) and [`export`](https://markojs.com/docs/reference/language#export) statements), which runs once as the template loads, cannot reference it. Reference it in the template instead, passing it to module level functions as an argument.
+      2 | <div>${locale}</div>
+      3 |
