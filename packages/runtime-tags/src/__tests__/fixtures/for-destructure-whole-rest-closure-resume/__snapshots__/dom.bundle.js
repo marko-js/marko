@@ -1,6 +1,6 @@
 // template.marko
-const $if_content2__$temp = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.c.join("+")));
-const $if_content2__setup = $if_content2__$temp;
+const $if_content2__list = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.d.join("+")));
+const $if_content2__setup = $if_content2__list;
 const $if_content__$temp = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, JSON.stringify($scope._.c)));
 const $if_content__setup = $if_content__$temp;
 const $for_content2__if = /*@__PURE__*/ _if(0, "<u> </u>", "D ", $if_content2__setup);

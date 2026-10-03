@@ -4,6 +4,7 @@ import {
   type Binding,
   getCanonicalBinding,
   getNearestDeclared,
+  isRest,
 } from "./bindings";
 import {
   forEachIdentifier,
@@ -45,7 +46,7 @@ export default function translateVar(
         } else {
           translateAliasInSection(tag, id, binding, kind);
         }
-      } else if (binding.excludeProperties !== undefined) {
+      } else if (isRest(binding)) {
         translateRest(tag, id, binding, kind);
       }
     });
@@ -196,7 +197,7 @@ export function getRestPattern(
   shorthand: boolean,
 ) {
   const restElement = t.restElement(id);
-  if (rest.restOffset) {
+  if (rest.restOffset !== undefined) {
     return t.arrayPattern([
       ...new Array(rest.restOffset - (from.restOffset || 0)).fill(null),
       restElement,
@@ -226,7 +227,9 @@ export function withRestFallback(
     ? t.logicalExpression(
         "||",
         value,
-        rest.restOffset ? t.arrayExpression([]) : t.objectExpression([]),
+        rest.restOffset !== undefined
+          ? t.arrayExpression([])
+          : t.objectExpression([]),
       )
     : value;
 }

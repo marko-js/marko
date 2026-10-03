@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, 1, 0, 0, 1);
 		_scope($scope2_id, {
-			c: list,
+			d: list,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "c", 1, $wg__input_lists);

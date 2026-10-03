@@ -62,6 +62,8 @@ export interface Binding {
   aliasOf: Binding | undefined;
   /** The value these `<for>` params iterate, by `of` or `in`. */
   iterates: { expr: t.NodeExtra; type: "of" | "in" } | undefined;
+  /** For an array rest, the source index it starts at: `rest[0]` of
+   * `[a, ...rest]` is the source's `[1]`. */
   restOffset: number | undefined;
   /** For a tag variable a child's `<return>` writes, the node binding of the
    * tag rendering that child. */
@@ -124,6 +126,7 @@ export function createBinding(
   excludeProperties?: SortedOpt<string>,
   loc: t.SourceLocation | null = null,
   refDeclared = false,
+  restOffset?: number,
 ): Binding {
   const id = getNextBindingId();
   const section = aliased ? aliased.section : refSection;
@@ -157,11 +160,13 @@ export function createBinding(
     declaredAlias: undefined,
     localOf: undefined,
     localClosures: undefined,
-    restOffset: undefined,
+    restOffset,
     returnedBy: undefined,
     reserveSize: 0,
     scopeAccessor: undefined,
-    nullable: !sameSection || excludeProperties === undefined,
+    nullable:
+      !sameSection ||
+      (excludeProperties === undefined && restOffset === undefined),
     pruned: undefined,
     exposed: false,
     hasLazyReads: false,
@@ -228,7 +233,7 @@ export function getAssignedObject(binding: Binding) {
   // A rest is a copy, so nothing above it is what it reads.
   for (
     let alias = binding;
-    alias.aliasOf && alias.excludeProperties === undefined;
+    alias.aliasOf && !isRest(alias);
     alias = alias.aliasOf
   ) {
     if (alias.property !== undefined) {
@@ -388,18 +393,22 @@ export function isDirectAlias(binding: Binding) {
   return (
     binding.aliasOf !== undefined &&
     binding.property === undefined &&
-    binding.excludeProperties === undefined
+    !isRest(binding)
+  );
+}
+
+// A rest element: a new object or array of what its pattern leaves. An array's
+// always has a `restOffset`, 0 when it takes the whole value.
+export function isRest(binding: Binding) {
+  return (
+    binding.excludeProperties !== undefined || binding.restOffset !== undefined
   );
 }
 
 export function getDebugScopeAccess(binding: Binding) {
   let root = binding;
   let access = "";
-  while (
-    !(root.loc || root.declared) &&
-    root.aliasOf &&
-    root.excludeProperties === undefined
-  ) {
+  while (!(root.loc || root.declared) && root.aliasOf && !isRest(root)) {
     if (root.property !== undefined) {
       access = toAccess(root.property) + access;
     }
@@ -422,10 +431,7 @@ export function getDebugName(binding: Binding) {
   if (isTemplateParam(binding)) {
     let root = binding;
     let access = "";
-    while (
-      root.aliasOf !== root.section.params &&
-      root.excludeProperties === undefined
-    ) {
+    while (root.aliasOf !== root.section.params && !isRest(root)) {
       if (root.property !== undefined) {
         access = toAccess(root.property) + access;
       }
@@ -452,21 +458,14 @@ function getDebugNameAsIdentifier(binding: Binding) {
   let access = "";
 
   if (isTemplateParam(binding)) {
-    while (
-      root.aliasOf !== root.section.params &&
-      root.excludeProperties === undefined
-    ) {
+    while (root.aliasOf !== root.section.params && !isRest(root)) {
       if (root.property !== undefined) {
         access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
       }
       root = root.aliasOf as ParamBinding;
     }
   } else {
-    while (
-      !(root.loc || root.declared) &&
-      root.aliasOf &&
-      root.excludeProperties === undefined
-    ) {
+    while (!(root.loc || root.declared) && root.aliasOf && !isRest(root)) {
       if (root.property !== undefined) {
         access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
       }
@@ -489,7 +488,7 @@ function isReadBeyondInvoking(binding: Binding) {
     binding.hoists ||
     binding.getters.size ||
     binding.propertyAliases.size ||
-    binding.excludeProperties
+    isRest(binding)
   ) {
     return true;
   }

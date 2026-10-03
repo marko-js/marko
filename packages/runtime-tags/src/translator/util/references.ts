@@ -13,6 +13,7 @@ import {
   getCanonicalBinding,
   getOrCreatePropertyAlias,
   isDirectAlias,
+  isRest,
   isIndexProperty,
   propsUtil,
   getNearestDeclared,
@@ -249,7 +250,7 @@ export function trackVarReferences(
     let target = aliased && getCanonicalBinding(aliased);
     if (target) {
       const { excludeProperties, restOffset } = target;
-      if (excludeProperties !== undefined) {
+      if (isRest(target)) {
         target = target.aliasOf!;
       }
       // An alias is read as what it aliases, so declares only a pattern holding
@@ -410,7 +411,7 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
     const refSection = getOrCreateSection(ref);
     // HTML writes a read of an undeclared binding through what it reads from,
     // so where that name is hidden the binding is declared and read by its own.
-    if (!binding.declared && binding.excludeProperties === undefined) {
+    if (!binding.declared && !isRest(binding)) {
       const root = getNearestDeclared(binding);
       binding.declared =
         !!root &&
@@ -639,8 +640,8 @@ function createBindingsAndTrackReferences(
         excludeProperties,
         lVal.loc,
         declared,
+        restOffset,
       ));
-      if (restOffset) binding.restOffset = restOffset;
       trackReferencesForBinding(scope.getBinding(lVal.name)!, binding);
       break;
     }
@@ -833,7 +834,7 @@ function trackReference(
     if (isAssignedMember(root.parentPath!)) {
       let object = reference;
       while (isDirectAlias(object)) object = object.aliasOf!;
-      if (object.excludeProperties !== undefined) {
+      if (isRest(object)) {
         throw root.parentPath!.buildCodeFrameError(
           `\`${referencePath.node.name}\` is a rest element, a copy rebuilt from the value it is destructured from whenever that changes, so assigning its members would be lost. Assign the property on that value instead, or keep your own copy in a \`<let>\`.`,
         );
@@ -843,8 +844,8 @@ function trackReference(
     }
     if (prop === undefined) break;
 
-    if (reference.aliasOf && reference.excludeProperties !== undefined) {
-      if (reference.restOffset) {
+    if (reference.aliasOf && isRest(reference)) {
+      if (reference.restOffset !== undefined) {
         // A shifted array rest only mirrors the source at offset indices;
         // anything else (length, methods) belongs to the rest array itself.
         if (isIndexProperty(prop)) {
@@ -1426,8 +1427,8 @@ export function mapParamBindingToExpr(
   exprs: KnownExprs,
   binding: ParamBinding,
 ): Opt<t.NodeExtra> {
-  // Property-less with an aliased binding covers every whole-value link: pure
-  // rests (which carry no excludeProperties), rest grains, and aliases.
+  // Property-less with an aliased binding covers every whole-value link: rests,
+  // rest grains, and aliases.
   const isWholeAlias =
     binding.property === undefined && binding.aliasOf !== undefined;
   const curExpr = getKnownExprsAt(

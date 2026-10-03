@@ -1,15 +1,16 @@
 // template.marko
 const $template = "<button id=toggle>toggle</button><!><!><!>";
 const $walks = " b%b%c";
-const $if_content2__$temp = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.$temp2.join("+")));
-const $if_content2__setup = $if_content2__$temp;
+const $if_content2__list = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.list.join("+")));
+const $if_content2__setup = $if_content2__list;
 const $if_content__$temp = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], JSON.stringify($scope._.$temp)));
 const $if_content__setup = $if_content__$temp;
 const $for_content2__if = /*@__PURE__*/ _if("#text/0", "<u> </u>", "D ", $if_content2__setup);
 const $for_content2__show = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content2__if($scope, $scope._.show ? 0 : 1));
 const $for_content2__setup = $for_content2__show;
 const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3[0]);
-const $for_content2__$temp = /*@__PURE__*/ _const("$temp2", $if_content2__$temp);
+const $for_content2__$temp = ($scope, $temp2) => $for_content2__list($scope, (([ ...list]) => list)($temp2));
+const $for_content2__list = /*@__PURE__*/ _const("list", $if_content2__list);
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<i> </i>", "D ", $if_content__setup);
 const $for_content__show = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.show ? 0 : 1));
 const $for_content__setup = $for_content__show;
