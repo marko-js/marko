@@ -1,0 +1,41 @@
+<div id=log></div><!--M_[--><!--M_!^3-->loading<!--M_!3--><!--M_]1 a 3-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[--><!--M_!^c--><!--M_#d--><!--M_!c--><!--M_]5 b 7--></t>
+<script>
+  M._.r = [_ => [6, {
+    G: 3,
+    c: "reordered"
+  }, {
+    E: _._.a0
+  }, {
+    G: 7,
+    c: "caught"
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d></t>
+<t hidden M_=c>caught ERROR!</t>
+<script>
+  M._.r.push(_ => [3, {
+    Q: _._.a1
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+done<script>
+  M._.r.push("b0 6");
+  M._.w()
+</script>

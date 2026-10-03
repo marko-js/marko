@@ -1,0 +1,49 @@
+<div id=log></div>
+<script async type=module src="child.marko.load.mjs"></script>
+<!--M_[--><!--M_!^b-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-await-again-keeps-held-effects-in-order/child.marko": [
+      _ => [3, {
+        "#CatchContent": _._[
+          "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-await-again-keeps-held-effects-in-order/child.marko_2*content"
+          ]
+      }, {
+        "#ClosestBranchId": 3,
+        input_id: "a"
+      }]
+    ]
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-await-again-keeps-held-effects-in-order/child.marko"
+    ].push(_ => [6, {
+    "#ClosestBranchId": 3,
+    input_id: "b"
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!b--><!--M_]2 #text/0 3-->
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-await-again-keeps-held-effects-in-order/child.marko"
+    ].push(_ => [8, {
+    "#ClosestBranchId": 3,
+    input_id: "c"
+  }]);
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-await-again-keeps-held-effects-in-order/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-await-again-keeps-held-effects-in-order/tags/log-effect.marko_0_input_id#2 4 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-await-again-keeps-held-effects-in-order/tags/log-effect.marko_0_input_id#2 6 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-await-again-keeps-held-effects-in-order/tags/log-effect.marko_0_input_id#2 8"
+    );
+  M._.w()
+</script>

@@ -1,0 +1,37 @@
+<div id=log></div>
+<script async type=module src="child.marko.load.mjs"></script>
+<!--M_[--><!--M_!^b-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [3, {
+      E: _._.a0
+    }, {
+      G: 3,
+      c: "a"
+    }]]
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.b._a.push(_ => [6, {
+    G: 3,
+    c: "b"
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!b--><!--M_]2 a 3-->
+<script>
+  M._.b._a.push(_ => [8, {
+    G: 3,
+    c: "c"
+  }]);
+  M._.b._a.push("c0 4 c0 6 c0 8");
+  M._.w()
+</script>

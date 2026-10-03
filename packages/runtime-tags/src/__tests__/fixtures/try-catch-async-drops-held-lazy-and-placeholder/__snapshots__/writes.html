@@ -1,0 +1,35 @@
+<div id=log></div><!--M_[--><!--M_!^b-->
+<script async type=module src="child.marko.load.mjs"></script>
+<span>child</span><!--M_[--><!--M_!^6--><!--M_[--><!--M_]3 P6 5--><!--M_!6--><!--M_]3 c 6-->
+<t hidden M_=6><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [4, {
+      G: 3
+    }]]
+  };
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [2, {
+    c: "before"
+  }, {
+    E: _._.b1
+  }, 3, {
+    c: "after"
+  }], _ => [6, {
+    P: _(5)
+  }, 2, {
+    c: "placeholder"
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!b-->ERROR!<!--M_]1 b 3-->
+<t hidden M_=c></t>
+<t hidden M_=b></t>
+<script>
+  M._.r.push("c0 2 c0 7");
+  M._.w()
+</script>

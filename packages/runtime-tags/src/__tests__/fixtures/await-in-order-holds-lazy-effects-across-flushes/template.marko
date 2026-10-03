@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+import Reordered from "./reordered.marko" with { load: "render" }
+
+<div id="log"/>
+<Child id="a"/>
+<await|v| = resolveAfter("b", 1)>
+  <Child id=v/>
+</await>
+<try>
+  <@placeholder>loading</@placeholder>
+  <await|v| = resolveAfter("c", 2)>
+    <Reordered id=v/>
+  </await>
+</try>
+<await|v| = resolveAfter("d", 3)>
+  <Child id=v/>
+</await>

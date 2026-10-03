@@ -1,0 +1,8 @@
+import Child from "./child.marko" with { load: "render" }
+import Awaiter from "./awaiter.marko" with { load: "render" }
+
+<div id="log"/>
+<log-effect id="page"/>
+<Child/>
+<log-effect id="page-after"/>
+<Awaiter/>

@@ -1,0 +1,15 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<div id="log"/>
+<try>
+  <@placeholder>loading</@placeholder>
+  <await|v| = resolveAfter("outer", 1)>
+    <log-effect id="reordered"/>
+    <try>
+      <log-effect id="caught"/>
+      <await|x| = rejectAfter(new Error("ERROR!"), 2)>${x}</await>
+      <@catch|err|>caught ${err.message}</@catch>
+    </try>
+  </await>
+</try>
+<await|done| = resolveAfter("done", 3)>${done}</await>

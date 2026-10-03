@@ -1,0 +1,12 @@
+// use tags
+import { resolveAfter } from "../../../utils/resolve";
+
+<script>console.log(`${input.name} before`)</script>
+<try>
+  <await|value|=resolveAfter("value", 1)>
+    <script>console.log(`${input.name} in try`)</script>
+    ${value}
+  </await>
+  <@catch|err|>${err.message}</@catch>
+</try>
+<script>console.log(`${input.name} after`)</script>

@@ -1,0 +1,7 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<log-effect id="before-await"/>
+<await|v| = resolveAfter("in-await", 1)>
+  <log-effect id=v/>
+</await>
+<log-effect id="after-await"/>

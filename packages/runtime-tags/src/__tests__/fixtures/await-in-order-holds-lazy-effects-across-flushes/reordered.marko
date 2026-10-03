@@ -1,0 +1,9 @@
+export interface Input {
+  id: string;
+}
+
+<let/count=0/>
+<button class=input.id onClick() { count++ }>${input.id}:${count}</button>
+<script>
+  document.getElementById("log").textContent += "[" + input.id + "]";
+</script>

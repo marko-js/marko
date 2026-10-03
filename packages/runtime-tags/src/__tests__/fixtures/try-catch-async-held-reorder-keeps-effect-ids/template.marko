@@ -1,0 +1,20 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<div id="log"/>
+<try>
+  <await|v| = resolveAfter("r", 1)>
+    <script>
+      document.getElementById("log").textContent += "[r]";
+    </script>
+  </await>
+  <@placeholder>loading</@placeholder>
+</try>
+<log-effect id="a"/>
+<try>
+  <await|v| = resolveAfter("q", 3)>
+    <log-effect id="q"/>
+  </await>
+  <@catch|err|>
+    ${err.message}
+  </@catch>
+</try>

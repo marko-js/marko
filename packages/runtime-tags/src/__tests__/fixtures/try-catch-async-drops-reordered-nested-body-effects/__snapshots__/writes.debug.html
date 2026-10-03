@@ -1,0 +1,48 @@
+<div id=log></div><!--M_[--><!--M_!^3-->loading<!--M_!3--><!--M_]1 #text/0 3-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[--><!--M_!^c--><!--M_#d--><!--M_!c--><!--M_]5 #text/1 7-->
+</t>
+<script>
+  M._.r = [_ => [6, {
+    "#ClosestBranchId": 3,
+    input_id: "reordered"
+  }, {
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-catch-async-drops-reordered-nested-body-effects/template.marko_5*content"
+      ]
+  }, {
+    "#ClosestBranchId": 7,
+    input_id: "caught"
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d></t>
+<t hidden M_=c>caught ERROR!</t>
+<script>
+  M._.r.push(_ => [3, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/try-catch-async-drops-reordered-nested-body-effects/template.marko_2*content"
+      ]
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+done<script>
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/try-catch-async-drops-reordered-nested-body-effects/tags/log-effect.marko_0_input_id#2 6"
+    );
+  M._.w()
+</script>

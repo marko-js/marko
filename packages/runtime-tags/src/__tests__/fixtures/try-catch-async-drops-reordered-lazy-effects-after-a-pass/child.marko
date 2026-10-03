@@ -1,0 +1,20 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<try>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <await|v| = resolveAfter("inner", 4)>
+      ${v}
+    </await>
+    <log-effect id="reordered"/>
+  </try>
+  <await|v| = resolveAfter("mid", 1)>
+    ${v}
+  </await>
+  <await|v| = rejectAfter(new Error("ERROR!"), 2)>
+    ${v}
+  </await>
+  <@catch|err|>
+    ${err.message}
+  </@catch>
+</try>
