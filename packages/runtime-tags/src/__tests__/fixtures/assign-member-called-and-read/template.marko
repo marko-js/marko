@@ -1,0 +1,12 @@
+static function initial(_n: number) {}
+<const/box={ reveal: initial }/>
+<let/out="none"/>
+<const/show=(n: number) => { box.reveal(n) }/>
+<lifecycle onMount() {
+  box.reveal = (n) => { out = `revealed ${n}` };
+}/>
+<button.go onClick() { show(1) }>go</button>
+<button.check onClick() {
+  out = `${out} ${box.reveal === initial ? "initial" : "replaced"}`;
+}>check</button>
+<span>${out}</span>
