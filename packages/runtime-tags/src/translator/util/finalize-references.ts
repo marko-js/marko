@@ -14,6 +14,7 @@ import {
   getAliasRoot,
   getBindings,
   getCanonicalBinding,
+  getAssignedObject,
   getPropertyPath,
   isDirectAlias,
   propsUtil,
@@ -664,20 +665,20 @@ function pruneBinding(binding: Binding): boolean {
   // Likewise an assignment from such a value.
   forEach(binding.assignments, pruneWriter);
 
-  // An expression that also reads an ancestor reads this through it.
+  // An expression that also reads an ancestor reads this through it, and one
+  // reading a property assigned in place reads it from the object, kept current.
+  const assignedObject = getAssignedObject(binding);
   for (const [expr, reads] of binding.reads) {
-    const owner = getReadOwner(binding.aliasOf, expr);
+    const owner = assignedObject
+      ? getReadOwner(assignedObject, expr) || assignedObject
+      : getReadOwner(binding.aliasOf, expr);
     if (owner) {
       owner.reads.set(expr, concat(owner.reads.get(expr), reads));
       binding.reads.delete(expr);
     }
   }
 
-  // An emitted assignment calls the change handler in the id it reserves.
-  let shouldPrune =
-    !binding.reads.size &&
-    !(binding.reserveSize && some(binding.assignments, inEmittedExpr));
-
+  let shouldPrune = true;
   for (const alias of binding.aliases) {
     if (pruneBinding(alias)) {
       binding.aliases.delete(alias);
@@ -693,6 +694,12 @@ function pruneBinding(binding: Binding): boolean {
       shouldPrune = false;
     }
   }
+
+  // Judged after its aliases, which can hand it their reads; an emitted
+  // assignment calls the change handler in the id it reserves.
+  shouldPrune &&=
+    !binding.reads.size &&
+    !(binding.reserveSize && some(binding.assignments, inEmittedExpr));
 
   binding.pruned = shouldPrune;
   if (shouldPrune && !hasEmittedAssignment(binding)) {

@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-rest-element/template.marko:2:21
+      1 | <const/{ ...rest }=input.obj/>
+    > 2 | <button onClick() { rest = {} }>${rest.b}</button>
+        |                     ^^^^^^^^^ `rest` is a rest element, which has no [change handler](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding) to receive a new value, so it cannot be assigned to. Assign the properties of the value it is destructured from instead.
+      3 |

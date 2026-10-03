@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
 import {
+  addAssignedProperty,
   type Binding,
   BindingType,
   type Getter,
@@ -11,6 +12,7 @@ import {
   createBinding,
   getCanonicalBinding,
   getOrCreatePropertyAlias,
+  isDirectAlias,
   isIndexProperty,
   propsUtil,
   getNearestDeclared,
@@ -303,6 +305,9 @@ export function trackParamsReferences(
 
     for (let i = 0; i < params.length; i++) {
       const param = params[i];
+      if (param.type === "RestElement") {
+        assertRestNotAssigned(body.scope, param.argument);
+      }
       if (
         i === 0 &&
         param.type === "RestElement" &&
@@ -646,6 +651,7 @@ function createBindingsAndTrackReferences(
       const declaresPattern = declared || hasRest;
       for (const prop of lVal.properties) {
         if (prop.type === "RestElement") {
+          assertRestNotAssigned(scope, prop.argument);
           createBindingsAndTrackReferences(
             prop.argument,
             type,
@@ -722,6 +728,7 @@ function createBindingsAndTrackReferences(
         index++;
         if (element) {
           if (element.type === "RestElement") {
+            assertRestNotAssigned(scope, element.argument);
             excludeProperties =
               index > 0
                 ? addNumericPropertiesUntil(excludeProperties, index)
@@ -774,6 +781,21 @@ function isAssignment(ref: t.NodePath) {
   return ref.type !== "MarkoTag";
 }
 
+// A rest has no change handler, even one that is all of its value and so
+// read as that value.
+function assertRestNotAssigned(scope: t.Scope, rest: t.LVal) {
+  if (rest.type === "Identifier") {
+    const assignment = scope
+      .getBinding(rest.name)!
+      .constantViolations.find(isAssignment);
+    if (assignment) {
+      throw assignment.buildCodeFrameError(
+        `\`${rest.name}\` is a rest element, which has no [change handler](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding) to receive a new value, so it cannot be assigned to. Assign the properties of the value it is destructured from instead.`,
+      );
+    }
+  }
+}
+
 function trackReference(
   referencePath: t.NodePath<t.Identifier>,
   binding: Binding,
@@ -786,14 +808,21 @@ function trackReference(
 
   while (true) {
     const { parent } = root;
-    if (
-      (!t.isMemberExpression(parent) &&
-        !t.isOptionalMemberExpression(parent)) ||
-      isWrittenMember(root.parentPath!)
-    )
+    if (!t.isMemberExpression(parent) && !t.isOptionalMemberExpression(parent))
       break;
 
     let prop = getMemberExpressionPropString(parent);
+    if (isAssignedMember(root.parentPath!)) {
+      let object = reference;
+      while (isDirectAlias(object)) object = object.aliasOf!;
+      if (object.excludeProperties !== undefined) {
+        throw root.parentPath!.buildCodeFrameError(
+          `\`${referencePath.node.name}\` is a rest element, a copy rebuilt from the value it is destructured from whenever that changes, so assigning its members would be lost. Assign the property on that value instead, or keep your own copy in a \`<let>\`.`,
+        );
+      }
+      addAssignedProperty(object, prop);
+      break;
+    }
     if (prop === undefined) break;
 
     if (reference.aliasOf && reference.excludeProperties !== undefined) {
@@ -830,9 +859,9 @@ function trackReference(
   addReadToExpression(root, reference, undefined);
 }
 
-// Writing a member (`obj.x = 1`, `obj.x++`, `delete obj.x`, a destructuring
-// target) mutates its object, so the read must stop at that object.
-function isWrittenMember(member: t.NodePath) {
+// Assigning a member (`obj.x = 1`, `obj.x++`, `delete obj.x`, a destructuring
+// target) changes its object in place, so the read must stop at that object.
+function isAssignedMember(member: t.NodePath) {
   const { node, parent } = member;
   switch (parent.type) {
     case "AssignmentExpression":
@@ -1074,7 +1103,16 @@ function untrackExtra(exprExtra: ReferencedExtra) {
   if (reads) {
     readsByExpr.delete(exprExtra);
     getFunctionReadsByExpression().delete(exprExtra);
-    forEach(reads, (read) => read.binding.reads.delete(exprExtra));
+    // Pruning may have handed a read to any binding up its alias chain.
+    forEach(reads, (read) => {
+      for (
+        let cur: Binding | undefined = read.binding;
+        cur;
+        cur = cur.aliasOf
+      ) {
+        cur.reads.delete(exprExtra);
+      }
+    });
   }
 }
 

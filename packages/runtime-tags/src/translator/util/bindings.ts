@@ -56,6 +56,9 @@ export interface Binding {
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
   excludeProperties: SortedOpt<string>;
+  /** Its properties code assigns in place (`obj.x = 1`), all of them for a
+   * computed one. */
+  assignedProperties: SortedOpt<string> | true;
   aliasOf: Binding | undefined;
   /** The value these `<for>` params iterate, by `of` or `in`. */
   iterates: { expr: t.NodeExtra; type: "of" | "in" } | undefined;
@@ -140,6 +143,7 @@ export function createBinding(
     closureId: undefined,
     assignments: undefined,
     excludeProperties,
+    assignedProperties: undefined,
     sources: undefined,
     intersection: undefined,
     derivedFrom: undefined,
@@ -204,6 +208,41 @@ export function getOrCreatePropertyAlias(binding: Binding, property: string) {
       property,
     )
   );
+}
+
+// An assignment changes the object in place, which no alias of the property sees.
+export function addAssignedProperty(
+  binding: Binding,
+  property: string | undefined,
+) {
+  if (binding.assignedProperties !== true) {
+    binding.assignedProperties =
+      property === undefined ||
+      propsUtil.add(binding.assignedProperties, property);
+  }
+}
+
+// The outermost object an alias reads a property of that code assigns in place.
+export function getAssignedObject(binding: Binding) {
+  let object: Binding | undefined;
+  // A rest is a copy, so nothing above it is what it reads.
+  for (
+    let alias = binding;
+    alias.aliasOf && alias.excludeProperties === undefined;
+    alias = alias.aliasOf
+  ) {
+    if (alias.property !== undefined) {
+      let parent = alias.aliasOf;
+      while (isDirectAlias(parent)) parent = parent.aliasOf!;
+      if (
+        parent.assignedProperties === true ||
+        propsUtil.has(parent.assignedProperties, alias.property)
+      ) {
+        object = alias.aliasOf;
+      }
+    }
+  }
+  return object;
 }
 
 // The alias a property path reaches from a binding, if every hop exists.

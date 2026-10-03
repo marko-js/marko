@@ -1,0 +1,13 @@
+<const/live={ open: false, nested: { depth: 1 } }/>
+<let/box={ count: 0 }/>
+<const/{ open }=live/>
+<let/log=""/>
+<button.write onClick() {
+  live.open = true;
+  live.nested.depth = 2;
+  box.count++;
+}>write</button>
+<button.read onClick() {
+  log = `${live.open} ${live.nested.depth} ${box.count} ${open}`;
+}>read</button>
+<p>${log}</p>

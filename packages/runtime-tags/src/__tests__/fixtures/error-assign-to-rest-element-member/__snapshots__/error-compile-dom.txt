@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-rest-element-member/template.marko:2:21
+      1 | <const/{ a, ...rest }=input.obj/>
+    > 2 | <button onClick() { rest.b = 5 }>${a}${rest.b}</button>
+        |                     ^^^^^^ `rest` is a rest element, a copy rebuilt from the value it is destructured from whenever that changes, so assigning its members would be lost. Assign the property on that value instead, or keep your own copy in a `<let>`.
+      3 |
