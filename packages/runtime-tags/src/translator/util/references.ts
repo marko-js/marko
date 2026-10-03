@@ -22,6 +22,7 @@ import { generateUid } from "./generate-uid";
 import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
+import isStatic from "./is-static";
 import {
   concat,
   forEach,
@@ -213,6 +214,7 @@ export function trackDomVarReferences(
   }
 
   for (const ref of babelBinding.referencePaths as t.NodePath<t.Identifier>[]) {
+    assertReferencedInRender(ref, tagVar.name);
     const refSection = getOrCreateSection(ref);
     const invoked = isInvokedFunction(ref);
     const hoisted = isReferenceHoisted(babelBinding.path, ref)
@@ -403,8 +405,9 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   const { referencePaths, constantViolations } = babelBinding;
 
   for (const ref of referencePaths as t.NodePath<t.Identifier>[]) {
-    const refSection = getOrCreateSection(ref);
     const markoRoot = getMarkoRoot(ref);
+    assertReferencedInRender(ref, ref.node.name, markoRoot);
+    const refSection = getOrCreateSection(ref);
     // HTML writes a read of an undeclared binding through what it reads from,
     // so where that name is hidden the binding is declared and read by its own.
     if (!binding.declared && binding.excludeProperties === undefined) {
@@ -462,6 +465,8 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
         .get("var")
         .buildCodeFrameError(`Duplicate declaration of \`${binding.name}\`.`);
     }
+
+    assertReferencedInRender(ref, binding.name);
 
     if (isReferenceHoisted(babelBinding.path, ref)) {
       throw ref.buildCodeFrameError(
@@ -562,6 +567,19 @@ function trackAssignment(
       }
     }
   });
+}
+
+// A render-scoped name exists only while the template renders.
+export function assertReferencedInRender(
+  ref: t.NodePath,
+  name: string,
+  markoRoot = getMarkoRoot(ref),
+) {
+  if (markoRoot && isStatic(markoRoot)) {
+    throw ref.buildCodeFrameError(
+      `\`${name}\` exists only while the template renders, so module level code ([\`static\`, \`server\` and \`client\`](https://markojs.com/docs/reference/language#static) and [\`export\`](https://markojs.com/docs/reference/language#export) statements), which runs once as the template loads, cannot reference it. Reference it in the template instead, passing it to module level functions as an argument.`,
+    );
+  }
 }
 
 export function setReferencesScope(path: t.NodePath<any>) {

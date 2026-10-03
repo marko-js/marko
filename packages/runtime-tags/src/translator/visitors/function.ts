@@ -16,6 +16,7 @@ import {
   type MarkoExprRootPath,
 } from "../util/get-root";
 import isInvokedFunction from "../util/is-invoked-function";
+import isStatic from "../util/is-static";
 import { mergeReasons, type Reason } from "../util/reasons";
 import { getCanonicalExtra, type RegisteredFnExtra } from "../util/references";
 import { getSection } from "../util/sections";
@@ -114,7 +115,7 @@ export default {
 
     reserveExportRegisterId(fnExtra, fn, markoRoot);
 
-    if (isStaticRoot(markoRoot)) {
+    if (isStatic(markoRoot)) {
       const refs = getStaticDeclRefs(fn);
       if (refs.size) {
         getReferencesByFn().set(fnExtra, refs);
@@ -256,7 +257,7 @@ function reserveExportRegisterId(
   fn: t.NodePath<t.Function>,
   markoRoot: MarkoExprRootPath,
 ) {
-  if (!isStaticRoot(markoRoot)) return;
+  if (!isStatic(markoRoot)) return;
   const exportNames = getExportNames(fn, markoRoot);
   // The generated module imports the function by name, so the id is keyed by a
   // name that can be spelled in an import.
@@ -388,7 +389,7 @@ function addBindingRefs(
     const exprRoot = getExprRoot(ref);
     const markoRoot = getMarkoRoot(exprRoot);
     if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
-    if (isStaticRoot(markoRoot)) {
+    if (isStatic(markoRoot)) {
       getStaticDeclRefs(ref, refs, seen);
     } else {
       refs.add((exprRoot.node.extra ??= {}));
@@ -420,16 +421,4 @@ function isMarkoAttribute(
   parentPath: t.NodePath<t.MarkoTag>;
 } {
   return path ? path.isMarkoAttribute() : false;
-}
-
-function isStaticRoot(path: t.NodePath<t.Node>) {
-  switch (path.type) {
-    case "MarkoScriptlet":
-      return (path.node as t.MarkoScriptlet).static;
-    case "ExportDefaultDeclaration":
-    case "ExportNamedDeclaration":
-      return true;
-    default:
-      return false;
-  }
 }
