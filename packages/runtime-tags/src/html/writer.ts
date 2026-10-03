@@ -1677,9 +1677,9 @@ export class Chunk {
     return false;
   }
 
-  flushMarks() {
+  // Queued once the markers it replaces stream.
+  queueDeferredReorder() {
     const { deferredReorder } = this;
-    // Queued once the markers it replaces stream.
     if (deferredReorder) {
       this.deferredReorder = null;
       deferredReorder.boundary.state.reorder(deferredReorder);
@@ -1698,7 +1698,7 @@ export class Chunk {
     let deferredReady: Opt<Chunk>;
 
     while (cur.next && !cur.async) {
-      cur.flushMarks();
+      cur.queueDeferredReorder();
       html += cur.html;
       if (cur.serializeState.readyId) {
         deferredReady = push(deferredReady, cur);
@@ -1885,7 +1885,7 @@ export class Chunk {
         reorderedChunk.reorderId = null;
 
         while (cur) {
-          cur.flushMarks();
+          cur.queueDeferredReorder();
           cur.deferOwnReady();
           const { next } = cur;
           // Reorder-ready batches fill slots reserved by the main stream.
