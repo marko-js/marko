@@ -5,7 +5,11 @@ const $setup = () => {};
 const $inputdyn_content__if = /*@__PURE__*/ _if("#text/0", "y");
 const $inputdyn_content__setup = ($scope) => $inputdyn_content__if($scope, $getLabel_getter($scope._._) ? 0 : 1);
 const $inputdyn_content = _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $inputdyn_content__setup);
-const $getLabel_getter = _hoist_resume("__tests__/template.marko_0_getLabel#2:0/hoist", "getLabel", "BranchScopes:#text/0");
+const $getLabel_getter = _hoist_resume("__tests__/template.marko_0_getLabel#2:0/hoist", "getLabel", [
+	"BranchScopes:#text/0",
+	"ConditionalRenderer:#text/0",
+	0
+]);
 const $if_content__getLabel = /*@__PURE__*/ _const("getLabel", ($scope) => _assert_hoist($scope.getLabel));
 const $if_content__setup = ($scope) => $if_content__getLabel($scope, $getLabel);
 const $else_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $inputdyn_content);

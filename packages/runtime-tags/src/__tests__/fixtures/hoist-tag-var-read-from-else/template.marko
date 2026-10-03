@@ -1,0 +1,9 @@
+<if=input.a>
+  <const/getLabel=() => "a"/>
+</if>
+<else>
+  <let/label="none"/>
+  <button onClick() { label = `${getLabel()}:${[...getLabel].length}` }>
+    ${label}
+  </button>
+</else>
