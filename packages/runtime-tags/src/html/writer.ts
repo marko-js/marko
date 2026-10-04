@@ -280,6 +280,22 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
+// Opens a `<template>` whose content may write resume marks.
+export function _template_content() {
+  const { state } = $chunk.boundary;
+  state.templateMarks.push(state.marks);
+  return "";
+}
+
+// Closes it: resume walks its content, which the page walker never reaches,
+// when the content wrote a mark, at this marker naming no accessor.
+export function _template_content_end(scopeId: number) {
+  const { state } = $chunk.boundary;
+  return state.marks > state.templateMarks.pop()!
+    ? state.mark(ResumeSymbol.Node, "" + scopeId)
+    : "";
+}
+
 export function _text_resume(
   scopeId: number,
   accessor: Accessor,
@@ -1327,6 +1343,9 @@ export class State implements SerializeState {
   public hasGlobals = false;
   public needsMainRuntime = false;
   public hasMainRuntime = false;
+  // Resume marks written so far, and the count at each open `<template>`.
+  public marks = 0;
+  public templateMarks: number[] = [];
   public hasReadyRuntime = false;
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
@@ -1438,6 +1457,7 @@ export class State implements SerializeState {
   }
 
   mark(code: ResumeSymbol | Mark, str: string) {
+    this.marks++;
     return "<!--" + this.commentPrefix + code + str + "-->";
   }
 }

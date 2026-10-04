@@ -132,6 +132,7 @@ export const domRuntimeFeatures = [
   "dynamic-tag-var",
   "lazy",
   "placeholder",
+  "template-content",
 ] as const;
 export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
 const importedFeatures = new WeakMap<t.Program, Set<string>>();

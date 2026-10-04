@@ -1,6 +1,7 @@
 // size: 2569 (min) 1277 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
+let dynamicHtmlEnabled;
 let rendering;
 let runId = 2;
 let pendingEffects = [];
@@ -16,6 +17,7 @@ let delegate = (type, handler) =>
   (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1));
 let isScheduled;
 let channel;
+let templateContentEnabled;
 let _resumed = {};
 let curRenders;
 let readyIds;
@@ -206,14 +208,20 @@ function init(runtimeId = "M") {
               if ((processResumes(render.r, effects), readyIds));
               let retained = 0;
               for (visit of (visits = render.v))
-                ((lastTokenIndex = render.i.length),
+                if (
+                  ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
                   (visitScope = getScope(nextToken())),
-                  (visitScope[nextToken()] =
+                  dynamicHtmlEnabled)
+                );
+                else if (
+                  ((visitScope[nextToken()] =
                     visitType === "%"
                       ? visit.parentNode.insertBefore(new Text(), visit)
-                      : visit.previousSibling));
+                      : visit.previousSibling),
+                  templateContentEnabled)
+                );
               return ((visits.length = retained), effects);
             }),
             (render.w = () => {

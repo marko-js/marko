@@ -90,6 +90,7 @@ import { scopeIdentifier } from "../program";
 
 const kNodeOp = Symbol("native tag structure node");
 const kNativeAttrs = Symbol("native tag attrs");
+const kDynamicDetachedBody = Symbol("native tag dynamic detached body");
 
 // Tags whose body html translate replaced with a content attribute write.
 const htmlContentAttrTags = new WeakSet<t.MarkoTag>();
@@ -105,6 +106,8 @@ declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kNodeOp]?: StructureNode;
     [kNativeAttrs]?: NativeAttrs;
+    /** Its detached body renders content client code walks into. */
+    [kDynamicDetachedBody]?: true;
   }
 }
 
@@ -333,6 +336,15 @@ export default {
       const nonceUnset =
         isInjectNonceTag(tagName) && indexByName.nonce === undefined;
       const tagExtra = (node.extra ??= {});
+      // A declarative shadow root replaces its `<template>` as it parses, so
+      // no content follows the element for resume to walk.
+      if (
+        tagFacts.detachedBody &&
+        indexByName.shadowrootmode === undefined &&
+        !isStaticMarkup(tag.get("body"))
+      ) {
+        tagExtra[kDynamicDetachedBody] = true;
+      }
 
       let textPlaceholders: undefined | t.Node[];
       if (isTextOnly) {
@@ -785,6 +797,10 @@ export default {
         if (writeAtStartOfBody) {
           write`${writeAtStartOfBody}`;
         }
+
+        if (tagExtra[kDynamicDetachedBody]) {
+          write`${callRuntime("_template_content")}`;
+        }
       },
       exit(tag) {
         const tagExtra = tag.node.extra!;
@@ -860,6 +876,13 @@ export default {
           write`</${tagName}>`;
         }
 
+        if (tagExtra[kDynamicDetachedBody]) {
+          write`${callRuntime(
+            "_template_content_end",
+            getScopeIdIdentifier(tagSection),
+          )}`;
+        }
+
         if (markerReason) {
           writer.markNode(tag, nodeBinding, markerReason, tagName === "html");
         }
@@ -871,6 +894,9 @@ export default {
       enter(tag) {
         const tagExtra = tag.node.extra!;
         const { nodeBinding } = tagExtra;
+        if (tagExtra[kDynamicDetachedBody]) {
+          importRuntimeFeature("template-content");
+        }
         // The template holds everything a tag without a node binding writes.
         if (!nodeBinding) return;
 
@@ -2060,4 +2086,26 @@ export function controllableFeatureFor(tagName: string | undefined) {
 
 export function enableControllable(feature: DOMRuntimeFeature | undefined) {
   if (feature) importRuntimeFeature(feature);
+}
+
+// Text, comments, constant placeholders and native elements with constant
+// attributes, which the template writes as is.
+function isStaticMarkup(body: t.NodePath<t.MarkoTagBody>): boolean {
+  return body
+    .get("body")
+    .every(
+      (child) =>
+        child.isMarkoText() ||
+        child.isMarkoComment() ||
+        (child.isMarkoPlaceholder() && evaluate(child.node.value).confident) ||
+        (child.isMarkoTag() &&
+          analyzeTagNameType(child) === TagNameType.NativeTag &&
+          !child.node.var &&
+          !child.node.body.attributeTags &&
+          child.node.attributes.every(
+            (attr) =>
+              t.isMarkoAttribute(attr) && evaluate(attr.value).confident,
+          ) &&
+          isStaticMarkup(child.get("body"))),
+    );
 }

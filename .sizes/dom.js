@@ -47,6 +47,7 @@ let channel;
 let _return = (scope, value) => (scope.T ? scope.T(value) : (scope.RV = value));
 let _var_change = (scope, value) => scope.U?.(value);
 let tagIdsByGlobal = /* @__PURE__ */ new WeakMap();
+let templateContentEnabled;
 let currentNode;
 let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
   let value,
@@ -1043,27 +1044,34 @@ function init(runtimeId = "M") {
                 }
               let retained = 0;
               for (visit of (visits = render.v))
-                ((lastTokenIndex = render.i.length),
+                if (
+                  ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
                   (visitScope = getScope(nextToken())),
-                  dynamicHtmlEnabled && visitType > "%" && visitType <= "'"
-                    ? visitType === "&"
-                      ? (htmlStart = visit)
-                      : ((visitScope[nextToken()] = htmlStart),
-                        (visitScope["H" + lastToken] = visit),
-                        branchesEnabled &&
-                          pending[pending.length - 1] !== visitScope &&
-                          pending.push(visitScope))
-                    : branchesEnabled && visitType > "'"
-                      ? (visitBranches ||= createVisitBranches())()
-                      : ((visitScope[nextToken()] =
-                          visitType === "%"
-                            ? visit.parentNode.insertBefore(new Text(), visit)
-                            : visit.previousSibling),
-                        branchesEnabled &&
-                          pending[pending.length - 1] !== visitScope &&
-                          pending.push(visitScope)));
+                  dynamicHtmlEnabled && visitType > "%" && visitType <= "'")
+                )
+                  visitType === "&"
+                    ? (htmlStart = visit)
+                    : ((visitScope[nextToken()] = htmlStart),
+                      (visitScope["H" + lastToken] = visit),
+                      branchesEnabled &&
+                        pending[pending.length - 1] !== visitScope &&
+                        pending.push(visitScope));
+                else if (branchesEnabled && visitType > "'")
+                  (visitBranches ||= createVisitBranches())();
+                else {
+                  if (
+                    ((visitScope[nextToken()] =
+                      visitType === "%"
+                        ? visit.parentNode.insertBefore(new Text(), visit)
+                        : visit.previousSibling),
+                    templateContentEnabled)
+                  );
+                  branchesEnabled &&
+                    pending[pending.length - 1] !== visitScope &&
+                    pending.push(visitScope);
+                }
               return (
                 branchesEnabled &&
                   visitBranches &&

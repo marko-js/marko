@@ -48,6 +48,8 @@ export {
   _await,
   _el,
   _el_resume,
+  _template_content,
+  _template_content_end,
   _existing_scope,
   _for_in,
   _for_of,

@@ -1,0 +1,9 @@
+<let/show=true/>
+<template>
+  <if=show><span>shown</span></if>
+  <p>${show ? "on" : "off"}</p>
+  <template><b>${show ? "inner on" : "inner off"}</b></template>
+  <child label=(show ? "child on" : "child off")/>
+</template>
+<button onClick() { show = !show }>toggle</button>
+<pre/>

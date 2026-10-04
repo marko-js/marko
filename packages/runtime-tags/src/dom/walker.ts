@@ -9,6 +9,15 @@ import {
 } from "../common/types";
 import { createScope, skipScope } from "./scope";
 
+// Native `<template>` content support latch, set by `template-content.feat`,
+// which a program rendering dynamic content inside one imports; walking and
+// resuming that content folds out of every other bundle.
+export let templateContentEnabled: undefined | 1;
+
+export function withTemplateContent() {
+  templateContentEnabled = 1;
+}
+
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 let currentNode: Node;
 
@@ -99,6 +108,7 @@ const walkInternal = function walkInternal(
       value = WalkRangeSize.Out * currentMultiplier + value - WalkCode.Out;
       while (value--) {
         currentNode = currentNode.parentNode || currentNode;
+        if (templateContentEnabled) toContentHost();
       }
       walkNextSibling();
     } else {
@@ -130,13 +140,26 @@ export function getDebugKey(index: number, node: Node | string) {
   return index;
 }
 
+// A `<template>`'s children are in its `content`, whose fragment leads back to
+// it here; both only with dynamic content inside one, else they fold away.
+const contentHosts = /* @__PURE__ */ new WeakMap<Node, Node>();
+
 const walkNextNode = () => {
+  if (templateContentEnabled && (currentNode as HTMLTemplateElement).content) {
+    const { content } = currentNode as HTMLTemplateElement;
+    contentHosts.set(content, currentNode);
+    if (content.firstChild) return (currentNode = content.firstChild);
+  }
   if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
   while (!currentNode.nextSibling && currentNode.parentNode) {
     currentNode = currentNode.parentNode;
+    if (templateContentEnabled) toContentHost();
   }
   walkNextSibling();
 };
+
+const toContentHost = () =>
+  (currentNode = contentHosts.get(currentNode) || currentNode);
 
 const walkNextSibling = () =>
   (currentNode = currentNode.nextSibling || currentNode);

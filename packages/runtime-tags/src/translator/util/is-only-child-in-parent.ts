@@ -23,8 +23,10 @@ export function getOnlyChildParentTagName(tag: t.NodePath<t.MarkoTag>) {
     parentTag &&
     analyzeTagNameType(parentTag) === TagNameType.NativeTag &&
     parentTag.node.name.type === "StringLiteral" &&
-    // Marko does not own every child of a page element.
+    // Marko does not own every child of a page element, and a detached body's
+    // children are not the element's.
     !getTagFacts(parentTag).pageElement &&
+    !getTagFacts(parentTag).detachedBody &&
     isOnlyChild(tag)
       ? parentTag.node.name.value
       : false);

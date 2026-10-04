@@ -22,7 +22,7 @@ import { runEffects } from "./queue";
 import { setParentBranch } from "./renderer";
 import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
-import { getDebugKey } from "./walker";
+import { getDebugKey, templateContentEnabled } from "./walker";
 
 type ResumeFn = (ctx: SerializeContext) => unknown;
 type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
@@ -493,6 +493,28 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 visitType === ResumeSymbol.EmptyText
                   ? visit.parentNode!.insertBefore(new Text(), visit)
                   : visit.previousSibling!;
+              if (
+                templateContentEnabled &&
+                !lastToken &&
+                visitType === ResumeSymbol.Node
+              ) {
+                // A node marker naming no accessor follows a `<template>`
+                // whose content the page walker never reaches: its marks
+                // visit next.
+                const contentWalker = document.createTreeWalker(
+                  (visit.previousSibling as HTMLTemplateElement).content,
+                  NodeFilter.SHOW_COMMENT,
+                );
+                let index = visits.indexOf(visit);
+                for (let mark; (mark = contentWalker.nextNode() as Comment);) {
+                  if (
+                    !mark.data.indexOf(render.i) &&
+                    mark.data[render.i.length] > "#"
+                  ) {
+                    visits.splice(++index, 0, mark);
+                  }
+                }
+              }
               // Lazy content may enable branches later; consecutive visits
               // usually share an owner, so one entry suffices.
               if (
