@@ -1,0 +1,20 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<let/show=true/>
+<pre id="log"/>
+<button.inc onClick() { count++ }>${count}</button>
+<button.hide onClick() { show = false }/>
+<if=show>
+  <try>
+    <await|v| = rejectAfter(new Error("nope"), 1)>${v}</await>
+    <@catch|err|>
+      <await|c| = resolveAfter("caught", 2)>
+        <span>${count}</span>
+        <script>
+          document.getElementById("log").textContent += "[" + count + "]";
+        </script>
+      </await>
+    </@catch>
+  </try>
+</if>

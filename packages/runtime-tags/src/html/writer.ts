@@ -1222,6 +1222,13 @@ function tryBoundary(
         catchChunk === catchChunk.render(catchContent!, catchBoundary.reason);
       // A throw in the catch reached the enclosing `<try>`, whose catch cut this one.
       if (boundary.aborted) return;
+      // A reordered catch names the try's branch for the client to adopt it into.
+      if (bodyEnd.consumed || !inOrder) {
+        catchChunk.reorderStart = state.mark(
+          ResumeSymbol.ReorderStart,
+          branchId + "",
+        );
+      }
 
       if (bodyEnd.consumed) {
         catchChunk.reorderId = reorderId;
@@ -1567,6 +1574,9 @@ export class Chunk {
   public async = false;
   public consumed = false;
   public reorderId: string | null = null;
+  // A reordered `@catch`'s marker naming its try's branch, leading its reorder
+  // and those of content still pending in it.
+  public reorderStart = "";
   public deferredReady: Opt<Chunk> = null;
   // Effects held for the in-order content this chunk heads, in stream order, on
   // chunks of the boundary each came from, so a `@catch` drops only its own.
@@ -1715,9 +1725,7 @@ export class Chunk {
     }
 
     const { branchId, scopeId, placeholderBranchId } = placeholder;
-    const reorderId = (body.reorderId = branchId
-      ? branchId + ""
-      : state.nextReorderId());
+    const reorderId = (body.reorderId = branchId + "");
     this.writeHTML(state.mark(Mark.Placeholder, reorderId));
     const { effects } = this;
     const beforeBranch = deferBranchStart(this);
@@ -1976,6 +1984,11 @@ export class Chunk {
       ? ""
       : joinHeldEffects(this.takeHeldEffects(), this.effects);
     let { html, scripts } = this;
+    // A reorder streamed before leaves its adoption open until here when the
+    // client resumes after both; this content is not the reorder's.
+    if (html && state.hasReorderRuntime) {
+      html = state.mark(ResumeSymbol.ReorderStart, "") + html;
+    }
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
       state.hasMainRuntime = true;
@@ -2015,7 +2028,7 @@ export class Chunk {
           );
         }
 
-        const { reorderId } = reorderedChunk;
+        const { reorderId, reorderStart } = reorderedChunk;
         const readyReservations: string[] = [];
         let reorderHTML = "";
         let reorderEffects = "";
@@ -2063,6 +2076,7 @@ export class Chunk {
               Mark.ReorderMarker,
               (cur.reorderId = state.nextReorderId()),
             );
+            cur.reorderStart = reorderStart;
             // It queues itself once settled, or once its boundary aborts.
             (cur.boundary.pendingReorders ||= new Set()).add(cur);
             cur.html = cur.effects = cur.scripts = cur.lastEffect = "";
@@ -2105,6 +2119,7 @@ export class Chunk {
           "=" +
           reorderId +
           ">" +
+          reorderStart +
           reorderHTML +
           "</t>";
       }
