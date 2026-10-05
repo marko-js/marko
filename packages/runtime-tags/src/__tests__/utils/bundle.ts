@@ -13,7 +13,11 @@ import {
 } from "rolldown";
 import { minifySync } from "rolldown/utils";
 
-import { importEvictable, importWithContext } from "./import-with-context";
+import {
+  importEvictable,
+  importWithContext,
+  type LoadFault,
+} from "./import-with-context";
 
 type RunDOM = typeof import("@marko/runtime-tags/dom").run;
 
@@ -52,7 +56,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   disposeServer(): void;
   clientRunner?: (
     ctx: any,
-    rejectLoad?: (id: string) => boolean,
+    loadFault?: LoadFault,
   ) => Promise<{ template: Template; run: RunDOM }>;
   domBundle(): Promise<SnapshotResult>;
   htmlBundle(): Promise<SnapshotResult>;
@@ -88,13 +92,13 @@ export async function createServerRunner<T extends Record<string, string>>(
   const clientRunner = csrFileName
     ? (
         ctx: any,
-        rejectLoad?: (id: string) => boolean,
+        loadFault?: LoadFault,
       ): Promise<{ template: Template; run: RunDOM }> =>
         importWithContext(
           path.join(domOut, csrFileName),
           { browser: true },
           ctx,
-          rejectLoad,
+          loadFault,
         )
     : undefined;
 

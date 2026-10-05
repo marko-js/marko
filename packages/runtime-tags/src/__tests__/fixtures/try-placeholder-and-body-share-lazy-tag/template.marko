@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<pre id="log"/>
+<try>
+  <@placeholder>
+    <Child value="p"/>
+  </@placeholder>
+  <await|v| = resolveAfter("b", 1)>
+    <Child value=v/>
+    <script>
+      document.getElementById("log").textContent +=
+        document.querySelector(".child")?.textContent;
+    </script>
+  </await>
+</try>

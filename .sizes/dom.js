@@ -1,4 +1,4 @@
-// size: 27559 (min) 10243 (brotli)
+// size: 27577 (min) 10246 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2267,16 +2267,17 @@ function _load_setup(load) {
   };
 }
 function insertLoaded(renderer, branch, marker, awaitCounter) {
-  let parent = marker.parentNode,
+  let parent = () => marker.parentNode,
     values = branch.X,
     clone = () => {
-      (syncGen(branch), renderer.b(branch, parent.namespaceURI), (branch.X = 0));
+      (syncGen(branch), renderer.b(branch, parent().namespaceURI), (branch.X = 0));
     },
     insert = () => {
-      (insertBranchBefore(branch, parent, marker), marker.remove(), awaitCounter?.c());
+      (insertBranchBefore(branch, parent(), marker), marker.remove(), awaitCounter?.c());
     },
     remaining;
   if ((remaining = values?.size)) {
+    awaitCounter ||= addAwaitCounter(branch);
     let fail = loadFailed(branch, awaitCounter);
     values.forEach(([, apply], promise) =>
       promise.then(

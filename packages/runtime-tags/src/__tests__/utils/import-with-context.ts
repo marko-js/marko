@@ -5,6 +5,8 @@ import vm from "node:vm";
 
 import { type ResolveOptions, resolveSync } from "resolve-sync";
 
+import { resolveAfter } from "./resolve";
+
 /** Imports an ESM file into the *current* realm through vm modules, so its
  * namespace is collectable once the caller drops it — Node's ESM loader cache
  * (`ModuleLoader.loadCache`) retains ordinary dynamic imports for the life of
@@ -70,11 +72,15 @@ interface State {
 
 const stateForCtx = new WeakMap<WeakKey, State>();
 
+// Simulates the network for a lazy chunk import: a load failure, or a chunk that
+// lands on the test's next `resolveAfter` tick, after the next animation frame.
+export type LoadFault = (id: string) => "reject" | "delay" | undefined;
+
 export async function importWithContext<T>(
   entry: string,
   resolveOpts: Omit<ResolveOptions, "from">,
   context: vm.Context,
-  rejectLoad?: (id: string) => boolean,
+  loadFault?: LoadFault,
 ): Promise<T> {
   vm.createContext(context);
   const state =
@@ -87,7 +93,7 @@ export async function importWithContext<T>(
     });
   return (await load(entry)).namespace as T;
 
-  function load(id: string): Promise<vm.Module> {
+  function load(id: string, delay?: boolean): Promise<vm.Module> {
     let cached = state.cache.get(id);
     if (!cached) {
       const mod = new vm.SourceTextModule(readFileSync(id, "utf8"), {
@@ -97,10 +103,10 @@ export async function importWithContext<T>(
       });
 
       state.pending++;
+      const linked = mod.link(importModuleDynamically);
       state.cache.set(
         id,
-        (cached = mod
-          .link(importModuleDynamically)
+        (cached = (delay ? linked.then(() => resolveAfter(0)) : linked)
           .then(() => mod.evaluate())
           .then(() => mod)),
       );
@@ -121,7 +127,8 @@ export async function importWithContext<T>(
     const resolved = path.isAbsolute(id)
       ? id
       : resolveSync(id, { ...resolveOpts, from });
-    if (rejectLoad?.(resolved || id)) {
+    const fault = loadFault?.(resolved || id);
+    if (fault === "reject") {
       return Promise.reject(new Error(`simulated chunk load failure: ${id}`));
     }
 
@@ -131,7 +138,7 @@ export async function importWithContext<T>(
       );
     }
 
-    return load(resolved);
+    return load(resolved, fault === "delay");
   }
 
   function afterEvaluate() {

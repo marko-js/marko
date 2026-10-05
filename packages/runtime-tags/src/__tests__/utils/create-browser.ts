@@ -4,6 +4,7 @@ import { JSDOM, VirtualConsole } from "jsdom";
 
 import {
   importWithContext,
+  type LoadFault,
   waitForPendingModules,
 } from "./import-with-context";
 import type { FlushType } from "./resolve";
@@ -20,7 +21,7 @@ type MQLEntry = {
 export default function createBrowser(
   dir?: string,
   loadOrder?: string[],
-  rejectLoad?: (id: string) => boolean,
+  loadFault?: LoadFault,
 ) {
   const virtualConsole = new VirtualConsole();
   // A fresh window per run: fully resetting a reused one costs about as much,
@@ -188,7 +189,7 @@ export default function createBrowser(
           // A lazy load SCRIPT that fails at the network level never
           // evaluates: the browser fires `error` on the script element
           // instead of surfacing the failure to anyone awaiting it.
-          if (src.endsWith(".load.mjs") && rejectLoad?.(src)) {
+          if (src.endsWith(".load.mjs") && loadFault?.(src) === "reject") {
             for (const el of window.document.scripts) {
               if (el.src === src) el.dispatchEvent(new window.Event("error"));
             }
@@ -199,7 +200,7 @@ export default function createBrowser(
               path.join(dir, src),
               { browser: true },
               ctx,
-              rejectLoad,
+              loadFault,
             ),
           );
           // With an explicit order each script is fully evaluated before

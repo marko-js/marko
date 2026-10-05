@@ -104,23 +104,28 @@ function insertLoaded(
   marker: ChildNode,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
 ) {
-  const parent = marker.parentNode as Element,
+  // Read when it inserts: a pending `<try>` moves its range into a fragment
+  // while its placeholder shows, and back once it is dismissed.
+  const parent = () => marker.parentNode as Element,
     values = branch[AccessorProp.Load] as LoadValues,
     // Clone in the run that sets up: nested scopes take the generation of
     // the run that creates them, and a `<let>` seeded by setup in a later
     // run is dropped as stale, taking the nested tag's `<return>` with it.
     clone = () => {
       syncGen(branch);
-      renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
+      renderer[RendererProp.Clone]!(branch, parent().namespaceURI!);
       branch[AccessorProp.Load] = 0;
     },
     insert = () => {
-      insertBranchBefore(branch, parent, marker);
+      insertBranchBefore(branch, parent(), marker);
       marker.remove();
       awaitCounter?.c();
     };
   let remaining: number;
   if ((remaining = values?.size as number)) {
+    // A module already loaded still waits on its input's chunks, which a pending
+    // `<try>` counts before it dismisses its placeholder.
+    awaitCounter ||= addAwaitCounter(branch);
     const fail = loadFailed(branch, awaitCounter);
     // Each entry's signal is cached as its chunk lands, so the render
     // applies every entry synchronously.
