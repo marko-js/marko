@@ -27,7 +27,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_a");
+const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a");
 s("c", _marko_template);
 var template_default = _template("b", (input) => {
 	_scope_reason();

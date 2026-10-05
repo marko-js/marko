@@ -19,7 +19,7 @@ var import_reorderer_renderer = /* @__PURE__ */ __toESM(require_reorderer_render
 var import_preferred_script_location_tag = /* @__PURE__ */ __toESM(require_preferred_script_location_tag());
 const _marko_componentType = "b";
 const _marko_template = (0, import_html.t)(_marko_componentType);
-const _marko_load_Child = (0, import_load_tag.withLoadAssets)("a", _marko_template$1);
+const _marko_load_Child = (0, import_load_tag.withLoadAssets)("a", _marko_template$1, flush);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<!DOCTYPE html><html><head><title>Head Flush Test</title>");
 	(0, import_load_tag.flushHead)(out);

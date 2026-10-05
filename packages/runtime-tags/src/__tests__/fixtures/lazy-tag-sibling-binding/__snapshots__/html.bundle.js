@@ -27,8 +27,8 @@ var child_b_default = _template("a", (input) => {
 });
 
 // template.marko
-const $ChildS_withLoadAssets = withLoadAssets(child_s_default, "_b");
-const $ChildB_withLoadAssets = withLoadAssets(child_b_default, "_a");
+const $ChildS_withLoadAssets = withLoadAssets(child_s_default, flush, "_b");
+const $ChildB_withLoadAssets = withLoadAssets(child_b_default, flush, "_a");
 var template_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

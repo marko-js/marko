@@ -16,7 +16,7 @@ const cache = { n: 1 };
 function getShared() {
 	return cache;
 }
-const $Child_withLoadAssets = withLoadAssets(child_default, "_a");
+const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a");
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

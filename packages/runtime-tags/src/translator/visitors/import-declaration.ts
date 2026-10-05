@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   getFile,
   getProgram,
+  importNamed,
   loadFileForImport,
   resolveRelativePath,
   resolveTagImport,
@@ -258,6 +259,7 @@ function getOrCreateHtmlLoadWrapped(
             callRuntime(
               "withLoadAssets",
               originalIdentifier,
+              importNamed(getFile(), markoOpts.linkAssets!.runtime, "flush"),
               t.stringLiteral(readyId),
               triggers ? t.valueToNode(triggers) : undefined,
             ),

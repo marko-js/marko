@@ -7,7 +7,7 @@ var child_default = _template("a", (input) => {
 });
 
 // template.marko
-withLoadAssets(child_default, "_a");
+withLoadAssets(child_default, flush, "_a");
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

@@ -9,7 +9,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 }, 1);
 
 // template.marko
-const $Layout_withLoadAssets = withLoadAssets(layout_default, "ready:__tests__/layout.marko");
+const $Layout_withLoadAssets = withLoadAssets(layout_default, flush, "ready:__tests__/layout.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0), $wi__input_value = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();

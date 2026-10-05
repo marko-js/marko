@@ -44,6 +44,7 @@ export type LoadTrigger =
 type Trigger = LoadTrigger;
 interface Asset {
   id: string;
+  flush: AssetFlush;
   triggers: Trigger[] | undefined;
   // Kept to write again: a resolver may write each url only once per render.
   block: string | undefined;
@@ -67,20 +68,18 @@ type AssetFlush = (
   type: "block" | "defer",
   asset: string,
 ) => string;
-// A Marko runtime bundles exactly one asset runtime, so every page sharing this
-// module shares the one resolver — module scope is intentional, not a leak.
-let assetFlush: AssetFlush;
 
-// Flushes through the resolver a page entry sets as it evaluates: bundler integrations
-// render only after one has loaded, so the resolver is set whenever a lazy tag renders.
+// Its importer passes the bundler's resolver, so it resolves on a page of either
+// API, whichever page entry rendered.
 export function withLoadAssets(
   renderer: ServerRenderer,
+  flush: AssetFlush,
   assetId: string,
   triggers?: Trigger[],
 ): ServerRenderer {
   return Object.assign((input: unknown) => {
     const g = $global();
-    writeAsset(g, addAsset(g, assetId, triggers));
+    writeAsset(g, addAsset(g, assetId, flush, triggers));
     return writeWaitReady(assetId, renderer, input);
   }, renderer);
 }
@@ -91,7 +90,6 @@ export function withPageAssets(
   assetId: string,
   runtimeId?: string,
 ): Template {
-  assetFlush = runtime;
   return Object.assign((input: unknown) => {
     const g = $global();
     if (runtimeId) {
@@ -113,7 +111,7 @@ export function withPageAssets(
         );
       }
     }
-    const asset = addAsset(g, assetId);
+    const asset = addAsset(g, assetId, runtime);
     // A page entry rendered after the first flush cleared `__flush__` takes the
     // top-level branch on purpose: co-rendered pages batch assets and flushes.
     if (g.__flush__) {
@@ -188,20 +186,26 @@ function needsWrite(at: Boundary | null | undefined) {
 }
 
 function blockHTML(g: $Global, asset: Asset) {
-  return (asset.block ??= assetFlush(g, "block", asset.id));
+  return (asset.block ??= asset.flush(g, "block", asset.id));
 }
 
 function deferHTML(g: $Global, asset: Asset) {
-  return (asset.defer ??= assetFlush(g, "defer", asset.id));
+  return (asset.defer ??= asset.flush(g, "defer", asset.id));
 }
 
-function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
+function addAsset(
+  g: $Global,
+  id: string,
+  flush: AssetFlush,
+  triggers?: Trigger[],
+) {
   const assets = (g[kAssets] ||= []);
   let asset = assets.find((a) => a.id === id);
   if (!asset) {
     assets.push(
       (asset = {
         id,
+        flush,
         triggers,
         block: undefined,
         defer: undefined,
