@@ -17,6 +17,7 @@ exports.f = (id, fn, component, out) =>
 
 exports.p = function (htmlCompat) {
   registerClassFunction = htmlCompat.registerClassFunction;
+  require("../load-tag").___tagsCompat = htmlCompat;
   const writersByGlobal = new WeakMap();
   const boundaryModeByRenderer = new WeakMap();
   const isMarko6 = (fn) => typeof fn !== "function" || htmlCompat.isTagsAPI(fn);

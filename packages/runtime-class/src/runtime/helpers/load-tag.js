@@ -78,21 +78,32 @@ exports.withLoadAssets = function withLoadAssets(
   return createFacade(template, function (input, out) {
     var key = out.___assignedKey;
     var def = out.___assignedComponentDef;
-    addAsset(out.global, typeId, assetFlush, triggers);
 
     if (willRerender(def)) {
       out.bf(key + "s", def.___component, true);
-      flush(out);
+      writeLoadAsset(out, typeId, assetFlush, triggers);
       out.ef();
       out.bf(key, def.___component, true);
       template._(input, out);
       out.ef();
     } else {
-      flush(out);
+      writeLoadAsset(out, typeId, assetFlush, triggers);
       template._(input, out);
     }
   });
 };
+
+// Within Tags content the Tags writer places it apart from what a `@catch` drops,
+// and leaves the page's own entry to the page.
+function writeLoadAsset(out, typeId, assetFlush, triggers) {
+  var tagsCompat = exports.___tagsCompat;
+  if (tagsCompat && tagsCompat.getChunk()) {
+    tagsCompat.writeLoadAsset(typeId, assetFlush, triggers);
+  } else {
+    addAsset(out.global, typeId, assetFlush, triggers);
+    flush(out);
+  }
+}
 
 function createFacade(template, render) {
   // Under hot reload the template's `_` is an accessor, which a normal
