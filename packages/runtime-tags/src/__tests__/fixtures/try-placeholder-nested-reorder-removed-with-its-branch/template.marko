@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<let/inner=true/>
+<pre id="log"/>
+<button.inc onClick() { count++ }>${count}</button>
+<button.hide onClick() { inner = false }/>
+<try>
+  <if=inner>
+    <await|w| = resolveAfter(1, 1)>
+      <span>${count}</span>
+      <script>
+        document.getElementById("log").textContent += "[" + count + "]";
+      </script>
+    </await>
+  </if>
+  <@placeholder>loading</@placeholder>
+</try>
