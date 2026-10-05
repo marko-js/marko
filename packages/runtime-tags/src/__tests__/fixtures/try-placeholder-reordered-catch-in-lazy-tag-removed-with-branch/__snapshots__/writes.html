@@ -1,0 +1,39 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<pre id=log></pre><button class=inc>0<!--M_$2 b--></button><!--M_$2 a--><button
+  class=hide></button><!--M_$2 c--><!--M_[--><!--M_[--><!--M_!^b--><!--M_!^5-->outer
+loading<!--M_!5--><!--M_!b--><!--M_]3 a 5--><!--M_]2 d 3-->
+<t hidden M_=5><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [2, {
+      e: 0,
+      g: new Set
+    }]]
+  };
+  M._.b._a.push("a5 2");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[--><!--M_!^9-->loading<!--M_!9--><!--M_]7 a 9--></t>
+<t hidden M_=9><!--M_#d--></t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d></t>
+<t hidden M_=b><!--M_*5--><span>0<!--M_$11 a--></span></t>
+<script>
+  M._.b._a.push(1);
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [11, {
+      _: _(3)
+    }], "a0 11 a1 11"))(M._.b._a)
+  };
+  M._.w()
+</script>

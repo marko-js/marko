@@ -10,8 +10,8 @@ export const BranchEndNativeTag = "(";
 export const BranchEndSingleNode = "|";
 export const BranchEndOnlyChildInParent = ")";
 export const BranchEndSingleNodeOnlyChildInParent = "}";
-// Pushed by the reorder runtime before a reordered chunk's visits, carrying the
-// chunk's root id (a `<try>` body's branch id); the walk's end closes it.
+// Opens a span of reordered visits for the branch its id names (a `<try>`'s, by
+// its body's reorder id or a `@catch`'s marker); an empty one closes it.
 export const ReorderStart = "*";
 
 type Self = typeof import("./resume-symbol");

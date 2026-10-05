@@ -1,0 +1,14 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<let/show=true/>
+<pre id="log"/>
+<button.inc onClick() { count++ }>${count}</button>
+<button.hide onClick() { show = false }/>
+<if=show>
+  <try>
+    <await|v| = resolveAfter(1, 1)><span.body>${v}${count}</span></await>
+    <@placeholder>loading</@placeholder>
+  </try>
+</if>
+<await|y| = resolveAfter(1, 2)><span.after>${count}</span></await>
