@@ -1,0 +1,7 @@
+// use tags
+<try>
+  <class-wrap/>
+  ${(() => { throw new Error("S"); })()}
+  <@catch|err|>caught ${err.message}</@catch>
+</try>
+<class-wrap/>

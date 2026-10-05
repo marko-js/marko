@@ -9,7 +9,6 @@ var DEFAULT_RUNTIME_ID = "M";
 var kAssets = Symbol();
 var kBlockIndex = Symbol();
 var kDeferIndex = Symbol();
-var assetFlush;
 
 exports.withPageAssets = function withPageAssets(
   typeId,
@@ -17,7 +16,6 @@ exports.withPageAssets = function withPageAssets(
   runtime,
   runtimeId,
 ) {
-  assetFlush = runtime;
   var flushBeforeInput = { renderBody: flush };
   return createFacade(template, function (input, out) {
     var g = out.global;
@@ -44,7 +42,7 @@ exports.withPageAssets = function withPageAssets(
     var key = out.___assignedKey;
     var def = out.___assignedComponentDef;
     var component = def && def.___component;
-    addAsset(g, typeId);
+    addAsset(g, typeId, runtime);
 
     if (hasAssets) {
       if (willRerender(def)) {
@@ -69,11 +67,18 @@ exports.withPageAssets = function withPageAssets(
   });
 };
 
-exports.withLoadAssets = function withLoadAssets(typeId, template, triggers) {
+// Its importer passes the bundler's resolver, so it resolves on a page of either
+// API, whichever page entry rendered.
+exports.withLoadAssets = function withLoadAssets(
+  typeId,
+  template,
+  assetFlush,
+  triggers,
+) {
   return createFacade(template, function (input, out) {
     var key = out.___assignedKey;
     var def = out.___assignedComponentDef;
-    addAsset(out.global, typeId, triggers);
+    addAsset(out.global, typeId, assetFlush, triggers);
 
     if (willRerender(def)) {
       out.bf(key + "s", def.___component, true);
@@ -116,12 +121,12 @@ function flush(out) {
   var di = g[kDeferIndex];
 
   for (; bi < length; bi++) {
-    result += assetFlush(g, "block", assets[bi].id);
+    result += assets[bi].flush(g, "block", assets[bi].id);
   }
 
   for (; di < length; di++) {
     var asset = assets[di];
-    var deferHTML = assetFlush(g, "defer", asset.id);
+    var deferHTML = asset.flush(g, "defer", asset.id);
     if (asset.triggers) {
       if (deferHTML) out.script(triggerScript(deferHTML, asset.triggers));
     } else {
@@ -134,17 +139,17 @@ function flush(out) {
   out.write(result);
 }
 
-function addAsset(g, id, triggers) {
+function addAsset(g, id, assetFlush, triggers) {
   var assets = g[kAssets];
   if (!assets) {
-    g[kAssets] = [{ id: id, triggers: triggers }];
+    g[kAssets] = [{ id: id, flush: assetFlush, triggers: triggers }];
     g[kBlockIndex] = g[kDeferIndex] = 0;
   } else if (
     !assets.find(function (a) {
       return a.id === id;
     })
   ) {
-    assets.push({ id: id, triggers: triggers });
+    assets.push({ id: id, flush: assetFlush, triggers: triggers });
   }
 }
 

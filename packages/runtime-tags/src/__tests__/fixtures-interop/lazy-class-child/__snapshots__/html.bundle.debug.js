@@ -22,7 +22,7 @@ var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components_tag());
 const _marko_componentType = "__tests__/template.marko";
 const _marko_template = (0, import_html.t)(_marko_componentType);
-const _marko_load_Child = (0, import_load_tag.withLoadAssets)("__tests__/components/child.marko", _marko_template$1);
+const _marko_load_Child = (0, import_load_tag.withLoadAssets)("__tests__/components/child.marko", _marko_template$1, flush);
 const _marko_component = {
 	onCreate() {
 		this.state = { show: false };

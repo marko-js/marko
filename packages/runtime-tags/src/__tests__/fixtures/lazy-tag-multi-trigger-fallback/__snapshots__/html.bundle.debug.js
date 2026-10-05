@@ -8,7 +8,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "ready:__tests__/child.marko", [{
+const $Child_withLoadAssets = withLoadAssets(child_default, flush, "ready:__tests__/child.marko", [{
 	type: "on-click",
 	selector: ".nope1"
 }, {

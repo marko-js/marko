@@ -18,8 +18,8 @@ var counter_default = _template("a", (input) => {
 });
 
 // template.marko
-const $Thrower_withLoadAssets = withLoadAssets(thrower_default, "_c");
-const $Counter_withLoadAssets = withLoadAssets(counter_default, "_a");
+const $Thrower_withLoadAssets = withLoadAssets(thrower_default, flush$1, "_c");
+const $Counter_withLoadAssets = withLoadAssets(counter_default, flush$1, "_a");
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

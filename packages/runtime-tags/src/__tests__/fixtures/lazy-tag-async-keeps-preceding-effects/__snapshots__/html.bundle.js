@@ -19,7 +19,7 @@ var counter_default = _template("c", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_a", [{ type: "idle" }]);
+const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a", [{ type: "idle" }]);
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	_scope_id();

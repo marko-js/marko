@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 });
 
 // tags/parent-a.marko
-const $Child_withLoadAssets$1 = withLoadAssets(child_default, "_b", [{
+const $Child_withLoadAssets$1 = withLoadAssets(child_default, flush, "_b", [{
 	type: "visible",
 	selector: "body"
 }]);
@@ -19,7 +19,7 @@ var parent_a_default = _template("c", (input) => {
 });
 
 // tags/parent-b.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_b", [{ type: "idle" }]);
+const $Child_withLoadAssets = withLoadAssets(child_default, flush, "_b", [{ type: "idle" }]);
 var parent_b_default = _template("d", (input) => {
 	_scope_reason();
 	_scope_id();

@@ -14,7 +14,7 @@ var grand_child_default = _template("c", (input) => {
 });
 
 // child.marko
-const $GrandChild_withLoadAssets = withLoadAssets(grand_child_default, "_c");
+const $GrandChild_withLoadAssets = withLoadAssets(grand_child_default, flush$1, "_c");
 var child_default = _template("b", (input) => {
 	_scope_reason();
 	_scope_id();
@@ -36,8 +36,8 @@ var awaiter_default = _template("a", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_b");
-const $Awaiter_withLoadAssets = withLoadAssets(awaiter_default, "_a");
+const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_b");
+const $Awaiter_withLoadAssets = withLoadAssets(awaiter_default, flush$1, "_a");
 var template_default = _template("d", (input) => {
 	_scope_reason();
 	_scope_id();

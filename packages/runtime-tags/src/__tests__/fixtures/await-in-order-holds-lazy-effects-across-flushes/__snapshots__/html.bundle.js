@@ -27,8 +27,8 @@ var reordered_default = _template("b", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, "_a");
-const $Reordered_withLoadAssets = withLoadAssets(reordered_default, "_b");
+const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a");
+const $Reordered_withLoadAssets = withLoadAssets(reordered_default, flush$1, "_b");
 var template_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

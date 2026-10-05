@@ -18,8 +18,8 @@ var counter_default = _template("__tests__/counter.marko", (input) => {
 });
 
 // template.marko
-const $Thrower_withLoadAssets = withLoadAssets(thrower_default, "ready:__tests__/thrower.marko");
-const $Counter_withLoadAssets = withLoadAssets(counter_default, "ready:__tests__/counter.marko");
+const $Thrower_withLoadAssets = withLoadAssets(thrower_default, flush$1, "ready:__tests__/thrower.marko");
+const $Counter_withLoadAssets = withLoadAssets(counter_default, flush$1, "ready:__tests__/counter.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

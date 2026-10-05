@@ -12,7 +12,7 @@ var nested_default = _template("a", (input) => {
 });
 
 // parent.marko
-const $Nested_withLoadAssets = withLoadAssets(nested_default, "_a");
+const $Nested_withLoadAssets = withLoadAssets(nested_default, flush$1, "_a");
 var parent_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -31,7 +31,7 @@ var parent_default = _template("b", (input) => {
 });
 
 // template.marko
-const $Parent_withLoadAssets = withLoadAssets(parent_default, "_b");
+const $Parent_withLoadAssets = withLoadAssets(parent_default, flush$1, "_b");
 var template_default = _template("c", (input) => {
 	_scope_reason();
 	_scope_id();

@@ -17,7 +17,7 @@ var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 var import_init_components_tag = /* @__PURE__ */ __toESM(require_init_components_tag());
 const _marko_componentType = "a";
 const _marko_template = (0, import_html.t)(_marko_componentType);
-const _marko_load_Child = (0, import_load_tag.withLoadAssets)("b", _marko_template$1);
+const _marko_load_Child = (0, import_load_tag.withLoadAssets)("b", _marko_template$1, flush);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<button id=inc>Inc</button>");
 	(0, import_render_tag.default)(_marko_load_Child, { "value": state.value }, out, _componentDef, "1");
