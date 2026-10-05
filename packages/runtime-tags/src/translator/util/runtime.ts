@@ -11,6 +11,7 @@ import {
   _escape_style,
   _unescaped,
 } from "../../html";
+import { escapeDoubleQuotedAttrValue } from "../../html/attrs";
 import { isTranslate } from "./get-compile-stage";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
@@ -173,6 +174,7 @@ export function getHTMLRuntime() {
     _attr_style,
     _escape_script,
     _escape_style,
+    escapeDoubleQuotedAttrValue,
   };
 }
 

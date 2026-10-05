@@ -3,7 +3,7 @@ const $template = "<ul></ul><button class=relabel>relabel</button>";
 const $walks = " b b";
 const $for_content__selected__OR__row_label = /*@__PURE__*/ _or(8, ($scope) => _text($scope["#text/1"], $scope._.selected === $scope["#LoopKey"] && $scope.row_label));
 const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/0", "selected", "#LoopKey", ($scope) => {
-	_attr_class($scope["#li/0"], $scope._.selected === $scope["#LoopKey"] && "danger");
+	_attr_class_item($scope["#li/0"], "danger", $scope._.selected === $scope["#LoopKey"]);
 	$for_content__selected__OR__row_label($scope);
 });
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {

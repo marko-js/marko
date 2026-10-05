@@ -567,7 +567,7 @@ function replaceUnsafeSingleQuoteAttrChar(match: string) {
   return match === "'" ? "&#39;" : match === "\r" ? "&#13;" : "&amp;";
 }
 
-function escapeDoubleQuotedAttrValue(value: string) {
+export function escapeDoubleQuotedAttrValue(value: string) {
   return doubleQuoteAttrReplacements.test(value)
     ? value.replace(
         doubleQuoteAttrReplacements,

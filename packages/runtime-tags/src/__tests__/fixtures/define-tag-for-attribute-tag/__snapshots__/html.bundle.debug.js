@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_thing_selected = _write_guard($scope0_reason, 1), $wg__input_thing_content = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class({ "selected": input.thing.selected })}>`);
+	_html(`<div${input.thing.selected ? " class=selected" : ""}>`);
 	_dynamic_tag($scope0_id, "#text/1", input.thing.content, {}, 0, 0, $wg__input_thing_content);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_thing_selected)}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);

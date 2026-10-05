@@ -33,7 +33,7 @@ const $class = [
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_c__OR__input_d = _write_guard($scope0_reason, 0), $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h = _write_guard($scope0_reason, 7), $wg__input_c = _write_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
-	_html(`<div class=${$class[(input.c ? 1 : 0) + (input.d ? 2 : 0)]}></div>${_el_resume($scope0_id, "#div/0", $wg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${input.c ? " class=active" : ""}></div>${_el_resume($scope0_id, "#div/1", $wg__input_c)}<div${_attr_class("base" + (input.c ? " c" : "") + (input.d ? " d" : "") + (input.e ? " e" : "") + (input.f ? " f" : "") + (input.g ? " g" : "") + (input.h ? " h" : ""))}></div>${_el_resume($scope0_id, "#div/2", $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
+	_html(`<div class=${$class[(input.c ? 1 : 0) + (input.d ? 2 : 0)]}></div>${_el_resume($scope0_id, "#div/0", $wg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${input.c ? " class=active" : ""}></div>${_el_resume($scope0_id, "#div/1", $wg__input_c)}<div${_attr_class(`base${input.c ? " c" : ""}${input.d ? " d" : ""}${input.e ? " e" : ""}${input.f ? " f" : ""}${input.g ? " g" : ""}${input.h ? " h" : ""}`)}></div>${_el_resume($scope0_id, "#div/2", $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
 	_set_scope_reason($wg__input_c__OR__input_d << 1 | $wg__input_c__OR__input_d << 5);
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ class: ["a", {

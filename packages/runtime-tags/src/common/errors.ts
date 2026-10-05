@@ -31,6 +31,25 @@ export function assertValidAttrValue(name: string, value: unknown) {
   }
 }
 
+// A toggled class must not share a name with any other part of its value, since
+// the client adds and removes it by itself; style import reads are only known here.
+export function _assert_class_toggles(classes: string, toggles: string[]) {
+  if (MARKO_DEBUG) {
+    const written = new Set(classes.split(" "));
+    for (const toggle of toggles) {
+      const names = new Set(toggle.split(" "));
+      for (const name of names) {
+        if (written.has(name)) {
+          throw new Error(
+            `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled class may appear only once.`,
+          );
+        }
+      }
+      for (const name of names) written.add(name);
+    }
+  }
+}
+
 export function assertValidTextValue(value: unknown) {
   const unrenderable = describeUnrenderable(value);
   if (unrenderable) {

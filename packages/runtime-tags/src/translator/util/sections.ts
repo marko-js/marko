@@ -76,7 +76,8 @@ export type StructureOp =
   | Step.Value // enter/exit a node
   | StructureText
   | StructureNode
-  | StructureChild;
+  | StructureChild
+  | StructureModuleRead;
 
 // Static text written into the markup; distinguished from markup strings so
 // resolution knows which template edges parse as text nodes.
@@ -100,6 +101,12 @@ export interface StructureChild {
   name: string;
   binding: Binding;
   renderer?: StructureRef;
+}
+
+// A module read written into the markup, read when the module loads.
+export interface StructureModuleRead {
+  kind: typeof StructureKind.ModuleRead;
+  read: string[];
 }
 
 export interface Section {

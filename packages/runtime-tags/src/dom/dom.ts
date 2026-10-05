@@ -89,6 +89,20 @@ export function _attr_class_item(
   element.classList.toggle(name, !!value);
 }
 
+// A style import's class can hold several space separated names.
+export function _attr_class_names(
+  element: Element,
+  names: string,
+  value: unknown,
+) {
+  let start = 0;
+  let end;
+  do {
+    end = names.indexOf(" ", start);
+    element.classList.toggle(names.slice(start, end >>> 0), !!value);
+  } while ((start = end + 1));
+}
+
 export function _attr_style(element: Element, value: unknown) {
   setAttribute(
     element,

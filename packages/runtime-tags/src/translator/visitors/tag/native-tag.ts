@@ -16,6 +16,7 @@ import {
   getWrongAttrSuggestion,
   isEventHandler,
   stringifyClassObject,
+  stringifyStyleObject,
   toDelimitedString,
 } from "../../../common/helpers";
 import { BindingType, createBinding } from "../../util/bindings";
@@ -37,6 +38,10 @@ import {
   isOptimize,
   isOutputHTML,
 } from "../../util/marko-config";
+import {
+  getStyleImportRead,
+  toModuleReadExpression,
+} from "../../util/module-read";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
 import { addReasonExprs, addReason } from "../../util/reasons";
@@ -74,6 +79,7 @@ import {
 } from "../../util/signals";
 import { findSlot, getSlot } from "../../util/slots";
 import { ALWAYS } from "../../util/sources";
+import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { getTagFacts } from "../../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -239,7 +245,10 @@ export default {
           } else {
             assertValidNativeEventHandlerAttr(tag, attr);
             if (isChangeHandlerAttr) valueExtra.retained = true;
-            if (!evaluate(attr.value).confident) {
+            if (
+              !isStaticDelimitedAttr(tag, attr) &&
+              !evaluate(attr.value).confident
+            ) {
               hasDynamicAttributes = true;
               addSetupExpr(tagSection, attr.value);
             } else if (attr.name === "content" && tagName !== "meta") {
@@ -450,14 +459,24 @@ export default {
           if (confident) {
             write`${getStaticAttrMarkup(name, computed)}`;
           } else if (name === "class" || name === "style") {
-            const meta: DelimitedAttrMeta = {
-              staticItems: undefined,
-              dynamicItems: undefined,
-              dynamicValues: undefined,
-            };
-            trackDelimitedAttrValue(value, meta);
-            if (!meta.dynamicItems && meta.staticItems) {
-              write`${getStaticAttrMarkup(name, meta.staticItems)}`;
+            const meta = trackDelimitedAttrValue(tag, name, value);
+            const { staticParts } = meta;
+            if (getDelimitedAttrItems(name, meta) && staticParts.length) {
+              if (staticParts.every(isLiteralPart)) {
+                write`${getStaticAttrMarkup(name, staticParts)}`;
+              } else {
+                write` class="`;
+                for (let i = 0; i < staticParts.length; i++) {
+                  const part = staticParts[i];
+                  if (i) write` `;
+                  if (isLiteralPart(part)) {
+                    write`${getHTMLRuntime().escapeDoubleQuotedAttrValue(part)}`;
+                  } else {
+                    structure.writeModuleReadTo(tag, part);
+                  }
+                }
+                write`"`;
+              }
             }
           }
         }
@@ -682,7 +701,7 @@ export default {
             write`${
               confident
                 ? getStaticAttrMarkup(name, computed)
-                : factorAttrConditional(buildAttrExpression(name, value))
+                : factorAttrConditional(buildAttrExpression(tag, name, value))
             }`;
           }
         }
@@ -957,62 +976,68 @@ export default {
             switch (name) {
               case "class":
               case "style": {
-                const helper = `_attr_${name}` as const;
                 if (!confident) {
-                  const nodeExpr = createScopeReadExpression(nodeBinding);
-                  const meta: DelimitedAttrMeta = {
-                    staticItems: undefined,
-                    dynamicItems: undefined,
-                    dynamicValues: undefined,
-                  };
-                  let stmt: undefined | t.Statement;
-                  trackDelimitedAttrValue(value, meta);
-
-                  if (meta.dynamicItems) {
-                    stmt = t.expressionStatement(
-                      callRuntime(helper, nodeExpr, value),
+                  const meta = trackDelimitedAttrValue(tag, name, value);
+                  const items = getDelimitedAttrItems(name, meta);
+                  const calls: t.Expression[] = [];
+                  const assert = buildClassTogglesAssert(meta);
+                  if (assert) calls.push(assert);
+                  if (!items) {
+                    calls.push(
+                      callRuntime(
+                        `_attr_${name}`,
+                        createScopeReadExpression(nodeBinding),
+                        value,
+                      ),
                     );
                   } else {
-                    if (meta.dynamicValues) {
-                      const keys = Object.keys(meta.dynamicValues);
-
-                      if (keys.length === 1) {
-                        const [key] = keys;
-                        const value = meta.dynamicValues[key];
-                        stmt = t.expressionStatement(
-                          callRuntime(
-                            `_attr_${name}_item`,
-                            nodeExpr,
-                            t.stringLiteral(key),
-                            value,
-                          ),
-                        );
+                    const single: { key: string; value: t.Expression }[] = [];
+                    for (const { key, value } of items) {
+                      if (isLiteralPart(key) && !/\s/.test(key)) {
+                        single.push({ key, value });
                       } else {
-                        const props: t.ObjectExpression["properties"] = [];
-                        for (const key of keys) {
-                          const value = meta.dynamicValues[key];
-                          props.push(
-                            t.objectProperty(toPropertyName(key), value),
-                          );
-                        }
-
-                        stmt = t.expressionStatement(
+                        // A style import read or a multi-word key may hold several names.
+                        calls.push(
                           callRuntime(
-                            `_attr_${name}_items`,
-                            nodeExpr,
-                            t.objectExpression(props),
+                            "_attr_class_names",
+                            createScopeReadExpression(nodeBinding),
+                            toClassPartExpression(key),
+                            value,
                           ),
                         );
                       }
                     }
+
+                    if (single.length === 1) {
+                      calls.push(
+                        callRuntime(
+                          `_attr_${name}_item`,
+                          createScopeReadExpression(nodeBinding),
+                          t.stringLiteral(single[0].key),
+                          single[0].value,
+                        ),
+                      );
+                    } else if (single.length) {
+                      calls.push(
+                        callRuntime(
+                          `_attr_${name}_items`,
+                          createScopeReadExpression(nodeBinding),
+                          t.objectExpression(
+                            single.map(({ key, value }) =>
+                              t.objectProperty(toPropertyName(key), value),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
                   }
 
-                  if (stmt) {
+                  for (const call of calls) {
                     addStatement(
                       "render",
                       tagSection,
                       valueReferences,
-                      stmt,
+                      t.expressionStatement(call),
                       true,
                     );
                   }
@@ -1681,8 +1706,6 @@ function getRawTextEscapeHelper(tagName: string) {
   }
 }
 
-// Distribute the attr helper through a conditional, serializing literal branches
-// at build time: `_attr("a", x ? "b" : dyn)` -> `x ? ' a="b"' : _attr("a", dyn)`.
 // A known attribute value's markup, the same in the DOM template and in HTML.
 function getStaticAttrMarkup(name: string, computed: unknown) {
   switch (name) {
@@ -1695,12 +1718,18 @@ function getStaticAttrMarkup(name: string, computed: unknown) {
   }
 }
 
-function buildAttrExpression(name: string, value: t.Expression): t.Expression {
+// Distribute the attr helper through a conditional, serializing literal branches
+// at build time: `_attr("a", x ? "b" : dyn)` -> `x ? ' a="b"' : _attr("a", dyn)`.
+function buildAttrExpression(
+  tag: t.NodePath<t.MarkoTag>,
+  name: string,
+  value: t.Expression,
+): t.Expression {
   if (value.type === "ConditionalExpression") {
     return t.conditionalExpression(
       value.test,
-      buildAttrExpression(name, value.consequent),
-      buildAttrExpression(name, value.alternate),
+      buildAttrExpression(tag, name, value.consequent),
+      buildAttrExpression(tag, name, value.alternate),
     );
   }
 
@@ -1712,14 +1741,11 @@ function buildAttrExpression(name: string, value: t.Expression): t.Expression {
   switch (name) {
     case "class":
       return (
-        buildStringAttrAnd(name, value) ||
-        buildClassAttrExpression(value) ||
+        buildClassAttrExpression(tag, value) ||
         callRuntime("_attr_class", value)
       );
     case "style":
-      return (
-        buildStringAttrAnd(name, value) || callRuntime("_attr_style", value)
-      );
+      return buildStyleAttrAnd(value) || callRuntime("_attr_style", value);
     default:
       return (
         buildLogicalAttr(name, value) ||
@@ -1799,224 +1825,476 @@ function buildLogicalAttr(name: string, value: t.Expression) {
   );
 }
 
-// class/style omit a falsy value, so `x && val` is just `x ? val : ""` — the
+// style omits a falsy value, so `x && val` is just `x ? val : ""` — the
 // operand is used once and no helper is needed (unlike `_attr`).
-function buildStringAttrAnd(name: "class" | "style", value: t.Expression) {
+function buildStyleAttrAnd(value: t.Expression) {
   if (value.type === "LogicalExpression" && value.operator === "&&") {
     const { confident, computed } = evaluate(value.right);
     if (confident) {
       return t.conditionalExpression(
         value.left,
-        t.stringLiteral(getStaticAttrMarkup(name, computed)),
+        t.stringLiteral(getStaticAttrMarkup("style", computed)),
         t.stringLiteral(""),
       );
     }
   }
 }
 
-// Resolve a static-base `class` object/array at build time, referencing each toggle once:
-// 1 picks a precomputed literal; a few index a hoisted table; more concatenate for `_attr_class`.
+// A `class` of literals, style import reads and toggles without `_attr_class` per render:
+// a few toggles index every combination, precomputed or else computed as the module loads.
 const MAX_PRECOMPUTED_CLASS_TOGGLES = 4;
-function buildClassAttrExpression(value: t.Expression) {
-  if (value.type !== "ObjectExpression" && value.type !== "ArrayExpression") {
+function buildClassAttrExpression(
+  tag: t.NodePath<t.MarkoTag>,
+  value: t.Expression,
+) {
+  const meta = trackDelimitedAttrValue(tag, "class", value);
+  if (meta.dynamic) return;
+  const markup = buildClassMarkup(meta);
+  const assert = markup && buildClassTogglesAssert(meta);
+  return assert ? t.sequenceExpression([assert, markup!]) : markup;
+}
+
+function buildClassMarkup({
+  staticParts,
+  dynamicValues = [],
+}: DelimitedAttrMeta) {
+  if (dynamicValues.length > MAX_PRECOMPUTED_CLASS_TOGGLES) {
+    if (staticParts.length) {
+      return callRuntime(
+        "_attr_class",
+        buildClassString(staticParts, dynamicValues),
+      );
+    }
     return;
   }
 
-  const meta: DelimitedAttrMeta = {
-    staticItems: undefined,
-    dynamicItems: undefined,
-    dynamicValues: undefined,
-  };
-  trackDelimitedAttrValue(value, meta);
-  if (meta.dynamicItems || !meta.staticItems || !meta.dynamicValues) {
-    return;
+  // Every toggle combination's parts, indexed by the toggles bit-packed.
+  const combos: DelimitedAttrPart[][] = [];
+  for (let mask = 0; mask < 1 << dynamicValues.length; mask++) {
+    const parts = [...staticParts];
+    for (let i = 0; i < dynamicValues.length; i++) {
+      const { key, alternate } = dynamicValues[i];
+      const part = mask & (1 << i) ? key : alternate;
+      if (part) parts.push(part);
+    }
+    combos.push(parts);
   }
 
-  const base = toDelimitedString(meta.staticItems, " ", stringifyClassObject);
-  if (!base) {
-    return;
-  }
-
-  const { _attr_class } = getHTMLRuntime();
-  const keys = Object.keys(meta.dynamicValues);
-  if (keys.length === 1) {
-    const [key] = keys;
-    return t.conditionalExpression(
-      meta.dynamicValues[key],
-      t.stringLiteral(_attr_class(base + " " + key)),
-      t.stringLiteral(_attr_class(base)),
+  if (combos.every((parts) => parts.every(isLiteralPart))) {
+    return buildPrecomputedClass(
+      combos.map((parts) => getHTMLRuntime()._attr_class(parts.join(" "))),
+      dynamicValues,
     );
   }
 
-  if (keys.length <= MAX_PRECOMPUTED_CLASS_TOGGLES) {
-    // Each combination's class string, indexed by the toggles bit-packed.
-    const combos: string[] = [];
-    for (let mask = 0; mask < 1 << keys.length; mask++) {
-      let classes = base;
-      for (let i = 0; i < keys.length; i++) {
-        if (mask & (1 << i)) classes += " " + keys[i];
-      }
-      combos.push(_attr_class(classes));
-    }
+  const table = getHoistedClassMarkup(combos);
+  return dynamicValues.length
+    ? t.memberExpression(table, buildToggleIndex(dynamicValues), true)
+    : table;
+}
 
-    // Hoist the shared `class=` prefix; the table holds only the value parts.
-    const end = commonAttrPrefixEnd(combos);
-    const table = generateUidIdentifier("class");
+function buildPrecomputedClass(
+  combos: string[],
+  toggles: DelimitedAttrValue[],
+) {
+  if (!toggles.length) {
+    return t.stringLiteral(combos[0]);
+  }
+
+  if (toggles.length === 1) {
+    return t.conditionalExpression(
+      toggles[0].value,
+      t.stringLiteral(combos[1]),
+      t.stringLiteral(combos[0]),
+    );
+  }
+
+  // Hoist the shared `class=` prefix; the table holds only the value parts.
+  const end = commonAttrPrefixEnd(combos);
+  const table = generateUidIdentifier("class");
+  getProgram().node.body.push(
+    t.markoScriptlet(
+      [
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            table,
+            t.arrayExpression(
+              combos.map((combo) => t.stringLiteral(combo.slice(end))),
+            ),
+          ),
+        ]),
+      ],
+      true,
+    ),
+  );
+
+  const lookup = t.memberExpression(
+    t.cloneNode(table),
+    buildToggleIndex(toggles),
+    true,
+  );
+  return normalizeStringExpression([combos[0].slice(0, end), lookup])!;
+}
+
+// A class with style import reads renders as the module loads: one markup, or a
+// table of every toggle combination, shared by each element writing the same parts.
+const [getHoistedClassMarkups] = createProgramState(
+  () => new Map<string, t.Identifier>(),
+);
+function getHoistedClassMarkup(combos: DelimitedAttrPart[][]) {
+  const key = JSON.stringify(combos);
+  const hoisted = getHoistedClassMarkups();
+  let id = hoisted.get(key);
+  if (!id) {
+    const markups = combos.map((parts) =>
+      parts.length
+        ? callRuntime("_attr_class", buildClassString(parts, []))
+        : t.stringLiteral(""),
+    );
+    hoisted.set(key, (id = generateUidIdentifier("class")));
     getProgram().node.body.push(
       t.markoScriptlet(
         [
           t.variableDeclaration("const", [
             t.variableDeclarator(
-              table,
-              t.arrayExpression(
-                combos.map((combo) => t.stringLiteral(combo.slice(end))),
-              ),
+              id,
+              markups.length === 1 ? markups[0] : t.arrayExpression(markups),
             ),
           ]),
         ],
         true,
       ),
     );
+  }
+  return t.cloneNode(id);
+}
 
-    let index: t.Expression = t.conditionalExpression(
-      meta.dynamicValues[keys[0]],
-      t.numericLiteral(1),
-      t.numericLiteral(0),
-    );
-    for (let i = 1; i < keys.length; i++) {
-      index = t.binaryExpression(
-        "+",
-        index,
-        t.conditionalExpression(
-          meta.dynamicValues[keys[i]],
-          t.numericLiteral(1 << i),
-          t.numericLiteral(0),
-        ),
-      );
-    }
-
-    const lookup = t.memberExpression(t.cloneNode(table), index, true);
-    return normalizeStringExpression([combos[0].slice(0, end), lookup])!;
+// Debug output checks a toggled style import read against the value's other names.
+function buildClassTogglesAssert({
+  staticParts,
+  dynamicValues,
+}: DelimitedAttrMeta) {
+  if (
+    isOptimize() ||
+    !dynamicValues ||
+    [
+      ...staticParts,
+      ...dynamicValues.flatMap(({ key, alternate }) => [key, alternate]),
+    ].every((part) => part === undefined || isLiteralPart(part))
+  ) {
+    return;
   }
 
-  let classes: t.Expression = t.stringLiteral(base);
-  for (const key of keys) {
-    classes = t.binaryExpression(
+  return callRuntime(
+    "_assert_class_toggles",
+    buildClassString(staticParts, []),
+    t.arrayExpression(
+      dynamicValues.map(({ key, alternate }) =>
+        buildClassString(alternate ? [key, alternate] : [key], []),
+      ),
+    ),
+  );
+}
+
+// Each toggle's bit, summed to index its combination.
+function buildToggleIndex(toggles: DelimitedAttrValue[]) {
+  let index: t.Expression = t.conditionalExpression(
+    toggles[0].value,
+    t.numericLiteral(1),
+    t.numericLiteral(0),
+  );
+  for (let i = 1; i < toggles.length; i++) {
+    index = t.binaryExpression(
       "+",
-      classes,
+      index,
       t.conditionalExpression(
-        meta.dynamicValues[key],
-        t.stringLiteral(" " + key),
-        t.stringLiteral(""),
+        toggles[i].value,
+        t.numericLiteral(1 << i),
+        t.numericLiteral(0),
       ),
     );
   }
-
-  return callRuntime("_attr_class", classes);
+  return index;
 }
 
+// The class names of `parts`, then each toggle's while its value is truthy.
+function buildClassString(
+  parts: DelimitedAttrPart[],
+  toggles: DelimitedAttrValue[],
+) {
+  const strs: (string | t.Expression)[] = [];
+  for (let i = 0; i < parts.length; i++) {
+    if (i) strs.push(" ");
+    strs.push(toClassPartExpression(parts[i]));
+  }
+  for (const { key, value, alternate } of toggles) {
+    strs.push(
+      t.conditionalExpression(
+        value,
+        toSpacedClassPart(key),
+        toSpacedClassPart(alternate),
+      ),
+    );
+  }
+  return normalizeStringExpression(strs) || t.stringLiteral("");
+}
+
+function toClassPartExpression(part: DelimitedAttrPart) {
+  return isLiteralPart(part)
+    ? t.stringLiteral(part)
+    : toModuleReadExpression(part);
+}
+
+function toSpacedClassPart(part: DelimitedAttrPart | undefined) {
+  return part === undefined
+    ? t.stringLiteral("")
+    : isLiteralPart(part)
+      ? t.stringLiteral(" " + part)
+      : t.binaryExpression(
+          "+",
+          t.stringLiteral(" "),
+          toModuleReadExpression(part),
+        );
+}
+
+// A `class`/`style` value as what writes it: the parts always written, in
+// order, and the class names or style properties a value sets.
 interface DelimitedAttrMeta {
-  staticItems: undefined | unknown[];
-  dynamicItems: undefined | (t.Expression | t.SpreadElement)[];
-  dynamicValues: undefined | Record<string, t.Expression>;
+  /** An item only the whole-value helper (`_attr_class`/`_attr_style`) can write. */
+  dynamic: boolean;
+  staticParts: DelimitedAttrPart[];
+  dynamicValues: DelimitedAttrValue[] | undefined;
 }
-function trackDelimitedAttrValue(expr: t.Expression, meta: DelimitedAttrMeta) {
-  switch (expr.type) {
-    case "ObjectExpression":
-      trackDelimitedAttrObjectProperties(expr, meta);
-      break;
-    case "ArrayExpression":
-      trackDelimitedAttrArrayItems(expr, meta);
-      break;
-    default:
-      (meta.dynamicItems ||= []).push(expr);
-      break;
+
+/** A literal, or a style import read (class only). */
+type DelimitedAttrPart = string | string[];
+
+interface DelimitedAttrValue {
+  /** The class names the value toggles, or the style property it sets. */
+  key: DelimitedAttrPart;
+  value: t.Expression;
+  /** The class names written instead while the value is falsy (`c ? a : b`). */
+  alternate: DelimitedAttrPart | undefined;
+}
+
+const delimitedAttrStringify = {
+  class: [" ", stringifyClassObject],
+  style: [";", stringifyStyleObject],
+} as const;
+
+// A toggled class must not share a name with any other part, since the client adds and
+// removes it by itself; style import reads' names are checked as they render in dev.
+function assertUniqueClassToggles(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+  { staticParts, dynamicValues = [] }: DelimitedAttrMeta,
+) {
+  const written = new Set(staticParts.flatMap(getClassNames));
+  for (const { key, alternate } of dynamicValues) {
+    // A toggle writes its key or its alternate, never both.
+    const names = new Set([...getClassNames(key), ...getClassNames(alternate)]);
+    for (const name of names) {
+      if (written.has(name)) {
+        throw tag.hub.buildError(
+          attr,
+          `The toggled class \`${name}\` is also written by another part of the \`class\` value; a toggled [class name](https://markojs.com/docs/reference/native-tag#class) may appear only once.`,
+          Error,
+        );
+      }
+    }
+    for (const name of names) written.add(name);
   }
 }
 
-function trackDelimitedAttrArrayItems(
-  arr: t.ArrayExpression,
+function getClassNames(part: DelimitedAttrPart | undefined) {
+  return part === undefined
+    ? []
+    : isLiteralPart(part)
+      ? part.split(/\s+/).filter(Boolean)
+      : [part.join(".")];
+}
+
+// A value the template holds whole, which then never needs the element.
+function isStaticDelimitedAttr(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+) {
+  const { name, value } = attr;
+  if (name !== "class" && name !== "style") return false;
+  const meta = trackDelimitedAttrValue(tag, name, value);
+  if (name === "class") assertUniqueClassToggles(tag, attr, meta);
+  return !meta.dynamic && !meta.dynamicValues;
+}
+
+// The values the client writes one at a time, leaving the template's static part
+// (none when only the whole value can be written); a toggled class repeats no other name.
+function getDelimitedAttrItems(
+  name: "class" | "style",
+  { dynamic, dynamicValues }: DelimitedAttrMeta,
+) {
+  if (dynamic) return;
+  const items: { key: DelimitedAttrPart; value: t.Expression }[] = [];
+  if (!dynamicValues) return items;
+  const keys = new Set<string>();
+  for (const { key, value, alternate } of dynamicValues) {
+    if (
+      alternate !== undefined ||
+      (name === "style" &&
+        (!isLiteralPart(key) ||
+          /\s/.test(key) ||
+          keys.size === keys.add(key).size))
+    ) {
+      return;
+    }
+    items.push({ key, value });
+  }
+
+  return items;
+}
+
+function isLiteralPart(part: DelimitedAttrPart): part is string {
+  return typeof part === "string";
+}
+
+function trackDelimitedAttrValue(
+  tag: t.NodePath<t.MarkoTag>,
+  name: "class" | "style",
+  value: t.Expression,
+) {
+  const meta: DelimitedAttrMeta = {
+    dynamic: false,
+    staticParts: [],
+    dynamicValues: undefined,
+  };
+  trackDelimitedAttrItem(tag, name, value, meta);
+  return meta;
+}
+
+function trackDelimitedAttrItem(
+  tag: t.NodePath<t.MarkoTag>,
+  name: "class" | "style",
+  item: t.Expression | t.SpreadElement,
   meta: DelimitedAttrMeta,
 ) {
-  for (const item of arr.elements) {
-    if (item) {
-      switch (item.type) {
-        case "ArrayExpression": {
-          trackDelimitedAttrArrayItems(item, meta);
-          break;
-        }
-        case "ObjectExpression": {
-          trackDelimitedAttrObjectProperties(item, meta);
-          break;
-        }
-        case "SpreadElement":
-          if (item.argument.type === "ArrayExpression") {
-            trackDelimitedAttrArrayItems(item.argument, meta);
-          } else {
-            (meta.dynamicItems ||= []).push(item);
-          }
-          break;
-        default: {
-          const evalItem = evaluate(item);
-          if (evalItem.confident) {
-            (meta.staticItems ||= []).push(evalItem.computed);
-          } else {
-            (meta.dynamicItems ||= []).push(item);
-          }
-          break;
-        }
+  switch (item.type) {
+    case "ArrayExpression":
+      for (const child of item.elements) {
+        if (child) trackDelimitedAttrItem(tag, name, child, meta);
       }
+      return;
+    case "SpreadElement":
+      if (item.argument.type === "ArrayExpression") {
+        trackDelimitedAttrItem(tag, name, item.argument, meta);
+      } else {
+        meta.dynamic = true;
+      }
+      return;
+    case "ObjectExpression":
+      trackDelimitedAttrObjectProperties(tag, name, item, meta);
+      return;
+  }
+
+  const part = getDelimitedAttrPart(tag, name, item);
+  if (part !== undefined) {
+    if (part) meta.staticParts.push(part);
+  } else if (name === "class" && item.type === "LogicalExpression") {
+    // `c && a` toggles like `{ [a]: c }`: a falsy `c` writes nothing either way.
+    const key =
+      item.operator === "&&" && getDelimitedAttrPart(tag, name, item.right);
+    if (key) {
+      addDynamicValue(meta, key, item.left, undefined);
+    } else {
+      meta.dynamic = true;
     }
+  } else if (name === "class" && item.type === "ConditionalExpression") {
+    const key = getDelimitedAttrPart(tag, name, item.consequent);
+    const alternate = getDelimitedAttrPart(tag, name, item.alternate);
+    if (key && alternate !== undefined) {
+      addDynamicValue(meta, key, item.test, alternate || undefined);
+    } else {
+      meta.dynamic = true;
+    }
+  } else {
+    meta.dynamic = true;
   }
 }
 
 function trackDelimitedAttrObjectProperties(
+  tag: t.NodePath<t.MarkoTag>,
+  name: "class" | "style",
   obj: t.ObjectExpression,
   meta: DelimitedAttrMeta,
 ) {
-  let staticProps: Record<string, unknown> | undefined;
-  let dynamicProps: t.ObjectExpression["properties"] | undefined;
   for (const prop of obj.properties) {
-    if (prop.type !== "ObjectProperty" || prop.computed) {
-      (dynamicProps ||= []).push(prop);
-      continue;
-    }
-
-    let key: string;
-    if (prop.key.type === "Identifier") {
-      key = prop.key.name;
-    } else {
-      const keyEval = evaluate(prop.key as t.Expression);
-      if (
-        keyEval.confident &&
-        typeof keyEval.computed === "string" &&
-        // An empty key falls through to the whole-object helper, which drops
-        // it; `classList.toggle("")` would throw.
-        !/^$|\s/.test(keyEval.computed)
-      ) {
-        key = keyEval.computed + "";
-      } else {
-        (dynamicProps ||= []).push(prop);
-        continue;
-      }
+    const key =
+      prop.type === "ObjectProperty"
+        ? getDelimitedAttrKey(tag, name, prop)
+        : undefined;
+    // An empty key writes nothing yet its value still runs.
+    if (!key || prop.type !== "ObjectProperty") {
+      meta.dynamic = true;
+      return;
     }
 
     const value = prop.value as t.Expression;
-    const propEval = evaluate(value);
-    if (propEval.confident) {
-      (staticProps ||= {})[key] = propEval.computed;
+    const { confident, computed } = evaluate(value);
+    if (!confident) {
+      addDynamicValue(meta, key, value, undefined);
+    } else if (!isLiteralPart(key)) {
+      if (computed) meta.staticParts.push(key);
     } else {
-      (meta.dynamicValues ||= {})[key] = value;
+      const part = delimitedAttrStringify[name][1](key, computed);
+      if (part) meta.staticParts.push(part);
     }
   }
+}
 
-  if (staticProps) {
-    (meta.staticItems ||= []).push(staticProps);
+function getDelimitedAttrKey(
+  tag: t.NodePath<t.MarkoTag>,
+  name: "class" | "style",
+  prop: t.ObjectProperty,
+): DelimitedAttrPart | undefined {
+  if (!prop.computed && prop.key.type === "Identifier") {
+    return prop.key.name;
   }
 
-  if (dynamicProps) {
-    (meta.dynamicItems ||= []).push(t.objectExpression(dynamicProps));
+  const key = prop.key as t.Expression;
+  const { confident, computed } = evaluate(key);
+  if (confident) {
+    return typeof computed === "string" || typeof computed === "number"
+      ? computed + ""
+      : undefined;
   }
+
+  if (name === "class") {
+    return getStyleImportRead(tag, key);
+  }
+}
+
+// A literal's written string (possibly empty), or a style import read (class only).
+function getDelimitedAttrPart(
+  tag: t.NodePath<t.MarkoTag>,
+  name: "class" | "style",
+  value: t.Expression,
+): DelimitedAttrPart | undefined {
+  const { confident, computed } = evaluate(value);
+  if (confident) {
+    const [delimiter, stringify] = delimitedAttrStringify[name];
+    return toDelimitedString(computed, delimiter, stringify);
+  }
+
+  if (name === "class") {
+    return getStyleImportRead(tag, value);
+  }
+}
+
+function addDynamicValue(
+  meta: DelimitedAttrMeta,
+  key: DelimitedAttrPart,
+  value: t.Expression,
+  alternate: DelimitedAttrPart | undefined,
+) {
+  (meta.dynamicValues ||= []).push({ key, value, alternate });
 }
 
 function buildUndefined() {

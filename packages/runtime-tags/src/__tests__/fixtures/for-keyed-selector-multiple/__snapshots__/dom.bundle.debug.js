@@ -1,7 +1,10 @@
 // template.marko
 const $template = "<button class=select>select</button><button class=hover>hover</button><ul></ul>";
 const $walks = " b b b";
-const $for_content__selected__OR__hovered = /*@__PURE__*/ _or(2, ($scope) => _attr_class($scope["#li/0"], [$scope._.selected === $scope["#LoopKey"] && "sel", $scope._.hovered === $scope["#LoopKey"] && "hov"]));
+const $for_content__selected__OR__hovered = /*@__PURE__*/ _or(2, ($scope) => _attr_class_items($scope["#li/0"], {
+	sel: $scope._.selected === $scope["#LoopKey"],
+	hov: $scope._.hovered === $scope["#LoopKey"]
+}));
 const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/2", "selected", "#LoopKey", $for_content__selected__OR__hovered);
 const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);

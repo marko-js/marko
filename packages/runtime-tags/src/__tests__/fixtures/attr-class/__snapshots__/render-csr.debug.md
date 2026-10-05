@@ -43,7 +43,9 @@
 <div
   class="a b c"
 />
-<div />
+<div
+  class=""
+/>
 <div
   class="base"
 />
@@ -65,7 +67,7 @@
 ```
 ## Change
 ```
-UPDATE: div:nth-of-type(4)[class] "active" => null
+UPDATE: div:nth-of-type(4)[class] "active" => ""
 UPDATE: div:nth-of-type(1)[class] "a b d" => "a"
 UPDATE: div:nth-of-type(1)[class] "a d" => "a"
 UPDATE: div:nth-of-type(6)[class] "a b d" => "a"

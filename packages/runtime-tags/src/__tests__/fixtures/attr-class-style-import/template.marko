@@ -1,0 +1,15 @@
+import * as styles from "./styles.css.ts";
+import { box } from "./styles.css.ts";
+<let/on=false/>
+<button onClick() { on = !on }>toggle</button>
+<div class=styles.box/>
+<div class=box/>
+<div class=[styles.item, "lit", styles.tone.warn]/>
+<div class=[styles.item, on && styles.on]/>
+<div class=[styles.item, { [styles.on]: on, lit: !on }]/>
+<div class={ [styles.on]: on }/>
+<div class=on ? styles.on : styles.box/>
+<input-toggle on=on/>
+<if=on>
+  <span class=styles.item/>
+</if>

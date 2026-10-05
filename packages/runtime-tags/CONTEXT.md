@@ -75,6 +75,20 @@ is a render-time value of the scope that declares it, so module scope
 (`static`, `export`) never sees it.
 _Avoid_: ref
 
+**Module read**:
+A read of an import binding (`styles.box`, `logo`) and its member names, which
+the module can evaluate once its imports load: so a template may write it into
+markup built when the module loads. `server`/`client` imports, which exist in
+one output only, and destructured tag variables are not module reads.
+_Avoid_: static value, constant import
+
+**Style import**:
+A module read of a stylesheet module: an import whose source names one (`.css`,
+`.scss`, `.css.ts`, …, matched by path as `@marko/vite` keeps them), or a
+`<style/name>` tag variable (a namespace import of the tag's own module). Its
+reads are class name strings, so a class built from them renders like a literal.
+_Avoid_: CSS module (vanilla-extract and plain stylesheets match too)
+
 **Hoist**:
 A tag-variable read before its declaring tag within the enclosing body, or from
 outside that body. It lowers through a getter and may cross sections; it is not

@@ -21,6 +21,8 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: .a.b.c.d.e.f[class] "a b c" => "a b c d e f"
+UPDATE: .a.b.c.d.e.f[class] "a b c d" => "a b c d e f"
+UPDATE: .a.b.c.d.e.f[class] "a b c d e" => "a b c d e f"
 UPDATE: .a.b.c.d.e.f::text "0" => "1"
 ```
 
@@ -38,6 +40,8 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: .a.b.c[class] "a b c d e f" => "a b c"
+UPDATE: .a.b.c[class] "a b c e f" => "a b c"
+UPDATE: .a.b.c[class] "a b c f" => "a b c"
 UPDATE: .a.b.c::text "1" => "2"
 ```
 
@@ -55,5 +59,7 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: .a.b.c.d.e.f[class] "a b c" => "a b c d e f"
+UPDATE: .a.b.c.d.e.f[class] "a b c d" => "a b c d e f"
+UPDATE: .a.b.c.d.e.f[class] "a b c d e" => "a b c d e f"
 UPDATE: .a.b.c.d.e.f::text "2" => "3"
 ```

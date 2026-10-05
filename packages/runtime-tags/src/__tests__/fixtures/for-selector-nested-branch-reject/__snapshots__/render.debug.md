@@ -26,7 +26,9 @@
 ```
 ```html
 <ul>
-  <li>
+  <li
+    class=""
+  >
     <button
       class="select"
     >
@@ -46,7 +48,7 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)[class] "danger" => null
+UPDATE: ul > li:nth-of-type(1)[class] "danger" => ""
 UPDATE: .danger[class] null => "danger"
 ```
 
@@ -65,7 +67,9 @@ UPDATE: .danger[class] null => "danger"
       a
     </button>
   </li>
-  <li>
+  <li
+    class=""
+  >
     <button
       class="select"
     >
@@ -76,6 +80,6 @@ UPDATE: .danger[class] null => "danger"
 ```
 ## Change
 ```
-UPDATE: .danger[class] null => "danger"
-UPDATE: ul > li:nth-of-type(2)[class] "danger" => null
+UPDATE: .danger[class] "" => "danger"
+UPDATE: ul > li:nth-of-type(2)[class] "danger" => ""
 ```

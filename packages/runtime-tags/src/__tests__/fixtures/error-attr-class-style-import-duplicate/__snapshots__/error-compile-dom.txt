@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-class-style-import-duplicate/template.marko:3:6
+      1 | import * as styles from "./styles.css.ts";
+      2 | <let/on=false/>
+    > 3 | <div class=[styles.box, on && styles.box]/>
+        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The toggled class `styles.box` is also written by another part of the `class` value; a toggled [class name](https://markojs.com/docs/reference/native-tag#class) may appear only once.
+      4 | <button onClick() { on = !on }/>
+      5 |

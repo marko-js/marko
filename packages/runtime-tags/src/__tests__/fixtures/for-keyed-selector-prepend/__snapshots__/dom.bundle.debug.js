@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=add>add</button><ul></ul>";
 const $walks = " b b";
-const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", "#LoopKey", ($scope) => _attr_class($scope["#li/0"], $scope._.selected === $scope["#LoopKey"] && "danger"));
+const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", "#LoopKey", ($scope) => _attr_class_item($scope["#li/0"], "danger", $scope._.selected === $scope["#LoopKey"]));
 const $for_content__setup = $for_content__selected;
 const $for_content__row_label = ($scope, row_label) => _text($scope["#text/1"], row_label);
 const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);

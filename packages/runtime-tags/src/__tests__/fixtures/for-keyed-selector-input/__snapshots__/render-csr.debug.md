@@ -34,7 +34,9 @@
   <li>
     a
   </li>
-  <li>
+  <li
+    class=""
+  >
     b
   </li>
   <li>
@@ -44,7 +46,7 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(2)[class] "sel" => null
+UPDATE: ul > li:nth-of-type(2)[class] "sel" => ""
 ```
 
 # Update
@@ -73,7 +75,7 @@ UPDATE: ul > li:nth-of-type(2)[class] "sel" => null
 ```
 ## Change
 ```
-UPDATE: .sel[class] null => "sel"
+UPDATE: .sel[class] "" => "sel"
 ```
 
 # Update `{"rows":[{"id":1,"label":"a"},{"id":2,"label":"b"},{"id":3,"label":"c"}],"selected":3}`
@@ -87,7 +89,9 @@ UPDATE: .sel[class] null => "sel"
   <li>
     a
   </li>
-  <li>
+  <li
+    class=""
+  >
     b
   </li>
   <li
@@ -99,7 +103,7 @@ UPDATE: .sel[class] null => "sel"
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(2)[class] "sel" => null
+UPDATE: ul > li:nth-of-type(2)[class] "sel" => ""
 UPDATE: .sel[class] null => "sel"
 ```
 
@@ -119,10 +123,14 @@ UPDATE: .sel[class] null => "sel"
   <li>
     a
   </li>
-  <li>
+  <li
+    class=""
+  >
     b
   </li>
-  <li>
+  <li
+    class=""
+  >
     c
   </li>
 </ul>
@@ -131,5 +139,5 @@ UPDATE: .sel[class] null => "sel"
 ```
 INSERT: ul > .sel
 UPDATE: .sel[class] null => "sel"
-UPDATE: ul > li:nth-of-type(4)[class] "sel" => null
+UPDATE: ul > li:nth-of-type(4)[class] "sel" => ""
 ```

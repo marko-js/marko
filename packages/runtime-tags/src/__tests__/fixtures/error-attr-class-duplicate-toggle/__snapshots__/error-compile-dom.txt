@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-class-duplicate-toggle/template.marko:2:6
+      1 | <let/on=false/>
+    > 2 | <div class=["a", { a: on }]/>
+        |      ^^^^^^^^^^^^^^^^^^^^^^ The toggled class `a` is also written by another part of the `class` value; a toggled [class name](https://markojs.com/docs/reference/native-tag#class) may appear only once.
+      3 | <button onClick() { on = !on }/>
+      4 |

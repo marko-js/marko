@@ -26,7 +26,9 @@
 ```
 ```html
 <ul>
-  <li>
+  <li
+    class=""
+  >
     <button
       class="toggle"
     >
@@ -44,7 +46,7 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)[class] "danger" => null
+UPDATE: ul > li:nth-of-type(1)[class] "danger" => ""
 ```
 
 # Update
@@ -53,7 +55,9 @@ UPDATE: ul > li:nth-of-type(1)[class] "danger" => null
 ```
 ```html
 <ul>
-  <li>
+  <li
+    class=""
+  >
     <button
       class="toggle"
     >

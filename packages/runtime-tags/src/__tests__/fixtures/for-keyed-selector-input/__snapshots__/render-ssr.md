@@ -34,7 +34,9 @@
   <li>
     a
   </li>
-  <li>
+  <li
+    class=""
+  >
     b
   </li>
   <li>
@@ -44,7 +46,7 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(2)[class] "sel" => null
+UPDATE: ul > li:nth-of-type(2)[class] "sel" => ""
 ```
 
 # Update
@@ -73,5 +75,5 @@ UPDATE: ul > li:nth-of-type(2)[class] "sel" => null
 ```
 ## Change
 ```
-UPDATE: .sel[class] null => "sel"
+UPDATE: .sel[class] "" => "sel"
 ```
