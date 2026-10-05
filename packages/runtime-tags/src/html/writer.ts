@@ -1223,12 +1223,7 @@ function tryBoundary(
       // A throw in the catch reached the enclosing `<try>`, whose catch cut this one.
       if (boundary.aborted) return;
       // A reordered catch names the try's branch for the client to adopt it into.
-      if (bodyEnd.consumed || !inOrder) {
-        catchChunk.reorderStart = state.mark(
-          ResumeSymbol.ReorderStart,
-          branchId + "",
-        );
-      }
+      if (bodyEnd.consumed || !inOrder) catchChunk.reorderBranch = branchId;
 
       if (bodyEnd.consumed) {
         catchChunk.reorderId = reorderId;
@@ -1574,9 +1569,9 @@ export class Chunk {
   public async = false;
   public consumed = false;
   public reorderId: string | null = null;
-  // A reordered `@catch`'s marker naming its try's branch, leading its reorder
-  // and those of content still pending in it.
-  public reorderStart = "";
+  // The branch its reorder's content joins when its id does not name it: a
+  // `@catch`'s try branch, or the branch around a hole in another reorder.
+  public reorderBranch = 0;
   public deferredReady: Opt<Chunk> = null;
   // Effects held for the in-order content this chunk heads, in stream order, on
   // chunks of the boundary each came from, so a `@catch` drops only its own.
@@ -2028,7 +2023,9 @@ export class Chunk {
           );
         }
 
-        const { reorderId, reorderStart } = reorderedChunk;
+        const { reorderId, reorderBranch } = reorderedChunk;
+        // The client adopts what this reorder streams into this branch.
+        const rootBranch = reorderBranch || +reorderId!;
         const readyReservations: string[] = [];
         let reorderHTML = "";
         let reorderEffects = "";
@@ -2076,7 +2073,11 @@ export class Chunk {
               Mark.ReorderMarker,
               (cur.reorderId = state.nextReorderId()),
             );
-            cur.reorderStart = reorderStart;
+            // A hole within a branch the reorder's content opened, which took a
+            // later scope id than the reorder's own branch, names it for its content.
+            const holeBranch = cur.context?.[kBranchId] as number;
+            cur.reorderBranch =
+              holeBranch > rootBranch ? holeBranch : reorderBranch;
             // It queues itself once settled, or once its boundary aborts.
             (cur.boundary.pendingReorders ||= new Set()).add(cur);
             cur.html = cur.effects = cur.scripts = cur.lastEffect = "";
@@ -2119,7 +2120,9 @@ export class Chunk {
           "=" +
           reorderId +
           ">" +
-          reorderStart +
+          (reorderBranch
+            ? state.mark(ResumeSymbol.ReorderStart, reorderBranch + "")
+            : "") +
           reorderHTML +
           "</t>";
       }
