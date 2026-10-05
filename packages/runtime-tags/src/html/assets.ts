@@ -78,10 +78,19 @@ export function withLoadAssets(
   triggers?: Trigger[],
 ): ServerRenderer {
   return Object.assign((input: unknown) => {
-    const g = $global();
-    writeAsset(g, addAsset(g, assetId, flush, triggers));
+    writeLoadAsset(assetId, flush, triggers);
     return writeWaitReady(assetId, renderer, input);
   }, renderer);
+}
+
+// Also writes a Class API lazy tag's asset rendering within Tags content.
+export function writeLoadAsset(
+  assetId: string,
+  flush: AssetFlush,
+  triggers?: Trigger[],
+) {
+  const g = $global();
+  writeAsset(g, addAsset(g, assetId, flush, triggers));
 }
 
 export function withPageAssets(

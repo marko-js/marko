@@ -1,0 +1,8 @@
+// use tags
+import { rejectAfter } from "../../../utils/resolve";
+
+<try>
+  <class-wrap/>
+  <await|v| = rejectAfter(new Error("S"), 1)>${v}</await>
+  <@catch|err|>caught ${err.message}</@catch>
+</try>
