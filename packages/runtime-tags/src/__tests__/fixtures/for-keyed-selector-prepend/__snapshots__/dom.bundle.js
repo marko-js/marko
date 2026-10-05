@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__selected = /*@__PURE__*/ _for_selector(1, 3, "M", ($scope) => _attr_class($scope.a, $scope._.d === $scope.M && "danger"));
+const $for_content__selected = /*@__PURE__*/ _for_selector(1, 3, "M", ($scope) => _attr_class_item($scope.a, "danger", $scope._.d === $scope.M));
 const $for_content__setup = $for_content__selected;
 const $for_content__row_label = ($scope, row_label) => _text($scope.b, row_label);
 const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);

@@ -1,5 +1,9 @@
 export { attrTag, attrTags } from "./common/attr-tag";
-export { _assert_hoist, _hoist_read_error } from "./common/errors";
+export {
+  _assert_class_toggles,
+  _assert_hoist,
+  _hoist_read_error,
+} from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _call } from "./common/helpers";
 export { $signal, $signalReset } from "./dom/abort-signal";
@@ -54,6 +58,7 @@ export {
   _attr_class,
   _attr_class_item,
   _attr_class_items,
+  _attr_class_names,
   _attr_content,
   _attr_nonce,
   _attr_style,

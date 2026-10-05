@@ -33,7 +33,9 @@
   >
     new
   </li>
-  <li>
+  <li
+    class=""
+  >
     a
   </li>
   <li>
@@ -45,7 +47,7 @@
 ```
 INSERT: ul > .danger
 UPDATE: .danger[class] null => "danger"
-UPDATE: ul > li:nth-of-type(2)[class] "danger" => null
+UPDATE: ul > li:nth-of-type(2)[class] "danger" => ""
 ```
 
 # Update
@@ -64,10 +66,14 @@ UPDATE: ul > li:nth-of-type(2)[class] "danger" => null
   >
     new
   </li>
-  <li>
+  <li
+    class=""
+  >
     new
   </li>
-  <li>
+  <li
+    class=""
+  >
     a
   </li>
   <li>
@@ -79,5 +85,5 @@ UPDATE: ul > li:nth-of-type(2)[class] "danger" => null
 ```
 INSERT: ul > .danger
 UPDATE: .danger[class] null => "danger"
-UPDATE: ul > li:nth-of-type(2)[class] "danger" => null
+UPDATE: ul > li:nth-of-type(2)[class] "danger" => ""
 ```

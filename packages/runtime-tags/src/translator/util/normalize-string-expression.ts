@@ -47,18 +47,22 @@ export default function normalizeStringExpression(
     if (useIife) {
       // Note: this is a temporary workaround for https://github.com/rolldown/rolldown/issues/9189
       // (a bare template literal defeats DCE when templates reference each other, eg recursive tags).
-      const params = exprs.map((_, i) => t.identifier(`_w${i}`));
+      // Only those references pass as arguments; any other read stays inline.
+      const args: t.Expression[] = [];
+      const params: t.Identifier[] = [];
+      const body = t.templateLiteral(
+        strs.map((raw) => t.templateElement({ raw: escapeTemplateRaw(raw) })),
+        exprs.map((expr) => {
+          if (expr.type !== "Identifier") return expr;
+          const param = t.identifier(`_w${params.length}`);
+          params.push(param);
+          args.push(expr);
+          return param;
+        }),
+      );
       const iife = t.callExpression(
-        t.arrowFunctionExpression(
-          params,
-          t.templateLiteral(
-            strs.map((raw) =>
-              t.templateElement({ raw: escapeTemplateRaw(raw) }),
-            ),
-            params,
-          ),
-        ),
-        exprs,
+        t.arrowFunctionExpression(params, body),
+        args,
       );
       t.addComment(iife, "leading", "@__PURE__");
       return iife;

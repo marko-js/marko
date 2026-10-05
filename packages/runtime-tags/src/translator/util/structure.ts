@@ -8,6 +8,7 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getParentTag } from "./get-parent-tag";
 import { importOrSelfReferenceName } from "./import-reference";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
+import { toModuleReadExpression } from "./module-read";
 import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
@@ -79,6 +80,13 @@ export function writeTo(path: t.NodePath<any>) {
       pushMarkup(structure, strs[i + 1]);
     }
   };
+}
+
+export function writeModuleReadTo(path: t.NodePath<any>, read: string[]) {
+  getSection(path).structure?.push({
+    kind: StructureKind.ModuleRead,
+    read,
+  });
 }
 
 export function writeTextTo(path: t.NodePath<any>, value: string) {
@@ -188,6 +196,10 @@ export function resolveStructure(section: Section) {
           }
           appendLiteral(resolved.writes, op.value);
           textEdge = "own";
+          break;
+        case StructureKind.ModuleRead:
+          resolved.writes.push(toModuleReadExpression(op.read), "");
+          textEdge = undefined;
           break;
         case StructureKind.Node: {
           if (!op.binding) continue;

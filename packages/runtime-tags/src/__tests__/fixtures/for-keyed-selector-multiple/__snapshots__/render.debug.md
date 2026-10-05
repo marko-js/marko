@@ -43,7 +43,9 @@
   hover
 </button>
 <ul>
-  <li>
+  <li
+    class=""
+  >
     a
   </li>
   <li
@@ -60,7 +62,7 @@
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(1)[class] "sel" => null
+UPDATE: ul > li:nth-of-type(1)[class] "sel" => ""
 UPDATE: .sel[class] null => "sel"
 ```
 
@@ -80,10 +82,14 @@ UPDATE: .sel[class] null => "sel"
   hover
 </button>
 <ul>
-  <li>
+  <li
+    class=""
+  >
     a
   </li>
-  <li>
+  <li
+    class=""
+  >
     b
   </li>
   <li
@@ -95,6 +101,6 @@ UPDATE: .sel[class] null => "sel"
 ```
 ## Change
 ```
-UPDATE: ul > li:nth-of-type(2)[class] "hov" => null
+UPDATE: ul > li:nth-of-type(2)[class] "hov" => ""
 UPDATE: .sel.hov[class] "sel" => "sel hov"
 ```

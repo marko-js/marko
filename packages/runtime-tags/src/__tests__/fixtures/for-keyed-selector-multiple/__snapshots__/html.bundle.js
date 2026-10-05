@@ -1,4 +1,10 @@
 // template.marko
+const $class = [
+	"",
+	" class=sel",
+	" class=hov",
+	" class=\"sel hov\""
+];
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -21,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=select>select</button>${_el_resume($scope0_id, "a")}<button class=hover>hover</button>${_el_resume($scope0_id, "b")}<ul>`);
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li${_attr_class([selected === row.id && "sel", hovered === row.id && "hov"])}>${_escape(row.label)}</li>${_el_resume($scope1_id, "a")}`);
+		_html(`<li${$class[(selected === row.id ? 1 : 0) + (hovered === row.id ? 2 : 0)]}>${_escape(row.label)}</li>${_el_resume($scope1_id, "a")}`);
 		_scope($scope1_id, {
 			M: row?.id,
 			_: _scope_with_id($scope0_id)

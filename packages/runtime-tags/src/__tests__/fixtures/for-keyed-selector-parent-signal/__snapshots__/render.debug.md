@@ -94,7 +94,9 @@ UPDATE: .danger[class] null => "danger"
 ```html
 <table>
   <tbody>
-    <tr>
+    <tr
+      class=""
+    >
       <td>
         <button
           class="select"
@@ -131,7 +133,7 @@ UPDATE: .danger[class] null => "danger"
 ```
 ## Change
 ```
-UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => null
+UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => ""
 ```
 
 # Update
@@ -180,7 +182,7 @@ UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => null
 ```
 ## Change
 ```
-UPDATE: .danger[class] null => "danger"
+UPDATE: .danger[class] "" => "danger"
 ```
 
 # Update
@@ -190,7 +192,9 @@ UPDATE: .danger[class] null => "danger"
 ```html
 <table>
   <tbody>
-    <tr>
+    <tr
+      class=""
+    >
       <td>
         <button
           class="select"
@@ -229,6 +233,6 @@ UPDATE: .danger[class] null => "danger"
 ```
 ## Change
 ```
-UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => null
+UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => ""
 UPDATE: .danger[class] null => "danger"
 ```

@@ -62,7 +62,7 @@ const $input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h 
 	h: $scope.h
 }), 5);
 const $c = /*@__PURE__*/ _const("c", ($scope) => {
-	_attr_class($scope["#div/1"], $scope.c && "active");
+	_attr_class_item($scope["#div/1"], "active", $scope.c);
 	$input_c__OR__input_d($scope);
 	$input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h($scope);
 });

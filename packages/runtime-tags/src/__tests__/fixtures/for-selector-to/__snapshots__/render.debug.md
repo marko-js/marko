@@ -120,7 +120,9 @@ UPDATE: .danger[class] null => "danger"
 ```html
 <table>
   <tbody>
-    <tr>
+    <tr
+      class=""
+    >
       <td>
         <button
           class="select"
@@ -172,7 +174,7 @@ UPDATE: .danger[class] null => "danger"
 ```
 ## Change
 ```
-UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => null
+UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => ""
 UPDATE: .danger[class] null => "danger"
 ```
 
@@ -212,7 +214,9 @@ UPDATE: .danger[class] null => "danger"
         </button>
       </td>
     </tr>
-    <tr>
+    <tr
+      class=""
+    >
       <td>
         <button
           class="select"
@@ -235,6 +239,6 @@ UPDATE: .danger[class] null => "danger"
 ```
 ## Change
 ```
-UPDATE: table > tbody > tr:nth-of-type(4)[class] "danger" => null
-UPDATE: .danger[class] null => "danger"
+UPDATE: table > tbody > tr:nth-of-type(4)[class] "danger" => ""
+UPDATE: .danger[class] "" => "danger"
 ```

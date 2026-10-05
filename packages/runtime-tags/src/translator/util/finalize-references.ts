@@ -479,7 +479,8 @@ function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {
 // The last tag whose child returns one of the intersection's own sources, whose
 // scope offset the intersection renders after.
 function getWalkedBinding(op: StructureOp) {
-  return typeof op === "object" && op.kind !== StructureKind.Text
+  return typeof op === "object" &&
+    (op.kind === StructureKind.Node || op.kind === StructureKind.Child)
     ? op.binding
     : undefined;
 }

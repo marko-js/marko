@@ -1,0 +1,12 @@
+// styles.css.ts
+const box = "box";
+
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html(`<div${_attr_class("box")}></div><button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "2:6" });
+}, 1);

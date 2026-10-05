@@ -1,0 +1,1 @@
+The toggled class `x` is also written by another part of the `class` value; a toggled class may appear only once.
