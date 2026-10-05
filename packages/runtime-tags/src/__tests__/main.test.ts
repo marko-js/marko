@@ -18,6 +18,7 @@ import {
 } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
+import type { LoadFault } from "./utils/import-with-context";
 import {
   type Destroy,
   type Flush,
@@ -62,6 +63,11 @@ export type TestConfig = {
    * substrings, simulating a network-level lazy-chunk load failure.
    */
   reject_load?: string[];
+  /**
+   * Delays any dynamic chunk import whose specifier contains one of these
+   * substrings to the next `resolveAfter` tick, past the next animation frame.
+   */
+  delay_load?: string[];
   /**
    * Streams this many extra flushes into the document before the page's
    * entry module runs, simulating a bundle that loads slower than the
@@ -194,9 +200,14 @@ function testFixtures(interop?: true) {
             html?: Sizes;
           } = {};
           const browsers: ReturnType<typeof createBrowser>[] = [];
-          const rejectLoad =
-            config.reject_load &&
-            ((id: string) => config.reject_load!.some((s) => id.includes(s)));
+          const loadFault: LoadFault | undefined =
+            (config.reject_load || config.delay_load) &&
+            ((id: string) =>
+              config.reject_load?.some((s) => id.includes(s))
+                ? "reject"
+                : config.delay_load?.some((s) => id.includes(s))
+                  ? "delay"
+                  : undefined);
 
           // Mocha retains suite closures for the entire run, so the cached
           // browsers/bundles are released once the fixture finishes to keep
@@ -327,7 +338,7 @@ function testFixtures(interop?: true) {
             const tracker = createMutationTracker(browser);
             const { template, run } = await runClient(
               browser.ctx,
-              rejectLoad || undefined,
+              loadFault || undefined,
             );
             const instance = template.mount(input, document.body, "afterbegin");
             tracker.logRender(input);
@@ -407,7 +418,7 @@ function testFixtures(interop?: true) {
             const browser = createBrowser(
               runner.assets,
               config.load_order,
-              rejectLoad || undefined,
+              loadFault || undefined,
             );
             browsers.push(browser);
             const { window } = browser;
