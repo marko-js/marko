@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $row;
 	forOf(rows, (a) => {
 		$row = attrTags($row, { content: _content("__tests__/template.marko_1*content", () => {
-			_scope_reason();
+			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			const $row_content__a_id__closures = new Set();
 			_set_scope_reason(2);
@@ -54,9 +54,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id();
 			inner_default({ cell: $cell });
 			_scope($scope1_id, {
+				a_id: _write_if($scope1_reason, 0) && a?.id,
 				"ClosureScopes:a_id/3": $row_content__a_id__closures,
 				"#childScope/0": _existing_scope($childScope)
-			}, "__tests__/template.marko", "4:6");
+			}, "__tests__/template.marko", "4:6", { a_id: 0 });
 		}, $scope0_id) });
 	});
 	const $childScope2 = _peek_scope_id();

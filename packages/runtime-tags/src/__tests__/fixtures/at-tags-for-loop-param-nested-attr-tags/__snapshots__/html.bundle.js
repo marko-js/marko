@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 	let $row;
 	forOf(rows, (a) => {
 		$row = attrTags($row, { content: _content("a2", () => {
-			_scope_reason();
+			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			const $row_content__a_id__closures = /* @__PURE__ */ new Set();
 			_set_scope_reason(2);
@@ -54,6 +54,7 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id();
 			inner_default({ cell: $cell });
 			_scope($scope1_id, {
+				c: _write_if($scope1_reason, 0) && a?.id,
 				d: $row_content__a_id__closures,
 				a: _existing_scope($childScope)
 			});

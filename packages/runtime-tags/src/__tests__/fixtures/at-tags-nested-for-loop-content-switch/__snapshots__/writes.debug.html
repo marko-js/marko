@@ -1,0 +1,67 @@
+<button data-tab=0>x0</button><!--M_$3 #button/0--><button
+  data-tab=1>x1</button><!--M_$4 #button/0--><button
+  data-tab=2>y0</button><!--M_$5 #button/0--><button
+  data-tab=3>y1</button><!--M_$6 #button/0-->
+<div><!--M_[--><button class=inc>x<!--M_$7 #text/1-->
+    <!>0<!--M_$7 #text/2-->: <!>0<!--M_$7 #text/3-->
+  </button><!--M_$7 #button/0--><!--M_]2 #text/1 7--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+      "ConditionalRenderer:#text/1": "packages/runtime-tags/src/__tests__/fixtures/at-tags-nested-for-loop-content-switch/template.marko_1*content 1",
+      tabs: [{
+        title: "x0",
+        content: _._[
+          "packages/runtime-tags/src/__tests__/fixtures/at-tags-nested-for-loop-content-switch/template.marko_1*content"
+          ](_(1), {
+          row_0: "x",
+          col: 0
+        }),
+        *[(_.a = [_.b = {
+          title: "x1",
+          content: _._[
+            "packages/runtime-tags/src/__tests__/fixtures/at-tags-nested-for-loop-content-switch/template.marko_1*content"
+            ](_(1), {
+            row_0: "x",
+            col: 1
+          })
+        }, _.c = {
+          title: "y0",
+          content: _._[
+            "packages/runtime-tags/src/__tests__/fixtures/at-tags-nested-for-loop-content-switch/template.marko_1*content"
+            ](_(1), {
+            row_0: "y",
+            col: 0
+          })
+        }, _.d = {
+          title: "y1",
+          content: _._[
+            "packages/runtime-tags/src/__tests__/fixtures/at-tags-nested-for-loop-content-switch/template.marko_1*content"
+            ](_(1), {
+            row_0: "y",
+            col: 1
+          })
+        }], Symbol.iterator)]() {
+          yield this;
+          yield* _.a
+        }
+      }, _.b, _.c, _.d]
+    }, {
+      "#LoopKey": 0,
+      _: _(2)
+    }, {
+      "#LoopKey": 1,
+      _: _(2)
+    }, {
+      "#LoopKey": 2,
+      _: _(2)
+    }, {
+      "#LoopKey": 3,
+      _: _(2)
+    }, {
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/at-tags-nested-for-loop-content-switch/tags/tabs.marko_1 3 4 5 6 packages/runtime-tags/src/__tests__/fixtures/at-tags-nested-for-loop-content-switch/template.marko_1 7"
+  ];
+  M._.w()
+</script>

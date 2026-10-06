@@ -21,9 +21,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		3
 	], (zzz) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			_scope_reason();
+			const $scope1_reason = _scope_reason(), $wg__zzz = _write_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
-			_html(_escape(zzz));
+			_html(_text_resume($scope1_id, "#text/0", zzz, $wg__zzz));
+			_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "3:5");
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

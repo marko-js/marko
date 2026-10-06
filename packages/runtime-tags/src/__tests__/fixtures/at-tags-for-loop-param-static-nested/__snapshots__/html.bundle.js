@@ -18,16 +18,16 @@ var template_default = _template("a", (input) => {
 	let $item;
 	forOf(["a", "b"], (item) => {
 		$item = attrTags($item, { content: _content("a1", () => {
-			_scope_reason();
+			const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0), $wi__item = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<span>${_escape(item)}</span>`);
-					$wi__input_show && _scope($scope2_id, {});
+					_html(`<span>${_text_resume($scope2_id, "a", item, $wg__item)}</span>`);
+					($wi__input_show || $wi__item) && _scope($scope2_id, { _: $wi__item && _scope_with_id($scope1_id) });
 					return 0;
 				}
-			}, $scope1_id, "a", $wg__input_show, $wg__input_show, 0, 0, 1);
+			}, $scope1_id, "a", $wg__input_show || $wg__item, $wg__input_show, 0, 0, 1);
 			$wi__input_show && _subscribe($input_show__closures, _scope($scope1_id, {
 				b: item,
 				_: _scope_with_id($scope0_id)

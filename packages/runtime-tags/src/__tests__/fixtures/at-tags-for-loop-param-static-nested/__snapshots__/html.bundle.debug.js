@@ -18,16 +18,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item;
 	forOf(["a", "b"], (item) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			const $scope1_reason = _scope_reason();
+			const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0), $wi__item = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<span>${_escape(item)}</span>`);
-					$wi__input_show && _scope($scope2_id, {}, "__tests__/template.marko", "4:13");
+					_html(`<span>${_text_resume($scope2_id, "#text/0", item, $wg__item)}</span>`);
+					($wi__input_show || $wi__item) && _scope($scope2_id, { _: $wi__item && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:13");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", $wg__input_show, $wg__input_show, 0, 0, 1);
+			}, $scope1_id, "#text/0", $wg__input_show || $wg__item, $wg__input_show, 0, 0, 1);
 			$wi__input_show && _subscribe($input_show__closures, _scope($scope1_id, {
 				item,
 				_: _scope_with_id($scope0_id)

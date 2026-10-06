@@ -29,10 +29,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item;
 	forOf(input.items, (item) => {
 		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_2*content", () => {
-			const $scope2_reason = _scope_reason();
+			const $scope2_reason = _scope_reason(), $wg__item = _write_guard($scope2_reason, 0);
 			const $scope2_id = _scope_id();
-			_html(`<span>${_text_resume($scope2_id, "#text/0", JSON.stringify(item), $wg__input_items)}</span>`);
-			$wi__input_items && _scope($scope2_id, {}, "__tests__/template.marko", "5:6");
+			_html(`<span>${_text_resume($scope2_id, "#text/0", JSON.stringify(item), $wg__input_items || $wg__item)}</span>`);
+			($wi__input_items || _write_if($scope2_reason, 0)) && _scope($scope2_id, {}, "__tests__/template.marko", "5:6");
 		}, $scope0_id, () => [{ item }]) });
 	});
 	const $childScope = _peek_scope_id();

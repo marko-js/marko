@@ -570,21 +570,22 @@ function resolveBindingSources(binding: Binding) {
       }
       return;
     }
-    case BindingType.param:
+    case BindingType.param: {
       binding.sources = createSources(
         undefined,
         getCanonicalBinding(binding) as ParamBinding,
       );
+      // Content also gets new loop values when the loop reruns.
+      const { localOf } = getAliasRoot(binding) || binding;
+      if (localOf) {
+        resolveBindingSources(localOf);
+        binding.sources = mergeSources(localOf.sources, binding.sources);
+      }
       return;
+    }
     case BindingType.global:
       binding.sources = globalSources;
       return;
-  }
-
-  if (binding.localOf) {
-    resolveBindingSources(binding.localOf);
-    binding.sources = binding.localOf.sources;
-    return;
   }
 
   const aliasRoot = getAliasRoot(binding);

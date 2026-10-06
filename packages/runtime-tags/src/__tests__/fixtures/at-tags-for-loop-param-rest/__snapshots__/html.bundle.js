@@ -37,9 +37,10 @@ var template_default = _template("a", (input) => {
 	let $item2;
 	forOf([["a", "b"], ["c", "d"]], ([first, ...others]) => {
 		$item2 = attrTags($item2, { content: _content("a1", () => {
-			_scope_reason();
-			_scope_id();
-			_html(`<b>${_escape(first)}${_escape(others[0])}</b>`);
+			const $scope2_reason = _scope_reason(), $wg__first = _write_guard($scope2_reason, 1), $wg__$temp2_ = _write_guard($scope2_reason, 2);
+			const $scope2_id = _scope_id();
+			_html(`<b>${_text_resume($scope2_id, "a", first, $wg__first)}${_text_resume($scope2_id, "b", others[0], $wg__$temp2_ * 2)}</b>`);
+			_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 		}, $scope0_id) });
 	});
 	list_default({ item: $item2 });

@@ -40,9 +40,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item2;
 	forOf([["a"], ["b", "c"]], ([x, y = "dy"]) => {
 		$item2 = attrTags($item2, { content: _content("__tests__/template.marko_3*content", () => {
-			_scope_reason();
+			const $scope3_reason = _scope_reason(), $wg__x = _write_guard($scope3_reason, 1), $wg__y = _write_guard($scope3_reason, 2);
 			const $scope3_id = _scope_id();
-			_html(`<i>${_escape(x)}${_escape(y)}</i>`);
+			_html(`<i>${_text_resume($scope3_id, "#text/0", x, $wg__x)}${_text_resume($scope3_id, "#text/1", y, $wg__y * 2)}</i>`);
+			_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "16:6");
 		}, $scope0_id) });
 	});
 	list_default({ item: $item2 });

@@ -153,15 +153,15 @@ declare module "@marko/compiler/dist/types" {
   export interface FunctionExpressionExtra extends FunctionExtra {}
 }
 
-// An attribute tag `<for>` param reaches only the content the loop creates, so
-// that content holds it as its own binding, which nested sections close over.
+// An attribute tag `<for>` param reaches only the content the loop creates, as a
+// param of that content its creator supplies; nested sections close over it.
 function getOrCreateLocalClosure(local: Binding, section: Section) {
   while (section.parent !== local.section) section = section.parent!;
   let closure = local.localClosures?.get(section);
   if (!closure) {
     closure = createBinding(
       local.name,
-      BindingType.derived,
+      BindingType.param,
       section,
       undefined,
       undefined,

@@ -36,9 +36,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if (true) {
 		forUntil(3, 0, 1, (i) => {
 			$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-				_scope_reason();
+				const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0);
 				const $scope1_id = _scope_id();
-				_html(`static ${_escape(i)}`);
+				_html(`static ${_text_resume($scope1_id, "#text/0", i, $wg__i * 2)}`);
+				_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "8:22");
 			}, $scope0_id) });
 		});
 	}
