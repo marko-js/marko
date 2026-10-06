@@ -1,0 +1,8 @@
+import Child from "./tags/child.marko";
+<let/Tag=Child/>
+<${Tag}/v/>
+<button.inc onClick() { v.set(v.n + 1) }>${v.n}</button>
+<for|i| until=2>
+  <${Tag}/row/>
+  <button.row onClick() { row.set(row.n + 1) }>${row.n}</button>
+</for>
