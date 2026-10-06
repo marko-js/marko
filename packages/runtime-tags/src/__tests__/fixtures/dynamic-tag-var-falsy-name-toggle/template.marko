@@ -1,0 +1,11 @@
+<let/label="Close"/>
+<${label && "button"}/btn aria-label=label>
+  content
+</>
+<${label && "span"}/value>
+  <return=1/>
+</>
+<${!label && "span"}/other/>
+<p>${typeof btn} ${typeof value} ${typeof other}</p>
+<input value=label/>
+<button#toggle onClick() { label = label ? "" : "Close" }/>

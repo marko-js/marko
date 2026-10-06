@@ -15,7 +15,7 @@ const $_return = ($scope) => function(value) {
 	$n($scope, value);
 };
 _resumed["__tests__/tags/grandchild.marko_0/_return"] = $_return;
-var grandchild_default = /*@__PURE__*/ _template("__tests__/tags/grandchild.marko", $template$2, "D l", $setup$2);
+var grandchild_default = /*@__PURE__*/ _template("__tests__/tags/grandchild.marko", $template$2, "D l", /*@__PURE__*/ _return_setup($setup$2));
 
 // tags/child.marko
 const $template$1 = "<!><!><!>";
@@ -27,7 +27,7 @@ function $setup$1($scope) {
 	$Inner($scope, grandchild_default);
 }
 const $g = _var_resume("__tests__/tags/child.marko_0_g#3/var", /*@__PURE__*/ _const("g", ($scope) => _return($scope, $scope.g)));
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b1c", $setup$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b1c", /*@__PURE__*/ _return_setup($setup$1));
 
 // template.marko
 const $template = "<!><!><button class=inc> </button><button class=toggle></button>";

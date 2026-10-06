@@ -197,7 +197,8 @@ export let _dynamic_tag = (
         }
       } else if (content) {
         // A falsy name renders only its body; `content=` is input for a named tag.
-        return content();
+        // With no tag, the body's `<return>` is not its variable.
+        content();
       }
     };
     result = shouldResume ? withBranchId(branchId, render) : render();

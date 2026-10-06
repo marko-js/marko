@@ -1,0 +1,5 @@
+import Some from "./tags/some.marko" with { load: "render" }
+<let/mounted=false/>
+<button onClick() { mounted = true }/>
+<${mounted && Some}/v/>
+<p>${String(v && v.n)}</p>

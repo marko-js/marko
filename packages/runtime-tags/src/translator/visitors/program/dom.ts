@@ -4,6 +4,7 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { BindingType } from "../../util/bindings";
+import { isOptimize } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
 import { callRuntime, registerRuntimeValue } from "../../util/runtime";
@@ -151,8 +152,11 @@ export default {
                 ...replaceNullishAndEmptyFunctionsWith0([
                   writes,
                   walks,
-                  setupIdentifier,
-                  tagParamsIdentifier,
+                  ...markReturn(
+                    childSection,
+                    setupIdentifier,
+                    tagParamsIdentifier,
+                  ),
                   childSection.hoisted || childSection.isHoistThrough
                     ? getSectionInstancesAccessorLiteral(childSection)
                     : undefined,
@@ -241,8 +245,11 @@ export default {
             ...replaceNullishAndEmptyFunctionsWith0([
               templateIdentifier,
               walksIdentifier,
-              section.hasSetupWork ? setupIdentifier : undefined,
-              programInputSignal?.identifier,
+              ...markReturn(
+                section,
+                section.hasSetupWork ? setupIdentifier : undefined,
+                programInputSignal?.identifier,
+              ),
             ]),
           ),
         ),
@@ -264,4 +271,18 @@ function assertSetupWorkFound(
       "Marko internal error: analysis found no setup work for a section whose translation produced setup statements. Please open an issue with a reproduction.",
     );
   }
+}
+
+// A debug build marks content with a `<return>` on its setup, or its params if
+// it has no setup, to check a dynamic tag's variable over it.
+function markReturn(
+  section: Section,
+  setup: t.Expression | undefined,
+  params: t.Expression | undefined,
+) {
+  return section.returnValueExpr && !isOptimize()
+    ? setup
+      ? [callRuntime("_return_setup", setup), params]
+      : [setup, callRuntime("_return_setup", params!)]
+    : [setup, params];
 }

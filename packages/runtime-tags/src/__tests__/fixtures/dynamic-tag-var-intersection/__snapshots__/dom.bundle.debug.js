@@ -15,7 +15,7 @@ const $_return = ($scope) => function(value) {
 	$n($scope, value);
 };
 _resumed["__tests__/tags/child.marko_0/_return"] = $_return;
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", $setup$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", /*@__PURE__*/ _return_setup($setup$1));
 
 // template.marko
 const $template = "<!><!><button class=inc> </button><button class=toggle></button>";

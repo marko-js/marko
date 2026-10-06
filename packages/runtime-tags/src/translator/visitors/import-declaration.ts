@@ -12,7 +12,12 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
-import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOptimize,
+  isOutputHTML,
+} from "../util/marko-config";
 import {
   callRuntime,
   dynamicImport,
@@ -179,6 +184,16 @@ export default {
               importDecl.remove();
             } else {
               importRuntimeFeature("catch");
+              const load = t.arrowFunctionExpression(
+                [],
+                dynamicImport(
+                  resolveRelativePath(file, loadFile.opts.filename),
+                  t.arrowFunctionExpression(
+                    [t.identifier("mod")],
+                    toMemberExpression(t.identifier("mod"), "default"),
+                  ),
+                ),
+              );
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(
@@ -186,16 +201,12 @@ export default {
                     callRuntime(
                       "_load_template",
                       t.stringLiteral(loadFile.metadata.marko.id),
-                      t.arrowFunctionExpression(
-                        [],
-                        dynamicImport(
-                          resolveRelativePath(file, loadFile.opts.filename),
-                          t.arrowFunctionExpression(
-                            [t.identifier("mod")],
-                            toMemberExpression(t.identifier("mod"), "default"),
-                          ),
-                        ),
-                      ),
+                      // Known before it loads, for a debug build's check of a
+                      // dynamic tag's variable over it.
+                      !isOptimize() &&
+                        loadFile.ast.program.extra.section?.returnValueExpr
+                        ? callRuntime("_return_setup", load)
+                        : load,
                     ),
                   ),
                 ]),

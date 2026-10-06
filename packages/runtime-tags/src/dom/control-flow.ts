@@ -612,7 +612,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
   (
     nodeAccessor: EncodedAccessor,
     getContent?: ((scope: Scope) => Renderer) | 0,
-    getTagVar?: (() => Signal<unknown>) | 0,
+    getTagVar?: (() => (scope: Scope, value?: unknown) => void) | 0,
     inputIsArgs?: 1,
   ): Signal<Renderer | string | undefined> => {
     // The walker reserves the variable's scope offset right after the node.
@@ -634,7 +634,11 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
         normalizeDynamicRenderer<Renderer>(newRenderer);
       if (
         scope[rendererAccessor] !==
-          (scope[rendererAccessor] = rendererKey(normalizedRenderer)) ||
+          (scope[rendererAccessor] =
+            rendererKey(normalizedRenderer) ||
+            // With no body nothing resumes, so a first render without a tag
+            // runs too, setting its variable.
+            (getContent ? undefined : 0)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
       ) {
         // A falsy name renders the body in its place.
@@ -648,7 +652,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
         );
 
         if (getTagVar) {
-          if (scope[childScopeAccessor]) {
+          if (normalizedRenderer) {
             scope[childScopeAccessor][AccessorProp.TagVariable] = (
               value: unknown,
             ) => getTagVar()(scope, value);
@@ -659,8 +663,8 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
               normalizedRenderer,
             );
           } else {
-            // The branch tore down; clear the tag variable with it.
-            getTagVar()(scope, undefined);
+            // A falsy name has no tag, so no variable, even where its body renders.
+            getTagVar()(scope);
           }
         }
 

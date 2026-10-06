@@ -34,4 +34,4 @@ const $input_depth = /*@__PURE__*/ _const("input_depth", ($scope) => {
 	$if_content__input_depth($scope);
 });
 const $input = ($scope, input) => $input_depth($scope, input.depth);
-var rec_default = /*@__PURE__*/ _template("__tests__/tags/rec.marko", $template, $walks, $setup, $input);
+var rec_default = /*@__PURE__*/ _template("__tests__/tags/rec.marko", $template, $walks, /*@__PURE__*/ _return_setup($setup), $input);
