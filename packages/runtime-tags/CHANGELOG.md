@@ -1,5 +1,23 @@
 # @marko/runtime-tags
 
+## 6.4.3
+
+### Patch Changes
+
+- [#4416](https://github.com/marko-js/marko/pull/4416) [`e8199de`](https://github.com/marko-js/marko/commit/e8199de3ca2493d331a26ddd82eba42d671a0987) Thanks [@HenriqueLimas](https://github.com/HenriqueLimas)! - Type `autocorrect` as a global HTML attribute so `<input>`, `<form>` and `contenteditable` elements accept it, not only `<textarea>`.
+
+- [#4417](https://github.com/marko-js/marko/pull/4417) [`a4d036e`](https://github.com/marko-js/marko/commit/a4d036e2bb881ea40fcbeba81c5973f9a750dd41) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a stale value when one update changes a lazy tag's variable, returned from a tag nested in it, and another value read with it: the expression reading both now shows the latest of each, rendering once.
+
+- [#4411](https://github.com/marko-js/marko/pull/4411) [`0e8dee0`](https://github.com/marko-js/marko/commit/0e8dee0d9b133a302325ca73557a509911088d38) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resume content that streams into an `<await>` within a branch of a reordered `<try>` body, such as one under an `<if>`, inside that branch instead of the `<try>`'s, so removing the branch also stops its effects.
+
+- [#4419](https://github.com/marko-js/marko/pull/4419) [`37c47bf`](https://github.com/marko-js/marko/commit/37c47bf9521d5a83632fb3b61bd1eeab257fb066) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a dynamic tag's variable not updating after resume when the child's own scope had nothing else to send, such as a child whose `<return>` reads a `<let>` it never renders: the child's `<return>` now reaches the parent's variable.
+
+- [#4414](https://github.com/marko-js/marko/pull/4414) [`4dbdf99`](https://github.com/marko-js/marko/commit/4dbdf991250f8d59076ef24c15f140b10b27fa98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a crash after resume when a dynamic tag or a native tag's `content` switches between content an attribute tag `<for>` created, such as tabs. The switch now updates the content in place, as it already did in a client render.
+
+- [#4418](https://github.com/marko-js/marko/pull/4418) [`55fe102`](https://github.com/marko-js/marko/commit/55fe102f07820638da85ef71bf85c6e3ff6da8a8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a compile error for a tag variable on a Marko 5 (class API) tag, which cannot `<return>` a value: the server rendered its readers with `undefined` while the browser never rendered them.
+
+- [#4415](https://github.com/marko-js/marko/pull/4415) [`b4ef4ec`](https://github.com/marko-js/marko/commit/b4ef4ec16c6b3c7a6040bb57a3fb560ed7405851) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix stale values when one update changes a tag variable and another value read with it. A dynamic tag's child, a child nested inside it, a remounted child, and a `<const>` derived from a child's variable now update every expression that reads them in the same update, rendering each once. Also fix `<for>` rows that kept a stale value after a row was prepended, and a `<for>` row reading a value derived from a tag variable outside the loop dropping its own update in production builds.
+
 ## 6.4.2
 
 ### Patch Changes
