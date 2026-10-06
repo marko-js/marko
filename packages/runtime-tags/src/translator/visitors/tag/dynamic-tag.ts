@@ -138,6 +138,13 @@ export default {
 
       assertAttributesOrArgs(tag);
       const { node } = tag;
+      if (node.var && node.extra!.featureType === "class") {
+        throw tag
+          .get("var")
+          .buildCodeFrameError(
+            `The Marko 5 (class API) tag \`${getStaticTagName(node)}\` cannot [\`<return>\`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or migrate the tag to the tags API.`,
+          );
+      }
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
         knownTagAnalyze(tag, definedBodySection);
