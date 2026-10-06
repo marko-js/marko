@@ -76,9 +76,9 @@ export let queuePendingRender = (render: PendingRender) => {
   pendingRenders[i] = render;
 };
 
-// A dynamic tag creates its branch after the owner's walk, so the branch's
-// scopes sort after the variable's readers; its renders run from their own
-// heap instead, as one render where a static child's sort.
+// A dynamic tag's branch, or the scopes a lazy tag's module clones, come after
+// the owner's walk and sort after the variable's readers; their renders run
+// from a heap of their own instead, as one render where a static child's sort.
 export function createBranchRenders(
   scope: Scope,
   scopeKey: number,

@@ -175,6 +175,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getStaticTagName(node);
 
   if (isLoad) {
+    // `_load_setup_var` places the renders of the scopes the module clones.
+    if (node.var) importRuntimeFeature("dynamic-tag-var");
     const childFileName = childFile.opts.filename;
     const { triggers, signals, setups } = getLoadIdentifiers();
     let triggerIdent = triggers.get(loadConfig);
@@ -233,7 +235,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         return signalIdent;
       },
       (section, childBinding) => {
-        const setupKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}`;
+        const setupKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}${node.var ? "\0var" : ""}`;
         let setupIdent = setups.get(setupKey);
         if (!setupIdent) {
           setupIdent = generateUidIdentifier(`load_${tagName}_setup`);
@@ -250,7 +252,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               t.variableDeclarator(
                 setupIdent,
                 callRuntime(
-                  "_load_setup",
+                  node.var ? "_load_setup_var" : "_load_setup",
                   triggerIdent
                     ? t.addComment(
                         t.callExpression(triggerIdent, [setupLoadExpr]),
