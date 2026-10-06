@@ -16,6 +16,7 @@ import type { Locals } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   _el,
+  _existing_scope,
   _html,
   _peek_scope_id,
   _resume,
@@ -210,6 +211,9 @@ export let _dynamic_tag = (
           scopeId + " " + accessor + (rendered ? " " + branchId : ""),
         ),
       );
+      // Unlike a known tag's child scope, no link ships this one, so it flushes
+      // here with the tag variable its template's `<return>` may call.
+      if (renderer) _existing_scope(branchId);
     }
   }
 
