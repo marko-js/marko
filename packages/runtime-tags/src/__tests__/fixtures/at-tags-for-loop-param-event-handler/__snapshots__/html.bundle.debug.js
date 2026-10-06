@@ -26,10 +26,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				clicked += foo;
 			}, "__tests__/template.marko_0/onClick", { "foo/5": foo }, $scope0_id),
 			content: _content("__tests__/template.marko_1*content", () => {
-				_scope_reason();
+				const $scope1_reason = _scope_reason(), $wg__foo = _write_guard($scope1_reason, 0);
 				const $scope1_id = _scope_id();
-				_html(`Click ${_text_resume($scope1_id, "#text/0", foo, 2)}`);
-				_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
+				_html(`Click ${_text_resume($scope1_id, "#text/0", foo, $wg__foo * 2)}`);
+				_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 			}, $scope0_id)
 		});
 	});

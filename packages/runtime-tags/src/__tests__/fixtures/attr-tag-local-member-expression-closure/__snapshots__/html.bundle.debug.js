@@ -17,9 +17,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let $item;
 		forOf(texts, (item) => {
 			$item = attrTags($item, { content: _content("__tests__/template.marko_4*content", () => {
-				_scope_reason();
+				const $scope4_reason = _scope_reason(), $wg__item_text = _write_guard($scope4_reason, 0);
 				const $scope4_id = _scope_id();
-				_html(_escape(item.text));
+				_html(_text_resume($scope4_id, "#text/0", item.text, $wg__item_text));
+				_write_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "11:14");
 			}, $scope2_id) });
 		});
 		Child.content({ item: $item });

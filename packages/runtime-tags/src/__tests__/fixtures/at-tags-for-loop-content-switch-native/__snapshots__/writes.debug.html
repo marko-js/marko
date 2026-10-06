@@ -1,0 +1,42 @@
+<button data-tab=0>a</button><!--M_$3 #button/0--><button
+  data-tab=1>b</button><!--M_$4 #button/0-->
+<section title=a><button class=inc>a<!--M_$5 #text/1-->: <!>
+      0<!--M_$5 #text/2--></button><!--M_$5 #button/0--></section>
+<!--M_$2 #section/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+      "BranchScopes:#section/1": _(5),
+      "ConditionalRenderer:#section/1": "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-content-switch-native/template.marko_1*content 1",
+      tabs: [{
+        title: "a",
+        content: _._[
+          "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-content-switch-native/template.marko_1*content"
+          ](_(1), {
+          t: "a"
+        }),
+        *[(_.a = [_.b = {
+          title: "b",
+          content: _._[
+            "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-content-switch-native/template.marko_1*content"
+            ](_(1), {
+            t: "b"
+          })
+        }], Symbol.iterator)]() {
+          yield this;
+          yield* _.a
+        }
+      }, _.b]
+    }, {
+      "#LoopKey": 0,
+      _: _(2)
+    }, {
+      "#LoopKey": 1,
+      _: _(2)
+    }, {
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-content-switch-native/tags/tabs.marko_1 3 4 packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-content-switch-native/template.marko_1 5 packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-content-switch-native/tags/tabs.marko_0_i#5_tabs#6 2"
+  ];
+  M._.w()
+</script>

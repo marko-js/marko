@@ -1,0 +1,8 @@
+<let/i=0/>
+<const/tabs=[...input.tab ?? []]/>
+<for|tab, j| of=tabs>
+  <button data-tab=j onClick() { i = j }>${tab.title}</button>
+</for>
+<div>
+  <${tabs[i].content}/>
+</div>

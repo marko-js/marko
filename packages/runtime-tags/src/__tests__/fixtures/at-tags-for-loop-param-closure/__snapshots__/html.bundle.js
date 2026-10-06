@@ -21,9 +21,10 @@ var template_default = _template("a", (input) => {
 		3
 	], (zzz) => {
 		$item = attrTags($item, { content: _content("a0", () => {
-			_scope_reason();
-			_scope_id();
-			_html(_escape(zzz));
+			const $scope1_reason = _scope_reason(), $wg__zzz = _write_guard($scope1_reason, 0);
+			const $scope1_id = _scope_id();
+			_html(_text_resume($scope1_id, "a", zzz, $wg__zzz));
+			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

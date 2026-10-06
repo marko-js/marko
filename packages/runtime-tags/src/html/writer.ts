@@ -367,10 +367,17 @@ export function _attr_content(
   const render = normalizeServerRender(content);
   const branchId = _peek_scope_id();
   if (render) {
-    if (shouldResume) {
-      withBranchId(branchId, render);
-    } else {
-      render();
+    // The client may swap in another instance of this content, with its own
+    // loop values, so the content resumes every input it reads.
+    try {
+      _set_scope_reason(shouldResume ? CLIENT_ALL : 0);
+      if (shouldResume) {
+        withBranchId(branchId, render);
+      } else {
+        render();
+      }
+    } finally {
+      _set_scope_reason(undefined);
     }
   }
 

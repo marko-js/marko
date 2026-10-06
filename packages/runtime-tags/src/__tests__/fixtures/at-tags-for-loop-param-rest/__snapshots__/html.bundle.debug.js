@@ -26,10 +26,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item;
 	forOf(items, ({ id, ...rest }) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			_scope_reason();
+			const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 1), $wg__$temp_extra = _write_guard($scope1_reason, 2);
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", id)}:${_text_resume($scope1_id, "#text/1", rest.extra, 2)}</p>`);
-			_scope($scope1_id, {}, "__tests__/template.marko", "6:6");
+			_html(`<p>${_text_resume($scope1_id, "#text/0", id, $wg__id)}:${_text_resume($scope1_id, "#text/1", rest.extra, $wg__$temp_extra * 2)}</p>`);
+			_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "6:6");
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
@@ -37,9 +37,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item2;
 	forOf([["a", "b"], ["c", "d"]], ([first, ...others]) => {
 		$item2 = attrTags($item2, { content: _content("__tests__/template.marko_2*content", () => {
-			_scope_reason();
+			const $scope2_reason = _scope_reason(), $wg__first = _write_guard($scope2_reason, 1), $wg__$temp2_ = _write_guard($scope2_reason, 2);
 			const $scope2_id = _scope_id();
-			_html(`<b>${_escape(first)}${_escape(others[0])}</b>`);
+			_html(`<b>${_text_resume($scope2_id, "#text/0", first, $wg__first)}${_text_resume($scope2_id, "#text/1", others[0], $wg__$temp2_ * 2)}</b>`);
+			_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "12:6");
 		}, $scope0_id) });
 	});
 	list_default({ item: $item2 });

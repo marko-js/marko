@@ -22,17 +22,17 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let picked = null;
-	_set_scope_reason($wg__input_items << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.items, (item) => {
 		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_2*content", () => {
-			const $scope2_reason = _scope_reason();
+			const $scope2_reason = _scope_reason(), $wg__item = _write_guard($scope2_reason, 0);
 			const $scope2_id = _scope_id();
-			_html(`<span>${_text_resume($scope2_id, "#text/0", JSON.stringify(item), $wg__input_items)}</span>`);
-			$wi__input_items && _scope($scope2_id, {}, "__tests__/template.marko", "5:6");
+			_html(`<span>${_text_resume($scope2_id, "#text/0", JSON.stringify(item), $wg__item)}</span>`);
+			_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "5:6");
 		}, $scope0_id, () => [{ item }]) });
 	});
 	const $childScope = _peek_scope_id();
@@ -47,5 +47,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "10:2", { v: "10:8" });
 	});
 	_html(`<div>${_text_resume($scope0_id, "#text/2", picked && picked.text)}</div>`);
-	_scope($scope0_id, { "#childScope/0": $wi__input_items && _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

@@ -35,9 +35,10 @@ var template_default = _template("a", (input) => {
 	let $item;
 	forUntil(3, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("a0", () => {
-			_scope_reason();
-			_scope_id();
-			_html(`static ${_escape(i)}`);
+			const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0);
+			const $scope1_id = _scope_id();
+			_html(`static ${_text_resume($scope1_id, "a", i, $wg__i * 2)}`);
+			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });
@@ -45,10 +46,10 @@ var template_default = _template("a", (input) => {
 	let $item2;
 	forUntil(count, 0, 1, (i) => {
 		$item2 = attrTags($item2, { content: _content("a1", () => {
-			_scope_reason();
+			const $scope2_reason = _scope_reason(), $wg__i2 = _write_guard($scope2_reason, 0);
 			const $scope2_id = _scope_id();
-			_html(`if ${_text_resume($scope2_id, "a", i, 2)}`);
-			_scope($scope2_id, {});
+			_html(`if ${_text_resume($scope2_id, "a", i, $wg__i2 * 2)}`);
+			_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
@@ -65,10 +66,10 @@ var template_default = _template("a", (input) => {
 	let $item5;
 	forUntil(count, 0, 1, (j) => {
 		if (j % 2 === 0) $item5 = attrTags($item5, { content: _content("a4", () => {
-			_scope_reason();
+			const $scope5_reason = _scope_reason(), $wg__j = _write_guard($scope5_reason, 0);
 			const $scope5_id = _scope_id();
-			_html(`for-if ${_text_resume($scope5_id, "a", j, 2)}`);
-			_scope($scope5_id, {});
+			_html(`for-if ${_text_resume($scope5_id, "a", j, $wg__j * 2)}`);
+			_write_if($scope5_reason, 0) && _scope($scope5_id, {});
 		}, $scope0_id) });
 	});
 	const $childScope4 = _peek_scope_id();

@@ -23,32 +23,33 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item;
 	forUntil(count, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			_scope_reason();
+			const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0), $wi__i = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $item_content__i__closures = new Set();
 			_if(() => {
 				if (show) {
 					const $scope3_id = _scope_id();
-					_html(`<em>if ${_text_resume($scope3_id, "#text/0", i, 2)}</em>`);
+					_html(`<em>if ${_text_resume($scope3_id, "#text/0", i, $wg__i * 2)}</em>`);
 					_scope($scope3_id, {}, "__tests__/template.marko", "12:8");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 			_dynamic_tag($scope1_id, "#text/1", show ? "b" : "i", {}, _content("__tests__/template.marko_4*content", () => {
 				const $scope4_id = _scope_id();
-				_scope_reason();
-				_html(`tag ${_text_resume($scope4_id, "#text/0", i, 2)}`);
-				_subscribe($item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "13:10"), "__tests__/template.marko_4_i#1:3/subscribe");
+				const $scope4_reason = _scope_reason();
+				_html(`tag ${_text_resume($scope4_id, "#text/0", i, $wg__i * 2)}`);
+				_subscribe($wi__i && $item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "13:10"), "__tests__/template.marko_4_i#1:3/subscribe", $wg__i);
+				$wg__i || _resume_branch($scope4_id);
 			}, $scope1_id));
 			_for_until(2, 0, 1, (j) => {
 				const $scope5_id = _scope_id();
-				_html(`<span>${_text_resume($scope5_id, "#text/0", i)}.${_escape(j)}</span>`);
-				_scope($scope5_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "14:8");
-			}, 0, $scope1_id, "#text/2", 1, 0, 0, 0, 1);
+				_html(`<span>${_text_resume($scope5_id, "#text/0", i, $wg__i)}.${_escape(j)}</span>`);
+				$wi__i && _scope($scope5_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "14:8");
+			}, 0, $scope1_id, "#text/2", $wg__i, 0, 0, 0, 1);
 			_subscribe($show__closures, _scope($scope1_id, {
 				i,
 				_: _scope_with_id($scope0_id),
-				"ClosureScopes:i/9": $item_content__i__closures
+				"ClosureScopes:i/9": $wi__i && $item_content__i__closures
 			}, "__tests__/template.marko", "11:6", { i: "10:8" }), "__tests__/template.marko_1_show#0:6/subscribe");
 		}, $scope0_id) });
 	});
@@ -58,12 +59,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item2;
 	forOf(items, (item) => {
 		$item2 = attrTags($item2, { content: _content("__tests__/template.marko_2*content", () => {
-			_scope_reason();
+			const $scope2_reason = _scope_reason(), $wg__item_text = _write_guard($scope2_reason, 0);
 			const $scope2_id = _scope_id();
 			_if(() => {
 				if (show) {
 					const $scope6_id = _scope_id();
-					_html(`<strong>${_text_resume($scope6_id, "#text/0", item.text)}</strong>`);
+					_html(`<strong>${_text_resume($scope6_id, "#text/0", item.text, $wg__item_text)}</strong>`);
 					_scope($scope6_id, {}, "__tests__/template.marko", "21:13");
 					return 0;
 				}
