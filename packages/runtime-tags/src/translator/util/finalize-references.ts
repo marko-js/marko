@@ -581,12 +581,6 @@ function resolveBindingSources(binding: Binding) {
       return;
   }
 
-  if (binding.localOf) {
-    resolveBindingSources(binding.localOf);
-    binding.sources = binding.localOf.sources;
-    return;
-  }
-
   const aliasRoot = getAliasRoot(binding);
   if (aliasRoot) {
     if (!resolvedSources.has(aliasRoot)) {

@@ -24,10 +24,12 @@ var template_default = _template("a", (input) => {
 	let $item;
 	forOf(["a", "b"], (item) => {
 		$item = attrTags($item, { content: _content("a0", () => {
-			_scope_reason();
-			_scope_id();
+			const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0);
+			const $scope1_id = _scope_id();
+			const $childScope = _peek_scope_id();
 			child_default({ x: item });
-			_html(`<p>${_escape(item)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "b", item, $wg__item)}</p>`);
+			_write_if($scope1_reason, 0) && _scope($scope1_id, { a: _existing_scope($childScope) });
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

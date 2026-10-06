@@ -20,10 +20,10 @@ var template_default = _template("a", (input) => {
 	let $item;
 	forUntil(size, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("a2", () => {
-			_scope_reason();
+			const $scope3_reason = _scope_reason(), $wg__i = _write_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(_text_resume($scope3_id, "a", i));
-			_scope($scope3_id, {});
+			_html(_text_resume($scope3_id, "a", i, $wg__i));
+			_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();

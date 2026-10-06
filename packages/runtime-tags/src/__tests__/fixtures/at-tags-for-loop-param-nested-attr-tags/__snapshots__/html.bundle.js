@@ -38,24 +38,26 @@ var template_default = _template("a", (input) => {
 	let $row;
 	forOf(rows, (a) => {
 		$row = attrTags($row, { content: _content("a2", () => {
-			_scope_reason();
+			const $scope1_reason = _scope_reason(), $wg__a_id = _write_guard($scope1_reason, 2), $wi__a_items__OR__a_id = _write_if($scope1_reason, 0), $wg__a_items = _write_guard($scope1_reason, 1), $wi__a_id = _write_if($scope1_reason, 2), $wi__a_items = _write_if($scope1_reason, 1);
 			const $scope1_id = _scope_id();
 			const $row_content__a_id__closures = /* @__PURE__ */ new Set();
-			_set_scope_reason(2);
+			_set_scope_reason($wg__a_items << 1);
 			let $cell;
 			forOf(a.items, (b) => {
 				$cell = attrTags($cell, { content: _content("a1", () => {
-					_scope_reason();
+					const $scope2_reason = _scope_reason(), $wg__b = _write_guard($scope2_reason, 0), $wi__b = _write_if($scope2_reason, 0);
 					const $scope2_id = _scope_id();
-					_html(`${_text_resume($scope2_id, "a", a.id)}-${_text_resume($scope2_id, "b", b, 2)};`);
-					_subscribe($row_content__a_id__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0");
+					_html(`${_text_resume($scope2_id, "a", a.id, $wg__a_id)}-${_text_resume($scope2_id, "b", b, $wg__b * 2)};`);
+					($wi__a_items__OR__a_id || $wi__b) && _subscribe($wi__a_id && $row_content__a_id__closures, _scope($scope2_id, { _: $wi__a_items__OR__a_id && _scope_with_id($scope1_id) }), "a0", $wg__a_id || $wg__b);
+					$wg__a_id || $wg__b || ($wi__a_items__OR__a_id || $wi__b) && _resume_branch($scope2_id);
 				}, $scope1_id) });
 			});
 			const $childScope = _peek_scope_id();
 			inner_default({ cell: $cell });
-			_scope($scope1_id, {
-				d: $row_content__a_id__closures,
-				a: _existing_scope($childScope)
+			$wi__a_items__OR__a_id && _scope($scope1_id, {
+				c: $wi__a_items && a?.id,
+				d: $wi__a_id && $row_content__a_id__closures,
+				a: $wi__a_items && _existing_scope($childScope)
 			});
 		}, $scope0_id) });
 	});

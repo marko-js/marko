@@ -183,9 +183,7 @@ export let _dynamic_tag = (
     const render = () => {
       if (renderer) {
         try {
-          _set_scope_reason(
-            shouldResume && inputOrArgs !== undefined ? CLIENT_ALL : 0,
-          );
+          _set_scope_reason(shouldResume ? CLIENT_ALL : 0);
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
             : renderer(

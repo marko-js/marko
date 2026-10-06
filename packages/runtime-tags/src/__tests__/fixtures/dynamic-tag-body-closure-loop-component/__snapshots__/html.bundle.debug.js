@@ -42,20 +42,22 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	let $item;
 	forUntil(2, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("__tests__/tags/heading.marko_1*content", () => {
-			const $scope1_reason = _scope_reason();
+			const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0), $wi__i = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
+			const $item_content__i__closures = new Set();
 			_dynamic_tag($scope1_id, "#text/0", input.type, {}, _content_resume("__tests__/tags/heading.marko_2*content", () => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
-				_html(`item ${_escape(i)}`);
-				$wi__input_type && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "3:15");
-				$wi__input_type && _resume_branch($scope2_id);
+				_html(`item ${_text_resume($scope2_id, "#text/0", i, $wg__i * 2)}`);
+				($wi__input_type || $wi__i) && _subscribe($wi__i && $item_content__i__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "3:15"), "__tests__/tags/heading.marko_2_i#1:1/subscribe", $wg__i);
+				$wg__i || ($wi__input_type || $wi__i) && _resume_branch($scope2_id);
 			}, $scope1_id, ($scope) => [{ i }]), 0, $wg__input_type);
-			$wi__input_type && _subscribe($input_type__closures, _scope($scope1_id, {
-				i,
-				_: _scope_with_id($scope0_id)
+			($wi__input_type || $wi__i) && _subscribe($wi__input_type && $input_type__closures, _scope($scope1_id, {
+				i: $wi__input_type && i,
+				_: $wi__input_type && _scope_with_id($scope0_id),
+				"ClosureScopes:i/5": $wi__i && $item_content__i__closures
 			}, "__tests__/tags/heading.marko", "3:6", { i: "2:8" }), "__tests__/tags/heading.marko_1_input_type#0:3/subscribe", $wg__input_type);
-			$wg__input_type || $wi__input_type && _resume_branch($scope1_id);
+			$wg__input_type || ($wi__input_type || $wi__i) && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

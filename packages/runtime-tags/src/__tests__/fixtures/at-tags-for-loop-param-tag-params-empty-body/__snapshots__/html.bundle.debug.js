@@ -25,10 +25,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item;
 	forOf(["a", "b"], (item) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			_scope_reason();
+			const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
+			const $childScope = _peek_scope_id();
 			child_default({ x: item });
-			_html(`<p>${_escape(item)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/1", item, $wg__item)}</p>`);
+			_write_if($scope1_reason, 0) && _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:6");
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

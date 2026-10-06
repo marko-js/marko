@@ -65,8 +65,8 @@ _Avoid_: captured variable, hoist
 
 **Local closure**:
 An attribute tag `<for>` param read from content the loop creates. The loop
-passes it when it creates that content, which holds it as a binding of its own
-that nested sections read as a closure.
+passes it when it creates that content, which holds it as a param that the
+content's call site supplies and nested sections read as a closure.
 _Avoid_: loop local holder
 
 **Tag variable**:
