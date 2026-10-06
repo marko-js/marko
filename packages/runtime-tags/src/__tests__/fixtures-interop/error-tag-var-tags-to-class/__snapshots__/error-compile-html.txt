@@ -1,0 +1,17 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/error-tag-var-tags-to-class/template.marko:4:16
+      2 |
+      3 | <let/count = 0/>
+    > 4 | <class-counter/v count=count/>
+        |                ^ The Marko 5 (class API) tag `class-counter` cannot [`<return>`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or migrate the tag to the tags API.
+      5 | <ClassCounter/w count=count/>
+      6 | <p>${String(v)} ${String(w)}</p>
+      7 |
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/error-tag-var-tags-to-class/template.marko:5:15
+      3 | <let/count = 0/>
+      4 | <class-counter/v count=count/>
+    > 5 | <ClassCounter/w count=count/>
+        |               ^ The Marko 5 (class API) tag `ClassCounter` cannot [`<return>`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or migrate the tag to the tags API.
+      6 | <p>${String(v)} ${String(w)}</p>
+      7 |
