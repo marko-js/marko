@@ -2226,11 +2226,6 @@ declare global {
         autocomplete?: AttrAutoComplete;
 
         /**
-         * (Safari only). Controls the autocorrect behavior of the <textarea> element.
-         */
-        autocorrect?: AttrOnOff;
-
-        /**
          * Specifies the visible width of the <textarea> element in terms of character width.
          * @see https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-cols
          */
@@ -4207,6 +4202,12 @@ declare global {
         | "none"
         | "sentences"
         | "words";
+
+      /**
+       * Controls whether user agents may autocorrect spelling while the user types.
+       * @see https://html.spec.whatwg.org/multipage/interaction.html#attr-autocorrect
+       */
+      autocorrect?: AttrOnOff;
 
       /**
        * Indicates whether the element should automatically get focus when the page loads.
