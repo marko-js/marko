@@ -1,0 +1,6 @@
+import None from "./tags/none.marko";
+import Some from "./tags/some.marko";
+<let/Tag=Some/>
+<${Tag}/v/>
+<p>${String(v && v.n)}</p>
+<button onClick() { Tag = None }/>

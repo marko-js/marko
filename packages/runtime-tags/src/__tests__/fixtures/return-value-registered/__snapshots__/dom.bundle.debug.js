@@ -9,7 +9,7 @@ function $getter() {
 	return "hello";
 }
 _resumed["__tests__/tags/getter.marko_0/getter"] = $getter;
-var getter_default = /*@__PURE__*/ _template("__tests__/tags/getter.marko", "", "", $setup$1);
+var getter_default = /*@__PURE__*/ _template("__tests__/tags/getter.marko", "", "", /*@__PURE__*/ _return_setup($setup$1));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div></div>`)("");

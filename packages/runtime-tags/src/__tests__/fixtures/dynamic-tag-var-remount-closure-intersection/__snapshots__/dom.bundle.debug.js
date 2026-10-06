@@ -12,7 +12,7 @@ const $_return = ($scope) => function() {
 	$n($scope, +$scope.n + 1);
 };
 _resumed["__tests__/tags/child.marko_0/_return"] = $_return;
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", /*@__PURE__*/ _return_setup($setup$1));
 
 // template.marko
 const $template = "<!><!><!><button class=toggle></button>";

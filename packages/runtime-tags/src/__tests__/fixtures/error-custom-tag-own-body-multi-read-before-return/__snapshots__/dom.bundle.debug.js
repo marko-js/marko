@@ -7,7 +7,7 @@ const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $r);
 const $r = _var_resume("__tests__/tags/child.marko_0_r#5/var", /*@__PURE__*/ _const("r", ($scope) => _return($scope, $scope.r)));
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b1c", 0, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b1c", 0, /*@__PURE__*/ _return_setup($input));
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<div> </div>`)($template$1);
@@ -20,7 +20,7 @@ const $child_content__setup = ($scope) => {
 	_return($scope, 1);
 };
 const $child_content__x = /*@__PURE__*/ _closure_get("x/6", $child_content__y__OR__x);
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span> </span>", "D ", $child_content__setup);
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span> </span>", "D ", /*@__PURE__*/ _return_setup($child_content__setup));
 const $y = /*@__PURE__*/ _let("y/3");
 function $setup($scope) {
 	_var($scope, "#childScope/0", $x);

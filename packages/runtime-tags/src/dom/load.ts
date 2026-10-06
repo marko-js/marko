@@ -10,6 +10,7 @@ import { queueAsyncRender, queueRender, runId } from "./queue";
 import {
   _content,
   type Renderer,
+  type ReturnMark,
   setParentBranch,
   setupBranch,
   type SetupFn,
@@ -40,7 +41,10 @@ export interface LoadTrigger {
 // A stand-in signal or load: the callers ignore its result.
 const noop = (_?: unknown): any => 0;
 
-export function _load_template(id: string, load: () => Promise<Renderer>) {
+export function _load_template(
+  id: string,
+  load: (() => Promise<Renderer>) & ReturnMark,
+) {
   let pending: ReturnType<typeof load> | undefined;
   const lazyTemplate = _template(
     id,
@@ -72,6 +76,12 @@ export function _load_template(id: string, load: () => Promise<Renderer>) {
       })),
     ),
   ) as Template & Renderer;
+  if (MARKO_DEBUG) {
+    // A debug build marks a lazy template with a `<return>` on its load, for a
+    // dynamic tag's variable check that runs before the template loads.
+    lazyTemplate[RendererProp.Setup]![RendererProp.Returns] =
+      load[RendererProp.Returns];
+  }
   return lazyTemplate;
 }
 

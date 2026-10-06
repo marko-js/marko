@@ -1,0 +1,9 @@
+<define/Count>
+  <let/n=1/>
+  <return={ n }/>
+</define>
+<let/on=true/>
+<Count/a/>
+<${on && Count}/b/>
+<p>${String(a && a.n)} ${String(b && b.n)}</p>
+<button onClick() { on = !on }/>

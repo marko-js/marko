@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-recursive-tag-var-without-return/template.marko:3:11
+      1 | <define/Tree|{ depth }|>
+      2 |   <if=depth>
+    > 3 |     <Tree/child depth=depth - 1/>
+        |           ^^^^^ The `Tree` tag does not [`<return>`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or add a `<return>` to the tag.
+      4 |   </if>
+      5 | </define>
+      6 | <Tree depth=1/>

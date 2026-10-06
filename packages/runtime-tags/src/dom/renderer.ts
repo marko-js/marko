@@ -18,13 +18,17 @@ export type Renderer = {
   [RendererProp.Id]: string;
   [RendererProp.Setup]: undefined | SetupFn;
   [RendererProp.Clone]: (branch: BranchScope, ns: string) => void;
-  [RendererProp.Params]: Signal<unknown> | undefined;
+  [RendererProp.Params]: (Signal<unknown> & ReturnMark) | undefined;
   [RendererProp.Owner]: Scope | undefined;
   [RendererProp.Accessor]: Accessor | undefined;
   [RendererProp.LocalClosures]?: SetupFn;
 };
 
-export type SetupFn = (scope: Scope) => void;
+export type SetupFn = ((scope: Scope) => void) & ReturnMark;
+
+// A debug build sets it on the setup, or else the params, of content with a
+// `<return>`: every instance shares them, resumed ones included.
+export type ReturnMark = { [RendererProp.Returns]?: 1 };
 
 export function createBranch(
   $global: Scope[typeof AccessorProp.Global],
@@ -77,6 +81,18 @@ export function setupBranch(renderer: Renderer, branch: BranchScope) {
     queueRender(branch, renderer[RendererProp.Setup], -1);
   }
   return branch;
+}
+
+// Marks content with a `<return>` for a debug build's dynamic tag variable check.
+export function _return_setup<
+  T extends ((...args: any[]) => unknown) | { _: SetupFn },
+>(setup: T) {
+  if (MARKO_DEBUG) {
+    ((setup as { _?: SetupFn })._ || (setup as ReturnMark))[
+      RendererProp.Returns
+    ] = 1;
+  }
+  return setup;
 }
 
 export function _content(

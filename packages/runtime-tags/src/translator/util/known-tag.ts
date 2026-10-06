@@ -25,7 +25,7 @@ import {
   reserveId,
 } from "./bindings";
 import { generateUidIdentifier } from "./generate-uid";
-import { getTagName } from "./get-tag-name";
+import { getStaticTagName, getTagName } from "./get-tag-name";
 import { isOptimize } from "./marko-config";
 import {
   analyzeAttributeTags,
@@ -161,6 +161,7 @@ export function knownTagAnalyze(
   }
 
   if (varBinding) {
+    if (!recursive) assertReturns(tag, contentSection);
     // Tag variables emit a `_var` statement in the parent's setup.
     addSetupExpr(section);
     const mutatesTagVar = !!(
@@ -188,10 +189,9 @@ export function knownTagAnalyze(
 // Every body is analyzed now, so each recursive tag takes its callee's tree.
 export function analyzeRecursiveTags() {
   for (const tag of getRecursiveTags()) {
-    analyzeKnownTagParams(
-      tag,
-      getParamsTree(tag.node.extra![kContentSection]!),
-    );
+    const contentSection = tag.node.extra![kContentSection]!;
+    if (tag.node.var) assertReturns(tag, contentSection);
+    analyzeKnownTagParams(tag, getParamsTree(contentSection));
   }
 }
 
@@ -225,9 +225,19 @@ function analyzeKnownTagParams(
 // The params another template's return value is computed from, or `true` when
 // it also reads state.
 function getReturnParams(section: Section) {
-  const sources =
-    section.returnValueExpr && getSourcesForExpr(section.returnValueExpr);
+  const sources = getSourcesForExpr(section.returnValueExpr!);
   return sources && (sources.always || !!sources.state || sources.param);
+}
+
+// A tag variable is the value its tag's content `<return>`s.
+function assertReturns(tag: t.NodePath<t.MarkoTag>, contentSection: Section) {
+  if (!contentSection.returnValueExpr) {
+    throw tag
+      .get("var")
+      .buildCodeFrameError(
+        `The \`${getStaticTagName(tag.node)}\` tag does not [\`<return>\`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or add a \`<return>\` to the tag.`,
+      );
+  }
 }
 
 // The child's scope resumes, and with it any tag variable, which HTML wires

@@ -1,4 +1,4 @@
-// size: 27609 (min) 10259 (brotli)
+// size: 27637 (min) 10269 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -194,14 +194,16 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
     return (scope, newRenderer, getInput) => {
       let normalizedRenderer = normalizeDynamicRenderer(newRenderer);
       if (
-        scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(normalizedRenderer)) ||
+        scope[rendererAccessor] !==
+          (scope[rendererAccessor] =
+            rendererKey(normalizedRenderer) || (getContent ? void 0 : 0)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
       ) {
         let renderer = normalizedRenderer || (getContent ? getContent(scope) : void 0);
         if (
           (setConditionalRenderer(scope, nodeAccessor, renderer, createBranchWithTagNameOrRenderer),
           getTagVar &&
-            (scope[childScopeAccessor]
+            (normalizedRenderer
               ? ((scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
                 bindTagVar(
                   scope,
@@ -209,7 +211,7 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
                   scope[scopeOffsetAccessor],
                   normalizedRenderer,
                 ))
-              : getTagVar()(scope, void 0)),
+              : getTagVar()(scope)),
           typeof renderer == "string")
         ) {
           if (getContent) {
@@ -1140,6 +1142,9 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
 }
 function setupBranch(renderer, branch) {
   return (renderer.c && queueRender(branch, renderer.c, -1), branch);
+}
+function _return_setup(setup) {
+  return setup;
 }
 function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),

@@ -1,0 +1,17 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-var-without-return/template.marko:4:7
+      2 |   <i>plain</i>
+      3 | </define>
+    > 4 | <none/a/>
+        |       ^ The `none` tag does not [`<return>`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or add a `<return>` to the tag.
+      5 | <Plain/b/>
+      6 | <p>${String(a)} ${String(b)}</p>
+      7 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-tag-var-without-return/template.marko:5:8
+      3 | </define>
+      4 | <none/a/>
+    > 5 | <Plain/b/>
+        |        ^ The `Plain` tag does not [`<return>`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or add a `<return>` to the tag.
+      6 | <p>${String(a)} ${String(b)}</p>
+      7 |
