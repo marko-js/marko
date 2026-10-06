@@ -5,9 +5,15 @@ import {
   type Scope,
   type Template,
 } from "../common/types";
-import { addAwaitCounter, renderCatch } from "./control-flow";
+import { addAwaitCounter, bindTagVar, renderCatch } from "./control-flow";
 import { queueAsyncRender, queueRender, runId } from "./queue";
-import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
+import {
+  _content,
+  type Renderer,
+  setParentBranch,
+  setupBranch,
+  type SetupFn,
+} from "./renderer";
 import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
@@ -93,6 +99,17 @@ export function _load_setup(load: () => Promise<LoadModule>) {
         loadFailed(child, awaitCounter),
       );
     }
+  };
+}
+
+// The module clones a lazy tag's scopes after its variable's readers sort, so
+// the child runs their renders as a branch, from where its own scope sorts.
+export function _load_setup_var(load: () => Promise<LoadModule>) {
+  const setup = _load_setup(load);
+  return (owner: Scope, child: BranchScope, marker: ChildNode) => {
+    setParentBranch(child, child[AccessorProp.ClosestBranch]);
+    bindTagVar!(owner, child, child[AccessorProp.Id]);
+    setup(owner, child, marker);
   };
 }
 

@@ -1,5 +1,5 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup_var(() => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
 const $if_content__focusChild = _var_resume("b0", /*@__PURE__*/ _const(4));
 const $if_content__setup__script = _script("b1", ($scope) => _on($scope.d, "click", function() {

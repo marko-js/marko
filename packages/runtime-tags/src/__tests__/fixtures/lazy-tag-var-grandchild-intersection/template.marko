@@ -1,0 +1,8 @@
+import Child from "./child.marko" with { load: "render" }
+<let/a=0/>
+<let/mounted=false/>
+<button.toggle onClick() { mounted = !mounted }>toggle</button>
+<if=mounted>
+  <Child/v/>
+  <button.inc onClick() { a++; v.set(a) }>${a + ":" + v?.n}</button>
+</if>
