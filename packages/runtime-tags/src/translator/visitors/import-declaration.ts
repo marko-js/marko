@@ -16,6 +16,7 @@ import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
 import {
   callRuntime,
   dynamicImport,
+  importRuntime,
   importRuntimeFeature,
 } from "../util/runtime";
 import { createProgramState } from "../util/state";
@@ -191,15 +192,16 @@ export default {
                   ),
                 ),
               );
+              const args = [t.stringLiteral(loadFile.metadata.marko.id), load];
               importDecl.replaceWith(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(
                     local,
-                    callRuntime(
-                      "_load_template",
-                      t.stringLiteral(loadFile.metadata.marko.id),
-                      load,
-                    ),
+                    // `_load_template` registers the template; one the server
+                    // writes stays registered whatever else the client keeps.
+                    extra.registeredImports?.has(local.name)
+                      ? t.callExpression(importRuntime("_load_template"), args)
+                      : callRuntime("_load_template", ...args),
                   ),
                 ]),
               );
@@ -294,10 +296,7 @@ function trackRegisteredImports(importDecl: t.NodePath<t.ImportDeclaration>) {
 
     const local = specifier.node.local.name;
     if (importedName === "default") {
-      // Registering a lazily loaded template would load its module eagerly.
-      if (!node.extra?.loadImport) {
-        trackImportedTemplate(importDecl, local, childFile);
-      }
+      trackImportedTemplate(importDecl, local, childFile);
     } else {
       trackImport(
         importDecl,
