@@ -1,0 +1,10 @@
+<let/visible=false/>
+<let/v="init"/>
+<button.show onClick() { visible = true }/>
+<form>
+  <show=visible>
+    <input value:=v/>
+  </show>
+  <button.reset type="reset"/>
+</form>
+<p>${v}</p>

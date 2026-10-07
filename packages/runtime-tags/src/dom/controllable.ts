@@ -553,9 +553,7 @@ function syncControllableFormInput<
   // `input` only: browsers and autofill fire it for every control, so a lone
   // `change` (eg testing-library's `fireEvent.change`) goes unhandled.
   delegate("input", handleChange);
-  if ((el as any).form) {
-    delegate("reset", handleFormReset);
-  }
+  delegate("reset", handleFormReset);
 
   if (isResuming && hasChanged(el)) {
     queueMicrotask(onChange);
@@ -568,7 +566,7 @@ function handleChange(ev: Event) {
 
 function handleFormReset(ev: Event) {
   const handlers: (() => void)[] = [];
-  for (const el of (ev.target as HTMLFormElement).elements) {
+  for (const el of (ev.target as HTMLFormElement).elements || []) {
     if ((el as any)._ && (el as any).c(el)) {
       handlers.push((el as any)._);
     }
