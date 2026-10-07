@@ -941,16 +941,14 @@ describe("AsyncStream", function () {
 
       out.write("first");
       var asyncOut = out.beginAsync();
-      setTimeout(function () {
-        asyncOut.write("second");
-        asyncOut.end();
-      }, 5);
       out.end();
 
       expect(new TextDecoder().decode((await reader.read()).value)).to.equal(
         "first",
       );
       await reader.cancel();
+      asyncOut.write("second");
+      asyncOut.end();
     });
 
     it("ends the iteration when the reader cancels with nothing left to emit", async function () {
