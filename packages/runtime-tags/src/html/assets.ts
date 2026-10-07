@@ -1,7 +1,7 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { type $Global, RendererProp, type Template } from "../common/types";
 import { _escape_script } from "./content";
-import { toObjectKey } from "./serializer";
+import { register, toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
 import {
   _html,
@@ -70,19 +70,22 @@ type AssetFlush = (
 ) => string;
 
 // Its importer passes the bundler's resolver, so it resolves on a page of either
-// API, whichever page entry rendered.
+// API, whichever page entry rendered. It serializes as the template it loads.
 export function withLoadAssets(
   renderer: ServerRenderer,
   flush: AssetFlush,
   assetId: string,
   triggers?: Trigger[],
 ): ServerRenderer {
-  return Object.assign(
-    (input: unknown) => {
-      writeLoadAsset(assetId, flush, triggers);
-      return writeWaitReady(assetId, renderer, input);
-    },
-    MARKO_DEBUG ? { ...renderer, [RendererProp.Lazy]: 1 as const } : renderer,
+  return register(
+    renderer[RendererProp.Id]!,
+    Object.assign(
+      (input: unknown) => {
+        writeLoadAsset(assetId, flush, triggers);
+        return writeWaitReady(assetId, renderer, input);
+      },
+      MARKO_DEBUG ? { ...renderer, [RendererProp.Lazy]: 1 as const } : renderer,
+    ),
   );
 }
 

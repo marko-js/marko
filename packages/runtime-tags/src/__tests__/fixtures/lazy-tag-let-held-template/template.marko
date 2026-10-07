@@ -1,0 +1,6 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/count=1>
+<let/Tag=Child>
+<button onClick() { count++ }>Inc</button>
+<${Tag} value=count/>
