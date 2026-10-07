@@ -197,6 +197,11 @@ if (
 
 export default config;
 
+export let globalConfig = { ...config };
+export function configure(newConfig) {
+  globalConfig = { ...config, ...newConfig };
+}
+
 import taglibConfig from "./taglib/config";
 taglibConfig.fs = config.fileSystem;
 
