@@ -366,4 +366,31 @@ describe("runtime-tags/translator-api", () => {
       assert.doesNotMatch(compileError("Foo bar=1"), /meant to be text/);
     });
   });
+
+  describe("page entry asset imports", () => {
+    it("links style imports in every style language by default", () => {
+      const linked = [
+        "./a.pcss",
+        "./b.postcss",
+        "./c.stylus",
+        "./d.sss",
+        "./e.css.ts",
+        "./g.css",
+      ];
+      const { code } = compiler.compileSync(
+        [...linked, "./h.ts", "./i.css?url"]
+          .map((request) => `import "${request}";\n`)
+          .join("") + "<div/>",
+        path.join(import.meta.dirname, "tmp.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "dom",
+          entry: "page",
+          linkAssets: { runtime: "asset-runtime", onAsset() {} },
+        },
+      );
+      assert.deepEqual(code.match(/(?<=import ")[^"]+/g), linked);
+    });
+  });
 });
