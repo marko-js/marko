@@ -502,6 +502,18 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 pending.push(visitScope);
               }
             }
+
+            // The first visit, once read, precedes any reorder container its chunk
+            // holds back; the observer destroys the render once this disconnects.
+            if (embedRenders && !embedAnchor && visit.parentNode) {
+              embedRenders.set(
+                (embedAnchor = visit.parentNode.insertBefore(
+                  new Text(),
+                  visit,
+                )),
+                [renderId, scopeLookup],
+              );
+            }
           }
 
           // A chunk's own script ends the walk, so its span closes here.
@@ -509,19 +521,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             visitType = ResumeSymbol.ReorderStart;
             lastToken = "";
             visitBranches();
-          }
-
-          // No visits, or a reorder bound last, leaves nothing to anchor after.
-          if (embedRenders && !embedAnchor && visit?.parentNode) {
-            // The anchor's disconnection marks the embedded render as
-            // removed; the observer destroys its scopes.
-            embedRenders.set(
-              (embedAnchor = visit.parentNode!.insertBefore(
-                new Text(),
-                visit.nextSibling,
-              )),
-              [renderId, scopeLookup],
-            );
           }
 
           visits.length = retained;

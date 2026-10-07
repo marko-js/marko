@@ -1,0 +1,30 @@
+<button>inc</button><!--Membedded$1 a--><!--Membedded[--><!--Membedded!^3-->loading<!--Membedded!3--><!--Membedded]1 b 3-->
+<t hidden Membedded=3>
+  <p>b <!>1<!--Membedded$3 a--></p><!--Membedded#b-->
+</t>
+<script>
+  WALKER_RUNTIME("M")("embedded");
+  M.embedded.b = {
+    a: [_ => [1, {
+      c: 1,
+      d: new Set
+    }, 1, {
+      _: _(1),
+      Q: _._.a1
+    }]]
+  };
+  M.embedded.b.a.push("a2 1");
+  REORDER_RUNTIME(M.embedded);
+  M.embedded.b.a.push(1);
+  M.embedded.j[3] = _ => {
+    (b => b.splice(b.indexOf(1), 1, "a0 3"))(M.embedded.b.a)
+  };
+  M.embedded.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden Membedded=b>x</t>
+<script>
+  M.embedded.w()
+</script>
