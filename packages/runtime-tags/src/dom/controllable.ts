@@ -150,6 +150,7 @@ export function _attr_input_checkedValue_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
+  // Rebuilt from the checked inputs, so a bound array holds only rendered values.
   if (isResuming && el.defaultChecked) {
     if (scope[AccessorPrefix.ControlledValue + nodeAccessor]) {
       (scope[AccessorPrefix.ControlledValue + nodeAccessor] as string[]).push(
@@ -390,6 +391,7 @@ export function _attr_select_value_script(
     }
   };
 
+  // Rebuilt from the selected options, so a bound value holds only rendered ones.
   if (isResuming) {
     if (el.multiple) {
       scope[AccessorPrefix.ControlledValue + nodeAccessor] = [];
@@ -449,17 +451,12 @@ function assertSelectValueMatchesOption(
   normalizedValue: string | string[],
   value: unknown,
 ) {
-  const multiple = Array.isArray(normalizedValue);
-  if (multiple ? normalizedValue.some(Boolean) : normalizedValue) {
-    for (const opt of el.options) {
-      if (
-        multiple
-          ? normalizedValue.includes(opt.value)
-          : opt.value === normalizedValue
-      ) {
-        return;
-      }
-    }
+  const options = Array.from(el.options, (opt) => opt.value);
+  if (
+    (Array.isArray(normalizedValue) ? normalizedValue : [normalizedValue]).some(
+      (v) => v && !options.includes(v),
+    )
+  ) {
     console.error(
       "A controlled `<select>`'s `value` has no matching `<option>`:",
       value,
