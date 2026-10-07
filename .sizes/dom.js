@@ -1,4 +1,4 @@
-// size: 27558 (min) 10237 (brotli)
+// size: 27545 (min) 10231 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1067,18 +1067,18 @@ function init(runtimeId = "M") {
                             : visit.previousSibling),
                         branchesEnabled &&
                           pending[pending.length - 1] !== visitScope &&
-                          pending.push(visitScope)));
+                          pending.push(visitScope)),
+                  embedRenders &&
+                    !embedAnchor &&
+                    visit.parentNode &&
+                    embedRenders.set(
+                      (embedAnchor = visit.parentNode.insertBefore(new Text(), visit)),
+                      [renderId, scopeLookup],
+                    ));
               return (
                 branchesEnabled &&
                   visitBranches &&
                   ((visitType = "*"), (lastToken = ""), visitBranches()),
-                embedRenders &&
-                  !embedAnchor &&
-                  visit?.parentNode &&
-                  embedRenders.set(
-                    (embedAnchor = visit.parentNode.insertBefore(new Text(), visit.nextSibling)),
-                    [renderId, scopeLookup],
-                  ),
                 (visits.length = retained),
                 effects
               );

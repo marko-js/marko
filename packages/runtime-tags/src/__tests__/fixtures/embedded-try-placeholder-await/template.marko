@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/value=1>
+<button onClick() { value++ }>inc</button>
+<try>
+  <@placeholder>loading</@placeholder>
+  <p>b ${value}</p>
+  <await|v|=resolveAfter("x", 1)>${v}</await>
+</try>

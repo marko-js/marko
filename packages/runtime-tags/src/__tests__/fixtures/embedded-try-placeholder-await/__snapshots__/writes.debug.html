@@ -1,0 +1,44 @@
+<button>inc</button><!--Membedded$1 #button/0--><!--Membedded[--><!--Membedded!^3-->loading<!--Membedded!3--><!--Membedded]1 #text/1 3-->
+<t hidden Membedded=3>
+  <p>b <!>1<!--Membedded$3 #text/0--></p><!--Membedded#b-->
+</t>
+<script>
+  WALKER_RUNTIME("M")("embedded");
+  M.embedded.b = {
+    "packages/runtime-tags/src/__tests__/fixtures/embedded-try-placeholder-await/template.marko": [
+      _ => [1, {
+        value: 1,
+        "ClosureScopes:value/3": new Set
+      }, 1, {
+        _: _(1),
+        "#PlaceholderContent": _._[
+          "packages/runtime-tags/src/__tests__/fixtures/embedded-try-placeholder-await/template.marko_2*content"
+          ]
+      }]
+    ]
+  };
+  M.embedded.b[
+    "packages/runtime-tags/src/__tests__/fixtures/embedded-try-placeholder-await/template.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/embedded-try-placeholder-await/template.marko_0 1"
+    );
+  REORDER_RUNTIME(M.embedded);
+  M.embedded.b[
+    "packages/runtime-tags/src/__tests__/fixtures/embedded-try-placeholder-await/template.marko"
+    ].push(1);
+  M.embedded.j[3] = _ => {
+    (b => b.splice(b.indexOf(1), 1,
+      "packages/runtime-tags/src/__tests__/fixtures/embedded-try-placeholder-await/template.marko_1_value#0:2/subscribe 3"
+      ))(M.embedded.b[
+      "packages/runtime-tags/src/__tests__/fixtures/embedded-try-placeholder-await/template.marko"
+      ])
+  };
+  M.embedded.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden Membedded=b>x</t>
+<script>
+  M.embedded.w()
+</script>
