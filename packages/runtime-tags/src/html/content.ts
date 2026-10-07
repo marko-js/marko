@@ -35,14 +35,27 @@ export function _escape(val: unknown) {
 // Escapes `</script`, `<!--`, and `<script`: their combination shifts the parser
 // into the double-escaped state where a real `</script>` no longer closes it.
 const unsafeScriptReg = /<(\/?script|!--)/gi;
+// `\u003C` because the text may be JSON (`application/ld+json`), which rejects `\x3C`.
 const escapeScriptStr = (str: string) =>
-  unsafeScriptReg.test(str) ? str.replace(unsafeScriptReg, "\\x3C$1") : str;
+  unsafeScriptReg.test(str) ? str.replace(unsafeScriptReg, "\\u003C$1") : str;
 export function _escape_script(val: unknown) {
   if (MARKO_DEBUG) {
     assertValidTextValue(val);
   }
   return val ? escapeScriptStr(val + "") : val === 0 ? "0" : "";
 }
+
+// A double-quoted string for the runtime's own scripts, whose `<` escapes only
+// where it would start a script tag or comment.
+const unsafeScriptStringReg = /["\\\n\r]|<(?=\/?script|!--)/gi;
+const replaceUnsafeScriptString = (c: string) =>
+  c === "<" ? "\\x3C" : c === "\n" ? "\\n" : c === "\r" ? "\\r" : "\\" + c;
+export const quoteScriptString = (str: string) =>
+  '"' +
+  (unsafeScriptStringReg.test(str)
+    ? str.replace(unsafeScriptStringReg, replaceUnsafeScriptString)
+    : str) +
+  '"';
 
 const unsafeStyleReg = /<(\/style)/gi;
 const escapeStyleStr = (str: string) =>
