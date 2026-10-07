@@ -30,7 +30,7 @@ pnpm run change                                           # add a changeset (req
 
 `pnpm run compile` is the fastest way to inspect what the translator generates. It writes nothing: each compiled module, and then any module the translator generates for it, prints to stdout under a `// <resolved path>` header. (Pass `-t class` for the Marko 5 translator; `-t` also accepts a full translator module id.)
 
-`pnpm run change` prompts, so write `.changeset/<name>.md` directly, naming the package that owns the changed code: `packages/compiler` is `@marko/compiler`, `packages/runtime-tags` is `@marko/runtime-tags`, `packages/runtime-class` is `marko`. `pnpm exec changeset status` fails on a name that is no workspace package (which would break the release on `main`), but not on the wrong one: `marko` for a runtime-tags fix passes and publishes the wrong package.
+`pnpm run change` prompts, so write `.changeset/<name>.md` directly, naming the package that owns the changed code: `packages/compiler` is `@marko/compiler`, `packages/runtime-tags` is `@marko/runtime-tags`, `packages/runtime-class` is `marko`. `pnpm exec changeset status` fails on a name that is no workspace package (which would break the release on `main`), but not on the wrong one: `marko` for a runtime-tags fix passes and publishes the wrong package. Restricting behavior that was already broken is a fix (`patch`), never described as a breaking change.
 
 ## Repo invariants
 
@@ -47,7 +47,9 @@ Comments are a last resort and never exceed two lines: prefer self-describing co
 
 Derive before adding. Before a new field, flag, helper, state container, parameter, test config, or module, find the existing analysis, helper, or runtime structure that already answers it and extend that. A parallel mechanism for one feature (one the rest of the code never needed) is a smell: say in the summary why nothing existing fits.
 
-Every line needs a reason you can name. No guards, `?.`, fallbacks, casts (`as never`, `as any`), or parameters for states the design rules out; lean on the invariant (`!`, or a `MARKO_DEBUG` assert). Name checks, dependency method overrides, and machine heuristics are hacks: find the structural fix. A perf or config knob ships only with a measured win, and never restates a default.
+Every line needs a reason you can name. No guards, `?.`, fallbacks, casts (`as never`, `as any`, or one the type already satisfies), or parameters for states the design rules out; lean on the invariant (`!`, or a `MARKO_DEBUG` assert). Name checks, dependency method overrides, and machine heuristics are hacks: find the structural fix. A perf or config knob ships only with a measured win, and never restates a default.
+
+Write the direct form. No rest or spread to copy, extend, or strip an object: share one record, or key a collection by the field it lacks. Client runtime code, where bundle size comes first, may keep a spread that `build:sizes` shows is smallest, but it is still a red flag to justify. No function that only forwards, and no type named for a single use. A helper every caller guards takes the `undefined` itself, and a flag is set as `flag ||= condition`.
 
 Names come from the code. Reuse the vocabulary of neighboring code, [`CONTEXT.md`](packages/runtime-tags/CONTEXT.md), and the markojs.com docs; never coin a term the codebase does not already use.
 
