@@ -49,12 +49,9 @@ export function _attr_option_value(value: unknown) {
     normalizedValueMatches(selectedValue, value)
   ) {
     if (MARKO_DEBUG) {
-      const matched = getContext(kSelectedValueMatched) as
-        | { value: boolean }
-        | undefined;
-      if (matched) {
-        matched.value = true;
-      }
+      (getContext(kSelectedValueMatched) as Set<string> | undefined)?.add(
+        normalizeStrAttrValue(value),
+      );
     }
     return valueAttr + " selected";
   }
@@ -90,15 +87,15 @@ export function _attr_select_value(
     if (MARKO_DEBUG && valueChange) {
       // Checked when the sync content returns, so async-rendered options (eg
       // under `<await>`) can false-positive; accepted to keep the check simple.
-      const matched = { value: false };
+      const matched = new Set<string>();
       withContext(kSelectedValue, selectedValue, () =>
         withContext(kSelectedValueMatched, matched, content),
       );
       if (
-        !matched.value &&
-        (Array.isArray(value)
-          ? value.some((v) => normalizeStrAttrValue(v) !== "")
-          : normalizeStrAttrValue(value) !== "")
+        (Array.isArray(value) ? value : [value]).some((v) => {
+          const str = normalizeStrAttrValue(v);
+          return str !== "" && !matched.has(str);
+        })
       ) {
         console.error(
           "A controlled `<select>`'s `value` has no matching `<option>`:",
