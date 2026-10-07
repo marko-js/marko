@@ -1,0 +1,11 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/mounted=false>
+<button class="mount" onClick() { mounted = true }>mount</button>
+<if=mounted>
+  <try>
+    <Child label="x"/>
+    <@placeholder>loading</@placeholder>
+    <@catch|err|><span class="err">${err.message}</span></@catch>
+  </try>
+</if>

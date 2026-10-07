@@ -1,5 +1,5 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { $Global, Template } from "../common/types";
+import { type $Global, RendererProp, type Template } from "../common/types";
 import { _escape_script } from "./content";
 import { toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
@@ -77,10 +77,13 @@ export function withLoadAssets(
   assetId: string,
   triggers?: Trigger[],
 ): ServerRenderer {
-  return Object.assign((input: unknown) => {
-    writeLoadAsset(assetId, flush, triggers);
-    return writeWaitReady(assetId, renderer, input);
-  }, renderer);
+  return Object.assign(
+    (input: unknown) => {
+      writeLoadAsset(assetId, flush, triggers);
+      return writeWaitReady(assetId, renderer, input);
+    },
+    MARKO_DEBUG ? { ...renderer, [RendererProp.Lazy]: 1 as const } : renderer,
+  );
 }
 
 // Also writes a Class API lazy tag's asset rendering within Tags content.

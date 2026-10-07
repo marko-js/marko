@@ -23,6 +23,8 @@ export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   // The owner's scope id, where the client holds the owner scope itself.
   [RendererProp.Owner]?: number;
   [RendererProp.Embed]?: boolean;
+  // A debug build marks a lazily loaded template, for a dynamic tag variable check.
+  [RendererProp.Lazy]?: 1;
 };
 
 export const _template = (

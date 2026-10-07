@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-lazy-tag-var/template.marko:2:8
+      1 | import Child from "./child.marko" with { load: "render" }
+    > 2 | <Child/v/>
+        |        ^ The `Child` tag is lazily loaded, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or import the tag without `load`.
+      3 | <p>${String(v && v.n)}</p>
+      4 |

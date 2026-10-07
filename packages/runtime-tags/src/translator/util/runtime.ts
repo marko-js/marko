@@ -54,7 +54,6 @@ const pureDOMFunctions = new Set<string>([
   "_const",
   "_load_signal",
   "_load_setup",
-  "_load_setup_var",
   "_load_template",
   "_load_visible_trigger",
   "_load_event_trigger",

@@ -22,6 +22,8 @@ export type Renderer = {
   [RendererProp.Owner]: Scope | undefined;
   [RendererProp.Accessor]: Accessor | undefined;
   [RendererProp.LocalClosures]?: SetupFn;
+  // A debug build marks a lazily loaded template, for a dynamic tag variable check.
+  [RendererProp.Lazy]?: 1;
 };
 
 export type SetupFn = ((scope: Scope) => void) & ReturnMark;

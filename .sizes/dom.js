@@ -1,4 +1,4 @@
-// size: 27637 (min) 10269 (brotli)
+// size: 27562 (min) 10240 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2269,14 +2269,6 @@ function _load_setup(load) {
           loadFailed(child, awaitCounter),
         ));
     }
-  };
-}
-function _load_setup_var(load) {
-  let setup = _load_setup(load);
-  return (owner, child, marker) => {
-    (setParentBranch(child, child.F),
-      bindTagVar(owner, child, child.L),
-      setup(owner, child, marker));
   };
 }
 function insertLoaded(renderer, branch, marker, awaitCounter) {

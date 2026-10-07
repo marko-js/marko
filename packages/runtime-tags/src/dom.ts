@@ -84,7 +84,6 @@ export {
   _load_media_trigger,
   _load_race_trigger,
   _load_setup,
-  _load_setup_var,
   _load_signal,
   _load_template,
   _load_visible_trigger,

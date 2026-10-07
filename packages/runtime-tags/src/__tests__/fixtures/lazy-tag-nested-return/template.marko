@@ -1,0 +1,7 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/mounted=false>
+<button class="mount" onClick() { mounted = true }>mount</button>
+<if=mounted>
+  <Child label="x"/>
+</if>

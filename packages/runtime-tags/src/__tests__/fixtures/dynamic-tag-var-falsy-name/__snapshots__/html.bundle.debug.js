@@ -23,7 +23,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_html("content");
-		}, $scope1_id));
+		}, $scope1_id), void 0, void 0, 1);
 		_var($scope1_id, "#scopeOffset/1", $inputa11yTextbutton_scope, "__tests__/tags/child/index.marko_1_$btn#2/var");
 		_subscribe($wi__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			$btn,

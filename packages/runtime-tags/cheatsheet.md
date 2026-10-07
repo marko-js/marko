@@ -171,7 +171,7 @@ Imperative libs (charts, maps) needing mount/update/destroy: use `<lifecycle>`, 
 
 ## Lazy loading
 
-Defer a tag's JS into its own bundle until a trigger fires: `visible#sel`, `idle`, `media(...)`, `on-click#sel` (combine with `|`), or `render` alone. Server HTML renders immediately; in the browser `<try>` shows a `@placeholder` while loading. Don't hand-roll an `IntersectionObserver`.
+Defer a tag's JS into its own bundle until a trigger fires: `visible#sel`, `idle`, `media(...)`, `on-click#sel` (combine with `|`), or `render` alone. Server HTML renders immediately; in the browser `<try>` shows a `@placeholder` while loading. Don't hand-roll an `IntersectionObserver`. A lazy tag takes no tag variable: bind state down instead (`<Modal open:=open/>`).
 
 ```marko
 import PriceChart from "<price-chart>" with { load: "visible#chart" }

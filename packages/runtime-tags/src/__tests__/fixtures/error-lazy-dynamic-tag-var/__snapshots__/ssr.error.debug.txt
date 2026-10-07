@@ -1,0 +1,1 @@
+A dynamic tag with a [tag variable](https://markojs.com/docs/reference/language#tag-variables) rendered `packages/runtime-tags/src/__tests__/fixtures/error-lazy-dynamic-tag-var/tags/some.marko`, which is lazily loaded, so it does not support one. Import it without `load`, or remove the variable.

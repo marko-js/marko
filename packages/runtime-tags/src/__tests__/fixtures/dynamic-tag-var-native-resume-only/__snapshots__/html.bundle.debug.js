@@ -7,7 +7,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html("<span>body</span>");
-	}, $scope0_id));
+	}, $scope0_id), void 0, void 0, 1);
 	_var($scope0_id, "#scopeOffset/1", $inputtype_scope, "__tests__/tags/heading.marko_0_el#5/var");
 	_script($scope0_id, "__tests__/tags/heading.marko_0_el#5");
 	_scope($scope0_id, { el }, "__tests__/tags/heading.marko", 0, { el: "1:16" });

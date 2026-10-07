@@ -12,12 +12,7 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
-import {
-  getMarkoOpts,
-  getReadyId,
-  isOptimize,
-  isOutputHTML,
-} from "../util/marko-config";
+import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
 import {
   callRuntime,
   dynamicImport,
@@ -201,12 +196,7 @@ export default {
                     callRuntime(
                       "_load_template",
                       t.stringLiteral(loadFile.metadata.marko.id),
-                      // Known before it loads, for a debug build's check of a
-                      // dynamic tag's variable over it.
-                      !isOptimize() &&
-                        loadFile.ast.program.extra.section?.returnValueExpr
-                        ? callRuntime("_return_setup", load)
-                        : load,
+                      load,
                     ),
                   ),
                 ]),
