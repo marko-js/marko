@@ -20,7 +20,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let Inner = grandchild_default;
 	const $Inner_scope = _peek_scope_id();
-	let g = _dynamic_tag($scope0_id, "#text/0", Inner, {});
+	let g = _dynamic_tag($scope0_id, "#text/0", Inner, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "#scopeOffset/1", $Inner_scope, "__tests__/tags/child.marko_0_g#3/var");
 	const $return = g;
 	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let a = 0;
 	let Tag = child_default;
 	const $Tag_scope = _peek_scope_id();
-	let v = _dynamic_tag($scope0_id, "#text/0", Tag, {});
+	let v = _dynamic_tag($scope0_id, "#text/0", Tag, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "#scopeOffset/1", $Tag_scope, "__tests__/template.marko_0_v#7/var");
 	_html(`<button class=inc>${_text_resume($scope0_id, "#text/3", a + ":" + v?.n)}</button>${_el_resume($scope0_id, "#button/2")}<button class=toggle></button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

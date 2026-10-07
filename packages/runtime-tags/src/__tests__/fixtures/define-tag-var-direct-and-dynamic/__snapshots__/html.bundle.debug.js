@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let on = true;
 	let a = Count.content({});
 	const $onCount_scope = _peek_scope_id();
-	let b = _dynamic_tag($scope0_id, "#text/2", on && Count, {});
+	let b = _dynamic_tag($scope0_id, "#text/2", on && Count, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "#scopeOffset/3", $onCount_scope, "__tests__/template.marko_0_b#11/var");
 	_html(`<p>${_escape(String(a && a.n))} ${_text_resume($scope0_id, "#text/5", String(b && b.n), 2)}</p><button></button>${_el_resume($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

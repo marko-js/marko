@@ -7,6 +7,7 @@ export const Accessor = "accessor";
 export const LocalClosures = "localClosures";
 export const Returns = "returns";
 export const Embed = "embed";
+export const Lazy = "lazy";
 
 type Self = typeof import("./renderer-prop.debug");
 export type Value = Self[keyof Self];

@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_scope_reason();
 				_html("body");
-			}, $scope1_id));
+			}, $scope1_id), void 0, void 0, 1);
 			_var($scope1_id, "#scopeOffset/1", $inputtype_scope, "__tests__/template.marko_1_$el#2/var");
 			_scope($scope1_id, {
 				$el,

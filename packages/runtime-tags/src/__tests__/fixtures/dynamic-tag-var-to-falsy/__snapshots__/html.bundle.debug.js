@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let clicks = 0;
 	const $inputtag_scope = _peek_scope_id();
-	let el = _dynamic_tag($scope0_id, "#text/0", input.tag, {});
+	let el = _dynamic_tag($scope0_id, "#text/0", input.tag, {}, void 0, void 0, void 0, 1);
 	_var($scope0_id, "#scopeOffset/1", $inputtag_scope, "__tests__/template.marko_0_el#8/var");
 	_html(`<button>${_text_resume($scope0_id, "#text/3", clicks)}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

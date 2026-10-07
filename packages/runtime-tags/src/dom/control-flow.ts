@@ -781,7 +781,7 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
   },
 );
 
-// A dynamic or lazy tag's variable lives in `dynamic-tag-var.feat`, which the
+// A dynamic tag's variable lives in `dynamic-tag-var.feat`, which the
 // compiler imports with one; bundles without one fold this away.
 export let bindTagVar:
   | undefined
@@ -789,7 +789,7 @@ export let bindTagVar:
       scope: Scope,
       branch: BranchScope,
       scopeKey: number,
-      renderer?: Renderer | string,
+      renderer: Renderer | string,
     ) => void);
 export function installDynamicTagVar(bind: NonNullable<typeof bindTagVar>) {
   bindTagVar = bind;

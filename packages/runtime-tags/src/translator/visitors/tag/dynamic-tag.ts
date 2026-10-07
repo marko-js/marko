@@ -462,6 +462,8 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
         const markerGuard = getWriteGuard(tagSection, markerReason, true);
+        // For a debug build's check that the tag it renders is not lazy.
+        const debugTagVar = !isOptimize() && node.var && t.numericLiteral(1);
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -474,6 +476,7 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               markerGuard,
+              debugTagVar,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -484,6 +487,7 @@ export default {
               args[1] || (markerGuard ? t.numericLiteral(0) : undefined),
               markerGuard ? t.numericLiteral(0) : undefined,
               markerGuard,
+              debugTagVar,
             );
 
         if (node.var && isTagVarResumed(tag)) {

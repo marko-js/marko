@@ -49,6 +49,8 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   markerGuard?: 1 | 0,
+  // Passed by a debug build's compiler for a tag variable.
+  tagVar?: 1,
 ) => {
   const shouldResume = markerGuard !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
@@ -178,6 +180,12 @@ export let _dynamic_tag = (
     // variable holds it. It reads this scope's node visit, not the branch.
     result = _el(scopeId, DYNAMIC_TAG_VAR_REGISTER_ID + accessor);
   } else {
+    if (MARKO_DEBUG && tagVar && renderer?.[RendererProp.Lazy]) {
+      throw new Error(
+        `A dynamic tag with a [tag variable](https://markojs.com/docs/reference/language#tag-variables) rendered \`${renderer[RendererProp.Id]}\`, which is lazily loaded, so it does not support one. Import it without \`load\`, or remove the variable.`,
+      );
+    }
+
     const chunk = getChunk()!;
     const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;
 
@@ -261,6 +269,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
       content,
       inputIsArgs,
       resume,
+      tagVar,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -273,6 +282,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
         content,
         inputIsArgs,
         resume,
+        tagVar,
       );
     };
   }
