@@ -23,8 +23,9 @@ import { toMemberExpression } from "../util/to-property-name";
 import type { TemplateVisitor } from "../util/visitors";
 import {
   resolveRegisteredExport,
-  type ResolvedExport,
-  trackImportedFn,
+  type RegisteredExport,
+  trackImport,
+  trackImportedTemplate,
 } from "./function";
 
 declare module "@marko/compiler/dist/types" {
@@ -35,7 +36,8 @@ declare module "@marko/compiler/dist/types" {
   export interface ImportDeclarationExtra {
     tagImport?: string;
     loadImport?: LoadImportConfig;
-    registeredImportedFns?: (ResolvedExport & { local: string })[];
+    /** Each local binding the template registers -> the export it imports. */
+    registeredImports?: Map<string, RegisteredExport>;
   }
 }
 
@@ -70,7 +72,7 @@ export default {
         tags.push(tagImport);
       }
 
-      trackImportedRegisteredFns(importDecl);
+      trackRegisteredImports(importDecl);
     }
 
     const loadAttrPath = getLoadAttr(importDecl);
@@ -273,9 +275,7 @@ function getOrCreateHtmlLoadWrapped(
   return wrappedName;
 }
 
-function trackImportedRegisteredFns(
-  importDecl: t.NodePath<t.ImportDeclaration>,
-) {
+function trackRegisteredImports(importDecl: t.NodePath<t.ImportDeclaration>) {
   const { node } = importDecl;
   // Type imports are already stripped: the compiler turns `stripTypes` on for
   // every output this translator runs for.
@@ -283,17 +283,27 @@ function trackImportedRegisteredFns(
   if (!childFile) return;
 
   for (const specifier of importDecl.get("specifiers")) {
-    if (!specifier.isImportSpecifier()) continue;
-    const { imported } = specifier.node;
-    const importedName =
-      imported.type === "Identifier" ? imported.name : imported.value;
-    // A default specifier is skipped by its type; this is the same import
-    // written as a name, and a template's default export is the template.
-    if (importedName === "default") continue;
+    let importedName = "default";
+    if (specifier.isImportSpecifier()) {
+      const { imported } = specifier.node;
+      importedName =
+        imported.type === "Identifier" ? imported.name : imported.value;
+    } else if (!specifier.isImportDefaultSpecifier()) {
+      continue;
+    }
 
-    const resolved = resolveRegisteredExport(childFile, importedName);
-    if (resolved) {
-      trackImportedFn(importDecl, specifier.node.local.name, resolved);
+    const local = specifier.node.local.name;
+    if (importedName === "default") {
+      // Registering a lazily loaded template would load its module eagerly.
+      if (!node.extra?.loadImport) {
+        trackImportedTemplate(importDecl, local, childFile);
+      }
+    } else {
+      trackImport(
+        importDecl,
+        local,
+        resolveRegisteredExport(childFile, importedName),
+      );
     }
   }
 }

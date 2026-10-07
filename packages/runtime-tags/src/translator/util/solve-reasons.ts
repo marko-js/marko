@@ -312,6 +312,13 @@ export function getValueReason(extra: t.NodeExtra): undefined | Reason {
   return reason;
 }
 
+// An expression's `getReasonForBinding`: what rereads its value after resume,
+// which the server writes it for. Unlike `getValueReason`, landing somewhere
+// retained adds nothing: only a function there is read as is.
+export function getReasonForExpr(extra: t.NodeExtra): undefined | Reason {
+  return readersOfExtra(extra).reason;
+}
+
 function readersOfExtra(extra: t.NodeExtra): Readers {
   if (extra.isEffect) return ALWAYS_READ;
   const readers = extraReaders(extra);

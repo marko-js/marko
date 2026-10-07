@@ -1,0 +1,7 @@
+import Child from "./tags/child.marko";
+
+<const/getChild() { return Child }/>
+<wrapper type=Child/>
+<if=input.show>
+  <div>${getChild() ? "child" : "none"}</div>
+</if>

@@ -1,0 +1,8 @@
+import Child from "./tags/child.marko";
+
+<let/count=1/>
+<const/picker={ get() { return Child } }/>
+<if=(count > 1)>
+  <${picker.get()} value=count/>
+</if>
+<button onClick() { count++ }>inc</button>
