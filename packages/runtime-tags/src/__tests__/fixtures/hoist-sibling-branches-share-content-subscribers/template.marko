@@ -1,0 +1,8 @@
+<wrap>
+  <if=input.a><p/el1/></if>
+  <if=input.b><span/el2/></if>
+</wrap>
+<button onClick() {
+  for (const el of el1) el.textContent = "a";
+  for (const el of el2) el.textContent = "b";
+}>set</button>

@@ -49,6 +49,7 @@ export function getTemplateContentName() {
 export default {
   translate: {
     enter() {
+      const sectionDynamicSubscribers = new Set<Section>();
       forEachSection((section) => {
         forEach(section.bindings, (binding) => {
           for (const [hoistSection, hasReference] of binding.getters) {
@@ -82,7 +83,6 @@ export default {
           }
         });
 
-        const sectionDynamicSubscribers = new Set<Section>();
         forEach(section.hoisted, (binding) => {
           let highestHoistSection!: Section;
           forEach(binding.hoists, (hoistSection) => {
