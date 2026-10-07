@@ -126,13 +126,22 @@ describe("runtime-tags/html/content", () => {
     });
   });
 
-  describe("quoteScriptString", () => {
+  describe("quoteScriptTemplateLiteral", () => {
     it("should escape only a `<` that starts a script tag or comment", () => {
       assert.equal(
-        helpers.quoteScriptString(
+        helpers.quoteScriptTemplateLiteral(
           '<link href="a.css"><script src="\\b.js"></SCRIPT>\n<!--',
         ),
-        '"<link href=\\"a.css\\">\\x3Cscript src=\\"\\\\b.js\\">\\x3C/SCRIPT>\\n\\x3C!--"',
+        '`<link href="a.css">\\x3Cscript src="\\\\b.js">\\x3C/SCRIPT>\n\\x3C!--`',
+      );
+    });
+
+    it("should read back as the string it quotes", () => {
+      const str = "a`b${c}\\d\r\ne\u2028f</script><!--<script";
+      // eslint-disable-next-line no-new-func
+      assert.equal(
+        new Function("return " + helpers.quoteScriptTemplateLiteral(str))(),
+        str,
       );
     });
   });

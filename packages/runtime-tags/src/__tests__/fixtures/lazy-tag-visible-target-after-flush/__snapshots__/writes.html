@@ -6,7 +6,7 @@
   }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
     .isIntersecting) && i.disconnect() + l()).observe(e))(document
     .querySelector("#footer") || l()))(
-    "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+    `\x3Cscript async type=module src="child.marko.load.mjs">\x3C/script>`);
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.w()

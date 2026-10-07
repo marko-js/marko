@@ -3,7 +3,7 @@
   ((h, d, l = $ => {
     d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
       "script").forEach(s => s.onerror = () => console.error(
-      "The lazy module for \"ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger/child.marko\" failed to load; its server-rendered content cannot become interactive."
+      `The lazy module for "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger/child.marko" failed to load; its server-rendered content cannot become interactive.`
       )), document.head.append(d))
   }) => {
     (e => e && new IntersectionObserver((e, i) => e.some(e => e
@@ -14,7 +14,7 @@
     (self.requestIdleCallback || l)(l, {
       timeout: 100
     })
-  })("\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  })(`\x3Cscript async type=module src="child.marko.load.mjs">\x3C/script>`);
   WALKER_RUNTIME("M")("_");
   M._.b = {
     "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multi-trigger/child.marko": [

@@ -4,7 +4,7 @@
   ((h, d, l = $ => {
     d || document.head.append(new Range().createContextualFragment(d = h))
   }) => (self.requestIdleCallback || l)(l))(
-    "\x3Cscript async type=module src=\"card.marko.load.mjs\">\x3C/script>");
+    `\x3Cscript async type=module src="card.marko.load.mjs">\x3C/script>`);
   WALKER_RUNTIME("M")("_");
   M._.b = {
     _b: [_ => [3, {

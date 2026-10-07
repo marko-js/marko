@@ -5,7 +5,7 @@
   }) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
     .isIntersecting) && i.disconnect() + l()).observe(e))(document
     .querySelector("body") || l()))(
-    "\x3Cscript async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+    `\x3Cscript async type=module src="child.marko.load.mjs">\x3C/script>`);
   WALKER_RUNTIME("M")("_");
   M._.b = {
     _b: ["b0 3"]

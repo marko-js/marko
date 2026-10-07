@@ -45,17 +45,20 @@ export function _escape_script(val: unknown) {
   return val ? escapeScriptStr(val + "") : val === 0 ? "0" : "";
 }
 
-// A double-quoted string for the runtime's own scripts, whose `<` escapes only
-// where it would start a script tag or comment.
-const unsafeScriptStringReg = /["\\\n\r]|<(?=\/?script|!--)/gi;
-const replaceUnsafeScriptString = (c: string) =>
-  c === "<" ? "\\x3C" : c === "\n" ? "\\n" : c === "\r" ? "\\r" : "\\" + c;
-export const quoteScriptString = (str: string) =>
-  '"' +
-  (unsafeScriptStringReg.test(str)
-    ? str.replace(unsafeScriptStringReg, replaceUnsafeScriptString)
+// A template literal for the runtime's own scripts, so html keeps its quotes; `<`
+// escapes only where it starts a script tag or comment, and CR (read as LF) too.
+const unsafeScriptTemplateLiteralReg = /[`\\\r]|\$\{|<(?=\/?script|!--)/gi;
+const replaceUnsafeScriptTemplateLiteral = (c: string) =>
+  c === "<" ? "\\x3C" : c === "\r" ? "\\r" : "\\" + c;
+export const quoteScriptTemplateLiteral = (str: string) =>
+  "`" +
+  (unsafeScriptTemplateLiteralReg.test(str)
+    ? str.replace(
+        unsafeScriptTemplateLiteralReg,
+        replaceUnsafeScriptTemplateLiteral,
+      )
     : str) +
-  '"';
+  "`";
 
 const unsafeStyleReg = /<(\/style)/gi;
 const escapeStyleStr = (str: string) =>
