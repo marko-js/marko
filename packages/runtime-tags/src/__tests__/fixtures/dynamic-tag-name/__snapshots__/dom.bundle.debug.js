@@ -30,6 +30,9 @@ const $input$1 = ($scope, input) => {
 };
 var tag_b_default = /*@__PURE__*/ _template("__tests__/tags/tag-b/index.marko", $template$1, $walks$1, 0, $input$1);
 
+// tags/tag-a/v:index.marko.register-default.js
+_resumed["__tests__/tags/tag-a/index.marko"] = tag_a_default;
+
 // template.marko
 const $template = "<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>";
 const $walks = "b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%c";

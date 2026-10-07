@@ -17,10 +17,18 @@ import {
 } from "../util/get-root";
 import isInvokedFunction from "../util/is-invoked-function";
 import isStatic from "../util/is-static";
-import { mergeReasons, type Reason } from "../util/reasons";
-import { getCanonicalExtra, type RegisteredFnExtra } from "../util/references";
+import {
+  isUnconditionalReason,
+  mergeReasons,
+  type Reason,
+} from "../util/reasons";
+import {
+  getCanonicalExtra,
+  isRegisteredFnExtra,
+  type RegisteredFnExtra,
+} from "../util/references";
 import { getSection } from "../util/sections";
-import { getValueReason } from "../util/solve-reasons";
+import { getReasonForExpr, getValueReason } from "../util/solve-reasons";
 import { createProgramState } from "../util/state";
 import { traverseFindAwait } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
@@ -29,31 +37,35 @@ const kRegisteredExports = Symbol("registered exports");
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     // Every name an export is reachable by -> its reserved registration.
-    [kRegisteredExports]?: Map<string, ReservedExport>;
+    [kRegisteredExports]?: Map<string, RegisteredExport>;
   }
 }
 
-/** The canonical name a reserved register id is exported under, and its id. */
-export interface ReservedExport {
+/**
+ * An export registered under an id: the template that declares it, and the
+ * canonical name it is exported under.
+ */
+export interface RegisteredExport {
   registerId: string;
   exportName: string;
-}
-
-/** A reserved export, plus the template that declares it. */
-export interface ResolvedExport extends ReservedExport {
   filename: string;
-}
-
-interface ImportedFn extends ResolvedExport {
-  node: t.ImportDeclaration;
-  local: string;
 }
 
 const [getReferencesByFn] = createProgramState(
   () => new Map<RegisteredFnExtra, Set<t.NodeExtra>>(),
 );
-const [getReferencesByImportedFn] = createProgramState(
-  () => new Map<ImportedFn, Set<t.NodeExtra>>(),
+const [getReferencesByImport] = createProgramState(
+  () =>
+    new Map<
+      {
+        node: t.ImportDeclaration;
+        local: string;
+        registered: RegisteredExport;
+        /** Only for a template: the outermost functions its references sit in. */
+        fnRoots?: Set<t.NodeExtra>;
+      },
+      Set<t.NodeExtra>
+    >(),
 );
 export default {
   analyze(fn) {
@@ -144,31 +156,66 @@ export function finalizeFunctionRegistry() {
     }
   }
 
-  for (const [importedFn, exprExtras] of getReferencesByImportedFn()) {
-    if (resolveReason(exprExtras)) {
-      registerImportedFn(importedFn);
+  for (const [
+    { node, local, registered, fnRoots },
+    exprExtras,
+  ] of getReferencesByImport()) {
+    const reason = fnRoots
+      ? resolveTemplateReason(exprExtras)
+      : resolveReason(exprExtras);
+    if (reason) {
+      if (!fnRoots || !isTemplateShipped(fnRoots, exprExtras)) {
+        const extra = (node.extra ??= {});
+        extra.registeredImports ??= new Map();
+        extra.registeredImports.set(local, registered);
+      }
+      markRegistrationInteractive(reason);
     }
   }
 }
 
 /**
- * Tracks a function imported from another template that reserved a register id.
- * The importing template registers it (under the reserved id) when client
- * code reads its own references.
+ * Tracks a template imported as a default export. The server writes a template
+ * only as a binding's value, so the importing template registers it when one may.
  */
-export function trackImportedFn(
+export function trackImportedTemplate(
   importDecl: t.NodePath<t.ImportDeclaration>,
   local: string,
-  resolved: ResolvedExport,
+  templateFile: t.BabelFile,
 ) {
-  const binding = importDecl.scope.getBinding(local);
+  trackImport(
+    importDecl,
+    local,
+    {
+      registerId: templateFile.metadata.marko.id,
+      exportName: "default",
+      filename: templateFile.opts.filename,
+    },
+    new Set(),
+  );
+}
+
+/**
+ * Tracks an export imported from another template that registers under an id,
+ * if it does. The importing template registers it (under that id) when client
+ * code reads its own references.
+ */
+export function trackImport(
+  importDecl: t.NodePath<t.ImportDeclaration>,
+  local: string,
+  registered: RegisteredExport | undefined,
+  fnRoots?: Set<t.NodeExtra>,
+) {
+  const binding = registered && importDecl.scope.getBinding(local);
   if (!binding) return;
 
-  const importedFn: ImportedFn = { ...resolved, node: importDecl.node, local };
   const refs = new Set<t.NodeExtra>();
-  addBindingRefs(binding, refs, new Set());
+  addBindingRefs(binding, refs, new Set(), fnRoots);
   if (refs.size) {
-    getReferencesByImportedFn().set(importedFn, refs);
+    getReferencesByImport().set(
+      { node: importDecl.node, local, registered, fnRoots },
+      refs,
+    );
   }
 }
 
@@ -182,15 +229,15 @@ export function resolveRegisteredExport(
   file: t.BabelFile,
   exportName: string,
   seen = new Set<string>(),
-): ResolvedExport | undefined {
-  const filename = file.opts.filename as string;
+): RegisteredExport | undefined {
+  const filename = file.opts.filename;
   const key = `${filename}\0${exportName}`;
   if (seen.has(key)) return;
   seen.add(key);
 
-  const reserved =
+  const registered =
     file.ast.program.extra?.[kRegisteredExports]?.get(exportName);
-  if (reserved) return { ...reserved, filename };
+  if (registered) return registered;
 
   for (const child of file.ast.program.body) {
     if (
@@ -242,11 +289,41 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
   return reason;
 }
 
-function registerImportedFn({ node, ...importedFn }: ImportedFn) {
-  const extra = (node.extra ??= {});
-  extra.registeredImportedFns ??= [];
-  extra.registeredImportedFns.push(importedFn);
-  getProgram().node.extra.isInteractive = true;
+// When the server writes a template: an effect reading it runs on the client
+// instead of reading it from the resume data.
+function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
+  let reason: undefined | Reason;
+  for (const exprExtra of exprExtras) {
+    const extra = getCanonicalExtra(exprExtra);
+    if (!extra.isEffect) {
+      reason = mergeReasons(reason, getReasonForExpr(extra));
+    }
+  }
+
+  return reason;
+}
+
+// A resumed instance runs its effects and registered functions, so one that
+// reads the template ships it wherever this template ships.
+function isTemplateShipped(
+  fnRoots: Set<t.NodeExtra>,
+  exprExtras: Set<t.NodeExtra>,
+) {
+  for (const fnRoot of fnRoots) {
+    if (isRegisteredFnExtra(fnRoot)) return true;
+  }
+
+  for (const exprExtra of exprExtras) {
+    if (getCanonicalExtra(exprExtra).isEffect) return true;
+  }
+
+  return false;
+}
+
+// A value written only while a caller changes params ships with that caller,
+// which bundles this template through its imports.
+function markRegistrationInteractive(reason: Reason) {
+  getProgram().node.extra.isInteractive ||= isUnconditionalReason(reason);
 }
 
 // An exported function is always module scoped, so any template that imports it
@@ -271,14 +348,19 @@ function reserveExportRegisterId(
   const programExtra = getProgram().node.extra;
   const registerId = getTemplateId(
     markoOpts,
-    filename as string,
+    filename,
     `${fnExtra.section.id}/export/${exportName}`,
   );
 
+  const registered: RegisteredExport = {
+    registerId,
+    exportName,
+    filename,
+  };
   fnExtra.exportRegisterId = registerId;
   programExtra[kRegisteredExports] ??= new Map();
   for (const name of exportNames!) {
-    programExtra[kRegisteredExports].set(name, { registerId, exportName });
+    programExtra[kRegisteredExports].set(name, registered);
   }
 }
 
@@ -361,6 +443,7 @@ function getStaticDeclRefs(
   path: t.NodePath<t.Node>,
   refs = new Set<t.NodeExtra>(),
   seen = new Set<t.Node>(),
+  fnRoots?: Set<t.NodeExtra>,
 ): Set<t.NodeExtra> {
   const decl = getDeclarationRoot(path);
   // A self- or mutually-referential static/export declaration resolves back to
@@ -371,7 +454,7 @@ function getStaticDeclRefs(
     if (ids) {
       for (const name in ids) {
         const binding = decl.scope.getBinding(name);
-        if (binding) addBindingRefs(binding, refs, seen);
+        if (binding) addBindingRefs(binding, refs, seen, fnRoots);
       }
     }
   }
@@ -383,14 +466,19 @@ function addBindingRefs(
   binding: NonNullable<ReturnType<t.Scope["getBinding"]>>,
   refs: Set<t.NodeExtra>,
   seen: Set<t.Node>,
+  fnRoots?: Set<t.NodeExtra>,
 ) {
   for (const ref of binding.referencePaths) {
     if (isInvokedFunction(ref) || ref.parentPath!.type === "Program") continue;
     const exprRoot = getExprRoot(ref);
     const markoRoot = getMarkoRoot(exprRoot);
     if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
+    if (fnRoots) {
+      const fnRoot = getFnRoot(ref);
+      if (fnRoot) fnRoots.add((fnRoot.node.extra ??= {}));
+    }
     if (isStatic(markoRoot)) {
-      getStaticDeclRefs(ref, refs, seen);
+      getStaticDeclRefs(ref, refs, seen, fnRoots);
     } else {
       refs.add((exprRoot.node.extra ??= {}));
     }
@@ -400,16 +488,15 @@ function addBindingRefs(
 function registerFunction(fnExtra: RegisteredFnExtra) {
   const {
     markoOpts,
-    path: program,
     opts: { filename },
   } = getFile();
-  program.node.extra.isInteractive = true;
+  markRegistrationInteractive(fnExtra.reason);
   fnExtra.name = generateUid(fnExtra.name);
   fnExtra.registerId =
     fnExtra.exportRegisterId ??
     getTemplateId(
       markoOpts,
-      filename as string,
+      filename,
       `${fnExtra.section.id}/${fnExtra.name.slice(1)}`,
     );
 }

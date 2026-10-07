@@ -3,7 +3,7 @@ import path from "path";
 import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
-import type { ResolvedExport } from "../visitors/function";
+import type { RegisteredExport } from "../visitors/function";
 import { getMarkoOpts, isOutputHTML } from "./marko-config";
 import { isRegisteredFnExtra } from "./references";
 import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
@@ -12,7 +12,7 @@ import { isValidPropertyIdentifier } from "./to-property-name";
 /**
  * Writes the registrations for module scoped functions: the ones this template
  * exports and registers itself, and the ones it imports from a template that
- * reserved a register id without registering it.
+ * reserved a register id without registering it; and for templates it imports.
  */
 export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
   const file = getFile();
@@ -20,22 +20,23 @@ export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
   const seen = new Set<string>();
 
   for (const child of program.node.body) {
-    const registeredImportedFns =
-      t.isImportDeclaration(child) && child.extra?.registeredImportedFns;
-    if (registeredImportedFns) {
-      for (const importedFn of registeredImportedFns) {
-        if (seen.has(importedFn.registerId)) continue;
-        seen.add(importedFn.registerId);
+    const registeredImports =
+      t.isImportDeclaration(child) && child.extra?.registeredImports;
+    if (registeredImports) {
+      for (const [local, registered] of registeredImports) {
+        if (seen.has(registered.registerId)) continue;
+        seen.add(registered.registerId);
 
-        // The dom output shares a module per function, so templates that import
+        // The dom output shares a module per export, so templates that import
         // the same one do not each carry a copy of its registration into the
-        // bundle. The html output has no bundle to keep small.
+        // bundle. The html output has no bundle to keep small, and a server
+        // template registers itself.
         if (isOutputHTML()) {
-          statements.push(
-            buildRegistration(importedFn.local, importedFn.registerId),
-          );
+          if (registered.exportName !== "default") {
+            statements.push(buildRegistration(local, registered.registerId));
+          }
         } else {
-          importDefault(file, resolveRegisterModule(file, importedFn));
+          importDefault(file, resolveRegisterModule(file, registered));
         }
       }
     } else if (child.type === "ExportNamedDeclaration") {
@@ -94,15 +95,15 @@ function buildRegistration(local: string, registerId: string) {
 // template that imports the function resolves to the same module.
 function resolveRegisterModule(
   file: t.BabelFile,
-  { filename, exportName, registerId }: ResolvedExport,
+  { filename, exportName, registerId }: RegisteredExport,
 ) {
-  const importer = file.opts.filename as string;
+  const importer = file.opts.filename;
   return getMarkoOpts().resolveVirtualDependency!(importer, {
     virtualPath: `${relativePath(importer, filename)}.register-${exportName}.js`,
     code:
-      `import { ${exportName} } from "./${path.basename(filename)}";\n` +
+      `import { ${exportName} as value } from "./${path.basename(filename)}";\n` +
       `import { _resumed } from "${getRuntimePath("dom")}";\n` +
-      `_resumed${isValidPropertyIdentifier(registerId) ? `.${registerId}` : `[${JSON.stringify(registerId)}]`} = ${exportName};\n`,
+      `_resumed${isValidPropertyIdentifier(registerId) ? `.${registerId}` : `[${JSON.stringify(registerId)}]`} = value;\n`,
   })!;
 }
 
