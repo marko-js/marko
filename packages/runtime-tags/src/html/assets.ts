@@ -1,6 +1,6 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { type $Global, RendererProp, type Template } from "../common/types";
-import { _escape_script } from "./content";
+import { quoteScriptString } from "./content";
 import { register, toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
 import {
@@ -179,7 +179,7 @@ function writeAsset(g: $Global, asset: Asset) {
       if (block && isInResumedBranch()) {
         // Its stylesheets also go in the head, which outlives the branch.
         writeScript(
-          `document.head.insertAdjacentHTML("beforeend",${_escape_script(JSON.stringify(block))})`,
+          `document.head.insertAdjacentHTML("beforeend",${quoteScriptString(block)})`,
         );
       }
       asset.htmlAt = catchableBoundary();
@@ -242,15 +242,13 @@ function addAsset(
 }
 
 function triggerScript(id: string, html: string, triggers: Trigger[]) {
-  const htmlStr = _escape_script(JSON.stringify(html));
+  const htmlStr = quoteScriptString(html);
   // A loader script that fails at the network level never evaluates, so the
   // debug build reports from the script's own error event; matches the
   // load-entry rejection arm's diagnostic.
   const insert = MARKO_DEBUG
-    ? `(d=new Range().createContextualFragment(h),d.querySelectorAll("script").forEach(s=>s.onerror=()=>console.error(${_escape_script(
-        JSON.stringify(
-          `The lazy module for "${id}" failed to load; its server-rendered content cannot become interactive.`,
-        ),
+    ? `(d=new Range().createContextualFragment(h),d.querySelectorAll("script").forEach(s=>s.onerror=()=>console.error(${quoteScriptString(
+        `The lazy module for "${id}" failed to load; its server-rendered content cannot become interactive.`,
       )})),document.head.append(d))`
     : `document.head.append(new Range().createContextualFragment(d=h))`;
   const exprs = triggers.map((trigger) => {
