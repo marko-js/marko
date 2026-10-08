@@ -41,6 +41,7 @@ import {
 } from "../util/sections";
 import {
   addValue,
+  buildClosureHop,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
@@ -288,20 +289,17 @@ export default {
         const tagExtra = node.extra!;
         const referencedBindings = getReferencedBindings(tagExtra);
         const nodeBinding = tagExtra.nodeBinding!;
-        setClosureSignalBuilder(tag, (closure, render) => {
+        const hop = { kind: "for", ref: nodeBinding } as const;
+        setClosureSignalBuilder(tag, hop, (closure, render) => {
           const selectorKeyBinding = getForSelectorKey(bodySection, closure);
-          if (selectorKeyBinding) {
-            return callRuntime(
-              "_for_selector",
-              getScopeAccessorLiteral(nodeBinding, true),
-              getScopeAccessorLiteral(closure, true),
-              getScopeAccessorLiteral(selectorKeyBinding, true),
-              render,
-            );
+          if (!selectorKeyBinding) {
+            return buildClosureHop(hop, render);
           }
           return callRuntime(
-            "_for_closure",
+            "_for_selector",
             getScopeAccessorLiteral(nodeBinding, true),
+            getScopeAccessorLiteral(closure, true),
+            getScopeAccessorLiteral(selectorKeyBinding, true),
             render,
           );
         });

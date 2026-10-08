@@ -117,6 +117,11 @@ type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
 ) => t.Expression;
+// Structured facts about a branch section's closure hop: what kind of
+// branch it is and which accessor (plus branch index) addresses it.
+export type ClosureHop =
+  | { kind: "if"; ref: Binding; index: number }
+  | { kind: "for"; ref: Binding };
 export const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
   () => new Map(),
@@ -126,9 +131,18 @@ const [getClosureSignalBuilder, _setClosureSignalBuilder] = createSectionState<
 >("queue");
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
-  builder: closureSignalBuilder,
+  hop: ClosureHop,
+  build: closureSignalBuilder = (_closure, render) =>
+    buildClosureHop(hop, render),
 ) {
-  _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, builder);
+  _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, build);
+}
+
+export function buildClosureHop(hop: ClosureHop, render: t.Expression) {
+  const accessor = getScopeAccessorLiteral(hop.ref, true);
+  return hop.kind === "if"
+    ? callRuntime("_if_closure", accessor, t.numericLiteral(hop.index), render)
+    : callRuntime("_for_closure", accessor, render);
 }
 
 // A branch section whose scope ids ride a resume marker carrying the parent scope
