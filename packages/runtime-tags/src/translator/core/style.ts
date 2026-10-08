@@ -34,13 +34,14 @@ import {
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
-import { findSlot, getSlot } from "../util/slots";
+import { getSlot } from "../util/slots";
 import * as structure from "../util/structure";
 import {
   checkStyleInterpolations,
   htmlStyleTagAlternateMsg,
 } from "../util/style-interpolation";
 import { translateByTarget } from "../util/visitors";
+import { getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
@@ -216,7 +217,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
   if (binding) {
     writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
-    writer.markNode(tag, binding, findSlot(binding)?.reason);
+    writer.markNode(tag, binding, getWriteReason(binding));
   }
 
   emitStyleImport(tag);

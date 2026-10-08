@@ -77,7 +77,7 @@ import {
   addStatement,
   setSectionDebugVar,
 } from "../../util/signals";
-import { findSlot, getSlot } from "../../util/slots";
+import { getSlot } from "../../util/slots";
 import { ALWAYS } from "../../util/sources";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
@@ -90,7 +90,7 @@ import {
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
-import { getWriteGuard } from "../../util/write-guard";
+import { getWriteGuard, getWriteReason } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
@@ -760,7 +760,7 @@ export default {
                 contentAttr.value,
                 getWriteGuard(
                   tagSection,
-                  nodeBinding && findSlot(nodeBinding)?.reason,
+                  nodeBinding && getWriteReason(nodeBinding),
                   true,
                 ),
               ),
@@ -769,7 +769,7 @@ export default {
         } else if (spreadContent) {
           const markerGuard = getWriteGuard(
             tagSection,
-            nodeBinding && findSlot(nodeBinding)?.reason,
+            nodeBinding && getWriteReason(nodeBinding),
             true,
           );
           htmlContentAttrTags.add(tag.node);
@@ -815,7 +815,7 @@ export default {
         const tagSection = getSection(tag);
         const skipEndTag = isEndTagWrittenByBranch(nodeBinding);
         const markerReason =
-          !skipEndTag && nodeBinding && findSlot(nodeBinding)?.reason;
+          !skipEndTag && nodeBinding && getWriteReason(nodeBinding);
         const write = writer.writeTo(
           tag,
           // `</html>` defers even when marked (its `#html/0` marker resolves to

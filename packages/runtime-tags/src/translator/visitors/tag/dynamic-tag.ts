@@ -78,7 +78,7 @@ import {
   type Signal,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import { findSlot, getSlot } from "../../util/slots";
+import { getSlot } from "../../util/slots";
 import { ALWAYS } from "../../util/sources";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
@@ -91,7 +91,7 @@ import {
 } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
-import { getWriteGuard } from "../../util/write-guard";
+import { getWriteGuard, getWriteReason } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
 import { getTagRelativePath, tagNotFoundError } from "./custom-tag";
@@ -326,7 +326,7 @@ export default {
       const tagExtra = node.extra!;
       const nodeBinding = tagExtra.nodeBinding!;
       const isClassAPI = tagExtra.featureType === "class";
-      const markerReason = findSlot(nodeBinding)?.reason;
+      const markerReason = getWriteReason(nodeBinding);
       let tagExpression = node.name;
 
       if (isClassAPI) {

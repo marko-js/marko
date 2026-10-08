@@ -46,10 +46,11 @@ import {
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { findSectionSlot, getSlot, SlotKind } from "../util/slots";
+import { getSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
+import { getBranchWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 type ForType = "in" | "of" | "to" | "until";
@@ -224,10 +225,7 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        const branchReason = findSectionSlot(
-          bodySection,
-          SlotKind.Branch,
-        )?.reason;
+        const branchReason = getBranchWriteReason(bodySection);
 
         resumeOwnerByMarkerWhenStatic(bodySection, nodeBinding);
 

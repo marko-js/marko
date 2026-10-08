@@ -6,9 +6,14 @@ import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
 import { hasResumableWriter } from "./references";
 import { ContentType, type Section } from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
-import { findSectionSlot, findSlot, SlotKind } from "./slots";
+import { findSlot, SlotKind } from "./slots";
 import { createProgramState } from "./state";
-import { getWriteGuard, getWriteGuardForAny } from "./write-guard";
+import {
+  getBranchWriteReason,
+  getWriteGuard,
+  getWriteGuardForAny,
+  getWriteReason,
+} from "./write-guard";
 
 // Shared wiring for control flow branches (and `<show>`'s end args), so the
 // tags cannot drift apart one copy at a time.
@@ -32,10 +37,8 @@ export function resumeOwnerByMarkerWhenStatic(
   if (
     isStateReason(branchExprReason) &&
     some(branchExprReason.state, hasResumableWriter) &&
-    isUnconditionalReason(
-      findSectionSlot(bodySection, SlotKind.Branch)?.reason,
-    ) &&
-    isUnconditionalReason(findSlot(nodeBinding)?.reason)
+    isUnconditionalReason(getBranchWriteReason(bodySection)) &&
+    isUnconditionalReason(getWriteReason(nodeBinding))
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
@@ -67,7 +70,7 @@ export function getBranchEndArgs(
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean | undefined,
 ) {
-  const markerReason = findSlot(nodeBinding)?.reason;
+  const markerReason = getWriteReason(nodeBinding);
   const skipParentEnd = !!onlyChildParentTagName && !!markerReason;
   if (skipParentEnd) {
     getBranchEndTags().add(nodeBinding);

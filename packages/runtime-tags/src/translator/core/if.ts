@@ -37,11 +37,12 @@ import {
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { findSectionSlot, getSlot, SlotKind } from "../util/slots";
+import { getSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
+import { getBranchWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const BRANCHES_LOOKUP = new WeakMap<
@@ -121,10 +122,7 @@ export const IfTag = {
             const [branchTag, branchBodySection] = branches[i];
             const bodyStatements = branchTag.node.body.body;
             if (branchBodySection) {
-              const branchReason = findSectionSlot(
-                branchBodySection,
-                SlotKind.Branch,
-              )?.reason;
+              const branchReason = getBranchWriteReason(branchBodySection);
               if (branchReason) {
                 branchReasons = sourcesUtil.add(branchReasons, branchReason);
                 bodyStatements.push(
