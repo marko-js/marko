@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.42.11
+
+### Patch Changes
+
+- [#4433](https://github.com/marko-js/marko/pull/4433) [`5f2dbee`](https://github.com/marko-js/marko/commit/5f2dbee729b310ef550c8e145478b8c76cca5989) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `getRuntimeEntryFiles`, `getRuntimeVersion` and `taglib.buildLookup` now follow what `configure()` sets, as compiles do. Called without a translator, they use the configured `translator` instead of the one detected from `package.json`, and `getRuntimeEntryFiles` uses the configured `optimize` before falling back to `MARKO_DEBUG`/`NODE_ENV`. A host that configures either no longer pre-bundles a runtime its templates never import.
+
+- [#4432](https://github.com/marko-js/marko/pull/4432) [`a163005`](https://github.com/marko-js/marko/commit/a163005bfbcc5efee947e11c0ed70f0d8add9f81) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - The default `hydrateIncludeImports` now also links `.pcss`, `.postcss`, `.stylus`, `.sss` and vanilla-extract `.css.ts` imports, so a server-only page importing its stylesheet in one of those languages ships it.
+
 ## 5.42.10
 
 ### Patch Changes
