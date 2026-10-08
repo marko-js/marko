@@ -9,6 +9,7 @@ import {
 import { generator } from "@marko/compiler/internal/babel";
 
 import * as translate6 from "..";
+import type { Reach } from "../util/entry-builder";
 import { resolveRelativeToEntry } from "../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile } from "../util/runtime";
 import { isTagsAPI } from "./feature-detection";
@@ -140,7 +141,7 @@ export function createInteropTranslator(translate5: any) {
       visit(
         file: t.BabelFile,
         entryFile: EntryFile,
-        visitChild: (id: string, bundled?: boolean) => void,
+        visitChild: (id: string, reach?: Reach) => void,
       ) {
         const state = (entryFile[kState] ||= {
           has5: false,
@@ -181,33 +182,28 @@ export function createInteropTranslator(translate5: any) {
             return enterProgram?.call(this, program, state);
           }
 
-          // Mirrors the Tags builder's own traversal: a file only ever
-          // reached below a bundled template is re-visited if later reached
-          // eagerly. The Class builder omits the flag, so children inherit
-          // how their parent was reached.
-          const visitedFiles = new Map([
+          // Mirrors the Tags builder's own traversal. The Class builder omits
+          // the reach, so children inherit how their parent was reached.
+          const visitedFiles = new Map<string, Reach>([
             [
               resolveRelativePath(entryFile, entryFile.opts.filename as string),
-              false,
+              0,
             ],
           ]);
           entryBuilder.visit(
             entryFile,
             entryFile,
-            function visitChild(resolved: string, bundled = false) {
-              const seenBundled = visitedFiles.get(resolved);
-              if (seenBundled === false || (seenBundled && bundled)) return;
-              visitedFiles.set(resolved, bundled);
+            function visitChild(resolved: string, reach: Reach = 0) {
+              const seen = visitedFiles.get(resolved);
+              if (seen !== undefined && seen <= reach) return;
+              visitedFiles.set(resolved, reach);
               const file = loadFileForImport(entryFile, resolved);
               if (file) {
-                entryBuilder.visit(
-                  file,
-                  entryFile,
-                  (id, childBundled = false) =>
-                    visitChild(
-                      resolveRelativeToEntry(entryFile, file, id),
-                      childBundled || bundled,
-                    ),
+                entryBuilder.visit(file, entryFile, (id, childReach = 0) =>
+                  visitChild(
+                    resolveRelativeToEntry(entryFile, file, id),
+                    childReach > reach ? childReach : reach,
+                  ),
                 );
               }
             },
